@@ -13,12 +13,19 @@
     <title>Districter</title>
   </head>
   <body>
-    <div class="container">
+    <!--adapted from https://getbootstrap.com/docs/4.3/components/navbar/ -->
+    <!-- As a link -->
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="#">Districter</a>
+    </nav>
+    <div class="container-fluid">
     {% block content %}
-    {% endblock content %}
+    {% endblock %}
     </div>
     <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="{% static '/bootstrap-4.3.1/js/bootstrap.min.js'%}"</script>
   </body>
+  <footer class="footer">
+      <div class="container">
+  </footer>
 </html>
