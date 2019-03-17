@@ -1,7 +1,7 @@
 # Districter
 Crowdsourced redistricting tool. Draw your community of interest and make your voice heard. In early stages of development.
 
-# Check out a brange
+# Check out a branch
 git checkout -b branchname
 git push origin branchname
 
