@@ -4,4 +4,5 @@
 3. Create about page of team members
 4. Add links to design doc and additional documentation as per project specs
 4. Deploy website to heroku
-5. Create contact page with form
+5. Set up DNS
+6. Create contact page with form
