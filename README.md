@@ -4,7 +4,7 @@ Crowdsourced redistricting tool. Draw your community of interest and make your v
 
 ### Create a virtual environment:
 _Steps from https://www.cs.princeton.edu/courses/archive/spring19/cos333/a4.html_
-**The name pyenv is in the gitignore so as long as you name your env pyenv as per instructions it will not be commited.**
+**The name pyenv is in the gitignore so as long as you name your env "pyenv" as per instructions it will not be committed.**
 ```
 $ pip install virtualenv --user  
 $ virtualenv pyvenv                 
