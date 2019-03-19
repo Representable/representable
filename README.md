@@ -4,12 +4,20 @@ Crowdsourced redistricting tool. Draw your community of interest and make your v
 
 ### Create a virtual environment:
 _Steps from https://www.cs.princeton.edu/courses/archive/spring19/cos333/a4.html_
+**Make sure the environment is in a separate folder so you don't commit it / add it to the github!**
 ```
 $ pip install virtualenv --user  
 $ virtualenv pyvenv                 
 $ . pyenv/bin/activate
 # when done with work:
 $ deactivate                      
+```
+### Add requirements from *pyenv* to requirements.txt
+```
+# Save requirements in repository. This puts all the pip packages required to run the server in requirements.txt
+$ pip freeze > requirements.txt
+# Load requirements from existing file. This installs all the packages mentioned in requirements.txt.
+$ pip install -r requirements.txt
 ```
 
 ### Check out a branch:
