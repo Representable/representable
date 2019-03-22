@@ -32,6 +32,21 @@ git checkout master
 git checkout branchname
 ```
 
+# Add Environment Variables
+You can find the mapbox API key referenced below by logging in the Mapbox.com account.
+```
+# Navigate to your root directory.
+cd ~
+# open your .bash_profile (or .bashrc, etc.) in your favorite text editor.
+vim .bash_profile
+# Add the following lines (dummy strings):
+export DISTR_DB_NAME="..."
+export DISTR_DB_USER="..."
+export DISTR_DB_PASS="..."
+export DISTR_MAPBOX_KEY="COPY_THIS_FROM_MAPBOX_ACCOUNT"
+# Save and launch a new terminal session.
+```
+
 ### Start server:
 ```
 cd districter

@@ -1,0 +1,31 @@
+{% extends 'geo_districter/base.html' %}
+{% load leaflet_tags %}
+
+{% block head %}
+{% leaflet_js %}
+{% leaflet_css %}
+{% endblock %}
+
+{% block content %}
+{% leaflet_map "map" callback="mapInit" %}
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+    function mapInit(map, options) {
+
+        L.tileLayer('https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token={{ mapbox_key }}', {
+            attribution: '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        }).addTo(map);
+
+        // Random Place in Seattle from a Tutorial
+        map.setView([47.61264, -122.32109], 11);
+
+        map.locate({
+            setView: true,
+            maxZoom: 15
+        });
+    };
+</script>
+</script>
+{% endblock %}
