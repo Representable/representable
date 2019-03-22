@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+<html>
+<head>
+    <title>Districter Map Test</title>
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+    {% block content %}
+    {% endblock %}
+    <footer>
+        <p>&copy; <span id="year">2019</span> Districter Team</p>
+    </footer>
+    {% block script %}
+        <script type="text/javascript">
+            document.getElementById("year").innerHTML = new Date().getFullYear();
+        </script>
+    {% endblock %}
+</body>
+</html>
