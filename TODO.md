@@ -1,5 +1,4 @@
 # To-do list
-1. Create geodjango app with leaflet and mapbox integration
 2. Add CMS app (or some page management system). CMS must integrate with Postgres.
 3. Create about page of team members
 4. Add links to design doc and additional documentation as per project specs
@@ -16,3 +15,4 @@
 3. Integrate static bootstrap files at starter/static
 4. created templates base.html and index.html in starter/templates
 5. Integrated postgres.
+6. Created geodjango app with postgres and mapbox integration.
