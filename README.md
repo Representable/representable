@@ -32,7 +32,7 @@ git checkout master
 git checkout branchname
 ```
 
-# Add Environment Variables
+### Add Environment Variables
 You can find the mapbox API key referenced below by logging in the Mapbox.com account.
 ```
 # Navigate to your root directory.
