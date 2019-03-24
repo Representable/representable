@@ -13,7 +13,7 @@ Taken from https://medium.com/agatha-codes/painless-postgresql-django-d4f0336498
 psql postgres
 CREATE DATABASE <DB_NAME>;
 ```
-5. Add the following to your .bash_profile or .bashrc (copy/paste, then change the ...s ). This is so that we don't store passwords/info in cleartext. Ask me for them if you don't have them anymore!
+6. Add the following to your .bash_profile or .bashrc (copy/paste, then change the ...s ). This is so that we don't store passwords/info in cleartext. Ask me for them if you don't have them anymore!
 
 On a Mac terminal, type:
 ```
@@ -30,6 +30,6 @@ export DISTR_DB_PASS="..."
 ```
 And then Ctrl^x and press Y to exit.
 
-6. Restart the bash terminal for changes to go into effect.
+7. Restart the bash terminal for changes to go into effect.
 
-7. You can now run `python manage.py runserver` without issues!
+8. You can now run `python manage.py runserver` without issues!
