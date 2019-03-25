@@ -18,7 +18,7 @@ from django.urls import path, include
 from starter.views import Index
 
 urlpatterns = [
-path('geo_districter/', include('geo_districter.urls')),
-    path('', Index.as_view(), name='index'),
+    path('geo_districter/', include('geo_districter.urls')),
+    path('', include('starter.urls')),
     path('admin/', admin.site.urls),
 ]
