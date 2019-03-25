@@ -11,14 +11,17 @@ Taken from https://medium.com/agatha-codes/painless-postgresql-django-d4f0336498
 ```
 # open postgres
 psql postgres
-CREATE DATABASE <DB_NAME>;
+CREATE DATABASE <DISTR_DB_NAME>;
+CREATE USER <DISTR_DB_USER> WITH encrypted password <DISTR_DB_PASS>;
+GRANT ALL PRIVILEGES ON DATABASE <DISTR_DB_NAME> to <DISTR_DB_USER>;
 ```
-6. Add the following to your .bash_profile or .bashrc (copy/paste, then change the ...s ). This is so that we don't store passwords/info in cleartext. Ask me for them if you don't have them anymore!
+
+6. Add the following to your .bash_profile and .bashrc (copy/paste, then change the ...s ). This is so that we don't store passwords/info in cleartext. Ask me for them if you don't have them anymore!
 
 On a Mac terminal, type:
 ```
 cd ~
-nano .bashrc
+nano .bash_profile
 ```
 
 Add these lines:
