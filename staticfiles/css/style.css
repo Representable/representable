@@ -1,0 +1,17 @@
+body{
+  font-family: 'Inter', system-ui, sans-serif;
+  color: white;
+  background-color: black;
+}
+
+h1 {
+  font-weight: 700;
+}
+
+.di-title, .di-subtitle {
+  text-align:center;
+}
+.di-subtitle {
+  font-weight: 200;
+  font-style: italic;
+}
