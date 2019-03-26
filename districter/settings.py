@@ -144,4 +144,5 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Mapbox API Key
 MAPBOX_KEY = os.environ.get('DISTR_MAPBOX_KEY')
+
 django_heroku.settings(locals())
