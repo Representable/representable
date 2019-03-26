@@ -1,0 +1,184 @@
+@font-face {
+  font-family: 'Inter';
+  font-style:  normal;
+  font-weight: 100;
+  src: url("Inter-Thin.95dcd9833440.woff2") format("woff2"),
+       url("Inter-Thin.993430a02687.woff") format("woff");
+}
+@font-face {
+  font-family: 'Inter';
+  font-style:  italic;
+  font-weight: 100;
+  src: url("Inter-ThinItalic.bab091cd4215.woff2") format("woff2"),
+       url("Inter-ThinItalic.03aaefeac4f9.woff") format("woff");
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style:  normal;
+  font-weight: 200;
+  src: url("Inter-ExtraLight.3e86dd6bb880.woff2") format("woff2"),
+       url("Inter-ExtraLight.7410d5373a89.woff") format("woff");
+}
+@font-face {
+  font-family: 'Inter';
+  font-style:  italic;
+  font-weight: 200;
+  src: url("Inter-ExtraLightItalic.7a97fd62a0d7.woff2") format("woff2"),
+       url("Inter-ExtraLightItalic.2ab0bd663beb.woff") format("woff");
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style:  normal;
+  font-weight: 300;
+  src: url("Inter-Light.42922cef6c88.woff2") format("woff2"),
+       url("Inter-Light.235041efc07f.woff") format("woff");
+}
+@font-face {
+  font-family: 'Inter';
+  font-style:  italic;
+  font-weight: 300;
+  src: url("Inter-LightItalic.ba0b2a0c4ad9.woff2") format("woff2"),
+       url("Inter-LightItalic.7547f5c17624.woff") format("woff");
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style:  normal;
+  font-weight: 400;
+  src: url("Inter-Regular.bffaed793493.woff2") format("woff2"),
+       url("Inter-Regular.aebfbb3c9c7d.woff") format("woff");
+}
+@font-face {
+  font-family: 'Inter';
+  font-style:  italic;
+  font-weight: 400;
+  src: url("Inter-Italic.381444ec5c7d.woff2") format("woff2"),
+       url("Inter-Italic.35cf8109301b.woff") format("woff");
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style:  normal;
+  font-weight: 500;
+  src: url("Inter-Medium.2e5e0884f40c.woff2") format("woff2"),
+       url("Inter-Medium.c09fb3891c96.woff") format("woff");
+}
+@font-face {
+  font-family: 'Inter';
+  font-style:  italic;
+  font-weight: 500;
+  src: url("Inter-MediumItalic.7a7fd73559e4.woff2") format("woff2"),
+       url("Inter-MediumItalic.ad6e093cdbde.woff") format("woff");
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style:  normal;
+  font-weight: 600;
+  src: url("Inter-SemiBold.cd04cacdf531.woff2") format("woff2"),
+       url("Inter-SemiBold.acc6eebdcdac.woff") format("woff");
+}
+@font-face {
+  font-family: 'Inter';
+  font-style:  italic;
+  font-weight: 600;
+  src: url("Inter-SemiBoldItalic.57262d35e7da.woff2") format("woff2"),
+       url("Inter-SemiBoldItalic.569061c24342.woff") format("woff");
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style:  normal;
+  font-weight: 700;
+  src: url("Inter-Bold.34356f6bf3d0.woff2") format("woff2"),
+       url("Inter-Bold.61c493e3af34.woff") format("woff");
+}
+@font-face {
+  font-family: 'Inter';
+  font-style:  italic;
+  font-weight: 700;
+  src: url("Inter-BoldItalic.57acb4797f14.woff2") format("woff2"),
+       url("Inter-BoldItalic.6fbcf86a8d4a.woff") format("woff");
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style:  normal;
+  font-weight: 800;
+  src: url("Inter-ExtraBold.a627e2ce6bb3.woff2") format("woff2"),
+       url("Inter-ExtraBold.0b03428a6dce.woff") format("woff");
+}
+@font-face {
+  font-family: 'Inter';
+  font-style:  italic;
+  font-weight: 800;
+  src: url("Inter-ExtraBoldItalic.b95f0df1c3be.woff2") format("woff2"),
+       url("Inter-ExtraBoldItalic.137fcd982987.woff") format("woff");
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style:  normal;
+  font-weight: 900;
+  src: url("Inter-Black.c7a3bad18958.woff2") format("woff2"),
+       url("Inter-Black.a4502329af92.woff") format("woff");
+}
+@font-face {
+  font-family: 'Inter';
+  font-style:  italic;
+  font-weight: 900;
+  src: url("Inter-BlackItalic.d000d76edb65.woff2") format("woff2"),
+       url("Inter-BlackItalic.094751f4ef58.woff") format("woff");
+}
+
+/* -------------------------------------------------------
+Variable font.
+Usage:
+
+  html { font-family: 'Inter', sans-serif; }
+  @supports (font-variation-settings: normal) {
+    html { font-family: 'Inter var', sans-serif; }
+  }
+*/
+@font-face {
+  font-family: 'Inter var';
+  font-weight: 100 900;
+  font-style: normal;
+  font-named-instance: 'Regular';
+  src: url("Inter-upright.var.dc162a64e0ec.woff2") format("woff2 supports variations(gvar)"),
+       url("Inter-upright.var.dc162a64e0ec.woff2") format("woff2-variations"),
+       url("Inter-upright.var.dc162a64e0ec.woff2") format("woff2");
+}
+@font-face {
+  font-family: 'Inter var';
+  font-weight: 100 900;
+  font-style: italic;
+  font-named-instance: 'Italic';
+  src: url("Inter-italic.var.7457830229b0.woff2") format("woff2 supports variations(gvar)"),
+       url("Inter-italic.var.7457830229b0.woff2") format("woff2-variations"),
+       url("Inter-italic.var.7457830229b0.woff2") format("woff2");
+}
+
+
+/* --------------------------------------------------------------------------
+[EXPERIMENTAL] Multi-axis, single variable font.
+
+Slant axis is not yet widely supported (as of February 2019) and thus this
+multi-axis single variable font is opt-in rather than the default.
+
+When using this, you will probably need to set font-variation-settings
+explicitly, e.g.
+
+  * { font-variation-settings: "slnt" 0deg }
+  .italic { font-variation-settings: "slnt" 10deg }
+
+*/
+@font-face {
+  font-family: 'Inter var experimental';
+  font-weight: 100 900;
+  font-style: oblique 0deg 10deg;
+  src: url("Inter.var.6f521bf650c7.woff2") format("woff2-variations"),
+       url("Inter.var.6f521bf650c7.woff2") format("woff2");
+}
