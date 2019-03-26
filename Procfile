@@ -1,1 +1,1 @@
-web: gunicorn districter333.wsgi
+web: gunicorn districter.wsgi
