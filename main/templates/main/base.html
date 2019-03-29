@@ -1,0 +1,35 @@
+<!doctype html>
+<!--{% load staticfiles %}-->
+
+<!--adaptation of https://getbootstrap.com/docs/4.3/getting-started/introduction/#main-template-->
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'fonts/Inter/inter.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+
+    <title>Districter</title>
+  </head>
+  <body>
+    <!--adapted from https://getbootstrap.com/docs/4.3/components/navbar/ -->
+    <!-- As a link -->
+    <nav class="navbar">
+      <a class="navbar-brand" href="#">Districter</a>
+    </nav>
+    <div class="container-fluid">
+    {% block content %}
+    {% endblock %}
+    </div>
+    <!-- Optional JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  </body>
+  <footer class="footer">
+      <div class="container">
+  </footer>
+</html>
