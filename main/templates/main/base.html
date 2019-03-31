@@ -1,6 +1,5 @@
 <!doctype html>
 {% load static %}
-
 <!--adaptation of https://getbootstrap.com/docs/4.3/getting-started/introduction/#main-template-->
 <html lang="en">
   <head>
@@ -13,16 +12,21 @@
     <link rel="stylesheet" href="{% static 'fonts/Inter/inter.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
+    <style>
+    .container-panel {
+      background-image: url("{% static 'img/background.jpg' %}");
+    }
+    </style>
 
     <title>Districter</title>
   </head>
   <body>
     <!--adapted from https://getbootstrap.com/docs/4.3/components/navbar/ -->
     <!-- As a link -->
+    <div class ="container-panel">
     <nav class="navbar">
       <a class="navbar-brand" href="#">Districter</a>
     </nav>
-    <div class="container-fluid">
     {% block content %}
     {% endblock %}
     </div>
@@ -33,5 +37,6 @@
   </body>
   <footer class="footer">
       <div class="container">
+      </div>
   </footer>
 </html>
