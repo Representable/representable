@@ -51,11 +51,12 @@ h1, h2, h3 {
 }
 
 a:link,
-a:visited {
+a:visited,
+a:active {
   color: inherit;
 }
-a:hover,
-a:active {
+
+a:hover {
     color: #ffcccc;
     text-decoration: none;
 }
