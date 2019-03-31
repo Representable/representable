@@ -64,7 +64,7 @@ a:active {
   border-radius: 0;
   margin: 3px;
 }
-.btn-outline-primary, .btn-outline-primary:visited {
+.btn-outline-primary, .btn-outline-primary:visited, .btn-outline-primary:link {
   color: #ffcccc;
   border-color: #ffcccc;
 }
@@ -109,7 +109,7 @@ a:active {
    z-index:1;
 }
 
-.btn-canvas {
+.btn-canvas, nav {
   position: relative;
   z-index:2;
 }
