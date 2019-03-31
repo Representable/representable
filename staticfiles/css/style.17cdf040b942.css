@@ -95,7 +95,7 @@ a:active {
 #particles-js{
   width: 100%;
   height: 100%;
-  background-image: url('');
+  background-image: url("");
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;
@@ -110,6 +110,6 @@ a:active {
 }
 
 .btn-canvas {
-  position: relative;
+  position: absolute;
   z-index:2;
 }
