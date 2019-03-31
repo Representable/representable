@@ -69,13 +69,13 @@ a:hover {
   color: #ffcccc;
   border-color: #ffcccc;
 }
-
-.btn-outline-primary:hover {
-  color:white;
-  background-color: #ffcccc;
-  border-color: #ffcccc;
+@media screen and (min-width: 768px) {
+  .btn-outline-primary:hover {
+    color:white;
+    background-color: #ffcccc;
+    border-color: #ffcccc;
+  }
 }
-
 .jumbotron {
   background-color: transparent;
   margin-bottom: 0;
