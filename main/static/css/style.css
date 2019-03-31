@@ -63,6 +63,7 @@ a:hover {
 .btn-outline-primary:active {
   color: #ffcccc;
   border-color: #ffcccc;
+  background-color:transparent;
 }
 @media screen and (min-width: 768px) {
   .btn-outline-primary:hover,.btn-outline-primary:active {
