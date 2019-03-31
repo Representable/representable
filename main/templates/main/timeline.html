@@ -1,9 +1,13 @@
 {% extends 'main/base.html' %}
+{% block hero %}
+<div class="container">
+<h1 class="di-title">Timeline</h1>
+</div>
+{% endblock %}
 {% block content %}
-<h1 class="di-title">Districter</h1>
-<h5 class="di-subtitle">A citizen tool to end Gerrymandering</h5>
-
-<div class="container container-panel">
+<div class="panel">
+<div class="container">
+    <div class="jumbotron">
   <ol>
     <h4><li>Meet the Team</li></h4>
       <ul>
@@ -78,5 +82,8 @@
         <li>Christopher Moretti</li>
       </ul>
   </ol>
-<div>
+</div>
+</div>
+</div>
+
 {% endblock %}
