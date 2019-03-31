@@ -2,32 +2,19 @@
   --melon:#ffcccc;
   --mint: #96ceb4;
 }
-
 body {
   font-family: 'Inter', system-ui, sans-serif;
   color: white;
   background-color: black;
-  font-weight: 600;
 }
 
 h1 {
-  font-size: 2rem;
-}
-
-h1, h2, h3 {
   font-weight: 700;
 }
 
-@media screen and (min-width: 768px) {
-  h1 {
-    font-size: 55px;
-  }
+.di-title, .di-subtitle {
+  text-align:center;
 }
-
-/*.di-title {
-  text-shadow: 4px 3px 0 rgba(70,70,70,0.9);
-}*/
-
 .di-subtitle {
   font-weight: 200;
   font-style: italic;
@@ -51,19 +38,4 @@ a:active {
 .btn-outline-primary:hover {
   background-color: #ffcccc;
   border-color: #ffcccc;
-}
-
-.jumbotron {
-  background-color: transparent;
-  margin-bottom: 0;
-}
-
-.panel {
-  border: 3px solid white;
-  border-width: 3px 0 0 0;
-  background-color: black;
-}
-
-.container {
-  border-width: 0;
 }

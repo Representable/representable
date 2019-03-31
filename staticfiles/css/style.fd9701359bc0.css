@@ -60,10 +60,6 @@ a:active {
 
 .panel {
   border: 3px solid white;
-  border-width: 3px 0 0 0;
+  border-width: 3px 0px;
   background-color: black;
-}
-
-.container {
-  border-width: 0;
 }

@@ -18,22 +18,24 @@
 
 <form method="post" action="{% url 'login' %}">
 {% csrf_token %}
-<table>
-<tr>
-    <td>{{ form.username.label_tag }}</td>
-    <td>{{ form.username }}</td>
-</tr>
-<tr>
-    <td>{{ form.password.label_tag }}</td>
-    <td>{{ form.password }}</td>
-</tr>
-</table>
+<div class="form-group">
+  <!--https://docs.djangoproject.com/en/dev/topics/forms/#customizing-the-form-template-->
+  {% for field in form %}
+  <div class="fieldWrapper">
+      {{ field.errors }}
+      {{ field.label_tag }} <input class="form-control" id="{{ field.id_for_label }}" maxlength="30" name="{{ field.html_name }}" placeholder="{{ field.html_name }}" value="{{ field.value }}" type="text" />
+      {% if field.help_text %}
+      <p class="help">{{ field.help_text|safe }}</p>
+      {% endif %}
+  </div>
+{% endfor %}
+</div>
 
-<input type="submit" value="login">
+<button type="submit" class="btn btn-outline-primary" value="login">Submit</button>
 <input type="hidden" name="next" value="{{ next }}">
 </form>
 
 {# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+<p><a href="{% url 'password_reset' %}">Forgot password?</a></p>
 
 {% endblock %}
