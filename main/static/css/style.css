@@ -55,7 +55,8 @@ a:active {
   border-radius: 0;
   margin: 3px;
 }
-.btn-outline-primary, .btn-outline-primary:visited, .btn-outline-primary:link {
+.btn-outline-primary, .btn-outline-primary:visited, .btn-outline-primary:link,.btn-outline-primary:hover,
+.btn-outline-primary:active {
   color: #ffcccc;
   border-color: #ffcccc;
 }
