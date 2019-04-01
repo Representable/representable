@@ -110,3 +110,10 @@ a:hover {
   position: relative;
   z-index:2;
 }
+
+.shadow-sm {
+  /* http://jsfiddle.net/K88H9/821/ */
+  box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);
+  -moz-box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);
+  -webkit-box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);
+}
