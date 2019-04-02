@@ -92,7 +92,7 @@ a:hover {
 #particles-js{
   width: 100%;
   height: 100%;
-  background-image: url('');
+  background-image: url("");
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;
@@ -101,8 +101,8 @@ a:hover {
 
 
 .particles-js-canvas-el {
-   position:fixed;
-   top: 0;
+   position:relative;
+   margin-top:-100%;
    z-index:1;
 }
 
@@ -133,6 +133,6 @@ a:hover {
   border-width: 0 0 3px 0;
 }
 
-.navbar a, .navbar-brand {
+.navbar a {
   font-weight: 700;
 }
