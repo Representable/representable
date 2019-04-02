@@ -91,7 +91,7 @@ a:hover {
 /* http://codepen.io/VincentGarreau/pen/pnlso */
 #particles-js{
   width: 100%;
-  height: 100%;
+  height: auto;
   background-image: url('');
   background-size: cover;
   background-position: 50% 50%;
@@ -101,7 +101,7 @@ a:hover {
 
 
 .particles-js-canvas-el {
-   position:fixed;
+   position:absolute;
    top: 0;
    z-index:1;
 }
