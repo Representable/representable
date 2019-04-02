@@ -1,0 +1,25 @@
+
+
+#map {
+    top:0;
+    bottom:0;
+    width:100%;
+    /*  Must Set Absolute Height */
+    height: 500px;
+}
+
+.calculation-box {
+height: 75px;
+width: 150px;
+bottom: 40px;
+left: 10px;
+background-color: rgba(255, 255, 255, .9);
+padding: 15px;
+text-align: center;
+}
+
+p {
+font-family: 'Open Sans';
+margin: 0;
+font-size: 13px;
+}
