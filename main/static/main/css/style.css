@@ -24,7 +24,7 @@ h1, h2, h3 {
 
 @media screen and (min-width: 768px) {
   h1 {
-    font-size: 55px;
+    font-size: 50px;
   }
   p {
     font-size: 18px;
@@ -101,8 +101,8 @@ a:hover {
 
 
 .particles-js-canvas-el {
-   position:relative;
-   margin-top:-100%;
+   position:fixed;
+   top: 0;
    z-index:1;
 }
 
@@ -116,4 +116,23 @@ a:hover {
   box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);
   -moz-box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);
   -webkit-box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);
+}
+
+.form-control {
+  background-color:transparent;
+  border-color: inherit;
+  border-radius: 0;
+  border-width: 0 0 1px 0;
+}
+
+.form-control:focus{
+  background-color:transparent;
+  border-color: inherit;
+  box-shadow: none;
+  border-radius: 0;
+  border-width: 0 0 3px 0;
+}
+
+.navbar a, .navbar-brand {
+  font-weight: 700;
 }
