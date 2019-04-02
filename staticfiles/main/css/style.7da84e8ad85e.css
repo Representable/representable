@@ -92,7 +92,7 @@ a:hover {
 #particles-js{
   width: 100%;
   height: auto;
-  background-image: url('');
+  background-image: url("");
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;
@@ -101,7 +101,8 @@ a:hover {
 
 
 .particles-js-canvas-el {
-   position:absolute;
+   position:fixed;
+   height: auto;
    top: 0;
    z-index:1;
 }
