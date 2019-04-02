@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from main.views import Index
 
 urlpatterns = [
     path('geo_districter/', include('geo_districter.urls')),
