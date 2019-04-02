@@ -23,7 +23,7 @@
   {% for field in form %}
   <div class="fieldWrapper">
       {{ field.errors }}
-      {{ field.label_tag }} <input class="form-control" id="{{ field.id_for_label }}" maxlength="30" name="{{ field.html_name }}" placeholder="{{ field.html_name }}" value="{{ field.value }}" type="text" />
+      <input class="form-control" id="{{ field.id_for_label }}" maxlength="30" name="{{ field.html_name }}" placeholder="{{ field.html_name }}" type="text" />
       {% if field.help_text %}
       <p class="help">{{ field.help_text|safe }}</p>
       {% endif %}
