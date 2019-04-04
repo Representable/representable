@@ -80,7 +80,6 @@ a:hover {
 .jumbo-outline {
   border: 3px solid black;
   border-width: 3px 0 0 0;
-  border-radius: 0;
   background-color: transparent;
   margin-bottom: 0;
 }
@@ -98,7 +97,7 @@ a:hover {
 #particles-js{
   width: 100%;
   height: auto;
-  background-image: url('');
+  background-image: url("");
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;

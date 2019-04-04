@@ -38,7 +38,13 @@ h1, h2, h3 {
   text-shadow: 4px 3px 0 rgba(70,70,70,0.9);
 }*/
 
-
+#map {
+    top:0;
+    bottom:0;
+    width:100%;
+    /*  Must Set Absolute Height */
+    height: 500px;
+}
 
 .di-subtitle {
   font-weight: 200;
@@ -77,15 +83,9 @@ a:hover {
   margin-bottom: 0;
 }
 
-.jumbo-outline {
+.panel {
   border: 3px solid black;
   border-width: 3px 0 0 0;
-  border-radius: 0;
-  background-color: transparent;
-  margin-bottom: 0;
-}
-
-.panel {
   background-color: white;
   color: black;
 }
@@ -98,7 +98,7 @@ a:hover {
 #particles-js{
   width: 100%;
   height: auto;
-  background-image: url('');
+  background-image: url("");
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;
