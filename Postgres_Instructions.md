@@ -6,7 +6,7 @@ Taken from https://medium.com/agatha-codes/painless-postgresql-django-d4f0336498
 1. Install required requirements `pip install -r requirements.txt`.
 2. Install PostgreSQL from: https://postgresapp.com/downloads.html. Choose the first download option: Postgres.app with PostgreSQL 11. If you don't already have postgres, do "brew install postgres".
 3. Make sure to start a Postgres server. Use the default settings on Port 5432.
-4/5. Use the information I texted you to create a Postgres user with the DISTR_DB_USER, a database with DISTR_DB_NAME, and password DISTR_DB_PASS. Create the database/user from the command line:
+4. Use the information I texted you to create a Postgres user with the DISTR_DB_USER, a database with DISTR_DB_NAME, and password DISTR_DB_PASS. Create the database/user from the command line:
 ```
 # open postgres
 psql postgres
