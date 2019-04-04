@@ -12,7 +12,7 @@ Taken from https://medium.com/agatha-codes/painless-postgresql-django-d4f0336498
 # open postgres
 psql postgres
 CREATE DATABASE <DISTR_DB_NAME>;
-CREATE USER <DISTR_DB_USER> WITH encrypted password <DISTR_DB_PASS>;
+CREATE USER <DISTR_DB_USER> WITH encrypted password '<DISTR_DB_PASS>';
 GRANT ALL PRIVILEGES ON DATABASE <DISTR_DB_NAME> to <DISTR_DB_USER>;
 ```
 
