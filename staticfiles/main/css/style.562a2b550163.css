@@ -13,6 +13,10 @@ h1, h2, h3 {
   font-weight: 700;
 }
 
+h3 {
+  text-transform: uppercase;
+}
+
 /*.di-title-span {
   line-height: 1.3;
   background-color: black;
@@ -78,6 +82,9 @@ a:hover {
 }
 
 .jumbo-outline {
+  border: 3px solid black;
+  border-width: 3px 0 0 0;
+  border-radius: 0;
   background-color: transparent;
   margin-bottom: 0;
 }
@@ -95,7 +102,7 @@ a:hover {
 #particles-js{
   width: 100%;
   height: auto;
-  background-image: url('');
+  background-image: url("");
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;
@@ -138,9 +145,4 @@ a:hover {
 
 .navbar a, .navbar-brand {
   font-weight: 700;
-}
-
-hr {
-  border: 3px solid black;
-  border-width: 3px 0 0 0;
 }

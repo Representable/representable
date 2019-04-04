@@ -51,7 +51,7 @@ a:active {
   color: inherit;
 }
 a:hover {
-    color: #ff9191;
+    color: #fc7e7e;
     text-decoration: none;
 }
 
@@ -61,15 +61,15 @@ a:hover {
 }
 .btn-outline-primary, .btn-outline-primary:visited, .btn-outline-primary:link,.btn-outline-primary:hover,
 .btn-outline-primary:active {
-  color: #ff9191;
-  border-color: #ff9191;
+  color: #fc7e7e;
+  border-color: #fc7e7e;
   background-color:transparent;
 }
 @media screen and (min-width: 768px) {
   .btn-outline-primary:hover,.btn-outline-primary:active {
     color:white;
-    background-color: #ff9191;
-    border-color: #ff9191;
+    background-color: #fc7e7e;
+    border-color: #fc7e7e;
   }
 }
 .jumbotron {
@@ -78,6 +78,9 @@ a:hover {
 }
 
 .jumbo-outline {
+  border: 3px solid black;
+  border-width: 3px 0 0 0;
+  border-radius: 0;
   background-color: transparent;
   margin-bottom: 0;
 }
@@ -95,7 +98,7 @@ a:hover {
 #particles-js{
   width: 100%;
   height: auto;
-  background-image: url('');
+  background-image: url("");
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;
@@ -138,9 +141,4 @@ a:hover {
 
 .navbar a, .navbar-brand {
   font-weight: 700;
-}
-
-hr {
-  border: 3px solid black;
-  border-width: 3px 0 0 0;
 }

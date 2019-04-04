@@ -51,7 +51,7 @@ a:active {
   color: inherit;
 }
 a:hover {
-    color: #ffcccc;
+    color: #ff9191;
     text-decoration: none;
 }
 
@@ -61,15 +61,15 @@ a:hover {
 }
 .btn-outline-primary, .btn-outline-primary:visited, .btn-outline-primary:link,.btn-outline-primary:hover,
 .btn-outline-primary:active {
-  color: #ffcccc;
-  border-color: #ffcccc;
+  color: #ff9191;
+  border-color: #ff9191;
   background-color:transparent;
 }
 @media screen and (min-width: 768px) {
   .btn-outline-primary:hover,.btn-outline-primary:active {
     color:white;
-    background-color: #ffcccc;
-    border-color: #ffcccc;
+    background-color: #ff9191;
+    border-color: #ff9191;
   }
 }
 .jumbotron {
@@ -78,9 +78,6 @@ a:hover {
 }
 
 .jumbo-outline {
-  border: 3px solid black;
-  border-width: 3px 0 0 0;
-  border-radius: 0;
   background-color: transparent;
   margin-bottom: 0;
 }
@@ -141,4 +138,9 @@ a:hover {
 
 .navbar a, .navbar-brand {
   font-weight: 700;
+}
+
+hr {
+  border: 3px solid black;
+  border-width: 3px 0 0 0;
 }

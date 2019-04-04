@@ -1,7 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% block hero %}
-<div class="container">
+<div class="container-fluid">
   <div class="jumbotron">
     <h1 class="di-title"><span class="di-title-span">A crowdsourced redistricting tool to map communities and make your voice heard.</span></h1>
     <a class="btn btn-outline-primary btn-canvas" href="#about" role="button">Learn More</a><a class="btn btn-outline-primary btn-canvas" href="#contribute" role="button">Contribute</a>
@@ -10,9 +10,10 @@
 {% endblock %}
 {% block content %}
 <div class="panel">
-<div class="container">
+<div class="container-fluid">
     <div class="jumbotron" id="about">
       <h3>What is Districter?</h3>
+      <hr>
       <p>Districter is an online service that allows citizens to fight against gerrymandering by
 crowdsourcing maps of their communities of interest (COIs). A COI is what citizens consider to
 be their community. This can take the form of a coastal neighborhood that stretches along a
@@ -26,9 +27,11 @@ state of gerrymandering by overlaying district lines over communities of interes
   </div>
 </div>
 <div class="panel">
-  <div class="container">
+  <div class="container-fluid">
     <div class="jumbotron jumbo-outline" id="contribute">
       <h3>Draw my community</h3>
+      <hr>
+      <br>
       <img src="{% static 'img/map-sample.png' %}" alt="Map" width="80%">
 
 
