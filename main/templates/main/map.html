@@ -1,18 +1,38 @@
 {% extends 'main/base.html' %}
+{% load leaflet_tags %}
 {% load static %}
-<html>
-  <head>
-    <meta charset='utf-8' />
-    <title>Add a GeoJSON polygon</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
-    <style>
-      body { margin:0; padding:0; }
-      #map { position:absolute; top:0; bottom:0; width:100%; }
-    </style>
-  </head>
+
+{% block head %}
+{% leaflet_js %}
+{% leaflet_css %}
+<!-- https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ -->
+<!-- Mapbox GL JS -->
+<meta charset='utf-8' />
+<title>Add a GeoJSON polygon</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+<!--  Custom CSS -->
+<link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+
+{% endblock %}
+{% block hero %}
+<div class="container">
+<h1 class="di-title">View Communities</h1>
+</div>
+{% endblock %}
+{% block content %}
+
   <body>
   <div id='map'></div>
   </body>
-</html>
+{% endblock %}
+
+{% block script %}
+<!--  Has to be at the end after the HTML loads.-->
+<script type="text/javascript">
+    mapboxgl.accessToken = "{{ mapbox_key }}";
+</script>
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/map.js' %}"></script>
+{% endblock %}

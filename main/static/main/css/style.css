@@ -38,7 +38,13 @@ h1, h2, h3 {
   text-shadow: 4px 3px 0 rgba(70,70,70,0.9);
 }*/
 
-
+#map {
+    top:0;
+    bottom:0;
+    width:100%;
+    /*  Must Set Absolute Height */
+    height: 500px;
+}
 
 .di-subtitle {
   font-weight: 200;

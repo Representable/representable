@@ -7,3 +7,6 @@ class Index(TemplateView):
 
 class Timeline(TemplateView):
     template_name = "main/timeline.html"
+
+class Map(TemplateView):
+    template_name = "main/map.html"
