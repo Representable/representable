@@ -20,10 +20,12 @@ var draw = new MapboxDraw({
 });
 map.addControl(draw);
 
+// Update Area Listeners
 map.on('draw.create', updateArea);
 map.on('draw.delete', updateArea);
 map.on('draw.update', updateArea);
 
+// Save Polygon Listeners
 function updateArea(e) {
     var data = draw.getAll();
     var answer = document.getElementById('calculated-area');
