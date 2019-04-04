@@ -63,6 +63,7 @@ CREATE EXTENSION postgis;
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/X.Y/bin
 ```
 ##### Linux
+
 Take a look at these:
 i. https://docs.djangoproject.com/en/2.1/ref/contrib/gis/install/geolibs/
 ii. https://docs.djangoproject.com/en/2.1/ref/contrib/gis/install/postgis/
