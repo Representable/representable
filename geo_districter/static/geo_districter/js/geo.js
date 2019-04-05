@@ -39,3 +39,24 @@ function updateArea(e) {
         if (e.type !== 'draw.delete') alert("Use the draw tools to draw a polygon!");
     }
 }
+
+// Dummy Save Listener
+document.getElementById("dummySave").onclick = dummySave;
+
+function dummySave(e) {
+    console.log("Dummy save button pressed!");
+    var csrftoken = Cookies.get('csrftoken');
+    // console.log(csrftoken);
+    $.ajax({
+        url: 'ajax/dummy_save/',
+        data: {
+          'dummy_data': "dummy"
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.worked) {
+              console.log("Worked!");
+          }
+        }
+      });
+}
