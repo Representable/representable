@@ -6,6 +6,7 @@
 {% leaflet_js %}
 {% leaflet_css %}
 <!-- https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ -->
+
 <!--  Mapbox GL JS-->
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
@@ -20,11 +21,12 @@
 {% endblock %}
 
 {% block content %}
-<div id='map'></div> 
+<div id='map'></div>
 <div class='calculation-box'>
     <p>Draw a polygon using the draw tools.</p>
     <div id='calculated-area'></div>
 </div>
+<button id="dummySave" type="button" class="btn btn-primary">Dummy Save</button>
 {% endblock %}
 
 {% block script %}

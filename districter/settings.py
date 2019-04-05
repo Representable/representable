@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'main',
     'geo_districter',
     'leaflet',
+    'django.contrib.gis',
 ]
 
 MIDDLEWARE = [
@@ -85,7 +86,7 @@ WSGI_APPLICATION = 'districter.wsgi.application'
 # for NAME, USER, and PASS.
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': os.environ.get('DISTR_DB_NAME', ''),
         'USER': os.environ.get('DISTR_DB_USER', ''),
         'PASS': os.environ.get('DISTR_DB_PASS', ''),

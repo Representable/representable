@@ -20,10 +20,12 @@ var draw = new MapboxDraw({
 });
 map.addControl(draw);
 
+// Update Area Listeners
 map.on('draw.create', updateArea);
 map.on('draw.delete', updateArea);
 map.on('draw.update', updateArea);
 
+// Save Polygon Listeners
 function updateArea(e) {
     var data = draw.getAll();
     var answer = document.getElementById('calculated-area');
@@ -36,4 +38,25 @@ function updateArea(e) {
         answer.innerHTML = '';
         if (e.type !== 'draw.delete') alert("Use the draw tools to draw a polygon!");
     }
+}
+
+// Dummy Save Listener
+document.getElementById("dummySave").onclick = dummySave;
+
+function dummySave(e) {
+    console.log("Dummy save button pressed!");
+    var csrftoken = Cookies.get('csrftoken');
+    // console.log(csrftoken);
+    $.ajax({
+        url: 'ajax/dummy_save/',
+        data: {
+          'dummy_data': "dummy_data"
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.worked) {
+              alert("Worked!");
+          }
+        }
+      });
 }
