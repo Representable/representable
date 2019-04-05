@@ -1,7 +1,6 @@
 body {
   font-family: 'Inter', system-ui, sans-serif;
-  color: white;
-  background-color: black;
+  background-color: #030428;
   font-weight: 400;
 }
 
@@ -51,7 +50,7 @@ a:active {
   color: inherit;
 }
 a:hover {
-    color: #ffcccc;
+    color: #56577d;
     text-decoration: none;
 }
 
@@ -61,15 +60,13 @@ a:hover {
 }
 .btn-outline-primary, .btn-outline-primary:visited, .btn-outline-primary:link,.btn-outline-primary:hover,
 .btn-outline-primary:active {
-  color: #ffcccc;
-  border-color: #ffcccc;
+  color: white;
+  border-color: white;
   background-color:transparent;
 }
 @media screen and (min-width: 768px) {
   .btn-outline-primary:hover,.btn-outline-primary:active {
-    color:white;
-    background-color: #ffcccc;
-    border-color: #ffcccc;
+    background-color: #56577d;
   }
 }
 .jumbotron {
@@ -77,9 +74,12 @@ a:hover {
   margin-bottom: 0;
 }
 
+.jumbo-outline {
+  background-color: transparent;
+  margin-bottom: 0;
+}
+
 .panel {
-  border: 3px solid black;
-  border-width: 3px 0 0 0;
   background-color: white;
   color: black;
 }
@@ -91,7 +91,7 @@ a:hover {
 /* http://codepen.io/VincentGarreau/pen/pnlso */
 #particles-js{
   width: 100%;
-  height: 100%;
+  height: auto;
   background-image: url("");
   background-size: cover;
   background-position: 50% 50%;
@@ -101,7 +101,7 @@ a:hover {
 
 
 .particles-js-canvas-el {
-   position:relative;
+   position:absolute;
    top: 0;
    z-index:1;
 }
@@ -113,11 +113,13 @@ a:hover {
 
 .shadow-sm {
   /* http://jsfiddle.net/K88H9/821/ */
-  box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);
+  /*box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);
   -moz-box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);
-  -webkit-box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);
+  -webkit-box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);*/
+  color: white;
+  background-image: linear-gradient(rgb(2, 3, 20),rgb(3, 4, 40));
 }
-
+/*
 .form-control {
   background-color:transparent;
   border-color: inherit;
@@ -132,7 +134,12 @@ a:hover {
   border-radius: 0;
   border-width: 0 0 3px 0;
 }
-
+*/
 .navbar a, .navbar-brand {
   font-weight: 700;
+}
+
+hr {
+  border: 3px solid black;
+  border-width: 3px 0 0 0;
 }
