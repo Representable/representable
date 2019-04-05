@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'main',
     'geo_districter',
     'leaflet',
+    'django.contrib.gis',
 ]
 
 MIDDLEWARE = [
@@ -85,7 +86,7 @@ WSGI_APPLICATION = 'districter.wsgi.application'
 # for NAME, USER, and PASS.
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': os.environ.get('DISTR_DB_NAME', ''),
         'USER': os.environ.get('DISTR_DB_USER', ''),
         'PASS': os.environ.get('DISTR_DB_PASS', ''),
@@ -146,5 +147,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Mapbox API Key
 MAPBOX_KEY = os.environ.get('DISTR_MAPBOX_KEY')
-
+GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
+GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
 django_heroku.settings(locals())
