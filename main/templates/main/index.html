@@ -1,11 +1,17 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% block hero-pre %}
+<div class="shadow-sm">
+<div id="particles-js">
+{% endblock %}
 {% block hero %}
 <div class="container-fluid">
   <div class="jumbotron">
     <h1 class="di-title">A crowdsourced redistricting tool to map communities and make your voice heard.</h1>
     <a class="btn btn-outline-primary btn-canvas" href="#about" role="button">Learn More</a><a class="btn btn-outline-primary btn-canvas" href="#contribute" role="button">Contribute</a>
   </div>
+</div>
+</div>
 </div>
 {% endblock %}
 {% block content %}
