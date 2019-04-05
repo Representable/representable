@@ -50,7 +50,7 @@ function dummySave(e) {
     $.ajax({
         url: 'ajax/dummy_save/',
         data: {
-          'dummy_data': "dummy_data"
+          'dummy_data': "dummy"
         },
         dataType: 'json',
         success: function (data) {

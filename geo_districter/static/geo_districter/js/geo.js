@@ -50,12 +50,12 @@ function dummySave(e) {
     $.ajax({
         url: 'ajax/dummy_save/',
         data: {
-          'dummy_data': "dummy"
+          'dummy_data': "dummy_data"
         },
         dataType: 'json',
         success: function (data) {
           if (data.worked) {
-              console.log("Worked!");
+              alert("Worked!");
           }
         }
       });
