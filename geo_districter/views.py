@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.views import generic
 from django.http import JsonResponse
 import json
+from shapely.geometry import shape
+from django.contrib.gis.geos import Point
+from geo_districter.models import Entry
 
 
 from django.http import HttpResponse
@@ -15,12 +18,20 @@ class IndexView(generic.TemplateView):
 def savePolygon(request):
     print("Got request!")
     # Get Request and Deserialize it with json.loads()
-    request_entry_poly = request.GET.get('entry_features')
+    request_entry_poly = request.GET.get('entry_features', None)
+    request_map_center = request.GET.get('map_center', None)
     entryGeoJson = json.loads(request_entry_poly)
+    mapCenterJson = json.loads(request_map_center)
     print(entryGeoJson['id'])
     print(entryGeoJson['geometry'])
+    print(mapCenterJson)
+    # Convert GeoJson to WKT
+    # https://gist.github.com/drmalex07/5a54fc4f1db06a66679e
+    geom_poly = shape(entryGeoJson['geometry']).wkt
+    geom_point = Point(mapCenterJson[0], mapCenterJson[1])
     # Save to DB
-    # new_entry = Entry(entry_ID=entryGeoJson['id'], entry_poly=)
+    new_entry = Entry(entry_ID=entryGeoJson['id'], entry_polygon=geom_poly, entry_location=geom_point)
+    new_entry.save()
     data = {
         'worked': True
     }

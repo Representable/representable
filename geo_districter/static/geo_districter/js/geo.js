@@ -57,10 +57,13 @@ function saveNewEntry(event) {
         // Need to stringify
         // https://www.webucator.com/how-to/how-send-receive-json-data-from-the-server.cfm
         var entry_features = JSON.stringify(user_polygon);
+        var map_center = JSON.stringify([-91.874, 42.760]);
+        console.log(map_center);
         $.ajax({
             url: 'ajax/dummy_save/',
             data: {
                 'entry_features': entry_features,
+                'map_center': map_center,
             },
             dataType: 'json',
             success: function(data) {
