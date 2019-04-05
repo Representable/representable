@@ -1,19 +1,19 @@
-# Postgres Steps
+# GeoDjango and Postgres Tutorial
 _by Theodor Marcu (Reach out if you have questions!)_
 
-Taken from https://medium.com/agatha-codes/painless-postgresql-django-d4f03364989.
+Taken from https://medium.com/agatha-codes/painless-postgresql-django-d4f03364989 and adapted.
 
 1. Install required requirements `pip install -r requirements.txt`.
 2. Install PostgreSQL from: https://postgresapp.com/downloads.html. Choose the first download option: Postgres.app with PostgreSQL 11. If you don't already have postgres, do "brew install postgres".
 3. Make sure to start a Postgres server. Use the default settings on Port 5432.
 4. Use the information I texted you to create a Postgres user with the DISTR_DB_USER, a database with DISTR_DB_NAME, and password DISTR_DB_PASS.
-5. Create the database from the command line:
+5. Create the user and database from the command line:
 ```
 # Open postgres
 psql postgres
 # Create user
 CREATE USER <DISTR_DB_USER> WITH encrypted password '<DISTR_DB_PASS>';
-# Give User CREATEDB ability
+# Give User permission to create databases
 ALTER ROLE <DISTR_DB_USER> WITH CREATEDB;
 # Check that your user was set up correctly
 \du
@@ -24,7 +24,7 @@ GRANT ALL PRIVILEGES ON DATABASE <DISTR_DB_NAME> to <DISTR_DB_USER>;
 \l
 ```
 
-6. Add the following to your .bash_profile and .bashrc (copy/paste, then change the ...s ). This is so that we don't store passwords/info in cleartext. Ask me for them if you don't have them anymore!
+6. Add the following to your .bash_profile and .bashrc (copy/paste, then change the ...s ). This is so that we don't store passwords/info in clear text. Ask me for them if you don't have them anymore!
 
 On a UNIX (Mac/Linux) terminal, type:
 ```
@@ -61,15 +61,43 @@ psql districter_db
 CREATE EXTENSION postgis;
 # Add this line to your .bash_profile. Replace X and Y with your Postgres.app version (e.g. .../11.2/bin)
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/X.Y/bin
+# Save
 ```
 ##### Linux
 
-Take a look at these:
+Take a look at these. Sorry, I didn't do this :(. Please add more instructions when you get the chance to.
+
 i. https://docs.djangoproject.com/en/2.1/ref/contrib/gis/install/geolibs/
+
 ii. https://docs.djangoproject.com/en/2.1/ref/contrib/gis/install/postgis/
 
-8. Close terminal and
+8. Close terminal, open a new one. Restart Postgres.app too.
 
-7. Restart the bash terminal for changes to go into effect.
+9. Go into `settings.py` and change the DB Engine to:
 
-8. You can now run `python manage.py runserver` without issues!
+```
+# Settings.py DB Engine under DATABASES. Replace ENGINE with the following line:
+'ENGINE': 'django.contrib.gis.db.backends.postgis',
+```
+
+10. Add GIS to INSTALLED_APPS:
+
+```
+# Add the following line as is:
+'django.contrib.gis',
+```
+
+11. Save. Run makemigrations, migrate, and collectstatic.
+
+```
+# Make Migrations
+python manage.py makemigrations
+# Migrate
+python manage.py migrate
+# collectstatic
+python manage.py collectstatic
+```
+
+12. Restart the bash terminal for changes to go into effect (Just in case at this point).
+
+13. You can now run `python manage.py runserver` without issues! 🌎
