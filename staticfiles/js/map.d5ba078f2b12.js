@@ -1,5 +1,6 @@
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
+
   var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v11',
@@ -7,19 +8,17 @@
     zoom: 5
   });
 
-  map.addControl(new mapboxgl.NavigationControl());
-
   map.on('load', function () {
 
     map.addLayer({
       'id': 'maine',
-      'type': 'fill',
+      'type': 'line',
       'source': {
         'type': 'geojson',
         'data': {
           'type': 'Feature',
           'geometry': {
-            'type': 'Polygon',
+            'type': 'LineString',
             'coordinates': [[[-67.13734351262877, 45.137451890638886],
             [-66.96466, 44.8097],
             [-68.03252, 44.3252],
@@ -43,10 +42,13 @@
           }
         }
       },
-      'layout': {},
+      'layout': {
+        'line-join': 'round',
+        'line-cap': 'round'
+      },
       'paint': {
-        'fill-color': 'rgba(200, 100, 240, 0.4)',
-        'fill-outline-color': 'rgba(200, 100, 240, 1)'
+        'line-color': '#088',
+        'line-width': 8
       }
     });
   });
