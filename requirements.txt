@@ -8,11 +8,8 @@ gunicorn==19.9.0
 psycopg2==2.7.6
 psycopg2-binary==2.7.7
 pytz==2018.9
-<<<<<<< HEAD
 Shapely==1.6.4.post2
 sqlparse==0.3.0
-=======
 six==1.12.0
->>>>>>> main_lej2
 whitenoise==4.1.2
 --extra-index-url=https://packagecloud.io/github/git-lfs/pypi/simple

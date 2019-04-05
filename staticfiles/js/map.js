@@ -11,6 +11,12 @@
 
   map.on('load', function () {
 
+    var request = new XMLhttpRequest();
+    request.open("GET", "../../assets/NJBlocks.json", false);
+    request.send(null)
+    var census_blocks = JSON.parse(request.responseText);
+    alert(census_blocks.result[0]);
+
     map.addLayer({
       'id': 'maine',
       'type': 'fill',

@@ -10,10 +10,9 @@ class Index(TemplateView):
 class Timeline(TemplateView):
     template_name = "main/timeline.html"
 
-<<<<<<< HEAD
 class Map(TemplateView):
     template_name = "main/map.html"
-=======
+
 class Thanks(TemplateView):
     template_name = "main/thanks.html"
 
@@ -26,4 +25,3 @@ class CommunityView(FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
->>>>>>> main_lej2
