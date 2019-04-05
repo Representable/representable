@@ -45,8 +45,8 @@
       },
       'layout': {},
       'paint': {
-        'fill-color': 'rgba(200, 100, 240, 0.4)',
-        'fill-outline-color': 'rgba(200, 100, 240, 1)'
+        'fill-color': '#088',
+        'fill-opacity': 0
       }
     });
   });

@@ -1,6 +1,5 @@
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
-
   var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v11',
@@ -8,7 +7,15 @@
     zoom: 5
   });
 
+  map.addControl(new mapboxgl.NavigationControl());
+
   map.on('load', function () {
+
+    var request = new XMLhttpRequest();
+    request.open("GET", "../../assets/NJBlocks.json", false);
+    request.send(null)
+    var census_blocks = JSON.parse(request.responseText);
+    alert(census_blocks.result[0]);
 
     map.addLayer({
       'id': 'maine',
@@ -44,8 +51,8 @@
       },
       'layout': {},
       'paint': {
-        'fill-color': '#088',
-        'fill-opacity': 0.8
+        'fill-color': 'rgba(200, 100, 240, 0.4)',
+        'fill-outline-color': 'rgba(200, 100, 240, 1)'
       }
     });
   });
