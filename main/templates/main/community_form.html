@@ -3,14 +3,13 @@
 {% load widget_tweaks %}
 
 {% block hero %}
-<div class="container">
-<h1 class="di-title">Form</h1>
-</div>
 {% endblock %}
 {% block content %}
-
-<div class="form-group">
+<div class="panel">
+<div class="container">
+    <div class="jumbotron">
 <form method="post">{% csrf_token %}
+  <div class="form-group">
     {% for field in form %}
     <div class="field-wrap">
         {{ field.errors }}
@@ -23,6 +22,8 @@
   </div>
 
     <button type="submit" class="btn btn-outline-primary" value="Submit">Submit</button>
-
 </form>
+</div>
+</div>
+</div>
 {% endblock %}

@@ -20,7 +20,17 @@ RACE_CHOICES = (
     ('black', 'Black or African American'),
     ('native', 'American Indian or Alaska Native'),
     ('pacific_islander', 'Native Hawaiian or Other Pacific Islander'),
-    ('asian', 'Asian')
+    ('Asian', (
+        ('indian', 'Asian Indian'),
+        ('chinese', 'Chinese'),
+        ('filipino', 'Filipino'),
+        ('japanese', 'Japanese'),
+        ('korean', 'Korean'),
+        ('vietnamese', 'Vietnamese'),
+        ('other_asian', 'Other Asian'),
+        )
+    ),
+    ('other', 'Other'),
 )
 
 class Community(models.Model):
@@ -39,5 +49,3 @@ class CommunityForm(ModelForm):
         widgets = {
             'race': Select2MultipleWidget(choices=RACE_CHOICES)
         }
-
-        

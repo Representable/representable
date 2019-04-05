@@ -1,7 +1,6 @@
 body {
   font-family: 'Inter', system-ui, sans-serif;
-  color: white;
-  background-color: black;
+  background-color: #030428;
   font-weight: 400;
 }
 
@@ -24,7 +23,7 @@ h1, h2, h3 {
 
 @media screen and (min-width: 768px) {
   h1 {
-    font-size: 50px;
+    font-size: 60px;
   }
   p {
     font-size: 18px;
@@ -51,7 +50,7 @@ a:active {
   color: inherit;
 }
 a:hover {
-    color: #ff9191;
+    color: #56577d;
     text-decoration: none;
 }
 
@@ -61,15 +60,13 @@ a:hover {
 }
 .btn-outline-primary, .btn-outline-primary:visited, .btn-outline-primary:link,.btn-outline-primary:hover,
 .btn-outline-primary:active {
-  color: #ff9191;
-  border-color: #ff9191;
+  color: white;
+  border-color: white;
   background-color:transparent;
 }
 @media screen and (min-width: 768px) {
   .btn-outline-primary:hover,.btn-outline-primary:active {
-    color:white;
-    background-color: #ff9191;
-    border-color: #ff9191;
+    background-color: #56577d;
   }
 }
 .jumbotron {
@@ -78,9 +75,6 @@ a:hover {
 }
 
 .jumbo-outline {
-  border: 3px solid black;
-  border-width: 3px 0 0 0;
-  border-radius: 0;
   background-color: transparent;
   margin-bottom: 0;
 }
@@ -119,11 +113,13 @@ a:hover {
 
 .shadow-sm {
   /* http://jsfiddle.net/K88H9/821/ */
-  box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);
+  /*box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);
   -moz-box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);
-  -webkit-box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);
+  -webkit-box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);*/
+  color: white;
+  background-image: linear-gradient(rgb(2, 3, 20),rgb(3, 4, 40));
 }
-
+/*
 .form-control {
   background-color:transparent;
   border-color: inherit;
@@ -138,7 +134,12 @@ a:hover {
   border-radius: 0;
   border-width: 0 0 3px 0;
 }
-
+*/
 .navbar a, .navbar-brand {
   font-weight: 700;
+}
+
+hr {
+  border: 3px solid black;
+  border-width: 3px 0 0 0;
 }
