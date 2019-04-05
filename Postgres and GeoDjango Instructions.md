@@ -65,11 +65,41 @@ export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/X.Y/bin
 ```
 ##### Linux
 
-Take a look at these. Sorry, I didn't do this :(. Please add more instructions when you get the chance to.
-
-i. https://docs.djangoproject.com/en/2.1/ref/contrib/gis/install/geolibs/
-
-ii. https://docs.djangoproject.com/en/2.1/ref/contrib/gis/install/postgis/
+```
+# Install GEOS from source
+wget https://download.osgeo.org/geos/geos-3.7.1.tar.bz2
+tar xjf geos-3.7.1.tar.bz2
+cd geos-3.7.1
+./configure
+make
+sudo make install
+# Install PROJ.4 from source
+wget https://download.osgeo.org/proj/proj-6.0.0.tar.gz
+wget https://download.osgeo.org/proj/proj-datumgrid-1.8.tar.gz
+tar xzf proj-6.0.0.tar.gz
+cd proj-6.0.0/data
+tar xzf ../../proj-datumgrid-X.Y.tar.gz
+cd ..
+./configure
+make
+sudo make install
+# Install GDAL from source
+wget https://download.osgeo.org/gdal/2.4.1/gdal-2.4.1.tar.gz
+tar xzf gdal-2.4.1.tar.gz
+cd gdal-2.4.1
+./configure
+make # this literally takes an hour
+sudo make install
+# Install PostGIS
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt bionic-pgdg main" >> /etc/apt/sources.list'
+wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
+sudo apt update
+sudo apt install postgresql-10-postgis-2.4
+sudo apt install postgresql-10-postgis-scripts
+sudo apt install postgresql-10-pgrouting
+psql -U postgres
+CREATE EXTENSION postgis
+```
 
 8. Close terminal, open a new one. Restart Postgres.app too.
 
