@@ -21,7 +21,7 @@
 <div class="form-group">
   <!--https://docs.djangoproject.com/en/dev/topics/forms/#customizing-the-form-template-->
   {% for field in form %}
-  <div class="fieldWrapper">
+  <div class="field-wrap">
       {{ field.errors }}
       <input class="form-control" id="{{ field.id_for_label }}" maxlength="30" name="{{ field.html_name }}" placeholder="{{ field.html_name }}" type="text" />
       {% if field.help_text %}

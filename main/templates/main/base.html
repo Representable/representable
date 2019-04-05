@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{% static 'main/fonts/Inter/inter.css' %}">
     <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
 
+    {{ form.media.css }}
     <!--<style>
     .container-panel {
       background-image: url("{% static 'img/background.jpg' %}");
@@ -48,6 +49,9 @@ Districter</a>
       console.log('callback - particles.min.js config loaded');
     });
     </script>
+
+   {{ form.media.js }}
+
 
   </body>
   <footer class="footer">

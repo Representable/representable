@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'main',
     'geo_districter',
     'leaflet',
+    'django_select2',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
