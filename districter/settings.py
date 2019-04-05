@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'main',
     'geo_districter',
     'leaflet',
-    'django.contrib.gis',
 ]
 
 MIDDLEWARE = [
