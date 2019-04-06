@@ -68,7 +68,7 @@ a:hover {
 .row-content {
   background-color: white;
   color: black;
-  padding: 15px;
+  padding: 5px;
 }
 
 @media screen and (min-width: 768px) {
@@ -87,7 +87,7 @@ a:hover {
 #particles-js{
   width: 100%;
   height: auto;
-  background-image: url('');
+  background-image: url("");
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;

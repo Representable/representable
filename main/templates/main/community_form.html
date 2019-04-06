@@ -3,9 +3,9 @@
 {% load widget_tweaks %}
 
 {% block content %}
-<div class="panel">
-<div class="container">
-    <div class="jumbotron">
+<div class="container-fluid">
+<div class="row row-content">
+  <div class="col-12">
 <form method="post">{% csrf_token %}
   <div class="form-group">
     {% for field in form %}

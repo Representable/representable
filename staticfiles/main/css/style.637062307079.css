@@ -6,12 +6,10 @@ body {
 
 h1 {
   font-size: 2rem;
-  font-weight: 500;
 }
 
-h4 {
-  font-weight: 300;
-  letter-spacing: 2px;
+h1, h2, h3 {
+  font-weight: 600;
 }
 
 
@@ -68,14 +66,14 @@ a:hover {
 .row-content {
   background-color: white;
   color: black;
-  padding: 15px;
+  padding-top: 5px;
 }
 
 @media screen and (min-width: 768px) {
   .row-content {
     background-color: white;
     color: black;
-    padding: 40px;
+    padding: 15px 15px;
   }
 }
 
@@ -87,7 +85,7 @@ a:hover {
 #particles-js{
   width: 100%;
   height: auto;
-  background-image: url('');
+  background-image: url("");
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;
@@ -111,7 +109,7 @@ a:hover {
   /*box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);
   -moz-box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);
   -webkit-box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);*/
-  background-image: linear-gradient(rgb(3, 4, 40),#2b2e51);
+  background-image: linear-gradient(rgb(2, 3, 20),rgb(3, 4, 40));
 }
 .container-panel {
    color: white;

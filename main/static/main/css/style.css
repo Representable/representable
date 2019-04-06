@@ -6,20 +6,14 @@ body {
 
 h1 {
   font-size: 2rem;
+  font-weight: 500;
 }
 
-h1, h2, h3 {
-  font-weight: 600;
+h4 {
+  font-weight: 300;
+  letter-spacing: 2px;
 }
 
-/*.di-title-span {
-  line-height: 1.3;
-  background-color: black;
-  padding: 3px;
-  white-space: pre-wrap;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-}*/
 
 @media screen and (min-width: 768px) {
   h1 {
@@ -30,9 +24,6 @@ h1, h2, h3 {
   }
 }
 
-/*.di-title {
-  text-shadow: 4px 3px 0 rgba(70,70,70,0.9);
-}*/
 
 #map {
     top:0;
@@ -40,11 +31,6 @@ h1, h2, h3 {
     width:100%;
     /*  Must Set Absolute Height */
     height: 500px;
-}
-
-.di-subtitle {
-  font-weight: 200;
-  font-style: italic;
 }
 
 a:link,
@@ -58,8 +44,8 @@ a:hover {
 }
 
 .btn {
-  border-radius: 0;
-  margin: 3px;
+  border-radius: 1rem;
+  margin: 5px;
 }
 .btn-outline-primary, .btn-outline-primary:visited, .btn-outline-primary:link,.btn-outline-primary:hover,
 .btn-outline-primary:active {
@@ -72,19 +58,25 @@ a:hover {
     background-color: #56577d;
   }
 }
-.jumbotron {
+.container-hero {
   background-color: transparent;
   margin-bottom: 0;
+  text-align: center;
 }
 
-.jumbo-outline {
-  background-color: transparent;
-  margin-bottom: 0;
-}
 
-.panel {
+.row-content {
   background-color: white;
   color: black;
+  padding: 15px;
+}
+
+@media screen and (min-width: 768px) {
+  .row-content {
+    background-color: white;
+    color: black;
+    padding: 40px;
+  }
 }
 
 .container {
@@ -119,7 +111,7 @@ a:hover {
   /*box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);
   -moz-box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);
   -webkit-box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);*/
-  background-image: linear-gradient(rgb(2, 3, 20),rgb(3, 4, 40));
+  background-image: linear-gradient(rgb(3, 4, 40),#2b2e51);
 }
 .container-panel {
    color: white;
