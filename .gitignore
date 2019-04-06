@@ -117,5 +117,4 @@ GitHub.sublime-settings
 !.vscode/extensions.json
 .history
 
-# temporary
-NJBlocks.json
+staticfiles/
