@@ -117,5 +117,5 @@ GitHub.sublime-settings
 !.vscode/extensions.json
 .history
 
-# Compiled static files
+# Compiled static files - hidden
 staticfiles/
