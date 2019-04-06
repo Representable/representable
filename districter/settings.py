@@ -154,3 +154,8 @@ MAPBOX_KEY = os.environ.get('DISTR_MAPBOX_KEY')
 GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
 GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
 django_heroku.settings(locals())
+# https://github.com/heroku/django-heroku/issues/6
+if DATABASES['default']['ENGINE'] in ('django.db.backends.postgresql', 'django.db.backends.postgresql_psycopg2'):
+    DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+elif DATABASES['default']['ENGINE'] == 'django.db.backends.sqlite3':
+    DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.spatialite'
