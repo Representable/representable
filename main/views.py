@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from .models import CommunityForm, Entry
 from django.views.generic.edit import FormView
+import os
 
 # Geo Page (from fmr stricter)
 from django.http import JsonResponse
@@ -18,10 +19,12 @@ class Timeline(TemplateView):
 
 class Map(TemplateView):
     template_name = "main/map.html"
-    def get_queryset(self, **kwargs):
-            object_list = Entry.objects.all()
-            print(object_list)
-            return object_list
+    def get_context_data(self, **kwargs):
+        context = ({
+            'entries':  Entry.objects.all(),
+            'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
+        })
+        return context
 
 class Thanks(TemplateView):
     template_name = "main/thanks.html"

@@ -1,4 +1,3 @@
-
 {% load leaflet_tags %}
 {% load static %}
 
@@ -18,16 +17,15 @@
 {% endblock %}
 {% block content %}
 
-  <body>
-    <div>
-      {{ object_list }}
-        {% for census in object_list %}
+<body>
+    <div style="color: white;">
+        {% for census in entries %}
         {{ census }}
         {% endfor %}
     </div>
-  <div id='map'></div>
+    <div id='map'></div>
 
-  </body>
+</body>
 {% endblock %}
 
 
