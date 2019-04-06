@@ -2,7 +2,9 @@
 <!--Adapted from https://docs.djangoproject.com/en/2.1/topics/auth/default/#django.contrib.auth.forms.UserCreationForm-->
 
 {% block content %}
-
+<div class="container-fluid">
+<div class="row row-content">
+  <div class="col-12">
 {% if form.errors %}
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
@@ -21,7 +23,7 @@
 <div class="form-group">
   <!--https://docs.djangoproject.com/en/dev/topics/forms/#customizing-the-form-template-->
   {% for field in form %}
-  <div class="fieldWrapper">
+  <div class="field-wrap">
       {{ field.errors }}
       <input class="form-control" id="{{ field.id_for_label }}" maxlength="30" name="{{ field.html_name }}" placeholder="{{ field.html_name }}" type="text" />
       {% if field.help_text %}
@@ -38,4 +40,7 @@
 {# Assumes you setup the password_reset view in your URLconf #}
 <p><a href="{% url 'password_reset' %}">Forgot password?</a></p>
 
+</div>
+</div>
+</div>
 {% endblock %}

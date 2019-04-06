@@ -10,4 +10,6 @@ urlpatterns = [
     path('map/', views.Map.as_view(),
      {'mapbox_key': MAPBOX_KEY},
      name='map'),
+    path('thanks/', views.Thanks.as_view(), name='thanks'),
+    path('form/', views.CommunityView.as_view(), name='community_form')
 ]

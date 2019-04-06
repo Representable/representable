@@ -1,39 +1,41 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% block hero-pre %}
+<div class="shadow-sm">
+<div id="particles-js">
+{% endblock %}
 {% block hero %}
-<div class="container">
-  <div class="jumbotron">
-    <h1 class="di-title"><span class="di-title-span">A crowdsourced redistricting tool to map communities and make your voice heard.</span></h1>
+<div class="container-fluid container-hero">
+  <div class="row row-hero">
+    <div class="col-sm-12 col-md-10 offset-md-1 my-5">
+    <h1 class="di-title mb-4">A crowdsourced redistricting tool to map communities and make your voice heard.</h1>
     <a class="btn btn-outline-primary btn-canvas" href="#about" role="button">Learn More</a><a class="btn btn-outline-primary btn-canvas" href="#contribute" role="button">Contribute</a>
   </div>
+  </div>
+</div>
+</div>
 </div>
 {% endblock %}
 {% block content %}
-<div class="panel">
-<div class="container">
-    <div class="jumbotron" id="about">
-      <h3>What is Districter?</h3>
-      <p>Districter is an online service that allows citizens to fight against gerrymandering by
-crowdsourcing maps of their communities of interest (COIs). A COI is what citizens consider to
+<div class="container-fluid">
+<div class="row row-content">
+  <div class="col-sm-12 col-md-6">
+      <h4>What is Districter?</h4>
+      <p>Districter is an online service that allows Americans to fight against gerrymandering by
+drawing their communities of interest (COIs) on a map. A COI is what a person consider to
 be their community. This can take the form of a coastal neighborhood that stretches along a
-beach, or a valley village that is clustered around a river. Currently, citizens can only provide
+beach, or a valley village that is clustered around a river. Currently, people can only provide
 qualitative information through committee hearings, which cannot be easily used to draw
-districts or highlight gerrymandering. Allowing citizens to mark their COIs will help redistricting
+districts or highlight gerrymandering. Allowing people to mark their COIs will help redistricting
 committees by providing them with quantifiable information that can be used to draw fair
 districts. Furthermore, Districter will provide a way to better visualize and quantify the current
 state of gerrymandering by overlaying district lines over communities of interest.</p>
-    </div>
   </div>
-</div>
-<div class="panel">
-  <div class="container">
-    <div class="jumbotron" id="contribute">
-      <h3>Draw my community</h3>
+<div class="col-sm-12 col-md-6">
+      <h4>Draw my community</h4>
+      <br>
       <img src="{% static 'img/map-sample.png' %}" alt="Map" width="80%">
-
-
-    </div>
-  </div>
 </div>
-
+</div>
+</div>
 {% endblock %}

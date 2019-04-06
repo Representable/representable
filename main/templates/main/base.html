@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{% static 'main/fonts/Inter/inter.css' %}">
     <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
 
+    {{ form.media.css }}
     <!--<style>
     .container-panel {
       background-image: url("{% static 'img/background.jpg' %}");
@@ -24,16 +25,16 @@
     <!--adapted from https://getbootstrap.com/docs/4.3/components/navbar/ -->
     <!-- As a link -->
     <div class="container-panel">
-    <div class="shadow-sm">
-    <div id="particles-js">
+    {% block hero-pre %}
+    {% endblock %}
+
     <nav class="navbar">
-      <a class="navbar-brand" href="/"><img src="{% static 'img/small-logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+      <a class="navbar-brand" href="/"><!--<img src="{% static 'img/small-logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">-->
 Districter</a>
     </nav>
     {% block hero %}
     {% endblock %}
-  </div>
-</div>
+
     {% block content %}
     {% endblock %}
   </div>
@@ -49,9 +50,12 @@ Districter</a>
     });
     </script>
 
+   {{ form.media.js }}
+
+
   </body>
   <footer class="footer">
-      <div class="container">
+      <div class="container-fluid">
       </div>
   </footer>
 </html>

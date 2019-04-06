@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container-fluid">
+<div class="row row-content">
+  <div class="col-12">
+<form method="post">{% csrf_token %}
+  <div class="form-group">
+    {% for field in form %}
+    <div class="field-wrap">
+        {{ field.errors }}
+        {{ field.label_tag }} {{ field|append_attr:"class:form-control" }}
+        {% if field.help_text %}
+        <p class="help">{{ field.help_text|safe }}</p>
+        {% endif %}
+        </div>
+    {% endfor %}
+  </div>
+
+    <button type="submit" class="btn btn-outline-primary" value="Submit">Submit</button>
+</form>
+</div>
+</div>
+</div>
+{% endblock %}

@@ -28,8 +28,7 @@ GRANT ALL PRIVILEGES ON DATABASE <DISTR_DB_NAME> to <DISTR_DB_USER>;
 
 On a UNIX (Mac/Linux) terminal, type:
 ```
-cd ~
-nano .bash_profile
+nano ~/.bash_profile
 ```
 
 Add these lines:
