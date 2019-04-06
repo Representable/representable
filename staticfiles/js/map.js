@@ -2,7 +2,7 @@
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
   var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/light-v11',
+    style: 'mapbox://styles/mapbox/street-v11',
     center: [-68.13734351262877, 45.137451890638886],
     zoom: 5
   });
@@ -11,12 +11,28 @@
 
   map.on('load', function () {
 
+/*
     var request = new XMLhttpRequest();
     request.open("GET", "../../assets/NJBlocks.json", false);
     request.send(null)
     var census_blocks = JSON.parse(request.responseText);
     alert(census_blocks.result[0]);
 
+    map.addSource({
+      'id': 'census',
+      'data': census_blocks
+    });
+
+    map.addLayer({
+      'id': 'census-blocks',
+      'type': 'fill',
+      'source': 'census',
+      'paint': {
+        'fill-color': 'rgba(200, 100, 240, 0.4)',
+        'fill-outline-color': 'rgba(200, 100, 240, 1)'
+      },
+    });
+*/
     map.addLayer({
       'id': 'maine',
       'type': 'fill',

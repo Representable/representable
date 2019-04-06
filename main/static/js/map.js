@@ -2,7 +2,7 @@
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
   var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/light-v10',
+    style: 'mapbox://styles/mapbox/street-v11',
     center: [-68.13734351262877, 45.137451890638886],
     zoom: 5
   });
