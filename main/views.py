@@ -4,7 +4,7 @@ from .models import CommunityForm, Entry
 from django.views.generic.edit import FormView
 import os
 
-# Geo Page (from fmr stricter)
+# Geo Page (from fmr districter)
 from django.http import JsonResponse
 import json
 from shapely.geometry import shape
@@ -42,7 +42,7 @@ class CommunityView(FormView):
 
 # Geo View - Generic Template (See Django tutorial)
 class GeoView(TemplateView):
-    template_name = 'main/index_geo.html'
+    template_name = 'main/geo.html'
 
 # savePolygon saves the Polygon to the DB for the current entry. Inspired from:
 # https://l.messenger.com/l.php?u=https%3A%2F%2Fsimpleisbetterthancomplex.com%2Ftutorial%2F2016%2F08%2F29%2Fhow-to-work-with-ajax-request-with-django.html&h=AT2eBJBqRwotQY98nmtDeTb6y0BYi-ydl5NuMK68-V1LIRsZY11LiFF6o6HUCLsrn0vfPqJYoJ0RsZNQGvLO9qBJPphpzlX4fkxhtRrIzAgOsHmcC6pDV2MzhaeUT-hhj4M2-iOUyg

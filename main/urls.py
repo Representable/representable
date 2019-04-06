@@ -10,6 +10,6 @@ urlpatterns = [
     path('map/', views.Map.as_view(), name='map'),
     path('thanks/', views.Thanks.as_view(), name='thanks'),
     path('form/', views.CommunityView.as_view(), name='community_form'),
-    path('geo/', views.GeoView.as_view(), {'mapbox_key': MAPBOX_KEY}, name='index_geo'),
+    path('geo/', views.GeoView.as_view(), {'mapbox_key': MAPBOX_KEY}, name='geo'),
     path('geo/ajax/dummy_save/', views.savePolygon, name='savePolygon')
 ]
