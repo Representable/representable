@@ -39,7 +39,7 @@ a:active {
   color: inherit;
 }
 a:hover {
-    color: white;
+    color: #7779c4;
     text-decoration: none;
 }
 
@@ -53,16 +53,9 @@ a:hover {
   border-color: white;
   background-color:transparent;
 }
-
-.btn-primary, .btn-primary:visited, .btn-primary:link,.btn-primary:hover,
-.btn-primary:active {
-  background-color: #56577d;
-}
-
-
 @media screen and (min-width: 768px) {
   .btn-outline-primary:hover,.btn-outline-primary:active {
-    background-color: rgb(97, 195, 237);
+    background-color: #7779c4;
   }
 }
 .container-hero {
@@ -94,7 +87,7 @@ a:hover {
 #particles-js{
   width: 100%;
   height: auto;
-  background-image: url('');
+  background-image: url("");
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;
@@ -118,7 +111,7 @@ a:hover {
   /*box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);
   -moz-box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);
   -webkit-box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);*/
-  background-image: linear-gradient(#030428,rgba(97, 195, 237,0.7));
+  background-image: linear-gradient(rgb(3, 4, 40),#2b2e51);
 }
 .container-panel {
    color: white;
