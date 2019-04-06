@@ -18,6 +18,10 @@ class Timeline(TemplateView):
 
 class Map(TemplateView):
     template_name = "main/map.html"
+    def get_queryset(self, **kwargs):
+            object_list = Entry.objects.all()
+            print(object_list)
+            return object_list
 
 class Thanks(TemplateView):
     template_name = "main/thanks.html"

@@ -19,9 +19,17 @@
 {% block content %}
 
   <body>
+    <div>
+      {{ object_list }}
+        {% for census in object_list %}
+        {{ census }}
+        {% endfor %}
+    </div>
   <div id='map'></div>
+
   </body>
 {% endblock %}
+
 
 {% block script %}
 <!--  Has to be at the end after the HTML loads.-->

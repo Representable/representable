@@ -62,3 +62,5 @@ class Entry(models.Model):
     entry_polygon = models.PolygonField()
     def __str__(self):
         return self.entry_ID
+    class Meta:
+        db_table = "main_entry"
