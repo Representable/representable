@@ -94,8 +94,8 @@ DATABASES = {
         'NAME': os.environ.get('DISTR_DB_NAME', ''),
         'USER': os.environ.get('DISTR_DB_USER', ''),
         'PASS': os.environ.get('DISTR_DB_PASS', ''),
-        'HOST': 'localhost', # TODO: must change in production!!!
-        'PORT': '5432', # TODO: must change in production - default port for local postgresql server
+        # 'HOST': 'localhost', # TODO: must change in production!!!
+        # 'PORT': '5432', # TODO: must change in production - default port for local postgresql server
     }
 }
 
