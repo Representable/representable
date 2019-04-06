@@ -8,6 +8,13 @@
     height: 500px;
 }
 
+#menu {
+position: absolute;
+background: #fff;
+padding: 10px;
+font-family: 'Open Sans', sans-serif;
+}
+
 .calculation-box {
 height: 75px;
 width: 150px;

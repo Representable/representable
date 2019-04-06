@@ -6,10 +6,23 @@ var user_polygon = null;
 /* eslint-disable */
 var map = new mapboxgl.Map({
     container: 'map', // container id
-    style: 'mapbox://styles/mapbox/satellite-v9', //hosted style id
-    center: [-91.874, 42.760], // starting position
+    style: 'mapbox://styles/mapbox/streets-v11', //hosted style id
+    center: [-74.65545, 40.341701], // starting position
     zoom: 12 // starting zoom
 });
+
+
+var layerList = document.getElementById('menu');
+var inputs = layerList.getElementsByTagName('input');
+
+function switchLayer(layer) {
+var layerId = layer.target.id;
+map.setStyle('mapbox://styles/mapbox/' + layerId);
+}
+
+for (var i = 0; i < inputs.length; i++) {
+inputs[i].onclick = switchLayer;
+}
 
 var draw = new MapboxDraw({
     displayControlsDefault: false,
