@@ -53,16 +53,9 @@ a:hover {
   border-color: white;
   background-color:transparent;
 }
-
-.btn-primary, .btn-primary:visited, .btn-primary:link,.btn-primary:hover,
-.btn-primary:active {
-  background-color: #56577d;
-}
-
-
 @media screen and (min-width: 768px) {
   .btn-outline-primary:hover,.btn-outline-primary:active {
-    background-color: rgb(97, 195, 237);
+    background-color: #030428;
   }
 }
 .container-hero {
@@ -94,7 +87,7 @@ a:hover {
 #particles-js{
   width: 100%;
   height: auto;
-  background-image: url('');
+  background-image: url("");
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;

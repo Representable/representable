@@ -1,4 +1,6 @@
 {% extends "main/base.html" %}
+{% load widget_tweaks %}
+
 <!--Adapted from https://docs.djangoproject.com/en/2.1/topics/auth/default/#django.contrib.auth.forms.UserCreationForm-->
 
 {% block content %}
@@ -18,28 +20,25 @@
     {% endif %}
 {% endif %}
 
-<form method="post" action="{% url 'login' %}">
-{% csrf_token %}
-<div class="form-group">
-  <!--https://docs.djangoproject.com/en/dev/topics/forms/#customizing-the-form-template-->
-  {% for field in form %}
-  <div class="field-wrap">
-      {{ field.errors }}
-      <input class="form-control" id="{{ field.id_for_label }}" maxlength="30" name="{{ field.html_name }}" placeholder="{{ field.html_name }}" type="text" />
-      {% if field.help_text %}
-      <p class="help">{{ field.help_text|safe }}</p>
-      {% endif %}
+<form method="post" action="{% url 'login' %}">{% csrf_token %}
+  <div class="form-group">
+    {% for field in form %}
+    <div class="field-wrap">
+        {{ field.errors }}
+        {{ field.label_tag }} {{ field|append_attr:"class:form-control" }}
+        {% if field.help_text %}
+        <p class="help">{{ field.help_text|safe }}</p>
+        {% endif %}
+        </div>
+    {% endfor %}
   </div>
-{% endfor %}
-</div>
 
-<button type="submit" class="btn btn-outline-primary" value="login">Submit</button>
-<input type="hidden" name="next" value="{{ next }}">
+    <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
+    <input type="hidden" name="next" value="{{ next }}">
 </form>
 
 {# Assumes you setup the password_reset view in your URLconf #}
 <p><a href="{% url 'password_reset' %}">Forgot password?</a></p>
-
 </div>
 </div>
 </div>

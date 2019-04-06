@@ -94,7 +94,7 @@ a:hover {
 #particles-js{
   width: 100%;
   height: auto;
-  background-image: url('');
+  background-image: url("");
   background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;
@@ -118,7 +118,7 @@ a:hover {
   /*box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);
   -moz-box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);
   -webkit-box-shadow: 0 4px 4px -2px rgba(0,0,0,0.12);*/
-  background-image: linear-gradient(#030428,rgba(97, 195, 237,0.7));
+  background-image: linear-gradient(#030428,rgba(97, 195, 237,1.0));
 }
 .container-panel {
    color: white;
