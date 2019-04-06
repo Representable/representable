@@ -99,7 +99,7 @@ border:3px solid #000;
 border-width:3px 0 0;
 }
 
-@media screen and (min-width 768px) {
+@media screen and (min-width: 768px) {
   h1 {
   font-size:55px;
   }
