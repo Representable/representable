@@ -1,4 +1,4 @@
-{% extends 'geo_districter/base.html' %}
+{% extends 'main/base_geo.html' %}
 {% load leaflet_tags %}
 {% load static %}
 
@@ -22,7 +22,7 @@
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js'></script>
 <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css' type='text/css' />
 <!--  Custom CSS -->
-<link rel="stylesheet" href="{% static 'geo_districter/css/geo.css' %}">
+<link rel="stylesheet" href="{% static 'main/css/geo.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -54,5 +54,5 @@
 <script type="text/javascript">
     mapboxgl.accessToken = "{{ mapbox_key }}";
 </script>
-<script type="text/javascript" src="{% static 'geo_districter/js/geo.js' %}"></script>
+<script type="text/javascript" src="{% static 'main/js/geo.js' %}"></script>
 {% endblock %}

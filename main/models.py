@@ -4,6 +4,8 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 from django_select2.forms import Select2MultipleWidget, Select2Widget
+# Geo App
+import uuid
 
 # Referenced https://docs.djangoproject.com/en/2.2/topics/forms/modelforms/#a-full-example
 '''
@@ -49,3 +51,14 @@ class CommunityForm(ModelForm):
         widgets = {
             'race': Select2MultipleWidget(choices=RACE_CHOICES)
         }
+
+
+class Entry(models.Model):
+    # Max Length = 100 chars, Blank=False - Field cannot be false. Unique - field has to be unique.
+    entry_ID = models.CharField(max_length=100, blank=False, unique=True, default=uuid.uuid4)
+    # Store the location searched by the user (lat-long)
+    entry_location = models.PointField()
+    # Store the polygon created by the user.
+    entry_polygon = models.PolygonField()
+    def __str__(self):
+        return self.entry_ID
