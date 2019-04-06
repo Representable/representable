@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'leaflet',
     'django_select2',
     'widget_tweaks',
+
 ]
 
 MIDDLEWARE = [

@@ -1,5 +1,5 @@
 dj-database-url==0.5.0
-Django==2.1.7
+Django==2.2
 django-appconf==1.0.3
 django-heroku==0.3.1
 django-leaflet==0.24.0
