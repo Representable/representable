@@ -6,9 +6,25 @@ var user_polygon = null;
 /* eslint-disable */
 var map = new mapboxgl.Map({
     container: 'map', // container id
-    style: 'mapbox://styles/mapbox/satellite-v9', //hosted style id
-    center: [-91.874, 42.760], // starting position
+    style: 'mapbox://styles/mapbox/streets-v11', //hosted style id
+    center: [-74.65545, 40.341701], // starting position - Princeton, NJ :)
     zoom: 12 // starting zoom
+});
+
+var layerList = document.getElementById('menu');
+var inputs = layerList.getElementsByTagName('input');
+
+function switchLayer(layer) {
+var layerId = layer.target.id;
+map.setStyle('mapbox://styles/mapbox/' + layerId);
+}
+
+for (var i = 0; i < inputs.length; i++) {
+inputs[i].onclick = switchLayer;
+}
+
+var geocoder = new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken
 });
 
 var draw = new MapboxDraw({
@@ -18,7 +34,44 @@ var draw = new MapboxDraw({
         trash: true
     }
 });
+
+map.addControl(geocoder, 'top-right');
 map.addControl(draw);
+
+// After the map style has loaded on the page, add a source layer and default
+// styling for a single point.
+map.on('load', function() {
+    map.addSource('single-point', {
+        "type": "geojson",
+        "data": {
+            "type": "FeatureCollection",
+            "features": []
+        }
+    });
+
+    map.addLayer({
+        "id": "point",
+        "source": "single-point",
+        "type": "circle",
+        "paint": {
+            "circle-radius": 10,
+            "circle-color": "#007cbf"
+        }
+    });
+
+    // Listen for the `geocoder.input` event that is triggered when a user
+    // makes a selection and add a symbol that matches the result.
+    geocoder.on('result', function(ev) {
+        map.getSource('single-point').setData(ev.result.geometry);
+        console.log(ev.result);
+        var styleSpec = ev.result;
+        var styleSpecBox = document.getElementById('json-response');
+        var styleSpecText = JSON.stringify(styleSpec, null, 2);
+        var syntaxStyleSpecText = syntaxHighlight(styleSpecText);
+        styleSpecBox.innerHTML = syntaxStyleSpecText;
+
+    });
+});
 
 // Update Area Listeners
 map.on('draw.create', updateArea);
