@@ -15,6 +15,13 @@ padding: 10px;
 font-family: 'Open Sans', sans-serif;
 }
 
+#geocoder-container > div { min-width:50%; margin-left:25%;}
+.string { color: #314ccd; }
+.number { color: #b43b71; }
+.boolean { color: #5a3fc0; }
+.null { color: #ba7334; }
+.key { color: #ba3b3f; }
+
 .calculation-box {
 height: 75px;
 width: 150px;

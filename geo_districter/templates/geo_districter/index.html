@@ -6,9 +6,14 @@
 {% leaflet_js %}
 {% leaflet_css %}
 <!-- https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ -->
-
 <!--  Mapbox GL JS-->
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<!--  GeoCoder -->
+<meta name='robots' content='noindex, nofollow'>
+<link href="https://api.mapbox.com/mapbox-assembly/mbx/v0.23.1/assembly.min.css" rel="stylesheet">
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
+<!--  Polygon Draw-->
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
 <!--  Turf JS for calculating the area. -->
@@ -21,7 +26,7 @@
 {% endblock %}
 
 {% block content %}
-<p>Draw your COI below ! </p>
+<p>Enter your 5 digit ZipCode into the Search Bar and use the Polygon draw features on the right to draw your COI below ! </p>
 <div id='map'></div>
 
 <div id='menu'>
