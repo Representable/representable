@@ -116,3 +116,7 @@ GitHub.sublime-settings
 !.vscode/launch.json
 !.vscode/extensions.json
 .history
+
+# Compiled static files - hidden
+staticfiles/
+NJBlocks.json

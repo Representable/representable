@@ -1,4 +1,4 @@
-
+{% extends 'main/base.html' %}
 {% load leaflet_tags %}
 {% load static %}
 
@@ -12,22 +12,22 @@
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
-<!--  Custom CSS -->
-<link rel="stylesheet" href="{% static 'main/css/style.css' %}">
-
 {% endblock %}
 {% block content %}
-
-  <body>
+<div class="col-12">
+  <div>
+    {% for census in entries %}
+    {{ census }}
+    {% endfor %}
+  </div>
   <div id='map'></div>
-  </body>
+</div>
 {% endblock %}
 
 {% block script %}
 <!--  Has to be at the end after the HTML loads.-->
 <script type="text/javascript">
-    mapboxgl.accessToken = "{{ mapbox_key }}";
+  mapboxgl.accessToken = "{{ mapbox_key }}";
 </script>
-<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
 {% endblock %}

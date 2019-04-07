@@ -23,7 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True
+
+DEBUG = False #remove in production
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
 ALLOWED_HOSTS = ['*']
@@ -41,8 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
-    'geo_districter',
     'leaflet',
+    'django_select2',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -86,12 +88,12 @@ WSGI_APPLICATION = 'districter.wsgi.application'
 # for NAME, USER, and PASS.
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': os.environ.get('DISTR_DB_NAME', ''),
         'USER': os.environ.get('DISTR_DB_USER', ''),
         'PASS': os.environ.get('DISTR_DB_PASS', ''),
-        'HOST': 'localhost', # TODO: must change in production!!!
-        'PORT': '5432', # TODO: must change in production - default port for local postgresql server
+        # 'HOST': 'localhost', # TODO: must change in production!!!
+        # 'PORT': '5432', # TODO: must change in production - default port for local postgresql server
     }
 }
 
@@ -147,5 +149,12 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Mapbox API Key
 MAPBOX_KEY = os.environ.get('DISTR_MAPBOX_KEY')
-
+GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
+GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
 django_heroku.settings(locals())
+
+# https://github.com/heroku/django-heroku/issues/6
+if DATABASES['default']['ENGINE'] in ('django.db.backends.postgresql', 'django.db.backends.postgresql_psycopg2'):
+    DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+elif DATABASES['default']['ENGINE'] == 'django.db.backends.sqlite3':
+    DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.spatialite'
