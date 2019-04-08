@@ -64,8 +64,8 @@ class Entry(models.Model):
     # Store the location searched by the user (lat-long)
     entry_location = models.PointField()
     # Store the polygon created by the user.
-    entry_polygon = models.PolygonField()
+    entry_polygon = models.PolygonField(serialize=True)
     def __str__(self):
-        return self.entry_ID
+        return str(self.entry_polygon)
     class Meta:
         db_table = "main_entry"

@@ -22,44 +22,40 @@ map.on('load', function () {
   'id': 'census',
   'data': census_blocks
 });
-
-map.addLayer({
-'id': 'census-blocks',
-'type': 'fill',
-'source': 'census',
-'paint': {
-'fill-color': 'rgba(200, 100, 240, 0.4)',
-'fill-outline-color': 'rgba(200, 100, 240, 1)'
-},
-});
-*/
+ */  
 
 //it's just... a square...
-map.addLayer({
-  'id': 'dummy',
-  'type': 'fill',
-  'source': {
-    'type': 'geojson',
-    'data': {
-      'type': 'Feature',
-      'geometry': {
-        'type': 'Polygon',
-        'coordinates': [[[-74.0, 40.0],
-        [-74.0, 40.5],
-        [-74.5, 40.5],
-        [-74.5, 40.0]]]
+// send elements to javascript as geojson objects and make them show on the map by
+// calling the addTo
+  console.log("printing the features");
+  a = JSON.parse(a);
+  console.log(a);
+  for (let i = 0; i < a.length; i++) {
+    let tempId = "dummy" + i;
+    console.log(tempId);
+    map.addLayer({
+      'id': tempId,
+      'type': 'fill',
+      'source': {
+        'type': 'geojson',
+        'data': {
+          'type': 'Feature',
+          'geometry': {
+            'type': 'Polygon',
+            'coordinates': a[i]
+          },
+          'properties': {
+            'name': 'dummy'
+          }
+        }
       },
-      'properties': {
-        'name': 'dummy'
+      'layout': {},
+      'paint': {
+        'fill-color': 'rgba(200, 100, 240, 0.4)',
+        'fill-outline-color': 'rgba(200, 100, 240, 1)'
       }
-    }
-  },
-  'layout': {},
-  'paint': {
-    'fill-color': 'rgba(200, 100, 240, 0.4)',
-    'fill-outline-color': 'rgba(200, 100, 240, 1)'
+    });
   }
-});
 
 // When a click event occurs on a feature in the dummy layer, open a popup at the
 // location of the click, with description HTML from its properties.
