@@ -1,7 +1,4 @@
-from django.forms import ModelForm
-from django import forms
 from django.contrib.postgres.fields import ArrayField
-from django_select2.forms import Select2MultipleWidget, Select2Widget
 # Geo App
 import uuid
 from django.conf import settings
@@ -21,6 +18,19 @@ class User(AbstractUser):
 - issues our community cares about
 - This is my community / I am creating this on behalf of another community
 '''
+
+'''
+class Migration(migrations.Migration):
+
+    dependencies = [
+        ('user', '0001_initial'),
+    ]
+
+    operations = [
+        migrations.RenameModel('User', 'main.User')
+    ]
+'''
+
 # https://www.census.gov/topics/population/race/about.html
 RACE_CHOICES = (
     ('white', 'White'),
@@ -39,17 +49,7 @@ RACE_CHOICES = (
     ),
     ('other', 'Other'),
 )
-'''
-class Migration(migrations.Migration):
 
-    dependencies = [
-        ('user', '0001_initial'),
-    ]
-
-    operations = [
-        migrations.RenameModel('User', 'main.User')
-    ]
-'''
 class Community(models.Model):
     zipcode = models.CharField(max_length=5)
     race = ArrayField(models.CharField(max_length=50,choices=RACE_CHOICES),default=list,blank=False)
@@ -57,15 +57,6 @@ class Community(models.Model):
     issues =  models.CharField(max_length=100)
     is_my_community = models.BooleanField()
     creator =  models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
-class CommunityForm(ModelForm):
-    class Meta:
-        model = Community
-        fields = '__all__'
-
-        widgets = {
-            'race': Select2MultipleWidget(choices=RACE_CHOICES)
-        }
 
 class Entry(models.Model):
     # Max Length = 100 chars, Blank=False - Field cannot be false. Unique - field has to be unique.

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
-from .models import CommunityForm, Entry
+from .models import Entry
+from .forms import CommunityForm
 from django.views.generic.edit import FormView
 import os
 from django.http import JsonResponse
