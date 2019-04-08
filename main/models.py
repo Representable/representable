@@ -1,11 +1,16 @@
-from django.contrib.gis.db import models
 from django.forms import ModelForm
 from django import forms
-from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 from django_select2.forms import Select2MultipleWidget, Select2Widget
 # Geo App
 import uuid
+from django.conf import settings
+from django.contrib.auth.models import AbstractUser
+from django.db import migrations, models
+from django.contrib.gis.db import models
+
+class User(AbstractUser):
+    pass
 
 # Referenced https://docs.djangoproject.com/en/2.2/topics/forms/modelforms/#a-full-example
 '''
@@ -34,14 +39,24 @@ RACE_CHOICES = (
     ),
     ('other', 'Other'),
 )
+'''
+class Migration(migrations.Migration):
 
+    dependencies = [
+        ('user', '0001_initial'),
+    ]
+
+    operations = [
+        migrations.RenameModel('User', 'main.User')
+    ]
+'''
 class Community(models.Model):
     zipcode = models.CharField(max_length=5)
     race = ArrayField(models.CharField(max_length=50,choices=RACE_CHOICES),default=list,blank=False)
     #race = models.ManyToManyField(Race)
     issues =  models.CharField(max_length=100)
     is_my_community = models.BooleanField()
-    creator =  models.ForeignKey(User, on_delete=models.CASCADE)
+    creator =  models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 class CommunityForm(ModelForm):
     class Meta:
