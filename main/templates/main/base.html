@@ -25,37 +25,42 @@
         {% block hero-pre %}
         {% endblock %}
 
-        <nav class="navbar navbar-expand-lg">
+        <nav class="navbar navbar-expand-lg navbar-dark">
             <a class="navbar-brand" href="/">Districter</a>
             <!--<img src="{% static 'img/small-logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">-->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
+                <!-- <span class="icon-bar"></span>  -->
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="#">Link</a>
                     </li> -->
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="btn btn-primary" href='/'> Account </a>
+                        <a class="nav-link" href='/'> My Entries </a>
                     </li>
-                    <li>
-                        <a class="btn btn-primary" href='/'> My Entries </a>
+                    <li class="nav-item">
+                        <a class="nav-link" href='/'> Account </a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- <a class="btn btn-light my-2 my-sm-0" href="/accounts/signup"> Sign Up</a> -->
+                        <a class="nav-link" href="/accounts/logout">Log Out</a>
                     </li>
                     {% else %}
-                    <li>
-                        <a class="btn btn-primary" href="#"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/accounts/login">Login</a>
                     </li>
-                    <li>
-                        <a class="btn btn-primary" href="#"><i class="far fa-user"></i> Sign Up</a>
+                    <li class="nav-item">
+                        <!-- <a class="btn btn-light my-2 my-sm-0" href="/accounts/signup"> Sign Up</a> -->
+                        <a class="nav-link" href="/accounts/signup">Sign Up</a>
                     </li>
                     {% endif %}
                 </ul>

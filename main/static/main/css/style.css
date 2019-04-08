@@ -83,7 +83,7 @@ a:hover {
     color: #FFF;
 }
 
-.navbar a, .navbar-brand {
+.navbar a.navbar-brand {
     font-weight: 700;
 }
 
