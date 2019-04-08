@@ -1,0 +1,31 @@
+<!-- adaptation of official allauth code https://github.com/pennersr/django-allauth/blob/master/allauth/templates/account/signup.html-->
+<!-- allows bootstrap in form-->
+{% extends "account/base.html" %}
+{% load widget_tweaks %}
+
+{% load i18n %}
+
+{% block content %}
+
+<p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+
+<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+  {% csrf_token %}
+  <div class="form-group">
+    {% for field in form %}
+    <div class="field-wrap">
+        {{ field.errors }}
+        {{ field.label_tag }} {{ field|append_attr:"class:form-control" }}
+        {% if field.help_text %}
+        <p class="help">{{ field.help_text|safe }}</p>
+        {% endif %}
+        </div>
+    {% endfor %}
+  </div>
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <button class="btn btn-primary" type="submit">{% trans "Sign Up" %} &raquo;</button>
+</form>
+
+{% endblock %}
