@@ -83,7 +83,7 @@ map.on('mouseleave', 'dummy', function () {
 });
 
 //create a button ! toggles layers based on their IDs
-var toggleableLayerIds = [ 'Census Blocks', 'Districts' ];
+var toggleableLayerIds = [ 'Census Blocks', 'dummy' ];
 
 for (var i = 0; i < toggleableLayerIds.length; i++) {
   var id = toggleableLayerIds[i];
