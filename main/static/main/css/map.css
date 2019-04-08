@@ -5,6 +5,8 @@
   height:500px;
 }
 
+/* the menu stuff is the buttons for census data / districts and such */
+/* from https://docs.mapbox.com/mapbox-gl-js/example/toggle-layers/ */
 #menu {
   background: #fff;
   position: absolute;
@@ -45,4 +47,9 @@
 
 #menu a.active:hover {
   background: #3074a4;
+}
+
+.mapboxgl-popup {
+max-width: 400px;
+font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }

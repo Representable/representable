@@ -48,6 +48,9 @@ map.addLayer({
         [-74.0, 40.5],
         [-74.5, 40.5],
         [-74.5, 40.0]]]
+      },
+      'properties': {
+        'name': 'dummy'
       }
     }
   },
@@ -56,6 +59,26 @@ map.addLayer({
     'fill-color': 'rgba(200, 100, 240, 0.4)',
     'fill-outline-color': 'rgba(200, 100, 240, 1)'
   }
+});
+
+// When a click event occurs on a feature in the dummy layer, open a popup at the
+// location of the click, with description HTML from its properties.
+// https://docs.mapbox.com/mapbox-gl-js/example/polygon-popup-on-click/
+map.on('click', 'dummy', function (e) {
+  new mapboxgl.Popup()
+  .setLngLat(e.lngLat)
+  .setHTML(e.features[0].properties.name)
+  .addTo(map);
+});
+
+// Change the cursor to a pointer when the mouse is over the dummy layer.
+map.on('mouseenter', 'dummy', function () {
+  map.getCanvas().style.cursor = 'pointer';
+});
+
+// Change it back to a pointer when it leaves.
+map.on('mouseleave', 'dummy', function () {
+  map.getCanvas().style.cursor = '';
 });
 });
 
