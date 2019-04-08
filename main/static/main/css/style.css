@@ -14,14 +14,6 @@ font-weight:300;
 letter-spacing:2px;
 }
 
-
-#map {
-bottom:0;
-height:500px;
-top:0;
-width:100%;
-}
-
 a:link,a:visited,a:active {
 color:inherit;
 }

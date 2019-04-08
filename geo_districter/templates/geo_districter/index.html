@@ -1,0 +1,36 @@
+{% extends 'geo_districter/base.html' %}
+{% load leaflet_tags %}
+{% load static %}
+
+{% block head %}
+{% leaflet_js %}
+{% leaflet_css %}
+<!-- https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ -->
+<!--  Mapbox GL JS-->
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+<!--  Turf JS for calculating the area. -->
+<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script>
+<!--  Mapbox Draw -->
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css' type='text/css' />
+<!--  Custom CSS -->
+<link rel="stylesheet" href="{% static 'geo_districter/css/geo.css' %}">
+{% endblock %}
+
+{% block content %}
+<div id='map'></div> 
+<div class='calculation-box'>
+    <p>Draw a polygon using the draw tools.</p>
+    <div id='calculated-area'></div>
+</div>
+{% endblock %}
+
+{% block script %}
+<!--  Has to be at the end after the HTML loads.-->
+<script type="text/javascript">
+    mapboxgl.accessToken = "{{ mapbox_key }}";
+</script>
+<script type="text/javascript" src="{% static 'geo_districter/js/geo.js' %}"></script>
+{% endblock %}
