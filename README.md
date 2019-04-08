@@ -53,9 +53,6 @@ cd districter
 python manage.py migrate
 python manage.py runserver
 ```
-<<<<<<< HEAD
-=======
 
 ### To delete heroku variable:
 heroku config:unset DISABLE_COLLECTSTATIC
->>>>>>> master
