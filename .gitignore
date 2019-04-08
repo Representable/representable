@@ -119,4 +119,5 @@ GitHub.sublime-settings
 
 # Compiled static files - hidden
 staticfiles/
+geo_districter/
 NJBlocks.json
