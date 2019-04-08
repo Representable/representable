@@ -3,11 +3,11 @@ from django.views.generic import TemplateView, ListView
 from .models import CommunityForm, Entry
 from django.views.generic.edit import FormView
 import os
-
-# Geo Page (from fmr districter)
 from django.http import JsonResponse
 import json
 from shapely.geometry import shape
+
+# must be imported after other models
 from django.contrib.gis.geos import Point
 
 # https://docs.djangoproject.com/en/2.1/topics/class-based-views/
