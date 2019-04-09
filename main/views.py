@@ -48,17 +48,17 @@ class Map(TemplateView):
         for obj in Entry.objects.all():
             # print(obj.entry_polygon.geojson)
             a.append(obj.entry_polygon.geojson)
-        
+
         final = []
         for obj in a:
             s = "".join(obj)
-            
+
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
             print("printing the struct")
             print(struct)
-            final.append(struct.coordinates) 
+            final.append(struct.coordinates)
 
         context = ({
             # 'entries':  serialize('geojson', Entry.objects.all(), geometry_field='polygon', fields=('entry_polygon')),
@@ -83,11 +83,13 @@ class CommunityView(FormView):
 
 
 # Geo View - Generic Template (See Django tutorial)
+# https://stackoverflow.com/questions/41697984/django-redirect-already-logged-user-by-class-based-view
+
 class GeoView(TemplateView):
     template_name = 'main/geo.html'
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
-            return redirect('/')
+            return redirect('/accounts/login')
         return super(GeoView, self).get(request, *args, **kwargs)
 
 
