@@ -133,7 +133,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Custom user model
 AUTH_USER_MODEL = 'main.User'
-
+LOGIN_REDIRECT_URL = '/'
 #ACCOUNT_LOGIN_FORM_CLASS = 'main.forms.LoginForm'
 
 #ACCOUNT_SIGNUP_FORM_CLASS = 'main.forms.SignupForm'

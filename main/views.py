@@ -10,6 +10,8 @@ import os
 from django.http import JsonResponse
 import json
 from shapely.geometry import shape
+from allauth.account.decorators import verified_email_required
+from django.shortcuts import redirect
 
 # must be imported after other models
 from django.contrib.gis.geos import Point
@@ -46,17 +48,17 @@ class Map(TemplateView):
         for obj in Entry.objects.all():
             # print(obj.entry_polygon.geojson)
             a.append(obj.entry_polygon.geojson)
-        
+
         final = []
         for obj in a:
             s = "".join(obj)
-            
+
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
             print("printing the struct")
             print(struct)
-            final.append(struct.coordinates) 
+            final.append(struct.coordinates)
 
         context = ({
             # 'entries':  serialize('geojson', Entry.objects.all(), geometry_field='polygon', fields=('entry_polygon')),
@@ -81,8 +83,15 @@ class CommunityView(FormView):
 
 
 # Geo View - Generic Template (See Django tutorial)
+# https://stackoverflow.com/questions/41697984/django-redirect-already-logged-user-by-class-based-view
+
 class GeoView(TemplateView):
     template_name = 'main/geo.html'
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('/accounts/login')
+        return super(GeoView, self).get(request, *args, **kwargs)
+
 
 # savePolygon saves the Polygon to the DB for the current entry. Inspired from:
 # https://l.messenger.com/l.php?u=https%3A%2F%2Fsimpleisbetterthancomplex.com%2Ftutorial%2F2016%2F08%2F29%2Fhow-to-work-with-ajax-request-with-django.html&h=AT2eBJBqRwotQY98nmtDeTb6y0BYi-ydl5NuMK68-V1LIRsZY11LiFF6o6HUCLsrn0vfPqJYoJ0RsZNQGvLO9qBJPphpzlX4fkxhtRrIzAgOsHmcC6pDV2MzhaeUT-hhj4M2-iOUyg
