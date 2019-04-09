@@ -30,6 +30,11 @@ DEBUG_PROPAGATE_EXCEPTIONS = True
 ALLOWED_HOSTS = ['*']
 
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,12 +45,22 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
     'main',
     'leaflet',
     'django_select2',
     'widget_tweaks',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.facebook',
+    # 'allauth.socialaccount.providers.google',
+    #'allauth.socialaccount.providers.linkedin',
+    # 'allauth.socialaccount.providers.linkedin_oauth2',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     # Simplified static file serving.
@@ -119,7 +134,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Custom user model
 AUTH_USER_MODEL = 'main.User'
 
+#ACCOUNT_LOGIN_FORM_CLASS = 'main.forms.LoginForm'
 
+#ACCOUNT_SIGNUP_FORM_CLASS = 'main.forms.SignupForm'
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -144,6 +161,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+# workaround for django all auth
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/

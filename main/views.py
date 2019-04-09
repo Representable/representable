@@ -3,6 +3,9 @@ from django.views.generic import TemplateView, ListView
 from .models import Entry
 from .forms import CommunityForm
 from django.views.generic.edit import FormView
+from django.core.serializers import serialize
+from shapely.geometry import Polygon, mapping
+import geojson
 import os
 from django.http import JsonResponse
 import json
@@ -20,9 +23,45 @@ class Timeline(TemplateView):
 
 class Map(TemplateView):
     template_name = "main/map.html"
+    # serialize('geojson', Entry.objects.all(), geometry_field='polygon', fields=('entry_polygon',))
     def get_context_data(self, **kwargs):
+        # GEOJSONSerializer = serializers.get_serializer("geojson")
+        # geojson_serializer = GEOJSONSerializer()
+        # geojson_serializer.serialize(Entry.objects.only('entry_polygon'))
+        # data = geojson_serializer.getvalue()
+        data = serialize("geojson", Entry.objects.all(), geometry_field="Polygon", fields=("entry_polygon", "Polygon",))
+        print("printing data")
+        # print(data)
+        # struct = json.loads(data)
+        # data = Entry.objects.only('entry_polygon')
+
+        # s = "".join(data)
+        # something = geojson.loads(s)
+
+        # print(geojson.loads(Entry.objects.all()))
+        # print(data[0])
+        # print(geojson.Polygon(data[0]))
+        # data = json.dumps(struct)
+        a = []
+        for obj in Entry.objects.all():
+            # print(obj.entry_polygon.geojson)
+            a.append(obj.entry_polygon.geojson)
+        
+        final = []
+        for obj in a:
+            s = "".join(obj)
+            
+            # add all the coordinates in the array
+            # at this point all the elements of the array are coordinates of the polygons
+            struct = geojson.loads(s)
+            print("printing the struct")
+            print(struct)
+            final.append(struct.coordinates) 
+
         context = ({
-            'entries':  Entry.objects.all(),
+            # 'entries':  serialize('geojson', Entry.objects.all(), geometry_field='polygon', fields=('entry_polygon')),
+            # 'entries': data,
+            'entries': final,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
         })
         return context
