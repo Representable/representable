@@ -22,9 +22,30 @@ map.on('load', function () {
   'id': 'census',
   'data': census_blocks
 });
- */  
+ */
+  /* map.addSource("census", {
+    type: "vector",
+    url: "mapbox://districter-team.cju9s844959el2rqu8kj31fhd"
+  }); */
 
-//it's just... a square...
+  map.addLayer({
+    "id": "census-blocks",
+    "type": "fill",
+    "source": {
+      "type": "vector",
+      "tiles":
+      ["mapbox://districter-team.cju9s844959el2rqu8kj31fhd"]
+    },
+    "source-layer": "census",
+    "layout": {
+      "visibility": "visible"
+    },
+    "paint": {
+      "fill-color": "rgba(200, 100, 240, 0.4)",
+      "fill-outline-color": "rgba(200, 100, 240, 1)"
+    }
+  });
+
 // send elements to javascript as geojson objects and make them show on the map by
 // calling the addTo
   console.log("printing the features");
