@@ -4,8 +4,10 @@
 {% load widget_tweaks %}
 
 {% block head %}
+{{ form.media.css }}
 {% leaflet_js %}
 {% leaflet_css %}
+
 <!-- https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ -->
 <!--  Mapbox GL JS-->
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
@@ -24,15 +26,15 @@
 <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css' type='text/css' />
 <!--  Custom CSS -->
 <link rel="stylesheet" href="{% static 'main/css/geo.css' %}">
-<!--  FORM, media CSS -->
-{{ form.media.css }}
+
 {% endblock %}
 
 {% block content %}
 <div class="col-12">
+
   <p>Enter your 5 digit ZipCode into the Search Bar and use the Polygon draw features on the right to draw your COI below ! </p>
   <div id='map'></div>
-<!--  change map view html -->
+
   <div id='menu'>
     <input id='streets-v11' type='radio' name='rtoggle' value='streets' checked='checked'>
     <label for='streets'>streets</label>
@@ -46,17 +48,13 @@
     <label for='satellite'>satellite</label>
   </div>
 
-
-<!--  calculation box -->
   <div class='calculation-box'>
     <p>Draw a polygon using the draw tools.</p>
     <div id='calculated-area'></div>
   </div>
   <button id="dummySave" type="button" class="btn btn-primary">Dummy Save</button>
-  <!-- {% endblock %} -->
+</div>
 
- <!--  {% block extracontent %} -->
-<!--  form  -->
   <form method="post">{% csrf_token %}
     <div class="form-group">
       {% for field in form %}
@@ -69,10 +67,10 @@
       </div>
       {% endfor %}
     </div>
+
     <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
   </form>
 </div>
-
 {% endblock %}
 
 {% block script %}

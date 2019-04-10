@@ -17,21 +17,27 @@ from django.shortcuts import redirect
 from django.contrib.gis.geos import Point
 
 # https://docs.djangoproject.com/en/2.1/topics/class-based-views/
+
+
 class Index(TemplateView):
     template_name = "main/index.html"
+
 
 class Timeline(TemplateView):
     template_name = "main/timeline.html"
 
+
 class Map(TemplateView):
     template_name = "main/map.html"
     # serialize('geojson', Entry.objects.all(), geometry_field='polygon', fields=('entry_polygon',))
+
     def get_context_data(self, **kwargs):
         # GEOJSONSerializer = serializers.get_serializer("geojson")
         # geojson_serializer = GEOJSONSerializer()
         # geojson_serializer.serialize(Entry.objects.only('entry_polygon'))
         # data = geojson_serializer.getvalue()
-        data = serialize("geojson", Entry.objects.all(), geometry_field="Polygon", fields=("entry_polygon", "Polygon",))
+        data = serialize("geojson", Entry.objects.all(
+        ), geometry_field="Polygon", fields=("entry_polygon", "Polygon",))
         print("printing data")
         # print(data)
         # struct = json.loads(data)
@@ -68,10 +74,13 @@ class Map(TemplateView):
         })
         return context
 
+
 class Thanks(TemplateView):
     template_name = "main/thanks.html"
 
 # https://docs.djangoproject.com/en/2.1/topics/class-based-views/generic-editing/
+
+
 class CommunityView(FormView):
     template_name = 'main/community_form.html'
     form_class = CommunityForm
@@ -84,17 +93,26 @@ class CommunityView(FormView):
 # Geo View - Generic Template (See Django tutorial)
 # https://stackoverflow.com/questions/41697984/django-redirect-already-logged-user-by-class-based-view
 
+
 class GeoView(TemplateView):
     template_name = 'main/geo.html'
+
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return redirect('/accounts/login')
         return super(GeoView, self).get(request, *args, **kwargs)
 
-class FullGeoView(TemplateView):
+
+class FullGeoView(FormView):
     template_name = 'main/fullgeo.html'
     form_class = CommunityForm
     success_url = '/thanks/'
+
+    def get_context_data(self, **kwargs):
+        context = super(FullGeoView, self).get_context_data(**kwargs) # get the default context data
+        context['mapbox_key'] = os.environ.get('DISTR_MAPBOX_KEY')
+        return context
+
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return redirect('/accounts/login')
@@ -104,8 +122,11 @@ class FullGeoView(TemplateView):
         form.save()
         return super().form_valid(form)
 
+
 # savePolygon saves the Polygon to the DB for the current entry. Inspired from:
 # https://l.messenger.com/l.php?u=https%3A%2F%2Fsimpleisbetterthancomplex.com%2Ftutorial%2F2016%2F08%2F29%2Fhow-to-work-with-ajax-request-with-django.html&h=AT2eBJBqRwotQY98nmtDeTb6y0BYi-ydl5NuMK68-V1LIRsZY11LiFF6o6HUCLsrn0vfPqJYoJ0RsZNQGvLO9qBJPphpzlX4fkxhtRrIzAgOsHmcC6pDV2MzhaeUT-hhj4M2-iOUyg
+
+
 def savePolygon(request):
     print("Got request!")
     # Get Request and Deserialize it with json.loads()
@@ -121,7 +142,8 @@ def savePolygon(request):
     geom_poly = shape(entryGeoJson['geometry']).wkt
     geom_point = Point(mapCenterJson[0], mapCenterJson[1])
     # Save to DB
-    new_entry = Entry(entry_ID=entryGeoJson['id'], entry_polygon=geom_poly, entry_location=geom_point)
+    new_entry = Entry(
+        entry_ID=entryGeoJson['id'], entry_polygon=geom_poly, entry_location=geom_point)
     new_entry.save()
     data = {
         'worked': True
