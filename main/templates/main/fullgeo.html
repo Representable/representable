@@ -1,0 +1,82 @@
+{% extends 'main/base.html' %}
+{% load leaflet_tags %}
+{% load static %}
+
+{% block head %}
+{% leaflet_js %}
+{% leaflet_css %}
+<!-- https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ -->
+<!--  Mapbox GL JS-->
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<!--  GeoCoder -->
+<meta name='robots' content='noindex, nofollow'>
+<link href="https://api.mapbox.com/mapbox-assembly/mbx/v0.23.1/assembly.min.css" rel="stylesheet">
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
+<!--  Polygon Draw-->
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+<!--  Turf JS for calculating the area. -->
+<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script>
+<!--  Mapbox Draw -->
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css' type='text/css' />
+<!--  Custom CSS -->
+<link rel="stylesheet" href="{% static 'main/css/geo.css' %}">
+{% endblock %}
+
+{% block head %}
+{{ form.media.css }}
+{% endblock %}
+
+{% block content %}
+<div class="col-12">
+
+  <p>Enter your 5 digit ZipCode into the Search Bar and use the Polygon draw features on the right to draw your COI below ! </p>
+  <div id='map'></div>
+
+  <div id='menu'>
+    <input id='streets-v11' type='radio' name='rtoggle' value='streets' checked='checked'>
+    <label for='streets'>streets</label>
+    <input id='light-v10' type='radio' name='rtoggle' value='light'>
+    <label for='light'>light</label>
+    <input id='dark-v10' type='radio' name='rtoggle' value='dark'>
+    <label for='dark'>dark</label>
+    <input id='outdoors-v11' type='radio' name='rtoggle' value='outdoors'>
+    <label for='outdoors'>outdoors</label>
+    <input id='satellite-v9' type='radio' name='rtoggle' value='satellite'>
+    <label for='satellite'>satellite</label>
+  </div>
+
+  <div class='calculation-box'>
+    <p>Draw a polygon using the draw tools.</p>
+    <div id='calculated-area'></div>
+  </div>
+  <button id="dummySave" type="button" class="btn btn-primary">Dummy Save</button>
+</div>
+
+<div class="col-12">
+  <form method="post">{% csrf_token %}
+    <div class="form-group">
+      {% for field in form %}
+      <div class="field-wrap">
+        {{ field.errors }}
+        {{ field.label_tag }} {{ field|append_attr:"class:form-control" }}
+        {% if field.help_text %}
+        <p class="help">{{ field.help_text|safe }}</p>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+
+    <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
+  </form>
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+  mapboxgl.accessToken = "{{ mapbox_key }}";
+</script>
+<script type="text/javascript" src="{% static 'main/js/geo.js' %}"></script>
+{% endblock %}
