@@ -81,7 +81,6 @@ class CommunityView(FormView):
         form.save()
         return super().form_valid(form)
 
-
 # Geo View - Generic Template (See Django tutorial)
 # https://stackoverflow.com/questions/41697984/django-redirect-already-logged-user-by-class-based-view
 
@@ -92,6 +91,18 @@ class GeoView(TemplateView):
             return redirect('/accounts/login')
         return super(GeoView, self).get(request, *args, **kwargs)
 
+class FullGeoView(TemplateView):
+    template_name = 'main/fullgeo.html'
+    form_class = CommunityForm
+    success_url = '/thanks/'
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('/accounts/login')
+        return super(FullGeoView, self).get(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
 
 # savePolygon saves the Polygon to the DB for the current entry. Inspired from:
 # https://l.messenger.com/l.php?u=https%3A%2F%2Fsimpleisbetterthancomplex.com%2Ftutorial%2F2016%2F08%2F29%2Fhow-to-work-with-ajax-request-with-django.html&h=AT2eBJBqRwotQY98nmtDeTb6y0BYi-ydl5NuMK68-V1LIRsZY11LiFF6o6HUCLsrn0vfPqJYoJ0RsZNQGvLO9qBJPphpzlX4fkxhtRrIzAgOsHmcC6pDV2MzhaeUT-hhj4M2-iOUyg
