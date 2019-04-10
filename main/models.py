@@ -53,7 +53,6 @@ RACE_CHOICES = (
 class Community(models.Model):
     zipcode = models.CharField(max_length=5)
     race = ArrayField(models.CharField(max_length=50,choices=RACE_CHOICES),default=list,blank=False)
-    #race = models.ManyToManyField(Race)
     issues =  models.CharField(max_length=100)
     is_my_community = models.BooleanField()
     creator =  models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
