@@ -23,20 +23,16 @@ map.on('load', function () {
   'data': census_blocks
 });
  */
-  /* map.addSource("census", {
+  map.addSource("census", {
     type: "vector",
-    url: "mapbox://districter-team.cju9s844959el2rqu8kj31fhd"
-  }); */
+    url: "mapbox://districter-team.njblocks"
+  });
 
   map.addLayer({
     "id": "census-blocks",
     "type": "fill",
-    "source": {
-      "type": "vector",
-      "tiles":
-      ["mapbox://districter-team.cju9s844959el2rqu8kj31fhd"]
-    },
-    "source-layer": "census",
+    "source": "census",
+    "source-layer": "NJBlocks",
     "layout": {
       "visibility": "visible"
     },
