@@ -73,11 +73,6 @@ map.on('load', function() {
     });
 });
 
-// Update Area Listeners
-map.on('draw.create', updateArea);
-map.on('draw.delete', updateArea);
-map.on('draw.update', updateArea);
-
 // Save Polygon Listeners
 function updateArea(e) {
     var data = draw.getAll();
