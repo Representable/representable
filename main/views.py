@@ -103,20 +103,20 @@ class GeoView(TemplateView):
         return super(GeoView, self).get(request, *args, **kwargs)
 
 
-class FullGeoView(FormView):
-    template_name = 'main/fullgeo.html'
+class EntryView(FormView):
+    template_name = 'main/entry.html'
     form_class = CommunityForm
     success_url = '/thanks/'
 
     def get_context_data(self, **kwargs):
-        context = super(FullGeoView, self).get_context_data(**kwargs) # get the default context data
+        context = super(EntryView, self).get_context_data(**kwargs) # get the default context data
         context['mapbox_key'] = os.environ.get('DISTR_MAPBOX_KEY')
         return context
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return redirect('/accounts/login')
-        return super(FullGeoView, self).get(request, *args, **kwargs)
+        return super(EntryView, self).get(request, *args, **kwargs)
 
     def form_valid(self, form):
         form.save()
@@ -128,15 +128,14 @@ class FullGeoView(FormView):
 
 
 def savePolygon(request):
-    print("Got request!")
     # Get Request and Deserialize it with json.loads()
     request_entry_poly = request.GET.get('entry_features', None)
     request_map_center = request.GET.get('map_center', None)
     entryGeoJson = json.loads(request_entry_poly)
     mapCenterJson = json.loads(request_map_center)
-    print(entryGeoJson['id'])
-    print(entryGeoJson['geometry'])
-    print(mapCenterJson)
+    # print(entryGeoJson['id'])
+    # print(entryGeoJson['geometry'])
+    # print(mapCenterJson)
     # Convert GeoJson to WKT
     # https://gist.github.com/drmalex07/5a54fc4f1db06a66679e
     geom_poly = shape(entryGeoJson['geometry']).wkt
