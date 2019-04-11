@@ -6,9 +6,7 @@ from .models import CommunityEntry, RACE_CHOICES
 class CommunityForm(ModelForm):
     class Meta:
         model = CommunityEntry
-        fields = [
-            'user', 'entry_ID', 'entry_location',
-            'entry_polygon', 'zipcode', 'race', 'issues', 'is_my_community']
+        fields = '__all__'
 
         widgets = {
             'race': Select2MultipleWidget(choices=RACE_CHOICES),
