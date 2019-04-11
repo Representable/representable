@@ -1,9 +1,10 @@
 #map {
     top: 0;
     bottom: 0;
-    width: 850px;
+    width: 100%;
     /*  Must Set Absolute Height */
-    height: 500px;
+    min-height: 500px;
+    
 }
 
 #menu {
