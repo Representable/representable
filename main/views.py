@@ -18,14 +18,17 @@ from django.contrib.gis.geos import Point
 
 # https://docs.djangoproject.com/en/2.1/topics/class-based-views/
 
+#******************************************************************************#
 
 class Index(TemplateView):
     template_name = "main/index.html"
 
+#******************************************************************************#
 
 class Timeline(TemplateView):
     template_name = "main/timeline.html"
 
+#******************************************************************************#
 
 class Map(TemplateView):
     template_name = "main/map.html"
@@ -74,12 +77,14 @@ class Map(TemplateView):
         })
         return context
 
+#******************************************************************************#
 
 class Thanks(TemplateView):
     template_name = "main/thanks.html"
 
 # https://docs.djangoproject.com/en/2.1/topics/class-based-views/generic-editing/
 
+#******************************************************************************#
 
 class CommunityView(FormView):
     template_name = 'main/community_form.html'
@@ -93,6 +98,7 @@ class CommunityView(FormView):
 # Geo View - Generic Template (See Django tutorial)
 # https://stackoverflow.com/questions/41697984/django-redirect-already-logged-user-by-class-based-view
 
+#******************************************************************************#
 
 class GeoView(TemplateView):
     template_name = 'main/geo.html'
@@ -102,6 +108,7 @@ class GeoView(TemplateView):
             return redirect('/accounts/login')
         return super(GeoView, self).get(request, *args, **kwargs)
 
+#******************************************************************************#
 
 class EntryView(FormView):
     template_name = 'main/entry.html'
@@ -123,6 +130,7 @@ class EntryView(FormView):
         form.save()
         return super().form_valid(form)
 
+#******************************************************************************#
 
 # savePolygon saves the Polygon to the DB for the current entry. Inspired from:
 # https://l.messenger.com/l.php?u=https%3A%2F%2Fsimpleisbetterthancomplex.com%2Ftutorial%2F2016%2F08%2F29%2Fhow-to-work-with-ajax-request-with-django.html&h=AT2eBJBqRwotQY98nmtDeTb6y0BYi-ydl5NuMK68-V1LIRsZY11LiFF6o6HUCLsrn0vfPqJYoJ0RsZNQGvLO9qBJPphpzlX4fkxhtRrIzAgOsHmcC6pDV2MzhaeUT-hhj4M2-iOUyg
@@ -155,3 +163,5 @@ def savePolygon(request):
     if data['worked']:
         data['error_message'] = 'Error.'
     return JsonResponse(data)
+
+#******************************************************************************#
