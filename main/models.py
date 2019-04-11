@@ -19,18 +19,6 @@ class User(AbstractUser):
 - This is my community / I am creating this on behalf of another community
 '''
 
-
-class Migration(migrations.Migration):
-
-    dependencies = [
-        ('user', '0001_initial'),
-    ]
-
-    operations = [
-        migrations.RenameModel('User', 'main.User')
-    ]
-
-
 # https://www.census.gov/topics/population/race/about.html
 RACE_CHOICES = (
     ('white', 'White'),
@@ -50,13 +38,13 @@ RACE_CHOICES = (
     ('other', 'Other'),
 )
 
+
 class Community(models.Model):
     zipcode = models.CharField(max_length=5)
     race = ArrayField(models.CharField(max_length=50,choices=RACE_CHOICES),default=list,blank=False)
     #race = models.ManyToManyField(Race)
     issues =  models.CharField(max_length=100)
     is_my_community = models.BooleanField()
-
 
 class CommunityEntry(models.Model):
     # Foreign Key = User (Many to One)
