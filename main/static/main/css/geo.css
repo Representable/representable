@@ -1,10 +1,18 @@
+body {
+    background-color: white;
+}
+
+.navbar {
+    background-color: #030428;
+}
+
 #map {
     top: 0;
     bottom: 0;
     width: 100%;
     /*  Must Set Absolute Height */
     min-height: 500px;
-    
+
 }
 
 #menu {
