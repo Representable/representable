@@ -3,7 +3,7 @@
 #map {
     top:0;
     bottom:0;
-    width:100%;
+    width:850px;
     /*  Must Set Absolute Height */
     height: 500px;
 }
