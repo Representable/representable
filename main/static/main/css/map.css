@@ -49,6 +49,43 @@
   background: #3074a4;
 }
 
+/* the tags stuff is the tags for changing layers and such */
+
+#tags {
+  width: 80%;
+  margin: auto;
+  background: #A9A9A9;
+  border-radius: 3px;
+  border: 2px solid black;
+  font-family:Inter, system-ui, sans-serif;
+}
+
+#tags a {
+  font-size: 13px;
+  color: #404040;
+  display: block;
+  margin: 0;
+  padding: 0;
+  padding: 10px;
+  text-decoration: none;
+  border-bottom: 1px solid black;
+  text-align: center;
+}
+
+#tags a:hover {
+  background-color: #f8f8f8;
+  color: #404040;
+}
+
+#tags a.active {
+  background-color: #3887be;
+  color: #ffffff;
+}
+
+#tags a.active:hover {
+  background: #3074a4;
+}
+
 .mapboxgl-popup {
 max-width: 400px;
 font-family:Inter, system-ui, sans-serif;
