@@ -19,7 +19,7 @@ class User(AbstractUser):
 - This is my community / I am creating this on behalf of another community
 '''
 
-'''
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RenameModel('User', 'main.User')
     ]
-'''
+
 
 # https://www.census.gov/topics/population/race/about.html
 RACE_CHOICES = (
