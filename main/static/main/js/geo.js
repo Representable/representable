@@ -94,7 +94,7 @@ function updateArea(e) {
 
 // AJAX for Saving https://l.messenger.com/l.php?u=https%3A%2F%2Fsimpleisbetterthancomplex.com%2Ftutorial%2F2016%2F08%2F29%2Fhow-to-work-with-ajax-request-with-django.html&h=AT2eBJBqRwotQY98nmtDeTb6y0BYi-ydl5NuMK68-V1LIRsZY11LiFF6o6HUCLsrn0vfPqJYoJ0RsZNQGvLO9qBJPphpzlX4fkxhtRrIzAgOsHmcC6pDV2MzhaeUT-hhj4M2-iOUyg
 // Dummy Button Save Listener
-document.getElementById("dummySave").onclick = saveNewEntry;
+document.getElementById("save").onclick = saveNewEntry;
 
 // Process AJAX Request
 function saveNewEntry(event) {
