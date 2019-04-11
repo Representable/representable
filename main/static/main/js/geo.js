@@ -73,20 +73,17 @@ map.on('load', function() {
     });
 });
 
+map.on('draw.create', updatePolygon);
+map.on('draw.delete', updatePolygon);
+map.on('draw.update', updatePolygon);
+
 // Save Polygon Listeners
-function updateArea(e) {
+function updatePolygon(e) {
     var data = draw.getAll();
-    var answer = document.getElementById('calculated-area');
     if (data.features.length > 0) {
-        var area = turf.area(data);
-        // restrict to area to 2 decimal points
-        var rounded_area = Math.round(area * 100) / 100;
-        answer.innerHTML = '<p><strong>' + rounded_area + '</strong></p><p>square meters</p>';
         // Update User Polygon with the GeoJson data.
         user_polygon = data.features[0];
     } else {
-        answer.innerHTML = '';
-        if (e.type !== 'draw.delete') alert("Use the draw tools to draw a polygon!");
         // Update User Polygon
         user_polygon = null;
     }
@@ -94,7 +91,7 @@ function updateArea(e) {
 
 // AJAX for Saving https://l.messenger.com/l.php?u=https%3A%2F%2Fsimpleisbetterthancomplex.com%2Ftutorial%2F2016%2F08%2F29%2Fhow-to-work-with-ajax-request-with-django.html&h=AT2eBJBqRwotQY98nmtDeTb6y0BYi-ydl5NuMK68-V1LIRsZY11LiFF6o6HUCLsrn0vfPqJYoJ0RsZNQGvLO9qBJPphpzlX4fkxhtRrIzAgOsHmcC6pDV2MzhaeUT-hhj4M2-iOUyg
 // Dummy Button Save Listener
-document.getElementById("save").onclick = saveNewEntry;
+document.getElementById("dummySave").onclick = saveNewEntry;
 
 // Process AJAX Request
 function saveNewEntry(event) {
@@ -105,11 +102,12 @@ function saveNewEntry(event) {
         // Need to stringify
         // https://www.webucator.com/how-to/how-send-receive-json-data-from-the-server.cfm
         var entry_features = JSON.stringify(user_polygon);
-        var map_center = JSON.stringify([-91.874, 42.760]);
-        console.log(map_center);
+        var map_center = JSON.stringify([map.getCenter()['lng'], map.getCenter()['lat']]);
+        var entry_id = JSON.stringify(user_polygon['id']);
         $.ajax({
             url: 'ajax/dummy_save/',
             data: {
+                'entry_id': entry_id,
                 'entry_features': entry_features,
                 'map_center': map_center,
             },
