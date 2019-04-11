@@ -125,8 +125,6 @@ class EntryView(FormView):
 
 # savePolygon saves the Polygon to the DB for the current entry. Inspired from:
 # https://l.messenger.com/l.php?u=https%3A%2F%2Fsimpleisbetterthancomplex.com%2Ftutorial%2F2016%2F08%2F29%2Fhow-to-work-with-ajax-request-with-django.html&h=AT2eBJBqRwotQY98nmtDeTb6y0BYi-ydl5NuMK68-V1LIRsZY11LiFF6o6HUCLsrn0vfPqJYoJ0RsZNQGvLO9qBJPphpzlX4fkxhtRrIzAgOsHmcC6pDV2MzhaeUT-hhj4M2-iOUyg
-
-
 def savePolygon(request):
     # Get Request and Deserialize it with json.loads()
     request_entry_poly = request.GET.get('entry_features', None)
@@ -140,9 +138,14 @@ def savePolygon(request):
     # https://gist.github.com/drmalex07/5a54fc4f1db06a66679e
     geom_poly = shape(entryGeoJson['geometry']).wkt
     geom_point = Point(mapCenterJson[0], mapCenterJson[1])
+    # GET USER OBJECT
+    current_user_id = request.user
     # Save to DB
     new_entry = Entry(
-        entry_ID=entryGeoJson['id'], entry_polygon=geom_poly, entry_location=geom_point)
+        creator_ID=current_user_id,
+        entry_ID=entryGeoJson['id'],
+        entry_polygon=geom_poly,
+        entry_location=geom_point)
     new_entry.save()
     data = {
         'worked': True

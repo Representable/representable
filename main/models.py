@@ -59,7 +59,7 @@ class Entry(models.Model):
     entry_polygon = models.PolygonField(serialize=True)
     # Foreign Key = User (Many to One   )
     # https://docs.djangoproject.com/en/2.2/topics/db/examples/many_to_one/
-    creator =  models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    creator_ID =  models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.entry_polygon)
