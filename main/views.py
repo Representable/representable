@@ -129,8 +129,12 @@ class EntryView(LoginRequiredMixin, FormView):
         return super(EntryView, self).get(request, *args, **kwargs)
     # Validate form
     def form_valid(self, form):
-        form.save()
+        # https://stackoverflow.com/questions/569468/django-multiple-models-in-one-template-using-forms/575133#575133
+        # Use commit false to change a field
+        form.save(commit=False)
         form.user = request.user
+        print(form.user)
+        form.save()
         return super().form_valid(form)
 
 #******************************************************************************#
