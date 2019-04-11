@@ -12,6 +12,7 @@ import json
 from shapely.geometry import shape
 from allauth.account.decorators import verified_email_required
 from django.shortcuts import redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # must be imported after other models
 from django.contrib.gis.geos import Point
@@ -112,7 +113,7 @@ class GeoView(TemplateView):
 
 # EntryView displays the form and map selection screen.
 
-class EntryView(FormView):
+class EntryView(LoginRequiredMixin, FormView):
     template_name = 'main/entry.html'
     form_class = CommunityForm
     success_url = '/thanks/'

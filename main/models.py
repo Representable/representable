@@ -78,7 +78,7 @@ class CommunityEntry(models.Model):
     # Foreign Key = User (Many to One)
     # https://docs.djangoproject.com/en/2.2/topics/db/examples/many_to_one/
     user =  models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    # Max Length = 100 chars, Blank=False - Field cannot be false. Unique - field has to be unique.
+    # Max Length = 100 chars, Blank=False - Field cannot be blank. Unique - field has to be unique.
     entry_ID = models.CharField(max_length=100, blank=False, unique=True, default=uuid.uuid4)
     # Store the location searched by the user (lat-long)
     entry_location = models.PointField()
