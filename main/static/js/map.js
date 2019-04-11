@@ -16,6 +16,7 @@ map.on('load', function () {
     url: "mapbox://districter-team.njblocks"
   });
 
+  // colors: https://coolors.co/6f2dbd-a663cc-b298dc-b8d0eb-b9faf8
   map.addLayer({
     "id": "Census Blocks",
     "type": "fill",
@@ -25,8 +26,8 @@ map.on('load', function () {
       "visibility": "visible"
     },
     "paint": {
-      "fill-color": "rgba(255, 152, 255, 0)",
-      "fill-outline-color": "rgba(255, 152, 255, 1)"
+      "fill-color": "rgba(111, 45, 189, 0)",
+      "fill-outline-color": "rgba(111, 45, 189, 1)"
     }
   });
 
@@ -37,7 +38,7 @@ map.on('load', function () {
   });
 
   map.addLayer({
-    "id": "State Legislature",
+    "id": "Legislature Polygons",
     "type": "fill",
     "source": "leg",
     "source-layer": "njlegislature",
@@ -45,8 +46,24 @@ map.on('load', function () {
       "visibility": "visible"
     },
     "paint": {
-      "fill-color": "rgba(152, 255, 152, 0)",
-      "fill-outline-color": "rgba(152, 255, 152, 1)"
+      "fill-color": "rgba(166, 99, 204, 0)",
+    }
+  });
+
+  // a line so that thickness can be changed
+  map.addLayer({
+    "id": "State Legislature",
+    "type": "line",
+    "source": "leg",
+    "source-layer": "njlegislature",
+    "layout": {
+      "visibility": "visible",
+      "line-join": "round",
+      "line-cap": "round"
+    },
+    "paint": {
+      "line-color": "rgba(166, 99, 204, 1)",
+      "line-width": 3
     }
   });
 
@@ -76,8 +93,8 @@ map.on('load', function () {
       },
       'layout': {},
       'paint': {
-        'fill-color': 'rgba(152,255,255,0.4)',
-        'fill-outline-color': 'rgba(152,255,255,1)'
+        'fill-color': 'rgba(185, 250, 248,0.4)',
+        'fill-outline-color': 'rgba(185, 250, 248,1)'
       }
     });
   }
@@ -85,7 +102,7 @@ map.on('load', function () {
 // When a click event occurs on a feature in the dummy layer, open a popup at the
 // location of the click, with description HTML from its properties.
 // https://docs.mapbox.com/mapbox-gl-js/example/polygon-popup-on-click/
-map.on('click', 'State Legislature', function (e) {
+map.on('click', 'Legislature Polygons', function (e) {
   new mapboxgl.Popup()
   .setLngLat(e.lngLat)
   .setHTML(e.features[0].properties.NAMELSAD)
@@ -93,12 +110,12 @@ map.on('click', 'State Legislature', function (e) {
 });
 
 // Change the cursor to a pointer when the mouse is over the dummy layer.
-map.on('mouseenter', 'State Legislature', function () {
+map.on('mouseenter', 'Legislature Polygons', function () {
   map.getCanvas().style.cursor = 'pointer';
 });
 
 // Change it back to a pointer when it leaves.
-map.on('mouseleave', 'State Legislature', function () {
+map.on('mouseleave', 'Legislature Polygons', function () {
   map.getCanvas().style.cursor = '';
 });
 });
