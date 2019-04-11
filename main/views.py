@@ -114,6 +114,7 @@ class EntryView(FormView):
         return context
 
     def get(self, request, *args, **kwargs):
+        # Redirect to login if user not authenticated
         if not request.user.is_authenticated:
             return redirect('/accounts/login')
         return super(EntryView, self).get(request, *args, **kwargs)
@@ -138,6 +139,7 @@ def savePolygon(request):
     # https://gist.github.com/drmalex07/5a54fc4f1db06a66679e
     geom_poly = shape(entryGeoJson['geometry']).wkt
     geom_point = Point(mapCenterJson[0], mapCenterJson[1])
+
     # GET USER OBJECT
     current_user_id = request.user
     # Save to DB

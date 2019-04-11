@@ -72,7 +72,9 @@ class Community(models.Model):
     #race = models.ManyToManyField(Race)
     issues =  models.CharField(max_length=100)
     is_my_community = models.BooleanField()
-    # Store the entry as a 1:1 relationship.
-    # https://stackoverflow.com/questions/5870537/whats-the-difference-between-django-onetoonefield-and-foreignkey
-    # https://docs.djangoproject.com/en/2.2/topics/db/examples/one_to_one/
-    entry = models.OneToOneField(Entry, on_delete="CASCADE", primary_key=True)
+    # Max Length = 100 chars, Blank=False - Field cannot be false. Unique - field has to be unique.
+    entry_ID = models.CharField(max_length=100, blank=False, unique=True, default=uuid.uuid4)
+    # Store the location searched by the user (lat-long)
+    entry_location = models.PointField()
+    # Store the polygon created by the user.
+    entry_polygon = models.PolygonField(serialize=True)
