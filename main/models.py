@@ -19,17 +19,17 @@ class User(AbstractUser):
 - This is my community / I am creating this on behalf of another community
 '''
 
-
-class Migration(migrations.Migration):
-
-    dependencies = [
-        ('user', '0001_initial'),
-    ]
-
-    operations = [
-        migrations.RenameModel('User', 'main.User')
-    ]
-
+# 
+# class Migration(migrations.Migration):
+#
+#     dependencies = [
+#         ('user', '0001_initial'),
+#     ]
+#
+#     operations = [
+#         migrations.RenameModel('User', 'main.User')
+#     ]
+#
 
 # https://www.census.gov/topics/population/race/about.html
 RACE_CHOICES = (
