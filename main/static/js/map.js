@@ -25,8 +25,8 @@ map.on('load', function () {
       "visibility": "visible"
     },
     "paint": {
-      "fill-color": "rgba(152, 255, 152, 0)",
-      "fill-outline-color": "rgba(152, 255, 152, 1)"
+      "fill-color": "rgba(255, 152, 255, 0)",
+      "fill-outline-color": "rgba(255, 152, 255, 1)"
     }
   });
 
@@ -45,8 +45,8 @@ map.on('load', function () {
       "visibility": "visible"
     },
     "paint": {
-      "fill-color": "rgba(255, 152, 255, 0.1)",
-      "fill-outline-color": "rgba(255 ,152, 255,1)"
+      "fill-color": "rgba(152, 255, 152, 0)",
+      "fill-outline-color": "rgba(152, 255, 152, 1)"
     }
   });
 
