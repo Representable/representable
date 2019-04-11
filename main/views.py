@@ -110,22 +110,23 @@ class GeoView(TemplateView):
 
 #******************************************************************************#
 
+# EntryView displays the form and map selection screen.
+
 class EntryView(FormView):
     template_name = 'main/entry.html'
     form_class = CommunityForm
     success_url = '/thanks/'
-
+    # Add extra context variables.
     def get_context_data(self, **kwargs):
         context = super(EntryView, self).get_context_data(**kwargs) # get the default context data
         context['mapbox_key'] = os.environ.get('DISTR_MAPBOX_KEY')
         return context
-
+    # Redirect to login if user not authenticated
     def get(self, request, *args, **kwargs):
-        # Redirect to login if user not authenticated
         if not request.user.is_authenticated:
             return redirect('/accounts/login')
         return super(EntryView, self).get(request, *args, **kwargs)
-
+    # Validate form
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
