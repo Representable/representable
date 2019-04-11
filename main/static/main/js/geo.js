@@ -91,32 +91,27 @@ map.on('draw.update', updateCommunityEntry);
 // updatePolygon responds to the user's actions and updates the polygon field
 // in the form.
 function updateCommunityEntry(e) {
+    var wkt = new Wkt.Wkt();
     var data = draw.getAll();
     var user_polygon;
-    var entry_features;
-    var map_center;
-    var entry_id;
+    var entry_polygon;
     if (data.features.length > 0) {
         // Update User Polygon with the GeoJson data.
         user_polygon = data.features[0];
-        entry_features = JSON.stringify(user_polygon);
-        map_center = JSON.stringify([map.getCenter()['lng'], map.getCenter()['lat']]);
-        entry_id = JSON.stringify(user_polygon['id']);
+        entry_polygon = JSON.stringify(user_polygon['geometry']);
+        wkt_obj = wkt.read(entry_polygon);
+        entry_polygon = wkt_obj.write();
     } else {
         // Update User Polygon with `null`.
         user_polygon = null;
-        entry_features = null;
-        map_center = null;
-        entry_id = null;
+        entry_polygon = '';
     }
-    console.log(entry_features);
-    console.log(map_center);
-    console.log(entry_id);
+    console.log(entry_polygon);
     console.log(user_polygon);
     // Update form field
-    document.getElementById('id_entry_ID').value = entry_id;
-    document.getElementById('id_entry_location').value = map_center;
-    document.getElementById('id_entry_polygon').value = entry_features;
+    // document.getElementById('id_entry_ID').value = entry_id;
+    // document.getElementById('id_entry_location').value = map_center;
+    document.getElementById('id_entry_polygon').value = entry_polygon;
 }
 
 /******************************************************************************/

@@ -12,6 +12,5 @@ class CommunityForm(ModelForm):
             'race': Select2MultipleWidget(choices=RACE_CHOICES),
             'user': forms.HiddenInput(),
             'entry_ID': forms.HiddenInput(),
-            'entry_location': forms.HiddenInput(),
             'entry_polygon': forms.HiddenInput()
         }

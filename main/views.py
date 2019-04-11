@@ -131,11 +131,15 @@ class EntryView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         # https://stackoverflow.com/questions/569468/django-multiple-models-in-one-template-using-forms/575133#575133
         # Use commit false to change a field
-        form.save(commit=False)
-        form.user = request.user
-        print(form.user)
         form.save()
         return super().form_valid(form)
+    # https://www.agiliq.com/blog/2019/01/django-formview/
+    def get_initial(self):
+        initial = super(EntryView, self).get_initial()
+        if self.request.user.is_authenticated:
+            initial.update({'user': self.request.user})
+        print(self.request.user);
+        return initial
 
 #******************************************************************************#
 
