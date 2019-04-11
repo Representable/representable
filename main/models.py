@@ -49,13 +49,19 @@ RACE_CHOICES = (
     ),
     ('other', 'Other'),
 )
+class Issue(models.Model):
+    models.CharField(max_length=100)
 
 class Community(models.Model):
     zipcode = models.CharField(max_length=5)
     race = ArrayField(models.CharField(max_length=50,choices=RACE_CHOICES),default=list,blank=False)
-    issues =  models.CharField(max_length=100)
+    issues =  ArrayField(models.CharField(max_length=100),default=list,blank=False)
     is_my_community = models.BooleanField()
     creator =  models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.issues
+
 
 class Entry(models.Model):
     # Max Length = 100 chars, Blank=False - Field cannot be false. Unique - field has to be unique.
