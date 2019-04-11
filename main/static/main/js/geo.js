@@ -1,8 +1,13 @@
+/******************************************************************************/
+
 // GEO Js file for handling map drawing.
 /* https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ */
-
+// Polygon Drawn By User
 var user_polygon = null;
 
+/******************************************************************************/
+
+// Initialize the Map
 /* eslint-disable */
 var map = new mapboxgl.Map({
     container: 'map', // container id
@@ -37,6 +42,8 @@ var draw = new MapboxDraw({
 
 map.addControl(geocoder, 'top-right');
 map.addControl(draw);
+
+/******************************************************************************/
 
 // After the map style has loaded on the page, add a source layer and default
 // styling for a single point.
@@ -73,25 +80,35 @@ map.on('load', function() {
     });
 });
 
+/******************************************************************************/
+
 map.on('draw.create', updatePolygon);
 map.on('draw.delete', updatePolygon);
 map.on('draw.update', updatePolygon);
 
-// Save Polygon Listeners
+/******************************************************************************/
+
+// updatePolygon responds to the user's actions and updates the polygon field
+// in the form.
 function updatePolygon(e) {
     var data = draw.getAll();
     if (data.features.length > 0) {
         // Update User Polygon with the GeoJson data.
         user_polygon = data.features[0];
     } else {
-        // Update User Polygon
+        // Update User Polygon with `null`.
         user_polygon = null;
     }
+    // Update form field
 }
+
+/******************************************************************************/
 
 // AJAX for Saving https://l.messenger.com/l.php?u=https%3A%2F%2Fsimpleisbetterthancomplex.com%2Ftutorial%2F2016%2F08%2F29%2Fhow-to-work-with-ajax-request-with-django.html&h=AT2eBJBqRwotQY98nmtDeTb6y0BYi-ydl5NuMK68-V1LIRsZY11LiFF6o6HUCLsrn0vfPqJYoJ0RsZNQGvLO9qBJPphpzlX4fkxhtRrIzAgOsHmcC6pDV2MzhaeUT-hhj4M2-iOUyg
 // Dummy Button Save Listener
-document.getElementById("dummySave").onclick = saveNewEntry;
+// document.getElementById("dummySave").onclick = saveNewEntry;
+
+/******************************************************************************/
 
 // Process AJAX Request
 function saveNewEntry(event) {
@@ -122,3 +139,5 @@ function saveNewEntry(event) {
         });
     }
 }
+
+/******************************************************************************/
