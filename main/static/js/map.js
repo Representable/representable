@@ -10,19 +10,7 @@ var map = new mapboxgl.Map({
 map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
 
 map.on('load', function () {
-  // the stuff that happens when the map is loaded...
-  /*
-  var request = new XMLhttpRequest();
-  request.open("GET", "../../assets/NJBlocks.json", false);
-  request.send(null)
-  var census_blocks = JSON.parse(request.responseText);
-  alert(census_blocks.result[0]);
-
-  map.addSource({
-  'id': 'census',
-  'data': census_blocks
-});
- */
+  // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
   map.addSource("census", {
     type: "vector",
     url: "mapbox://districter-team.njblocks"
@@ -37,8 +25,28 @@ map.on('load', function () {
       "visibility": "visible"
     },
     "paint": {
-      "fill-color": "rgba(200, 100, 240, 0)",
-      "fill-outline-color": "rgba(200, 100, 240, 1)"
+      "fill-color": "rgb(152, 255, 152, 0)",
+      "fill-outline-color": "rgb(152, 255, 152, 1)"
+    }
+  });
+
+  // this is where the state legislature districts are loaded, from a url to the mbtiles file uploaded to mapbox
+  map.addSource("leg", {
+    type: "vector",
+    url: "mapbox://districter-team.njlegislature"
+  });
+
+  map.addLayer({
+    "id": "State Legislature",
+    "type": "fill",
+    "source": "leg",
+    "source-layer": "njlegislature",
+    "layout": {
+      "visibility": "visible"
+    },
+    "paint": {
+      "fill-color": "rgb(255, 152, 255, 0.1)",
+      "fill-outline-color": "rgb(255 ,152, 255,1)"
     }
   });
 
@@ -96,7 +104,7 @@ map.on('mouseleave', 'Census Blocks', function () {
 });
 
 //create a button ! toggles layers based on their IDs
-var toggleableLayerIds = [ 'Census Blocks'];
+var toggleableLayerIds = ['Census Blocks', 'State Legislature'];
 
 for (var i = 0; i < toggleableLayerIds.length; i++) {
   var id = toggleableLayerIds[i];
