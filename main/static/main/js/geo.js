@@ -106,11 +106,9 @@ function updateCommunityEntry(e) {
         user_polygon = null;
         entry_polygon = '';
     }
-    console.log(entry_polygon);
-    console.log(user_polygon);
+    // console.log(entry_polygon);
+    // console.log(user_polygon);
     // Update form field
-    // document.getElementById('id_entry_ID').value = entry_id;
-    // document.getElementById('id_entry_location').value = map_center;
     document.getElementById('id_entry_polygon').value = entry_polygon;
 }
 
