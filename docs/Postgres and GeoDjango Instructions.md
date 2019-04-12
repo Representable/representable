@@ -12,14 +12,14 @@ Taken from https://medium.com/agatha-codes/painless-postgresql-django-d4f0336498
 # Open postgres
 psql postgres
 # Create user
-CREATE USER <DISTR_DB_USER> WITH encrypted password '<DISTR_DB_PASS>';
+CREATE USER districter WITH encrypted password '<pass_here>';
 # Give User permission to create databases
-ALTER ROLE <DISTR_DB_USER> WITH CREATEDB;
+ALTER ROLE districter WITH CREATEDB;
 # Check that your user was set up correctly
 \du
 # Crate DB
-CREATE DATABASE <DISTR_DB_NAME> WITH OWNER <DISTR_DB_USER>;
-GRANT ALL PRIVILEGES ON DATABASE <DISTR_DB_NAME> to <DISTR_DB_USER>;
+CREATE DATABASE districter_db WITH OWNER districter;
+GRANT ALL PRIVILEGES ON DATABASE districter_db to districter;
 # Check that DB was created correctly
 \l
 ```
@@ -34,8 +34,8 @@ nano ~/.bash_profile
 Add these lines:
 ```
 # Districter Stuff
-export DISTR_DB_NAME="..."
-export DISTR_DB_USER="..."
+export DISTR_DB_NAME="districter_db"
+export DISTR_DB_USER="districter"
 export DISTR_DB_PASS="..."
 ```
 And then Ctrl^x and press Y to exit.

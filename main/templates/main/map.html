@@ -18,19 +18,20 @@
 {% block content %}
 <div class="col-12">
   <div>
-      <script type="text/javascript"> 
+      <script type="text/javascript">
         // var a = JSON.parse('{{ entries | escapejs }}')
         var a = '{{ entries | escapejs}}';
         // var a = '{{ entries }}';
      </script>
     {% for census in entries %}
   <script type="text/javascript">
-    
+
   </script>
     {% endfor %}
   </div>
   <nav id='menu'></div>
   <div id='map'></div>
+  <nav id='tags'></nav>
 </div>
 {% endblock %}
 
