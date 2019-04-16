@@ -1,39 +1,64 @@
+body {
+    background-color: white;
+}
 
+.navbar {
+    background-color: #030428;
+}
 
 #map {
-    top:0;
-    bottom:0;
-    width:850px;
+    top: 0;
+    bottom: 0;
+    width: 100%;
     /*  Must Set Absolute Height */
-    height: 500px;
+    min-height: 500px;
+
 }
 
 #menu {
-position: absolute;
-background: #fff;
-padding: 10px;
-font-family: 'Open Sans', sans-serif;
+    position: absolute;
+    background: #fff;
+    padding: 10px;
+    font-family: 'Open Sans', sans-serif;
 }
 
-#geocoder-container > div { min-width:50%; margin-left:25%;}
-.string { color: #314ccd; }
-.number { color: #b43b71; }
-.boolean { color: #5a3fc0; }
-.null { color: #ba7334; }
-.key { color: #ba3b3f; }
+#geocoder-container>div {
+    min-width: 50%;
+    margin-left: 25%;
+}
+
+.string {
+    color: #314ccd;
+}
+
+.number {
+    color: #b43b71;
+}
+
+.boolean {
+    color: #5a3fc0;
+}
+
+.null {
+    color: #ba7334;
+}
+
+.key {
+    color: #ba3b3f;
+}
 
 .calculation-box {
-height: 75px;
-width: 150px;
-bottom: 40px;
-left: 10px;
-background-color: rgba(255, 255, 255, .9);
-padding: 15px;
-text-align: center;
+    height: 75px;
+    width: 150px;
+    bottom: 40px;
+    left: 10px;
+    background-color: rgba(255, 255, 255, .9);
+    padding: 15px;
+    text-align: center;
 }
 
 p {
-font-family: 'Open Sans';
-margin: 0;
-font-size: 13px;
+    font-family: 'Open Sans';
+    margin: 0;
+    font-size: 13px;
 }
