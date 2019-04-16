@@ -150,92 +150,52 @@ function updateCommunityEntry(e) {
         // Update User Polygon with the GeoJson data.
         user_polygon = data.features[0];
         entry_polygon = JSON.stringify(user_polygon['geometry']);
-        // console.log(entry_polygon);
-        // var features = map.querySourceFeatures('census', entry_polygon);
-        // console.log(features);
+
         wkt_obj = wkt.read(entry_polygon);
         entry_polygon = wkt_obj.write();
 
         var polygonBoundingBox = turf.bbox(user_polygon);
-        console.log("entry_polygon");
-        console.log(entry_polygon);
-        console.log("user_polygon");
-        console.log(user_polygon);
+        // get the bounds of the polygon to reduce the number of blocks you are querying from
         var southWest = [polygonBoundingBox[0], polygonBoundingBox[1]];
         var northEast = [polygonBoundingBox[2], polygonBoundingBox[3]];
         var northEastPointPixel = map.project(northEast);
         var southWestPointPixel = map.project(southWest);
-        var pointarray = [];
+        var pointarray = []; // debug still have to make the block highlighting more specific
+
         console.log(user_polygon.geometry.coordinates[0].length);
+        // debugging to make the polygon highlitghting more specific
         for (let i = 0; i < user_polygon.geometry.coordinates[0].length-1; i++) {
             let p = [user_polygon.geometry.coordinates[0][i][0], user_polygon.geometry.coordinates[0][i][1]];
             // let p = new Point(user_polygon.coordinates[0][i][0], user_polygon.coordinates[0][i][1]);
             pointarray.push(p);
         }
-        console.log("printing the coordinates");
-        console.log(pointarray);
         // var features = map.queryRenderedFeatures(pointarray, { layers: ["census-blocks"] });
         var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
 
-
-        console.log("printing features");
-        console.log(features);
         // debugger
 
         var filter = features.reduce(function(memo, feature) {
             console.log(feature);
             console.log(memo);
             console.log(user_polygon.geometry.coordinates[0]);
-            let poly1 = turf.polygon(feature.geometry.coordinates);
-            let poly2 = turf.polygon(user_polygon.geometry.coordinates);
+            // make the bounds to limit to the coordinate
+            // let poly1 = turf.polygon(feature.geometry.coordinates);
+            // let poly2 = turf.polygon(user_polygon.geometry.coordinates);
 
-            // if (! (turf.intersect(poly1, poly2)) === undefined) {
             if (! (undefined === turf.intersect(feature, user_polygon))) {
 
                 // only add the property, if the feature intersects with the polygon drawn by the user
                 // console.log("entered the loop to check how many intersected");
-                // console.log(memo);
-                
-                // console.log(feature);
                 memo.push(feature.properties.GEOID10);
             } 
-            // memo.push(feature.properties.FIPS);
-            // console.log(memo);
             return memo;
         }, ["in", "GEOID10"]);
         
-        // var filter2 = [];
-        // for (let i = 0; i < filter.length; i++) {
-        //     if (filter[i] != undefined) {
-        //         filter2.push(filter[i]);
-        //     }
-        // }
         console.log("printing out the new filter");
-        // console.log(filter);
         console.log(filter);
         
 
         map.setFilter("blocks-highlighted", filter);
-
-        // if (map.getSource('census') && map.isSourceLoaded('census')) {
-        //     console.log('source loaded!');
-        //     var features = map.querySourceFeatures('census', entry_polygon);
-        //     console.log(features);
-        // }
-
-        // if (map.loaded() || wasLoaded) {
-        //     var features = map.querySourceFeatures('census', entry_polygon);
-
-        //     console.log("printing the features");
-        //     console.log(entry_polygon);
-        //     console.log(features);
-        //     var filter = features.reduce(function(memo, feature) {
-        //         memo.push(feature.properties.FIPS);
-        //         return memo;
-        //         }, ['in', 'FIPS']);
-                
-        //         map.setFilter("blocks-highlighted", filter);
-        // }
         
         
 
