@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
-# from .models import Entry
+from .models import CommunityEntry
 from .forms import CommunityForm
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
@@ -40,9 +40,9 @@ class Map(TemplateView):
         # geojson_serializer = GEOJSONSerializer()
         # geojson_serializer.serialize(Entry.objects.only('entry_polygon'))
         # data = geojson_serializer.getvalue()
-        data = serialize("geojson", Entry.objects.all(
-        ), geometry_field="Polygon", fields=("entry_polygon", "Polygon",))
-        print("printing data")
+        # data = serialize("geojson", CommunityEntry.objects.all(
+        # ), geometry_field="Polygon", fields=("entry_polygon", "Polygon",))
+        # print("printing data")
         # print(data)
         # struct = json.loads(data)
         # data = Entry.objects.only('entry_polygon')
@@ -55,7 +55,7 @@ class Map(TemplateView):
         # print(geojson.Polygon(data[0]))
         # data = json.dumps(struct)
         a = []
-        for obj in Entry.objects.all():
+        for obj in CommunityEntry.objects.all():
             # print(obj.entry_polygon.geojson)
             a.append(obj.entry_polygon.geojson)
 

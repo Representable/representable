@@ -21,9 +21,11 @@
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
 <!--  Turf JS for calculating the area. -->
 <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script>
+
 <!--  Mapbox Draw -->
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js'></script>
 <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css' type='text/css' />
+
 <!--  Custom CSS -->
 <link rel="stylesheet" href="{% static 'main/css/geo.css' %}">
 {% endblock %}
@@ -85,4 +87,6 @@
 </script>
 <script type="text/javascript" src="{% static 'main/js/wicket.js' %}"></script>
 <script type="text/javascript" src="{% static 'main/js/geo.js' %}"></script>
+<!-- Turf to get the bounding box. -->
+<script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
 {% endblock %}
