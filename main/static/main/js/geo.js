@@ -88,7 +88,7 @@ map.on('load', function() {
         "line-cap": "round"
       },
       "paint": {
-        "line-color": "rgba(200, 100, 240, 1)",
+        "line-color": "rgba(71, 93, 204, 0.25)",
         "line-width": 1
       }
     });

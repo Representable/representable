@@ -152,7 +152,8 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
 }
 
 // create a button which toggles layers based on tags
-// for the future: make it look pretty, get tags from form, etc.
+// for the future: make it look pretty, get tags from db, etc.
+// Needed: how to get the names of the tags, how do we display freeform data from the db
 var tagIds = [ 'Demographics', 'Environment'];
 
 for (var i = 0; i < tagIds.length; i++) {
