@@ -19,6 +19,11 @@
   width: 30%;
   border: 1px solid rgba(0,0,0,0.4);
   font-family:Inter, system-ui, sans-serif;
+  height: 100%;
+}
+
+#menu input[type=text] {
+  
 }
 
 #menu a {

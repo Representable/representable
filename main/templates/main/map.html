@@ -12,6 +12,7 @@
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!--  Custom CSS -->
 <link rel="stylesheet" href="{% static 'main/css/map.css' %}">
 {% endblock %}
@@ -29,7 +30,9 @@
   </script>
     {% endfor %}
   </div>
-  <nav id='menu'></div>
+  <nav id='menu'>
+  <input type="text" placeholder="Search tags...">
+  <button type="submit"><i class="fa fa-search"></i></button>
   <div id='map'></div>
 </div>
 {% endblock %}
