@@ -1,5 +1,5 @@
 #map {
-  top:0;
+  top: 55px;
   bottom:0;
   left: 0;
   right: 0;
@@ -13,7 +13,7 @@
 #menu {
   background: #fff;
   position: fixed;
-  top: 0;
+  top: 55px;
   left: 0;
   border-radius: 3px;
   width: 30%;
