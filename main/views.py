@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
 # from .models import Entry
-from .forms import CommunityForm
+from .forms import CommunityForm, IssueForm
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
 from shapely.geometry import Polygon, mapping
@@ -89,12 +89,9 @@ class Thanks(TemplateView):
 
 class CommunityView(FormView):
     template_name = 'main/community_form.html'
-    form_class = CommunityForm
+    form_class = IssueForm
     success_url = '/thanks/'
 
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
 
 # Geo View - Generic Template (See Django tutorial)
 # https://stackoverflow.com/questions/41697984/django-redirect-already-logged-user-by-class-based-view
@@ -132,6 +129,7 @@ class EntryView(LoginRequiredMixin, FormView):
         # https://stackoverflow.com/questions/569468/django-multiple-models-in-one-template-using-forms/575133#575133
         # Use commit false to change a field
         form.save()
+        #form.save_m2m()
         return super().form_valid(form)
     # https://www.agiliq.com/blog/2019/01/django-formview/
     def get_initial(self):
@@ -140,6 +138,8 @@ class EntryView(LoginRequiredMixin, FormView):
             initial.update({'user': self.request.user})
         print(self.request.user);
         return initial
+
+
 
 #******************************************************************************#
 

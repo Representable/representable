@@ -37,16 +37,37 @@ RACE_CHOICES = (
     ),
     ('other', 'Other'),
 )
+
+POLICY_ISSUES = (
+    ('criminal_justice', 'Criminal Justice'),
+    ('civil_rights','Civil Rights'),
+    ('economic','Economic Affairs'),
+    ('education','Education'),
+    ('environment','Environment'),
+    ('health','Health and Health Insurance'),
+    ('internet','Internet Regulation'),
+    ('women','Women\'s Issues'),
+    ('lgbt', 'LGBT Issues'),
+    ('security','National Security'),
+    ('welfare', 'Social Welfare')
+)
 class Issue(models.Model):
-    models.CharField(max_length=100)
+    category = models.CharField(max_length=50,choices=POLICY_ISSUES,default=None)
+    description = models.CharField(max_length=250)
 
+    class Meta:
+        ordering = ('category','description',)
 
+    def __str__(self):
+        return self.description
+
+'''
 class Community(models.Model):
     zipcode = models.CharField(max_length=5)
     race = ArrayField(models.CharField(max_length=50,choices=RACE_CHOICES),default=list,blank=False)
     issues =  ArrayField(models.CharField(max_length=100),default=list,blank=False)
     is_my_community = models.BooleanField()
-
+'''
 class CommunityEntry(models.Model):
     # Foreign Key = User (Many to One)
     # https://docs.djangoproject.com/en/2.2/topics/db/examples/many_to_one/
@@ -61,9 +82,10 @@ class CommunityEntry(models.Model):
     zipcode = models.CharField(max_length=5)
     # Race
     race = ArrayField(models.CharField(max_length=50,choices=RACE_CHOICES),default=list,blank=False)
-    #race = models.ManyToManyField(Race)
     # Issues
-    issues =  models.CharField(max_length=100)
+    #issues = models.ManyToManyField(Issue,related_name='new_issues')
+    #issue_list = models.ManyToManyField(Issue,related_name='old_issues')
+    entry_issues = models.ManyToManyField(Issue)
     # My Community
     is_my_community = models.BooleanField()
 
