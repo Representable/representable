@@ -130,6 +130,8 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   link.href = '#';
   link.className = 'active';
   link.textContent = id;
+  link.role = 'menuitem';
+  link.tabindex = "-1";
 
   link.onclick = function (e) {
     var clickedLayer = this.textContent;
@@ -147,23 +149,23 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
     }
   };
 
-  var layers = document.getElementById('menu');
+  var layers = document.getElementById('outline-menu');
   layers.appendChild(link);
 }
 
-// function for displaying census block stuff and more
-function displayData() {
-  var clickedLayer = this.textContent;
-  e.preventDefault();
-  e.stopPropagation();
-
-  var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
-
-  if (visibility === 'visible') {
-    map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-    this.className = '';
-  } else {
-    this.className = 'active';
-    map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
-  }
-};
+// // function for displaying census block stuff and more
+// function displayData(e) {
+//   var clickedLayer = this.textContent;
+//   e.preventDefault();
+//   e.stopPropagation();
+//
+//   var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+//
+//   if (visibility === 'visible') {
+//     map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+//     this.className = '';
+//   } else {
+//     this.className = 'active';
+//     map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+//   }
+// };
