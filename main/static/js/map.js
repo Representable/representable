@@ -121,7 +121,7 @@ map.on('mouseleave', 'Legislature Polygons', function () {
 });
 
 //create a button ! toggles layers based on their IDs
-var toggleableLayerIds = ['Census Blocks', 'State Legislature', 'Demographics', 'Environment'];
+var toggleableLayerIds = ['Census Blocks', 'State Legislature'];
 
 for (var i = 0; i < toggleableLayerIds.length; i++) {
   var id = toggleableLayerIds[i];
@@ -152,20 +152,3 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   var layers = document.getElementById('outline-menu');
   layers.appendChild(link);
 }
-
-// // function for displaying census block stuff and more
-// function displayData(e) {
-//   var clickedLayer = this.textContent;
-//   e.preventDefault();
-//   e.stopPropagation();
-//
-//   var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
-//
-//   if (visibility === 'visible') {
-//     map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-//     this.className = '';
-//   } else {
-//     this.className = 'active';
-//     map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
-//   }
-// };
