@@ -1,0 +1,4 @@
+<div class="form-check">
+  <input type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}
+{% if widget.wrap_label %}<label class="form-check-label" {% if widget.attrs.id %} for="{{ widget.attrs.id }}"{% endif %}>&nbsp;{% endif %}{% if widget.wrap_label %}{{ widget.label }}</label>{% endif %}
+</div>
