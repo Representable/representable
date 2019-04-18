@@ -22,8 +22,12 @@
   height: 100%;
 }
 
+input {
+  width: 85%;
+}
+
 #menu input[type=text] {
-  
+
 }
 
 #menu a {
