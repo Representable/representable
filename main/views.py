@@ -140,8 +140,6 @@ class EntryView(LoginRequiredMixin, FormView):
         print(self.request.user);
         return initial
 
-
-
 #******************************************************************************#
 
 # savePolygon saves the Polygon to the DB for the current entry. Inspired from:
