@@ -25,6 +25,7 @@ class TagSelect2Widget(ModelSelect2TagWidget):
     #             val = queryset.create(name=val).pk
     #         cleaned_values.append(val)
     #     return cleaned_values
+    '''
     def value_from_datadict(self, data, files, name):
         values = super(TagSelect2Widget, self).value_from_datadict(data, files, name)
         return ",".join(values)
@@ -34,6 +35,7 @@ class TagSelect2Widget(ModelSelect2TagWidget):
         selected = set(values)
         subgroup = [self.create_option(name, v, v, selected, i) for i, v in enumerate(values)]
         return [(None, subgroup, 0)]
+    '''
 
 class IssueForm(ModelForm):
     class Meta:
