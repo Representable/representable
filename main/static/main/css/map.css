@@ -9,11 +9,24 @@
 }
 
 
-
 /* the menu stuff is the buttons for census data / districts and such */
 /* from https://docs.mapbox.com/mapbox-gl-js/example/toggle-layers/ */
+/* TODO: figure out why i have to add the left part of dropdown menu */
+.dropdown-menu {
+  padding: 0;
+  width: 100%;
+  margin: 0;
+  left: -4px !important;
+}
+
+.btn {
+  width: 100%;
+  border-radius: 0;
+  margin: 0;
+}
+/* colors: https://coolors.co/f8bdc4-f497da-f679e5-b8d0eb-f65be3 */
 #menu {
-  background: #fff;
+  background: #040428;
   position: fixed;
   top: 55px;
   left: 0;
@@ -49,41 +62,17 @@ input {
 }
 
 #menu a:hover {
-  background-color: #f8f8f8;
+  background-color: #274690;
   color: #404040;
 }
 
 #menu a.active {
-  background-color: #3887be;
+  background-color: #576ca8;
   color: #ffffff;
 }
 
 #menu a.active:hover {
-  background: #3074a4;
-}
-
-/* the tags stuff is the tags for changing layers and such */
-
-#tags {
-  width: 80%;
-  top: 10px;
-  margin: auto;
-  background: #A9A9A9;
-  border-radius: 3px;
-  border: 2px solid black;
-  font-family:Inter, system-ui, sans-serif;
-}
-
-#tags a {
-  font-size: 13px;
-  color: #404040;
-  display: block;
-  margin: 0;
-  padding: 0;
-  padding: 10px;
-  text-decoration: none;
-  border-bottom: 1px solid black;
-  text-align: center;
+  background: #7d8cc4;
 }
 
 .mapboxgl-popup {
