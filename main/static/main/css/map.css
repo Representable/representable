@@ -21,33 +21,42 @@
 
 .btn {
   width: 100%;
-  border-radius: 0;
+  border-radius: 1rem;
   margin: 0;
+  background-color: #576ca8;
+  color: white;
 }
+
+.btn:active {
+  background-color: #576ca8;
+}
+
+.btn:hover {
+  background-color: #274690;
+}
+
+.subform {
+  background-color: #576ca8;
+}
+
+.subform:hover {
+  background-color: #274690;
+}
+
 /* colors: https://coolors.co/f8bdc4-f497da-f679e5-b8d0eb-f65be3 */
 #menu {
   background: #040428;
   position: fixed;
   top: 55px;
   left: 0;
-  border-radius: 3px;
   width: 30%;
   border: 1px solid rgba(0,0,0,0.4);
   font-family:Inter, system-ui, sans-serif;
   height: 100%;
 }
 
-input {
-  width: 85%;
-}
-
-#menu input[type=text] {
-
-}
-
 #menu a {
   font-size: 13px;
-  color: #404040;
   display: block;
   margin: 0;
   padding: 0;
@@ -63,7 +72,6 @@ input {
 
 #menu a:hover {
   background-color: #274690;
-  color: #404040;
 }
 
 #menu a.active {
@@ -72,11 +80,43 @@ input {
 }
 
 #menu a.active:hover {
-  background: #7d8cc4;
+  background: #274690;
 }
 
 .mapboxgl-popup {
 max-width: 400px;
 font-family:Inter, system-ui, sans-serif;
 font-size: 12px;
+}
+
+/* search bar css stuff */
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #576ca8;
+  border-right: none;
+  padding: 5px;
+  border-radius: 1rem 0 0 1rem;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #576ca8;
+}
+
+.searchButton {
+  width: 40px;
+  border: 1px solid #576ca8;
+  background: #576ca8;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 1rem 1rem 0;
+  cursor: pointer;
+  font-size: 20px;
 }

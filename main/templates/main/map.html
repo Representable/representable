@@ -31,10 +31,14 @@
     {% endfor %}
   </div>
   <nav id='menu'>
-  <input type="text" placeholder="Search tags...">
-  <button type="submit"><i class="fa fa-search"></i></button>
+    <div class="search">
+     <input type="text" class="searchTerm" placeholder="What are you looking for?">
+     <button type="submit" class="searchButton">
+       <i class="fa fa-search"></i>
+    </button>
+  </div>
   <div class="dropdown">
-    <button class="btn btn-primary dropdown-toggle" id="outlines" type="button"
+    <button class="btn dropdown-toggle" id="outlines" type="button"
     data-toggle="dropdown">Display Outlines
     <span class="caret"></span></button>
     <ul class="dropdown-menu" role="menu" aria-labelledby="outlines" id="outline-menu">

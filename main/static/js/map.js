@@ -152,6 +152,7 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   var layers = document.getElementById('outline-menu');
   var li = document.createElement('li');
   li.setAttribute('role', 'presentation');
+  li.setAttribute('id', 'subform');
   layers.appendChild(li);
   li.appendChild(link);
 }
