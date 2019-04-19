@@ -130,8 +130,8 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   link.href = '#';
   link.className = 'active';
   link.textContent = id;
-  link.role = 'menuitem';
-  link.tabindex = "-1";
+  link.setAttribute('role', 'menuitem');
+  link.setAttribute('tabindex', '-1');
 
   link.onclick = function (e) {
     var clickedLayer = this.textContent;
@@ -150,5 +150,7 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   };
 
   var layers = document.getElementById('outline-menu');
-  layers.appendChild(link);
+  var li = document.createElement('li');
+  layers.appendChild(li);
+  li.appendChild(link);
 }
