@@ -1,27 +1,62 @@
 #map {
-  top:0;
+  top: 55px;
   bottom:0;
+  left: 0;
+  right: 0;
   width:100%;
-  height:500px;
+  height:100%;
+  position: fixed;
 }
+
 
 /* the menu stuff is the buttons for census data / districts and such */
 /* from https://docs.mapbox.com/mapbox-gl-js/example/toggle-layers/ */
+/* TODO: figure out why i have to add the left part of dropdown menu */
+.dropdown-menu {
+  padding: 0;
+  width: 100%;
+  margin: 0;
+  left: -4px !important;
+}
+
+.btn {
+  width: 100%;
+  border-radius: 1rem;
+  margin: 0;
+  background-color: #576ca8;
+  color: white;
+}
+
+.btn:active {
+  background-color: #576ca8;
+}
+
+.btn:hover {
+  background-color: #274690;
+}
+
+.subform {
+  background-color: #576ca8;
+}
+
+.subform:hover {
+  background-color: #274690;
+}
+
+/* colors: https://coolors.co/f8bdc4-f497da-f679e5-b8d0eb-f65be3 */
 #menu {
-  background: #fff;
-  position: absolute;
-  z-index: 1;
-  top: 10px;
-  left: 10px;
-  border-radius: 3px;
-  width: 120px;
+  background: #040428;
+  position: fixed;
+  top: 55px;
+  left: 0;
+  width: 30%;
   border: 1px solid rgba(0,0,0,0.4);
   font-family:Inter, system-ui, sans-serif;
+  height: 100%;
 }
 
 #menu a {
   font-size: 13px;
-  color: #404040;
   display: block;
   margin: 0;
   padding: 0;
@@ -36,59 +71,52 @@
 }
 
 #menu a:hover {
-  background-color: #f8f8f8;
-  color: #404040;
+  background-color: #274690;
 }
 
 #menu a.active {
-  background-color: #3887be;
+  background-color: #576ca8;
   color: #ffffff;
 }
 
 #menu a.active:hover {
-  background: #3074a4;
-}
-
-/* the tags stuff is the tags for changing layers and such */
-
-#tags {
-  width: 80%;
-  top: 10px;
-  margin: auto;
-  background: #A9A9A9;
-  border-radius: 3px;
-  border: 2px solid black;
-  font-family:Inter, system-ui, sans-serif;
-}
-
-#tags a {
-  font-size: 13px;
-  color: #404040;
-  display: block;
-  margin: 0;
-  padding: 0;
-  padding: 10px;
-  text-decoration: none;
-  border-bottom: 1px solid black;
-  text-align: center;
-}
-
-#tags a:hover {
-  background-color: #f8f8f8;
-  color: #404040;
-}
-
-#tags a.active {
-  background-color: #3887be;
-  color: #ffffff;
-}
-
-#tags a.active:hover {
-  background: #3074a4;
+  background: #274690;
 }
 
 .mapboxgl-popup {
 max-width: 400px;
 font-family:Inter, system-ui, sans-serif;
 font-size: 12px;
+}
+
+/* search bar css stuff */
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #576ca8;
+  border-right: none;
+  padding: 5px;
+  border-radius: 1rem 0 0 1rem;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #576ca8;
+}
+
+.searchButton {
+  width: 40px;
+  border: 1px solid #576ca8;
+  background: #576ca8;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 1rem 1rem 0;
+  cursor: pointer;
+  font-size: 20px;
 }
