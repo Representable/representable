@@ -31,20 +31,16 @@
     {% endfor %}
   </div>
   <nav id='menu'>
+  <div class="sidenav">
     <div class="search">
      <input type="text" class="searchTerm" placeholder="What are you looking for?">
      <button type="submit" class="searchButton">
        <i class="fa fa-search"></i>
     </button>
   </div>
-  <div class="dropdown">
-    <button class="btn dropdown-toggle" id="outlines" type="button"
-    data-toggle="dropdown">Display Outlines
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="outlines" id="outline-menu">
-    </ul>
-    <div id="tags">
-    </div>
+    <button class="dropdown-btn">Display Outlines
+    <i class="fa fa-caret-down"></i></button>
+    <div class="dropdown-container" id="outline-menu">
   </nav>
   <div id='map'></div>
 </div>
