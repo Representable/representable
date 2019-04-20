@@ -33,16 +33,16 @@
   <nav id='menu'>
   <div class="sidenav">
     <div class="search">
-     <input type="text" class="searchTerm" placeholder="What are you looking for?">
-     <button type="submit" class="searchButton">
+     <input type="text" id= "search-bar" class="searchTerm" placeholder="Seach tags..." onkeyup="searchTags()">
+     <button type="submit" class="searchButton" onclick="searchTags()">
        <i class="fa fa-search"></i>
     </button>
   </div>
-    <button class="dropdown-btn">Display Outlines
+    <button class="dropdown-btn" id="dropdown">Display Outlines
     <i class="fa fa-caret-down"></i></button>
     <div class="dropdown-container" id="outline-menu">
     </div>
-    <button class="dropdown-btn">Environment
+    <button class="dropdown-btn" id="dropdown">Environment
     <i class="fa fa-caret-down"></i></button>
     <div class="dropdown-container">
       <a href="#">link</a>

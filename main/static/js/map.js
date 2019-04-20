@@ -212,3 +212,21 @@ for (i = 0; i < dropdown.length; i++) {
   }
   });
 }
+
+function searchTags() {
+  var input, filter, dropdowns, sub, i, txtValue;
+  input = document.getElementById("search-bar");
+  filter = input.value.toUpperCase();
+  dropdowns = document.getElementsByTagName("dropdown");
+  for (i = 0; i < dropdowns.length; i++) {
+    sub = dropdowns[i].getElementsByTagName("a")[0];
+    if (sub) {
+      txtValue = sub.textContent || sub.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        sub[i].style.display = "";
+      } else {
+        sub[i].style.display = "none";
+      }
+    }
+  }
+}
