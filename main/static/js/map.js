@@ -156,3 +156,46 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   layers.appendChild(li);
   li.appendChild(link);
 }
+
+var tagLayers = ['Environment', 'Social Issues'];
+
+for (var i = 0; i < tagLayers.length; i++) {
+  var id = tagLayers[i];
+
+  var link = document.createElement('a');
+  link.href = '#';
+  link.className = 'active';
+  link.textContent = id;
+  link.setAttribute('role', 'menuitem');
+  link.setAttribute('tabindex', '-1');
+
+  link.onclick = function (e) {
+    var clickedLayer = this.textContent;
+    e.preventDefault();
+    e.stopPropagation();
+
+    var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+    if (visibility === 'visible') {
+      map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+      this.className = '';
+    } else {
+      this.className = 'active';
+      map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+    }
+  };
+  <ul class="dropdown-menu" role="menu" aria-labelledby="outlines" id="outline-menu">
+  </ul>
+  var ul = document.createElement('ul');
+  ul.setAttribute('class', 'dropdown-menu');
+  ul.setAttribute('role', 'menu');
+  ul.setAttribute('aria-labelledby', 'outlines');
+
+  var layers = document.getElementById('tags');
+  var li = document.createElement('li');
+  li.setAttribute('role', 'presentation');
+  li.setAttribute('id', 'subform');
+  layers.appendChild(ul);
+  ul.appendChild(li);
+  li.appendChild(link);
+}
