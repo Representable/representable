@@ -151,8 +151,52 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   layers.appendChild(link);
 }
 
-var tagLayers = ['Environment', 'Social Issues'];
-
+// var tagLayers = ['Environment', 'Social Issues'];
+//
+//   // <button class="dropdown-btn">Display Outlines
+//   // <i class="fa fa-caret-down"></i></button>
+//   // <div class="dropdown-container" id="outline-menu">
+//
+//   for (var i = 0; i < tagLayers.length; i++) {
+//     var id = tagLayers[i];
+//
+//     var link = document.createElement('a');
+//     link.href = '#';
+//     link.className = 'active';
+//     link.textContent = 'fill in the blank';
+//
+//     link.onclick = function (e) {
+//       var clickedLayer = this.textContent;
+//       e.preventDefault();
+//       e.stopPropagation();
+//
+//       var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+//
+//       if (visibility === 'visible') {
+//         map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+//         this.className = '';
+//       } else {
+//         this.className = 'active';
+//         map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+//       }
+//     };
+//
+//     var button = document.createElement('button');
+//     button.className = 'dropdown-btn';
+//     button.textContent = id;
+//
+//     var inButton = document.createElement('i');
+//     inButton.className = 'fa fa-caret-down';
+//
+//     var dropDiv = document.createElement('div');
+//     dropDiv.className = 'dropdown-container';
+//
+//     var layers = document.getElementById('sidenav');
+//     layers.appendChild(button);
+//     button.appendChild(inButton);
+//     layers.appendChild(dropDiv);
+//     dropDiv.appendChild(link);
+//   }
 /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
 var dropdown = document.getElementsByClassName("dropdown-btn");
 var i;
