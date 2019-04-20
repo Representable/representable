@@ -159,6 +159,9 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
 
 var tagLayers = ['Environment', 'Social Issues'];
 
+// TODO: edit this stuff so that it creates the button, not just the ul (it will
+// be complicated but it must be this way)
+
 for (var i = 0; i < tagLayers.length; i++) {
   var id = tagLayers[i];
 
