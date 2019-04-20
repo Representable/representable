@@ -10,9 +10,7 @@
 
 /* colors: https://coolors.co/f8bdc4-f497da-f679e5-b8d0eb-f65be3 */
 /* Fixed sidenav, full height */
-#menu {
-}
-
+/* https://www.w3schools.com/howto/howto_js_dropdown_sidenav.asp */
 .sidenav {
   height: 100%;
   width: 30%;
@@ -48,14 +46,14 @@
 
 /* Add an active class to the active dropdown button */
 .active {
-  background-color: green;
   color: white;
 }
 
 /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
 .dropdown-container {
   display: none;
-  background-color: #262626;
+  background-color: #274690;
+  color: #95a3b3;
   padding-left: 8px;
 }
 
@@ -80,10 +78,9 @@ font-size: 12px;
 
 .searchTerm {
   width: 100%;
-  border: 3px solid #576ca8;
+  border: 3px solid #274690;
   border-right: none;
   padding: 5px;
-  border-radius: 1rem 0 0 1rem;
   outline: none;
   color: #9DBFAF;
 }
@@ -94,11 +91,10 @@ font-size: 12px;
 
 .searchButton {
   width: 40px;
-  border: 1px solid #576ca8;
-  background: #576ca8;
+  border: 1px solid #274690;
+  background: #274690;
   text-align: center;
   color: #fff;
-  border-radius: 0 1rem 1rem 0;
   cursor: pointer;
   font-size: 20px;
 }
