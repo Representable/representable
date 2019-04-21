@@ -214,19 +214,22 @@ for (i = 0; i < dropdown.length; i++) {
 }
 
 function searchTags() {
-  var input, filter, dropdowns, sub, i, txtValue;
+  var input, filter, dropdowns, sub, i, txtValue, j;
   input = document.getElementById("search-bar");
   filter = input.value.toUpperCase();
-  dropdowns = document.getElementsByTagName("dropdown");
+  dropdowns = document.getElementsByClassName("dropdown-container");
   for (i = 0; i < dropdowns.length; i++) {
-    sub = dropdowns[i].getElementsByTagName("a")[0];
+    sub = dropdowns[i].getElementsByTagName("a");
     if (sub) {
-      txtValue = sub.textContent || sub.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        sub[i].style.display = "";
-      } else {
-        sub[i].style.display = "none";
+      for (j = 0; j < sub.length; j++) {
+        txtValue = sub[j].textContent || sub[j].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          sub[j].style.display = "";
+        } else {
+          sub[j].style.display = "none";
+        }
       }
+
     }
   }
 }
