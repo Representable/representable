@@ -54,7 +54,10 @@
 
         </div>
         <div class="col-sm-4">
-            <form method="post">{% csrf_token %}
+            <form method="post">
+                {% csrf_token %}
+                {{ form.errors }}
+                {{ form.non_field_errors }}
                 <div class="form-group">
                     <!-- {# Include the hidden fields #} -->
                     {% for hidden in form.hidden_fields %}
