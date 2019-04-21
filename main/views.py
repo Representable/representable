@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
+# from .models import Entry
+from .forms import CommunityForm, IssueForm
 from .models import CommunityEntry
-from .forms import CommunityForm
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
 from shapely.geometry import Polygon, mapping
@@ -54,6 +55,10 @@ class Map(TemplateView):
         # print(data[0])
         # print(geojson.Polygon(data[0]))
         # data = json.dumps(struct)
+
+        # the array of tags -- dummy info for now, but will become someting soon !
+        tags = ["Race", "Faith", "Industry"]
+
         a = []
         for obj in CommunityEntry.objects.all():
             # print(obj.entry_polygon.geojson)
@@ -73,6 +78,7 @@ class Map(TemplateView):
         context = ({
             # 'entries':  serialize('geojson', Entry.objects.all(), geometry_field='polygon', fields=('entry_polygon')),
             # 'entries': data,
+            'tags': tags,
             'entries': final,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
         })
@@ -89,12 +95,9 @@ class Thanks(TemplateView):
 
 class CommunityView(FormView):
     template_name = 'main/community_form.html'
-    form_class = CommunityForm
+    form_class = IssueForm
     success_url = '/thanks/'
 
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
 
 # Geo View - Generic Template (See Django tutorial)
 # https://stackoverflow.com/questions/41697984/django-redirect-already-logged-user-by-class-based-view
@@ -131,7 +134,14 @@ class EntryView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         # https://stackoverflow.com/questions/569468/django-multiple-models-in-one-template-using-forms/575133#575133
         # Use commit false to change a field
+        # -*- coding: utf-8 -*-
+        eprint("ELON MUSK")
+        for each_tag in form.fields.tags:
+            tag, created = Tag.objects.get_or_create(name=each_tag)
+            print('The tag in the parsed podcast is {}'.format(each_tag))
+            form.tags.add(tag)
         form.save()
+        #form.save_m2m()
         return super().form_valid(form)
     # https://www.agiliq.com/blog/2019/01/django-formview/
     def get_initial(self):
@@ -140,6 +150,8 @@ class EntryView(LoginRequiredMixin, FormView):
             initial.update({'user': self.request.user})
         print(self.request.user);
         return initial
+
+
 
 #******************************************************************************#
 

@@ -62,7 +62,7 @@ map.on('style.load', function() {
         type: "vector",
         url: "mapbox://districter-team.njblocks"
       });
-    
+
     map.addLayer({
     "id": "census-blocks",
     "type": "fill",
@@ -73,8 +73,25 @@ map.on('style.load', function() {
     },
     "paint": {
         "fill-color": "rgba(200, 100, 240, 0)",
-        "fill-outline-color": "rgba(200, 100, 240, 1)"
+        "fill-outline-color": "rgba(200, 100, 240, 0)"
     }
+    });
+
+    // a line so that thickness can be changed
+    map.addLayer({
+      "id": "census-lines",
+      "type": "line",
+      "source": "census",
+      "source-layer": "NJBlocks",
+      "layout": {
+        "visibility": "visible",
+        "line-join": "round",
+        "line-cap": "round"
+      },
+      "paint": {
+        "line-color": "rgba(71, 93, 204, 0.25)",
+        "line-width": 1
+      }
     });
 
     map.addLayer({
@@ -88,7 +105,7 @@ map.on('style.load', function() {
         "fill-opacity": 0.75
         },
         "filter": ["in", "GEOID10", ""]
-        }); 
+        });
 
 
     map.addLayer({
@@ -143,7 +160,7 @@ map.on('draw.update', updateCommunityEntry);
 // updatePolygon responds to the user's actions and updates the polygon field
 // in the form.
 function updateCommunityEntry(e) {
-    
+
     var wkt = new Wkt.Wkt();
     var data = draw.getAll();
     var user_polygon;
@@ -181,6 +198,7 @@ function updateCommunityEntry(e) {
                 // only add the property, if the feature intersects with the polygon drawn by the user
                 // console.log("entered the loop to check how many intersected");
                 memo.push(feature.properties.GEOID10);
+<<<<<<< HEAD
                 let poly1 = turf.polygon(feature.geometry.coordinates);
                 mpolygon.push(poly1);
                 // push to an array and find the union polygon
@@ -190,6 +208,19 @@ function updateCommunityEntry(e) {
         }, ["in", "GEOID10"]);
     
         map.setFilter("blocks-highlighted", filter);
+=======
+            }
+            return memo;
+        }, ["in", "GEOID10"]);
+
+        console.log("printing out the new filter");
+        console.log(filter);
+
+
+        map.setFilter("blocks-highlighted", filter);
+
+
+>>>>>>> master
 
 
         var finalpoly = turf.union(mpolygon[0], mpolygon[1]);
@@ -210,7 +241,7 @@ function updateCommunityEntry(e) {
     console.log(entry_polygon);
     // Update form field
     document.getElementById('id_entry_polygon').value = entry_polygon;
-    
+
 }
 
 /******************************************************************************/

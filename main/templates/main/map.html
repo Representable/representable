@@ -12,6 +12,12 @@
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--  GeoCoder -->
+<meta name='robots' content='noindex, nofollow'>
+<link href="https://api.mapbox.com/mapbox-assembly/mbx/v0.23.1/assembly.min.css" rel="stylesheet">
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
 <!--  Custom CSS -->
 <link rel="stylesheet" href="{% static 'main/css/map.css' %}">
 {% endblock %}
@@ -29,9 +35,32 @@
   </script>
     {% endfor %}
   </div>
-  <nav id='menu'></div>
+  <nav id='menu'>
+  <div class="sidenav">
+    <div class="search">
+     <input type="text" id= "search-bar" class="searchTerm" placeholder="Seach tags..." onkeyup="searchTags()">
+     <button type="submit" class="searchButton" onclick="searchTags()">
+       <i class="fa fa-search"></i>
+    </button>
+  </div>
+    <button class="dropdown-btn">Display Outlines
+    <i class="fa fa-caret-down"></i></button>
+    <div class="dropdown-container" id="outline-menu">
+    </div>
+    {% for tag in tags %}
+      <button class="dropdown-btn">{{ tag }}
+        <i class="fa fa-caret-down"></i></button>
+        <div class="dropdown-container">
+          <a href="#">link</a>
+        </div>
+    {% endfor %}
+    <button class="dropdown-btn">Environment
+    <i class="fa fa-caret-down"></i></button>
+    <div class="dropdown-container">
+      <a href="#">link</a>
+    </div>
+  </nav>
   <div id='map'></div>
-  <nav id='tags'></nav>
 </div>
 {% endblock %}
 
