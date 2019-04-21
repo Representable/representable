@@ -90,7 +90,7 @@ class Thanks(TemplateView):
 class CommunityView(FormView):
     template_name = 'main/community_form.html'
     form_class = CommunityForm
-    success_url = '/entry/'
+    success_url = '/thanks/'
 
     def form_valid(self, form):
         form.save()
@@ -116,7 +116,7 @@ class GeoView(TemplateView):
 class EntryView(LoginRequiredMixin, FormView):
     template_name = 'main/entry.html'
     form_class = CommunityForm
-    success_url = '/entry/'
+    success_url = '/thanks/'
     # Add extra context variables.
     def get_context_data(self, **kwargs):
         context = super(EntryView, self).get_context_data(**kwargs) # get the default context data

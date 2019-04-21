@@ -19,13 +19,14 @@ var map = new mapboxgl.Map({
 var layerList = document.getElementById('menu');
 var inputs = layerList.getElementsByTagName('input');
 
+
 function switchLayer(layer) {
-var layerId = layer.target.id;
-map.setStyle('mapbox://styles/mapbox/' + layerId);
+    var layerId = layer.target.id;
+    map.setStyle('mapbox://styles/mapbox/' + layerId);
 }
 
 for (let i = 0; i < inputs.length; i++) {
-inputs[i].onclick = switchLayer;
+    inputs[i].onclick = switchLayer;
 }
 
 var geocoder = new MapboxGeocoder({
@@ -48,7 +49,7 @@ map.boxZoom.disable();
 
 // After the map style has loaded on the page, add a source layer and default
 // styling for a single point.
-map.on('load', function() {
+map.on('style.load', function() {
     map.addSource('single-point', {
         "type": "geojson",
         "data": {
@@ -150,10 +151,7 @@ function updateCommunityEntry(e) {
     if (data.features.length > 0) {
         // Update User Polygon with the GeoJson data.
         user_polygon = data.features[0];
-        entry_polygon = JSON.stringify(user_polygon['geometry']);
-
-        wkt_obj = wkt.read(entry_polygon);
-        entry_polygon = wkt_obj.write();
+        
 
         var polygonBoundingBox = turf.bbox(user_polygon);
         // get the bounds of the polygon to reduce the number of blocks you are querying from
@@ -177,15 +175,6 @@ function updateCommunityEntry(e) {
         var mpolygon = [];
         // var collection = [];
         var filter = features.reduce(function(memo, feature) {
-            // console.log(feature);
-            // console.log(memo);
-            // console.log(user_polygon.geometry.coordinates[0]);
-            // make the bounds to limit to the coordinate
-            
-            // console.log("printing out the polygon");
-            // console.log(poly1);
-            // console.log(feature);
-            // let poly2 = turf.polygon(user_polygon.geometry.coordinates);
 
             if (! (undefined === turf.intersect(feature, user_polygon))) {
 
@@ -199,11 +188,7 @@ function updateCommunityEntry(e) {
             } 
             return memo;
         }, ["in", "GEOID10"]);
-        
-        // console.log("printing out the new filter");
-        // console.log(filter);
-        
-        // console.log(mpolygon);
+    
         map.setFilter("blocks-highlighted", filter);
 
 
@@ -211,35 +196,18 @@ function updateCommunityEntry(e) {
         for (let i = 2; i < mpolygon.length; i++) {
             finalpoly = turf.union(finalpoly, mpolygon[i]);
         }
-        console.log(finalpoly);
-        console.log("compare the two");
-        console.log(user_polygon);
-        var poly = {
-            "id": user_polygon.id,
-            "type": "Feature",
-            "properties": {},
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [finalpoly.geometry.coordinates[0]]
-            }
-        };
-        console.log("printing out the other pilygon");
-        console.log(poly);
 
-        // make polygon from the coordinates from the first element of the array
-        //finalpoly.geometry.coordinates[0]
-
-        // create the featurecollection:
-        // var collection = turf.featureCollection(collection);
-        // console.log(collection);
-        
-        
-
+        user_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0];
     } else {
         // Update User Polygon with `null`.
         user_polygon = null;
         entry_polygon = '';
     }
+    entry_polygon = JSON.stringify(user_polygon['geometry']);
+    
+    wkt_obj = wkt.read(entry_polygon);
+    entry_polygon = wkt_obj.write();
+    console.log(entry_polygon);
     // Update form field
     document.getElementById('id_entry_polygon').value = entry_polygon;
     
