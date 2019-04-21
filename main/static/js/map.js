@@ -215,7 +215,7 @@ for (i = 0; i < dropdown.length; i++) {
 
 // search bar function ! looks through the tags and the buttons themselves
 function searchTags() {
-  var input, filter, dropdowns, sub, i, txtValue, j, buttons;
+  var input, filter, dropdowns, sub, i, txtValue, j, buttons, prev;
   input = document.getElementById("search-bar");
   filter = input.value.toUpperCase();
   // search among the tags themselves (buttons)
@@ -232,11 +232,13 @@ function searchTags() {
   // search among the sub tags (user input, hashtags)
   dropdowns = document.getElementsByClassName("dropdown-container");
   for (i = 0; i < dropdowns.length; i++) {
+    prev = dropdowns[i].previousElementSibling;
     sub = dropdowns[i].getElementsByTagName("a");
     if (sub) {
       for (j = 0; j < sub.length; j++) {
         txtValue = sub[j].textContent || sub[j].innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          prev.style.display = "";
           sub[j].style.display = "";
         } else {
           sub[j].style.display = "none";
