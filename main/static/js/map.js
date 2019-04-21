@@ -213,10 +213,23 @@ for (i = 0; i < dropdown.length; i++) {
   });
 }
 
+// search bar function ! looks through the tags and the buttons themselves
 function searchTags() {
-  var input, filter, dropdowns, sub, i, txtValue, j;
+  var input, filter, dropdowns, sub, i, txtValue, j, buttons;
   input = document.getElementById("search-bar");
   filter = input.value.toUpperCase();
+  // search among the tags themselves (buttons)
+  // maybe there is a more efficient way to do this, but this makes sense, for now
+  buttons = document.getElementsByClassName("dropdown-btn");
+  for (i = 0; i < buttons.length; i++) {
+      txtValue = buttons[i].textContent || buttons[i].innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          buttons[i].style.display = "";
+      } else {
+          buttons[i].style.display = "none";
+      }
+  }
+  // search among the sub tags (user input, hashtags)
   dropdowns = document.getElementsByClassName("dropdown-container");
   for (i = 0; i < dropdowns.length; i++) {
     sub = dropdowns[i].getElementsByTagName("a");
@@ -229,7 +242,6 @@ function searchTags() {
           sub[j].style.display = "none";
         }
       }
-
     }
   }
 }
