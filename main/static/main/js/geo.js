@@ -24,7 +24,7 @@ var layerId = layer.target.id;
 map.setStyle('mapbox://styles/mapbox/' + layerId);
 }
 
-for (var i = 0; i < inputs.length; i++) {
+for (let i = 0; i < inputs.length; i++) {
 inputs[i].onclick = switchLayer;
 }
 
@@ -114,6 +114,7 @@ map.on('load', function() {
     geocoder.on('result', function(ev) {
         map.getSource('single-point').setData(ev.result.geometry);
         console.log(ev.result);
+        console.log("hello changing the page");
         var styleSpec = ev.result;
         var styleSpecBox = document.getElementById('json-response');
         var styleSpecText = JSON.stringify(styleSpec, null, 2);
@@ -171,15 +172,19 @@ function updateCommunityEntry(e) {
         }
         // var features = map.queryRenderedFeatures(pointarray, { layers: ["census-blocks"] });
         var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
-
+        console.log(user_polygon);
         // debugger
-
+        var mpolygon = [];
+        // var collection = [];
         var filter = features.reduce(function(memo, feature) {
-            console.log(feature);
-            console.log(memo);
-            console.log(user_polygon.geometry.coordinates[0]);
+            // console.log(feature);
+            // console.log(memo);
+            // console.log(user_polygon.geometry.coordinates[0]);
             // make the bounds to limit to the coordinate
-            // let poly1 = turf.polygon(feature.geometry.coordinates);
+            
+            // console.log("printing out the polygon");
+            // console.log(poly1);
+            // console.log(feature);
             // let poly2 = turf.polygon(user_polygon.geometry.coordinates);
 
             if (! (undefined === turf.intersect(feature, user_polygon))) {
@@ -187,15 +192,46 @@ function updateCommunityEntry(e) {
                 // only add the property, if the feature intersects with the polygon drawn by the user
                 // console.log("entered the loop to check how many intersected");
                 memo.push(feature.properties.GEOID10);
+                let poly1 = turf.polygon(feature.geometry.coordinates);
+                mpolygon.push(poly1);
+                // push to an array and find the union polygon
+
             } 
             return memo;
         }, ["in", "GEOID10"]);
         
-        console.log("printing out the new filter");
-        console.log(filter);
+        // console.log("printing out the new filter");
+        // console.log(filter);
         
-
+        // console.log(mpolygon);
         map.setFilter("blocks-highlighted", filter);
+
+
+        var finalpoly = turf.union(mpolygon[0], mpolygon[1]);
+        for (let i = 2; i < mpolygon.length; i++) {
+            finalpoly = turf.union(finalpoly, mpolygon[i]);
+        }
+        console.log(finalpoly);
+        console.log("compare the two");
+        console.log(user_polygon);
+        var poly = {
+            "id": user_polygon.id,
+            "type": "Feature",
+            "properties": {},
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [finalpoly.geometry.coordinates[0]]
+            }
+        };
+        console.log("printing out the other pilygon");
+        console.log(poly);
+
+        // make polygon from the coordinates from the first element of the array
+        //finalpoly.geometry.coordinates[0]
+
+        // create the featurecollection:
+        // var collection = turf.featureCollection(collection);
+        // console.log(collection);
         
         
 
@@ -222,12 +258,16 @@ function saveNewEntry(event) {
     console.log("Dummy save button pressed!");
     // Only save if the user_polygon is not null or empty
     if (user_polygon != null && user_polygon != '') {
-        console.log("[AJAX] Sending saveNewEntry to server.")
+        
+        console.log("[AJAX] Sending saveNewEntry to server.");
         // Need to stringify
         // https://www.webucator.com/how-to/how-send-receive-json-data-from-the-server.cfm
-        var entry_features = JSON.stringify(user_polygon);
+        // var entry_features = JSON.stringify(user_polygon);
+        
+        var entry_features = JSON.stringify(poly);
+        console.log(poly);
         var map_center = JSON.stringify([map.getCenter()['lng'], map.getCenter()['lat']]);
-        var entry_id = JSON.stringify(user_polygon['id']);
+        var entry_id = JSON.stringify(poly['id']);
         $.ajax({
             url: 'ajax/dummy_save/',
             data: {
