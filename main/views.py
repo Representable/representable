@@ -129,6 +129,12 @@ class EntryView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         # https://stackoverflow.com/questions/569468/django-multiple-models-in-one-template-using-forms/575133#575133
         # Use commit false to change a field
+        # -*- coding: utf-8 -*-
+        eprint("ELON MUSK")
+        for each_tag in form.fields.tags:
+            tag, created = Tag.objects.get_or_create(name=each_tag)
+            print('The tag in the parsed podcast is {}'.format(each_tag))
+            form.tags.add(tag)
         form.save()
         #form.save_m2m()
         return super().form_valid(form)

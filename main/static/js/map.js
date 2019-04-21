@@ -130,6 +130,8 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   link.href = '#';
   link.className = 'active';
   link.textContent = id;
+  link.setAttribute('role', 'menuitem');
+  link.setAttribute('tabindex', '-1');
 
   link.onclick = function (e) {
     var clickedLayer = this.textContent;
@@ -147,39 +149,10 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
     }
   };
 
-  var layers = document.getElementById('menu');
-  layers.appendChild(link);
-}
-
-// create a button which toggles layers based on tags
-// for the future: make it look pretty, get tags from db, etc.
-// Needed: how to get the names of the tags, how do we display freeform data from the db
-var tagIds = [ 'Demographics', 'Environment'];
-
-for (var i = 0; i < tagIds.length; i++) {
-  var id = tagIds[i];
-
-  var link = document.createElement('a');
-  link.href = '#';
-  link.className = 'active';
-  link.textContent = id;
-
-  link.onclick = function (e) {
-    var clickedLayer = this.textContent;
-    e.preventDefault();
-    e.stopPropagation();
-
-    var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
-
-    if (visibility === 'visible') {
-      map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-      this.className = '';
-    } else {
-      this.className = 'active';
-      map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
-    }
-  };
-
-  var layers = document.getElementById('tags');
-  layers.appendChild(link);
+  var layers = document.getElementById('outline-menu');
+  var li = document.createElement('li');
+  li.setAttribute('role', 'presentation');
+  li.setAttribute('id', 'subform');
+  layers.appendChild(li);
+  li.appendChild(link);
 }

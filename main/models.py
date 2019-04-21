@@ -34,8 +34,10 @@ class CommunityEntry(models.Model):
     industry = ArrayField(models.CharField(max_length=50,choices=INDUSTRY_CHOICES),default=list,blank=True)
     tags = models.ManyToManyField(Tag)
 
-    CHOICES=(('Y','Yes, this is my community.'),
-         ('N','No, I am creating this community on behalf of another group of people.'))
+    CHOICES=(
+        ('Y','Yes, this is my community.'),
+        ('N','No, I am creating this community on behalf of another group of people.')
+    )
     my_community = models.CharField("Is this your community?", max_length=1,choices=CHOICES, default= 'Y')
 
     def __str__(self):
