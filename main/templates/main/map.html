@@ -47,6 +47,13 @@
     <i class="fa fa-caret-down"></i></button>
     <div class="dropdown-container" id="outline-menu">
     </div>
+    {% for tag in tags %}
+      <button class="dropdown-btn">{{ tag }}
+        <i class="fa fa-caret-down"></i></button>
+        <div class="dropdown-container">
+          <a href="#">link</a>
+        </div>
+    {% endfor %}
     <button class="dropdown-btn">Environment
     <i class="fa fa-caret-down"></i></button>
     <div class="dropdown-container">

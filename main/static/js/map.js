@@ -257,7 +257,6 @@ function searchTags() {
       }
     }
     if (!skip) {
-      console.log("check buttons");
       if (txtValueB.toUpperCase().indexOf(filter) > -1) {
         next.style.display = "block";
         for (j = 0; j < sub.length; j++) {

@@ -54,6 +54,10 @@ class Map(TemplateView):
         # print(data[0])
         # print(geojson.Polygon(data[0]))
         # data = json.dumps(struct)
+
+        # the array of tags -- dummy info for now, but will become someting soon !
+        tags = ["Race", "Faith", "Industry"]
+
         a = []
         for obj in CommunityEntry.objects.all():
             # print(obj.entry_polygon.geojson)
@@ -73,6 +77,7 @@ class Map(TemplateView):
         context = ({
             # 'entries':  serialize('geojson', Entry.objects.all(), geometry_field='polygon', fields=('entry_polygon')),
             # 'entries': data,
+            'tags': tags,
             'entries': final,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
         })
