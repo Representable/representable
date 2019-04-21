@@ -7,11 +7,20 @@ var map = new mapboxgl.Map({
   zoom: 12 // starting zoom -- higher is closer
 });
 
+// geocoder used for a search bar -- within the map itself
 var geocoder = new MapboxGeocoder({
-    accessToken: mapboxgl.accessToken
+  accessToken: mapboxgl.accessToken
 });
-
 map.addControl(geocoder, 'top-right');
+
+// Add geolocate control to the map. -- this zooms in on the user's current location when pressed
+// Q: is it too confusing ? like the symbol doesn't exactly tell you what it does
+map.addControl(new mapboxgl.GeolocateControl({
+  positionOptions: {
+    enableHighAccuracy: true
+  },
+  trackUserLocation: true
+}));
 
 map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
 
