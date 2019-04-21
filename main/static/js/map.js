@@ -67,8 +67,8 @@ map.on('load', function () {
     }
   });
 
-// send elements to javascript as geojson objects and make them show on the map by
-// calling the addTo
+  // send elements to javascript as geojson objects and make them show on the map by
+  // calling the addTo
   console.log("printing the features");
   a = JSON.parse(a);
   console.log(a);
@@ -99,25 +99,25 @@ map.on('load', function () {
     });
   }
 
-// When a click event occurs on a feature in the dummy layer, open a popup at the
-// location of the click, with description HTML from its properties.
-// https://docs.mapbox.com/mapbox-gl-js/example/polygon-popup-on-click/
-map.on('click', 'Legislature Polygons', function (e) {
-  new mapboxgl.Popup()
-  .setLngLat(e.lngLat)
-  .setHTML(e.features[0].properties.NAMELSAD)
-  .addTo(map);
-});
+  // When a click event occurs on a feature in the dummy layer, open a popup at the
+  // location of the click, with description HTML from its properties.
+  // https://docs.mapbox.com/mapbox-gl-js/example/polygon-popup-on-click/
+  map.on('click', 'Legislature Polygons', function (e) {
+    new mapboxgl.Popup()
+    .setLngLat(e.lngLat)
+    .setHTML(e.features[0].properties.NAMELSAD)
+    .addTo(map);
+  });
 
-// Change the cursor to a pointer when the mouse is over the dummy layer.
-map.on('mouseenter', 'Legislature Polygons', function () {
-  map.getCanvas().style.cursor = 'pointer';
-});
+  // Change the cursor to a pointer when the mouse is over the dummy layer.
+  map.on('mouseenter', 'Legislature Polygons', function () {
+    map.getCanvas().style.cursor = 'pointer';
+  });
 
-// Change it back to a pointer when it leaves.
-map.on('mouseleave', 'Legislature Polygons', function () {
-  map.getCanvas().style.cursor = '';
-});
+  // Change it back to a pointer when it leaves.
+  map.on('mouseleave', 'Legislature Polygons', function () {
+    map.getCanvas().style.cursor = '';
+  });
 });
 
 //create a button ! toggles layers based on their IDs
@@ -203,47 +203,55 @@ var i;
 
 for (i = 0; i < dropdown.length; i++) {
   dropdown[i].addEventListener("click", function() {
-  this.classList.toggle("active");
-  var dropdownContent = this.nextElementSibling;
-  if (dropdownContent.style.display === "block") {
-  dropdownContent.style.display = "none";
-  } else {
-  dropdownContent.style.display = "block";
-  }
+    this.classList.toggle("active");
+    var dropdownContent = this.nextElementSibling;
+    if (dropdownContent.style.display === "block") {
+      dropdownContent.style.display = "none";
+    } else {
+      dropdownContent.style.display = "block";
+    }
   });
 }
 
 // search bar function ! looks through the tags and the buttons themselves
 function searchTags() {
-  var input, filter, dropdowns, sub, i, txtValue, j, buttons, prev;
+  var input, filter, dropdowns, sub, i, txtValueB, txtValueS, j, buttons, prev, next, skip;
   input = document.getElementById("search-bar");
   filter = input.value.toUpperCase();
   // search among the tags themselves (buttons)
   // maybe there is a more efficient way to do this, but this makes sense, for now
   buttons = document.getElementsByClassName("dropdown-btn");
   for (i = 0; i < buttons.length; i++) {
-      txtValue = buttons[i].textContent || buttons[i].innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          buttons[i].style.display = "";
-      } else {
-          buttons[i].style.display = "none";
-      }
-  }
-  // search among the sub tags (user input, hashtags)
-  dropdowns = document.getElementsByClassName("dropdown-container");
-  for (i = 0; i < dropdowns.length; i++) {
-    prev = dropdowns[i].previousElementSibling;
-    sub = dropdowns[i].getElementsByTagName("a");
+    // the dropdown-container with sub tags
+    next = buttons[i].nextElementSibling;
+    txtValueB = buttons[i].textContent || buttons[i].innerText;
+    // the links within dropdown-container: sub tags themselves
+    sub = next.getElementsByTagName("a");
+    skip = false;
     if (sub) {
       for (j = 0; j < sub.length; j++) {
-        txtValue = sub[j].textContent || sub[j].innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          prev.style.display = "";
+        txtValueS = sub[j].textContent || sub[j].innerText;
+        if (txtValueS.toUpperCase().indexOf(filter) > -1) {
+          buttons[i].style.display = "";
+          skip = true;
           sub[j].style.display = "";
         } else {
           sub[j].style.display = "none";
         }
       }
     }
+    if (!skip) {
+      console.log("check buttons");
+      if (txtValueB.toUpperCase().indexOf(filter) > -1) {
+        next.style.display = "block";
+        for (j = 0; j < sub.length; j++) {
+          sub[j].style.display = "block";
+        }
+        buttons[i].style.display = "";
+      } else {
+        buttons[i].style.display = "none";
+      }
+    }
+    skip = false;
   }
 }
