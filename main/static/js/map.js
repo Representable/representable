@@ -7,6 +7,12 @@ var map = new mapboxgl.Map({
   zoom: 12 // starting zoom -- higher is closer
 });
 
+var geocoder = new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken
+});
+
+map.addControl(geocoder, 'top-right');
+
 map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
 
 map.on('load', function () {
@@ -234,7 +240,8 @@ function searchTags() {
         if (txtValueS.toUpperCase().indexOf(filter) > -1) {
           buttons[i].style.display = "";
           skip = true;
-          sub[j].style.display = "";
+          next.style.display = "block";
+          sub[j].style.display = "block";
         } else {
           sub[j].style.display = "none";
         }
