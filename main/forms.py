@@ -13,25 +13,14 @@ class TagSelect2Widget(ModelSelect2TagWidget):
     queryset = model.objects.all()
 
     def value_from_datadict(self, data, files, name):
-        print('value_from_datadict')
-        print(self)
-        print(data)
-        print(files)
-        print(name)
         values = super().value_from_datadict(data, files, name)
         queryset = self.get_queryset()
-        print("QUERYSET")
-        print(queryset)
-        print("VALUES")
-        print(values)
         pks = queryset.filter(**{'name__in': list(values)}).values_list('name', flat=True)
         cleaned_values = []
         for val in values:
             if str(val) not in pks:
                 val = queryset.create(name=val).pk
             cleaned_values.append(val)
-        print("cleaned_values")
-        print(cleaned_values)
         return cleaned_values
 
 class IssueForm(ModelForm):
