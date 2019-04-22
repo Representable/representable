@@ -1,3 +1,4 @@
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
 from django.views import View
@@ -15,6 +16,7 @@ from shapely.geometry import shape
 from allauth.account.decorators import verified_email_required
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 # must be imported after other models
 from django.contrib.gis.geos import Point
@@ -177,9 +179,8 @@ class EntryView(View, LoginRequiredMixin):
     def post(self, request, *args, **kwargs):
         print("POST")
         form = self.form_class(request.POST)
-
+        print(f"FORM IS VALID: {form.is_valid()")
         if form.is_valid():
-            print(form)
             # <process form cleaned data>
             return HttpResponseRedirect(self.success_url)
         print("NOT VALID BRUH")

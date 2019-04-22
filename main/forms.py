@@ -10,32 +10,29 @@ from .choices import *
 class TagSelect2Widget(ModelSelect2TagWidget):
     model = Tag
     search_fields=['name__icontains']
+    queryset = model.objects.all()
 
-    # def create_value(self, value):
-    #     print("theodor")
-    #     print(value)
-    #     self.get_queryset().create(name=value)
-    # def value_from_datadict(self, data, files, name):
-    #     values = super(TagSelect2Widget, self).value_from_datadict(self, data, files, name)
-    #     qs = self.queryset.filter(**{'pk__in': list(values)})
-    #     pks = set(str(getattr(o, pk)) for o in qs)
-    #     cleaned_values = []
-    #     for val in values:
-    #         if str(val) not in pks:
-    #             val = queryset.create(name=val).pk
-    #         cleaned_values.append(val)
-    #     return cleaned_values
-    '''
     def value_from_datadict(self, data, files, name):
-        values = super(TagSelect2Widget, self).value_from_datadict(data, files, name)
-        return ",".join(values)
-
-    def optgroups(self, name, value, attrs=None):
-        values = value[0].split(',') if value[0] else []
-        selected = set(values)
-        subgroup = [self.create_option(name, v, v, selected, i) for i, v in enumerate(values)]
-        return [(None, subgroup, 0)]
-    '''
+        print('value_from_datadict')
+        print(self)
+        print(data)
+        print(files)
+        print(name)
+        values = super().value_from_datadict(data, files, name)
+        queryset = self.get_queryset()
+        print("QUERYSET")
+        print(queryset)
+        print("VALUES")
+        print(values)
+        pks = queryset.filter(**{'name__in': list(values)}).values_list('name', flat=True)
+        cleaned_values = []
+        for val in values:
+            if str(val) not in pks:
+                val = queryset.create(name=val).pk
+            cleaned_values.append(val)
+        print("cleaned_values")
+        print(cleaned_values)
+        return cleaned_values
 
 class IssueForm(ModelForm):
     class Meta:
