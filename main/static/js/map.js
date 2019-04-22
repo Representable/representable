@@ -28,7 +28,7 @@ map.on('load', function () {
   // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
   map.addSource("census", {
     type: "vector",
-    url: "mapbox://districter-team.njblocks"
+    url: "mapbox://districter-team.aq1twwkc"
   });
 
   // colors: https://coolors.co/6f2dbd-a663cc-b298dc-b8d0eb-b9faf8
@@ -36,7 +36,7 @@ map.on('load', function () {
     "id": "Census Blocks",
     "type": "fill",
     "source": "census",
-    "source-layer": "NJBlocks",
+    "source-layer": "njblockdata",
     "layout": {
       "visibility": "visible"
     },
