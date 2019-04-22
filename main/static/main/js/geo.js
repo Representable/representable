@@ -198,7 +198,6 @@ function updateCommunityEntry(e) {
                 // only add the property, if the feature intersects with the polygon drawn by the user
                 // console.log("entered the loop to check how many intersected");
                 memo.push(feature.properties.GEOID10);
-<<<<<<< HEAD
                 let poly1 = turf.polygon(feature.geometry.coordinates);
                 mpolygon.push(poly1);
                 // push to an array and find the union polygon
@@ -208,19 +207,6 @@ function updateCommunityEntry(e) {
         }, ["in", "GEOID10"]);
     
         map.setFilter("blocks-highlighted", filter);
-=======
-            }
-            return memo;
-        }, ["in", "GEOID10"]);
-
-        console.log("printing out the new filter");
-        console.log(filter);
-
-
-        map.setFilter("blocks-highlighted", filter);
-
-
->>>>>>> master
 
 
         var finalpoly = turf.union(mpolygon[0], mpolygon[1]);
