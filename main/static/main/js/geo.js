@@ -168,6 +168,10 @@ function updateCommunityEntry(e) {
     if (data.features.length > 0) {
         // Update User Polygon with the GeoJson data.
         user_polygon = data.features[0];
+
+        entry_polygon = JSON.stringify(user_polygon['geometry']);
+        wkt_obj = wkt.read(entry_polygon);
+        entry_polygon = wkt_obj.write();
         
 
         var polygonBoundingBox = turf.bbox(user_polygon);
@@ -219,12 +223,8 @@ function updateCommunityEntry(e) {
         // Update User Polygon with `null`.
         user_polygon = null;
         entry_polygon = '';
+        map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
     }
-    entry_polygon = JSON.stringify(user_polygon['geometry']);
-    
-    wkt_obj = wkt.read(entry_polygon);
-    entry_polygon = wkt_obj.write();
-    console.log(entry_polygon);
     // Update form field
     document.getElementById('id_entry_polygon').value = entry_polygon;
 
