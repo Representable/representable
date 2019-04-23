@@ -4,6 +4,7 @@
 /* https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ */
 // Polygon Drawn By User
 var user_polygon = null;
+var ideal_population = 109899;
 
 /******************************************************************************/
 
@@ -194,6 +195,8 @@ function updateCommunityEntry(e) {
         console.log(user_polygon);
         // debugger
         var mpolygon = [];
+        var total = 0.0;
+        
         // var collection = [];
         var filter = features.reduce(function(memo, feature) {
 
@@ -204,6 +207,9 @@ function updateCommunityEntry(e) {
                 memo.push(feature.properties.BLOCKID10);
                 let poly1 = turf.polygon(feature.geometry.coordinates);
                 mpolygon.push(poly1);
+                total+= feature.properties.POP10;
+
+                
                 // push to an array and find the union polygon
 
             } 
@@ -211,7 +217,7 @@ function updateCommunityEntry(e) {
         }, ["in", "BLOCKID10"]);
 
         map.setFilter("blocks-highlighted", filter);
-
+        console.log(total);
 
         var finalpoly = turf.union(mpolygon[0], mpolygon[1]);
         for (let i = 2; i < mpolygon.length; i++) {
