@@ -207,22 +207,21 @@ function updateCommunityEntry(e) {
         // progress bar with population data based on ideal population for a district in the given state
         //<div id="pop" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 85%">
         progress = document.getElementById("pop");
+        // set color of the progress bar depending on population
+        if (total < (ideal_population * 0.33) || total > (ideal_population * 1.5)) {
+          progress.style.background = "red";
+        }
+        else if (total < (ideal_population * 0.67) || total > (ideal_population * 1.33)) {
+          progress.style.background = "orange";
+        }
+        else {
+          progress.style.background = "green";
+        }
         progress.innerHTML = total;
         progress.setAttribute("aria-valuenow", "total");
         progress.setAttribute("aria-valuemax", ideal_population * 1.5);
         popWidth = total / (ideal_population * 1.5) * 100;
         progress.style.width = popWidth + "%";
-
-        // set color of the progress bar depending on population
-        if (total < (ideal_population * 0.67) || total > (ideal_population * 1.33)) {
-          progress.className = "progress-bar progress-bar-warning";
-        }
-        else if (total < (ideal_population * 0.33) || total > (ideal_population * 1.5)) {
-          progress.className = "progress-bar progress-bar-danger";
-        }
-        else {
-          progress.className = "progress-bar progress-bar-success";
-        }
 
         var finalpoly = turf.union(mpolygon[0], mpolygon[1]);
         for (let i = 2; i < mpolygon.length; i++) {
