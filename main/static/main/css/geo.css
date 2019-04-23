@@ -6,6 +6,31 @@ body {
     background-color: #030428;
 }
 
+.bar-step {
+    position:absolute;
+    margin-top:-20px;
+	  z-index:1;
+    font-size:12px;
+    left: 33%;
+}
+
+.label-txt {
+    float: left;
+}
+
+.label-line {
+    float: right;
+    background: #000;
+    height:50px;
+	  width:1px;
+    margin-left: 5px;
+}
+
+.label-percent {
+    float: right;
+    margin-left: 5px;
+}
+
 #map {
     top: 0;
     bottom: 0;
