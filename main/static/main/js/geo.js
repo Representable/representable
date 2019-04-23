@@ -189,10 +189,7 @@ function updateCommunityEntry(e) {
         // console.log(user_polygon);
         var mpolygon = [];
         var total = 0.0;
-<<<<<<< HEAD
-=======
 
->>>>>>> kylecensus
         // var collection = [];
         var filter = features.reduce(function(memo, feature) {
             if (! (turf.intersect(feature, user_polygon) === null)) {
@@ -202,19 +199,10 @@ function updateCommunityEntry(e) {
                 let poly1 = turf.polygon(feature.geometry.coordinates);
                 mpolygon.push(poly1);
                 total+= feature.properties.POP10;
-<<<<<<< HEAD
-            } 
-=======
-
-                // push to an array and find the union polygon
-
             }
->>>>>>> kylecensus
             return memo;
         }, ["in", "BLOCKID10"]);
         map.setFilter("blocks-highlighted", filter);
-<<<<<<< HEAD
-=======
         console.log(total);
         // progress bar with population data based on ideal population for a district in the given state
         //<div id="pop" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 85%">
@@ -224,7 +212,6 @@ function updateCommunityEntry(e) {
         progress.setAttribute("aria-valuemax", ideal_population * 1.5);
         popWidth = total / (ideal_population * 1.5) * 100;
         progress.style.width = popWidth + "%";
->>>>>>> kylecensus
 
         var finalpoly = turf.union(mpolygon[0], mpolygon[1]);
         for (let i = 2; i < mpolygon.length; i++) {
