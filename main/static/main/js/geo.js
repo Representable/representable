@@ -213,6 +213,17 @@ function updateCommunityEntry(e) {
         popWidth = total / (ideal_population * 1.5) * 100;
         progress.style.width = popWidth + "%";
 
+        // set color of the progress bar depending on population
+        if (total < (ideal_population * 0.67) || total > (ideal_population * 1.33)) {
+          progress.className = "progress-bar progress-bar-warning";
+        }
+        else if (total < (ideal_population * 0.33) || total > (ideal_population * 1.5)) {
+          progress.className = "progress-bar progress-bar-danger";
+        }
+        else {
+          progress.className = "progress-bar progress-bar-success";
+        }
+
         var finalpoly = turf.union(mpolygon[0], mpolygon[1]);
         for (let i = 2; i < mpolygon.length; i++) {
             finalpoly = turf.union(finalpoly, mpolygon[i]);
