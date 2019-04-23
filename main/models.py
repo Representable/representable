@@ -7,8 +7,12 @@ from django.db import migrations, models
 from django.contrib.gis.db import models
 from .choices import *
 
+#******************************************************************************#
+
 class User(AbstractUser):
     pass
+
+#******************************************************************************#
 
 class Tag(models.Model):
     '''
@@ -21,6 +25,8 @@ class Tag(models.Model):
         ordering = ('name',)
     def __str__(self):
         return self.name
+
+#******************************************************************************#
 
 class CommunityEntry(models.Model):
     '''
@@ -55,16 +61,20 @@ class CommunityEntry(models.Model):
     class Meta:
         db_table = "community_entry"
 
+#******************************************************************************#
+
 class Issue(models.Model):
     '''
-    
+    Issue holds issues associated with each community entry.
     '''
+    entry = models.ForeignKey(CommunityEntry, on_delete=models.CASCADE, default=None, blank=False)
     category = models.CharField(max_length=50,choices=POLICY_ISSUES,default=None)
     description = models.CharField(max_length=250)
-    entry = models.ForeignKey(CommunityEntry, on_delete=models.CASCADE, default=None, blank=False)
 
     class Meta:
         ordering = ('category','description',)
 
     def __str__(self):
         return self.description
+        
+#******************************************************************************#
