@@ -56,6 +56,9 @@ class CommunityEntry(models.Model):
         db_table = "community_entry"
 
 class Issue(models.Model):
+    '''
+    
+    '''
     category = models.CharField(max_length=50,choices=POLICY_ISSUES,default=None)
     description = models.CharField(max_length=250)
     entry = models.ForeignKey(CommunityEntry, on_delete=models.CASCADE, default=None, blank=False)

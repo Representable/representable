@@ -2,6 +2,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
 from django.views import View
+from django.shortcuts import redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
+from allauth.account.decorators import verified_email_required
+from django.forms import formset_factory
 # from .models import Entry
 from .forms import CommunityForm, IssueForm, BaseIssueFormSet
 from .models import CommunityEntry
@@ -10,34 +14,30 @@ from django.core.serializers import serialize
 from shapely.geometry import Polygon, mapping
 import geojson
 import os
-from django.http import JsonResponse
 import json
+from django.http import JsonResponse
 from shapely.geometry import shape
-from allauth.account.decorators import verified_email_required
-from django.shortcuts import redirect
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.forms import formset_factory
 
+
+#******************************************************************************#
 
 # must be imported after other models
 from django.contrib.gis.geos import Point
 
-# https://docs.djangoproject.com/en/2.1/topics/class-based-views/
-
 #******************************************************************************#
 
-
+'''
+Documentation: https://docs.djangoproject.com/en/2.1/topics/class-based-views/
+'''
 class Index(TemplateView):
     template_name = "main/index.html"
 
 #******************************************************************************#
 
-
 class Timeline(TemplateView):
     template_name = "main/timeline.html"
 
 #******************************************************************************#
-
 
 class Map(TemplateView):
     template_name = "main/map.html"
@@ -88,40 +88,15 @@ class Map(TemplateView):
 
 #******************************************************************************#
 
-
 class Thanks(TemplateView):
     template_name = "main/thanks.html"
 
-# https://docs.djangoproject.com/en/2.1/topics/class-based-views/generic-editing/
-
 #******************************************************************************#
-
-
-class CommunityView(FormView):
-    template_name = 'main/community_form.html'
-    form_class = IssueForm
-    success_url = '/thanks/'
-
-
-# Geo View - Generic Template (See Django tutorial)
-# https://stackoverflow.com/questions/41697984/django-redirect-already-logged-user-by-class-based-view
-
-#******************************************************************************#
-
-class GeoView(TemplateView):
-    template_name = 'main/geo.html'
-
-    def get(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return redirect('/accounts/login')
-        return super(GeoView, self).get(request, *args, **kwargs)
-
-#******************************************************************************#
-
-# EntryView displays the form and map selection screen.
-
 
 class EntryView(View, LoginRequiredMixin):
+    '''
+    EntryView displays the form and map selection screen.
+    '''
     template_name = 'main/entry.html'
     form_class = CommunityForm
     initial = {'key': 'value'}
