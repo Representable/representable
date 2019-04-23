@@ -23,6 +23,10 @@ class Tag(models.Model):
         return self.name
 
 class CommunityEntry(models.Model):
+    '''
+    Community Entry represents the entry created by the user when drawing their
+    COI.
+    '''
     # https://www.census.gov/topics/population/race/about.html
     # Foreign Key = User (Many to One)
     # https://docs.djangoproject.com/en/2.2/topics/db/examples/many_to_one/
