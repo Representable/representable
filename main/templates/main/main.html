@@ -2,66 +2,26 @@
 {% load leaflet_tags %}
 {% load static %}
 
-{% block hero-pre %}
-<div class="shadow-sm">
-  <div id="particles-js">
-    {% endblock %}
-    {% block hero %}
-    <div class="container-fluid container-hero">
-      <div class="row row-hero">
-        <div class="col-sm-12 col-md-10 offset-md-1 my-5">
-          <h1 class="di-title mb-4">A crowdsourced redistricting tool to map communities and make your voice heard.</h1>
-          <a class="btn btn-outline-primary btn-canvas" href="#description" role="button">Learn More</a>
-            <a class="btn btn-outline-primary btn-canvas" href="#map" role="button">How do I contribute</a>
-          <a class="btn btn-outline-primary btn-canvas" href="/entry" role="button">Contribute</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-{% endblock %}
-
 {% block head %}
 {% leaflet_js %}
 {% leaflet_css %}
-
-<!--  Mapbox GL JS-->
+<!--  Custom CSS -->
 <meta charset='utf-8' />
+<title>Main page of Disticter </title>
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+<style>
+  body { margin:0; padding:0; }
+  #map { position:absolute; top:0; bottom:0; width:100%; }
+</style>
+
 <!--  Custom CSS -->
 <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="row">
-  <div id = 'description' class="col-sm-6">
-  <h4>What is Districter?</h4>
-  <p>Districter is an online service that allows Americans to fight against gerrymandering by
-    drawing their communities of interest (COIs) on a map. A COI is what a person consider to
-    be their community.<br> <br>
-
-    This can take the form of a coastal neighborhood that stretches along a
-    beach, or a valley village that is clustered around a river. Currently, people can only provide
-    qualitative information through committee hearings, which cannot be easily used to draw
-    districts or highlight gerrymandering.<br> <br>
-
-    Allowing people to mark their COIs will help redistricting
-    committees by providing them with quantifiable information that can be used to draw fair
-    districts. Furthermore, Districter will provide a way to better visualize and quantify the current
-    state of gerrymandering by overlaying district lines over communities of interest.</p>
-</div>
-   <div id = images class="col-sm-6">
-     <img src="{% static 'img/gerry.png' %}" alt="map" width=500px height=400px>
-  <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
-     </div>
-
-</div>
-
-
-
-  <div id='map'></div>
+<div id='map'> </div>
 
   <div id='features'>
   <section id='baker' class='active'>
@@ -94,19 +54,10 @@ even drag the entire shape over. </p>
   <p> Return to the main menu to explore submissions by others near you, interesting trends,
   and the latest in Districter news.</p>
   </section>
-
   </div>
-
-
 {% endblock %}
 
 {% block script %}
-<script src="{% static 'js/particles.min.js' %}"></script>
-<script>
-  particlesJS.load('particles-js', "{% static 'assets/particles.json' %}", function() {
-    console.log('callback - particles.min.js config loaded');
-  });
-</script>
 <script type="text/javascript">
   mapboxgl.accessToken = "{{ mapbox_key }}";
 </script>

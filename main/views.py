@@ -25,6 +25,23 @@ from django.contrib.gis.geos import Point
 class Index(TemplateView):
     template_name = "main/index.html"
 
+    # Add extra context variables.
+    def get_context_data(self, **kwargs):
+        context = super(Index, self).get_context_data(**kwargs) # get the default context data
+        context['mapbox_key'] = os.environ.get('DISTR_MAPBOX_KEY')
+        return context
+
+#******************************************************************************#
+
+class MainView(TemplateView):
+    template_name = "main/main.html"
+
+    # Add extra context variables.
+    def get_context_data(self, **kwargs):
+        context = super(MainView, self).get_context_data(**kwargs) # get the default context data
+        context['mapbox_key'] = os.environ.get('DISTR_MAPBOX_KEY')
+        return context
+
 #******************************************************************************#
 
 class Timeline(TemplateView):
