@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
 from django.views import View
 # from .models import Entry
-from .forms import CommunityForm, IssueForm
+from .forms import CommunityForm, IssueForm, BaseIssueFormSet
 from .models import CommunityEntry
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
@@ -16,6 +16,7 @@ from shapely.geometry import shape
 from allauth.account.decorators import verified_email_required
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.forms import formset_factory
 
 
 # must be imported after other models
@@ -119,47 +120,14 @@ class GeoView(TemplateView):
 
 # EntryView displays the form and map selection screen.
 
-# class EntryView(LoginRequiredMixin, FormView):
-#     template_name = 'main/entry.html'
-#     form_class = CommunityForm
-#     success_url = '/thanks/'
-#     # Add extra context variables.
-#     def get_context_data(self, **kwargs):
-#         context = super(EntryView, self).get_context_data(**kwargs) # get the default context data
-#         context['mapbox_key'] = os.environ.get('DISTR_MAPBOX_KEY')
-#         return context
-#     # Redirect to login if user not authenticated
-#     def get(self, request, *args, **kwargs):
-#         if not request.user.is_authenticated:
-#             return redirect('/accounts/login')
-#         return super(EntryView, self).get(request, *args, **kwargs)
-#     # Validate form
-#     def form_valid(self, form):
-#         # https://stackoverflow.com/questions/569468/django-multiple-models-in-one-template-using-forms/575133#575133
-#         # Use commit false to change a field
-#         # -*- coding: utf-8 -*-
-#         eprint("ELON MUSK")
-#         for each_tag in form.fields.tags:
-#             tag, created = Tag.objects.get_or_create(name=each_tag)
-#             print('The tag in the parsed podcast is {}'.format(each_tag))
-#             form.tags.add(tag)
-#         form.save()
-#         #form.save_m2m()
-#         return super().form_valid(form)
-#     # https://www.agiliq.com/blog/2019/01/django-formview/
-#     def get_initial(self):
-#         initial = super(EntryView, self).get_initial()
-#         if self.request.user.is_authenticated:
-#             initial.update({'user': self.request.user})
-#         print(self.request.user);
-#         return initial
-
 
 class EntryView(View, LoginRequiredMixin):
     template_name = 'main/entry.html'
     form_class = CommunityForm
     initial = {'key': 'value'}
     success_url = '/thanks/'
+    # Create the formset, specifying the form and formset we want to use.
+    IssueFormSet = formset_factory(IssueForm, formset=BaseIssueFormSet)
 
     # https://www.agiliq.com/blog/2019/01/django-formview/
     def get_initial(self):
@@ -167,23 +135,35 @@ class EntryView(View, LoginRequiredMixin):
         initial = self.initial
         if self.request.user.is_authenticated:
             initial.update({'user': self.request.user})
-            initial.update({'zipcode': '00000'})
-        print(self.request.user);
+        print(self.request.user)
         return initial
 
     def get(self, request, *args, **kwargs):
         print("GET")
         form = self.form_class(initial=self.get_initial())
-        return render(request, self.template_name, {'form': form, 'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY')})
+        issue_formset = self.IssueFormSet(request.POST)
+        context = {
+            'form': form,
+            'issue_formset': issue_formset,
+            'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY')
+        }
+        return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         print("POST")
+        print(f"FORM IS VALID: {form.is_valid()}")
         form = self.form_class(request.POST)
-        print(f"FORM IS VALID: {form.is_valid()")
-        if form.is_valid():
+        issue_formset = self.IssueFormSet(request.POST)
+        if form.is_valid() and issue_formset.is_valid():
+            print(form.cleaned_data)
+            print(issue_formset.cleaned_data)
             # <process form cleaned data>
             return HttpResponseRedirect(self.success_url)
-        print("NOT VALID BRUH")
-        return render(request, self.template_name, {'form': form, 'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY')})
+        context = {
+            'form': form,
+            'issue_formset': issue_formset,
+            'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY')
+        }
+        return render(request, self.template_name, context)
 
 #******************************************************************************#

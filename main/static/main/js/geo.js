@@ -144,6 +144,7 @@ var wasLoaded = false;
 map.on('render', function() {
     if (!map.loaded() || wasLoaded) return;
     wasLoaded = true;
+    
 });
 
 /******************************************************************************/
@@ -190,7 +191,6 @@ function updateCommunityEntry(e) {
         var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
 
         // debugger
-
         var filter = features.reduce(function(memo, feature) {
             console.log(feature);
             console.log(memo);
@@ -225,43 +225,4 @@ function updateCommunityEntry(e) {
     document.getElementById('id_entry_polygon').value = entry_polygon;
 
 }
-
-/******************************************************************************/
-
-// AJAX for Saving https://l.messenger.com/l.php?u=https%3A%2F%2Fsimpleisbetterthancomplex.com%2Ftutorial%2F2016%2F08%2F29%2Fhow-to-work-with-ajax-request-with-django.html&h=AT2eBJBqRwotQY98nmtDeTb6y0BYi-ydl5NuMK68-V1LIRsZY11LiFF6o6HUCLsrn0vfPqJYoJ0RsZNQGvLO9qBJPphpzlX4fkxhtRrIzAgOsHmcC6pDV2MzhaeUT-hhj4M2-iOUyg
-// Dummy Button Save Listener
-// document.getElementById("dummySave").onclick = saveNewEntry;
-
-/******************************************************************************/
-
-// Process AJAX Request
-function saveNewEntry(event) {
-    console.log("Dummy save button pressed!");
-    // Only save if the user_polygon is not null or empty
-    if (user_polygon != null && user_polygon != '') {
-        console.log("[AJAX] Sending saveNewEntry to server.")
-        // Need to stringify
-        // https://www.webucator.com/how-to/how-send-receive-json-data-from-the-server.cfm
-        var entry_features = JSON.stringify(user_polygon);
-        var map_center = JSON.stringify([map.getCenter()['lng'], map.getCenter()['lat']]);
-        var entry_id = JSON.stringify(user_polygon['id']);
-        $.ajax({
-            url: 'ajax/dummy_save/',
-            data: {
-                'entry_id': entry_id,
-                'entry_features': entry_features,
-                'map_center': map_center,
-            },
-            dataType: 'json',
-            success: function(data) {
-                if (data.worked) {
-                    alert("Saved!");
-                } else {
-                    alert("Error.");
-                }
-            }
-        });
-    }
-}
-
 /******************************************************************************/

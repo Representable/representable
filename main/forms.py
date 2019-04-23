@@ -4,6 +4,7 @@ from django_select2.forms import Select2MultipleWidget, Select2Widget, ModelSele
 from .models import CommunityEntry, Issue, Tag
 from django.forms import formset_factory
 from .choices import *
+from django.forms.formsets import BaseFormSet
 
 # https://django-select2.readthedocs.io/en/latest/django_select2.html
 
@@ -45,12 +46,41 @@ class CommunityForm(ModelForm):
             'race': Select2MultipleWidget(choices=RACE_CHOICES),
             'religion': Select2MultipleWidget(choices=RELIGION_CHOICES),
             'industry': Select2MultipleWidget(choices=INDUSTRY_CHOICES),
-            #'entry_issues': ModelSelect2TagWidget(model=Issue,queryset = Issue.objects.all(),search_fields=['name__icontains']),
+            'entry_issues': ModelSelect2TagWidget(model=Issue,queryset = Issue.objects.all(),search_fields=['name__icontains']),
             'tags': TagSelect2Widget(),
             'user': forms.HiddenInput(),
             'entry_ID': forms.HiddenInput(),
             'entry_polygon': forms.HiddenInput(),
-            'zipcode': forms.HiddenInput(),
             'my_community': BootstrapRadioSelect(),
-
         }
+
+class BaseIssueFormSet(BaseFormSet):
+    def clean(self):
+        """
+        https://whoisnicoleharris.com/2015/01/06/implementing-django-formsets.html
+        Adds validation to check that no two issues have the same category and that
+        all links have both a category and description.
+        """
+        if any(self.errors):
+            return
+
+        categories = []
+        descriptions = []
+        duplicates = False
+
+        for form in self.forms:
+            if form.cleaned_data:
+                category = form.cleaned_data['category']
+                description = form.cleaned_data['description']
+
+                # Check that all links have both a category and a description
+                if category and not description:
+                    raise forms.ValidationError(
+                        'All issues must have a category.',
+                        code='missing_category'
+                    )
+                elif anchor and not url:
+                    raise forms.ValidationError(
+                        'All issues must have a description.',
+                        code='missing_description'
+                    )

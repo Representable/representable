@@ -31,52 +31,74 @@
 {% endblock %}
 
 {% block content %}
-        <div class="col-sm-12">
-            <h2>Create your entry and support your community!</h2>
-            <h6>Instructions:</h6>
-            <p>Enter your 5 digit ZipCode into the Search Bar and use the Polygon draw features on the right to draw your COI below! </p>
-            <!-- <button id="dummySave" type="button" class="btn btn-primary">Dummy Save</button> -->
-        </div>
-        <div class="col-sm-8">
-            <div id='map'></div>
-            <div id='menu'>
-                <input id='streets-v11' type='radio' name='rtoggle' value='streets' checked='checked'>
-                <label for='streets'>streets</label>
-                <input id='light-v10' type='radio' name='rtoggle' value='light'>
-                <label for='light'>light</label>
-                <input id='dark-v10' type='radio' name='rtoggle' value='dark'>
-                <label for='dark'>dark</label>
-                <input id='outdoors-v11' type='radio' name='rtoggle' value='outdoors'>
-                <label for='outdoors'>outdoors</label>
-                <input id='satellite-v9' type='radio' name='rtoggle' value='satellite'>
-                <label for='satellite'>satellite</label>
+<div class="col-sm-12">
+    <h2>Create your entry and support your community!</h2>
+    <h6>Instructions:</h6>
+    <p>Enter your 5 digit ZipCode into the Search Bar and use the Polygon draw features on the right to draw your COI below! </p>
+    <!-- <button id="dummySave" type="button" class="btn btn-primary">Dummy Save</button> -->
+</div>
+<div class="col-sm-8">
+    <div id='map'></div>
+    <div id='menu'>
+        <input id='streets-v11' type='radio' name='rtoggle' value='streets' checked='checked'>
+        <label for='streets'>streets</label>
+        <input id='light-v10' type='radio' name='rtoggle' value='light'>
+        <label for='light'>light</label>
+        <input id='dark-v10' type='radio' name='rtoggle' value='dark'>
+        <label for='dark'>dark</label>
+        <input id='outdoors-v11' type='radio' name='rtoggle' value='outdoors'>
+        <label for='outdoors'>outdoors</label>
+        <input id='satellite-v9' type='radio' name='rtoggle' value='satellite'>
+        <label for='satellite'>satellite</label>
+    </div>
+
+</div>
+<div class="col-sm-4">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.errors }}
+        {{ form.non_field_errors }}
+        <div class="form-group">
+            {{ issue_formset.management_form }}
+            {% for issue_form in issue_formset %}
+            <div class="issue-formset">
+                {{ issue_form.anchor }}
+                {% if issue_form.anchor.errors %}
+                {% for error in issue_form.anchor.errors %}
+                {{ error|escape }}
+                {% endfor %}
+                {% endif %}
+
+                {{ issue_form.url }}
+                {% if issue_form.url.errors %}
+                {% for error in issue_form.url.errors %}
+                {{ error|escape }}
+                {% endfor %}
+                {% endif %}
             </div>
+            {% endfor %}
+
+            <!-- {# Include the hidden fields #} -->
+            {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+            {% endfor %}
+            <!-- {# Include the visible fields #} -->
+            {% for field in form.visible_fields %}
+            <div class="field-wrap">
+                {{ field.errors }}
+                {{ field.label_tag }} {{ field|append_attr:"class:form-control" }}
+                {% if field.help_text %}
+                <p class="help">{{ field.help_text|safe }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+
 
         </div>
-        <div class="col-sm-4">
-            <form method="post">
-                {% csrf_token %}
-                {{ form.errors }}
-                {{ form.non_field_errors }}
-                <div class="form-group">
-                    <!-- {# Include the hidden fields #} -->
-                    {% for hidden in form.hidden_fields %}
-                    {{ hidden }}
-                    {% endfor %}
-                    <!-- {# Include the visible fields #} -->
-                    {% for field in form.visible_fields %}
-                    <div class="field-wrap">
-                        {{ field.errors }}
-                        {{ field.label_tag }} {{ field|append_attr:"class:form-control" }}
-                        {% if field.help_text %}
-                        <p class="help">{{ field.help_text|safe }}</p>
-                        {% endif %}
-                    </div>
-                    {% endfor %}
-                </div>
-                <button id="save" type="submit" class="btn btn-primary" value="Submit">Submit</button>
-            </form>
-        </div>
+        <button id="save" type="submit" class="btn btn-primary" value="Submit">Submit</button>
+    </form>
+</div>
 {% endblock %}
 
 {% block script %}
@@ -88,4 +110,13 @@
 <script type="text/javascript" src="{% static 'main/js/geo.js' %}"></script>
 <!-- Turf to get the bounding box. -->
 <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+<!-- Include formset plugin - including jQuery dependency -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="{% static 'path_to/jquery.formset.js' %}"></script>
+<script>
+    $('.link-formset').formset({
+        addText: 'add link',
+        deleteText: 'remove'
+    });
+</script>
 {% endblock %}
