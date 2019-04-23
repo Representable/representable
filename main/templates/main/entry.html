@@ -72,9 +72,17 @@
                     {% endfor %}
                 </div>
                 <button id="save" type="submit" class="btn btn-primary" value="Submit">Submit</button>
+                <br>
                 Community Population:
+                <br>
+                <br>
                 <div class="progress">
-                  <div id="pop" class="progress-bar" role="progressbar"aria-valuemin="0">
+                  <div class="bar-step">
+                    <div class="label-txt">Ideal District Size</div>
+                    <div class="label-percent" id="ideal-pop"></div>
+                    <div class="label-line"></div>
+                  </div>
+                  <div id="pop" class="progress-bar" role="progressbar" aria-valuemin="0">
                   </div>
                 </div>
             </form>

@@ -42,6 +42,9 @@ var draw = new MapboxDraw({
     }
 });
 
+// initialize the progress bar with pop data
+document.getElementById("ideal-pop").innerHTML = ideal_population;
+
 map.addControl(geocoder, 'top-right');
 map.addControl(draw);
 map.boxZoom.disable();
@@ -217,6 +220,7 @@ function updateCommunityEntry(e) {
 
         map.setFilter("blocks-highlighted", filter);
         console.log(total);
+        // progress bar with population data based on ideal population for a district in the given state
         //<div id="pop" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 85%">
         progress = document.getElementById("pop");
         progress.innerHTML = total;
