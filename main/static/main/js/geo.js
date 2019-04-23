@@ -181,43 +181,24 @@ function updateCommunityEntry(e) {
         var northEast = [polygonBoundingBox[2], polygonBoundingBox[3]];
         var northEastPointPixel = map.project(northEast);
         var southWestPointPixel = map.project(southWest);
-        var pointarray = []; // debug still have to make the block highlighting more specific
 
-        console.log(user_polygon.geometry.coordinates[0].length);
-        // debugging to make the polygon highlitghting more specific
-        for (let i = 0; i < user_polygon.geometry.coordinates[0].length-1; i++) {
-            let p = [user_polygon.geometry.coordinates[0][i][0], user_polygon.geometry.coordinates[0][i][1]];
-            // let p = new Point(user_polygon.coordinates[0][i][0], user_polygon.coordinates[0][i][1]);
-            pointarray.push(p);
-        }
-        // var features = map.queryRenderedFeatures(pointarray, { layers: ["census-blocks"] });
         var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
-        console.log(user_polygon);
-        // debugger
+        // console.log(user_polygon);
         var mpolygon = [];
         var total = 0.0;
-        
         // var collection = [];
         var filter = features.reduce(function(memo, feature) {
-
-            if (! (undefined === turf.intersect(feature, user_polygon))) {
-
+            if (! (turf.intersect(feature, user_polygon) === null)) {
                 // only add the property, if the feature intersects with the polygon drawn by the user
                 // console.log("entered the loop to check how many intersected");
                 memo.push(feature.properties.BLOCKID10);
                 let poly1 = turf.polygon(feature.geometry.coordinates);
                 mpolygon.push(poly1);
                 total+= feature.properties.POP10;
-
-                
-                // push to an array and find the union polygon
-
             } 
             return memo;
         }, ["in", "BLOCKID10"]);
-
         map.setFilter("blocks-highlighted", filter);
-        console.log(total);
 
         var finalpoly = turf.union(mpolygon[0], mpolygon[1]);
         for (let i = 2; i < mpolygon.length; i++) {
