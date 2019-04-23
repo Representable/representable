@@ -59,14 +59,14 @@ map.on('load', function() {
 
     map.addSource("census", {
         type: "vector",
-        url: "mapbox://districter-team.njblocks"
+        url: "mapbox://districter-team.aq1twwkc"
       });
 
     map.addLayer({
     "id": "census-blocks",
     "type": "fill",
     "source": "census",
-    "source-layer": "NJBlocks",
+    "source-layer": "njblockdata",
     "layout": {
         "visibility": "visible"
     },
@@ -81,7 +81,7 @@ map.on('load', function() {
       "id": "census-lines",
       "type": "line",
       "source": "census",
-      "source-layer": "NJBlocks",
+      "source-layer": "njblockdata",
       "layout": {
         "visibility": "visible",
         "line-join": "round",
@@ -97,13 +97,13 @@ map.on('load', function() {
         "id": "blocks-highlighted",
         "type": "fill",
         "source": "census",
-        "source-layer": "NJBlocks",
+        "source-layer": "njblockdata",
         "paint": {
         "fill-outline-color": "#484896",
         "fill-color": "#6e599f",
         "fill-opacity": 0.75
         },
-        "filter": ["in", "GEOID10", ""]
+        "filter": ["in", "BLOCKID10", ""]
         });
 
 
@@ -122,7 +122,7 @@ map.on('load', function() {
             closeButton: false
         })
         .setLngLat(e.lngLat)
-        .setHTML(e.features[0].properties.GEOID10)
+        .setHTML(e.features[0].properties.BLOCKID10)
         .addTo(map);
       });
 
@@ -203,10 +203,10 @@ function updateCommunityEntry(e) {
 
                 // only add the property, if the feature intersects with the polygon drawn by the user
                 // console.log("entered the loop to check how many intersected");
-                memo.push(feature.properties.GEOID10);
+                memo.push(feature.properties.BLOCKID10);
             }
             return memo;
-        }, ["in", "GEOID10"]);
+        }, ["in", "BLOCKID10"]);
 
         console.log("printing out the new filter");
         console.log(filter);
