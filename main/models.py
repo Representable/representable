@@ -10,8 +10,11 @@ from .choices import *
 class User(AbstractUser):
     pass
 
-# Referenced https://docs.djangoproject.com/en/2.2/topics/forms/modelforms/#a-full-example
 class Tag(models.Model):
+    '''
+    Referenced https://docs.djangoproject.com/en/2.2/topics/forms/modelforms/#a-full-example
+    The tag table stores tags associated with different entries.
+    '''
     name = models.CharField(max_length=100)
 
     class Meta:

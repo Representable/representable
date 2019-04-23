@@ -1,43 +1,34 @@
 from django.test import TestCase
 from main.forms import CommunityForm
+from django.test import Client
+from main.views import EntryView
+from django.contrib.auth import get_user_model
+
 
 class CommunityEntryTest(TestCase):
     def setUp(self):
+        '''
+        This function is called before every test.
+        Create and login a fake user.
+        '''
         # Create a fake user.
         self.user = get_user_model().objects.create_user('johndoe', 'john@doe.com', 'johndoe')
-        self.client.login(username=self.user.email, password='pass')
+        # Fake user login
+        self.client.login(username='johndoe', password='johndoe')
 
-    def form_data(self, entry_ID, entry_polygon, race, religion,
-                  industry, zipcode, tags):
-        return CommunityForm(
-            user=self.user,
-            data={
-                'user': user,
-                'entry_ID': entry_ID,
-                'entry_polygon': entry_polygon,
-                'race': race,
-                'religion': religion,
-                'industry': industry,
-                'zipcode': zipcode,
-                'tags': tags
-            }
-        )
+    def tearDown(self):
+        '''
+        This function runs after every test. It deletes the fake user.
+        '''
+        self.user.delete()
 
-    def test_valid_data(self):
-        c = self.client
-        response = c.get('')
-        form = self.form_data(, 'Last')
-        self.assertTrue(form.is_valid())
 
-    def test_missing_first_name(self):
-        form = self.form_data('', 'Last')
-        errors = form['first_name'].errors.as_data()
-        self.assertEqual(len(errors), 1)
-        self.assertEqual(errors[0].code, 'required')
-
-    def test_missing_last_name(self):
-        form = self.form_data('First', '')
-        errors = form['last_name'].errors.as_data()
-
-        self.assertEqual(len(errors), 1)
-        self.assertEqual(errors[0].code, 'required')
+    def test_valid_form(self):
+        '''
+        Test that the server returns the right form when /entry/ is requested.
+        '''
+        c = Client()
+        response = c.get('/entry/')
+        form = CommunityForm(initial=EntryView.get_initial())
+        self.assertEqual(response.context['form'], form)
+        self.assertEqual(response.context[mapbox_key], os.environ.get('DISTR_MAPBOX_KEY'))
