@@ -46,7 +46,7 @@ class CommunityEntry(models.Model):
     religion = ArrayField(models.CharField(max_length=50,choices=RELIGION_CHOICES),default=list,blank=True)
     industry = ArrayField(models.CharField(max_length=50,choices=INDUSTRY_CHOICES),default=list,blank=True)
     # User Zipcode
-    zipcode = models.CharField(max_length=5)
+    zipcode = models.CharField(max_length=5, blank=False)
     tags = models.ManyToManyField(Tag)
 
     CHOICES=(
@@ -76,5 +76,5 @@ class Issue(models.Model):
 
     def __str__(self):
         return self.description
-        
+
 #******************************************************************************#

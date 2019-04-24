@@ -54,30 +54,13 @@
 
 </div>
 <div class="col-sm-4">
+
     <form method="post">
         {% csrf_token %}
         {{ form.errors }}
         {{ form.non_field_errors }}
+
         <div class="form-group">
-            {{ issue_formset.management_form }}
-            {% for issue_form in issue_formset %}
-            <div class="issue-formset">
-                {{ issue_form.anchor }}
-                {% if issue_form.anchor.errors %}
-                {% for error in issue_form.anchor.errors %}
-                {{ error|escape }}
-                {% endfor %}
-                {% endif %}
-
-                {{ issue_form.url }}
-                {% if issue_form.url.errors %}
-                {% for error in issue_form.url.errors %}
-                {{ error|escape }}
-                {% endfor %}
-                {% endif %}
-            </div>
-            {% endfor %}
-
             <!-- {# Include the hidden fields #} -->
             {% for hidden in form.hidden_fields %}
             {{ hidden }}
@@ -93,8 +76,24 @@
             </div>
             {% endfor %}
 
+            {{ issue_formset.management_form }}
+            {% for form in issue_formset %}
+            <div class="issue-formset">
+                {{ form.category }}
+                {% if form.category.errors %}
+                    {% for error in form.category.errors %}
+                    {{ error|escape }}
+                    {% endfor %}
+                {% endif %}
 
-
+                {{ form.description }}
+                {% if form.description.errors %}
+                    {% for error in form.description.errors %}
+                    {{ error|escape }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+            {% endfor %}
         </div>
         <button id="save" type="submit" class="btn btn-primary" value="Submit">Submit</button>
     </form>
@@ -111,12 +110,12 @@
 <!-- Turf to get the bounding box. -->
 <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
 <!-- Include formset plugin - including jQuery dependency -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="{% static 'path_to/jquery.formset.js' %}"></script>
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="{% static 'main/js/jquery.formset.js' %}"></script>
 <script>
     $('.link-formset').formset({
         addText: 'add link',
         deleteText: 'remove'
     });
-</script>
+</script> -->
 {% endblock %}

@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from allauth.account.decorators import verified_email_required
 from django.forms import formset_factory
 # from .models import Entry
-from .forms import CommunityForm, IssueForm, BaseIssueFormSet
+from .forms import CommunityForm, IssueForm
 from .models import CommunityEntry
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
@@ -101,8 +101,14 @@ class EntryView(View, LoginRequiredMixin):
     form_class = CommunityForm
     initial = {'key': 'value'}
     success_url = '/thanks/'
+    data = {
+        'form-TOTAL_FORMS': '1',
+        'form-INITIAL_FORMS': '0',
+        'form-MAX_NUM_FORMS': '10',
+        
+    }
     # Create the formset, specifying the form and formset we want to use.
-    IssueFormSet = formset_factory(IssueForm, formset=BaseIssueFormSet)
+    IssueFormSet =  formset_factory(IssueForm)
 
     # https://www.agiliq.com/blog/2019/01/django-formview/
     def get_initial(self):
@@ -116,7 +122,9 @@ class EntryView(View, LoginRequiredMixin):
     def get(self, request, *args, **kwargs):
         print("GET")
         form = self.form_class(initial=self.get_initial())
-        issue_formset = self.IssueFormSet(request.POST)
+        print("GET2")
+        issue_formset = self.IssueFormSet(self.data)
+        print(issue_formset)
         context = {
             'form': form,
             'issue_formset': issue_formset,
@@ -128,7 +136,7 @@ class EntryView(View, LoginRequiredMixin):
         print("POST")
         print(f"FORM IS VALID: {form.is_valid()}")
         form = self.form_class(request.POST)
-        issue_formset = self.IssueFormSet(request.POST)
+        issue_formset = self.IssueFormSet(request.POST, self.data)
         if form.is_valid() and issue_formset.is_valid():
             print(form.cleaned_data)
             print(issue_formset.cleaned_data)
