@@ -1,8 +1,34 @@
+/**************************************************************************/
+/* this file loads the visualization stuff ! for map.html -- loads layers of
+census blocks, state legislature, and drawn polygons + tags to select ur favs */
+/**************************************************************************/
+// the mapbox keys to load tilesets
+// when adding a new state: put it into censusKeys, upperKeys, lowerKeys, and state array
+var censusKeys = {
+  "nj-census": "aq1twwkc",
+  "va-census": "48cgf8ll",
+  "pa-census": "0k2ks83t",
+  "mi-census": "7bb2ddev"
+};
+var upperKeys = {
+  "nj-upper": "9fogw4w4",
+  "va-upper": "3b1qryb8",
+  "pa-upper": "33mtf25i",
+  "mi-upper": "5bvjx29f"
+};
+var lowerKeys = {
+  "nj-lower": "8w0imag4",
+  "va-lower": "9xpukpnx",
+  "pa-lower": "c2qg68h1",
+  "mi-lower": "aa2ljvl2"
+};
+var states = ["nj", "va", "pa", "mi"];
+/*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
 var map = new mapboxgl.Map({
   container: 'map', // container id
-  style: 'mapbox://styles/mapbox/dark-v10', //mapbox style -- dark is pretty for data visualization :o)
+  style: 'mapbox://styles/mapbox/light-v9', //color of the map -- dark or light?
   center: [-74.65545, 40.341701], // starting position - Princeton, NJ :)
   zoom: 12 // starting zoom -- higher is closer
 });
@@ -24,119 +50,83 @@ map.addControl(new mapboxgl.GeolocateControl({
 
 map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
 
+// add a new source layer
+function newSourceLayer(name, mbCode) {
+  map.addSource(name, {
+    type: "vector",
+    url: "mapbox://districter-team." + mbCode
+  });
+}
+// add a new layer of census block data
+function newCensusLayer(state) {
+  map.addLayer({
+    "id": state.toUpperCase() + " Census Blocks",
+    "type": "fill",
+    "source": state + "-census",
+    "source-layer": state + "blockdata",
+    "layout": {
+      "visibility": "visible"
+    },
+    "paint": {
+      "fill-color": "rgba(193, 202, 214, 0)",
+      "fill-outline-color": "rgba(193, 202, 214, 1)"
+    }
+  });
+}
+// add a new layer of upper state legislature data
+function newUpperLegislatureLayer(state) {
+  map.addLayer({
+    "id": state.toUpperCase() + " State Legislature - Upper",
+    "type": "line",
+    "source": state + "-upper",
+    "source-layer": state + "upper",
+    "layout": {
+      "visibility": "none",
+      "line-join": "round",
+      "line-cap": "round"
+    },
+    "paint": {
+      "line-color": "rgba(193, 202, 214, 1)",
+      "line-width": 2
+    }
+  });
+}
+// add a new layer of lower state legislature data
+function newLowerLegislatureLayer(state) {
+  map.addLayer({
+    "id": state.toUpperCase() + " State Legislature - Lower",
+    "type": "line",
+    "source": state + "-lower",
+    "source-layer": state + "lower",
+    "layout": {
+      "visibility": "visible",
+      "line-join": "round",
+      "line-cap": "round"
+    },
+    "paint": {
+      "line-color": "rgba(193, 202, 214, 1)",
+      "line-width": 2
+    }
+  });
+}
 map.on('load', function () {
   // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
-  map.addSource("nj-census", {
-    type: "vector",
-    url: "mapbox://districter-team.aq1twwkc"
-  });
-  map.addSource("va-census", {
-    type: "vector",
-    url: "mapbox://districter-team.48cgf8ll"
-  });
-  map.addSource("pa-census", {
-    type: "vector",
-    url: "mapbox://districter-team.0k2ks83t"
-  });
-  map.addSource("mi-census", {
-    type: "vector",
-    url: "mapbox://districter-team.7bb2ddev"
-  });
-
-  // colors: https://coolors.co/6f2dbd-a663cc-b298dc-b8d0eb-b9faf8
-  map.addLayer({
-    "id": "NJ Census Blocks",
-    "type": "fill",
-    "source": "nj-census",
-    "source-layer": "njblockdata",
-    "layout": {
-      "visibility": "visible"
-    },
-    "paint": {
-      "fill-color": "rgba(111, 45, 189, 0)",
-      "fill-outline-color": "rgba(111, 45, 189, 1)"
-    }
-  });
-  map.addLayer({
-    "id": "VA Census Blocks",
-    "type": "fill",
-    "source": "va-census",
-    "source-layer": "vablockdata",
-    "layout": {
-      "visibility": "visible"
-    },
-    "paint": {
-      "fill-color": "rgba(111, 45, 189, 0)",
-      "fill-outline-color": "rgba(111, 45, 189, 1)"
-    }
-  });
-  map.addLayer({
-    "id": "PA Census Blocks",
-    "type": "fill",
-    "source": "pa-census",
-    "source-layer": "pablockdata",
-    "layout": {
-      "visibility": "visible"
-    },
-    "paint": {
-      "fill-color": "rgba(111, 45, 189, 0)",
-      "fill-outline-color": "rgba(111, 45, 189, 1)"
-    }
-  });
-  map.addLayer({
-    "id": "MI Census Blocks",
-    "type": "fill",
-    "source": "mi-census",
-    "source-layer": "miblockdata",
-    "layout": {
-      "visibility": "visible"
-    },
-    "paint": {
-      "fill-color": "rgba(111, 45, 189, 0)",
-      "fill-outline-color": "rgba(111, 45, 189, 1)"
-    }
-  });
-
-  // this is where the state legislature districts are loaded, from a url to the mbtiles file uploaded to mapbox
-  map.addSource("nj-upper", {
-    type: "vector",
-    url: "mapbox://districter-team.9fogw4w4"
-  });
-  map.addSource("nj-lower", {
-    type: "vector",
-    url: "mapbox://districter-team.8w0imag4"
-  });
-  // a line so that thickness can be changed
-  map.addLayer({
-    "id": "NJ State Legislature - Upper",
-    "type": "line",
-    "source": "nj-upper",
-    "source-layer": "njupper",
-    "layout": {
-      "visibility": "visible",
-      "line-join": "round",
-      "line-cap": "round"
-    },
-    "paint": {
-      "line-color": "rgba(166, 99, 204, 1)",
-      "line-width": 3
-    }
-  });
-  map.addLayer({
-    "id": "NJ State Legislature - Lower",
-    "type": "line",
-    "source": "nj-lower",
-    "source-layer": "njlower",
-    "layout": {
-      "visibility": "visible",
-      "line-join": "round",
-      "line-cap": "round"
-    },
-    "paint": {
-      "line-color": "rgba(166, 99, 204, 1)",
-      "line-width": 3
-    }
-  });
+  for (var census in censusKeys) {
+    newSourceLayer(census, censusKeys[census]);
+  }
+  // upper layers
+  for (var upper in upperKeys) {
+    newSourceLayer(upper, upperKeys[upper]);
+  }
+  // lower layers
+  for (var lower in lowerKeys) {
+    newSourceLayer(lower, lowerKeys[lower]);
+  }
+  for (var i = 0; i < states.length; i++) {
+    newCensusLayer(states[i]);
+    newUpperLegislatureLayer(states[i]);
+    newLowerLegislatureLayer(states[i]);
+  }
 
   // send elements to javascript as geojson objects and make them show on the map by
   // calling the addTo
