@@ -190,6 +190,8 @@ function updateCommunityEntry(e) {
         var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
 
         // debugger
+        console.log(user_polygon);
+        //console.log()
 
         var filter = features.reduce(function(memo, feature) {
             console.log(feature);
@@ -215,7 +217,6 @@ function updateCommunityEntry(e) {
         map.setFilter("blocks-highlighted", filter);
 
 
-
     } else {
         // Update User Polygon with `null`.
         user_polygon = null;
@@ -223,7 +224,6 @@ function updateCommunityEntry(e) {
     }
     // Update form field
     document.getElementById('id_entry_polygon').value = entry_polygon;
-
 }
 
 /******************************************************************************/

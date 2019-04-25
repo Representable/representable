@@ -34,7 +34,7 @@ class Index(TemplateView):
 #******************************************************************************#
 
 class MainView(TemplateView):
-    template_name = "main/main.html"
+    template_name = "main/main_test.html"
 
     # Add extra context variables.
     def get_context_data(self, **kwargs):

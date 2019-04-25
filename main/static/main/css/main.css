@@ -4,7 +4,7 @@
     bottom: 0;
     width: 50%;
     /*  Must Set Absolute Height */
-    min-height: 800px;
+    height: 800px;
 }
 
 #features {
@@ -22,7 +22,7 @@ section {
     line-height: 25px;
     border-bottom: 1px solid #ddd;
     opacity: 0.25;
-    height: 200px;
+    height: 350px;
     font-size: 13px;
 }
 
