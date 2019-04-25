@@ -17,40 +17,41 @@
 <link rel="stylesheet" href="{% static 'main/css/map.css' %}">
 {% endblock %}
 {% block content %}
-<div class="col-12">
-  <div>
-      <script type="text/javascript">
-        // var a = JSON.parse('{{ entries | escapejs }}')
-        var a = '{{ entries | escapejs}}';
-        // var a = '{{ entries }}';
-     </script>
-    {% for census in entries %}
-  <script type="text/javascript">
+<div class="row row-content">
+    <div class="col-12">
+        <div>
+            <script type="text/javascript">
+                // var a = JSON.parse('{{ entries | escapejs }}')
+                var a = '{{ entries | escapejs}}';
+                // var a = '{{ entries }}';
+            </script>
+            {% for census in entries %}
+            <script type="text/javascript">
 
-  </script>
-    {% endfor %}
-  </div>
-  <nav id='menu'>
-    <div class="search">
-     <input type="text" class="searchTerm" placeholder="What are you looking for?">
-     <button type="submit" class="searchButton">
-       <i class="fa fa-search"></i>
-    </button>
-  </div>
-  <div class="dropdown">
-    <button class="btn dropdown-toggle" id="outlines" type="button"
-    data-toggle="dropdown">Display Outlines
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="outlines" id="outline-menu">
-  </nav>
-  <div id='map'></div>
+            </script>
+            {% endfor %}
+        </div>
+        <nav id='menu'>
+            <div class="search">
+                <input type="text" class="searchTerm" placeholder="What are you looking for?">
+                <button type="submit" class="searchButton">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" id="outlines" type="button" data-toggle="dropdown">Display Outlines
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="outlines" id="outline-menu">
+        </nav>
+        <div id='map'></div>
+    </div>
 </div>
 {% endblock %}
 
 {% block script %}
 <!--  Has to be at the end after the HTML loads.-->
 <script type="text/javascript">
-  mapboxgl.accessToken = "{{ mapbox_key }}";
+    mapboxgl.accessToken = "{{ mapbox_key }}";
 </script>
 <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
 {% endblock %}

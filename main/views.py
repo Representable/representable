@@ -16,7 +16,6 @@ import geojson
 import os
 import json
 from django.http import JsonResponse
-from shapely.geometry import shape
 
 
 #******************************************************************************#
@@ -111,14 +110,12 @@ class EntryView(LoginRequiredMixin, View):
 
     # https://www.agiliq.com/blog/2019/01/django-formview/
     def get_initial(self):
-        print("get_initial")
         initial = self.initial
         if self.request.user.is_authenticated:
             initial.update({'user': self.request.user})
         return initial
 
     def get(self, request, *args, **kwargs):
-        print("GET")
         form = self.form_class(initial=self.get_initial())
         issue_formset = self.IssueFormSet(self.data)
         context = {
@@ -129,11 +126,8 @@ class EntryView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        print("POST")
         form = self.form_class(request.POST)
         issue_formset = self.IssueFormSet(request.POST)
-        print("POST2")
-        print(type(form))
         if form.is_valid() and issue_formset.is_valid():
             entryForm = form.save(commit=False)
             entryForm.save()
@@ -149,11 +143,6 @@ class EntryView(LoginRequiredMixin, View):
             'issue_formset': issue_formset,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY')
         }
-        print("CONTEXT")
-        print(context)
-        print("FORM ERRORS")
-        print(form.errors)
-        print(issue_formset.errors)
         return render(request, self.template_name, context)
 
 #******************************************************************************#

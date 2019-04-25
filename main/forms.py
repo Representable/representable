@@ -32,7 +32,6 @@ class IssueForm(ModelForm):
 
         widgets = {
             'category': forms.Select(choices = POLICY_ISSUES, attrs={'class': 'form-control'})
-            # 'category': forms.Select(choices=AGE_CHOICES,attrs={'class': 'form-control'}),
         }
 
 class BootstrapRadioSelect(forms.RadioSelect):
@@ -55,34 +54,3 @@ class CommunityForm(ModelForm):
             'entry_polygon': forms.HiddenInput(),
             'my_community': BootstrapRadioSelect(),
         }
-
-# class BaseIssueFormSet(BaseFormSet):
-#     def clean(self):
-#         """
-#         https://whoisnicoleharris.com/2015/01/06/implementing-django-formsets.html
-#         Adds validation to check that no two issues have the same category and that
-#         all links have both a category and description.
-#         """
-#         if any(self.errors):
-#             return
-#
-#         categories = []
-#         descriptions = []
-#         duplicates = False
-#
-#         for form in self.forms:
-#             if form.cleaned_data:
-#                 category = form.cleaned_data['category']
-#                 description = form.cleaned_data['description']
-#
-#                 # Check that all links have both a category and a description
-#                 if category and not description:
-#                     raise forms.ValidationError(
-#                         'All issues must have a category.',
-#                         code='missing_category'
-#                     )
-#                 elif anchor and not url:
-#                     raise forms.ValidationError(
-#                         'All issues must have a description.',
-#                         code='missing_description'
-#                     )

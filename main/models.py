@@ -48,13 +48,11 @@ class CommunityEntry(models.Model):
     # User Zipcode
     zipcode = models.CharField(max_length=5, blank=False, null=False)
     tags = models.ManyToManyField(Tag)
-
     CHOICES=(
         ('Y','Yes, this is my community.'),
         ('N','No, I am creating this community on behalf of another group of people.')
     )
     my_community = models.CharField("Is this your community?", max_length=1,choices=CHOICES, default= 'Y', blank=False, null=False)
-
 
     def __str__(self):
         return str(self.entry_ID)
@@ -68,7 +66,7 @@ class Issue(models.Model):
     Issue holds issues associated with each community entry.
     '''
     entry = models.ForeignKey(CommunityEntry, on_delete=models.CASCADE, default=None, blank=False)
-    category = models.CharField(max_length=50, choices=POLICY_ISSUES, default=None)
+    category = models.CharField(max_length=50, choices=POLICY_ISSUES, default=None, blank=False)
     description = models.CharField(max_length=250)
 
     class Meta:
