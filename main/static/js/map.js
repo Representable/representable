@@ -26,17 +26,68 @@ map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
 
 map.on('load', function () {
   // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
-  map.addSource("census", {
+  map.addSource("nj-census", {
     type: "vector",
     url: "mapbox://districter-team.aq1twwkc"
+  });
+  map.addSource("va-census", {
+    type: "vector",
+    url: "mapbox://districter-team.48cgf8ll"
+  });
+  map.addSource("pa-census", {
+    type: "vector",
+    url: "mapbox://districter-team.0k2ks83t"
+  });
+  map.addSource("mi-census", {
+    type: "vector",
+    url: "mapbox://districter-team.7bb2ddev"
   });
 
   // colors: https://coolors.co/6f2dbd-a663cc-b298dc-b8d0eb-b9faf8
   map.addLayer({
-    "id": "Census Blocks",
+    "id": "NJ Census Blocks",
     "type": "fill",
-    "source": "census",
+    "source": "nj-census",
     "source-layer": "njblockdata",
+    "layout": {
+      "visibility": "visible"
+    },
+    "paint": {
+      "fill-color": "rgba(111, 45, 189, 0)",
+      "fill-outline-color": "rgba(111, 45, 189, 1)"
+    }
+  });
+  map.addLayer({
+    "id": "VA Census Blocks",
+    "type": "fill",
+    "source": "va-census",
+    "source-layer": "vablockdata",
+    "layout": {
+      "visibility": "visible"
+    },
+    "paint": {
+      "fill-color": "rgba(111, 45, 189, 0)",
+      "fill-outline-color": "rgba(111, 45, 189, 1)"
+    }
+  });
+  map.addLayer({
+    "id": "PA Census Blocks",
+    "type": "fill",
+    "source": "pa-census",
+    "source-layer": "pablockdata",
+    "layout": {
+      "visibility": "visible"
+    },
+    "paint": {
+      "fill-color": "rgba(111, 45, 189, 0)",
+      "fill-outline-color": "rgba(111, 45, 189, 1)"
+    }
+  });
+  map.addLayer({
+    "id": "MI Census Blocks",
+    "type": "fill",
+    "source": "mi-census",
+    "source-layer": "miblockdata",
     "layout": {
       "visibility": "visible"
     },
@@ -67,7 +118,7 @@ map.on('load', function () {
 
   // a line so that thickness can be changed
   map.addLayer({
-    "id": "State Legislature",
+    "id": "NJ State Legislature",
     "type": "line",
     "source": "leg",
     "source-layer": "njlegislature",
@@ -136,7 +187,7 @@ map.on('load', function () {
 });
 
 //create a button ! toggles layers based on their IDs
-var toggleableLayerIds = ['Census Blocks', 'State Legislature'];
+var toggleableLayerIds = ['NJ Census Blocks', 'NJ State Legislature'];
 
 for (var i = 0; i < toggleableLayerIds.length; i++) {
   var id = toggleableLayerIds[i];
