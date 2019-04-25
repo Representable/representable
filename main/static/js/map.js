@@ -98,30 +98,35 @@ map.on('load', function () {
   });
 
   // this is where the state legislature districts are loaded, from a url to the mbtiles file uploaded to mapbox
-  map.addSource("leg", {
+  map.addSource("nj-upper", {
     type: "vector",
-    url: "mapbox://districter-team.njlegislature"
+    url: "mapbox://districter-team.9fogw4w4"
   });
-
-  map.addLayer({
-    "id": "Legislature Polygons",
-    "type": "fill",
-    "source": "leg",
-    "source-layer": "njlegislature",
-    "layout": {
-      "visibility": "visible"
-    },
-    "paint": {
-      "fill-color": "rgba(166, 99, 204, 0)",
-    }
+  map.addSource("nj-lower", {
+    type: "vector",
+    url: "mapbox://districter-team.8w0imag4"
   });
-
   // a line so that thickness can be changed
   map.addLayer({
-    "id": "NJ State Legislature",
+    "id": "NJ State Legislature - Upper",
     "type": "line",
-    "source": "leg",
-    "source-layer": "njlegislature",
+    "source": "nj-upper",
+    "source-layer": "njupper",
+    "layout": {
+      "visibility": "visible",
+      "line-join": "round",
+      "line-cap": "round"
+    },
+    "paint": {
+      "line-color": "rgba(166, 99, 204, 1)",
+      "line-width": 3
+    }
+  });
+  map.addLayer({
+    "id": "NJ State Legislature - Lower",
+    "type": "line",
+    "source": "nj-lower",
+    "source-layer": "njlower",
     "layout": {
       "visibility": "visible",
       "line-join": "round",
@@ -165,29 +170,29 @@ map.on('load', function () {
     });
   }
 
-  // When a click event occurs on a feature in the dummy layer, open a popup at the
-  // location of the click, with description HTML from its properties.
-  // https://docs.mapbox.com/mapbox-gl-js/example/polygon-popup-on-click/
-  map.on('click', 'Legislature Polygons', function (e) {
-    new mapboxgl.Popup()
-    .setLngLat(e.lngLat)
-    .setHTML(e.features[0].properties.NAMELSAD)
-    .addTo(map);
-  });
-
-  // Change the cursor to a pointer when the mouse is over the dummy layer.
-  map.on('mouseenter', 'Legislature Polygons', function () {
-    map.getCanvas().style.cursor = 'pointer';
-  });
-
-  // Change it back to a pointer when it leaves.
-  map.on('mouseleave', 'Legislature Polygons', function () {
-    map.getCanvas().style.cursor = '';
-  });
+  // // When a click event occurs on a feature in the dummy layer, open a popup at the
+  // // location of the click, with description HTML from its properties.
+  // // https://docs.mapbox.com/mapbox-gl-js/example/polygon-popup-on-click/
+  // map.on('click', 'Legislature Polygons', function (e) {
+  //   new mapboxgl.Popup()
+  //   .setLngLat(e.lngLat)
+  //   .setHTML(e.features[0].properties.NAMELSAD)
+  //   .addTo(map);
+  // });
+  //
+  // // Change the cursor to a pointer when the mouse is over the dummy layer.
+  // map.on('mouseenter', 'Legislature Polygons', function () {
+  //   map.getCanvas().style.cursor = 'pointer';
+  // });
+  //
+  // // Change it back to a pointer when it leaves.
+  // map.on('mouseleave', 'Legislature Polygons', function () {
+  //   map.getCanvas().style.cursor = '';
+  // });
 });
 
 //create a button ! toggles layers based on their IDs
-var toggleableLayerIds = ['NJ Census Blocks', 'NJ State Legislature'];
+var toggleableLayerIds = ['Census Blocks', 'State Legislature - Lower', 'State Legislature - Upper'];
 
 for (var i = 0; i < toggleableLayerIds.length; i++) {
   var id = toggleableLayerIds[i];
@@ -198,18 +203,21 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   link.textContent = id;
 
   link.onclick = function (e) {
-    var clickedLayer = this.textContent;
+    var txt = this.textContent;
+    var clickedLayers = ["NJ " + txt, "VA " + txt, "PA " + txt, "MI " + txt];
     e.preventDefault();
     e.stopPropagation();
 
-    var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+    for (var j = 0; j < clickedLayers.length; j++) {
+      var visibility = map.getLayoutProperty(clickedLayers[j], 'visibility');
 
-    if (visibility === 'visible') {
-      map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-      this.className = '';
-    } else {
-      this.className = 'active';
-      map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+      if (visibility === 'visible') {
+        map.setLayoutProperty(clickedLayers[j], 'visibility', 'none');
+        this.className = '';
+      } else {
+        this.className = 'active';
+        map.setLayoutProperty(clickedLayers[j], 'visibility', 'visible');
+      }
     }
   };
 
@@ -217,52 +225,6 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   layers.appendChild(link);
 }
 
-// var tagLayers = ['Environment', 'Social Issues'];
-//
-//   // <button class="dropdown-btn">Display Outlines
-//   // <i class="fa fa-caret-down"></i></button>
-//   // <div class="dropdown-container" id="outline-menu">
-//
-//   for (var i = 0; i < tagLayers.length; i++) {
-//     var id = tagLayers[i];
-//
-//     var link = document.createElement('a');
-//     link.href = '#';
-//     link.className = 'active';
-//     link.textContent = 'fill in the blank';
-//
-//     link.onclick = function (e) {
-//       var clickedLayer = this.textContent;
-//       e.preventDefault();
-//       e.stopPropagation();
-//
-//       var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
-//
-//       if (visibility === 'visible') {
-//         map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-//         this.className = '';
-//       } else {
-//         this.className = 'active';
-//         map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
-//       }
-//     };
-//
-//     var button = document.createElement('button');
-//     button.className = 'dropdown-btn';
-//     button.textContent = id;
-//
-//     var inButton = document.createElement('i');
-//     inButton.className = 'fa fa-caret-down';
-//
-//     var dropDiv = document.createElement('div');
-//     dropDiv.className = 'dropdown-container';
-//
-//     var layers = document.getElementById('sidenav');
-//     layers.appendChild(button);
-//     button.appendChild(inButton);
-//     layers.appendChild(dropDiv);
-//     dropDiv.appendChild(link);
-//   }
 /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
 var dropdown = document.getElementsByClassName("dropdown-btn");
 var i;
