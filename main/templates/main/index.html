@@ -35,6 +35,7 @@
 {% endblock %}
 
 {% block content %}
+<!--  what is Districter ?? -->
 <div class="row">
   <div id = 'description' class="col-sm-6">
   <h4>What is Districter?</h4>
@@ -57,10 +58,12 @@
   <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
      </div>
 </div>
+
+<!--  STEP ONE  -->
 <div class="row">
-  <div id = 'Video 1' class="col-sm-6">
+  <div id = 'Video1' class="col-sm-6">
   <video  loop width="520" height="440" autoplay>
-      <source src= "{% static 'img/browse.mp4' %}" type="video/mp4">
+      <source src= "{% static 'img/Browse_1.mp4' %}" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 </div>
@@ -71,43 +74,71 @@
   </div>
   </div>
 
-
-<!--
-  <div id='map'></div>
-
-  <div id='features'>
-  <section id='baker' class='active'>
-  <h4>1. Browse the map.</h4>
-  <p> Explore the map by entering in a zipcode in the search box and navigate to your local community using interactive features </p>
-  </section>
-  <section id='aldgate'>
-  <h4>2. Navigate your community</h4>
-  <p> Using a variety of map views and add on geographic and census features, get a better understanding for your geospatial COI </p>
-  </section>
-  <section id='london-bridge'>
-  <h4>Draw ur COI</h4>
-  <p>3. Using the Polygon draw tool, click ___, and begin to draw your COI! click on a point on the map to create
-  a vertex and click twice on your final vertex to finalize your polygon. To start over press the trash can
-on the right hand of the screen. To edit the polygon once made simply click on a vertex and drag accorginly or
-even drag the entire shape over. </p>
-  </section>
-  <section id='woolwich'>
-  <h4>4.Demographic Data </h4>
-  <p> Help us understand the importance of this community for you, and identify aggregate trends in your commynity
-  by submitting your demographic information and policy needs on the right hand side of the screen</p>
-  </section>
-  <section id='woolwich'>
-  <h4>5. Submit data !</h4>
-  <p>Submit the data to be entered into a critical databse of citizens in your area who want to have their voices
-  heard during redistricting</p>
-  </section>
-  <section id='woolwich'>
-  <h4>6. Explore!</h4>
-  <p> Return to the main menu to explore submissions by others near you, interesting trends,
-  and the latest in Districter news.</p>
-  </section>
+  <!--  STEP TWO  -->
+<div class="row">
+    <div id = 'Video2' class="col-sm-6">
+    <video  loop width="520" height="440" autoplay>
+        <source src= "{% static 'img/NavCommunity.mp4' %}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
   </div>
-  -->
+   <div id = description class="col-sm-6">
+     <h4> 2. Navigate your community <h4>
+     <p> Using a variety of map views and add on geographic and census features, get
+  a better understanding for your geospatial COI  <p>
+    </div>
+</div>
+
+<!--  STEP THREE  -->
+<div class="row">
+      <div id = 'Video 3' class="col-sm-6">
+      <video  loop width="520" height="440" autoplay>
+          <source src= "{% static 'img/COI.mp4' %}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+     <div id = description class="col-sm-6">
+       <h4> 3. Draw ur COI <h4>
+       <p> Using the Polygon draw tool, click the 'createCOI logo',
+         and begin to draw your COI! click on a point on the map to create a vertex
+         and click twice on your final vertex to finalize your polygon. To start
+         over press the trash can on the right hand of the screen. To edit the
+         polygon once made simply click on a vertex and drag accorginly or
+even drag the entire shape over. <p>
+      </div>
+</div>
+
+<!--  STEP FOUR  -->
+<div class="row">
+        <div id = 'Video 1' class="col-sm-6">
+        <video  loop width="520" height="440" autoplay>
+            <source src= "{% static 'img/Demo.mp4' %}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+       <div id = description class="col-sm-6">
+         <h4> 4.Demographic Data <h4>
+         <p> Help us understand the importance of this community for you, and
+           identify aggregate trends in your commynity
+by submitting your demographic information and policy needs on the right
+hand side of the screen <p>
+        </div>
+  </div>
+
+  <!--  STEP FOUR  -->
+  <div class="row">
+          <div id = 'Video 1' class="col-sm-6">
+            <div id = images class="col-sm-6">
+              <img src="{% static 'img/mapp.png' %}" alt="map" width=500px height=400px>
+              </div>
+        </div>
+         <div id = description class="col-sm-6">
+           <h4> 5.Submit & Help make US politics more judicial! <h4>
+           <p> Submit the data to be entered into a critical databse of citizens in your area
+who want to have their voices heard during redistricting <br>
+go to animation of submitting data / redistricting? <p>
+          </div>
+    </div>
 
 {% endblock %}
 
