@@ -19,7 +19,7 @@ class Tag(models.Model):
     Referenced https://docs.djangoproject.com/en/2.2/topics/forms/modelforms/#a-full-example
     The tag table stores tags associated with different entries.
     '''
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, primary_key=True)
 
     class Meta:
         ordering = ('name',)
@@ -36,7 +36,7 @@ class CommunityEntry(models.Model):
     # https://www.census.gov/topics/population/race/about.html
     # Foreign Key = User (Many to One)
     # https://docs.djangoproject.com/en/2.2/topics/db/examples/many_to_one/
-    user =  models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     # Generated randomly every time.
     entry_ID = models.CharField(max_length=100, blank=False, unique=True, default=uuid.uuid4)
     # From Mapbox GL GS.
@@ -46,14 +46,14 @@ class CommunityEntry(models.Model):
     religion = ArrayField(models.CharField(max_length=50,choices=RELIGION_CHOICES),default=list,blank=True)
     industry = ArrayField(models.CharField(max_length=50,choices=INDUSTRY_CHOICES),default=list,blank=True)
     # User Zipcode
-    zipcode = models.CharField(max_length=5, blank=False)
+    zipcode = models.CharField(max_length=5, blank=False, null=False)
     tags = models.ManyToManyField(Tag)
 
     CHOICES=(
         ('Y','Yes, this is my community.'),
         ('N','No, I am creating this community on behalf of another group of people.')
     )
-    my_community = models.CharField("Is this your community?", max_length=1,choices=CHOICES, default= 'Y')
+    my_community = models.CharField("Is this your community?", max_length=1,choices=CHOICES, default= 'Y', blank=False, null=False)
 
 
     def __str__(self):
@@ -68,7 +68,7 @@ class Issue(models.Model):
     Issue holds issues associated with each community entry.
     '''
     entry = models.ForeignKey(CommunityEntry, on_delete=models.CASCADE, default=None, blank=False)
-    category = models.CharField(max_length=50,choices=POLICY_ISSUES,default=None)
+    category = models.CharField(max_length=50, choices=POLICY_ISSUES, default=None)
     description = models.CharField(max_length=250)
 
     class Meta:

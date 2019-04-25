@@ -62,3 +62,9 @@ p {
     margin: 0;
     font-size: 13px;
 }
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}

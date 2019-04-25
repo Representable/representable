@@ -12,7 +12,7 @@ class TagSelect2Widget(ModelSelect2TagWidget):
     model = Tag
     search_fields=['name__icontains']
     queryset = model.objects.all()
-
+    # Check if tag name is in the db already. If not, add it.
     def value_from_datadict(self, data, files, name):
         values = super().value_from_datadict(data, files, name)
         queryset = self.get_queryset()
@@ -28,9 +28,11 @@ class IssueForm(ModelForm):
     class Meta:
         model = Issue
         fields = '__all__'
+        exclude = ("entry",)
 
         widgets = {
-            'category': Select2Widget(choices = POLICY_ISSUES), # attrs={'data-token-separators': "[',']"}
+            'category': forms.Select(choices = POLICY_ISSUES, attrs={'class': 'form-control'})
+            # 'category': forms.Select(choices=AGE_CHOICES,attrs={'class': 'form-control'}),
         }
 
 class BootstrapRadioSelect(forms.RadioSelect):

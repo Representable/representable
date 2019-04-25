@@ -93,7 +93,7 @@ class Thanks(TemplateView):
 
 #******************************************************************************#
 
-class EntryView(View, LoginRequiredMixin):
+class EntryView(LoginRequiredMixin, View):
     '''
     EntryView displays the form and map selection screen.
     '''
@@ -104,11 +104,10 @@ class EntryView(View, LoginRequiredMixin):
     data = {
         'form-TOTAL_FORMS': '1',
         'form-INITIAL_FORMS': '0',
-        'form-MAX_NUM_FORMS': '10',
-        
+        'form-MAX_NUM_FORMS': ''
     }
     # Create the formset, specifying the form and formset we want to use.
-    IssueFormSet =  formset_factory(IssueForm)
+    IssueFormSet =  formset_factory(IssueForm, extra=1)
 
     # https://www.agiliq.com/blog/2019/01/django-formview/
     def get_initial(self):
@@ -116,15 +115,12 @@ class EntryView(View, LoginRequiredMixin):
         initial = self.initial
         if self.request.user.is_authenticated:
             initial.update({'user': self.request.user})
-        print(self.request.user)
         return initial
 
     def get(self, request, *args, **kwargs):
         print("GET")
         form = self.form_class(initial=self.get_initial())
-        print("GET2")
         issue_formset = self.IssueFormSet(self.data)
-        print(issue_formset)
         context = {
             'form': form,
             'issue_formset': issue_formset,
@@ -134,19 +130,30 @@ class EntryView(View, LoginRequiredMixin):
 
     def post(self, request, *args, **kwargs):
         print("POST")
-        print(f"FORM IS VALID: {form.is_valid()}")
         form = self.form_class(request.POST)
-        issue_formset = self.IssueFormSet(request.POST, self.data)
+        issue_formset = self.IssueFormSet(request.POST)
+        print("POST2")
+        print(type(form))
         if form.is_valid() and issue_formset.is_valid():
-            print(form.cleaned_data)
-            print(issue_formset.cleaned_data)
-            # <process form cleaned data>
+            entryForm = form.save(commit=False)
+            entryForm.save()
+            for issue_form in issue_formset:
+                    issue = issue_form.save(commit=False)
+                    # Set issueFormset form Foreign Key (entry) to the recently
+                    # created entryForm.
+                    issue.entry = entryForm
+                    issue.save()
             return HttpResponseRedirect(self.success_url)
         context = {
             'form': form,
             'issue_formset': issue_formset,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY')
         }
+        print("CONTEXT")
+        print(context)
+        print("FORM ERRORS")
+        print(form.errors)
+        print(issue_formset.errors)
         return render(request, self.template_name, context)
 
 #******************************************************************************#

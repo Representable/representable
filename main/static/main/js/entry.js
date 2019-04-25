@@ -1,16 +1,15 @@
-
-script type = 'text/javascript' >
-    function updateElementIndex(el, prefix, ndx) {
-        var id_regex = new RegExp('(' + prefix + '-\\d+)');
-        var replacement = prefix + '-' + ndx;
-        if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
-        if (el.id) el.id = el.id.replace(id_regex, replacement);
-        if (el.name) el.name = el.name.replace(id_regex, replacement);
-    }
+function updateElementIndex(el, prefix, ndx) {
+    var id_regex = new RegExp('(' + prefix + '-\\d+)');
+    var replacement = prefix + '-' + ndx;
+    if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
+    if (el.id) el.id = el.id.replace(id_regex, replacement);
+    if (el.name) el.name = el.name.replace(id_regex, replacement);
+}
 
 function cloneMore(selector, prefix) {
     var newElement = $(selector).clone(true);
     var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
+    console.log(total)
     newElement.find(':input').each(function() {
         var name = $(this).attr('name').replace('-' + (total - 1) + '-', '-' + total + '-');
         var id = 'id_' + name;
@@ -26,7 +25,7 @@ function cloneMore(selector, prefix) {
     conditionRow.find('.btn.add-form-row')
         .removeClass('btn-success').addClass('btn-danger')
         .removeClass('add-form-row').addClass('remove-form-row')
-        .html('<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>');
+        .html('<span class="" aria-hidden="true">Remove Issue</span>');
     return false;
 }
 
@@ -53,5 +52,4 @@ $(document).on('click', '.remove-form-row', function(e) {
     e.preventDefault();
     deleteForm('form', $(this));
     return false;
-}); <
-/script>
+});
