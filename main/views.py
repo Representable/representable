@@ -31,10 +31,32 @@ Documentation: https://docs.djangoproject.com/en/2.1/topics/class-based-views/
 class Index(TemplateView):
     template_name = "main/index.html"
 
+    # Add extra context variables.
+    def get_context_data(self, **kwargs):
+        context = super(Index, self).get_context_data(**kwargs) # get the default context data
+        context['mapbox_key'] = os.environ.get('DISTR_MAPBOX_KEY')
+        return context
+
+#******************************************************************************#
+
+class MainView(TemplateView):
+    template_name = "main/main_test.html"
+
+    # Add extra context variables.
+    def get_context_data(self, **kwargs):
+        context = super(MainView, self).get_context_data(**kwargs) # get the default context data
+        context['mapbox_key'] = os.environ.get('DISTR_MAPBOX_KEY')
+        return context
+
 #******************************************************************************#
 
 class Timeline(TemplateView):
     template_name = "main/timeline.html"
+
+#******************************************************************************#
+
+class AboutUs(TemplateView):
+    template_name = "main/AboutUs.html"
 
 #******************************************************************************#
 
