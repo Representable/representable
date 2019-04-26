@@ -27,7 +27,7 @@
 <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css' type='text/css' />
 
 <!--  Custom CSS -->
-<link rel="stylesheet" href="{% static 'main/css/entry.css' %}">
+<link rel="stylesheet" href="{% static 'main/css/geo.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -200,7 +200,7 @@
     mapboxgl.accessToken = "{{ mapbox_key }}";
 </script>
 <script type="text/javascript" src="{% static 'main/js/wicket.js' %}"></script>
-<script type="text/javascript" src="{% static 'main/js/entry.js' %}"></script>
+<script type="text/javascript" src="{% static 'main/js/geo.js' %}"></script>
 <!-- Turf to get the bounding box. -->
 <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
 {% endblock %}
