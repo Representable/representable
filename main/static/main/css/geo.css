@@ -35,7 +35,6 @@ body {
 #map {
     top: 0;
     bottom: 0;
-    width: 50%;
     /*  Must Set Absolute Height */
     min-height: 500px;
 }
