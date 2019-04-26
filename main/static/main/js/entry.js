@@ -44,6 +44,12 @@ map.addControl(geocoder, 'top-right');
 map.addControl(draw);
 map.boxZoom.disable();
 
+var polygonError = document.getElementById("polygon_missing");
+if (polygonError != null) {
+    document.getElementById("map").classList.add("border");
+    document.getElementById("map").classList.add("border-warning");
+}
+
 /******************************************************************************/
 
 // After the map style has loaded on the page, add a source layer and default
@@ -257,7 +263,7 @@ function cloneMore(selector, prefix) {
     conditionRow.find('.btn.add-form-row')
         .removeClass('btn-success').addClass('btn-danger')
         .removeClass('add-form-row').addClass('remove-form-row')
-        .html('<span class="" aria-hidden="true">Remove Issue</span>');
+        .html('<span class="" aria-hidden="true">Remove</span>');
     return false;
 }
 
@@ -296,3 +302,5 @@ $(document).on('click', '.remove-form-row', function(e) {
     deleteForm('form', $(this));
     return false;
 });
+
+/******************************************************************************/

@@ -5,6 +5,7 @@ from .models import CommunityEntry, Issue, Tag
 from django.forms import formset_factory
 from .choices import *
 from django.forms.formsets import BaseFormSet
+from django.contrib.gis.db import models
 
 # https://django-select2.readthedocs.io/en/latest/django_select2.html
 
@@ -42,6 +43,7 @@ class CommunityForm(ModelForm):
     class Meta:
         model = CommunityEntry
         fields = '__all__'
+        entry_polygon = models.PolygonField(error_messages={'required':'Please draw your community.'})
 
         widgets = {
             'race': Select2MultipleWidget(choices=RACE_CHOICES),
