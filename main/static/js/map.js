@@ -69,7 +69,7 @@ function newCensusLayer(state) {
     },
     "paint": {
       "fill-color": "rgba(193, 202, 214, 0)",
-      "fill-outline-color": "rgba(193, 202, 214, 1)"
+      "fill-outline-color": "#82ccdd"
     }
   });
 }

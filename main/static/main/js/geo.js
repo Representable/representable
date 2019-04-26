@@ -181,7 +181,9 @@ function updateCommunityEntry(e) {
         user_polygon = data.features[0];
 
         entry_polygon = JSON.stringify(user_polygon['geometry']);
+        console.log(entry_polygon);
         wkt_obj = wkt.read(entry_polygon);
+        console.log(wkt_obj.write());
         entry_polygon = wkt_obj.write();
 
 
@@ -245,7 +247,6 @@ function updateCommunityEntry(e) {
     }
     // Update form field
     document.getElementById('id_entry_polygon').value = entry_polygon;
-
 }
 /******************************************************************************/
 

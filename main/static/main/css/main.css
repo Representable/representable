@@ -1,0 +1,35 @@
+#map {
+  /*  position: absolute; */
+    top: 100px;
+    bottom: 0;
+    width: 50%;
+    /*  Must Set Absolute Height */
+    height: 800px;
+}
+
+#features {
+    width: 50%;
+    top: 0;
+    margin-left: 50%;
+    font-family: sans-serif;
+    overflow-y: scroll;
+    height: 800px;
+    background-color: #fafafa;
+    /* set to red to test response:  background-color: #ff0000; */
+}
+section {
+    padding:  25px 50px;
+    line-height: 25px;
+    border-bottom: 1px solid #ddd;
+    opacity: 0.25;
+    height: 350px;
+    font-size: 13px;
+}
+
+section.active {
+    opacity: 1;
+}
+section:last-child {
+    border-bottom: none;
+    margin-bottom: 200px;
+}

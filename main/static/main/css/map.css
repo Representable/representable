@@ -1,11 +1,6 @@
 #map {
-  /* top: 55px;
-  bottom:0;
-  left: 0;
-  right: 0; */
   width:100%;
   height:100%;
-  /* position: fixed; */
 }
 
 .row-wide {
@@ -20,6 +15,9 @@
   .col-map {
     height: 88vh;
     width: 100%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-width: 0 0 0 1px;
+    /*box-shadow: -2px 0 2px 1px rgba(0,0,0,0.1);*/
   }
 }
 
@@ -29,12 +27,7 @@
 .sidenav {
   height: 100%;
   width: 100%;
-/*  position: fixed; */
   z-index: 1;
-  /* top: 55px;
-  left: 0; */
-  border: 1px solid rgba(0,0,0,0.4);
-  background-color: #040428;
   overflow-x: hidden;
 }
 
@@ -42,8 +35,7 @@
 .sidenav a, .dropdown-btn {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
-  font-size: 20px;
-  color: #818181;
+  color: black;
   display: block;
   border: none;
   background: none;
@@ -53,20 +45,10 @@
   outline: none;
 }
 
-/* On mouse-over */
-.sidenav a:hover, .dropdown-btn:hover {
-  color: #f1f1f1;
-}
-
-/* Add an active class to the active dropdown button */
-.active {
-  color: white;
-}
-
 /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
 .dropdown-container {
   display: none;
-  background-color: #274690;
+  background-color: rgb(240,240,240);
   color: #95a3b3;
   padding-left: 8px;
 }
@@ -92,7 +74,7 @@ font-size: 12px;
 
 .searchTerm {
   width: 100%;
-  border: 3px solid #274690;
+  border: 3px solid rgb(240,240,240);
   border-right: none;
   padding: 5px;
   outline: none;
@@ -105,10 +87,14 @@ font-size: 12px;
 
 .searchButton {
   width: 40px;
-  border: 1px solid #274690;
-  background: #274690;
+  border: 1px solid rgb(240,240,240);
+  background: rgb(240,240,240);
   text-align: center;
   color: #fff;
   cursor: pointer;
   font-size: 20px;
+}
+
+.col-wide {
+  padding: 0;
 }

@@ -1,21 +1,16 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView
 from django.views import View
-from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from allauth.account.decorators import verified_email_required
 from django.forms import formset_factory
-# from .models import Entry
 from .forms import CommunityForm, IssueForm
 from .models import CommunityEntry, Issue
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
 from shapely.geometry import Polygon, mapping
-import geojson
-import os
-import json
-import re
+import geojson, os, json,re
 from django.http import JsonResponse
 
 
@@ -32,10 +27,32 @@ Documentation: https://docs.djangoproject.com/en/2.1/topics/class-based-views/
 class Index(TemplateView):
     template_name = "main/index.html"
 
+    # Add extra context variables.
+    def get_context_data(self, **kwargs):
+        context = super(Index, self).get_context_data(**kwargs) # get the default context data
+        context['mapbox_key'] = os.environ.get('DISTR_MAPBOX_KEY')
+        return context
+
+#******************************************************************************#
+
+class MainView(TemplateView):
+    template_name = "main/main_test.html"
+
+    # Add extra context variables.
+    def get_context_data(self, **kwargs):
+        context = super(MainView, self).get_context_data(**kwargs) # get the default context data
+        context['mapbox_key'] = os.environ.get('DISTR_MAPBOX_KEY')
+        return context
+
 #******************************************************************************#
 
 class Timeline(TemplateView):
     template_name = "main/timeline.html"
+
+#******************************************************************************#
+
+class AboutUs(TemplateView):
+    template_name = "main/AboutUs.html"
 
 #******************************************************************************#
 
