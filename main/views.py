@@ -1,20 +1,16 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView
 from django.views import View
-from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from allauth.account.decorators import verified_email_required
 from django.forms import formset_factory
-# from .models import Entry
 from .forms import CommunityForm, IssueForm
 from .models import CommunityEntry
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
 from shapely.geometry import Polygon, mapping
-import geojson
-import os
-import json
+import geojson, os, json
 from django.http import JsonResponse
 
 
