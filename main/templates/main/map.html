@@ -48,11 +48,13 @@
     <i class="fa fa-caret-down"></i></button>
     <div class="dropdown-container" id="outline-menu">
     </div>
-    {% for tag in tags %}
-      <button class="dropdown-btn">{{ tag }}
+    {% for issue, desc in issues.items %}
+      <button class="dropdown-btn">{{ issue }}
         <i class="fa fa-caret-down"></i></button>
         <div class="dropdown-container">
-          <a href="#">link</a>
+          {% for item in desc %}
+          <a href="#">{{ item }}</a>
+          {% endfor %}
         </div>
     {% endfor %}
   </nav>

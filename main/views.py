@@ -6,11 +6,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from allauth.account.decorators import verified_email_required
 from django.forms import formset_factory
 from .forms import CommunityForm, IssueForm
-from .models import CommunityEntry
+from .models import CommunityEntry, Issue
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
 from shapely.geometry import Polygon, mapping
-import geojson, os, json
+import geojson, os, json,re
 from django.http import JsonResponse
 
 
@@ -27,10 +27,32 @@ Documentation: https://docs.djangoproject.com/en/2.1/topics/class-based-views/
 class Index(TemplateView):
     template_name = "main/index.html"
 
+    # Add extra context variables.
+    def get_context_data(self, **kwargs):
+        context = super(Index, self).get_context_data(**kwargs) # get the default context data
+        context['mapbox_key'] = os.environ.get('DISTR_MAPBOX_KEY')
+        return context
+
+#******************************************************************************#
+
+class MainView(TemplateView):
+    template_name = "main/main_test.html"
+
+    # Add extra context variables.
+    def get_context_data(self, **kwargs):
+        context = super(MainView, self).get_context_data(**kwargs) # get the default context data
+        context['mapbox_key'] = os.environ.get('DISTR_MAPBOX_KEY')
+        return context
+
 #******************************************************************************#
 
 class Timeline(TemplateView):
     template_name = "main/timeline.html"
+
+#******************************************************************************#
+
+class AboutUs(TemplateView):
+    template_name = "main/AboutUs.html"
 
 #******************************************************************************#
 
@@ -58,8 +80,18 @@ class Map(TemplateView):
         # print(geojson.Polygon(data[0]))
         # data = json.dumps(struct)
 
-        # the array of tags -- dummy info for now, but will become someting soon !
-        tags = ["Race", "Faith", "Industry"]
+        # the dict of issues + input of descriptions
+        issues = dict()
+        for obj in Issue.objects.all():
+            cat = obj.category;
+            cat = re.sub('_', ' ', cat).title()
+            if cat in issues:
+                issues[cat].append(obj.description)
+            else:
+                issues[cat] = [obj.description]
+            print(issues)
+
+
 
         a = []
         for obj in CommunityEntry.objects.all():
@@ -80,7 +112,7 @@ class Map(TemplateView):
         context = ({
             # 'entries':  serialize('geojson', Entry.objects.all(), geometry_field='polygon', fields=('entry_polygon')),
             # 'entries': data,
-            'tags': tags,
+            'issues': issues,
             'entries': final,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
         })
