@@ -49,6 +49,11 @@ class Timeline(TemplateView):
 
 #******************************************************************************#
 
+class AboutUs(TemplateView):
+    template_name = "main/AboutUs.html"
+
+#******************************************************************************#
+
 class Map(TemplateView):
     template_name = "main/map.html"
     # serialize('geojson', Entry.objects.all(), geometry_field='polygon', fields=('entry_polygon',))
