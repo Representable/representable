@@ -12,5 +12,4 @@ urlpatterns = [
     path('entry/', views.EntryView.as_view(), name='entry'),
     path('main/', views.MainView.as_view(), name='main_test'),
     path('aboutUs/', views.AboutUs.as_view(), name='aboutUs'),
-    # path('entry/ajax/dummy_save/', views.savePolygon, name='savePolygon')
 ]
