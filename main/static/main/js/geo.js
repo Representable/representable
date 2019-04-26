@@ -39,7 +39,99 @@ var draw = new MapboxDraw({
     controls: {
         polygon: true,
         trash: true
-    }
+    },
+    styles: [
+        {
+            'id': 'gl-draw-polygon-fill-inactive',
+            'type': 'fill',
+            'filter': ['all', ['==', 'active', 'false'],
+                ['==', '$type', 'Polygon'],
+                ['!=', 'mode', 'static']
+            ],
+            'paint': {
+                'fill-color': '#3bb2d0',
+                'fill-outline-color': '#3bb2d0',
+                'fill-opacity': 0.1
+            }
+        },
+        {
+            'id': 'gl-draw-polygon-fill-active',
+            'type': 'fill',
+            'filter': ['all', ['==', 'active', 'true'],
+                ['==', '$type', 'Polygon']
+            ],
+            'paint': {
+                'fill-color': '#4a69bd',
+                'fill-outline-color': '#4a69bd',
+                'fill-opacity': 0.5
+            }
+        },
+        {
+            'id': 'gl-draw-polygon-stroke-inactive',
+            'type': 'line',
+            'filter': ['all', ['==', 'active', 'false'],
+                ['==', '$type', 'Polygon'],
+                ['!=', 'mode', 'static']
+            ],
+            'layout': {
+                'line-cap': 'round',
+                'line-join': 'round'
+            },
+            'paint': {
+                'line-color': '#3bb2d0',
+                'line-width': 2
+            }
+        },
+        {
+            'id': 'gl-draw-polygon-stroke-active',
+            'type': 'line',
+            'filter': ['all', ['==', 'active', 'true'],
+                ['==', '$type', 'Polygon']
+            ],
+            'layout': {
+                'line-cap': 'round',
+                'line-join': 'round'
+            },
+            'paint': {
+                'line-color': '#fbb03b',
+                'line-dasharray': [0.2, 2],
+                'line-width': 2
+            }
+        },
+        {
+            'id': 'gl-draw-line-inactive',
+            'type': 'line',
+            'filter': ['all', ['==', 'active', 'false'],
+                ['==', '$type', 'LineString'],
+                ['!=', 'mode', 'static']
+            ],
+            'layout': {
+                'line-cap': 'round',
+                'line-join': 'round'
+            },
+            'paint': {
+                'line-color': '#3bb2d0',
+                'line-width': 2
+            }
+        },
+        {
+            'id': 'gl-draw-line-active',
+            'type': 'line',
+            'filter': ['all', ['==', '$type', 'LineString'],
+                ['==', 'active', 'true']
+            ],
+            'layout': {
+                'line-cap': 'round',
+                'line-join': 'round'
+            },
+            'paint': {
+                'line-color': '#fbb03b',
+                'line-dasharray': [0.2, 2],
+                'line-width': 2
+            }
+        }
+    ]
+
 });
 
 // initialize the progress bar with pop data
@@ -104,9 +196,9 @@ map.on('style.load', function() {
         "source": "census",
         "source-layer": "njblockdata",
         "paint": {
-        "fill-outline-color": "#484896",
-        "fill-color": "#6e599f",
-        "fill-opacity": 0.75
+        "fill-outline-color": "#1e3799",
+        "fill-color": "#4a69bd",
+        "fill-opacity": 0.7
         },
         "filter": ["in", "BLOCKID10", ""]
         });
@@ -173,37 +265,28 @@ function updateCommunityEntry(e) {
         // Update User Polygon with the GeoJson data.
         user_polygon = data.features[0];
 
-        entry_polygon = JSON.stringify(user_polygon['geometry']);
-        wkt_obj = wkt.read(entry_polygon);
-        entry_polygon = wkt_obj.write();
-
-
         var polygonBoundingBox = turf.bbox(user_polygon);
         // get the bounds of the polygon to reduce the number of blocks you are querying from
         var southWest = [polygonBoundingBox[0], polygonBoundingBox[1]];
         var northEast = [polygonBoundingBox[2], polygonBoundingBox[3]];
+  
         var northEastPointPixel = map.project(northEast);
         var southWestPointPixel = map.project(southWest);
-
         var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
-        // console.log(user_polygon);
         var mpolygon = [];
         var total = 0.0;
 
-        // var collection = [];
         var filter = features.reduce(function(memo, feature) {
             if (! (turf.intersect(feature, user_polygon) === null)) {
-                // only add the property, if the feature intersects with the polygon drawn by the user
-                // console.log("entered the loop to check how many intersected");
                 memo.push(feature.properties.BLOCKID10);
-                let poly1 = turf.polygon(feature.geometry.coordinates);
-                mpolygon.push(poly1);
+                mpolygon.push(feature);
                 total+= feature.properties.POP10;
             }
             return memo;
         }, ["in", "BLOCKID10"]);
+
         map.setFilter("blocks-highlighted", filter);
-        console.log(total);
+        // console.log(total);
         // progress bar with population data based on ideal population for a district in the given state
         //<div id="pop" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 85%">
         progress = document.getElementById("pop");
@@ -213,12 +296,11 @@ function updateCommunityEntry(e) {
         popWidth = total / (ideal_population * 1.5) * 100;
         progress.style.width = popWidth + "%";
 
-        var finalpoly = turf.union(mpolygon[0], mpolygon[1]);
-        for (let i = 2; i < mpolygon.length; i++) {
-            finalpoly = turf.union(finalpoly, mpolygon[i]);
-        }
-
+        var finalpoly = turf.union.apply(null, mpolygon);
         user_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0];
+        entry_polygon = JSON.stringify(user_polygon['geometry']);
+        wkt_obj = wkt.read(entry_polygon);
+        entry_polygon = wkt_obj.write();
     } else {
         // Update User Polygon with `null`.
         user_polygon = null;
