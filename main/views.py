@@ -8,13 +8,14 @@ from allauth.account.decorators import verified_email_required
 from django.forms import formset_factory
 # from .models import Entry
 from .forms import CommunityForm, IssueForm
-from .models import CommunityEntry
+from .models import CommunityEntry, Issue
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
 from shapely.geometry import Polygon, mapping
 import geojson
 import os
 import json
+import re
 from django.http import JsonResponse
 
 
@@ -62,8 +63,18 @@ class Map(TemplateView):
         # print(geojson.Polygon(data[0]))
         # data = json.dumps(struct)
 
-        # the array of tags -- dummy info for now, but will become someting soon !
-        tags = ["Race", "Faith", "Industry"]
+        # the dict of issues + input of descriptions
+        issues = dict()
+        for obj in Issue.objects.all():
+            cat = obj.category;
+            cat = re.sub('_', ' ', cat).title()
+            if cat in issues:
+                issues[cat].append(obj.description)
+            else:
+                issues[cat] = [obj.description]
+            print(issues)
+
+
 
         a = []
         for obj in CommunityEntry.objects.all():
@@ -84,7 +95,7 @@ class Map(TemplateView):
         context = ({
             # 'entries':  serialize('geojson', Entry.objects.all(), geometry_field='polygon', fields=('entry_polygon')),
             # 'entries': data,
-            'tags': tags,
+            'issues': issues,
             'entries': final,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
         })
