@@ -215,6 +215,40 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   layers.appendChild(link);
 }
 
+// when clicking on the issue title, only show those issues
+
+
+for (var i = 0; i < toggleableLayerIds.length; i++) {
+  var id = toggleableLayerIds[i];
+
+  var link = document.createElement('a');
+  link.href = '#';
+  link.className = 'active';
+  link.textContent = id;
+
+  link.onclick = function (e) {
+    var txt = this.textContent;
+    var clickedLayers = ["NJ " + txt, "VA " + txt, "PA " + txt, "MI " + txt];
+    e.preventDefault();
+    e.stopPropagation();
+
+    for (var j = 0; j < clickedLayers.length; j++) {
+      var visibility = map.getLayoutProperty(clickedLayers[j], 'visibility');
+
+      if (visibility === 'visible') {
+        map.setLayoutProperty(clickedLayers[j], 'visibility', 'none');
+        this.className = '';
+      } else {
+        this.className = 'active';
+        map.setLayoutProperty(clickedLayers[j], 'visibility', 'visible');
+      }
+    }
+  };
+
+  var layers = document.getElementById('outline-menu');
+  layers.appendChild(link);
+}
+
 /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content -
 This allows the user to have multiple dropdowns without any conflict */
 var dropdown = document.getElementsByClassName("dropdown-btn");
