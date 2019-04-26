@@ -76,7 +76,8 @@ a:hover {
 }
 
 .shadow-sm {
-    background-image: linear-gradient(#030428, rgba(97, 195, 237, 0.7));
+    /* background-image: linear-gradient(#030428, rgba(97, 195, 237, 0.7)); */
+    background-image: linear-gradient(#0a3d62, #82ccdd);
 }
 
 .container-panel {
