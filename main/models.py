@@ -47,7 +47,7 @@ class CommunityEntry(models.Model):
     industry = ArrayField(models.CharField(max_length=50,choices=INDUSTRY_CHOICES),default=list,blank=True)
     # User Zipcode
     zipcode = models.CharField(max_length=5, blank=False, null=False)
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, blank=True)
     CHOICES=(
         ('Y','Yes, this is my community.'),
         ('N','No, I am creating this community on behalf of another group of people.')

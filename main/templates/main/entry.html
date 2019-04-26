@@ -40,107 +40,110 @@
     </div>
 </div>
 <div class="row row-content">
-    <!-- <div class="col-sm-4">
-
-    </div> -->
-    <div class="col-sm-12">
-        <div id='map'></div>
-        <div id='menu'>
-            <input id='streets-v11' type='radio' name='rtoggle' value='streets' checked='checked'>
-            <label for='streets'>streets</label>
-            <input id='light-v10' type='radio' name='rtoggle' value='light'>
-            <label for='light'>light</label>
-            <input id='dark-v10' type='radio' name='rtoggle' value='dark'>
-            <label for='dark'>dark</label>
-            <input id='outdoors-v11' type='radio' name='rtoggle' value='outdoors'>
-            <label for='outdoors'>outdoors</label>
-            <input id='satellite-v9' type='radio' name='rtoggle' value='satellite'>
-            <label for='satellite'>satellite</label>
-        </div>
-
-    </div>
-</div>
-<div class="row row-content">
-    <div class="col-sm-12">
+    <div class="col">
         <form id="entryForm" method="post">
-            {% csrf_token %}
-            {{ form.entry_polygon.non_field_errors }}
-            <div class="form-group">
-                <!-- {# Include the hidden fields #} -->
-                {% for hidden in form.hidden_fields %}
-                {{ hidden }}
-                {% endfor %}
-                {{ form.entry_polygon.errors }}
-                <!-- {# Include the visible fields #} -->
-                <!-- {# Race Field} -->
-                <div class="field-wrap">
-                    <div class="form-error">
-                    {{ form.race.errors }}
-                    </div>
-                    {{ form.race.label_tag }} {{ form.race|append_attr:"class:form-control" }}
-                    {% if form.race.help_text %}
-                    <p class="help">{{ form.race.help_text|safe }}</p>
-                    {% endif %}
-                </div>
-                <!-- {# Religion Field} -->
-                <div class="field-wrap">
-                    <div class="form-error">
-                    {{ form.religion.errors }}
-                    </div>
-                    {{ form.religion.label_tag }} {{ form.religion|append_attr:"class:form-control" }}
-                    {% if form.religion.help_text %}
-                    <p class="help">{{ form.religion.help_text|safe }}</p>
-                    {% endif %}
-                </div>
-                <!-- {# Industry Field} -->
-                <div class="field-wrap">
-                    <div class="form-error">
-                    {{ form.industry.errors }}
-                    </div>
-                    {{ form.industry.label_tag }} {{ form.industry|append_attr:"class:form-control" }}
-                    {% if form.industry.help_text %}
-                    <p class="help">{{ form.industry.help_text|safe }}</p>
-                    {% endif %}
-                </div>
-                <!-- {# Zipcode Field} -->
-                <div class="field-wrap">
-                    <div class="form-error">
-                    {{ form.zipcode.errors }}
-                    </div>
-                    {{ form.zipcode.label_tag }} {{ form.zipcode|append_attr:"class:form-control" }}
-                    {% if form.zipcode.help_text %}
-                    <p class="help">{{ form.zipcode.help_text|safe }}</p>
-                    {% endif %}
-                </div>
-                <!-- {# Tags Field} -->
-                <div class="field-wrap">
-                    <div class="form-error">
-                    {{ form.tags.errors }}
-                    </div>
-                    {{ form.tags.label_tag }} {{ form.tags|append_attr:"class:form-control" }}
-                    {% if form.tags.help_text %}
-                    <p class="help">{{ form.tags.help_text|safe }}</p>
-                    {% endif %}
-                </div>
+            <div class="row row-content">
+                <div class="col-lg">
+                    {% csrf_token %}
+                    {{ form.entry_polygon.non_field_errors }}
+                    <div class="form-group">
+                        <!-- {# Include the hidden fields #} -->
+                        {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                        {% endfor %}
+                        {{ form.entry_polygon.errors }}
+                        <!-- {# Include the visible fields #} -->
+                        <!-- {# Race Field} -->
+                        <div class="field-wrap">
+                            <div class="form-error">
+                                {{ form.race.errors }}
+                            </div>
+                            {{ form.race.label_tag }} {{ form.race|append_attr:"class:form-control" }}
+                            {% if form.race.help_text %}
+                            <p class="help">{{ form.race.help_text|safe }}</p>
+                            {% endif %}
+                        </div>
+                        <!-- {# Religion Field} -->
+                        <div class="field-wrap">
+                            <div class="form-error">
+                                {{ form.religion.errors }}
+                            </div>
+                            {{ form.religion.label_tag }} {{ form.religion|append_attr:"class:form-control" }}
+                            {% if form.religion.help_text %}
+                            <p class="help">{{ form.religion.help_text|safe }}</p>
+                            {% endif %}
+                        </div>
+                        <!-- {# Industry Field} -->
+                        <div class="field-wrap">
+                            <div class="form-error">
+                                {{ form.industry.errors }}
+                            </div>
+                            {{ form.industry.label_tag }} {{ form.industry|append_attr:"class:form-control" }}
+                            {% if form.industry.help_text %}
+                            <p class="help">{{ form.industry.help_text|safe }}</p>
+                            {% endif %}
+                        </div>
+                        <!-- {# Zipcode Field} -->
+                        <div class="field-wrap">
+                            <div class="form-error">
+                                {{ form.zipcode.errors }}
+                            </div>
+                            {{ form.zipcode.label_tag }} {{ form.zipcode|append_attr:"class:form-control" }}
+                            {% if form.zipcode.help_text %}
+                            <p class="help">{{ form.zipcode.help_text|safe }}</p>
+                            {% endif %}
+                        </div>
+                        <!-- {# Tags Field} -->
+                        <div class="field-wrap">
+                            <div class="form-error">
+                                {{ form.tags.errors }}
+                            </div>
+                            {{ form.tags.label_tag }} {{ form.tags|append_attr:"class:form-control" }}
+                            {% if form.tags.help_text %}
+                            <p class="help">{{ form.tags.help_text|safe }}</p>
+                            {% endif %}
+                        </div>
 
-                <!-- {# Is this your community? Field} -->
-                <div class="field-wrap">
-                    {{ form.my_community.errors }}
-                    {{ form.my_community.label_tag }} {{ form.my_community|append_attr:"class:form-control" }}
-                    {% if form.my_community.help_text %}
-                    <p class="help">{{ form.my_community.help_text|safe }}</p>
-                    {% endif %}
+                        <!-- {# Is this your community? Field} -->
+                        <div class="field-wrap">
+                            {{ form.my_community.errors }}
+                            {{ form.my_community.label_tag }} {{ form.my_community|append_attr:"class:form-control" }}
+                            {% if form.my_community.help_text %}
+                            <p class="help">{{ form.my_community.help_text|safe }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
-                {{ issue_formset.management_form }}
-                <!-- {# "My Issues" Fields} -->
-                <label> Issues that affect my community: </label>
-                <!-- {# Include the formset.} -->
-                {% for hidden_issue_field in issue_formset.hidden_fields %}
-                {{ hidden_issue_field }}
-                {% endfor %}
-                {% for formset_row in issue_formset %}
-                <div class="row form-row issues_formset">
-                        <div class="col-4">
+                <div class="col">
+                    <div id='map'></div>
+                    <div id='menu'>
+                        <input id='streets-v11' type='radio' name='rtoggle' value='streets' checked='checked'>
+                        <label for='streets'>streets</label>
+                        <input id='light-v10' type='radio' name='rtoggle' value='light'>
+                        <label for='light'>light</label>
+                        <input id='dark-v10' type='radio' name='rtoggle' value='dark'>
+                        <label for='dark'>dark</label>
+                        <input id='outdoors-v11' type='radio' name='rtoggle' value='outdoors'>
+                        <label for='outdoors'>outdoors</label>
+                        <input id='satellite-v9' type='radio' name='rtoggle' value='satellite'>
+                        <label for='satellite'>satellite</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-content">
+                <div class='col'>
+                </div>
+                <div class="col-sm-8">
+                    {{ issue_formset.management_form }}
+                    <!-- {# "My Issues" Fields} -->
+                    <label> Issues that affect my community: </label>
+                    <!-- {# Include the formset.} -->
+                    {% for hidden_issue_field in issue_formset.hidden_fields %}
+                    {{ hidden_issue_field }}
+                    {% endfor %}
+                    {% for formset_row in issue_formset %}
+                    <div class="row form-row issues_formset">
+                        <div class="col-sm-4">
                             {{ formset_row.category|append_attr:"class:form-control" }}
                             {% if formset_row.category.errors %}
                             {% for error in formset_row.category.errors %}
@@ -148,7 +151,7 @@
                             {% endfor %}
                             {% endif %}
                         </div>
-                        <div class="col-4">
+                        <div class="col-sm-4">
                             {{ formset_row.description|append_attr:"class:form-control" }}
                             {% if formset_row.description.errors %}
                             {% for error in formset_row.description.errors %}
@@ -156,18 +159,23 @@
                             {% endfor %}
                             {% endif %}
                         </div>
-                        <div class="col">
+                        <div class="col-sm-4 text-center">
                             <button name="addFormRow" class="btn btn-success add-form-row">Add Another Issue</button>
                         </div>
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-                <button id="save" form="entryForm" type="submit" class="btn btn-primary" value="Submit">Submit</button>
-
+                <div class='col'>
+                </div>
+            </div>
+            <div class="row row-container">
+                <div class="col text-center">
+                    <button id="save" form="entryForm" type="submit" class="btn btn-primary" value="Submit">Submit</button>
+                </div>
             </div>
         </form>
     </div>
 </div>
-
 {% endblock %}
 
 {% block script %}
