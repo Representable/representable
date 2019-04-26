@@ -66,7 +66,7 @@
 {% block script %}
 <!--  Has to be at the end after the HTML loads.-->
 <script type="text/javascript">
-  mapboxgl.accessToken = "{{ mapbox_key }}";
+    mapboxgl.accessToken = "{{ mapbox_key }}";
 </script>
 <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
 {% endblock %}

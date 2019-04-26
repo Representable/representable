@@ -24,7 +24,7 @@ a:hover {
 }
 
 .btn {
-    border-radius: 1rem;
+    /* border-radius: 1rem; */
     margin: 5px;
 }
 
@@ -110,5 +110,12 @@ hr {
         background-color: #FFF;
         color: #000;
         padding: 40px;
+    }
+    .row-content-2 {
+        background-color: #FFF;
+        color: #000;
+        padding-left: 40px;
+        padding-right: 40px;
+        padding-bottom: 40px;
     }
 }
