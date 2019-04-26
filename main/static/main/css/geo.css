@@ -6,6 +6,7 @@ body {
     background-color: #030428;
 }
 
+/* css for the line on the progress bar */
 .bar-step {
     position:absolute;
     margin-top:-20px;
@@ -86,4 +87,10 @@ p {
     font-family: 'Open Sans';
     margin: 0;
     font-size: 13px;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
 }

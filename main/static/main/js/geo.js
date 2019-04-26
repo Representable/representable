@@ -141,6 +141,12 @@ map.addControl(geocoder, 'top-right');
 map.addControl(draw);
 map.boxZoom.disable();
 
+var polygonError = document.getElementById("polygon_missing");
+if (polygonError != null) {
+    document.getElementById("map").classList.add("border");
+    document.getElementById("map").classList.add("border-warning");
+}
+
 /******************************************************************************/
 
 // After the map style has loaded on the page, add a source layer and default
@@ -242,6 +248,7 @@ var wasLoaded = false;
 map.on('render', function() {
     if (!map.loaded() || wasLoaded) return;
     wasLoaded = true;
+
 });
 
 /******************************************************************************/
@@ -290,6 +297,16 @@ function updateCommunityEntry(e) {
         // progress bar with population data based on ideal population for a district in the given state
         //<div id="pop" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 85%">
         progress = document.getElementById("pop");
+        // set color of the progress bar depending on population
+        if (total < (ideal_population * 0.33) || total > (ideal_population * 1.5)) {
+          progress.style.background = "red";
+        }
+        else if (total < (ideal_population * 0.67) || total > (ideal_population * 1.33)) {
+          progress.style.background = "orange";
+        }
+        else {
+          progress.style.background = "green";
+        }
         progress.innerHTML = total;
         progress.setAttribute("aria-valuenow", "total");
         progress.setAttribute("aria-valuemax", ideal_population * 1.5);
@@ -311,47 +328,76 @@ function updateCommunityEntry(e) {
     document.getElementById('id_entry_polygon').value = entry_polygon;
 
 }
-
 /******************************************************************************/
 
-// AJAX for Saving https://l.messenger.com/l.php?u=https%3A%2F%2Fsimpleisbetterthancomplex.com%2Ftutorial%2F2016%2F08%2F29%2Fhow-to-work-with-ajax-request-with-django.html&h=AT2eBJBqRwotQY98nmtDeTb6y0BYi-ydl5NuMK68-V1LIRsZY11LiFF6o6HUCLsrn0vfPqJYoJ0RsZNQGvLO9qBJPphpzlX4fkxhtRrIzAgOsHmcC6pDV2MzhaeUT-hhj4M2-iOUyg
-// Dummy Button Save Listener
-// document.getElementById("dummySave").onclick = saveNewEntry;
-
-/******************************************************************************/
-
-// Process AJAX Request
-function saveNewEntry(event) {
-    console.log("Dummy save button pressed!");
-    // Only save if the user_polygon is not null or empty
-    if (user_polygon != null && user_polygon != '') {
-
-        console.log("[AJAX] Sending saveNewEntry to server.");
-        // Need to stringify
-        // https://www.webucator.com/how-to/how-send-receive-json-data-from-the-server.cfm
-        // var entry_features = JSON.stringify(user_polygon);
-
-        var entry_features = JSON.stringify(poly);
-        console.log(poly);
-        var map_center = JSON.stringify([map.getCenter()['lng'], map.getCenter()['lat']]);
-        var entry_id = JSON.stringify(poly['id']);
-        $.ajax({
-            url: 'ajax/dummy_save/',
-            data: {
-                'entry_id': entry_id,
-                'entry_features': entry_features,
-                'map_center': map_center,
-            },
-            dataType: 'json',
-            success: function(data) {
-                if (data.worked) {
-                    alert("Saved!");
-                } else {
-                    alert("Error.");
-                }
-            }
-        });
-    }
+function updateElementIndex(el, prefix, ndx) {
+    var id_regex = new RegExp('(' + prefix + '-\\d+)');
+    var replacement = prefix + '-' + ndx;
+    if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
+    if (el.id) el.id = el.id.replace(id_regex, replacement);
+    if (el.name) el.name = el.name.replace(id_regex, replacement);
 }
+
+/******************************************************************************/
+
+function cloneMore(selector, prefix) {
+    // Function that clones formset fields.
+    var newElement = $(selector).clone(true);
+    var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
+    console.log(total)
+    newElement.find(':input').each(function() {
+        var name = $(this).attr('name').replace('-' + (total - 1) + '-', '-' + total + '-');
+        var id = 'id_' + name;
+        $(this).attr({
+            'name': name,
+            'id': id
+        }).val('').removeAttr('checked');
+    });
+    total++;
+    $('#id_' + prefix + '-TOTAL_FORMS').val(total);
+    $(selector).after(newElement);
+    var conditionRow = $('.form-row:not(:last)');
+    conditionRow.find('.btn.add-form-row')
+        .removeClass('btn-success').addClass('btn-danger')
+        .removeClass('add-form-row').addClass('remove-form-row')
+        .html('<span class="" aria-hidden="true">Remove</span>');
+    return false;
+}
+
+/******************************************************************************/
+
+function deleteForm(prefix, btn) {
+    // Function that deletes formset fields.
+    var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
+    if (total > 1) {
+        btn.closest('.form-row').remove();
+        var forms = $('.form-row');
+        $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+        for (var i = 0, formCount = forms.length; i < formCount; i++) {
+            $(forms.get(i)).find(':input').each(function() {
+                updateElementIndex(this, prefix, i);
+            });
+        }
+    }
+    return false;
+}
+
+/******************************************************************************/
+
+$(document).on('click', '.add-form-row', function(e) {
+    // Add form click handler.
+    e.preventDefault();
+    cloneMore('.form-row:last', 'form');
+    return false;
+});
+
+/******************************************************************************/
+
+$(document).on('click', '.remove-form-row', function(e) {
+    // Remove form click handler.
+    e.preventDefault();
+    deleteForm('form', $(this));
+    return false;
+});
 
 /******************************************************************************/

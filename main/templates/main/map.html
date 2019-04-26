@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="{% static 'main/css/map.css' %}">
 {% endblock %}
 {% block content %}
-<div class="col-12">
+<div class="row row-wide">
   <div>
       <script type="text/javascript">
         // var a = JSON.parse('{{ entries | escapejs }}')
@@ -35,6 +35,7 @@
   </script>
     {% endfor %}
   </div>
+  <div class="col-md-3 col-sm-12">
   <nav id='menu'>
   <div class="sidenav">
     <div class="search">
@@ -54,20 +55,18 @@
           <a href="#">link</a>
         </div>
     {% endfor %}
-    <button class="dropdown-btn">Environment
-    <i class="fa fa-caret-down"></i></button>
-    <div class="dropdown-container">
-      <a href="#">link</a>
-    </div>
   </nav>
-  <div id='map'></div>
-</div>
+  </div>
+  <div class="col-md-9 col-sm-12 col-map">
+    <div id='map'></div>
+  </div>
+  </div>
 {% endblock %}
 
 {% block script %}
 <!--  Has to be at the end after the HTML loads.-->
 <script type="text/javascript">
-  mapboxgl.accessToken = "{{ mapbox_key }}";
+    mapboxgl.accessToken = "{{ mapbox_key }}";
 </script>
 <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
 {% endblock %}
