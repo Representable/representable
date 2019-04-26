@@ -1,5 +1,7 @@
 {% extends 'main/base.html' %}
+{% load leaflet_tags %}
 {% load static %}
+
 {% block hero-pre %}
 <div class="shadow-sm">
     <div id="particles-js">
@@ -9,33 +11,172 @@
             <div class="row row-hero">
                 <div class="col-sm-12 col-md-10 offset-md-1 my-5">
                     <h1 class="di-title mb-4">A crowdsourced redistricting tool to map communities and make your voice heard.</h1>
-                    <a class="btn btn-outline-primary btn-canvas btn-margin" href="#about" role="button">Learn More</a>
-                    <a class="btn btn-outline-primary btn-canvas btn-margin" href="/entry" role="button">Contribute</a>
+                    <a class="btn btn-outline-primary btn-canvas" href="/aboutUs" role="button">About Us</a>
+                    <a class="btn btn-outline-primary btn-canvas" href="#features" role="button">How To Contribute</a>
+                    <a class="btn btn-outline-primary btn-canvas" href="/entry" role="button">Contribute</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 {% endblock %}
+
+{% block head %}
+{% leaflet_js %}
+{% leaflet_css %}
+
+<!--  Mapbox GL JS-->
+<meta charset='utf-8' />
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+{% endblock %}
+
 {% block content %}
+<!--  what is Districter ?? -->
 <div class="row row-content">
-    <div class="col">
-        <h4>What is Districter?</h4>
+    <div id='description' class="col-sm-6">
+        <h2>What is Districter?</h2>
         <p>Districter is an online service that allows Americans to fight against gerrymandering by
             drawing their communities of interest (COIs) on a map. A COI is what a person consider to
-            be their community. This can take the form of a coastal neighborhood that stretches along a
+            be their community.<br> <br>
+
+            This can take the form of a coastal neighborhood that stretches along a
             beach, or a valley village that is clustered around a river. Currently, people can only provide
             qualitative information through committee hearings, which cannot be easily used to draw
-            districts or highlight gerrymandering. Allowing people to mark their COIs will help redistricting
+            districts or highlight gerrymandering.<br> <br>
+
+            Allowing people to mark their COIs will help redistricting
             committees by providing them with quantifiable information that can be used to draw fair
             districts. Furthermore, Districter will provide a way to better visualize and quantify the current
             state of gerrymandering by overlaying district lines over communities of interest.</p>
     </div>
-
-    <div class="col">
-        <img src="{% static 'img/map-sample.png' %}" alt="Map" width="100%" height="100%">
+    <div id=images class="col-sm-6">
+        <img src="{% static 'img/gerry.png' %}" alt="map" style="width: 100%; height: auto;">
+        <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
     </div>
 </div>
+<div class="row row-content">
+    <div class='col-sm'>
+        <h2>How Do I contribute?</h2>
+    </div>
+</div>
+<!--  TUTORIAL -------------------------------------------------------------->
+<div class="row row-content">
+    <div class='col-sm'>
+        <div id='features'>
+            <!--  STEP ONE : BROWSE THE MAP-->
+            <div class="row">
+                <div col='col'>
+                    <section id='Step1-Browse' class='active'>
+                        <h3> 1. Browse the Map </h3>
+                        <div class="row">
+                            <div id='Video1' class="col-sm-6">
+                                <video loop style="width: 100%; height: auto;" autoplay>
+                                    <source src="{% static 'img/Browse_1.mp4' %}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                            <div id=description class="col-sm-6">
+                                <p> Explore the map by entering in a zipcode in the search box and navigate to your
+                                    local community using interactive features </p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!--  STEP TWO :NavCommunity -->
+            <div class="row">
+                <div col='col-sm'>
+                    <section id='Step2-NavCommunity' class='active'>
+                        <h3> 2. Navigate your community </h3>
+                                <div class="row">
+                                    <div id=description class="col-sm-6">
+                                        <p> Using a variety of map views and add on geographic and census features, get
+                                            a better understanding for your geospatial COI </p>
+                                    </div>
+                                    <div id='Video2' class="col-sm-6">
+                                        <video loop style="width: 100%; height: auto;" autoplay>
+                                            <source src="{% static 'img/NavCommunity.mp4' %}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                </div>
+                    </section>
+                </div>
+            </div>
+
+            <!--  STEP THREE : DRAW COI -->
+            <div class="row">
+                <div col='col'>
+                    <section id='Step3-drawCOi' class='active'>
+                        <h3> 3. Draw ur COI </h3>
+                                <div class="row">
+                                    <div id='Video 3' class="col-sm-6">
+                                        <video loop style="width: 100%; height: auto;" autoplay>
+                                            <source src="{% static 'img/COI.mp4' %}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                    <div id=description class="col-sm-6">
+
+                                        <p> Using the Polygon draw tool, click the 'createCOI logo',
+                                            and begin to draw your COI! click on a point on the map to create a vertex
+                                            and click twice on your final vertex to finalize your polygon. To start
+                                            over press the trash can on the right hand of the screen. To edit the
+                                            polygon once made simply click on a vertex and drag accorginly or
+                                            even drag the entire shape over. </p>
+                                    </div>
+                                </div>
+                    </section>
+                </div>
+            </div>
+
+            <!--  STEP FOUR : Enter DEMOGRAPHIC data -->
+            <div class="row">
+                <div col='col'>
+                    <section id='Step4-DemographicData' class='active'>
+                        <h3> 4.Demographic Data </h3>
+                                <div class="row">
+                                    <div id=description class="col-sm-6">
+                                        <p> Help us understand the importance of this community for you, and
+                                            identify aggregate trends in your commynity
+                                            by submitting your demographic information and policy needs on the right
+                                            hand side of the screen </p>
+                                    </div>
+                                    <div id='Video 4' class="col-sm-6">
+                                        <video loop style="width: 100%; height: auto;" autoplay>
+                                            <source src="{% static 'img/Demo.mp4' %}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+
+                                </div>
+                    </section>
+                </div>
+            </div>
+
+            <!--  STEP FIVE : submit  -->
+            <div class="row">
+                <div col='col'>
+                    <section id='Step5-Submit Data' class='active'>
+                        <h3> 5.Submit & Help make US politics more judicial! </h3>
+                                <div class="row">
+                                    <div id=images class="col-sm-6">
+                                        <img src="{% static 'img/mapp.png' %}" alt="map" style="width: 100%; height: auto;">
+                                    </div>
+                                    <div id=description class="col-sm-6">
+                                        <p> Submit the data to be entered into a critical databse of citizens in your area
+                                            who want to have their voices heard during redistricting <br>
+                                            go to animation of submitting data / redistricting? <p>
+                                    </div>
+                                </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
 
@@ -45,5 +186,8 @@
     particlesJS.load('particles-js', "{% static 'assets/particles.json' %}", function() {
         console.log('callback - particles.min.js config loaded');
     });
+</script>
+<script type="text/javascript">
+    mapboxgl.accessToken = "{{ mapbox_key }}";
 </script>
 {% endblock %}

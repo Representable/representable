@@ -326,7 +326,6 @@ function updateCommunityEntry(e) {
     }
     // Update form field
     document.getElementById('id_entry_polygon').value = entry_polygon;
-
 }
 /******************************************************************************/
 
