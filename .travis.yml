@@ -12,10 +12,10 @@ env:
 # Install the version of PostGIS that matches your PostgreSQL version,
 # and activate the PostGIS extension using:
 addons:
-  postgresql:   11.2
+  postgresql: "11.2"
   apt:
     packages:
-    - postgresql-11.2-postgis-2.5.1
+    - postgresql-11.2-postgis-2.5
 # Run before script.
 before_script:
     - psql -c 'create database travis_ci_test;' -U postgres

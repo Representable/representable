@@ -101,27 +101,16 @@ WSGI_APPLICATION = 'districter.wsgi.application'
 # From tutorial here: https://medium.com/agatha-codes/painless-postgresql-django-d4f03364989
 # Make sure that you add the right environment variables in your .bash_profile
 # for NAME, USER, and PASS.
-if 'TRAVIS' in os.environ:
-    DATABASES = {
-        'default': {
-            'ENGINE':   'django.contrib.gis.db.backends.postgis',
-            'NAME':     'travisci',
-            'USER':     'postgres',
-            'PASSWORD': '',
-            'HOST':     'localhost',
-            'PORT':     '',
-        }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.contrib.gis.db.backends.postgis',
-            'NAME': os.environ.get('DISTR_DB_NAME', ''),
-            'USER': os.environ.get('DISTR_DB_USER', ''),
-            'PASS': os.environ.get('DISTR_DB_PASS', ''),
-            # 'HOST': 'localhost', # TODO: must change in production!!!
-            # 'PORT': '5432', # TODO: must change in production - default port for local postgresql server
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': os.environ.get('DISTR_DB_NAME', ''),
+        'USER': os.environ.get('DISTR_DB_USER', ''),
+        'PASS': os.environ.get('DISTR_DB_PASS', ''),
+        # 'HOST': 'localhost', # TODO: must change in production!!!
+        # 'PORT': '5432', # TODO: must change in production - default port for local postgresql server
     }
+}
 
 
 # Password validation
