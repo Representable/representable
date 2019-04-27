@@ -17,6 +17,7 @@
     width: 100%;
     border: 1px solid rgba(0,0,0,0.2);
     border-width: 0 0 0 1px;
+    box-shadow: 5px 0 5px -5px rgba(0,0,0,0.1);
     /*box-shadow: -2px 0 2px 1px rgba(0,0,0,0.1);*/
   }
 }
