@@ -358,47 +358,53 @@ function updateCommunityEntry(e) {
         var northEastPointPixel = map.project(northEast);
         var southWestPointPixel = map.project(southWest);
         var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
-        var mpolygon = [];
-        var total = 0.0;
+        // if no census block data
+        if (features.length < 1) {
 
-        var filter = features.reduce(function(memo, feature) {
-            if (! (turf.intersect(feature, user_polygon) === null)) {
-                memo.push(feature.properties.BLOCKID10);
-                mpolygon.push(feature);
-                total+= feature.properties.POP10;
+        }
+        else {
+            var mpolygon = [];
+            var total = 0.0;
+
+            var filter = features.reduce(function(memo, feature) {
+                if (! (turf.intersect(feature, user_polygon) === null)) {
+                    memo.push(feature.properties.BLOCKID10);
+                    mpolygon.push(feature);
+                    total+= feature.properties.POP10;
+                }
+                return memo;
+            }, ["in", "BLOCKID10"]);
+
+
+            map.setFilter("blocks-highlighted", filter);
+            // progress bar with population data based on ideal population for a district in the given state
+            //<div id="pop" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 85%">
+            progress = document.getElementById("pop");
+            // set color of the progress bar depending on population
+            if (total < (ideal_population * 0.33) || total > (ideal_population * 1.5)) {
+            progress.style.background = "red";
             }
-            return memo;
-        }, ["in", "BLOCKID10"]);
+            else if (total < (ideal_population * 0.67) || total > (ideal_population * 1.33)) {
+            progress.style.background = "orange";
+            }
+            else {
+            progress.style.background = "green";
+            }
+            progress.innerHTML = total;
+            progress.setAttribute("aria-valuenow", "total");
+            progress.setAttribute("aria-valuemax", ideal_population * 1.5);
+            popWidth = total / (ideal_population * 1.5) * 100;
+            progress.style.width = popWidth + "%";
 
-        map.setFilter("blocks-highlighted", filter);
-        // progress bar with population data based on ideal population for a district in the given state
-        //<div id="pop" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 85%">
-        progress = document.getElementById("pop");
-        // set color of the progress bar depending on population
-        if (total < (ideal_population * 0.33) || total > (ideal_population * 1.5)) {
-          progress.style.background = "red";
+            var finalpoly = turf.union.apply(null, mpolygon);
+            // should only be the exterior ring
+            if (finalpoly.geometry.coordinates[0][0].length > 2) {
+                user_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0][0];
+            }
+            else {
+                user_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0];
+            }
         }
-        else if (total < (ideal_population * 0.67) || total > (ideal_population * 1.33)) {
-          progress.style.background = "orange";
-        }
-        else {
-          progress.style.background = "green";
-        }
-        progress.innerHTML = total;
-        progress.setAttribute("aria-valuenow", "total");
-        progress.setAttribute("aria-valuemax", ideal_population * 1.5);
-        popWidth = total / (ideal_population * 1.5) * 100;
-        progress.style.width = popWidth + "%";
-
-        var finalpoly = turf.union.apply(null, mpolygon);
-        // should only be the exterior ring
-        if (finalpoly.geometry.coordinates[0][0].length > 2) {
-            user_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0][0];
-        }
-        else {
-            user_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0];
-        }
-        
         entry_polygon = JSON.stringify(user_polygon['geometry']);
         wkt_obj = wkt.read(entry_polygon);
         entry_polygon = wkt_obj.write();
