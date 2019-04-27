@@ -52,7 +52,7 @@ class Timeline(TemplateView):
 #******************************************************************************#
 
 class AboutUs(TemplateView):
-    template_name = "main/AboutUs.html"
+    template_name = "main/about.html"
 
 #******************************************************************************#
 
