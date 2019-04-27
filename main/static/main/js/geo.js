@@ -343,13 +343,22 @@ function updateCommunityEntry(e) {
 
     var wkt = new Wkt.Wkt();
     var data = draw.getAll();
-    var user_polygon;
-    var census_blocks_polygon;
+    // Polygon drawn by user in map.
+    var drawn_polygon;
+    // Polygon saved to DB.
+    var user_polygon_wkt;
+    // Polygon saved to DB.
+    var census_blocks_polygon_wkt;
+
     if (data.features.length > 0) {
         // Update User Polygon with the GeoJson data.
-        user_polygon = data.features[0];
-        census_blocks_polygon = user_polygon;
-
+        drawn_polygon = data.features[0];
+        // Save user polygon.
+        let user_polygon_json = JSON.stringify(drawn_polygon['geometry']);
+        wkt_obj = wkt.read(user_polygon_json);
+        user_polygon_wkt = wkt_obj.write();
+        // Save census blocks polygon outline.
+        census_blocks_polygon = drawn_polygon;
         var polygonBoundingBox = turf.bbox(census_blocks_polygon);
         // get the bounds of the polygon to reduce the number of blocks you are querying from
         var southWest = [polygonBoundingBox[0], polygonBoundingBox[1]];
@@ -399,21 +408,21 @@ function updateCommunityEntry(e) {
             census_blocks_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0];
         }
         // Save outline of census blocks.
-        census_blocks_polygon = JSON.stringify(census_blocks_polygon['geometry']);
-        wkt_obj = wkt.read(census_blocks_polygon);
-        census_blocks_polygon = wkt_obj.write();
-        // Save user polygon.
-        user_polygon = JSON.stringify(user_polygon['geometry']);
-        wkt_obj = wkt.read(user_polygon);
-        user_polygon = wkt_obj.write();
+        let census_blocks_polygon_json = JSON.stringify(census_blocks_polygon['geometry']);
+        wkt_obj = wkt.read(census_blocks_polygon_json);
+        census_blocks_polygon_wkt = wkt_obj.write();
     } else {
-        user_polygon = '';
-        census_blocks_polygon = '';
+        drawn_polygon = null;
+        user_polygon_wkt = '';
+        census_blocks_polygon_wkt = '';
         map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
     }
+    // Print the polygons.
+    console.log(user_polygon_wkt);
+    console.log(census_blocks_polygon_wkt);
     // Update form fields
-    document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon;
-    document.getElementById('id_user_polygon').value = user_polygon;
+    document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon_wkt;
+    document.getElementById('id_user_polygon').value = user_polygon_wkt;
 }
 /******************************************************************************/
 
