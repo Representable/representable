@@ -3,20 +3,20 @@
 census blocks, state legislature, and drawn polygons + tags to select ur favs */
 /**************************************************************************/
 // the mapbox keys to load tilesets
-// when adding a new state: put it into censusKeys, upperKeys, lowerKeys, and state array
-var censusKeys = {
+// when adding a new state: put it into CENSUS_KEYS, UPPER_KEYS, LOWER_KEYS, and state array
+var CENSUS_KEYS = {
   "nj-census": "aq1twwkc",
   "va-census": "48cgf8ll",
   "pa-census": "0k2ks83t",
   "mi-census": "7bb2ddev"
 };
-var upperKeys = {
+var UPPER_KEYS = {
   "nj-upper": "9fogw4w4",
   "va-upper": "3b1qryb8",
   "pa-upper": "33mtf25i",
   "mi-upper": "5bvjx29f"
 };
-var lowerKeys = {
+var LOWER_KEYS = {
   "nj-lower": "8w0imag4",
   "va-lower": "9xpukpnx",
   "pa-lower": "c2qg68h1",
@@ -69,7 +69,7 @@ function newCensusLayer(state) {
     },
     "paint": {
       "fill-color": "rgba(193, 202, 214, 0)",
-      "fill-outline-color": "rgba(193, 202, 214, 1)"
+      "fill-outline-color": "#82ccdd"
     }
   });
 }
@@ -111,16 +111,16 @@ function newLowerLegislatureLayer(state) {
 }
 map.on('load', function () {
   // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
-  for (var census in censusKeys) {
-    newSourceLayer(census, censusKeys[census]);
+  for (var census in CENSUS_KEYS) {
+    newSourceLayer(census, CENSUS_KEYS[census]);
   }
   // upper layers
-  for (var upper in upperKeys) {
-    newSourceLayer(upper, upperKeys[upper]);
+  for (var upper in UPPER_KEYS) {
+    newSourceLayer(upper, UPPER_KEYS[upper]);
   }
   // lower layers
-  for (var lower in lowerKeys) {
-    newSourceLayer(lower, lowerKeys[lower]);
+  for (var lower in LOWER_KEYS) {
+    newSourceLayer(lower, LOWER_KEYS[lower]);
   }
   for (var i = 0; i < states.length; i++) {
     newCensusLayer(states[i]);
@@ -215,7 +215,8 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   layers.appendChild(link);
 }
 
-/* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+/* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content -
+This allows the user to have multiple dropdowns without any conflict */
 var dropdown = document.getElementsByClassName("dropdown-btn");
 var i;
 
