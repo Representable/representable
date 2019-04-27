@@ -1,0 +1,16 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<div class="row row-content">
+    <div class="col">
+
+      {% if user.is_authenticated %}
+      <h1> Review your submissions! </h1>
+      {% else %}
+      <p>Please login to see this page.</p>
+      {% endif %}
+    </div>
+</div>
+
+{% endblock %}

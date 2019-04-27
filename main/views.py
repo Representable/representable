@@ -51,35 +51,20 @@ class Timeline(TemplateView):
 
 #******************************************************************************#
 
-class AboutUs(TemplateView):
-    template_name = "main/AboutUs.html"
+class About(TemplateView):
+    template_name = "main/about.html"
 
 #******************************************************************************#
 
+class Review(TemplateView):
+    template_name = "main/review.html"
+
+#******************************************************************************#
 class Map(TemplateView):
     template_name = "main/map.html"
     # serialize('geojson', Entry.objects.all(), geometry_field='polygon', fields=('entry_polygon',))
 
     def get_context_data(self, **kwargs):
-        # GEOJSONSerializer = serializers.get_serializer("geojson")
-        # geojson_serializer = GEOJSONSerializer()
-        # geojson_serializer.serialize(Entry.objects.only('entry_polygon'))
-        # data = geojson_serializer.getvalue()
-        # data = serialize("geojson", CommunityEntry.objects.all(
-        # ), geometry_field="Polygon", fields=("entry_polygon", "Polygon",))
-        # print("printing data")
-        # print(data)
-        # struct = json.loads(data)
-        # data = Entry.objects.only('entry_polygon')
-
-        # s = "".join(data)
-        # something = geojson.loads(s)
-
-        # print(geojson.loads(Entry.objects.all()))
-        # print(data[0])
-        # print(geojson.Polygon(data[0]))
-        # data = json.dumps(struct)
-
         # the dict of issues + input of descriptions
         issues = dict()
         for obj in Issue.objects.all():
@@ -91,11 +76,8 @@ class Map(TemplateView):
                 issues[cat] = [obj.description]
             print(issues)
 
-
-
         a = []
         for obj in CommunityEntry.objects.all():
-            # print(obj.entry_polygon.geojson)
             a.append(obj.entry_polygon.geojson)
 
         final = []
@@ -105,13 +87,9 @@ class Map(TemplateView):
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
-            # print("printing the struct")
-            # print(struct)
             final.append(struct.coordinates)
 
         context = ({
-            # 'entries':  serialize('geojson', Entry.objects.all(), geometry_field='polygon', fields=('entry_polygon')),
-            # 'entries': data,
             'issues': issues,
             'entries': final,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),

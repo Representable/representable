@@ -11,5 +11,6 @@ urlpatterns = [
     path('thanks/', views.Thanks.as_view(), name='thanks'),
     path('entry/', views.EntryView.as_view(), name='entry'),
     path('main/', views.MainView.as_view(), name='main_test'),
-    path('aboutUs/', views.AboutUs.as_view(), name='aboutUs'),
+    path('about/', views.About.as_view(), name='about'),
+    path('review/', views.Review.as_view(), name='review')
 ]
