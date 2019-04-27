@@ -83,8 +83,22 @@ class Map(TemplateView):
         # the dict of issues + input of descriptions
         issues = dict()
         for obj in Issue.objects.all():
-            cat = obj.category;
+            cat = obj.category
             cat = re.sub('_', ' ', cat).title()
+            if cat == 'Economic':
+                cat = 'Economic Affairs'
+            if cat == 'Health':
+                cat = 'Health and Health Insurance'
+            if cat == 'Internet':
+                cat = 'Internet Regulation'
+            if cat == 'Women':
+                cat = 'Women\'s Issues'
+            if cat == 'Lgbt':
+                cat = 'LGBT Issues'
+            if cat == 'Security':
+                cat = 'National Security'
+            if cat == 'Welfare':
+                cat = 'Social Welfare'
             if cat in issues:
                 issues[cat].append(obj.description)
             else:

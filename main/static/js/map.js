@@ -69,7 +69,7 @@ function newCensusLayer(state) {
     },
     "paint": {
       "fill-color": "rgba(193, 202, 214, 0)",
-      "fill-outline-color": "#82ccdd"
+      "fill-outline-color": "rgba(193, 202, 214, 1)"
     }
   });
 }
@@ -216,10 +216,17 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
 }
 
 // when clicking on the issue title, only show those issues
-// 
-//
-// for (var i = 0; i < toggleableLayerIds.length; i++) {
-//   var id = toggleableLayerIds[i];
+// {% for issue, desc in issues.items %}
+//   <button class="dropdown-btn">{{ issue }}
+//     <i class="fa fa-caret-down"></i></button>
+//     <div class="dropdown-container">
+//       {% for item in desc %}
+//       <a href="#">{{ item }}</a>
+//       {% endfor %}
+//     </div>
+// {% endfor %}
+// for (var i = 0; i < issues.length; i++) {
+//   var id = issues[i];
 //
 //   var link = document.createElement('a');
 //   link.href = '#';
