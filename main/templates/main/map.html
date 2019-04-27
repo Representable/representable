@@ -26,6 +26,7 @@
   <div>
       <script type="text/javascript">
         // var a = JSON.parse('{{ entries | escapejs }}')
+        var issues = '{{ issues | escapejs }}';
         var a = '{{ entries | escapejs}}';
         // var a = '{{ entries }}';
      </script>
@@ -49,7 +50,7 @@
     <div class="dropdown-container" id="outline-menu">
     </div>
     {% for issue, desc in issues.items %}
-      <button class="dropdown-btn">{{ issue }}
+      <button class="dropdown-btn" id="{{ issue }}">{{ issue }}
         <i class="fa fa-caret-down"></i></button>
         <div class="dropdown-container">
           {% for item in desc %}
