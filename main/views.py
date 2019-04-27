@@ -105,8 +105,8 @@ class Map(TemplateView):
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
-            print("printing the struct")
-            print(struct)
+            # print("printing the struct")
+            # print(struct)
             final.append(struct.coordinates)
 
         context = ({
