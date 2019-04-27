@@ -34,6 +34,9 @@ var geocoder = new MapboxGeocoder({
     accessToken: mapboxgl.accessToken
 });
 
+/* tutorial reference for draw control properties:
+https://bl.ocks.org/dnseminara/0790e53cef9867e848e716937727ab18
+*/
 var draw = new MapboxDraw({
     displayControlsDefault: false,
     controls: {
@@ -128,6 +131,81 @@ var draw = new MapboxDraw({
                 'line-color': '#fbb03b',
                 'line-dasharray': [0.2, 2],
                 'line-width': 2
+            }
+        },
+        {
+            'id': 'gl-draw-polygon-and-line-vertex-stroke-inactive',
+            'type': 'circle',
+            'filter': ['all', ['==', 'meta', 'vertex'],
+                ['==', '$type', 'Point'],
+                ['!=', 'mode', 'static']
+            ],
+            'paint': {
+                'circle-radius': 5,
+                'circle-color': '#fff'
+            }
+        },
+        {
+            'id': 'gl-draw-polygon-and-line-vertex-inactive',
+            'type': 'circle',
+            'filter': ['all', ['==', 'meta', 'vertex'],
+                ['==', '$type', 'Point'],
+                ['!=', 'mode', 'static']
+            ],
+            'paint': {
+                'circle-radius': 3,
+                'circle-color': '#fbb03b'
+            }
+        },
+        {
+            'id': 'gl-draw-point-point-stroke-inactive',
+            'type': 'circle',
+            'filter': ['all', ['==', 'active', 'false'],
+                ['==', '$type', 'Point'],
+                ['==', 'meta', 'feature'],
+                ['!=', 'mode', 'static']
+            ],
+            'paint': {
+                'circle-radius': 5,
+                'circle-opacity': 1,
+                'circle-color': '#fff'
+            }
+        },
+        {
+            'id': 'gl-draw-point-inactive',
+            'type': 'circle',
+            'filter': ['all', ['==', 'active', 'false'],
+                ['==', '$type', 'Point'],
+                ['==', 'meta', 'feature'],
+                ['!=', 'mode', 'static']
+            ],
+            'paint': {
+                'circle-radius': 3,
+                'circle-color': '#3bb2d0'
+            }
+        },
+        {
+            'id': 'gl-draw-point-stroke-active',
+            'type': 'circle',
+            'filter': ['all', ['==', '$type', 'Point'],
+                ['==', 'active', 'true'],
+                ['!=', 'meta', 'midpoint']
+            ],
+            'paint': {
+                'circle-radius': 7,
+                'circle-color': '#fff'
+            }
+        },
+        {
+            'id': 'gl-draw-point-active',
+            'type': 'circle',
+            'filter': ['all', ['==', '$type', 'Point'],
+                ['!=', 'meta', 'midpoint'],
+                ['==', 'active', 'true']
+            ],
+            'paint': {
+                'circle-radius': 5,
+                'circle-color': '#fbb03b'
             }
         }
     ]
@@ -293,7 +371,6 @@ function updateCommunityEntry(e) {
         }, ["in", "BLOCKID10"]);
 
         map.setFilter("blocks-highlighted", filter);
-        // console.log(total);
         // progress bar with population data based on ideal population for a district in the given state
         //<div id="pop" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 85%">
         progress = document.getElementById("pop");
@@ -314,17 +391,25 @@ function updateCommunityEntry(e) {
         progress.style.width = popWidth + "%";
 
         var finalpoly = turf.union.apply(null, mpolygon);
-        user_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0];
+        // should only be the exterior ring
+        if (finalpoly.geometry.coordinates[0][0].length > 2) {
+            user_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0][0];
+        }
+        else {
+            user_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0];
+        }
+        
         entry_polygon = JSON.stringify(user_polygon['geometry']);
         wkt_obj = wkt.read(entry_polygon);
         entry_polygon = wkt_obj.write();
     } else {
-        // Update User Polygon with `null`.
         user_polygon = null;
         entry_polygon = '';
         map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
     }
     // Update form field
+    // console.log("ENTRY FINAL");
+    // console.log(entry_polygon);
     document.getElementById('id_entry_polygon').value = entry_polygon;
 }
 /******************************************************************************/
