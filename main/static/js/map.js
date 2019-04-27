@@ -148,7 +148,7 @@ map.on('load', function () {
             'coordinates': a[i]
           },
           'properties': {
-            'name': 'dummy'
+            'issue': 'dummy'
           }
         }
       },
@@ -217,7 +217,7 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
 
 // when clicking on the issue title, only show those issues
 // {% for issue, desc in issues.items %}
-//   <button class="dropdown-btn">{{ issue }}
+//   <button class="dropdown-btn" id="{{ issue }}">{{ issue }}
 //     <i class="fa fa-caret-down"></i></button>
 //     <div class="dropdown-container">
 //       {% for item in desc %}
@@ -225,30 +225,26 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
 //       {% endfor %}
 //     </div>
 // {% endfor %}
-// for (var i = 0; i < issues.length; i++) {
-//   var id = issues[i];
+// for (var issue in issues) {
+//   var desc = issues[issue];
 //
 //   var link = document.createElement('a');
 //   link.href = '#';
 //   link.className = 'active';
-//   link.textContent = id;
 //
 //   link.onclick = function (e) {
-//     var txt = this.textContent;
-//     var clickedLayers = ["NJ " + txt, "VA " + txt, "PA " + txt, "MI " + txt];
+//     var clickedLayer = issue;
 //     e.preventDefault();
 //     e.stopPropagation();
 //
-//     for (var j = 0; j < clickedLayers.length; j++) {
-//       var visibility = map.getLayoutProperty(clickedLayers[j], 'visibility');
+//     var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
 //
-//       if (visibility === 'visible') {
-//         map.setLayoutProperty(clickedLayers[j], 'visibility', 'none');
-//         this.className = '';
-//       } else {
-//         this.className = 'active';
-//         map.setLayoutProperty(clickedLayers[j], 'visibility', 'visible');
-//       }
+//     if (visibility === 'visible') {
+//       map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+//       this.className = '';
+//     } else {
+//       this.className = 'active';
+//       map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
 //     }
 //   };
 //

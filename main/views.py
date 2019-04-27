@@ -103,7 +103,6 @@ class Map(TemplateView):
                 issues[cat].append(obj.description)
             else:
                 issues[cat] = [obj.description]
-            print(issues)
 
 
 
