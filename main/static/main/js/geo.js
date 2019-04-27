@@ -3,7 +3,6 @@
 // GEO Js file for handling map drawing.
 /* https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ */
 // Polygon Drawn By User
-var user_polygon = null;
 var ideal_population = 109899;
 
 /******************************************************************************/
@@ -345,16 +344,17 @@ function updateCommunityEntry(e) {
     var wkt = new Wkt.Wkt();
     var data = draw.getAll();
     var user_polygon;
-    var entry_polygon;
+    var census_blocks_polygon;
     if (data.features.length > 0) {
         // Update User Polygon with the GeoJson data.
         user_polygon = data.features[0];
+        census_blocks_polygon = user_polygon;
 
-        var polygonBoundingBox = turf.bbox(user_polygon);
+        var polygonBoundingBox = turf.bbox(census_blocks_polygon);
         // get the bounds of the polygon to reduce the number of blocks you are querying from
         var southWest = [polygonBoundingBox[0], polygonBoundingBox[1]];
         var northEast = [polygonBoundingBox[2], polygonBoundingBox[3]];
-  
+
         var northEastPointPixel = map.project(northEast);
         var southWestPointPixel = map.project(southWest);
         var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
@@ -362,7 +362,7 @@ function updateCommunityEntry(e) {
         var total = 0.0;
 
         var filter = features.reduce(function(memo, feature) {
-            if (! (turf.intersect(feature, user_polygon) === null)) {
+            if (! (turf.intersect(feature, census_blocks_polygon) === null)) {
                 memo.push(feature.properties.BLOCKID10);
                 mpolygon.push(feature);
                 total+= feature.properties.POP10;
@@ -393,24 +393,27 @@ function updateCommunityEntry(e) {
         var finalpoly = turf.union.apply(null, mpolygon);
         // should only be the exterior ring
         if (finalpoly.geometry.coordinates[0][0].length > 2) {
-            user_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0][0];
+            census_blocks_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0][0];
         }
         else {
-            user_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0];
+            census_blocks_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0];
         }
-        
-        entry_polygon = JSON.stringify(user_polygon['geometry']);
-        wkt_obj = wkt.read(entry_polygon);
-        entry_polygon = wkt_obj.write();
+        // Save outline of census blocks.
+        census_blocks_polygon = JSON.stringify(census_blocks_polygon['geometry']);
+        wkt_obj = wkt.read(census_blocks_polygon);
+        census_blocks_polygon = wkt_obj.write();
+        // Save user polygon.
+        user_polygon = JSON.stringify(user_polygon['geometry']);
+        wkt_obj = wkt.read(user_polygon);
+        user_polygon = wkt_obj.write();
     } else {
-        user_polygon = null;
-        entry_polygon = '';
+        user_polygon = '';
+        census_blocks_polygon = '';
         map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
     }
-    // Update form field
-    console.log("ENTRY FINAL");
-    console.log(entry_polygon);
-    document.getElementById('id_entry_polygon').value = entry_polygon;
+    // Update form fields
+    document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon;
+    document.getElementById('id_user_polygon').value = user_polygon;
 }
 /******************************************************************************/
 

@@ -40,7 +40,7 @@ INDUSTRY_CHOICES = (
 )
 
 POLICY_ISSUES = (
-    ('', 'Choose Category'),
+    ('', 'Issue Category'),
     ('criminal_justice', 'Criminal Justice'),
     ('civil_rights','Civil Rights'),
     ('economic','Economic Affairs'),

@@ -41,7 +41,7 @@ class CommunityEntry(models.Model):
     entry_ID = models.CharField(max_length=100, blank=False, unique=True, default=uuid.uuid4)
     # From Mapbox GL GS.
     # Entry polygon contains the combined census block polygons.
-    census_blocks_polygon = models.PolygonField(serialize=True, blank=True)
+    census_blocks_polygon = models.PolygonField(serialize=True, blank=True, null=True)
     # User polygon contains the polygon drawn by the user.
     user_polygon = models.PolygonField(serialize=True, blank=False)
     # "Which races shape this community's identity? Select one or multiple."
