@@ -1,4 +1,5 @@
 # https://medium.com/@MicroPyramid/set-up-travis-ci-for-django-project-427d6dd2f46c
+# https://github.com/ndarville/pony-forum/blob/master/.travis.yml
 dist:           xenial   # required for Python >= 3.7
 language:       python
 python:
@@ -9,6 +10,10 @@ services:
 # Specify Django version and the database
 env:
     - DJANGO=2.2 DB=postgres
+    global:
+        - DJANGO_SETTINGS_MODULE="districter.settings"
+        - PYTHONPATH="/home/travis/build/lauren-johnston/districter"
+        - PIP_USE_MIRRORS=true
 # Install the version of PostGIS that matches your PostgreSQL version,
 # and activate the PostGIS extension using:
 addons:
@@ -16,16 +21,22 @@ addons:
   apt:
     packages:
     - postgresql-11-postgis-2.5
-# Run before script.
-before_script:
-    - psql -c 'create database travis_ci_test;' -U postgres
-    - psql -U postgres -c "create extension postgis;"
+
 # command to install dependencies
 install:
   - pip install -r requirements.txt
+
+# Run before script.
+before_script:
+    - psql --version
+    - psql -c 'create database travis_ci_test;' -U postgres
+    - psql -U postgres -c "create extension postgis;"
+
 # command to run tests
 script:
   - python manage.py test
+
+# Email settings
 notifications:
   email:
     recipients:
