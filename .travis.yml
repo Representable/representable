@@ -7,7 +7,6 @@ python:
 # Start PostgreSQL
 services:
     - postgresql
-    
 # Specify Django version and the database
 env:
     - DJANGO=2.2 DB=postgres
