@@ -56,13 +56,18 @@ class About(TemplateView):
 
 #******************************************************************************#
 
-class Review(TemplateView):
+class Review(LoginRequiredMixin, View):
     template_name = "main/review.html"
+
+    def get_initial(self):
+        initial = self.initial
+        if self.request.user.is_authenticated:
+            initial.update({'user': self.request.user})
+        return initial
 
 #******************************************************************************#
 class Map(TemplateView):
     template_name = "main/map.html"
-    # serialize('geojson', Entry.objects.all(), geometry_field='polygon', fields=('entry_polygon',))
 
     def get_context_data(self, **kwargs):
         # the dict of issues + input of descriptions
