@@ -43,7 +43,7 @@ class CommunityForm(ModelForm):
     class Meta:
         model = CommunityEntry
         fields = '__all__'
-        entry_polygon = models.PolygonField(error_messages={'required':'Please draw your community.'})
+        user_polygon = models.PolygonField(error_messages={'required':'User polygon missing. Please draw your community.'})
 
         widgets = {
             'race': Select2MultipleWidget(choices=RACE_CHOICES),
@@ -53,6 +53,7 @@ class CommunityForm(ModelForm):
             'tags': TagSelect2Widget(),
             'user': forms.HiddenInput(),
             'entry_ID': forms.HiddenInput(),
-            'entry_polygon': forms.HiddenInput(),
+            'census_blocks_polygon': forms.HiddenInput(),
+            'user_polygon': forms.HiddenInput(),
             'my_community': BootstrapRadioSelect(),
         }
