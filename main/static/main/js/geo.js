@@ -408,8 +408,8 @@ function updateCommunityEntry(e) {
         map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
     }
     // Update form field
-    // console.log("ENTRY FINAL");
-    // console.log(entry_polygon);
+    console.log("ENTRY FINAL");
+    console.log(entry_polygon);
     document.getElementById('id_entry_polygon').value = entry_polygon;
 }
 /******************************************************************************/
