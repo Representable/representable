@@ -167,14 +167,16 @@
                             <!-- Begin formset container. -->
                             <div id="formset_container">
                             {% for formset_row in issue_formset %}
+                            {{ formset_row.category.errors}}
                             <div class="row form-row issues_formset mt-2">
                                 <div class='col'>
                                     <div class='row mt-2'>
                                         <div class="col-sm-5">
                                             {{ formset_row.category|append_attr:"class:form-control" }}
                                             {% if formset_row.category.errors %}
+                                            <p> ERROR </p>
                                             {% for error in formset_row.category.errors %}
-                                            {{ error|escape }}
+                                            <label>{{ error|escape }}</label>
                                             {% endfor %}
                                             {% endif %}
                                         </div>
@@ -182,7 +184,8 @@
                                             {{ formset_row.description|append_attr:"class:form-control" }}
                                             {% if formset_row.description.errors %}
                                             {% for error in formset_row.description.errors %}
-                                            {{ error|escape }}
+                                            <p> ERROR </p>
+                                            <label>{{ error|escape }}</label>
                                             {% endfor %}
                                             {% endif %}
                                         </div>

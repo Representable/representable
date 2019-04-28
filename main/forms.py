@@ -57,3 +57,35 @@ class CommunityForm(ModelForm):
             'user_polygon': forms.HiddenInput(),
             'my_community': BootstrapRadioSelect(),
         }
+
+class BaseIssueFormSet(BaseFormSet):
+    def clean(self):
+        """
+        Adds validation to ignore empty forms and check that all issues have
+        both a description and a category.
+        Courtesy of: https://whoisnicoleharris.com/2015/01/06/implementing-django-formsets.html
+        """
+        if any(self.errors):
+            return
+
+        categories = []
+        descriptions = []
+
+        for form in self.forms:
+            if form.cleaned_data:
+                category = form.cleaned_data['category']
+                description = form.cleaned_data['description']
+
+                # Check that issues have both a category and a description
+                if description and not category:
+                    print("ValidationError  CATEG")
+                    raise forms.ValidationError(
+                        'All issues must have a category.',
+                        code='missing_category'
+                    )
+                elif category and not description:
+                    print("ValidationError  CATEG")
+                    raise forms.ValidationError(
+                        'All issues must have a description.',
+                        code='missing_description'
+                    )

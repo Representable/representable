@@ -5,7 +5,7 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from allauth.account.decorators import verified_email_required
 from django.forms import formset_factory
-from .forms import CommunityForm, IssueForm
+from .forms import CommunityForm, IssueForm, BaseIssueFormSet
 from .models import CommunityEntry, Issue
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
@@ -152,7 +152,7 @@ class EntryView(LoginRequiredMixin, View):
         'form-MAX_NUM_FORMS': ''
     }
     # Create the formset, specifying the form and formset we want to use.
-    IssueFormSet =  formset_factory(IssueForm, extra=1)
+    IssueFormSet =  formset_factory(IssueForm, formset = BaseIssueFormSet, extra=1)
 
     # https://www.agiliq.com/blog/2019/01/django-formview/
     def get_initial(self):
@@ -178,6 +178,10 @@ class EntryView(LoginRequiredMixin, View):
             entryForm = form.save(commit=False)
             entryForm.save()
             for issue_form in issue_formset:
+                category = issue_form.cleaned_data.get('category')
+                description = issue_form.cleaned_data.get('description')
+                # Ignore form row if it's completely empty.
+                if category and description:
                     issue = issue_form.save(commit=False)
                     # Set issueFormset form Foreign Key (entry) to the recently
                     # created entryForm.
@@ -189,6 +193,7 @@ class EntryView(LoginRequiredMixin, View):
             'issue_formset': issue_formset,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY')
         }
+        print(issue_formset)
         return render(request, self.template_name, context)
 
 #******************************************************************************#

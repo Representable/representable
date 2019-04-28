@@ -68,9 +68,9 @@ class Issue(models.Model):
     '''
     Issue holds issues associated with each community entry.
     '''
-    entry = models.ForeignKey(CommunityEntry, on_delete=models.CASCADE, default=None, blank=False)
-    category = models.CharField(max_length=50, choices=POLICY_ISSUES, default=None, blank=False)
-    description = models.CharField(max_length=250)
+    entry = models.ForeignKey(CommunityEntry, on_delete=models.CASCADE, default=None)
+    category = models.CharField(max_length=50, choices=POLICY_ISSUES, default=None, blank=True)
+    description = models.CharField(max_length=250, blank=True)
 
     class Meta:
         ordering = ('category','description',)
