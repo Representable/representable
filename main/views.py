@@ -56,14 +56,40 @@ class About(TemplateView):
 
 #******************************************************************************#
 
-class Review(LoginRequiredMixin, View):
+class Review(TemplateView):
     template_name = "main/review.html"
 
-    def get_initial(self):
-        initial = self.initial
-        if self.request.user.is_authenticated:
-            initial.update({'user': self.request.user})
-        return initial
+        def get_context_data(self, **kwargs):
+            # the dict of issues + input of descriptions
+            issues = dict()
+            for obj in Issue.objects.all():
+                cat = obj.category;
+                cat = re.sub('_', ' ', cat).title()
+                if cat in issues:
+                    issues[cat].append(obj.description)
+                else:
+                    issues[cat] = [obj.description]
+                print(issues)
+
+            a = []
+            for obj in CommunityEntry.objects.all():
+                a.append(obj.entry_polygon.geojson)
+
+            final = []
+            for obj in a:
+                s = "".join(obj)
+
+                # add all the coordinates in the array
+                # at this point all the elements of the array are coordinates of the polygons
+                struct = geojson.loads(s)
+                final.append(struct.coordinates)
+
+            context = ({
+                'issues': issues,
+                'entries': final,
+                'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
+            })
+            return context
 
 #******************************************************************************#
 class Map(TemplateView):
