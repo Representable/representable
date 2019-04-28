@@ -5,6 +5,19 @@
 // Polygon Drawn By User
 var ideal_population = 109899;
 var wkt_obj;
+// Formset field object saves a deep copy of the original formset field object.
+// (If user deletes all fields, he can add one more according to this one).
+var formsetFieldObject;
+
+/******************************************************************************/
+// Make buttons show the right skin.
+document.addEventListener('DOMContentLoaded', function() {
+    var conditionRow = $('.form-row:not(:last)');
+    conditionRow.find('.btn.add-form-row')
+        .removeClass('btn-outline-success').addClass('btn-outline-danger')
+        .removeClass('add-form-row').addClass('remove-form-row')
+        .html('<span class="" aria-hidden="true">Remove</span>');
+}, false);
 
 /******************************************************************************/
 
@@ -333,6 +346,7 @@ map.on('render', function() {
         var featureIds = draw.add(geoJsonFeature);
         updateCommunityEntry();
     }
+
 });
 
 /******************************************************************************/
@@ -445,6 +459,9 @@ function cloneMore(selector, prefix) {
     // Function that clones formset fields.
     var newElement = $(selector).clone(true);
     var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
+    if (total == 0) {
+        newElement = formsetFieldObject;
+    }
     newElement.find(':input').each(function() {
         var name = $(this).attr('name').replace('-' + (total - 1) + '-', '-' + total + '-');
         var id = 'id_' + name;
@@ -455,10 +472,14 @@ function cloneMore(selector, prefix) {
     });
     total++;
     $('#id_' + prefix + '-TOTAL_FORMS').val(total);
-    $(selector).after(newElement);
+    if (total == 1) {
+        $("#formset_container").after(newElement);
+    } else {
+        $(selector).after(newElement);
+    }
     var conditionRow = $('.form-row:not(:last)');
     conditionRow.find('.btn.add-form-row')
-        .removeClass('btn-success').addClass('btn-danger')
+        .removeClass('btn-outline-success').addClass('btn-outline-danger')
         .removeClass('add-form-row').addClass('remove-form-row')
         .html('<span class="" aria-hidden="true">Remove</span>');
     return false;
@@ -469,15 +490,17 @@ function cloneMore(selector, prefix) {
 function deleteForm(prefix, btn) {
     // Function that deletes formset fields.
     var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
-    if (total > 1) {
-        btn.closest('.form-row').remove();
-        var forms = $('.form-row');
-        $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
-        for (var i = 0, formCount = forms.length; i < formCount; i++) {
-            $(forms.get(i)).find(':input').each(function() {
-                updateElementIndex(this, prefix, i);
-            });
-        }
+    if (total == 1) {
+        // save last formset field object.
+        formsetFieldObject = $('.form-row:last').clone(true);
+    }
+    btn.closest('.form-row').remove();
+    var forms = $('.form-row');
+    $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+    for (var i = 0, formCount = forms.length; i < formCount; i++) {
+        $(forms.get(i)).find(':input').each(function() {
+            updateElementIndex(this, prefix, i);
+        });
     }
     return false;
 }
