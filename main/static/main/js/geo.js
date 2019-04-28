@@ -229,8 +229,26 @@ var draw = new MapboxDraw({
 document.getElementById("ideal-pop").innerHTML = ideal_population;
 
 map.addControl(geocoder, 'top-right');
+// Add controls outside of map.
+// Source: https://github.com/mapbox/mapbox-gl-draw/blob/master/docs/API.md
 map.addControl(draw);
-map.boxZoom.disable();
+// Enable draw polygon mode.
+document.getElementById('drawPolygon').onclick = function(){
+    draw.changeMode('draw_polygon');
+};
+// Delete all drawn features.
+document.getElementById('deletePolygon').onclick = function(){
+    draw.trash();
+};
+
+/* Change mapbox draw button */
+var drawButton = document.getElementsByClassName("mapbox-gl-draw_polygon");
+drawButton[0].backgroundImg = '';
+drawButton[0].innerHTML = "<i class='fas fa-draw-polygon'></i> Draw Polygon";
+var trashButton = document.getElementsByClassName("mapbox-gl-draw_trash");
+trashButton[0].backgroundImg = '';
+trashButton[0].innerHTML = "<i class='fas fa-trash-alt'></i> Delete Polygon";
+
 
 var polygonError = document.getElementById("polygon_missing");
 if (polygonError != null) {
@@ -462,6 +480,8 @@ function cloneMore(selector, prefix) {
     if (total == 0) {
         newElement = formsetFieldObject;
     }
+    newElement.find('#description_warning').remove();
+    newElement.find('#category_warning').remove();
     newElement.find(':input').each(function() {
         var name = $(this).attr('name').replace('-' + (total - 1) + '-', '-' + total + '-');
         var id = 'id_' + name;
@@ -496,6 +516,7 @@ function deleteForm(prefix, btn) {
     }
     btn.closest('.form-row').remove();
     var forms = $('.form-row');
+    console.log(forms.length);
     $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
     for (var i = 0, formCount = forms.length; i < formCount; i++) {
         $(forms.get(i)).find(':input').each(function() {

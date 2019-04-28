@@ -36,9 +36,9 @@ a:hover {
 }
 
 .btn-outline-primary, .btn-outline-primary:visited, .btn-outline-primary:link, .btn-outline-primary:hover, .btn-outline-primary:active {
-    background-color: transparent;
-    border-color: #FFF;
-    color: #FFF;
+    /* background-color: transparent; */
+    /* border-color: #FFF; */
+    /* color: #FFF; */
 }
 
 .btn-primary, .btn-primary:visited, .btn-primary:link, .btn-primary:hover, .btn-primary:active {
@@ -101,13 +101,6 @@ hr {
 }
 
 @media screen and (min-width: 768px) {
-    h1 {
-        font-size: 55px;
-    }
-
-    p {
-        font-size: 18px;
-    }
 
     .gap-90 {
         width:100%;
@@ -115,7 +108,7 @@ hr {
       }
 
     .btn-outline-primary:hover, .btn-outline-primary:active {
-        background-color: #61c3ed;
+        /* background-color: #61c3ed; */
     }
 
     .row-content {
@@ -158,5 +151,5 @@ section {
     line-height: 25px;
     border-bottom: 1px solid #ddd;
     opacity: 1;
-    font-size: 13px;
+    /* font-size: 13px; */
 }

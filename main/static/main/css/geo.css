@@ -40,9 +40,7 @@ body {
 }
 
 #menu {
-    position: absolute;
     background: #fff;
-    padding: 10px;
     font-family: 'Open Sans', sans-serif;
 }
 
@@ -81,14 +79,23 @@ body {
     text-align: center;
 }
 
-p {
+/* p {
     font-family: 'Open Sans';
     margin: 0;
     font-size: 13px;
-}
+} */
 
 .vcenter {
     display: inline-block;
     vertical-align: middle;
     float: none;
+}
+
+.mapboxgl-ctrl-group > button {
+    display: block;
+    width: 100%;
+    background-image: none;
+    margin: 0 auto;
+    padding-left: 10px;
+    padding-right: 10px;
 }

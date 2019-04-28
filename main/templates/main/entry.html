@@ -40,6 +40,7 @@
 
         <div class="row mt-3">
             <div class="col">
+
                 <form id="entryForm" method="post">
                     <div class="row">
                         <div class="col-lg-4">
@@ -52,7 +53,7 @@
                                 {% endfor %}
                             </div>
                             {% endif %}
-                            <div class="form-group">
+                            <div id="main_community_form" class="form-group">
                                 <!-- {# Include the hidden fields #} -->
                                 {% for hidden in form.hidden_fields %}
                                 {{ hidden }}
@@ -132,12 +133,21 @@
                             </div>
                         </div>
                         <div class="col-lg-8">
+
                             <!-- {# Include form.entry_polygon error. } -->
                             {% if form.user_polygon.errors %}
                             <div id="polygon_missing" class="alert alert-warning" role="alert">
                                 You need to draw a polygon to submit the form.
                             </div>
                             {% endif %}
+                            <div id='menu' class="">
+                                <div id="map_controls">
+                                    <button id="drawPolygon" type="button" class="btn btn-secondary">Draw Polygon Mode</button>
+                                    <button id="deletePolygon" type="button" class="btn btn-warning">Delete Drawn Polygon</button>
+                                </div>
+                            </div>
+                            <div id='map'>
+                            </div>
                             <p>Community Population:</p>
                             <div class="progress">
                                 <div class="bar-step">
@@ -148,14 +158,9 @@
                                 <div id="pop" class="progress-bar" role="progressbar" aria-valuemin="0">
                                 </div>
                             </div>
-                            <div id='map'>
-                            </div>
-                            <div id='menu'>
-                            </div>
-
                         </div>
                     </div>
-                    <div class="row mt-5">
+                    <div class="row mt-3">
                         <div class="col-sm-8">
                             {{ issue_formset.management_form }}
                             <!-- {# "My Issues" Fields} -->
@@ -165,32 +170,42 @@
                             {{ hidden_issue_field }}
                             {% endfor %}
                             {{ issue_formset.non_field_errors }}
+                            <!-- Formset Row Non Field Errors -->
+                            <!-- {% for formset_row in issue_formset %}
+                                {% if formset_row.non_field_errors %}
+                                {% for non_field_error in formset_row.non_field_errors %}
+                                <div id="formset_row_error" class="alert alert-warning" role="alert">
+                                    {{ non_field_error }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                            {% endfor %} -->
                             <!-- Begin formset container. -->
                             <div id="formset_container">
                             {% for formset_row in issue_formset %}
-                            {{ formset_row.non_field_errors}}
                             <div class="row form-row issues_formset mt-2">
                                 <div class='col'>
                                     <div class='row mt-2'>
-                                        <div class="col-sm-5">
+                                        <div class="col-sm-5 mt-2">
                                             {{ formset_row.category|append_attr:"class:form-control" }}
+                                            <!-- Error Codes Here -->
                                             {% if formset_row.category.errors %}
-                                            <p> ERROR </p>
-                                            {% for error in formset_row.category.errors %}
-                                            <label>{{ error|escape }}</label>
-                                            {% endfor %}
+                                                {% for error in formset_row.category.errors %}
+
+                                                    <small id="category_warning" class="text-danger">{{ error|escape }}</small>
+                                                {% endfor %}
                                             {% endif %}
                                         </div>
-                                        <div class="col-sm-5">
+                                        <div class="col-sm-5 mt-2">
                                             {{ formset_row.description|append_attr:"class:form-control" }}
+                                            <!-- Error Codes Here -->
                                             {% if formset_row.description.errors %}
-                                            {% for error in formset_row.description.errors %}
-                                            <p> ERROR </p>
-                                            <label>{{ error|escape }}</label>
-                                            {% endfor %}
+                                                {% for error in formset_row.description.errors %}
+                                                    <small id="category_warning" class="text-danger">{{ error|escape }}</small>
+                                                {% endfor %}
                                             {% endif %}
                                         </div>
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-2 mt-2">
                                             <button name="removeFormRow" class="btn btn-outline-danger remove-form-row">Remove Issue Entry</button>
                                         </div>
                                     </div>

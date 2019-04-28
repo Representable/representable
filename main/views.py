@@ -5,7 +5,7 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from allauth.account.decorators import verified_email_required
 from django.forms import formset_factory
-from .forms import CommunityForm, IssueForm, BaseIssueFormSet
+from .forms import CommunityForm, IssueForm
 from .models import CommunityEntry, Issue
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
@@ -152,7 +152,7 @@ class EntryView(LoginRequiredMixin, View):
         'form-MAX_NUM_FORMS': ''
     }
     # Create the formset, specifying the form and formset we want to use.
-    IssueFormSet =  formset_factory(IssueForm, formset = BaseIssueFormSet, extra=1)
+    IssueFormSet =  formset_factory(IssueForm, extra=1)
 
     # https://www.agiliq.com/blog/2019/01/django-formview/
     def get_initial(self):
