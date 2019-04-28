@@ -69,7 +69,7 @@ function newCensusLayer(state) {
     },
     "paint": {
       "fill-color": "rgba(193, 202, 214, 0)",
-      "fill-outline-color": "#82ccdd"
+      "fill-outline-color": "rgba(193, 202, 214, 1)"
     }
   });
 }
@@ -148,7 +148,7 @@ map.on('load', function () {
             'coordinates': a[i]
           },
           'properties': {
-            'name': 'dummy'
+            'issue': 'dummy'
           }
         }
       },
@@ -214,6 +214,43 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   var layers = document.getElementById('outline-menu');
   layers.appendChild(link);
 }
+
+// when clicking on the issue title, only show those issues
+// {% for issue, desc in issues.items %}
+//   <button class="dropdown-btn" id="{{ issue }}">{{ issue }}
+//     <i class="fa fa-caret-down"></i></button>
+//     <div class="dropdown-container">
+//       {% for item in desc %}
+//       <a href="#">{{ item }}</a>
+//       {% endfor %}
+//     </div>
+// {% endfor %}
+// for (var issue in issues) {
+//   var desc = issues[issue];
+//
+//   var link = document.createElement('a');
+//   link.href = '#';
+//   link.className = 'active';
+//
+//   link.onclick = function (e) {
+//     var clickedLayer = issue;
+//     e.preventDefault();
+//     e.stopPropagation();
+//
+//     var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+//
+//     if (visibility === 'visible') {
+//       map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+//       this.className = '';
+//     } else {
+//       this.className = 'active';
+//       map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+//     }
+//   };
+//
+//   var layers = document.getElementById('outline-menu');
+//   layers.appendChild(link);
+// }
 
 /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content -
 This allows the user to have multiple dropdowns without any conflict */

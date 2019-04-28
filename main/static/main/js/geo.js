@@ -3,8 +3,21 @@
 // GEO Js file for handling map drawing.
 /* https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ */
 // Polygon Drawn By User
-var user_polygon = null;
 var ideal_population = 109899;
+var wkt_obj;
+// Formset field object saves a deep copy of the original formset field object.
+// (If user deletes all fields, he can add one more according to this one).
+var formsetFieldObject;
+
+/******************************************************************************/
+// Make buttons show the right skin.
+document.addEventListener('DOMContentLoaded', function() {
+    var conditionRow = $('.form-row:not(:last)');
+    conditionRow.find('.btn.add-form-row')
+        .removeClass('btn-outline-success').addClass('btn-outline-danger')
+        .removeClass('add-form-row').addClass('remove-form-row')
+        .html('<span class="" aria-hidden="true">Remove</span>');
+}, false);
 
 /******************************************************************************/
 
@@ -297,7 +310,6 @@ map.on('style.load', function() {
             "circle-color": "#007cbf"
         }
     });
-
     map.on('click', 'Census Blocks', function (e) {
         new mapboxgl.Popup({
             closeButton: false
@@ -311,8 +323,6 @@ map.on('style.load', function() {
     // makes a selection and add a symbol that matches the result.
     geocoder.on('result', function(ev) {
         map.getSource('single-point').setData(ev.result.geometry);
-        console.log(ev.result);
-        console.log("hello changing the page");
         var styleSpec = ev.result;
         var styleSpecBox = document.getElementById('json-response');
         var styleSpecText = JSON.stringify(styleSpec, null, 2);
@@ -326,6 +336,16 @@ var wasLoaded = false;
 map.on('render', function() {
     if (!map.loaded() || wasLoaded) return;
     wasLoaded = true;
+    if (document.getElementById('id_user_polygon').value !== '') {
+        // If page refreshes (or the submission fails), get the polygon
+        // from the field and draw it again.
+        var feature = document.getElementById('id_user_polygon').value;
+        var wkt = new Wkt.Wkt();
+        wkt_obj = wkt.read(feature);
+        var geoJsonFeature = wkt_obj.toJson();
+        var featureIds = draw.add(geoJsonFeature);
+        updateCommunityEntry();
+    }
 
 });
 
@@ -334,6 +354,7 @@ map.on('render', function() {
 map.on('draw.create', updateCommunityEntry);
 map.on('draw.delete', updateCommunityEntry);
 map.on('draw.update', updateCommunityEntry);
+
 
 /******************************************************************************/
 
@@ -344,79 +365,83 @@ function updateCommunityEntry(e) {
 
     var wkt = new Wkt.Wkt();
     var data = draw.getAll();
-    var user_polygon;
-    var entry_polygon;
+    // Polygon drawn by user in map.
+    var drawn_polygon;
+    // Polygon saved to DB.
+    var user_polygon_wkt;
+    // Polygon saved to DB.
+    var census_blocks_polygon_wkt;
+
     if (data.features.length > 0) {
         // Update User Polygon with the GeoJson data.
-        user_polygon = data.features[0];
-
-        var polygonBoundingBox = turf.bbox(user_polygon);
+        drawn_polygon = data.features[0];
+        // Save user polygon.
+        let user_polygon_json = JSON.stringify(drawn_polygon['geometry']);
+        wkt_obj = wkt.read(user_polygon_json);
+        user_polygon_wkt = wkt_obj.write();
+        // Save census blocks polygon outline.
+        census_blocks_polygon = drawn_polygon;
+        var polygonBoundingBox = turf.bbox(census_blocks_polygon);
         // get the bounds of the polygon to reduce the number of blocks you are querying from
         var southWest = [polygonBoundingBox[0], polygonBoundingBox[1]];
         var northEast = [polygonBoundingBox[2], polygonBoundingBox[3]];
-  
+
         var northEastPointPixel = map.project(northEast);
         var southWestPointPixel = map.project(southWest);
         var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
-        // if no census block data
-        if (features.length < 1) {
+        var mpolygon = [];
+        var total = 0.0;
 
+        var filter = features.reduce(function(memo, feature) {
+            if (! (turf.intersect(feature, census_blocks_polygon) === null)) {
+                memo.push(feature.properties.BLOCKID10);
+                mpolygon.push(feature);
+                total+= feature.properties.POP10;
+            }
+            return memo;
+        }, ["in", "BLOCKID10"]);
+
+        map.setFilter("blocks-highlighted", filter);
+        // progress bar with population data based on ideal population for a district in the given state
+        //<div id="pop" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 85%">
+        progress = document.getElementById("pop");
+        // set color of the progress bar depending on population
+        if (total < (ideal_population * 0.33) || total > (ideal_population * 1.5)) {
+          progress.style.background = "red";
+        }
+        else if (total < (ideal_population * 0.67) || total > (ideal_population * 1.33)) {
+          progress.style.background = "orange";
         }
         else {
-            var mpolygon = [];
-            var total = 0.0;
-
-            var filter = features.reduce(function(memo, feature) {
-                if (! (turf.intersect(feature, user_polygon) === null)) {
-                    memo.push(feature.properties.BLOCKID10);
-                    mpolygon.push(feature);
-                    total+= feature.properties.POP10;
-                }
-                return memo;
-            }, ["in", "BLOCKID10"]);
-
-
-            map.setFilter("blocks-highlighted", filter);
-            // progress bar with population data based on ideal population for a district in the given state
-            //<div id="pop" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 85%">
-            progress = document.getElementById("pop");
-            // set color of the progress bar depending on population
-            if (total < (ideal_population * 0.33) || total > (ideal_population * 1.5)) {
-            progress.style.background = "red";
-            }
-            else if (total < (ideal_population * 0.67) || total > (ideal_population * 1.33)) {
-            progress.style.background = "orange";
-            }
-            else {
-            progress.style.background = "green";
-            }
-            progress.innerHTML = total;
-            progress.setAttribute("aria-valuenow", "total");
-            progress.setAttribute("aria-valuemax", ideal_population * 1.5);
-            popWidth = total / (ideal_population * 1.5) * 100;
-            progress.style.width = popWidth + "%";
-
-            var finalpoly = turf.union.apply(null, mpolygon);
-            // should only be the exterior ring
-            if (finalpoly.geometry.coordinates[0][0].length > 2) {
-                user_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0][0];
-            }
-            else {
-                user_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0];
-            }
+          progress.style.background = "green";
         }
-        entry_polygon = JSON.stringify(user_polygon['geometry']);
-        wkt_obj = wkt.read(entry_polygon);
-        entry_polygon = wkt_obj.write();
+        progress.innerHTML = total;
+        progress.setAttribute("aria-valuenow", "total");
+        progress.setAttribute("aria-valuemax", ideal_population * 1.5);
+        popWidth = total / (ideal_population * 1.5) * 100;
+        progress.style.width = popWidth + "%";
+
+        var finalpoly = turf.union.apply(null, mpolygon);
+        // should only be the exterior ring
+        if (finalpoly.geometry.coordinates[0][0].length > 2) {
+            census_blocks_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0][0];
+        }
+        else {
+            census_blocks_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0];
+        }
+        // Save outline of census blocks.
+        let census_blocks_polygon_json = JSON.stringify(census_blocks_polygon['geometry']);
+        wkt_obj = wkt.read(census_blocks_polygon_json);
+        census_blocks_polygon_wkt = wkt_obj.write();
     } else {
-        user_polygon = null;
-        entry_polygon = '';
+        drawn_polygon = null;
+        user_polygon_wkt = '';
+        census_blocks_polygon_wkt = '';
         map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
     }
-    // Update form field
-    console.log("ENTRY FINAL");
-    console.log(entry_polygon);
-    document.getElementById('id_entry_polygon').value = entry_polygon;
+    // Update form fields
+    document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon_wkt;
+    document.getElementById('id_user_polygon').value = user_polygon_wkt;
 }
 /******************************************************************************/
 
@@ -434,7 +459,9 @@ function cloneMore(selector, prefix) {
     // Function that clones formset fields.
     var newElement = $(selector).clone(true);
     var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
-    console.log(total)
+    if (total == 0) {
+        newElement = formsetFieldObject;
+    }
     newElement.find(':input').each(function() {
         var name = $(this).attr('name').replace('-' + (total - 1) + '-', '-' + total + '-');
         var id = 'id_' + name;
@@ -445,10 +472,14 @@ function cloneMore(selector, prefix) {
     });
     total++;
     $('#id_' + prefix + '-TOTAL_FORMS').val(total);
-    $(selector).after(newElement);
+    if (total == 1) {
+        $("#formset_container").after(newElement);
+    } else {
+        $(selector).after(newElement);
+    }
     var conditionRow = $('.form-row:not(:last)');
     conditionRow.find('.btn.add-form-row')
-        .removeClass('btn-success').addClass('btn-danger')
+        .removeClass('btn-outline-success').addClass('btn-outline-danger')
         .removeClass('add-form-row').addClass('remove-form-row')
         .html('<span class="" aria-hidden="true">Remove</span>');
     return false;
@@ -459,15 +490,17 @@ function cloneMore(selector, prefix) {
 function deleteForm(prefix, btn) {
     // Function that deletes formset fields.
     var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
-    if (total > 1) {
-        btn.closest('.form-row').remove();
-        var forms = $('.form-row');
-        $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
-        for (var i = 0, formCount = forms.length; i < formCount; i++) {
-            $(forms.get(i)).find(':input').each(function() {
-                updateElementIndex(this, prefix, i);
-            });
-        }
+    if (total == 1) {
+        // save last formset field object.
+        formsetFieldObject = $('.form-row:last').clone(true);
+    }
+    btn.closest('.form-row').remove();
+    var forms = $('.form-row');
+    $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+    for (var i = 0, formCount = forms.length; i < formCount; i++) {
+        $(forms.get(i)).find(':input').each(function() {
+            updateElementIndex(this, prefix, i);
+        });
     }
     return false;
 }

@@ -43,7 +43,7 @@ class CommunityForm(ModelForm):
     class Meta:
         model = CommunityEntry
         fields = '__all__'
-        entry_polygon = models.PolygonField(error_messages={'required':'Please draw your community.'})
+        user_polygon = models.PolygonField(error_messages={'required':'User polygon missing. Please draw your community.'})
 
         widgets = {
             'race': Select2MultipleWidget(choices=RACE_CHOICES),
@@ -53,6 +53,39 @@ class CommunityForm(ModelForm):
             'tags': TagSelect2Widget(),
             'user': forms.HiddenInput(),
             'entry_ID': forms.HiddenInput(),
-            'entry_polygon': forms.HiddenInput(),
+            'census_blocks_polygon': forms.HiddenInput(),
+            'user_polygon': forms.HiddenInput(),
             'my_community': BootstrapRadioSelect(),
         }
+
+class BaseIssueFormSet(BaseFormSet):
+    def clean(self):
+        """
+        Adds validation to ignore empty forms and check that all issues have
+        both a description and a category.
+        Courtesy of: https://whoisnicoleharris.com/2015/01/06/implementing-django-formsets.html
+        """
+        if any(self.errors):
+            return
+
+        categories = []
+        descriptions = []
+
+        for form in self.forms:
+            if form.cleaned_data:
+                category = form.cleaned_data['category']
+                description = form.cleaned_data['description']
+
+                # Check that issues have both a category and a description
+                if description and not category:
+                    print("ValidationError  CATEG")
+                    raise forms.ValidationError(
+                        'All issues must have a category.',
+                        code='missing_category'
+                    )
+                elif category and not description:
+                    print("ValidationError  CATEG")
+                    raise forms.ValidationError(
+                        'All issues must have a description.',
+                        code='missing_description'
+                    )

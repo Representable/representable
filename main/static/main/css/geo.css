@@ -8,9 +8,9 @@ body {
 
 /* css for the line on the progress bar */
 .bar-step {
-    position:absolute;
-    margin-top:-20px;
-	  z-index:1;
+    position: absolute;
+    /* margin-top:-20px; */
+	z-index:1;
     font-size:12px;
     left: 33%;
 }
@@ -22,8 +22,8 @@ body {
 .label-line {
     float: right;
     background: #000;
-    height:50px;
-	  width:1px;
+    height: 100%;
+	width:1px;
     margin-left: 5px;
 }
 
@@ -35,7 +35,7 @@ body {
 #map {
     top: 0;
     bottom: 0;
-    /*  Must Set Absolute Height */
+    /*  Mapbox: Must Set Absolute Height */
     min-height: 500px;
 }
 
