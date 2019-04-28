@@ -1,0 +1,92 @@
+{% extends 'main/base.html' %}
+{% load leaflet_tags %}
+{% load static %}
+
+{% block hero-pre %}
+<div class="shadow-sm">
+    <div id="particles-js">
+        {% endblock %}
+        {% block hero %}
+        <div class="container-fluid container-hero">
+            <div class="row row-hero">
+                <div class="col-sm-12 col-md-10 offset-md-1 my-5">
+                    <h1 class="di-title mb-4">Meet The Team</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<!--  what is Districter ?? -->
+<div class="row">
+    <div id='Somya' class="col-sm-6">
+        <h2>Somya Arora</h2>
+        <p>Department of Computer Science, 2021</p>
+    </div>
+    <div id=images class="col-sm-6">
+        <img src="{% static 'img/theo.png' %}" alt="map" width=400px height=400px>
+        <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
+    </div>
+</div>
+
+<div class="row">
+    <div id='Kyle' class="col-sm-6">
+        <h2>Kyle Barnes</h2>
+        <p> Department of Computer Science, 2021</p>
+    </div>
+    <div id=images class="col-sm-6">
+        <img src="{% static 'img/theo.png' %}" alt="map" width=400px height=400px>
+        <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
+    </div>
+</div>
+
+<div class="row">
+    <div id='Preeti' class="col-sm-6">
+        <h2>Preeti Iyer</h2>
+        <p> Department of Computer Science, 2020</p>
+    </div>
+    <div id=images class="col-sm-6">
+        <img src="{% static 'img/theo.png' %}" alt="map" width=400px height=400px>
+        <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
+    </div>
+</div>
+
+<div class="row">
+    <div id='Lauren' class="col-sm-6">
+        <h2>Lauren Johnston</h2>
+        <p> Department of Computer Science, 2020</p>
+    </div>
+    <div id=images class="col-sm-6">
+        <img src="{% static 'img/theo.png' %}" alt="map" width=400px height=400px>
+        <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
+    </div>
+</div>
+
+<div class="row">
+    <div id='Theo' class="col-sm-6">
+        <h2> Theodor Marcu</h2>
+        <p> Department of Computer Science, 2020</p>
+    </div>
+    <div id=images class="col-sm-6">
+        <img src="{% static 'img/theo.png' %}" alt="map" width=400px height=400px>
+        <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+<script src="{% static 'js/particles.min.js' %}"></script>
+<script>
+    particlesJS.load('particles-js', "{% static 'assets/particles.json' %}", function() {
+        console.log('callback - particles.min.js config loaded');
+    });
+</script>
+<script type="text/javascript">
+    mapboxgl.accessToken = "{{ mapbox_key }}";
+</script>
+{% endblock %}
