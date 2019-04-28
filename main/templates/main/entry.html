@@ -164,10 +164,11 @@
                             {% for hidden_issue_field in issue_formset.hidden_fields %}
                             {{ hidden_issue_field }}
                             {% endfor %}
+                            {{ issue_formset.non_field_errors }}
                             <!-- Begin formset container. -->
                             <div id="formset_container">
                             {% for formset_row in issue_formset %}
-                            {{ formset_row.category.errors}}
+                            {{ formset_row.non_field_errors}}
                             <div class="row form-row issues_formset mt-2">
                                 <div class='col'>
                                     <div class='row mt-2'>
