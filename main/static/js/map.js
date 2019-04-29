@@ -152,7 +152,9 @@ map.on('load', function () {
           }
         }
       },
-      'layout': {},
+      'layout': {
+        "visibility": "visible"
+      },
       'paint': {
         'fill-color': 'rgba(185, 250, 248,0.4)',
         'fill-outline-color': 'rgba(185, 250, 248,1)'

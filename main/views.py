@@ -99,34 +99,32 @@ class Map(TemplateView):
                 cat = 'National Security'
             if cat == 'Welfare':
                 cat = 'Social Welfare'
+            issueInfo = dict()
+            issueInfo[obj.entry] = obj.description
             if cat in issues:
-                issues[cat].append(obj.description)
+                issues[cat].append(issueInfo)
             else:
-                issues[cat] = [obj.description]
+                issues[cat] = [issueInfo]
 
 
 
-        a = []
+        # turn it into a dict
+        entryPolyDict = dict()
         for obj in CommunityEntry.objects.all():
-            # print(obj.entry_polygon.geojson)
-            a.append(obj.entry_polygon.geojson)
-
-        final = []
-        for obj in a:
-            s = "".join(obj)
-
+            s = "".join(obj.user_polygon.geojson)
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
-            # print("printing the struct")
-            # print(struct)
-            final.append(struct.coordinates)
+            entryPolyDict[obj.entry_ID] = struct.coordinates
+
+
+
 
         context = ({
             # 'entries':  serialize('geojson', Entry.objects.all(), geometry_field='polygon', fields=('entry_polygon')),
             # 'entries': data,
             'issues': issues,
-            'entries': final,
+            'entries': entryPolyDict,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
         })
         return context
