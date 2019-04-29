@@ -117,9 +117,6 @@ class Map(TemplateView):
             struct = geojson.loads(s)
             entryPolyDict[obj.entry_ID] = struct.coordinates
 
-
-
-
         context = ({
             # 'entries':  serialize('geojson', Entry.objects.all(), geometry_field='polygon', fields=('entry_polygon')),
             # 'entries': data,

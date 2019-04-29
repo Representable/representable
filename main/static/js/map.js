@@ -131,8 +131,12 @@ map.on('load', function () {
   // send elements to javascript as geojson objects and make them show on the map by
   // calling the addTo
   console.log("printing the features");
-  a = JSON.parse(a);
+ 
+  var outputstr= a.replace(/'/g,'"');
+  console.log(outputstr);
+  a = JSON.parse(outputstr);
   console.log(a);
+
   for (let i = 0; i < a.length; i++) {
     let tempId = "dummy" + i;
     console.log(tempId);
