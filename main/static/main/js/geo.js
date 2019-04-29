@@ -8,6 +8,14 @@ var wkt_obj;
 // Formset field object saves a deep copy of the original formset field object.
 // (If user deletes all fields, he can add one more according to this one).
 var formsetFieldObject;
+// flags
+var user_poly_defined;
+var count_user_poly = 0;
+var count_census_poly = 0
+var census_poly_defined;
+// used to call a function
+var drawn_polygon;
+
 
 /******************************************************************************/
 // Make buttons show the right skin.
@@ -225,6 +233,24 @@ var draw = new MapboxDraw({
 
 });
 
+// create the custom event
+/* inspired from: https://gomakethings.com/custom-events-with-vanilla-javascript/ */
+
+// var highlight = function (elem) {
+
+//     elem.classList.add('highlights');
+
+//     // Create a new event
+//     var event = new CustomEvent('highlight');
+
+//     // Dispatch the event
+//     elem.dispatchEvent(event);
+
+// };
+
+// dispatch event
+// var document.getElementById("map").dispatchEvent(event);
+// highlight(map);
 // initialize the progress bar with pop data
 document.getElementById("ideal-pop").innerHTML = ideal_population;
 
@@ -239,6 +265,13 @@ if (polygonError != null) {
 }
 
 /******************************************************************************/
+
+
+// map.addEventListener('highlighted', highlightBlocks);
+// how to trigger the event?
+
+/******************************************************************************/
+
 
 // After the map style has loaded on the page, add a source layer and default
 // styling for a single point.
@@ -349,16 +382,122 @@ map.on('render', function() {
 
 });
 
+map.on('idle', triggerFunc);
+
 /******************************************************************************/
 
 map.on('draw.create', updateCommunityEntry);
-map.on('draw,create', highlightBlocks);
 map.on('draw.delete', updateCommunityEntry);
 map.on('draw.update', updateCommunityEntry);
 
 
 /******************************************************************************/
 
+function triggerFunc(e) {
+    // console.log(user_polygon_wkt);
+    // has to be a global var
+    // debugger
+    // create a custom event and c
+    if (user_poly_defined !== undefined && count_user_poly > 0) {
+        // console.log("polygon drawn and now do something");
+        console.log(count_user_poly);
+        count_user_poly = 0;
+        let mpolygon = highlightBlocks();
+        console.log(count_user_poly);
+        
+        // debugger
+
+        if (census_poly_defined !== undefined && count_census_poly > 0) {
+            count_census_poly = 0;
+            mergeBlocks(mpolygon);
+            
+            // mergeBlocks(mpolygon);
+    
+            // console.log("highlight polygons now that the filter returns something");
+        }
+    }
+    
+}
+
+function mergeBlocks(mpolygon) {
+    var wkt = new Wkt.Wkt();
+    var finalpoly = turf.union.apply(null, mpolygon);
+    var census_blocks_polygon = drawn_polygon;
+    // should only be the exterior ring
+
+    if (finalpoly.geometry.coordinates[0][0].length > 2) {
+        census_blocks_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0][0];
+    }
+    else {
+        census_blocks_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0];
+    }
+    // Save outline of census blocks.
+    let census_blocks_polygon_json = JSON.stringify(census_blocks_polygon['geometry']);
+    wkt_obj = wkt.read(census_blocks_polygon_json);
+    census_blocks_polygon_wkt = wkt_obj.write();
+    document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon_wkt;
+    // debugger
+    // prevent the method from being called multiple times
+}
+
+function highlightBlocks() {
+    // Save census blocks polygon outline.
+    //
+    console.log("called highlight blocks");
+    // once the above works, check the global scope of drawn_polygon
+
+    var census_blocks_polygon = drawn_polygon;
+    var polygonBoundingBox = turf.bbox(census_blocks_polygon);
+    // get the bounds of the polygon to reduce the number of blocks you are querying from
+    var southWest = [polygonBoundingBox[0], polygonBoundingBox[1]];
+    var northEast = [polygonBoundingBox[2], polygonBoundingBox[3]];
+
+    var northEastPointPixel = map.project(northEast);
+    var southWestPointPixel = map.project(southWest);
+    var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
+    if (features.length >= 1) {
+        var mpolygon = [];
+        var total = 0.0;
+
+        var filter = features.reduce(function(memo, feature) {
+            if (! (turf.intersect(feature, census_blocks_polygon) === null)) {
+                memo.push(feature.properties.BLOCKID10);
+                mpolygon.push(feature);
+                total+= feature.properties.POP10;
+            }
+            return memo;
+        }, ["in", "BLOCKID10"]);
+
+        map.setFilter("blocks-highlighted", filter);
+        census_poly_defined = true;
+        count_census_poly = 1;
+
+        progress = document.getElementById("pop");
+        // set color of the progress bar depending on population
+        if (total < (ideal_population * 0.33) || total > (ideal_population * 1.5)) {
+            progress.style.background = "red";
+        }
+        else if (total < (ideal_population * 0.67) || total > (ideal_population * 1.33)) {
+            progress.style.background = "orange";
+        }
+        else {
+            progress.style.background = "green";
+        }
+        progress.innerHTML = total;
+        progress.setAttribute("aria-valuenow", "total");
+        progress.setAttribute("aria-valuemax", ideal_population * 1.5);
+        popWidth = total / (ideal_population * 1.5) * 100;
+        progress.style.width = popWidth + "%";
+    }
+    else {
+        census_poly_defined = false;
+        count_census_poly = 0;
+    }
+
+    return mpolygon;
+}
+
+/******************************************************************************/
 
 // updatePolygon responds to the user's actions and updates the polygon field
 // in the form.
@@ -367,7 +506,7 @@ function updateCommunityEntry(e) {
     var wkt = new Wkt.Wkt();
     var data = draw.getAll();
     // Polygon drawn by user in map.
-    var drawn_polygon;
+    
     // Polygon saved to DB.
     var user_polygon_wkt;
     // Polygon saved to DB.
@@ -380,110 +519,86 @@ function updateCommunityEntry(e) {
         let user_polygon_json = JSON.stringify(drawn_polygon['geometry']);
         wkt_obj = wkt.read(user_polygon_json);
         user_polygon_wkt = wkt_obj.write();
+        user_poly_defined = true;
+        count_user_poly = 1;
         // Save census blocks polygon outline.
-        census_blocks_polygon = drawn_polygon;
-        var polygonBoundingBox = turf.bbox(census_blocks_polygon);
-        // get the bounds of the polygon to reduce the number of blocks you are querying from
-        var southWest = [polygonBoundingBox[0], polygonBoundingBox[1]];
-        var northEast = [polygonBoundingBox[2], polygonBoundingBox[3]];
+        // census_blocks_polygon = drawn_polygon;
+        // var polygonBoundingBox = turf.bbox(census_blocks_polygon);
+        // // get the bounds of the polygon to reduce the number of blocks you are querying from
+        // var southWest = [polygonBoundingBox[0], polygonBoundingBox[1]];
+        // var northEast = [polygonBoundingBox[2], polygonBoundingBox[3]];
 
-        var northEastPointPixel = map.project(northEast);
-        var southWestPointPixel = map.project(southWest);
-        var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
-        if (features.length >= 1) {
-            var mpolygon = [];
-            var total = 0.0;
+        // var northEastPointPixel = map.project(northEast);
+        // var southWestPointPixel = map.project(southWest);
+        // var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
+        // if (features.length >= 1) {
+        //     var mpolygon = [];
+        //     var total = 0.0;
 
-            var filter = features.reduce(function(memo, feature) {
-                if (! (turf.intersect(feature, census_blocks_polygon) === null)) {
-                    memo.push(feature.properties.BLOCKID10);
-                    mpolygon.push(feature);
-                    total+= feature.properties.POP10;
-                }
-                return memo;
-            }, ["in", "BLOCKID10"]);
+        //     var filter = features.reduce(function(memo, feature) {
+        //         if (! (turf.intersect(feature, census_blocks_polygon) === null)) {
+        //             memo.push(feature.properties.BLOCKID10);
+        //             mpolygon.push(feature);
+        //             total+= feature.properties.POP10;
+        //         }
+        //         return memo;
+        //     }, ["in", "BLOCKID10"]);
             
 
-            map.setFilter("blocks-highlighted", filter);
-            // progress bar with population data based on ideal population for a district in the given state
-            //<div id="pop" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 85%">
-            progress = document.getElementById("pop");
-            // set color of the progress bar depending on population
-            if (total < (ideal_population * 0.33) || total > (ideal_population * 1.5)) {
-            progress.style.background = "red";
-            }
-            else if (total < (ideal_population * 0.67) || total > (ideal_population * 1.33)) {
-            progress.style.background = "orange";
-            }
-            else {
-            progress.style.background = "green";
-            }
-            progress.innerHTML = total;
-            progress.setAttribute("aria-valuenow", "total");
-            progress.setAttribute("aria-valuemax", ideal_population * 1.5);
-            popWidth = total / (ideal_population * 1.5) * 100;
-            progress.style.width = popWidth + "%";
+        //     map.setFilter("blocks-highlighted", filter);
+        //     census_poly_defined = true;
+        //     // progress bar with population data based on ideal population for a district in the given state
+        //     //<div id="pop" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 85%">
+        //     progress = document.getElementById("pop");
+        //     // set color of the progress bar depending on population
+        //     if (total < (ideal_population * 0.33) || total > (ideal_population * 1.5)) {
+        //     progress.style.background = "red";
+        //     }
+        //     else if (total < (ideal_population * 0.67) || total > (ideal_population * 1.33)) {
+        //     progress.style.background = "orange";
+        //     }
+        //     else {
+        //     progress.style.background = "green";
+        //     }
+        //     progress.innerHTML = total;
+        //     progress.setAttribute("aria-valuenow", "total");
+        //     progress.setAttribute("aria-valuemax", ideal_population * 1.5);
+        //     popWidth = total / (ideal_population * 1.5) * 100;
+        //     progress.style.width = popWidth + "%";
 
-            var finalpoly = turf.union.apply(null, mpolygon);
-            // should only be the exterior ring
+        //     var finalpoly = turf.union.apply(null, mpolygon);
+        //     // should only be the exterior ring
 
-            if (finalpoly.geometry.coordinates[0][0].length > 2) {
-                census_blocks_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0][0];
-            }
-            else {
-                census_blocks_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0];
-            }
-            // Save outline of census blocks.
-            let census_blocks_polygon_json = JSON.stringify(census_blocks_polygon['geometry']);
-            wkt_obj = wkt.read(census_blocks_polygon_json);
-            census_blocks_polygon_wkt = wkt_obj.write();
-        }
-        else {
-            census_blocks_polygon_wkt = '';
-        }
+        //     if (finalpoly.geometry.coordinates[0][0].length > 2) {
+        //         census_blocks_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0][0];
+        //     }
+        //     else {
+        //         census_blocks_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0];
+        //     }
+        //     // Save outline of census blocks.
+        //     let census_blocks_polygon_json = JSON.stringify(census_blocks_polygon['geometry']);
+        //     wkt_obj = wkt.read(census_blocks_polygon_json);
+        //     census_blocks_polygon_wkt = wkt_obj.write();
+        // }
+        // else {
+        //     census_blocks_polygon_wkt = '';
+        // }
         
     } else {
+        user_poly_defined = false;
+        count_user_poly = 0;
+        census_poly_defined = false;
         drawn_polygon = null;
         user_polygon_wkt = '';
         census_blocks_polygon_wkt = '';
         map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
     }
     // Update form fields
-    document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon_wkt;
     document.getElementById('id_user_polygon').value = user_polygon_wkt;
 }
 
-function highlightBlocks(e) {
-    // Save census blocks polygon outline.
-    console.log("drawn_polygon");
-    census_blocks_polygon = drawn_polygon;
-    var polygonBoundingBox = turf.bbox(census_blocks_polygon);
-    // get the bounds of the polygon to reduce the number of blocks you are querying from
-    var southWest = [polygonBoundingBox[0], polygonBoundingBox[1]];
-    var northEast = [polygonBoundingBox[2], polygonBoundingBox[3]];
-
-    var northEastPointPixel = map.project(northEast);
-    var southWestPointPixel = map.project(southWest);
-    var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
-    var mpolygon = [];
-    var total = 0.0;
-
-    var filter = features.reduce(function(memo, feature) {
-        if (! (turf.intersect(feature, census_blocks_polygon) === null)) {
-            memo.push(feature.properties.BLOCKID10);
-            mpolygon.push(feature);
-            total+= feature.properties.POP10;
-        }
-        return memo;
-    }, ["in", "BLOCKID10"]);
-
-    map.setFilter("blocks-highlighted", filter);
-}
 
 
-function mergeBlockData(e) {
-
-}
 /******************************************************************************/
 
 function updateElementIndex(el, prefix, ndx) {
