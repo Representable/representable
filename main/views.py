@@ -99,12 +99,13 @@ class Map(TemplateView):
                 cat = 'National Security'
             if cat == 'Welfare':
                 cat = 'Social Welfare'
-            issueInfo = dict()
-            issueInfo[obj.entry] = obj.description
+            
             if cat in issues:
-                issues[cat].append(issueInfo)
+                issues[cat][str(obj.entry)] = obj.description
             else:
-                issues[cat] = [issueInfo]
+                issueInfo = dict()
+                issueInfo[str(obj.entry)] = obj.description
+                issues[cat] = issueInfo
 
 
 

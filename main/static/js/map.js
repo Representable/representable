@@ -111,33 +111,51 @@ function newLowerLegislatureLayer(state) {
 }
 map.on('load', function () {
   // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
-  for (var census in CENSUS_KEYS) {
+  for (let census in CENSUS_KEYS) {
     newSourceLayer(census, CENSUS_KEYS[census]);
   }
   // upper layers
-  for (var upper in UPPER_KEYS) {
+  for (let upper in UPPER_KEYS) {
     newSourceLayer(upper, UPPER_KEYS[upper]);
   }
   // lower layers
-  for (var lower in LOWER_KEYS) {
+  for (let lower in LOWER_KEYS) {
     newSourceLayer(lower, LOWER_KEYS[lower]);
   }
-  for (var i = 0; i < states.length; i++) {
+  for (let i = 0; i < states.length; i++) {
     newCensusLayer(states[i]);
     newUpperLegislatureLayer(states[i]);
     newLowerLegislatureLayer(states[i]);
   }
 
+
+  // issues add to properties
+  var issueDict= issues.replace(/'/g,'"');
+  issues = JSON.parse(issueDict);
+  console.log(issues);
   // send elements to javascript as geojson objects and make them show on the map by
   // calling the addTo
-  console.log("printing the features");
  
   var outputstr= a.replace(/'/g,'"');
-  console.log(outputstr);
   a = JSON.parse(outputstr);
-  console.log(a);
-
-  for (let i = 0; i < a.length; i++) {
+  let i = 0;
+  for (obj in a) {
+    // console.log(obj);
+    let catDict = {};
+    let catArray = [];
+    for (cat in issues) {
+      // console.log(cat);
+      // console.log(issues[cat][obj]);
+      
+      if (issues[cat][obj] !== undefined) {
+        catArray.push(cat);
+        // console.log(issues[cat][obj]);
+        // console.log("goinginside");
+        catDict[cat] = issues[cat][obj];
+      }
+      
+    }
+    // console.log(catDict);
     let tempId = "dummy" + i;
     console.log(tempId);
     map.addLayer({
@@ -149,10 +167,11 @@ map.on('load', function () {
           'type': 'Feature',
           'geometry': {
             'type': 'Polygon',
-            'coordinates': a[i]
+            'coordinates': a[obj]
           },
           'properties': {
-            'issue': 'dummy'
+            'issues': catDict,
+            'category': catArray
           }
         }
       },
@@ -164,7 +183,9 @@ map.on('load', function () {
         'fill-outline-color': 'rgba(185, 250, 248,1)'
       }
     });
+    i++;
   }
+
 
   // // When a click event occurs on a feature in the dummy layer, open a popup at the
   // // location of the click, with description HTML from its properties.
@@ -194,6 +215,7 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   var id = toggleableLayerIds[i];
 
   var link = document.createElement('a');
+
   link.href = '#';
   link.className = 'active';
   link.textContent = id;
@@ -265,6 +287,7 @@ var i;
 
 for (i = 0; i < dropdown.length; i++) {
   dropdown[i].addEventListener("click", function() {
+    console.log("i was clicked");
     this.classList.toggle("active");
     var dropdownContent = this.nextElementSibling;
     if (dropdownContent.style.display === "block") {
@@ -272,6 +295,8 @@ for (i = 0; i < dropdown.length; i++) {
     } else {
       dropdownContent.style.display = "block";
     }
+    // add logic for polygons
+    // map.setFilter('users', ['in', 'orgs', ...targetIDs]);
   });
 }
 
