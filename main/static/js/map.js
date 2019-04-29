@@ -159,7 +159,7 @@ map.on('load', function () {
     let tempId = "dummy" + i;
     console.log(tempId);
     map.addLayer({
-      'id': tempId,
+      'id': obj,
       'type': 'fill',
       'source': {
         'type': 'geojson',
