@@ -207,7 +207,8 @@ map.on('load', function () {
         }
       }
     }
-
+    console.log(issues);
+    console.log(issue);
     for (entry in issues[issue]) {
       var entryId = document.getElementById(entry);
       entryId.onclick = function (e) {

@@ -530,8 +530,9 @@ function highlightBlocks() {
         progress.style.width = popWidth + "%";
     }
     else {
-        census_poly_defined = false;
+        census_poly_defined = undefined;
         count_census_poly = 0;
+        document.getElementById('id_census_blocks_polygon').value = "";
     }
 
     return mpoly;
