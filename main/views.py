@@ -99,10 +99,6 @@ class Map(TemplateView):
                 cat = 'National Security'
             if cat == 'Welfare':
                 cat = 'Social Welfare'
-<<<<<<< HEAD
-=======
-
->>>>>>> db5387d218a1c2fc574c45dbb43210c9c694c494
             if cat in issues:
                 issues[cat].append(obj.description)
             else:
@@ -112,23 +108,13 @@ class Map(TemplateView):
 
         a = []
         for obj in CommunityEntry.objects.all():
-<<<<<<< HEAD
-            # print(obj.entry_polygon.geojson)
-            a.append(obj.entry_polygon.geojson)
-
-        final = []
-        for obj in a:
-            s = "".join(obj)
-
-=======
             s = "".join(obj.census_blocks_polygon.geojson)
->>>>>>> db5387d218a1c2fc574c45dbb43210c9c694c494
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
+            entryPolyDict[obj.entry_ID] = struct.coordinates
             # print("printing the struct")
             # print(struct)
-            final.append(struct.coordinates)
 
         context = ({
             # 'entries':  serialize('geojson', Entry.objects.all(), geometry_field='polygon', fields=('entry_polygon')),
