@@ -70,6 +70,7 @@ class About(TemplateView):
 class Review(TemplateView):
     template_name = "main/review.html"
 
+    '''
     def get_context_data(self, **kwargs):
         # the dict of issues + input of descriptions
         issues = dict()
@@ -101,7 +102,7 @@ class Review(TemplateView):
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
         })
         return context
-
+    '''
 #******************************************************************************#
 
 
