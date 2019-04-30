@@ -45,6 +45,15 @@ a:hover {
     /* background-color: #56577d; */
 }
 
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+.container-hero {
+    background-color: transparent;
+    margin-bottom: 0;
+    text-align: center;
+=======
+>>>>>>> acbca76e21f7412d0523c3e29f84e79b9d280d26
 /* Forces columns to have the same height. */
 .row-equal-cols {
   display: -webkit-box;
@@ -63,6 +72,10 @@ a:hover {
   content: "";
   display: table;
   clear: both;
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+>>>>>>> acbca76e21f7412d0523c3e29f84e79b9d280d26
 }
 
 .row-content {
@@ -92,6 +105,13 @@ a:hover {
 }
 
 .btn-canvas, nav {
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+    position: relative;
+    z-index: 2;
+=======
+>>>>>>> acbca76e21f7412d0523c3e29f84e79b9d280d26
   position: relative;
   z-index: 2;
 }
@@ -128,6 +148,10 @@ a:hover {
     padding-right: 40px;
     padding-bottom: 40px;
   }
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+>>>>>>> acbca76e21f7412d0523c3e29f84e79b9d280d26
 }
 
 .shadow-sm {
