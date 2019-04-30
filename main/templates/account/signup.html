@@ -8,7 +8,9 @@
 {% block content %}
 <div class="row row-content">
     <div class="col">
-        <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+        <p>{% blocktrans %}Already have an account?
+          Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}
+          Else please sign up below </p>
 
         <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
             {% csrf_token %}
@@ -29,6 +31,10 @@
             <button class="btn btn-primary" type="submit">{% trans "Sign Up" %} &raquo;</button>
         </form>
     </div>
+    <p> <br>
+        In order for us to make sure that your data is protected and that Districter data
+        remains secure and accurate, its important for each user to create an account before joining the districter
+        community. Thanks for your understanding!</p>
 </div>
 
 {% endblock %}

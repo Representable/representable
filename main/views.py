@@ -10,7 +10,10 @@ from .models import CommunityEntry, Issue
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
 from shapely.geometry import Polygon, mapping
-import geojson, os, json,re
+import geojson
+import os
+import json
+import re
 from django.http import JsonResponse
 
 
@@ -24,62 +27,88 @@ from django.contrib.gis.geos import Point
 '''
 Documentation: https://docs.djangoproject.com/en/2.1/topics/class-based-views/
 '''
+
+
 class Index(TemplateView):
     template_name = "main/index.html"
 
     # Add extra context variables.
     def get_context_data(self, **kwargs):
-        context = super(Index, self).get_context_data(**kwargs) # get the default context data
+        context = super(Index, self).get_context_data(
+            **kwargs)  # get the default context data
         context['mapbox_key'] = os.environ.get('DISTR_MAPBOX_KEY')
         return context
 
 #******************************************************************************#
+
 
 class MainView(TemplateView):
     template_name = "main/main_test.html"
 
     # Add extra context variables.
     def get_context_data(self, **kwargs):
-        context = super(MainView, self).get_context_data(**kwargs) # get the default context data
+        context = super(MainView, self).get_context_data(
+            **kwargs)  # get the default context data
         context['mapbox_key'] = os.environ.get('DISTR_MAPBOX_KEY')
         return context
 
 #******************************************************************************#
+
 
 class Timeline(TemplateView):
     template_name = "main/timeline.html"
 
 #******************************************************************************#
 
-class AboutUs(TemplateView):
+
+class About(TemplateView):
     template_name = "main/about.html"
 
 #******************************************************************************#
 
+
+class Review(TemplateView):
+    template_name = "main/review.html"
+
+    '''
+    def get_context_data(self, **kwargs):
+        # the dict of issues + input of descriptions
+        issues = dict()
+        for obj in Issue.objects.all():
+            cat = obj.category
+            cat = re.sub('_', ' ', cat).title()
+            if cat in issues:
+                issues[cat].append(obj.description)
+            else:
+                issues[cat] = [obj.description]
+            print(issues)
+
+        a = []
+        for obj in CommunityEntry.objects.all():
+            a.append(obj.entry_polygon.geojson)
+
+        final = []
+        for obj in a:
+            s = "".join(obj)
+
+            # add all the coordinates in the array
+            # at this point all the elements of the array are coordinates of the polygons
+            struct = geojson.loads(s)
+            final.append(struct.coordinates)
+
+        context = ({
+            'issues': issues,
+            'entries': final,
+            'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
+        })
+        return context
+    '''
+#******************************************************************************#
+
+
 class Map(TemplateView):
     template_name = "main/map.html"
-    # serialize('geojson', Entry.objects.all(), geometry_field='polygon', fields=('entry_polygon',))
-
     def get_context_data(self, **kwargs):
-        # GEOJSONSerializer = serializers.get_serializer("geojson")
-        # geojson_serializer = GEOJSONSerializer()
-        # geojson_serializer.serialize(Entry.objects.only('entry_polygon'))
-        # data = geojson_serializer.getvalue()
-        # data = serialize("geojson", CommunityEntry.objects.all(
-        # ), geometry_field="Polygon", fields=("entry_polygon", "Polygon",))
-        # print("printing data")
-        # print(data)
-        # struct = json.loads(data)
-        # data = Entry.objects.only('entry_polygon')
-
-        # s = "".join(data)
-        # something = geojson.loads(s)
-
-        # print(geojson.loads(Entry.objects.all()))
-        # print(data[0])
-        # print(geojson.Polygon(data[0]))
-        # data = json.dumps(struct)
-
         # the dict of issues + input of descriptions
         issues = dict()
         for obj in Issue.objects.all():
@@ -99,7 +128,7 @@ class Map(TemplateView):
                 cat = 'National Security'
             if cat == 'Welfare':
                 cat = 'Social Welfare'
-            
+
             if cat in issues:
                 issues[cat][str(obj.entry)] = obj.description
             else:
@@ -107,20 +136,16 @@ class Map(TemplateView):
                 issueInfo[str(obj.entry)] = obj.description
                 issues[cat] = issueInfo
 
-
-
         # turn it into a dict
         entryPolyDict = dict()
         for obj in CommunityEntry.objects.all():
-            s = "".join(obj.user_polygon.geojson)
+            s = "".join(obj.census_blocks_polygon.geojson)
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
             entryPolyDict[obj.entry_ID] = struct.coordinates
 
         context = ({
-            # 'entries':  serialize('geojson', Entry.objects.all(), geometry_field='polygon', fields=('entry_polygon')),
-            # 'entries': data,
             'issues': issues,
             'entries': entryPolyDict,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
@@ -129,10 +154,12 @@ class Map(TemplateView):
 
 #******************************************************************************#
 
+
 class Thanks(TemplateView):
     template_name = "main/thanks.html"
 
 #******************************************************************************#
+
 
 class EntryView(LoginRequiredMixin, View):
     '''
@@ -148,7 +175,7 @@ class EntryView(LoginRequiredMixin, View):
         'form-MAX_NUM_FORMS': ''
     }
     # Create the formset, specifying the form and formset we want to use.
-    IssueFormSet =  formset_factory(IssueForm, extra=1)
+    IssueFormSet = formset_factory(IssueForm, extra=1)
 
     # https://www.agiliq.com/blog/2019/01/django-formview/
     def get_initial(self):

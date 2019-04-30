@@ -9,8 +9,8 @@ urlpatterns = [
     path('timeline/', views.Timeline.as_view(), name='timeline'),
     path('map/', views.Map.as_view(), name='map'),
     path('thanks/', views.Thanks.as_view(), name='thanks'),
+    path('form/', views.CommunityView.as_view(), name='community_form'),
+    path('geo/', views.GeoView.as_view(), {'mapbox_key': MAPBOX_KEY}, name='geo'),
     path('entry/', views.EntryView.as_view(), name='entry'),
-    path('main/', views.MainView.as_view(), name='main_test'),
-    path('about/', views.About.as_view(), name='about'),
-    path('review/', views.Review.as_view(), name='review')
+    # path('entry/ajax/dummy_save/', views.savePolygon, name='savePolygon')
 ]

@@ -35,7 +35,7 @@
 {% block content %}
 <!--  what is Districter ?? -->
 <div class="row row-content">
-    <div id='description' class="col-sm-6">
+    <div id='descriptionTop' class="col-sm-6">
         <h2>What is Districter?</h2>
         <p>Districter is an online service that allows Americans to fight against gerrymandering by
             drawing their communities of interest (COIs) on a map. A COI is what a person consider to
@@ -52,7 +52,7 @@
             state of gerrymandering by overlaying district lines over communities of interest.</p>
     </div>
     <div id=images class="col-sm-6">
-        <img src="{% static 'img/gerry.png' %}" alt="map" style="width: 100%; height: auto;">
+        <img src="{% static 'img/mapstockImage.png' %}" alt="map" style="width: 100%; height: 100%;">
         <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
     </div>
 </div>
@@ -71,11 +71,9 @@
                     <section id='Step1-Browse' class='active'>
                         <h3> 1. Browse the Map </h3>
                         <div class="row">
-                            <div id='Video1' class="col-sm-6">
-                                <video loop style="width: 100%; height: auto;" autoplay>
-                                    <source src="{% static 'img/Browse_1.mp4' %}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
+                              <div id=images class="col-sm-6">
+                                  <img src="{% static 'img/browse1.png' %}" alt="map" style="width: 100%; height: 100%;">
+                                  <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
                             </div>
                             <div id=description class="col-sm-6">
                                 <p> Explore the map by entering in a zipcode in the search box and navigate to your
@@ -90,17 +88,16 @@
             <div class="row">
                 <div col='col-sm'>
                     <section id='Step2-NavCommunity' class='active'>
-                        <h3> 2. Navigate your community </h3>
+                        <h3> 2. Orient yourself, get ready to draw! </h3>
                         <div class="row">
                             <div id=description class="col-sm-6">
-                                <p> Using a variety of map views and add on geographic and census features, get
-                                    a better understanding for your geospatial COI </p>
+                                <p> Using a variety of geographic and census features, get
+                                    a better understanding for your geospatial COI; click on the upper right hand 'Dr
+                                    aw Polygon' tool when you're ready to draw your COI</p>
                             </div>
-                            <div id='Video2' class="col-sm-6">
-                                <video loop style="width: 100%; height: auto;" autoplay>
-                                    <source src="{% static 'img/NavCommunity.mp4' %}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
+                              <div id=images class="col-sm-6">
+                                  <img src="{% static 'img/startCOI.png' %}" alt="map" style="width: 100%; height: 100%;">
+                                  <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
                             </div>
                         </div>
                     </section>
@@ -113,45 +110,61 @@
                     <section id='Step3-drawCOi' class='active'>
                         <h3> 3. Draw ur COI </h3>
                         <div class="row">
-                            <div id='Video 3' class="col-sm-6">
-                                <video loop style="width: 100%; height: auto;" autoplay>
-                                    <source src="{% static 'img/COI.mp4' %}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
+                              <div id=images class="col-sm-6">
+                                  <img src="{% static 'img/COI2:3.png' %}" alt="map" style="width: 100%; height: 100%;">
+                                  <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
                             </div>
                             <div id=description class="col-sm-6">
-
-                                <p> Using the Polygon draw tool, click the 'createCOI logo',
-                                    and begin to draw your COI! click on a point on the map to create a vertex
-                                    and click twice on your final vertex to finalize your polygon. To start
-                                    over press the trash can on the right hand of the screen. To edit the
-                                    polygon once made simply click on a vertex and drag accorginly or
-                                    even drag the entire shape over. </p>
+                                <p> After clicking the 'Draw Polygon' tool, click on a point on the map to create
+                                    a vertex to start your polygon.
+                                    Click down to place a vertex then drag the cursor to your next desired COI boundary point.
+                                    Click twice on your final vertex to
+                                    finalize your polygon. </p>
                             </div>
                         </div>
                     </section>
                 </div>
             </div>
 
+            <!--  STEP THREE : DRAW COI -->
+            <div class="row">
+                <div col='col'>
+                    <section id='Step3-drawCOi' class='active'>
+                        <h3> 4. Finalize/edit your COI </h3>
+                        <div class="row">
+                            <div id=description class="col-sm-6">
+                                <p> Once a polygon is finalized the shape will snap to the census block units that
+                                  correspond with your submitted COI.
+                                  To start over press the trash can on the right hand of the screen. To edit the
+                                polygon once made simply double click on a vertex and drag accordingly or
+                                even drag the entire shape over. </p>
+                            </div>
+                            <div id=images class="col-sm-6">
+                                <img src="{% static 'img/COIdraw2.png' %}" alt="map" style="width: 100%; height: 100%;">
+                                <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+
             <!--  STEP FOUR : Enter DEMOGRAPHIC data -->
             <div class="row">
                 <div col='col'>
                     <section id='Step4-DemographicData' class='active'>
-                        <h3> 4.Demographic Data </h3>
+                        <h3> 5.Demographic Data </h3>
                         <div class="row">
+                          <div id=images class="col-sm-6">
+                              <img src="{% static 'img/demographics.png' %}" alt="map" style="width: 100%; height: 100%;">
+                              <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
+                          </div>
                             <div id=description class="col-sm-6">
                                 <p> Help us understand the importance of this community for you, and
                                     identify aggregate trends in your commynity
-                                    by submitting your demographic information and policy needs on the right
+                                    by submitting your demographic information on the left
                                     hand side of the screen </p>
                             </div>
-                            <div id='Video 4' class="col-sm-6">
-                                <video loop style="width: 100%; height: auto;" autoplay>
-                                    <source src="{% static 'img/Demo.mp4' %}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                            </div>
-
                         </div>
                     </section>
                 </div>
@@ -161,20 +174,48 @@
             <div class="row">
                 <div col='col'>
                     <section id='Step5-Submit Data' class='active'>
-                        <h3> 5.Submit & Help make US politics more judicial! </h3>
+                        <h3> 5.Topics and Issues of Interest </h3>
                         <div class="row">
-                            <div id=images class="col-sm-6">
-                                <img src="{% static 'img/mapp.png' %}" alt="map" style="width: 100%; height: auto;">
-                            </div>
                             <div id=description class="col-sm-6">
-                                <p> Submit the data to be entered into a critical databse of citizens in your area
-                                    who want to have their voices heard during redistricting <br>
-                                    go to animation of submitting data / redistricting? <p>
+                                <p> Submit issues so that your voice can be heard about the issues you feel pertain to your
+                                  community! Pick the category your issue/ topic of interest falls into then further specify in
+                                  with the field.
+                            </div>
+                            <div id=images class="col-sm-6">
+                                <img src="{% static 'img/issues.png' %}" alt="map" style="width: 100%; height: 100%;">
+                                <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
                             </div>
                         </div>
                     </section>
                 </div>
             </div>
+
+            <div class="row">
+                <div col='col'>
+                    <section id='Step6-Submit Data' class='active'>
+                        <h3> 6.Submit & have your voice heard! </h3>
+                        <div class="row">
+                          <div id=images class="col-sm-6">
+                              <img src="{% static 'img/mapp.png' %}" alt="map" style="width: 100%; height: 100%;">
+                              <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
+                          </div>
+                            <div id=description class="col-sm-6">
+                                <p> Submit your data to be entered into a critical databse of citizens in your area
+                                    who want to have their voices heard during redistricting and other political processes
+                                    involving your community!
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div
+
+            <div class="row row-hero">
+                <div class="col-sm-12 col-md-10 offset-md-1 my-5">
+                    <a class="btn btn-outline-primary btn-canvas" href="#descriptionTop" role="button">Back to Top</a>
+                    <a class="btn btn-outline-primary btn-canvas" href="/entry" role="button">Contribute Now!</a>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
