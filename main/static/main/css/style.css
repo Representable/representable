@@ -387,3 +387,14 @@ section {
     /*  Must Set Absolute Height */
     height: 800px;
 }
+.race-field-wrap {
+    visibility: hidden;
+    height: 0px;
+}
+.religion-field-wrap {
+    visibility: hidden;
+    height: 0px;
+}
+.industry-field-wrap {
+    visibility: hidden;
+    height: 0px;}

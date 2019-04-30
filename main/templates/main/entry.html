@@ -37,6 +37,7 @@
         <h6>Instructions:</h6>
         <p>Find your community, answer the questions, and draw what you think resembles your community most closely.</p>
         <p>Your submission will enable your local government to draw more accurate maps.</p>
+        <hr>
         <!-- <button id="dummySave" type="button" class="btn btn-primary">Dummy Save</button> -->
 
         <div class="row mt-3">
@@ -60,10 +61,10 @@
                                 {% endfor %}
                                 <!-- {# Include the visible fields #} -->
                                 <!-- {# Race Field} -->
-                                <p> Does this community identify with one or more racial groups?</p>
-                                <input type="radio" name="race" value="on" id="race-yes">Yes<br>
-                                <input type="radio" name="race" value="off" id="race-no">No
-                                <div id="race-field" class="field-wrap">
+                                <p class="mt-2"> Does this community identify with one or more racial groups?</p>
+                                <button type="button" class = 'btn btn-outline-dark' id="race-yes">Yes</button>
+                                <button type="button" class = 'btn btn-outline-dark'id="race-no">No</button>
+                                <div id="race-field" class="field-wrap race-field-wrap">
                                     {{ form.race.label_tag }}
                                     <div class="form-error">
                                         {{ form.race.errors }}
@@ -74,10 +75,10 @@
                                     {% endif %}
                                 </div>
                                 <!-- {# Religion Field} -->
-                                <p> Does this community identify with one or more religious groups?</p>
-                                <input type="radio" name="religion" value="on" id="religion-yes">Yes<br>
-                                <input type="radio" name="religion" value="off" id="religion-no">No
-                                <div id="religion-field" class="field-wrap">
+                                <p class="mt-2"> Does this community identify with one or more religious groups?</p>
+                                <button type="button" class = 'btn btn-outline-dark' id="religion-yes">Yes</button>
+                                <button type="button" class = 'btn btn-outline-dark' id="religion-no">No</button>
+                                <div id="religion-field" class="field-wrap religion-field-wrap">
                                     {{ form.religion.label_tag }}
                                     <div class="form-error">
                                         {{ form.religion.errors }}
@@ -88,10 +89,10 @@
                                     {% endif %}
                                 </div>
                                 <!-- {# Industry Field} -->
-                                <p> Does this community identify with one or more profressions or industries?</p>
-                                <input type="radio" name="industry" value="on" id="industry-yes">Yes<br>
-                                <input type="radio" name="industry" value="off" id="industry-no">No
-                                <div id="industry-field" class="field-wrap">
+                                <p class="mt-2"> Does this community identify with one or more profressions or industries?</p>
+                                <button type="button" class = 'btn btn-outline-dark' id="industry-yes">Yes</button>
+                                <button type="button" class = 'btn btn-outline-dark' id="industry-no">No</button>
+                                <div id="industry-field" class="field-wrap industry-field-wrap">
                                     {{ form.industry.label_tag }}
                                     <div class="form-error">
                                         {{ form.industry.errors }}
