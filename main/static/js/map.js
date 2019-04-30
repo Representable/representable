@@ -206,8 +206,31 @@ map.on('load', function () {
         }
       }
     }
+
+    for (entry in issues[issue]) {
+      var entryId = document.getElementById(entry);
+      entryId.onclick = function (e) {
+        var thisId = this.id;
+        for (obj in a) {
+          if (thisId === obj) {
+            // console.log(obj);
+            map.setLayoutProperty(obj, 'visibility', 'visible');
+          }
+          else {
+            map.setLayoutProperty(obj, 'visibility', 'none');
+          }
+        }
+      }
+    }
   }
 
+  var allEntriesButton = document.getElementById('all');
+
+  allEntriesButton.onclick = function (e) {
+    for (obj in a) {
+      map.setLayoutProperty(obj, 'visibility', 'visible');
+    }
+  }
 
   // // When a click event occurs on a feature in the dummy layer, open a popup at the
   // // location of the click, with description HTML from its properties.
@@ -264,7 +287,6 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   var layers = document.getElementById('outline-menu');
   layers.appendChild(link);
 }
-
 
 /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content -
 This allows the user to have multiple dropdowns without any conflict */
