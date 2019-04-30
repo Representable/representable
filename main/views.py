@@ -99,30 +99,44 @@ class Map(TemplateView):
         # the dict of issues + input of descriptions
         issues = dict()
         for obj in Issue.objects.all():
-            cat = obj.category;
+            cat = obj.category
             cat = re.sub('_', ' ', cat).title()
+            if cat == 'Economic':
+                cat = 'Economic Affairs'
+            if cat == 'Health':
+                cat = 'Health and Health Insurance'
+            if cat == 'Internet':
+                cat = 'Internet Regulation'
+            if cat == 'Women':
+                cat = 'Women\'s Issues'
+            if cat == 'Lgbt':
+                cat = 'LGBT Issues'
+            if cat == 'Security':
+                cat = 'National Security'
+            if cat == 'Welfare':
+                cat = 'Social Welfare'
+
             if cat in issues:
-                issues[cat].append(obj.description)
+                issues[cat][str(obj.entry)] = obj.description
             else:
-                issues[cat] = [obj.description]
-            print(issues)
+                issueInfo = dict()
+                issueInfo[str(obj.entry)] = obj.description
+                issues[cat] = issueInfo
 
-        a = []
+
+
+        # turn it into a dict
+        entryPolyDict = dict()
         for obj in CommunityEntry.objects.all():
-            a.append(obj.entry_polygon.geojson)
-
-        final = []
-        for obj in a:
-            s = "".join(obj)
-
+            s = "".join(obj.census_blocks_polygon.geojson)
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
-            final.append(struct.coordinates)
+            entryPolyDict[obj.entry_ID] = struct.coordinates
 
         context = ({
             'issues': issues,
-            'entries': final,
+            'entries': entryPolyDict,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
         })
         return context
@@ -174,6 +188,10 @@ class EntryView(LoginRequiredMixin, View):
             entryForm = form.save(commit=False)
             entryForm.save()
             for issue_form in issue_formset:
+                category = issue_form.cleaned_data.get('category')
+                description = issue_form.cleaned_data.get('description')
+                # Ignore form row if it's completely empty.
+                if category and description:
                     issue = issue_form.save(commit=False)
                     # Set issueFormset form Foreign Key (entry) to the recently
                     # created entryForm.
@@ -185,6 +203,7 @@ class EntryView(LoginRequiredMixin, View):
             'issue_formset': issue_formset,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY')
         }
+        print(issue_formset)
         return render(request, self.template_name, context)
 
 #******************************************************************************#

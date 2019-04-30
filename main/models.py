@@ -40,7 +40,10 @@ class CommunityEntry(models.Model):
     # Generated randomly every time.
     entry_ID = models.CharField(max_length=100, blank=False, unique=True, default=uuid.uuid4)
     # From Mapbox GL GS.
-    entry_polygon = models.PolygonField(serialize=True)
+    # Entry polygon contains the combined census block polygons.
+    census_blocks_polygon = models.PolygonField(serialize=True, blank=True, null=True)
+    # User polygon contains the polygon drawn by the user.
+    user_polygon = models.PolygonField(serialize=True, blank=False)
     # "Which races shape this community's identity? Select one or multiple."
     race = ArrayField(models.CharField(max_length=50,choices=RACE_CHOICES),default=list,blank=True)
     religion = ArrayField(models.CharField(max_length=50,choices=RELIGION_CHOICES),default=list,blank=True)
@@ -65,9 +68,9 @@ class Issue(models.Model):
     '''
     Issue holds issues associated with each community entry.
     '''
-    entry = models.ForeignKey(CommunityEntry, on_delete=models.CASCADE, default=None, blank=False)
-    category = models.CharField(max_length=50, choices=POLICY_ISSUES, default=None, blank=False)
-    description = models.CharField(max_length=250)
+    entry = models.ForeignKey(CommunityEntry, on_delete=models.CASCADE, default=None)
+    category = models.CharField(max_length=50, choices=POLICY_ISSUES, default=None, blank=True)
+    description = models.CharField(max_length=250, blank=True)
 
     class Meta:
         ordering = ('category','description',)

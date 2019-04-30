@@ -69,7 +69,7 @@ function newCensusLayer(state) {
     },
     "paint": {
       "fill-color": "rgba(193, 202, 214, 0)",
-      "fill-outline-color": "#82ccdd"
+      "fill-outline-color": "rgba(193, 202, 214, 1)"
     }
   });
 }
@@ -111,33 +111,53 @@ function newLowerLegislatureLayer(state) {
 }
 map.on('load', function () {
   // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
-  for (var census in CENSUS_KEYS) {
+  for (let census in CENSUS_KEYS) {
     newSourceLayer(census, CENSUS_KEYS[census]);
   }
   // upper layers
-  for (var upper in UPPER_KEYS) {
+  for (let upper in UPPER_KEYS) {
     newSourceLayer(upper, UPPER_KEYS[upper]);
   }
   // lower layers
-  for (var lower in LOWER_KEYS) {
+  for (let lower in LOWER_KEYS) {
     newSourceLayer(lower, LOWER_KEYS[lower]);
   }
-  for (var i = 0; i < states.length; i++) {
+  for (let i = 0; i < states.length; i++) {
     newCensusLayer(states[i]);
     newUpperLegislatureLayer(states[i]);
     newLowerLegislatureLayer(states[i]);
   }
 
+
+  // issues add to properties
+  var issueDict= issues.replace(/'/g,'"');
+  issues = JSON.parse(issueDict);
+  console.log(issues);
   // send elements to javascript as geojson objects and make them show on the map by
   // calling the addTo
-  console.log("printing the features");
-  a = JSON.parse(a);
-  console.log(a);
-  for (let i = 0; i < a.length; i++) {
-    let tempId = "dummy" + i;
-    console.log(tempId);
+
+  var outputstr= a.replace(/'/g,'"');
+  a = JSON.parse(outputstr);
+  let i = 0;
+  for (obj in a) {
+    // console.log(obj);
+    let catDict = {};
+    let catArray = [];
+    for (cat in issues) {
+      // console.log(cat);
+      // console.log(issues[cat][obj]);
+
+      if (issues[cat][obj] !== undefined) {
+        catArray.push(cat);
+        // console.log(issues[cat][obj]);
+        // console.log("goinginside");
+        catDict[cat] = issues[cat][obj];
+      }
+
+    }
+
     map.addLayer({
-      'id': tempId,
+      'id': obj,
       'type': 'fill',
       'source': {
         'type': 'geojson',
@@ -145,19 +165,71 @@ map.on('load', function () {
           'type': 'Feature',
           'geometry': {
             'type': 'Polygon',
-            'coordinates': a[i]
+            'coordinates': a[obj]
           },
           'properties': {
-            'name': 'dummy'
+            'issues': catDict,
+            'category': catArray
           }
         }
       },
-      'layout': {},
+      'layout': {
+        "visibility": "visible"
+      },
       'paint': {
         'fill-color': 'rgba(185, 250, 248,0.4)',
         'fill-outline-color': 'rgba(185, 250, 248,1)'
       }
     });
+    i++;
+  }
+
+// this function iterates thru the issues, and adds a link to each one Which
+// displays the right polygons
+  for (issue in issues) {
+    // console.log(issue);
+    // the button element
+    var cat = document.getElementById(issue);
+    // console.log(cat);
+
+    cat.onclick = function (e) {
+      var issueId = this.id;
+      // console.log(issues[issueId]);
+      // iterate thru the polygons on the map
+      for (obj in a) {
+        if (issues[issueId][obj] === undefined) {
+          // console.log(obj);
+          map.setLayoutProperty(obj, 'visibility', 'none');
+        }
+        else {
+          map.setLayoutProperty(obj, 'visibility', 'visible');
+        }
+      }
+    }
+
+    for (entry in issues[issue]) {
+      var entryId = document.getElementById(entry);
+      entryId.onclick = function (e) {
+        var thisId = this.id;
+        for (obj in a) {
+          if (thisId === obj) {
+            // console.log(obj);
+            map.setLayoutProperty(obj, 'visibility', 'visible');
+          }
+          else {
+            map.setLayoutProperty(obj, 'visibility', 'none');
+          }
+        }
+      }
+    }
+  }
+
+  var allEntriesButton = document.getElementById('all');
+
+  allEntriesButton.onclick = function (e) {
+    for (obj in a) {
+      map.setLayoutProperty(obj, 'visibility', 'visible');
+    }
   }
 
   // // When a click event occurs on a feature in the dummy layer, open a popup at the
@@ -188,6 +260,7 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   var id = toggleableLayerIds[i];
 
   var link = document.createElement('a');
+
   link.href = '#';
   link.className = 'active';
   link.textContent = id;
@@ -229,6 +302,8 @@ for (i = 0; i < dropdown.length; i++) {
     } else {
       dropdownContent.style.display = "block";
     }
+    // add logic for polygons
+    // map.setFilter('users', ['in', 'orgs', ...targetIDs]);
   });
 }
 
