@@ -722,9 +722,9 @@ $('input:radio').on('click', function(e) {
             break;
         case 'industry':
             if (value === "on") {
-                document.getElementById('religion-field').style.visibility = 'visible';
+                document.getElementById('industry-field').style.visibility = 'visible';
             } else {
-                document.getElementById('religion-field').style.visibility = 'hidden';
+                document.getElementById('industry-field').style.visibility = 'hidden';
             }
             break;
     }
