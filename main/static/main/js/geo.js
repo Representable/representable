@@ -475,6 +475,7 @@ function mergeBlocks(mpoly) {
     census_blocks_polygon_wkt = wkt_obj.write();
 
     document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon_wkt;
+    debugger
     // debugger
     // prevent the method from being called multiple times
 }
@@ -634,6 +635,7 @@ function updateCommunityEntry(e) {
     }
     // Update form fields
     document.getElementById('id_user_polygon').value = user_polygon_wkt;
+    document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon_wkt;
 }
 
 

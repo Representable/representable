@@ -106,9 +106,12 @@ class Map(TemplateView):
 
 
 
-        a = []
+        entryPolyDict = dict()
         for obj in CommunityEntry.objects.all():
-            s = "".join(obj.census_blocks_polygon.geojson)
+            if (obj.census_blocks_polygon == "" or obj.census_blocks_polygon == None):
+                s = "".join(obj.user_polygon.geojson)
+            else:
+                s = "".join(obj.census_blocks_polygon.geojson)
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
@@ -120,7 +123,7 @@ class Map(TemplateView):
             # 'entries':  serialize('geojson', Entry.objects.all(), geometry_field='polygon', fields=('entry_polygon')),
             # 'entries': data,
             'issues': issues,
-            'entries': final,
+            'entries': entryPolyDict,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
         })
         return context
