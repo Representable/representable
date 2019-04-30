@@ -155,9 +155,7 @@ map.on('load', function () {
       }
 
     }
-    // console.log(catDict);
-    let tempId = "dummy" + i;
-    console.log(tempId);
+
     map.addLayer({
       'id': obj,
       'type': 'fill',
@@ -185,49 +183,30 @@ map.on('load', function () {
     });
     i++;
   }
-  //
-  // for (issue in issues) {
-  // var link = document.createElement('a');
-  // link.href = '#';
-  // link.className = 'active';
-  var issue = "Economic Affairs";
-  console.log(issue);
-  var catElement = document.getElementById(issue);
 
-  catElement.onclick = function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    // issues[issue]
-    for (obj in a) {
-      console.log(issues["Economic Affairs"][obj]);
-      if (issues["Economic Affairs"][obj] === undefined) {
-        console.log(obj);
-        map.setLayoutProperty(obj, 'visibility', 'none');
+// this function iterates thru the issues, and adds a link to each one Which
+// displays the right polygons
+  for (issue in issues) {
+    // console.log(issue);
+    // the button element
+    var cat = document.getElementById(issue);
+    // console.log(cat);
+
+    cat.onclick = function (e) {
+      var issueId = this.id;
+      // console.log(issues[issueId]);
+      // iterate thru the polygons on the map
+      for (obj in a) {
+        if (issues[issueId][obj] === undefined) {
+          // console.log(obj);
+          map.setLayoutProperty(obj, 'visibility', 'none');
+        }
+        else {
+          map.setLayoutProperty(obj, 'visibility', 'visible');
+        }
       }
     }
-  };
-
-  //
-  // for (issue in issues) {
-  // var link = document.createElement('a');
-  // link.href = '#';
-  // link.className = 'active';
-  issue = "National Security";
-  console.log(issue);
-  var catElement = document.getElementById(issue);
-
-  catElement.onclick = function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    // issues[issue]
-    for (obj in a) {
-      console.log(issues["National Security"][obj]);
-      if (issues["National Security"][obj] === undefined) {
-        console.log(obj);
-        map.setLayoutProperty(obj, 'visibility', 'none');
-      }
-    }
-  };
+  }
 
 
   // // When a click event occurs on a feature in the dummy layer, open a popup at the
