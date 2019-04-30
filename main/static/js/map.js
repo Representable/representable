@@ -135,7 +135,7 @@ map.on('load', function () {
   console.log(issues);
   // send elements to javascript as geojson objects and make them show on the map by
   // calling the addTo
- 
+
   var outputstr= a.replace(/'/g,'"');
   a = JSON.parse(outputstr);
   let i = 0;
@@ -147,18 +147,16 @@ map.on('load', function () {
     for (cat in issues) {
       // console.log(cat);
       // console.log(issues[cat][obj]);
-      
+
       if (issues[cat][obj] !== undefined) {
         catArray.push(cat);
         // console.log(issues[cat][obj]);
         // console.log("goinginside");
         catDict[cat] = issues[cat][obj];
       }
-      
+
     }
-    // console.log(catDict);
-    let tempId = "dummy" + i;
-    console.log(tempId);
+
     map.addLayer({
       'id': obj,
       'type': 'fill',
@@ -187,29 +185,29 @@ map.on('load', function () {
     i++;
   }
 
+// this function iterates thru the issues, and adds a link to each one Which
+// displays the right polygons
   for (issue in issues) {
+    // console.log(issue);
+    // the button element
+    var cat = document.getElementById(issue);
+    // console.log(cat);
 
-    // var link = document.createElement('a');
-    // link.href = '#';
-    // link.className = 'active';
-  
-    console.log(issue);
-    var catElement = document.getElementById(issue);
-  
-    catElement.onclick = function (e) {
-      var layerName = issue;
-      e.preventDefault();
-      e.stopPropagation();
-      // issues[issue]
-      for ( obj in a) {
-        if (issues[issue][obj] === undefined) {
-          map.setLayoutProperty(layerName, 'visibility', 'none');
-          this.className = '';
+    cat.onclick = function (e) {
+      var issueId = this.id;
+      // console.log(issues[issueId]);
+      // iterate thru the polygons on the map
+      for (obj in a) {
+        if (issues[issueId][obj] === undefined) {
+          // console.log(obj);
+          map.setLayoutProperty(obj, 'visibility', 'none');
+        }
+        else {
+          map.setLayoutProperty(obj, 'visibility', 'visible');
         }
       }
-    };
+    }
   }
-  
 
 
   // // When a click event occurs on a feature in the dummy layer, open a popup at the
@@ -268,42 +266,6 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   layers.appendChild(link);
 }
 
-// when clicking on the issue title, only show those issues
-// {% for issue, desc in issues.items %}
-//   <button class="dropdown-btn" id="{{ issue }}">{{ issue }}
-//     <i class="fa fa-caret-down"></i></button>
-//     <div class="dropdown-container">
-//       {% for item in desc %}
-//       <a href="#">{{ item }}</a>
-//       {% endfor %}
-//     </div>
-// {% endfor %}
-// for (var issue in issues) {
-//   var desc = issues[issue];
-//
-//   var link = document.createElement('a');
-//   link.href = '#';
-//   link.className = 'active';
-//
-//   link.onclick = function (e) {
-//     var clickedLayer = issue;
-//     e.preventDefault();
-//     e.stopPropagation();
-//
-//     var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
-//
-//     if (visibility === 'visible') {
-//       map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-//       this.className = '';
-//     } else {
-//       this.className = 'active';
-//       map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
-//     }
-//   };
-//
-//   var layers = document.getElementById('outline-menu');
-//   layers.appendChild(link);
-// }
 
 /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content -
 This allows the user to have multiple dropdowns without any conflict */
@@ -312,7 +274,6 @@ var i;
 
 for (i = 0; i < dropdown.length; i++) {
   dropdown[i].addEventListener("click", function() {
-    console.log("i was clicked");
     this.classList.toggle("active");
     var dropdownContent = this.nextElementSibling;
     if (dropdownContent.style.display === "block") {
