@@ -172,7 +172,7 @@ class EntryView(LoginRequiredMixin, View):
     data = {
         'form-TOTAL_FORMS': '1',
         'form-INITIAL_FORMS': '0',
-        'form-MAX_NUM_FORMS': ''
+        'form-MAX_NUM_FORMS': '10'
     }
     # Create the formset, specifying the form and formset we want to use.
     IssueFormSet = formset_factory(IssueForm, extra=1)
@@ -185,7 +185,7 @@ class EntryView(LoginRequiredMixin, View):
         return initial
 
     def get(self, request, *args, **kwargs):
-        form = self.form_class(initial=self.get_initial())
+        form = self.form_class(initial=self.get_initial(), label_suffix='')
         issue_formset = self.IssueFormSet(self.data)
         context = {
             'form': form,
@@ -195,7 +195,7 @@ class EntryView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
+        form = self.form_class(request.POST, label_suffix='')
         issue_formset = self.IssueFormSet(request.POST)
         if form.is_valid() and issue_formset.is_valid():
             entryForm = form.save(commit=False)

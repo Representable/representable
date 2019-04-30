@@ -625,6 +625,7 @@ function cloneMore(selector, prefix) {
     // Function that clones formset fields.
     var newElement = $(selector).clone(true);
     var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
+    if (total >= 10) {return false;}
     if (total == 0) {
         newElement = formsetFieldObject;
     }
