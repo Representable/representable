@@ -59,87 +59,87 @@ class About(TemplateView):
 class Review(TemplateView):
     template_name = "main/review.html"
 
-        def get_context_data(self, **kwargs):
-            # the dict of issues + input of descriptions
-            issues = dict()
-            for obj in Issue.objects.all():
-                cat = obj.category;
-                cat = re.sub('_', ' ', cat).title()
-                if cat in issues:
-                    issues[cat].append(obj.description)
-                else:
-                    issues[cat] = [obj.description]
-                print(issues)
+    def get_context_data(self, **kwargs):
+        # the dict of issues + input of descriptions
+        issues = dict()
+        for obj in Issue.objects.all():
+            cat = obj.category;
+            cat = re.sub('_', ' ', cat).title()
+            if cat in issues:
+                issues[cat].append(obj.description)
+            else:
+                issues[cat] = [obj.description]
+            print(issues)
 
-            a = []
-            for obj in CommunityEntry.objects.all():
-                a.append(obj.entry_polygon.geojson)
+        a = []
+        for obj in CommunityEntry.objects.all():
+            a.append(obj.entry_polygon.geojson)
 
-            final = []
-            for obj in a:
-                s = "".join(obj)
+        final = []
+        for obj in a:
+            s = "".join(obj)
 
-                # add all the coordinates in the array
-                # at this point all the elements of the array are coordinates of the polygons
-                struct = geojson.loads(s)
-                final.append(struct.coordinates)
+            # add all the coordinates in the array
+            # at this point all the elements of the array are coordinates of the polygons
+            struct = geojson.loads(s)
+            final.append(struct.coordinates)
 
-            context = ({
-                'issues': issues,
-                'entries': final,
-                'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
-            })
-            return context
+        context = ({
+            'issues': issues,
+            'entries': final,
+            'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
+        })
+        return context
 
 #******************************************************************************#
 class Map(TemplateView):
     template_name = "main/map.html"
 
-    def get_context_data(self, **kwargs):
-        # the dict of issues + input of descriptions
-        issues = dict()
-        for obj in Issue.objects.all():
-            cat = obj.category
-            cat = re.sub('_', ' ', cat).title()
-            if cat == 'Economic':
-                cat = 'Economic Affairs'
-            if cat == 'Health':
-                cat = 'Health and Health Insurance'
-            if cat == 'Internet':
-                cat = 'Internet Regulation'
-            if cat == 'Women':
-                cat = 'Women\'s Issues'
-            if cat == 'Lgbt':
-                cat = 'LGBT Issues'
-            if cat == 'Security':
-                cat = 'National Security'
-            if cat == 'Welfare':
-                cat = 'Social Welfare'
+def get_context_data(self, **kwargs):
+    # the dict of issues + input of descriptions
+    issues = dict()
+    for obj in Issue.objects.all():
+        cat = obj.category
+        cat = re.sub('_', ' ', cat).title()
+        if cat == 'Economic':
+            cat = 'Economic Affairs'
+        if cat == 'Health':
+            cat = 'Health and Health Insurance'
+        if cat == 'Internet':
+            cat = 'Internet Regulation'
+        if cat == 'Women':
+            cat = 'Women\'s Issues'
+        if cat == 'Lgbt':
+            cat = 'LGBT Issues'
+        if cat == 'Security':
+            cat = 'National Security'
+        if cat == 'Welfare':
+            cat = 'Social Welfare'
 
-            if cat in issues:
-                issues[cat][str(obj.entry)] = obj.description
-            else:
-                issueInfo = dict()
-                issueInfo[str(obj.entry)] = obj.description
-                issues[cat] = issueInfo
+        if cat in issues:
+            issues[cat][str(obj.entry)] = obj.description
+        else:
+            issueInfo = dict()
+            issueInfo[str(obj.entry)] = obj.description
+            issues[cat] = issueInfo
 
 
 
-        # turn it into a dict
-        entryPolyDict = dict()
-        for obj in CommunityEntry.objects.all():
-            s = "".join(obj.census_blocks_polygon.geojson)
-            # add all the coordinates in the array
-            # at this point all the elements of the array are coordinates of the polygons
-            struct = geojson.loads(s)
-            entryPolyDict[obj.entry_ID] = struct.coordinates
+    # turn it into a dict
+    entryPolyDict = dict()
+    for obj in CommunityEntry.objects.all():
+        s = "".join(obj.census_blocks_polygon.geojson)
+        # add all the coordinates in the array
+        # at this point all the elements of the array are coordinates of the polygons
+        struct = geojson.loads(s)
+        entryPolyDict[obj.entry_ID] = struct.coordinates
 
-        context = ({
-            'issues': issues,
-            'entries': entryPolyDict,
-            'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
-        })
-        return context
+    context = ({
+        'issues': issues,
+        'entries': entryPolyDict,
+        'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
+    })
+    return context
 
 #******************************************************************************#
 
