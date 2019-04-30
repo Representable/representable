@@ -258,14 +258,6 @@ map.addControl(geocoder, 'top-right');
 // Add controls outside of map.
 // Source: https://github.com/mapbox/mapbox-gl-draw/blob/master/docs/API.md
 map.addControl(draw);
-// Enable draw polygon mode.
-document.getElementById('drawPolygon').onclick = function(){
-    draw.changeMode('draw_polygon');
-};
-// Delete all drawn features.
-document.getElementById('deletePolygon').onclick = function(){
-    draw.trash();
-};
 
 /* Change mapbox draw button */
 var drawButton = document.getElementsByClassName("mapbox-gl-draw_polygon");
