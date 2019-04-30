@@ -166,6 +166,12 @@ section {
   height: 100%;
 }
 
+.draw_polygon_map {
+    top: 0;
+    bottom: 0;
+    /*  Required by Mapbox: Must Set Absolute Height in px */
+    min-height: 500px;
+}
 
 .col-map {
   height: 500px;
@@ -339,11 +345,4 @@ section {
   margin: 0 auto;
   padding-left: 10px;
   padding-right: 10px;
-}
-
-#race-field,
-#religion-field,
-#industry-field {
-  visibility: collapse;
-  display: none;
 }
