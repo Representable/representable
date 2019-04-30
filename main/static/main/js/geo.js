@@ -15,6 +15,7 @@ var count_census_poly = 0
 var census_poly_defined;
 // used to call a function
 var drawn_polygon;
+var mpolygon = [];
 
 
 /******************************************************************************/
@@ -153,7 +154,7 @@ var draw = new MapboxDraw({
                 'line-dasharray': [0.2, 2],
                 'line-width': 2
             }
-        },
+        }, // basic tools - default settings
         {
             'id': 'gl-draw-polygon-and-line-vertex-stroke-inactive',
             'type': 'circle',
@@ -401,6 +402,7 @@ map.on('render', function() {
 });
 
 map.on('idle', triggerFunc);
+map.on('dataloading', triggerFunc2);
 
 /******************************************************************************/
 
@@ -420,26 +422,44 @@ function triggerFunc(e) {
         // console.log("polygon drawn and now do something");
         console.log(count_user_poly);
         count_user_poly = 0;
-        let mpolygon = highlightBlocks();
+        mpolygon = highlightBlocks();
         console.log(count_user_poly);
         
         // debugger
 
-        if (census_poly_defined !== undefined && count_census_poly > 0) {
-            count_census_poly = 0;
-            mergeBlocks(mpolygon);
+        // if (census_poly_defined !== undefined && count_census_poly > 0) {
+        //     count_census_poly = 0;
+        //     mergeBlocks(mpolygon);
             
-            // mergeBlocks(mpolygon);
+        //     // mergeBlocks(mpolygon);
     
-            // console.log("highlight polygons now that the filter returns something");
-        }
+        //     // console.log("highlight polygons now that the filter returns something");
+        // }
     }
     
 }
 
-function mergeBlocks(mpolygon) {
+
+function triggerFunc2(e) {
+    // console.log(user_polygon_wkt);
+    // has to be a global var
+    // debugger
+    // create a custom event and c
+
+    if (census_poly_defined !== undefined && count_census_poly > 0) {
+        count_census_poly = 0;
+        mergeBlocks(mpolygon);
+        
+        // mergeBlocks(mpolygon);
+
+        // console.log("highlight polygons now that the filter returns something");
+    }
+    
+}
+
+function mergeBlocks(mpoly) {
     var wkt = new Wkt.Wkt();
-    var finalpoly = turf.union.apply(null, mpolygon);
+    var finalpoly = turf.union.apply(null, mpoly);
     var census_blocks_polygon = drawn_polygon;
     // should only be the exterior ring
 
@@ -453,6 +473,7 @@ function mergeBlocks(mpolygon) {
     let census_blocks_polygon_json = JSON.stringify(census_blocks_polygon['geometry']);
     wkt_obj = wkt.read(census_blocks_polygon_json);
     census_blocks_polygon_wkt = wkt_obj.write();
+
     document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon_wkt;
     // debugger
     // prevent the method from being called multiple times
@@ -474,13 +495,13 @@ function highlightBlocks() {
     var southWestPointPixel = map.project(southWest);
     var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
     if (features.length >= 1) {
-        var mpolygon = [];
+        var mpoly = [];
         var total = 0.0;
 
         var filter = features.reduce(function(memo, feature) {
             if (! (turf.intersect(feature, census_blocks_polygon) === null)) {
                 memo.push(feature.properties.BLOCKID10);
-                mpolygon.push(feature);
+                mpoly.push(feature);
                 total+= feature.properties.POP10;
             }
             return memo;
@@ -512,7 +533,7 @@ function highlightBlocks() {
         count_census_poly = 0;
     }
 
-    return mpolygon;
+    return mpoly;
 }
 
 /******************************************************************************/

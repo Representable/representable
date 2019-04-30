@@ -139,6 +139,7 @@ map.on('load', function () {
   var outputstr= a.replace(/'/g,'"');
   a = JSON.parse(outputstr);
   let i = 0;
+
   for (obj in a) {
     // console.log(obj);
     let catDict = {};
@@ -185,6 +186,30 @@ map.on('load', function () {
     });
     i++;
   }
+
+  for (issue in issues) {
+
+    // var link = document.createElement('a');
+    // link.href = '#';
+    // link.className = 'active';
+  
+    console.log(issue);
+    var catElement = document.getElementById(issue);
+  
+    catElement.onclick = function (e) {
+      var layerName = issue;
+      e.preventDefault();
+      e.stopPropagation();
+      // issues[issue]
+      for ( obj in a) {
+        if (issues[issue][obj] === undefined) {
+          map.setLayoutProperty(layerName, 'visibility', 'none');
+          this.className = '';
+        }
+      }
+    };
+  }
+  
 
 
   // // When a click event occurs on a feature in the dummy layer, open a popup at the
@@ -299,6 +324,8 @@ for (i = 0; i < dropdown.length; i++) {
     // map.setFilter('users', ['in', 'orgs', ...targetIDs]);
   });
 }
+
+
 
 // search bar function ! looks through the tags and the buttons themselves
 function searchTags() {
