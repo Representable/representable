@@ -708,23 +708,29 @@ $('input:radio').on('click', function(e) {
     switch (name) {
         case 'race':
             if (value === "on") {
+                document.getElementById('race-field').style.display = 'block';
                 document.getElementById('race-field').style.visibility = 'visible';
             } else {
                 document.getElementById('race-field').style.visibility = 'hidden';
+                document.getElementById('race-field').style.display = 'none';
             }
             break;
         case 'religion':
             if (value === "on") {
+                document.getElementById('religion-field').style.display = 'block';
                 document.getElementById('religion-field').style.visibility = 'visible';
             } else {
                 document.getElementById('religion-field').style.visibility = 'hidden';
+                document.getElementById('religion-field').style.display = 'none';
             }
             break;
         case 'industry':
             if (value === "on") {
+                document.getElementById('industry-field').style.display = 'block';
                 document.getElementById('industry-field').style.visibility = 'visible';
             } else {
                 document.getElementById('industry-field').style.visibility = 'hidden';
+                document.getElementById('industry-field').style.display = 'none';
             }
             break;
     }

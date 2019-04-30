@@ -99,3 +99,10 @@ body {
     padding-left: 10px;
     padding-right: 10px;
 }
+
+#race-field,
+#religion-field,
+#industry-field {
+    visibility: collapse;
+    display: none;
+}
