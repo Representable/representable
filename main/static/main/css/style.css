@@ -1,135 +1,63 @@
+/*----------------------------------------------------------------------
+Name: style.css
+Project: Districter
+Version: 1.0
+Modified: 5/30/2019
+Authors: S. Arora, K. Barnes, P.Iyer, L. Johnston, T. Marcu
+----------------------------------------------------------------------*/
+
+/* Body and headings */
 body {
-    background-color: #0a3d62;
-    font-family: Inter, system-ui, sans-serif;
-    font-weight: 400;
+  background-color: #0a3d62;
+  font-family: Inter, system-ui, sans-serif;
+  font-weight: 400;
 }
 
 h1 {
-    font-size: 2rem;
-    font-weight: 500;
-}
-
-p {
-  font-family: Inter, system-ui, sans-serif;
-   color: #000000;
-}
-
-
-h3 {
-    font-weight: 300;
-    letter-spacing: 1px;
-    color: #0a3d62;
-}
-
-a:link, a:visited, a:active {
-    color: inherit;
-}
-
-a:hover {
-    color: #FFF;
-    text-decoration: none;
-}
-
-.btn-margin {
-    /* border-radius: 1rem; */
-    margin: 5px;
-}
-
-.btn-outline-primary, .btn-outline-primary:visited, .btn-outline-primary:link, .btn-outline-primary:hover, .btn-outline-primary:active {
-    /* background-color: transparent; */
-    /* border-color: #FFF; */
-    /* color: #FFF; */
-}
-
-.btn-primary, .btn-primary:visited, .btn-primary:link, .btn-primary:hover, .btn-primary:active {
-    /* background-color: #56577d; */
-}
-
-.container-hero {
-    background-color: transparent;
-    margin-bottom: 0;
-    text-align: center;
-}
-
-.row-content {
-    background-color: #FFF;
-    color: #000;
-    padding: 15px;
-}
-
-.container {
-    border-width: 0;
-}
-
-#particles-js {
-    background-image: url();
-    background-position: 50% 50%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: auto;
-    position: relative;
-    width: 100%;
-}
-
-.particles-js-canvas-el {
-    position: absolute;
-    top: 0;
-    z-index: 1;
-}
-
-.btn-canvas, nav {
-    position: relative;
-    z-index: 2;
-}
-
-.shadow-sm {
-    background-image: linesar-gradient(#030428, rgba(97, 195, 237, 0.7));
-    background-image: linear-gradient(#0a3d62, #82ccdd);
-}
-
-.container-panel {
-    color: #FFF;
-}
-
-.navbar a.navbar-brand {
-    font-weight: 700;
-}
-
-hr {
-    border: 3px solid #000;
-    border-width: 3px 0 0;
+  font-size: 2rem;
+  font-weight: 500;
 }
 
 @media screen and (min-width: 768px) {
-
-    .gap-90 {
-        width:100%;
-        height:90px;
-      }
-
-    .btn-outline-primary:hover, .btn-outline-primary:active {
-        /* background-color: #61c3ed; */
-    }
-
-    .row-content {
-        background-color: #FFF;
-        color: #000;
-        padding: 40px;
-    }
-    .row-content-2 {
-        background-color: #FFF;
-        color: #000;
-        padding-left: 40px;
-        padding-right: 40px;
-        padding-bottom: 40px;
-    }
+  h1 {
+    font-size: 55px;
+  }
 }
 
+p {
+  color: #000000;
+  font-family: Inter, system-ui, sans-serif;
+}
 
+h3 {
+  color: #0a3d62;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
 
-.column {
-  float: left;
-  width: 50%;
+/* Links and buttons */
+
+a:link, a:visited, a:active {
+  color: inherit;
+}
+
+a:hover {
+  color: #FFF;
+  text-decoration: none;
+}
+
+/* Bootstrap elements */
+
+.navbar, .navbar-brand {
+  font-weight: 700;
+}
+
+.container {
+  border-width: 0;
+}
+
+.container-panel {
+  color: #FFF;
 }
 
 /* Clear floats after the columns */
@@ -139,17 +67,350 @@ hr {
   clear: both;
 }
 
-
-#features {
-    font-family: sans-serif;
-    background-color: #FFFFFF;
-    /* set to red to test response:  background-color: #ff0000; */
+.row-content {
+  background-color: #FFF;
+  color: #000;
+  padding: 15px;
 }
 
+.row-wide {
+  background-color: white;
+}
+
+.col-wide {
+  padding: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .gap-90 {
+    width: 100%;
+    height: 90px;
+  }
+
+  .btn-outline-primary:hover, .btn-outline-primary:active {
+    /* background-color: #61c3ed; */
+  }
+
+  .row-content {
+    background-color: #FFF;
+    color: #000;
+    padding: 40px;
+  }
+
+  .row-content-2 {
+    background-color: #FFF;
+    color: #000;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 40px;
+  }
+}
+
+.column {
+  float: left;
+  width: 50%;
+}
+
+/* Hero block and particles.js animation */
+
+.container-hero {
+  background-color: transparent;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.shadow-sm {
+  background-image: linear-gradient(#0a3d62, #82ccdd);
+}
+
+#particles-js {
+  background-image: url();
+  background-position: 50% 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: auto;
+  position: relative;
+  width: 100%;
+}
+
+.particles-js-canvas-el {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+
+.btn-canvas, nav {
+  position: relative;
+  z-index: 2;
+}
+
+.btn-margin {
+  margin: 5px;
+}
+
+hr {
+  border: 3px solid #000;
+  border-width: 3px 0 0;
+}
+
+@media screen and (min-width: 768px) {
+  .gap-90 {
+    width: 100%;
+    height: 90px;
+  }
+
+  .btn-outline-primary:hover, .btn-outline-primary:active {
+    /* background-color: #61c3ed; */
+  }
+
+  .row-content {
+    background-color: #FFF;
+    color: #000;
+    padding: 40px;
+  }
+
+  .row-content-2 {
+    background-color: #FFF;
+    color: #000;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 40px;
+  }
+}
+
+.column {
+  float: left;
+  width: 50%;
+}
+
+#features {
+  font-family: sans-serif;
+  background-color: #FFFFFF;
+  /* set to red to test response:  background-color: #ff0000; */
+}
+
+section {
+  padding: 25px 50px;
+  line-height: 25px;
+  border-bottom: 1px solid #ddd;
+  opacity: 1;
+  /* font-size: 13px; */
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+.draw_polygon_map {
+    top: 0;
+    bottom: 0;
+    /*  Required by Mapbox: Must Set Absolute Height in px */
+    min-height: 500px;
+}
+
+.col-map {
+  height: 500px;
+}
+
+@media screen and (min-width: 768px) {
+  .col-map {
+    height: 88vh;
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-width: 0 0 0 1px;
+    box-shadow: 5px 0 5px -5px rgba(0, 0, 0, 0.1);
+    /*box-shadow: -2px 0 2px 1px rgba(0,0,0,0.1);*/
+  }
+}
+
+/* colors: https://coolors.co/f8bdc4-f497da-f679e5-b8d0eb-f65be3 */
+/* Fixed sidenav, full height */
+/* https://www.w3schools.com/howto/howto_js_dropdown_sidenav.asp */
+.sidenav {
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  overflow-x: hidden;
+}
+
+/* Style the sidenav links and the dropdown button */
+.sidenav a, .dropdown-btn {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  color: black;
+  display: block;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container {
+  display: none;
+  background-color: rgb(240, 240, 240);
+  color: #95a3b3;
+  padding-left: 8px;
+}
+
+/* Optional: Style the caret down icon */
+.fa-caret-down {
+  float: right;
+  padding-right: 8px;
+}
+
+.mapboxgl-popup {
+  max-width: 400px;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 12px;
+}
+
+/* Map visualizations search bar */
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid rgb(240, 240, 240);
+  border-right: none;
+  padding: 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus {
+  color: #576ca8;
+}
+
+.searchButton {
+  width: 40px;
+  border: 1px solid rgb(240, 240, 240);
+  background: rgb(240, 240, 240);
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/* css for the line on the progress bar */
+.bar-step {
+  position: absolute;
+  /* margin-top:-20px; */
+  z-index: 1;
+  font-size: 12px;
+  left: 33%;
+}
+
+.label-txt {
+  float: left;
+}
+
+.label-line {
+  float: right;
+  background: #000;
+  height: 100%;
+  width: 1px;
+  margin-left: 5px;
+}
+
+.label-percent {
+  float: right;
+  margin-left: 5px;
+}
+
+#menu {
+  background: #fff;
+  font-family: 'Open Sans', sans-serif;
+}
+
+#geocoder-container>div {
+  min-width: 50%;
+  margin-left: 25%;
+}
+
+.string {
+  color: #314ccd;
+}
+
+.number {
+  color: #b43b71;
+}
+
+.boolean {
+  color: #5a3fc0;
+}
+
+.null {
+  color: #ba7334;
+}
+
+.key {
+  color: #ba3b3f;
+}
+
+.calculation-box {
+  height: 75px;
+  width: 150px;
+  bottom: 40px;
+  left: 10px;
+  background-color: rgba(255, 255, 255, .9);
+  padding: 15px;
+  text-align: center;
+}
+
+.vcenter {
+  display: inline-block;
+  vertical-align: middle;
+  float: none;
+}
+
+.mapboxgl-ctrl-group>button {
+  display: block;
+  width: 100%;
+  background-image: none;
+  margin: 0 auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.map-demo {
+  /*  position: absolute; */
+    top: 100px;
+    bottom: 0;
+    width: 50%;
+    /*  Must Set Absolute Height */
+    height: 800px;
+}
+
+#features {
+    width: 50%;
+    top: 0;
+    margin-left: 50%;
+    font-family: sans-serif;
+    overflow-y: scroll;
+    height: 800px;
+    background-color: #fafafa;
+    /* set to red to test response:  background-color: #ff0000; */
+}
 section {
     padding:  25px 50px;
     line-height: 25px;
     border-bottom: 1px solid #ddd;
+    opacity: 0.25;
+    height: 350px;
+    font-size: 13px;
+}
+
+section.active {
     opacity: 1;
-    /* font-size: 13px; */
+}
+section:last-child {
+    border-bottom: none;
+    margin-bottom: 200px;
 }
