@@ -35,7 +35,7 @@ h3 {
   letter-spacing: 1px;
 }
 
-/* Links and Buttons */
+/* Links and buttons */
 
 a:link, a:visited, a:active {
   color: inherit;
@@ -44,6 +44,27 @@ a:link, a:visited, a:active {
 a:hover {
   color: #FFF;
   text-decoration: none;
+}
+
+/* Bootstrap elements */
+
+.navbar, .navbar-brand {
+  font-weight: 700;
+}
+
+.container {
+  border-width: 0;
+}
+
+.container-panel {
+  color: #FFF;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .row-content {
@@ -56,16 +77,38 @@ a:hover {
   background-color: white;
 }
 
-.container {
-  border-width: 0;
+.col-wide {
+  padding: 0;
 }
 
-.container-panel {
-  color: #FFF;
+@media screen and (min-width: 768px) {
+  .gap-90 {
+    width: 100%;
+    height: 90px;
+  }
+
+  .btn-outline-primary:hover, .btn-outline-primary:active {
+    /* background-color: #61c3ed; */
+  }
+
+  .row-content {
+    background-color: #FFF;
+    color: #000;
+    padding: 40px;
+  }
+
+  .row-content-2 {
+    background-color: #FFF;
+    color: #000;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 40px;
+  }
 }
 
-.navbar a.navbar-brand {
-  font-weight: 700;
+.column {
+  float: left;
+  width: 50%;
 }
 
 /* Hero block and particles.js animation */
@@ -138,13 +181,6 @@ hr {
 .column {
   float: left;
   width: 50%;
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
 }
 
 #features {
@@ -232,7 +268,7 @@ section {
   font-size: 12px;
 }
 
-/* search bar css stuff */
+/* Map visualizations search bar */
 .search {
   width: 100%;
   position: relative;
@@ -260,10 +296,6 @@ section {
   color: #fff;
   cursor: pointer;
   font-size: 20px;
-}
-
-.col-wide {
-  padding: 0;
 }
 
 /* css for the line on the progress bar */
