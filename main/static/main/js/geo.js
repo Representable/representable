@@ -424,7 +424,7 @@ function triggerFunc(e) {
         count_user_poly = 0;
         mpolygon = highlightBlocks();
         console.log(count_user_poly);
-        
+
         // debugger
 
         // if (census_poly_defined !== undefined && count_census_poly > 0) {
@@ -436,7 +436,7 @@ function triggerFunc(e) {
         //     // console.log("highlight polygons now that the filter returns something");
         // }
     }
-    
+
 }
 
 
@@ -545,7 +545,7 @@ function updateCommunityEntry(e) {
     var wkt = new Wkt.Wkt();
     var data = draw.getAll();
     // Polygon drawn by user in map.
-    
+
     // Polygon saved to DB.
     var user_polygon_wkt;
     // Polygon saved to DB.
@@ -582,7 +582,7 @@ function updateCommunityEntry(e) {
         //         }
         //         return memo;
         //     }, ["in", "BLOCKID10"]);
-            
+
 
         //     map.setFilter("blocks-highlighted", filter);
         //     census_poly_defined = true;
@@ -622,7 +622,7 @@ function updateCommunityEntry(e) {
         // else {
         //     census_blocks_polygon_wkt = '';
         // }
-        
+
     } else {
         user_poly_defined = false;
         count_user_poly = 0;
@@ -722,3 +722,37 @@ $(document).on('click', '.remove-form-row', function(e) {
 });
 
 /******************************************************************************/
+
+$('input:radio').on('click', function(e) {
+    let name = e.currentTarget.name;
+    let value = e.currentTarget.value;
+    switch (name) {
+        case 'race':
+            if (value === "on") {
+                document.getElementById('race-field').style.display = 'block';
+                document.getElementById('race-field').style.visibility = 'visible';
+            } else {
+                document.getElementById('race-field').style.visibility = 'hidden';
+                document.getElementById('race-field').style.display = 'none';
+            }
+            break;
+        case 'religion':
+            if (value === "on") {
+                document.getElementById('religion-field').style.display = 'block';
+                document.getElementById('religion-field').style.visibility = 'visible';
+            } else {
+                document.getElementById('religion-field').style.visibility = 'hidden';
+                document.getElementById('religion-field').style.display = 'none';
+            }
+            break;
+        case 'industry':
+            if (value === "on") {
+                document.getElementById('industry-field').style.display = 'block';
+                document.getElementById('industry-field').style.visibility = 'visible';
+            } else {
+                document.getElementById('industry-field').style.visibility = 'hidden';
+                document.getElementById('industry-field').style.display = 'none';
+            }
+            break;
+    }
+});

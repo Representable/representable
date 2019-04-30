@@ -19,7 +19,7 @@
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js'></script>
 <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
 <!--  Custom CSS -->
-<link rel="stylesheet" href="{% static 'main/css/map.css' %}">
+<link rel="stylesheet" href="{% static 'main/css/style.css' %}">
 {% endblock %}
 {% block content %}
 <div class="row row-wide">
@@ -40,6 +40,9 @@
                         <i class="fa fa-search"></i>
                     </button>
                 </div>
+                <button class="dropdown-btn" id="all">All Entries
+                    <i class="fa"></i></button>
+                <div class="dropdown-container"></div>
                 <button class="dropdown-btn">Display Outlines
                     <i class="fa fa-caret-down"></i></button>
                 <div class="dropdown-container" id="outline-menu">
@@ -49,7 +52,7 @@
                     <i class="fa fa-caret-down"></i></button>
                 <div class="dropdown-container">
                     {% for item, key in desc.items %}
-                    <a href="#" id="{{ key }}">{{ key }}</a>
+                    <a href="#" id="{{ item }}">{{ key }}</a>
                     {% endfor %}
                 </div>
                 {% endfor %}
