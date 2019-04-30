@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------
+Name: style.css
+Project: Districter
+Version: 1.0
+Modified: 5/30/2019
+Authors: S. Arora, K. Barnes, P.Iyer, L. Johnston, T. Marcu
+----------------------------------------------------------------------*/
+
+/* Body and headings */
 body {
   background-color: #0a3d62;
   font-family: Inter, system-ui, sans-serif;
@@ -26,6 +35,8 @@ h3 {
   letter-spacing: 1px;
 }
 
+/* Links and buttons */
+
 a:link, a:visited, a:active {
   color: inherit;
 }
@@ -35,14 +46,25 @@ a:hover {
   text-decoration: none;
 }
 
-.btn-margin {
-  margin: 5px;
+/* Bootstrap elements */
+
+.navbar, .navbar-brand {
+  font-weight: 700;
 }
 
-.container-hero {
-  background-color: transparent;
-  margin-bottom: 0;
-  text-align: center;
+.container {
+  border-width: 0;
+}
+
+.container-panel {
+  color: #FFF;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .row-content {
@@ -55,8 +77,50 @@ a:hover {
   background-color: white;
 }
 
-.container {
-  border-width: 0;
+.col-wide {
+  padding: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .gap-90 {
+    width: 100%;
+    height: 90px;
+  }
+
+  .btn-outline-primary:hover, .btn-outline-primary:active {
+    /* background-color: #61c3ed; */
+  }
+
+  .row-content {
+    background-color: #FFF;
+    color: #000;
+    padding: 40px;
+  }
+
+  .row-content-2 {
+    background-color: #FFF;
+    color: #000;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 40px;
+  }
+}
+
+.column {
+  float: left;
+  width: 50%;
+}
+
+/* Hero block and particles.js animation */
+
+.container-hero {
+  background-color: transparent;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.shadow-sm {
+  background-image: linear-gradient(#0a3d62, #82ccdd);
 }
 
 #particles-js {
@@ -80,17 +144,8 @@ a:hover {
   z-index: 2;
 }
 
-.shadow-sm {
-  background-image: linesar-gradient(#030428, rgba(97, 195, 237, 0.7));
-  background-image: linear-gradient(#0a3d62, #82ccdd);
-}
-
-.container-panel {
-  color: #FFF;
-}
-
-.navbar a.navbar-brand {
-  font-weight: 700;
+.btn-margin {
+  margin: 5px;
 }
 
 hr {
@@ -128,13 +183,6 @@ hr {
   width: 50%;
 }
 
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
 #features {
   font-family: sans-serif;
   background-color: #FFFFFF;
@@ -154,6 +202,12 @@ section {
   height: 100%;
 }
 
+.draw_polygon_map {
+    top: 0;
+    bottom: 0;
+    /*  Required by Mapbox: Must Set Absolute Height in px */
+    min-height: 500px;
+}
 
 .col-map {
   height: 500px;
@@ -214,7 +268,7 @@ section {
   font-size: 12px;
 }
 
-/* search bar css stuff */
+/* Map visualizations search bar */
 .search {
   width: 100%;
   position: relative;
@@ -242,10 +296,6 @@ section {
   color: #fff;
   cursor: pointer;
   font-size: 20px;
-}
-
-.col-wide {
-  padding: 0;
 }
 
 /* css for the line on the progress bar */
@@ -327,4 +377,40 @@ section {
   margin: 0 auto;
   padding-left: 10px;
   padding-right: 10px;
+}
+
+.map-demo {
+  /*  position: absolute; */
+    top: 100px;
+    bottom: 0;
+    width: 50%;
+    /*  Must Set Absolute Height */
+    height: 800px;
+}
+
+#features {
+    width: 50%;
+    top: 0;
+    margin-left: 50%;
+    font-family: sans-serif;
+    overflow-y: scroll;
+    height: 800px;
+    background-color: #fafafa;
+    /* set to red to test response:  background-color: #ff0000; */
+}
+section {
+    padding:  25px 50px;
+    line-height: 25px;
+    border-bottom: 1px solid #ddd;
+    opacity: 0.25;
+    height: 350px;
+    font-size: 13px;
+}
+
+section.active {
+    opacity: 1;
+}
+section:last-child {
+    border-bottom: none;
+    margin-bottom: 200px;
 }
