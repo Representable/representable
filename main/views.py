@@ -136,9 +136,12 @@ class Map(TemplateView):
                 issueInfo[str(obj.entry)] = obj.description
                 issues[cat] = issueInfo
 
-        # turn it into a dict
+        # the polygon coordinates
         entryPolyDict = dict()
+        # dictionary of tags to be displayed
+        tags = dict()
         for obj in CommunityEntry.objects.all():
+            print(obj.tags)
             s = "".join(obj.census_blocks_polygon.geojson)
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
