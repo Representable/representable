@@ -99,7 +99,7 @@ class Map(TemplateView):
                 cat = 'National Security'
             if cat == 'Welfare':
                 cat = 'Social Welfare'
-            
+
             if cat in issues:
                 issues[cat][str(obj.entry)] = obj.description
             else:
@@ -112,7 +112,7 @@ class Map(TemplateView):
         # turn it into a dict
         entryPolyDict = dict()
         for obj in CommunityEntry.objects.all():
-            s = "".join(obj.user_polygon.geojson)
+            s = "".join(obj.census_blocks_polygon.geojson)
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
