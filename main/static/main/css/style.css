@@ -39,9 +39,9 @@ a:link, a:visited, a:active {
   color: inherit;
 }
 
-a:hover {
+/* a:hover {
   text-decoration: none;
-}
+} */
 
 /* Bootstrap elements */
 
@@ -98,28 +98,41 @@ a:hover {
   padding: 0;
 }
 
-.btn-primary, .btn-primary:visited, .btn-primary:link {
+.btn-primary {
     background-color:#82ccdd;
     border-color:#82ccdd;
-
+    cursor: pointer;
 }
+
+.btn-primary:active {
+    background-color:#5b8f9b;
+    border-color: #5b8f9b;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color:#5b8f9b;
+    border-color:#5b8f9b;
+    cursor: pointer;
+}
+
+.btn-outline-primary, .btn-outline-primary:visited, .btn-outline-primary:link, .btn-outline-primary:active {
+    background-color: transparent;
+    border-color: #FFF;
+    color: #FFF;
+}
+
+.btn-outline-primary:hover {
+    background-color: transparent;
+    border-color: #CCC;
+    color: #CCC;
+}
+
 
 @media screen and (min-width: 768px) {
   .gap-90 {
     width: 100%;
     height: 90px;
-  }
-
-  .btn-outline-primary, .btn-outline-primary:visited, .btn-outline-primary:link, .btn-outline-primary:hover, .btn-outline-primary:active {
-      background-color: transparent;
-      border-color: #FFF;
-      color: #FFF;
-  }
-
-  .btn-primary:hover, .btn-primary:active {
-      background-color:#82ccdd;
-      border-color:#82ccdd;
-
   }
 
 
