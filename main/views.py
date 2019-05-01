@@ -143,9 +143,9 @@ class Map(TemplateView):
         # dictionary of zip codes
         zips = dict()
         for obj in CommunityEntry.objects.all():
-            print(obj.tags.all())
-            for tag in obj.tags.all():
-                print(tag)
+            # print(obj.tags.all())
+            # for tag in obj.tags.all():
+            #     print(tag)
             zipcode = obj.zipcode
             s = "".join(obj.census_blocks_polygon.geojson)
             # add all the coordinates in the array
