@@ -565,7 +565,7 @@ function updateCommunityEntry(e) {
         // user_poly_defined = true;
         // count_user_poly = 1;
         var mpolygon = highlightBlocks(drawn_polygon);
-        census_blocks_polygon_wkt = mergeBlocks(mpolygon, drawn_polygon);
+        // census_blocks_polygon_wkt = mergeBlocks(mpolygon, drawn_polygon);
         // Save census blocks polygon outline.
         // census_blocks_polygon = drawn_polygon;
         // var polygonBoundingBox = turf.bbox(census_blocks_polygon);
@@ -639,6 +639,7 @@ function updateCommunityEntry(e) {
         map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
     }
     // Update form fields
+    census_blocks_polygon_wkt = '';
     document.getElementById('id_user_polygon').value = user_polygon_wkt;
     document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon_wkt;
 }
