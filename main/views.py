@@ -62,7 +62,7 @@ class Timeline(TemplateView):
 
 
 class About(TemplateView):
-    template_name = "main/about.html"
+    template_name = "main/aboutUs.html"
 
 #******************************************************************************#
 
@@ -164,7 +164,7 @@ class Map(TemplateView):
                 s = "".join(obj.user_polygon.geojson)
             else:
                 s = "".join(obj.census_blocks_polygon.geojson)
-            
+
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
