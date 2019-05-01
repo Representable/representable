@@ -215,6 +215,11 @@ section {
   height: 100%;
 } */
 
+.map-visualization {
+    width: 100%;
+    height: 100%;
+}
+
 .draw_polygon_map {
     top: 0;
     bottom: 0;
