@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from allauth.account.decorators import verified_email_required
 from django.forms import formset_factory
 from .forms import CommunityForm, IssueForm
-from .models import CommunityEntry, Issue
+from .models import CommunityEntry, Issue, Tag
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
 from shapely.geometry import Polygon, mapping
@@ -161,16 +161,18 @@ class Map(TemplateView):
         entryPolyDict = dict()
         # dictionary of tags to be displayed
         tags = dict()
+        for obj in Tag.objects.all():
+            print(obj)
+            print(obj.communityentry_set.all())
         # dictionary of zip codes
         zips = dict()
         for obj in CommunityEntry.objects.all():
+            # print(obj.tags.name)
             zipcode = obj.zipcode
             if (obj.census_blocks_polygon == "" or obj.census_blocks_polygon == None):
                 s = "".join(obj.user_polygon.geojson)
             else:
                 s = "".join(obj.census_blocks_polygon.geojson)
-
-            print(obj.tags.all())
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
