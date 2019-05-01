@@ -24,7 +24,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-DEBUG = True #remove in production
+DEBUG = False  # remove in production
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
 ALLOWED_HOSTS = ['*']
@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     # 'allauth.socialaccount.providers.facebook',
     # 'allauth.socialaccount.providers.google',
-    #'allauth.socialaccount.providers.linkedin',
+    # 'allauth.socialaccount.providers.linkedin',
     # 'allauth.socialaccount.providers.linkedin_oauth2',
 ]
 
@@ -188,6 +188,91 @@ MAPBOX_KEY = os.environ.get('DISTR_MAPBOX_KEY')
 GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
 GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
 django_heroku.settings(locals())
+
+
+def get_cache():
+    import os
+    try:
+        servers = os.environ['MEMCACHIER_SERVERS']
+        username = os.environ['MEMCACHIER_USERNAME']
+        password = os.environ['MEMCACHIER_PASSWORD']
+        return {
+            'default': {
+                'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+                # TIMEOUT is not the connection timeout! It's the default expiration
+                # timeout that should be applied to keys! Setting it to `None`
+                # disables expiration.
+                'TIMEOUT': None,
+                'LOCATION': servers,
+                'OPTIONS': {
+                    'binary': True,
+                    'username': username,
+                    'password': password,
+                    'behaviors': {
+                        # Enable faster IO
+                        'no_block': True,
+                        'tcp_nodelay': True,
+                        # Keep connection alive
+                        'tcp_keepalive': True,
+                        # Timeout settings
+                        'connect_timeout': 2000,  # ms
+                        'send_timeout': 750 * 1000,  # us
+                        'receive_timeout': 750 * 1000,  # us
+                        '_poll_timeout': 2000,  # ms
+                        # Better failover
+                        'ketama': True,
+                        'remove_failed': 1,
+                        'retry_timeout': 2,
+                        'dead_timeout': 30,
+                    }
+                }
+            },
+            'select2': {
+                'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+                # TIMEOUT is not the connection timeout! It's the default expiration
+                # timeout that should be applied to keys! Setting it to `None`
+                # disables expiration.
+                'TIMEOUT': None,
+                'LOCATION': servers,
+                'OPTIONS': {
+                    'binary': True,
+                    'username': username,
+                    'password': password,
+                    'behaviors': {
+                        # Enable faster IO
+                        'no_block': True,
+                        'tcp_nodelay': True,
+                        # Keep connection alive
+                        'tcp_keepalive': True,
+                        # Timeout settings
+                        'connect_timeout': 2000,  # ms
+                        'send_timeout': 750 * 1000,  # us
+                        'receive_timeout': 750 * 1000,  # us
+                        '_poll_timeout': 2000,  # ms
+                        # Better failover
+                        'ketama': True,
+                        'remove_failed': 1,
+                        'retry_timeout': 2,
+                        'dead_timeout': 30,
+                    }
+                }
+            },
+        }
+    except:
+        return {
+            'default': {
+                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
+            },
+            'select2': {
+                'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+                'LOCATION': 'unix:/tmp/memcached.sock',
+                'TIMEOUT': 60 * 60 * 24,
+            }
+        }
+
+
+CACHES = get_cache()
+SELECT2_CACHE_BACKEND = 'select2'
 
 # https://github.com/heroku/django-heroku/issues/6
 if DATABASES['default']['ENGINE'] in ('django.db.backends.postgresql', 'django.db.backends.postgresql_psycopg2'):

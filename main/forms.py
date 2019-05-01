@@ -23,6 +23,7 @@ class TagSelect2Widget(ModelSelect2TagWidget):
             if str(val) not in pks:
                 val = queryset.create(name=val).pk
             cleaned_values.append(val)
+        print(cleaned_values)
         return cleaned_values
 
 class IssueForm(ModelForm):
