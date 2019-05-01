@@ -160,7 +160,11 @@ class Map(TemplateView):
         # turn it into a dict
         entryPolyDict = dict()
         for obj in CommunityEntry.objects.all():
-            s = "".join(obj.census_blocks_polygon.geojson)
+            if (obj.census_blocks_polygon == "" or obj.census_blocks_polygon == None):
+                s = "".join(obj.user_polygon.geojson)
+            else:
+                s = "".join(obj.census_blocks_polygon.geojson)
+            
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
