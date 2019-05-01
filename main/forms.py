@@ -23,6 +23,7 @@ class TagSelect2Widget(ModelSelect2TagWidget):
             if str(val) not in pks:
                 val = queryset.create(name=val).pk
             cleaned_values.append(val)
+        print(cleaned_values)
         return cleaned_values
 
 class IssueForm(ModelForm):
@@ -32,7 +33,8 @@ class IssueForm(ModelForm):
         exclude = ("entry",)
 
         widgets = {
-            'category': forms.Select(choices = POLICY_ISSUES, attrs={'class': 'form-control'})
+            'category': forms.Select(choices = POLICY_ISSUES, attrs={'class': 'form-control'}),
+            'description': forms.TextInput(attrs={'placeholder': 'Short Description'})
         }
 
     def clean(self):
@@ -70,16 +72,22 @@ class CommunityForm(ModelForm):
         model = CommunityEntry
         fields = '__all__'
         user_polygon = models.PolygonField(error_messages={'required':'User polygon missing. Please draw your community.'})
-
         widgets = {
-            'race': Select2MultipleWidget(choices=RACE_CHOICES),
-            'religion': Select2MultipleWidget(choices=RELIGION_CHOICES),
-            'industry': Select2MultipleWidget(choices=INDUSTRY_CHOICES),
+            'race': Select2MultipleWidget(choices=RACE_CHOICES, attrs={'data-placeholder': 'E.g. Black, Asian, etc.'}),
+            'religion': Select2MultipleWidget(choices=RELIGION_CHOICES, attrs={'data-placeholder': 'E.g. Christian, Hindu etc.'}),
+            'industry': Select2MultipleWidget(choices=INDUSTRY_CHOICES, attrs={'data-placeholder': 'E.g. Fishing, Professional etc.'}),
             'entry_issues': ModelSelect2TagWidget(model=Issue,queryset = Issue.objects.all(),search_fields=['name__icontains']),
-            'tags': TagSelect2Widget(),
+            'tags': TagSelect2Widget(attrs={'data-placeholder': 'E.g. #flintwatercrisis, Korea Town, etc.'}),
             'user': forms.HiddenInput(),
             'entry_ID': forms.HiddenInput(),
             'census_blocks_polygon': forms.HiddenInput(),
             'user_polygon': forms.HiddenInput(),
             'my_community': BootstrapRadioSelect(),
+            'zipcode': forms.TextInput(attrs={'placeholder': 'Your Zipcode'})
+        }
+        labels = {
+            "tags": "Community Tags",
+            'race': 'List Racial Groups (At Least One, Multiple Accepted)',
+            'industry': 'List Industries/Profressions (At Least One, Multiple Accepted)',
+            'religion': 'List Religions (At Least One, Multiple Accepted)'
         }

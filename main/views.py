@@ -77,11 +77,24 @@ class Review(TemplateView):
         for obj in Issue.objects.all():
             cat = obj.category
             cat = re.sub('_', ' ', cat).title()
+            if cat == 'Economic':
+                cat = 'Economic Affairs'
+            if cat == 'Health':
+                cat = 'Health and Health Insurance'
+            if cat == 'Internet':
+                cat = 'Internet Regulation'
+            if cat == 'Women':
+                cat = 'Women\'s Issues'
+            if cat == 'Lgbt':
+                cat = 'LGBT Issues'
+            if cat == 'Security':
+                cat = 'National Security'
+            if cat == 'Welfare':
+                cat = 'Social Welfare'
             if cat in issues:
                 issues[cat].append(obj.description)
             else:
                 issues[cat] = [obj.description]
-            print(issues)
 
         a = []
         for obj in CommunityEntry.objects.all():
@@ -91,10 +104,18 @@ class Review(TemplateView):
         for obj in a:
             s = "".join(obj)
 
+        entryPolyDict = dict()
+        for obj in CommunityEntry.objects.all():
+            if (obj.census_blocks_polygon == "" or obj.census_blocks_polygon == None):
+                s = "".join(obj.user_polygon.geojson)
+            else:
+                s = "".join(obj.census_blocks_polygon.geojson)
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
-            final.append(struct.coordinates)
+            entryPolyDict[obj.entry_ID] = struct.coordinates
+            # print("printing the struct")
+            # print(struct)
 
         context = ({
             'issues': issues,
@@ -143,11 +164,12 @@ class Map(TemplateView):
         # dictionary of zip codes
         zips = dict()
         for obj in CommunityEntry.objects.all():
-            # print(obj.tags.all())
-            # for tag in obj.tags.all():
-            #     print(tag)
             zipcode = obj.zipcode
-            s = "".join(obj.census_blocks_polygon.geojson)
+            if (obj.census_blocks_polygon == "" or obj.census_blocks_polygon == None):
+                s = "".join(obj.user_polygon.geojson)
+            else:
+                s = "".join(obj.census_blocks_polygon.geojson)
+
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
@@ -185,7 +207,7 @@ class EntryView(LoginRequiredMixin, View):
     data = {
         'form-TOTAL_FORMS': '1',
         'form-INITIAL_FORMS': '0',
-        'form-MAX_NUM_FORMS': ''
+        'form-MAX_NUM_FORMS': '10'
     }
     # Create the formset, specifying the form and formset we want to use.
     IssueFormSet = formset_factory(IssueForm, extra=1)
@@ -198,7 +220,7 @@ class EntryView(LoginRequiredMixin, View):
         return initial
 
     def get(self, request, *args, **kwargs):
-        form = self.form_class(initial=self.get_initial())
+        form = self.form_class(initial=self.get_initial(), label_suffix='')
         issue_formset = self.IssueFormSet(self.data)
         context = {
             'form': form,
@@ -208,7 +230,7 @@ class EntryView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
+        form = self.form_class(request.POST, label_suffix='')
         issue_formset = self.IssueFormSet(request.POST)
         if form.is_valid() and issue_formset.is_valid():
             entryForm = form.save(commit=False)

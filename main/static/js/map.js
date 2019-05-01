@@ -152,6 +152,7 @@ map.on('load', function () {
   var outputstr= a.replace(/'/g,'"');
   a = JSON.parse(outputstr);
   let i = 0;
+
   for (obj in a) {
     // console.log(obj);
     let catDict = {};
@@ -221,7 +222,8 @@ map.on('load', function () {
         }
       }
     }
-
+    console.log(issues);
+    console.log(issue);
     for (entry in issues[issue]) {
       var entryId = document.getElementById(entry);
       entryId.onclick = function (e) {
@@ -323,6 +325,8 @@ for (i = 0; i < dropdown.length; i++) {
     // map.setFilter('users', ['in', 'orgs', ...targetIDs]);
   });
 }
+
+
 
 // search bar function ! looks through the tags and the buttons themselves
 function searchTags() {

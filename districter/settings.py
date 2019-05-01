@@ -24,7 +24,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-DEBUG = True #remove in production
+DEBUG = False  # remove in production
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
 ALLOWED_HOSTS = ['*']
@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     # 'allauth.socialaccount.providers.facebook',
     # 'allauth.socialaccount.providers.google',
-    #'allauth.socialaccount.providers.linkedin',
+    # 'allauth.socialaccount.providers.linkedin',
     # 'allauth.socialaccount.providers.linkedin_oauth2',
 ]
 
@@ -188,6 +188,23 @@ MAPBOX_KEY = os.environ.get('DISTR_MAPBOX_KEY')
 GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
 GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
 django_heroku.settings(locals())
+
+
+if 'REDIS_URL' in os.environ:
+    CACHES = {
+        "default": {
+            "BACKEND": "redis_cache.RedisCache",
+            "LOCATION": os.environ.get('REDIS_URL'),
+        },
+        'select2': {
+            "BACKEND": "redis_cache.RedisCache",
+            "LOCATION": os.environ.get('HEROKU_REDIS_NAVY_URL')
+        }
+    }
+    # Set the cache backend to select2
+    SELECT2_CACHE_BACKEND = 'select2'
+
+
 
 # https://github.com/heroku/django-heroku/issues/6
 if DATABASES['default']['ENGINE'] in ('django.db.backends.postgresql', 'django.db.backends.postgresql_psycopg2'):
