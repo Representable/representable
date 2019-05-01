@@ -1,92 +1,156 @@
+<!-- code adapted from: https://codepen.io/shamim539/pen/VvLLdV?editors=1010 -->
 {% extends 'main/base.html' %}
-{% load leaflet_tags %}
 {% load static %}
 
-{% block hero-pre %}
-<div class="shadow-sm">
-  <div id="particles-js">
-    {% endblock %}
-    {% block hero %}
-    <div class="container-fluid container-hero">
-      <div class="row row-hero">
-        <div class="col-sm-12 col-md-10 offset-md-1 my-5">
-          <h1 class="di-title mb-4">Meet The Team</h1>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+{% block head %}
+<link rel="stylesheet" href="{% static 'main/css/style.css' %}">
 {% endblock %}
-
 
 {% block content %}
-<!--  what is Districter ?? -->
 <div class="row">
-  <div id = 'Somya' class="col-sm-6">
-  <h2>Somya Arora</h2>
-  <p>Department of Computer Science, 2021</p>
+<div class="heading-title text-center">
+<h1> Meet the team! </h1>
+<p class="p-top-30 half-txt2"> We’re a team of second and third year Princeton engineers
+  who are excited to bring more technically advanced solutions to civic issues.
+   Coming from a wide array of backgrounds, we put our technical and policy experience
+    together to make a powerful crowdsourced tool which we hope can change the current
+    polarized political landscape of how Districts are made in the United States.
+    We’re committed to giving a voice to those who have been marginalized or politically
+    diluted by gerrymandering and look forward to turning Districter into a national
+    tool for political equity. </p>
 </div>
-   <div id = images class="col-sm-6">
-     <img src="{% static 'img/theo.png' %}" alt="map" width=400px height=400px>
-  <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
-     </div>
 </div>
 
+<div class = "container">
 <div class="row">
-  <div id = 'Kyle' class="col-sm-6">
-  <h2>Kyle Barnes</h2>
-  <p> Department of Computer Science, 2021</p>
-</div>
-   <div id = images class="col-sm-6">
-     <img src="{% static 'img/theo.png' %}" alt="map" width=400px height=400px>
-  <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
-     </div>
-</div>
-
-<div class="row">
-  <div id = 'Preeti' class="col-sm-6">
-  <h2>Preeti Iyer</h2>
-  <p> Department of Computer Science, 2020</p>
-</div>
-   <div id = images class="col-sm-6">
-     <img src="{% static 'img/theo.png' %}" alt="map" width=400px height=400px>
-  <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
-     </div>
-</div>
-
-<div class="row">
-  <div id = 'Lauren' class="col-sm-6">
-  <h2>Lauren Johnston</h2>
-  <p> Department of Computer Science, 2020</p>
-</div>
-   <div id = images class="col-sm-6">
-     <img src="{% static 'img/theo.png' %}" alt="map" width=400px height=400px>
-  <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
-     </div>
+<div class="col-sm">
+  <div class="team-member">
+    <div class="team-img">
+          <img src="{% static 'img/somya.png' %}" alt="team member" style="width: 100%; height: 100%;">
+    </div>
+    <div class="team-hover">
+          <div class="desk">
+              <p>I have worked on the community draw and community visualization features for Districter.
+                My interests focus on Computer Graphics and Vision. When I’m not working on Districer,
+                you can find me outdoors, hiking in the woods, dancing, or sampling different kinds of teas.</p>
+          </div>
+          <div class="s-link">
+          <a href="mailto:somyaa@princeton.edu?Subject=Districer%20Inquiry"
+          target="_top">Click to contact Somya</a>
+          </div>
+      </div>
+  </div>
+  <div class="team-title">
+      <h5>Somya Arora</h5>
+      <span>Princeton 2021</span>
+  </div>
 </div>
 
-<div class="row">
-  <div id = 'Theo' class="col-sm-6">
-  <h2> Theodor Marcu</h2>
-  <p> Department of Computer Science, 2020</p>
+
+<div class="col-sm">
+  <div class="team-member">
+    <div class="team-img">
+          <img src="{% static 'img/kyle.png' %}" alt="team member" style="width: 100%; height: 100%;">
+    </div>
+      <div class="team-hover">
+          <div class="desk">
+              <p>I work primarily on visualization for Districter, and am interested in the
+                applications of tech and design in service. When I’m not working on Districter,
+                I am often found figure skating, designing clothes, dancing, dj-ing, and
+                eating copious amounts of breakfast foods. </p>
+          </div>
+          <div class="s-link">
+          <a href="mailto:ktbarnes@princeton.edu ?Subject=Districer%20Inquiry"
+          target="_top">Click to contact Kyle</a>
+          </div>
+      </div>
+  </div>
+  <div class="team-title">
+      <h5>Kyle Barnes</h5>
+      <span>Princeton Class of 2020</span>
+  </div>
 </div>
-   <div id = images class="col-sm-6">
-     <img src="{% static 'img/theo.png' %}" alt="map" width=400px height=400px>
-  <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
-     </div>
+
+
+<div class="col-sm">
+  <div class="team-member">
+    <div class="team-img">
+          <img src="{% static 'img/preeti.jpeg' %}" alt="team member" style="width: 100%; height: 100%;">
+    </div>
+      <div class="team-hover">
+          <div class="desk">
+              <p> I worked within front end development for Districter and am interested in
+                data science applications in robotics, healthcare, and urban issues. When I’m not
+                working on Districter, you can find me dancing, working on menstrual rights policy,
+                hiking, and catching the perfect sunset.</p>
+          </div>
+          <div class="s-link">
+          <a href="mailto:psiyer@princeton.edu ?Subject=Districer%20Inquiry"
+          target="_top">Click to contact Preeti</a>
+          </div>
+      </div>
+  </div>
+  <div class="team-title">
+      <h5>Preeti Iyer</h5>
+      <span>Princeton Class of 2020</span>
+  </div>
+</div>
+</div>
 </div>
 
-{% endblock %}
 
+<div class = "container">
+<div class = "row">
+<div class="col-sm">
+  <div class="team-member">
+    <div class="team-img">
+          <img src="{% static 'img/lauren.png' %}" alt="team member" style="width: 100%; height: 100%;">
+    </div>
+      <div class="team-hover">
+          <div class="desk">
+              <p> Within the Districter project, I’ve been working on implementing the community
+                identification form, user authentication, and developing the front-end user experience.
+                When I’m not working on Districter, you can find me reporting on campus life as part of 1080princeton,
+                 planting at the Princeton Garden Project, or dancing with friends.</p>
+          </div>
+          <div class="s-link">
+          <a href="mailto:ljohnston@princeton.edu?Subject=Districer%20Inquiry"
+          target="_top">Click to contact Lauren</a>
+          </div>
+      </div>
+  </div>
+  <div class="team-title">
+      <h5>Lauren Johnston</h5>
+      <span>Princeton Class of 2020</span>
+  </div>
+</div>
 
-{% block script %}
-<script src="{% static 'js/particles.min.js' %}"></script>
-<script>
-  particlesJS.load('particles-js', "{% static 'assets/particles.json' %}", function() {
-    console.log('callback - particles.min.js config loaded');
-  });
-</script>
-<script type="text/javascript">
-  mapboxgl.accessToken = "{{ mapbox_key }}";
-</script>
+<div class="col-sm">
+  <div class="team-member">
+    <div class="team-img">
+          <img src="{% static 'img/theo.png' %}" alt="team member" style="width: 100%; height: 100%;">
+    </div>
+      <div class="team-hover">
+          <div class="desk">
+              <p>I have developed parts of the form and community drawing page for Districter.
+                 My interests focus on UI/UX research and tech public policy. When I’m not working
+                 on Districter you can find me playing tennis, going out, or just hacking together
+                 a new project.</p>
+          </div>
+          <div class="s-link">
+          <a href="mailto:tmarcu@princeton.edu?Subject=Districer%20Inquiry"
+          target="_top">Click to contact Theo</a>
+          </div>
+      </div>
+  </div>
+  <div class="team-title">
+      <h5>Theodor Marcu</h5>
+      <span>Princeton 2020</span>
+        </div>
+    </div>
+
+    <div class="col-sm">
+        </div>
+  </div>
+</div>
 {% endblock %}
