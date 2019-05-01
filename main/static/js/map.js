@@ -122,7 +122,7 @@ function newLowerLegislatureLayer(state) {
     }
   });
 }
-map.on('load', function () {
+map.on('load', function() {
   // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
   for (let census in CENSUS_KEYS) {
     newSourceLayer(census, CENSUS_KEYS[census]);
@@ -143,13 +143,13 @@ map.on('load', function () {
 
 
   // issues add to properties
-  var issueDict= issues.replace(/'/g,'"');
+  var issueDict = issues.replace(/'/g, '"');
   issues = JSON.parse(issueDict);
   console.log(issues);
   // send elements to javascript as geojson objects and make them show on the map by
   // calling the addTo
 
-  var outputstr= a.replace(/'/g,'"');
+  var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
   let i = 0;
 
@@ -198,15 +198,15 @@ map.on('load', function () {
     i++;
   }
 
-// this function iterates thru the issues, and adds a link to each one Which
-// displays the right polygons
+  // this function iterates thru the issues, and adds a link to each one Which
+  // displays the right polygons
   for (issue in issues) {
     // console.log(issue);
     // the button element
     var cat = document.getElementById(issue);
     // console.log(cat);
 
-    cat.onclick = function (e) {
+    cat.onclick = function(e) {
       var issueId = this.id;
       // console.log(issues[issueId]);
       // iterate thru the polygons on the map
@@ -214,8 +214,7 @@ map.on('load', function () {
         if (issues[issueId][obj] === undefined) {
           // console.log(obj);
           map.setLayoutProperty(obj, 'visibility', 'none');
-        }
-        else {
+        } else {
           map.setLayoutProperty(obj, 'visibility', 'visible');
           map.setPaintProperty(obj, 'fill-color', PAINT_VALUES[issueId] + '0.4)');
           map.setPaintProperty(obj, 'fill-outline-color', PAINT_VALUES[issueId] + '1)');
@@ -223,17 +222,18 @@ map.on('load', function () {
       }
     }
     console.log(issues);
-    console.log(issue);
+    // console.log(issue);
     for (entry in issues[issue]) {
       var entryId = document.getElementById(entry);
-      entryId.onclick = function (e) {
+      // console.log(entryId);
+      entryId.onclick = function(e) {
         var thisId = this.id;
+        // console.log(thisId);
         for (obj in a) {
           if (thisId === obj) {
             console.log(obj);
             map.setLayoutProperty(obj, 'visibility', 'visible');
-          }
-          else {
+          } else {
             map.setLayoutProperty(obj, 'visibility', 'none');
           }
         }
@@ -243,12 +243,50 @@ map.on('load', function () {
 
   var allEntriesButton = document.getElementById('all');
 
-  allEntriesButton.onclick = function (e) {
+  allEntriesButton.onclick = function(e) {
     for (obj in a) {
       map.setLayoutProperty(obj, 'visibility', 'visible');
       map.setPaintProperty(obj, 'fill-color', 'rgba(185, 250, 248,0.4)');
       map.setPaintProperty(obj, 'fill-outline-color', 'rgba(185, 250, 248, 1)');
     }
+  }
+
+  //create a button which toggles layers based on their zip codes
+  console.log(zips);
+  // console.log(typeof zips);
+  // console.log(typeof issues);
+  var zipReplace = zips.replace(/'/g, '"');
+  var newZips = JSON.parse(zipReplace);
+  // console.log(newZips);
+  for (var zip in newZips) {
+    var entries = newZips[zip];
+    // console.log(zip);
+    var link = document.createElement('a');
+
+    link.href = '#';
+    link.className = 'active';
+    link.textContent = zip;
+    link.setAttribute('entries', entries);
+
+    link.onclick = function(e) {
+      var entryIds = this.getAttribute('entries');
+      var txt = this.textContent;
+      e.preventDefault();
+      e.stopPropagation();
+
+      for (obj in a) {
+        if (entryIds.includes(obj)) {
+          // console.log(obj);
+          map.setLayoutProperty(obj, 'visibility', 'visible');
+          this.className = '';
+        } else {
+          this.className = 'active';
+          map.setLayoutProperty(obj, 'visibility', 'none');
+        }
+      }
+    };
+    var layers = document.getElementById('zip-menu');
+    layers.appendChild(link);
   }
 
   // // When a click event occurs on a feature in the dummy layer, open a popup at the
@@ -284,7 +322,7 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   link.className = 'active';
   link.textContent = id;
 
-  link.onclick = function (e) {
+  link.onclick = function(e) {
     var txt = this.textContent;
     var clickedLayers = ["NJ " + txt, "VA " + txt, "PA " + txt, "MI " + txt];
     e.preventDefault();

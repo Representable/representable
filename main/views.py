@@ -170,6 +170,7 @@ class Map(TemplateView):
             else:
                 s = "".join(obj.census_blocks_polygon.geojson)
 
+            print(obj.tags.all())
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
