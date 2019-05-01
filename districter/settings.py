@@ -201,27 +201,10 @@ if 'REDIS_URL' in os.environ:
             "LOCATION": os.environ.get('HEROKU_REDIS_NAVY_URL')
         }
     }
-else:
-    CACHES = {
-        "default": {
-            "BACKEND": "django_redis.cache.RedisCache",
-            "LOCATION": "redis://127.0.0.1:6379/1",
-            "OPTIONS": {
-                "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            }
-        },
-        'select2': {
-            "BACKEND": "django_redis.cache.RedisCache",
-            "LOCATION": "redis://127.0.0.1:6379/2",
-            "OPTIONS": {
-                "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            }
-        }
-    }
+    # Set the cache backend to select2
+    SELECT2_CACHE_BACKEND = 'select2'
 
 
-# Set the cache backend to select2
-SELECT2_CACHE_BACKEND = 'select2'
 
 # https://github.com/heroku/django-heroku/issues/6
 if DATABASES['default']['ENGINE'] in ('django.db.backends.postgresql', 'django.db.backends.postgresql_psycopg2'):
