@@ -33,21 +33,27 @@
 {% block content %}
 <div class="row row-content">
     <div class="col-sm-12">
+        <!-- BIG COLUMN -->
         <h2>Create your entry and support your community!</h2>
         <h6>Instructions:</h6>
         <p>Find your community, answer the questions, and draw what you think resembles your community most closely.</p>
         <p>Your submission will enable your local government to draw more accurate maps.</p>
-        <div class="card">
-            <div class="card-header">
-                Districter Entry Creator
-            </div>
-            <div class="card-body">
-                <div class="row mt-3">
-                    <div class="col">
-                        <form id="entryForm" method="post">
-                            <div class="row row-equal-cols">
-                                <div class="col-lg-4">
+        <!-- START FORM BODY -->
+
+
+        <div class="row mt-3">
+            <div class="col">
+                <!-- Entry Form -->
+                <form id="entryForm" method="post">
+                    <!-- First Row: Includes 1 (Map) and 2 (Other Info) -->
+                    <div class="row row-equal-cols">
+                        <div class="col-lg-4 mt-3">
+                            <!-- COMMUNITY BACKGROUND -->
+                            <div class="card">
+                                <div class="card-header">
                                     <h5>1. Community Background</h5>
+                                </div>
+                                <div class="card-body">
                                     {% csrf_token %}
                                     <!-- {# Include the non-field error fields #} -->
                                     {% if form.non_field_errors %}
@@ -154,8 +160,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-8">
+                            </div>
+                        </div>
+                        <!-- Map -->
+                        <div class="col-lg-8 mt-3">
+                            <div class="card">
+                                <div class="card-header">
                                     <h5>2. Community Map</h5>
+                                </div>
+                                <div class="card-body">
+                                    <!-- <h5>2. Community Map</h5> -->
                                     <label>Selected Community Population</label>
                                     <div class="progress">
                                         <div class="bar-step">
@@ -182,12 +196,19 @@
                                     </div>
                                 </div>
                             </div>
-                            <hr>
-                            <div class="row mt-3">
-                                <div class="col-sm-8">
+                        </div>
+                    </div>
+                    <!-- <hr> -->
+                    <div class="row mt-3">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>3. Community Issues</h5>
+                                </div>
+                                <div class="card-body">
                                     {{ issue_formset.management_form }}
                                     <!-- {# "My Issues" Fields} -->
-                                    <h5> 3. Issues that affect my community</h5>
+                                    <!-- <h5> 3. Issues that affect my community</h5> -->
                                     <p> Include the issues and policy areas that
                                         affect your community. Please specify a
                                         category and a short description for each one.
@@ -213,30 +234,26 @@
                                     <div id="formset_container">
                                         {% for formset_row in issue_formset %}
                                         <div class="row form-row issues_formset mt-2">
-                                            <div class='col'>
-                                                <div class='row'>
-                                                    <div class="col-sm-5 mt-2">
-                                                        {{ formset_row.category|append_attr:"class:form-control" }}
-                                                        <!-- Error Codes Here -->
-                                                        {% if formset_row.category.errors %}
-                                                        {% for error in formset_row.category.errors %}
-                                                        <small id="category_warning" class="text-danger">{{ error|escape }}</small>
-                                                        {% endfor %}
-                                                        {% endif %}
-                                                    </div>
-                                                    <div class="col-sm-5 mt-2">
-                                                        {{ formset_row.description|append_attr:"class:form-control" }}
-                                                        <!-- Error Codes Here -->
-                                                        {% if formset_row.description.errors %}
-                                                        {% for error in formset_row.description.errors %}
-                                                        <small id="category_warning" class="text-danger">{{ error|escape }}</small>
-                                                        {% endfor %}
-                                                        {% endif %}
-                                                    </div>
-                                                    <div class="col-sm-2 mt-2">
-                                                        <button name="removeFormRow" class="btn btn-outline-danger remove-form-row">Remove Issue Entry</button>
-                                                    </div>
-                                                </div>
+                                            <div class="col-sm-5 mt-2">
+                                                {{ formset_row.category|append_attr:"class:form-control" }}
+                                                <!-- Error Codes Here -->
+                                                {% if formset_row.category.errors %}
+                                                {% for error in formset_row.category.errors %}
+                                                <small id="category_warning" class="text-danger">{{ error|escape }}</small>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-sm-5 mt-2">
+                                                {{ formset_row.description|append_attr:"class:form-control" }}
+                                                <!-- Error Codes Here -->
+                                                {% if formset_row.description.errors %}
+                                                {% for error in formset_row.description.errors %}
+                                                <small id="category_warning" class="text-danger">{{ error|escape }}</small>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-sm-2 mt-2">
+                                                <button name="removeFormRow" class="btn btn-outline-danger remove-form-row">Remove</button>
                                             </div>
                                         </div>
                                         {% endfor %}
@@ -250,17 +267,19 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class='row mt-4'>
-                            <div class='col'>
-                                <button id="save" form="entryForm" type="submit" class="btn btn-primary" value="Submit">Submit Entry</button>
-                            </div>
-                            </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
+                    <div class='row mt-4'>
+                        <div class='col'>
+                            <button id="save" form="entryForm" type="submit" class="btn btn-primary" value="Submit">Submit Entry</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 {% endblock %}
 

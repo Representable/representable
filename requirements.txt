@@ -9,6 +9,8 @@ django-bmemcached==0.2.4
 django-crispy-forms==1.7.2
 django-heroku==0.3.1
 django-leaflet==0.24.0
+django-redis==4.10.0
+django-redis-cache==2.0.0
 django-select2==6.3.1
 django-widget-tweaks==1.4.3
 Faker==1.0.5
@@ -24,6 +26,7 @@ python-binary-memcached==0.28.0
 python-dateutil==2.8.0
 python3-openid==3.1.0
 pytz==2018.9
+redis==3.2.1
 requests==2.21.0
 requests-oauthlib==1.2.0
 selenium==3.141.0

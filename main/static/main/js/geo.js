@@ -9,12 +9,13 @@ var wkt_obj;
 // (If user deletes all fields, he can add one more according to this one).
 var formsetFieldObject;
 // flags
-var user_poly_defined;
-var count_user_poly = 0;
-var count_census_poly = 0
-var census_poly_defined;
+// var user_poly_defined;
+// var count_user_poly = 0;
+// var count_census_poly = 0
+// var census_poly_defined;
 // used to call a function
-var drawn_polygon;
+// var drawn_polygon;
+// var mpolygon = [];
 
 
 /******************************************************************************/
@@ -153,7 +154,7 @@ var draw = new MapboxDraw({
                 'line-dasharray': [0.2, 2],
                 'line-width': 2
             }
-        },
+        }, // basic tools - default settings
         {
             'id': 'gl-draw-polygon-and-line-vertex-stroke-inactive',
             'type': 'circle',
@@ -392,7 +393,8 @@ map.on('render', function() {
 
 });
 
-map.on('idle', triggerFunc);
+// map.on('idle', triggerFunc);
+// map.on('dataloading', triggerFunc2);
 
 /******************************************************************************/
 
@@ -403,38 +405,64 @@ map.on('draw.update', updateCommunityEntry);
 
 /******************************************************************************/
 
-function triggerFunc(e) {
-    // console.log(user_polygon_wkt);
-    // has to be a global var
-    // debugger
-    // create a custom event and c
-    if (user_poly_defined !== undefined && count_user_poly > 0) {
-        // console.log("polygon drawn and now do something");
-        console.log(count_user_poly);
-        count_user_poly = 0;
-        let mpolygon = highlightBlocks();
-        console.log(count_user_poly);
+// function triggerFunc(e) {
+//     // console.log(user_polygon_wkt);
+//     // has to be a global var
+//     // debugger
+//     // create a custom event and c
+//     if (user_poly_defined !== undefined && count_user_poly > 0) {
+//         // console.log("polygon drawn and now do something");
+//         console.log(count_user_poly);
+//         count_user_poly = 0;
+//         mpolygon = highlightBlocks();
+//         console.log(count_user_poly);
 
-        // debugger
+//         // debugger
 
-        if (census_poly_defined !== undefined && count_census_poly > 0) {
-            count_census_poly = 0;
-            mergeBlocks(mpolygon);
+//         // if (census_poly_defined !== undefined && count_census_poly > 0) {
+//         //     count_census_poly = 0;
+//         //     mergeBlocks(mpolygon);
+            
+//         //     // mergeBlocks(mpolygon);
+    
+//         //     // console.log("highlight polygons now that the filter returns something");
+//         // }
+//     }
 
-            // mergeBlocks(mpolygon);
+// }
 
-            // console.log("highlight polygons now that the filter returns something");
-        }
+
+// function triggerFunc2(e) {
+//     // console.log(user_polygon_wkt);
+//     // has to be a global var
+//     // debugger
+//     // create a custom event and c
+
+//     if (census_poly_defined !== undefined && count_census_poly > 0) {
+//         count_census_poly = 0;
+//         mergeBlocks(mpolygon);
+        
+//         // mergeBlocks(mpolygon);
+
+//         // console.log("highlight polygons now that the filter returns something");
+//     }
+    
+// }
+
+function mergeBlocks(mpoly, drawn_polygon) {
+    var wkt = new Wkt.Wkt();
+    var finalpoly = turf.union(mpoly[0], mpoly[1], mpoly[2], mpoly[3], mpoly[4]);
+    for(var i = 0; i < mpoly.length - (mpoly.length%5); i+=5) {
+        finalpoly = turf.union(mpoly[i], mpoly[i+1], mpoly[i+2], mpoly[i+3], mpoly[i+4], finalpoly);
+    }
+    for (i; i < (mpoly.length%5); i++) {
+        finalpoly = turf.union(mpoly[i], finalpoly);
     }
 
-}
-
-function mergeBlocks(mpolygon) {
-    var wkt = new Wkt.Wkt();
-    var finalpoly = turf.union.apply(null, mpolygon);
+    
     var census_blocks_polygon = drawn_polygon;
     // should only be the exterior ring
-
+    console.log("function triggered");
     if (finalpoly.geometry.coordinates[0][0].length > 2) {
         census_blocks_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0][0];
     }
@@ -445,12 +473,15 @@ function mergeBlocks(mpolygon) {
     let census_blocks_polygon_json = JSON.stringify(census_blocks_polygon['geometry']);
     wkt_obj = wkt.read(census_blocks_polygon_json);
     census_blocks_polygon_wkt = wkt_obj.write();
-    document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon_wkt;
+
+    // document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon_wkt;
+    console.log("function ended");
+    return census_blocks_polygon_wkt;
     // debugger
     // prevent the method from being called multiple times
 }
 
-function highlightBlocks() {
+function highlightBlocks(drawn_polygon) {
     // Save census blocks polygon outline.
     //
     console.log("called highlight blocks");
@@ -466,21 +497,21 @@ function highlightBlocks() {
     var southWestPointPixel = map.project(southWest);
     var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
     if (features.length >= 1) {
-        var mpolygon = [];
+        var mpoly = [];
         var total = 0.0;
 
         var filter = features.reduce(function(memo, feature) {
             if (! (turf.intersect(feature, census_blocks_polygon) === null)) {
                 memo.push(feature.properties.BLOCKID10);
-                mpolygon.push(feature);
+                mpoly.push(feature);
                 total+= feature.properties.POP10;
             }
             return memo;
         }, ["in", "BLOCKID10"]);
 
         map.setFilter("blocks-highlighted", filter);
-        census_poly_defined = true;
-        count_census_poly = 1;
+        // census_poly_defined = true;
+        // count_census_poly = 1;
 
         progress = document.getElementById("pop");
         // set color of the progress bar depending on population
@@ -500,11 +531,12 @@ function highlightBlocks() {
         progress.style.width = popWidth + "%";
     }
     else {
-        census_poly_defined = false;
-        count_census_poly = 0;
+        // census_poly_defined = undefined;
+        // count_census_poly = 0;
+        document.getElementById('id_census_blocks_polygon').value = "";
     }
 
-    return mpolygon;
+    return mpoly;
 }
 
 /******************************************************************************/
@@ -521,6 +553,7 @@ function updateCommunityEntry(e) {
     var user_polygon_wkt;
     // Polygon saved to DB.
     var census_blocks_polygon_wkt;
+    var drawn_polygon;
 
     if (data.features.length > 0) {
         // Update User Polygon with the GeoJson data.
@@ -529,8 +562,10 @@ function updateCommunityEntry(e) {
         let user_polygon_json = JSON.stringify(drawn_polygon['geometry']);
         wkt_obj = wkt.read(user_polygon_json);
         user_polygon_wkt = wkt_obj.write();
-        user_poly_defined = true;
-        count_user_poly = 1;
+        // user_poly_defined = true;
+        // count_user_poly = 1;
+        var mpolygon = highlightBlocks(drawn_polygon);
+        // census_blocks_polygon_wkt = mergeBlocks(mpolygon, drawn_polygon);
         // Save census blocks polygon outline.
         // census_blocks_polygon = drawn_polygon;
         // var polygonBoundingBox = turf.bbox(census_blocks_polygon);
@@ -595,16 +630,18 @@ function updateCommunityEntry(e) {
         // }
 
     } else {
-        user_poly_defined = false;
-        count_user_poly = 0;
-        census_poly_defined = false;
-        drawn_polygon = null;
+        // user_poly_defined = false;
+        // count_user_poly = 0;
+        // census_poly_defined = false;
+        // drawn_polygon = null;
         user_polygon_wkt = '';
         census_blocks_polygon_wkt = '';
         map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
     }
     // Update form fields
+    census_blocks_polygon_wkt = '';
     document.getElementById('id_user_polygon').value = user_polygon_wkt;
+    document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon_wkt;
 }
 
 
