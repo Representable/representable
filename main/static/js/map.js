@@ -230,7 +230,7 @@ map.on('load', function () {
         var thisId = this.id;
         for (obj in a) {
           if (thisId === obj) {
-            // console.log(obj);
+            console.log(obj);
             map.setLayoutProperty(obj, 'visibility', 'visible');
           }
           else {
