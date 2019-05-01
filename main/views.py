@@ -10,7 +10,10 @@ from .models import CommunityEntry, Issue
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
 from shapely.geometry import Polygon, mapping
-import geojson, os, json,re
+import geojson
+import os
+import json
+import re
 from django.http import JsonResponse
 
 
@@ -24,46 +27,55 @@ from django.contrib.gis.geos import Point
 '''
 Documentation: https://docs.djangoproject.com/en/2.1/topics/class-based-views/
 '''
+
+
 class Index(TemplateView):
     template_name = "main/index.html"
 
     # Add extra context variables.
     def get_context_data(self, **kwargs):
-        context = super(Index, self).get_context_data(**kwargs) # get the default context data
+        context = super(Index, self).get_context_data(
+            **kwargs)  # get the default context data
         context['mapbox_key'] = os.environ.get('DISTR_MAPBOX_KEY')
         return context
 
 #******************************************************************************#
+
 
 class MainView(TemplateView):
     template_name = "main/main_test.html"
 
     # Add extra context variables.
     def get_context_data(self, **kwargs):
-        context = super(MainView, self).get_context_data(**kwargs) # get the default context data
+        context = super(MainView, self).get_context_data(
+            **kwargs)  # get the default context data
         context['mapbox_key'] = os.environ.get('DISTR_MAPBOX_KEY')
         return context
 
 #******************************************************************************#
+
 
 class Timeline(TemplateView):
     template_name = "main/timeline.html"
 
 #******************************************************************************#
 
+
 class About(TemplateView):
     template_name = "main/about.html"
 
 #******************************************************************************#
 
+
 class Review(TemplateView):
     template_name = "main/review.html"
 
+    '''
     def get_context_data(self, **kwargs):
         # the dict of issues + input of descriptions
         issues = dict()
         for obj in Issue.objects.all():
-            cat = obj.category;
+            cat = obj.category
             cat = re.sub('_', ' ', cat).title()
             if cat == 'Economic':
                 cat = 'Economic Affairs'
@@ -111,63 +123,64 @@ class Review(TemplateView):
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
         })
         return context
-
+    '''
 #******************************************************************************#
+
+
 class Map(TemplateView):
     template_name = "main/map.html"
+    def get_context_data(self, **kwargs):
+        # the dict of issues + input of descriptions
+        issues = dict()
+        for obj in Issue.objects.all():
+            cat = obj.category
+            cat = re.sub('_', ' ', cat).title()
+            if cat == 'Economic':
+                cat = 'Economic Affairs'
+            if cat == 'Health':
+                cat = 'Health and Health Insurance'
+            if cat == 'Internet':
+                cat = 'Internet Regulation'
+            if cat == 'Women':
+                cat = 'Women\'s Issues'
+            if cat == 'Lgbt':
+                cat = 'LGBT Issues'
+            if cat == 'Security':
+                cat = 'National Security'
+            if cat == 'Welfare':
+                cat = 'Social Welfare'
 
-def get_context_data(self, **kwargs):
-    # the dict of issues + input of descriptions
-    issues = dict()
-    for obj in Issue.objects.all():
-        cat = obj.category
-        cat = re.sub('_', ' ', cat).title()
-        if cat == 'Economic':
-            cat = 'Economic Affairs'
-        if cat == 'Health':
-            cat = 'Health and Health Insurance'
-        if cat == 'Internet':
-            cat = 'Internet Regulation'
-        if cat == 'Women':
-            cat = 'Women\'s Issues'
-        if cat == 'Lgbt':
-            cat = 'LGBT Issues'
-        if cat == 'Security':
-            cat = 'National Security'
-        if cat == 'Welfare':
-            cat = 'Social Welfare'
+            if cat in issues:
+                issues[cat][str(obj.entry)] = obj.description
+            else:
+                issueInfo = dict()
+                issueInfo[str(obj.entry)] = obj.description
+                issues[cat] = issueInfo
 
-        if cat in issues:
-            issues[cat][str(obj.entry)] = obj.description
-        else:
-            issueInfo = dict()
-            issueInfo[str(obj.entry)] = obj.description
-            issues[cat] = issueInfo
+        # turn it into a dict
+        entryPolyDict = dict()
+        for obj in CommunityEntry.objects.all():
+            s = "".join(obj.census_blocks_polygon.geojson)
+            # add all the coordinates in the array
+            # at this point all the elements of the array are coordinates of the polygons
+            struct = geojson.loads(s)
+            entryPolyDict[obj.entry_ID] = struct.coordinates
 
-
-
-    # turn it into a dict
-    entryPolyDict = dict()
-    for obj in CommunityEntry.objects.all():
-        s = "".join(obj.census_blocks_polygon.geojson)
-        # add all the coordinates in the array
-        # at this point all the elements of the array are coordinates of the polygons
-        struct = geojson.loads(s)
-        entryPolyDict[obj.entry_ID] = struct.coordinates
-
-    context = ({
-        'issues': issues,
-        'entries': entryPolyDict,
-        'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
-    })
-    return context
+        context = ({
+            'issues': issues,
+            'entries': entryPolyDict,
+            'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
+        })
+        return context
 
 #******************************************************************************#
+
 
 class Thanks(TemplateView):
     template_name = "main/thanks.html"
 
 #******************************************************************************#
+
 
 class EntryView(LoginRequiredMixin, View):
     '''
@@ -180,10 +193,10 @@ class EntryView(LoginRequiredMixin, View):
     data = {
         'form-TOTAL_FORMS': '1',
         'form-INITIAL_FORMS': '0',
-        'form-MAX_NUM_FORMS': ''
+        'form-MAX_NUM_FORMS': '10'
     }
     # Create the formset, specifying the form and formset we want to use.
-    IssueFormSet =  formset_factory(IssueForm, extra=1)
+    IssueFormSet = formset_factory(IssueForm, extra=1)
 
     # https://www.agiliq.com/blog/2019/01/django-formview/
     def get_initial(self):
@@ -193,7 +206,7 @@ class EntryView(LoginRequiredMixin, View):
         return initial
 
     def get(self, request, *args, **kwargs):
-        form = self.form_class(initial=self.get_initial())
+        form = self.form_class(initial=self.get_initial(), label_suffix='')
         issue_formset = self.IssueFormSet(self.data)
         context = {
             'form': form,
@@ -203,7 +216,7 @@ class EntryView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
+        form = self.form_class(request.POST, label_suffix='')
         issue_formset = self.IssueFormSet(request.POST)
         if form.is_valid() and issue_formset.is_valid():
             entryForm = form.save(commit=False)

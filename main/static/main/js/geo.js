@@ -259,14 +259,6 @@ map.addControl(geocoder, 'top-right');
 // Add controls outside of map.
 // Source: https://github.com/mapbox/mapbox-gl-draw/blob/master/docs/API.md
 map.addControl(draw);
-// Enable draw polygon mode.
-document.getElementById('drawPolygon').onclick = function(){
-    draw.changeMode('draw_polygon');
-};
-// Delete all drawn features.
-document.getElementById('deletePolygon').onclick = function(){
-    draw.trash();
-};
 
 /* Change mapbox draw button */
 var drawButton = document.getElementsByClassName("mapbox-gl-draw_polygon");
@@ -657,6 +649,7 @@ function cloneMore(selector, prefix) {
     // Function that clones formset fields.
     var newElement = $(selector).clone(true);
     var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
+    if (total >= 10) {return false;}
     if (total == 0) {
         newElement = formsetFieldObject;
     }
@@ -726,36 +719,31 @@ $(document).on('click', '.remove-form-row', function(e) {
 
 /******************************************************************************/
 
-$('input:radio').on('click', function(e) {
-    let name = e.currentTarget.name;
-    let value = e.currentTarget.value;
-    switch (name) {
-        case 'race':
-            if (value === "on") {
-                document.getElementById('race-field').style.display = 'block';
-                document.getElementById('race-field').style.visibility = 'visible';
-            } else {
-                document.getElementById('race-field').style.visibility = 'hidden';
-                document.getElementById('race-field').style.display = 'none';
-            }
-            break;
-        case 'religion':
-            if (value === "on") {
-                document.getElementById('religion-field').style.display = 'block';
-                document.getElementById('religion-field').style.visibility = 'visible';
-            } else {
-                document.getElementById('religion-field').style.visibility = 'hidden';
-                document.getElementById('religion-field').style.display = 'none';
-            }
-            break;
-        case 'industry':
-            if (value === "on") {
-                document.getElementById('industry-field').style.display = 'block';
-                document.getElementById('industry-field').style.visibility = 'visible';
-            } else {
-                document.getElementById('industry-field').style.visibility = 'hidden';
-                document.getElementById('industry-field').style.display = 'none';
-            }
-            break;
-    }
-});
+document.getElementById("race-yes").addEventListener("click", function () {
+    document.getElementById('race-field').style.visibility = 'visible';
+    document.getElementById('race-field').style.height = "auto";
+})
+
+document.getElementById("race-no").addEventListener("click", function () {
+    document.getElementById('race-field').style.visibility = 'hidden';
+    document.getElementById('race-field').style.height = '0px';
+})
+
+document.getElementById("religion-yes").addEventListener("click", function () {
+    document.getElementById('religion-field').style.visibility = 'visible';
+    document.getElementById('religion-field').style.height = "auto";
+})
+
+document.getElementById("religion-no").addEventListener("click", function () {
+    document.getElementById('religion-field').style.visibility = 'hidden';
+    document.getElementById('religion-field').style.height = '0px';
+})
+
+document.getElementById("industry-yes").addEventListener("click", function () {
+    document.getElementById('industry-field').style.visibility = 'visible';
+    document.getElementById('industry-field').style.height = 'auto';
+})
+document.getElementById("industry-no").addEventListener("click", function () {
+    document.getElementById('industry-field').style.visibility = 'hidden';
+    document.getElementById('industry-field').style.height = '0px';
+})

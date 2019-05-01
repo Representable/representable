@@ -37,203 +37,227 @@
         <h6>Instructions:</h6>
         <p>Find your community, answer the questions, and draw what you think resembles your community most closely.</p>
         <p>Your submission will enable your local government to draw more accurate maps.</p>
-        <!-- <button id="dummySave" type="button" class="btn btn-primary">Dummy Save</button> -->
+        <div class="card">
+            <div class="card-header">
+                Districter Entry Creator
+            </div>
+            <div class="card-body">
+                <div class="row mt-3">
+                    <div class="col">
+                        <form id="entryForm" method="post">
+                            <div class="row row-equal-cols">
+                                <div class="col-lg-4">
+                                    <h5>1. Community Background</h5>
+                                    {% csrf_token %}
+                                    <!-- {# Include the non-field error fields #} -->
+                                    {% if form.non_field_errors %}
+                                    <div class="non-field-errors">
+                                        {% for err in form.non_field_errors %}
+                                        <p class="form-error">{{ err }}</p>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                    <div id="main_community_form" class="form-group">
+                                        <!-- {# Include the hidden fields #} -->
+                                        {% for hidden in form.hidden_fields %}
+                                        {{ hidden }}
+                                        {% endfor %}
+                                        <!-- {# Include the visible fields #} -->
+                                        <!-- {# Race Field} -->
+                                        <div class=" mb-2">
+                                            <p class=""> Does this community identify with one or more racial groups?</p>
+                                            <button type="button" class='btn btn-outline-dark' id="race-yes">Yes</button>
+                                            <button type="button" class='btn btn-outline-dark' id="race-no">No</button>
 
-        <div class="row mt-3">
-            <div class="col">
-                <form id="entryForm" method="post">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            {% csrf_token %}
-                            <!-- {# Include the non-field error fields #} -->
-                            {% if form.non_field_errors %}
-                            <div class="non-field-errors">
-                                {% for err in form.non_field_errors %}
-                                <p class="form-error">{{ err }}</p>
-                                {% endfor %}
-                            </div>
-                            {% endif %}
-                            <div id="main_community_form" class="form-group">
-                                <!-- {# Include the hidden fields #} -->
-                                {% for hidden in form.hidden_fields %}
-                                {{ hidden }}
-                                {% endfor %}
-                                <!-- {# Include the visible fields #} -->
-                                <!-- {# Race Field} -->
-                                <p> Does this community identify with one or more racial groups?</p>
-                                <input type="radio" name="race" value="on" id="race-yes">Yes<br>
-                                <input type="radio" name="race" value="off" id="race-no">No
-                                <div id="race-field" class="field-wrap">
-                                    {{ form.race.label_tag }}
-                                    <div class="form-error">
-                                        {{ form.race.errors }}
-                                    </div>
-                                    {{ form.race|append_attr:"class:form-control" }}
-                                    {% if form.race.help_text %}
-                                    <p class="help">{{ form.race.help_text|safe }}</p>
-                                    {% endif %}
-                                </div>
-                                <!-- {# Religion Field} -->
-                                <p> Does this community identify with one or more religious groups?</p>
-                                <input type="radio" name="religion" value="on" id="religion-yes">Yes<br>
-                                <input type="radio" name="religion" value="off" id="religion-no">No
-                                <div id="religion-field" class="field-wrap">
-                                    {{ form.religion.label_tag }}
-                                    <div class="form-error">
-                                        {{ form.religion.errors }}
-                                    </div>
-                                    {{ form.religion|append_attr:"class:form-control" }}
-                                    {% if form.religion.help_text %}
-                                    <p class="help">{{ form.religion.help_text|safe }}</p>
-                                    {% endif %}
-                                </div>
-                                <!-- {# Industry Field} -->
-                                <p> Does this community identify with one or more profressions or industries?</p>
-                                <input type="radio" name="industry" value="on" id="industry-yes">Yes<br>
-                                <input type="radio" name="industry" value="off" id="industry-no">No
-                                <div id="industry-field" class="field-wrap">
-                                    {{ form.industry.label_tag }}
-                                    <div class="form-error">
-                                        {{ form.industry.errors }}
-                                    </div>
-                                    {{ form.industry|append_attr:"class:form-control" }}
-                                    {% if form.industry.help_text %}
-                                    <p class="help">{{ form.industry.help_text|safe }}</p>
-                                    {% endif %}
-                                </div>
-                                <!-- {# Zipcode Field} -->
-                                <div class="field-wrap">
-                                    {{ form.zipcode.label_tag }}
-                                    <div class="form-error">
-                                        {{ form.zipcode.errors }}
-                                    </div>
-                                    {{ form.zipcode|append_attr:"class:form-control" }}
-                                    {% if form.zipcode.help_text %}
-                                    <p class="help">{{ form.zipcode.help_text|safe }}</p>
-                                    {% endif %}
-                                </div>
-                                <!-- {# Tags Field} -->
-                                <div class="field-wrap">
-                                    {{ form.tags.label_tag }}
-                                    <div class="form-error">
-                                        {{ form.tags.errors }}
-                                    </div>
-                                    {{ form.tags|append_attr:"class:form-control" }}
-                                    {% if form.tags.help_text %}
-                                    <p class="help">{{ form.tags.help_text|safe }}</p>
-                                    {% endif %}
-                                </div>
-
-                                <!-- {# Is this your community? Field} -->
-                                <div class="field-wrap">
-                                    <div class="form-error">
-                                        {{ form.my_community.label_tag }}
-                                        {% if form.my_community.errors %}
-                                        <div id="my_community_missing" class="alert alert-warning" role="alert">
-                                            You need to specify if you are part of this community.
+                                            <div id="race-field" class="field-wrap race-field-wrap">
+                                                {{ form.race.label_tag }}
+                                                <div class="form-error">
+                                                    {{ form.race.errors }}
+                                                </div>
+                                                {{ form.race|append_attr:"class:form-control" }}
+                                                {% if form.race.help_text %}
+                                                <p class="help">{{ form.race.help_text|safe }}</p>
+                                                {% endif %}
+                                            </div>
                                         </div>
-                                        {% endif %}
-                                    </div>
-                                    {{ form.my_community|append_attr:"class:form-control" }}
-                                    {% if form.my_community.help_text %}
-                                    <p class="help">{{ form.my_community.help_text|safe }}</p>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-8">
+                                        <!-- {# Religion Field} -->
+                                        <div class=" mb-2">
+                                            <p class=""> Does this community identify with one or more religious groups?</p>
+                                            <button type="button" class='btn btn-outline-dark' id="religion-yes">Yes</button>
+                                            <button type="button" class='btn btn-outline-dark' id="religion-no">No</button>
 
-                            <!-- {# Include form.entry_polygon error. } -->
-                            {% if form.user_polygon.errors %}
-                            <div id="polygon_missing" class="alert alert-warning" role="alert">
-                                You need to draw a polygon to submit the form.
-                            </div>
-                            {% endif %}
-                            <div id='menu' class="">
-                                <div id="map_controls">
-                                    <button id="drawPolygon" type="button" class="btn btn-secondary">Draw Polygon Mode</button>
-                                    <button id="deletePolygon" type="button" class="btn btn-warning">Delete Drawn Polygon</button>
-                                </div>
-                            </div>
-                            <div id='map' class='draw_polygon_map'>
-                            </div>
-                            <p>Community Population:</p>
-                            <div class="progress">
-                                <div class="bar-step">
-                                    <div class="label-txt">Ideal District Size</div>
-                                    <div class="label-percent" id="ideal-pop"></div>
-                                    <div class="label-line"></div>
-                                </div>
-                                <div id="pop" class="progress-bar" role="progressbar" aria-valuemin="0">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-sm-8">
-                            {{ issue_formset.management_form }}
-                            <!-- {# "My Issues" Fields} -->
-                            <label> Issues that affect my community: </label>
-                            <!-- {# Include the formset.} -->
-                            {% for hidden_issue_field in issue_formset.hidden_fields %}
-                            {{ hidden_issue_field }}
-                            {% endfor %}
-                            {{ issue_formset.non_field_errors }}
-                            <!-- Formset Row Non Field Errors -->
-                            <!-- {% for formset_row in issue_formset %}
-                                {% if formset_row.non_field_errors %}
-                                {% for non_field_error in formset_row.non_field_errors %}
-                                <div id="formset_row_error" class="alert alert-warning" role="alert">
-                                    {{ non_field_error }}
-                                </div>
-                                {% endfor %}
-                                {% endif %}
-                            {% endfor %} -->
-                            <!-- Begin formset container. -->
-                            <div id="formset_container">
-                            {% for formset_row in issue_formset %}
-                            <div class="row form-row issues_formset mt-2">
-                                <div class='col'>
-                                    <div class='row mt-2'>
-                                        <div class="col-sm-5 mt-2">
-                                            {{ formset_row.category|append_attr:"class:form-control" }}
-                                            <!-- Error Codes Here -->
-                                            {% if formset_row.category.errors %}
-                                                {% for error in formset_row.category.errors %}
+                                            <div id="religion-field" class="field-wrap religion-field-wrap">
+                                                {{ form.religion.label_tag }}
+                                                <div class="form-error">
+                                                    {{ form.religion.errors }}
+                                                </div>
+                                                {{ form.religion|append_attr:"class:form-control" }}
+                                                {% if form.religion.help_text %}
+                                                <p class="help">{{ form.religion.help_text|safe }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <!-- {# Industry Field} -->
+                                        <div class=" mb-2">
+                                            <p class=""> Does this community identify with one or more professions or industries?</p>
+                                            <button type="button" class='btn btn-outline-dark mb-2' id="industry-yes">Yes</button>
+                                            <button type="button" class='btn btn-outline-dark mb-2' id="industry-no">No</button>
+                                            <div id="industry-field" class="field-wrap industry-field-wrap">
+                                                {{ form.industry.label_tag }}
+                                                <div class="form-error">
+                                                    {{ form.industry.errors }}
+                                                </div>
+                                                {{ form.industry|append_attr:"class:form-control" }}
+                                                {% if form.industry.help_text %}
+                                                <p class="help">{{ form.industry.help_text|safe }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <!-- {# Zipcode Field} -->
+                                        <div class="field-wrap">
+                                            {{ form.zipcode.label_tag }} <small class="text-danger">(Required)</small>
+                                            <div class="form-error">
+                                                {{ form.zipcode.errors }}
+                                            </div>
+                                            {{ form.zipcode|append_attr:"class:form-control" }}
+                                            {% if form.zipcode.help_text %}
+                                            <p class="help">{{ form.zipcode.help_text|safe }}</p>
+                                            {% endif %}
 
-                                                    <small id="category_warning" class="text-danger">{{ error|escape }}</small>
-                                                {% endfor %}
+                                        </div>
+                                        <!-- {# Tags Field} -->
+                                        <div class="field-wrap">
+                                            {{ form.tags.label_tag }}
+                                            <div class="form-error">
+                                                {{ form.tags.errors }}
+                                            </div>
+                                            {{ form.tags|append_attr:"class:form-control" }}
+                                            {% if form.tags.help_text %}
+                                            <p class="help">{{ form.tags.help_text|safe }}</p>
                                             {% endif %}
                                         </div>
-                                        <div class="col-sm-5 mt-2">
-                                            {{ formset_row.description|append_attr:"class:form-control" }}
-                                            <!-- Error Codes Here -->
-                                            {% if formset_row.description.errors %}
-                                                {% for error in formset_row.description.errors %}
-                                                    <small id="category_warning" class="text-danger">{{ error|escape }}</small>
-                                                {% endfor %}
+
+                                        <!-- {# Is this your community? Field} -->
+                                        <div class="field-wrap">
+                                            <div class="form-error">
+                                                {{ form.my_community.label_tag }} <small class="text-danger">(Required)</small>
+                                                {% if form.my_community.errors %}
+                                                <div id="my_community_missing" class="alert alert-warning" role="alert">
+                                                    You need to specify if you are part of this community.
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                            {{ form.my_community|append_attr:"class:form-control" }}
+                                            {% if form.my_community.help_text %}
+                                            <p class="help">{{ form.my_community.help_text|safe }}</p>
                                             {% endif %}
                                         </div>
-                                        <div class="col-sm-2 mt-2">
-                                            <button name="removeFormRow" class="btn btn-outline-danger remove-form-row">Remove Issue Entry</button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8">
+                                    <h5>2. Community Map</h5>
+                                    <label>Selected Community Population</label>
+                                    <div class="progress">
+                                        <div class="bar-step">
+                                            <div class="label-txt">Ideal District Size</div>
+                                            <div class="label-percent" id="ideal-pop"></div>
+                                            <div class="label-line"></div>
+                                        </div>
+                                        <div id="pop" class="progress-bar" role="progressbar" aria-valuemin="0">
+                                        </div>
+                                    </div>
+                                    <!-- {# Include form.entry_polygon error. } -->
+                                    {% if form.user_polygon.errors %}
+                                    <div id="polygon_missing" class="alert alert-warning" role="alert">
+                                        You need to draw a polygon to submit the form.
+                                    </div>
+                                    {% endif %}
+                                    <div>
+                                        <div id='menu'>
+                                        </div>
+                                        <div id='map' class='draw_polygon_map'>
+                                        </div>
+                                        <div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            {% endfor %}
-                            </div>
-                            <!-- End formset container. -->
-                            <div class="row mt-2">
-                                <div class='col-sm-12'>
-                                    <button name="addFormRow" class="btn btn-outline-success add-form-row">Add New Issue</button>
+                            <hr>
+                            <div class="row mt-3">
+                                <div class="col-sm-8">
+                                    {{ issue_formset.management_form }}
+                                    <!-- {# "My Issues" Fields} -->
+                                    <h5> 3. Issues that affect my community</h5>
+                                    <p> Include the issues and policy areas that
+                                        affect your community. Please specify a
+                                        category and a short description for each one.
+                                        <br>
+                                        Example: Environment - The watershed is polluted.
+                                    </p>
+                                    <!-- {# Include the formset.} -->
+                                    {% for hidden_issue_field in issue_formset.hidden_fields %}
+                                    {{ hidden_issue_field }}
+                                    {% endfor %}
+                                    {{ issue_formset.non_field_errors }}
+                                    <!-- Formset Row Non Field Errors -->
+                                    <!-- {% for formset_row in issue_formset %}
+                                    {% if formset_row.non_field_errors %}
+                                    {% for non_field_error in formset_row.non_field_errors %}
+                                    <div id="formset_row_error" class="alert alert-warning" role="alert">
+                                        {{ non_field_error }}
+                                    </div>
+                                    {% endfor %}
+                                    {% endif %}
+                                    {% endfor %} -->
+                                    <!-- Begin formset container. -->
+                                    <div id="formset_container">
+                                        {% for formset_row in issue_formset %}
+                                        <div class="row form-row issues_formset mt-2">
+                                            <div class='col'>
+                                                <div class='row'>
+                                                    <div class="col-sm-5 mt-2">
+                                                        {{ formset_row.category|append_attr:"class:form-control" }}
+                                                        <!-- Error Codes Here -->
+                                                        {% if formset_row.category.errors %}
+                                                        {% for error in formset_row.category.errors %}
+                                                        <small id="category_warning" class="text-danger">{{ error|escape }}</small>
+                                                        {% endfor %}
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="col-sm-5 mt-2">
+                                                        {{ formset_row.description|append_attr:"class:form-control" }}
+                                                        <!-- Error Codes Here -->
+                                                        {% if formset_row.description.errors %}
+                                                        {% for error in formset_row.description.errors %}
+                                                        <small id="category_warning" class="text-danger">{{ error|escape }}</small>
+                                                        {% endfor %}
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="col-sm-2 mt-2">
+                                                        <button name="removeFormRow" class="btn btn-outline-danger remove-form-row">Remove Issue Entry</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    <!-- End formset container. -->
+                                    <div class="row mt-3">
+                                        <div class='col-sm-12'>
+                                            <button name="addFormRow" class="btn btn-outline-success add-form-row">Add New Issue</button>
+                                            <small> You can add maximum 10 issues. </small>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class='col'>
-                        </div>
+                            <div class='row mt-4'>
+                            <div class='col'>
+                                <button id="save" form="entryForm" type="submit" class="btn btn-primary" value="Submit">Submit Entry</button>
+                            </div>
+                            </div>
+                        </form>
                     </div>
-                    <button id="save" form="entryForm" type="submit" class="btn btn-primary mt-5" value="Submit">Submit</button>
-                </form>
+                </div>
             </div>
         </div>
     </div>
