@@ -10,7 +10,7 @@
     <div class="col">
         <p>{% blocktrans %}Already have an account?
           Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}
-          Else please sign up below </p>
+          If not, please sign up below. </p>
 
         <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
             {% csrf_token %}
