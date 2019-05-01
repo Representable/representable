@@ -198,7 +198,7 @@ def get_cache():
         password = os.environ['MEMCACHIER_PASSWORD']
         return {
             'default': {
-                'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+                'BACKEND': 'django_bmemcached.memcached.BMemcached',
                 # TIMEOUT is not the connection timeout! It's the default expiration
                 # timeout that should be applied to keys! Setting it to `None`
                 # disables expiration.
@@ -228,7 +228,7 @@ def get_cache():
                 }
             },
             'select2': {
-                'BACKEND': 'django.core.cache.backends.memcached.PyLibMCCache',
+                'BACKEND': 'django_bmemcached.memcached.BMemcached',
                 # TIMEOUT is not the connection timeout! It's the default expiration
                 # timeout that should be applied to keys! Setting it to `None`
                 # disables expiration.
@@ -261,8 +261,13 @@ def get_cache():
     except:
         return {
             'default': {
-                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
-            },
+                'BACKEND': 'django_bmemcached.memcached.BMemcached',
+                'LOCATION': os.environ.get('MEMCACHEDCLOUD_SERVERS').split(','),
+                'OPTIONS': {
+                    'username': os.environ.get('MEMCACHEDCLOUD_USERNAME'),
+                    'password': os.environ.get('MEMCACHEDCLOUD_PASSWORD')
+                }
+            }
             'select2': {
                 'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
                 'LOCATION': 'unix:/tmp/memcached.sock',
