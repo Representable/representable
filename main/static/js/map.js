@@ -41,7 +41,7 @@ var PAINT_VALUES = {
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
 var map = new mapboxgl.Map({
   container: 'map', // container id
-  style: 'mapbox://styles/mapbox/light-v9', //color of the map -- dark or light?
+  style: 'mapbox://styles/mapbox/light-v9', //color of the map -- dark-v10 or light-v9
   center: [-74.65545, 40.341701], // starting position - Princeton, NJ :)
   zoom: 12 // starting zoom -- higher is closer
 });

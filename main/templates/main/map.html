@@ -28,6 +28,7 @@
         // var a = JSON.parse('{{ entries | escapejs }}')
         var issues = '{{ issues | escapejs }}';
         var a = '{{ entries | escapejs}}';
+        var zips = '{{ zips | escapejs }}'
         // var a = '{{ entries }}';
      </script>
   </div>
@@ -35,7 +36,7 @@
         <nav id='menu'>
             <div class="sidenav">
                 <div class="search">
-                    <input type="text" id="search-bar" class="searchTerm" placeholder="Seach tags..." onkeyup="searchTags()">
+                    <input type="text" id="search-bar" class="searchTerm" placeholder="Search issues..." onkeyup="searchTags()">
                     <button type="submit" class="searchButton" onclick="searchTags()">
                         <i class="fa fa-search"></i>
                     </button>
