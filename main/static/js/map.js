@@ -318,7 +318,7 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   var link = document.createElement('a');
 
   link.href = '#';
-  link.className = 'active';
+  link.className = 'btn-primary';
   link.textContent = id;
 
   link.onclick = function(e) {
@@ -332,9 +332,7 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
 
       if (visibility === 'visible') {
         map.setLayoutProperty(clickedLayers[j], 'visibility', 'none');
-        this.className = '';
       } else {
-        this.className = 'active';
         map.setLayoutProperty(clickedLayers[j], 'visibility', 'visible');
       }
     }

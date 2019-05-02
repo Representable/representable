@@ -41,10 +41,10 @@
                         <i class="fa fa-search"></i>
                     </button>
                 </div>
-                <button class="dropdown-btn" id="all">All Entries
+                <button class="dropdown-btn btn-primary" id="all">All Entries
                     <i class="fa"></i></button>
                 <div class="dropdown-container"></div>
-                <button class="dropdown-btn">Display Outlines
+                <button class="dropdown-btn btn-primary">Display Outlines
                     <i class="fa fa-caret-down"></i></button>
                 <div class="dropdown-container" id="outline-menu">
                 </div>
@@ -53,11 +53,11 @@
                 <div class="dropdown-container" id="zip-menu">
                 </div> -->
                 {% for issue, desc in issues.items %}
-                <button class="dropdown-btn" id="{{ issue }}">{{ issue }}
+                <button class="dropdown-btn btn-primary" id="{{ issue }}">{{ issue }}
                     <i class="fa fa-caret-down"></i></button>
                 <div class="dropdown-container">
                     {% for item, key in desc.items %}
-                    <a href="#" id="{{ item }}">{{ key }}</a>
+                    <a href="#" id="{{ item }}" class="btn-primary">{{ key }}</a>
                     {% endfor %}
                 </div>
                 {% endfor %}
