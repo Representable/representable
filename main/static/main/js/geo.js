@@ -568,73 +568,7 @@ function updateCommunityEntry(e) {
         let user_polygon_json = JSON.stringify(drawn_polygon['geometry']);
         wkt_obj = wkt.read(user_polygon_json);
         user_polygon_wkt = wkt_obj.write();
-        // user_poly_defined = true;
-        // count_user_poly = 1;
         var mpolygon = highlightBlocks(drawn_polygon);
-        // census_blocks_polygon_wkt = mergeBlocks(mpolygon, drawn_polygon);
-        // Save census blocks polygon outline.
-        // census_blocks_polygon = drawn_polygon;
-        // var polygonBoundingBox = turf.bbox(census_blocks_polygon);
-        // // get the bounds of the polygon to reduce the number of blocks you are querying from
-        // var southWest = [polygonBoundingBox[0], polygonBoundingBox[1]];
-        // var northEast = [polygonBoundingBox[2], polygonBoundingBox[3]];
-
-        // var northEastPointPixel = map.project(northEast);
-        // var southWestPointPixel = map.project(southWest);
-        // var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
-        // if (features.length >= 1) {
-        //     var mpolygon = [];
-        //     var total = 0.0;
-
-        //     var filter = features.reduce(function(memo, feature) {
-        //         if (! (turf.intersect(feature, census_blocks_polygon) === null)) {
-        //             memo.push(feature.properties.BLOCKID10);
-        //             mpolygon.push(feature);
-        //             total+= feature.properties.POP10;
-        //         }
-        //         return memo;
-        //     }, ["in", "BLOCKID10"]);
-
-
-        //     map.setFilter("blocks-highlighted", filter);
-        //     census_poly_defined = true;
-        //     // progress bar with population data based on ideal population for a district in the given state
-        //     //<div id="pop" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 85%">
-        //     progress = document.getElementById("pop");
-        //     // set color of the progress bar depending on population
-        //     if (total < (ideal_population * 0.33) || total > (ideal_population * 1.5)) {
-        //     progress.style.background = "red";
-        //     }
-        //     else if (total < (ideal_population * 0.67) || total > (ideal_population * 1.33)) {
-        //     progress.style.background = "orange";
-        //     }
-        //     else {
-        //     progress.style.background = "green";
-        //     }
-        //     progress.innerHTML = total;
-        //     progress.setAttribute("aria-valuenow", "total");
-        //     progress.setAttribute("aria-valuemax", ideal_population * 1.5);
-        //     popWidth = total / (ideal_population * 1.5) * 100;
-        //     progress.style.width = popWidth + "%";
-
-        //     var finalpoly = turf.union.apply(null, mpolygon);
-        //     // should only be the exterior ring
-
-        //     if (finalpoly.geometry.coordinates[0][0].length > 2) {
-        //         census_blocks_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0][0];
-        //     }
-        //     else {
-        //         census_blocks_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0];
-        //     }
-        //     // Save outline of census blocks.
-        //     let census_blocks_polygon_json = JSON.stringify(census_blocks_polygon['geometry']);
-        //     wkt_obj = wkt.read(census_blocks_polygon_json);
-        //     census_blocks_polygon_wkt = wkt_obj.write();
-        // }
-        // else {
-        //     census_blocks_polygon_wkt = '';
-        // }
-
     } else {
         // user_poly_defined = false;
         // count_user_poly = 0;
