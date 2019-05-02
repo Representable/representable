@@ -150,7 +150,6 @@ map.on('load', function() {
 
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
-  let i = 0;
 
   for (obj in a) {
     // console.log(obj);
@@ -190,11 +189,36 @@ map.on('load', function() {
         "visibility": "visible"
       },
       'paint': {
-        'fill-color': 'rgba(185, 250, 248,0.4)',
-        'fill-outline-color': 'rgba(185, 250, 248,1)'
+        'fill-color': 'rgba(110, 178, 181,0.15)',
       }
     });
-    i++;
+    map.addLayer({
+      'id': obj + "line",
+      'type': 'line',
+      'source': {
+        'type': 'geojson',
+        'data': {
+          'type': 'Feature',
+          'geometry': {
+            'type': 'Polygon',
+            'coordinates': a[obj]
+          },
+          'properties': {
+            'issues': catDict,
+            'category': catArray
+          }
+        }
+      },
+      'layout': {
+        "visibility": "visible",
+        "line-join": "round",
+        "line-cap": "round"
+      },
+      'paint': {
+        'line-color': 'rgba(110, 178, 181,0.3)',
+        "line-width": 2
+      }
+    });
   }
 
   // this function iterates thru the issues, and adds a link to each one Which
@@ -213,10 +237,12 @@ map.on('load', function() {
         if (issues[issueId][obj] === undefined) {
           // console.log(obj);
           map.setLayoutProperty(obj, 'visibility', 'none');
+          map.setLayoutProperty(obj + "line", 'visibility', 'none');
         } else {
           map.setLayoutProperty(obj, 'visibility', 'visible');
-          map.setPaintProperty(obj, 'fill-color', PAINT_VALUES[issueId] + '0.4)');
-          map.setPaintProperty(obj, 'fill-outline-color', PAINT_VALUES[issueId] + '1)');
+          map.setLayoutProperty(obj + "line", 'visibility', 'visible');
+          map.setPaintProperty(obj + "line", 'line-color', PAINT_VALUES[issueId] + '0.3)');
+          map.setPaintProperty(obj, 'fill-color', PAINT_VALUES[issueId] + '0.15)');
         }
       }
     }
@@ -232,8 +258,10 @@ map.on('load', function() {
           if (thisId === obj) {
             console.log(obj);
             map.setLayoutProperty(obj, 'visibility', 'visible');
+            map.setLayoutProperty(obj + "line", 'visibility', 'visible');
           } else {
             map.setLayoutProperty(obj, 'visibility', 'none');
+            map.setLayoutProperty(obj + "line", 'visibility', 'none');
           }
         }
       }
@@ -245,8 +273,10 @@ map.on('load', function() {
   allEntriesButton.onclick = function(e) {
     for (obj in a) {
       map.setLayoutProperty(obj, 'visibility', 'visible');
-      map.setPaintProperty(obj, 'fill-color', 'rgba(185, 250, 248,0.4)');
-      map.setPaintProperty(obj, 'fill-outline-color', 'rgba(185, 250, 248, 1)');
+      map.setLayoutProperty(obj + "line", 'visibility', 'visible');
+      map.setPaintProperty(obj, 'fill-color', 'rgba(110, 178, 181,0.15)');
+      map.setPaintProperty(obj + "line", 'line-color', 'rgba(110, 178, 181,0.3)');
+
     }
   }
 
