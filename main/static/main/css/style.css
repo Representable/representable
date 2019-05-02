@@ -49,6 +49,10 @@ a:link, a:visited, a:active {
   font-weight: 700;
 }
 
+.nav-link {
+  font-weight: 500;
+  font-size: 16px;
+}
 .container {
   border-width: 0;
 }
@@ -224,10 +228,6 @@ section {
     border-width: 0 0 0 1px;
     box-shadow: 5px 0 5px -5px rgba(0, 0, 0, 0.1);
     /*box-shadow: -2px 0 2px 1px rgba(0,0,0,0.1);*/
-  }
-
-  .row-content {
-    padding: 40px;
   }
 
   .row-content {
@@ -474,12 +474,11 @@ section {
     top: 0%;
     width: 100%;
     opacity: 0;
-    -webkit-transform: translateY(-45%);
-    -ms-transform: translateY(-45%);
-    transform: translateY(-45%);
+    -webkit-transform: translateY(-40%);
+    -ms-transform: translateY(-40%);
+    transform: translateY(-40%);
     -webkit-transition: all 0.3s 0.2s;
     transition: all 0.3s 0.2s;
-    /*padding: 0 20px;*/
 }
 .desk, .desk h4, .team-hover .s-link a {
     text-align: center;

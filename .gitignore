@@ -121,3 +121,5 @@ GitHub.sublime-settings
 staticfiles/
 geo_districter/
 NJBlocks.json
+
+.DS_Store
