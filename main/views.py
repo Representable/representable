@@ -10,12 +10,8 @@ from .models import CommunityEntry, Issue, Tag
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
 from shapely.geometry import Polygon, mapping
-import geojson
-import os
-import json
-import re
+import geojson, os, json, re
 from django.http import JsonResponse
-
 
 #******************************************************************************#
 
@@ -23,11 +19,9 @@ from django.http import JsonResponse
 from django.contrib.gis.geos import Point
 
 #******************************************************************************#
-
 '''
 Documentation: https://docs.djangoproject.com/en/2.1/topics/class-based-views/
 '''
-
 
 class Index(TemplateView):
     template_name = "main/index.html"
@@ -41,7 +35,6 @@ class Index(TemplateView):
 
 #******************************************************************************#
 
-
 class MainView(TemplateView):
     template_name = "main/main_test.html"
 
@@ -54,78 +47,35 @@ class MainView(TemplateView):
 
 #******************************************************************************#
 
-
 class Timeline(TemplateView):
     template_name = "main/timeline.html"
 
 #******************************************************************************#
 
-
 class About(TemplateView):
     template_name = "main/about.html"
 
 #******************************************************************************#
-
-
-class Review(TemplateView):
+class Review(LoginRequiredMixin, TemplateView):
     template_name = "main/review.html"
 
-    '''
     def get_context_data(self, **kwargs):
-        # the dict of issues + input of descriptions
-        issues = dict()
-        for obj in Issue.objects.all():
-            cat = obj.category
-            cat = re.sub('_', ' ', cat).title()
-            if cat == 'Economic':
-                cat = 'Economic Affairs'
-            if cat == 'Health':
-                cat = 'Health and Health Insurance'
-            if cat == 'Internet':
-                cat = 'Internet Regulation'
-            if cat == 'Women':
-                cat = 'Women\'s Issues'
-            if cat == 'Lgbt':
-                cat = 'LGBT Issues'
-            if cat == 'Security':
-                cat = 'National Security'
-            if cat == 'Welfare':
-                cat = 'Social Welfare'
-            if cat in issues:
-                issues[cat].append(obj.description)
-            else:
-                issues[cat] = [obj.description]
-
-        a = []
-        for obj in CommunityEntry.objects.all():
-            a.append(obj.entry_polygon.geojson)
-
-        final = []
-        for obj in a:
-            s = "".join(obj)
-
         entryPolyDict = dict()
-        for obj in CommunityEntry.objects.all():
+        for obj in CommunityEntry.objects.filter(user = self.request.user):
             if (obj.census_blocks_polygon == "" or obj.census_blocks_polygon == None):
                 s = "".join(obj.user_polygon.geojson)
             else:
                 s = "".join(obj.census_blocks_polygon.geojson)
-            # add all the coordinates in the array
-            # at this point all the elements of the array are coordinates of the polygons
+
             struct = geojson.loads(s)
             entryPolyDict[obj.entry_ID] = struct.coordinates
-            # print("printing the struct")
-            # print(struct)
 
         context = ({
-            'issues': issues,
-            'entries': final,
+            'entries': entryPolyDict,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
         })
         return context
-    '''
 #******************************************************************************#
-
 
 class Map(TemplateView):
     template_name = "main/map.html"
@@ -173,7 +123,6 @@ class Map(TemplateView):
                 s = "".join(obj.user_polygon.geojson)
             else:
                 s = "".join(obj.census_blocks_polygon.geojson)
-
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)

@@ -33,9 +33,6 @@ class CommunityEntry(models.Model):
     Community Entry represents the entry created by the user when drawing their
     COI.
     '''
-    # https://www.census.gov/topics/population/race/about.html
-    # Foreign Key = User (Many to One)
-    # https://docs.djangoproject.com/en/2.2/topics/db/examples/many_to_one/
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     # Generated randomly every time.
     entry_ID = models.CharField(max_length=100, blank=False, unique=True, default=uuid.uuid4)
@@ -48,7 +45,6 @@ class CommunityEntry(models.Model):
     race = ArrayField(models.CharField(max_length=50,choices=RACE_CHOICES),default=list,blank=True)
     religion = ArrayField(models.CharField(max_length=50,choices=RELIGION_CHOICES),default=list,blank=True)
     industry = ArrayField(models.CharField(max_length=50,choices=INDUSTRY_CHOICES),default=list,blank=True)
-    # User Zipcode
     zipcode = models.CharField("Zipcode", max_length=5, blank=False, null=False)
     tags = models.ManyToManyField(Tag, blank=True)
     CHOICES=(

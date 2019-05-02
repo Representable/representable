@@ -348,7 +348,6 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   var link = document.createElement('a');
 
   link.href = '#';
-  link.className = 'btn-primary';
   link.textContent = id;
 
   link.onclick = function(e) {
@@ -362,14 +361,48 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
 
       if (visibility === 'visible') {
         map.setLayoutProperty(clickedLayers[j], 'visibility', 'none');
+        this.id = 'invis';
       } else {
         map.setLayoutProperty(clickedLayers[j], 'visibility', 'visible');
+        this.id = 'vis'
       }
     }
   };
 
+  // <div class="onoffswitch">
+  //   <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+  //   <label class="onoffswitch-label" for="myonoffswitch">
+  //     <span class="onoffswitch-inner"></span>
+  //     <span class="onoffswitch-switch"></span>
+  //   </label>
+  // </div>
+  var div = document.createElement('div');
+  div.className = 'onoffswitch';
+  var input = document.createElement('input');
+  input.setAttribute('type', 'checkbox');
+  input.setAttribute('name', 'onoffswitch');
+  input.className = 'onoffswitch-checkbox';
+  input.id = 'myonoffswitch';
+  if (link.id === 'vis') {
+    input.checked = true;
+  }
+  else {
+    input.checked = false;
+  }
+  var label = document.createElement('label');
+  label.className = 'onoffswitch-label';
+  label.setAttribute('for', 'myonoffswitch');
+  var inner = document.createElement('span');
+  inner.className = 'onoffswitch-inner';
+  var switchClass = document.createElement('span');
+  switchClass.className = 'onoffswitch-switch';
+  div.appendChild(input);
+  label.appendChild(inner);
+  label.appendChild(switchClass);
+  div.appendChild(label);
   var layers = document.getElementById('outline-menu');
   layers.appendChild(link);
+  link.appendChild(div);
 }
 
 /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content -
