@@ -251,43 +251,43 @@ map.on('load', function() {
     }
   }
 
-  //create a button which toggles layers based on their zip codes
-  console.log(zips);
-  // console.log(typeof zips);
-  // console.log(typeof issues);
-  var zipReplace = zips.replace(/'/g, '"');
-  var newZips = JSON.parse(zipReplace);
-  // console.log(newZips);
-  for (var zip in newZips) {
-    var entries = newZips[zip];
-    // console.log(zip);
-    var link = document.createElement('a');
-
-    link.href = '#';
-    link.className = 'active';
-    link.textContent = zip;
-    link.setAttribute('entries', entries);
-
-    link.onclick = function(e) {
-      var entryIds = this.getAttribute('entries');
-      var txt = this.textContent;
-      e.preventDefault();
-      e.stopPropagation();
-
-      for (obj in a) {
-        if (entryIds.includes(obj)) {
-          // console.log(obj);
-          map.setLayoutProperty(obj, 'visibility', 'visible');
-          this.className = '';
-        } else {
-          this.className = 'active';
-          map.setLayoutProperty(obj, 'visibility', 'none');
-        }
-      }
-    };
-    var layers = document.getElementById('zip-menu');
-    layers.appendChild(link);
-  }
+  // //create a button which toggles layers based on their zip codes
+  // console.log(zips);
+  // // console.log(typeof zips);
+  // // console.log(typeof issues);
+  // var zipReplace = zips.replace(/'/g, '"');
+  // var newZips = JSON.parse(zipReplace);
+  // // console.log(newZips);
+  // for (var zip in newZips) {
+  //   var entries = newZips[zip];
+  //   // console.log(zip);
+  //   var link = document.createElement('a');
+  //
+  //   link.href = '#';
+  //   link.className = 'active';
+  //   link.textContent = zip;
+  //   link.setAttribute('entries', entries);
+  //
+  //   link.onclick = function(e) {
+  //     var entryIds = this.getAttribute('entries');
+  //     var txt = this.textContent;
+  //     e.preventDefault();
+  //     e.stopPropagation();
+  //
+  //     for (obj in a) {
+  //       if (entryIds.includes(obj)) {
+  //         // console.log(obj);
+  //         map.setLayoutProperty(obj, 'visibility', 'visible');
+  //         this.className = '';
+  //       } else {
+  //         this.className = 'active';
+  //         map.setLayoutProperty(obj, 'visibility', 'none');
+  //       }
+  //     }
+  //   };
+  //   var layers = document.getElementById('zip-menu');
+  //   layers.appendChild(link);
+  // }
 
   // // When a click event occurs on a feature in the dummy layer, open a popup at the
   // // location of the click, with description HTML from its properties.

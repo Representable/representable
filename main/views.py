@@ -165,10 +165,10 @@ class Map(TemplateView):
             print(obj)
             print(obj.communityentry_set.all())
         # dictionary of zip codes
-        zips = dict()
+        # zips = dict()
         for obj in CommunityEntry.objects.all():
             # print(obj.tags.name)
-            zipcode = obj.zipcode
+            # zipcode = obj.zipcode
             if (obj.census_blocks_polygon == "" or obj.census_blocks_polygon == None):
                 s = "".join(obj.user_polygon.geojson)
             else:
@@ -177,13 +177,13 @@ class Map(TemplateView):
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
             entryPolyDict[obj.entry_ID] = struct.coordinates
-            if zipcode in zips:
-                zips[zipcode].append(obj.entry_ID)
-            else:
-                zips[zipcode] = [obj.entry_ID]
+            # if zipcode in zips:
+            #     zips[zipcode].append(obj.entry_ID)
+            # else:
+            #     zips[zipcode] = [obj.entry_ID]
 
         context = ({
-            'zips': zips,
+            # 'zips': zips,
             'issues': issues,
             'entries': entryPolyDict,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
