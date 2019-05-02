@@ -502,11 +502,44 @@ function highlightBlocks(drawn_polygon) {
         var total = 0.0;
 
         var filter = features.reduce(function(memo, feature) {
-            if (! (turf.intersect(feature, census_blocks_polygon) === null)) {
-                memo.push(feature.properties.BLOCKID10);
-                mpoly.push(feature);
-                total+= feature.properties.POP10;
-            }
+            // console.log(feature);
+            // check if polygon intersects
+            // if (! (turf.intersect(feature, census_blocks_polygon) === null)) {
+            //     memo.push(feature.properties.BLOCKID10);
+            //     mpoly.push(feature);
+            //     total+= feature.properties.POP10;
+            // }
+            // // check if polygon is contained
+            // else {
+                if (feature.geometry.type == "MultiPolygon") {
+                    var polyCon;
+                    // go through all the polygons and check to see if any of the polygons are contained
+                    // call intersect AND contained
+                    console.log("going inside the if statement");
+                    if (feature.geometry.coordinates[0][0].length > 2) {
+                        console.log(feature.geometry.coordinates[0][0]);
+                        polyCon = turf.polygon([feature.geometry.coordinates[0][0]]);
+                    }
+                    else {
+                        polyCon = feature.geometry.coordinates[0];
+                    }
+                    // console.log("polyCon");
+                    // console.log(polyCon);
+
+                    if (turf.booleanContains(drawn_polygon, polyCon)) {
+                        // console.log("containd");
+                        memo.push(feature.properties.BLOCKID10);
+                        mpoly.push(polyCon);
+                        total+= feature.properties.POP10;
+                    }
+                }
+                else {
+                    if (turf.booleanContains(drawn_polygon, feature.geometry)) {
+                        memo.push(feature.properties.BLOCKID10);
+                        mpoly.push(feature);
+                        total+= feature.properties.POP10;
+                    }
+                }
             return memo;
         }, ["in", "BLOCKID10"]);
 
@@ -527,8 +560,8 @@ function highlightBlocks(drawn_polygon) {
         }
         progress.innerHTML = total;
         progress.setAttribute("aria-valuenow", "total");
-        progress.setAttribute("aria-valuemax", ideal_population * 1.5);
-        popWidth = total / (ideal_population * 1.5) * 100;
+        progress.setAttribute("aria-valuemax", ideal_population);
+        popWidth = total / (ideal_population) * 100;
         progress.style.width = popWidth + "%";
     }
     else {
