@@ -34,6 +34,15 @@ h3 {
   letter-spacing: 1px;
 }
 
+.text-info-custom {
+    color: #38ada9;
+}
+
+.text-header-card {
+    color: #3c6382;
+    font-size: 1.25rem;
+}
+
 /* Links and buttons */
 a:link, a:visited, a:active {
   color: inherit;

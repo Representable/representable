@@ -238,6 +238,7 @@ class EntryView(LoginRequiredMixin, View):
         issue_formset = self.IssueFormSet(request.POST)
         if form.is_valid() and issue_formset.is_valid():
             entryForm = form.save(commit=False)
+            
             entryForm.save()
             for issue_form in issue_formset:
                 category = issue_form.cleaned_data.get('category')
