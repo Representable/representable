@@ -581,7 +581,8 @@ function updateCommunityEntry(e) {
     // Update form fields
     census_blocks_polygon_wkt = '';
     document.getElementById('id_user_polygon').value = user_polygon_wkt;
-    document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon_wkt;
+    document.getElementById('census_blocks_multipolygon').value = "";
+    document.getElementById('census_blocks_polygon').value = "";
 }
 
 

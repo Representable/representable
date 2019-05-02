@@ -17,11 +17,12 @@ class TagSelect2Widget(ModelSelect2TagWidget):
     def value_from_datadict(self, data, files, name):
         values = super().value_from_datadict(data, files, name)
         queryset = self.get_queryset()
+        print(queryset)
         pks = queryset.filter(**{'name__in': list(values)}).values_list('name', flat=True)
         cleaned_values = []
         for val in values:
             if str(val) not in pks:
-                val = queryset.create(name=val).pk
+                val = queryset.create(name=val)
             cleaned_values.append(val)
         print(cleaned_values)
         return cleaned_values
