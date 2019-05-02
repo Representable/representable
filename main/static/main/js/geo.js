@@ -259,6 +259,7 @@ map.addControl(geocoder, 'top-right');
 // Add controls outside of map.
 // Source: https://github.com/mapbox/mapbox-gl-draw/blob/master/docs/API.md
 map.addControl(draw);
+// map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
 
 /* Change mapbox draw button */
 var drawButton = document.getElementsByClassName("mapbox-gl-draw_polygon");
@@ -422,9 +423,9 @@ map.on('draw.update', updateCommunityEntry);
 //         // if (census_poly_defined !== undefined && count_census_poly > 0) {
 //         //     count_census_poly = 0;
 //         //     mergeBlocks(mpolygon);
-            
+
 //         //     // mergeBlocks(mpolygon);
-    
+
 //         //     // console.log("highlight polygons now that the filter returns something");
 //         // }
 //     }
@@ -441,12 +442,12 @@ map.on('draw.update', updateCommunityEntry);
 //     if (census_poly_defined !== undefined && count_census_poly > 0) {
 //         count_census_poly = 0;
 //         mergeBlocks(mpolygon);
-        
+
 //         // mergeBlocks(mpolygon);
 
 //         // console.log("highlight polygons now that the filter returns something");
 //     }
-    
+
 // }
 
 function mergeBlocks(mpoly, drawn_polygon) {
@@ -459,7 +460,7 @@ function mergeBlocks(mpoly, drawn_polygon) {
         finalpoly = turf.union(mpoly[i], finalpoly);
     }
 
-    
+
     var census_blocks_polygon = drawn_polygon;
     // should only be the exterior ring
     console.log("function triggered");

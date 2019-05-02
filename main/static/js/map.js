@@ -141,7 +141,6 @@ map.on('load', function() {
     newLowerLegislatureLayer(states[i]);
   }
 
-
   // issues add to properties
   var issueDict = issues.replace(/'/g, '"');
   issues = JSON.parse(issueDict);

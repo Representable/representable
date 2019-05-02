@@ -1,11 +1,33 @@
 {% extends 'main/base.html' %}
+{% load static %}
 
-{% block content %}
 
-<div class="row row-content">
-    <div class="col-12">
-        <h1> Thank you for contributing to creating fair voting districts!</h1>
+
+{% block hero-pre %}
+<div class="shadow-sm">
+    <div id="particles-js">
+        {% endblock %}
+        {% block hero %}
+        <div class="container-fluid container-hero">
+            <div class="row row-hero">
+                <div class="col-sm-12 col-md-10 offset-md-1 my-5">
+                    <h1 class="di-title mb-4"> Thank you for contributing to creating fair voting districts!</h1>
+                    <a class="btn btn-primary btn-canvas" href="/map/" role="button">Browse Community Entries</a>
+                    <a class="btn btn-primary btn-canvas" href="/entry" role="button">Create Another Entry</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
+
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'js/particles.min.js' %}"></script>
+<script>
+    particlesJS.load('particles-js', "{% static 'assets/particles.json' %}", function() {
+        console.log('callback - particles.min.js config loaded');
+    });
+</script>
 {% endblock %}
