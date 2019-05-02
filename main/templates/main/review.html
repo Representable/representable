@@ -1,9 +1,61 @@
 {% extends 'main/base.html' %}
+{% load leaflet_tags %}
+{% load static %}
 
+{% block head %}
+{% leaflet_js %}
+{% leaflet_css %}
+<!-- https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ -->
+<!-- Mapbox GL JS -->
+<meta charset='utf-8' />
+<title>View Communities</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--  GeoCoder -->
+<meta name='robots' content='noindex, nofollow'>
+<link href="https://api.mapbox.com/mapbox-assembly/mbx/v0.23.1/assembly.min.css" rel="stylesheet">
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
+<!--  Custom CSS -->
+<link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+{% endblock %}
 {% block content %}
-<div class="row row-content">
-    <div class="col">
-      <h1> Review your submissions! </h1>
+<div class="row row-wide">
+  <div>
+      <script type="text/javascript">
+        var a = '{{ entries | escapejs}}';
+     </script>
+  </div>
+    <div class="col-md-3 col-wide">
+        <nav id='menu'>
+            <div class="sidenav">
+                <div class="search">
+                    <input type="text" id="search-bar" class="searchTerm" placeholder="Search layers..." onkeyup="searchTags()">
+                    <button type="submit" class="searchButton" onclick="searchTags()">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+                <button class="dropdown-btn btn-primary" id="all">All Entries
+                    <i class="fa"></i></button>
+                <div class="dropdown-container"></div>
+                <button class="dropdown-btn btn-primary">Display Outlines
+                    <i class="fa fa-caret-down"></i></button>
+                <div class="dropdown-container" id="outline-menu">
+                </div>
+        </nav>
+    </div>
+    <div class="col-md-9 col-map col-wide">
+        <div id='map' class="map-visualization"></div>
     </div>
 </div>
+{% endblock %}
+
+{% block script %}
+<!--  Has to be at the end after the HTML loads.-->
+<script type="text/javascript">
+    mapboxgl.accessToken = "{{ mapbox_key }}";
+</script>
+<script type="text/javascript" src="{% static 'js/map.js' %}"></script>
 {% endblock %}

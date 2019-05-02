@@ -1,4 +1,5 @@
 # Defines the choices for various models and form widgets
+# https://www.census.gov/topics/population/race/about.html
 RACE_CHOICES = (
     ('white', 'White'),
     ('black', 'Black or African American'),

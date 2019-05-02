@@ -199,6 +199,7 @@ a:link, a:visited, a:active {
 
 section {
   padding: 25px 0;
+  border-bottom: 1px solid #ddd;
 }
 
 .map-visualization {
