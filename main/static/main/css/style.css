@@ -380,7 +380,7 @@ section {
   float: none;
 }
 
-.draw_polygon_map .mapboxgl-ctrl-group>button {
+.draw-group>button {
   display: block;
   width: 100%;
   background-image: none;

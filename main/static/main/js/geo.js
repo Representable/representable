@@ -259,7 +259,12 @@ map.addControl(geocoder, 'top-right');
 // Add controls outside of map.
 // Source: https://github.com/mapbox/mapbox-gl-draw/blob/master/docs/API.md
 map.addControl(draw);
-// map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
+// Insert class into draw buttons so we can differentiate their styling from
+// from the nav buttons below.
+drawControls = document.querySelector(".draw_polygon_map .mapboxgl-ctrl-group");
+drawControls.className += " draw-group";
+// Add nav control buttons.
+map.addControl(new mapboxgl.NavigationControl());
 
 /* Change mapbox draw button */
 var drawButton = document.getElementsByClassName("mapbox-gl-draw_polygon");
