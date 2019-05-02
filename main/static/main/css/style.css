@@ -196,12 +196,9 @@ a:link, a:visited, a:active {
   /* set to red to test response:  background-color: #ff0000; */
 }
 
+
 section {
-  padding: 25px 50px;
-  line-height: 25px;
-  border-bottom: 1px solid #ddd;
-  opacity: 1;
-  /* font-size: 13px; */
+  padding: 25px 0;
 }
 
 .map-visualization {
