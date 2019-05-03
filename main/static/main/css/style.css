@@ -34,6 +34,15 @@ h3 {
   letter-spacing: 1px;
 }
 
+.text-info-custom {
+    color: #38ada9;
+}
+
+.text-header-card {
+    color: #3c6382;
+    font-size: 1.25rem;
+}
+
 /* Links and buttons */
 a:link, a:visited, a:active {
   color: inherit;
@@ -378,7 +387,7 @@ section {
   float: none;
 }
 
-.draw_polygon_map .mapboxgl-ctrl-group>button {
+.draw-group>button {
   display: block;
   width: 100%;
   background-image: none;
