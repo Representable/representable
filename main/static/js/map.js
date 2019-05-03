@@ -349,6 +349,7 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
 
   link.href = '#';
   link.textContent = id;
+  link.id = 'vis';
 
   link.onclick = function(e) {
     var txt = this.textContent;
