@@ -536,7 +536,8 @@ function highlightBlocks(drawn_polygon) {
         // count_census_poly = 1;
 
         // 1. LOWER LEGISLATION PROGRESS BAR __________________________________
-        progress = document.getElementById("pop");
+        progressL = document.getElementById("pop");
+        /*
         // set color of the progress bar depending on population
         if (total < (ideal_population_LOWER['nj'] * 0.33) || total > (ideal_population_LOWER['nj'] * 1.5)) {
             progress.style.background = "red";
@@ -547,15 +548,19 @@ function highlightBlocks(drawn_polygon) {
         else {
             progress.style.background = "green";
         }
-        progress.innerHTML = Math.round(total / (ideal_population_LOWER['nj'] * 1.5) * 100) + "%";
-        progress.setAttribute("aria-valuenow", "total");
-        progress.setAttribute("aria-valuemax", ideal_population_LOWER['nj'] * 1.5);
+        */
+        progressL.style.background = "orange"
+        progressL.innerHTML = Math.round(total / (ideal_population_LOWER['nj'] * 1.5) * 100) + "%";
+        progressL.setAttribute("aria-valuenow", "total");
+        progressL.setAttribute("aria-valuemax", ideal_population_LOWER['nj']);
         popWidth = total / (ideal_population_LOWER['nj'] * 1.5) * 100;
-        progress.style.width = popWidth + "%";
+        progressL.style.width = popWidth + "%";
 
 
         // 2. UPPER LEGISLATION PROGRESS BAR __________________________________
         progressU = document.getElementById("popU");
+
+        /*
         // set color of the progress bar depending on population
         if (total < (ideal_population_UPPER['nj'] * 0.33) || total > (ideal_population_UPPER['nj'] * 1.5)) {
             progressU.style.background = "red";
@@ -566,15 +571,18 @@ function highlightBlocks(drawn_polygon) {
         else {
             progressU.style.background = "green";
         }
+        */
+        progressU.style.background = "orange"
         progressU.innerHTML = Math.round(total / (ideal_population_UPPER['nj'] * 1.5) * 100) + "%";
         progressU.setAttribute("aria-valuenow", "total");
-        progressU.setAttribute("aria-valuemax", ideal_population_UPPER['nj'] * 1.5);
+        progressU.setAttribute("aria-valuemax", ideal_population_UPPER['nj']);
         popWidth = total / (ideal_population_UPPER['nj'] * 1.5) * 100;
         progressU.style.width = popWidth + "%";
 
 
         // 3. CONGRESSIONAL DISTRICT PROGRESS BAR __________________________________
         progressC = document.getElementById("popC");
+        /*
         // set color of the progress bar depending on population
         if (total < (ideal_population_CONG['nj'] * 0.33) || total > (ideal_population_CONG['nj'] * 1.5)) {
             progressU.style.background = "red";
@@ -585,9 +593,11 @@ function highlightBlocks(drawn_polygon) {
         else {
             progressC.style.background = "green";
         }
+        */
+        progressC.style.background = "orange"
         progressC.innerHTML = Math.round(total / (ideal_population_CONG['nj'] * 1.5) * 100) + "%";
         progressC.setAttribute("aria-valuenow", "total");
-        progressC.setAttribute("aria-valuemax", ideal_population_CONG['nj'] * 1.5);
+        progressC.setAttribute("aria-valuemax", ideal_population_CONG['nj']);
         popWidth = total / (ideal_population_CONG['nj'] * 1.5) * 100;
         progressC.style.width = popWidth + "%";
     }
