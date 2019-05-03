@@ -376,6 +376,7 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
 
   var label = document.createElement('label');
   label.for = id;
+  label.textContent = id;
   var layers = document.getElementById('outline-menu');
   layers.appendChild(label);
   layers.appendChild(link);
