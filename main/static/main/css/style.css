@@ -94,6 +94,10 @@ a:link, a:visited, a:active {
   clear: both;
 }
 
+.card-body {
+    color: #000;
+}
+
 .row-content {
   background-color: #FFF;
   /* color: #000; */
