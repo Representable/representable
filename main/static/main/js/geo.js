@@ -274,7 +274,7 @@ var draw = new MapboxDraw({
 // var document.getElementById("map").dispatchEvent(event);
 // highlight(map);
 // initialize the progress bar with pop data
-document.getElementById("ideal-pop").innerHTML = ideal_population_LOWER['nj'];
+// document.getElementById("ideal-pop").innerHTML = ideal_population_LOWER['nj'];
 
 map.addControl(geocoder, 'top-right');
 // Add controls outside of map.
