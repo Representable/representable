@@ -347,8 +347,10 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
 
   var link = document.createElement('input');
 
+  link.value = id.replace(/\s+/g, '-').toLowerCase();
   link.id = id;
   link.type = 'checkbox';
+  link.className = 'switch_1';
   // only state upper legislature is not checked
   if (id === 'State Legislature - Upper') {
     link.checked = false;
@@ -374,12 +376,17 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
     }
   };
 
+  var div = document.createElement('div');
+  div.className = 'switch_box box_1';
   var label = document.createElement('label');
-  label.for = id;
+  label.setAttribute('for', id.replace(/\s+/g, '-').toLowerCase());
   label.textContent = id;
   var layers = document.getElementById('outline-menu');
-  layers.appendChild(label);
-  layers.appendChild(link);
+  div.appendChild(link);
+  div.appendChild(label);
+  layers.appendChild(div);
+  var newline = document.createElement('br');
+  // layers.appendChild(newline);
   // var div = document.createElement('div');
   // div.className = 'onoffswitch';
   // var input = document.createElement('input');

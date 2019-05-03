@@ -40,7 +40,7 @@ a:link, a:visited, a:active {
 }
 
 /* a:hover {
-  text-decoration: none;
+text-decoration: none;
 } */
 
 /* Bootstrap elements */
@@ -99,33 +99,33 @@ a:link, a:visited, a:active {
 }
 
 .btn-primary {
-    background-color:#82ccdd;
-    border-color:#82ccdd;
-    cursor: pointer;
+  background-color:#82ccdd;
+  border-color:#82ccdd;
+  cursor: pointer;
 }
 
 .btn-primary:active {
-    background-color:#5b8f9b;
-    border-color: #5b8f9b;
-    cursor: pointer;
+  background-color:#5b8f9b;
+  border-color: #5b8f9b;
+  cursor: pointer;
 }
 
 .btn-primary:hover {
-    background-color:#5b8f9b;
-    border-color:#5b8f9b;
-    cursor: pointer;
+  background-color:#5b8f9b;
+  border-color:#5b8f9b;
+  cursor: pointer;
 }
 
 .btn-outline-primary, .btn-outline-primary:visited, .btn-outline-primary:link {
-    background-color: transparent;
-    border-color: #FFF;
-    color: #FFF;
+  background-color: transparent;
+  border-color: #FFF;
+  color: #FFF;
 }
 
 .btn-outline-primary:hover, .btn-outline-primary:active {
-    background-color: transparent;
-    border-color: #CCC;
-    color: #CCC;
+  background-color: transparent;
+  border-color: #CCC;
+  color: #CCC;
 }
 
 
@@ -201,15 +201,15 @@ section {
 }
 
 .map-visualization {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .draw_polygon_map {
-    top: 0;
-    bottom: 0;
-    /*  Required by Mapbox: Must Set Absolute Height in px */
-    min-height: 500px;
+  top: 0;
+  bottom: 0;
+  /*  Required by Mapbox: Must Set Absolute Height in px */
+  min-height: 500px;
 }
 
 .col-map {
@@ -391,65 +391,65 @@ section {
 
 .map-demo {
   /*  position: absolute; */
-    top: 100px;
-    bottom: 0;
-    width: 50%;
-    /*  Must Set Absolute Height */
-    height: 800px;
+  top: 100px;
+  bottom: 0;
+  width: 50%;
+  /*  Must Set Absolute Height */
+  height: 800px;
 }
 .race-field-wrap {
-    visibility: hidden;
-    height: 0px;
+  visibility: hidden;
+  height: 0px;
 }
 .religion-field-wrap {
-    visibility: hidden;
-    height: 0px;
+  visibility: hidden;
+  height: 0px;
 }
 .industry-field-wrap {
-    visibility: hidden;
-    height: 0px;}
+  visibility: hidden;
+  height: 0px;}
 
 
-.heading-title h3 {
+  .heading-title h3 {
     margin-bottom: 0;
     letter-spacing: 2px;
     font-weight: normal;
-}
-.p-top-30 {
+  }
+  .p-top-30 {
     padding-top: 30px;
-}
+  }
 
-.half-txt2 {
+  .half-txt2 {
     width: 60%;
     margin: 0 auto;
     display: inline-block;
     line-height: 25px;
     /* color: #FFFFFF; */
     font-size: 22px;
-}
+  }
 
-.half-txt {
+  .half-txt {
     width: 60%;
     margin: 0 auto;
     display: inline-block;
     line-height: 25px;
     color: #7e7e7e;
-}
-.text-uppercase {
+  }
+  .text-uppercase {
     text-transform: uppercase;
-}
+  }
 
-.team-member, .team-member .team-img {
+  .team-member, .team-member .team-img {
     position: relative;
-}
-.team-member {
+  }
+  .team-member {
     overflow: hidden;
-}
-.team-member, .team-member .team-img {
+  }
+  .team-member, .team-member .team-img {
     position: relative;
-}
+  }
 
-.team-hover {
+  .team-hover {
     position: absolute;
     top: 0;
     left: 0;
@@ -461,15 +461,15 @@ section {
     opacity: 0;
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
-}
-.team-member:hover .team-hover .desk {
+  }
+  .team-member:hover .team-hover .desk {
     top: 35%;
-}
-.team-member:hover .team-hover, .team-member:hover .team-hover .desk, .team-member:hover .team-hover .s-link {
+  }
+  .team-member:hover .team-hover, .team-member:hover .team-hover .desk, .team-member:hover .team-hover .s-link {
     opacity: 1;
-}
+  }
 
-.desk {
+  .desk {
     position: absolute;
     top: 0%;
     width: 100%;
@@ -480,25 +480,25 @@ section {
     -webkit-transition: all 0.3s 0.2s;
     transition: all 0.3s 0.2s;
     /*padding: 0 20px;*/
-}
-.desk, .desk h4, .team-hover .s-link a {
+  }
+  .desk, .desk h4, .team-hover .s-link a {
     text-align: center;
     color: #222;
-}
-
-@media screen and (max-width: 991px) {
-  .desk p {
-    font-size: 14px;
   }
-}
 
-.team-member:hover .team-hover .s-link {
+  @media screen and (max-width: 991px) {
+    .desk p {
+      font-size: 14px;
+    }
+  }
+
+  .team-member:hover .team-hover .s-link {
     bottom: 10%;
-}
-.team-member:hover .team-hover, .team-member:hover .team-hover .desk, .team-member:hover .team-hover .s-link {
+  }
+  .team-member:hover .team-hover, .team-member:hover .team-hover .desk, .team-member:hover .team-hover .s-link {
     opacity: 1;
-}
-.team-hover .s-link {
+  }
+  .team-hover .s-link {
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -510,78 +510,96 @@ section {
     -webkit-transition: all 0.3s 0.2s;
     transition: all 0.3s 0.2s;
     font-size: 35px;
-}
-.desk, .desk h4, .team-hover .s-link a {
+  }
+  .desk, .desk h4, .team-hover .s-link a {
     text-align: center;
     color: #222;
-}
-.team-member .s-link a {
+  }
+  .team-member .s-link a {
     margin: 0 10px;
     color: #333;
     font-size: 16px;
-}
-.team-title {
+  }
+  .team-title {
     position: static;
     padding: 20px 0;
     display: inline-block;
     letter-spacing: 2px;
     width: 100%;
-}
-.team-title h5 {
+  }
+  .team-title h5 {
     margin-bottom: 0px;
     display: block;
     text-transform: uppercase;
-}
-.team-title span {
+  }
+  .team-title span {
     font-size: 12px;
     text-transform: uppercase;
     color: #a5a5a5;
     letter-spacing: 1px;
-}
+  }
 
-.onoffswitch {
-    position: relative; width: 60px;
-    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
-}
-.onoffswitch-checkbox {
-    display: none;
-}
-.onoffswitch-label {
-    display: block; overflow: hidden; cursor: pointer;
-    border: 2px solid #E3E3E3; border-radius: 36px;
-}
-.onoffswitch-inner {
-    display: block; width: 200%; margin-left: -100%;
-    transition: margin 0.3s ease-in 0s;
-}
-.onoffswitch-inner:before, .onoffswitch-inner:after {
-    display: block; float: left; width: 50%; height: 36px; padding: 0; line-height: 36px;
-    font-size: 16px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
-    box-sizing: border-box;
-}
-.onoffswitch-inner:before {
+/* code for the toggle button: https://codepen.io/thelaazyguy/pen/MvqpPr/ */
+  .switch_box{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 10%;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding-left: 12px;
+  }
+
+  input[type="checkbox"].switch_1{
+    font-size: 16px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 3.5em;
+    height: 1.5em;
+    background: #ddd;
+    border-radius: 3em;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    -webkit-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+    flex: 0.29;
+  }
+
+  input[type="checkbox"].switch_1:checked{
+    background: #0ebeff;
+  }
+
+  input[type="checkbox"].switch_1:after{
+    position: absolute;
     content: "";
-    padding-left: 10px;
-    background-color: #FFFFFF; color: #FFFFFF;
-}
-.onoffswitch-inner:after {
-    content: "";
-    padding-right: 10px;
-    background-color: #FFFFFF; color: #666666;
-    text-align: right;
-}
-.onoffswitch-switch {
-    display: block; width: 36px; margin: 0px;
-    background: #A1A1A1;
-    position: absolute; top: 0; bottom: 0;
-    right: 20px;
-    border: 2px solid #E3E3E3; border-radius: 36px;
-    transition: all 0.3s ease-in 0s;
-}
-.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
-    margin-left: 0;
-}
-.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
-    right: 0px;
-    background-color: #27A1CA;
-}
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    background: #fff;
+    -webkit-box-shadow: 0 0 .25em rgba(0,0,0,.3);
+    box-shadow: 0 0 .25em rgba(0,0,0,.3);
+    -webkit-transform: scale(.7);
+    transform: scale(.7);
+    left: 0;
+    -webkit-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+  }
+
+  input[type="checkbox"].switch_1:checked:after{
+    left: calc(100% - 1.5em);
+  }
+
+  label {
+    color: black;
+    padding: 6px 8px 6px 16px;
+    flex: 1;
+  }
