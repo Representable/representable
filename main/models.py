@@ -21,7 +21,8 @@ class Tag(models.Model):
     Referenced https://docs.djangoproject.com/en/2.2/topics/forms/modelforms/#a-full-example
     The tag table stores tags associated with different entries.
     '''
-    name = models.CharField(max_length=100, primary_key=True)
+    name = models.CharField(max_length=100)
+    # entries = models.ManyToManyField(CommunityEntry, blank=True)
 
     class Meta:
         ordering = ('name',)

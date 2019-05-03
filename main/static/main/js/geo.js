@@ -581,8 +581,8 @@ function updateCommunityEntry(e) {
     // Update form fields
     census_blocks_polygon_wkt = '';
     document.getElementById('id_user_polygon').value = user_polygon_wkt;
-    document.getElementById('census_blocks_multipolygon').value = "";
-    document.getElementById('census_blocks_polygon').value = "";
+    document.getElementById('id_census_blocks_multipolygon').value = "";
+    document.getElementById('id_census_blocks_polygon').value = "";
 }
 
 
@@ -670,34 +670,3 @@ $(document).on('click', '.remove-form-row', function(e) {
     deleteForm('form', $(this));
     return false;
 });
-
-/******************************************************************************/
-
-document.getElementById("race-yes").addEventListener("click", function () {
-    document.getElementById('race-field').style.visibility = 'visible';
-    document.getElementById('race-field').style.height = "auto";
-})
-
-document.getElementById("race-no").addEventListener("click", function () {
-    document.getElementById('race-field').style.visibility = 'hidden';
-    document.getElementById('race-field').style.height = '0px';
-})
-
-document.getElementById("religion-yes").addEventListener("click", function () {
-    document.getElementById('religion-field').style.visibility = 'visible';
-    document.getElementById('religion-field').style.height = "auto";
-})
-
-document.getElementById("religion-no").addEventListener("click", function () {
-    document.getElementById('religion-field').style.visibility = 'hidden';
-    document.getElementById('religion-field').style.height = '0px';
-})
-
-document.getElementById("industry-yes").addEventListener("click", function () {
-    document.getElementById('industry-field').style.visibility = 'visible';
-    document.getElementById('industry-field').style.height = 'auto';
-})
-document.getElementById("industry-no").addEventListener("click", function () {
-    document.getElementById('industry-field').style.visibility = 'hidden';
-    document.getElementById('industry-field').style.height = '0px';
-})
