@@ -170,16 +170,6 @@
                                 </div>
                                 <div class="card-body">
                                     <!-- <h5>2. Community Map</h5> -->
-                                    <label>Selected Community Population</label>
-                                    <div class="progress">
-                                        <div class="bar-step">
-                                            <div class="label-txt">Ideal District Size</div>
-                                            <div class="label-percent" id="ideal-pop"></div>
-                                            <div class="label-line"></div>
-                                        </div>
-                                        <div id="pop" class="progress-bar" role="progressbar" aria-valuemin="0">
-                                        </div>
-                                    </div>
                                     <!-- {# Include form.entry_polygon error. } -->
                                     {% if form.user_polygon.errors %}
                                     <div id="polygon_missing" class="alert alert-warning" role="alert">
@@ -192,6 +182,35 @@
                                         <div id='map' class='draw_polygon_map'>
                                         </div>
                                         <div>
+                                        </div>
+                                    </div>
+                                    <p class="card-text"></p>
+                                    <h5>Selected Community Population</h5>
+                                    <p class="card-text">Percent of Lower Legistlation district size:</p>
+                                    <div class="progress">
+                                        <div class="bar-step">
+                                            <div class="label-line"></div>
+                                        </div>
+                                        <div id="pop" class="progress-bar progress-bar-striped" role="progressbar" aria-valuemin="0">
+                                        </div>
+                                    </div>
+
+                                    <p class="card-text">Percent of Upper Legistlation district size:</p>
+                                    <div class="progress">
+                                        <div class="bar-step">
+                                            <div class="label-line"></div>
+                                        </div>
+                                        <div id="popU" class="progress-bar" role="progressbar" aria-valuemin="0">
+                                        </div>
+                                    </div>
+
+                                    <p class="card-text">Percent of Congressional district size:</p>
+                                    <div class="progress">
+                                        <div class="bar-step">
+                                            <div class="label-percent" id="ideal-pop"></div>
+                                            <div class="label-line"></div>
+                                        </div>
+                                        <div id="popC" class="progress-bar" role="progressbar" aria-valuemin="0">
                                         </div>
                                     </div>
                                 </div>

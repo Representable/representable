@@ -4,6 +4,27 @@
 /* https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ */
 // Polygon Drawn By User
 var ideal_population = 109899;
+var ideal_population_LOWER = {
+  "nj": 109899,
+  "va": 80010,
+  "pa": 62573,
+  "mi": 89851
+};
+
+var ideal_population_UPPER = {
+  "nj": 219797,
+  "va": 200026,
+  "pa": 254048,
+  "mi": 260096
+};
+
+var ideal_population_CONG = {
+  "nj": 710767,
+  "va": 710767,
+  "pa": 710767,
+  "mi": 710767
+};
+
 var wkt_obj;
 // Formset field object saves a deep copy of the original formset field object.
 // (If user deletes all fields, he can add one more according to this one).
@@ -253,7 +274,7 @@ var draw = new MapboxDraw({
 // var document.getElementById("map").dispatchEvent(event);
 // highlight(map);
 // initialize the progress bar with pop data
-document.getElementById("ideal-pop").innerHTML = ideal_population;
+document.getElementById("ideal-pop").innerHTML = ideal_population_LOWER['nj'];
 
 map.addControl(geocoder, 'top-right');
 // Add controls outside of map.
@@ -514,22 +535,61 @@ function highlightBlocks(drawn_polygon) {
         // census_poly_defined = true;
         // count_census_poly = 1;
 
+        // 1. LOWER LEGISLATION PROGRESS BAR __________________________________
         progress = document.getElementById("pop");
         // set color of the progress bar depending on population
-        if (total < (ideal_population * 0.33) || total > (ideal_population * 1.5)) {
+        if (total < (ideal_population_LOWER['nj'] * 0.33) || total > (ideal_population_LOWER['nj'] * 1.5)) {
             progress.style.background = "red";
         }
-        else if (total < (ideal_population * 0.67) || total > (ideal_population * 1.33)) {
+        else if (total < (ideal_population_LOWER['nj'] * 0.67) || total > (ideal_population_LOWER['nj'] * 1.33)) {
             progress.style.background = "orange";
         }
         else {
             progress.style.background = "green";
         }
-        progress.innerHTML = total;
+        progress.innerHTML = Math.round(total / (ideal_population_LOWER['nj'] * 1.5) * 100) + "%";
         progress.setAttribute("aria-valuenow", "total");
-        progress.setAttribute("aria-valuemax", ideal_population * 1.5);
-        popWidth = total / (ideal_population * 1.5) * 100;
+        progress.setAttribute("aria-valuemax", ideal_population_LOWER['nj'] * 1.5);
+        popWidth = total / (ideal_population_LOWER['nj'] * 1.5) * 100;
         progress.style.width = popWidth + "%";
+
+
+        // 2. UPPER LEGISLATION PROGRESS BAR __________________________________
+        progressU = document.getElementById("popU");
+        // set color of the progress bar depending on population
+        if (total < (ideal_population_UPPER['nj'] * 0.33) || total > (ideal_population_UPPER['nj'] * 1.5)) {
+            progressU.style.background = "red";
+        }
+        else if (total < (ideal_population_UPPER['nj'] * 0.67) || total > (ideal_population_UPPER['nj'] * 1.33)) {
+            progressU.style.background = "orange";
+        }
+        else {
+            progressU.style.background = "green";
+        }
+        progressU.innerHTML = Math.round(total / (ideal_population_UPPER['nj'] * 1.5) * 100) + "%";
+        progressU.setAttribute("aria-valuenow", "total");
+        progressU.setAttribute("aria-valuemax", ideal_population_UPPER['nj'] * 1.5);
+        popWidth = total / (ideal_population_UPPER['nj'] * 1.5) * 100;
+        progressU.style.width = popWidth + "%";
+
+
+        // 3. CONGRESSIONAL DISTRICT PROGRESS BAR __________________________________
+        progressC = document.getElementById("popC");
+        // set color of the progress bar depending on population
+        if (total < (ideal_population_CONG['nj'] * 0.33) || total > (ideal_population_CONG['nj'] * 1.5)) {
+            progressU.style.background = "red";
+        }
+        else if (total < (ideal_population_CONG['nj'] * 0.67) || total > (ideal_population_CONG['nj'] * 1.33)) {
+            progressC.style.background = "orange";
+        }
+        else {
+            progressC.style.background = "green";
+        }
+        progressC.innerHTML = Math.round(total / (ideal_population_CONG['nj'] * 1.5) * 100) + "%";
+        progressC.setAttribute("aria-valuenow", "total");
+        progressC.setAttribute("aria-valuemax", ideal_population_CONG['nj'] * 1.5);
+        popWidth = total / (ideal_population_CONG['nj'] * 1.5) * 100;
+        progressC.style.width = popWidth + "%";
     }
     else {
         // census_poly_defined = undefined;
