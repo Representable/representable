@@ -3,7 +3,6 @@
 // GEO Js file for handling map drawing.
 /* https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ */
 // Polygon Drawn By User
-var ideal_population = 109899;
 var ideal_population_LOWER = {
   "nj": 109899,
   "va": 80010,
