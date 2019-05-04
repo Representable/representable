@@ -450,6 +450,9 @@ map.on('draw.update', updateCommunityEntry);
 
 // }
 
+// create the multipolygon on this end
+
+
 function mergeBlocks(mpoly, drawn_polygon) {
     var wkt = new Wkt.Wkt();
     var finalpoly = turf.union(mpoly[0], mpoly[1], mpoly[2], mpoly[3], mpoly[4]);
@@ -484,7 +487,7 @@ function mergeBlocks(mpoly, drawn_polygon) {
 
 function highlightBlocks(drawn_polygon) {
     // Save census blocks polygon outline.
-    //
+    // 
     console.log("called highlight blocks");
     // once the above works, check the global scope of drawn_polygon
 
@@ -502,32 +505,18 @@ function highlightBlocks(drawn_polygon) {
         var total = 0.0;
 
         var filter = features.reduce(function(memo, feature) {
-            // console.log(feature);
-            // check if polygon intersects
-            // if (! (turf.intersect(feature, census_blocks_polygon) === null)) {
-            //     memo.push(feature.properties.BLOCKID10);
-            //     mpoly.push(feature);
-            //     total+= feature.properties.POP10;
-            // }
-            // // check if polygon is contained
-            // else {
                 if (feature.geometry.type == "MultiPolygon") {
                     var polyCon;
                     // go through all the polygons and check to see if any of the polygons are contained
                     // call intersect AND contained
                     console.log("going inside the if statement");
                     if (feature.geometry.coordinates[0][0].length > 2) {
-                        console.log(feature.geometry.coordinates[0][0]);
                         polyCon = turf.polygon([feature.geometry.coordinates[0][0]]);
                     }
                     else {
                         polyCon = feature.geometry.coordinates[0];
                     }
-                    // console.log("polyCon");
-                    // console.log(polyCon);
-
                     if (turf.booleanContains(drawn_polygon, polyCon)) {
-                        // console.log("containd");
                         memo.push(feature.properties.BLOCKID10);
                         mpoly.push(polyCon);
                         total+= feature.properties.POP10;
@@ -544,8 +533,6 @@ function highlightBlocks(drawn_polygon) {
         }, ["in", "BLOCKID10"]);
 
         map.setFilter("blocks-highlighted", filter);
-        // census_poly_defined = true;
-        // count_census_poly = 1;
 
         progress = document.getElementById("pop");
         // set color of the progress bar depending on population
@@ -578,9 +565,12 @@ function highlightBlocks(drawn_polygon) {
 // updatePolygon responds to the user's actions and updates the polygon field
 // in the form.
 function updateCommunityEntry(e) {
-
+    console.log("updateCommunity entry called");
+   
     var wkt = new Wkt.Wkt();
     var data = draw.getAll();
+    console.log(data);
+    console.log(e);
     // Polygon drawn by user in map.
 
     // Polygon saved to DB.
@@ -599,6 +589,20 @@ function updateCommunityEntry(e) {
         // user_poly_defined = true;
         // count_user_poly = 1;
         var mpolygon = highlightBlocks(drawn_polygon);
+        console.log(drawn_polygon);
+        // use the array to create a multipolygon
+        var multi_poly = turf.multiPolygon(mpolygon);
+        
+        var dr_poly = document.getElementsByClassName("mapbox-gl-draw_polygon")[0];
+        dr_poly.style.display = "none";
+        
+
+        // if (dr_poly.style.display === "none") {
+            
+        // } else {
+        //     dr_poly.style.display = "none";
+        // }
+
         // census_blocks_polygon_wkt = mergeBlocks(mpolygon, drawn_polygon);
         // Save census blocks polygon outline.
         // census_blocks_polygon = drawn_polygon;
@@ -671,6 +675,9 @@ function updateCommunityEntry(e) {
         user_polygon_wkt = '';
         census_blocks_polygon_wkt = '';
         map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
+        var dr_poly = document.getElementsByClassName("mapbox-gl-draw_polygon")[0];
+        dr_poly.style.display = "block";
+        debugger
     }
     // Update form fields
     census_blocks_polygon_wkt = '';
@@ -763,6 +770,17 @@ $(document).on('click', '.remove-form-row', function(e) {
     deleteForm('form', $(this));
     return false;
 });
+
+/******************************************************************************/
+
+// var dr_poly = document.getElementsByClassName("mapbox-gl-draw_polygon")[0];
+// dr_poly.addEventListener("click", function(e) {
+//     if (dr_poly.style.display === "none") {
+//         dr_poly.style.display = "block";
+//       } else {
+//         dr_poly.style.display = "none";
+//       }
+// })
 
 /******************************************************************************/
 
