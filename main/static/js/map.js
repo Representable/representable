@@ -345,13 +345,22 @@ var toggleableLayerIds = ['Census Blocks', 'State Legislature - Lower', 'State L
 for (var i = 0; i < toggleableLayerIds.length; i++) {
   var id = toggleableLayerIds[i];
 
-  var link = document.createElement('a');
+  var link = document.createElement('input');
 
-  link.href = '#';
-  link.textContent = id;
+  link.value = id.replace(/\s+/g, '-').toLowerCase();
+  link.id = id;
+  link.type = 'checkbox';
+  link.className = 'switch_1';
+  // only state upper legislature is not checked
+  if (id === 'State Legislature - Upper') {
+    link.checked = false;
+  }
+  else {
+    link.checked = true;
+  }
 
-  link.onclick = function(e) {
-    var txt = this.textContent;
+  link.onchange = function(e) {
+    var txt = this.id;
     var clickedLayers = ["NJ " + txt, "VA " + txt, "PA " + txt, "MI " + txt];
     e.preventDefault();
     e.stopPropagation();
@@ -361,48 +370,50 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
 
       if (visibility === 'visible') {
         map.setLayoutProperty(clickedLayers[j], 'visibility', 'none');
-        this.id = 'invis';
       } else {
         map.setLayoutProperty(clickedLayers[j], 'visibility', 'visible');
-        this.id = 'vis'
       }
     }
   };
 
-  // <div class="onoffswitch">
-  //   <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
-  //   <label class="onoffswitch-label" for="myonoffswitch">
-  //     <span class="onoffswitch-inner"></span>
-  //     <span class="onoffswitch-switch"></span>
-  //   </label>
-  // </div>
   var div = document.createElement('div');
-  div.className = 'onoffswitch';
-  var input = document.createElement('input');
-  input.setAttribute('type', 'checkbox');
-  input.setAttribute('name', 'onoffswitch');
-  input.className = 'onoffswitch-checkbox';
-  input.id = 'myonoffswitch';
-  if (link.id === 'vis') {
-    input.checked = true;
-  }
-  else {
-    input.checked = false;
-  }
+  div.className = 'switch_box box_1';
   var label = document.createElement('label');
-  label.className = 'onoffswitch-label';
-  label.setAttribute('for', 'myonoffswitch');
-  var inner = document.createElement('span');
-  inner.className = 'onoffswitch-inner';
-  var switchClass = document.createElement('span');
-  switchClass.className = 'onoffswitch-switch';
-  div.appendChild(input);
-  label.appendChild(inner);
-  label.appendChild(switchClass);
-  div.appendChild(label);
+  label.setAttribute('for', id.replace(/\s+/g, '-').toLowerCase());
+  label.textContent = id;
   var layers = document.getElementById('outline-menu');
-  layers.appendChild(link);
-  link.appendChild(div);
+  div.appendChild(link);
+  div.appendChild(label);
+  layers.appendChild(div);
+  var newline = document.createElement('br');
+  // layers.appendChild(newline);
+  // var div = document.createElement('div');
+  // div.className = 'onoffswitch';
+  // var input = document.createElement('input');
+  // input.setAttribute('type', 'checkbox');
+  // input.setAttribute('name', 'onoffswitch');
+  // input.className = 'onoffswitch-checkbox';
+  // input.id = 'myonoffswitch';
+  // if (link.id === 'vis') {
+  //   input.setAttribute('checked', 'true');
+  // }
+  // else {
+  //   input.removeAttribute('checked');
+  // }
+  // var label = document.createElement('label');
+  // label.className = 'onoffswitch-label';
+  // label.setAttribute('for', 'myonoffswitch');
+  // var inner = document.createElement('span');
+  // inner.className = 'onoffswitch-inner';
+  // var switchClass = document.createElement('span');
+  // switchClass.className = 'onoffswitch-switch';
+  // div.appendChild(input);
+  // label.appendChild(inner);
+  // label.appendChild(switchClass);
+  // div.appendChild(label);
+  // var layers = document.getElementById('outline-menu');
+  // layers.appendChild(link);
+  // link.appendChild(div);
 }
 
 /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content -
