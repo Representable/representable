@@ -3,7 +3,27 @@
 // GEO Js file for handling map drawing.
 /* https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ */
 // Polygon Drawn By User
-var ideal_population = 109899;
+var ideal_population_LOWER = {
+  "nj": 109899,
+  "va": 80010,
+  "pa": 62573,
+  "mi": 89851
+};
+
+var ideal_population_UPPER = {
+  "nj": 219797,
+  "va": 200026,
+  "pa": 254048,
+  "mi": 260096
+};
+
+var ideal_population_CONG = {
+  "nj": 710767,
+  "va": 710767,
+  "pa": 710767,
+  "mi": 710767
+};
+
 var wkt_obj;
 // Formset field object saves a deep copy of the original formset field object.
 // (If user deletes all fields, he can add one more according to this one).
@@ -253,13 +273,18 @@ var draw = new MapboxDraw({
 // var document.getElementById("map").dispatchEvent(event);
 // highlight(map);
 // initialize the progress bar with pop data
-document.getElementById("ideal-pop").innerHTML = ideal_population;
+// document.getElementById("ideal-pop").innerHTML = ideal_population_LOWER['nj'];
 
 map.addControl(geocoder, 'top-right');
 // Add controls outside of map.
 // Source: https://github.com/mapbox/mapbox-gl-draw/blob/master/docs/API.md
 map.addControl(draw);
-// map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
+// Insert class into draw buttons so we can differentiate their styling from
+// from the nav buttons below.
+drawControls = document.querySelector(".draw_polygon_map .mapboxgl-ctrl-group");
+drawControls.className += " draw-group";
+// Add nav control buttons.
+map.addControl(new mapboxgl.NavigationControl());
 
 /* Change mapbox draw button */
 var drawButton = document.getElementsByClassName("mapbox-gl-draw_polygon");
@@ -514,22 +539,71 @@ function highlightBlocks(drawn_polygon) {
         // census_poly_defined = true;
         // count_census_poly = 1;
 
-        progress = document.getElementById("pop");
+        // 1. LOWER LEGISLATION PROGRESS BAR __________________________________
+        progressL = document.getElementById("pop");
+        /*
         // set color of the progress bar depending on population
-        if (total < (ideal_population * 0.33) || total > (ideal_population * 1.5)) {
+        if (total < (ideal_population_LOWER['nj'] * 0.33) || total > (ideal_population_LOWER['nj'] * 1.5)) {
             progress.style.background = "red";
         }
-        else if (total < (ideal_population * 0.67) || total > (ideal_population * 1.33)) {
+        else if (total < (ideal_population_LOWER['nj'] * 0.67) || total > (ideal_population_LOWER['nj'] * 1.33)) {
             progress.style.background = "orange";
         }
         else {
             progress.style.background = "green";
         }
-        progress.innerHTML = total;
-        progress.setAttribute("aria-valuenow", "total");
-        progress.setAttribute("aria-valuemax", ideal_population * 1.5);
-        popWidth = total / (ideal_population * 1.5) * 100;
-        progress.style.width = popWidth + "%";
+        */
+        progressL.style.background = "orange"
+        progressL.innerHTML = Math.round(total / (ideal_population_LOWER['nj'] * 1.5) * 100) + "%";
+        progressL.setAttribute("aria-valuenow", "total");
+        progressL.setAttribute("aria-valuemax", ideal_population_LOWER['nj']);
+        popWidth = total / (ideal_population_LOWER['nj'] * 1.5) * 100;
+        progressL.style.width = popWidth + "%";
+
+
+        // 2. UPPER LEGISLATION PROGRESS BAR __________________________________
+        progressU = document.getElementById("popU");
+
+        /*
+        // set color of the progress bar depending on population
+        if (total < (ideal_population_UPPER['nj'] * 0.33) || total > (ideal_population_UPPER['nj'] * 1.5)) {
+            progressU.style.background = "red";
+        }
+        else if (total < (ideal_population_UPPER['nj'] * 0.67) || total > (ideal_population_UPPER['nj'] * 1.33)) {
+            progressU.style.background = "orange";
+        }
+        else {
+            progressU.style.background = "green";
+        }
+        */
+        progressU.style.background = "orange"
+        progressU.innerHTML = Math.round(total / (ideal_population_UPPER['nj'] * 1.5) * 100) + "%";
+        progressU.setAttribute("aria-valuenow", "total");
+        progressU.setAttribute("aria-valuemax", ideal_population_UPPER['nj']);
+        popWidth = total / (ideal_population_UPPER['nj'] * 1.5) * 100;
+        progressU.style.width = popWidth + "%";
+
+
+        // 3. CONGRESSIONAL DISTRICT PROGRESS BAR __________________________________
+        progressC = document.getElementById("popC");
+        /*
+        // set color of the progress bar depending on population
+        if (total < (ideal_population_CONG['nj'] * 0.33) || total > (ideal_population_CONG['nj'] * 1.5)) {
+            progressU.style.background = "red";
+        }
+        else if (total < (ideal_population_CONG['nj'] * 0.67) || total > (ideal_population_CONG['nj'] * 1.33)) {
+            progressC.style.background = "orange";
+        }
+        else {
+            progressC.style.background = "green";
+        }
+        */
+        progressC.style.background = "orange"
+        progressC.innerHTML = Math.round(total / (ideal_population_CONG['nj'] * 1.5) * 100) + "%";
+        progressC.setAttribute("aria-valuenow", "total");
+        progressC.setAttribute("aria-valuemax", ideal_population_CONG['nj']);
+        popWidth = total / (ideal_population_CONG['nj'] * 1.5) * 100;
+        progressC.style.width = popWidth + "%";
     }
     else {
         // census_poly_defined = undefined;
@@ -563,73 +637,7 @@ function updateCommunityEntry(e) {
         let user_polygon_json = JSON.stringify(drawn_polygon['geometry']);
         wkt_obj = wkt.read(user_polygon_json);
         user_polygon_wkt = wkt_obj.write();
-        // user_poly_defined = true;
-        // count_user_poly = 1;
         var mpolygon = highlightBlocks(drawn_polygon);
-        // census_blocks_polygon_wkt = mergeBlocks(mpolygon, drawn_polygon);
-        // Save census blocks polygon outline.
-        // census_blocks_polygon = drawn_polygon;
-        // var polygonBoundingBox = turf.bbox(census_blocks_polygon);
-        // // get the bounds of the polygon to reduce the number of blocks you are querying from
-        // var southWest = [polygonBoundingBox[0], polygonBoundingBox[1]];
-        // var northEast = [polygonBoundingBox[2], polygonBoundingBox[3]];
-
-        // var northEastPointPixel = map.project(northEast);
-        // var southWestPointPixel = map.project(southWest);
-        // var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
-        // if (features.length >= 1) {
-        //     var mpolygon = [];
-        //     var total = 0.0;
-
-        //     var filter = features.reduce(function(memo, feature) {
-        //         if (! (turf.intersect(feature, census_blocks_polygon) === null)) {
-        //             memo.push(feature.properties.BLOCKID10);
-        //             mpolygon.push(feature);
-        //             total+= feature.properties.POP10;
-        //         }
-        //         return memo;
-        //     }, ["in", "BLOCKID10"]);
-
-
-        //     map.setFilter("blocks-highlighted", filter);
-        //     census_poly_defined = true;
-        //     // progress bar with population data based on ideal population for a district in the given state
-        //     //<div id="pop" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 85%">
-        //     progress = document.getElementById("pop");
-        //     // set color of the progress bar depending on population
-        //     if (total < (ideal_population * 0.33) || total > (ideal_population * 1.5)) {
-        //     progress.style.background = "red";
-        //     }
-        //     else if (total < (ideal_population * 0.67) || total > (ideal_population * 1.33)) {
-        //     progress.style.background = "orange";
-        //     }
-        //     else {
-        //     progress.style.background = "green";
-        //     }
-        //     progress.innerHTML = total;
-        //     progress.setAttribute("aria-valuenow", "total");
-        //     progress.setAttribute("aria-valuemax", ideal_population * 1.5);
-        //     popWidth = total / (ideal_population * 1.5) * 100;
-        //     progress.style.width = popWidth + "%";
-
-        //     var finalpoly = turf.union.apply(null, mpolygon);
-        //     // should only be the exterior ring
-
-        //     if (finalpoly.geometry.coordinates[0][0].length > 2) {
-        //         census_blocks_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0][0];
-        //     }
-        //     else {
-        //         census_blocks_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0];
-        //     }
-        //     // Save outline of census blocks.
-        //     let census_blocks_polygon_json = JSON.stringify(census_blocks_polygon['geometry']);
-        //     wkt_obj = wkt.read(census_blocks_polygon_json);
-        //     census_blocks_polygon_wkt = wkt_obj.write();
-        // }
-        // else {
-        //     census_blocks_polygon_wkt = '';
-        // }
-
     } else {
         // user_poly_defined = false;
         // count_user_poly = 0;
@@ -642,7 +650,8 @@ function updateCommunityEntry(e) {
     // Update form fields
     census_blocks_polygon_wkt = '';
     document.getElementById('id_user_polygon').value = user_polygon_wkt;
-    document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon_wkt;
+    document.getElementById('id_census_blocks_multipolygon').value = "";
+    document.getElementById('id_census_blocks_polygon').value = "";
 }
 
 
@@ -730,34 +739,3 @@ $(document).on('click', '.remove-form-row', function(e) {
     deleteForm('form', $(this));
     return false;
 });
-
-/******************************************************************************/
-
-document.getElementById("race-yes").addEventListener("click", function () {
-    document.getElementById('race-field').style.visibility = 'visible';
-    document.getElementById('race-field').style.height = "auto";
-})
-
-document.getElementById("race-no").addEventListener("click", function () {
-    document.getElementById('race-field').style.visibility = 'hidden';
-    document.getElementById('race-field').style.height = '0px';
-})
-
-document.getElementById("religion-yes").addEventListener("click", function () {
-    document.getElementById('religion-field').style.visibility = 'visible';
-    document.getElementById('religion-field').style.height = "auto";
-})
-
-document.getElementById("religion-no").addEventListener("click", function () {
-    document.getElementById('religion-field').style.visibility = 'hidden';
-    document.getElementById('religion-field').style.height = '0px';
-})
-
-document.getElementById("industry-yes").addEventListener("click", function () {
-    document.getElementById('industry-field').style.visibility = 'visible';
-    document.getElementById('industry-field').style.height = 'auto';
-})
-document.getElementById("industry-no").addEventListener("click", function () {
-    document.getElementById('industry-field').style.visibility = 'hidden';
-    document.getElementById('industry-field').style.height = '0px';
-})

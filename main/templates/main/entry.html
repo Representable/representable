@@ -34,202 +34,156 @@
 <div class="row row-content">
     <div class="col-sm-12">
         <!-- BIG COLUMN -->
-        <h2>Create your entry and support your community!</h2>
-        <h6>Instructions:</h6>
-        <p>Find your community, answer the questions, and draw what you think resembles your community most closely.</p>
-        <p>Your submission will enable your local government to draw more accurate maps.</p>
+        <h2 class="text-primary">Create your entry and support your community!</h2>
+        <p>Districter helps fight against gerrymandering by empowering communities
+            to represent themselves more easily. Fill out the form below to
+            add your community.
+        </p>
         <!-- START FORM BODY -->
-
-
         <div class="row mt-3">
-            <div class="col">
-                <!-- Entry Form -->
-                <form id="entryForm" method="post">
-                    <!-- First Row: Includes 1 (Map) and 2 (Other Info) -->
-                    <div class="row row-equal-cols">
-                        <div class="col-lg-4 mt-3">
-                            <!-- COMMUNITY BACKGROUND -->
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5>1. Community Background</h5>
-                                </div>
-                                <div class="card-body">
-                                    {% csrf_token %}
-                                    <!-- {# Include the non-field error fields #} -->
-                                    {% if form.non_field_errors %}
-                                    <div class="non-field-errors">
-                                        {% for err in form.non_field_errors %}
-                                        <p class="form-error">{{ err }}</p>
-                                        {% endfor %}
-                                    </div>
-                                    {% endif %}
-                                    <div id="main_community_form" class="form-group">
-                                        <!-- {# Include the hidden fields #} -->
-                                        {% for hidden in form.hidden_fields %}
-                                        {{ hidden }}
-                                        {% endfor %}
-                                        <!-- {# Include the visible fields #} -->
-                                        <!-- {# Race Field} -->
-                                        <div class=" mb-2">
-                                            <p class=""> Does this community identify with one or more racial groups?</p>
-                                            <button type="button" class='btn btn-outline-dark' id="race-yes">Yes</button>
-                                            <button type="button" class='btn btn-outline-dark' id="race-no">No</button>
-
-                                            <div id="race-field" class="field-wrap race-field-wrap">
-                                                {{ form.race.label_tag }}
-                                                <div class="form-error">
-                                                    {{ form.race.errors }}
-                                                </div>
-                                                {{ form.race|append_attr:"class:form-control" }}
-                                                {% if form.race.help_text %}
-                                                <p class="help">{{ form.race.help_text|safe }}</p>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                        <!-- {# Religion Field} -->
-                                        <div class=" mb-2">
-                                            <p class=""> Does this community identify with one or more religious groups?</p>
-                                            <button type="button" class='btn btn-outline-dark' id="religion-yes">Yes</button>
-                                            <button type="button" class='btn btn-outline-dark' id="religion-no">No</button>
-
-                                            <div id="religion-field" class="field-wrap religion-field-wrap">
-                                                {{ form.religion.label_tag }}
-                                                <div class="form-error">
-                                                    {{ form.religion.errors }}
-                                                </div>
-                                                {{ form.religion|append_attr:"class:form-control" }}
-                                                {% if form.religion.help_text %}
-                                                <p class="help">{{ form.religion.help_text|safe }}</p>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                        <!-- {# Industry Field} -->
-                                        <div class=" mb-2">
-                                            <p class=""> Does this community identify with one or more professions or industries?</p>
-                                            <button type="button" class='btn btn-outline-dark mb-2' id="industry-yes">Yes</button>
-                                            <button type="button" class='btn btn-outline-dark mb-2' id="industry-no">No</button>
-                                            <div id="industry-field" class="field-wrap industry-field-wrap">
-                                                {{ form.industry.label_tag }}
-                                                <div class="form-error">
-                                                    {{ form.industry.errors }}
-                                                </div>
-                                                {{ form.industry|append_attr:"class:form-control" }}
-                                                {% if form.industry.help_text %}
-                                                <p class="help">{{ form.industry.help_text|safe }}</p>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                        <!-- {# Zipcode Field} -->
-                                        <div class="field-wrap">
-                                            {{ form.zipcode.label_tag }} <small class="text-danger">(Required)</small>
-                                            <div class="form-error">
-                                                {{ form.zipcode.errors }}
-                                            </div>
-                                            {{ form.zipcode|append_attr:"class:form-control" }}
-                                            {% if form.zipcode.help_text %}
-                                            <p class="help">{{ form.zipcode.help_text|safe }}</p>
-                                            {% endif %}
-
-                                        </div>
-                                        <!-- {# Tags Field} -->
-                                        <div class="field-wrap">
-                                            {{ form.tags.label_tag }}
-                                            <div class="form-error">
-                                                {{ form.tags.errors }}
-                                            </div>
-                                            {{ form.tags|append_attr:"class:form-control" }}
-                                            {% if form.tags.help_text %}
-                                            <p class="help">{{ form.tags.help_text|safe }}</p>
-                                            {% endif %}
-                                        </div>
-
-                                        <!-- {# Is this your community? Field} -->
-                                        <div class="field-wrap">
-                                            <div class="form-error">
-                                                {{ form.my_community.label_tag }} <small class="text-danger">(Required)</small>
-                                                {% if form.my_community.errors %}
-                                                <div id="my_community_missing" class="alert alert-warning" role="alert">
-                                                    You need to specify if you are part of this community.
-                                                </div>
-                                                {% endif %}
-                                            </div>
-                                            {{ form.my_community|append_attr:"class:form-control" }}
-                                            {% if form.my_community.help_text %}
-                                            <p class="help">{{ form.my_community.help_text|safe }}</p>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
+            <!-- Entry Form -->
+            <form id="entryForm" method="post">
+                <!-- First Row: Includes Map. -->
+                <div class="row row-equal-cols">
+                    <!-- Map -->
+                    <div class="col-lg-8 mt-3">
+                        <div class="card">
+                            <div class="card-header text-header-card">
+                                <strong>1. What does your community look like?</strong>
                             </div>
-                        </div>
-                        <!-- Map -->
-                        <div class="col-lg-8 mt-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5>2. Community Map</h5>
+                            <div class="card-body">
+                                <!-- {# Include form.entry_polygon error. } -->
+                                {% if form.user_polygon.errors %}
+                                <div id="polygon_missing" class="alert alert-warning" role="alert">
+                                    You need to draw a polygon to submit the form.
                                 </div>
-                                <div class="card-body">
-                                    <!-- <h5>2. Community Map</h5> -->
-                                    <label>Selected Community Population</label>
+                                {% endif %}
+                                <div>
+                                    <div id='menu'>
+                                    </div>
+                                    <div id='map' class='draw_polygon_map'>
+                                    </div>
+                                    <div>
+                                    </div>
+                                    <p class="card-text"></p>
+                                    <h5>How big is your community?</h5>
+                                    <p> The numbers below show how big your community is in relation to
+                                        the size of an average electoral district. Generally, a higher percentage
+                                        indicates that your community has a bigger impact on election results in your district.
+                                        <small class="text-info-custom"> Note that districts vary in size from state to state. </small>
+                                    </p>
+
+
+                                    <p class="card-text">Percent of State Lower Legistlation Average District Size:</p>
                                     <div class="progress">
                                         <div class="bar-step">
-                                            <div class="label-txt">Ideal District Size</div>
+                                            <div class="label-line"></div>
+                                        </div>
+                                        <div id="pop" class="progress-bar progress-bar-striped" role="progressbar" aria-valuemin="0">
+                                        </div>
+                                    </div>
+
+                                    <p class="card-text">Percent of State Upper Legistlation Average District Size:</p>
+                                    <div class="progress">
+                                        <div class="bar-step">
+                                            <div class="label-line"></div>
+                                        </div>
+                                        <div id="popU" class="progress-bar" role="progressbar" aria-valuemin="0">
+                                        </div>
+                                    </div>
+
+                                    <p class="card-text">Percent of State Congressional Average District Size:</p>
+                                    <div class="progress">
+                                        <div class="bar-step">
                                             <div class="label-percent" id="ideal-pop"></div>
                                             <div class="label-line"></div>
                                         </div>
-                                        <div id="pop" class="progress-bar" role="progressbar" aria-valuemin="0">
-                                        </div>
-                                    </div>
-                                    <!-- {# Include form.entry_polygon error. } -->
-                                    {% if form.user_polygon.errors %}
-                                    <div id="polygon_missing" class="alert alert-warning" role="alert">
-                                        You need to draw a polygon to submit the form.
-                                    </div>
-                                    {% endif %}
-                                    <div>
-                                        <div id='menu'>
-                                        </div>
-                                        <div id='map' class='draw_polygon_map'>
-                                        </div>
-                                        <div>
+                                        <div id="popC" class="progress-bar" role="progressbar" aria-valuemin="0">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- <hr> -->
-                    <div class="row mt-3">
-                        <div class="col-sm-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5>3. Community Issues</h5>
+                    <div class="col-lg-4 mt-3">
+                        <div class="card mb-3">
+                            <div class="card-header text-info-custom">
+                                <b>Why should I draw my community?</b>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    Drawing your community enables officials to draw fair district lines that allow you to be well-represented in your state legislature and congress.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-header text-info-custom">
+                                <b>How to draw?</b>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    1. Search for your location using the search bar!
+                                    <hr>
+                                    </hr>
+                                    2. Press on <b> Draw Polygon </b> and draw a shape that includes everything you consider to be part of your community.
+                                    <hr>
+                                    </hr>
+                                    This shape can include schools, watersheds, parks, administrative
+                                    buildings, commercial centers, etc.
+                                    <hr>
+                                    </hr>
+                                    3. Don't worry about making a mistake! You can always start again.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <hr> -->
+                <div class="row row-equal-cols">
+                    <div class="col-lg-8  mt-3">
+                        <div class="card">
+                            <div class="card-header text-header-card">
+                                <strong>2. What does your community care about?</strong>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    Include issues and demographic information about your area.
+                                </p>
+                                {% csrf_token %}
+                                <!-- {# Include the non-field error fields #} -->
+                                {% if form.non_field_errors %}
+                                <div class="non-field-errors">
+                                    {% for err in form.non_field_errors %}
+                                    <p class="form-error">{{ err }}</p>
+                                    {% endfor %}
                                 </div>
-                                <div class="card-body">
+                                {% endif %}
+                                <div id="main_community_form" class="form-group">
+                                    <!-- {# Include the hidden fields #} -->
+                                    {% for hidden in form.hidden_fields %}
+                                    {{ hidden }}
+                                    {% endfor %}
+                                    <!-- Include Formset -->
                                     {{ issue_formset.management_form }}
-                                    <!-- {# "My Issues" Fields} -->
-                                    <!-- <h5> 3. Issues that affect my community</h5> -->
-                                    <p> Include the issues and policy areas that
-                                        affect your community. Please specify a
-                                        category and a short description for each one.
-                                        <br>
-                                        Example: Environment - The watershed is polluted.
-                                    </p>
                                     <!-- {# Include the formset.} -->
                                     {% for hidden_issue_field in issue_formset.hidden_fields %}
                                     {{ hidden_issue_field }}
                                     {% endfor %}
+
                                     {{ issue_formset.non_field_errors }}
                                     <!-- Formset Row Non Field Errors -->
+                                    <!-- KEEP THESE. Not useful now but may become useful in the future and this can save time. -->
+                                    <!---------------------------------------------------------------------------->
                                     <!-- {% for formset_row in issue_formset %}
-                                    {% if formset_row.non_field_errors %}
-                                    {% for non_field_error in formset_row.non_field_errors %}
-                                    <div id="formset_row_error" class="alert alert-warning" role="alert">
-                                        {{ non_field_error }}
-                                    </div>
-                                    {% endfor %}
-                                    {% endif %}
-                                    {% endfor %} -->
+                                        {% if formset_row.non_field_errors %}
+                                        {% for non_field_error in formset_row.non_field_errors %}
+                                        <div id="formset_row_error" class="alert alert-warning" role="alert">
+                                            {{ non_field_error }}
+                                        </div>
+                                        {% endfor %}
+                                        {% endif %}
+                                        {% endfor %} -->
+                                    <!---------------------------------------------------------------------------->
                                     <!-- Begin formset container. -->
                                     <div id="formset_container">
                                         {% for formset_row in issue_formset %}
@@ -263,23 +217,67 @@
                                         <div class='col-sm-12'>
                                             <button name="addFormRow" class="btn btn-outline-success add-form-row">Add New Issue</button>
                                             <small> You can add maximum 10 issues. </small>
+                                            <!-- 10 is arbitrary for now. Check forms.py -->
                                         </div>
                                     </div>
+                                    <!-- {# Tags Field} -->
+                                    <div class="field-wrap mt-3">
+                                        {{ form.tags.label_tag }}
+                                        <div class="form-error">
+                                            {{ form.tags.errors }}
+                                        </div>
+                                        {{ form.tags|append_attr:"class:form-control" }}
+                                        {% if form.tags.help_text %}
+                                        <p class="help">{{ form.tags.help_text|safe }}</p>
+                                        {% endif %}
+                                    </div>
+
+
+                                </div>
+
+                                <!-- {# Is this your community? Field} -->
+                                <div class="field-wrap">
+                                    <div class="form-error">
+                                        {{ form.my_community.label_tag }} <small class="text-danger">(Required)</small>
+                                        {% if form.my_community.errors %}
+                                        <div id="my_community_missing" class="alert alert-warning" role="alert">
+                                            You need to specify if you are part of this community.
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    {{ form.my_community|append_attr:"class:form-control" }}
+                                    {% if form.my_community.help_text %}
+                                    <p class="help">{{ form.my_community.help_text|safe }}</p>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class='row mt-4'>
-                        <div class='col'>
-                            <button id="save" form="entryForm" type="submit" class="btn btn-primary" value="Submit">Submit Entry</button>
+
+                    <div class="col-lg-4 mt-3">
+                        <div class="card mb-3">
+                            <div class="card-header text-info-custom">
+                                <b>Why do you need this information?</b>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text" style="text-color:white;">
+                                    Including information about your community
+                                    <b>exposes gerrymandering</b>. The more information
+                                    you provide, the easier it will be for officials
+                                    and non-profits to draw fairer electoral districts.
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </form>
+                </div>
+            </form>
+            <div class='row mt-4'>
+                <div class='col'>
+                    <button id="save" form="entryForm" type="submit" class="btn btn-primary" value="Submit">Submit Entry</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</div>
 </div>
 {% endblock %}
 
