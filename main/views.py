@@ -84,21 +84,21 @@ class Map(TemplateView):
         issues = dict()
         for obj in Issue.objects.all():
             cat = obj.category
-            cat = re.sub('_', ' ', cat).title()
-            if cat == 'Economic':
-                cat = 'Economic Affairs'
-            if cat == 'Health':
-                cat = 'Health and Health Insurance'
-            if cat == 'Internet':
-                cat = 'Internet Regulation'
-            if cat == 'Women':
-                cat = 'Women\'s Issues'
-            if cat == 'Lgbt':
-                cat = 'LGBT Issues'
-            if cat == 'Security':
-                cat = 'National Security'
-            if cat == 'Welfare':
-                cat = 'Social Welfare'
+            cat = re.sub("_", " ", cat).title()
+            if cat == "Economic":
+                cat = "Economic Affairs"
+            if cat == "Health":
+                cat = "Health and Health Insurance"
+            if cat == "Internet":
+                cat = "Internet Regulation"
+            if cat == "Women":
+                cat = "Women\'s Issues"
+            if cat == "Lgbt":
+                cat = "LGBT Issues"
+            if cat == "Security":
+                cat = "National Security"
+            if cat == "Welfare":
+                cat = "Social Welfare"
 
             if cat in issues:
                 issues[cat][str(obj.entry)] = obj.description
@@ -118,7 +118,6 @@ class Map(TemplateView):
             for id in entries:
                 ids.append(str(id))
             tags[str(obj)] = ids
-        print(tags)
 
         for obj in CommunityEntry.objects.all():
             # print(obj.tags.name)
@@ -132,9 +131,9 @@ class Map(TemplateView):
             entryPolyDict[obj.entry_ID] = struct.coordinates
 
         context = ({
-            'tags': tags,
-            'issues': issues,
-            'entries': entryPolyDict,
+            'tags': json.dumps(tags),
+            'issues': json.dumps(issues),
+            'entries': json.dumps(entryPolyDict),
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
         })
         return context
