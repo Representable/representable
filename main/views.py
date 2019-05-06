@@ -112,17 +112,16 @@ class Map(TemplateView):
         # dictionary of tags to be displayed
         tags = dict()
         for obj in Tag.objects.all():
+            # manytomany query
             entries = obj.communityentry_set.all()
             ids = []
             for id in entries:
                 ids.append(str(id))
             tags[str(obj)] = ids
         print(tags)
-        # dictionary of zip codes
-        # zips = dict()
+
         for obj in CommunityEntry.objects.all():
             # print(obj.tags.name)
-            # zipcode = obj.zipcode
             if (obj.census_blocks_polygon == "" or obj.census_blocks_polygon == None):
                 s = "".join(obj.user_polygon.geojson)
             else:
@@ -131,13 +130,9 @@ class Map(TemplateView):
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
             entryPolyDict[obj.entry_ID] = struct.coordinates
-            # if zipcode in zips:
-            #     zips[zipcode].append(obj.entry_ID)
-            # else:
-            #     zips[zipcode] = [obj.entry_ID]
 
         context = ({
-            # 'zips': zips,
+            'tags': tags,
             'issues': issues,
             'entries': entryPolyDict,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),

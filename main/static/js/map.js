@@ -144,7 +144,10 @@ map.on('load', function() {
   // issues add to properties
   var issueDict = issues.replace(/'/g, '"');
   issues = JSON.parse(issueDict);
-  console.log(issues);
+  // tags add to properties
+  var tagsDict = tags.replace(/'/g, '"');
+  tags = JSON.parse(tagsDict);
+  // console.log(issues);
   // send elements to javascript as geojson objects and make them show on the map by
   // calling the addTo
 
@@ -246,7 +249,6 @@ map.on('load', function() {
         }
       }
     }
-    console.log(issues);
     // console.log(issue);
     for (entry in issues[issue]) {
       var entryId = document.getElementById(entry);
@@ -256,7 +258,6 @@ map.on('load', function() {
         // console.log(thisId);
         for (obj in a) {
           if (thisId === obj) {
-            console.log(obj);
             map.setLayoutProperty(obj, 'visibility', 'visible');
             map.setLayoutProperty(obj + "line", 'visibility', 'visible');
           } else {
@@ -280,63 +281,30 @@ map.on('load', function() {
     }
   }
 
-  // //create a button which toggles layers based on their zip codes
-  // console.log(zips);
-  // // console.log(typeof zips);
-  // // console.log(typeof issues);
-  // var zipReplace = zips.replace(/'/g, '"');
-  // var newZips = JSON.parse(zipReplace);
-  // // console.log(newZips);
-  // for (var zip in newZips) {
-  //   var entries = newZips[zip];
-  //   // console.log(zip);
-  //   var link = document.createElement('a');
-  //
-  //   link.href = '#';
-  //   link.className = 'active';
-  //   link.textContent = zip;
-  //   link.setAttribute('entries', entries);
-  //
-  //   link.onclick = function(e) {
-  //     var entryIds = this.getAttribute('entries');
-  //     var txt = this.textContent;
-  //     e.preventDefault();
-  //     e.stopPropagation();
-  //
-  //     for (obj in a) {
-  //       if (entryIds.includes(obj)) {
-  //         // console.log(obj);
-  //         map.setLayoutProperty(obj, 'visibility', 'visible');
-  //         this.className = '';
-  //       } else {
-  //         this.className = 'active';
-  //         map.setLayoutProperty(obj, 'visibility', 'none');
-  //       }
-  //     }
-  //   };
-  //   var layers = document.getElementById('zip-menu');
-  //   layers.appendChild(link);
-  // }
+  for (var tag in tags) {
+    var link = document.createElement('a');
+    link.href = '#';
+    link.textContent = tag;
+    link.className = 'btn-primary';
 
-  // // When a click event occurs on a feature in the dummy layer, open a popup at the
-  // // location of the click, with description HTML from its properties.
-  // // https://docs.mapbox.com/mapbox-gl-js/example/polygon-popup-on-click/
-  // map.on('click', 'Legislature Polygons', function (e) {
-  //   new mapboxgl.Popup()
-  //   .setLngLat(e.lngLat)
-  //   .setHTML(e.features[0].properties.NAMELSAD)
-  //   .addTo(map);
-  // });
-  //
-  // // Change the cursor to a pointer when the mouse is over the dummy layer.
-  // map.on('mouseenter', 'Legislature Polygons', function () {
-  //   map.getCanvas().style.cursor = 'pointer';
-  // });
-  //
-  // // Change it back to a pointer when it leaves.
-  // map.on('mouseleave', 'Legislature Polygons', function () {
-  //   map.getCanvas().style.cursor = '';
-  // });
+    link.onclick = function (e) {
+      var tagName = this.textContent;
+      e.preventDefault();
+      e.stopPropagation();
+      for (obj in a) {
+        if (tags[tagName].includes(obj)) {
+          map.setLayoutProperty(obj, 'visibility', 'visible');
+          map.setLayoutProperty(obj + "line", 'visibility', 'visible');
+        } else {
+          map.setLayoutProperty(obj, 'visibility', 'none');
+          map.setLayoutProperty(obj + "line", 'visibility', 'none');
+        }
+      }
+    };
+
+    var layers = document.getElementById('tags-menu');
+    layers.appendChild(link);
+  }
 });
 
 //create a button ! toggles layers based on their IDs
@@ -375,7 +343,7 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
       }
     }
   };
-
+  // in order to create the buttons
   var div = document.createElement('div');
   div.className = 'switch_box box_1';
   var label = document.createElement('label');
@@ -386,34 +354,6 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   div.appendChild(label);
   layers.appendChild(div);
   var newline = document.createElement('br');
-  // layers.appendChild(newline);
-  // var div = document.createElement('div');
-  // div.className = 'onoffswitch';
-  // var input = document.createElement('input');
-  // input.setAttribute('type', 'checkbox');
-  // input.setAttribute('name', 'onoffswitch');
-  // input.className = 'onoffswitch-checkbox';
-  // input.id = 'myonoffswitch';
-  // if (link.id === 'vis') {
-  //   input.setAttribute('checked', 'true');
-  // }
-  // else {
-  //   input.removeAttribute('checked');
-  // }
-  // var label = document.createElement('label');
-  // label.className = 'onoffswitch-label';
-  // label.setAttribute('for', 'myonoffswitch');
-  // var inner = document.createElement('span');
-  // inner.className = 'onoffswitch-inner';
-  // var switchClass = document.createElement('span');
-  // switchClass.className = 'onoffswitch-switch';
-  // div.appendChild(input);
-  // label.appendChild(inner);
-  // label.appendChild(switchClass);
-  // div.appendChild(label);
-  // var layers = document.getElementById('outline-menu');
-  // layers.appendChild(link);
-  // link.appendChild(div);
 }
 
 /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content -
