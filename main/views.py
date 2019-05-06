@@ -195,9 +195,6 @@ class EntryView(LoginRequiredMixin, View):
             # print(request.POST.getlist('tags'))
             # entryForm.tags.add(tags[0])
             for tag_id in tag_ids:
-                print("******")
-                print(tag_id)
-                print("******")
                 tag = Tag.objects.get(name=tag_id)
                 entryForm.tags.add(tag)
             for issue_form in issue_formset:
