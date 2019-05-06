@@ -110,10 +110,10 @@ class Map(TemplateView):
         # the polygon coordinates
         entryPolyDict = dict()
         # dictionary of tags to be displayed
-        tags = dict()
-        for obj in Tag.objects.all():
-            print(obj)
-            print(obj.communityentry_set)
+        # tags = dict()
+        # for obj in Tag.objects.all():
+        #     print(obj)
+        #     print(obj.communityentry_set)
         # dictionary of zip codes
         # zips = dict()
         for obj in CommunityEntry.objects.all():
@@ -185,16 +185,20 @@ class EntryView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, label_suffix='')
         print("ENTRY FORM------")
+        print("POST")
+        print(request.POST)
         issue_formset = self.IssueFormSet(request.POST)
         if form.is_valid() and issue_formset.is_valid():
-            tags = request.POST.getlist('tags')
+            tag_ids = request.POST.getlist('tags')
             entryForm = form.save(commit=False)
             entryForm.save()
             # print(request.POST.getlist('tags'))
             # entryForm.tags.add(tags[0])
-            for tag_label in tags:
-                print(tag_label)
-                tag = Tag.objects.get(name=str(tag_label))
+            for tag_id in tag_ids:
+                print("******")
+                print(tag_id)
+                print("******")
+                tag = Tag.objects.get(name=tag_id)
                 entryForm.tags.add(tag)
             for issue_form in issue_formset:
                 category = issue_form.cleaned_data.get('category')

@@ -15,29 +15,22 @@ class TagSelect2Widget(ModelSelect2TagWidget):
     queryset = model.objects.all()
     # Check if tag name is in the db already. If not, add it.
     def value_from_datadict(self, data, files, name):
-        print("value_from_datadict")
-        print("self")
-        print(self)
-        print("data")
-        print(data)
-        print('name')
-        print(name)
+        # the actual strings of the tags
         values = super().value_from_datadict(data, files, name)
-        queryset = self.get_queryset()
-        print("queryset")
-        print(queryset)
-        pks = queryset.filter(**{'name__in': list(values)}).values_list('name', flat=True)
-        print("pks")
-        print(pks)
-        print("-------------")
+        queryset = self.get_queryset().filter(**{'name__in': list(values)})
+        # gets a set of the names, the values of the tags in the queryset
+        # this & queryset (above) will be empty if the tags are new (haven't been entered yet)
+        names = set(str(getattr(obj, 'name')) for obj in queryset)
+        # values to be returned (id of the tags, whether new or not)
         cleaned_values = []
         for val in values:
-            if str(val) not in pks:
-                print("***")
-                val = queryset.create(name=str(val))
+            if str(val) not in names:
+                # add if not in db
+                val = queryset.create(name=str(val)).id
+            else:
+                # otherwise find the current id
+                val = queryset.get(name=str(val)).id
             cleaned_values.append(val)
-        print("-------------")
-        print("-------------")
         return cleaned_values
 
 class IssueForm(ModelForm):
