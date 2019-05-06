@@ -110,10 +110,14 @@ class Map(TemplateView):
         # the polygon coordinates
         entryPolyDict = dict()
         # dictionary of tags to be displayed
-        # tags = dict()
-        # for obj in Tag.objects.all():
-        #     print(obj)
-        #     print(obj.communityentry_set)
+        tags = dict()
+        for obj in Tag.objects.all():
+            entries = obj.communityentry_set.all()
+            ids = []
+            for id in entries:
+                ids.append(str(id))
+            tags[str(obj)] = ids
+        print(tags)
         # dictionary of zip codes
         # zips = dict()
         for obj in CommunityEntry.objects.all():
