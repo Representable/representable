@@ -60,6 +60,32 @@ class Review(LoginRequiredMixin, TemplateView):
     template_name = "main/review.html"
 
     def get_context_data(self, **kwargs):
+        issues = dict()
+        for obj in Issue.objects.all():
+            cat = obj.category
+            cat = re.sub('_', ' ', cat).title()
+            if cat == 'Economic':
+                cat = 'Economic Affairs'
+            if cat == 'Health':
+                cat = 'Health and Health Insurance'
+            if cat == 'Internet':
+                cat = 'Internet Regulation'
+            if cat == 'Women':
+                cat = 'Women\'s Issues'
+            if cat == 'Lgbt':
+                cat = 'LGBT Issues'
+            if cat == 'Security':
+                cat = 'National Security'
+            if cat == 'Welfare':
+                cat = 'Social Welfare'
+
+            if cat in issues:
+                issues[cat][str(obj.entry)] = obj.description
+            else:
+                issueInfo = dict()
+                issueInfo[str(obj.entry)] = obj.description
+                issues[cat] = issueInfo
+
         entryPolyDict = dict()
         for obj in CommunityEntry.objects.filter(user = self.request.user):
             if (obj.census_blocks_polygon == "" or obj.census_blocks_polygon == None):
@@ -71,6 +97,7 @@ class Review(LoginRequiredMixin, TemplateView):
             entryPolyDict[obj.entry_ID] = struct.coordinates
 
         context = ({
+            'issues': issues,
             'entries': entryPolyDict,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
         })

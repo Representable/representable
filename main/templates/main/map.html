@@ -53,8 +53,7 @@
         </div> -->
         {% for issue, desc in issues.items %}
         <button class="dropdown-btn btn-primary" id="{{ issue }}">{{ issue }}
-          <i class="fa fa-caret-down"></i></button>
-          <div class="dropdown-container">
+           <div class="dropdown-container">
             {% for item, key in desc.items %}
             <a href="#" id="{{ item }}" class="btn-primary">{{ key }}</a>
             {% endfor %}

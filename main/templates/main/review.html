@@ -24,38 +24,53 @@
 {% block content %}
 <div class="row row-wide">
   <div>
-      <script type="text/javascript">
-        var a = '{{ entries | escapejs}}';
-     </script>
+    <script type="text/javascript">
+      var issues = '{{ issues | escapejs }}';
+      var a = '{{ entries | escapejs}}';
+    </script>
   </div>
-    <div class="col-md-3 col-wide">
-        <nav id='menu'>
-            <div class="sidenav">
-                <div class="search">
-                    <input type="text" id="search-bar" class="searchTerm" placeholder="Search layers..." onkeyup="searchTags()">
-                    <button type="submit" class="searchButton" onclick="searchTags()">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
-                <button class="dropdown-btn btn-primary" id="all">All Entries
-                    <i class="fa"></i></button>
-                <div class="dropdown-container"></div>
-                <button class="dropdown-btn btn-primary">Display Outlines
-                    <i class="fa fa-caret-down"></i></button>
-                <div class="dropdown-container" id="outline-menu">
-                </div>
-        </nav>
-    </div>
-    <div class="col-md-9 col-map col-wide">
-        <div id='map' class="map-visualization"></div>
-    </div>
+  <div class="col-md-3 col-wide">
+    <nav id='menu'>
+      <div class="sidenav">
+        <div class="search">
+          <input type="text" id="search-bar" class="searchTerm" placeholder="Search layers..." onkeyup="searchTags()">
+          <button type="submit" class="searchButton" onclick="searchTags()">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+        <div class="dropdown-container"></div>
+        <button class="dropdown-btn btn-primary" id="all">All Entries
+          <i class="fa"></i></button>
+        <div class="dropdown-container">
+          {% for entry in entries.items %}
+          <button class="dropdown-btn btn-primary" id="{{ entry }}">{{ entry }}
+          {% endfor %}
+        </div>
+        <button class="dropdown-btn btn-primary">Display Outlines
+          <i class="fa fa-caret-down"></i></button>
+        <div class="dropdown-container" id="outline-menu">
+          {% for entries in issues.items %}
+          <button class="dropdown-btn btn-primary" id="{{ issue }}">{{ issue }}
+            <i class="fa fa-caret-down"></i></button>
+          <div class="dropdown-container">
+            {% for item, key in desc.items %}
+            <a href="#" id="{{ item }}" class="btn-primary">{{ key }}</a>
+            {% endfor %}
+          </div>
+          {% endfor %}
+        </div>
+    </nav>
+  </div>
+  <div class="col-md-9 col-map col-wide">
+    <div id='map' class="map-visualization"></div>
+  </div>
 </div>
 {% endblock %}
 
 {% block script %}
 <!--  Has to be at the end after the HTML loads.-->
 <script type="text/javascript">
-    mapboxgl.accessToken = "{{ mapbox_key }}";
+  mapboxgl.accessToken = "{{ mapbox_key }}";
 </script>
 <script type="text/javascript" src="{% static 'js/map.js' %}"></script>
 {% endblock %}
