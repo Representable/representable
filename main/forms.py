@@ -84,7 +84,7 @@ class CommunityForm(ModelForm):
             'religion': Select2MultipleWidget(choices=RELIGION_CHOICES, attrs={'data-placeholder': 'E.g. Christian, Hindu etc.'}),
             'industry': Select2MultipleWidget(choices=INDUSTRY_CHOICES, attrs={'data-placeholder': 'E.g. Fishing, Professional etc.'}),
             'entry_issues': ModelSelect2TagWidget(model=Issue,queryset = Issue.objects.all(),search_fields=['name__icontains']),
-            'tags': TagSelect2Widget(attrs={'data-placeholder': 'E.g. #flintwatercrisis, Korea Town, etc.'}),
+            'tags': TagSelect2Widget(attrs={'data-placeholder': 'E.g. #flintwatercrisis, KoreaTown, etc.'}),
             'user': forms.HiddenInput(),
             'entry_ID': forms.HiddenInput(),
             'census_blocks_polygon_array': forms.HiddenInput(),
