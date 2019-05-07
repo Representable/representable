@@ -576,7 +576,6 @@ section {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    width: 3.5em;
     height: 1.5em;
     background: #ddd;
     border-radius: 3em;
@@ -586,10 +585,11 @@ section {
     -webkit-transition: all .2s ease-in-out;
     transition: all .2s ease-in-out;
     flex: 0.29;
+    max-width: 3em;
   }
 
   input[type="checkbox"].switch_1:checked{
-    background: #0ebeff;
+    background: #82ccdd;
   }
 
   input[type="checkbox"].switch_1:after{
