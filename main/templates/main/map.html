@@ -28,8 +28,7 @@
       // var a = JSON.parse('{{ entries | escapejs }}')
       var issues = '{{ issues | escapejs }}';
       var a = '{{ entries | escapejs}}';
-      // var zips = '{{ zips | escapejs }}'
-      // var a = '{{ entries }}';
+      var tags = '{{ tags | escapejs }}'
     </script>
   </div>
   <div class="col-md-3 col-wide">
@@ -46,11 +45,9 @@
         <div class="dropdown-container"></div>
         <div id="outline-menu">
         </div>
-
-          <!-- <button class="dropdown-btn">Zip Codes
+        <button class="dropdown-btn btn-primary">Tags
           <i class="fa fa-caret-down"></i></button>
-          <div class="dropdown-container" id="zip-menu">
-        </div> -->
+        <div class="dropdown-container" id="tags-menu"></div>
         {% for issue, desc in issues.items %}
         <button class="dropdown-btn btn-primary" id="{{ issue }}">{{ issue }}
           <i class="fa fa-caret-down"></i></button>

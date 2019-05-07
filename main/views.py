@@ -118,10 +118,14 @@ class Map(TemplateView):
         # dictionary of tags to be displayed
         tags = dict()
         for obj in Tag.objects.all():
-            print(obj)
-            print(obj.communityentry_set)
-        # dictionary of zip codes
-        # zips = dict()
+            # manytomany query
+            entries = obj.communityentry_set.all()
+            ids = []
+            for id in entries:
+                ids.append(str(id))
+            tags[str(obj)] = ids
+        print(tags)
+
         for obj in CommunityEntry.objects.all():
             # print(obj.tags.name)
             # zipcode = obj.zipcode
@@ -144,7 +148,7 @@ class Map(TemplateView):
             #     zips[zipcode] = [obj.entry_ID]
 
         context = ({
-            # 'zips': zips,
+            'tags': tags,
             'issues': issues,
             'entries': entryPolyDict,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
@@ -195,7 +199,9 @@ class EntryView(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, label_suffix='')
-        print("ENTRY FORM------\n\n\n\n\n")
+        print("ENTRY FORM------")
+        print("POST")
+        print(request.POST)
         issue_formset = self.IssueFormSet(request.POST)
         # print(form.data['census_blocks_multipolygon'])
         
@@ -208,7 +214,7 @@ class EntryView(LoginRequiredMixin, View):
 
         # print("\n\n printed out the drawn polygon")
         if form.is_valid() and issue_formset.is_valid():
-            tags = request.POST.getlist('tags')
+            tag_ids = request.POST.getlist('tags')
             entryForm = form.save(commit=False)
             entryForm.save()
             # CommunityEntry.objects.raw('SELECT ')
@@ -232,9 +238,8 @@ class EntryView(LoginRequiredMixin, View):
             # qs1.union(qs2).order_by('name')
             # print(request.POST.getlist('tags'))
             # entryForm.tags.add(tags[0])
-            for tag_label in tags:
-                # print(tag_label)
-                tag = Tag.objects.get(name=str(tag_label))
+            for tag_id in tag_ids:
+                tag = Tag.objects.get(name=tag_id)
                 entryForm.tags.add(tag)
             for issue_form in issue_formset:
                 category = issue_form.cleaned_data.get('category')
