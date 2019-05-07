@@ -16,7 +16,8 @@ from django.http import JsonResponse
 #******************************************************************************#
 
 # must be imported after other models
-from django.contrib.gis.geos import Point
+from django.contrib.gis.geos import Point, Polygon
+from django.contrib.gis.db.models import Union
 
 #******************************************************************************#
 '''
@@ -62,13 +63,18 @@ class Review(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         entryPolyDict = dict()
         for obj in CommunityEntry.objects.filter(user = self.request.user):
-            if (obj.census_blocks_polygon == "" or obj.census_blocks_polygon == None):
+            print(obj.census_blocks_multipolygon)
+            if (obj.census_blocks_multipolygon == "" or obj.census_blocks_multipolygon == None):
                 s = "".join(obj.user_polygon.geojson)
             else:
-                s = "".join(obj.census_blocks_polygon.geojson)
+                s = "".join(obj.census_blocks_multipolygon.geojson)
 
             struct = geojson.loads(s)
-            entryPolyDict[obj.entry_ID] = struct.coordinates
+            entryPolyDict[obj.entry_ID] = struct.coordinates[0]
+            for coord in struct.coordinates:
+                print(coord)
+                print("\n\n")
+                print("why am i not printing anything?")
 
         context = ({
             'entries': entryPolyDict,
@@ -113,20 +119,25 @@ class Map(TemplateView):
         tags = dict()
         for obj in Tag.objects.all():
             print(obj)
-            print(obj.communityentry_set.all())
+            print(obj.communityentry_set)
         # dictionary of zip codes
         # zips = dict()
         for obj in CommunityEntry.objects.all():
             # print(obj.tags.name)
             # zipcode = obj.zipcode
-            if (obj.census_blocks_polygon == "" or obj.census_blocks_polygon == None):
+            if (obj.census_blocks_multipolygon == "" or obj.census_blocks_multipolygon == None):
                 s = "".join(obj.user_polygon.geojson)
             else:
-                s = "".join(obj.census_blocks_polygon.geojson)
+                s = "".join(obj.census_blocks_multipolygon.geojson)
+                
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
-            entryPolyDict[obj.entry_ID] = struct.coordinates
+            # for coord in struct.coordinates[0]:
+            #     print(coord)
+            #     print("\n\n")
+            #     print("im printing something")
+            entryPolyDict[obj.entry_ID] = struct.coordinates[0]
             # if zipcode in zips:
             #     zips[zipcode].append(obj.entry_ID)
             # else:
@@ -184,10 +195,47 @@ class EntryView(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, label_suffix='')
+        print("ENTRY FORM------\n\n\n\n\n")
         issue_formset = self.IssueFormSet(request.POST)
+        # print(form.data['census_blocks_multipolygon'])
+        
+        # print("printing the census polygon\n\n\n\n\n")
+        # print(form.data['census_blocks_polygon'])
+
+        # print("printing the user polygon\n\n\n\n\n")
+        # print(form.data['user_polygon'])
+
+
+        # print("\n\n printed out the drawn polygon")
         if form.is_valid() and issue_formset.is_valid():
+            tags = request.POST.getlist('tags')
             entryForm = form.save(commit=False)
             entryForm.save()
+            # CommunityEntry.objects.raw('SELECT ')
+            # queryset
+            # lol = form.data['entry_ID']
+            # hello = CommunityEntry.objects.filter(entry_ID = lol).values().aggregate(temp = Union('census_blocks_multipolygon'))
+            # extract the coordinates and execute the query
+            # print(hello)
+            # entryForm.census_blocks_multipolygon = hello['temp']
+            # entryForm.save()
+
+
+            
+            # q1 = CommunityEntry.objects.filter(entry_ID = lol).aggregate(Union(census_blocks_multipolygon))
+            print("\n\n\n")
+            # hello = CommunityEntry.objects.filter(entry_ID = lol).values('census_blocks_multipolygon').aggregate(temp = Union('cample_blocks_multipolygon'))
+            # print(q1)
+            
+
+            # print(lol)
+            # qs1.union(qs2).order_by('name')
+            # print(request.POST.getlist('tags'))
+            # entryForm.tags.add(tags[0])
+            for tag_label in tags:
+                # print(tag_label)
+                tag = Tag.objects.get(name=str(tag_label))
+                entryForm.tags.add(tag)
             for issue_form in issue_formset:
                 category = issue_form.cleaned_data.get('category')
                 description = issue_form.cleaned_data.get('description')
@@ -198,13 +246,14 @@ class EntryView(LoginRequiredMixin, View):
                     # created entryForm.
                     issue.entry = entryForm
                     issue.save()
+
             return HttpResponseRedirect(self.success_url)
         context = {
             'form': form,
             'issue_formset': issue_formset,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY')
         }
-        print(issue_formset)
+        # print(issue_formset)
         return render(request, self.template_name, context)
 
 #******************************************************************************#

@@ -6,6 +6,8 @@ from django.contrib.auth.models import AbstractUser
 from django.db import migrations, models
 from django.contrib.gis.db import models
 from .choices import *
+import datetime
+
 
 #******************************************************************************#
 
@@ -19,7 +21,8 @@ class Tag(models.Model):
     Referenced https://docs.djangoproject.com/en/2.2/topics/forms/modelforms/#a-full-example
     The tag table stores tags associated with different entries.
     '''
-    name = models.CharField(max_length=100, primary_key=True)
+    name = models.CharField(max_length=100)
+    # entries = models.ManyToManyField(CommunityEntry, blank=True)
 
     class Meta:
         ordering = ('name',)
@@ -32,20 +35,23 @@ class CommunityEntry(models.Model):
     '''
     Community Entry represents the entry created by the user when drawing their
     COI.
+    Fields included:
+     - user: The user that created the entry. Foreign Key = User (Many to One)
+     - entry_ID: Randomly Generated via uuid.uuid4.
+     - user_polygon:  User polygon contains the polygon drawn by the user.
+     - census_blocks_multipolygon: The initial multipolygon containing all the
+                                   census blocks.
+     - census_blocks_polygon: The union of the census block polygons.
+
+     References:
+     FK, Many-to-One: https://docs.djangoproject.com/en/2.2/topics/db/examples/many_to_one/
+
     '''
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    # Generated randomly every time.
     entry_ID = models.CharField(max_length=100, blank=False, unique=True, default=uuid.uuid4)
-    # From Mapbox GL GS.
-    # Entry polygon contains the combined census block polygons.
-    census_blocks_polygon = models.PolygonField(serialize=True, blank=True, null=True)
-    # User polygon contains the polygon drawn by the user.
     user_polygon = models.PolygonField(serialize=True, blank=False)
-    # "Which races shape this community's identity? Select one or multiple."
-    race = ArrayField(models.CharField(max_length=50,choices=RACE_CHOICES),default=list,blank=True)
-    religion = ArrayField(models.CharField(max_length=50,choices=RELIGION_CHOICES),default=list,blank=True)
-    industry = ArrayField(models.CharField(max_length=50,choices=INDUSTRY_CHOICES),default=list,blank=True)
-    zipcode = models.CharField("Zipcode", max_length=5, blank=False, null=False)
+    census_blocks_multipolygon = models.MultiPolygonField(serialize=True, blank=True, null=True)
+    census_blocks_polygon = models.PolygonField(serialize=True, blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank=True)
     CHOICES=(
         ('Y','Yes, this is my community.'),
@@ -63,6 +69,10 @@ class CommunityEntry(models.Model):
 class Issue(models.Model):
     '''
     Issue holds issues associated with each community entry.
+    Fields included:
+        - entry: Foreign Key that associates the issue to the entry.
+        - category: Category associated with issue.
+        - description: Description.
     '''
     entry = models.ForeignKey(CommunityEntry, on_delete=models.CASCADE, default=None)
     category = models.CharField(max_length=50, choices=POLICY_ISSUES, default=None, blank=True)

@@ -192,6 +192,7 @@ map.on('load', function() {
         'fill-color': 'rgba(110, 178, 181,0.15)',
       }
     });
+    console.log(a[obj]);
     map.addLayer({
       'id': obj + "line",
       'type': 'line',
