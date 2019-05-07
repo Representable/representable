@@ -87,7 +87,7 @@ class CommunityForm(ModelForm):
             'tags': TagSelect2Widget(attrs={'data-placeholder': 'E.g. #flintwatercrisis, Korea Town, etc.'}),
             'user': forms.HiddenInput(),
             'entry_ID': forms.HiddenInput(),
-            'census_blocks_multipolygon': forms.HiddenInput(),
+            'census_blocks_polygon_array': forms.HiddenInput(),
             'census_blocks_polygon': forms.HiddenInput(),
             'user_polygon': forms.HiddenInput(),
             'my_community': BootstrapRadioSelect(),
