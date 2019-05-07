@@ -64,10 +64,10 @@ class Review(LoginRequiredMixin, TemplateView):
         entryPolyDict = dict()
         for obj in CommunityEntry.objects.filter(user = self.request.user):
             print(obj.census_blocks_multipolygon)
-            if (obj.census_blocks_multipolygon == "" or obj.census_blocks_multipolygon == None):
+            if (obj.census_blocks_polygon_array == [] or obj.census_blocks_polygon_array == None):
                 s = "".join(obj.user_polygon.geojson)
             else:
-                s = "".join(obj.census_blocks_multipolygon.geojson)
+                s = "".join(obj.user_polygon.geojson)
 
             struct = geojson.loads(s)
             entryPolyDict[obj.entry_ID] = struct.coordinates[0]
@@ -128,10 +128,10 @@ class Map(TemplateView):
         for obj in CommunityEntry.objects.all():
             # print(obj.tags.name)
             # zipcode = obj.zipcode
-            if (obj.census_blocks_multipolygon == "" or obj.census_blocks_multipolygon == None):
+            if (obj.census_blocks_polygon_array == [] or obj.census_blocks_polygon_array == None):
                 s = "".join(obj.user_polygon.geojson)
             else:
-                s = "".join(obj.census_blocks_multipolygon.geojson)
+                s = "".join(obj.user_polygon.geojson)
                 
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
@@ -206,9 +206,8 @@ class EntryView(LoginRequiredMixin, View):
 
         # print("printing the user polygon\n\n\n\n\n")
         # print(form.data['user_polygon'])
-
-
-        # print("\n\n printed out the drawn polygon")
+        print(form.data['user_polygon'])
+        print("\n\n")
         if form.is_valid() and issue_formset.is_valid():
             tag_ids = request.POST.getlist('tags')
             entryForm = form.save(commit=False)
