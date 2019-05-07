@@ -182,9 +182,6 @@ class EntryView(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, label_suffix='')
-        print("ENTRY FORM------")
-        print("POST")
-        print(request.POST)
         issue_formset = self.IssueFormSet(request.POST)
         if form.is_valid() and issue_formset.is_valid():
             tag_ids = request.POST.getlist('tags')
