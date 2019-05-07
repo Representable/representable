@@ -78,11 +78,11 @@ function newCensusLayer(state) {
     "source": state + "-census",
     "source-layer": state + "blockdata",
     "layout": {
-      "visibility": "visible"
+      "visibility": "none"
     },
     "paint": {
       "fill-color": "rgba(193, 202, 214, 0)",
-      "fill-outline-color": "rgba(193, 202, 214, 1)"
+      "fill-outline-color": "rgba(106,137,204,0.4)"
     }
   });
 }
@@ -99,7 +99,7 @@ function newUpperLegislatureLayer(state) {
       "line-cap": "round"
     },
     "paint": {
-      "line-color": "rgba(193, 202, 214, 1)",
+      "line-color": "rgba(106,137,204,0.2)",
       "line-width": 2
     }
   });
@@ -112,12 +112,12 @@ function newLowerLegislatureLayer(state) {
     "source": state + "-lower",
     "source-layer": state + "lower",
     "layout": {
-      "visibility": "visible",
+      "visibility": "none",
       "line-join": "round",
       "line-cap": "round"
     },
     "paint": {
-      "line-color": "rgba(193, 202, 214, 1)",
+      "line-color": "rgba(106,137,204,0.2)",
       "line-width": 2
     }
   });
@@ -140,6 +140,11 @@ for (issue in issues) {
   button.className = 'dropdown-btn btn-primary';
   button.id = issue;
   button.textContent = issue;
+  var circle = document.createElement('i');
+  circle.className = 'fa fa-circle';
+  circle.style.color = PAINT_VALUES[issue] + '1)';
+  circle.style.paddingLeft = '5px';
+  button.appendChild(circle);
 
   var i = document.createElement('i');
   i.className = 'fa fa-caret-down';
@@ -230,6 +235,7 @@ map.on('load', function() {
         'fill-color': 'rgba(110, 178, 181,0.15)',
       }
     });
+    console.log(a[obj]);
     map.addLayer({
       'id': obj + "line",
       'type': 'line',
@@ -353,13 +359,7 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   link.id = id;
   link.type = 'checkbox';
   link.className = 'switch_1';
-  // only state upper legislature is not checked
-  if (id === 'State Legislature - Upper') {
-    link.checked = false;
-  }
-  else {
-    link.checked = true;
-  }
+  link.checked = false;
 
   link.onchange = function(e) {
     var txt = this.id;
