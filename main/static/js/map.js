@@ -313,7 +313,6 @@ map.on('load', function() {
       map.setLayoutProperty(obj + "line", 'visibility', 'visible');
       map.setPaintProperty(obj, 'fill-color', 'rgba(110, 178, 181,0.15)');
       map.setPaintProperty(obj + "line", 'line-color', 'rgba(110, 178, 181,0.3)');
-
     }
   }
 

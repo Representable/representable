@@ -150,7 +150,7 @@ text-decoration: none;
 }
 
 
-@media screen and (min-width: 768px) {
+@media only screen and (min-width: 768px) {
   .gap-90 {
     width: 100%;
     height: 90px;
@@ -254,12 +254,18 @@ section {
 /* Fixed sidenav, full height */
 /* https://www.w3schools.com/howto/howto_js_dropdown_sidenav.asp */
 .sidenav {
-  height: 100%;
+  height: calc(100vh - 86px);
   width: 100%;
   z-index: 1;
   overflow-x: hidden;
+  overflow-y: auto;
 }
 
+@media only screen and (max-width: 768px) {
+  .sidenav {
+    height: 100%;
+  }
+}
 /* Style the sidenav links and the dropdown button */
 .sidenav a, .dropdown-btn {
   padding: 6px 8px 6px 16px;
@@ -551,6 +557,12 @@ section {
     text-transform: uppercase;
     color: #a5a5a5;
     letter-spacing: 1px;
+  }
+
+  #all {
+    font-size: 12px;
+    text-align: center;
+    text-decoration: underline;
   }
 
 /* code for the toggle button: https://codepen.io/thelaazyguy/pen/MvqpPr/ */
