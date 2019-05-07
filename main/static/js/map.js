@@ -123,6 +123,43 @@ function newLowerLegislatureLayer(state) {
   });
 }
 
+// issues add to properties
+issues = JSON.parse(issues);
+console.log(issues);
+// {% for issue, desc in issues.items %}
+// <button class="dropdown-btn btn-primary" id="{{ issue }}">{{ issue }}
+//   <i class="fa fa-caret-down"></i></button>
+//   <div class="dropdown-container">
+//     {% for item, key in desc.items %}
+//     <a href="#" id="{{ item }}" class="btn-primary">{{ key }}</a>
+//     {% endfor %}
+//   </div>
+//   {% endfor %}
+for (issue in issues) {
+  var button = document.createElement('button');
+  button.className = 'dropdown-btn btn-primary';
+  button.id = issue;
+  button.textContent = issue;
+
+  var i = document.createElement('i');
+  i.className = 'fa fa-caret-down';
+  button.appendChild(i);
+
+  var dropdowns = document.createElement('div');
+  dropdowns.className = 'dropdown-container';
+
+  for (entry in issues[issue]) {
+    var link = document.createElement('a');
+    link.href = '#';
+    link.id = entry;
+    link.className = 'btn-primary';
+    link.textContent = issues[issue][entry];
+    dropdowns.appendChild(link);
+  }
+  var issueDiv = document.getElementById('issue-dropdowns');
+  issueDiv.appendChild(button);
+  issueDiv.appendChild(dropdowns);
+}
 
 map.on('load', function() {
   // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
@@ -143,43 +180,6 @@ map.on('load', function() {
     newLowerLegislatureLayer(states[i]);
   }
 
-  // issues add to properties
-  issues = JSON.parse(issues);
-  console.log(issues);
-  // {% for issue, desc in issues.items %}
-  // <button class="dropdown-btn btn-primary" id="{{ issue }}">{{ issue }}
-  //   <i class="fa fa-caret-down"></i></button>
-  //   <div class="dropdown-container">
-  //     {% for item, key in desc.items %}
-  //     <a href="#" id="{{ item }}" class="btn-primary">{{ key }}</a>
-  //     {% endfor %}
-  //   </div>
-  //   {% endfor %}
-  for (issue in issues) {
-    var button = document.createElement('button');
-    button.className = 'dropdown-btn btn-primary';
-    button.id = issue;
-    button.textContent = issue;
-
-    var i = document.createElement('i');
-    i.className = 'fa fa-caret-down';
-    button.appendChild(i);
-
-    var dropdowns = document.createElement('div');
-    dropdowns.className = 'dropdown-container';
-
-    for (entry in issues[issue]) {
-      var link = document.createElement('a');
-      link.href = '#';
-      link.id = entry;
-      link.className = 'btn-primary';
-      link.textContent = issues[issue][entry];
-      dropdowns.appendChild(link);
-    }
-    var issueDiv = document.getElementById('issue-dropdowns');
-    issueDiv.appendChild(button);
-    issueDiv.appendChild(dropdowns);
-  }
   // tags add to properties
   tags = JSON.parse(tags);
   // console.log(issues);
