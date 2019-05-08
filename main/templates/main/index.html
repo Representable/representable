@@ -67,7 +67,7 @@
         <div id='features'>
             <!--  STEP ONE : BROWSE THE MAP-->
                     <section id='Step1-Browse' class='active'>
-                        <h3> 1. Browse the Map </h3>
+                        <h3> 1. Browse the map </h3>
                         <div class="row">
                               <div id=images class="col-sm-6">
                                   <img src="{% static 'img/browse1.png' %}" alt="map" style="width: 100%; height: 100%;">
@@ -133,32 +133,36 @@
                         </div>
                     </section>
 
+              <!--  STEP FIVE : How Big  -->
+                            <section id='Step5-Submit Data' class='active'>
+                                <h3> 5.View how big your COI is </h3>
+                                <div class="row">
+                                  <div id=images class="col-sm-6">
+                                      <img src="{% static 'img/howbig.png' %}" alt="map" style="width: 100%; height: 100%;">
+                                      <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
+                                  </div>
+                                    <div id=description class="col-sm-6">
+                                        <p> See how big your community is in relation to the size of an average electoral district.
+                                          Generally, a higher percentage indicates that your community has a bigger impact
+                                          on election results in your district.
+                                    </div>
+                                </div>
+                            </section>
 
-            <!--  STEP FOUR : Enter DEMOGRAPHIC data -->
-                    <section id='Step4-DemographicData' class='active'>
-                        <h3> 5.Demographic Data </h3>
-                        <div class="row">
-                          <div id=images class="col-sm-6">
-                              <img src="{% static 'img/demographics.png' %}" alt="map" style="width: 100%; height: 100%;">
-                              <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
-                          </div>
-                            <div id=description class="col-sm-6">
-                                <p> Help us understand the importance of this community for you, and
-                                    identify aggregate trends in your commynity
-                                    by submitting your demographic information on the left
-                                    hand side of the screen </p>
-                            </div>
-                        </div>
-                    </section>
 
             <!--  STEP FIVE : submit  -->
                     <section id='Step5-Submit Data' class='active'>
-                        <h3> 5.Topics and Issues of Interest </h3>
+                        <h3> 6. Add COI identifiers </h3>
                         <div class="row">
                             <div id=description class="col-sm-6">
-                                <p> Submit issues so that your voice can be heard about the issues you feel pertain to your
-                                  community! Pick the category your issue/ topic of interest falls into then further specify in
-                                  with the field.
+                                <p> Help us understand the importance of this community for you, and
+                                    identify aggregate trends in your commynity
+                                    by submitting your demographic information and policy issues so that your voice can be heard
+                                     about the issues you feel pertain to your
+                                    community.
+
+                                    Pick the category your issue/ topic of interest falls into then further specify in
+                                    with the field.
                             </div>
                             <div id=images class="col-sm-6">
                                 <img src="{% static 'img/issues.png' %}" alt="map" style="width: 100%; height: 100%;">
@@ -167,17 +171,33 @@
                         </div>
                     </section>
 
+                    <!--  STEP FIVE : submit  -->
+                            <section id='Step5-Submit Data' class='active'>
+                                <h3> 7.Submit tags </h3>
+                                <div class="row">
+                                  <div id=images class="col-sm-6">
+                                      <img src="{% static 'img/tags.png' %}" alt="map" style="width: 100%; height: 100%;">
+                                      <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
+                                  </div>
+                                    <div id=description class="col-sm-6">
+                                        <p> Submit hashtags to be used by the rest of the Districter community to
+                                            unify discussion on trending issues!</p>
+                                    </div>
+                                </div>
+                            </section>
+
+
                     <section id='Step6-Submit Data' class='active'>
-                        <h3> 6.Submit & have your voice heard! </h3>
+                        <h3> 8. Submit & help make districts more fair! </h3>
                         <div class="row">
-                          <div id=images class="col-sm-6">
-                              <img src="{% static 'img/mapp.png' %}" alt="map" style="width: 100%; height: 100%;">
-                              <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
-                          </div>
                             <div id=description class="col-sm-6">
                                 <p> Submit your data to be entered into a critical databse of citizens in your area
                                     who want to have their voices heard during redistricting and other political processes
                                     involving your community!
+                            </div>
+                            <div id=images class="col-sm-6">
+                                <img src="{% static 'img/mapp.png' %}" alt="map" style="width: 100%; height: 100%;">
+                                <!--   <img src="{% static 'img/demo.png' %}" alt="demo" width=600px height=300px> -->
                             </div>
                         </div>
                     </section>
