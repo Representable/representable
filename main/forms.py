@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from django_select2.forms import Select2MultipleWidget, Select2Widget, ModelSelect2Widget,ModelSelect2TagWidget
+from django_select2.forms import Select2MultipleWidget, Select2Widget, ModelSelect2Widget,ModelSelect2TagWidget,ModelSelect2Widget
 from .models import CommunityEntry, Issue, Tag
 from django.forms import formset_factory
 from .choices import *
@@ -103,3 +103,13 @@ class CommunityForm(ModelForm):
             'industry': 'List Industries/Profressions (At Least One, Multiple Accepted)',
             'religion': 'List Religions (At Least One, Multiple Accepted)'
         }
+
+class DeletionForm(ModelForm):
+    class Meta:
+        model = CommunityEntry
+        fields = ['entry_ID']
+        widgets = {
+            'entry_ID': ModelSelect2Widget(model=CommunityEntry,queryset = CommunityEntry.objects.filter(),search_fields=['name__icontains']),
+        }
+
+        #fields = []
