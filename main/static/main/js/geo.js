@@ -261,12 +261,10 @@ map.addControl(new mapboxgl.NavigationControl());
 /* Change mapbox draw button */
 var drawButton = document.getElementsByClassName("mapbox-gl-draw_polygon");
 drawButton[0].backgroundImg = '';
-drawButton[0].classList.add("text-success");
 drawButton[0].id = 'draw-button';
 drawButton[0].innerHTML = "<i class='fas fa-draw-polygon'></i> Draw Polygon";
 var trashButton = document.getElementsByClassName("mapbox-gl-draw_trash");
 trashButton[0].backgroundImg = '';
-trashButton[0].classList.add("text-danger");
 trashButton[0].id = 'trash-button';
 trashButton[0].innerHTML = "<i class='fas fa-trash-alt'></i> Delete Polygon";
 

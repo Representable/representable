@@ -570,6 +570,14 @@ section {
     text-decoration: underline;
   }
 
+  .fa-draw-polygon {
+    color: #28a745;
+  }
+
+  .fa-trash-alt {
+    color: #dc3545;
+  }
+
 /* code for the toggle button: https://codepen.io/thelaazyguy/pen/MvqpPr/ */
   .switch_box{
     display: -webkit-box;
