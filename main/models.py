@@ -39,8 +39,7 @@ class CommunityEntry(models.Model):
      - user: The user that created the entry. Foreign Key = User (Many to One)
      - entry_ID: Randomly Generated via uuid.uuid4.
      - user_polygon:  User polygon contains the polygon drawn by the user.
-     - census_blocks_multipolygon: The initial multipolygon containing all the
-                                   census blocks.
+     - census_blocks_polygon_array: Array containing multiple polygons.
      - census_blocks_polygon: The union of the census block polygons.
 
      References:
@@ -50,7 +49,7 @@ class CommunityEntry(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     entry_ID = models.CharField(max_length=100, blank=False, unique=True, default=uuid.uuid4)
     user_polygon = models.PolygonField(serialize=True, blank=False)
-    census_blocks_multipolygon = models.MultiPolygonField(serialize=True, blank=True, null=True)
+    census_blocks_polygon_array = ArrayField(models.PolygonField(blank=True, null=True, serialize=True), blank=True, null=True)
     census_blocks_polygon = models.PolygonField(serialize=True, blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank=True)
     CHOICES=(
