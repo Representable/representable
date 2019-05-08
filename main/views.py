@@ -5,7 +5,7 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from allauth.account.decorators import verified_email_required
 from django.forms import formset_factory
-from .forms import CommunityForm, IssueForm
+from .forms import CommunityForm, IssueForm, DeletionForm
 from .models import CommunityEntry, Issue, Tag
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
@@ -61,24 +61,25 @@ class Review(LoginRequiredMixin, TemplateView):
     template_name = "main/review.html"
 
     def get_context_data(self, **kwargs):
+        # the dict of issues + input of descriptions
         issues = dict()
         for obj in Issue.objects.all():
             cat = obj.category
-            cat = re.sub('_', ' ', cat).title()
-            if cat == 'Economic':
-                cat = 'Economic Affairs'
-            if cat == 'Health':
-                cat = 'Health and Health Insurance'
-            if cat == 'Internet':
-                cat = 'Internet Regulation'
-            if cat == 'Women':
-                cat = 'Women\'s Issues'
-            if cat == 'Lgbt':
-                cat = 'LGBT Issues'
-            if cat == 'Security':
-                cat = 'National Security'
-            if cat == 'Welfare':
-                cat = 'Social Welfare'
+            cat = re.sub("_", " ", cat).title()
+            if cat == "Economic":
+                cat = "Economic Affairs"
+            if cat == "Health":
+                cat = "Health and Health Insurance"
+            if cat == "Internet":
+                cat = "Internet Regulation"
+            if cat == "Women":
+                cat = "Women\'s Issues"
+            if cat == "Lgbt":
+                cat = "LGBT Issues"
+            if cat == "Security":
+                cat = "National Security"
+            if cat == "Welfare":
+                cat = "Social Welfare"
 
             if cat in issues:
                 issues[cat][str(obj.entry)] = obj.description
@@ -87,27 +88,44 @@ class Review(LoginRequiredMixin, TemplateView):
                 issueInfo[str(obj.entry)] = obj.description
                 issues[cat] = issueInfo
 
+        # the polygon coordinates
         entryPolyDict = dict()
-        for obj in CommunityEntry.objects.filter(user = self.request.user):
-            print(obj.census_blocks_multipolygon)
+        # dictionary of tags to be displayed
+        tags = dict()
+        for obj in Tag.objects.all():
+            # manytomany query
+            entries = obj.communityentry_set.all()
+            ids = []
+            for id in entries:
+                ids.append(str(id))
+            tags[str(obj)] = ids
+
+        query = CommunityEntry.objects.filter(user = self.request.user)
+
+
+        for obj in query:
             if (obj.census_blocks_multipolygon == "" or obj.census_blocks_multipolygon == None):
                 s = "".join(obj.user_polygon.geojson)
             else:
                 s = "".join(obj.census_blocks_multipolygon.geojson)
 
+            # add all the coordinates in the array
+            # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
             entryPolyDict[obj.entry_ID] = struct.coordinates[0]
-            for coord in struct.coordinates:
-                print(coord)
-                print("\n\n")
-                print("why am i not printing anything?")
+
+        form = DeletionForm()
 
         context = ({
-            'issues': issues,
-            'entries': entryPolyDict,
+            'form': form,
+            'tags': json.dumps(tags),
+            'issues': json.dumps(issues),
+            'entries': json.dumps(entryPolyDict),
+            'communities': query,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
         })
         return context
+
 #******************************************************************************#
 
 class Map(TemplateView):
@@ -159,7 +177,7 @@ class Map(TemplateView):
                 s = "".join(obj.user_polygon.geojson)
             else:
                 s = "".join(obj.census_blocks_multipolygon.geojson)
-                
+
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
@@ -227,7 +245,7 @@ class EntryView(LoginRequiredMixin, View):
         form = self.form_class(request.POST, label_suffix='')
         issue_formset = self.IssueFormSet(request.POST)
         # print(form.data['census_blocks_multipolygon'])
-        
+
         # print("printing the census polygon\n\n\n\n\n")
         # print(form.data['census_blocks_polygon'])
 
@@ -250,12 +268,12 @@ class EntryView(LoginRequiredMixin, View):
             # entryForm.save()
 
 
-            
+
             # q1 = CommunityEntry.objects.filter(entry_ID = lol).aggregate(Union(census_blocks_multipolygon))
             print("\n\n\n")
             # hello = CommunityEntry.objects.filter(entry_ID = lol).values('census_blocks_multipolygon').aggregate(temp = Union('cample_blocks_multipolygon'))
             # print(q1)
-            
+
 
             # print(lol)
             # qs1.union(qs2).order_by('name')

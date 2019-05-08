@@ -3,6 +3,7 @@
 {% load static %}
 
 {% block head %}
+{{ form.media.css }}
 {% leaflet_js %}
 {% leaflet_css %}
 <!-- https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ -->
@@ -25,52 +26,45 @@
 <div class="row row-wide">
   <div>
     <script type="text/javascript">
+      // var a = JSON.parse('{{ entries | escapejs }}')
       var issues = '{{ issues | escapejs }}';
       var a = '{{ entries | escapejs}}';
+      var tags = '{{ tags | escapejs }}'
     </script>
   </div>
-  <div class="col-md-3 col-wide">
+  <div class="col-md-6 col-wide">
     <nav id='menu'>
       <div class="sidenav">
-        <div class="search">
-          <input type="text" id="search-bar" class="searchTerm" placeholder="Search layers..." onkeyup="searchTags()">
-          <button type="submit" class="searchButton" onclick="searchTags()">
-            <i class="fa fa-search"></i>
-          </button>
-        </div>
         <div class="dropdown-container"></div>
-        <button class="dropdown-btn btn-primary" id="all">All Entries
-          <i class="fa"></i></button>
-        <div class="dropdown-container">
-          {% for entry in entries.items %}
-          <button class="dropdown-btn btn-primary" id="{{ entry }}">{{ entry }}
-          {% endfor %}
+        <div id="outline-menu">
         </div>
-        <button class="dropdown-btn btn-primary">Display Outlines
+        <p>{{ communities}}</p>
+        {% for c in communities %}
+          {{c}}
+        {% endfor %}
+        {{ form.as_p }}
+        {% for issue, desc in issues.items %}
+        <button class="dropdown-btn btn-primary" id="{{ issue }}">{{ issue }}
           <i class="fa fa-caret-down"></i></button>
-        <div class="dropdown-container" id="outline-menu">
-          {% for entries in issues.items %}
-          <button class="dropdown-btn btn-primary" id="{{ issue }}">{{ issue }}
-            <i class="fa fa-caret-down"></i></button>
-          <div class="dropdown-container">
-            {% for item, key in desc.items %}
-            <a href="#" id="{{ item }}" class="btn-primary">{{ key }}</a>
-            {% endfor %}
-          </div>
+        <div class="dropdown-container">
+          {% for item, key in desc.items %}
+          <a href="#" id="{{ item }}" class="btn-primary">{{ key }}</a>
           {% endfor %}
         </div>
+        {% endfor %}
     </nav>
   </div>
-  <div class="col-md-9 col-map col-wide">
+  <div class="col-md-6 col-map col-wide">
     <div id='map' class="map-visualization"></div>
   </div>
 </div>
 {% endblock %}
 
 {% block script %}
+{{ form.media.js }}
 <!--  Has to be at the end after the HTML loads.-->
 <script type="text/javascript">
   mapboxgl.accessToken = "{{ mapbox_key }}";
 </script>
-<script type="text/javascript" src="{% static 'js/map.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/review.js' %}"></script>
 {% endblock %}
