@@ -12,12 +12,15 @@ from django.core.serializers import serialize
 from shapely.geometry import Polygon, mapping
 import geojson, os, json, re
 from django.http import JsonResponse
+import shapely.wkt
+
 
 #******************************************************************************#
 
 # must be imported after other models
-from django.contrib.gis.geos import Point, Polygon
+from django.contrib.gis.geos import Point, Polygon, MultiPolygon
 from django.contrib.gis.db.models import Union
+from django.contrib.gis.geos import GEOSGeometry
 
 #******************************************************************************#
 '''
@@ -63,12 +66,11 @@ class Review(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         entryPolyDict = dict()
         for obj in CommunityEntry.objects.filter(user = self.request.user):
-            # print(obj.census_blocks_polygon_array)
-            s = "".join(obj.user_polygon.geojson)
-            # if (obj.census_blocks_polygon_array == "" or obj.census_blocks_polygon_array == None):
-            #     s = "".join(obj.user_polygon.geojson)
-            # else:
-            #     s = "".join(obj.census_blocks_polygon_array.geojson)
+            print(obj.census_blocks_multipolygon)
+            if (obj.census_blocks_polygon == '' or obj.census_blocks_polygon == None):
+                s = "".join(obj.user_polygon.geojson)
+            else:
+                s = "".join(obj.user_polygon.geojson)
 
             struct = geojson.loads(s)
             entryPolyDict[obj.entry_ID] = struct.coordinates
@@ -129,11 +131,10 @@ class Map(TemplateView):
         for obj in CommunityEntry.objects.all():
             # print(obj.tags.name)
             # zipcode = obj.zipcode
-            s = "".join(obj.user_polygon.geojson)
-            # if (obj.census_blocks_polygon_array == None):
-            #     s = "".join(obj.user_polygon.geojson)
-            # else:
-            #     s = "".join(obj.census_blocks_polygon_array.geojson)
+            if (obj.census_blocks_polygon == '' or obj.census_blocks_polygon == None):
+                s = "".join(obj.user_polygon.geojson)
+            else:
+                s = "".join(obj.census_blocks_polygon.geojson)
 
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
@@ -201,41 +202,23 @@ class EntryView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, label_suffix='')
         issue_formset = self.IssueFormSet(request.POST)
-        # print(form.data['census_blocks_polygon_array'])
 
-        # print("printing the census polygon\n\n\n\n\n")
-        # print(form.data['census_blocks_polygon'])
-
-        # print("printing the user polygon\n\n\n\n\n")
-        # print(form.data['user_polygon'])
-
-
-        # print("\n\n printed out the drawn polygon")
         if form.is_valid() and issue_formset.is_valid():
             tag_ids = request.POST.getlist('tags')
             entryForm = form.save(commit=False)
+            # get all the polygons from the array
+            # This returns an array of Django GEOS Polygon types
+            polyArray = form.data['census_blocks_polygon_array']
+            polyArray = polyArray.split('|')
+            newPolyArr = []
+            for stringPolygon in polyArray:
+                new_poly = GEOSGeometry(stringPolygon, srid=4326)
+                newPolyArr.append(new_poly)
+            mpoly = MultiPolygon(newPolyArr)
+            polygonUnion = mpoly.unary_union
+            entryForm.census_blocks_polygon = polygonUnion[0]
+
             entryForm.save()
-            # CommunityEntry.objects.raw('SELECT ')
-            # queryset
-            # lol = form.data['entry_ID']
-            # hello = CommunityEntry.objects.filter(entry_ID = lol).values().aggregate(temp = Union('census_blocks_polygon_array'))
-            # extract the coordinates and execute the query
-            # print(hello)
-            # entryForm.census_blocks_polygon_array = hello['temp']
-            # entryForm.save()
-
-
-
-            # q1 = CommunityEntry.objects.filter(entry_ID = lol).aggregate(Union(census_blocks_polygon_array))
-            print("\n\n\n")
-            # hello = CommunityEntry.objects.filter(entry_ID = lol).values('census_blocks_polygon_array').aggregate(temp = Union('cample_blocks_polygon_array'))
-            # print(q1)
-
-
-            # print(lol)
-            # qs1.union(qs2).order_by('name')
-            # print(request.POST.getlist('tags'))
-            # entryForm.tags.add(tags[0])
             for tag_id in tag_ids:
                 tag = Tag.objects.get(name=tag_id)
                 entryForm.tags.add(tag)

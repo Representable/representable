@@ -503,10 +503,10 @@ function highlightBlocks(drawn_polygon) {
 
     var northEastPointPixel = map.project(northEast);
     var southWestPointPixel = map.project(southWest);
-    var final_union = turf.union(turf.bboxPolygon([0, 0, 0, 0]), turf.bboxPolygon([0, 0, 1, 1]));
-    console.log(final_union);
+    // var final_union = turf.union(turf.bboxPolygon([0, 0, 0, 0]), turf.bboxPolygon([0, 0, 1, 1]));
     var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
     var mpoly = [];
+    var wkt = new Wkt.Wkt();
     if (features.length >= 1) {
 
         var total = 0.0;
@@ -526,16 +526,22 @@ function highlightBlocks(drawn_polygon) {
                     }
                     if (turf.booleanContains(drawn_polygon, polyCon)) {
                         memo.push(feature.properties.BLOCKID10);
-                        mpoly.push(polyCon.geometry.coordinates[0]);
-                        // final_union = turf.union(final_union, polyCon);
+                        // mpoly.push(polyCon.geometry.coordinates[0]);
+                        mpoly = addPoly(polyCon.geometry, mpoly, wkt);
+                        // call the poly push function
                         total+= feature.properties.POP10;
                     }
                 }
                 else {
                     if (turf.booleanContains(drawn_polygon, feature.geometry)) {
                         memo.push(feature.properties.BLOCKID10);
-                        mpoly.push(feature.geometry.coordinates[0]);
+                        // mpoly.push(feature.geometry.coordinates[0]);
+                        // console.log(feature.geometry);
+                        // create a polygon perhaps?
                         polyCon = turf.polygon([feature.geometry.coordinates[0]]);
+                        mpoly = addPoly(polyCon.geometry, mpoly, wkt);
+                        // call the poly push function
+
                         // final_union = turf.union(final_union, polyCon);
                         total+= feature.properties.POP10;
                     }
@@ -545,7 +551,6 @@ function highlightBlocks(drawn_polygon) {
         console.log("printing out the multi poly array that is returned")
 
         map.setFilter("blocks-highlighted", filter);
-        console.log(final_union);
 
         // 1. LOWER LEGISLATION PROGRESS BAR __________________________________
         progressL = document.getElementById("pop");
@@ -582,15 +587,27 @@ function highlightBlocks(drawn_polygon) {
 
 /******************************************************************************/
 
+function addPoly(poly, polyArray, wkt) {
+    // coordinates attribute that shud be converted and pushed
+    var poly_json = JSON.stringify(poly);
+    // console.log(poly_json);
+    var wkt_obj = wkt.read(poly_json);
+    // console.log(wkt_obj);
+    var poly_wkt = wkt_obj.write();
+    polyArray.push(poly_wkt);
+    return polyArray;
+}
+
+
 // updatePolygon responds to the user's actions and updates the polygon field
 // in the form.
 function updateCommunityEntry(e) {
     console.log("updateCommunity entry called");
+
     var wkt = new Wkt.Wkt();
     var data = draw.getAll();
     var user_polygon_wkt;
     var census_blocks_polygon_wkt;
-    var census_blocks_multipolygon_wkt;
     var drawn_polygon;
     if (data.features.length > 0) {
         // Update User Polygon with the GeoJson data.
@@ -623,12 +640,10 @@ function updateCommunityEntry(e) {
         user_polygon_wkt = wkt_obj.write();
         console.log();
         // save census blocks multipolygon
-        var mpolygon = highlightBlocks(drawn_polygon);
-        var census_blocks_multipolygon = turf.multiPolygon([mpolygon]);
-        var census_blocks_multipolygon_json = JSON.stringify(census_blocks_multipolygon['geometry']);
-
-        var multi_wkt_obj = wkt.read(census_blocks_multipolygon_json);
-        census_blocks_multipolygon_wkt = multi_wkt_obj.write();
+        census_blocks_polygon_array = highlightBlocks(drawn_polygon);
+        census_blocks_polygon_array = census_blocks_polygon_array.join("|");
+        console.log(census_blocks_polygon_array);
+        // debugger
 
         var dr_poly = document.getElementsByClassName("mapbox-gl-draw_polygon")[0];
         // dr_poly.style.display = "none";
@@ -645,9 +660,13 @@ function updateCommunityEntry(e) {
     // Update form fields
     census_blocks_polygon_wkt = '';
     document.getElementById('id_user_polygon').value = user_polygon_wkt;
-    // document.getElementById('id_census_blocks_array_polygon').value = census_blocks_multipolygon_wkt;
     document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon_wkt;
+    document.getElementById('id_census_blocks_polygon_array').value = census_blocks_polygon_array;
+    // console.log(user_polygon_wkt);
+    // console.log("printing the census_blocks_polygon_array");
+    // console.log(census_blocks_polygon_array);
     triggerSuccessMessage();
+    // debugger
 }
 
 /******************************************************************************/

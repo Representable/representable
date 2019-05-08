@@ -75,6 +75,10 @@ class BootstrapRadioSelect(forms.RadioSelect):
     option_template_name = 'forms/widgets/radio_option.html'
 
 class CommunityForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['census_blocks_polygon_array'].delimiter = '|' 
+
     class Meta:
         model = CommunityEntry
         fields = '__all__'
