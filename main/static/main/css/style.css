@@ -286,7 +286,7 @@ section {
 .sidenav a, .dropdown-btn {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
-  color: black;
+  color: black ! important;
   display: block;
   border: none;
   background: none;
