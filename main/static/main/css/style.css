@@ -142,6 +142,9 @@ text-decoration: none;
   border-color:#5b8f9b;
   cursor: pointer;
 }
+.btn-danger {
+  background-color:#dc3545;
+}
 
 .btn-outline-primary, .btn-outline-primary:visited, .btn-outline-primary:link {
   background-color: transparent;
