@@ -86,9 +86,9 @@ var draw = new MapboxDraw({
                 ['!=', 'mode', 'static']
             ],
             'paint': {
-                'fill-color': '#3bb2d0',
-                'fill-outline-color': '#3bb2d0',
-                'fill-opacity': 0.1
+                'fill-color': '#e55039',
+                'fill-outline-color': '#e55039',
+                'fill-opacity': 0.2
             }
         },
         {
@@ -98,8 +98,8 @@ var draw = new MapboxDraw({
                 ['==', '$type', 'Polygon']
             ],
             'paint': {
-                'fill-color': '#4a69bd',
-                'fill-outline-color': '#4a69bd',
+                'fill-color': '#e55039',
+                'fill-outline-color': '#e55039',
                 'fill-opacity': 0.5
             }
         },
@@ -115,7 +115,7 @@ var draw = new MapboxDraw({
                 'line-join': 'round'
             },
             'paint': {
-                'line-color': '#3bb2d0',
+                'line-color': '#eb2f06',
                 'line-width': 2
             }
         },
@@ -130,7 +130,7 @@ var draw = new MapboxDraw({
                 'line-join': 'round'
             },
             'paint': {
-                'line-color': '#fbb03b',
+                'line-color': '#b71540',
                 'line-dasharray': [0.2, 2],
                 'line-width': 2
             }
@@ -162,7 +162,7 @@ var draw = new MapboxDraw({
                 'line-join': 'round'
             },
             'paint': {
-                'line-color': '#fbb03b',
+                'line-color': '#b71540',
                 'line-dasharray': [0.2, 2],
                 'line-width': 2
             }
@@ -175,8 +175,8 @@ var draw = new MapboxDraw({
                 ['!=', 'mode', 'static']
             ],
             'paint': {
-                'circle-radius': 5,
-                'circle-color': '#fff'
+                'circle-radius': 10,
+                'circle-color': '#b71540'
             }
         },
         {
@@ -187,8 +187,8 @@ var draw = new MapboxDraw({
                 ['!=', 'mode', 'static']
             ],
             'paint': {
-                'circle-radius': 3,
-                'circle-color': '#fbb03b'
+                'circle-radius': 4,
+                'circle-color': '#b71540'
             }
         },
         {
@@ -253,31 +253,39 @@ map.addControl(draw);
 // Insert class into draw buttons so we can differentiate their styling from
 // from the nav buttons below.
 drawControls = document.querySelector(".draw_polygon_map .mapboxgl-ctrl-group");
-drawControls.className += " draw-group";
+drawControls.classList.add("draw-group");
+
 // Add nav control buttons.
 map.addControl(new mapboxgl.NavigationControl());
 
 /* Change mapbox draw button */
 var drawButton = document.getElementsByClassName("mapbox-gl-draw_polygon");
 drawButton[0].backgroundImg = '';
+drawButton[0].classList.add("text-success");
+drawButton[0].id = 'draw-button';
 drawButton[0].innerHTML = "<i class='fas fa-draw-polygon'></i> Draw Polygon";
 var trashButton = document.getElementsByClassName("mapbox-gl-draw_trash");
 trashButton[0].backgroundImg = '';
+trashButton[0].classList.add("text-danger");
+trashButton[0].id = 'trash-button';
 trashButton[0].innerHTML = "<i class='fas fa-trash-alt'></i> Delete Polygon";
 
+// Override Behavior for Draw-Button
+document.getElementById('draw-button').addEventListener('click', function (e) {
+    cleanAlerts();
+    draw.deleteAll();
+    map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
+    draw.changeMode('draw_polygon');
+});
 
-// var polygonError = document.getElementById("polygon_missing");
-// if (polygonError != null) {
-//     document.getElementById("map").classList.add("border");
-//     document.getElementById("map").classList.add("border-warning");
-// }
+document.getElementById('trash-button').addEventListener('click', function (e) {
+    cleanAlerts();
+    draw.deleteAll();
+    map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
+    draw.changeMode('simple_select');
+});
 
 /******************************************************************************/
-
-
-
-/******************************************************************************/
-
 
 // After the map style has loaded on the page, add a source layer and default
 // styling for a single point.
@@ -397,6 +405,13 @@ map.on('draw.update', updateCommunityEntry);
 
 /******************************************************************************/
 
+function cleanAlerts() {
+    let mapAlertMessages = document.querySelectorAll("#map-success-message, #map-area-size-error, #polygon-kink-error, #polygon_missing");
+    for (i = 0; i < mapAlertMessages.length; i++) {
+        mapAlertMessages[i].remove();
+    }
+}
+
 function triggerDrawError(id, stringErrorText) {
     /*
         triggerDrawError creates a bootstrap alert placed on top of the map.
@@ -431,15 +446,7 @@ function triggerSuccessMessage() {
     */
     console.log("triggerSuccessMessage() called");
     // Remove all map alert messages.
-    let mapAlertMessages = document.querySelectorAll("#map-success-message, #map-area-size-error, #polygon-kink-error, #polygon_missing");
-    for (i = 0; i < mapAlertMessages.length; i++) {
-        mapAlertMessages[i].remove();
-    }
-    // Remove old success message.
-    let oldAlert = document.getElementById('map-alert');
-    if (oldAlert) {
-        oldAlert.remove();
-    }
+    cleanAlerts();
 
     let newAlert = document.createElement('div');
     newAlert.innerHTML = '<div id="map-success-message" class="alert alert-success alert-dismissible fade show map-alert" role="alert">\
@@ -626,7 +633,7 @@ function updateCommunityEntry(e) {
         census_blocks_multipolygon_wkt = multi_wkt_obj.write();
 
         var dr_poly = document.getElementsByClassName("mapbox-gl-draw_polygon")[0];
-        dr_poly.style.display = "none";
+        // dr_poly.style.display = "none";
 
     } else {
         user_polygon_wkt = '';
@@ -635,7 +642,7 @@ function updateCommunityEntry(e) {
         map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
 
         var dr_poly = document.getElementsByClassName("mapbox-gl-draw_polygon")[0];
-        dr_poly.style.display = "block";
+        // dr_poly.style.display = "block";
     }
     // Update form fields
     census_blocks_polygon_wkt = '';
