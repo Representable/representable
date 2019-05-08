@@ -63,14 +63,15 @@ class Review(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         entryPolyDict = dict()
         for obj in CommunityEntry.objects.filter(user = self.request.user):
-            print(obj.census_blocks_polygon_array)
-            if (obj.census_blocks_polygon_array == "" or obj.census_blocks_polygon_array == None):
-                s = "".join(obj.user_polygon.geojson)
-            else:
-                s = "".join(obj.census_blocks_polygon_array.geojson)
+            # print(obj.census_blocks_polygon_array)
+            s = "".join(obj.user_polygon.geojson)
+            # if (obj.census_blocks_polygon_array == "" or obj.census_blocks_polygon_array == None):
+            #     s = "".join(obj.user_polygon.geojson)
+            # else:
+            #     s = "".join(obj.census_blocks_polygon_array.geojson)
 
             struct = geojson.loads(s)
-            entryPolyDict[obj.entry_ID] = struct.coordinates[0]
+            entryPolyDict[obj.entry_ID] = struct.coordinates
             for coord in struct.coordinates:
                 print(coord)
                 print("\n\n")
@@ -141,7 +142,7 @@ class Map(TemplateView):
             #     print(coord)
             #     print("\n\n")
             #     print("im printing something")
-            entryPolyDict[obj.entry_ID] = struct.coordinates[0]
+            entryPolyDict[obj.entry_ID] = struct.coordinates
             # if zipcode in zips:
             #     zips[zipcode].append(obj.entry_ID)
             # else:
