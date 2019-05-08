@@ -86,9 +86,9 @@ var draw = new MapboxDraw({
                 ['!=', 'mode', 'static']
             ],
             'paint': {
-                'fill-color': '#3bb2d0',
-                'fill-outline-color': '#3bb2d0',
-                'fill-opacity': 0.1
+                'fill-color': '#e55039',
+                'fill-outline-color': '#e55039',
+                'fill-opacity': 0.2
             }
         },
         {
@@ -98,8 +98,8 @@ var draw = new MapboxDraw({
                 ['==', '$type', 'Polygon']
             ],
             'paint': {
-                'fill-color': '#4a69bd',
-                'fill-outline-color': '#4a69bd',
+                'fill-color': '#e55039',
+                'fill-outline-color': '#e55039',
                 'fill-opacity': 0.5
             }
         },
@@ -115,7 +115,7 @@ var draw = new MapboxDraw({
                 'line-join': 'round'
             },
             'paint': {
-                'line-color': '#3bb2d0',
+                'line-color': '#eb2f06',
                 'line-width': 2
             }
         },
@@ -130,7 +130,7 @@ var draw = new MapboxDraw({
                 'line-join': 'round'
             },
             'paint': {
-                'line-color': '#fbb03b',
+                'line-color': '#b71540',
                 'line-dasharray': [0.2, 2],
                 'line-width': 2
             }
@@ -162,7 +162,7 @@ var draw = new MapboxDraw({
                 'line-join': 'round'
             },
             'paint': {
-                'line-color': '#fbb03b',
+                'line-color': '#b71540',
                 'line-dasharray': [0.2, 2],
                 'line-width': 2
             }
@@ -175,8 +175,8 @@ var draw = new MapboxDraw({
                 ['!=', 'mode', 'static']
             ],
             'paint': {
-                'circle-radius': 5,
-                'circle-color': '#fff'
+                'circle-radius': 10,
+                'circle-color': '#b71540'
             }
         },
         {
@@ -187,8 +187,8 @@ var draw = new MapboxDraw({
                 ['!=', 'mode', 'static']
             ],
             'paint': {
-                'circle-radius': 3,
-                'circle-color': '#fbb03b'
+                'circle-radius': 4,
+                'circle-color': '#b71540'
             }
         },
         {
@@ -253,29 +253,39 @@ map.addControl(draw);
 // Insert class into draw buttons so we can differentiate their styling from
 // from the nav buttons below.
 drawControls = document.querySelector(".draw_polygon_map .mapboxgl-ctrl-group");
-drawControls.className += " draw-group";
+drawControls.classList.add("draw-group");
+
 // Add nav control buttons.
 map.addControl(new mapboxgl.NavigationControl());
 
 /* Change mapbox draw button */
 var drawButton = document.getElementsByClassName("mapbox-gl-draw_polygon");
 drawButton[0].backgroundImg = '';
+drawButton[0].classList.add("text-success");
+drawButton[0].id = 'draw-button';
 drawButton[0].innerHTML = "<i class='fas fa-draw-polygon'></i> Draw Polygon";
 var trashButton = document.getElementsByClassName("mapbox-gl-draw_trash");
 trashButton[0].backgroundImg = '';
+trashButton[0].classList.add("text-danger");
+trashButton[0].id = 'trash-button';
 trashButton[0].innerHTML = "<i class='fas fa-trash-alt'></i> Delete Polygon";
 
+// Override Behavior for Draw-Button
+document.getElementById('draw-button').addEventListener('click', function (e) {
+    cleanAlerts();
+    draw.deleteAll();
+    map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
+    draw.changeMode('draw_polygon');
+});
 
-var polygonError = document.getElementById("polygon_missing");
-if (polygonError != null) {
-    document.getElementById("map").classList.add("border");
-    document.getElementById("map").classList.add("border-warning");
-}
+document.getElementById('trash-button').addEventListener('click', function (e) {
+    cleanAlerts();
+    draw.deleteAll();
+    map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
+    draw.changeMode('simple_select');
+});
 
 /******************************************************************************/
-
-/******************************************************************************/
-
 
 // After the map style has loaded on the page, add a source layer and default
 // styling for a single point.
@@ -395,6 +405,61 @@ map.on('draw.update', updateCommunityEntry);
 
 /******************************************************************************/
 
+function cleanAlerts() {
+    let mapAlertMessages = document.querySelectorAll("#map-success-message, #map-area-size-error, #polygon-kink-error, #polygon_missing");
+    for (i = 0; i < mapAlertMessages.length; i++) {
+        mapAlertMessages[i].remove();
+    }
+}
+
+function triggerDrawError(id, stringErrorText) {
+    /*
+        triggerDrawError creates a bootstrap alert placed on top of the map.
+    */
+    console.log("triggerDrawError() called");
+    // Remove success message.
+    let oldSuccessAlert = document.getElementById('map-success-message');
+    if (oldSuccessAlert) {
+        oldSuccessAlert.remove();
+    }
+    // Check for old error and return if already inserted.
+    let oldAlert = document.getElementById(id);
+    if (oldAlert) {
+        return;
+    }
+    let newAlert = document.createElement('div');
+    newAlert.innerHTML = '<div id="' + id + '" class="alert alert-warning alert-dismissible fade show map-alert" role="alert">\
+                              ' + stringErrorText + '\
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">\
+                                        <span aria-hidden="true">&times;</span>\
+                                  </button>\
+                          </div>';
+    document.getElementById('map-error-alerts').appendChild(newAlert);
+}
+
+/******************************************************************************/
+
+function triggerSuccessMessage() {
+    /*
+        triggerSuccessMessage lets the user know that they created a succesful
+        polygon.
+    */
+    console.log("triggerSuccessMessage() called");
+    // Remove all map alert messages.
+    cleanAlerts();
+
+    let newAlert = document.createElement('div');
+    newAlert.innerHTML = '<div id="map-success-message" class="alert alert-success alert-dismissible fade show map-alert" role="alert">\
+                                  <strong>Congratulations!</strong> Your map looks great.\
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">\
+                                        <span aria-hidden="true">&times;</span>\
+                                  </button>\
+                          </div>';
+    document.getElementById('map-error-alerts').appendChild(newAlert);
+}
+
+/******************************************************************************/
+
 function mergeBlocks(mpoly, drawn_polygon) {
     var wkt = new Wkt.Wkt();
     var finalpoly = turf.union(mpoly[0], mpoly[1], mpoly[2], mpoly[3], mpoly[4]);
@@ -426,6 +491,8 @@ function mergeBlocks(mpoly, drawn_polygon) {
     // prevent the method from being called multiple times
 }
 
+/******************************************************************************/
+
 function highlightBlocks(drawn_polygon) {
     console.log("called highlight blocks");
     // once the above works, check the global scope of drawn_polygon
@@ -443,7 +510,7 @@ function highlightBlocks(drawn_polygon) {
     var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
     var mpoly = [];
     if (features.length >= 1) {
-        
+
         var total = 0.0;
 
         var filter = features.reduce(function(memo, feature) {
@@ -521,21 +588,42 @@ function highlightBlocks(drawn_polygon) {
 // in the form.
 function updateCommunityEntry(e) {
     console.log("updateCommunity entry called");
-   
     var wkt = new Wkt.Wkt();
     var data = draw.getAll();
     var user_polygon_wkt;
     var census_blocks_polygon_wkt;
     var census_blocks_multipolygon_wkt;
     var drawn_polygon;
-
     if (data.features.length > 0) {
         // Update User Polygon with the GeoJson data.
         drawn_polygon = data.features[0];
+        // Validate User Polygon Area
+        // Check for kinks.
+        let kinks = turf.kinks(drawn_polygon);
+        if (kinks.features.length != 0) {
+            // console.log("Polygon contains kinks. Please redraw.")
+            triggerDrawError("polygon-kink-error", "Polygon lines should not overlap. Please draw your community again.")
+            draw.trash();
+            return;
+        }
+        // Calculate area and convert it from square meters into square miles.
+        let area = turf.area(data);
+        area = turf.convertArea(area, "meters", "miles");
+        // Use NJ State Area * 1/2
+        let halfStateArea = 4350;
+        if (area > halfStateArea) {
+            // console.log("Polygon area too large. Please redraw.")
+            triggerDrawError("map-area-size-error", "Polygon area too large. Please draw your community again.")
+            draw.trash();
+            return;
+        }
+        console.log("Area: " + turf.convertArea(area, "meters", "miles"));
+        console.log(area);
         // Save user polygon.
         var user_polygon_json = JSON.stringify(drawn_polygon['geometry']);
         wkt_obj = wkt.read(user_polygon_json);
         user_polygon_wkt = wkt_obj.write();
+        console.log();
         // save census blocks multipolygon
         var mpolygon = highlightBlocks(drawn_polygon);
         var census_blocks_multipolygon = turf.multiPolygon([mpolygon]);
@@ -545,7 +633,7 @@ function updateCommunityEntry(e) {
         census_blocks_multipolygon_wkt = multi_wkt_obj.write();
 
         var dr_poly = document.getElementsByClassName("mapbox-gl-draw_polygon")[0];
-        dr_poly.style.display = "none";
+        // dr_poly.style.display = "none";
 
     } else {
         user_polygon_wkt = '';
@@ -554,13 +642,14 @@ function updateCommunityEntry(e) {
         map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
 
         var dr_poly = document.getElementsByClassName("mapbox-gl-draw_polygon")[0];
-        dr_poly.style.display = "block";
+        // dr_poly.style.display = "block";
     }
     // Update form fields
     census_blocks_polygon_wkt = '';
     document.getElementById('id_user_polygon').value = user_polygon_wkt;
-    document.getElementById('id_census_blocks_multipolygon').value = census_blocks_multipolygon_wkt;
+    // document.getElementById('id_census_blocks_array_polygon').value = census_blocks_multipolygon_wkt;
     document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon_wkt;
+    triggerSuccessMessage();
 }
 
 /******************************************************************************/

@@ -51,14 +51,18 @@
                             <div class="card-header text-header-card">
                                 <strong>1. What does your community look like?</strong>
                             </div>
-                            <div class="card-body">
+                            <div id='map-card' class="card-body">
                                 <!-- {# Include form.entry_polygon error. } -->
+                                <div id="map-error-alerts">
                                 {% if form.user_polygon.errors %}
-                                <div id="polygon_missing" class="alert alert-warning" role="alert">
-                                    You need to draw a polygon to submit the form.
-                                </div>
+                                    <div id="polygon_missing" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                        You need to draw a polygon to submit the form.
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
                                 {% endif %}
-                                <div>
+                                </div>
                                     <div id='menu'>
                                     </div>
                                     <div id='map' class='draw_polygon_map'>
@@ -101,7 +105,6 @@
                                         <div id="popC" class="progress-bar" role="progressbar" aria-valuemin="0">
                                         </div>
                                     </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -118,7 +121,7 @@
                         </div>
                         <div class="card mb-3">
                             <div class="card-header text-info-custom">
-                                <b>How to draw?</b>
+                                <b>How do I draw my community?</b>
                             </div>
                             <div class="card-body">
                                 <p class="card-text">
@@ -132,7 +135,7 @@
                                     buildings, commercial centers, etc.
                                     <hr>
                                     </hr>
-                                    3. Don't worry about making a mistake! You can always start again.
+                                    3. Don't worry about making a mistake! You can always start again. Just press on <b> Delete Polygon </b> and again on <b> Draw Polygon </b>.
                                 </p>
                             </div>
                         </div>
@@ -240,8 +243,10 @@
                                     <div class="form-error">
                                         {{ form.my_community.label_tag }} <small class="text-danger">(Required)</small>
                                         {% if form.my_community.errors %}
-                                        <div id="my_community_missing" class="alert alert-warning" role="alert">
+                                        <div>
+                                        <div id="my_community_missing" class="alert alert-warning map-alert" role="alert">
                                             You need to specify if you are part of this community.
+                                        </div>
                                         </div>
                                         {% endif %}
                                     </div>
