@@ -67,7 +67,7 @@ class Review(LoginRequiredMixin, TemplateView):
         entryPolyDict = dict()
         for obj in CommunityEntry.objects.filter(user = self.request.user):
             print(obj.census_blocks_multipolygon)
-            if (obj.census_blocks_polygon_array == [] or obj.census_blocks_polygon_array == None):
+            if (obj.census_blocks_polygon == '' or obj.census_blocks_polygon == None):
                 s = "".join(obj.user_polygon.geojson)
             else:
                 s = "".join(obj.user_polygon.geojson)
@@ -131,10 +131,10 @@ class Map(TemplateView):
         for obj in CommunityEntry.objects.all():
             # print(obj.tags.name)
             # zipcode = obj.zipcode
-            if (obj.census_blocks_polygon_array == [] or obj.census_blocks_polygon_array == None):
+            if (obj.census_blocks_polygon == '' or obj.census_blocks_polygon == None):
                 s = "".join(obj.user_polygon.geojson)
             else:
-                s = "".join(obj.user_polygon.geojson)
+                s = "".join(obj.census_blocks_polygon.geojson)
 
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
@@ -143,7 +143,7 @@ class Map(TemplateView):
             #     print(coord)
             #     print("\n\n")
             #     print("im printing something")
-            entryPolyDict[obj.entry_ID] = struct.coordinates[0]
+            entryPolyDict[obj.entry_ID] = struct.coordinates
             # if zipcode in zips:
             #     zips[zipcode].append(obj.entry_ID)
             # else:
@@ -223,7 +223,12 @@ class EntryView(LoginRequiredMixin, View):
             for polygon in poly_array:
                 poly_union = poly_union.union(polygon)
             # Add to db
-            entryForm.id_census_blocks_polygon = poly_union;
+            
+            print("printing something out \n\n\n")
+            test = Polygon(poly_union[0][0])
+            entryForm.census_blocks_polygon = test
+            print(test)
+            # print(poly_union[0][0])
             entryForm.save()
             for tag_id in tag_ids:
                 tag = Tag.objects.get(name=tag_id)
