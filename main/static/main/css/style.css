@@ -105,7 +105,7 @@ text-decoration: none;
 }
 
 .row-content a {
-  color: #fff;
+  color: #6a89cc;
 }
 
 .row-about {
@@ -121,6 +121,12 @@ text-decoration: none;
   color: #000;
 }
 
+.row-wide a {
+  background-color: white;
+  color: #6a89cc;
+}
+
+
 .col-wide {
   padding: 0;
 }
@@ -129,6 +135,7 @@ text-decoration: none;
   background-color:#82ccdd;
   border-color:#82ccdd;
   cursor: pointer;
+  color: #fff ! important;
 }
 
 .btn-primary:active {
