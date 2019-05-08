@@ -12,13 +12,90 @@
             <div class="row row-hero">
                 <div class="col-sm-12 col-md-10 offset-md-1 my-5">
                     <h1 class="di-title mb-4"> Thank you for contributing to creating fair voting districts!</h1>
-                    <a class="btn btn-primary btn-canvas" href="/map/" role="button">Browse Community Entries</a>
-                    <a class="btn btn-primary btn-canvas" href="/entry" role="button">Create Another Entry</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+{% endblock %}
+
+{% block content %}
+<div class="row row-content">
+    <div class="container col-sm-6">
+        <img src="{% static 'img/lightmap.png' %}" style="width: 100%; height: 100%;">
+        <a class="btn btn-primary btn-canvas" href="/map/" role="button">Browse Community Entries</a>
+    </div>
+
+    <div class="container col-sm-6">
+        <img src="{% static 'img/darkmap.png' %}" style="width: 100%; height: 100%;">
+        <a class="btn btn-primary btn-canvas" href="/entry" role="button">Create Another Entry</a>
+    </div>
+</div>
+
+
+    <style>
+      /* Container needed to position the button. Adjust the width as needed */
+      .container {
+        position: relative;
+        width: 50%;
+      }
+
+      /* Make the image responsive */
+      .container img {
+        width: 100%;
+        height: auto;
+      }
+
+      /* Style the button and place it in the middle of the container/image */
+      .container .btn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        background-color:#82ccdd;
+        border-color:#82ccdd;
+        cursor: pointer;
+        color: white;
+        font-size: 16px;
+        padding: 12px 24px;
+        border: none;
+        cursor: pointer;
+        border-radius: 10px;
+      }
+
+      .container .btn:hover {
+        background-color:#5b8f9b;
+        border-color:#5b8f9b;
+        cursor: pointer;
+      }
+
+      .container .btn-primary:active {
+        background-color:#5b8f9b;
+        border-color: #5b8f9b;
+        cursor: pointer;
+      }
+
+      .container .btn-primary:hover {
+        background-color:#5b8f9b;
+        border-color:#5b8f9b;
+        cursor: pointer;
+      }
+
+      .btn-outline-primary, .btn-outline-primary:visited, .btn-outline-primary:link {
+        background-color: transparent;
+        border-color: #FFF;
+        color: #FFF;
+      }
+
+      .btn-outline-primary:hover, .btn-outline-primary:active {
+        background-color: transparent;
+        border-color: #CCC;
+        color: #CCC;
+      }
+    </style>
+
 
 
 {% endblock %}
