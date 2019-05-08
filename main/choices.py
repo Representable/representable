@@ -42,15 +42,17 @@ INDUSTRY_CHOICES = (
 
 POLICY_ISSUES = (
     ('', 'Select Category'),
-    ('criminal_justice', 'Criminal Justice'),
-    ('civil_rights','Civil Rights'),
-    ('economic','Economic Affairs'),
-    ('education','Education'),
-    ('environment','Environment'),
-    ('health','Health and Health Insurance'),
-    ('internet','Internet Regulation'),
-    ('women','Women\'s Issues'),
+    ('zoning', 'Zoning'),
+    ('policing','Policing'),
+    ('crime','Crime'),
+    ('environmental','Environmental'),
+    ('nuisance','Nuisance'),
+    ('school','School'),
+    ('religion','Religion/Church'),
+    ('race','Race/Ethnicity'),
+    ('immigration', 'Immigration Status'),
+    ('socioeconomic','Socioeconomic'),
+    ('transportation', 'Transportation'),
+    ('neighborhood', 'Neighborhood Identity/Official Definition'),
     ('lgbt', 'LGBT Issues'),
-    ('security','National Security'),
-    ('welfare', 'Social Welfare')
 )

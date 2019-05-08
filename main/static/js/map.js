@@ -24,17 +24,19 @@ var LOWER_KEYS = {
 };
 var states = ["nj", "va", "pa", "mi"];
 var PAINT_VALUES = {
-  "Criminal Justice": "rgba(135, 191, 255,",
-  "Civil Rights": "rgba(63, 142, 252,",
-  "Economic Affairs": "rgba(196, 178, 188,",
-  "Education": "rgba(223, 146, 142,",
-  "Environment": "rgba(249, 160, 63,",
-  "Health and Health Insurance": "rgba(234, 239, 177,",
-  "Internet Regulation": "rgba(178, 177, 207,",
-  "Women's Issues": "rgba(223, 41, 53,",
-  "LGBT Issues": "rgba(253, 202, 64,",
-  "National Security": "rgba(242, 255, 73,",
-  "Social Welfare": "rgba(251, 98, 246,",
+  "Zoning": "rgba(135, 191, 255,",
+  "Policing": "rgba(63, 142, 252,",
+  "Crime": "rgba(196, 178, 188,",
+  "Nuisance": "rgba(223, 146, 142,",
+  "School": "rgba(249, 160, 63,",
+  "Religion/Church": "rgba(234, 239, 177,",
+  "Race/Ethnicity": "rgba(178, 177, 207,",
+  "Immigration Status": "rgba(223, 41, 53,",
+  "Socioeconomic": "rgba(253, 202, 64,",
+  "Transportation": "rgba(242, 255, 73,",
+  "Neighborhood Identity/Official Definition": "rgba(251, 98, 246,",
+  "Environmental": "rgba(150, 98, 26,",
+  "LGBT Issues": "rgba(255, 192, 203,"
 };
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
