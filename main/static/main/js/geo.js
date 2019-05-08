@@ -530,7 +530,6 @@ function addPoly(poly, polyArray, wkt) {
     // console.log(wkt_obj);
     var poly_wkt = wkt_obj.write();
     polyArray.push(poly_wkt);
-
     return polyArray;
 }
 
@@ -557,6 +556,9 @@ function updateCommunityEntry(e) {
         user_polygon_wkt = wkt_obj.write();
         // save census blocks multipolygon
         census_blocks_polygon_array = highlightBlocks(drawn_polygon);
+        census_blocks_polygon_array = census_blocks_polygon_array.join("|");
+        console.log(census_blocks_polygon_array);
+        // debugger
 
         var dr_poly = document.getElementsByClassName("mapbox-gl-draw_polygon")[0];
         dr_poly.style.display = "none";
@@ -577,7 +579,8 @@ function updateCommunityEntry(e) {
     document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon_wkt;
     document.getElementById('id_census_blocks_polygon_array').value = census_blocks_polygon_array;
     console.log(user_polygon_wkt);
-    console.log(census_blocks_polygon_array[0]);
+    console.log("printing the census_blocks_polygon_array");
+    console.log(census_blocks_polygon_array);
     // debugger
 
 }

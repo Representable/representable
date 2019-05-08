@@ -12,6 +12,7 @@ from django.core.serializers import serialize
 from shapely.geometry import Polygon, mapping
 import geojson, os, json, re
 from django.http import JsonResponse
+import shapely.wkt
 
 #******************************************************************************#
 
@@ -199,6 +200,13 @@ class EntryView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, label_suffix='')
         issue_formset = self.IssueFormSet(request.POST)
+
+        # hI THEo: this is where you should be looking
+        # Step 1: Get the string from the form
+        # Step 2: Parse it such that you get the different polygons from the string
+        # Step 3: Call the shapely Union method using the polygons every time u create a new polygon
+        # Step 4: Start with an empty polygon
+        
         # print(form.data['census_blocks_multipolygon'])
         
         # print("printing the census polygon\n\n\n\n\n")
@@ -206,16 +214,42 @@ class EntryView(LoginRequiredMixin, View):
 
         # print("printing the user polygon\n\n\n\n\n")
         # print(form.data['user_polygon'])
-        print(form.data['user_polygon'])
+        # get all the polygons from the array
+        mpoly = form.data['census_blocks_polygon_array']
+        # s = "".join(obj.user_polygon.geojson)
+        # struct = geojson.loads(s)
+        # final_poly = 
+        # print(mpoly[0])
+        print("printing the poly")
+        hello = shapely.wkt.loads(mpoly)
+        print(hello.coordinates)
+            # poly_struct = geojson.loads(polygon)
+            # print(poly_struct)
+
+
+        # polygon = Polygon(mp)
+        # for poly in mpoly:
+        #     #create a shapely polygon
         print("\n\n")
         if form.is_valid() and issue_formset.is_valid():
             tag_ids = request.POST.getlist('tags')
             entryForm = form.save(commit=False)
+            # k = form.data['entry_ID']
+            # print(k)
+
+            # lol = form.data['entry_ID']
+            # hello = CommunityEntry.objects.filter(entry_ID = lol).values().Union('census_blocks_polygon_array'))
+            # print(hello['temp'])
+
+
+            # results = CommunityEntry.objects.raw('SELECT "id", "entry_ID", ST_ASTEXT(ST_Union(community_entry.census_blocks_polygon_array)) as singlegeom FROM community_entry')
+            # print(results.columns)
+            # print(results[0])
+
             entryForm.save()
             # CommunityEntry.objects.raw('SELECT ')
             # queryset
-            # lol = form.data['entry_ID']
-            # hello = CommunityEntry.objects.filter(entry_ID = lol).values().aggregate(temp = Union('census_blocks_multipolygon'))
+           
             # extract the coordinates and execute the query
             # print(hello)
             # entryForm.census_blocks_multipolygon = hello['temp']
