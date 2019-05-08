@@ -63,11 +63,11 @@ class Review(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         entryPolyDict = dict()
         for obj in CommunityEntry.objects.filter(user = self.request.user):
-            print(obj.census_blocks_multipolygon)
-            if (obj.census_blocks_multipolygon == "" or obj.census_blocks_multipolygon == None):
+            print(obj.census_blocks_polygon_array)
+            if (obj.census_blocks_polygon_array == "" or obj.census_blocks_polygon_array == None):
                 s = "".join(obj.user_polygon.geojson)
             else:
-                s = "".join(obj.census_blocks_multipolygon.geojson)
+                s = "".join(obj.census_blocks_polygon_array.geojson)
 
             struct = geojson.loads(s)
             entryPolyDict[obj.entry_ID] = struct.coordinates[0]
@@ -128,11 +128,12 @@ class Map(TemplateView):
         for obj in CommunityEntry.objects.all():
             # print(obj.tags.name)
             # zipcode = obj.zipcode
-            if (obj.census_blocks_multipolygon == "" or obj.census_blocks_multipolygon == None):
-                s = "".join(obj.user_polygon.geojson)
-            else:
-                s = "".join(obj.census_blocks_multipolygon.geojson)
-                
+            s = "".join(obj.user_polygon.geojson)
+            # if (obj.census_blocks_polygon_array == None):
+            #     s = "".join(obj.user_polygon.geojson)
+            # else:
+            #     s = "".join(obj.census_blocks_polygon_array.geojson)
+
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
@@ -199,8 +200,8 @@ class EntryView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, label_suffix='')
         issue_formset = self.IssueFormSet(request.POST)
-        # print(form.data['census_blocks_multipolygon'])
-        
+        # print(form.data['census_blocks_polygon_array'])
+
         # print("printing the census polygon\n\n\n\n\n")
         # print(form.data['census_blocks_polygon'])
 
@@ -216,19 +217,19 @@ class EntryView(LoginRequiredMixin, View):
             # CommunityEntry.objects.raw('SELECT ')
             # queryset
             # lol = form.data['entry_ID']
-            # hello = CommunityEntry.objects.filter(entry_ID = lol).values().aggregate(temp = Union('census_blocks_multipolygon'))
+            # hello = CommunityEntry.objects.filter(entry_ID = lol).values().aggregate(temp = Union('census_blocks_polygon_array'))
             # extract the coordinates and execute the query
             # print(hello)
-            # entryForm.census_blocks_multipolygon = hello['temp']
+            # entryForm.census_blocks_polygon_array = hello['temp']
             # entryForm.save()
 
 
-            
-            # q1 = CommunityEntry.objects.filter(entry_ID = lol).aggregate(Union(census_blocks_multipolygon))
+
+            # q1 = CommunityEntry.objects.filter(entry_ID = lol).aggregate(Union(census_blocks_polygon_array))
             print("\n\n\n")
-            # hello = CommunityEntry.objects.filter(entry_ID = lol).values('census_blocks_multipolygon').aggregate(temp = Union('cample_blocks_multipolygon'))
+            # hello = CommunityEntry.objects.filter(entry_ID = lol).values('census_blocks_polygon_array').aggregate(temp = Union('cample_blocks_polygon_array'))
             # print(q1)
-            
+
 
             # print(lol)
             # qs1.union(qs2).order_by('name')
