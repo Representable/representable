@@ -86,8 +86,8 @@ var draw = new MapboxDraw({
                 ['!=', 'mode', 'static']
             ],
             'paint': {
-                'fill-color': '#e55039',
-                'fill-outline-color': '#e55039',
+                'fill-color': '#60a3bc',
+                'fill-outline-color': '#60a3bc',
                 'fill-opacity': 0.2
             }
         },
@@ -98,8 +98,8 @@ var draw = new MapboxDraw({
                 ['==', '$type', 'Polygon']
             ],
             'paint': {
-                'fill-color': '#e55039',
-                'fill-outline-color': '#e55039',
+                'fill-color': '#60a3bc',
+                'fill-outline-color': '#60a3bc',
                 'fill-opacity': 0.5
             }
         },
@@ -115,7 +115,7 @@ var draw = new MapboxDraw({
                 'line-join': 'round'
             },
             'paint': {
-                'line-color': '#eb2f06',
+                'line-color': '#60a3bc',
                 'line-width': 2
             }
         },
@@ -130,7 +130,7 @@ var draw = new MapboxDraw({
                 'line-join': 'round'
             },
             'paint': {
-                'line-color': '#b71540',
+                'line-color': '#60a3bc',
                 'line-dasharray': [0.2, 2],
                 'line-width': 2
             }
@@ -147,7 +147,7 @@ var draw = new MapboxDraw({
                 'line-join': 'round'
             },
             'paint': {
-                'line-color': '#3bb2d0',
+                'line-color': '#60a3bc',
                 'line-width': 2
             }
         },
@@ -162,7 +162,7 @@ var draw = new MapboxDraw({
                 'line-join': 'round'
             },
             'paint': {
-                'line-color': '#b71540',
+                'line-color': '#60a3bc',
                 'line-dasharray': [0.2, 2],
                 'line-width': 2
             }
@@ -176,7 +176,7 @@ var draw = new MapboxDraw({
             ],
             'paint': {
                 'circle-radius': 10,
-                'circle-color': '#b71540'
+                'circle-color': '#3c6382'
             }
         },
         {
@@ -188,7 +188,7 @@ var draw = new MapboxDraw({
             ],
             'paint': {
                 'circle-radius': 4,
-                'circle-color': '#b71540'
+                'circle-color': '#3c6382'
             }
         },
         {
@@ -215,7 +215,7 @@ var draw = new MapboxDraw({
             ],
             'paint': {
                 'circle-radius': 3,
-                'circle-color': '#3bb2d0'
+                'circle-color': '#3c6382'
             }
         },
         {
@@ -239,7 +239,7 @@ var draw = new MapboxDraw({
             ],
             'paint': {
                 'circle-radius': 5,
-                'circle-color': '#fbb03b'
+                'circle-color': '#3c6382'
             }
         }
     ]
