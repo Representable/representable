@@ -1,6 +1,8 @@
 {% extends 'main/base.html' %}
 {% load leaflet_tags %}
 {% load static %}
+{% load widget_tweaks %}
+
 
 {% block head %}
 {{ form.media.css }}
@@ -38,12 +40,37 @@
         <div class="dropdown-container"></div>
         <div id="outline-menu">
         </div>
-        <p>{{ communities}}</p>
-        {% for c in communities %}
-          {{c}}
-        {% endfor %}
-        {{ form.as_p }}
-        {% for issue, desc in issues.items %}
+        {% if communities %}
+        <table>
+          {% for c in communities %}
+          <tr>
+            <form method="post" action="">{% csrf_token %}
+              <td>{{c}}</td>
+              <td><button type="submit" class="btn btn-primary" value="Submit">Delete</button>
+                <input type="hidden" name="c_id" value="{{ c }}"></td>
+            </form>
+          <tr>
+          {% endfor %}
+        </table>
+        {% else %}
+        <div class=jumbotron><h1>No entries!</h1></div>
+        {% endif %}
+        <!--<form method="post" action="/delete_entry/">{% csrf_token %}
+          <div class="form-group">
+            {% for field in form %}
+            <div class="field-wrap">
+                {{ field.errors }}
+                {{ field.label_tag }} {{ field|append_attr:"class:form-control" }}
+                {% if field.help_text %}
+                <p class="help">{{ field.help_text|safe }}</p>
+                {% endif %}
+                </div>
+            {% endfor %}
+          </div>
+          <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
+          <input type="hidden" name="next" value="{{ next }}">
+        </form>-->
+        <!--{% for issue, desc in issues.items %}
         <button class="dropdown-btn btn-primary" id="{{ issue }}">{{ issue }}
           <i class="fa fa-caret-down"></i></button>
         <div class="dropdown-container">
@@ -51,7 +78,7 @@
           <a href="#" id="{{ item }}" class="btn-primary">{{ key }}</a>
           {% endfor %}
         </div>
-        {% endfor %}
+        {% endfor %}-->
     </nav>
   </div>
   <div class="col-md-6 col-map col-wide">

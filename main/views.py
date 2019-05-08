@@ -59,6 +59,7 @@ class About(TemplateView):
 #******************************************************************************#
 class Review(LoginRequiredMixin, TemplateView):
     template_name = "main/review.html"
+    form_class = DeletionForm
 
     def get_context_data(self, **kwargs):
         # the dict of issues + input of descriptions
@@ -117,7 +118,7 @@ class Review(LoginRequiredMixin, TemplateView):
         form = DeletionForm()
 
         context = ({
-            'form': form,
+            #'form': form,
             'tags': json.dumps(tags),
             'issues': json.dumps(issues),
             'entries': json.dumps(entryPolyDict),
@@ -125,6 +126,69 @@ class Review(LoginRequiredMixin, TemplateView):
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
         })
         return context
+    def post(self, request, *args, **kwargs):
+            issues = dict()
+            for obj in Issue.objects.all():
+                cat = obj.category
+                cat = re.sub("_", " ", cat).title()
+                if cat == "Economic":
+                    cat = "Economic Affairs"
+                if cat == "Health":
+                    cat = "Health and Health Insurance"
+                if cat == "Internet":
+                    cat = "Internet Regulation"
+                if cat == "Women":
+                    cat = "Women\'s Issues"
+                if cat == "Lgbt":
+                    cat = "LGBT Issues"
+                if cat == "Security":
+                    cat = "National Security"
+                if cat == "Welfare":
+                    cat = "Social Welfare"
+
+                if cat in issues:
+                    issues[cat][str(obj.entry)] = obj.description
+                else:
+                    issueInfo = dict()
+                    issueInfo[str(obj.entry)] = obj.description
+                    issues[cat] = issueInfo
+            entry = CommunityEntry.objects.get(entry_ID=request.POST.get('c_id'))
+            entry.delete()
+
+            tags = dict()
+            for obj in Tag.objects.all():
+                # manytomany query
+                entries = obj.communityentry_set.all()
+                ids = []
+                for id in entries:
+                    ids.append(str(id))
+                tags[str(obj)] = ids
+            entryPolyDict = dict()
+
+            query = CommunityEntry.objects.filter(user = self.request.user)
+
+            for obj in query:
+                if (obj.census_blocks_multipolygon == "" or obj.census_blocks_multipolygon == None):
+                    s = "".join(obj.user_polygon.geojson)
+                else:
+                    s = "".join(obj.census_blocks_multipolygon.geojson)
+
+                # add all the coordinates in the array
+                # at this point all the elements of the array are coordinates of the polygons
+                struct = geojson.loads(s)
+                entryPolyDict[obj.entry_ID] = struct.coordinates[0]
+
+
+            context = {
+                #'form': form,
+                'tags': json.dumps(tags),
+                'issues': json.dumps(issues),
+                'entries': json.dumps(entryPolyDict),
+                'communities': query,
+                'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
+            }
+            # print(issue_formset)
+            return render(request, self.template_name, context)
 
 #******************************************************************************#
 
@@ -181,15 +245,9 @@ class Map(TemplateView):
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
-            # for coord in struct.coordinates[0]:
-            #     print(coord)
-            #     print("\n\n")
-            #     print("im printing something")
+
             entryPolyDict[obj.entry_ID] = struct.coordinates[0]
-            # if zipcode in zips:
-            #     zips[zipcode].append(obj.entry_ID)
-            # else:
-            #     zips[zipcode] = [obj.entry_ID]
+
 
         context = ({
             'tags': json.dumps(tags),
