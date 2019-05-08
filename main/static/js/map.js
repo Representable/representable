@@ -450,6 +450,13 @@ function searchTags() {
         buttons[i].style.display = "none";
       }
     }
+    if (filter === "") {
+      buttons[i].style.display = "";
+      next.style.display = "none";
+      for (j = 0; j < sub.length; j++) {
+        sub[j].style.display = "block";
+      }
+    }
     skip = false;
   }
 }
