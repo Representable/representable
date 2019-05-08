@@ -443,7 +443,7 @@ function highlightBlocks(drawn_polygon) {
     var mpoly = [];
     var wkt = new Wkt.Wkt();
     if (features.length >= 1) {
-        
+
         var total = 0.0;
 
         var filter = features.reduce(function(memo, feature) {
@@ -461,7 +461,7 @@ function highlightBlocks(drawn_polygon) {
                     }
                     if (turf.booleanContains(drawn_polygon, polyCon)) {
                         memo.push(feature.properties.BLOCKID10);
-                        // mpoly.push(polyCon.geometry.coordinates[0]); 
+                        // mpoly.push(polyCon.geometry.coordinates[0]);
                         mpoly = addPoly(polyCon.geometry, mpoly, wkt);
                         // call the poly push function
                         total+= feature.properties.POP10;
@@ -476,7 +476,7 @@ function highlightBlocks(drawn_polygon) {
                         polyCon = turf.polygon([feature.geometry.coordinates[0]]);
                         mpoly = addPoly(polyCon.geometry, mpoly, wkt);
                         // call the poly push function
-                        
+
                         // final_union = turf.union(final_union, polyCon);
                         total+= feature.properties.POP10;
                     }
@@ -522,7 +522,7 @@ function highlightBlocks(drawn_polygon) {
 
 /******************************************************************************/
 
-function addPoly(poly, polyArray, wkt) { 
+function addPoly(poly, polyArray, wkt) {
     // coordinates attribute that shud be converted and pushed
     var poly_json = JSON.stringify(poly);
     // console.log(poly_json);
@@ -538,7 +538,7 @@ function addPoly(poly, polyArray, wkt) {
 // in the form.
 function updateCommunityEntry(e) {
     console.log("updateCommunity entry called");
-   
+
     var wkt = new Wkt.Wkt();
     var data = draw.getAll();
     var user_polygon_wkt;
@@ -575,7 +575,6 @@ function updateCommunityEntry(e) {
     // Update form fields
     census_blocks_polygon_wkt = '';
     document.getElementById('id_user_polygon').value = user_polygon_wkt;
-    // document.getElementById('id_census_blocks_multipolygon').value = census_blocks_multipolygon_wkt;
     document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon_wkt;
     document.getElementById('id_census_blocks_polygon_array').value = census_blocks_polygon_array;
     console.log(user_polygon_wkt);

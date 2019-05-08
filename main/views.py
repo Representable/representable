@@ -216,19 +216,28 @@ class EntryView(LoginRequiredMixin, View):
 
             # get all the polygons from the array
             # This returns an array of Django GEOS Polygon types
-            poly_array = form.cleaned_data['census_blocks_polygon_array']
-            # Source: https://gist.github.com/djq/c4cb0760ca35d3850bd1
-            poly_union = poly_array[0]
-            poly_array = poly_array[1:]
-            for polygon in poly_array:
-                poly_union = poly_union.union(polygon)
-            # Add to db
-            
-            print("printing something out \n\n\n")
-            test = Polygon(poly_union[0][0])
-            entryForm.census_blocks_polygon = test
-            print(test)
-            # print(poly_union[0][0])
+            polyArray = form.data['census_blocks_polygon_array']
+            polyArray = polyArray.split('|')
+            newPolyArr = []
+            for stringPolygon in polyArray:
+                new_poly = GEOSGeometry(stringPolygon, srid=4326)
+                newPolyArr.append(new_poly)
+            mpoly = MultiPolygon(newPolyArr)
+            polygonUnion = mpoly.unary_union
+            entryForm.census_blocks_polygon = polygonUnion[0]
+
+            # # Source: https://gist.github.com/djq/c4cb0760ca35d3850bd1
+            # poly_union = poly_array[0]
+            # poly_array = poly_array[1:]
+            # for polygon in poly_array:
+            #     poly_union = poly_union.union(polygon)
+            # # Add to db
+            #
+            # print("printing something out \n\n\n")
+            # test = Polygon(poly_union[0][0])
+            # entryForm.census_blocks_polygon = test
+            # print(test)
+            # # print(poly_union[0][0])
             entryForm.save()
             for tag_id in tag_ids:
                 tag = Tag.objects.get(name=tag_id)
