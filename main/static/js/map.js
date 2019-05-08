@@ -220,7 +220,7 @@ map.on('load', function() {
           'type': 'Feature',
           'geometry': {
             'type': 'Polygon',
-            'coordinates': a[obj]
+            'coordinates': [a[obj][0]]
           },
           'properties': {
             'issues': catDict,
@@ -236,6 +236,7 @@ map.on('load', function() {
       }
     });
     console.log(a[obj]);
+    // debugger
     map.addLayer({
       'id': obj + "line",
       'type': 'line',
@@ -245,7 +246,7 @@ map.on('load', function() {
           'type': 'Feature',
           'geometry': {
             'type': 'Polygon',
-            'coordinates': a[obj]
+            'coordinates': [a[obj][0]]
           },
           'properties': {
             'issues': catDict,
