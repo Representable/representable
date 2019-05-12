@@ -321,8 +321,7 @@ class EntryView(LoginRequiredMixin, View):
             # get all the polygons from the array
             # This returns an array of Django GEOS Polygon types
             polyArray = form.data['census_blocks_polygon_array']
-            print(polyArray)
-            print("\n\n\n\n")
+
             if (polyArray != None and polyArray != ''):
                 polyArray = polyArray.split('|')
                 newPolyArr = []
@@ -331,7 +330,7 @@ class EntryView(LoginRequiredMixin, View):
                 for stringPolygon in polyArray:
                     new_poly = GEOSGeometry(stringPolygon, srid=4326)
                     newPolyArr.append(new_poly)
-                
+
                 mpoly = MultiPolygon(newPolyArr)
                 polygonUnion = mpoly.unary_union
                 polygonUnion.normalize()
