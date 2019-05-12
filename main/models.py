@@ -47,9 +47,9 @@ class CommunityEntry(models.Model):
     '''
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     entry_ID = models.CharField(max_length=100, blank=False, unique=True, default=uuid.uuid4)
-    user_polygon = models.PolygonField(serialize=True, blank=False)
-    census_blocks_polygon_array = ArrayField(models.PolygonField(blank=True, null=True, serialize=True), blank=True, null=True)
-    census_blocks_polygon = models.MultiPolygonField(serialize=True, blank=True, null=True)
+    user_polygon = models.PolygonField(geography=True, serialize=True, blank=False)
+    census_blocks_polygon_array = ArrayField(models.PolygonField(geography=True, blank=True, null=True, serialize=True), blank=True, null=True)
+    census_blocks_polygon = models.MultiPolygonField(geography=True, serialize=True, blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank=True)
     CHOICES=(
         ('Y','Yes, this is my community.'),

@@ -622,17 +622,13 @@ function updateCommunityEntry(e) {
             draw.trash();
             return;
         }
-        console.log("Area: " + turf.convertArea(area, "meters", "miles"));
-        console.log(area);
         // Save user polygon.
         var user_polygon_json = JSON.stringify(drawn_polygon['geometry']);
         wkt_obj = wkt.read(user_polygon_json);
         user_polygon_wkt = wkt_obj.write();
-        console.log();
         // save census blocks multipolygon
         census_blocks_polygon_array = highlightBlocks(drawn_polygon);
         census_blocks_polygon_array = census_blocks_polygon_array.join("|");
-        console.log(census_blocks_polygon_array);
 
     } else {
         user_polygon_wkt = '';
@@ -647,7 +643,6 @@ function updateCommunityEntry(e) {
     document.getElementById('id_census_blocks_polygon_array').value = census_blocks_polygon_array;
     triggerSuccessMessage();
 }
-
 /******************************************************************************/
 
 function updateElementIndex(el, prefix, ndx) {

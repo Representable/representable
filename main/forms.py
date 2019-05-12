@@ -6,8 +6,21 @@ from django.forms import formset_factory
 from .choices import *
 from django.forms.formsets import BaseFormSet
 from django.contrib.gis.db import models
+from django.contrib.gis.measure import Area
 
 # https://django-select2.readthedocs.io/en/latest/django_select2.html
+
+# def get_miles(self):
+#     '''
+#     Function used to project geometry in order to get area.
+#     From: https://gis.stackexchange.com/questions/9673/area-units-for-geos-area-property
+#     '''
+#     # convert polygon to SRID 4326
+#     self.polygon.transform(4326)
+#     meters_sq = self.polygon.area.sq_m
+#     print(meters_sq)
+#     return meters_sq
+
 
 class TagSelect2Widget(ModelSelect2TagWidget):
     model = Tag
@@ -106,6 +119,25 @@ class CommunityForm(ModelForm):
             'industry': 'List Industries/Profressions (At Least One, Multiple Accepted)',
             'religion': 'List Religions (At Least One, Multiple Accepted)'
         }
+
+    def clean_user_polygon(self):
+        '''
+        Make sure that the user polygon contains no kinks and has an acceptable area.
+        https://gis.stackexchange.com/questions/288103/how-to-convert-the-area-to-feets-in-geodjango
+        '''
+
+        data = self.cleaned_data['user_polygon']
+        # Check kinks
+        if not data.valid:
+            raise ValidationError("Polygon contains kinks.")
+        # Check area
+        polygon = data.transform(3857, clone=True)
+        area = Area(sq_m=polygon.area)
+        # Use NJ State Area * 1/2
+        halfStateArea = 4350;
+        if area.sq_mi > halfStateArea:
+            raise ValidationError("Area is too big.")
+        return data
 
 class DeletionForm(ModelForm):
     class Meta:
