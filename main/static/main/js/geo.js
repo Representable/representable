@@ -500,9 +500,10 @@ function highlightBlocks(drawn_polygon) {
     // get the bounds of the polygon to reduce the number of blocks you are querying from
     var southWest = [polygonBoundingBox[0], polygonBoundingBox[1]];
     var northEast = [polygonBoundingBox[2], polygonBoundingBox[3]];
+    try {
+        var northEastPointPixel = map.project(northEast);
+        var southWestPointPixel = map.project(southWest);
 
-    var northEastPointPixel = map.project(northEast);
-    var southWestPointPixel = map.project(southWest);
     // var final_union = turf.union(turf.bboxPolygon([0, 0, 0, 0]), turf.bboxPolygon([0, 0, 1, 1]));
     var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
     var mpoly = [];
@@ -542,7 +543,7 @@ function highlightBlocks(drawn_polygon) {
         console.log("printing out the multi poly array that is returned")
 
         map.setFilter("blocks-highlighted", filter);
-
+        
         // 1. LOWER LEGISLATION PROGRESS BAR __________________________________
         progressL = document.getElementById("pop");
         progressL.style.background = "orange"
@@ -571,6 +572,10 @@ function highlightBlocks(drawn_polygon) {
         progressC.setAttribute("aria-valuemax", ideal_population_CONG['nj']);
         popWidth = total / (ideal_population_CONG['nj'] * 1.5) * 100;
         progressC.style.width = popWidth + "%";
+    }
+}
+    catch(err) {
+        console.log("triangle shaped polygon was changed");
     }
 
     return mpoly;
@@ -631,8 +636,10 @@ function updateCommunityEntry(e) {
         console.log();
         // save census blocks multipolygon
         census_blocks_polygon_array = highlightBlocks(drawn_polygon);
-        census_blocks_polygon_array = census_blocks_polygon_array.join("|");
-        console.log(census_blocks_polygon_array);
+        if (census_blocks_polygon_array != undefined) {
+            census_blocks_polygon_array = census_blocks_polygon_array.join("|");
+        }
+        
 
     } else {
         user_polygon_wkt = '';
