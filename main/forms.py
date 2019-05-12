@@ -171,9 +171,8 @@ class CommunityForm(ModelForm):
 class DeletionForm(ModelForm):
     class Meta:
         model = CommunityEntry
-        fields = ['entry_ID']
+        fields = ['user', 'entry_ID']
         widgets = {
-            'entry_ID': ModelSelect2Widget(model=CommunityEntry,queryset = CommunityEntry.objects.filter(),search_fields=['name__icontains']),
+            'user': forms.HiddenInput(),
+            'entry_ID': forms.HiddenInput(),
         }
-
-        #fields = []

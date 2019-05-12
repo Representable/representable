@@ -24,19 +24,17 @@ var LOWER_KEYS = {
 };
 var states = ["nj", "va", "pa", "mi"];
 var PAINT_VALUES = {
-  "Zoning": "rgba(135, 191, 255,",
-  "Policing": "rgba(63, 142, 252,",
-  "Crime": "rgba(196, 178, 188,",
-  "Nuisance": "rgba(223, 146, 142,",
-  "School": "rgba(249, 160, 63,",
-  "Religion/Church": "rgba(234, 200, 30,",
-  "Race/Ethnicity": "rgba(178, 177, 207,",
-  "Immigration Status": "rgba(223, 41, 53,",
-  "Socioeconomic": "rgba(253, 202, 64,",
-  "Transportation": "rgba(242, 255, 73,",
-  "Neighborhood Identity/Official Definition": "rgba(251, 98, 246,",
-  "Environmental": "rgba(150, 98, 26,",
-  "LGBT Issues": "rgba(255, 192, 203,"
+  "Criminal Justice": "rgba(135, 191, 255,",
+  "Civil Rights": "rgba(63, 142, 252,",
+  "Economic Affairs": "rgba(196, 178, 188,",
+  "Education": "rgba(223, 146, 142,",
+  "Environment": "rgba(249, 160, 63,",
+  "Health and Health Insurance": "rgba(234, 239, 177,",
+  "Internet Regulation": "rgba(178, 177, 207,",
+  "Women's Issues": "rgba(223, 41, 53,",
+  "LGBT Issues": "rgba(253, 202, 64,",
+  "National Security": "rgba(242, 255, 73,",
+  "Social Welfare": "rgba(251, 98, 246,",
 };
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
@@ -146,40 +144,21 @@ map.on('load', function() {
 
   // tags add to properties
   tags = JSON.parse(tags);
-  // console.log(issues);
-  // send elements to javascript as geojson objects and make them show on the map by
-  // calling the addTo
 
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
 
   for (obj in a) {
-    // console.log(obj);
     let catDict = {};
     let catArray = [];
     for (cat in issues) {
-      // console.log(cat);
-      // console.log(issues[cat][obj]);
 
       if (issues[cat][obj] !== undefined) {
         catArray.push(cat);
-        // console.log(issues[cat][obj]);
-        // console.log("goinginside");
+
         catDict[cat] = issues[cat][obj];
       }
 
-    }
-    // check how deeply nested the outer ring of the unioned polygon is
-    final = [];
-    // set the coordinates of the outer ring to final 
-    if (a[obj][0][0].length > 2) {
-      final = [a[obj][0][0]];
-    }
-    else if(a[obj][0].length > 2) {
-      final = [a[obj][0]];
-    }
-    else {
-      final = a[obj]
     }
 
     map.addLayer({
@@ -191,7 +170,7 @@ map.on('load', function() {
           'type': 'Feature',
           'geometry': {
             'type': 'Polygon',
-            'coordinates': final
+            'coordinates': a[obj]
           },
           'properties': {
             'issues': catDict,
@@ -206,7 +185,7 @@ map.on('load', function() {
         'fill-color': 'rgba(110, 178, 181,0.15)',
       }
     });
-
+    console.log(a[obj]);
     map.addLayer({
       'id': obj + "line",
       'type': 'line',
@@ -216,7 +195,7 @@ map.on('load', function() {
           'type': 'Feature',
           'geometry': {
             'type': 'Polygon',
-            'coordinates': final
+            'coordinates': a[obj]
           },
           'properties': {
             'issues': catDict,
@@ -239,42 +218,13 @@ map.on('load', function() {
   // this function iterates thru the issues, and adds a link to each one Which
   // displays the right polygons
   for (issue in issues) {
+    console.log(issue);
     // the button element
 
     var cat = document.getElementById(issue);
 
-    // cat.onclick = function(e) {
-    //   var issueId = this.id;
-    //
-    //   for (obj in a) {
-    //     if (issues[issueId][obj] === undefined) {
-    //       map.setLayoutProperty(obj, 'visibility', 'none');
-    //       map.setLayoutProperty(obj + "line", 'visibility', 'none');
-    //     } else {
-    //       map.setLayoutProperty(obj, 'visibility', 'visible');
-    //       map.setLayoutProperty(obj + "line", 'visibility', 'visible');
-    //       map.setPaintProperty(obj + "line", 'line-color', PAINT_VALUES[issueId] + '0.3)');
-    //       map.setPaintProperty(obj, 'fill-color', PAINT_VALUES[issueId] + '0.15)');
-    //     }
-    //   }
-    // }
-    // console.log(issue);
     for (entry in issues[issue]) {
       var entryId = document.getElementById(entry);
-      // console.log(entryId);
-      // entryId.onclick = function(e) {
-      //   var thisId = this.id;
-      //   // console.log(thisId);
-      //   for (obj in a) {
-      //     if (thisId === obj) {
-      //       map.setLayoutProperty(obj, 'visibility', 'visible');
-      //       map.setLayoutProperty(obj + "line", 'visibility', 'visible');
-      //     } else {
-      //       map.setLayoutProperty(obj, 'visibility', 'none');
-      //       map.setLayoutProperty(obj + "line", 'visibility', 'none');
-      //     }
-      //   }
-      // }
     }
   }
 
