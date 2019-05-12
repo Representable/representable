@@ -285,8 +285,8 @@ document.getElementById('trash-button').addEventListener('click', function (e) {
 
 /******************************************************************************/
 
-// After the map style has loaded on the page, add a source layer and default
-// styling for a single point.
+/* After the map style has loaded on the page, add a source layer and default
+   styling for a single point. */
 map.on('style.load', function() {
     map.addSource('single-point', {
         "type": "geojson",
@@ -332,6 +332,7 @@ map.on('style.load', function() {
       }
     });
 
+    // filter is applied on this layer
     map.addLayer({
         "id": "blocks-highlighted",
         "type": "fill",
@@ -458,39 +459,10 @@ function triggerSuccessMessage() {
 
 /******************************************************************************/
 
-function mergeBlocks(mpoly, drawn_polygon) {
-    var wkt = new Wkt.Wkt();
-    var finalpoly = turf.union(mpoly[0], mpoly[1], mpoly[2], mpoly[3], mpoly[4]);
-    for(var i = 0; i < mpoly.length - (mpoly.length%5); i+=5) {
-        finalpoly = turf.union(mpoly[i], mpoly[i+1], mpoly[i+2], mpoly[i+3], mpoly[i+4], finalpoly);
-    }
-    for (i; i < (mpoly.length%5); i++) {
-        finalpoly = turf.union(mpoly[i], finalpoly);
-    }
-
-
-    var census_blocks_polygon = drawn_polygon;
-    // should only be the exterior ring
-    console.log("function triggered");
-    if (finalpoly.geometry.coordinates[0][0].length > 2) {
-        census_blocks_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0][0];
-    }
-    else {
-        census_blocks_polygon.geometry.coordinates[0] = finalpoly.geometry.coordinates[0];
-    }
-    // Save outline of census blocks.
-    let census_blocks_polygon_json = JSON.stringify(census_blocks_polygon['geometry']);
-    wkt_obj = wkt.read(census_blocks_polygon_json);
-    census_blocks_polygon_wkt = wkt_obj.write();
-
-    // document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon_wkt;
-    console.log("function ended");
-    return census_blocks_polygon_wkt;
-    // prevent the method from being called multiple times
-}
-
-/******************************************************************************/
-
+/* Takes the user drawn polygon and queries census blocks that are contained
+   within the drawn polygon. appends them to the filter and highlights those 
+   blocks. Returns an array containing the census block polygons that are 
+   highlighted */
 function highlightBlocks(drawn_polygon) {
     console.log("called highlight blocks");
     // once the above works, check the global scope of drawn_polygon
@@ -504,76 +476,77 @@ function highlightBlocks(drawn_polygon) {
         var northEastPointPixel = map.project(northEast);
         var southWestPointPixel = map.project(southWest);
 
-    // var final_union = turf.union(turf.bboxPolygon([0, 0, 0, 0]), turf.bboxPolygon([0, 0, 1, 1]));
-    var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
-    var mpoly = [];
-    var wkt = new Wkt.Wkt();
-    if (features.length >= 1) {
+        // var final_union = turf.union(turf.bboxPolygon([0, 0, 0, 0]), turf.bboxPolygon([0, 0, 1, 1]));
+        var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
+        var mpoly = [];
+        var wkt = new Wkt.Wkt();
+        if (features.length >= 1) {
 
-        var total = 0.0;
+            var total = 0.0;
 
-        var filter = features.reduce(function(memo, feature) {
-                if (feature.geometry.type == "MultiPolygon") {
-                    var polyCon;
-                    // go through all the polygons and check to see if any of the polygons are contained
-                    // call intersect AND contained
-                    // following if statements cover corner cases
-                    if (feature.geometry.coordinates[0][0].length > 2) {
-                        polyCon = turf.polygon([feature.geometry.coordinates[0][0]]);
+            var filter = features.reduce(function(memo, feature) {
+                    if (feature.geometry.type == "MultiPolygon") {
+                        var polyCon;
+                        // go through all the polygons and check to see if any of the polygons are contained
+                        // call intersect AND contained
+                        // following if statements cover corner cases
+                        // if census blocks are multipolygons, create a polygon using 
+                        if (feature.geometry.coordinates[0][0].length > 2) {
+                            polyCon = turf.polygon([feature.geometry.coordinates[0][0]]);
+                        }
+                        else {
+                            polyCon = turf.polygon([feature.geometry.coordinates[0]]);
+                        }
+                        if (turf.booleanContains(drawn_polygon, polyCon)) {
+                            memo.push(feature.properties.BLOCKID10);
+                            mpoly = addPoly(polyCon.geometry, mpoly, wkt);
+                            total+= feature.properties.POP10;
+                        }
                     }
                     else {
-                        polyCon = turf.polygon([feature.geometry.coordinates[0]]);
+                        if (turf.booleanContains(drawn_polygon, feature.geometry)) {
+                            memo.push(feature.properties.BLOCKID10);
+                            polyCon = turf.polygon([feature.geometry.coordinates[0]]);
+                            mpoly = addPoly(polyCon.geometry, mpoly, wkt);
+                            total+= feature.properties.POP10;
+                        }
                     }
-                    if (turf.booleanContains(drawn_polygon, polyCon)) {
-                        memo.push(feature.properties.BLOCKID10);
-                        mpoly = addPoly(polyCon.geometry, mpoly, wkt);
-                        total+= feature.properties.POP10;
-                    }
-                }
-                else {
-                    if (turf.booleanContains(drawn_polygon, feature.geometry)) {
-                        memo.push(feature.properties.BLOCKID10);
-                        polyCon = turf.polygon([feature.geometry.coordinates[0]]);
-                        mpoly = addPoly(polyCon.geometry, mpoly, wkt);
-                        total+= feature.properties.POP10;
-                    }
-                }
-            return memo;
-        }, ["in", "BLOCKID10"]);
-        console.log("printing out the multi poly array that is returned")
+                return memo;
+            }, ["in", "BLOCKID10"]);
+            //  sets filter - highlights blocks
+            map.setFilter("blocks-highlighted", filter);
 
-        map.setFilter("blocks-highlighted", filter);
-        
-        // 1. LOWER LEGISLATION PROGRESS BAR __________________________________
-        progressL = document.getElementById("pop");
-        progressL.style.background = "orange"
-        progressL.innerHTML = Math.round(total / (ideal_population_LOWER['nj'] * 1.5) * 100) + "%";
-        progressL.setAttribute("aria-valuenow", "total");
-        progressL.setAttribute("aria-valuemax", ideal_population_LOWER['nj']);
-        popWidth = total / (ideal_population_LOWER['nj'] * 1.5) * 100;
-        progressL.style.width = popWidth + "%";
+            // show population stats for NJ only:
+            // 1. LOWER LEGISLATION PROGRESS BAR __________________________________
+            progressL = document.getElementById("pop");
+            progressL.style.background = "orange"
+            progressL.innerHTML = Math.round(total / (ideal_population_LOWER['nj'] * 1.5) * 100) + "%";
+            progressL.setAttribute("aria-valuenow", "total");
+            progressL.setAttribute("aria-valuemax", ideal_population_LOWER['nj']);
+            popWidth = total / (ideal_population_LOWER['nj'] * 1.5) * 100;
+            progressL.style.width = popWidth + "%";
 
 
-        // 2. UPPER LEGISLATION PROGRESS BAR __________________________________
-        progressU = document.getElementById("popU");
-        progressU.style.background = "orange"
-        progressU.innerHTML = Math.round(total / (ideal_population_UPPER['nj'] * 1.5) * 100) + "%";
-        progressU.setAttribute("aria-valuenow", "total");
-        progressU.setAttribute("aria-valuemax", ideal_population_UPPER['nj']);
-        popWidth = total / (ideal_population_UPPER['nj'] * 1.5) * 100;
-        progressU.style.width = popWidth + "%";
+            // 2. UPPER LEGISLATION PROGRESS BAR __________________________________
+            progressU = document.getElementById("popU");
+            progressU.style.background = "orange"
+            progressU.innerHTML = Math.round(total / (ideal_population_UPPER['nj'] * 1.5) * 100) + "%";
+            progressU.setAttribute("aria-valuenow", "total");
+            progressU.setAttribute("aria-valuemax", ideal_population_UPPER['nj']);
+            popWidth = total / (ideal_population_UPPER['nj'] * 1.5) * 100;
+            progressU.style.width = popWidth + "%";
 
 
-        // 3. CONGRESSIONAL DISTRICT PROGRESS BAR __________________________________
-        progressC = document.getElementById("popC");
-        progressC.style.background = "orange"
-        progressC.innerHTML = Math.round(total / (ideal_population_CONG['nj'] * 1.5) * 100) + "%";
-        progressC.setAttribute("aria-valuenow", "total");
-        progressC.setAttribute("aria-valuemax", ideal_population_CONG['nj']);
-        popWidth = total / (ideal_population_CONG['nj'] * 1.5) * 100;
-        progressC.style.width = popWidth + "%";
+            // 3. CONGRESSIONAL DISTRICT PROGRESS BAR __________________________________
+            progressC = document.getElementById("popC");
+            progressC.style.background = "orange"
+            progressC.innerHTML = Math.round(total / (ideal_population_CONG['nj'] * 1.5) * 100) + "%";
+            progressC.setAttribute("aria-valuenow", "total");
+            progressC.setAttribute("aria-valuemax", ideal_population_CONG['nj']);
+            popWidth = total / (ideal_population_CONG['nj'] * 1.5) * 100;
+            progressC.style.width = popWidth + "%";
+        }
     }
-}
     catch(err) {
         console.log("triangle shaped polygon was changed");
     }
@@ -583,6 +556,7 @@ function highlightBlocks(drawn_polygon) {
 
 /******************************************************************************/
 
+/*  Pushes poly in its wkt forms to the polyArray */
 function addPoly(poly, polyArray, wkt) {
     // coordinates attribute that shud be converted and pushed
     var poly_json = JSON.stringify(poly);
@@ -595,8 +569,8 @@ function addPoly(poly, polyArray, wkt) {
 }
 
 
-// updatePolygon responds to the user's actions and updates the polygon field
-// in the form.
+/* Responds to the user's actions and updates the geometry fields and the arrayfield
+ in the form. */
 function updateCommunityEntry(e) {
     console.log("updateCommunity entry called");
 
@@ -640,8 +614,9 @@ function updateCommunityEntry(e) {
             census_blocks_polygon_array = census_blocks_polygon_array.join("|");
         }
         
-
     } else {
+        // sets an empty filter - unhighlights everything
+        // sets the form fields as empty
         user_polygon_wkt = '';
         census_blocks_polygon_wkt = '';
         census_blocks_multipolygon_wkt = '';
@@ -701,7 +676,7 @@ function cloneMore(selector, prefix) {
 }
 
 /******************************************************************************/
-
+/* Deletes the issue category and description when "remove" is pressed */
 function deleteForm(prefix, btn) {
     // Function that deletes formset fields.
     var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
@@ -715,7 +690,7 @@ function deleteForm(prefix, btn) {
     $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
     for (var i = 0, formCount = forms.length; i < formCount; i++) {
         $(forms.get(i)).find(':input').each(function() {
-            updateElementIndex(this, prefix, i);
+            updateElementIndex(this, prefix, i); 
         });
     }
     return false;

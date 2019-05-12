@@ -70,20 +70,32 @@ class Review(LoginRequiredMixin, TemplateView):
         for obj in Issue.objects.all():
             cat = obj.category
             cat = re.sub("_", " ", cat).title()
-            if cat == "Economic":
-                cat = "Economic Affairs"
-            if cat == "Health":
-                cat = "Health and Health Insurance"
-            if cat == "Internet":
-                cat = "Internet Regulation"
-            if cat == "Women":
-                cat = "Women\'s Issues"
+            if cat == "Zoning":
+                cat = "Zoning"
+            if cat == "Policing":
+                cat = "Policing"
+            if cat == "Crime":
+                cat = "Crime"
+            if cat == "Nuisance":
+                cat = "Nuisance"
+            if cat == "School":
+                cat = "School"
+            if cat == "Religion":
+                cat = "Religion/Church"
+            if cat == "Race":
+                cat = "Race/Ethnicity"
+            if cat == "Immigration":
+                cat = "Immigration Status"
+            if cat == "Socioeconomic":
+                cat = "Socioeconomic"
+            if cat == "Transportation":
+                cat = "Transportation"
+            if cat == "Neighborhood":
+                cat = "Neighborhood Identity/Official Definition"
+            if cat == "Environmental":
+                cat = "Environmental"
             if cat == "Lgbt":
                 cat = "LGBT Issues"
-            if cat == "Security":
-                cat = "National Security"
-            if cat == "Welfare":
-                cat = "Social Welfare"
 
             if cat in issues:
                 issues[cat][str(obj.entry)] = obj.description
@@ -134,20 +146,32 @@ class Review(LoginRequiredMixin, TemplateView):
             for obj in Issue.objects.all():
                 cat = obj.category
                 cat = re.sub("_", " ", cat).title()
-                if cat == "Economic":
-                    cat = "Economic Affairs"
-                if cat == "Health":
-                    cat = "Health and Health Insurance"
-                if cat == "Internet":
-                    cat = "Internet Regulation"
-                if cat == "Women":
-                    cat = "Women\'s Issues"
+                if cat == "Zoning":
+                    cat = "Zoning"
+                if cat == "Policing":
+                    cat = "Policing"
+                if cat == "Crime":
+                    cat = "Crime"
+                if cat == "Nuisance":
+                    cat = "Nuisance"
+                if cat == "School":
+                    cat = "School"
+                if cat == "Religion":
+                    cat = "Religion/Church"
+                if cat == "Race":
+                    cat = "Race/Ethnicity"
+                if cat == "Immigration":
+                    cat = "Immigration Status"
+                if cat == "Socioeconomic":
+                    cat = "Socioeconomic"
+                if cat == "Transportation":
+                    cat = "Transportation"
+                if cat == "Neighborhood":
+                    cat = "Neighborhood Identity/Official Definition"
+                if cat == "Environmental":
+                    cat = "Environmental"
                 if cat == "Lgbt":
                     cat = "LGBT Issues"
-                if cat == "Security":
-                    cat = "National Security"
-                if cat == "Welfare":
-                    cat = "Social Welfare"
 
                 if cat in issues:
                     issues[cat][str(obj.entry)] = obj.description
@@ -248,10 +272,8 @@ class Map(TemplateView):
             for id in entries:
                 ids.append(str(id))
             tags[str(obj)] = ids
-
+        # get the polygon from db and pass it on to html
         for obj in CommunityEntry.objects.all():
-            # print(obj.tags.name)
-            # zipcode = obj.zipcode
             if (obj.census_blocks_polygon == '' or obj.census_blocks_polygon == None):
                 s = "".join(obj.user_polygon.geojson)
             else:
