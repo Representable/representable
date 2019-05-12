@@ -149,6 +149,12 @@ text-decoration: none;
   border-color:#5b8f9b;
   cursor: pointer;
 }
+.btn-primary.dropdown-btn:hover {
+  background-color:#82ccdd;
+}
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle {
+  background-color: #60a3bc;
+}
 .btn-danger {
   background-color:#dc3545;
 }
