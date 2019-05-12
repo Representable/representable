@@ -23,6 +23,8 @@ var LOWER_KEYS = {
   "mi-lower": "aa2ljvl2"
 };
 var states = ["nj", "va", "pa", "mi"];
+
+/* Colors for the different issue categories */
 var PAINT_VALUES = {
   "Zoning": "rgba(135, 191, 255,",
   "Policing": "rgba(63, 142, 252,",
@@ -195,7 +197,6 @@ map.on('load', function() {
   a = JSON.parse(outputstr);
 
   for (obj in a) {
-    // console.log(obj);
     let catDict = {};
     let catArray = [];
     for (cat in issues) {
@@ -205,9 +206,10 @@ map.on('load', function() {
       }
 
     }
-    // check if how deeply nested the outer ring is
+    // check how deeply nested the outer ring of the unioned polygon is
     final = [];
-    if (a[obj][0][0].length >2) {
+    // set the coordinates of the outer ring to final 
+    if (a[obj][0][0].length > 2) {
       final = [a[obj][0][0]];
     }
     else if(a[obj][0].length > 2) {
@@ -216,6 +218,7 @@ map.on('load', function() {
     else {
       final = a[obj]
     }
+    // draw the polygon
     map.addLayer({
       'id': obj,
       'type': 'fill',
@@ -276,14 +279,12 @@ map.on('load', function() {
     console.log(issue);
     // the button element
     var cat = document.getElementById(issue);
-    // console.log(cat);
 
     cat.onclick = function(e) {
       var issueId = this.id;
       // iterate thru the polygons on the map
       for (obj in a) {
         if (issues[issueId][obj] === undefined) {
-          // console.log(obj);
           map.setLayoutProperty(obj, 'visibility', 'none');
           map.setLayoutProperty(obj + "line", 'visibility', 'none');
         } else {
@@ -294,13 +295,10 @@ map.on('load', function() {
         }
       }
     }
-    // console.log(issue);
     for (entry in issues[issue]) {
       var entryId = document.getElementById(entry);
-      // console.log(entryId);
       entryId.onclick = function(e) {
         var thisId = this.id;
-        // console.log(thisId);
         for (obj in a) {
           if (thisId === obj) {
             map.setLayoutProperty(obj, 'visibility', 'visible');
@@ -351,7 +349,7 @@ map.on('load', function() {
   }
 });
 
-//create a button ! toggles layers based on their IDs
+//create a button that toggles layers based on their IDs
 var toggleableLayerIds = ['Census Blocks', 'State Legislature - Lower', 'State Legislature - Upper'];
 
 for (var i = 0; i < toggleableLayerIds.length; i++) {
