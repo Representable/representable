@@ -22,7 +22,6 @@ class Tag(models.Model):
     The tag table stores tags associated with different entries.
     '''
     name = models.CharField(max_length=100)
-    # entries = models.ManyToManyField(CommunityEntry, blank=True)
 
     class Meta:
         ordering = ('name',)
