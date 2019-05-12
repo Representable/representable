@@ -109,7 +109,5 @@ class DeletionForm(ModelForm):
         model = CommunityEntry
         fields = ['entry_ID']
         widgets = {
-            'entry_ID': ModelSelect2Widget(model=CommunityEntry,queryset = CommunityEntry.objects.filter(),search_fields=['name__icontains']),
+            'entry_ID': forms.HiddenInput(),
         }
-
-        #fields = []

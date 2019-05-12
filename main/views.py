@@ -69,21 +69,6 @@ class Review(LoginRequiredMixin, TemplateView):
         issues = dict()
         for obj in Issue.objects.all():
             cat = obj.category
-            cat = re.sub("_", " ", cat).title()
-            if cat == "Economic":
-                cat = "Economic Affairs"
-            if cat == "Health":
-                cat = "Health and Health Insurance"
-            if cat == "Internet":
-                cat = "Internet Regulation"
-            if cat == "Women":
-                cat = "Women\'s Issues"
-            if cat == "Lgbt":
-                cat = "LGBT Issues"
-            if cat == "Security":
-                cat = "National Security"
-            if cat == "Welfare":
-                cat = "Social Welfare"
 
             if cat in issues:
                 issues[cat][str(obj.entry)] = obj.description
@@ -118,8 +103,6 @@ class Review(LoginRequiredMixin, TemplateView):
             struct = geojson.loads(s)
             entryPolyDict[obj.entry_ID] = struct.coordinates
 
-        form = DeletionForm()
-
         context = ({
             #'form': form,
             'tags': json.dumps(tags),
@@ -130,6 +113,8 @@ class Review(LoginRequiredMixin, TemplateView):
         })
         return context
     def post(self, request, *args, **kwargs):
+            form = DeletionForm()
+
             issues = dict()
             for obj in Issue.objects.all():
                 cat = obj.category
