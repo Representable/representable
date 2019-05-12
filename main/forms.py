@@ -6,8 +6,21 @@ from django.forms import formset_factory
 from .choices import *
 from django.forms.formsets import BaseFormSet
 from django.contrib.gis.db import models
+from django.contrib.gis.measure import Area
 
 # https://django-select2.readthedocs.io/en/latest/django_select2.html
+
+# def get_miles(self):
+#     '''
+#     Function used to project geometry in order to get area.
+#     From: https://gis.stackexchange.com/questions/9673/area-units-for-geos-area-property
+#     '''
+#     # convert polygon to SRID 4326
+#     self.polygon.transform(4326)
+#     meters_sq = self.polygon.area.sq_m
+#     print(meters_sq)
+#     return meters_sq
+
 
 class TagSelect2Widget(ModelSelect2TagWidget):
     model = Tag
@@ -15,22 +28,25 @@ class TagSelect2Widget(ModelSelect2TagWidget):
     queryset = model.objects.all()
     # Check if tag name is in the db already. If not, add it.
     def value_from_datadict(self, data, files, name):
-        # the actual strings of the tags
         values = super().value_from_datadict(data, files, name)
-        queryset = self.get_queryset().filter(**{'name__in': list(values)})
-        # gets a set of the names, the values of the tags in the queryset
-        # this & queryset (above) will be empty if the tags are new (haven't been entered yet)
-        names = set(str(getattr(obj, 'name')) for obj in queryset)
         # values to be returned (id of the tags, whether new or not)
         cleaned_values = []
+        names = []
+        ids = []
         for val in values:
-            if str(val) not in names:
-                # add if not in db
-                val = queryset.create(name=str(val)).id
-            else:
-                # otherwise find the current id
-                val = queryset.get(name=str(val)).id
-            cleaned_values.append(val)
+            # Do any names in the db match this value?
+            qs = self.queryset.filter(**{'name__icontains':str(val)})
+            # Add the names to 'names'
+            newNames = set(getattr(entry, 'name') for entry in qs)
+            for name in newNames:
+                names.append(str(name))
+            newIds = set(getattr(entry, 'id') for entry in qs)
+            for id in newIds:
+                ids.append(str(id))
+        for val in values:
+            if str(val) not in ids and str(val) not in names:
+                val = self.queryset.create(name=str(val)).id
+            cleaned_values.append(str(val))
         return cleaned_values
 
 class IssueForm(ModelForm):
@@ -77,7 +93,7 @@ class BootstrapRadioSelect(forms.RadioSelect):
 class CommunityForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['census_blocks_polygon_array'].delimiter = '|' 
+        self.fields['census_blocks_polygon_array'].delimiter = '|'
 
     class Meta:
         model = CommunityEntry
@@ -103,6 +119,25 @@ class CommunityForm(ModelForm):
             'industry': 'List Industries/Profressions (At Least One, Multiple Accepted)',
             'religion': 'List Religions (At Least One, Multiple Accepted)'
         }
+
+    def clean_user_polygon(self):
+        '''
+        Make sure that the user polygon contains no kinks and has an acceptable area.
+        https://gis.stackexchange.com/questions/288103/how-to-convert-the-area-to-feets-in-geodjango
+        '''
+
+        data = self.cleaned_data['user_polygon']
+        # Check kinks
+        if not data.valid:
+            raise ValidationError("Polygon contains kinks.")
+        # Check area
+        polygon = data.transform(3857, clone=True)
+        area = Area(sq_m=polygon.area)
+        # Use NJ State Area * 1/2
+        halfStateArea = 4350;
+        if area.sq_mi > halfStateArea:
+            raise ValidationError("Area is too big.")
+        return data
 
 class DeletionForm(ModelForm):
     class Meta:

@@ -23,13 +23,15 @@ var LOWER_KEYS = {
   "mi-lower": "aa2ljvl2"
 };
 var states = ["nj", "va", "pa", "mi"];
+
+/* Colors for the different issue categories */
 var PAINT_VALUES = {
   "Zoning": "rgba(135, 191, 255,",
   "Policing": "rgba(63, 142, 252,",
   "Crime": "rgba(196, 178, 188,",
   "Nuisance": "rgba(223, 146, 142,",
   "School": "rgba(249, 160, 63,",
-  "Religion/Church": "rgba(234, 239, 177,",
+  "Religion/Church": "rgba(234, 200, 30,",
   "Race/Ethnicity": "rgba(178, 177, 207,",
   "Immigration Status": "rgba(223, 41, 53,",
   "Socioeconomic": "rgba(253, 202, 64,",
@@ -127,7 +129,6 @@ function newLowerLegislatureLayer(state) {
 
 // issues add to properties
 issues = JSON.parse(issues);
-console.log(issues);
 // {% for issue, desc in issues.items %}
 // <button class="dropdown-btn btn-primary" id="{{ issue }}">{{ issue }}
 //   <i class="fa fa-caret-down"></i></button>
@@ -189,7 +190,6 @@ map.on('load', function() {
 
   // tags add to properties
   tags = JSON.parse(tags);
-  // console.log(issues);
   // send elements to javascript as geojson objects and make them show on the map by
   // calling the addTo
 
@@ -197,22 +197,28 @@ map.on('load', function() {
   a = JSON.parse(outputstr);
 
   for (obj in a) {
-    // console.log(obj);
     let catDict = {};
     let catArray = [];
     for (cat in issues) {
-      // console.log(cat);
-      // console.log(issues[cat][obj]);
-
       if (issues[cat][obj] !== undefined) {
         catArray.push(cat);
-        // console.log(issues[cat][obj]);
-        // console.log("goinginside");
         catDict[cat] = issues[cat][obj];
       }
 
     }
-
+    // check how deeply nested the outer ring of the unioned polygon is
+    final = [];
+    // set the coordinates of the outer ring to final 
+    if (a[obj][0][0].length > 2) {
+      final = [a[obj][0][0]];
+    }
+    else if(a[obj][0].length > 2) {
+      final = [a[obj][0]];
+    }
+    else {
+      final = a[obj]
+    }
+    // draw the polygon
     map.addLayer({
       'id': obj,
       'type': 'fill',
@@ -222,7 +228,7 @@ map.on('load', function() {
           'type': 'Feature',
           'geometry': {
             'type': 'Polygon',
-            'coordinates': [a[obj][0]]
+            'coordinates': final
           },
           'properties': {
             'issues': catDict,
@@ -237,8 +243,7 @@ map.on('load', function() {
         'fill-color': 'rgba(110, 178, 181,0.15)',
       }
     });
-    console.log(a[obj]);
-    // debugger
+
     map.addLayer({
       'id': obj + "line",
       'type': 'line',
@@ -248,7 +253,7 @@ map.on('load', function() {
           'type': 'Feature',
           'geometry': {
             'type': 'Polygon',
-            'coordinates': [a[obj][0]]
+            'coordinates': final
           },
           'properties': {
             'issues': catDict,
@@ -274,15 +279,12 @@ map.on('load', function() {
     console.log(issue);
     // the button element
     var cat = document.getElementById(issue);
-    // console.log(cat);
 
     cat.onclick = function(e) {
       var issueId = this.id;
-      // console.log(issues[issueId]);
       // iterate thru the polygons on the map
       for (obj in a) {
         if (issues[issueId][obj] === undefined) {
-          // console.log(obj);
           map.setLayoutProperty(obj, 'visibility', 'none');
           map.setLayoutProperty(obj + "line", 'visibility', 'none');
         } else {
@@ -293,13 +295,10 @@ map.on('load', function() {
         }
       }
     }
-    // console.log(issue);
     for (entry in issues[issue]) {
       var entryId = document.getElementById(entry);
-      // console.log(entryId);
       entryId.onclick = function(e) {
         var thisId = this.id;
-        // console.log(thisId);
         for (obj in a) {
           if (thisId === obj) {
             map.setLayoutProperty(obj, 'visibility', 'visible');
@@ -350,7 +349,7 @@ map.on('load', function() {
   }
 });
 
-//create a button ! toggles layers based on their IDs
+//create a button that toggles layers based on their IDs
 var toggleableLayerIds = ['Census Blocks', 'State Legislature - Lower', 'State Legislature - Upper'];
 
 for (var i = 0; i < toggleableLayerIds.length; i++) {

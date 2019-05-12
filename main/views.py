@@ -69,6 +69,33 @@ class Review(LoginRequiredMixin, TemplateView):
         issues = dict()
         for obj in Issue.objects.all():
             cat = obj.category
+            cat = re.sub("_", " ", cat).title()
+            if cat == "Zoning":
+                cat = "Zoning"
+            if cat == "Policing":
+                cat = "Policing"
+            if cat == "Crime":
+                cat = "Crime"
+            if cat == "Nuisance":
+                cat = "Nuisance"
+            if cat == "School":
+                cat = "School"
+            if cat == "Religion":
+                cat = "Religion/Church"
+            if cat == "Race":
+                cat = "Race/Ethnicity"
+            if cat == "Immigration":
+                cat = "Immigration Status"
+            if cat == "Socioeconomic":
+                cat = "Socioeconomic"
+            if cat == "Transportation":
+                cat = "Transportation"
+            if cat == "Neighborhood":
+                cat = "Neighborhood Identity/Official Definition"
+            if cat == "Environmental":
+                cat = "Environmental"
+            if cat == "Lgbt":
+                cat = "LGBT Issues"
 
             if cat in issues:
                 issues[cat][str(obj.entry)] = obj.description
@@ -119,20 +146,32 @@ class Review(LoginRequiredMixin, TemplateView):
             for obj in Issue.objects.all():
                 cat = obj.category
                 cat = re.sub("_", " ", cat).title()
-                if cat == "Economic":
-                    cat = "Economic Affairs"
-                if cat == "Health":
-                    cat = "Health and Health Insurance"
-                if cat == "Internet":
-                    cat = "Internet Regulation"
-                if cat == "Women":
-                    cat = "Women\'s Issues"
+                if cat == "Zoning":
+                    cat = "Zoning"
+                if cat == "Policing":
+                    cat = "Policing"
+                if cat == "Crime":
+                    cat = "Crime"
+                if cat == "Nuisance":
+                    cat = "Nuisance"
+                if cat == "School":
+                    cat = "School"
+                if cat == "Religion":
+                    cat = "Religion/Church"
+                if cat == "Race":
+                    cat = "Race/Ethnicity"
+                if cat == "Immigration":
+                    cat = "Immigration Status"
+                if cat == "Socioeconomic":
+                    cat = "Socioeconomic"
+                if cat == "Transportation":
+                    cat = "Transportation"
+                if cat == "Neighborhood":
+                    cat = "Neighborhood Identity/Official Definition"
+                if cat == "Environmental":
+                    cat = "Environmental"
                 if cat == "Lgbt":
                     cat = "LGBT Issues"
-                if cat == "Security":
-                    cat = "National Security"
-                if cat == "Welfare":
-                    cat = "Social Welfare"
 
                 if cat in issues:
                     issues[cat][str(obj.entry)] = obj.description
@@ -233,10 +272,8 @@ class Map(TemplateView):
             for id in entries:
                 ids.append(str(id))
             tags[str(obj)] = ids
-
+        # get the polygon from db and pass it on to html
         for obj in CommunityEntry.objects.all():
-            # print(obj.tags.name)
-            # zipcode = obj.zipcode
             if (obj.census_blocks_polygon == '' or obj.census_blocks_polygon == None):
                 s = "".join(obj.user_polygon.geojson)
             else:
@@ -300,26 +337,36 @@ class EntryView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, label_suffix='')
         issue_formset = self.IssueFormSet(request.POST)
-
         if form.is_valid() and issue_formset.is_valid():
-            tag_ids = request.POST.getlist('tags')
+            tag_id_qs = form.cleaned_data['tags'].values('id')
             entryForm = form.save(commit=False)
             # get all the polygons from the array
             # This returns an array of Django GEOS Polygon types
             polyArray = form.data['census_blocks_polygon_array']
-            polyArray = polyArray.split('|')
-            newPolyArr = []
-            for stringPolygon in polyArray:
-                new_poly = GEOSGeometry(stringPolygon, srid=4326)
-                newPolyArr.append(new_poly)
-            mpoly = MultiPolygon(newPolyArr)
-            polygonUnion = mpoly.unary_union
-            entryForm.census_blocks_polygon = polygonUnion[0]
+
+            if (polyArray != None and polyArray != ''):
+                polyArray = polyArray.split('|')
+                newPolyArr = []
+                # union them one at a time- does not work
+
+                for stringPolygon in polyArray:
+                    new_poly = GEOSGeometry(stringPolygon, srid=4326)
+                    newPolyArr.append(new_poly)
+
+                mpoly = MultiPolygon(newPolyArr)
+                polygonUnion = mpoly.unary_union
+                polygonUnion.normalize()
+                # if one polygon is returned, create a multipolygon
+                if (polygonUnion.geom_typeid == 3):
+                    polygonUnion = MultiPolygon(polygonUnion)
+
+                entryForm.census_blocks_polygon = polygonUnion
 
             entryForm.save()
-            for tag_id in tag_ids:
-                tag = Tag.objects.get(name=tag_id)
+            for tag_id in tag_id_qs:
+                tag = Tag.objects.get(id=int(tag_id['id']))
                 entryForm.tags.add(tag)
+
             for issue_form in issue_formset:
                 category = issue_form.cleaned_data.get('category')
                 description = issue_form.cleaned_data.get('description')
