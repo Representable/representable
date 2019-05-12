@@ -142,7 +142,8 @@ class CommunityForm(ModelForm):
 class DeletionForm(ModelForm):
     class Meta:
         model = CommunityEntry
-        fields = ['entry_ID']
+        fields = ['user', 'entry_ID']
         widgets = {
+            'user': forms.HiddenInput(),
             'entry_ID': forms.HiddenInput(),
         }

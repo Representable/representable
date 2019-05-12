@@ -21,7 +21,21 @@ import shapely.wkt
 from django.contrib.gis.geos import Point, Polygon, MultiPolygon
 from django.contrib.gis.db.models import Union
 from django.contrib.gis.geos import GEOSGeometry
-
+#******************************************************************************#
+def category_clean(cat):
+    ''' clean category names for clarity in visualizations '''
+    cat = re.sub("_", " ", cat).title()
+    if cat == "Religion":
+        cat = "Religion/Church"
+    if cat == "Race":
+        cat = "Race/Ethnicity"
+    if cat == "Immigration":
+        cat = "Immigration Status"
+    if cat == "Neighborhood":
+        cat = "Neighborhood Identity/Official Definition"
+    if cat == "Lgbt":
+        cat = "LGBT Issues"
+    return cat
 #******************************************************************************#
 '''
 Documentation: https://docs.djangoproject.com/en/2.1/topics/class-based-views/
@@ -63,39 +77,21 @@ class About(TemplateView):
 class Review(LoginRequiredMixin, TemplateView):
     template_name = "main/review.html"
     form_class = DeletionForm
+    initial = {'key': 'value'}
+
+    # https://www.agiliq.com/blog/2019/01/django-formview/
+    def get_initial(self):
+        initial = self.initial
+        if self.request.user.is_authenticated:
+            initial.update({'user': self.request.user})
+        return initial
 
     def get_context_data(self, **kwargs):
+        form = self.form_class(initial=self.get_initial(), label_suffix='')
         # the dict of issues + input of descriptions
         issues = dict()
         for obj in Issue.objects.all():
-            cat = obj.category
-            cat = re.sub("_", " ", cat).title()
-            if cat == "Zoning":
-                cat = "Zoning"
-            if cat == "Policing":
-                cat = "Policing"
-            if cat == "Crime":
-                cat = "Crime"
-            if cat == "Nuisance":
-                cat = "Nuisance"
-            if cat == "School":
-                cat = "School"
-            if cat == "Religion":
-                cat = "Religion/Church"
-            if cat == "Race":
-                cat = "Race/Ethnicity"
-            if cat == "Immigration":
-                cat = "Immigration Status"
-            if cat == "Socioeconomic":
-                cat = "Socioeconomic"
-            if cat == "Transportation":
-                cat = "Transportation"
-            if cat == "Neighborhood":
-                cat = "Neighborhood Identity/Official Definition"
-            if cat == "Environmental":
-                cat = "Environmental"
-            if cat == "Lgbt":
-                cat = "LGBT Issues"
+            cat = category_clean(obj.category)
 
             if cat in issues:
                 issues[cat][str(obj.entry)] = obj.description
@@ -131,7 +127,7 @@ class Review(LoginRequiredMixin, TemplateView):
             entryPolyDict[obj.entry_ID] = struct.coordinates
 
         context = ({
-            #'form': form,
+            'form': form,
             'tags': json.dumps(tags),
             'issues': json.dumps(issues),
             'entries': json.dumps(entryPolyDict),
@@ -140,82 +136,60 @@ class Review(LoginRequiredMixin, TemplateView):
         })
         return context
     def post(self, request, *args, **kwargs):
-            form = DeletionForm()
+        form = self.form_class(request.POST, label_suffix='')
 
-            issues = dict()
-            for obj in Issue.objects.all():
-                cat = obj.category
-                cat = re.sub("_", " ", cat).title()
-                if cat == "Zoning":
-                    cat = "Zoning"
-                if cat == "Policing":
-                    cat = "Policing"
-                if cat == "Crime":
-                    cat = "Crime"
-                if cat == "Nuisance":
-                    cat = "Nuisance"
-                if cat == "School":
-                    cat = "School"
-                if cat == "Religion":
-                    cat = "Religion/Church"
-                if cat == "Race":
-                    cat = "Race/Ethnicity"
-                if cat == "Immigration":
-                    cat = "Immigration Status"
-                if cat == "Socioeconomic":
-                    cat = "Socioeconomic"
-                if cat == "Transportation":
-                    cat = "Transportation"
-                if cat == "Neighborhood":
-                    cat = "Neighborhood Identity/Official Definition"
-                if cat == "Environmental":
-                    cat = "Environmental"
-                if cat == "Lgbt":
-                    cat = "LGBT Issues"
-
-                if cat in issues:
-                    issues[cat][str(obj.entry)] = obj.description
-                else:
-                    issueInfo = dict()
-                    issueInfo[str(obj.entry)] = obj.description
-                    issues[cat] = issueInfo
-            entry = CommunityEntry.objects.get(entry_ID=request.POST.get('c_id'))
+        # delete entry if form is valid and entry belongs to current user
+        if form.is_valid():
+            query = CommunityEntry.objects.filter(user = self.request.user)
+            entry = query.get(entry_ID=request.POST.get('c_id'))
             entry.delete()
 
-            tags = dict()
-            for obj in Tag.objects.all():
-                # manytomany query
-                entries = obj.communityentry_set.all()
-                ids = []
-                for id in entries:
-                    ids.append(str(id))
-                tags[str(obj)] = ids
-            entryPolyDict = dict()
+        issues = dict()
+        for obj in Issue.objects.all():
+            cat = category_clean(obj.category)
 
-            query = CommunityEntry.objects.filter(user = self.request.user)
-
-            for obj in query:
-                if (obj.census_blocks_polygon == '' or obj.census_blocks_polygon == None):
-                    s = "".join(obj.user_polygon.geojson)
-                else:
-                    s = "".join(obj.census_blocks_polygon.geojson)
-
-                # add all the coordinates in the array
-                # at this point all the elements of the array are coordinates of the polygons
-                struct = geojson.loads(s)
-                entryPolyDict[obj.entry_ID] = struct.coordinates
+            if cat in issues:
+                issues[cat][str(obj.entry)] = obj.description
+            else:
+                issueInfo = dict()
+                issueInfo[str(obj.entry)] = obj.description
+                issues[cat] = issueInfo
 
 
-            context = {
-                #'form': form,
-                'tags': json.dumps(tags),
-                'issues': json.dumps(issues),
-                'entries': json.dumps(entryPolyDict),
-                'communities': query,
-                'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
-            }
-            # print(issue_formset)
-            return render(request, self.template_name, context)
+        tags = dict()
+        for obj in Tag.objects.all():
+            # manytomany query
+            entries = obj.communityentry_set.all()
+            ids = []
+            for id in entries:
+                ids.append(str(id))
+            tags[str(obj)] = ids
+        entryPolyDict = dict()
+
+        query = CommunityEntry.objects.filter(user = self.request.user)
+
+        for obj in query:
+            if (obj.census_blocks_polygon == '' or obj.census_blocks_polygon == None):
+                s = "".join(obj.user_polygon.geojson)
+            else:
+                s = "".join(obj.census_blocks_polygon.geojson)
+
+            # add all the coordinates in the array
+            # at this point all the elements of the array are coordinates of the polygons
+            struct = geojson.loads(s)
+            entryPolyDict[obj.entry_ID] = struct.coordinates
+
+
+        context = {
+            'form': form,
+            'tags': json.dumps(tags),
+            'issues': json.dumps(issues),
+            'entries': json.dumps(entryPolyDict),
+            'communities': query,
+            'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
+        }
+        # print(issue_formset)
+        return render(request, self.template_name, context)
 
 #******************************************************************************#
 
@@ -225,34 +199,7 @@ class Map(TemplateView):
         # the dict of issues + input of descriptions
         issues = dict()
         for obj in Issue.objects.all():
-            cat = obj.category
-            cat = re.sub("_", " ", cat).title()
-            if cat == "Zoning":
-                cat = "Zoning"
-            if cat == "Policing":
-                cat = "Policing"
-            if cat == "Crime":
-                cat = "Crime"
-            if cat == "Nuisance":
-                cat = "Nuisance"
-            if cat == "School":
-                cat = "School"
-            if cat == "Religion":
-                cat = "Religion/Church"
-            if cat == "Race":
-                cat = "Race/Ethnicity"
-            if cat == "Immigration":
-                cat = "Immigration Status"
-            if cat == "Socioeconomic":
-                cat = "Socioeconomic"
-            if cat == "Transportation":
-                cat = "Transportation"
-            if cat == "Neighborhood":
-                cat = "Neighborhood Identity/Official Definition"
-            if cat == "Environmental":
-                cat = "Environmental"
-            if cat == "Lgbt":
-                cat = "LGBT Issues"
+            cat = category_clean(obj.category)
 
             if cat in issues:
                 issues[cat][str(obj.entry)] = obj.description
