@@ -29,7 +29,7 @@ var PAINT_VALUES = {
   "Crime": "rgba(196, 178, 188,",
   "Nuisance": "rgba(223, 146, 142,",
   "School": "rgba(249, 160, 63,",
-  "Religion/Church": "rgba(234, 239, 177,",
+  "Religion/Church": "rgba(234, 200, 30,",
   "Race/Ethnicity": "rgba(178, 177, 207,",
   "Immigration Status": "rgba(223, 41, 53,",
   "Socioeconomic": "rgba(253, 202, 64,",
@@ -127,7 +127,6 @@ function newLowerLegislatureLayer(state) {
 
 // issues add to properties
 issues = JSON.parse(issues);
-console.log(issues);
 // {% for issue, desc in issues.items %}
 // <button class="dropdown-btn btn-primary" id="{{ issue }}">{{ issue }}
 //   <i class="fa fa-caret-down"></i></button>
@@ -189,7 +188,6 @@ map.on('load', function() {
 
   // tags add to properties
   tags = JSON.parse(tags);
-  // console.log(issues);
   // send elements to javascript as geojson objects and make them show on the map by
   // calling the addTo
 
@@ -201,18 +199,23 @@ map.on('load', function() {
     let catDict = {};
     let catArray = [];
     for (cat in issues) {
-      // console.log(cat);
-      // console.log(issues[cat][obj]);
-
       if (issues[cat][obj] !== undefined) {
         catArray.push(cat);
-        // console.log(issues[cat][obj]);
-        // console.log("goinginside");
         catDict[cat] = issues[cat][obj];
       }
 
     }
-
+    // check if how deeply nested the outer ring is
+    final = [];
+    if (a[obj][0][0].length >2) {
+      final = [a[obj][0][0]];
+    }
+    else if(a[obj][0].length > 2) {
+      final = [a[obj][0]];
+    }
+    else {
+      final = a[obj]
+    }
     map.addLayer({
       'id': obj,
       'type': 'fill',
@@ -222,7 +225,7 @@ map.on('load', function() {
           'type': 'Feature',
           'geometry': {
             'type': 'Polygon',
-            'coordinates': [a[obj][0]]
+            'coordinates': final
           },
           'properties': {
             'issues': catDict,
@@ -237,8 +240,7 @@ map.on('load', function() {
         'fill-color': 'rgba(110, 178, 181,0.15)',
       }
     });
-    console.log(a[obj]);
-    // debugger
+
     map.addLayer({
       'id': obj + "line",
       'type': 'line',
@@ -248,7 +250,7 @@ map.on('load', function() {
           'type': 'Feature',
           'geometry': {
             'type': 'Polygon',
-            'coordinates': [a[obj][0]]
+            'coordinates': final
           },
           'properties': {
             'issues': catDict,
@@ -278,7 +280,6 @@ map.on('load', function() {
 
     cat.onclick = function(e) {
       var issueId = this.id;
-      // console.log(issues[issueId]);
       // iterate thru the polygons on the map
       for (obj in a) {
         if (issues[issueId][obj] === undefined) {

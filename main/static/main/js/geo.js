@@ -512,7 +512,6 @@ function highlightBlocks(drawn_polygon) {
         var total = 0.0;
 
         var filter = features.reduce(function(memo, feature) {
-            // console.log(feature);
                 if (feature.geometry.type == "MultiPolygon") {
                     var polyCon;
                     // go through all the polygons and check to see if any of the polygons are contained
@@ -526,23 +525,15 @@ function highlightBlocks(drawn_polygon) {
                     }
                     if (turf.booleanContains(drawn_polygon, polyCon)) {
                         memo.push(feature.properties.BLOCKID10);
-                        // mpoly.push(polyCon.geometry.coordinates[0]);
                         mpoly = addPoly(polyCon.geometry, mpoly, wkt);
-                        // call the poly push function
                         total+= feature.properties.POP10;
                     }
                 }
                 else {
                     if (turf.booleanContains(drawn_polygon, feature.geometry)) {
                         memo.push(feature.properties.BLOCKID10);
-                        // mpoly.push(feature.geometry.coordinates[0]);
-                        // console.log(feature.geometry);
-                        // create a polygon perhaps?
                         polyCon = turf.polygon([feature.geometry.coordinates[0]]);
                         mpoly = addPoly(polyCon.geometry, mpoly, wkt);
-                        // call the poly push function
-
-                        // final_union = turf.union(final_union, polyCon);
                         total+= feature.properties.POP10;
                     }
                 }
@@ -627,7 +618,6 @@ function updateCommunityEntry(e) {
         // Use NJ State Area * 1/2
         let halfStateArea = 4350;
         if (area > halfStateArea) {
-            // console.log("Polygon area too large. Please redraw.")
             triggerDrawError("map-area-size-error", "Polygon area too large. Please draw your community again.")
             draw.trash();
             return;
@@ -643,30 +633,19 @@ function updateCommunityEntry(e) {
         census_blocks_polygon_array = highlightBlocks(drawn_polygon);
         census_blocks_polygon_array = census_blocks_polygon_array.join("|");
         console.log(census_blocks_polygon_array);
-        // debugger
-
-        var dr_poly = document.getElementsByClassName("mapbox-gl-draw_polygon")[0];
-        // dr_poly.style.display = "none";
 
     } else {
         user_polygon_wkt = '';
         census_blocks_polygon_wkt = '';
         census_blocks_multipolygon_wkt = '';
         map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
-
-        var dr_poly = document.getElementsByClassName("mapbox-gl-draw_polygon")[0];
-        // dr_poly.style.display = "block";
     }
     // Update form fields
     census_blocks_polygon_wkt = '';
     document.getElementById('id_user_polygon').value = user_polygon_wkt;
     document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon_wkt;
     document.getElementById('id_census_blocks_polygon_array').value = census_blocks_polygon_array;
-    // console.log(user_polygon_wkt);
-    // console.log("printing the census_blocks_polygon_array");
-    // console.log(census_blocks_polygon_array);
     triggerSuccessMessage();
-    // debugger
 }
 
 /******************************************************************************/
