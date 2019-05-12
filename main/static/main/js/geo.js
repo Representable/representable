@@ -460,8 +460,8 @@ function triggerSuccessMessage() {
 /******************************************************************************/
 
 /* Takes the user drawn polygon and queries census blocks that are contained
-   within the drawn polygon. appends them to the filter and highlights those 
-   blocks. Returns an array containing the census block polygons that are 
+   within the drawn polygon. appends them to the filter and highlights those
+   blocks. Returns an array containing the census block polygons that are
    highlighted */
 function highlightBlocks(drawn_polygon) {
     console.log("called highlight blocks");
@@ -490,7 +490,7 @@ function highlightBlocks(drawn_polygon) {
                         // go through all the polygons and check to see if any of the polygons are contained
                         // call intersect AND contained
                         // following if statements cover corner cases
-                        // if census blocks are multipolygons, create a polygon using 
+                        // if census blocks are multipolygons, create a polygon using
                         if (feature.geometry.coordinates[0][0].length > 2) {
                             polyCon = turf.polygon([feature.geometry.coordinates[0][0]]);
                         }
@@ -607,15 +607,10 @@ function updateCommunityEntry(e) {
         user_polygon_wkt = wkt_obj.write();
         // save census blocks multipolygon
         census_blocks_polygon_array = highlightBlocks(drawn_polygon);
-<<<<<<< HEAD
-        census_blocks_polygon_array = census_blocks_polygon_array.join("|");
-
-=======
         if (census_blocks_polygon_array != undefined) {
             census_blocks_polygon_array = census_blocks_polygon_array.join("|");
         }
-        
->>>>>>> 4cb8579d5e235baaf03d0f53ca8ac007ca1eeea7
+
     } else {
         // sets an empty filter - unhighlights everything
         // sets the form fields as empty
@@ -691,7 +686,7 @@ function deleteForm(prefix, btn) {
     $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
     for (var i = 0, formCount = forms.length; i < formCount; i++) {
         $(forms.get(i)).find(':input').each(function() {
-            updateElementIndex(this, prefix, i); 
+            updateElementIndex(this, prefix, i);
         });
     }
     return false;
