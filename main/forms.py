@@ -29,25 +29,54 @@ class TagSelect2Widget(ModelSelect2TagWidget):
     # Check if tag name is in the db already. If not, add it.
     def value_from_datadict(self, data, files, name):
         values = super().value_from_datadict(data, files, name)
-        # values to be returned (id of the tags, whether new or not)
+        print(values)
         cleaned_values = []
         names = []
-        ids = []
         for val in values:
             # Do any names in the db match this value?
-            qs = self.queryset.filter(**{'name__icontains':str(val)})
+            qs = self.queryset.filter(**{'name__exact':str(val)})
             # Add the names to 'names'
             newNames = set(getattr(entry, 'name') for entry in qs)
             for name in newNames:
                 names.append(str(name))
-            newIds = set(getattr(entry, 'id') for entry in qs)
-            for id in newIds:
-                ids.append(str(id))
+
         for val in values:
-            if str(val) not in ids and str(val) not in names:
-                val = self.queryset.create(name=str(val)).id
+            if str(val) not in names:
+                print("Create ENTRY")
+                print(str(val))
+                val = self.queryset.create(name=str(val)).name
+            print(names)
             cleaned_values.append(str(val))
         return cleaned_values
+
+        # print(values)
+        # for val in values:
+        #     # Do any names in the db match this value?
+        #     qs = self.queryset.filter(**{'name__exact':str(val)})
+        #     # Add the names to 'names'
+        #     newNames = set(getattr(entry, 'name') for entry in qs)
+        #     for name in newNames:
+        #         names.append(str(name))
+        #     if val.isnumeric():
+        #         print("Int detected.")
+        #         qs = self.queryset.filter(**{'id__exact':int(val)})
+        #         newIds = set(getattr(entry, 'id') for entry in qs)
+        #         for id in newIds:
+        #             ids.append(int(id))
+        #
+        # print(names)
+        # print(ids)
+        # for val in values:
+        #     if val.isnumeric():
+        #         if int(val) not in ids and str(val) not in names:
+        #             print("Created")
+        #             val = self.queryset.create(name=str(val)).id
+        #     else:
+        #         if str(val) not in names:
+        #             val = self.queryset.create(name=str(val)).id
+        #     print(str(val))
+        #     cleaned_values.append(str(val))
+        # return cleaned_values
 
 class IssueForm(ModelForm):
     class Meta:
