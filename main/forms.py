@@ -29,7 +29,7 @@ class TagSelect2Widget(ModelSelect2TagWidget):
     # Check if tag name is in the db already. If not, add it.
     def value_from_datadict(self, data, files, name):
         values = super().value_from_datadict(data, files, name)
-        print(values)
+        # print(values)
         cleaned_values = []
         names = []
         for val in values:
@@ -42,10 +42,10 @@ class TagSelect2Widget(ModelSelect2TagWidget):
 
         for val in values:
             if str(val) not in names:
-                print("Create ENTRY")
-                print(str(val))
+                # print("Create ENTRY")
+                # print(str(val))
                 val = self.queryset.create(name=str(val)).name
-            print(names)
+            # print(names)
             cleaned_values.append(str(val))
         return cleaned_values
 
