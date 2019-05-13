@@ -160,7 +160,18 @@ map.on('load', function() {
       }
 
     }
-
+    // check how deeply nested the outer ring of the unioned polygon is
+    final = [];
+    // set the coordinates of the outer ring to final 
+    if (a[obj][0][0].length > 2) {
+      final = [a[obj][0][0]];
+    }
+    else if(a[obj][0].length > 2) {
+      final = [a[obj][0]];
+    }
+    else {
+      final = a[obj]
+    }
     map.addLayer({
       'id': obj,
       'type': 'fill',
@@ -170,7 +181,7 @@ map.on('load', function() {
           'type': 'Feature',
           'geometry': {
             'type': 'Polygon',
-            'coordinates': a[obj]
+            'coordinates': final
           },
           'properties': {
             'issues': catDict,
@@ -185,7 +196,7 @@ map.on('load', function() {
         'fill-color': 'rgba(110, 178, 181,0.15)',
       }
     });
-    console.log(a[obj]);
+    // console.log(a[obj]);
     map.addLayer({
       'id': obj + "line",
       'type': 'line',
@@ -195,7 +206,7 @@ map.on('load', function() {
           'type': 'Feature',
           'geometry': {
             'type': 'Polygon',
-            'coordinates': a[obj]
+            'coordinates': final
           },
           'properties': {
             'issues': catDict,
@@ -229,41 +240,3 @@ map.on('load', function() {
   }
 
 });
-
-//create a button ! toggles layers based on their IDs
-var toggleableLayerIds = ['Census Blocks', 'State Legislature - Lower', 'State Legislature - Upper'];
-
-for (var i = 0; i < toggleableLayerIds.length; i++) {
-  var id = toggleableLayerIds[i];
-
-  var link = document.createElement('input');
-
-  link.value = id.replace(/\s+/g, '-').toLowerCase();
-  link.id = id;
-  link.type = 'checkbox';
-  link.className = 'switch_1';
-  // only state upper legislature is not checked
-  if (id === 'State Legislature - Upper') {
-    link.checked = false;
-  }
-  else {
-    link.checked = true;
-  }
-
-  link.onchange = function(e) {
-    var txt = this.id;
-    var clickedLayers = ["NJ " + txt, "VA " + txt, "PA " + txt, "MI " + txt];
-    e.preventDefault();
-    e.stopPropagation();
-
-    for (var j = 0; j < clickedLayers.length; j++) {
-      var visibility = map.getLayoutProperty(clickedLayers[j], 'visibility');
-
-      if (visibility === 'visible') {
-        map.setLayoutProperty(clickedLayers[j], 'visibility', 'none');
-      } else {
-        map.setLayoutProperty(clickedLayers[j], 'visibility', 'visible');
-      }
-    }
-  };
-}

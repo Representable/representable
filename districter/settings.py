@@ -147,9 +147,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Custom user model
 AUTH_USER_MODEL = 'main.User'
 LOGIN_REDIRECT_URL = '/'
-#ACCOUNT_LOGIN_FORM_CLASS = 'main.forms.LoginForm'
 
-#ACCOUNT_SIGNUP_FORM_CLASS = 'main.forms.SignupForm'
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -169,11 +167,6 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
-
-# Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
 
 # workaround for django all auth
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
