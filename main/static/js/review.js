@@ -160,7 +160,18 @@ map.on('load', function() {
       }
 
     }
-
+    // check how deeply nested the outer ring of the unioned polygon is
+    final = [];
+    // set the coordinates of the outer ring to final 
+    if (a[obj][0][0].length > 2) {
+      final = [a[obj][0][0]];
+    }
+    else if(a[obj][0].length > 2) {
+      final = [a[obj][0]];
+    }
+    else {
+      final = a[obj]
+    }
     map.addLayer({
       'id': obj,
       'type': 'fill',
@@ -170,7 +181,7 @@ map.on('load', function() {
           'type': 'Feature',
           'geometry': {
             'type': 'Polygon',
-            'coordinates': a[obj]
+            'coordinates': final
           },
           'properties': {
             'issues': catDict,
@@ -185,7 +196,7 @@ map.on('load', function() {
         'fill-color': 'rgba(110, 178, 181,0.15)',
       }
     });
-    console.log(a[obj]);
+    // console.log(a[obj]);
     map.addLayer({
       'id': obj + "line",
       'type': 'line',
@@ -195,7 +206,7 @@ map.on('load', function() {
           'type': 'Feature',
           'geometry': {
             'type': 'Polygon',
-            'coordinates': a[obj]
+            'coordinates': final
           },
           'properties': {
             'issues': catDict,
