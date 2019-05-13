@@ -190,17 +190,6 @@ class Review(LoginRequiredMixin, TemplateView):
             for id in entries:
                 ids.append(str(id))
             tags[str(obj)] = ids
-        # get the polygon from db and pass it on to html
-        for obj in CommunityEntry.objects.all():
-            if (obj.census_blocks_polygon == '' or obj.census_blocks_polygon == None):
-                s = "".join(obj.user_polygon.geojson)
-            else:
-                s = "".join(obj.census_blocks_polygon.geojson)
-
-            # add all the coordinates in the array
-            # at this point all the elements of the array are coordinates of the polygons
-            struct = geojson.loads(s)
-            entryPolyDict[obj.entry_ID] = struct.coordinates
 
         context = {
             'form': form,
