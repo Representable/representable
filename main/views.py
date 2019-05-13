@@ -114,7 +114,6 @@ class Review(LoginRequiredMixin, TemplateView):
 
         query = CommunityEntry.objects.filter(user = self.request.user)
 
-
         for obj in query:
             if (obj.census_blocks_polygon == '' or obj.census_blocks_polygon == None):
                 s = "".join(obj.user_polygon.geojson)
@@ -179,6 +178,29 @@ class Review(LoginRequiredMixin, TemplateView):
             struct = geojson.loads(s)
             entryPolyDict[obj.entry_ID] = struct.coordinates
 
+
+        # the polygon coordinates
+        entryPolyDict = dict()
+        # dictionary of tags to be displayed
+        tags = dict()
+        for obj in Tag.objects.all():
+            # manytomany query
+            entries = obj.communityentry_set.all()
+            ids = []
+            for id in entries:
+                ids.append(str(id))
+            tags[str(obj)] = ids
+        # get the polygon from db and pass it on to html
+        for obj in CommunityEntry.objects.all():
+            if (obj.census_blocks_polygon == '' or obj.census_blocks_polygon == None):
+                s = "".join(obj.user_polygon.geojson)
+            else:
+                s = "".join(obj.census_blocks_polygon.geojson)
+
+            # add all the coordinates in the array
+            # at this point all the elements of the array are coordinates of the polygons
+            struct = geojson.loads(s)
+            entryPolyDict[obj.entry_ID] = struct.coordinates
 
         context = {
             'form': form,
