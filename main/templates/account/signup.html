@@ -28,13 +28,11 @@
             {% if redirect_field_value %}
             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
             {% endif %}
-            <button class="btn btn-primary" type="submit">{% trans "Sign Up" %} &raquo;</button>
+            <button class="btn btn-primary" type="submit">{% trans "Sign Up" %}</button>
         </form>
     </div>
     <p> <br>
-        In order for us to make sure that your data is protected and that Districter data
-        remains secure and accurate, its important for each user to create an account before joining the districter
-        community. Thanks for your understanding!</p>
+        In order for Districter to verify community submissions, we require all users to create accounts before drawing their communities. Thank you for understanding!</p>
 </div>
 
 {% endblock %}
