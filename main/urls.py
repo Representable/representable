@@ -1,7 +1,7 @@
 from django.urls import path
 
 from . import views
-from districter.settings import MAPBOX_KEY
+from representable.settings import MAPBOX_KEY
 
 app_name = "main"
 urlpatterns = [

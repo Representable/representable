@@ -26,7 +26,7 @@ nano .bash_profile
 
 Add these lines:
 ```
-# Districter Stuff
+# Representable Stuff
 export DISTR_DB_NAME="..."
 export DISTR_DB_USER="..."
 export DISTR_DB_PASS="..."

@@ -49,7 +49,7 @@ export DISTR_MAPBOX_KEY="COPY_THIS_FROM_MAPBOX_ACCOUNT"
 
 ### Start server:
 ```
-cd districter
+cd representable
 python manage.py migrate
 python manage.py runserver
 ```

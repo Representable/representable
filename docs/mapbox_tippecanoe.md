@@ -21,12 +21,12 @@ ogr2ogr -f GeoJSON {file-name}.geojson {file-name}.shp
 4. Convert to mbtiles (much smaller!): `tippecanoe -zg -o {file-name}.mbtiles --drop-densest-as-needed --extend-zooms-if-still-dropping {file-name}.geojson`
 5. Install mapbox cli: `pip install mapboxcli`
 6. Export mapbox token (ask me if you need it, different from mapbox key): `export MAPBOX_ACCESS_TOKEN={TOKEN}`
-7. upload the file: `mapbox upload districter-team.{name} {file-name}.geojson`
+7. upload the file: `mapbox upload representable-team.{name} {file-name}.geojson`
 8. now you can edit the javascript
 ```
 map.addSource("source-name", {
   type: "vector",
-  url: "mapbox://districter-team.{name}"
+  url: "mapbox://representable-team.{name}"
 });
 ```
 Make sure when you do `map.addLayer()`, you add `"source": "{source-name}"` and `"source-layer": "{file-name}"`! you are done

@@ -298,7 +298,7 @@ map.on('style.load', function() {
 
     map.addSource("census", {
         type: "vector",
-        url: "mapbox://districter-team.aq1twwkc"
+        url: "mapbox://representable-team.aq1twwkc"
       });
 
     map.addLayer({

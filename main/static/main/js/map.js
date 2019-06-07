@@ -71,7 +71,7 @@ map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
 function newSourceLayer(name, mbCode) {
   map.addSource(name, {
     type: "vector",
-    url: "mapbox://districter-team." + mbCode
+    url: "mapbox://representable-team." + mbCode
   });
 }
 // add a new layer of census block data
@@ -208,7 +208,7 @@ map.on('load', function() {
     }
     // check how deeply nested the outer ring of the unioned polygon is
     final = [];
-    // set the coordinates of the outer ring to final 
+    // set the coordinates of the outer ring to final
     if (a[obj][0][0].length > 2) {
       final = [a[obj][0][0]];
     }

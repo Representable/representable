@@ -12,14 +12,14 @@ Taken from https://medium.com/agatha-codes/painless-postgresql-django-d4f0336498
 # Open postgres
 psql postgres
 # Create user
-CREATE USER districter WITH encrypted password '<pass_here>';
+CREATE USER representable WITH encrypted password '<pass_here>';
 # Give User permission to create databases
-ALTER ROLE districter WITH CREATEDB;
+ALTER ROLE representable WITH CREATEDB;
 # Check that your user was set up correctly
 \du
 # Crate DB
-CREATE DATABASE districter_db WITH OWNER districter;
-GRANT ALL PRIVILEGES ON DATABASE districter_db to districter;
+CREATE DATABASE representable_db WITH OWNER representable;
+GRANT ALL PRIVILEGES ON DATABASE representable_db to representable;
 # Check that DB was created correctly
 \l
 ```
@@ -33,9 +33,9 @@ nano ~/.bash_profile
 
 Add these lines:
 ```
-# Districter Stuff
-export DISTR_DB_NAME="districter_db"
-export DISTR_DB_USER="districter"
+# Representable Stuff
+export DISTR_DB_NAME="representable_db"
+export DISTR_DB_USER="representable"
 export DISTR_DB_PASS="..."
 ```
 And then Ctrl^x and press Y to exit.
@@ -55,8 +55,8 @@ Homebrew/homebrew-cask (git revision f7063; last commit 2019-03-26)
 # After you check that Homebrew is installed, install `gdal` and `libgeoip`.
 brew install gdal
 brew install libgeoip
-# Open the districter_db DB and add/check that PostGIS is added.
-psql districter_db
+# Open the representable_db DB and add/check that PostGIS is added.
+psql representable_db
 CREATE EXTENSION postgis;
 # Add this line to your .bash_profile. Replace X and Y with your Postgres.app version (e.g. .../11.2/bin)
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/X.Y/bin
