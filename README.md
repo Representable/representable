@@ -1,4 +1,4 @@
-# Districter
+# Representable
 Crowdsourced redistricting tool. Draw your community of interest and make your voice heard. In early stages of development.
 
 
@@ -6,11 +6,11 @@ Crowdsourced redistricting tool. Draw your community of interest and make your v
 _Steps from https://www.cs.princeton.edu/courses/archive/spring19/cos333/a4.html_
 **The name pyenv is in the gitignore so as long as you name your env "pyenv" as per instructions it will not be committed.**
 ```
-$ pip install virtualenv --user  
-$ virtualenv pyvenv                 
+$ pip install virtualenv --user
+$ virtualenv pyvenv
 $ . pyenv/bin/activate
 # when done with work:
-$ deactivate                      
+$ deactivate
 ```
 ### Add requirements from *pyenv* to requirements.txt
 ```
