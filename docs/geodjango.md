@@ -3,7 +3,7 @@ _by Theodor Marcu (Reach out if you have questions!)_
 
 Taken from https://medium.com/agatha-codes/painless-postgresql-django-d4f03364989 and adapted.
 
-1. Install required requirements `pip install -r requirements.txt`.
+1. Install required requirements `pip install -r requirements.txt`. You may need to install libmemcached first.
 2. Install PostgreSQL from: https://postgresapp.com/downloads.html. Choose the first download option: Postgres.app with PostgreSQL 11. If you don't already have postgres, do "brew install postgres".
 3. Make sure to start a Postgres server. Use the default settings on Port 5432.
 4. Use the information I texted you to create a Postgres user with the DISTR_DB_USER, a database with DISTR_DB_NAME, and password DISTR_DB_PASS.
@@ -17,7 +17,7 @@ CREATE USER representable WITH encrypted password '<pass_here>';
 ALTER ROLE representable WITH CREATEDB;
 # Check that your user was set up correctly
 \du
-# Crate DB
+# Create DB
 CREATE DATABASE representable_db WITH OWNER representable;
 GRANT ALL PRIVILEGES ON DATABASE representable_db to representable;
 # Check that DB was created correctly
@@ -55,6 +55,8 @@ Homebrew/homebrew-cask (git revision f7063; last commit 2019-03-26)
 # After you check that Homebrew is installed, install `gdal` and `libgeoip`.
 brew install gdal
 brew install libgeoip
+brew install libmemcached
+
 # Open the representable_db DB and add/check that PostGIS is added.
 psql representable_db
 CREATE EXTENSION postgis;
