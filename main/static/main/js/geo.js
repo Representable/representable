@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2019- Representable Team (Theodor Marcu, Lauren Johnston, Somya Arora, Kyle Barnes, Preeti Iyer).
  *
- * This file is part of Representable 
+ * This file is part of Representable
  * (see http://representable.org).
  *
  * This program is free software: you can redistribute it and/or modify
@@ -317,7 +317,7 @@ map.on('style.load', function() {
 
     map.addSource("census", {
         type: "vector",
-        url: "mapbox://representable-team.aq1twwkc"
+        url: "mapbox://districter-team.aq1twwkc"
       });
 
     map.addLayer({

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2019- Representable Team (Theodor Marcu, Lauren Johnston, Somya Arora, Kyle Barnes, Preeti Iyer).
  *
- * This file is part of Representable 
+ * This file is part of Representable
  * (see http://representable.org).
  *
  * This program is free software: you can redistribute it and/or modify
@@ -90,7 +90,7 @@ map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
 function newSourceLayer(name, mbCode) {
   map.addSource(name, {
     type: "vector",
-    url: "mapbox://representable-team." + mbCode
+    url: "mapbox://districter-team." + mbCode
   });
 }
 // add a new layer of census block data
