@@ -24,24 +24,20 @@ census blocks, state legislature, and drawn polygons + tags to select ur favs */
 // the mapbox keys to load tilesets
 // when adding a new state: put it into CENSUS_KEYS, UPPER_KEYS, LOWER_KEYS, and state array
 var CENSUS_KEYS = {
-  "nj-census": "aq1twwkc",
-  "va-census": "48cgf8ll",
+  "ak-census": "58gmpem3","al-census": "3mwmen99","ar-census": "bhfk2jt5","az-census": "5qhvxy81","ca-census": "5ajw0t56","co-census": "9uuz0d5o","ct-census": "76he7y5v","dc-census": "aelj3igx","de-census": "8anqjirh","fl-census": "28rb6rz8","ga-census": "bool76jp","hi-census": "2wosvv9e","ia-census": "4gq84wm1","id-census": "8v0rh6sz","il-census": "2l2k4mwx","in-census": "bqy2i2eo","ks-census": "a61ow29h","ky-census": "2lkmcoff","la-census": "aymysxoe","ma-census": "b9fwwihl","md-census": "7uiplbeo","me-census": "6ixwpdg9","mi-census": "7bb2ddev","mn-census": "c8ycuc7z","mo-census": "6lhfe3qj","ms-census": "776w7c6l","mt-census": "8fot63pf","nc-census": "3q7wy8y4","nd-census": "davr96dm","ne-census": "an3kw0lz","nh-census": "5ih7fupl","nj-census": "aq1twwkc",
+  "nm-census": "0k2ks83t",
+  "nv-census": "6hp6zvs6",
+  "ny-census": "0k2ks83t",
   "pa-census": "0k2ks83t",
-  "mi-census": "7bb2ddev"
+  "sd-census": "d4h4wklr","tn-census": "33qavqus","tx-census": "91rh162c","ut-census": "9irxd436","va-census": "48cgf8ll","vt-census": "ctq6mfh4","wa-census": "aiw70rnf","wi-census": "cxg32i9p","wv-census": "blu8tjc9","wy-census": "bzizyt8u"
 };
 var UPPER_KEYS = {
-  "nj-upper": "9fogw4w4",
-  "va-upper": "3b1qryb8",
-  "pa-upper": "33mtf25i",
-  "mi-upper": "5bvjx29f"
+  "ak-upper": "ajy4zns3","al-upper": "ct0ehmlm","ar-upper": "0vp12qw4","az-upper": "7url8569","ca-upper": "c793js1z","co-upper": "duivmkp7","ct-upper": "bt8hzuqf","dc-upper": "7gb7owv6","de-upper": "1tjyqhsb","fl-upper": "1gclsamo","ga-upper": "0ctsypu0","hi-upper": "ce4zroh2","ia-upper": "cjshjdih","id-upper": "a1z3uex6","il-upper": "2k9tw58x","in-upper": "cxroj8b9","ks-upper": "8s51clse","ky-upper": "a0z84cq5","la-upper": "34ot8agf","ma-upper": "7t0rbyqc","md-upper": "57db6u4n","me-upper": "5xn4u2cb","mi-upper": "5bvjx29f","mn-upper": "dfxbv8s2","mo-upper": "8fenu4i3","ms-upper": "1n11roh2","mt-upper": "b0mb1mrt","nc-upper": "0n3amj58","nd-upper": "86n4hvqp","ne-upper": "22ev23od","nh-upper": "dbx500kk","nj-upper": "9fogw4w4","nm-upper": "amyd4x8x","nv-upper": "9t29x676","ny-upper": "2vbg6jw9","oh-upper": "4jxx8mtp","ok-upper": "bytxji14","or-upper": "1yfm1svn","pa-upper": "33mtf25i","ri-upper": "dvlmwj4t","sc-upper": "7e8h2zry","sd-upper": "2ia26tc9","tn-upper": "0wu0rs9e","tx-upper": "1jckmfg8","ut-upper": "3o87d3lh","va-upper": "3b1qryb8","vt-upper": "36j5ux3z","wa-upper": "21jsuobz","wi-upper": "7wznqcw4","wv-upper": "2oou05hr","wy-upper": "7lkxtzk5"
 };
 var LOWER_KEYS = {
-  "nj-lower": "8w0imag4",
-  "va-lower": "9xpukpnx",
-  "pa-lower": "c2qg68h1",
-  "mi-lower": "aa2ljvl2"
+  "ak-lower": "a7my06pf","al-lower": "6s3fb8x6","ar-lower": "aoo42mh5","az-lower": "69m1ncet","ca-lower": "8swc402r","co-lower": "6449ik1a","ct-lower": "aps4sgjm","de-lower": "6pnb05km","fl-lower": "489egzlz","ga-lower": "8tvwmii5","hi-lower": "9hvxot4m","ia-lower": "9lgve8rt","id-lower": "6n6vcm1q","il-lower": "6ztbe511","in-lower": "5o3tg7ko","ks-lower": "7ca08p7p","ky-lower": "bxcziibw","la-lower": "a993qoob","ma-lower": "2li5gb3y","md-lower": "4yiku1xm","me-lower": "b7vwy66v","mi-lower": "aa2ljvl2","mn-lower": "8ls97if0","mo-lower": "3m8wa0ij","ms-lower": "dmiyiiih","mt-lower": "4c5h4k4k","nc-lower": "4wfqq41l","nd-lower": "d5ctq6qu","nh-lower": "0rehp33q","nm-lower": "5ty9whhm","nv-lower": "ccsgcq7z","ny-lower": "7im366fo","oh-lower": "4ithojy1","ok-lower": "1yv8x4qk","or-lower": "al75jr5d","pa-lower": "c2qg68h1","ri-lower": "30x1nsif","sc-lower": "54vjbmvf","sd-lower": "dxkshx2x","tn-lower": "2tjnjb83","tx-lower": "8omxrrst","ut-lower": "05y3896b","va-lower": "9xpukpnx","vt-lower": "d6brg1fl","wa-lower": "c9rk9gas","wi-lower": "3q5v3n9v","wv-lower": "aq380u5z","wy-lower": "93ya8fsx"
 };
-var states = ["nj", "va", "pa", "mi"];
+var states = ["ak", "al", "ar", "az", "ca", "co", "ct", "dc", "de", "fl", "ga", "hi", "ia", "id", "il", "in", "ks", "ky", "la", "ma", "md", "me", "mi", "mn", "mo", "ms", "mt", "nc", "nd", "nh", "nj", "nm", "nv", "ny", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "va", "vt", "wa", "wi", "wv", "wy"];
 
 /* Colors for the different issue categories */
 var PAINT_VALUES = {
