@@ -317,7 +317,7 @@ map.on('style.load', function() {
 
     map.addSource("census", {
         type: "vector",
-        url: "mapbox://districter-team.aq1twwkc"
+        url: "mapbox://districter-team.0yrce8nw"
       });
 
     map.addLayer({
@@ -339,7 +339,7 @@ map.on('style.load', function() {
       "id": "census-lines",
       "type": "line",
       "source": "census",
-      "source-layer": "njblockdata",
+      "source-layer": "njcensus",
       "layout": {
         "visibility": "visible",
         "line-join": "round",
@@ -356,7 +356,7 @@ map.on('style.load', function() {
         "id": "blocks-highlighted",
         "type": "fill",
         "source": "census",
-        "source-layer": "njblockdata",
+        "source-layer": "njcensus",
         "paint": {
         "fill-outline-color": "#1e3799",
         "fill-color": "#4a69bd",
