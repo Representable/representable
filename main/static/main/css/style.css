@@ -378,8 +378,14 @@ section {
   margin-left: 5px;
 }
 
-#menu {
+.sidenav-box {
   background: #fff;
+  margin: 12px;
+}
+
+#menu {
+  background: #F7F7F7;
+  box-shadow: 8px 0 5px -3px #aeaeae;
 }
 
 #geocoder-container>div {
