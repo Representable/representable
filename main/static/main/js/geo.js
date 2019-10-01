@@ -324,7 +324,7 @@ map.on('style.load', function() {
     "id": "census-blocks",
     "type": "fill",
     "source": "census",
-    "source-layer": "njblockdata",
+    "source-layer": "njcensus",
     "layout": {
         "visibility": "visible"
     },
