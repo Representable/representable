@@ -45,6 +45,8 @@ var ideal_population_CONG = {
 var CENSUS_KEYS = {
   "ak-census": "40xiqgvl","al-census": "5wnfuadx","ar-census": "cfn0gxes","az-census": "d1hc4dk1","ca-census": "dgvz11d5","co-census": "10cpzey1","ct-census": "acwqf5pz","dc-census": "da466hfz","de-census": "1bx4au31","fl-census": "7hpatmow","ga-census": "5lx08ma9","hi-census": "82epj1e0","ia-census": "4jkzgaf9","id-census": "6s8r1pl0","il-census": "awf7y438","in-census": "1fn3qhnn","ks-census": "ad6ys13i","ky-census": "0q4sl8dv","la-census": "7zyid6d0","ma-census": "1bvt0bee","md-census": "1zwr1qu7","me-census": "cyabkjlh","mi-census": "5elaw49i","mn-census": "561za3yv","mo-census": "56j9wugl","ms-census": "33ictlz4","mt-census": "1qescrvy","nc-census": "2i44h0gn","nd-census": "2jj6oy57","ne-census": "4hcty1f0","nh-census": "8q2e3yu3","nj-census": "0yrce8nw","nm-census": "164i2lmn","nv-census": "42p3cqhj","ny-census": "3i3eca1x","oh-census": "18ik8ger","ok-census": "34ou4tm9","or-census": "66y60ac5","pa-census": "4oz1cx84","ri-census": "6p13pxdt","sc-census": "a7ddwoo9","sd-census": "aztmscpz","tn-census": "8io3xzps","tx-census": "773he449","ut-census": "2tq7r5as","va-census": "58tbtkkj","vt-census": "914alme3","wa-census": "4a9umfkl","wi-census": "52mhmiw7","wv-census": "82nll1sy","wy-census": "9uwm30og"
 };
+var states = ["ak", "al", "ar", "az", "ca", "co", "ct", "dc", "de", "fl", "ga", "hi", "ia", "id", "il", "in", "ks", "ky", "la", "ma", "md", "me", "mi", "mn", "mo", "ms", "mt", "nc", "nd", "nh", "nj", "nm", "nv", "ny", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "va", "vt", "wa", "wi", "wv", "wy"];
+
 
 var wkt_obj;
 // Formset field object saves a deep copy of the original formset field object.
@@ -315,7 +317,7 @@ function newSourceLayer(name, mbCode) {
 // add a new layer of census block data
 function newCensusLayer(state) {
   map.addLayer({
-    "id": state.toUpperCase() + " Census Blocks",
+    "id": state + "-census-blocks",
     "type": "fill",
     "source": state + "-census",
     "source-layer": state + "census",
@@ -323,9 +325,40 @@ function newCensusLayer(state) {
       "visibility": "none"
     },
     "paint": {
-      "fill-color": "rgba(193, 202, 214, 0)",
-      "fill-outline-color": "rgba(106,137,204,0.4)"
+      "fill-color": "rgba(200, 100, 240, 0)",
+      "fill-outline-color": "rgba(200,100,240,0)"
     }
+  });
+}
+function newCensusLines(state) {
+  map.addLayer({
+    "id": state + "-census-lines",
+    "type": "line",
+    "source": state + "-census",
+    "source-layer": state + "census",
+    "layout": {
+      "visibility": "visible",
+      "line-join": "round",
+      "line-cap": "round"
+    },
+    "paint": {
+      "line-color": "rgba(71, 93, 204, 0.25)",
+      "line-width": 1
+    }
+  });
+}
+function newHighlightLayer(state) {
+  map.addLayer({
+    "id": state + "-blocks-highlighted",
+    "type": "fill",
+    "source": state + "-census",
+    "source-layer": state + "census",
+    "paint": {
+      "fill-outline-color": "#1e3799",
+      "fill-color": "#4a69bd",
+      "fill-opacity": 0.7
+    },
+    "filter": ["in", "BLOCKID10", ""]
   });
 }
 
@@ -347,50 +380,11 @@ map.on('style.load', function() {
       newSourceLayer(census, CENSUS_KEYS[census]);
     }
 
-    map.addLayer({
-    "id": "census-blocks",
-    "type": "fill",
-    "source": "census",
-    "source-layer": "njcensus",
-    "layout": {
-        "visibility": "visible"
-    },
-    "paint": {
-        "fill-color": "rgba(200, 100, 240, 0)",
-        "fill-outline-color": "rgba(200, 100, 240, 0)"
+    for (let i = 0; i < states.length; i++) {
+      newCensusLayer(states[i]);
+      newCensusLines(states[i]);
+      newHighlightLayer(states[i]);
     }
-    });
-
-    // a line so that thickness can be changed
-    map.addLayer({
-      "id": "census-lines",
-      "type": "line",
-      "source": "census",
-      "source-layer": "njcensus",
-      "layout": {
-        "visibility": "visible",
-        "line-join": "round",
-        "line-cap": "round"
-      },
-      "paint": {
-        "line-color": "rgba(71, 93, 204, 0.25)",
-        "line-width": 1
-      }
-    });
-
-    // filter is applied on this layer
-    map.addLayer({
-        "id": "blocks-highlighted",
-        "type": "fill",
-        "source": "census",
-        "source-layer": "njcensus",
-        "paint": {
-        "fill-outline-color": "#1e3799",
-        "fill-color": "#4a69bd",
-        "fill-opacity": 0.7
-        },
-        "filter": ["in", "BLOCKID10", ""]
-        });
 
 
     map.addLayer({
@@ -524,7 +518,7 @@ function highlightBlocks(drawn_polygon) {
 
         // var final_union = turf.union(turf.bboxPolygon([0, 0, 0, 0]), turf.bboxPolygon([0, 0, 1, 1]));
         // TODO: update layer names for all states (will this work?)
-        var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
+        var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['nj-census-blocks'] });
         var mpoly = [];
         var wkt = new Wkt.Wkt();
         if (features.length >= 1) {
@@ -562,7 +556,7 @@ function highlightBlocks(drawn_polygon) {
             }, ["in", "BLOCKID10"]);
             //  sets filter - highlights blocks
             // TODO: update for all states
-            map.setFilter("blocks-highlighted", filter);
+            map.setFilter("nj-blocks-highlighted", filter);
 
             // show population stats for NJ only:
             // 1. LOWER LEGISLATION PROGRESS BAR __________________________________
@@ -667,7 +661,7 @@ function updateCommunityEntry(e) {
         census_blocks_polygon_wkt = '';
         census_blocks_multipolygon_wkt = '';
         // TODO: update for all states
-        map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
+        map.setFilter("nj-blocks-highlighted", ["in", "GEOID10"]);
     }
     // Update form fields
     census_blocks_polygon_wkt = '';
