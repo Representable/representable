@@ -305,6 +305,30 @@ document.getElementById('trash-button').addEventListener('click', function (e) {
     draw.changeMode('simple_select');
 });
 
+// add a new source layer
+function newSourceLayer(name, mbCode) {
+  map.addSource(name, {
+    type: "vector",
+    url: "mapbox://districter-team." + mbCode
+  });
+}
+// add a new layer of census block data
+function newCensusLayer(state) {
+  map.addLayer({
+    "id": state.toUpperCase() + " Census Blocks",
+    "type": "fill",
+    "source": state + "-census",
+    "source-layer": state + "census",
+    "layout": {
+      "visibility": "none"
+    },
+    "paint": {
+      "fill-color": "rgba(193, 202, 214, 0)",
+      "fill-outline-color": "rgba(106,137,204,0.4)"
+    }
+  });
+}
+
 /******************************************************************************/
 
 /* After the map style has loaded on the page, add a source layer and default
@@ -318,10 +342,10 @@ map.on('style.load', function() {
         }
     });
 
-    map.addSource("census", {
-        type: "vector",
-        url: "mapbox://districter-team.0yrce8nw"
-      });
+    // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
+    for (let census in CENSUS_KEYS) {
+      newSourceLayer(census, CENSUS_KEYS[census]);
+    }
 
     map.addLayer({
     "id": "census-blocks",
@@ -499,6 +523,7 @@ function highlightBlocks(drawn_polygon) {
         var southWestPointPixel = map.project(southWest);
 
         // var final_union = turf.union(turf.bboxPolygon([0, 0, 0, 0]), turf.bboxPolygon([0, 0, 1, 1]));
+        // TODO: update layer names for all states (will this work?)
         var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
         var mpoly = [];
         var wkt = new Wkt.Wkt();
@@ -536,10 +561,12 @@ function highlightBlocks(drawn_polygon) {
                 return memo;
             }, ["in", "BLOCKID10"]);
             //  sets filter - highlights blocks
+            // TODO: update for all states
             map.setFilter("blocks-highlighted", filter);
 
             // show population stats for NJ only:
             // 1. LOWER LEGISLATION PROGRESS BAR __________________________________
+            // TODO: update these parts to determine which state we are focusing on
             progressL = document.getElementById("pop");
             progressL.style.background = "orange"
             progressL.innerHTML = Math.round(total / (ideal_population_LOWER['nj'] * 1.5) * 100) + "%";
@@ -639,6 +666,7 @@ function updateCommunityEntry(e) {
         user_polygon_wkt = '';
         census_blocks_polygon_wkt = '';
         census_blocks_multipolygon_wkt = '';
+        // TODO: update for all states
         map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
     }
     // Update form fields
