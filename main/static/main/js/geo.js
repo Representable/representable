@@ -42,6 +42,9 @@ var ideal_population_CONG = {
   "pa": 710767,
   "mi": 710767
 };
+var CENSUS_KEYS = {
+  "ak-census": "40xiqgvl","al-census": "5wnfuadx","ar-census": "cfn0gxes","az-census": "d1hc4dk1","ca-census": "dgvz11d5","co-census": "10cpzey1","ct-census": "acwqf5pz","dc-census": "da466hfz","de-census": "1bx4au31","fl-census": "7hpatmow","ga-census": "5lx08ma9","hi-census": "82epj1e0","ia-census": "4jkzgaf9","id-census": "6s8r1pl0","il-census": "awf7y438","in-census": "1fn3qhnn","ks-census": "ad6ys13i","ky-census": "0q4sl8dv","la-census": "7zyid6d0","ma-census": "1bvt0bee","md-census": "1zwr1qu7","me-census": "cyabkjlh","mi-census": "5elaw49i","mn-census": "561za3yv","mo-census": "56j9wugl","ms-census": "33ictlz4","mt-census": "1qescrvy","nc-census": "2i44h0gn","nd-census": "2jj6oy57","ne-census": "4hcty1f0","nh-census": "8q2e3yu3","nj-census": "0yrce8nw","nm-census": "164i2lmn","nv-census": "42p3cqhj","ny-census": "3i3eca1x","oh-census": "18ik8ger","ok-census": "34ou4tm9","or-census": "66y60ac5","pa-census": "4oz1cx84","ri-census": "6p13pxdt","sc-census": "a7ddwoo9","sd-census": "aztmscpz","tn-census": "8io3xzps","tx-census": "773he449","ut-census": "2tq7r5as","va-census": "58tbtkkj","vt-census": "914alme3","wa-census": "4a9umfkl","wi-census": "52mhmiw7","wv-census": "82nll1sy","wy-census": "9uwm30og"
+};
 
 var wkt_obj;
 // Formset field object saves a deep copy of the original formset field object.
