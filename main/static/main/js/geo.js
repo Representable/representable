@@ -296,14 +296,16 @@ trashButton[0].innerHTML = "<i class='fas fa-trash-alt'></i> Delete Polygon";
 document.getElementById('draw-button').addEventListener('click', function (e) {
     cleanAlerts();
     draw.deleteAll();
-    map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
+    // TODO: change for all states
+    map.setFilter("nj-blocks-highlighted", ["in", "GEOID10"]);
     draw.changeMode('draw_polygon');
 });
 
 document.getElementById('trash-button').addEventListener('click', function (e) {
     cleanAlerts();
     draw.deleteAll();
-    map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
+    // TODO: change for all states
+    map.setFilter("nj-blocks-highlighted", ["in", "GEOID10"]);
     draw.changeMode('simple_select');
 });
 
