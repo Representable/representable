@@ -317,21 +317,6 @@ function newSourceLayer(name, mbCode) {
   });
 }
 // add a new layer of census block data
-function newCensusLayer(state) {
-  map.addLayer({
-    "id": state + "-census-blocks",
-    "type": "fill",
-    "source": state + "-census",
-    "source-layer": state + "census",
-    "layout": {
-      "visibility": "none"
-    },
-    "paint": {
-      "fill-color": "rgba(200, 100, 240, 0)",
-      "fill-outline-color": "rgba(200,100,240,0)"
-    }
-  });
-}
 function newCensusLines(state) {
   map.addLayer({
     "id": state + "-census-lines",
@@ -383,7 +368,6 @@ map.on('style.load', function() {
     }
 
     for (let i = 0; i < states.length; i++) {
-      newCensusLayer(states[i]);
       newCensusLines(states[i]);
       newHighlightLayer(states[i]);
     }
@@ -398,14 +382,6 @@ map.on('style.load', function() {
             "circle-color": "#007cbf"
         }
     });
-    map.on('click', 'Census Blocks', function (e) {
-        new mapboxgl.Popup({
-            closeButton: false
-        })
-        .setLngLat(e.lngLat)
-        .setHTML(e.features[0].properties.BLOCKID10)
-        .addTo(map);
-      });
 
     // Listen for the `geocoder.input` event that is triggered when a user
     // makes a selection and add a symbol that matches the result.
@@ -520,7 +496,7 @@ function highlightBlocks(drawn_polygon) {
 
         // var final_union = turf.union(turf.bboxPolygon([0, 0, 0, 0]), turf.bboxPolygon([0, 0, 1, 1]));
         // TODO: update layer names for all states (will this work?)
-        var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['nj-census-blocks'] });
+        var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['nj-census-lines'] });
         var mpoly = [];
         var wkt = new Wkt.Wkt();
         if (features.length >= 1) {
