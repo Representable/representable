@@ -372,7 +372,10 @@ map.on('load', function() {
     for (var i = 0; i < features.length; i++) {
       var source = features[i].source;
       if (source !== 'composite' && !source.includes('line') && !source.includes('census') && !source.includes('lower') && !source.includes('upper')) {
-        console.log(features[i]);
+        if (!sources.includes(source)) {
+          console.log(features[i]);
+          sources.push(source);
+        }
       }
     }
   });
