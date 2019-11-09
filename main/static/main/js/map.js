@@ -380,6 +380,17 @@ map.on('load', function() {
     }
     console.log('done');
   });
+  // var selected = [];
+  // // somehow append all the selected layers to this array (based on html, too)
+  // var data = selected.toGeoJSON();
+  // var convertedData = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data));
+  // $.ajax({
+  //   type: 'POST',
+  //   url: '/map/',
+  //   contentType: 'application/json',
+  //   data: convertedData,
+  //   complete: callback
+  // });
 });
 
 //create a button that toggles layers based on their IDs
