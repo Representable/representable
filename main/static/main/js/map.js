@@ -363,6 +363,18 @@ map.on('load', function() {
     var layers = document.getElementById('tags-menu');
     layers.appendChild(link);
   }
+  // find what features are currently on view
+  // multiple features are gathered that have the same source (or have the same source with 'line' added on)
+  // TODO: need to consider how to make sure that we only get one feature at a time
+  map.on('moveend', function() {
+    var sources = [];
+    var features = map.queryRenderedFeatures();
+    for (var i = 0; i < features.length; i++) {
+      if (features[i].source !== 'composite' && !features[i].source.includes('line')) {
+        console.log(features[i]);
+      }
+    }
+  });
 });
 
 //create a button that toggles layers based on their IDs
