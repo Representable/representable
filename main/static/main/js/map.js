@@ -370,7 +370,8 @@ map.on('load', function() {
     var sources = [];
     var features = map.queryRenderedFeatures();
     for (var i = 0; i < features.length; i++) {
-      if (features[i].source !== 'composite' && !features[i].source.includes('line')) {
+      var source = features[i].source;
+      if (source !== 'composite' && !source.includes('line') && !source.includes('census') && !source.includes('lower') && !source.includes('upper')) {
         console.log(features[i]);
       }
     }
