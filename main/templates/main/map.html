@@ -34,12 +34,18 @@
   <div class="col-md-3 col-wide">
     <nav id='menu'>
       <div class="sidenav">
-        <div class="search">
+        <div class = "tag-search">
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search tags" onkeyup="searchTags()" aria-label="Search">
+          <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" onclick="searchTags()"><i class="fa fa-search"></i></button>
+        </form>
+        </div>
+        <!--<div class="search">
           <input type="text" id="search-bar" class="searchTerm" placeholder="Search layers..." onkeyup="searchTags()">
           <button type="submit" class="searchButton" onclick="searchTags()">
             <i class="fa fa-search"></i>
           </button>
-        </div>
+        </div>-->
         <div class="sidenav-box">State Legislature Boundaries
           <div id="outline-menu">
           </div>
@@ -48,20 +54,31 @@
           <i class="fa fa-caret-down"></i></button>
         <div class="dropdown-container" id="tags-menu"></div>
         <div id="issue-dropdowns"></div>
+        <div class="items card">
+          <div class="card-header">
+            Communities
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Cras justo odio</li>
+            <li class="list-group-item">Dapibus ac facilisis in</li>
+            <li class="list-group-item">Vestibulum at eros</li>
+          </ul>
+        </div>
         <button class="dropdown-btn btn-canvas" id="all">Clear All Filters
           <i class="fa"></i></button>
         <div class="dropdown-container"></div>
-        </nav>
-      </div>
-      <div class="col-md-9 col-map col-wide">
-        <div id='map' class="map-visualization"></div>
-      </div>
-    </div>
-    {% endblock %}
+    </nav>
+  </div>
+  <div class="col-md-9 col-map col-wide">
+    <div id='map' class="map-visualization"></div>
+  </div>
+</div>
+{% endblock %}
 
-    {% block script %}
-    <!--  Has to be at the end after the HTML loads.-->
-    <script type="text/javascript">
-      mapboxgl.accessToken = "{{ mapbox_key }}";    </script>
-    <script type="text/javascript" src="{% static 'main/js/map.js' %}"></script>
-    {% endblock %}
+{% block script %}
+<!--  Has to be at the end after the HTML loads.-->
+<script type="text/javascript">
+  mapboxgl.accessToken = "{{ mapbox_key }}";
+</script>
+<script type="text/javascript" src="{% static 'main/js/map.js' %}"></script>
+{% endblock %}
