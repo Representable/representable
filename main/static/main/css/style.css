@@ -8,7 +8,7 @@ Authors: S. Arora, K. Barnes, P.Iyer, L. Johnston, T. Marcu
 
 /* Body and headings */
 body {
-  /*background-color: #0a3d62;*/
+  background-color: #FFF;
   font-family: Inter, system-ui, sans-serif;
   font-weight: 400;
 }
@@ -24,32 +24,23 @@ h1 {
   }
 }
 
-.text-primary {
-    color: #0a3d62 ! important;
+.hero-card .card {
+    border-width: 0 !important;
 }
 
-p {
-  color: #000000;
+.small-icon {
+    height: auto;
+    width: 25%;
 }
+.border-top { border-top: 1px solid #e5e5e5; }
+.border-bottom { border-bottom: 1px solid #e5e5e5; }
 
-h3 {
-  color: #0a3d62;
-  font-weight: 300;
-  letter-spacing: 1px;
-}
+.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
 
-.text-info-custom {
-    color: #38ada9;
-}
-
-.text-header-card {
-    color: #3c6382;
-    font-size: 1.25rem;
-}
 
 /* Links and buttons */
 a:link, a:visited, a:active {
-  color: inherit;
+  /* color: inherit; */
 }
 
 /* a:hover {
@@ -59,9 +50,13 @@ text-decoration: none;
 /* Bootstrap elements */
 .navbar {
   border-bottom: 1px solid #F5F5F5;
+  box-shadow: 0 0 5px -3px #BEBEBE;
 }
 .navbar-brand {
   font-weight: 700;
+  background: -webkit-linear-gradient(-45deg, #2A94F4, #00C6A7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .nav-link {
@@ -70,6 +65,10 @@ text-decoration: none;
 }
 .container {
   border-width: 0;
+}
+
+.container-full-width {
+    width: 100%;
 }
 
 .container-panel {
@@ -185,7 +184,7 @@ text-decoration: none;
 
   .row-content-2 {
     background-color: #FFF;
-    color: #000;
+    /* color: #000; */
     padding-left: 40px;
     padding-right: 40px;
     padding-bottom: 40px;
@@ -297,7 +296,7 @@ section {
 .sidenav a, .dropdown-btn {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
-  color: black ! important;
+  /* color: black ! important; */
   display: block;
   border: none;
   background: none;
