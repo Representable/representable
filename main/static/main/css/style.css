@@ -173,6 +173,7 @@ text-decoration: none;
 .btn-outline-primary:hover, .btn-outline-primary:active {
   background-color: #5b8f9b;
   border-color: #5b8f9b;
+  color: white;
 }
 
 
