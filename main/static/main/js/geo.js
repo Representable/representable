@@ -42,6 +42,11 @@ var ideal_population_CONG = {
   "pa": 710767,
   "mi": 710767
 };
+var CENSUS_KEYS = {
+  "ak-census": "40xiqgvl","al-census": "5wnfuadx","ar-census": "cfn0gxes","az-census": "d1hc4dk1","ca-census": "dgvz11d5","co-census": "10cpzey1","ct-census": "acwqf5pz","dc-census": "da466hfz","de-census": "1bx4au31","fl-census": "7hpatmow","ga-census": "5lx08ma9","hi-census": "82epj1e0","ia-census": "4jkzgaf9","id-census": "6s8r1pl0","il-census": "awf7y438","in-census": "1fn3qhnn","ks-census": "ad6ys13i","ky-census": "0q4sl8dv","la-census": "7zyid6d0","ma-census": "1bvt0bee","md-census": "1zwr1qu7","me-census": "cyabkjlh","mi-census": "5elaw49i","mn-census": "561za3yv","mo-census": "56j9wugl","ms-census": "33ictlz4","mt-census": "1qescrvy","nc-census": "2i44h0gn","nd-census": "2jj6oy57","ne-census": "4hcty1f0","nh-census": "8q2e3yu3","nj-census": "0yrce8nw","nm-census": "164i2lmn","nv-census": "42p3cqhj","ny-census": "3i3eca1x","oh-census": "18ik8ger","ok-census": "34ou4tm9","or-census": "66y60ac5","pa-census": "4oz1cx84","ri-census": "6p13pxdt","sc-census": "a7ddwoo9","sd-census": "aztmscpz","tn-census": "8io3xzps","tx-census": "773he449","ut-census": "2tq7r5as","va-census": "58tbtkkj","vt-census": "914alme3","wa-census": "4a9umfkl","wi-census": "52mhmiw7","wv-census": "82nll1sy","wy-census": "9uwm30og"
+};
+var states = ["ak", "al", "ar", "az", "ca", "co", "ct", "dc", "de", "fl", "ga", "hi", "ia", "id", "il", "in", "ks", "ky", "la", "ma", "md", "me", "mi", "mn", "mo", "ms", "mt", "nc", "nd", "nh", "nj", "nm", "nv", "ny", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "va", "vt", "wa", "wi", "wv", "wy"];
+
 
 var wkt_obj;
 // Formset field object saves a deep copy of the original formset field object.
@@ -291,16 +296,58 @@ trashButton[0].innerHTML = "<i class='fas fa-trash-alt'></i> Delete Polygon";
 document.getElementById('draw-button').addEventListener('click', function (e) {
     cleanAlerts();
     draw.deleteAll();
-    map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
+    // TODO: change for all states
+    map.setFilter("nj-blocks-highlighted", ["in", "GEOID10"]);
     draw.changeMode('draw_polygon');
 });
 
 document.getElementById('trash-button').addEventListener('click', function (e) {
     cleanAlerts();
     draw.deleteAll();
-    map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
+    // TODO: change for all states
+    map.setFilter("nj-blocks-highlighted", ["in", "GEOID10"]);
     draw.changeMode('simple_select');
 });
+
+// add a new source layer
+function newSourceLayer(name, mbCode) {
+  map.addSource(name, {
+    type: "vector",
+    url: "mapbox://districter-team." + mbCode
+  });
+}
+// add a new layer of census block data
+function newCensusLines(state) {
+  map.addLayer({
+    "id": state + "-census-lines",
+    "type": "line",
+    "source": state + "-census",
+    "source-layer": state + "census",
+    "layout": {
+      "visibility": "visible",
+      "line-join": "round",
+      "line-cap": "round"
+    },
+    "paint": {
+      "line-color": "rgba(71, 93, 204, 0.25)",
+      "line-width": 1
+    }
+  });
+}
+function newHighlightLayer(state) {
+  map.addLayer({
+    "id": state + "-blocks-highlighted",
+    "type": "fill",
+    "source": state + "-census",
+    "source-layer": state + "census",
+    "paint": {
+      "fill-outline-color": "#1e3799",
+      "fill-color": "#4a69bd",
+      "fill-opacity": 0.7
+    },
+    "filter": ["in", "BLOCKID10", ""]
+  });
+}
 
 /******************************************************************************/
 
@@ -315,55 +362,15 @@ map.on('style.load', function() {
         }
     });
 
-    map.addSource("census", {
-        type: "vector",
-        url: "mapbox://districter-team.0yrce8nw"
-      });
-
-    map.addLayer({
-    "id": "census-blocks",
-    "type": "fill",
-    "source": "census",
-    "source-layer": "njcensus",
-    "layout": {
-        "visibility": "visible"
-    },
-    "paint": {
-        "fill-color": "rgba(200, 100, 240, 0)",
-        "fill-outline-color": "rgba(200, 100, 240, 0)"
+    // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
+    for (let census in CENSUS_KEYS) {
+      newSourceLayer(census, CENSUS_KEYS[census]);
     }
-    });
 
-    // a line so that thickness can be changed
-    map.addLayer({
-      "id": "census-lines",
-      "type": "line",
-      "source": "census",
-      "source-layer": "njcensus",
-      "layout": {
-        "visibility": "visible",
-        "line-join": "round",
-        "line-cap": "round"
-      },
-      "paint": {
-        "line-color": "rgba(71, 93, 204, 0.25)",
-        "line-width": 1
-      }
-    });
-
-    // filter is applied on this layer
-    map.addLayer({
-        "id": "blocks-highlighted",
-        "type": "fill",
-        "source": "census",
-        "source-layer": "njcensus",
-        "paint": {
-        "fill-outline-color": "#1e3799",
-        "fill-color": "#4a69bd",
-        "fill-opacity": 0.7
-        },
-        "filter": ["in", "BLOCKID10", ""]
-        });
+    for (let i = 0; i < states.length; i++) {
+      newCensusLines(states[i]);
+      newHighlightLayer(states[i]);
+    }
 
 
     map.addLayer({
@@ -375,14 +382,6 @@ map.on('style.load', function() {
             "circle-color": "#007cbf"
         }
     });
-    map.on('click', 'Census Blocks', function (e) {
-        new mapboxgl.Popup({
-            closeButton: false
-        })
-        .setLngLat(e.lngLat)
-        .setHTML(e.features[0].properties.BLOCKID10)
-        .addTo(map);
-      });
 
     // Listen for the `geocoder.input` event that is triggered when a user
     // makes a selection and add a symbol that matches the result.
@@ -496,7 +495,8 @@ function highlightBlocks(drawn_polygon) {
         var southWestPointPixel = map.project(southWest);
 
         // var final_union = turf.union(turf.bboxPolygon([0, 0, 0, 0]), turf.bboxPolygon([0, 0, 1, 1]));
-        var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['census-blocks'] });
+        // TODO: update layer names for all states (will this work?)
+        var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['nj-census-lines'] });
         var mpoly = [];
         var wkt = new Wkt.Wkt();
         if (features.length >= 1) {
@@ -533,10 +533,12 @@ function highlightBlocks(drawn_polygon) {
                 return memo;
             }, ["in", "BLOCKID10"]);
             //  sets filter - highlights blocks
-            map.setFilter("blocks-highlighted", filter);
+            // TODO: update for all states
+            map.setFilter("nj-blocks-highlighted", filter);
 
             // show population stats for NJ only:
             // 1. LOWER LEGISLATION PROGRESS BAR __________________________________
+            // TODO: update these parts to determine which state we are focusing on
             progressL = document.getElementById("pop");
             progressL.style.background = "orange"
             progressL.innerHTML = Math.round(total / (ideal_population_LOWER['nj'] * 1.5) * 100) + "%";
@@ -636,7 +638,8 @@ function updateCommunityEntry(e) {
         user_polygon_wkt = '';
         census_blocks_polygon_wkt = '';
         census_blocks_multipolygon_wkt = '';
-        map.setFilter("blocks-highlighted", ["in", "GEOID10"]);
+        // TODO: update for all states
+        map.setFilter("nj-blocks-highlighted", ["in", "GEOID10"]);
     }
     // Update form fields
     census_blocks_polygon_wkt = '';

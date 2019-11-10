@@ -24,7 +24,7 @@ census blocks, state legislature, and drawn polygons + tags to select ur favs */
 // the mapbox keys to load tilesets
 // when adding a new state: put it into CENSUS_KEYS, UPPER_KEYS, LOWER_KEYS, and state array
 var CENSUS_KEYS = {
-  "ak-census": "58gmpem3","al-census": "3mwmen99","ar-census": "bhfk2jt5","az-census": "5qhvxy81","ca-census": "5ajw0t56","co-census": "9uuz0d5o","ct-census": "76he7y5v","dc-census": "aelj3igx","de-census": "8anqjirh","fl-census": "28rb6rz8","ga-census": "bool76jp","hi-census": "2wosvv9e","ia-census": "4gq84wm1","id-census": "8v0rh6sz","il-census": "2l2k4mwx","in-census": "bqy2i2eo","ks-census": "a61ow29h","ky-census": "2lkmcoff","la-census": "aymysxoe","ma-census": "b9fwwihl","md-census": "7uiplbeo","me-census": "6ixwpdg9","mi-census": "5elaw49i","mn-census": "c8ycuc7z","mo-census": "6lhfe3qj","ms-census": "776w7c6l","mt-census": "8fot63pf","nc-census": "3q7wy8y4","nd-census": "davr96dm","ne-census": "an3kw0lz","nh-census": "5ih7fupl","nj-census": "0yrce8nw","nm-census": "b423dfgi","nv-census": "6hp6zvs6","ny-census": "4owfrh4g","oh-census": "3fhjrufj","ok-census": "95bfdfda","or-census": "3wg3uhrc","pa-census": "4oz1cx84","ri-census": "ar35ojjs","sc-census": "ayvtineg","sd-census": "d4h4wklr","tn-census": "33qavqus","tx-census": "91rh162c","ut-census": "9irxd436","va-census": "58tbtkkj","vt-census": "ctq6mfh4","wa-census": "aiw70rnf","wi-census": "cxg32i9p","wv-census": "blu8tjc9","wy-census": "bzizyt8u"
+  "ak-census": "40xiqgvl","al-census": "5wnfuadx","ar-census": "cfn0gxes","az-census": "d1hc4dk1","ca-census": "dgvz11d5","co-census": "10cpzey1","ct-census": "acwqf5pz","dc-census": "da466hfz","de-census": "1bx4au31","fl-census": "7hpatmow","ga-census": "5lx08ma9","hi-census": "82epj1e0","ia-census": "4jkzgaf9","id-census": "6s8r1pl0","il-census": "awf7y438","in-census": "1fn3qhnn","ks-census": "ad6ys13i","ky-census": "0q4sl8dv","la-census": "7zyid6d0","ma-census": "1bvt0bee","md-census": "1zwr1qu7","me-census": "cyabkjlh","mi-census": "5elaw49i","mn-census": "561za3yv","mo-census": "56j9wugl","ms-census": "33ictlz4","mt-census": "1qescrvy","nc-census": "2i44h0gn","nd-census": "2jj6oy57","ne-census": "4hcty1f0","nh-census": "8q2e3yu3","nj-census": "0yrce8nw","nm-census": "164i2lmn","nv-census": "42p3cqhj","ny-census": "3i3eca1x","oh-census": "18ik8ger","ok-census": "34ou4tm9","or-census": "66y60ac5","pa-census": "4oz1cx84","ri-census": "6p13pxdt","sc-census": "a7ddwoo9","sd-census": "aztmscpz","tn-census": "8io3xzps","tx-census": "773he449","ut-census": "2tq7r5as","va-census": "58tbtkkj","vt-census": "914alme3","wa-census": "4a9umfkl","wi-census": "52mhmiw7","wv-census": "82nll1sy","wy-census": "9uwm30og"
 };
 var UPPER_KEYS = {
   "ak-upper": "ajy4zns3","al-upper": "ct0ehmlm","ar-upper": "0vp12qw4","az-upper": "7url8569","ca-upper": "c793js1z","co-upper": "duivmkp7","ct-upper": "bt8hzuqf","de-upper": "1tjyqhsb","fl-upper": "1gclsamo","ga-upper": "0ctsypu0","hi-upper": "ce4zroh2","ia-upper": "cjshjdih","id-upper": "a1z3uex6","il-upper": "2k9tw58x","in-upper": "cxroj8b9","ks-upper": "8s51clse","ky-upper": "a0z84cq5","la-upper": "34ot8agf","ma-upper": "7t0rbyqc","md-upper": "57db6u4n","me-upper": "5xn4u2cb","mi-upper": "5bvjx29f","mn-upper": "dfxbv8s2","mo-upper": "8fenu4i3","ms-upper": "1n11roh2","mt-upper": "b0mb1mrt","nc-upper": "0n3amj58","nd-upper": "86n4hvqp","ne-upper": "22ev23od","nh-upper": "dbx500kk","nj-upper": "9fogw4w4","nm-upper": "amyd4x8x","nv-upper": "9t29x676","ny-upper": "2vbg6jw9","oh-upper": "4jxx8mtp","ok-upper": "bytxji14","or-upper": "1yfm1svn","pa-upper": "33mtf25i","ri-upper": "dvlmwj4t","sc-upper": "7e8h2zry","sd-upper": "2ia26tc9","tn-upper": "0wu0rs9e","tx-upper": "1jckmfg8","ut-upper": "3o87d3lh","va-upper": "3b1qryb8","vt-upper": "36j5ux3z","wa-upper": "21jsuobz","wi-upper": "7wznqcw4","wv-upper": "2oou05hr","wy-upper": "7lkxtzk5"
@@ -363,6 +363,23 @@ map.on('load', function() {
     var layers = document.getElementById('tags-menu');
     layers.appendChild(link);
   }
+  // find what features are currently on view
+  // multiple features are gathered that have the same source (or have the same source with 'line' added on)
+  // TODO: need to consider how to make sure that we only get one feature at a time
+  map.on('moveend', function() {
+    var sources = [];
+    var features = map.queryRenderedFeatures();
+    for (var i = 0; i < features.length; i++) {
+      var source = features[i].source;
+      if (source !== 'composite' && !source.includes('line') && !source.includes('census') && !source.includes('lower') && !source.includes('upper')) {
+        if (!sources.includes(source)) {
+          console.log(features[i]);
+          sources.push(source);
+        }
+      }
+    }
+    console.log('done');
+  });
 });
 
 //create a button that toggles layers based on their IDs
