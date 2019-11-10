@@ -54,7 +54,7 @@ var wkt_obj;
 var formsetFieldObject;
 
 $(document).ready( function () {
-    $("#exampleModal").show();
+    $("#exampleModal").modal("show");
 });
 
 
