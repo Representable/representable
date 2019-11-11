@@ -20,52 +20,65 @@
 <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
 <!--  Custom CSS -->
 <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
-<!-- Add css again to take precedence over mapbox css. -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 {% endblock %}
-
 {% block content %}
 <div class="row row-wide">
-    <div>
-        <script type="text/javascript">
-            // var a = JSON.parse('{{ entries | escapejs }}')
-            var issues = '{{ issues | escapejs }}';
-            var a = '{{ entries | escapejs}}';
-            var tags = '{{ tags | escapejs }}'
-        </script>
-    </div>
-    <div class="col-md-3 col-wide">
-        <nav id='menu'>
-            <div class="sidenav">
-                <div class="search">
-                    <input type="text" id="search-bar" class="searchTerm" placeholder="Search layers..." onkeyup="searchTags()">
-                    <button type="submit" class="searchButton" onclick="searchTags()">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
-                <div class="sidenav-box">State Legislature Boundaries
-                    <div id="outline-menu">
-                    </div>
-                </div>
-                <button class="dropdown-btn btn-primary">Tags
-                    <i class="fa fa-caret-down"></i></button>
-                <div class="dropdown-container" id="tags-menu"></div>
-                <div id="issue-dropdowns"></div>
-                <button class="dropdown-btn btn-canvas" id="all">Clear All Filters
-                    <i class="fa"></i></button>
-                <div class="dropdown-container"></div>
-        </nav>
-    </div>
-    <div class="col-md-9 col-map col-wide">
-        <div id='map' class="map-visualization"></div>
-    </div>
+  <div>
+    <script type="text/javascript">
+      // var a = JSON.parse('{{ entries | escapejs }}')
+      var issues = '{{ issues | escapejs }}';
+      var a = '{{ entries | escapejs}}';
+      var tags = '{{ tags | escapejs }}'
+    </script>
+  </div>
+  <div class="col-md-3 col-wide">
+    <nav id='menu'>
+      <div class="sidenav">
+        <div class = "tag-search">
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search tags" onkeyup="searchTags()" aria-label="Search">
+          <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" onclick="searchTags()"><i class="fa fa-search"></i></button>
+        </form>
+        </div>
+        <!--<div class="search">
+          <input type="text" id="search-bar" class="searchTerm" placeholder="Search layers..." onkeyup="searchTags()">
+          <button type="submit" class="searchButton" onclick="searchTags()">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>-->
+        <div class="sidenav-box">State Legislature Boundaries
+          <div id="outline-menu">
+          </div>
+        </div>
+        <button class="dropdown-btn btn-primary">Tags
+          <i class="fa fa-caret-down"></i></button>
+        <div class="dropdown-container" id="tags-menu"></div>
+        <div id="issue-dropdowns"></div>
+        <div class="items card">
+          <div class="card-header">
+            Communities
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Cras justo odio</li>
+            <li class="list-group-item">Dapibus ac facilisis in</li>
+            <li class="list-group-item">Vestibulum at eros</li>
+          </ul>
+        </div>
+        <button class="dropdown-btn btn-canvas" id="all">Clear All Filters
+          <i class="fa"></i></button>
+        <div class="dropdown-container"></div>
+    </nav>
+  </div>
+  <div class="col-md-9 col-map col-wide">
+    <div id='map' class="map-visualization"></div>
+  </div>
 </div>
 {% endblock %}
 
 {% block script %}
 <!--  Has to be at the end after the HTML loads.-->
 <script type="text/javascript">
-    mapboxgl.accessToken = "{{ mapbox_key }}";
+  mapboxgl.accessToken = "{{ mapbox_key }}";
 </script>
 <script type="text/javascript" src="{% static 'main/js/map.js' %}"></script>
 {% endblock %}
