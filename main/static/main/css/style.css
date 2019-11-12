@@ -327,27 +327,6 @@ section {
   font-size: 12px;
 }
 
-/* Map visualizations search bar */
-.search {
-  width: 100%;
-  position: relative;
-  display: flex;
-}
-
-.searchTerm {
-  width: 100%;
-  border: 3px solid rgb(240, 240, 240);
-  border-right: none;
-  padding: 5px;
-  outline: none;
-  color: #9DBFAF;
-}
-
-.searchTerm:focus {
-  color: #576ca8;
-}
-
-
 /* css for the line on the progress bar */
 .bar-step {
   position: absolute;
@@ -826,12 +805,4 @@ section {
 
 .items li:active, .items li:hover {
   background-color: #F5F5F5;
-}
-
-#sticky-footer {
-  flex-shrink: none;
-}
-
-.tag-search {
-  padding: 10px 10px;
 }
