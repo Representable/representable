@@ -5,49 +5,49 @@ Version: 1.0
 Modified: 5/30/2019
 Authors: S. Arora, K. Barnes, P.Iyer, L. Johnston, T. Marcu
 ----------------------------------------------------------------------*/
+/* IMPORTANT - READ BELOW BEFORE ADDING - IMPORTANT*/
+
+/*
+
+WHEN CHANGING CSS MAKE SURE YOU ARE AS SPECIFIC AS POSSIBLE.
+
+This means, if you're only changing something for a small section of the website,
+define new CSS classes and rules, and don't change default Bootstrap classes
+and rules, since this can lead to unintended consequences.
+
+This means no changing anything like <a>, <li>, <p>, etc.
+
+You can define new classes for those.
+
+Tutorial on CSS rules:
+https://internetingishard.com/html-and-css/css-selectors/
+
+(or just google "CSS rules tutorial")
+
+Add comments for any rule you change/add.
+
+*/
+
 
 /* Body and headings */
+/* Change the website default font. */
 body {
-  background-color: #FFF;
   font-family: Inter, system-ui, sans-serif;
   font-weight: 400;
 }
 
-h1 {
-  font-size: 2rem;
-  font-weight: 500;
-}
-
-@media screen and (min-width: 768px) {
-  h1 {
-    font-size: 50px;
-  }
-}
-
+/* Change hero card so that it doesn't display borders. */
 .hero-card .card {
     border-width: 0 !important;
 }
 
+/* CSS to add small icons to front page. (Find/Draw/Submit) */
 .small-icon {
-    height: auto;
-    width: 25%;
-}
-.border-top { border-top: 1px solid #e5e5e5; }
-.border-bottom { border-bottom: 1px solid #e5e5e5; }
-
-.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
-
-
-/* Links and buttons */
-a:link, a:visited, a:active {
-  /* color: inherit; */
+    /* height: auto; */
+    /* width: 25%; */
 }
 
-/* a:hover {
-text-decoration: none;
-} */
-
-/* Bootstrap elements */
+/* Bootstrap elements. */
 .navbar {
   border-bottom: 1px solid #F5F5F5;
   box-shadow: 0 0 5px -3px #BEBEBE;
@@ -75,6 +75,17 @@ text-decoration: none;
   color: #FFF;
 }
 
+/* Class for what is gerrymandering section styling. */
+.what-is-gerrymandering {
+    background: -webkit-linear-gradient(-45deg, #2A94F4, #00C6A7);
+    color: white;
+}
+.video-frame {
+    /* min-width: 250px;
+    width: 25%;
+    height: auto; */
+}
+
 /* Class to make columns equal in height using flex. */
 .row-equal-cols {
   display: -webkit-box;
@@ -89,15 +100,6 @@ text-decoration: none;
 }
 
 /* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.card-body {
-    color: #000;
-}
 
 .row-content {
   background-color: #FFF;
@@ -106,7 +108,7 @@ text-decoration: none;
 }
 
 .row-content a {
-  color: #6a89cc;
+  color: #00C6A7;
 }
 
 .row-about {
@@ -123,8 +125,7 @@ text-decoration: none;
 }
 
 .row-wide a {
-  background-color: white;
-  color: #6a89cc;
+  color: #00C6A7;
 }
 
 
@@ -132,50 +133,52 @@ text-decoration: none;
   padding: 0;
 }
 
+/* Bootstrap Buttons. */
+
+/* This changes the color of the buttons so that it matches the Representable
+color scheme. See readme.md*/
+
 .btn {
   border-radius: 0.25rem;
 }
 .btn-primary {
-  background-color:#82ccdd;
-  border-color:#82ccdd;
+  background-color:#2A94F4;
+  border-color:#2A94F4;
   cursor: pointer;
   color: #fff ! important;
 }
 
 .btn-primary:active {
-  background-color:#5b8f9b;
-  border-color: #5b8f9b;
+  background-color:#2176C2;
+  border-color: #2176C2;
   cursor: pointer;
 }
 
 .btn-primary:hover {
-  background-color:#5b8f9b;
-  border-color:#5b8f9b;
+  background-color:#2176C2;
+  border-color:#2176C2;
   cursor: pointer;
 }
 .btn-primary.dropdown-btn:hover {
-  background-color:#82ccdd;
+  background-color:#2A94F4;
 }
 .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle {
-  background-color: #60a3bc;
+  background-color: #2176C2;
 }
-.btn-danger {
-  background-color:#dc3545;
-}
-
 
 .btn-outline-primary, .btn-outline-primary:visited, .btn-outline-primary:link {
   background-color: transparent;
-  border-color: #5b8f9b;
-  color: #5b8f9b;
+  border-color: #2176C2;
+  color: #2176C2;
 }
 
 .btn-outline-primary:hover, .btn-outline-primary:active {
-  background-color: #5b8f9b;
-  border-color: #5b8f9b;
+  background-color: #2176C2;
+  border-color: #2176C2;
   color: white;
 }
 
+/* NEEDS EXPLANATION */
 
 @media only screen and (min-width: 768px) {
   .gap-90 {
@@ -198,53 +201,6 @@ text-decoration: none;
 }
 
 /* Hero block and particles.js animation */
-
-.container-hero {
-  background-color: transparent;
-  margin-bottom: 0;
-  text-align: center;
-}
-
-.shadow-sm {
-  background-image: linear-gradient(#0a3d62, #82ccdd);
-}
-
-#particles-js {
-  background-image: url();
-  background-position: 50% 50%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  height: auto;
-  position: relative;
-  width: 100%;
-}
-
-.particles-js-canvas-el {
-  position: absolute;
-  top: 0;
-  z-index: 1;
-}
-
-.btn-canvas, nav {
-  position: relative;
-  z-index: 2;
-}
-
-.btn-margin {
-  margin: 5px;
-}
-
-
-#features {
-  background-color: #FFFFFF;
-  /* set to red to test response:  background-color: #ff0000; */
-}
-
-
-section {
-  padding: 25px 0;
-  border-bottom: 1px solid #ddd;
-}
 
 .map-visualization {
   width: 100%;
@@ -641,7 +597,7 @@ section {
   }
 
   input[type="checkbox"].switch_1:checked{
-    background: #82ccdd;
+    background: #2A94F4;
   }
 
   input[type="checkbox"].switch_1:after{
@@ -700,7 +656,7 @@ section {
 
 .form-signin .btn {
   font-size: 80%;
-  border-radius: 5rem;
+  /* border-radius: 5rem; */
   letter-spacing: .1rem;
   font-weight: bold;
   padding: 1rem;
@@ -711,11 +667,6 @@ section {
 .form-label-group {
   position: relative;
   margin-bottom: 1rem;
-}
-
-.form-group input {
-  height: auto;
-  border-radius: 2rem;
 }
 
 .form-label-group input,
@@ -794,7 +745,6 @@ section {
 /* Fallback for IE
 -------------------------------------------------- */
 
-
 /* Communities */
 @media all and (-ms-high-contrast: none),
 (-ms-high-contrast: active) {
@@ -826,7 +776,7 @@ section {
   content: counter(step-counter);
   margin-right: 5px;
   font-size: 80%;
-  background-color: rgb(0,200,200);
+  background-color: #00C6A7;
   color: white;
   font-weight: bold;
   padding: 3px 8px;

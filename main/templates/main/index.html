@@ -23,40 +23,60 @@ animation in the first version of Districter/Representable. -->
 {% block content %}
 <div class="container">
     <!-- Illustration -->
-    <div class="row row-hero">
+    <div class="row row-hero border-bottom my-3">
         <div class="col-sm-6 my-5">
-            <h1 class="display-5 mb-4">We're creating a map of all communities in America to end gerrymandering. Draw your community and make your voice heard.</h1>
-            <a class="btn btn-primary btn-canvas" href="/entry" role="button">Draw a community</a>
-            <a class="btn btn-primary btn-canvas" href="/map" role="button">View the map</a>
+            <h1 class="my-4">We're creating a map of all communities in America to end partisan gerrymandering.</h1>
+            <h3 class="my-4"> Draw your community and make your voice heard.</h3>
+            <a class="btn btn-primary btn-canvas mx-1 my-1" href="/entry" role="button">Draw a community</a>
+            <a class="btn btn-primary btn-canvas mx-1 my-1" href="/map" role="button">View the map</a>
         </div>
         <div class="col-sm-6 my-5">
             <img class="img-fluid" src="{% static 'img/illustration.svg' %}"> </img>
         </div>
     </div>
     <!-- How To -->
-    <div class="row">
-        <div class="col-sm-4 my-3 hero-card">
-            <div class="card">
+    <div class="row my-4">
+        <div class="col-sm my-3 shadow-sm mx-2">
+            <div class="card border-0">
                 <div class="card-body text-center">
-                    <img class="img-fluid small-icon m-2" src="{% static 'img/search.svg' %}"></img>
-                    <p>1. Find your community.</p>
+                    <img class="img-fluid small-icon m-2 h-25 w-50 border-bottom" src="{% static 'img/search.svg' %}"></img>
+                    <h4>Find your community</h4>
+                    <p>Use our map tool to find your community and all the points of interest around it.</p>
                 </div>
             </div>
         </div>
-        <div class="col-sm-4 my-3 hero-card">
-            <div class="card">
+        <div class="col-sm my-3 shadow-sm mx-2">
+            <div class="card border-0">
                 <div class="card-body text-center">
-                    <img class="img-fluid small-icon m-2" src="{% static 'img/draw.svg' %}"></img>
-                    <p>2. Draw your area.</p>
+                    <img class="img-fluid small-icon m-2 h-25 w-50 border-bottom" src="{% static 'img/draw.svg' %}"></img>
+                    <h4>Draw your area</h4>
+                    <p>After finding your community, use the drawing tool to circle a rough permiter around it.</p>
                 </div>
             </div>
         </div>
-        <div class="col-sm-4 my-3 hero-card">
-            <div class="card">
+        <div class="col-sm my-3 shadow-sm mx-2">
+            <div class="card border-0 align-center">
                 <div class="card-body text-center">
-                    <img class="img-fluid small-icon m-2" src="{% static 'img/send.svg' %}"></img>
-                    <p>3. Submit your map!</p>
+                    <img class="img-fluid small-icon m-2 h-25 w-50 border-bottom" src="{% static 'img/send.svg' %}"></img>
+                    <h4>Submit your map</h4>
+                    <p>Add information about the issues that matter to you and press submit!</p>
                 </div>
+            </div>
+        </div>
+    </div>
+    <!-- What does Representable do? -->
+    <div class="container my-5">
+        <h2 class="my-5 text-center">What is Representable?</h2>
+        <h5 class="my-3 text-center font-weight-normal">We are an open-source tool that maps communities across the US. States and nonprofits can use our data to test districts for gerrymandering.</h5>
+    </div>
+    <!-- What is gerrymandering? -->
+    <div class="jumbotron jumbotron-fluid what-is-gerrymandering rounded">
+        <div class="container">
+            <h3 class="text-center">What is gerrymandering?</h3>
+            <p class="text-center">Gerymandering is politicians manipulating district lines so they stay in power and take your voting rights away.</p>
+            <p class="lead text-center">Watch The Video Below To Better Understand Gerrymandering</p>
+            <div class="container embed-responsive embed-responsive-16by9 w-50">
+            <iframe class="embed-responsive-item rounded" src="https://www.youtube.com/embed/Mky11UJb9AY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </div>
     </div>
