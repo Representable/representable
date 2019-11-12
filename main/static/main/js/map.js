@@ -375,9 +375,17 @@ map.on('load', function() {
         if (!sources.includes(source)) {
           console.log(features[i]);
           sources.push(source);
+          var inner_content = "Community ID: ".concat(source, "\n",
+          "Issues:", features[i].properties.issues, "\n",
+          "Categories:", features[i].properties.categories, "\n");
+          var content = '<li class="list-group-item">'.concat(inner_content, '</li>');
+          document.getElementById('community-list').insertAdjacentHTML('beforeend', content);
+
         }
       }
     }
+
+
     console.log('done');
   });
 });

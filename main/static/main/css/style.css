@@ -347,15 +347,6 @@ section {
   color: #576ca8;
 }
 
-.searchButton {
-  width: 40px;
-  border: 1px solid rgb(240, 240, 240);
-  background: rgb(240, 240, 240);
-  text-align: center;
-  color: #fff;
-  cursor: pointer;
-  font-size: 20px;
-}
 
 /* css for the line on the progress bar */
 .bar-step {
