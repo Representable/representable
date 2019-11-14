@@ -54,9 +54,86 @@ var wkt_obj;
 var formsetFieldObject;
 
 $(document).ready( function () {
-    $("#exampleModal").modal("show");
+    $("#zipcodeModal").modal("show");
 });
 
+// $(function() {
+
+    // $("#zipcodeForm").validate({
+    //   rules: {
+    //     zipcode: {
+    //       required: true,
+    //       minlength: 5
+    //     },
+    //     action: "required"
+    //   },
+    //   messages: {
+    //     zipcode: {
+    //       required: "Please enter the zipcode",
+    //       minlength: "Your data must be at least 5 digits"
+    //     },
+    //     action: "Please enter the zipcode"
+    //   }
+    // });
+//   });
+
+$('#zipSubmit').click(function(e){
+    e.preventDefault();
+    
+    var isnum = /^\d+$/.test($('#zipcode').val());
+    if (isnum) {
+        console.log("yuh");
+        $('#zipcodeModal').modal('hide');
+        // user puts in a zipcode and the map zooms to that loc
+        let geoObj = geocoder.query($('#zipcode').val(), 
+        function(err, res) {
+            console.log(err, res)
+        });
+        console.log(geoObj);
+        var q = "Edison";
+        
+    //     var something = geocoder.mapboxClient.geocodeForward({
+    //         query: q.toString(),
+    //         countries: ["us"]
+    // }, function(err, res) {
+    //     console.log(err, res)
+    // });
+        // var y = geocoder.mapboxClient.geocodeReverse({
+        //     latitude: map.getCenter().lat, 
+        //     longitude: map.getCenter().lng
+        // }, function(err, res) {
+        //     console.log(err, res)
+        // });
+        // console.log(y);
+        debugger
+    }
+    else {
+        // write out the error here:
+    }
+    
+});
+
+//builds proper format of location string based on mapbox data. city,state/province,country
+function parseReverseGeo(geoData) {
+    // debugger;
+    var region, countryName, placeName, returnStr;
+    if(geoData.context){
+        $.each(geoData.context, function(i, v){
+            if(v.id.indexOf('region') >= 0) {
+                region = v.text;
+            }
+            if(v.id.indexOf('country') >= 0) {
+                countryName = v.text;
+            }
+        });
+    }
+    if(region && countryName) {
+        returnStr = region + ", " + countryName;
+    } else {
+        returnStr = geoData.place_name;
+    }
+    return returnStr;
+}
 
 /******************************************************************************/
 // Make buttons show the right skin.
@@ -93,7 +170,9 @@ for (let i = 0; i < inputs.length; i++) {
 }
 
 var geocoder = new MapboxGeocoder({
-    accessToken: mapboxgl.accessToken
+    accessToken: mapboxgl.accessToken,
+    country: 'us',
+    mapboxgl: mapboxgl
 });
 
 /* tutorial reference for draw control properties:
@@ -394,8 +473,8 @@ map.on('style.load', function() {
         var styleSpec = ev.result;
         var styleSpecBox = document.getElementById('json-response');
         var styleSpecText = JSON.stringify(styleSpec, null, 2);
-        var syntaxStyleSpecText = syntaxHighlight(styleSpecText);
-        styleSpecBox.innerHTML = syntaxStyleSpecText;
+        // var syntaxStyleSpecText = syntaxHighlight(styleSpecText);
+        // styleSpecBox.innerHTML = syntaxStyleSpecText;
 
     });
 });
