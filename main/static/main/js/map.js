@@ -50,6 +50,11 @@ var PAINT_VALUES = {
   "Environmental": "rgba(150, 98, 26,",
   "LGBT Issues": "rgba(255, 192, 203,"
 };
+
+$(document).ready( function () {
+    $("#exampleModal").modal("show");
+});
+
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */

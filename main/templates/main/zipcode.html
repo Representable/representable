@@ -1,0 +1,51 @@
+{% extends 'main/base.html' %}
+{% load leaflet_tags %}
+{% load static %}
+
+
+
+{% block head %}
+{% leaflet_js %}
+{% leaflet_css %}
+<!--  Mapbox GL JS-->
+<meta charset='utf-8' />
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.css' rel='stylesheet' />
+{% endblock %}
+
+<!-- Not sure `block hero-pre` is necessary anymore. Used to contain the particles.js
+animation in the first version of Districter/Representable. -->
+{% block hero-pre %}
+{% endblock %}
+
+<!-- Main Content -->
+{% block content %}
+
+<div class="container">
+    <div class = "row row-hero" id="search">
+      <h1 class="display-5 mb-4">Enter Zipcode Here!9</h1>
+      <form>
+        <input type="text" id = "zipcdodetext" value="" placeholder="_________" />
+        <br>
+        <button onclick= "buttonClickSubmit()" class="btn btn-primary">Search</button>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+    mapboxgl.accessToken = "{{ mapbox_key }}";
+
+    function buttonClickSubmit() {
+     var currentWebsite = window.location.href
+     var query = document.getElementById("zipcdodetext").value
+
+     var newWebsite = currentWebsite + query
+     window.open(newWebsite);
+    }
+
+</script>
+{% endblock %}
