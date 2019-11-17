@@ -151,7 +151,7 @@ issues = JSON.parse(issues);
 // TODO: change issue to a button, which iterates thru all the displayed features and selects for that issue
 for (issue in issues) {
   var button = document.createElement('button');
-  button.className = 'btn btn-primary';
+  button.className = 'btn btn-primary m-2';
   button.id = issue;
   button.textContent = issue;
   var circle = document.createElement('i');
