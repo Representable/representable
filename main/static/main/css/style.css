@@ -32,8 +32,8 @@ Add comments for any rule you change/add.
 /* Body and headings */
 /* Change the website default font. */
 body {
-  font-family: Inter, system-ui, sans-serif;
-  font-weight: 400;
+  /* font-family: Inter, system-ui, sans-serif; */
+  /* font-weight: 400; */
 }
 
 /* Change hero card so that it doesn't display borders. */
@@ -79,6 +79,7 @@ body {
 .what-is-gerrymandering {
     background: -webkit-linear-gradient(-45deg, #2A94F4, #00C6A7);
     color: white;
+
 }
 .video-frame {
     /* min-width: 250px;
@@ -279,8 +280,8 @@ color scheme. See readme.md*/
 
 .mapboxgl-popup {
   max-width: 400px;
-  font-family: Inter, system-ui, sans-serif;
-  font-size: 12px;
+  /* font-family: Inter, system-ui, sans-serif; */
+  /* font-size: 12px; */
 }
 
 /* Map visualizations search bar */
