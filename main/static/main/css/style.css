@@ -284,36 +284,6 @@ color scheme. See readme.md*/
   /* font-size: 12px; */
 }
 
-/* Map visualizations search bar */
-.search {
-  width: 100%;
-  position: relative;
-  display: flex;
-}
-
-.searchTerm {
-  width: 100%;
-  border: 3px solid rgb(240, 240, 240);
-  border-right: none;
-  padding: 5px;
-  outline: none;
-  color: #9DBFAF;
-}
-
-.searchTerm:focus {
-  color: #576ca8;
-}
-
-.searchButton {
-  width: 40px;
-  border: 1px solid rgb(240, 240, 240);
-  background: rgb(240, 240, 240);
-  text-align: center;
-  color: #fff;
-  cursor: pointer;
-  font-size: 20px;
-}
-
 /* css for the line on the progress bar */
 .bar-step {
   position: absolute;
@@ -668,6 +638,11 @@ color scheme. See readme.md*/
 .form-label-group {
   position: relative;
   margin-bottom: 1rem;
+}
+
+.form-group input {
+  height: auto;
+  border-radius: 2rem;
 }
 
 .form-label-group input,

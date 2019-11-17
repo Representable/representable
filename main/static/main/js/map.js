@@ -148,9 +148,10 @@ issues = JSON.parse(issues);
 //     {% endfor %}
 //   </div>
 //   {% endfor %}
+// TODO: change issue to a button, which iterates thru all the displayed features and selects for that issue
 for (issue in issues) {
   var button = document.createElement('button');
-  button.className = 'dropdown-btn btn-primary';
+  button.className = 'btn btn-primary';
   button.id = issue;
   button.textContent = issue;
   var circle = document.createElement('i');
@@ -159,9 +160,9 @@ for (issue in issues) {
   circle.style.paddingLeft = '5px';
   button.appendChild(circle);
 
-  var i = document.createElement('i');
-  i.className = 'fa fa-caret-down';
-  button.appendChild(i);
+  // var i = document.createElement('i');
+  // i.className = 'fa fa-caret-down';
+  // button.appendChild(i);
 
   var dropdowns = document.createElement('div');
   dropdowns.className = 'dropdown-container';
@@ -375,9 +376,17 @@ map.on('load', function() {
         if (!sources.includes(source)) {
           console.log(features[i]);
           sources.push(source);
+          var inner_content = "Community ID: ".concat(source, "\n",
+          "Issues:", features[i].properties.issues, "\n",
+          "Categories:", features[i].properties.categories, "\n");
+          var content = '<li class="list-group-item">'.concat(inner_content, '</li>');
+          document.getElementById('community-list').insertAdjacentHTML('beforeend', content);
+
         }
       }
     }
+
+
     console.log('done');
   });
 });

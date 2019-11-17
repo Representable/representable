@@ -36,35 +36,51 @@
   <div class="col-md-3 col-wide">
     <nav id='menu'>
       <div class="sidenav">
-        <div class = "tag-search">
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search tags" onkeyup="searchTags()" aria-label="Search">
-          <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" onclick="searchTags()"><i class="fa fa-search"></i></button>
-        </form>
+        <div class="tag-search">
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search tags" onkeyup="searchTags()" aria-label="Search">
+            <button class="btn btn-outline-primary my-2 my-sm-0 searchButton" type="submit" onclick="searchTags()"><i class="fa fa-search"></i></button>
+          </form>
         </div>
-        <!--<div class="search">
-          <input type="text" id="search-bar" class="searchTerm" placeholder="Search layers..." onkeyup="searchTags()">
-          <button type="submit" class="searchButton" onclick="searchTags()">
-            <i class="fa fa-search"></i>
-          </button>
-        </div>-->
-        <div class="sidenav-box">State Legislature Boundaries
-          <div id="outline-menu">
+        <div class="accordion" id="accordionExample">
+          <div class="items card">
+            <div class="card-header" id="headingOne">
+              <button class="" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="width: 100%">
+                State Legislature Boundaries <i class="fas fa-caret-down"></i></button>
+            </div>
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="card-body">
+                <div id="outline-menu">
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <button class="dropdown-btn btn-primary">Tags
-          <i class="fa fa-caret-down"></i></button>
-        <div class="dropdown-container" id="tags-menu"></div>
-        <div id="issue-dropdowns"></div>
-        <div class="items card">
-          <div class="card-header">
-            Communities
+          <div class="card">
+            <div class="card-header" id="headingTwo">
+              <button class="" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" style="width: 100%">
+                Tags <i class="fas fa-caret-down"></i></button>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+              <div class="card-body">
+                <div class="dropdown-container" id="tags-menu"></div>
+              </div>
+            </div>
           </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Vestibulum at eros</li>
-          </ul>
+          <!--TODO: Add issues for accordion-->
+          <div id="issue-dropdowns"></div>
+          <div class="items card">
+            <div class="card-header">
+              <button class="" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree" style="width: 100%">
+                Communities <i class="fas fa-caret-down"></i></button>
+            </div>
+            <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <ul class="list-group list-group-flush" id="community-list">
+                <!--<li class="list-group-item">Cras justo odio</li>
+                  <li class="list-group-item">Dapibus ac facilisis in</li>
+                  <li class="list-group-item">Vestibulum at eros</li>-->
+              </ul>
+            </div>
+          </div>
         </div>
         <button class="dropdown-btn btn-canvas" id="all">Clear All Filters
           <i class="fa"></i></button>
