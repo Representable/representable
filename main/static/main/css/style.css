@@ -79,7 +79,10 @@ body {
 .what-is-gerrymandering {
     background: -webkit-linear-gradient(-45deg, #2A94F4, #00C6A7);
     color: white;
+}
 
+.quote-footer {
+    color: white;
 }
 .video-frame {
     /* min-width: 250px;
