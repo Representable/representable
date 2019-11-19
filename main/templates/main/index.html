@@ -23,20 +23,28 @@ animation in the first version of Districter/Representable. -->
 {% block content %}
 <div class="container">
     <!-- Illustration -->
-    <div class="row row-hero border-bottom my-3">
-        <div class="col-sm-6">
-            <h1 class="my-4">We're creating a map of all communities in America to end partisan gerrymandering.</h1>
-            <h3 class="my-4"> Draw your community and make your voice heard.</h3>
-            <a class="btn btn-primary btn-canvas mx-1 my-1" href="/entry" role="button">Draw a community</a>
-            <a class="btn btn-primary btn-canvas mx-1 my-1" href="/map" role="button">View the map</a>
+    <div class="row row-hero border-bottom my-5">
+        <div class="col-lg-6 col-sm-12">
+            <h1 class="display-4 my-4 font-weight-medium">We're creating a map of all communities to end gerrymandering.</h1>
+            <!-- <p class="my-4">Draw your community and make your voice heard.</p> -->
+            <a class="btn btn-primary btn-canvas mx-1 my-2" href="/entry" role="button">Draw a community</a>
+            <a class="btn btn-primary btn-canvas mx-1 my-2" href="/map" role="button">View the map</a>
         </div>
-        <div class="col-sm-6">
+        <div class="col-lg-6 col-sm-12">
             <img class="img-fluid" src="{% static 'img/illustration.svg' %}"> </img>
         </div>
     </div>
+    <!-- What does Representable do? -->
+    <div class="container my-5">
+        <h1 class="my-3 text-center">What is Representable.org?</h1>
+        <p class="my-3 text-center lead">We are an open-source tool that maps communities across the US.
+            States and nonprofits can use our data to test districts for gerrymandering. See <a href="/map">our map</a> for examples.
+        </p>
+
+    </div>
     <!-- How To -->
-    <div class="row my-4">
-        <div class="col-sm my-3 shadow-sm mx-2">
+    <div class="row my-3">
+        <div class="col-sm my-3 shadow mx-3">
             <div class="card border-0">
                 <div class="card-body text-center">
                     <img class="img-fluid small-icon m-2 h-25 w-50 border-bottom" src="{% static 'img/search.svg' %}"></img>
@@ -45,7 +53,7 @@ animation in the first version of Districter/Representable. -->
                 </div>
             </div>
         </div>
-        <div class="col-sm my-3 shadow-sm mx-2">
+        <div class="col-sm my-3 shadow mx-3">
             <div class="card border-0">
                 <div class="card-body text-center">
                     <img class="img-fluid small-icon m-2 h-25 w-50 border-bottom" src="{% static 'img/draw.svg' %}"></img>
@@ -54,7 +62,7 @@ animation in the first version of Districter/Representable. -->
                 </div>
             </div>
         </div>
-        <div class="col-sm my-3 shadow-sm mx-2">
+        <div class="col-sm my-3 shadow mx-3">
             <div class="card border-0 align-center">
                 <div class="card-body text-center">
                     <img class="img-fluid small-icon m-2 h-25 w-50 border-bottom" src="{% static 'img/send.svg' %}"></img>
@@ -64,22 +72,24 @@ animation in the first version of Districter/Representable. -->
             </div>
         </div>
     </div>
-    <!-- What does Representable do? -->
-    <div class="container my-5">
-        <h2 class="my-5 text-center">What is Representable?</h2>
-        <h5 class="my-3 text-center font-weight-normal">We are an open-source tool that maps communities across the US. States and nonprofits can use our data to test districts for gerrymandering.</h5>
-    </div>
+
     <!-- What is gerrymandering? -->
-    <div class="jumbotron jumbotron-fluid what-is-gerrymandering rounded">
-        <div class="container">
-            <h3 class="text-center">What is gerrymandering?</h3>
-            <p class="text-center">Gerymandering is politicians manipulating district lines so they stay in power and take your voting rights away.</p>
-            <p class="lead text-center">Watch The Video Below To Better Understand Gerrymandering</p>
-            <div class="container embed-responsive embed-responsive-16by9 w-50">
-            <iframe class="embed-responsive-item rounded" src="https://www.youtube.com/embed/Mky11UJb9AY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
+    <div class="jumbotron jumbotron-fluid what-is-gerrymandering rounded my-3">
+        <div class="container text-center">
+            <h3 class="my-3">What is Gerrymandering?</h3>
+            <blockquote class="blockquote m-5">
+                <p class="mb-0 my-2">"...The practice of drawing the boundaries of electoral districts in a way that gives one political party an unfair advantage over its rivals (political or partisan gerrymandering) or that dilutes the voting
+                    power of members of ethnic or linguistic minority groups (racial gerrymandering)."</p>
+                <footer class="blockquote-footer quote-footer"><cite title="Source Title">Encyclopedia Britannica</cite></footer>
+            </blockquote>
         </div>
     </div>
+    <!-- <div class="container my-3">
+        <h3 class="my-5 text-center">Watch The Video Below To Better Understand Gerrymandering</h3>
+        <div class="container embed-responsive embed-responsive-16by9 w-50">
+            <iframe class="embed-responsive-item rounded" src="https://www.youtube.com/embed/Mky11UJb9AY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div> -->
 </div>
 {% endblock %}
 
