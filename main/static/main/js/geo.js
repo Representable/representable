@@ -52,30 +52,189 @@ var wkt_obj;
 // Formset field object saves a deep copy of the original formset field object.
 // (If user deletes all fields, he can add one more according to this one).
 var formsetFieldObject;
-
+var state;
 $(document).ready( function () {
     $("#zipcodeModal").modal("show");
 });
 
-// $(function() {
+function getState(zipcode) {
+    // Ensure param is a string to prevent unpredictable parsing results
+    if (typeof zipcode !== 'string') {
+        console.log('Must pass the zipcode as a string.');
+        return;
+    }
 
-    // $("#zipcodeForm").validate({
-    //   rules: {
-    //     zipcode: {
-    //       required: true,
-    //       minlength: 5
-    //     },
-    //     action: "required"
-    //   },
-    //   messages: {
-    //     zipcode: {
-    //       required: "Please enter the zipcode",
-    //       minlength: "Your data must be at least 5 digits"
-    //     },
-    //     action: "Please enter the zipcode"
-    //   }
-    // });
-//   });
+    // Ensure we have exactly 5 characters to parse
+    if (zipcode.length !== 5) {
+         console.log('Must pass a 5-digit zipcode.');
+         return;
+    } 
+
+    // Ensure we don't parse strings starting with 0 as octal values
+    const thiszip = parseInt(zipcode, 10);
+
+    // Code blocks alphabetized by state
+    if (thiszip >= 35000 && thiszip <= 36999) {
+        state = 'al';
+        }
+    else if (thiszip >= 99500 && thiszip <= 99999) {
+        state = 'ak';
+        }
+    else if (thiszip >= 85000 && thiszip <= 86999) {
+        state = 'az';
+        }
+    else if (thiszip >= 71600 && thiszip <= 72999) {
+        state = 'ar';
+        }
+    else if (thiszip >= 90000 && thiszip <= 96699) {
+        state = 'ca';
+        }
+    else if (thiszip >= 80000 && thiszip <= 81999) {
+        state = 'co';
+        }
+    else if (thiszip >= 6000 && thiszip <= 6999) {
+        state = 'ct';
+        }
+    else if (thiszip >= 19700 && thiszip <= 19999) {
+        state = 'de';
+        }
+    else if (thiszip >= 32000 && thiszip <= 34999) {
+        state = 'fl';
+        }
+    else if (thiszip >= 30000 && thiszip <= 31999) {
+        state = 'ga';
+        }
+    else if (thiszip >= 96700 && thiszip <= 96999) {
+        state = 'hi';
+        }
+    else if (thiszip >= 83200 && thiszip <= 83999) {
+        state = 'ID';
+        }
+    else if (thiszip >= 60000 && thiszip <= 62999) {
+        state = 'il';
+        }
+    else if (thiszip >= 46000 && thiszip <= 47999) {
+        state = 'in';
+        }
+    else if (thiszip >= 50000 && thiszip <= 52999) {
+        state = 'ia';
+        }
+    else if (thiszip >= 66000 && thiszip <= 67999) {
+        state = 'ks';
+        }
+    else if (thiszip >= 40000 && thiszip <= 42999) {
+        state = 'ky';
+        }
+    else if (thiszip >= 70000 && thiszip <= 71599) {
+        state = 'la';
+        }
+    else if (thiszip >= 3900 && thiszip <= 4999) {
+        state = 'me';
+        }
+    else if (thiszip >= 20600 && thiszip <= 21999) {
+        state = 'md';
+        }
+    else if (thiszip >= 1000 && thiszip <= 2799) {
+        state = 'ma';
+        }
+    else if (thiszip >= 48000 && thiszip <= 49999) {
+        state = 'mi';
+        }
+    else if (thiszip >= 55000 && thiszip <= 56999) {
+        state = 'mn';
+        }
+    else if (thiszip >= 38600 && thiszip <= 39999) {
+        state = 'ms';
+        }
+    else if (thiszip >= 63000 && thiszip <= 65999) {
+        state = 'mo';
+        }
+    else if (thiszip >= 59000 && thiszip <= 59999) {
+        state = 'mt';
+        }
+    else if (thiszip >= 27000 && thiszip <= 28999) {
+        state = 'nc';
+        }
+    else if (thiszip >= 58000 && thiszip <= 58999) {
+        state = 'nd';
+        }
+    else if (thiszip >= 68000 && thiszip <= 69999) {
+        state = 'ne';
+        }
+    else if (thiszip >= 88900 && thiszip <= 89999) {
+        state = 'nv';
+        }
+    else if (thiszip >= 3000 && thiszip <= 3899) {
+        state = 'nh';
+        }
+    else if (thiszip >= 7000 && thiszip <= 8999) {
+        state = 'nj';
+        }
+    else if (thiszip >= 87000 && thiszip <= 88499) {
+        state = 'nm';
+        }
+    else if (thiszip >= 10000 && thiszip <= 14999) {
+        state = 'ny';
+        }
+    else if (thiszip >= 43000 && thiszip <= 45999) {
+        state = 'oh';
+        }
+    else if (thiszip >= 73000 && thiszip <= 74999) {
+        state = 'ok';
+        }
+    else if (thiszip >= 97000 && thiszip <= 97999) {
+        state = 'or';
+        }
+    else if (thiszip >= 15000 && thiszip <= 19699) {
+        state = 'pa';
+        }
+    else if (thiszip >= 300 && thiszip <= 999) {
+        state = 'pr';
+        }
+    else if (thiszip >= 2800 && thiszip <= 2999) {
+        state = 'ri';
+        }
+    else if (thiszip >= 29000 && thiszip <= 29999) {
+        state = 'sc';
+        }
+    else if (thiszip >= 57000 && thiszip <= 57999) {
+        state = 'sd';
+        }
+    else if (thiszip >= 37000 && thiszip <= 38599) {
+        state = 'tn';
+        }
+    else if ( (thiszip >= 75000 && thiszip <= 79999) || (thiszip >= 88500 && thiszip <= 88599) ) {
+        state = 'tx';
+        }
+    else if (thiszip >= 84000 && thiszip <= 84999) {
+        state = 'ut';
+        }
+    else if (thiszip >= 5000 && thiszip <= 5999) {
+        state = 'vt';
+        }
+    else if (thiszip >= 22000 && thiszip <= 24699) {
+        state = 'va';
+        }
+    else if (thiszip >= 20000 && thiszip <= 20599) {
+        state = 'dc';
+        }
+    else if (thiszip >= 98000 && thiszip <= 99499) {
+        state = 'wa';
+        }
+    else if (thiszip >= 24700 && thiszip <= 26999) {
+        state = 'wv';
+        }
+    else if (thiszip >= 53000 && thiszip <= 54999) {
+        state = 'wi';
+        }
+    else if (thiszip >= 82000 && thiszip <= 83199) {
+        state = 'wy';
+
+        }
+    else {
+        state = 'none';
+    }
+}
 
 $('#zipSubmit').click(function(e){
     e.preventDefault();
@@ -90,25 +249,10 @@ $('#zipSubmit').click(function(e){
             console.log(err, res)
         });
         console.log(geoObj);
-        var q = "Edison";
-        
-    //     var something = geocoder.mapboxClient.geocodeForward({
-    //         query: q.toString(),
-    //         countries: ["us"]
-    // }, function(err, res) {
-    //     console.log(err, res)
-    // });
-        // var y = geocoder.mapboxClient.geocodeReverse({
-        //     latitude: map.getCenter().lat, 
-        //     longitude: map.getCenter().lng
-        // }, function(err, res) {
-        //     console.log(err, res)
-        // });
-        // console.log(y);
-        debugger
+        let st = getState($('#zipcode').val());
     }
     else {
-        // write out the error here:
+        // write out error handling here:
     }
     
 });
@@ -380,7 +524,7 @@ document.getElementById('draw-button').addEventListener('click', function (e) {
     cleanAlerts();
     draw.deleteAll();
     // TODO: change for all states
-    map.setFilter("nj-blocks-highlighted", ["in", "GEOID10"]);
+    map.setFilter(state+"-blocks-highlighted", ["in", "GEOID10"]);
     draw.changeMode('draw_polygon');
 });
 
@@ -388,7 +532,7 @@ document.getElementById('trash-button').addEventListener('click', function (e) {
     cleanAlerts();
     draw.deleteAll();
     // TODO: change for all states
-    map.setFilter("nj-blocks-highlighted", ["in", "GEOID10"]);
+    map.setFilter(state+"-blocks-highlighted", ["in", "GEOID10"]);
     draw.changeMode('simple_select');
 });
 
@@ -579,7 +723,7 @@ function highlightBlocks(drawn_polygon) {
 
         // var final_union = turf.union(turf.bboxPolygon([0, 0, 0, 0]), turf.bboxPolygon([0, 0, 1, 1]));
         // TODO: update layer names for all states (will this work?)
-        var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['nj-census-lines'] });
+        var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: [state+'-census-lines'] });
         // for (let j = 0 j < states.length(); j++) {
 
         // }
@@ -620,7 +764,7 @@ function highlightBlocks(drawn_polygon) {
             }, ["in", "BLOCKID10"]);
             //  sets filter - highlights blocks
             // TODO: update for all states
-            map.setFilter("nj-blocks-highlighted", filter);
+            map.setFilter(state+"-blocks-highlighted", filter);
 
             // show population stats for NJ only:
             // 1. LOWER LEGISLATION PROGRESS BAR __________________________________
@@ -725,7 +869,7 @@ function updateCommunityEntry(e) {
         census_blocks_polygon_wkt = '';
         census_blocks_multipolygon_wkt = '';
         // TODO: update for all states
-        map.setFilter("nj-blocks-highlighted", ["in", "GEOID10"]);
+        map.setFilter(state+"-blocks-highlighted", ["in", "GEOID10"]);
     }
     // Update form fields
     census_blocks_polygon_wkt = '';

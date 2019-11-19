@@ -43,7 +43,10 @@
         <div class="modal-body">
           <form role="form" id="zipcodeForm">
             <div class="form-group">
-              <input type="text" class="form-control" id="zipcode">
+              <input type="text" class="form-control" id="zipcode" placeholder="Zip" required>
+              <div class="invalid-feedback">
+                Please provide a valid zip.
+              </div>
               <!-- <button id="zipSubmit" type="submit" class="btn btn-primary" data-dismiss="modal">Submit</button> -->
             </div>
         </div>
