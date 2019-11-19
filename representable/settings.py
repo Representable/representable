@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2019- Representable Team (Theodor Marcu, Lauren Johnston, Somya Arora, Kyle Barnes, Preeti Iyer).
 #
-# This file is part of Representable 
+# This file is part of Representable
 # (see http://representable.org).
 #
 # This program is free software: you can redistribute it and/or modify
@@ -36,14 +36,14 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
+# See https://docs.djangoproject.com/en/2.1/howtodeployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-DEBUG = False # remove in production
+DEBUG = True # remove in production
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
 ALLOWED_HOSTS = ['*']
@@ -78,6 +78,8 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.linkedin',
     # 'allauth.socialaccount.providers.linkedin_oauth2',
 ]
+
+ACCOUNT_SESSION_REMEMBER = True
 
 SITE_ID = 1
 

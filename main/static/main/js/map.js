@@ -55,7 +55,7 @@ var PAINT_VALUES = {
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
 var map = new mapboxgl.Map({
   container: 'map', // container id
-  style: 'mapbox://styles/mapbox/light-v9', //color of the map -- dark-v10 or light-v9
+  style: 'mapbox://styles/mapbox/streets-v11', //color of the map -- dark-v10 or light-v9
   center: [-74.65545, 40.341701], // starting position - Princeton, NJ :)
   zoom: 12 // starting zoom -- higher is closer
 });
@@ -148,9 +148,10 @@ issues = JSON.parse(issues);
 //     {% endfor %}
 //   </div>
 //   {% endfor %}
+// TODO: change issue to a button, which iterates thru all the displayed features and selects for that issue
 for (issue in issues) {
   var button = document.createElement('button');
-  button.className = 'dropdown-btn btn-primary';
+  button.className = 'btn btn-primary m-2';
   button.id = issue;
   button.textContent = issue;
   var circle = document.createElement('i');
@@ -159,9 +160,9 @@ for (issue in issues) {
   circle.style.paddingLeft = '5px';
   button.appendChild(circle);
 
-  var i = document.createElement('i');
-  i.className = 'fa fa-caret-down';
-  button.appendChild(i);
+  // var i = document.createElement('i');
+  // i.className = 'fa fa-caret-down';
+  // button.appendChild(i);
 
   var dropdowns = document.createElement('div');
   dropdowns.className = 'dropdown-container';
@@ -375,9 +376,17 @@ map.on('load', function() {
         if (!sources.includes(source)) {
           console.log(features[i]);
           sources.push(source);
+          var inner_content = "Community ID: ".concat(source, "\n",
+          "Issues:", features[i].properties.issues, "\n",
+          "Categories:", features[i].properties.categories, "\n");
+          var content = '<li class="list-group-item">'.concat(inner_content, '</li>');
+          document.getElementById('community-list').insertAdjacentHTML('beforeend', content);
+
         }
       }
     }
+
+
     console.log('done');
   });
   // var selected = [];

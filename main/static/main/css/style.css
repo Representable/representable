@@ -5,61 +5,58 @@ Version: 1.0
 Modified: 5/30/2019
 Authors: S. Arora, K. Barnes, P.Iyer, L. Johnston, T. Marcu
 ----------------------------------------------------------------------*/
+/* IMPORTANT - READ BELOW BEFORE ADDING - IMPORTANT*/
+
+/*
+
+WHEN CHANGING CSS MAKE SURE YOU ARE AS SPECIFIC AS POSSIBLE.
+
+This means, if you're only changing something for a small section of the website,
+define new CSS classes and rules, and don't change default Bootstrap classes
+and rules, since this can lead to unintended consequences.
+
+This means no changing anything like <a>, <li>, <p>, etc.
+
+You can define new classes for those.
+
+Tutorial on CSS rules:
+https://internetingishard.com/html-and-css/css-selectors/
+
+(or just google "CSS rules tutorial")
+
+Add comments for any rule you change/add.
+
+*/
+
 
 /* Body and headings */
+/* Change the website default font. */
 body {
-  background-color: #0a3d62;
-  font-family: Inter, system-ui, sans-serif;
-  font-weight: 400;
+  /* font-family: Inter, system-ui, sans-serif; */
+  /* font-weight: 400; */
 }
 
-h1 {
-  font-size: 2rem;
-  font-weight: 500;
+/* Change hero card so that it doesn't display borders. */
+.hero-card .card {
+    border-width: 0 !important;
 }
 
-@media screen and (min-width: 768px) {
-  h1 {
-    font-size: 55px;
-  }
+/* CSS to add small icons to front page. (Find/Draw/Submit) */
+.small-icon {
+    /* height: auto; */
+    /* width: 25%; */
 }
 
-.text-primary {
-    color: #0a3d62 ! important;
+/* Bootstrap elements. */
+.navbar {
+  border-bottom: 1px solid #F5F5F5;
+  box-shadow: 0 0 5px -3px #BEBEBE;
 }
-
-p {
-  color: #000000;
-}
-
-h3 {
-  color: #0a3d62;
-  font-weight: 300;
-  letter-spacing: 1px;
-}
-
-.text-info-custom {
-    color: #38ada9;
-}
-
-.text-header-card {
-    color: #3c6382;
-    font-size: 1.25rem;
-}
-
-/* Links and buttons */
-a:link, a:visited, a:active {
-  color: inherit;
-}
-
-/* a:hover {
-text-decoration: none;
-} */
-
-/* Bootstrap elements */
-
 .navbar-brand {
   font-weight: 700;
+  background: -webkit-linear-gradient(-45deg, #2A94F4, #00C6A7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .nav-link {
@@ -70,8 +67,24 @@ text-decoration: none;
   border-width: 0;
 }
 
+.container-full-width {
+    width: 100%;
+}
+
 .container-panel {
   color: #FFF;
+}
+
+/* Class for what is gerrymandering section styling. */
+.what-is-gerrymandering {
+    background: -webkit-linear-gradient(-45deg, #2A94F4, #00C6A7);
+    color: white;
+
+}
+.video-frame {
+    /* min-width: 250px;
+    width: 25%;
+    height: auto; */
 }
 
 /* Class to make columns equal in height using flex. */
@@ -88,15 +101,6 @@ text-decoration: none;
 }
 
 /* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.card-body {
-    color: #000;
-}
 
 .row-content {
   background-color: #FFF;
@@ -105,7 +109,7 @@ text-decoration: none;
 }
 
 .row-content a {
-  color: #6a89cc;
+  color: #00C6A7;
 }
 
 .row-about {
@@ -122,8 +126,7 @@ text-decoration: none;
 }
 
 .row-wide a {
-  background-color: white;
-  color: #6a89cc;
+  color: #00C6A7;
 }
 
 
@@ -131,46 +134,52 @@ text-decoration: none;
   padding: 0;
 }
 
+/* Bootstrap Buttons. */
+
+/* This changes the color of the buttons so that it matches the Representable
+color scheme. See readme.md*/
+
+.btn {
+  border-radius: 0.25rem;
+}
 .btn-primary {
-  background-color:#82ccdd;
-  border-color:#82ccdd;
+  background-color:#2A94F4;
+  border-color:#2A94F4;
   cursor: pointer;
   color: #fff ! important;
 }
 
 .btn-primary:active {
-  background-color:#5b8f9b;
-  border-color: #5b8f9b;
+  background-color:#2176C2;
+  border-color: #2176C2;
   cursor: pointer;
 }
 
 .btn-primary:hover {
-  background-color:#5b8f9b;
-  border-color:#5b8f9b;
+  background-color:#2176C2;
+  border-color:#2176C2;
   cursor: pointer;
 }
 .btn-primary.dropdown-btn:hover {
-  background-color:#82ccdd;
+  background-color:#2A94F4;
 }
 .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle {
-  background-color: #60a3bc;
-}
-.btn-danger {
-  background-color:#dc3545;
+  background-color: #2176C2;
 }
 
 .btn-outline-primary, .btn-outline-primary:visited, .btn-outline-primary:link {
   background-color: transparent;
-  border-color: #FFF;
-  color: #FFF;
+  border-color: #2176C2;
+  color: #2176C2;
 }
 
 .btn-outline-primary:hover, .btn-outline-primary:active {
-  background-color: transparent;
-  border-color: #CCC;
-  color: #CCC;
+  background-color: #2176C2;
+  border-color: #2176C2;
+  color: white;
 }
 
+/* NEEDS EXPLANATION */
 
 @media only screen and (min-width: 768px) {
   .gap-90 {
@@ -180,7 +189,7 @@ text-decoration: none;
 
   .row-content-2 {
     background-color: #FFF;
-    color: #000;
+    /* color: #000; */
     padding-left: 40px;
     padding-right: 40px;
     padding-bottom: 40px;
@@ -193,53 +202,6 @@ text-decoration: none;
 }
 
 /* Hero block and particles.js animation */
-
-.container-hero {
-  background-color: transparent;
-  margin-bottom: 0;
-  text-align: center;
-}
-
-.shadow-sm {
-  background-image: linear-gradient(#0a3d62, #82ccdd);
-}
-
-#particles-js {
-  background-image: url();
-  background-position: 50% 50%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  height: auto;
-  position: relative;
-  width: 100%;
-}
-
-.particles-js-canvas-el {
-  position: absolute;
-  top: 0;
-  z-index: 1;
-}
-
-.btn-canvas, nav {
-  position: relative;
-  z-index: 2;
-}
-
-.btn-margin {
-  margin: 5px;
-}
-
-
-#features {
-  background-color: #FFFFFF;
-  /* set to red to test response:  background-color: #ff0000; */
-}
-
-
-section {
-  padding: 25px 0;
-  border-bottom: 1px solid #ddd;
-}
 
 .map-visualization {
   width: 100%;
@@ -292,7 +254,7 @@ section {
 .sidenav a, .dropdown-btn {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
-  color: black ! important;
+  /* color: black ! important; */
   display: block;
   border: none;
   background: none;
@@ -318,38 +280,8 @@ section {
 
 .mapboxgl-popup {
   max-width: 400px;
-  font-family: Inter, system-ui, sans-serif;
-  font-size: 12px;
-}
-
-/* Map visualizations search bar */
-.search {
-  width: 100%;
-  position: relative;
-  display: flex;
-}
-
-.searchTerm {
-  width: 100%;
-  border: 3px solid rgb(240, 240, 240);
-  border-right: none;
-  padding: 5px;
-  outline: none;
-  color: #9DBFAF;
-}
-
-.searchTerm:focus {
-  color: #576ca8;
-}
-
-.searchButton {
-  width: 40px;
-  border: 1px solid rgb(240, 240, 240);
-  background: rgb(240, 240, 240);
-  text-align: center;
-  color: #fff;
-  cursor: pointer;
-  font-size: 20px;
+  /* font-family: Inter, system-ui, sans-serif; */
+  /* font-size: 12px; */
 }
 
 /* css for the line on the progress bar */
@@ -384,8 +316,7 @@ section {
 }
 
 #menu {
-  background: #F7F7F7;
-  box-shadow: 8px 0 5px -3px #aeaeae;
+  box-shadow: 3px 0 5px -3px #BEBEBE;
 }
 
 #geocoder-container>div {
@@ -637,7 +568,7 @@ section {
   }
 
   input[type="checkbox"].switch_1:checked{
-    background: #82ccdd;
+    background: #2A94F4;
   }
 
   input[type="checkbox"].switch_1:after{
@@ -665,3 +596,177 @@ section {
     padding: 6px 8px 6px 16px;
     flex: 1;
   }
+
+/* LOGIN */
+
+:root {
+  --input-padding-x: 1.5rem;
+  --input-padding-y: .75rem;
+}
+
+
+.card-signin {
+  border: 0;
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+}
+
+.card-signin .card-title {
+  margin-bottom: 2rem;
+  font-weight: 300;
+  font-size: 1.5rem;
+}
+
+.card-signin .card-body {
+  padding: 2rem;
+}
+
+.form-signin {
+  width: 100%;
+}
+
+.form-signin .btn {
+  font-size: 80%;
+  /* border-radius: 5rem; */
+  letter-spacing: .1rem;
+  font-weight: bold;
+  padding: 1rem;
+  transition: all 0.2s;
+}
+
+
+.form-label-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.form-group input {
+  height: auto;
+  border-radius: 2rem;
+}
+
+.form-label-group input,
+.form-label-group label {
+  padding: var(--input-padding-y) var(--input-padding-x);
+}
+
+.form-label-group label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  line-height: 1.5;
+  color: #495057;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  transition: all .1s ease-in-out;
+}
+
+.form-label-group input::-webkit-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input:-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-ms-input-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::-moz-placeholder {
+  color: transparent;
+}
+
+.form-label-group input::placeholder {
+  color: transparent;
+}
+
+.form-label-group input:not(:placeholder-shown) {
+  padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
+  padding-bottom: calc(var(--input-padding-y) / 3);
+}
+
+.form-label-group input:not(:placeholder-shown)~label {
+  padding-top: calc(var(--input-padding-y) / 3);
+  padding-bottom: calc(var(--input-padding-y) / 3);
+  font-size: 12px;
+  color: #777;
+}
+
+.btn-google {
+  color: white;
+  background-color: #ea4335;
+}
+
+.btn-facebook {
+  color: white;
+  background-color: #3b5998;
+}
+
+/* Fallback for Edge
+-------------------------------------------------- */
+
+@supports (-ms-ime-align: auto) {
+  .form-group label {
+    display: none;
+  }
+  .form-group input::-ms-input-placeholder {
+    color: #777;
+  }
+}
+
+/* Fallback for IE
+-------------------------------------------------- */
+
+/* Communities */
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
+  .form-group>label {
+    display: none;
+  }
+  .form-group input:-ms-input-placeholder {
+    color: #777;
+  }
+}
+
+.items {
+  border: 1px solid #ccc;
+  border-width: 0 0 1px 0;
+  background-color: #fff;
+  border-radius: unset;
+}
+.items ol {
+  padding: 0;
+  counter-reset: li;
+  list-style: none;
+}
+.items li {
+  counter-increment: step-counter;
+  padding: 20px 20px;
+}
+
+.items li::before {
+  content: counter(step-counter);
+  margin-right: 5px;
+  font-size: 80%;
+  background-color: #00C6A7;
+  color: white;
+  font-weight: bold;
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+
+.items li:active, .items li:hover {
+  background-color: #F5F5F5;
+}
+
+#sticky-footer {
+  flex-shrink: none;
+}
+
+.tag-search {
+  padding: 10px 10px;
+}

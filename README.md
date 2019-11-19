@@ -56,3 +56,14 @@ python manage.py runserver
 
 ### To delete heroku variable:
 heroku config:unset DISABLE_COLLECTSTATIC
+
+
+### Representable Colors
+
+Primary Color: <span style="background-color: #2A94F4; color: white;">#2A94F</span>
+
+Primary Color - Dark: <span style="background-color:#2176C2; color: white;">#2176C2</span>
+
+Secondary Color: <span style="background-color:#00C6A7; color: white;">#00C6A7</span>
+
+Secondary Color - Dark: <span style="background-color:#00B094; color: white;">#00B094</span>
