@@ -366,13 +366,13 @@ map.on('load', function() {
   }
   // find what features are currently on view
   // multiple features are gathered that have the same source (or have the same source with 'line' added on)
-  // TODO: need to consider how to make sure that we only get one feature at a time
   map.on('moveend', function() {
     var sources = [];
     var features = map.queryRenderedFeatures();
+    // clear the html so that we dont end up with duplicate communities
     document.getElementById('community-list').innerHTML = "";
-    // features.length = 0;
     for (var i = 0; i < features.length; i++) {
+      // through all the features which are rendered, get info abt them
       var source = features[i].source;
       if (source !== 'composite' && !source.includes('line') && !source.includes('census') && !source.includes('lower') && !source.includes('upper')) {
         if (!sources.includes(source)) {
@@ -382,11 +382,11 @@ map.on('load', function() {
           "Issues:", features[i].properties.issues, "\n",
           "Categories:", features[i].properties.categories, "\n");
           var content = '<li class="list-group-item">'.concat(inner_content, '</li>');
+          // put the code into the html - display!
           document.getElementById('community-list').insertAdjacentHTML('beforeend', content);
         }
       }
     }
-    console.log('done');
   });
   // var selected = [];
   // // somehow append the selected layers (Features) to the array (depends on HTML)
