@@ -370,6 +370,8 @@ map.on('load', function() {
   map.on('moveend', function() {
     var sources = [];
     var features = map.queryRenderedFeatures();
+    document.getElementById('community-list').innerHTML = "";
+    // features.length = 0;
     for (var i = 0; i < features.length; i++) {
       var source = features[i].source;
       if (source !== 'composite' && !source.includes('line') && !source.includes('census') && !source.includes('lower') && !source.includes('upper')) {
@@ -381,12 +383,9 @@ map.on('load', function() {
           "Categories:", features[i].properties.categories, "\n");
           var content = '<li class="list-group-item">'.concat(inner_content, '</li>');
           document.getElementById('community-list').insertAdjacentHTML('beforeend', content);
-
         }
       }
     }
-
-
     console.log('done');
   });
   // var selected = [];
