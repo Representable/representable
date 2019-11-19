@@ -53,6 +53,10 @@ var wkt_obj;
 // (If user deletes all fields, he can add one more according to this one).
 var formsetFieldObject;
 
+$(document).ready( function () {
+    $("#exampleModal").modal("show");
+});
+
 
 /******************************************************************************/
 // Make buttons show the right skin.
@@ -497,6 +501,9 @@ function highlightBlocks(drawn_polygon) {
         // var final_union = turf.union(turf.bboxPolygon([0, 0, 0, 0]), turf.bboxPolygon([0, 0, 1, 1]));
         // TODO: update layer names for all states (will this work?)
         var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: ['nj-census-lines'] });
+        // for (let j = 0 j < states.length(); j++) {
+
+        // }
         var mpoly = [];
         var wkt = new Wkt.Wkt();
         if (features.length >= 1) {
