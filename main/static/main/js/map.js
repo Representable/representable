@@ -463,8 +463,8 @@ map.on('load', function() {
         if (!sources.includes(source)) {
           console.log(features[i]);
           sources.push(source);
-          var inner_content = "Community ID: ".concat(source, "\n",
-          "Issues:", features[i].properties.issues, "\n");
+          var inner_content = "<span class='font-weight-bold'>Community:</span>".concat(source, "\n",
+          "</br><h6>Issues:</h6>", features[i].properties.issues, "\n");
           var content = '<li class="list-group-item">'.concat(inner_content, '</li>');
           // put the code into the html - display!
           document.getElementById('community-list').insertAdjacentHTML('beforeend', content);
