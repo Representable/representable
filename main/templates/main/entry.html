@@ -25,30 +25,34 @@
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js'></script>
 <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css' type='text/css' />
 
+<!-- <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.7/jquery.validate.min.js"></script> -->
 <!--  Custom CSS -->
 <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="zipcodeModal" tabindex="-1" role="dialog" aria-labelledby="zipcodeModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Enter Your Zipcode</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+                <p>Enter Zipcode:</p>
+          <h5 class="modal-title" id="zipcodeModalLabel">Enter Your Zipcode</h5>
         </div>
         <div class="modal-body">
-          <form>
+          <form role="form" id="zipcodeForm">
             <div class="form-group">
-              <input type="text" class="form-control" id="zipcode">
+              <input type="text" class="form-control" id="zipcode" placeholder="Zip" required>
+              <div class="invalid-feedback">
+                Please provide a valid zip.
+              </div>
+              <!-- <button id="zipSubmit" type="submit" class="btn btn-primary" data-dismiss="modal">Submit</button> -->
             </div>
-          </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Enter Zipcode</button>
+          <button id="zipSubmit" type="submit" class="btn btn-primary">Submit</button>
         </div>
+        </form>
       </div>
     </div>
   </div>
