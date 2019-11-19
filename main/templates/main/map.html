@@ -23,6 +23,28 @@
 <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
 {% endblock %}
 {% block content %}
+<div class="modal fade" id="zipcodeModal" tabindex="-1" role="dialog" aria-labelledby="zipcodeModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+                <p>Enter Zipcode:</p>
+          <h5 class="modal-title" id="zipcodeModalLabel">Enter Your Zipcode</h5>
+        </div>
+        <div class="modal-body">
+          <form role="form" id="zipcodeForm">
+            <div class="form-group">
+              <input type="text" class="form-control" id="zipcode">
+              <!-- <button id="zipSubmit" type="submit" class="btn btn-primary" data-dismiss="modal">Submit</button> -->
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button id="zipSubmit" type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
 <div class="row row-wide">
     <div>
         <script type="text/javascript">

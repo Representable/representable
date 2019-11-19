@@ -50,6 +50,89 @@ var PAINT_VALUES = {
   "Environmental": "rgba(150, 98, 26,",
   "LGBT Issues": "rgba(255, 192, 203,"
 };
+
+$(document).ready( function () {
+    $("#zipcodeModal").modal("show");
+});
+
+// $(function() {
+
+    // $("#zipcodeForm").validate({
+    //   rules: {
+    //     zipcode: {
+    //       required: true,
+    //       minlength: 5
+    //     },
+    //     action: "required"
+    //   },
+    //   messages: {
+    //     zipcode: {
+    //       required: "Please enter the zipcode",
+    //       minlength: "Your data must be at least 5 digits"
+    //     },
+    //     action: "Please enter the zipcode"
+    //   }
+    // });
+//   });
+
+$('#zipSubmit').click(function(e){
+    e.preventDefault();
+
+    var isnum = /^\d+$/.test($('#zipcode').val());
+    if (isnum) {
+        console.log("yuh");
+        $('#zipcodeModal').modal('hide');
+        // user puts in a zipcode and the map zooms to that loc
+        let geoObj = geocoder.query($('#zipcode').val(),
+        function(err, res) {
+            console.log(err, res)
+        });
+        console.log(geoObj);
+        var q = "Edison";
+
+    //     var something = geocoder.mapboxClient.geocodeForward({
+    //         query: q.toString(),
+    //         countries: ["us"]
+    // }, function(err, res) {
+    //     console.log(err, res)
+    // });
+        // var y = geocoder.mapboxClient.geocodeReverse({
+        //     latitude: map.getCenter().lat,
+        //     longitude: map.getCenter().lng
+        // }, function(err, res) {
+        //     console.log(err, res)
+        // });
+        // console.log(y);
+        debugger
+    }
+    else {
+        // write out the error here:
+    }
+
+});
+
+//builds proper format of location string based on mapbox data. city,state/province,country
+function parseReverseGeo(geoData) {
+    // debugger;
+    var region, countryName, placeName, returnStr;
+    if(geoData.context){
+        $.each(geoData.context, function(i, v){
+            if(v.id.indexOf('region') >= 0) {
+                region = v.text;
+            }
+            if(v.id.indexOf('country') >= 0) {
+                countryName = v.text;
+            }
+        });
+    }
+    if(region && countryName) {
+        returnStr = region + ", " + countryName;
+    } else {
+        returnStr = geoData.place_name;
+    }
+    return returnStr;
+}
+
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
@@ -62,7 +145,9 @@ var map = new mapboxgl.Map({
 
 // geocoder used for a search bar -- within the map itself
 var geocoder = new MapboxGeocoder({
-  accessToken: mapboxgl.accessToken
+  accessToken: mapboxgl.accessToken,
+  country: 'us',
+  mapboxgl: mapboxgl
 });
 map.addControl(geocoder, 'top-right');
 
@@ -366,11 +451,13 @@ map.on('load', function() {
   }
   // find what features are currently on view
   // multiple features are gathered that have the same source (or have the same source with 'line' added on)
-  // TODO: need to consider how to make sure that we only get one feature at a time
   map.on('moveend', function() {
     var sources = [];
     var features = map.queryRenderedFeatures();
+    // clear the html so that we dont end up with duplicate communities
+    document.getElementById('community-list').innerHTML = "";
     for (var i = 0; i < features.length; i++) {
+      // through all the features which are rendered, get info abt them
       var source = features[i].source;
       if (source !== 'composite' && !source.includes('line') && !source.includes('census') && !source.includes('lower') && !source.includes('upper')) {
         if (!sources.includes(source)) {
@@ -379,15 +466,21 @@ map.on('load', function() {
           var inner_content = "Community ID: ".concat(source, "\n",
           "Issues:", features[i].properties.issues, "\n");
           var content = '<li class="list-group-item">'.concat(inner_content, '</li>');
+          // put the code into the html - display!
           document.getElementById('community-list').insertAdjacentHTML('beforeend', content);
-
         }
       }
     }
-
-
-    console.log('done');
   });
+  // var selected = [];
+  // // somehow append the selected layers (Features) to the array (depends on HTML)
+  // var data = selected.toGeoJSON();
+  // var convertedData = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data));
+  // var xhr = XMLHttpRequest();
+  // // what is yourURL being set to?
+  // xhr.open("POST", yourURL, true);
+  // xhr.setRequestHeader('Content-Type', 'application/vnd.geo+json');
+  // xhr.send(convertedData);
 });
 
 //create a button that toggles layers based on their IDs

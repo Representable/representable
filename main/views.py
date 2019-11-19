@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2019- Representable Team (Theodor Marcu, Lauren Johnston, Somya Arora, Kyle Barnes, Preeti Iyer).
 #
-# This file is part of Representable 
+# This file is part of Representable
 # (see http://representable.org).
 #
 # This program is free software: you can redistribute it and/or modify
@@ -225,6 +225,14 @@ class Review(LoginRequiredMixin, TemplateView):
 
 class Map(TemplateView):
     template_name = "main/map.html"
+    # def write_geojson(self, features):
+    #     features = [];
+    #     #assume that selectedEntries contains feature objects as gathered from map.js
+    #     for obj in selectedEntries.objects.all():
+    #         features.append(obj)
+    #     all_selected = FeatureCollection(features)
+    #     with open('myfile.geojson', 'w') as f:
+    #         dump(all_selected, f)
     def get_context_data(self, **kwargs):
         # the dict of issues + input of descriptions
         issues = dict()
