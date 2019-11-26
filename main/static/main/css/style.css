@@ -47,7 +47,7 @@ body {
     /* width: 25%; */
 }
 
-/* Bootstrap elements. */
+/* Bootstrap elements for navbar. */
 .navbar {
   border-bottom: 1px solid #F5F5F5;
   box-shadow: 0 0 5px -3px #BEBEBE;
@@ -73,6 +73,16 @@ body {
 
 .container-panel {
   color: #FFF;
+}
+
+/* Class for the text that greets the user on the website on the front page. */
+/* Alters display-4 max size from 3.5rem to 2.9rem. */
+.main-display-text-sm {
+    font-size: 2.3rem;
+}
+
+.main-display-text-all {
+    font-size: 2.5rem;
 }
 
 /* Class for what is gerrymandering section styling. */

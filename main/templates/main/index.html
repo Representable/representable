@@ -23,20 +23,23 @@ animation in the first version of Districter/Representable. -->
 {% block content %}
 <div class="container">
     <!-- Illustration -->
-    <div class="row row-hero border-bottom my-5">
-        <div class="col-lg-6 col-sm-12">
-            <h1 class="display-4 my-4 font-weight-medium">We're creating a map of all communities to end gerrymandering.</h1>
+    <div class="row row-hero row-eq-height border-bottom my-5">
+        <div class="col-lg-7 col-sm-12 col-md-7">
+            <!-- Shows on medium devices and higher. -->
+            <h4 class="display-4 my-4 font-weight-medium d-none d-sm-block main-display-text-all">We're creating a map of all communities to end gerrymandering.</h4>
+            <!-- Shows on small devices and lower. -->
+            <h5 class="display-4 my-2 font-weight-medium d-sm-none main-display-text-sm">We're creating a map of all communities to end gerrymandering.</h5>
             <!-- <p class="my-4">Draw your community and make your voice heard.</p> -->
             <a class="btn btn-primary btn-canvas mx-1 my-2" href="/entry" role="button">Draw a community</a>
             <a class="btn btn-primary btn-canvas mx-1 my-2" href="/map" role="button">View the map</a>
         </div>
-        <div class="col-lg-6 col-sm-12">
-            <img class="img-fluid" src="{% static 'img/illustration.svg' %}"> </img>
+        <div class="col-lg-5 col-sm-12 col-md-5">
+            <img class="img-fluid align-bottom my-3" src="{% static 'img/illustration.svg' %}"> </img>
         </div>
     </div>
     <!-- What does Representable do? -->
     <div class="container my-5">
-        <h1 class="my-3 text-center">What is Representable.org?</h1>
+        <h3 class="my-3 text-center">What is Representable.org?</h3>
         <p class="my-3 text-center lead">We are an open-source tool that maps communities across the US.
             States and nonprofits can use our data to test districts for gerrymandering. See <a href="/map">our map</a> for examples.
         </p>
