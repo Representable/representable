@@ -51,29 +51,11 @@ var PAINT_VALUES = {
   "LGBT Issues": "rgba(255, 192, 203,"
 };
 
+/*
 $(document).ready( function () {
     $("#zipcodeModal").modal("show");
-});
+});*/
 
-// $(function() {
-
-    // $("#zipcodeForm").validate({
-    //   rules: {
-    //     zipcode: {
-    //       required: true,
-    //       minlength: 5
-    //     },
-    //     action: "required"
-    //   },
-    //   messages: {
-    //     zipcode: {
-    //       required: "Please enter the zipcode",
-    //       minlength: "Your data must be at least 5 digits"
-    //     },
-    //     action: "Please enter the zipcode"
-    //   }
-    // });
-//   });
 
 $('#zipSubmit').click(function(e){
     e.preventDefault();
@@ -90,19 +72,6 @@ $('#zipSubmit').click(function(e){
         console.log(geoObj);
         var q = "Edison";
 
-    //     var something = geocoder.mapboxClient.geocodeForward({
-    //         query: q.toString(),
-    //         countries: ["us"]
-    // }, function(err, res) {
-    //     console.log(err, res)
-    // });
-        // var y = geocoder.mapboxClient.geocodeReverse({
-        //     latitude: map.getCenter().lat,
-        //     longitude: map.getCenter().lng
-        // }, function(err, res) {
-        //     console.log(err, res)
-        // });
-        // console.log(y);
         debugger
     }
     else {
@@ -224,15 +193,7 @@ function newLowerLegislatureLayer(state) {
 
 // issues add to properties
 issues = JSON.parse(issues);
-// {% for issue, desc in issues.items %}
-// <button class="dropdown-btn btn-primary" id="{{ issue }}">{{ issue }}
-//   <i class="fa fa-caret-down"></i></button>
-//   <div class="dropdown-container">
-//     {% for item, key in desc.items %}
-//     <a href="#" id="{{ item }}" class="btn-primary">{{ key }}</a>
-//     {% endfor %}
-//   </div>
-//   {% endfor %}
+
 // TODO: change issue to a button, which iterates thru all the displayed features and selects for that issue
 for (issue in issues) {
   var button = document.createElement('button');
@@ -244,10 +205,6 @@ for (issue in issues) {
   circle.style.color = PAINT_VALUES[issue] + '1)';
   circle.style.paddingLeft = '5px';
   button.appendChild(circle);
-
-  // var i = document.createElement('i');
-  // i.className = 'fa fa-caret-down';
-  // button.appendChild(i);
 
   var dropdowns = document.createElement('div');
   dropdowns.className = 'dropdown-container';
@@ -463,24 +420,16 @@ map.on('load', function() {
         if (!sources.includes(source)) {
           console.log(features[i]);
           sources.push(source);
-          var inner_content = "<span class='font-weight-bold'>Community:</span>".concat(source, "\n",
-          "</br><h6>Issues:</h6>", features[i].properties.issues, "\n");
-          var content = '<li class="list-group-item">'.concat(inner_content, '</li>');
+          var inner_content = "<span class='font-weight-light text-uppercase'>Community ".concat(source.slice(0,6), "</span>\n",
+          "</br><span class='font-weight-light'>Issues:</span>", features[i].properties.issues, "\n");
+          var content = '<li class="list-group-item small">'.concat(inner_content, '</li>');
           // put the code into the html - display!
           document.getElementById('community-list').insertAdjacentHTML('beforeend', content);
         }
       }
     }
   });
-  // var selected = [];
-  // // somehow append the selected layers (Features) to the array (depends on HTML)
-  // var data = selected.toGeoJSON();
-  // var convertedData = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data));
-  // var xhr = XMLHttpRequest();
-  // // what is yourURL being set to?
-  // xhr.open("POST", yourURL, true);
-  // xhr.setRequestHeader('Content-Type', 'application/vnd.geo+json');
-  // xhr.send(convertedData);
+
 });
 
 //create a button that toggles layers based on their IDs

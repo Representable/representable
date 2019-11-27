@@ -754,11 +754,9 @@ color scheme. See readme.md*/
 .items li::before {
   content: counter(step-counter);
   margin-right: 5px;
-  font-size: 80%;
   background-color: #00C6A7;
   color: white;
-  font-weight: bold;
-  padding: 3px 8px;
+  padding: 1px 5px;
   border-radius: 3px;
 }
 
