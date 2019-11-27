@@ -219,7 +219,6 @@ $('#zipSubmit').click(function(e) {
     console.log(geoObj);
     var q = "Edison";
 
-    debugger
   } else {
     // write out the error here:
   }
@@ -565,7 +564,7 @@ map.on('load', function() {
           console.log(features[i]);
           sources.push(source);
           var issues = JSON.parse(features[i].properties.issues);
-          var inner_content = "<span class='font-weight-light text-uppercase'>Community ".concat(source.slice(0, 8), "</span><hr class='my-2'>\n",
+          var inner_content = "<span class='font-weight-light text-uppercase'>Community ".concat(source.slice(0, 8), "</span><hr class='my-1'>\n",
             "<span class='font-weight-light'>Issues:</span>");
           if (features[i].properties.category !== "[]") {
             var categories = JSON.parse(features[i].properties.category);
