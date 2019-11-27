@@ -199,10 +199,9 @@ var PAINT_VALUES = {
   "LGBT Issues": "rgba(255, 192, 203,"
 };
 
-/*
 $(document).ready( function () {
     $("#zipcodeModal").modal("show");
-});*/
+});
 
 
 $('#zipSubmit').click(function(e) {
@@ -343,8 +342,8 @@ issues = JSON.parse(issues);
 
 // TODO: change issue to a button, which iterates thru all the displayed features and selects for that issue
 for (issue in issues) {
-  var button = document.createElement('button');
-  button.className = 'btn btn-primary m-2';
+  var button = document.createElement('div');
+  button.className = 'btn btn-info m-1';
   button.id = issue;
   button.textContent = issue;
   var circle = document.createElement('i');
