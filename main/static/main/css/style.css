@@ -735,17 +735,6 @@ color scheme. See readme.md*/
   }
 }
 
-.items {
-  border: 1px solid #ccc;
-  border-width: 0 0 1px 0;
-  background-color: #fff;
-  border-radius: unset;
-}
-.items ol {
-  padding: 0;
-  counter-reset: li;
-  list-style: none;
-}
 .items li {
   counter-increment: step-counter;
   padding: 20px 20px;

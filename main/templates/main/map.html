@@ -63,44 +63,35 @@
                     </form>
                 </div>
                 <div class="accordion" id="accordionExample">
-                    <div class="items card">
-                        <div class="card-header" id="headingOne">
-                            <button class="btn" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="width: 100%">
+                    <div class="card">
+                        <div id="headingOne">
+                            <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" style="width: 100%">
                                 State Legislature <i class="fas fa-caret-down"></i></button>
                         </div>
                         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                            <div class="card-body">
-                                <div id="outline-menu">
+                                <div class="font-weight-light text-uppercase small" id="outline-menu">
                                 </div>
-                            </div>
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-header" id="headingTwo">
-                            <button class="btn" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" style="width: 100%">
+                        <div id="headingTwo">
+                            <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" style="width: 100%">
                                 Issues <i class="fas fa-caret-down"></i></button>
 
                         </div>
                         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                            <div class="card-body">
                                 <div class="dropdown-container" id="tags-menu"></div>
-                                <div class="m-1" id="issue-dropdowns"></div>
-
-                            </div>
+                                <!--TODO: Add issues for accordion-->
+                                <div id="issue-dropdowns"></div>
                         </div>
                     </div>
-                    <!--TODO: Add issues for accordion-->
-                    <div class="m-1" id="issue-dropdowns"></div>
                     <div class="items card">
-                        <div class="card-header">
-                            <button class="btn" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree" style="width: 100%">
+                      <div id="headingThree">
+                            <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree" style="width: 100%">
                                 Communities <i class="fas fa-caret-down"></i></button>
                         </div>
                         <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionExample">
                             <ul class="list-group list-group-flush" id="community-list">
-                                <!--<li class="list-group-item">Cras justo odio</li>
-                  <li class="list-group-item">Dapibus ac facilisis in</li>
-                  <li class="list-group-item">Vestibulum at eros</li>-->
                             </ul>
                         </div>
                     </div>
