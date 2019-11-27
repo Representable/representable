@@ -756,7 +756,3 @@ color scheme. See readme.md*/
 #sticky-footer {
   flex-shrink: none;
 }
-
-.tag-search {
-  padding: 10px 10px;
-}

@@ -566,12 +566,12 @@ map.on('load', function() {
           console.log(features[i]);
           sources.push(source);
           var issues = JSON.parse(features[i].properties.issues);
-          var inner_content = "<span class='font-weight-light text-uppercase'>Community ".concat(source.slice(0, 6), "</span>\n",
-            "</br><span class='font-weight-light'>Issues:</span>");
+          var inner_content = "<span class='font-weight-light text-uppercase'>Community ".concat(source.slice(0, 8), "</span><hr class='my-2'>\n",
+            "<span class='font-weight-light'>Issues:</span>");
           if (features[i].properties.category !== "[]") {
             var categories = JSON.parse(features[i].properties.category);
             for (var cat in categories) {
-              inner_content += " " + issues[categories[cat]]
+              inner_content += " <div class='p-1 my-1 bg-info text-white text-center '>" + issues[categories[cat]] + "</div>"
             }
           } else {
             inner_content += " N/A"
@@ -669,39 +669,5 @@ function searchTags() {
     next = buttons[i].nextElementSibling;
     txtValueB = buttons[i].textContent || buttons[i].innerText;
     // the links within dropdown-container: sub tags themselves
-    sub = next.getElementsByTagName("a");
-    skip = false;
-    if (sub) {
-      for (j = 0; j < sub.length; j++) {
-        txtValueS = sub[j].textContent || sub[j].innerText;
-        if (txtValueS.toUpperCase().indexOf(filter) > -1) {
-          buttons[i].style.display = "";
-          skip = true;
-          next.style.display = "block";
-          sub[j].style.display = "block";
-        } else {
-          sub[j].style.display = "none";
-        }
-      }
-    }
-    if (!skip) {
-      if (txtValueB.toUpperCase().indexOf(filter) > -1) {
-        next.style.display = "block";
-        for (j = 0; j < sub.length; j++) {
-          sub[j].style.display = "block";
-        }
-        buttons[i].style.display = "";
-      } else {
-        buttons[i].style.display = "none";
-      }
-    }
-    if (filter === "") {
-      buttons[i].style.display = "";
-      next.style.display = "none";
-      for (j = 0; j < sub.length; j++) {
-        sub[j].style.display = "block";
-      }
-    }
-    skip = false;
   }
 }
