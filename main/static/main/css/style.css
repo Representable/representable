@@ -655,7 +655,7 @@ color scheme. See readme.md*/
 
 .form-group input {
   height: auto;
-  border-radius: 2rem;
+  /* border-radius: 2rem; */
 }
 
 .form-label-group input,
