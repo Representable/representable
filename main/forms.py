@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2019- Representable Team (Theodor Marcu, Lauren Johnston, Somya Arora, Kyle Barnes, Preeti Iyer).
 #
-# This file is part of Representable 
+# This file is part of Representable
 # (see http://representable.org).
 #
 # This program is free software: you can redistribute it and/or modify
@@ -28,18 +28,6 @@ from django.contrib.gis.db import models
 from django.contrib.gis.measure import Area
 
 # https://django-select2.readthedocs.io/en/latest/django_select2.html
-
-# def get_miles(self):
-#     '''
-#     Function used to project geometry in order to get area.
-#     From: https://gis.stackexchange.com/questions/9673/area-units-for-geos-area-property
-#     '''
-#     # convert polygon to SRID 4326
-#     self.polygon.transform(4326)
-#     meters_sq = self.polygon.area.sq_m
-#     print(meters_sq)
-#     return meters_sq
-
 
 class TagSelect2Widget(ModelSelect2TagWidget):
     model = Tag
@@ -68,34 +56,6 @@ class TagSelect2Widget(ModelSelect2TagWidget):
             cleaned_values.append(str(val))
         return cleaned_values
 
-        # print(values)
-        # for val in values:
-        #     # Do any names in the db match this value?
-        #     qs = self.queryset.filter(**{'name__exact':str(val)})
-        #     # Add the names to 'names'
-        #     newNames = set(getattr(entry, 'name') for entry in qs)
-        #     for name in newNames:
-        #         names.append(str(name))
-        #     if val.isnumeric():
-        #         print("Int detected.")
-        #         qs = self.queryset.filter(**{'id__exact':int(val)})
-        #         newIds = set(getattr(entry, 'id') for entry in qs)
-        #         for id in newIds:
-        #             ids.append(int(id))
-        #
-        # print(names)
-        # print(ids)
-        # for val in values:
-        #     if val.isnumeric():
-        #         if int(val) not in ids and str(val) not in names:
-        #             print("Created")
-        #             val = self.queryset.create(name=str(val)).id
-        #     else:
-        #         if str(val) not in names:
-        #             val = self.queryset.create(name=str(val)).id
-        #     print(str(val))
-        #     cleaned_values.append(str(val))
-        # return cleaned_values
 
 class IssueForm(ModelForm):
     class Meta:

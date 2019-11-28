@@ -54,7 +54,12 @@ var wkt_obj;
 var formsetFieldObject;
 var state;
 $(document).ready( function () {
-    $("#zipcodeModal").modal("show");
+    console.log(sessionStorage.getItem("stateName"));
+    // console.log(state);
+    console.log(sessionStorage.getItem("allChecks"));
+    if (sessionStorage.getItem("allChecks") == "pass") {
+        $("#zipcodeModal").modal("show");
+    }
 });
 
 function getState(zipcode) {
@@ -68,8 +73,10 @@ function getState(zipcode) {
     if (zipcode.length !== 5) {
          console.log('Must pass a 5-digit zipcode.');
          return;
-    } 
-
+    }
+    // after error handling, it shud always be 5 digits:
+    zipcode = zipcode.substring(0, 4);
+    zipcode += "0";
     // Ensure we don't parse strings starting with 0 as octal values
     const thiszip = parseInt(zipcode, 10);
 
@@ -234,27 +241,37 @@ function getState(zipcode) {
     else {
         state = 'none';
     }
+    sessionStorage.setItem("stateName", state);
+    console.log(sessionStorage.getItem("stateName"));
 }
 
-$('#zipSubmit').click(function(e){
-    e.preventDefault();
-    
-    var isnum = /^\d+$/.test($('#zipcode').val());
-    if (isnum) {
-        console.log("yuh");
-        $('#zipcodeModal').modal('hide');
-        // user puts in a zipcode and the map zooms to that loc
-        let geoObj = geocoder.query($('#zipcode').val(), 
-        function(err, res) {
-            console.log(err, res)
-        });
-        console.log(geoObj);
-        let st = getState($('#zipcode').val());
+function modalZip(e) {
+  e.preventDefault();
+
+  var isnum = /^\d+$/.test($('#zipcode').val());
+  if (isnum) {
+    console.log("yuh");
+    $('#zipcodeModal').modal('hide');
+    // user puts in a zipcode and the map zooms to that loc
+    let geoObj = geocoder.query($('#zipcode').val(),
+      function(err, res) {
+        console.log(err, res)
+      });
+    console.log(geoObj);
+    var q = "Edison";
+
+  } else {
+    // write out the error here:
+  }
+}
+
+$('#zipcodeModal').keypress(function (e) {
+    if (e.keyCode === 10 || e.keyCode === 13) {
+        modalZip(e);
     }
-    else {
-        // write out error handling here:
-    }
-    
+});
+$('#zipSubmit').click(function(e) {
+  modalZip(e);
 });
 
 //builds proper format of location string based on mapbox data. city,state/province,country
@@ -524,7 +541,7 @@ document.getElementById('draw-button').addEventListener('click', function (e) {
     cleanAlerts();
     draw.deleteAll();
     // TODO: change for all states
-    map.setFilter(state+"-blocks-highlighted", ["in", "GEOID10"]);
+    map.setFilter(sessionStorage.getItem("stateName")+"-blocks-highlighted", ["in", "GEOID10"]);
     draw.changeMode('draw_polygon');
 });
 
@@ -532,7 +549,7 @@ document.getElementById('trash-button').addEventListener('click', function (e) {
     cleanAlerts();
     draw.deleteAll();
     // TODO: change for all states
-    map.setFilter(state+"-blocks-highlighted", ["in", "GEOID10"]);
+    map.setFilter(sessionStorage.getItem("stateName")+"-blocks-highlighted", ["in", "GEOID10"]);
     draw.changeMode('simple_select');
 });
 
@@ -723,7 +740,7 @@ function highlightBlocks(drawn_polygon) {
 
         // var final_union = turf.union(turf.bboxPolygon([0, 0, 0, 0]), turf.bboxPolygon([0, 0, 1, 1]));
         // TODO: update layer names for all states (will this work?)
-        var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: [state+'-census-lines'] });
+        var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: [sessionStorage.getItem("stateName")+'-census-lines'] });
         // for (let j = 0 j < states.length(); j++) {
 
         // }
@@ -764,7 +781,7 @@ function highlightBlocks(drawn_polygon) {
             }, ["in", "BLOCKID10"]);
             //  sets filter - highlights blocks
             // TODO: update for all states
-            map.setFilter(state+"-blocks-highlighted", filter);
+            map.setFilter(sessionStorage.getItem("stateName")+"-blocks-highlighted", filter);
 
             // show population stats for NJ only:
             // 1. LOWER LEGISLATION PROGRESS BAR __________________________________
@@ -869,7 +886,7 @@ function updateCommunityEntry(e) {
         census_blocks_polygon_wkt = '';
         census_blocks_multipolygon_wkt = '';
         // TODO: update for all states
-        map.setFilter(state+"-blocks-highlighted", ["in", "GEOID10"]);
+        map.setFilter(sessionStorage.getItem("stateName")+"-blocks-highlighted", ["in", "GEOID10"]);
     }
     // Update form fields
     census_blocks_polygon_wkt = '';

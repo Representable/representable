@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2019- Representable Team (Theodor Marcu, Lauren Johnston, Somya Arora, Kyle Barnes, Preeti Iyer).
 #
-# This file is part of Representable 
+# This file is part of Representable
 # (see http://representable.org).
 #
 # This program is free software: you can redistribute it and/or modify
@@ -49,11 +49,6 @@ class UserTest(TestCase):
         response = self.client.get('/entry/')
         self.assertRedirects(response, '/accounts/login/?next=/entry/')
 
-        # Check map page.
-        # response = self.client.get('/map')
-        # Print response.
-        # self.assertEqual(response.status_code, 200)
-
     def testSimpleUser(self):
         '''
         Test create user/login/logout.
@@ -79,41 +74,3 @@ class UserTest(TestCase):
         # Destroy fake user.
         print("Test User Delete")
         self.user.delete()
-
-
-# class CommunityEntryTest(TestCase):
-#     '''
-#     Unit tests for community entry.
-#     Includes tests for:
-#         - Form
-#         - Formset
-#         - Model
-#     '''
-#     def setUp(self):
-#         '''
-#         This function is called before every test.
-#         Create and login a fake user.
-#         '''
-#         # Create a fake user.
-#         self.user = get_user_model().objects.create_user('johndoe', 'john@doe.com', 'johndoe')
-#         # Fake user login
-#         self.client.login(username='johndoe', password='johndoe')
-#
-#     def tearDown(self):
-#         '''
-#         This function runs after every test. It deletes the fake user.
-#         '''
-#         self.client.logout()
-#         self.user.delete()
-#
-#
-#
-#     def test_valid_form(self):
-#         '''
-#         Test that the server returns the right form when /entry/ is requested.
-#         '''
-#         c = Client()
-#         response = c.get('/entry/')
-#         form = CommunityForm(initial=EntryView.get_initial())
-#         self.assertEqual(response.context['form'], form)
-#         self.assertEqual(response.context[mapbox_key], os.environ.get('DISTR_MAPBOX_KEY'))

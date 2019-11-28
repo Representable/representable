@@ -1,9 +1,6 @@
 {% extends 'main/base.html' %}
 {% load leaflet_tags %}
 {% load static %}
-
-
-
 {% block head %}
 {% leaflet_js %}
 {% leaflet_css %}
@@ -14,93 +11,80 @@
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.css' rel='stylesheet' />
 {% endblock %}
 
-<!-- Not sure `block hero-pre` is necessary anymore. Used to contain the particles.js
-animation in the first version of Districter/Representable. -->
-{% block hero-pre %}
-{% endblock %}
-
 <!-- Main Content -->
 {% block content %}
 <div class="container">
-    <!-- Illustration -->
-    <div class="row row-hero row-eq-height border-bottom my-5">
-        <div class="col-lg-7 col-sm-12 col-md-7">
-            <!-- Shows on medium devices and higher. -->
-            <h4 class="display-4 my-4 font-weight-medium d-none d-sm-block main-display-text-all">We're creating a map of all communities to end gerrymandering.</h4>
-            <!-- Shows on small devices and lower. -->
-            <h5 class="display-4 my-2 font-weight-medium d-sm-none main-display-text-sm">We're creating a map of all communities to end gerrymandering.</h5>
-            <!-- <p class="my-4">Draw your community and make your voice heard.</p> -->
-            <a class="btn btn-primary btn-canvas mx-1 my-2" href="/entry" role="button">Contribute</a>
-            <a class="btn btn-primary btn-canvas mx-1 my-2" href="/map" role="button">View the map</a>
-        </div>
-        <div class="col-lg-5 col-sm-12 col-md-5">
-            <img class="img-fluid align-bottom my-3" src="{% static 'img/illustration.svg' %}"> </img>
-        </div>
+  <!-- Illustration -->
+  <div class="row row-hero row-eq-height border-bottom my-5">
+    <div class="col-lg-7 col-sm-12 col-md-7">
+      <!-- Shows on medium devices and higher. -->
+      <h4 class="display-4 my-4 font-weight-medium d-none d-sm-block main-display-text-all">We're creating a map of all communities to end gerrymandering.</h4>
+      <!-- Shows on small devices and lower. -->
+      <h5 class="display-4 my-2 font-weight-medium d-sm-none main-display-text-sm">We're creating a map of all communities to end gerrymandering.</h5>
+      <a class="btn btn-primary btn-canvas mx-1 my-2" href="/entry" role="button">Contribute</a>
+      <a class="btn btn-primary btn-canvas mx-1 my-2" href="/map" role="button">View the map</a>
     </div>
-    <!-- What does Representable do? -->
-    <div class="container my-5">
-        <h3 class="my-3 text-center">What is Representable.org?</h3>
-        <p class="my-3 text-center lead">We are an open-source tool that maps communities across the US.
-            States, nonprofits, and journalists can use our data to test districts for gerrymandering. See <a href="/map">our map</a> to see Representable in action.
-        </p>
+    <div class="col-lg-5 col-sm-12 col-md-5">
+      <img class="img-fluid align-bottom my-3" src="{% static 'img/illustration.svg' %}"> </img>
+    </div>
+  </div>
+  <!-- What does Representable do? -->
+  <div class="container my-5">
+    <h3 class="my-3 text-center">What is Representable.org?</h3>
+    <p class="my-3 text-center lead">We are an open-source tool that maps communities across the US.
+      States, nonprofits, and journalists can use our data to test districts for gerrymandering. See <a href="/map">our map</a> to see Representable in action.
+    </p>
 
+  </div>
+  <!-- How To -->
+  <div class="row my-3">
+    <div class="col-sm my-3 shadow-sm mx-3">
+      <div class="card border-0">
+        <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/citizens.svg' %}"></img>
+        <div class="card-body text-center d-flex flex-column align-items-center">
+          <h5>For citizens</h5>
+          <p>Learn how to use Representable to draw your community.</p>
+          <a class="btn btn-primary btn-canvas mt-auto" href="/entry" role="button">Get Started</a>
+        </div>
+      </div>
     </div>
-    <!-- How To -->
-    <div class="row my-3">
-        <div class="col-sm my-3 shadow-sm mx-3">
-            <div class="card border-0">
-                <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/citizens.svg' %}"></img>
-                <div class="card-body text-center d-flex flex-column align-items-center">
-                    <h5>For citizens</h5>
-                    <p>Learn how to use Representable to draw your community.</p>
-                    <a class="btn btn-primary btn-canvas mt-auto" href="/entry" role="button">Get Started</a>
-                </div>
-            </div>
+    <div class="col-sm my-3 shadow-sm mx-3">
+      <div class="card border-0">
+        <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/map.svg' %}"></img>
+        <div class="card-body text-center flex-column align-items-center">
+          <h5 class="card-title">For nonprofits</h5>
+          <p class="card-text">Work with us to map communities across the United States.</p>
+          <a class="btn btn-primary btn-canvas mt-auto" href="mailto: representableteam@gmail.com?subject=Hello!" role="button">Contact Us</a>
         </div>
-        <div class="col-sm my-3 shadow-sm mx-3">
-            <div class="card border-0">
-                <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/map.svg' %}"></img>
-                <div class="card-body text-center flex-column align-items-center">
-                    <h5 class="card-title">For nonprofits</h5>
-                    <p class="card-text">Work with us to map communities across the United States.</p>
-                    <a class="btn btn-primary btn-canvas mt-auto" href="mailto: representableteam@gmail.com?subject=Hello!" role="button">Contact Us</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm my-3 shadow-sm mx-3">
-            <div class="card border-0">
-                <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/redistricter.svg' %}"></img>
-                <div class="card-body text-center flex-column align-items-center">
-                    <h5 class="card-title">For redistricters</h5>
-                    <p class="card-text">Use our data to check voting districts maps for gerrymandering.</p>
-                    <a class="btn btn-primary btn-canvas mt-auto disabled" href="#" role="button">Coming Soon</a>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+    <div class="col-sm my-3 shadow-sm mx-3">
+      <div class="card border-0">
+        <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/redistricter.svg' %}"></img>
+        <div class="card-body text-center flex-column align-items-center">
+          <h5 class="card-title">For redistricters</h5>
+          <p class="card-text">Use our data to check voting districts maps for gerrymandering.</p>
+          <a class="btn btn-primary btn-canvas mt-auto disabled" href="#" role="button">Coming Soon</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <!-- What is gerrymandering? -->
-    <div class="jumbotron jumbotron-fluid what-is-gerrymandering rounded my-3">
-        <div class="container text-center">
-            <h3 class="my-3">What is Gerrymandering?</h3>
-            <blockquote class="blockquote m-5">
-                <p class="mb-0 my-2">"...The practice of drawing the boundaries of electoral districts in a way that gives one political party an unfair advantage over its rivals (political or partisan gerrymandering) or that dilutes the voting
-                    power of members of ethnic or linguistic minority groups (racial gerrymandering)."</p>
-                <footer class="blockquote-footer quote-footer"><cite title="Source Title">Encyclopedia Britannica</cite></footer>
-            </blockquote>
-        </div>
-    </div>
-    <!-- <div class="container my-3">
-        <h3 class="my-5 text-center">Watch The Video Below To Better Understand Gerrymandering</h3>
-        <div class="container embed-responsive embed-responsive-16by9 w-50">
-            <iframe class="embed-responsive-item rounded" src="https://www.youtube.com/embed/Mky11UJb9AY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-    </div> -->
+  <!-- What is gerrymandering? -->
+  <div class="jumbotron jumbotron-fluid what-is-gerrymandering rounded my-3">
+    <div class="text-center">
+      <h3 class="my-3">What is Gerrymandering?</h3>
+      <blockquote class="blockquote m-5">
+        <p class="mb-0 my-2">"...The practice of drawing the boundaries of electoral districts in a way that gives one political party an unfair advantage over its rivals (political or partisan gerrymandering) or that dilutes the voting
+          power of members of ethnic or linguistic minority groups (racial gerrymandering)."</p>
+        <footer class="blockquote-footer quote-footer"><cite title="Source Title">Encyclopedia Britannica</cite></footer>
+      </blockquote>
+  </div>
 </div>
 {% endblock %}
 
 {% block script %}
 <script type="text/javascript">
-    mapboxgl.accessToken = "{{ mapbox_key }}";
+  mapboxgl.accessToken = "{{ mapbox_key }}";
 </script>
 {% endblock %}

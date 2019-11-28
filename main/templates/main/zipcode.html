@@ -1,9 +1,6 @@
 {% extends 'main/base.html' %}
 {% load leaflet_tags %}
 {% load static %}
-
-
-
 {% block head %}
 {% leaflet_js %}
 {% leaflet_css %}
@@ -19,29 +16,28 @@
 {% block content %}
 
 <div class="container">
-    <div class = "row row-hero" id="search">
-      <h1 class="display-5 mb-4">Enter Zipcode Here!9</h1>
-      <form>
-        <input type="text" id = "zipcdodetext" value="" placeholder="_________" />
-        <br>
-        <button onclick= "buttonClickSubmit()" class="btn btn-primary">Search</button>
-      </form>
-    </div>
+  <div class="row row-hero" id="search">
+    <h1 class="display-5 mb-4">Enter Zipcode Here!9</h1>
+    <form>
+      <input type="text" id="zipcdodetext" value="" placeholder="_________" />
+      <br>
+      <button onclick="buttonClickSubmit()" class="btn btn-primary">Search</button>
+    </form>
   </div>
+</div>
 
 {% endblock %}
 
 {% block script %}
 <script type="text/javascript">
-    mapboxgl.accessToken = "{{ mapbox_key }}";
+  mapboxgl.accessToken = "{{ mapbox_key }}";
 
-    function buttonClickSubmit() {
-     var currentWebsite = window.location.href
-     var query = document.getElementById("zipcdodetext").value
+  function buttonClickSubmit() {
+    var currentWebsite = window.location.href
+    var query = document.getElementById("zipcdodetext").value
 
-     var newWebsite = currentWebsite + query
-     window.open(newWebsite);
-    }
-
+    var newWebsite = currentWebsite + query
+    window.open(newWebsite);
+  }
 </script>
 {% endblock %}
