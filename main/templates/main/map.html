@@ -24,103 +24,93 @@
 {% endblock %}
 {% block content %}
 <div class="modal fade" id="zipcodeModal" tabindex="-1" role="dialog" aria-labelledby="zipcodeModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-                <p>Enter Zipcode:</p>
-          <h5 class="modal-title" id="zipcodeModalLabel">Enter Your Zipcode</h5>
-        </div>
-        <div class="modal-body">
-          <form role="form" id="zipcodeForm">
-            <div class="form-group">
-              <input type="text" class="form-control" id="zipcode">
-              <!-- <button id="zipSubmit" type="submit" class="btn btn-primary" data-dismiss="modal">Submit</button> -->
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button id="zipSubmit" type="submit" class="btn btn-primary">Submit</button>
-        </div>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Search for a Zipcode:</h5>
+      </div>
+      <div class="modal-body">
+        <form role="form" id="zipcodeForm">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Zipcode" id="zipcode">
+            <!-- <button id="zipSubmit" type="submit" class="btn btn-primary" data-dismiss="modal">Submit</button> -->
+          </div>
         </form>
+      </div>
+      <div class="modal-footer">
+        <button id="zipSubmit" type="submit" class="btn btn-primary">Submit</button>
       </div>
     </div>
   </div>
+</div>
 
 <div class="row row-wide">
-    <div>
-        <script type="text/javascript">
-            // var a = JSON.parse('{{ entries | escapejs }}')
-            var issues = '{{ issues | escapejs }}';
-            var a = '{{ entries | escapejs}}';
-            var tags = '{{ tags | escapejs }}'
-        </script>
-    </div>
-    <div class="col-md-3 col-wide">
-        <nav id='menu'>
-            <div class="sidenav">
-                <div class="tag-search">
-                    <form class="form-inline my-2">
-                        <input class="form-control w-75" type="search" placeholder="Search tags" onkeyup="searchTags()" aria-label="Search">
-                        <button class="btn btn-outline-primary m-2" type="submit" onclick="searchTags()"><i class="fa fa-search"></i></button>
-                    </form>
-                </div>
-                <div class="accordion" id="accordionExample">
-                    <div class="items card">
-                        <div class="card-header" id="headingOne">
-                            <button class="btn" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="width: 100%">
-                                State Legislature <i class="fas fa-caret-down"></i></button>
-                        </div>
-                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                            <div class="card-body">
-                                <div id="outline-menu">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header" id="headingTwo">
-                            <button class="btn" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" style="width: 100%">
-                                Issues <i class="fas fa-caret-down"></i></button>
+  <div>
+    <script type="text/javascript">
+      // var a = JSON.parse('{{ entries | escapejs }}')
+      var issues = '{{ issues | escapejs }}';
+      var a = '{{ entries | escapejs}}';
+      var tags = '{{ tags | escapejs }}'
+    </script>
+  </div>
+  <div class="col-md-3 col-wide">
+    <nav id='menu'>
+      <div class="sidenav">
+        <div class="input-group mb-1">
+          <input class="form-control" id="search-bar" type="search" placeholder="Search tags" onkeyup="searchTags()" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-outline-primary" type="submit" onclick="searchTags()"><i class="fa fa-search"></i></button>
+          </div>
+        </div>
+        <div class="accordion" id="accordionExample">
+          <div class="card">
+            <div id="headingOne">
+              <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" style="width: 100%">
+                State Legislature <i class="fas fa-caret-down"></i></button>
+            </div>
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="font-weight-light text-uppercase small" id="outline-menu">
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div id="headingTwo">
+              <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" style="width: 100%">
+                Issues <i class="fas fa-caret-down"></i></button>
 
-                        </div>
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                            <div class="card-body">
-                                <div class="dropdown-container" id="tags-menu"></div>
-                                <div class="m-1" id="issue-dropdowns"></div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <!--TODO: Add issues for accordion-->
-                    <div class="m-1" id="issue-dropdowns"></div>
-                    <div class="items card">
-                        <div class="card-header">
-                            <button class="btn" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree" style="width: 100%">
-                                Communities <i class="fas fa-caret-down"></i></button>
-                        </div>
-                        <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionExample">
-                            <ul class="list-group list-group-flush" id="community-list">
-                                <!--<li class="list-group-item">Cras justo odio</li>
-                  <li class="list-group-item">Dapibus ac facilisis in</li>
-                  <li class="list-group-item">Vestibulum at eros</li>-->
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <button class="dropdown-btn btn-canvas" id="all">Clear All Filters
-                    <i class="fa"></i></button>
-                <div class="dropdown-container"></div>
-        </nav>
-    </div>
-    <div class="col-md-9 col-map col-wide">
-        <div id='map' class="map-visualization"></div>
-    </div>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+              <div class="dropdown-container" id="tags-menu"></div>
+              <!--TODO: Add issues for accordion-->
+              <div id="issue-dropdowns"></div>
+            </div>
+          </div>
+          <div class="items card">
+            <div id="headingThree">
+              <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree" style="width: 100%">
+                Communities <i class="fas fa-caret-down"></i></button>
+            </div>
+            <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <ul class="list-group list-group-flush" id="community-list">
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="dropdown-container" id="tags-menu"></div>
+        <button class="dropdown-btn btn-canvas" id="all">Clear All Filters
+          <i class="fa"></i></button>
+    </nav>
+  </div>
+  <div class="col-md-9 col-map col-wide">
+    <div id='map' class="map-visualization"></div>
+  </div>
 </div>
 {% endblock %}
 
 {% block script %}
 <!--  Has to be at the end after the HTML loads.-->
 <script type="text/javascript">
-    mapboxgl.accessToken = "{{ mapbox_key }}";
+  mapboxgl.accessToken = "{{ mapbox_key }}";
 </script>
 <script type="text/javascript" src="{% static 'main/js/map.js' %}"></script>
 {% endblock %}

@@ -32,7 +32,7 @@ Add comments for any rule you change/add.
 /* Body and headings */
 /* Change the website default font. */
 body {
-  /* font-family: Inter, system-ui, sans-serif; */
+  font-family: Inter, system-ui, sans-serif;
   /* font-weight: 400; */
 }
 
@@ -47,7 +47,7 @@ body {
     /* width: 25%; */
 }
 
-/* Bootstrap elements. */
+/* Bootstrap elements for navbar. */
 .navbar {
   border-bottom: 1px solid #F5F5F5;
   box-shadow: 0 0 5px -3px #BEBEBE;
@@ -73,6 +73,16 @@ body {
 
 .container-panel {
   color: #FFF;
+}
+
+/* Class for the text that greets the user on the website on the front page. */
+/* Alters display-4 max size from 3.5rem to 2.9rem. */
+.main-display-text-sm {
+    font-size: 2.3rem;
+}
+
+.main-display-text-all {
+    font-size: 2.5rem;
 }
 
 /* Class for what is gerrymandering section styling. */
@@ -145,6 +155,15 @@ color scheme. See readme.md*/
 .btn {
   border-radius: 0.25rem;
 }
+
+.text-primary {
+    color: #2A94F4 ! important
+}
+
+.text-secondary {
+    color: #00C6A7 ! important;
+}
+
 .btn-primary {
   background-color:#2A94F4;
   border-color:#2A94F4;
@@ -645,7 +664,7 @@ color scheme. See readme.md*/
 
 .form-group input {
   height: auto;
-  border-radius: 2rem;
+  /* border-radius: 2rem; */
 }
 
 .form-label-group input,
@@ -735,17 +754,6 @@ color scheme. See readme.md*/
   }
 }
 
-.items {
-  border: 1px solid #ccc;
-  border-width: 0 0 1px 0;
-  background-color: #fff;
-  border-radius: unset;
-}
-.items ol {
-  padding: 0;
-  counter-reset: li;
-  list-style: none;
-}
 .items li {
   counter-increment: step-counter;
   padding: 20px 20px;
@@ -754,11 +762,9 @@ color scheme. See readme.md*/
 .items li::before {
   content: counter(step-counter);
   margin-right: 5px;
-  font-size: 80%;
   background-color: #00C6A7;
   color: white;
-  font-weight: bold;
-  padding: 3px 8px;
+  padding: 1px 5px;
   border-radius: 3px;
 }
 
@@ -768,8 +774,4 @@ color scheme. See readme.md*/
 
 #sticky-footer {
   flex-shrink: none;
-}
-
-.tag-search {
-  padding: 10px 10px;
 }

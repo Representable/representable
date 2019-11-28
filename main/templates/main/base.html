@@ -85,15 +85,10 @@
 
   </nav>
 
-  {% block hero-pre %}
-  {% endblock %}
-
-  {% block hero %}
-  {% endblock %}
   <div class="container-fluid">
     {% block content %}
     {% endblock %}
-    <div>
+  </div>
 
 
       <!-- Optional JavaScript -->
@@ -113,10 +108,10 @@
         <small class="d-block mb-3 text-muted">© 2019</small>
       </div>
       <div class="col-6 col-md">
-        <h5>Features</h5>
+        <h5>Community Map</h5>
         <ul class="list-unstyled text-small">
-          <li><a class="text-muted" href="/entry">Draw Community</a></li>
-          <li><a class="text-muted" href="/map">Map</a></li>
+          <li><a class="text-muted" href="/entry">Contribute</a></li>
+          <li><a class="text-muted" href="/map">View All</a></li>
           {% if user.is_authenticated %}
           <li><a class="text-muted" href="/review">My Entries</a></li>
           {% endif %}
@@ -126,7 +121,7 @@
       <div class="col-6 col-md">
         <h5>About</h5>
         <ul class="list-unstyled text-small">
-          <li><a class="text-muted" href="/about">About The Team</a></li>
+          <li><a class="text-muted" href="/about">About Us</a></li>
           <li><a class="text-muted" href="#">Privacy</a></li>
           <li><a class="text-muted" href="#">Terms</a></li>
         </ul>
