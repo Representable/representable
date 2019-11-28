@@ -73,7 +73,7 @@ function getState(zipcode) {
     if (zipcode.length !== 5) {
          console.log('Must pass a 5-digit zipcode.');
          return;
-    } 
+    }
     // after error handling, it shud always be 5 digits:
     zipcode = zipcode.substring(0, 4);
     zipcode += "0";
@@ -245,25 +245,33 @@ function getState(zipcode) {
     console.log(sessionStorage.getItem("stateName"));
 }
 
-$('#zipSubmit').click(function(e){
-    e.preventDefault();
-    
-    var isnum = /^\d+$/.test($('#zipcode').val());
-    if (isnum) {
-        console.log("yuh");
-        $('#zipcodeModal').modal('hide');
-        // user puts in a zipcode and the map zooms to that loc
-        let geoObj = geocoder.query($('#zipcode').val(), 
-        function(err, res) {
-            console.log(err, res)
-        });
-        console.log(geoObj);
-        let st = getState($('#zipcode').val());
+function modalZip(e) {
+  e.preventDefault();
+
+  var isnum = /^\d+$/.test($('#zipcode').val());
+  if (isnum) {
+    console.log("yuh");
+    $('#zipcodeModal').modal('hide');
+    // user puts in a zipcode and the map zooms to that loc
+    let geoObj = geocoder.query($('#zipcode').val(),
+      function(err, res) {
+        console.log(err, res)
+      });
+    console.log(geoObj);
+    var q = "Edison";
+
+  } else {
+    // write out the error here:
+  }
+}
+
+$('#zipcodeModal').keypress(function (e) {
+    if (e.keyCode === 10 || e.keyCode === 13) {
+        modalZip(e);
     }
-    else {
-        // write out error handling here:
-    }
-    
+});
+$('#zipSubmit').click(function(e) {
+  modalZip(e);
 });
 
 //builds proper format of location string based on mapbox data. city,state/province,country
