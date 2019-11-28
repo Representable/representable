@@ -18,12 +18,3 @@
 </div>
 
 {% endblock %}
-
-{% block script %}
-<script src="{% static 'main/js/particles.min.js' %}"></script>
-<script>
-  particlesJS.load('particles-js', "{% static 'main/assets/particles.json' %}", function() {
-    console.log('callback - particles.min.js config loaded');
-  });
-</script>
-{% endblock %}
