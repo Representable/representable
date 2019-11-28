@@ -203,8 +203,7 @@ $(document).ready( function () {
     $("#zipcodeModal").modal("show");
 });
 
-
-$('#zipSubmit').click(function(e) {
+function modalZip(e) {
   e.preventDefault();
 
   var isnum = /^\d+$/.test($('#zipcode').val());
@@ -222,7 +221,15 @@ $('#zipSubmit').click(function(e) {
   } else {
     // write out the error here:
   }
+}
 
+$('#zipcodeModal').keypress(function (e) {
+    if (e.keyCode === 10 || e.keyCode === 13) {
+        modalZip(e);
+    }
+});
+$('#zipSubmit').click(function(e) {
+  modalZip(e);
 });
 
 //builds proper format of location string based on mapbox data. city,state/province,country
