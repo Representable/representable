@@ -30,7 +30,7 @@ animation in the first version of Districter/Representable. -->
             <!-- Shows on small devices and lower. -->
             <h5 class="display-4 my-2 font-weight-medium d-sm-none main-display-text-sm">We're creating a map of all communities to end gerrymandering.</h5>
             <!-- <p class="my-4">Draw your community and make your voice heard.</p> -->
-            <a class="btn btn-primary btn-canvas mx-1 my-2" href="/entry" role="button">Draw a community</a>
+            <a class="btn btn-primary btn-canvas mx-1 my-2" href="/entry" role="button">Contribute</a>
             <a class="btn btn-primary btn-canvas mx-1 my-2" href="/map" role="button">View the map</a>
         </div>
         <div class="col-lg-5 col-sm-12 col-md-5">
@@ -47,30 +47,33 @@ animation in the first version of Districter/Representable. -->
     </div>
     <!-- How To -->
     <div class="row my-3">
-        <div class="col-sm my-3 shadow mx-3">
+        <div class="col-sm my-3 shadow-sm mx-3">
             <div class="card border-0">
-                <div class="card-body text-center">
-                    <img class="img-fluid small-icon m-2 h-25 w-50 border-bottom" src="{% static 'img/search.svg' %}"></img>
-                    <h4>Find your community</h4>
-                    <p>Use our map tool to find your community and all the points of interest around it.</p>
+                <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/citizens.svg' %}"></img>
+                <div class="card-body text-center d-flex flex-column align-items-center">
+                    <h5>For citizens</h5>
+                    <p>Learn how to use Representable to draw your community.</p>
+                    <a class="btn btn-primary btn-canvas mt-auto" href="/entry" role="button">Get Started</a>
                 </div>
             </div>
         </div>
-        <div class="col-sm my-3 shadow mx-3">
+        <div class="col-sm my-3 shadow-sm mx-3">
             <div class="card border-0">
-                <div class="card-body text-center">
-                    <img class="img-fluid small-icon m-2 h-25 w-50 border-bottom" src="{% static 'img/draw.svg' %}"></img>
-                    <h4>Draw your area</h4>
-                    <p>After finding your community, use the drawing tool to circle a rough permiter around it.</p>
+                <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/map.svg' %}"></img>
+                <div class="card-body text-center flex-column align-items-center">
+                    <h5 class="card-title">For nonprofits</h5>
+                    <p class="card-text">Work with us to map communities across the United States.</p>
+                    <a class="btn btn-primary btn-canvas mt-auto" href="mailto: representableteam@gmail.com?subject=Hello!" role="button">Contact Us</a>
                 </div>
             </div>
         </div>
-        <div class="col-sm my-3 shadow mx-3">
-            <div class="card border-0 align-center">
-                <div class="card-body text-center">
-                    <img class="img-fluid small-icon m-2 h-25 w-50 border-bottom" src="{% static 'img/send.svg' %}"></img>
-                    <h4>Submit your map</h4>
-                    <p>Add information about the issues that matter to you and press submit!</p>
+        <div class="col-sm my-3 shadow-sm mx-3">
+            <div class="card border-0">
+                <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/redistricter.svg' %}"></img>
+                <div class="card-body text-center flex-column align-items-center">
+                    <h5 class="card-title">For redistricters</h5>
+                    <p class="card-text">Use our data to check voting districts maps for gerrymandering.</p>
+                    <a class="btn btn-primary btn-canvas mt-auto disabled" href="#" role="button">Coming Soon</a>
                 </div>
             </div>
         </div>

@@ -32,7 +32,7 @@ Add comments for any rule you change/add.
 /* Body and headings */
 /* Change the website default font. */
 body {
-  /* font-family: Inter, system-ui, sans-serif; */
+  font-family: Inter, system-ui, sans-serif;
   /* font-weight: 400; */
 }
 
