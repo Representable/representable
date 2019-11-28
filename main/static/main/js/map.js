@@ -24,13 +24,161 @@ census blocks, state legislature, and drawn polygons + tags to select ur favs */
 // the mapbox keys to load tilesets
 // when adding a new state: put it into CENSUS_KEYS, UPPER_KEYS, LOWER_KEYS, and state array
 var CENSUS_KEYS = {
-  "ak-census": "40xiqgvl","al-census": "5wnfuadx","ar-census": "cfn0gxes","az-census": "d1hc4dk1","ca-census": "dgvz11d5","co-census": "10cpzey1","ct-census": "acwqf5pz","dc-census": "da466hfz","de-census": "1bx4au31","fl-census": "7hpatmow","ga-census": "5lx08ma9","hi-census": "82epj1e0","ia-census": "4jkzgaf9","id-census": "6s8r1pl0","il-census": "awf7y438","in-census": "1fn3qhnn","ks-census": "ad6ys13i","ky-census": "0q4sl8dv","la-census": "7zyid6d0","ma-census": "1bvt0bee","md-census": "1zwr1qu7","me-census": "cyabkjlh","mi-census": "5elaw49i","mn-census": "561za3yv","mo-census": "56j9wugl","ms-census": "33ictlz4","mt-census": "1qescrvy","nc-census": "2i44h0gn","nd-census": "2jj6oy57","ne-census": "4hcty1f0","nh-census": "8q2e3yu3","nj-census": "0yrce8nw","nm-census": "164i2lmn","nv-census": "42p3cqhj","ny-census": "3i3eca1x","oh-census": "18ik8ger","ok-census": "34ou4tm9","or-census": "66y60ac5","pa-census": "4oz1cx84","ri-census": "6p13pxdt","sc-census": "a7ddwoo9","sd-census": "aztmscpz","tn-census": "8io3xzps","tx-census": "773he449","ut-census": "2tq7r5as","va-census": "58tbtkkj","vt-census": "914alme3","wa-census": "4a9umfkl","wi-census": "52mhmiw7","wv-census": "82nll1sy","wy-census": "9uwm30og"
+  "ak-census": "40xiqgvl",
+  "al-census": "5wnfuadx",
+  "ar-census": "cfn0gxes",
+  "az-census": "d1hc4dk1",
+  "ca-census": "dgvz11d5",
+  "co-census": "10cpzey1",
+  "ct-census": "acwqf5pz",
+  "dc-census": "da466hfz",
+  "de-census": "1bx4au31",
+  "fl-census": "7hpatmow",
+  "ga-census": "5lx08ma9",
+  "hi-census": "82epj1e0",
+  "ia-census": "4jkzgaf9",
+  "id-census": "6s8r1pl0",
+  "il-census": "awf7y438",
+  "in-census": "1fn3qhnn",
+  "ks-census": "ad6ys13i",
+  "ky-census": "0q4sl8dv",
+  "la-census": "7zyid6d0",
+  "ma-census": "1bvt0bee",
+  "md-census": "1zwr1qu7",
+  "me-census": "cyabkjlh",
+  "mi-census": "5elaw49i",
+  "mn-census": "561za3yv",
+  "mo-census": "56j9wugl",
+  "ms-census": "33ictlz4",
+  "mt-census": "1qescrvy",
+  "nc-census": "2i44h0gn",
+  "nd-census": "2jj6oy57",
+  "ne-census": "4hcty1f0",
+  "nh-census": "8q2e3yu3",
+  "nj-census": "0yrce8nw",
+  "nm-census": "164i2lmn",
+  "nv-census": "42p3cqhj",
+  "ny-census": "3i3eca1x",
+  "oh-census": "18ik8ger",
+  "ok-census": "34ou4tm9",
+  "or-census": "66y60ac5",
+  "pa-census": "4oz1cx84",
+  "ri-census": "6p13pxdt",
+  "sc-census": "a7ddwoo9",
+  "sd-census": "aztmscpz",
+  "tn-census": "8io3xzps",
+  "tx-census": "773he449",
+  "ut-census": "2tq7r5as",
+  "va-census": "58tbtkkj",
+  "vt-census": "914alme3",
+  "wa-census": "4a9umfkl",
+  "wi-census": "52mhmiw7",
+  "wv-census": "82nll1sy",
+  "wy-census": "9uwm30og"
 };
 var UPPER_KEYS = {
-  "ak-upper": "ajy4zns3","al-upper": "ct0ehmlm","ar-upper": "0vp12qw4","az-upper": "7url8569","ca-upper": "c793js1z","co-upper": "duivmkp7","ct-upper": "bt8hzuqf","de-upper": "1tjyqhsb","fl-upper": "1gclsamo","ga-upper": "0ctsypu0","hi-upper": "ce4zroh2","ia-upper": "cjshjdih","id-upper": "a1z3uex6","il-upper": "2k9tw58x","in-upper": "cxroj8b9","ks-upper": "8s51clse","ky-upper": "a0z84cq5","la-upper": "34ot8agf","ma-upper": "7t0rbyqc","md-upper": "57db6u4n","me-upper": "5xn4u2cb","mi-upper": "5bvjx29f","mn-upper": "dfxbv8s2","mo-upper": "8fenu4i3","ms-upper": "1n11roh2","mt-upper": "b0mb1mrt","nc-upper": "0n3amj58","nd-upper": "86n4hvqp","ne-upper": "22ev23od","nh-upper": "dbx500kk","nj-upper": "9fogw4w4","nm-upper": "amyd4x8x","nv-upper": "9t29x676","ny-upper": "2vbg6jw9","oh-upper": "4jxx8mtp","ok-upper": "bytxji14","or-upper": "1yfm1svn","pa-upper": "33mtf25i","ri-upper": "dvlmwj4t","sc-upper": "7e8h2zry","sd-upper": "2ia26tc9","tn-upper": "0wu0rs9e","tx-upper": "1jckmfg8","ut-upper": "3o87d3lh","va-upper": "3b1qryb8","vt-upper": "36j5ux3z","wa-upper": "21jsuobz","wi-upper": "7wznqcw4","wv-upper": "2oou05hr","wy-upper": "7lkxtzk5"
+  "ak-upper": "ajy4zns3",
+  "al-upper": "ct0ehmlm",
+  "ar-upper": "0vp12qw4",
+  "az-upper": "7url8569",
+  "ca-upper": "c793js1z",
+  "co-upper": "duivmkp7",
+  "ct-upper": "bt8hzuqf",
+  "de-upper": "1tjyqhsb",
+  "fl-upper": "1gclsamo",
+  "ga-upper": "0ctsypu0",
+  "hi-upper": "ce4zroh2",
+  "ia-upper": "cjshjdih",
+  "id-upper": "a1z3uex6",
+  "il-upper": "2k9tw58x",
+  "in-upper": "cxroj8b9",
+  "ks-upper": "8s51clse",
+  "ky-upper": "a0z84cq5",
+  "la-upper": "34ot8agf",
+  "ma-upper": "7t0rbyqc",
+  "md-upper": "57db6u4n",
+  "me-upper": "5xn4u2cb",
+  "mi-upper": "5bvjx29f",
+  "mn-upper": "dfxbv8s2",
+  "mo-upper": "8fenu4i3",
+  "ms-upper": "1n11roh2",
+  "mt-upper": "b0mb1mrt",
+  "nc-upper": "0n3amj58",
+  "nd-upper": "86n4hvqp",
+  "ne-upper": "22ev23od",
+  "nh-upper": "dbx500kk",
+  "nj-upper": "9fogw4w4",
+  "nm-upper": "amyd4x8x",
+  "nv-upper": "9t29x676",
+  "ny-upper": "2vbg6jw9",
+  "oh-upper": "4jxx8mtp",
+  "ok-upper": "bytxji14",
+  "or-upper": "1yfm1svn",
+  "pa-upper": "33mtf25i",
+  "ri-upper": "dvlmwj4t",
+  "sc-upper": "7e8h2zry",
+  "sd-upper": "2ia26tc9",
+  "tn-upper": "0wu0rs9e",
+  "tx-upper": "1jckmfg8",
+  "ut-upper": "3o87d3lh",
+  "va-upper": "3b1qryb8",
+  "vt-upper": "36j5ux3z",
+  "wa-upper": "21jsuobz",
+  "wi-upper": "7wznqcw4",
+  "wv-upper": "2oou05hr",
+  "wy-upper": "7lkxtzk5"
 };
 var LOWER_KEYS = {
-  "ak-lower": "a7my06pf","al-lower": "6s3fb8x6","ar-lower": "aoo42mh5","az-lower": "69m1ncet","ca-lower": "8swc402r","co-lower": "6449ik1a","ct-lower": "aps4sgjm","de-lower": "6pnb05km","fl-lower": "489egzlz","ga-lower": "8tvwmii5","hi-lower": "9hvxot4m","ia-lower": "9lgve8rt","id-lower": "6n6vcm1q","il-lower": "6ztbe511","in-lower": "5o3tg7ko","ks-lower": "7ca08p7p","ky-lower": "bxcziibw","la-lower": "a993qoob","ma-lower": "2li5gb3y","md-lower": "4yiku1xm","me-lower": "b7vwy66v","mi-lower": "aa2ljvl2","mn-lower": "8ls97if0","mo-lower": "3m8wa0ij","ms-lower": "dmiyiiih","mt-lower": "4c5h4k4k","nc-lower": "4wfqq41l","nd-lower": "d5ctq6qu","ne-lower": "4gfifmes","nh-lower": "0rehp33q","nj-lower": "8w0imag4","nm-lower": "5ty9whhm","nv-lower": "ccsgcq7z","ny-lower": "7im366fo","oh-lower": "4ithojy1","ok-lower": "1yv8x4qk","or-lower": "al75jr5d","pa-lower": "c2qg68h1","ri-lower": "30x1nsif","sc-lower": "54vjbmvf","sd-lower": "dxkshx2x","tn-lower": "2tjnjb83","tx-lower": "8omxrrst","ut-lower": "05y3896b","va-lower": "9xpukpnx","vt-lower": "d6brg1fl","wa-lower": "c9rk9gas","wi-lower": "3q5v3n9v","wv-lower": "aq380u5z","wy-lower": "93ya8fsx"
+  "ak-lower": "a7my06pf",
+  "al-lower": "6s3fb8x6",
+  "ar-lower": "aoo42mh5",
+  "az-lower": "69m1ncet",
+  "ca-lower": "8swc402r",
+  "co-lower": "6449ik1a",
+  "ct-lower": "aps4sgjm",
+  "de-lower": "6pnb05km",
+  "fl-lower": "489egzlz",
+  "ga-lower": "8tvwmii5",
+  "hi-lower": "9hvxot4m",
+  "ia-lower": "9lgve8rt",
+  "id-lower": "6n6vcm1q",
+  "il-lower": "6ztbe511",
+  "in-lower": "5o3tg7ko",
+  "ks-lower": "7ca08p7p",
+  "ky-lower": "bxcziibw",
+  "la-lower": "a993qoob",
+  "ma-lower": "2li5gb3y",
+  "md-lower": "4yiku1xm",
+  "me-lower": "b7vwy66v",
+  "mi-lower": "aa2ljvl2",
+  "mn-lower": "8ls97if0",
+  "mo-lower": "3m8wa0ij",
+  "ms-lower": "dmiyiiih",
+  "mt-lower": "4c5h4k4k",
+  "nc-lower": "4wfqq41l",
+  "nd-lower": "d5ctq6qu",
+  "ne-lower": "4gfifmes",
+  "nh-lower": "0rehp33q",
+  "nj-lower": "8w0imag4",
+  "nm-lower": "5ty9whhm",
+  "nv-lower": "ccsgcq7z",
+  "ny-lower": "7im366fo",
+  "oh-lower": "4ithojy1",
+  "ok-lower": "1yv8x4qk",
+  "or-lower": "al75jr5d",
+  "pa-lower": "c2qg68h1",
+  "ri-lower": "30x1nsif",
+  "sc-lower": "54vjbmvf",
+  "sd-lower": "dxkshx2x",
+  "tn-lower": "2tjnjb83",
+  "tx-lower": "8omxrrst",
+  "ut-lower": "05y3896b",
+  "va-lower": "9xpukpnx",
+  "vt-lower": "d6brg1fl",
+  "wa-lower": "c9rk9gas",
+  "wi-lower": "3q5v3n9v",
+  "wv-lower": "aq380u5z",
+  "wy-lower": "93ya8fsx"
 };
 var states = ["ak", "al", "ar", "az", "ca", "co", "ct", "dc", "de", "fl", "ga", "hi", "ia", "id", "il", "in", "ks", "ky", "la", "ma", "md", "me", "mi", "mn", "mo", "ms", "mt", "nc", "nd", "nh", "nj", "nm", "nv", "ny", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "va", "vt", "wa", "wi", "wv", "wy"];
 
@@ -55,82 +203,48 @@ $(document).ready( function () {
     $("#zipcodeModal").modal("show");
 });
 
-// $(function() {
 
-    // $("#zipcodeForm").validate({
-    //   rules: {
-    //     zipcode: {
-    //       required: true,
-    //       minlength: 5
-    //     },
-    //     action: "required"
-    //   },
-    //   messages: {
-    //     zipcode: {
-    //       required: "Please enter the zipcode",
-    //       minlength: "Your data must be at least 5 digits"
-    //     },
-    //     action: "Please enter the zipcode"
-    //   }
-    // });
-//   });
+$('#zipSubmit').click(function(e) {
+  e.preventDefault();
 
-$('#zipSubmit').click(function(e){
-    e.preventDefault();
+  var isnum = /^\d+$/.test($('#zipcode').val());
+  if (isnum) {
+    console.log("yuh");
+    $('#zipcodeModal').modal('hide');
+    // user puts in a zipcode and the map zooms to that loc
+    let geoObj = geocoder.query($('#zipcode').val(),
+      function(err, res) {
+        console.log(err, res)
+      });
+    console.log(geoObj);
+    var q = "Edison";
 
-    var isnum = /^\d+$/.test($('#zipcode').val());
-    if (isnum) {
-        console.log("yuh");
-        $('#zipcodeModal').modal('hide');
-        // user puts in a zipcode and the map zooms to that loc
-        let geoObj = geocoder.query($('#zipcode').val(),
-        function(err, res) {
-            console.log(err, res)
-        });
-        console.log(geoObj);
-        var q = "Edison";
-
-    //     var something = geocoder.mapboxClient.geocodeForward({
-    //         query: q.toString(),
-    //         countries: ["us"]
-    // }, function(err, res) {
-    //     console.log(err, res)
-    // });
-        // var y = geocoder.mapboxClient.geocodeReverse({
-        //     latitude: map.getCenter().lat,
-        //     longitude: map.getCenter().lng
-        // }, function(err, res) {
-        //     console.log(err, res)
-        // });
-        // console.log(y);
-        // debugger
-    }
-    else {
-        // write out the error here:
-    }
+  } else {
+    // write out the error here:
+  }
 
 });
 
 //builds proper format of location string based on mapbox data. city,state/province,country
 function parseReverseGeo(geoData) {
-    // debugger;
-    var region, countryName, placeName, returnStr;
-    if(geoData.context){
-        $.each(geoData.context, function(i, v){
-            if(v.id.indexOf('region') >= 0) {
-                region = v.text;
-            }
-            if(v.id.indexOf('country') >= 0) {
-                countryName = v.text;
-            }
-        });
-    }
-    if(region && countryName) {
-        returnStr = region + ", " + countryName;
-    } else {
-        returnStr = geoData.place_name;
-    }
-    return returnStr;
+  // debugger;
+  var region, countryName, placeName, returnStr;
+  if (geoData.context) {
+    $.each(geoData.context, function(i, v) {
+      if (v.id.indexOf('region') >= 0) {
+        region = v.text;
+      }
+      if (v.id.indexOf('country') >= 0) {
+        countryName = v.text;
+      }
+    });
+  }
+  if (region && countryName) {
+    returnStr = region + ", " + countryName;
+  } else {
+    returnStr = geoData.place_name;
+  }
+  return returnStr;
 }
 
 /*------------------------------------------------------------------------*/
@@ -224,19 +338,11 @@ function newLowerLegislatureLayer(state) {
 
 // issues add to properties
 issues = JSON.parse(issues);
-// {% for issue, desc in issues.items %}
-// <button class="dropdown-btn btn-primary" id="{{ issue }}">{{ issue }}
-//   <i class="fa fa-caret-down"></i></button>
-//   <div class="dropdown-container">
-//     {% for item, key in desc.items %}
-//     <a href="#" id="{{ item }}" class="btn-primary">{{ key }}</a>
-//     {% endfor %}
-//   </div>
-//   {% endfor %}
+
 // TODO: change issue to a button, which iterates thru all the displayed features and selects for that issue
 for (issue in issues) {
-  var button = document.createElement('button');
-  button.className = 'btn btn-primary m-2';
+  var button = document.createElement('div');
+  button.className = 'btn btn-info m-1';
   button.id = issue;
   button.textContent = issue;
   var circle = document.createElement('i');
@@ -244,10 +350,6 @@ for (issue in issues) {
   circle.style.color = PAINT_VALUES[issue] + '1)';
   circle.style.paddingLeft = '5px';
   button.appendChild(circle);
-
-  // var i = document.createElement('i');
-  // i.className = 'fa fa-caret-down';
-  // button.appendChild(i);
 
   var dropdowns = document.createElement('div');
   dropdowns.className = 'dropdown-container';
@@ -313,11 +415,9 @@ map.on('load', function() {
     // set the coordinates of the outer ring to final
     if (a[obj][0][0].length > 2) {
       final = [a[obj][0][0]];
-    }
-    else if(a[obj][0].length > 2) {
+    } else if (a[obj][0].length > 2) {
       final = [a[obj][0]];
-    }
-    else {
+    } else {
       final = a[obj]
     }
     // draw the polygon
@@ -431,7 +531,7 @@ map.on('load', function() {
     link.textContent = tag;
     link.className = 'btn-primary';
 
-    link.onclick = function (e) {
+    link.onclick = function(e) {
       var tagName = this.textContent;
       e.preventDefault();
       e.stopPropagation();
@@ -463,24 +563,25 @@ map.on('load', function() {
         if (!sources.includes(source)) {
           console.log(features[i]);
           sources.push(source);
-          var inner_content = "<span class='font-weight-bold'>Community:</span>".concat(source, "\n",
-          "</br><h6>Issues:</h6>", features[i].properties.issues, "\n");
-          var content = '<li class="list-group-item">'.concat(inner_content, '</li>');
+          var issues = JSON.parse(features[i].properties.issues);
+          var inner_content = "<span class='font-weight-light text-uppercase'>Community ".concat(source.slice(0, 8), "</span><hr class='my-1'>\n",
+            "<span class='font-weight-light'>Issues:</span>");
+          if (features[i].properties.category !== "[]") {
+            var categories = JSON.parse(features[i].properties.category);
+            for (var cat in categories) {
+              inner_content += " <div class='p-1 my-1 bg-info text-white text-center '>" + issues[categories[cat]] + "</div>"
+            }
+          } else {
+            inner_content += " N/A"
+          }
+          var content = '<li class="list-group-item small">'.concat(inner_content, '</li>');
           // put the code into the html - display!
           document.getElementById('community-list').insertAdjacentHTML('beforeend', content);
         }
       }
     }
   });
-  // var selected = [];
-  // // somehow append the selected layers (Features) to the array (depends on HTML)
-  // var data = selected.toGeoJSON();
-  // var convertedData = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data));
-  // var xhr = XMLHttpRequest();
-  // // what is yourURL being set to?
-  // xhr.open("POST", yourURL, true);
-  // xhr.setRequestHeader('Content-Type', 'application/vnd.geo+json');
-  // xhr.send(convertedData);
+
 });
 
 //create a button that toggles layers based on their IDs
@@ -566,39 +667,5 @@ function searchTags() {
     next = buttons[i].nextElementSibling;
     txtValueB = buttons[i].textContent || buttons[i].innerText;
     // the links within dropdown-container: sub tags themselves
-    sub = next.getElementsByTagName("a");
-    skip = false;
-    if (sub) {
-      for (j = 0; j < sub.length; j++) {
-        txtValueS = sub[j].textContent || sub[j].innerText;
-        if (txtValueS.toUpperCase().indexOf(filter) > -1) {
-          buttons[i].style.display = "";
-          skip = true;
-          next.style.display = "block";
-          sub[j].style.display = "block";
-        } else {
-          sub[j].style.display = "none";
-        }
-      }
-    }
-    if (!skip) {
-      if (txtValueB.toUpperCase().indexOf(filter) > -1) {
-        next.style.display = "block";
-        for (j = 0; j < sub.length; j++) {
-          sub[j].style.display = "block";
-        }
-        buttons[i].style.display = "";
-      } else {
-        buttons[i].style.display = "none";
-      }
-    }
-    if (filter === "") {
-      buttons[i].style.display = "";
-      next.style.display = "none";
-      for (j = 0; j < sub.length; j++) {
-        sub[j].style.display = "block";
-      }
-    }
-    skip = false;
   }
 }

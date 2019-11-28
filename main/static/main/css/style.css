@@ -735,17 +735,6 @@ color scheme. See readme.md*/
   }
 }
 
-.items {
-  border: 1px solid #ccc;
-  border-width: 0 0 1px 0;
-  background-color: #fff;
-  border-radius: unset;
-}
-.items ol {
-  padding: 0;
-  counter-reset: li;
-  list-style: none;
-}
 .items li {
   counter-increment: step-counter;
   padding: 20px 20px;
@@ -754,11 +743,9 @@ color scheme. See readme.md*/
 .items li::before {
   content: counter(step-counter);
   margin-right: 5px;
-  font-size: 80%;
   background-color: #00C6A7;
   color: white;
-  font-weight: bold;
-  padding: 3px 8px;
+  padding: 1px 5px;
   border-radius: 3px;
 }
 
@@ -768,8 +755,4 @@ color scheme. See readme.md*/
 
 #sticky-footer {
   flex-shrink: none;
-}
-
-.tag-search {
-  padding: 10px 10px;
 }
