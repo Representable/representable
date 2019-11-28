@@ -32,6 +32,10 @@
 {% endblock %}
 
 {% block content %}
+<script>
+    sessionStorage.setItem("allChecks", "pass");
+    console.log("passed");
+</script>
 <div class="modal fade" id="zipcodeModal" tabindex="-1" role="dialog" aria-labelledby="zipcodeModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -80,6 +84,9 @@
                                 <!-- {# Include form.entry_polygon error. } -->
                                 <div id="map-error-alerts">
                                     {% if form.user_polygon.errors %}
+                                    <script>
+                                        sessionStorage.setItem("allChecks", "fail");
+                                    </script>
                                     <div id="polygon_missing" class="alert alert-warning alert-dismissible fade show" role="alert">
                                         You need to draw a polygon to submit the form.
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -220,6 +227,9 @@
                                                 {{ formset_row.category|append_attr:"class:form-control" }}
                                                 <!-- Error Codes Here -->
                                                 {% if formset_row.category.errors %}
+                                                <script>
+                                                    sessionStorage.setItem("allChecks", "fail");
+                                                </script>
                                                 {% for error in formset_row.category.errors %}
                                                 <small id="category_warning" class="text-danger">{{ error|escape }}</small>
                                                 {% endfor %}
@@ -229,6 +239,9 @@
                                                 {{ formset_row.description|append_attr:"class:form-control" }}
                                                 <!-- Error Codes Here -->
                                                 {% if formset_row.description.errors %}
+                                                <script>
+                                                    sessionStorage.setItem("allChecks", "fail");
+                                                </script>
                                                 {% for error in formset_row.description.errors %}
                                                 <small id="category_warning" class="text-danger">{{ error|escape }}</small>
                                                 {% endfor %}
@@ -268,6 +281,9 @@
                                     <div class="form-error">
                                         {{ form.my_community.label_tag }} <small class="text-danger">(Required)</small>
                                         {% if form.my_community.errors %}
+                                        <script>
+                                            sessionStorage.setItem("allChecks", "fail");
+                                        </script>
                                         <div>
                                             <div id="my_community_missing" class="alert alert-warning map-alert" role="alert">
                                                 You need to specify if you are part of this community.

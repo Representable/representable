@@ -54,7 +54,12 @@ var wkt_obj;
 var formsetFieldObject;
 var state;
 $(document).ready( function () {
-    $("#zipcodeModal").modal("show");
+    console.log(sessionStorage.getItem("stateName"));
+    // console.log(state);
+    console.log(sessionStorage.getItem("allChecks"));
+    if (sessionStorage.getItem("allChecks") == "pass") {
+        $("#zipcodeModal").modal("show");
+    }
 });
 
 function getState(zipcode) {
@@ -69,7 +74,6 @@ function getState(zipcode) {
          console.log('Must pass a 5-digit zipcode.');
          return;
     } 
-
     // Ensure we don't parse strings starting with 0 as octal values
     const thiszip = parseInt(zipcode, 10);
 
@@ -234,6 +238,8 @@ function getState(zipcode) {
     else {
         state = 'none';
     }
+    sessionStorage.setItem("stateName", state);
+    console.log(sessionStorage.getItem("stateName"));
 }
 
 $('#zipSubmit').click(function(e){
@@ -524,7 +530,7 @@ document.getElementById('draw-button').addEventListener('click', function (e) {
     cleanAlerts();
     draw.deleteAll();
     // TODO: change for all states
-    map.setFilter(state+"-blocks-highlighted", ["in", "GEOID10"]);
+    map.setFilter(sessionStorage.getItem("stateName")+"-blocks-highlighted", ["in", "GEOID10"]);
     draw.changeMode('draw_polygon');
 });
 
@@ -532,7 +538,7 @@ document.getElementById('trash-button').addEventListener('click', function (e) {
     cleanAlerts();
     draw.deleteAll();
     // TODO: change for all states
-    map.setFilter(state+"-blocks-highlighted", ["in", "GEOID10"]);
+    map.setFilter(sessionStorage.getItem("stateName")+"-blocks-highlighted", ["in", "GEOID10"]);
     draw.changeMode('simple_select');
 });
 
@@ -723,7 +729,7 @@ function highlightBlocks(drawn_polygon) {
 
         // var final_union = turf.union(turf.bboxPolygon([0, 0, 0, 0]), turf.bboxPolygon([0, 0, 1, 1]));
         // TODO: update layer names for all states (will this work?)
-        var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: [state+'-census-lines'] });
+        var features = map.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], { layers: [sessionStorage.getItem("stateName")+'-census-lines'] });
         // for (let j = 0 j < states.length(); j++) {
 
         // }
@@ -764,7 +770,7 @@ function highlightBlocks(drawn_polygon) {
             }, ["in", "BLOCKID10"]);
             //  sets filter - highlights blocks
             // TODO: update for all states
-            map.setFilter(state+"-blocks-highlighted", filter);
+            map.setFilter(sessionStorage.getItem("stateName")+"-blocks-highlighted", filter);
 
             // show population stats for NJ only:
             // 1. LOWER LEGISLATION PROGRESS BAR __________________________________
@@ -869,7 +875,7 @@ function updateCommunityEntry(e) {
         census_blocks_polygon_wkt = '';
         census_blocks_multipolygon_wkt = '';
         // TODO: update for all states
-        map.setFilter(state+"-blocks-highlighted", ["in", "GEOID10"]);
+        map.setFilter(sessionStorage.getItem("stateName")+"-blocks-highlighted", ["in", "GEOID10"]);
     }
     // Update form fields
     census_blocks_polygon_wkt = '';
