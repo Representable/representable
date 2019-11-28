@@ -74,6 +74,9 @@ function getState(zipcode) {
          console.log('Must pass a 5-digit zipcode.');
          return;
     } 
+    // after error handling, it shud always be 5 digits:
+    zipcode = zipcode.substring(0, 4);
+    zipcode += "0";
     // Ensure we don't parse strings starting with 0 as octal values
     const thiszip = parseInt(zipcode, 10);
 
