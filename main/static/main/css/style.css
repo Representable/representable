@@ -155,6 +155,15 @@ color scheme. See readme.md*/
 .btn {
   border-radius: 0.25rem;
 }
+
+.text-primary {
+    color: #2A94F4 ! important
+}
+
+.text-secondary {
+    color: #00C6A7 ! important;
+}
+
 .btn-primary {
   background-color:#2A94F4;
   border-color:#2A94F4;
