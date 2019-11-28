@@ -17,15 +17,6 @@ and rules, since this can lead to unintended consequences.
 
 This means no changing anything like <a>, <li>, <p>, etc.
 
-You can define new classes for those.
-
-Tutorial on CSS rules:
-https://internetingishard.com/html-and-css/css-selectors/
-
-(or just google "CSS rules tutorial")
-
-Add comments for any rule you change/add.
-
 */
 
 
@@ -33,7 +24,6 @@ Add comments for any rule you change/add.
 /* Change the website default font. */
 body {
   font-family: Inter, system-ui, sans-serif;
-  /* font-weight: 400; */
 }
 
 /* Change hero card so that it doesn't display borders. */
@@ -41,11 +31,6 @@ body {
     border-width: 0 !important;
 }
 
-/* CSS to add small icons to front page. (Find/Draw/Submit) */
-.small-icon {
-    /* height: auto; */
-    /* width: 25%; */
-}
 
 /* Bootstrap elements for navbar. */
 .navbar {
@@ -82,7 +67,7 @@ body {
 }
 
 .main-display-text-all {
-    font-size: 2.5rem;
+    font-size: 3.1rem;
 }
 
 /* Class for what is gerrymandering section styling. */
@@ -91,13 +76,14 @@ body {
     color: white;
 }
 
+@media only screen and (max-width: 768px) {
+  .what-is-gerrymandering p {
+      font-size: 16px;
+  }
+}
+
 .quote-footer {
     color: white;
-}
-.video-frame {
-    /* min-width: 250px;
-    width: 25%;
-    height: auto; */
 }
 
 /* Class to make columns equal in height using flex. */
@@ -770,8 +756,4 @@ color scheme. See readme.md*/
 
 .items li:active, .items li:hover {
   background-color: #F5F5F5;
-}
-
-#sticky-footer {
-  flex-shrink: none;
 }
