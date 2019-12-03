@@ -46,6 +46,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = False # remove in production
 DEBUG_PROPAGATE_EXCEPTIONS = False
 
+
 ALLOWED_HOSTS = ['*']
 
 
