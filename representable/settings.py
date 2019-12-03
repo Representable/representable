@@ -46,6 +46,9 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = True # remove in production
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_REDIRECT = True
+
 ALLOWED_HOSTS = ['*']
 
 
