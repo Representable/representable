@@ -320,7 +320,7 @@ function newUpperLegislatureLayer(state) {
     },
     "paint": {
       "line-color": "rgba(106,137,204,0.2)",
-      "line-width": 2
+      "line-width": 3
     }
   });
 }
@@ -338,7 +338,7 @@ function newLowerLegislatureLayer(state) {
     },
     "paint": {
       "line-color": "rgba(106,137,204,0.2)",
-      "line-width": 2
+      "line-width": 3
     }
   });
 }
