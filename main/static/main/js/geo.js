@@ -663,6 +663,7 @@ map.on('render', function() {
         wkt_obj = wkt.read(feature);
         var geoJsonFeature = wkt_obj.toJson();
         var featureIds = draw.add(geoJsonFeature);
+        console.log('Refresh')
         updateCommunityEntry();
     }
 
@@ -670,9 +671,21 @@ map.on('render', function() {
 
 /******************************************************************************/
 
-map.on('draw.create', updateCommunityEntry);
-map.on('draw.delete', updateCommunityEntry);
-map.on('draw.update', updateCommunityEntry);
+map.on('draw.create', function() {
+    console.log('Draw create');
+    updateCommunityEntry();
+});
+map.on('draw.delete', function() {
+    console.log('Draw delete');
+    updateCommunityEntry();
+});
+map.on('draw.update', function() {
+    console.log('Draw update');
+    updateCommunityEntry();
+});
+map.on('draw.changeMode', function() {
+    console.log('Draw CM');
+});
 
 
 /******************************************************************************/
@@ -904,6 +917,7 @@ function updateCommunityEntry(e) {
     document.getElementById('id_user_polygon').value = user_polygon_wkt;
     document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon_wkt;
     document.getElementById('id_census_blocks_polygon_array').value = census_blocks_polygon_array;
+    console.log('Entry updated; map valid')
     triggerSuccessMessage();
 }
 /******************************************************************************/
