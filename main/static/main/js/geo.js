@@ -509,6 +509,17 @@ var draw = new MapboxDraw({
                 'circle-radius': 5,
                 'circle-color': '#3c6382'
             }
+        },
+        {
+            'id': 'gl-draw-polygon-midpoint',
+            'type': 'circle',
+            'filter': ['all', ['==', '$type', 'Point'],
+                ['==', 'meta', 'midpoint']
+            ],
+            'paint': {
+                'circle-radius': 5,
+                'circle-color': '#3c6382'
+            }
         }
     ]
 
@@ -573,7 +584,7 @@ function newCensusLines(state) {
       "line-cap": "round"
     },
     "paint": {
-      "line-color": "rgba(71, 93, 204, 0.25)",
+      "line-color": "rgba(71, 93, 204, 0.5)",
       "line-width": 1
     }
   });
@@ -616,7 +627,7 @@ map.on('style.load', function() {
       newHighlightLayer(states[i]);
     }
 
-
+    // Point centered at geocoded location
     map.addLayer({
         "id": "point",
         "source": "single-point",
