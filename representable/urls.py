@@ -41,4 +41,5 @@ urlpatterns = [
     #path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('allauth.urls')),
     path('select2/', include('django_select2.urls')),
+    path('i18n/', include('django.conf.urls.i18n'))
 ]
