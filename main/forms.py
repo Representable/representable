@@ -119,6 +119,7 @@ class CommunityForm(ModelForm):
             'census_blocks_polygon': forms.HiddenInput(),
             'user_polygon': forms.HiddenInput(),
             'my_community': BootstrapRadioSelect(),
+            # 'community_name': forms.TextInput(attrs={'placeholder': 'Community name'}),
             'zipcode': forms.TextInput(attrs={'placeholder': 'Your Zipcode'})
         }
         labels = {

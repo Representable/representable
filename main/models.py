@@ -74,6 +74,7 @@ class CommunityEntry(models.Model):
         ('Y','Yes, this is my community.'),
         ('N','No, I am creating this community on behalf of another group of people.')
     )
+    # community_name = models.CharField(max_length=100, blank=False, unique=True, default='Name') # TODO
     my_community = models.CharField("Is this your community?", max_length=1,choices=CHOICES, default= 'Y', blank=False, null=False)
 
     def __str__(self):
