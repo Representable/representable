@@ -173,6 +173,20 @@
             <div class="card">
               <div class="card-body">
                 <p class="card-text">
+                  Community overview
+                </p>
+              </div>
+              {{ form.entry_name|append_attr:"class:form-control" }}
+              {{ form.entry_reason|append_attr:"class:form-control" }}
+            </div>
+          </div>
+        </div>
+
+        <div class="row row-equal-cols">
+          <div class="col-lg-8  mt-3">
+            <div class="card">
+              <div class="card-body">
+                <p class="card-text">
                   Include issues and demographic information about your area.
                 </p>
                 {% csrf_token %}
@@ -209,9 +223,6 @@
                     {% endif %}
                   </div>
                 </div>
-
-                <!-- TODO ATTR -->
-                <!-- {{ form.community_name|append_attr:"class:form-control" }} -->
 
                 <!-- {# Is this your community? Field} -->
                 <div class="field-wrap">
