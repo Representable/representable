@@ -314,7 +314,7 @@ var map = new mapboxgl.Map({
     container: 'map', // container id
     style: 'mapbox://styles/mapbox/streets-v11', //hosted style id
     center: [-74.65545, 40.341701], // starting position - Princeton, NJ :)
-    zoom: 12 // starting zoom
+    zoom: 9 // starting zoom
 });
 
 var layerList = document.getElementById('menu');
@@ -333,7 +333,7 @@ for (let i = 0; i < inputs.length; i++) {
 var geocoder = new MapboxGeocoder({
     accessToken: mapboxgl.accessToken,
     country: 'us',
-    mapboxgl: mapboxgl
+    mapboxgl: mapboxgl,
 });
 
 /* tutorial reference for draw control properties:
