@@ -172,12 +172,17 @@
           <div class="col-lg-8  mt-3">
             <div class="card">
               <div class="card-body">
-                <p class="card-text">
-                  Community overview
-                </p>
+                <h4 class="card-text">
+                  Community information
+                </h4>
+                <div id="main_community_form" class="form-group">
+                  <div class="field-wrap mt-3">
+                    {{ form.entry_name|append_attr:"class:form-control" }}
+                    <hr>
+                    {{ form.entry_reason|append_attr:"class:form-control" }}
+                  </div>
+                </div>
               </div>
-              {{ form.entry_name|append_attr:"class:form-control" }}
-              {{ form.entry_reason|append_attr:"class:form-control" }}
             </div>
           </div>
         </div>
@@ -244,22 +249,6 @@
                   <p class="help">{{ form.my_community.help_text|safe }}</p>
                   {% endif %}
                 </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 mt-3">
-            <div class="card mb-3">
-              <div class="card-header text-info-custom">
-                <b>Why do we need this information?</b>
-              </div>
-              <div class="card-body">
-                <p class="card-text" style="text-color:white;">
-                  Including information about your community
-                  <b>exposes gerrymandering</b>. The more information
-                  you provide, the easier it will be for officials
-                  and non-profits to draw fairer electoral districts.
-                </p>
               </div>
             </div>
           </div>

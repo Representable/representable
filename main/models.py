@@ -66,8 +66,8 @@ class CommunityEntry(models.Model):
     '''
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     entry_ID = models.CharField(max_length=100, blank=False, unique=True, default=uuid.uuid4)
-    entry_name = models.CharField(max_length=100, blank=False, unique=False, default='')
-    entry_reason = models.CharField(max_length=500, blank=False, unique=False, default='') # TODO
+    entry_name = models.CharField(max_length=100, blank=False, unique=False, default='Community name')
+    entry_reason = models.CharField(max_length=500, blank=True, unique=False, default='') # TODO
     user_polygon = models.PolygonField(geography=True, serialize=True, blank=False)
     census_blocks_polygon_array = ArrayField(models.PolygonField(geography=True, blank=True, null=True, serialize=True), blank=True, null=True)
     census_blocks_polygon = models.MultiPolygonField(geography=True, serialize=True, blank=True, null=True)
@@ -76,7 +76,6 @@ class CommunityEntry(models.Model):
         ('Y','Yes, this is my community.'),
         ('N','No, I am creating this community on behalf of another group of people.')
     )
-    # community_name = models.CharField(max_length=100, blank=False, unique=True, default='Name') # TODO
     my_community = models.CharField("Is this your community?", max_length=1,choices=CHOICES, default= 'Y', blank=False, null=False)
 
     def __str__(self):

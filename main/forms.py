@@ -120,7 +120,7 @@ class CommunityForm(ModelForm):
             'user_polygon': forms.HiddenInput(),
             'my_community': BootstrapRadioSelect(),
             'entry_name': forms.TextInput(attrs={'placeholder': 'Community name'}),
-            'entry_reason': forms.TextInput(attrs={'placeholder': 'Reason'}),
+            'entry_reason': forms.TextInput(attrs={'placeholder': 'What brings this community together?'}),
             'zipcode': forms.TextInput(attrs={'placeholder': 'Your Zipcode'})
         }
         labels = {
