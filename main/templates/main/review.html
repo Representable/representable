@@ -49,7 +49,12 @@
                     </tr>
                     {% for c in communities %}
                     <tr>
-                        <td>{{c}}</td>
+                        <td>{{c}}<br>
+                            {% if user.is_staff %}
+                            <!-- we should have an author here too -->
+                                <b>Created by:</b> {{ c.user.username }}
+                            {% endif %}
+                        </td>
                         <td>
                             <form method="post" action="">{% csrf_token %}
                                 {{ form }}

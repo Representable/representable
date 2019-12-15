@@ -32,6 +32,8 @@ from shapely.geometry import Polygon, mapping
 import geojson, os, json, re
 from django.http import JsonResponse
 import shapely.wkt
+import reverse_geocoder as rg
+from state_abbrev import us_state_abbrev
 
 
 #******************************************************************************#
@@ -131,13 +133,51 @@ class Review(LoginRequiredMixin, TemplateView):
                 ids.append(str(id))
             tags[str(obj)] = ids
 
-        query = CommunityEntry.objects.filter(user = self.request.user)
+        user = self.request.user
+        # if admin, we want all those from approved state
+        def centroid(pt_list):
+            print(pt_list)
+            length = len(pt_list)
+            sum_x = sum([x[1] for x in pt_list]) # TODO coords are reversed for some reason?
+            sum_y = sum([x[0] for x in pt_list])
+            return sum_x / length, sum_y / length
 
-        for obj in query:
-            if (obj.census_blocks_polygon == '' or obj.census_blocks_polygon == None):
-                s = "".join(obj.user_polygon.geojson)
-            else:
-                s = "".join(obj.census_blocks_polygon.geojson)
+        authorDict = dict() # if superuser, who submitted this
+        if user.is_staff:
+            query = CommunityEntry.objects.all()
+            for obj in query:
+                if (obj.census_blocks_polygon == '' or obj.census_blocks_polygon == None):
+                    s = "".join(obj.user_polygon.geojson)
+                else:
+                    s = "".join(obj.census_blocks_polygon.geojson)
+                struct = geojson.loads(s)
+                ct = centroid(struct['coordinates'][0])
+                # https://github.com/thampiman/reverse-geocoder
+                # note that this is an offline reverse geocoding library
+                # reverse geocode to see which states this is in
+                results = rg.search(ct)
+                print(results)
+                if len(results) == 0:
+                    continue # skip this community: reverse geocoding failed!
+                admins = [y for x,y in results[0].items()]
+                # get the states that the object is in
+                possib_states = set([us_state_abbrev[x] for x in us_state_abbrev.keys() if x in admins])
+                # now make sure user is authorized to edit state
+                authorized = set([g.name.upper() for g in user.groups.all()]) # TODO assume all groups are state
+                print(possib_states, authorized)
+                if possib_states.issubset(authorized):
+                    print('Authorized for states {}'.format(possib_states))
+                    # add it to viewable
+                    entryPolyDict[obj.entry_ID] = struct.coordinates
+                    authorDict[obj.entry_ID] = obj.user.username
+        else:
+            # in this case, just get the ones we made
+            query = CommunityEntry.objects.filter(user = self.request.user)
+            for obj in query:
+                if (obj.census_blocks_polygon == '' or obj.census_blocks_polygon == None):
+                    s = "".join(obj.user_polygon.geojson)
+                else:
+                    s = "".join(obj.census_blocks_polygon.geojson)
 
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
@@ -149,13 +189,13 @@ class Review(LoginRequiredMixin, TemplateView):
             'tags': json.dumps(tags),
             'issues': json.dumps(issues),
             'entries': json.dumps(entryPolyDict),
+            'authors': json.dumps(authorDict),
             'communities': query,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
         })
         return context
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, label_suffix='')
-
         # delete entry if form is valid and entry belongs to current user
         print('deleting here')
         print(request.POST)

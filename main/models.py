@@ -31,7 +31,8 @@ import datetime
 #******************************************************************************#
 
 class User(AbstractUser):
-    approved_states = ArrayField(models.CharField(max_length=5, blank=False, default=''), unique=False, null=False, default=list)
+    # approved_states = ArrayField(models.CharField(max_length=5, blank=False, default=''), unique=False, null=False, default=list)
+    pass
 
 #******************************************************************************#
 
