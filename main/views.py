@@ -313,6 +313,7 @@ class Map(TemplateView):
             tags[str(obj)] = ids
         # get the polygon from db and pass it on to html
         for obj in CommunityEntry.objects.all():
+            if not obj.admin_approved: continue
             if (obj.census_blocks_polygon == '' or obj.census_blocks_polygon == None):
                 s = "".join(obj.user_polygon.geojson)
             else:
