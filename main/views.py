@@ -93,6 +93,16 @@ class About(TemplateView):
     template_name = "main/about.html"
 
 #******************************************************************************#
+
+class Privacy(TemplateView):
+    template_name = "main/privacy.html"
+
+#******************************************************************************#
+
+class Terms(TemplateView):
+    template_name = "main/terms.html"
+
+#******************************************************************************#
 class Review(LoginRequiredMixin, TemplateView):
     template_name = "main/review.html"
     form_class = DeletionForm

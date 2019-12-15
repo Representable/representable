@@ -31,5 +31,8 @@ urlpatterns = [
     path('entry/', views.EntryView.as_view(), name='entry'),
     path('main/', views.MainView.as_view(), name='main_test'),
     path('about/', views.About.as_view(), name='MeetTheTeam'),
-    path('review/', views.Review.as_view(), name='review')
+    path('review/', views.Review.as_view(), name='review'),
+    path('privacy/', views.Privacy.as_view(), name='privacy'),
+    path('terms/', views.Terms.as_view(), name='terms')
+
 ]
