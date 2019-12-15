@@ -31,7 +31,7 @@ import datetime
 #******************************************************************************#
 
 class User(AbstractUser):
-    pass
+    approved_states = ArrayField(models.CharField(max_length=5, blank=False, default=''), unique=False, null=False, default=list)
 
 #******************************************************************************#
 
@@ -75,6 +75,7 @@ class CommunityEntry(models.Model):
         ('N','No, I am creating this community on behalf of another group of people.')
     )
     my_community = models.CharField("Is this your community?", max_length=1,choices=CHOICES, default= 'Y', blank=False, null=False)
+    admin_approved = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.entry_ID)

@@ -58,7 +58,13 @@
         </li>
         {% if user.is_authenticated %}</li>
         <li class="nav-item mx-auto">
-          <a class="nav-link" href='/review'>My Entries</a>
+          {% if user.is_authenticated %}
+            {% if user.is_staff %}
+              <a class="nav-link" href='/review'>Approve and view entries</a>
+            {% else %}
+              <a class="nav-link" href='/review'>My Entries</a>
+            {% endif %}
+          {% endif %}
         </li>
         <li class="nav-item mx-auto">
           <a class="btn btn-outline-primary m-2" href="/entry">New Entry</a>
@@ -107,7 +113,11 @@
           <li><a class="text-muted" href="/entry">Contribute</a></li>
           <li><a class="text-muted" href="/map">View All</a></li>
           {% if user.is_authenticated %}
-          <li><a class="text-muted" href="/review">My Entries</a></li>
+            {% if user.is_staff %}
+              <li><a class="text-muted" href="/review">Approve and view entries</a></li>
+            {% else %}
+              <li><a class="text-muted" href="/review">My Entries</a></li>
+            {% endif %}
           {% endif %}
         </ul>
       </div>

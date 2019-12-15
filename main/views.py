@@ -157,7 +157,21 @@ class Review(LoginRequiredMixin, TemplateView):
         form = self.form_class(request.POST, label_suffix='')
 
         # delete entry if form is valid and entry belongs to current user
-        if form.is_valid():
+        print('deleting here')
+        print(request.POST)
+        if form.is_valid() and self.request.user.is_staff:
+            query = CommunityEntry.objects.filter(user = self.request.user)
+            entry = query.get(entry_ID=request.POST.get('c_id'))
+            # TODO check whether authorized to edit state?
+            if 'Approve' in request.POST: # TODO need someone to review security
+                entry.admin_approved = True
+                entry.save()
+            elif 'Unapprove' in request.POST:
+                entry.admin_approved = False
+                entry.save()
+            elif 'Delete' in request.POST:
+                entry.delete()
+        elif form.is_valid(): # not staff, just can delete own entries
             query = CommunityEntry.objects.filter(user = self.request.user)
             entry = query.get(entry_ID=request.POST.get('c_id'))
             entry.delete()

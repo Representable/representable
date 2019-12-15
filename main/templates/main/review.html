@@ -54,7 +54,14 @@
                             <form method="post" action="">{% csrf_token %}
                                 {{ form }}
                                 <input type="hidden" name="c_id" value="{{ c }}">
-                                <button type="submit" class="btn btn-danger" value="Submit">Delete</button>
+                                {% if user.is_staff %}
+                                    {% if c.admin_approved %}
+                                        <button type="submit" class="btn btn-warning", name="Unapprove">Unapprove</button>
+                                    {% else %}
+                                        <button type="submit" class="btn btn-success", name="Approve">Approve</button>
+                                    {% endif %}
+                                {% endif %}
+                                <button type="submit" class="btn btn-danger", name="Delete">Delete</button>
                             </form>
                         </td>
                     <tr>
