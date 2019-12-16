@@ -100,6 +100,13 @@ class Review(LoginRequiredMixin, TemplateView):
     form_class = DeletionForm
     initial = {'key': 'value'}
 
+    def centroid(self, pt_list):
+        print(pt_list)
+        length = len(pt_list)
+        sum_x = sum([x[1] for x in pt_list]) # TODO coords are reversed for some reason?
+        sum_y = sum([x[0] for x in pt_list])
+        return sum_x / length, sum_y / length
+
     # https://www.agiliq.com/blog/2019/01/django-formview/
     def get_initial(self):
         initial = self.initial
@@ -134,15 +141,8 @@ class Review(LoginRequiredMixin, TemplateView):
             tags[str(obj)] = ids
 
         user = self.request.user
-        # if admin, we want all those from approved state
-        def centroid(pt_list):
-            print(pt_list)
-            length = len(pt_list)
-            sum_x = sum([x[1] for x in pt_list]) # TODO coords are reversed for some reason?
-            sum_y = sum([x[0] for x in pt_list])
-            return sum_x / length, sum_y / length
-
         authorDict = dict() # if superuser, who submitted this
+        approvedList = list() # TODO make list?
         if user.is_staff:
             query = CommunityEntry.objects.all()
             for obj in query:
@@ -151,7 +151,7 @@ class Review(LoginRequiredMixin, TemplateView):
                 else:
                     s = "".join(obj.census_blocks_polygon.geojson)
                 struct = geojson.loads(s)
-                ct = centroid(struct['coordinates'][0])
+                ct = self.centroid(struct['coordinates'][0])
                 # https://github.com/thampiman/reverse-geocoder
                 # note that this is an offline reverse geocoding library
                 # reverse geocode to see which states this is in
@@ -164,12 +164,13 @@ class Review(LoginRequiredMixin, TemplateView):
                 possib_states = set([us_state_abbrev[x] for x in us_state_abbrev.keys() if x in admins])
                 # now make sure user is authorized to edit state
                 authorized = set([g.name.upper() for g in user.groups.all()]) # TODO assume all groups are state
-                print(possib_states, authorized)
                 if possib_states.issubset(authorized):
                     print('Authorized for states {}'.format(possib_states))
                     # add it to viewable
                     entryPolyDict[obj.entry_ID] = struct.coordinates
                     authorDict[obj.entry_ID] = obj.user.username
+                    if obj.admin_approved:
+                        approvedList.append(obj.entry_ID)
         else:
             # in this case, just get the ones we made
             query = CommunityEntry.objects.filter(user = self.request.user)
@@ -178,11 +179,12 @@ class Review(LoginRequiredMixin, TemplateView):
                     s = "".join(obj.user_polygon.geojson)
                 else:
                     s = "".join(obj.census_blocks_polygon.geojson)
-
-            # add all the coordinates in the array
-            # at this point all the elements of the array are coordinates of the polygons
-            struct = geojson.loads(s)
-            entryPolyDict[obj.entry_ID] = struct.coordinates
+                # add all the coordinates in the array
+                # at this point all the elements of the array are coordinates of the polygons
+                struct = geojson.loads(s)
+                entryPolyDict[obj.entry_ID] = struct.coordinates
+                if obj.admin_approved:
+                    approvedList.append(obj.entry_ID)
 
         context = ({
             'form': form,
@@ -190,6 +192,7 @@ class Review(LoginRequiredMixin, TemplateView):
             'issues': json.dumps(issues),
             'entries': json.dumps(entryPolyDict),
             'authors': json.dumps(authorDict),
+            'approved': json.dumps(approvedList),
             'communities': query,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
         })
@@ -197,8 +200,6 @@ class Review(LoginRequiredMixin, TemplateView):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, label_suffix='')
         # delete entry if form is valid and entry belongs to current user
-        print('deleting here')
-        print(request.POST)
         if form.is_valid() and self.request.user.is_staff:
             query = CommunityEntry.objects.filter(user = self.request.user)
             entry = query.get(entry_ID=request.POST.get('c_id'))
@@ -227,52 +228,7 @@ class Review(LoginRequiredMixin, TemplateView):
                 issueInfo[str(obj.entry)] = obj.description
                 issues[cat] = issueInfo
 
-
-        tags = dict()
-        for obj in Tag.objects.all():
-            # manytomany query
-            entries = obj.communityentry_set.all()
-            ids = []
-            for id in entries:
-                ids.append(str(id))
-            tags[str(obj)] = ids
-        entryPolyDict = dict()
-
-        query = CommunityEntry.objects.filter(user = self.request.user)
-
-        for obj in query:
-            if (obj.census_blocks_polygon == '' or obj.census_blocks_polygon == None):
-                s = "".join(obj.user_polygon.geojson)
-            else:
-                s = "".join(obj.census_blocks_polygon.geojson)
-
-            # add all the coordinates in the array
-            # at this point all the elements of the array are coordinates of the polygons
-            struct = geojson.loads(s)
-            entryPolyDict[obj.entry_ID] = struct.coordinates
-
-
-        # the polygon coordinates
-        entryPolyDict = dict()
-        # dictionary of tags to be displayed
-        tags = dict()
-        for obj in Tag.objects.all():
-            # manytomany query
-            entries = obj.communityentry_set.all()
-            ids = []
-            for id in entries:
-                ids.append(str(id))
-            tags[str(obj)] = ids
-
-        context = {
-            'form': form,
-            'tags': json.dumps(tags),
-            'issues': json.dumps(issues),
-            'entries': json.dumps(entryPolyDict),
-            'communities': query,
-            'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
-        }
-        # print(issue_formset)
+        context = self.get_context_data() # TODO: Is there a problem with this?
         return render(request, self.template_name, context)
 
 #******************************************************************************#
