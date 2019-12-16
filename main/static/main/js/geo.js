@@ -313,7 +313,7 @@ var map = new mapboxgl.Map({
     container: 'map', // container id
     style: 'mapbox://styles/mapbox/streets-v11', //hosted style id
     center: [-74.65545, 40.341701], // starting position - Princeton, NJ :)
-    zoom: 12 // starting zoom
+    zoom: 9 // starting zoom
 });
 
 var layerList = document.getElementById('menu');
@@ -332,7 +332,7 @@ for (let i = 0; i < inputs.length; i++) {
 var geocoder = new MapboxGeocoder({
     accessToken: mapboxgl.accessToken,
     country: 'us',
-    mapboxgl: mapboxgl
+    mapboxgl: mapboxgl,
 });
 
 /* tutorial reference for draw control properties:
@@ -508,6 +508,17 @@ var draw = new MapboxDraw({
                 'circle-radius': 5,
                 'circle-color': '#3c6382'
             }
+        },
+        {
+            'id': 'gl-draw-polygon-midpoint',
+            'type': 'circle',
+            'filter': ['all', ['==', '$type', 'Point'],
+                ['==', 'meta', 'midpoint']
+            ],
+            'paint': {
+                'circle-radius': 5,
+                'circle-color': '#3c6382'
+            }
         }
     ]
 
@@ -572,7 +583,7 @@ function newCensusLines(state) {
       "line-cap": "round"
     },
     "paint": {
-      "line-color": "rgba(71, 93, 204, 0.25)",
+      "line-color": "rgba(71, 93, 204, 0.5)",
       "line-width": 1
     }
   });
@@ -615,7 +626,7 @@ map.on('style.load', function() {
       newHighlightLayer(states[i]);
     }
 
-
+    // Point centered at geocoded location
     map.addLayer({
         "id": "point",
         "source": "single-point",
@@ -651,6 +662,7 @@ map.on('render', function() {
         wkt_obj = wkt.read(feature);
         var geoJsonFeature = wkt_obj.toJson();
         var featureIds = draw.add(geoJsonFeature);
+        console.log('Refresh')
         updateCommunityEntry();
     }
 
@@ -658,9 +670,21 @@ map.on('render', function() {
 
 /******************************************************************************/
 
-map.on('draw.create', updateCommunityEntry);
-map.on('draw.delete', updateCommunityEntry);
-map.on('draw.update', updateCommunityEntry);
+map.on('draw.create', function() {
+    console.log('Draw create');
+    updateCommunityEntry();
+});
+map.on('draw.delete', function() {
+    console.log('Draw delete');
+    updateCommunityEntry();
+});
+map.on('draw.update', function() {
+    console.log('Draw update');
+    updateCommunityEntry();
+});
+map.on('draw.changeMode', function() {
+    console.log('Draw CM');
+});
 
 
 /******************************************************************************/
@@ -893,6 +917,7 @@ function updateCommunityEntry(e) {
     document.getElementById('id_user_polygon').value = user_polygon_wkt;
     document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon_wkt;
     document.getElementById('id_census_blocks_polygon_array').value = census_blocks_polygon_array;
+    console.log('Entry updated; map valid')
     triggerSuccessMessage();
 }
 /******************************************************************************/
