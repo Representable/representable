@@ -28,6 +28,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="container-fluid">
 <script>
   sessionStorage.setItem("allChecks", "pass");
   console.log("passed");
@@ -306,9 +307,9 @@
     </div>
   </div>
 
-
-
 </div>
+</div>
+
 {% endblock %}
 {% block script %}
 {{ form.media.js }}
