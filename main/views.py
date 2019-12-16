@@ -210,8 +210,6 @@ class Review(LoginRequiredMixin, TemplateView):
                 entryPolyDict[obj.entry_ID] = struct.coordinates
                 if obj.admin_approved:
                     approvedList.append(obj.entry_ID)
-        print('Ret')
-        print(len(entryPolyDict))
         context = ({
             'form': form,
             'tags': json.dumps(tags),
