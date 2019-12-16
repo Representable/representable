@@ -2,7 +2,7 @@
 #
 # Copyright (c) 2019- Representable Team (Theodor Marcu, Lauren Johnston, Somya Arora, Kyle Barnes, Preeti Iyer).
 #
-# This file is part of Representable 
+# This file is part of Representable
 # (see http://representable.org).
 #
 # This program is free software: you can redistribute it and/or modify
@@ -21,8 +21,8 @@
 import os
 import sys
 
-if __name__ == '__main__':
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'representable.settings')
+if __name__ == "__main__":
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "representable.settings")
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

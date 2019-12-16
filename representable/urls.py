@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2019- Representable Team (Theodor Marcu, Lauren Johnston, Somya Arora, Kyle Barnes, Preeti Iyer).
 #
-# This file is part of Representable 
+# This file is part of Representable
 # (see http://representable.org).
 #
 # This program is free software: you can redistribute it and/or modify
@@ -36,10 +36,10 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('', include('main.urls')),
-    path('admin/', admin.site.urls),
-    #path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/', include('allauth.urls')),
-    path('select2/', include('django_select2.urls')),
-    path('i18n/', include('django.conf.urls.i18n'))
+    path("", include("main.urls")),
+    path("admin/", admin.site.urls),
+    # path('accounts/', include('django.contrib.auth.urls')),
+    path("accounts/", include("allauth.urls")),
+    path("select2/", include("django_select2.urls")),
+    path("i18n/", include("django.conf.urls.i18n")),
 ]
