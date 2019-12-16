@@ -258,8 +258,7 @@ function modalZip(e) {
         console.log(err, res)
       });
     console.log(geoObj);
-    var q = "Edison";
-
+    let st = getState($('#zipcode').val());
   } else {
     // write out the error here:
   }
@@ -314,7 +313,7 @@ var map = new mapboxgl.Map({
     container: 'map', // container id
     style: 'mapbox://styles/mapbox/streets-v11', //hosted style id
     center: [-74.65545, 40.341701], // starting position - Princeton, NJ :)
-    zoom: 12 // starting zoom
+    zoom: 9 // starting zoom
 });
 
 var layerList = document.getElementById('menu');
@@ -333,7 +332,7 @@ for (let i = 0; i < inputs.length; i++) {
 var geocoder = new MapboxGeocoder({
     accessToken: mapboxgl.accessToken,
     country: 'us',
-    mapboxgl: mapboxgl
+    mapboxgl: mapboxgl,
 });
 
 /* tutorial reference for draw control properties:
@@ -509,6 +508,17 @@ var draw = new MapboxDraw({
                 'circle-radius': 5,
                 'circle-color': '#3c6382'
             }
+        },
+        {
+            'id': 'gl-draw-polygon-midpoint',
+            'type': 'circle',
+            'filter': ['all', ['==', '$type', 'Point'],
+                ['==', 'meta', 'midpoint']
+            ],
+            'paint': {
+                'circle-radius': 5,
+                'circle-color': '#3c6382'
+            }
         }
     ]
 
@@ -573,7 +583,7 @@ function newCensusLines(state) {
       "line-cap": "round"
     },
     "paint": {
-      "line-color": "rgba(71, 93, 204, 0.25)",
+      "line-color": "rgba(71, 93, 204, 0.5)",
       "line-width": 1
     }
   });
@@ -616,7 +626,7 @@ map.on('style.load', function() {
       newHighlightLayer(states[i]);
     }
 
-
+    // Point centered at geocoded location
     map.addLayer({
         "id": "point",
         "source": "single-point",
@@ -652,6 +662,7 @@ map.on('render', function() {
         wkt_obj = wkt.read(feature);
         var geoJsonFeature = wkt_obj.toJson();
         var featureIds = draw.add(geoJsonFeature);
+        console.log('Refresh')
         updateCommunityEntry();
     }
 
@@ -659,9 +670,21 @@ map.on('render', function() {
 
 /******************************************************************************/
 
-map.on('draw.create', updateCommunityEntry);
-map.on('draw.delete', updateCommunityEntry);
-map.on('draw.update', updateCommunityEntry);
+map.on('draw.create', function() {
+    console.log('Draw create');
+    updateCommunityEntry();
+});
+map.on('draw.delete', function() {
+    console.log('Draw delete');
+    updateCommunityEntry();
+});
+map.on('draw.update', function() {
+    console.log('Draw update');
+    updateCommunityEntry();
+});
+map.on('draw.changeMode', function() {
+    console.log('Draw CM');
+});
 
 
 /******************************************************************************/
@@ -862,8 +885,10 @@ function updateCommunityEntry(e) {
         // Calculate area and convert it from square meters into square miles.
         let area = turf.area(data);
         area = turf.convertArea(area, "meters", "miles");
-        // Use NJ State Area * 1/2
-        let halfStateArea = 4350;
+
+        // TODO: Need to make sure map does not cross state boundaries??? Maybe this is fine for communities...
+        // Use NJ State Area * 1/2 TODO: need to generalize?
+        let halfStateArea = 4350; // TODO use dictionary lookup based on zipcode
         if (area > halfStateArea) {
             triggerDrawError("map-area-size-error", "Polygon area too large. Please draw your community again.")
             draw.trash();
@@ -878,7 +903,6 @@ function updateCommunityEntry(e) {
         if (census_blocks_polygon_array != undefined) {
             census_blocks_polygon_array = census_blocks_polygon_array.join("|");
         }
-
     } else {
         // sets an empty filter - unhighlights everything
         // sets the form fields as empty
@@ -893,6 +917,7 @@ function updateCommunityEntry(e) {
     document.getElementById('id_user_polygon').value = user_polygon_wkt;
     document.getElementById('id_census_blocks_polygon').value = census_blocks_polygon_wkt;
     document.getElementById('id_census_blocks_polygon_array').value = census_blocks_polygon_array;
+    console.log('Entry updated; map valid')
     triggerSuccessMessage();
 }
 /******************************************************************************/
