@@ -162,7 +162,6 @@ class Review(LoginRequiredMixin, TemplateView):
             tags[str(obj)] = ids
 
         user = self.request.user
-        authorDict = dict() # if superuser, who submitted this
         approvedList = list() # TODO make list?
         if user.is_staff:
             query = CommunityEntry.objects.all()
@@ -189,7 +188,6 @@ class Review(LoginRequiredMixin, TemplateView):
                     print('Authorized for states {}'.format(possib_states))
                     # add it to viewable
                     entryPolyDict[obj.entry_ID] = struct.coordinates
-                    authorDict[obj.entry_ID] = obj.user.username
                     viewableQuery.append(obj)
                     if obj.admin_approved:
                         # this is for coloring the map properly
@@ -219,7 +217,6 @@ class Review(LoginRequiredMixin, TemplateView):
             'tags': json.dumps(tags),
             'issues': json.dumps(issues),
             'entries': json.dumps(entryPolyDict),
-            'authors': json.dumps(authorDict),
             'approved': json.dumps(approvedList),
             'communities': query,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
