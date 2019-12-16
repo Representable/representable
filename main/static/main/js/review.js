@@ -166,7 +166,6 @@ map.on('load', function() {
 
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
-
   for (obj in a) {
     let catDict = {};
     let catArray = [];
@@ -191,6 +190,13 @@ map.on('load', function() {
     else {
       final = a[obj]
     }
+    approved_color = 'rgba(110, 178, 181,0.30)';
+    unapproved_color = 'rgba(255, 50, 0,0.30)';
+    if (approved.indexOf(obj) > -1) {
+      color = approved_color;
+    } else {
+      color = unapproved_color;
+    }
     map.addLayer({
       'id': obj,
       'type': 'fill',
@@ -212,10 +218,9 @@ map.on('load', function() {
         "visibility": "visible"
       },
       'paint': {
-        'fill-color': 'rgba(110, 178, 181,0.15)',
+        'fill-color': color,
       }
     });
-    // console.log(a[obj]);
     map.addLayer({
       'id': obj + "line",
       'type': 'line',
@@ -239,7 +244,7 @@ map.on('load', function() {
         "line-cap": "round"
       },
       'paint': {
-        'line-color': 'rgba(110, 178, 181,0.3)',
+        'line-color': 'rgba(0, 0, 0,0.2)',
         "line-width": 2
       }
     });

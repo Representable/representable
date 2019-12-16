@@ -1,5 +1,9 @@
 <!doctype html>
 {% load static %}
+{% load i18n %}
+
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
 <html lang="en">
 
 <head>
@@ -48,41 +52,117 @@
       </ul>
       <ul class="nav navbar-nav navbar-right align-items-center">
         <li class="nav-item mx-auto">
+          <!-- Translate this? -->
           <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item mx-auto">
-          <a class="nav-link" href='/about'>About</a>
+          <a class="nav-link" href='/about'>
+            {% if LANGUAGE_CODE == 'en' %}
+              About
+            {% elif LANGUAGE_CODE == 'es' %}
+              <!-- Google translate  -->
+              Acerca de
+            {% endif %}
+          </a>
         </li>
         <li class="nav-item mx-auto">
-          <a class="nav-link" href='/map'>Map</a>
+          <a class="nav-link" href='/map'>
+            {% if LANGUAGE_CODE == 'en' %}
+              Map
+            {% elif LANGUAGE_CODE == 'es' %}
+              <!-- Google translate  -->
+              Mapa
+            {% endif %}
+          </a>
         </li>
         {% if user.is_authenticated %}</li>
         <li class="nav-item mx-auto">
-          <a class="nav-link" href='/review'>My Entries</a>
+          {% if user.is_authenticated %}
+            {% if user.is_staff %}
+              <a class="nav-link" href='/review'>
+                {% if LANGUAGE_CODE == 'en' %}
+                  Approve and view entries
+                {% elif LANGUAGE_CODE == 'es' %}
+                  <!-- Google translate  -->
+                  Aprobar y ver entradas
+                {% endif %}
+              </a>
+            {% else %}
+              <a class="nav-link" href='/review'>
+                {% if LANGUAGE_CODE == 'en' %}
+                  My entries
+                {% elif LANGUAGE_CODE == 'es' %}
+                  <!-- Google translate  -->
+                  Mis entradas
+                {% endif %}
+              </a>
+            {% endif %}
+          {% endif %}
         </li>
         <li class="nav-item mx-auto">
-          <a class="btn btn-outline-primary m-2" href="/entry">New Entry</a>
+          <a class="btn btn-outline-primary m-2" href="/entry">
+            {% if LANGUAGE_CODE == 'en' %}
+              New entry
+            {% elif LANGUAGE_CODE == 'es' %}
+              <!-- Google translate  -->
+              Nueva entrada
+            {% endif %}
+          </a>
         </li>
         <li class="nav-item mx-auto">
-          <a class="btn btn-primary m-2" href="/accounts/logout">Log Out</a>
+          <a class="btn btn-primary m-2" href="/accounts/logout">
+            {% if LANGUAGE_CODE == 'en' %}
+              Log out
+            {% elif LANGUAGE_CODE == 'es' %}
+              <!-- Google translate  -->
+              Cerrar sesión
+            {% endif %}
+          </a>
         </li>
         {% else %}
         <li class="nav-item mx-auto">
-          <a class="btn btn-outline-primary m-2" href="/accounts/login">Log In</a>
+          <a class="btn btn-outline-primary m-2" href="/accounts/login">
+            {% if LANGUAGE_CODE == 'en' %}
+              Log in
+            {% elif LANGUAGE_CODE == 'es' %}
+              <!-- Google translate  -->
+              Iniciar sesión
+            {% endif %}
+          </a>
         </li>
         <li class="nav-item mx-auto">
-          <a class="btn btn-primary m-2" href="/accounts/signup">Sign up</a>
+          <a class="btn btn-primary m-2" href="/accounts/signup">
+            {% if LANGUAGE_CODE == 'en' %}
+              Sign up
+            {% elif LANGUAGE_CODE == 'es' %}
+              <!-- Google translate  -->
+              Regístrate
+            {% endif %}
+          </a>
         </li>
         {% endif %}
       </ul>
+      <!-- TODO: This should not necessarily be in the navbar - on mobile/iPad, it needs to be visible on main page. -->
+      <!-- References https://docs.djangoproject.com/en/2.2/topics/i18n/translation/#set-language-redirect-view -->
+      <!-- Also https://stackoverflow.com/questions/47874530/django-language-selection-from-dropdown-links-and-images -->
+      <ul class="nav navbar-nav navbar-right language menu">
+        <form action="{% url 'set_language' %}" method="post">
+          {% csrf_token %}
+          <input name="next" type="hidden" value="{{ redirect_to }}" />
+          <select name="language" onchange="javascript:this.form.submit()">
+              {% for lang in LANGUAGES %}
+                  <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected="selected"{% endif %}>
+                      {{ lang.1 }} ({{ lang.0 }})
+                  </option>
+              {% endfor %}
+          </select>
+        </form>
+      </ul>
     </div>
-
   </nav>
 
-  <div class="container-fluid">
     {% block content %}
     {% endblock %}
-  </div>
 
 
   <!-- Optional JavaScript -->
@@ -101,23 +181,40 @@
         <a href="/"><img class="mb-2" src="{% static 'img/representable_logo.svg' %}" alt="" width="24" height="24"></a>
         <small class="d-block mb-3 text-muted">© 2019</small>
       </div>
-      <div class="col-6 col-md">
+      <!-- <div class="col-6 col-md">
         <h5>Community Map</h5>
         <ul class="list-unstyled text-small">
           <li><a class="text-muted" href="/entry">Contribute</a></li>
           <li><a class="text-muted" href="/map">View All</a></li>
           {% if user.is_authenticated %}
-          <li><a class="text-muted" href="/review">My Entries</a></li>
+            {% if user.is_staff %}
+              <li><a class="text-muted" href="/review">Approve and view entries</a></li>
+            {% else %}
+              <li><a class="text-muted" href="/review">My Entries</a></li>
+            {% endif %}
           {% endif %}
         </ul>
-      </div>
+      </div> -->
 
       <div class="col-6 col-md">
-        <h5>About</h5>
+        <!-- <h5>About</h5> -->
         <ul class="list-unstyled text-small">
-          <li><a class="text-muted" href="/about">About Us</a></li>
-          <li><a class="text-muted" href="#">Privacy</a></li>
-          <li><a class="text-muted" href="#">Terms</a></li>
+          <!-- <li><a class="text-muted" href="/about">About Us</a></li> -->
+          <li><a class="text-muted" href="#">
+            {% if LANGUAGE_CODE == 'en' %}
+              Privacy
+            {% elif LANGUAGE_CODE == 'es' %}
+              <!-- Google translate  -->
+              Intimidad
+            {% endif %}
+          </a></li>
+          <li><a class="text-muted" href="#">
+            {% if LANGUAGE_CODE == 'en' %}
+              Terms
+            {% elif LANGUAGE_CODE == 'es' %}
+              <!-- Google translate  -->
+              Condiciones
+            {% endif %}</a></li>
         </ul>
       </div>
     </div>
