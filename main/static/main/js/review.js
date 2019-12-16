@@ -167,7 +167,6 @@ map.on('load', function() {
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
   for (obj in a) {
-    console.log(obj)
     let catDict = {};
     let catArray = [];
     for (cat in issues) {
