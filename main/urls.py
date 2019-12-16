@@ -1,7 +1,7 @@
 #
 # Copyright (c) 2019- Representable Team (Theodor Marcu, Lauren Johnston, Somya Arora, Kyle Barnes, Preeti Iyer).
 #
-# This file is part of Representable 
+# This file is part of Representable
 # (see http://representable.org).
 #
 # This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@
 from django.urls import path
 
 from . import views
-from representable.settings import MAPBOX_KEY
+from representable.settings.base import MAPBOX_KEY
 
 app_name = "main"
 urlpatterns = [
@@ -31,5 +31,8 @@ urlpatterns = [
     path('entry/', views.EntryView.as_view(), name='entry'),
     path('main/', views.MainView.as_view(), name='main_test'),
     path('about/', views.About.as_view(), name='MeetTheTeam'),
-    path('review/', views.Review.as_view(), name='review')
+    path('review/', views.Review.as_view(), name='review'),
+    path('privacy/', views.Privacy.as_view(), name='privacy'),
+    path('terms/', views.Terms.as_view(), name='terms')
+
 ]

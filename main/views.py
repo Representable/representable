@@ -28,6 +28,10 @@ from .forms import CommunityForm, IssueForm, DeletionForm
 from .models import CommunityEntry, Issue, Tag
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
+from django.utils.translation import gettext
+from django.utils.translation import (
+    LANGUAGE_SESSION_KEY, check_for_language, get_language, to_locale,
+)
 from shapely.geometry import Polygon, mapping
 import geojson, os, json, re
 from django.http import JsonResponse
@@ -56,6 +60,10 @@ def category_clean(cat):
         cat = "LGBT Issues"
     return cat
 #******************************************************************************#
+# language views
+
+#******************************************************************************#
+
 '''
 Documentation: https://docs.djangoproject.com/en/2.1/topics/class-based-views/
 '''
@@ -67,6 +75,10 @@ class Index(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(Index, self).get_context_data(
             **kwargs)  # get the default context data
+        print('hello')
+        print(context)
+        print(get_language())
+        # print(LANGUAGE_CODE)
         context['mapbox_key'] = os.environ.get('DISTR_MAPBOX_KEY')
         return context
 
@@ -91,6 +103,16 @@ class Timeline(TemplateView):
 
 class About(TemplateView):
     template_name = "main/about.html"
+
+#******************************************************************************#
+
+class Privacy(TemplateView):
+    template_name = "main/privacy.html"
+
+#******************************************************************************#
+
+class Terms(TemplateView):
+    template_name = "main/terms.html"
 
 #******************************************************************************#
 class Review(LoginRequiredMixin, TemplateView):
