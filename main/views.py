@@ -156,7 +156,6 @@ class Review(LoginRequiredMixin, TemplateView):
                 # note that this is an offline reverse geocoding library
                 # reverse geocode to see which states this is in
                 results = rg.search(ct)
-                print(results)
                 if len(results) == 0:
                     continue # skip this community: reverse geocoding failed!
                 admins = [y for x,y in results[0].items()]
