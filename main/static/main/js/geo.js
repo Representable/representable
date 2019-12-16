@@ -258,8 +258,7 @@ function modalZip(e) {
         console.log(err, res)
       });
     console.log(geoObj);
-    var q = "Edison";
-
+    let st = getState($('#zipcode').val());
   } else {
     // write out the error here:
   }
