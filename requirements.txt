@@ -28,7 +28,7 @@ lazy-object-proxy==1.4.3
 licenseheaders==0.6
 MarkupSafe==1.1.1
 mccabe==0.6.1
-nltk==3.4
+nltk==3.4.5
 numpy==1.17.4
 oauthlib==3.0.1
 opencv-python==4.1.0.25
