@@ -294,15 +294,15 @@ function newSourceLayer(name, mbCode) {
 function newCensusLayer(state) {
   map.addLayer({
     "id": state.toUpperCase() + " Census Blocks",
-    "type": "fill",
+    "type": "line",
     "source": state + "-census",
     "source-layer": state + "census",
     "layout": {
       "visibility": "none"
     },
     "paint": {
-      "fill-color": "rgba(193, 202, 214, 0)",
-      "fill-outline-color": "rgba(106,137,204,0.4)"
+      "line-color": "rgba(106,137,204,0.7)",
+      "line-width": 3
     }
   });
 }
@@ -319,7 +319,7 @@ function newUpperLegislatureLayer(state) {
       "line-cap": "round"
     },
     "paint": {
-      "line-color": "rgba(106,137,204,0.2)",
+      "line-color": "rgba(106,137,204,0.7)",
       "line-width": 2
     }
   });
@@ -337,7 +337,7 @@ function newLowerLegislatureLayer(state) {
       "line-cap": "round"
     },
     "paint": {
-      "line-color": "rgba(106,137,204,0.2)",
+      "line-color": "rgba(106,137,204,0.7)",
       "line-width": 2
     }
   });

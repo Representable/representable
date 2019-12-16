@@ -2,15 +2,12 @@
 {% extends 'main/base.html' %}
 {% load static %}
 
-{% block head %}
-<link rel="stylesheet" href="{% static 'main/css/style.css' %}">
-{% endblock %}
-
 {% block content %}
-<div class="row row-content row-about text-center">
+<div class="container">
+<div class="row text-center row-content">
   <div class="col">
-    <h1> Meet the team! </h1>
-    <p class="p-about"> We’re a team of Princeton engineers
+    <h2> About Us </h2>
+    <p class="font-weight-light"> We’re a team of engineers
       who are excited to create technical solutions for civic issues.
       Coming from a wide array of backgrounds, we put our technical and policy experience
       together to make a powerful crowdsourced tool which we hope can change the current
@@ -19,117 +16,59 @@
       diluted by gerrymandering and look forward to turning Representable into a national
       tool for political equity. </p>
   </div>
+
 </div>
-
-<div class="row row-content">
-  <div class="col-md-6 col-lg-4">
-    <div class="team-member">
-      <div class="team-img">
-        <img src="{% static 'img/somya.png' %}" alt="team member" style="width: 100%; height: 100%;">
-      </div>
-      <div class="team-hover">
-        <div class="desk">
-          <p>I have worked on the community draw and community visualization features for Representable.
-            My interests focus on Computer Graphics and Vision. When I’m not working on Representable,
-            you can find me outdoors, hiking in the woods, dancing, or sampling different kinds of teas.</p>
-        </div>
-      </div>
+<div class="row text-center">
+  <div class="col my-2">
+    <h4>Founding Team</h4>
     </div>
-    <div class="team-title">
-      <a href="mailto:somyaa@princeton.edu?Subject=Representable%20Inquiry" target="_top">
-        <h5>Somya Arora</h5>
-      </a>
-      <span>Princeton Class of 2021</span>
+    </div>
+  <div class="row">
+  <div class="col-md-4 col-lg">
+    <div class="card border-0 shadow-sm">
+      <img src="{% static 'img/somya.jpeg' %}" class="card-img-top" alt="...">
+      <div class="card-body text-center">
+        <h6 class="card-title">Somya Arora</h6>
+        <p class="card-text font-weight-light">Engineer</p>
+      </div>
     </div>
   </div>
-
-  <div class="col-md-6 col-lg-4">
-    <div class="team-member">
-      <div class="team-img">
-        <img src="{% static 'img/kyle.png' %}" alt="team member" style="width: 100%; height: 100%;">
+  <div class="col-md-4 col-lg">
+    <div class="card border-0 shadow-sm" >
+      <img src="{% static 'img/kyle.jpeg' %}" class="card-img-top" alt="...">
+      <div class="card-body text-center">
+        <h6 class="card-title">Kyle Barnes</h6>
+        <p class="card-text font-weight-light">Engineer</p>
       </div>
-      <div class="team-hover">
-        <div class="desk">
-          <p>I work primarily on visualization for Representable, and am interested in the
-            applications of tech and design in service. When I’m not working on Representable,
-            I am often found figure skating, designing clothes, dancing, dj-ing, and
-            eating copious amounts of breakfast foods. </p>
-        </div>
-      </div>
-    </div>
-    <div class="team-title">
-      <a href="mailto:ktbarnes@princeton.edu ?Subject=Representable%20Inquiry" target="_top">
-        <h5>Kyle Barnes</h5>
-      </a>
-      <span>Princeton Class of 2020</span>
     </div>
   </div>
-
-
-  <div class="col-md-6 col-lg-4">
-    <div class="team-member">
-      <div class="team-img">
-        <img src="{% static 'img/preeti.png' %}" alt="team member" style="width: 100%; height: 100%;">
+  <div class="col-md-4 col-lg">
+    <div class="card border-0 shadow-sm" >
+      <img src="{% static 'img/preeti.jpeg' %}" class="card-img-top" alt="...">
+      <div class="card-body text-center">
+        <h6 class="card-title">Preeti Iyer</h6>
+        <p class="card-text font-weight-light">Engineer</p>
       </div>
-      <div class="team-hover">
-        <div class="desk">
-          <p> I worked within front end development for Representable and am interested in
-            data science applications in robotics, healthcare, and urban issues. When I’m not
-            working on Representable, you can find me dancing, working on menstrual rights policy,
-            hiking, and catching the perfect sunset.</p>
-        </div>
-      </div>
-    </div>
-    <div class="team-title">
-      <a href="mailto:psiyer@princeton.edu ?Subject=Representable%20Inquiry" target="_top">
-        <h5>Preeti Iyer</h5>
-      </a>
-      <span>Princeton Class of 2020</span>
     </div>
   </div>
-
-  <div class="col-md-6 col-lg-4">
-    <div class="team-member">
-      <div class="team-img">
-        <img src="{% static 'img/lauren.png' %}" alt="team member" style="width: 100%; height: 100%;">
+  <div class="col-md-4 col-lg">
+    <div class="card border-0 shadow-sm" >
+      <img src="{% static 'img/lauren.jpeg' %}" class="card-img-top" alt="...">
+      <div class="card-body text-center">
+        <h6 class="card-title">Lauren Johnston</h6>
+        <p class="card-text font-weight-light">Engineer</p>
       </div>
-      <div class="team-hover">
-        <div class="desk">
-          <p>I have been working on the community identification form, user authentication, and developing the front-end user experience.
-            When I’m not working on Representable, you can find me reporting on campus life as part of 1080princeton,
-            planting at the Princeton Garden Project, or going on a trail run.</p>
-        </div>
-      </div>
-    </div>
-    <div class="team-title">
-      <a href="mailto:ljohnston@princeton.edu?Subject=Representable%20Inquiry" target="_top">
-        <h5>Lauren Johnston</h5>
-      </a>
-      <span>Princeton Class of 2020</span>
     </div>
   </div>
-
-  <div class="col-md-6 col-lg-4">
-    <div class="team-member">
-      <div class="team-img">
-        <img src="{% static 'img/theo.png' %}" alt="team member" style="width: 100%; height: 100%;">
+  <div class="col-md-4 col-lg">
+    <div class="card border-0 shadow-sm" >
+      <img src="{% static 'img/theo.jpeg' %}" class="card-img-top" alt="...">
+      <div class="card-body text-center">
+        <h6 class="card-title">Theodor Marcu</h6>
+        <p class="card-text font-weight-light">Engineer</p>
       </div>
-      <div class="team-hover">
-        <div class="desk">
-          <p>I have developed parts of the form and community drawing page for Representable.
-            My interests focus on UI/UX research and tech public policy. When I’m not working
-            on Representable you can find me playing tennis, going out, or just hacking together
-            a new project.</p>
-        </div>
-      </div>
-    </div>
-    <div class="team-title">
-      <a href="mailto:tmarcu@princeton.edu?Subject=Representable%20Inquiry" target="_top">
-        <h5>Theodor Marcu</h5>
-      </a>
-      <span>Princeton Class of 2020</span>
     </div>
   </div>
-
+</div>
 </div>
 {% endblock %}
