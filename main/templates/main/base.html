@@ -181,20 +181,47 @@
         <a href="/"><img class="mb-2" src="{% static 'img/representable_logo.svg' %}" alt="" width="24" height="24"></a>
         <small class="d-block mb-3 text-muted">© 2019</small>
       </div>
-      <!-- <div class="col-6 col-md">
-        <h5>Community Map</h5>
+      <div class="col-6 col-md">
+        <!-- <h5>Community Map</h5> -->
         <ul class="list-unstyled text-small">
-          <li><a class="text-muted" href="/entry">Contribute</a></li>
-          <li><a class="text-muted" href="/map">View All</a></li>
+          <li><a class="text-muted" href="/entry">
+              {% if LANGUAGE_CODE == 'en' %}
+                Contribute
+              {% elif LANGUAGE_CODE == 'es' %}
+                <!-- Google translate  -->
+                Contribuir
+              {% endif %}
+          </a></li>
+          <li><a class="text-muted" href="/map">
+              {% if LANGUAGE_CODE == 'en' %}
+                View All Maps
+              {% elif LANGUAGE_CODE == 'es' %}
+                <!-- Google translate  -->
+                Ver Todos Los Mapas
+          </a></li>
           {% if user.is_authenticated %}
             {% if user.is_staff %}
-              <li><a class="text-muted" href="/review">Approve and view entries</a></li>
+              <li><a class="text-muted" href="/review">
+                  <li><a class="text-muted" href="/map">
+                      {% if LANGUAGE_CODE == 'en' %}
+                        Approve and View Entries
+                      {% elif LANGUAGE_CODE == 'es' %}
+                        <!-- Google translate  -->
+                        Aprobar Y Ver Entradas
+                  </a></li>
+              </a></li>
             {% else %}
-              <li><a class="text-muted" href="/review">My Entries</a></li>
+              <li><a class="text-muted" href="/review">
+                  {% if LANGUAGE_CODE == 'en' %}
+                    My Entries
+                  {% elif LANGUAGE_CODE == 'es' %}
+                    <!-- Google translate  -->
+                    Mis entradas
+              </a></li>
             {% endif %}
           {% endif %}
         </ul>
-      </div> -->
+      </div>
 
       <div class="col-6 col-md">
         <!-- <h5>About</h5> -->
