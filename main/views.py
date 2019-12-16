@@ -36,6 +36,8 @@ from shapely.geometry import Polygon, mapping
 import geojson, os, json, re
 from django.http import JsonResponse
 import shapely.wkt
+import reverse_geocoder as rg
+from state_abbrev import us_state_abbrev
 
 
 #******************************************************************************#
@@ -120,6 +122,13 @@ class Review(LoginRequiredMixin, TemplateView):
     form_class = DeletionForm
     initial = {'key': 'value'}
 
+    def centroid(self, pt_list):
+        print(pt_list)
+        length = len(pt_list)
+        sum_x = sum([x[1] for x in pt_list]) # TODO coords are reversed for some reason?
+        sum_y = sum([x[0] for x in pt_list])
+        return sum_x / length, sum_y / length
+
     # https://www.agiliq.com/blog/2019/01/django-formview/
     def get_initial(self):
         initial = self.initial
@@ -153,33 +162,78 @@ class Review(LoginRequiredMixin, TemplateView):
                 ids.append(str(id))
             tags[str(obj)] = ids
 
-        query = CommunityEntry.objects.filter(user = self.request.user)
-
-        for obj in query:
-            if (obj.census_blocks_polygon == '' or obj.census_blocks_polygon == None):
-                s = "".join(obj.user_polygon.geojson)
-            else:
-                s = "".join(obj.census_blocks_polygon.geojson)
-
-            # add all the coordinates in the array
-            # at this point all the elements of the array are coordinates of the polygons
-            struct = geojson.loads(s)
-            entryPolyDict[obj.entry_ID] = struct.coordinates
+        user = self.request.user
+        authorDict = dict() # if superuser, who submitted this
+        approvedList = list() # TODO make list?
+        if user.is_staff:
+            query = CommunityEntry.objects.all()
+            for obj in query:
+                if (obj.census_blocks_polygon == '' or obj.census_blocks_polygon == None):
+                    s = "".join(obj.user_polygon.geojson)
+                else:
+                    s = "".join(obj.census_blocks_polygon.geojson)
+                struct = geojson.loads(s)
+                ct = self.centroid(struct['coordinates'][0])
+                # https://github.com/thampiman/reverse-geocoder
+                # note that this is an offline reverse geocoding library
+                # reverse geocode to see which states this is in
+                results = rg.search(ct)
+                if len(results) == 0:
+                    continue # skip this community: reverse geocoding failed!
+                admins = [y for x,y in results[0].items()]
+                # get the states that the object is in
+                possib_states = set([us_state_abbrev[x] for x in us_state_abbrev.keys() if x in admins])
+                # now make sure user is authorized to edit state
+                authorized = set([g.name.upper() for g in user.groups.all()]) # TODO assume all groups are state
+                if possib_states.issubset(authorized):
+                    print('Authorized for states {}'.format(possib_states))
+                    # add it to viewable
+                    entryPolyDict[obj.entry_ID] = struct.coordinates
+                    authorDict[obj.entry_ID] = obj.user.username
+                    if obj.admin_approved:
+                        approvedList.append(obj.entry_ID)
+        else:
+            # in this case, just get the ones we made
+            query = CommunityEntry.objects.filter(user = self.request.user)
+            for obj in query:
+                if (obj.census_blocks_polygon == '' or obj.census_blocks_polygon == None):
+                    s = "".join(obj.user_polygon.geojson)
+                else:
+                    s = "".join(obj.census_blocks_polygon.geojson)
+                # add all the coordinates in the array
+                # at this point all the elements of the array are coordinates of the polygons
+                struct = geojson.loads(s)
+                entryPolyDict[obj.entry_ID] = struct.coordinates
+                if obj.admin_approved:
+                    approvedList.append(obj.entry_ID)
 
         context = ({
             'form': form,
             'tags': json.dumps(tags),
             'issues': json.dumps(issues),
             'entries': json.dumps(entryPolyDict),
+            'authors': json.dumps(authorDict),
+            'approved': json.dumps(approvedList),
             'communities': query,
             'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
         })
         return context
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, label_suffix='')
-
         # delete entry if form is valid and entry belongs to current user
-        if form.is_valid():
+        if form.is_valid() and self.request.user.is_staff:
+            query = CommunityEntry.objects.filter(user = self.request.user)
+            entry = query.get(entry_ID=request.POST.get('c_id'))
+            # TODO check whether authorized to edit state?
+            if 'Approve' in request.POST: # TODO need someone to review security
+                entry.admin_approved = True
+                entry.save()
+            elif 'Unapprove' in request.POST:
+                entry.admin_approved = False
+                entry.save()
+            elif 'Delete' in request.POST:
+                entry.delete()
+        elif form.is_valid(): # not staff, just can delete own entries
             query = CommunityEntry.objects.filter(user = self.request.user)
             entry = query.get(entry_ID=request.POST.get('c_id'))
             entry.delete()
@@ -195,52 +249,7 @@ class Review(LoginRequiredMixin, TemplateView):
                 issueInfo[str(obj.entry)] = obj.description
                 issues[cat] = issueInfo
 
-
-        tags = dict()
-        for obj in Tag.objects.all():
-            # manytomany query
-            entries = obj.communityentry_set.all()
-            ids = []
-            for id in entries:
-                ids.append(str(id))
-            tags[str(obj)] = ids
-        entryPolyDict = dict()
-
-        query = CommunityEntry.objects.filter(user = self.request.user)
-
-        for obj in query:
-            if (obj.census_blocks_polygon == '' or obj.census_blocks_polygon == None):
-                s = "".join(obj.user_polygon.geojson)
-            else:
-                s = "".join(obj.census_blocks_polygon.geojson)
-
-            # add all the coordinates in the array
-            # at this point all the elements of the array are coordinates of the polygons
-            struct = geojson.loads(s)
-            entryPolyDict[obj.entry_ID] = struct.coordinates
-
-
-        # the polygon coordinates
-        entryPolyDict = dict()
-        # dictionary of tags to be displayed
-        tags = dict()
-        for obj in Tag.objects.all():
-            # manytomany query
-            entries = obj.communityentry_set.all()
-            ids = []
-            for id in entries:
-                ids.append(str(id))
-            tags[str(obj)] = ids
-
-        context = {
-            'form': form,
-            'tags': json.dumps(tags),
-            'issues': json.dumps(issues),
-            'entries': json.dumps(entryPolyDict),
-            'communities': query,
-            'mapbox_key': os.environ.get('DISTR_MAPBOX_KEY'),
-        }
-        # print(issue_formset)
+        context = self.get_context_data() # TODO: Is there a problem with this?
         return render(request, self.template_name, context)
 
 #******************************************************************************#
@@ -281,6 +290,7 @@ class Map(TemplateView):
             tags[str(obj)] = ids
         # get the polygon from db and pass it on to html
         for obj in CommunityEntry.objects.all():
+            if not obj.admin_approved: continue
             if (obj.census_blocks_polygon == '' or obj.census_blocks_polygon == None):
                 s = "".join(obj.user_polygon.geojson)
             else:

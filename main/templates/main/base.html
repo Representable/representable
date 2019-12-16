@@ -77,14 +77,27 @@
         </li>
         {% if user.is_authenticated %}</li>
         <li class="nav-item mx-auto">
-          <a class="nav-link" href='/review'>
-            {% if LANGUAGE_CODE == 'en' %}
-              My entries
-            {% elif LANGUAGE_CODE == 'es' %}
-              <!-- Google translate  -->
-              Mis entradas
+          {% if user.is_authenticated %}
+            {% if user.is_staff %}
+              <a class="nav-link" href='/review'>
+                {% if LANGUAGE_CODE == 'en' %}
+                  Approve and view entries
+                {% elif LANGUAGE_CODE == 'es' %}
+                  <!-- Google translate  -->
+                  Aprobar y ver entradas
+                {% endif %}
+              </a>
+            {% else %}
+              <a class="nav-link" href='/review'>
+                {% if LANGUAGE_CODE == 'en' %}
+                  My entries
+                {% elif LANGUAGE_CODE == 'es' %}
+                  <!-- Google translate  -->
+                  Mis entradas
+                {% endif %}
+              </a>
             {% endif %}
-          </a>
+          {% endif %}
         </li>
         <li class="nav-item mx-auto">
           <a class="btn btn-outline-primary m-2" href="/entry">
@@ -174,7 +187,11 @@
           <li><a class="text-muted" href="/entry">Contribute</a></li>
           <li><a class="text-muted" href="/map">View All</a></li>
           {% if user.is_authenticated %}
-          <li><a class="text-muted" href="/review">My Entries</a></li>
+            {% if user.is_staff %}
+              <li><a class="text-muted" href="/review">Approve and view entries</a></li>
+            {% else %}
+              <li><a class="text-muted" href="/review">My Entries</a></li>
+            {% endif %}
           {% endif %}
         </ul>
       </div> -->

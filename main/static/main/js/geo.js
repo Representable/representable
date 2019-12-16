@@ -861,8 +861,10 @@ function updateCommunityEntry(e) {
         // Calculate area and convert it from square meters into square miles.
         let area = turf.area(data);
         area = turf.convertArea(area, "meters", "miles");
-        // Use NJ State Area * 1/2
-        let halfStateArea = 4350;
+
+        // TODO: Need to make sure map does not cross state boundaries??? Maybe this is fine for communities...
+        // Use NJ State Area * 1/2 TODO: need to generalize?
+        let halfStateArea = 4350; // TODO use dictionary lookup based on zipcode
         if (area > halfStateArea) {
             triggerDrawError("map-area-size-error", "Polygon area too large. Please draw your community again.")
             draw.trash();
@@ -877,7 +879,6 @@ function updateCommunityEntry(e) {
         if (census_blocks_polygon_array != undefined) {
             census_blocks_polygon_array = census_blocks_polygon_array.join("|");
         }
-
     } else {
         // sets an empty filter - unhighlights everything
         // sets the form fields as empty
