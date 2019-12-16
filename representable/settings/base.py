@@ -28,6 +28,7 @@ https://docs.djangoproject.com/en/2.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
+from django.utils.translation import ugettext_lazy as _
 import django_heroku
 import os
 
@@ -38,33 +39,33 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howtodeployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
 )
 
 # Application definition
 
 INSTALLED_APPS = [
-    'whitenoise.runserver_nostatic',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.gis',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.sites',
-    'django.contrib.staticfiles',
-    'main',
-    'leaflet',
-    'django_select2',
-    'widget_tweaks',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
+    "whitenoise.runserver_nostatic",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.gis",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.sites",
+    "django.contrib.staticfiles",
+    "main",
+    "leaflet",
+    "django_select2",
+    "widget_tweaks",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
     # 'allauth.socialaccount.providers.facebook',
     # 'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.linkedin',
@@ -78,36 +79,36 @@ SITE_ID = 1
 MIDDLEWARE = [
     # Simplified static file serving.
     # https://warehouse.python.org/project/whitenoise/
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'representable.urls'
+ROOT_URLCONF = "representable.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'representable.wsgi.application'
+WSGI_APPLICATION = "representable.wsgi.application"
 
 
 # Database
@@ -115,25 +116,25 @@ WSGI_APPLICATION = 'representable.wsgi.application'
 # From tutorial here: https://medium.com/agatha-codes/painless-postgresql-django-d4f03364989
 # Make sure that you add the right environment variables in your .bash_profile
 # for NAME, USER, and PASS.
-if 'TRAVIS' in os.environ:
+if "TRAVIS" in os.environ:
     # courtesy of https://github.com/ndarville/pony-forum/blob/master/.travis.yml
     DATABASES = {
-        'default': {
-            'ENGINE':   'django.contrib.gis.db.backends.postgis',
-            'NAME':     'travis_ci_test',  # Must match travis.yml setting
-            'USER':     'postgres',
-            'PASSWORD': '',
-            'HOST':     'localhost',
-            'PORT':     '',
+        "default": {
+            "ENGINE": "django.contrib.gis.db.backends.postgis",
+            "NAME": "travis_ci_test",  # Must match travis.yml setting
+            "USER": "postgres",
+            "PASSWORD": "",
+            "HOST": "localhost",
+            "PORT": "",
         }
     }
 else:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.contrib.gis.db.backends.postgis',
-            'NAME': os.environ.get('DISTR_DB_NAME', ''),
-            'USER': os.environ.get('DISTR_DB_USER', ''),
-            'PASS': os.environ.get('DISTR_DB_PASS', ''),
+        "default": {
+            "ENGINE": "django.contrib.gis.db.backends.postgis",
+            "NAME": os.environ.get("DISTR_DB_NAME", ""),
+            "USER": os.environ.get("DISTR_DB_USER", ""),
+            "PASS": os.environ.get("DISTR_DB_PASS", ""),
         }
     }
 
@@ -143,36 +144,35 @@ else:
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
 # Custom user model
-AUTH_USER_MODEL = 'main.User'
-LOGIN_REDIRECT_URL = '/'
+AUTH_USER_MODEL = "main.User"
+LOGIN_REDIRECT_URL = "/"
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
-from django.utils.translation import ugettext_lazy as _
 
 # Provide a lists of languages which your site supports.
 LANGUAGES = (
-    ('en', _('English')),
-    ('es', _('Spanish')),
+    ("en", _("English")),
+    ("es", _("Spanish")),
 )
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -183,43 +183,47 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
 # workaround for django all auth
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 # Mapbox API Key
-MAPBOX_KEY = os.environ.get('DISTR_MAPBOX_KEY')
-GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
-GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
+MAPBOX_KEY = os.environ.get("DISTR_MAPBOX_KEY")
+GDAL_LIBRARY_PATH = os.environ.get("GDAL_LIBRARY_PATH")
+GEOS_LIBRARY_PATH = os.environ.get("GEOS_LIBRARY_PATH")
 django_heroku.settings(locals())
 
 
-if 'REDIS_URL' in os.environ:
+if "REDIS_URL" in os.environ:
     CACHES = {
         "default": {
             "BACKEND": "redis_cache.RedisCache",
-            "LOCATION": os.environ.get('REDIS_URL'),
+            "LOCATION": os.environ.get("REDIS_URL"),
         },
-        'select2': {
+        "select2": {
             "BACKEND": "redis_cache.RedisCache",
-            "LOCATION": os.environ.get('HEROKU_REDIS_NAVY_URL')
-        }
+            "LOCATION": os.environ.get("HEROKU_REDIS_NAVY_URL"),
+        },
     }
     # Set the cache backend to select2
-    SELECT2_CACHE_BACKEND = 'select2'
-
+    SELECT2_CACHE_BACKEND = "select2"
 
 
 # https://github.com/heroku/django-heroku/issues/6
-if DATABASES['default']['ENGINE'] in ('django.db.backends.postgresql', 'django.db.backends.postgresql_psycopg2'):
-    DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
-elif DATABASES['default']['ENGINE'] == 'django.db.backends.sqlite3':
-    DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.spatialite'
+if DATABASES["default"]["ENGINE"] in (
+    "django.db.backends.postgresql",
+    "django.db.backends.postgresql_psycopg2",
+):
+    DATABASES["default"]["ENGINE"] = "django.contrib.gis.db.backends.postgis"
+elif DATABASES["default"]["ENGINE"] == "django.db.backends.sqlite3":
+    DATABASES["default"][
+        "ENGINE"
+    ] = "django.contrib.gis.db.backends.spatialite"
