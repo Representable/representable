@@ -291,7 +291,7 @@ function newSourceLayer(name, mbCode) {
   });
 }
 // add a new layer of census block data
-function newCensusLayer(state) {
+function newCensusLayer(state, firstSymbolId) {
   map.addLayer({
     "id": state.toUpperCase() + " Census Blocks",
     "type": "line",
@@ -304,7 +304,9 @@ function newCensusLayer(state) {
       "line-color": "rgba(106,137,204,0.7)",
       "line-width": 3
     }
-  });
+  },
+  firstSymbolId
+  );
 }
 // add a new layer of upper state legislature data
 function newUpperLegislatureLayer(state) {
@@ -375,6 +377,15 @@ for (issue in issues) {
 }
 
 map.on('load', function() {
+  var layers = map.getStyle().layers;
+  // Find the index of the first symbol layer in the map style
+  var firstSymbolId;
+  for (var i = 0; i < layers.length; i++) {
+    if (layers[i].type === 'symbol' && layers[i].type !== 'road') {
+      firstSymbolId = layers[i].id;
+      break;
+    }
+  }
   // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
   for (let census in CENSUS_KEYS) {
     newSourceLayer(census, CENSUS_KEYS[census]);
@@ -392,7 +403,7 @@ map.on('load', function() {
     }
   }
   for (let i = 0; i < states.length; i++) {
-    newCensusLayer(states[i]);
+    newCensusLayer(states[i], firstSymbolId);
     if (states[i] !== "dc") {
       newUpperLegislatureLayer(states[i]);
       newLowerLegislatureLayer(states[i]);
