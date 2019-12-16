@@ -322,7 +322,7 @@ function newUpperLegislatureLayer(state) {
     },
     "paint": {
       "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 2
+      "line-width": 4
     }
   });
 }
@@ -340,7 +340,7 @@ function newLowerLegislatureLayer(state) {
     },
     "paint": {
       "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 2
+      "line-width": 4
     }
   });
 }
@@ -381,7 +381,7 @@ map.on('load', function() {
   // Find the index of the first symbol layer in the map style
   var firstSymbolId;
   for (var i = 0; i < layers.length; i++) {
-    if (layers[i].type === 'symbol' && layers[i].type !== 'road') {
+    if (layers[i].type === 'symbol' && layers[i] !== 'road') {
       firstSymbolId = layers[i].id;
       break;
     }
