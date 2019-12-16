@@ -123,7 +123,6 @@ class Review(LoginRequiredMixin, TemplateView):
     initial = {'key': 'value'}
 
     def centroid(self, pt_list):
-        print(pt_list)
         length = len(pt_list)
         sum_x = sum([x[1] for x in pt_list]) # TODO coords are reversed for some reason?
         sum_y = sum([x[0] for x in pt_list])
@@ -173,7 +172,7 @@ class Review(LoginRequiredMixin, TemplateView):
                 else:
                     s = "".join(obj.census_blocks_polygon.geojson)
                 struct = geojson.loads(s)
-                ct = self.centroid(struct['coordinates'][0])
+                ct = self.centroid(struct['coordinates'][0][0])
                 # https://github.com/thampiman/reverse-geocoder
                 # note that this is an offline reverse geocoding library
                 # reverse geocode to see which states this is in
