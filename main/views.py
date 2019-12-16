@@ -123,6 +123,13 @@ class Review(LoginRequiredMixin, TemplateView):
     initial = {'key': 'value'}
 
     def centroid(self, pt_list):
+        if len(pt_list) > 0 and type(pt_list) == list:
+            if type(pt_list[0][0]) == list:
+                new_list = []
+                for x in pt_list:
+                    for y in x:
+                        new_list.append(y)
+                pt_list = new_list
         length = len(pt_list)
         sum_x = sum([x[1] for x in pt_list]) # TODO coords are reversed for some reason?
         sum_y = sum([x[0] for x in pt_list])
@@ -164,6 +171,7 @@ class Review(LoginRequiredMixin, TemplateView):
         user = self.request.user
         approvedList = list() # TODO make list?
         if user.is_staff:
+            print('Staff')
             query = CommunityEntry.objects.all()
             viewableQuery = list()
             for obj in query:
@@ -172,7 +180,7 @@ class Review(LoginRequiredMixin, TemplateView):
                 else:
                     s = "".join(obj.census_blocks_polygon.geojson)
                 struct = geojson.loads(s)
-                ct = self.centroid(struct['coordinates'][0][0])
+                ct = self.centroid(struct['coordinates'][0])
                 # https://github.com/thampiman/reverse-geocoder
                 # note that this is an offline reverse geocoding library
                 # reverse geocode to see which states this is in
@@ -224,8 +232,10 @@ class Review(LoginRequiredMixin, TemplateView):
         form = self.form_class(request.POST, label_suffix='')
         # delete entry if form is valid and entry belongs to current user
         if form.is_valid() and self.request.user.is_staff:
-            query = CommunityEntry.objects.filter(user = self.request.user)
-            entry = query.get(entry_ID=request.POST.get('c_id'))
+            query = CommunityEntry.objects.filter(entry_ID = request.POST.get('c_id'))
+            if len(query) == 0:
+                print('No map found')
+            entry = query[0]
             # TODO check whether authorized to edit state?
             if 'Approve' in request.POST: # TODO need someone to review security
                 entry.admin_approved = True

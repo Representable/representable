@@ -7,4 +7,4 @@ SECURE_SSL_REDIRECT = True
 # only allow requests from domain
 ALLOWED_HOSTS = ['www.representable.org', 'representable.org']
 
-DEBUG = False
+DEBUG = True
