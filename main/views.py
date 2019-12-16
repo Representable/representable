@@ -166,6 +166,7 @@ class Review(LoginRequiredMixin, TemplateView):
         approvedList = list() # TODO make list?
         if user.is_staff:
             query = CommunityEntry.objects.all()
+            viewableQuery = list()
             for obj in query:
                 if (obj.census_blocks_polygon == '' or obj.census_blocks_polygon == None):
                     s = "".join(obj.user_polygon.geojson)
@@ -189,8 +190,14 @@ class Review(LoginRequiredMixin, TemplateView):
                     # add it to viewable
                     entryPolyDict[obj.entry_ID] = struct.coordinates
                     authorDict[obj.entry_ID] = obj.user.username
+                    viewableQuery.append(obj)
                     if obj.admin_approved:
+                        # this is for coloring the map properly
                         approvedList.append(obj.entry_ID)
+                else:
+                    print(type(query))
+                    print('Not authorized')
+            query = viewableQuery
         else:
             # in this case, just get the ones we made
             query = CommunityEntry.objects.filter(user = self.request.user)
@@ -205,7 +212,8 @@ class Review(LoginRequiredMixin, TemplateView):
                 entryPolyDict[obj.entry_ID] = struct.coordinates
                 if obj.admin_approved:
                     approvedList.append(obj.entry_ID)
-
+        print('Ret')
+        print(len(entryPolyDict))
         context = ({
             'form': form,
             'tags': json.dumps(tags),
