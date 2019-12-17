@@ -19,6 +19,14 @@
 #
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User
+from django.forms import TextInput, Textarea
+from django.db import models
+from .models import User, CommunityEntry
 
+# class EntryAdmin(admin.ModelAdmin):
+#     formfield_overrides = {
+#         models.TextField: {'widget': Textarea(attrs={'rows':10, 'cols':40})},
+#     }
+
+# admin.site.register(CommunityEntry, EntryAdmin)
 admin.site.register(User, UserAdmin)

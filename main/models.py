@@ -24,6 +24,7 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import migrations, models
 from django.contrib.gis.db import models
+from django.forms import TextInput, Textarea
 from .choices import *
 import datetime
 
@@ -68,7 +69,7 @@ class CommunityEntry(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     entry_ID = models.CharField(max_length=100, blank=False, unique=True, default=uuid.uuid4)
     entry_name = models.CharField(max_length=100, blank=False, unique=False, default='Community name')
-    entry_reason = models.CharField(max_length=500, blank=True, unique=False, default='') # TODO
+    entry_reason = models.TextField(max_length=500, blank=True, unique=False, default='') # TODO
     user_polygon = models.PolygonField(geography=True, serialize=True, blank=False)
     census_blocks_polygon_array = ArrayField(models.PolygonField(geography=True, blank=True, null=True, serialize=True), blank=True, null=True)
     census_blocks_polygon = models.MultiPolygonField(geography=True, serialize=True, blank=True, null=True)
