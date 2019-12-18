@@ -28,7 +28,14 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5>Search for a Zipcode:</h5>
+        <h5>
+          {% if LANGUAGE_CODE == 'en' %}
+          Search for a Zipcode:
+          {% elif LANGUAGE_CODE == 'es' %}
+          <!-- Google translate -->
+          Busque un código postal:
+          {% endif %}
+        </h5>
       </div>
       <div class="modal-body">
         <form role="form" id="zipcodeForm">
