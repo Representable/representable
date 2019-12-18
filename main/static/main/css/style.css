@@ -31,11 +31,20 @@ body {
     border-width: 0 !important;
 }
 
+/* Entry button submission center */
+.flex-centered {
+  display: inline-inline-block;
+  justify-content: center;
+  margin-top: 31px;
+  height: 46px;
+}
+
 
 /* Bootstrap elements for navbar. */
 .navbar {
   border-bottom: 1px solid #F5F5F5;
   box-shadow: 0 0 5px -3px #BEBEBE;
+  z-index: 999;
 }
 .navbar-brand {
   font-weight: 500;
