@@ -37,7 +37,14 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5>Search for a Zipcode:</h5>
+                    <h5>
+                        {% if LANGUAGE_CODE == 'en' %}
+                        Search for a Zipcode:
+                        {% elif LANGUAGE_CODE == 'es' %}
+                        <!-- Google translate -->
+                        Busque un código postal:
+                        {% endif %}
+                    </h5>
                 </div>
                 <div class="modal-body">
                     <form role="form" id="zipcodeForm">
@@ -46,6 +53,7 @@
                                 {% if LANGUAGE_CODE == 'en' %}
                                 To start, we need the zipcode of your community.
                                 {% elif LANGUAGE_CODE == 'es' %}
+                                <!-- Google translate -->
                                 Para comenzar, necesitamos el código postal de su comunidad.
                                 {% endif %}
                             </p>
@@ -97,7 +105,7 @@
                                         {% if form.user_polygon.errors %}
                                         <script>
                                             sessionStorage.setItem("allChecks", "fail");
-                  </script>
+                                        </script>
                                         <div id="polygon_missing" class="alert alert-warning alert-dismissible fade show" role="alert">
                                             {% if LANGUAGE_CODE == 'en' %}
                                             You need to draw a polygon to submit the form.
