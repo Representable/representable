@@ -415,6 +415,7 @@ class EntryView(LoginRequiredMixin, View):
         form = self.form_class(request.POST, label_suffix="")
         issue_formset = self.IssueFormSet(request.POST)
         if form.is_valid() and issue_formset.is_valid():
+            print('Entry form is valid')
             tag_name_qs = form.cleaned_data["tags"].values("name")
             entryForm = form.save(commit=False)
             # get all the polygons from the array
