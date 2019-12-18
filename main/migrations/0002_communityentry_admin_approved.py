@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0001_initial'),
+        ("main", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='communityentry',
-            name='admin_approved',
+            model_name="communityentry",
+            name="admin_approved",
             field=models.BooleanField(default=False),
         ),
     ]
