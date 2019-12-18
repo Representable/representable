@@ -105,6 +105,12 @@ class CommunityEntry(models.Model):
             "No, I am creating this community on behalf of another group of people.",
         ),
     )
+    entry_name = models.CharField(
+        max_length=100,
+        blank=False,
+        unique=False,
+        default='Community_name'
+    )
     my_community = models.CharField(
         "Is this your community?",
         max_length=1,
