@@ -151,8 +151,12 @@ class CommunityForm(ModelForm):
             "entry_ID": forms.HiddenInput(),
             "census_blocks_polygon_array": forms.HiddenInput(),
             "census_blocks_polygon": forms.HiddenInput(),
-            "entry_name": forms.TextInput(attrs={"placeholder": "<community_name>"}),
-            "entry_reason": forms.TextInput(attrs={"placeholder": "<community_reason>"}),
+            "entry_name": forms.TextInput(
+                attrs={"placeholder": "<community_name>"}
+            ),
+            "entry_reason": forms.Textarea(
+                attrs={"placeholder": "<community_reason>", "rows": 5}
+            ),
             "user_polygon": forms.HiddenInput(),
             "my_community": BootstrapRadioSelect(),
             "zipcode": forms.TextInput(attrs={"placeholder": "Your Zipcode"}),

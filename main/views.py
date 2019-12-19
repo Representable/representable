@@ -389,8 +389,8 @@ class EntryView(LoginRequiredMixin, View):
     form_class = CommunityForm
     initial = {
         "key": "value",
-        "entry_name": "My local community", # TODO add es/en versions
-        "entry_reason": "This community is brought together by..."
+        "entry_name": "My local community",  # TODO add es/en versions
+        "entry_reason": "This community is brought together by...",
     }
     success_url = "/thanks/"
     data = {
