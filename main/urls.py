@@ -34,4 +34,5 @@ urlpatterns = [
     path("review/", views.Review.as_view(), name="review"),
     path("privacy/", views.Privacy.as_view(), name="privacy"),
     path("terms/", views.Terms.as_view(), name="terms"),
+    path("submission/", views.Submission.as_view(), name="submission"),
 ]

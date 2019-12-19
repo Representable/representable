@@ -40,6 +40,7 @@ import geojson
 import os
 import json
 import re
+import hashlib
 from django.http import JsonResponse
 import shapely.wkt
 import reverse_geocoder as rg
@@ -310,6 +311,44 @@ class Review(LoginRequiredMixin, TemplateView):
         )  # TODO: Is there a problem with this?
         return render(request, self.template_name, context)
 
+
+# ******************************************************************************#
+
+class Submission(TemplateView):
+    template_name = "main/submission.html"
+    sha = hashlib.sha256()
+    NUM_DIGITS = 10 # TODO move to some place with constants
+    
+    def get(self, request, *args, **kwargs):
+        m_uuid = self.request.GET.get('uuid', None)
+        # print(m_uuid)
+        # self.sha.update(m_uuid.encode())
+        # print(self.sha.hexdigest()[:NUM_DIGITS])
+        # TODO: Are there security risks? Probably - we should hash the UUID and make that the permalink
+        # TODO we will have to update the database to store hash values :'(
+        # TODO we should make UUID's shorter - maybe 10 digits
+        if m_uuid is None:
+            pass # TODO need to fix here
+        query = CommunityEntry.objects.filter(entry_ID=m_uuid)
+        print(query)
+        if len(query) == 0:
+            # TODO return error - no map found
+            pass
+        # query will have length 1 or database is invalid
+        user_map = query[0]
+        if (
+            user_map.census_blocks_polygon == ""
+            or user_map.census_blocks_polygon is None
+        ):
+            s = "".join(user_map.user_polygon.geojson)
+        else:
+            s = "".join(user_map.census_blocks_polygon.geojson)
+        map_poly = geojson.loads(s)
+        context = {
+            "entry": json.dumps(map_poly),
+            "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+        }
+        return render(request, self.template_name, context)
 
 # ******************************************************************************#
 
