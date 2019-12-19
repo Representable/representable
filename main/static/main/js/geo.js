@@ -301,7 +301,6 @@ function modalZip(e) {
 
   var isnum = /^\d+$/.test($("#zipcode").val());
   if (isnum) {
-    console.log("yuh");
     // Parse only first 4 digits of zipcode.
     zipcode = $("#zipcode").val();
     zipcode = zipcode.substring(0, 4);
@@ -600,7 +599,7 @@ map.addControl(geocoder, "top-right");
 map.addControl(draw);
 // Insert class into draw buttons so we can differentiate their styling from
 // from the nav buttons below.
-drawControls = document.querySelector(".draw_polygon_map .mapboxgl-ctrl-group");
+drawControls = document.querySelector(".draw-polygon-map .mapboxgl-ctrl-group");
 drawControls.classList.add("draw-group");
 
 // Add nav control buttons.
@@ -892,7 +891,6 @@ function highlightBlocks(drawn_polygon) {
         sessionStorage.getItem("stateName") + "-blocks-highlighted",
         filter
       );
-
       // show population stats for NJ only:
       // 1. LOWER LEGISLATION PROGRESS BAR __________________________________
       // TODO: update these parts to determine which state we are focusing on
