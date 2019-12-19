@@ -216,16 +216,6 @@
                             </div>
                         </div>
                         <div class="col-lg-4 mt-3">
-                            <!-- <div class="card mb-3">
-              <div class="card-header text-info-custom">
-                <b>Why should I draw my community?</b>
-              </div>
-              <div class="card-body">
-                <p class="card-text">
-                  Drawing your community enables officials to draw fair district lines that allow you to be well-represented in your state legislature and congress.
-                </p>
-              </div>
-            </div> -->
                             <div class="card mb-3">
                                 <div class="card-header text-info-custom">
                                     <b>
@@ -301,7 +291,7 @@
                                                     {% if formset_row.category.errors %}
                                                     <script>
                                                         sessionStorage.setItem("allChecks", "fail");
-                        </script>
+                                                    </script>
                                                     {% for error in formset_row.category.errors %}
                                                     <small id="category_warning" class="text-danger">{{ error|escape }}</small>
                                                     {% endfor %}
@@ -313,7 +303,7 @@
                                                     {% if formset_row.description.errors %}
                                                     <script>
                                                         sessionStorage.setItem("allChecks", "fail");
-                        </script>
+                                                    </script>
                                                     {% for error in formset_row.description.errors %}
                                                     <small id="category_warning" class="text-danger">{{ error|escape }}</small>
                                                     {% endfor %}
@@ -347,7 +337,6 @@
 
 
                                     </div>
-
                                     <!-- {# Is this your community? Field} -->
                                     <div class="field-wrap">
                                         <div class="form-error">
@@ -355,7 +344,7 @@
                                             {% if form.my_community.errors %}
                                             <script>
                                                 sessionStorage.setItem("allChecks", "fail");
-                    </script>
+                                            </script>
                                             <div>
                                                 <div id="my_community_missing" class="alert alert-warning map-alert" role="alert">
                                                     You need to specify if you are part of this community.
@@ -368,22 +357,6 @@
                                         <p class="help">{{ form.my_community.help_text|safe }}</p>
                                         {% endif %}
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 mt-3">
-                            <div class="card mb-3">
-                                <div class="card-header text-info-custom">
-                                    <b>Why do we need this information?</b>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text" style="text-color:white;">
-                                        Including information about your community
-                                        <b>exposes gerrymandering</b>. The more information
-                                        you provide, the easier it will be for officials
-                                        and non-profits to draw fairer electoral districts.
-                                    </p>
                                 </div>
                             </div>
                         </div>
