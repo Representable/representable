@@ -106,16 +106,10 @@ class CommunityEntry(models.Model):
         ),
     )
     entry_name = models.CharField(
-        max_length=100,
-        blank=False,
-        unique=False,
-        default='Community_name'
+        max_length=100, blank=False, unique=False, default="Community_name"
     )
     entry_reason = models.TextField(
-        max_length=500,
-        blank=True,
-        unique=False,
-        default=''
+        max_length=500, blank=True, unique=False, default=""
     )
     my_community = models.CharField(
         "Is this your community?",

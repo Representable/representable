@@ -154,14 +154,14 @@
                                       <p> The numbers below show how big your community is in relation to
                                           the size of an average electoral district. Generally, a higher percentage
                                           indicates that your community has a bigger impact on election results in your district.
-                                          <small class="text-info-custom"> Note that districts vary in size from state to state. </small>
+                                          <!-- <small class="text-info-custom"> Note that districts vary in size from state to state. </small> -->
                                       </p>
                                     {% elif LANGUAGE_CODE == 'es' %}
                                     <!-- Google translate  -->
                                     <p> Los números a continuación muestran cuán grande es su comunidad en relación con
                                         El tamaño de un distrito electoral promedio. Generalmente, un porcentaje más alto
                                         indica que su comunidad tiene un mayor impacto en los resultados electorales en su distrito.
-                                        <small class="text-info-custom"> Tenga en cuenta que los distritos varían en tamaño de estado a estado. </small>
+                                        <!-- <small class="text-info-custom"> Tenga en cuenta que los distritos varían en tamaño de estado a estado. </small> -->
                                     </p>
                                     {% endif %} 
                                     <p class="card-text">
@@ -216,16 +216,6 @@
                             </div>
                         </div>
                         <div class="col-lg-4 mt-3">
-                            <!-- <div class="card mb-3">
-              <div class="card-header text-info-custom">
-                <b>Why should I draw my community?</b>
-              </div>
-              <div class="card-body">
-                <p class="card-text">
-                  Drawing your community enables officials to draw fair district lines that allow you to be well-represented in your state legislature and congress.
-                </p>
-              </div>
-            </div> -->
                             <div class="card mb-3">
                                 <div class="card-header text-info-custom">
                                     <b>
@@ -263,11 +253,27 @@
                         <div class="col-lg-8  mt-3">
                             <div class="card">
                                 <div class="card-header text-header-card">
-                                    <strong>2. What does your community care about?</strong>
+                                    <strong>2. What brings your community together?</strong>
                                 </div>
                                 <div class="card-body">
                                     <p class="card-text">
-                                        Include issues and demographic information about your area.
+                                        What name can we use to identify your community? <small class="text-danger">(Required)</small>
+                                        <!-- TODO we should find a better example -->
+                                        <br>
+                                        <small>For example: Princeton area student community</small>
+                                    </p>
+                                    {{ form.entry_name|append_attr:"class:form-control" }}
+                                    <hr>
+                                    <p class="card-text">
+                                        Why are you identifying this area as a community? <small class="text-danger">(Required)</small>
+                                        <!-- TODO we should find a better example -->
+                                        <br>
+                                        <small>For example: All of the on-campus Princeton University student body lives and studies in this geographic area.</small>
+                                    </p>
+                                    {{ form.entry_reason|append_attr:"class:form-control" }}
+                                    <hr>
+                                    <p class="card-text">
+                                        What issues are relevant to your community?
                                     </p>
                                     {% csrf_token %}
                                     <!-- {# Include the non-field error fields #} -->
@@ -301,7 +307,7 @@
                                                     {% if formset_row.category.errors %}
                                                     <script>
                                                         sessionStorage.setItem("allChecks", "fail");
-                        </script>
+                                                    </script>
                                                     {% for error in formset_row.category.errors %}
                                                     <small id="category_warning" class="text-danger">{{ error|escape }}</small>
                                                     {% endfor %}
@@ -313,7 +319,7 @@
                                                     {% if formset_row.description.errors %}
                                                     <script>
                                                         sessionStorage.setItem("allChecks", "fail");
-                        </script>
+                                                    </script>
                                                     {% for error in formset_row.description.errors %}
                                                     <small id="category_warning" class="text-danger">{{ error|escape }}</small>
                                                     {% endfor %}
@@ -347,7 +353,6 @@
 
 
                                     </div>
-
                                     <!-- {# Is this your community? Field} -->
                                     <div class="field-wrap">
                                         <div class="form-error">
@@ -355,7 +360,7 @@
                                             {% if form.my_community.errors %}
                                             <script>
                                                 sessionStorage.setItem("allChecks", "fail");
-                    </script>
+                                            </script>
                                             <div>
                                                 <div id="my_community_missing" class="alert alert-warning map-alert" role="alert">
                                                     You need to specify if you are part of this community.
@@ -368,22 +373,6 @@
                                         <p class="help">{{ form.my_community.help_text|safe }}</p>
                                         {% endif %}
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 mt-3">
-                            <div class="card mb-3">
-                                <div class="card-header text-info-custom">
-                                    <b>Why do we need this information?</b>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text" style="text-color:white;">
-                                        Including information about your community
-                                        <b>exposes gerrymandering</b>. The more information
-                                        you provide, the easier it will be for officials
-                                        and non-profits to draw fairer electoral districts.
-                                    </p>
                                 </div>
                             </div>
                         </div>
