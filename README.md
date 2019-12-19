@@ -32,14 +32,14 @@ Save and launch a new terminal session.
 ### 4. Follow postgres, mapbox setup instructions
 Go to docs/postgres, docs/geodjango, and docs/mapbox_tippecanoe for details.
 
-### 4. Start server
+### 5. Start server
 ```
 cd representable
 python manage.py migrate
 python manage.py runserver
 ```
 
-### 5. Helpful Heroku commands
+### 6. Helpful Heroku commands
 ```
 git push heroku master
 heroku config:set VARIABLE=value
