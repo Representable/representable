@@ -387,7 +387,11 @@ class EntryView(LoginRequiredMixin, View):
 
     template_name = "main/entry.html"
     form_class = CommunityForm
-    initial = {"key": "value"}
+    initial = {
+        "key": "value",
+        "entry_name": "My local community", # TODO add es/en versions
+        "entry_reason": "This community is brought together by..."
+    }
     success_url = "/thanks/"
     data = {
         "form-TOTAL_FORMS": "1",
