@@ -8,7 +8,7 @@
 <!-- https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ -->
 <!-- Mapbox GL JS -->
 <meta charset='utf-8' />
-<title>View Communities</title>
+<title>View Map</title>
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
@@ -24,40 +24,11 @@
 {% endblock %}
 {% block content %}
 <div class="container-fluid">
-<div class="modal fade" id="zipcodeModal" tabindex="-1" role="dialog" aria-labelledby="zipcodeModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5>
-          {% if LANGUAGE_CODE == 'en' %}
-          Search for a Zipcode:
-          {% elif LANGUAGE_CODE == 'es' %}
-          <!-- Google translate -->
-          Busque un código postal:
-          {% endif %}
-        </h5>
-      </div>
-      <div class="modal-body">
-        <form role="form" id="zipcodeForm">
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="Zipcode" id="zipcode">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-          <a class="btn btn-secondary" href="/" role="button">Return to homepage</a>
-        <button id="zipSubmit" type="submit" class="btn btn-primary">Submit</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div class="row row-wide">
   <div>
     <script type="text/javascript">
-      var issues = '{{ issues | escapejs }}';
-      var a = '{{ entries | escapejs}}';
-      var tags = '{{ tags | escapejs }}'
+        var entry = '{{ entry | escapejs }}';
     </script>
   </div>
   <div class="col-md-3 col-wide">
@@ -80,28 +51,8 @@
               </div>
             </div>
           </div>
-          <div class="card">
-            <div id="headingTwo">
-              <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" style="width: 100%">
-                Issues <i class="fas fa-caret-down"></i></button>
-
-            </div>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-              <div class="dropdown-container" id="tags-menu"></div>
-              <!--TODO: Add issues for accordion-->
-              <div id="issue-dropdowns"></div>
-            </div>
-          </div>
-          <div class="items card">
-            <div id="headingThree">
-              <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree" style="width: 100%">
-                Communities <i class="fas fa-caret-down"></i></button>
-            </div>
-            <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionExample">
-              <ul class="list-group list-group-flush" id="community-list">
-              </ul>
-            </div>
-          </div>
+          <!-- Note: TODO issues temporarily removed because it's just one map, could add back -->
+          <!-- Note: TODO communities temporarily removed because it's just one map, could add back -->
         </div>
         <div class="dropdown-container" id="tags-menu"></div>
         <button class="dropdown-btn btn-canvas" id="all">Clear All Filters
@@ -120,5 +71,5 @@
 <script type="text/javascript">
   mapboxgl.accessToken = "{{ mapbox_key }}";
 </script>
-<script type="text/javascript" src="{% static 'main/js/map.js' %}"></script>
+<script type="text/javascript" src="{% static 'main/js/submission.js' %}"></script>
 {% endblock %}

@@ -24,47 +24,49 @@ from django.contrib.auth import get_user_model
 
 
 class UserTest(TestCase):
-    '''
+    """
     Unit tests for user sign-up, log-in, and log-out.
-    '''
+    """
 
     def setUp(self):
-        '''
+        """
         This function is called before every test.
-        '''
+        """
         self.client = Client()
 
     def testSimpleGet(self):
-        '''
+        """
         Test get main page, map page, and entry page.
-        '''
+        """
         # Check index page.
         print("Testing Index Page")
-        response = self.client.get('/')
+        response = self.client.get("/")
         # Check that response is 200 OK.
         self.assertEqual(response.status_code, 200)
 
         # Check entry page.
         print("Testing Entry Page")
-        response = self.client.get('/entry/')
-        self.assertRedirects(response, '/accounts/login/?next=/entry/')
+        response = self.client.get("/entry/")
+        self.assertRedirects(response, "/accounts/login/?next=/entry/")
 
     def testSimpleUser(self):
-        '''
+        """
         Test create user/login/logout.
         https://stackoverflow.com/questions/22457557/how-to-test-login-process
-        '''
+        """
 
         # Create a fake user.
         print("Testing Create User")
-        self.user = get_user_model().objects.create_user('johndoe', 'john@doe.com', 'johndoe')
+        self.user = get_user_model().objects.create_user(
+            "johndoe", "john@doe.com", "johndoe"
+        )
 
         # Fake user login.
         print("Testing User Login")
-        self.client.login(username='johndoe', password='johndoe')
-        response = self.client.get('/main/')
-        self.assertTrue(response.context['user'].is_active)
-        response = self.client.get('/entry/')
+        self.client.login(username="johndoe", password="johndoe")
+        response = self.client.get("/main/")
+        self.assertTrue(response.context["user"].is_active)
+        response = self.client.get("/entry/")
         self.assertEqual(response.status_code, 200)
 
         # Fake user logout.

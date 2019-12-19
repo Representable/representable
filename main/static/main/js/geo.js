@@ -77,6 +77,7 @@ function getState(zipcode) {
     // after error handling, it shud always be 5 digits:
     zipcode = zipcode.substring(0, 4);
     zipcode += "0";
+    // console.log(zipcode)
     // Ensure we don't parse strings starting with 0 as octal values
     const thiszip = parseInt(zipcode, 10);
 
@@ -251,9 +252,14 @@ function modalZip(e) {
   var isnum = /^\d+$/.test($('#zipcode').val());
   if (isnum) {
     console.log("yuh");
+    // Parse only first 4 digits of zipcode.
+    zipcode = $('#zipcode').val()
+    zipcode = zipcode.substring(0, 4);
+    zipcode += "0";
+    // console.log(zipcode)
     $('#zipcodeModal').modal('hide');
     // user puts in a zipcode and the map zooms to that loc
-    let geoObj = geocoder.query($('#zipcode').val(),
+    let geoObj = geocoder.query(zipcode,
       function(err, res) {
         console.log(err, res)
       });

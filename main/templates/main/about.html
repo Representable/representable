@@ -6,21 +6,48 @@
 <div class="container">
 <div class="row text-center row-content">
   <div class="col">
-    <h2> About Us </h2>
-    <p class="font-weight-light"> We’re a team of engineers
+    <h2> 
+      {% if LANGUAGE_CODE == 'en' %}
+      About us
+      {% elif LANGUAGE_CODE == 'es' %}
+      <!-- Google translate  -->
+      Sobre nosotros
+      {% endif %}
+    </h2>
+    <p class="font-weight-light"> 
+      {% if LANGUAGE_CODE == 'en' %}
+      We’re a team of engineers
       who are excited to create technical solutions for civic issues.
       Coming from a wide array of backgrounds, we put our technical and policy experience
       together to make a powerful crowdsourced tool which we hope can change the current
       polarized political landscape of how districts are made in the United States.
       We’re committed to giving a voice to those who have been marginalized or politically
       diluted by gerrymandering and look forward to turning Representable into a national
-      tool for political equity. </p>
+      tool for political equity. 
+      {% elif LANGUAGE_CODE == 'es' %}
+      <!-- Google translate  -->
+      Somos un equipo de ingenieros quienes están entusiasmados por crear soluciones técnicas para problemas cívicos.
+      Viniendo de una amplia gama de antecedentes, ponemos nuestra experiencia técnica y política
+      juntos para hacer una poderosa herramienta de crowdsourcing que esperamos pueda cambiar la corriente
+      panorama político polarizado de cómo se hacen los distritos en los Estados Unidos.
+      Estamos comprometidos a dar voz a aquellos que han sido marginados o políticamente
+      diluido por gerrymandering y esperamos convertir a Representable en un nacional
+      herramienta para la equidad política.
+      {% endif %}
+    </p>
   </div>
 
 </div>
 <div class="row text-center">
   <div class="col my-2">
-    <h4>Founding Team</h4>
+    <h4>
+      {% if LANGUAGE_CODE == 'en' %}
+      Founding Team
+      {% elif LANGUAGE_CODE == 'es' %}
+      <!-- Google translate  -->
+      Equipo fundador
+      {% endif %}
+    </h4>
     </div>
     </div>
   <div class="row">
