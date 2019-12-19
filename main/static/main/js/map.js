@@ -74,7 +74,7 @@ var CENSUS_KEYS = {
   "wa-census": "4a9umfkl",
   "wi-census": "52mhmiw7",
   "wv-census": "82nll1sy",
-  "wy-census": "9uwm30og"
+  "wy-census": "9uwm30og",
 };
 var UPPER_KEYS = {
   "ak-upper": "ajy4zns3",
@@ -126,7 +126,7 @@ var UPPER_KEYS = {
   "wa-upper": "21jsuobz",
   "wi-upper": "7wznqcw4",
   "wv-upper": "2oou05hr",
-  "wy-upper": "7lkxtzk5"
+  "wy-upper": "7lkxtzk5",
 };
 var LOWER_KEYS = {
   "ak-lower": "a7my06pf",
@@ -178,57 +178,106 @@ var LOWER_KEYS = {
   "wa-lower": "c9rk9gas",
   "wi-lower": "3q5v3n9v",
   "wv-lower": "aq380u5z",
-  "wy-lower": "93ya8fsx"
+  "wy-lower": "93ya8fsx",
 };
-var states = ["ak", "al", "ar", "az", "ca", "co", "ct", "dc", "de", "fl", "ga", "hi", "ia", "id", "il", "in", "ks", "ky", "la", "ma", "md", "me", "mi", "mn", "mo", "ms", "mt", "nc", "nd", "nh", "nj", "nm", "nv", "ny", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "va", "vt", "wa", "wi", "wv", "wy"];
+var states = [
+  "ak",
+  "al",
+  "ar",
+  "az",
+  "ca",
+  "co",
+  "ct",
+  "dc",
+  "de",
+  "fl",
+  "ga",
+  "hi",
+  "ia",
+  "id",
+  "il",
+  "in",
+  "ks",
+  "ky",
+  "la",
+  "ma",
+  "md",
+  "me",
+  "mi",
+  "mn",
+  "mo",
+  "ms",
+  "mt",
+  "nc",
+  "nd",
+  "nh",
+  "nj",
+  "nm",
+  "nv",
+  "ny",
+  "oh",
+  "ok",
+  "or",
+  "pa",
+  "ri",
+  "sc",
+  "sd",
+  "tn",
+  "tx",
+  "ut",
+  "va",
+  "vt",
+  "wa",
+  "wi",
+  "wv",
+  "wy",
+];
 
 /* Colors for the different issue categories */
 var PAINT_VALUES = {
-  "Zoning": "rgba(135, 191, 255,",
-  "Policing": "rgba(63, 142, 252,",
-  "Crime": "rgba(196, 178, 188,",
-  "Nuisance": "rgba(223, 146, 142,",
-  "School": "rgba(249, 160, 63,",
+  Zoning: "rgba(135, 191, 255,",
+  Policing: "rgba(63, 142, 252,",
+  Crime: "rgba(196, 178, 188,",
+  Nuisance: "rgba(223, 146, 142,",
+  School: "rgba(249, 160, 63,",
   "Religion/Church": "rgba(234, 200, 30,",
   "Race/Ethnicity": "rgba(178, 177, 207,",
   "Immigration Status": "rgba(223, 41, 53,",
-  "Socioeconomic": "rgba(253, 202, 64,",
-  "Transportation": "rgba(242, 255, 73,",
+  Socioeconomic: "rgba(253, 202, 64,",
+  Transportation: "rgba(242, 255, 73,",
   "Neighborhood Identity/Official Definition": "rgba(251, 98, 246,",
-  "Environmental": "rgba(150, 98, 26,",
-  "LGBT Issues": "rgba(255, 192, 203,"
+  Environmental: "rgba(150, 98, 26,",
+  "LGBT Issues": "rgba(255, 192, 203,",
 };
 
-$(document).ready( function () {
-    $("#zipcodeModal").modal("show");
+$(document).ready(function() {
+  $("#zipcodeModal").modal("show");
 });
 
 function modalZip(e) {
   e.preventDefault();
 
-  var isnum = /^\d+$/.test($('#zipcode').val());
+  var isnum = /^\d+$/.test($("#zipcode").val());
   if (isnum) {
     console.log("yuh");
-    $('#zipcodeModal').modal('hide');
+    $("#zipcodeModal").modal("hide");
     // user puts in a zipcode and the map zooms to that loc
-    let geoObj = geocoder.query($('#zipcode').val(),
-      function(err, res) {
-        console.log(err, res)
-      });
+    let geoObj = geocoder.query($("#zipcode").val(), function(err, res) {
+      console.log(err, res);
+    });
     console.log(geoObj);
     var q = "Edison";
-
   } else {
     // write out the error here:
   }
 }
 
-$('#zipcodeModal').keypress(function (e) {
-    if (e.keyCode === 10 || e.keyCode === 13) {
-        modalZip(e);
-    }
+$("#zipcodeModal").keypress(function(e) {
+  if (e.keyCode === 10 || e.keyCode === 13) {
+    modalZip(e);
+  }
 });
-$('#zipSubmit').click(function(e) {
+$("#zipSubmit").click(function(e) {
   modalZip(e);
 });
 
@@ -238,10 +287,10 @@ function parseReverseGeo(geoData) {
   var region, countryName, placeName, returnStr;
   if (geoData.context) {
     $.each(geoData.context, function(i, v) {
-      if (v.id.indexOf('region') >= 0) {
+      if (v.id.indexOf("region") >= 0) {
         region = v.text;
       }
-      if (v.id.indexOf('country') >= 0) {
+      if (v.id.indexOf("country") >= 0) {
         countryName = v.text;
       }
     });
@@ -258,28 +307,30 @@ function parseReverseGeo(geoData) {
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
 var map = new mapboxgl.Map({
-  container: 'map', // container id
-  style: 'mapbox://styles/mapbox/streets-v11', //color of the map -- dark-v10 or light-v9
+  container: "map", // container id
+  style: "mapbox://styles/mapbox/streets-v11", //color of the map -- dark-v10 or light-v9
   center: [-74.65545, 40.341701], // starting position - Princeton, NJ :)
-  zoom: 12 // starting zoom -- higher is closer
+  zoom: 12, // starting zoom -- higher is closer
 });
 
 // geocoder used for a search bar -- within the map itself
 var geocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
-  country: 'us',
-  mapboxgl: mapboxgl
+  country: "us",
+  mapboxgl: mapboxgl,
 });
-map.addControl(geocoder, 'top-right');
+map.addControl(geocoder, "top-right");
 
 // Add geolocate control to the map. -- this zooms in on the user's current location when pressed
 // Q: is it too confusing ? like the symbol doesn't exactly tell you what it does
-map.addControl(new mapboxgl.GeolocateControl({
-  positionOptions: {
-    enableHighAccuracy: true
-  },
-  trackUserLocation: true
-}));
+map.addControl(
+  new mapboxgl.GeolocateControl({
+    positionOptions: {
+      enableHighAccuracy: true,
+    },
+    trackUserLocation: true,
+  })
+);
 
 map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
 
@@ -287,59 +338,59 @@ map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
 function newSourceLayer(name, mbCode) {
   map.addSource(name, {
     type: "vector",
-    url: "mapbox://districter-team." + mbCode
+    url: "mapbox://districter-team." + mbCode,
   });
 }
 // add a new layer of census block data
 function newCensusLayer(state) {
   map.addLayer({
-    "id": state.toUpperCase() + " Census Blocks",
-    "type": "line",
-    "source": state + "-census",
+    id: state.toUpperCase() + " Census Blocks",
+    type: "line",
+    source: state + "-census",
     "source-layer": state + "census",
-    "layout": {
-      "visibility": "none"
+    layout: {
+      visibility: "none",
     },
-    "paint": {
+    paint: {
       "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 3
-    }
+      "line-width": 3,
+    },
   });
 }
 // add a new layer of upper state legislature data
 function newUpperLegislatureLayer(state) {
   map.addLayer({
-    "id": state.toUpperCase() + " State Legislature - Upper",
-    "type": "line",
-    "source": state + "-upper",
+    id: state.toUpperCase() + " State Legislature - Upper",
+    type: "line",
+    source: state + "-upper",
     "source-layer": state + "upper",
-    "layout": {
-      "visibility": "none",
+    layout: {
+      visibility: "none",
       "line-join": "round",
-      "line-cap": "round"
+      "line-cap": "round",
     },
-    "paint": {
+    paint: {
       "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 2
-    }
+      "line-width": 2,
+    },
   });
 }
 // add a new layer of lower state legislature data
 function newLowerLegislatureLayer(state) {
   map.addLayer({
-    "id": state.toUpperCase() + " State Legislature - Lower",
-    "type": "line",
-    "source": state + "-lower",
+    id: state.toUpperCase() + " State Legislature - Lower",
+    type: "line",
+    source: state + "-lower",
     "source-layer": state + "lower",
-    "layout": {
-      "visibility": "none",
+    layout: {
+      visibility: "none",
       "line-join": "round",
-      "line-cap": "round"
+      "line-cap": "round",
     },
-    "paint": {
+    paint: {
       "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 2
-    }
+      "line-width": 2,
+    },
   });
 }
 
@@ -348,33 +399,33 @@ issues = JSON.parse(issues);
 
 // TODO: change issue to a button, which iterates thru all the displayed features and selects for that issue
 for (issue in issues) {
-  var button = document.createElement('div');
-  button.className = 'btn btn-info m-1';
+  var button = document.createElement("div");
+  button.className = "btn btn-info m-1";
   button.id = issue;
   button.textContent = issue;
-  var circle = document.createElement('i');
-  circle.className = 'fa fa-circle';
-  circle.style.color = PAINT_VALUES[issue] + '1)';
-  circle.style.paddingLeft = '5px';
+  var circle = document.createElement("i");
+  circle.className = "fa fa-circle";
+  circle.style.color = PAINT_VALUES[issue] + "1)";
+  circle.style.paddingLeft = "5px";
   button.appendChild(circle);
 
-  var dropdowns = document.createElement('div');
-  dropdowns.className = 'dropdown-container';
+  var dropdowns = document.createElement("div");
+  dropdowns.className = "dropdown-container";
 
   for (entry in issues[issue]) {
-    var link = document.createElement('a');
-    link.href = '#';
+    var link = document.createElement("a");
+    link.href = "#";
     link.id = entry;
-    link.className = 'btn-primary';
+    link.className = "btn-primary";
     link.textContent = issues[issue][entry];
     dropdowns.appendChild(link);
   }
-  var issueDiv = document.getElementById('issue-dropdowns');
+  var issueDiv = document.getElementById("issue-dropdowns");
   issueDiv.appendChild(button);
   issueDiv.appendChild(dropdowns);
 }
 
-map.on('load', function() {
+map.on("load", function() {
   // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
   for (let census in CENSUS_KEYS) {
     newSourceLayer(census, CENSUS_KEYS[census]);
@@ -415,7 +466,6 @@ map.on('load', function() {
         catArray.push(cat);
         catDict[cat] = issues[cat][obj];
       }
-
     }
     // check how deeply nested the outer ring of the unioned polygon is
     final = [];
@@ -425,60 +475,60 @@ map.on('load', function() {
     } else if (a[obj][0].length > 2) {
       final = [a[obj][0]];
     } else {
-      final = a[obj]
+      final = a[obj];
     }
     // draw the polygon
     map.addLayer({
-      'id': obj,
-      'type': 'fill',
-      'source': {
-        'type': 'geojson',
-        'data': {
-          'type': 'Feature',
-          'geometry': {
-            'type': 'Polygon',
-            'coordinates': final
+      id: obj,
+      type: "fill",
+      source: {
+        type: "geojson",
+        data: {
+          type: "Feature",
+          geometry: {
+            type: "Polygon",
+            coordinates: final,
           },
-          'properties': {
-            'issues': catDict,
-            'category': catArray
-          }
-        }
+          properties: {
+            issues: catDict,
+            category: catArray,
+          },
+        },
       },
-      'layout': {
-        "visibility": "visible"
+      layout: {
+        visibility: "visible",
       },
-      'paint': {
-        'fill-color': 'rgba(110, 178, 181,0.15)',
-      }
+      paint: {
+        "fill-color": "rgba(110, 178, 181,0.15)",
+      },
     });
 
     map.addLayer({
-      'id': obj + "line",
-      'type': 'line',
-      'source': {
-        'type': 'geojson',
-        'data': {
-          'type': 'Feature',
-          'geometry': {
-            'type': 'Polygon',
-            'coordinates': final
+      id: obj + "line",
+      type: "line",
+      source: {
+        type: "geojson",
+        data: {
+          type: "Feature",
+          geometry: {
+            type: "Polygon",
+            coordinates: final,
           },
-          'properties': {
-            'issues': catDict,
-            'category': catArray
-          }
-        }
+          properties: {
+            issues: catDict,
+            category: catArray,
+          },
+        },
       },
-      'layout': {
-        "visibility": "visible",
+      layout: {
+        visibility: "visible",
         "line-join": "round",
-        "line-cap": "round"
+        "line-cap": "round",
       },
-      'paint': {
-        'line-color': 'rgba(110, 178, 181,0.3)',
-        "line-width": 2
-      }
+      paint: {
+        "line-color": "rgba(110, 178, 181,0.3)",
+        "line-width": 2,
+      },
     });
   }
 
@@ -494,49 +544,61 @@ map.on('load', function() {
       // iterate thru the polygons on the map
       for (obj in a) {
         if (issues[issueId][obj] === undefined) {
-          map.setLayoutProperty(obj, 'visibility', 'none');
-          map.setLayoutProperty(obj + "line", 'visibility', 'none');
+          map.setLayoutProperty(obj, "visibility", "none");
+          map.setLayoutProperty(obj + "line", "visibility", "none");
         } else {
-          map.setLayoutProperty(obj, 'visibility', 'visible');
-          map.setLayoutProperty(obj + "line", 'visibility', 'visible');
-          map.setPaintProperty(obj + "line", 'line-color', PAINT_VALUES[issueId] + '0.3)');
-          map.setPaintProperty(obj, 'fill-color', PAINT_VALUES[issueId] + '0.15)');
+          map.setLayoutProperty(obj, "visibility", "visible");
+          map.setLayoutProperty(obj + "line", "visibility", "visible");
+          map.setPaintProperty(
+            obj + "line",
+            "line-color",
+            PAINT_VALUES[issueId] + "0.3)"
+          );
+          map.setPaintProperty(
+            obj,
+            "fill-color",
+            PAINT_VALUES[issueId] + "0.15)"
+          );
         }
       }
-    }
+    };
     for (entry in issues[issue]) {
       var entryId = document.getElementById(entry);
       entryId.onclick = function(e) {
         var thisId = this.id;
         for (obj in a) {
           if (thisId === obj) {
-            map.setLayoutProperty(obj, 'visibility', 'visible');
-            map.setLayoutProperty(obj + "line", 'visibility', 'visible');
+            map.setLayoutProperty(obj, "visibility", "visible");
+            map.setLayoutProperty(obj + "line", "visibility", "visible");
           } else {
-            map.setLayoutProperty(obj, 'visibility', 'none');
-            map.setLayoutProperty(obj + "line", 'visibility', 'none');
+            map.setLayoutProperty(obj, "visibility", "none");
+            map.setLayoutProperty(obj + "line", "visibility", "none");
           }
         }
-      }
+      };
     }
   }
 
-  var allEntriesButton = document.getElementById('all');
+  var allEntriesButton = document.getElementById("all");
 
   allEntriesButton.onclick = function(e) {
     for (obj in a) {
-      map.setLayoutProperty(obj, 'visibility', 'visible');
-      map.setLayoutProperty(obj + "line", 'visibility', 'visible');
-      map.setPaintProperty(obj, 'fill-color', 'rgba(110, 178, 181,0.15)');
-      map.setPaintProperty(obj + "line", 'line-color', 'rgba(110, 178, 181,0.3)');
+      map.setLayoutProperty(obj, "visibility", "visible");
+      map.setLayoutProperty(obj + "line", "visibility", "visible");
+      map.setPaintProperty(obj, "fill-color", "rgba(110, 178, 181,0.15)");
+      map.setPaintProperty(
+        obj + "line",
+        "line-color",
+        "rgba(110, 178, 181,0.3)"
+      );
     }
-  }
+  };
 
   for (var tag in tags) {
-    var link = document.createElement('a');
-    link.href = '#';
+    var link = document.createElement("a");
+    link.href = "#";
     link.textContent = tag;
-    link.className = 'btn-primary';
+    link.className = "btn-primary";
 
     link.onclick = function(e) {
       var tagName = this.textContent;
@@ -544,65 +606,85 @@ map.on('load', function() {
       e.stopPropagation();
       for (obj in a) {
         if (tags[tagName].includes(obj)) {
-          map.setLayoutProperty(obj, 'visibility', 'visible');
-          map.setLayoutProperty(obj + "line", 'visibility', 'visible');
+          map.setLayoutProperty(obj, "visibility", "visible");
+          map.setLayoutProperty(obj + "line", "visibility", "visible");
         } else {
-          map.setLayoutProperty(obj, 'visibility', 'none');
-          map.setLayoutProperty(obj + "line", 'visibility', 'none');
+          map.setLayoutProperty(obj, "visibility", "none");
+          map.setLayoutProperty(obj + "line", "visibility", "none");
         }
       }
     };
 
-    var layers = document.getElementById('tags-menu');
+    var layers = document.getElementById("tags-menu");
     layers.appendChild(link);
   }
   // find what features are currently on view
   // multiple features are gathered that have the same source (or have the same source with 'line' added on)
-  map.on('moveend', function() {
+  map.on("moveend", function() {
     var sources = [];
     var features = map.queryRenderedFeatures();
     // clear the html so that we dont end up with duplicate communities
-    document.getElementById('community-list').innerHTML = "";
+    document.getElementById("community-list").innerHTML = "";
     for (var i = 0; i < features.length; i++) {
       // through all the features which are rendered, get info abt them
       var source = features[i].source;
-      if (source !== 'composite' && !source.includes('line') && !source.includes('census') && !source.includes('lower') && !source.includes('upper')) {
+      if (
+        source !== "composite" &&
+        !source.includes("line") &&
+        !source.includes("census") &&
+        !source.includes("lower") &&
+        !source.includes("upper")
+      ) {
         if (!sources.includes(source)) {
           console.log(features[i]);
           sources.push(source);
           var issues = JSON.parse(features[i].properties.issues);
-          var inner_content = "<span class='font-weight-light text-uppercase'>Community ".concat(source.slice(0, 8), "</span><hr class='my-1'>\n",
-            "<span class='font-weight-light'>Issues:</span>");
+          var inner_content = "<span class='font-weight-light text-uppercase'>Community ".concat(
+            source.slice(0, 8),
+            "</span><hr class='my-1'>\n",
+            "<span class='font-weight-light'>Issues:</span>"
+          );
           if (features[i].properties.category !== "[]") {
             var categories = JSON.parse(features[i].properties.category);
             for (var cat in categories) {
-              inner_content += " <div class='p-1 my-1 bg-info text-white text-center '>" + issues[categories[cat]] + "</div>"
+              inner_content +=
+                " <div class='p-1 my-1 bg-info text-white text-center '>" +
+                issues[categories[cat]] +
+                "</div>";
             }
           } else {
-            inner_content += " N/A"
+            inner_content += " N/A";
           }
-          var content = '<li class="list-group-item small">'.concat(inner_content, '</li>');
+          var content = '<li class="list-group-item small">'.concat(
+            inner_content,
+            "</li>"
+          );
           // put the code into the html - display!
-          document.getElementById('community-list').insertAdjacentHTML('beforeend', content);
+          document
+            .getElementById("community-list")
+            .insertAdjacentHTML("beforeend", content);
         }
       }
     }
   });
-
 });
 
 //create a button that toggles layers based on their IDs
-var toggleableLayerIds = ['Census Blocks', 'State Legislature - Lower', 'State Legislature - Upper'];
+var toggleableLayerIds = [
+  "Census Blocks",
+  "State Legislature - Lower",
+  "State Legislature - Upper",
+];
 
 for (var i = 0; i < toggleableLayerIds.length; i++) {
   var id = toggleableLayerIds[i];
 
-  var link = document.createElement('input');
+  var link = document.createElement("input");
 
-  link.value = id.replace(/\s+/g, '-').toLowerCase();
+  link.value = id.replace(/\s+/g, "-").toLowerCase();
   link.id = id;
-  link.type = 'checkbox';
-  link.className = 'switch_1';
+  link.type = "checkbox";
+  link.className = "switch_1";
   link.checked = false;
 
   link.onchange = function(e) {
@@ -618,26 +700,26 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
     e.stopPropagation();
 
     for (var j = 0; j < clickedLayers.length; j++) {
-      var visibility = map.getLayoutProperty(clickedLayers[j], 'visibility');
+      var visibility = map.getLayoutProperty(clickedLayers[j], "visibility");
 
-      if (visibility === 'visible') {
-        map.setLayoutProperty(clickedLayers[j], 'visibility', 'none');
+      if (visibility === "visible") {
+        map.setLayoutProperty(clickedLayers[j], "visibility", "none");
       } else {
-        map.setLayoutProperty(clickedLayers[j], 'visibility', 'visible');
+        map.setLayoutProperty(clickedLayers[j], "visibility", "visible");
       }
     }
   };
   // in order to create the buttons
-  var div = document.createElement('div');
-  div.className = 'switch_box box_1';
-  var label = document.createElement('label');
-  label.setAttribute('for', id.replace(/\s+/g, '-').toLowerCase());
+  var div = document.createElement("div");
+  div.className = "switch_box box_1";
+  var label = document.createElement("label");
+  label.setAttribute("for", id.replace(/\s+/g, "-").toLowerCase());
   label.textContent = id;
-  var layers = document.getElementById('outline-menu');
+  var layers = document.getElementById("outline-menu");
   div.appendChild(link);
   div.appendChild(label);
   layers.appendChild(div);
-  var newline = document.createElement('br');
+  var newline = document.createElement("br");
 }
 
 /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content -
@@ -659,11 +741,20 @@ for (i = 0; i < dropdown.length; i++) {
   });
 }
 
-
-
 // search bar function ! looks through the tags and the buttons themselves
 function searchTags() {
-  var input, filter, dropdowns, sub, i, txtValueB, txtValueS, j, buttons, prev, next, skip;
+  var input,
+    filter,
+    dropdowns,
+    sub,
+    i,
+    txtValueB,
+    txtValueS,
+    j,
+    buttons,
+    prev,
+    next,
+    skip;
   input = document.getElementById("search-bar");
   filter = input.value.toUpperCase();
   // search among the tags themselves (buttons)
