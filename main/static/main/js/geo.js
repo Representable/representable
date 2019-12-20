@@ -603,6 +603,7 @@ drawControls = document.querySelector(".draw-polygon-map .mapboxgl-ctrl-group");
 drawControls.classList.add("draw-group");
 
 // Add nav control buttons.
+map.addControl(new mapboxgl.FullscreenControl());
 map.addControl(new mapboxgl.NavigationControl());
 
 /* Change mapbox draw button */
