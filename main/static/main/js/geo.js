@@ -648,6 +648,7 @@ function newSourceLayer(name, mbCode) {
 // add a new layer of census block data
 function newCensusLines(state) {
   map.addLayer({
+    minzoom: 10, // Set zoom level to whatever suits your needs
     id: state + "-census-lines",
     type: "line",
     source: state + "-census",
@@ -658,8 +659,10 @@ function newCensusLines(state) {
       "line-cap": "round",
     },
     paint: {
-      "line-color": "rgba(71, 93, 204, 0.5)",
-      "line-width": 1,
+      "line-color": "gray",
+      "line-opacity": 0.5,
+      "line-dasharray": [0.2, 2],
+      "line-width": 1.3,
     },
   });
 }

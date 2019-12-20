@@ -300,8 +300,6 @@ color scheme. See readme.md*/
 
 .mapboxgl-popup {
   max-width: 400px;
-  /* font-family: Inter, system-ui, sans-serif; */
-  /* font-size: 12px; */
 }
 
 /* css for the line on the progress bar */
