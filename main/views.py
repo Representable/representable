@@ -327,9 +327,10 @@ class Submission(TemplateView):
         # TODO: Are there security risks? Probably - we should hash the UUID and make that the permalink
         # TODO we will have to update the database to store hash values :'(
         # TODO we should make UUID's shorter - maybe 10 digits
+        print(m_uuid)
         if m_uuid is None:
             pass # TODO need to fix here
-        query = CommunityEntry.objects.filter(entry_ID=m_uuid)
+        query = CommunityEntry.objects.filter(entry_ID__startswith=m_uuid)
         print(query)
         if len(query) == 0:
             # TODO return error - no map found
@@ -344,8 +345,11 @@ class Submission(TemplateView):
         else:
             s = "".join(user_map.census_blocks_polygon.geojson)
         map_poly = geojson.loads(s)
+        entryPolyDict = {}
+        entryPolyDict[m_uuid] = map_poly.coordinates
+
         context = {
-            "entry": json.dumps(map_poly),
+            "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
         }
         return render(request, self.template_name, context)
