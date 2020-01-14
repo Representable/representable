@@ -320,7 +320,7 @@ class Submission(TemplateView):
     NUM_DIGITS = 10 # TODO move to some place with constants
     
     def get(self, request, *args, **kwargs):
-        m_uuid = self.request.GET.get('uuid', None)
+        m_uuid = self.request.GET.get('map_id', None)
         # print(m_uuid)
         # self.sha.update(m_uuid.encode())
         # print(self.sha.hexdigest()[:NUM_DIGITS])
@@ -416,6 +416,12 @@ class Map(TemplateView):
 class Thanks(TemplateView):
     template_name = "main/thanks.html"
 
+    def get(self, request):
+        context = {
+            "map_url" : request.GET['map_id'],
+        }
+        return render(request, self.template_name, context)
+
 
 # ******************************************************************************#
 
@@ -499,7 +505,9 @@ class EntryView(LoginRequiredMixin, View):
                     issue.entry = entryForm
                     issue.save()
 
-            return HttpResponseRedirect(self.success_url)
+            m_uuid = str(entryForm.entry_ID).split("-")[0]
+            full_url = self.success_url + "?map_id=" + m_uuid
+            return HttpResponseRedirect(full_url) 
         context = {
             "form": form,
             "issue_formset": issue_formset,
