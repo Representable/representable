@@ -334,7 +334,10 @@ class Submission(TemplateView):
         print(query)
         if len(query) == 0:
             # TODO return error - no map found
-            pass
+            context = {
+                "entries": "",
+            }
+            return render(request, self.template_name, context)
         # query will have length 1 or database is invalid
         user_map = query[0]
         if (
@@ -349,6 +352,8 @@ class Submission(TemplateView):
         entryPolyDict[m_uuid] = map_poly.coordinates
 
         context = {
+            "entry_name" : user_map.entry_name,
+            "entry_reason" : user_map.entry_reason,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
         }

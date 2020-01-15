@@ -31,7 +31,7 @@
       let a = '{{ entries | escapejs}}';
     </script>
   </div>
-  <div class="col-md-3 col-wide">
+  <div class="col-md-4 col-wide">
     <nav id='menu'>
       <div class="sidenav">
         <div class="input-group mb-1">
@@ -49,17 +49,36 @@
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
               <div class="font-weight-light text-uppercase small" id="outline-menu">
               </div>
+              <!-- <button class="dropdown-btn btn-canvas" id="all">Clear All Filters -->
+            </div>
+            <div id="headingTwo">
+              <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" style="width: 100%">
+                Community Information <i class="fas fa-caret-down"></i></button>
+            </div>
+            <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample">
+              <br>
+              <div class="container">
+                <b>Community name</b>
+              </div>
+              <div class="card-body text-center d-flex flex-column align-items-center" id="outline-menu">
+                {{ entry_name }}
+              </div>
+              <div class="container">
+              <b>Why are you submitting this community?</b>
+            </div>
+              <div class="card-body text-center d-flex flex-column align-items-center" id="outline-menu">
+                {{ entry_reason }}
+              </div>
             </div>
           </div>
           <!-- Note: TODO issues temporarily removed because it's just one map, could add back -->
           <!-- Note: TODO communities temporarily removed because it's just one map, could add back -->
         </div>
         <div class="dropdown-container" id="tags-menu"></div>
-        <button class="dropdown-btn btn-canvas" id="all">Clear All Filters
           <i class="fa"></i></button>
     </nav>
   </div>
-  <div class="col-md-9 col-map col-wide">
+  <div class="col-md-8 col-map col-wide">
     <div id='map' class="map-visualization"></div>
   </div>
 </div>
