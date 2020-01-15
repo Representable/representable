@@ -31,6 +31,11 @@
       let a = '{{ entries | escapejs}}';
     </script>
   </div>
+  {% if entries is None %}
+    <script>
+      alert('No map found with the given map_id.');
+    </script>
+  {% endif %}
   <div class="col-md-4 col-wide">
     <nav id='menu'>
       <div class="sidenav">

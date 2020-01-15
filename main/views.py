@@ -335,7 +335,7 @@ class Submission(TemplateView):
         if len(query) == 0:
             # TODO return error - no map found
             context = {
-                "entries": "",
+                "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             }
             return render(request, self.template_name, context)
         # query will have length 1 or database is invalid
