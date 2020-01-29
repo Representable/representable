@@ -324,19 +324,13 @@ class Submission(TemplateView):
     
     def get(self, request, *args, **kwargs):
         m_uuid = self.request.GET.get('map_id', None)
-        # print(m_uuid)
-        # self.sha.update(m_uuid.encode())
-        # print(self.sha.hexdigest()[:NUM_DIGITS])
         # TODO: Are there security risks? Probably - we should hash the UUID and make that the permalink
-        # TODO we will have to update the database to store hash values :'(
-        # TODO we should make UUID's shorter - maybe 10 digits
         print(m_uuid)
         if m_uuid is None:
             pass # TODO need to fix here
         query = CommunityEntry.objects.filter(entry_ID__startswith=m_uuid)
         print(query)
         if len(query) == 0:
-            # TODO return error - no map found
             context = {
                 "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             }
