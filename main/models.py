@@ -25,8 +25,6 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import migrations
 from django.contrib.gis.db import models
-from django.forms import TextInput, Textarea
-from .choices import *
 import datetime
 from .choices import (
     POLICY_ISSUES,
