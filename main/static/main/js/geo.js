@@ -622,8 +622,8 @@ class CensusBlocksControl {
         var blocksLink = document.createElement('button');
         blocksLink.href = '#';
         blocksLink.className = 'active';
-        blocksLink.textContent = 'Toggle Census Blocks';
-        blocksLink.style.width = '135px';
+        blocksLink.style.width = '150px';
+        blocksLink.innerHTML = "<i class='fas fa-th-large'></i> Toggle Census Blocks";
         this._map = map;
         this._container = document.createElement('div');
         this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
