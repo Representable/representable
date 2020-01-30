@@ -209,7 +209,6 @@ $('#zipSubmit').click(function(e) {
 
 //builds proper format of location string based on mapbox data. city,state/province,country
 function parseReverseGeo(geoData) {
-  // debugger;
   var region, countryName, placeName, returnStr;
   if (geoData.context) {
     $.each(geoData.context, function(i, v) {
