@@ -650,11 +650,8 @@ map.on('load', function() {
           console.log(features[i]);
           sources.push(source);
           var issues = JSON.parse(features[i].properties.issues);
-          var inner_content = "<span class='font-weight-light text-uppercase'>Community ".concat(
-            source.slice(0, 8),
-            "</span><hr class='my-1'>\n",
-            "<span class='font-weight-light'>Issues:</span>"
-          );
+          var inner_content = "<span class='font-weight-light text-uppercase'><a style='display:inline;' href='/submission?map_id=" + source.slice(0, 8) + "'>Community ".concat(source.slice(0, 8), "</a></span><hr class='my-1'>\n",
+            "<span class='font-weight-light'>Issues:</span>");
           if (features[i].properties.category !== "[]") {
             var categories = JSON.parse(features[i].properties.category);
             for (var cat in categories) {

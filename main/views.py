@@ -40,6 +40,7 @@ import geojson
 import os
 import json
 import re
+import hashlib
 from django.http import JsonResponse
 import shapely.wkt
 import reverse_geocoder as rg
@@ -316,6 +317,47 @@ class Review(LoginRequiredMixin, TemplateView):
 
 # ******************************************************************************#
 
+class Submission(TemplateView):
+    template_name = "main/submission.html"
+    sha = hashlib.sha256()
+    NUM_DIGITS = 10 # TODO move to some place with constants
+    
+    def get(self, request, *args, **kwargs):
+        m_uuid = self.request.GET.get('map_id', None)
+        # TODO: Are there security risks? Probably - we should hash the UUID and make that the permalink
+        print(m_uuid)
+        if m_uuid is None:
+            pass # TODO need to fix here
+        query = CommunityEntry.objects.filter(entry_ID__startswith=m_uuid)
+        print(query)
+        if len(query) == 0:
+            context = {
+                "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+            }
+            return render(request, self.template_name, context)
+        # query will have length 1 or database is invalid
+        user_map = query[0]
+        if (
+            user_map.census_blocks_polygon == ""
+            or user_map.census_blocks_polygon is None
+        ):
+            s = "".join(user_map.user_polygon.geojson)
+        else:
+            s = "".join(user_map.census_blocks_polygon.geojson)
+        map_poly = geojson.loads(s)
+        entryPolyDict = {}
+        entryPolyDict[m_uuid] = map_poly.coordinates
+
+        context = {
+            "entry_name" : user_map.entry_name,
+            "entry_reason" : user_map.entry_reason,
+            "entries": json.dumps(entryPolyDict),
+            "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+        }
+        return render(request, self.template_name, context)
+
+# ******************************************************************************#
+
 
 class Map(TemplateView):
     template_name = "main/map.html"
@@ -375,6 +417,12 @@ class Map(TemplateView):
 
 class Thanks(TemplateView):
     template_name = "main/thanks.html"
+
+    def get(self, request):
+        context = {
+            "map_url" : request.GET['map_id'],
+        }
+        return render(request, self.template_name, context)
 
 
 # ******************************************************************************#
@@ -463,7 +511,9 @@ class EntryView(LoginRequiredMixin, View):
                     issue.entry = entryForm
                     issue.save()
 
-            return HttpResponseRedirect(self.success_url)
+            m_uuid = str(entryForm.entry_ID).split("-")[0]
+            full_url = self.success_url + "?map_id=" + m_uuid
+            return HttpResponseRedirect(full_url) 
         context = {
             "form": form,
             "issue_formset": issue_formset,

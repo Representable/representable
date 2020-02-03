@@ -1,0 +1,93 @@
+{% extends 'main/base.html' %}
+{% load leaflet_tags %}
+{% load static %}
+
+{% block head %}
+{% leaflet_js %}
+{% leaflet_css %}
+<!-- https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ -->
+<!-- Mapbox GL JS -->
+<meta charset='utf-8' />
+<title>View Map</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--  GeoCoder -->
+<meta name='robots' content='noindex, nofollow'>
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
+<!-- Add css again to take precedence over mapbox css. -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<!--  Custom CSS -->
+<link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+
+<div class="row row-wide">
+  <div>
+    <script type="text/javascript">
+      let a = '{{ entries | escapejs}}';
+    </script>
+  </div>
+  {% if entries is None %}
+    <script>
+      alert('No map found with the given map_id.');
+    </script>
+  {% endif %}
+  <div class="col-md-4 col-wide">
+    <nav id='menu'>
+      <div class="sidenav">
+        <div class="accordion" id="accordionExample">
+          <div class="card">
+            <div id="headingOne">
+              <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" style="width: 100%">
+                Data layers <i class="fas fa-caret-down"></i></button>
+            </div>
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="font-weight-light text-uppercase small" id="outline-menu">
+              </div>
+              <!-- <button class="dropdown-btn btn-canvas" id="all">Clear All Filters -->
+            </div>
+            <div id="headingTwo">
+              <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" style="width: 100%">
+                Community Information <i class="fas fa-caret-down"></i></button>
+            </div>
+            <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample">
+              <br>
+              <div class="container">
+                <b>Community name</b>
+              </div>
+              <div class="card-body text-center d-flex flex-column align-items-center" id="outline-menu">
+                {{ entry_name }}
+              </div>
+              <div class="container">
+              <b>Why are you submitting this community?</b>
+            </div>
+              <div class="card-body text-center d-flex flex-column align-items-center" id="outline-menu">
+                {{ entry_reason }}
+              </div>
+            </div>
+          </div>
+          <!-- Note: TODO issues temporarily removed because it's just one map, could add back -->
+          <!-- Note: TODO communities temporarily removed because it's just one map, could add back -->
+        </div>
+        <div class="dropdown-container" id="tags-menu"></div>
+          <i class="fa"></i></button>
+    </nav>
+  </div>
+  <div class="col-md-8 col-map col-wide">
+    <div id='map' class="map-visualization"></div>
+  </div>
+</div>
+<div>
+{% endblock %}
+
+{% block script %}
+<!--  Has to be at the end after the HTML loads.-->
+<script type="text/javascript">
+  mapboxgl.accessToken = "{{ mapbox_key }}";
+</script>
+<script type="text/javascript" src="{% static 'main/js/submission.js' %}"></script>
+{% endblock %}
