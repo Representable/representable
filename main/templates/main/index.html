@@ -27,7 +27,14 @@
         {% endif %}
       </h4>
       <!-- Shows on small devices and lower. -->
-      <h5 class="display-4 my-2 font-weight-medium d-sm-none main-display-text-sm">We're creating a map of all communities to end gerrymandering.</h5>
+      <h5 class="display-4 my-2 font-weight-medium d-sm-none main-display-text-sm">
+        {% if LANGUAGE_CODE == 'en' %}
+          We're creating a map of communities to end gerrymandering.
+        {% elif LANGUAGE_CODE == 'es' %}
+          <!-- Google translate  -->
+          Estamos creando un mapa de comunidades para terminar con la gerrymandering.
+        {% endif %}
+      </h5>
       <a class="btn btn-primary btn-canvas mx-1 my-2" href="/entry" role="button">
         {% if LANGUAGE_CODE == 'en' %}
           Contribute
