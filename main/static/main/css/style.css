@@ -562,6 +562,10 @@ color scheme. See readme.md*/
   color: #dc3545;
 }
 
+.fa-th-large {
+  color: #455bcb;
+}
+
 /* code for the toggle button: https://codepen.io/thelaazyguy/pen/MvqpPr/ */
 .switch_box {
   display: -webkit-box;

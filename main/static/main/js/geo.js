@@ -616,6 +616,46 @@ trashButton[0].backgroundImg = "";
 trashButton[0].id = "trash-button";
 trashButton[0].innerHTML = "<i class='fas fa-trash-alt'></i> Delete Polygon";
 
+// add button for toggling census Blocks
+class CensusBlocksControl {
+    onAdd(map) {
+        var blocksLink = document.createElement('button');
+        blocksLink.href = '#';
+        blocksLink.className = 'active';
+        blocksLink.style.width = '150px';
+        blocksLink.innerHTML = "<i class='fas fa-th-large'></i> Toggle Census Blocks";
+        this._map = map;
+        this._container = document.createElement('div');
+        this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+        // this._container.textContent = 'Toggle Census Blocks';
+        blocksLink.onclick = function(e) {
+          for (let i = 0; i < states.length; i++) {
+
+            var clickedLayer = states[i] + "-census-lines";
+            e.preventDefault();
+            e.stopPropagation();
+
+            var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+            if (visibility === 'visible') {
+              map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+              this.className = '';
+            } else {
+              this.className = 'active';
+              map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+            }
+          }
+        };
+        this._container.appendChild(blocksLink);
+        return this._container;
+    }
+
+    onRemove() {
+        this._container.parentNode.removeChild(this._container);
+        this._map = undefined;
+    }
+}
+map.addControl(new CensusBlocksControl(), 'top-left');
+
 // Override Behavior for Draw-Button
 document.getElementById("draw-button").addEventListener("click", function(e) {
   cleanAlerts();
