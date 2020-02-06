@@ -2,7 +2,7 @@
 
 _by Kyle Barnes (reach out for questions)_
 
-1. Find your data ! Census blocks and a lot of other shapefiles are available from the census website at https://www.census.gov/cgi-bin/geo/shapefiles/index.php
+1. Find your data ! Census blocks and a lot of other shapefiles are available from the census website at https://www.census.gov/cgi-bin/geo/shapefiles/index.php and the specific population data is included in these files ftp://ftp2.census.gov/geo/tiger/TIGER2010BLKPOPHU/
 2. Install tippecanoe (https://github.com/mapbox/tippecanoe)
 
 ```
