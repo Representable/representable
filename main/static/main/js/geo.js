@@ -301,7 +301,6 @@ function modalZip(e) {
 
   var isnum = /^\d+$/.test($("#zipcode").val());
   if (isnum) {
-    console.log("yuh");
     // Parse only first 4 digits of zipcode.
     zipcode = $("#zipcode").val();
     zipcode = zipcode.substring(0, 4);
@@ -704,6 +703,23 @@ function newCensusLines(state) {
     },
   });
 }
+// // add a new layer of census block data (transparent layer)
+// function newCensusShading(state) {
+//   map.addLayer({
+//     id: state + "-census-shading",
+//     type: "fill",
+//     source: state + "-census",
+//     "source-layer": state + "census",
+//     layout: {
+//       visibility: "visible"
+//     },
+//     paint: {
+//       "fill-outline-color": "rgb(71, 93, 204)",
+//       "fill-color": "rgb(71, 93, 204)",
+//       "fill-opacity": 0.2
+//     },
+//   });
+// }
 function newHighlightLayer(state) {
   map.addLayer({
     id: state + "-blocks-highlighted",
@@ -739,6 +755,7 @@ map.on("style.load", function() {
 
   for (let i = 0; i < states.length; i++) {
     newCensusLines(states[i]);
+    // newCensusShading(states[i]);
     newHighlightLayer(states[i]);
   }
 
@@ -883,7 +900,6 @@ function highlightBlocks(drawn_polygon) {
     var southWestPointPixel = map.project(southWest);
 
     // var final_union = turf.union(turf.bboxPolygon([0, 0, 0, 0]), turf.bboxPolygon([0, 0, 1, 1]));
-    // TODO: update layer names for all states (will this work?)
     var features = map.queryRenderedFeatures(
       [southWestPointPixel, northEastPointPixel],
       { layers: [sessionStorage.getItem("stateName") + "-census-lines"] }
