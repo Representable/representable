@@ -686,40 +686,40 @@ function newSourceLayer(name, mbCode) {
   });
 }
 // add a new layer of census block data
-function newCensusLines(state) {
-  map.addLayer({
-    id: state + "-census-lines",
-    type: "line",
-    source: state + "-census",
-    "source-layer": state + "census",
-    layout: {
-      visibility: "visible",
-      "line-join": "round",
-      "line-cap": "round",
-    },
-    paint: {
-      "line-color": "rgba(71, 93, 204, 0.5)",
-      "line-width": 1,
-    },
-  });
-}
-// // add a new layer of census block data (transparent layer)
-// function newCensusShading(state) {
+// function newCensusLines(state) {
 //   map.addLayer({
-//     id: state + "-census-shading",
-//     type: "fill",
+//     id: state + "-census-lines",
+//     type: "line",
 //     source: state + "-census",
 //     "source-layer": state + "census",
 //     layout: {
-//       visibility: "visible"
+//       visibility: "visible",
+//       "line-join": "round",
+//       "line-cap": "round",
 //     },
 //     paint: {
-//       "fill-outline-color": "rgb(71, 93, 204)",
-//       "fill-color": "rgb(71, 93, 204)",
-//       "fill-opacity": 0.2
+//       "line-color": "rgba(71, 93, 204, 0.5)",
+//       "line-width": 1,
 //     },
 //   });
 // }
+// add a new layer of census block data (transparent layer)
+function newCensusShading(state) {
+  map.addLayer({
+    id: state + "-census-lines",
+    type: "fill",
+    source: state + "-census",
+    "source-layer": state + "census",
+    layout: {
+      visibility: "none"
+    },
+    paint: {
+      "fill-outline-color": "rgb(71, 93, 204)",
+      "fill-color": "rgb(71, 93, 204)",
+      "fill-opacity": ["*", ["get", "POP10"], .001]
+    },
+  });
+}
 function newHighlightLayer(state) {
   map.addLayer({
     id: state + "-blocks-highlighted",
@@ -754,8 +754,8 @@ map.on("style.load", function() {
   }
 
   for (let i = 0; i < states.length; i++) {
-    newCensusLines(states[i]);
-    // newCensusShading(states[i]);
+    // newCensusLines(states[i]);
+    newCensusShading(states[i]);
     newHighlightLayer(states[i]);
   }
 
