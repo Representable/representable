@@ -22,26 +22,6 @@
 // GEO Js file for handling map drawing.
 /* https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ */
 // Polygon Drawn By User
-var ideal_population_LOWER = {
-  nj: 109899,
-  va: 80010,
-  pa: 62573,
-  mi: 89851,
-};
-
-var ideal_population_UPPER = {
-  nj: 219797,
-  va: 200026,
-  pa: 254048,
-  mi: 260096,
-};
-
-var ideal_population_CONG = {
-  nj: 710767,
-  va: 710767,
-  pa: 710767,
-  mi: 710767,
-};
 var CENSUS_KEYS = {
   "ak-census": "40xiqgvl",
   "al-census": "5wnfuadx",
@@ -912,14 +892,12 @@ function highlightBlocks(drawn_polygon) {
             if (turf.booleanContains(drawn_polygon, polyCon)) {
               memo.push(feature.properties.BLOCKID10);
               mpoly = addPoly(polyCon.geometry, mpoly, wkt);
-              total += feature.properties.POP10;
             }
           } else {
             if (turf.booleanContains(drawn_polygon, feature.geometry)) {
               memo.push(feature.properties.BLOCKID10);
               polyCon = turf.polygon([feature.geometry.coordinates[0]]);
               mpoly = addPoly(polyCon.geometry, mpoly, wkt);
-              total += feature.properties.POP10;
             }
           }
           return memo;
@@ -933,37 +911,6 @@ function highlightBlocks(drawn_polygon) {
         filter
       );
 
-      // show population stats for NJ only:
-      // 1. LOWER LEGISLATION PROGRESS BAR __________________________________
-      // TODO: update these parts to determine which state we are focusing on
-      progressL = document.getElementById("pop");
-      progressL.style.background = "orange";
-      progressL.innerHTML =
-        Math.round((total / (ideal_population_LOWER["nj"] * 1.5)) * 100) + "%";
-      progressL.setAttribute("aria-valuenow", "total");
-      progressL.setAttribute("aria-valuemax", ideal_population_LOWER["nj"]);
-      popWidth = (total / (ideal_population_LOWER["nj"] * 1.5)) * 100;
-      progressL.style.width = popWidth + "%";
-
-      // 2. UPPER LEGISLATION PROGRESS BAR __________________________________
-      progressU = document.getElementById("popU");
-      progressU.style.background = "orange";
-      progressU.innerHTML =
-        Math.round((total / (ideal_population_UPPER["nj"] * 1.5)) * 100) + "%";
-      progressU.setAttribute("aria-valuenow", "total");
-      progressU.setAttribute("aria-valuemax", ideal_population_UPPER["nj"]);
-      popWidth = (total / (ideal_population_UPPER["nj"] * 1.5)) * 100;
-      progressU.style.width = popWidth + "%";
-
-      // 3. CONGRESSIONAL DISTRICT PROGRESS BAR __________________________________
-      progressC = document.getElementById("popC");
-      progressC.style.background = "orange";
-      progressC.innerHTML =
-        Math.round((total / (ideal_population_CONG["nj"] * 1.5)) * 100) + "%";
-      progressC.setAttribute("aria-valuenow", "total");
-      progressC.setAttribute("aria-valuemax", ideal_population_CONG["nj"]);
-      popWidth = (total / (ideal_population_CONG["nj"] * 1.5)) * 100;
-      progressC.style.width = popWidth + "%";
     }
   } catch (err) {
     console.log("triangle shaped polygon was changed");
