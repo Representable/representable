@@ -272,6 +272,8 @@ function getState(zipcode) {
   } else {
     state = "none";
   }
+  newCensusLines(state);
+  newHighlightLayer(state);
   sessionStorage.setItem("stateName", state);
   console.log(sessionStorage.getItem("stateName"));
 }
@@ -609,20 +611,17 @@ class CensusBlocksControl {
         this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
         // this._container.textContent = 'Toggle Census Blocks';
         blocksLink.onclick = function(e) {
-          for (let i = 0; i < states.length; i++) {
+          var clickedLayer = state + "-census-lines";
+          e.preventDefault();
+          e.stopPropagation();
 
-            var clickedLayer = states[i] + "-census-lines";
-            e.preventDefault();
-            e.stopPropagation();
-
-            var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
-            if (visibility === 'visible') {
-              map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-              this.className = '';
-            } else {
-              this.className = 'active';
-              map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
-            }
+          var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+          if (visibility === 'visible') {
+            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+            this.className = '';
+          } else {
+            this.className = 'active';
+            map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
           }
         };
         this._container.appendChild(blocksLink);
@@ -715,11 +714,6 @@ map.on("style.load", function() {
   // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
   for (let census in CENSUS_KEYS) {
     newSourceLayer(census, CENSUS_KEYS[census]);
-  }
-
-  for (let i = 0; i < states.length; i++) {
-    newCensusLines(states[i]);
-    newHighlightLayer(states[i]);
   }
 
   // Point centered at geocoded location
@@ -868,9 +862,7 @@ function highlightBlocks(drawn_polygon) {
       [southWestPointPixel, northEastPointPixel],
       { layers: [sessionStorage.getItem("stateName") + "-census-lines"] }
     );
-    // for (let j = 0 j < states.length(); j++) {
 
-    // }
     var mpoly = [];
     var wkt = new Wkt.Wkt();
     if (features.length >= 1) {
