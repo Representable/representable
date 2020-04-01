@@ -399,34 +399,6 @@ function newLowerLegislatureLayer(state) {
 // issues add to properties
 issues = JSON.parse(issues);
 
-// TODO: change issue to a button, which iterates thru all the displayed features and selects for that issue
-for (issue in issues) {
-  var button = document.createElement("div");
-  button.className = "btn btn-info m-1";
-  button.id = issue;
-  button.textContent = issue;
-  var circle = document.createElement("i");
-  circle.className = "fa fa-circle";
-  circle.style.color = PAINT_VALUES[issue] + "1)";
-  circle.style.paddingLeft = "5px";
-  button.appendChild(circle);
-
-  var dropdowns = document.createElement("div");
-  dropdowns.className = "dropdown-container";
-
-  for (entry in issues[issue]) {
-    var link = document.createElement("a");
-    link.href = "#";
-    link.id = entry;
-    link.className = "btn-primary";
-    link.textContent = issues[issue][entry];
-    dropdowns.appendChild(link);
-  }
-  var issueDiv = document.getElementById("issue-dropdowns");
-  issueDiv.appendChild(button);
-  issueDiv.appendChild(dropdowns);
-}
-
 map.on('load', function() {
   var layers = map.getStyle().layers;
   // Find the index of the first symbol layer in the map style
@@ -543,53 +515,6 @@ map.on('load', function() {
     });
   }
 
-  // this function iterates thru the issues, and adds a link to each one Which
-  // displays the right polygons
-  for (issue in issues) {
-    console.log(issue);
-    // the button element
-    var cat = document.getElementById(issue);
-
-    cat.onclick = function(e) {
-      var issueId = this.id;
-      // iterate thru the polygons on the map
-      for (obj in a) {
-        if (issues[issueId][obj] === undefined) {
-          map.setLayoutProperty(obj, "visibility", "none");
-          map.setLayoutProperty(obj + "line", "visibility", "none");
-        } else {
-          map.setLayoutProperty(obj, "visibility", "visible");
-          map.setLayoutProperty(obj + "line", "visibility", "visible");
-          map.setPaintProperty(
-            obj + "line",
-            "line-color",
-            PAINT_VALUES[issueId] + "0.3)"
-          );
-          map.setPaintProperty(
-            obj,
-            "fill-color",
-            PAINT_VALUES[issueId] + "0.15)"
-          );
-        }
-      }
-    };
-    for (entry in issues[issue]) {
-      var entryId = document.getElementById(entry);
-      entryId.onclick = function(e) {
-        var thisId = this.id;
-        for (obj in a) {
-          if (thisId === obj) {
-            map.setLayoutProperty(obj, "visibility", "visible");
-            map.setLayoutProperty(obj + "line", "visibility", "visible");
-          } else {
-            map.setLayoutProperty(obj, "visibility", "none");
-            map.setLayoutProperty(obj + "line", "visibility", "none");
-          }
-        }
-      };
-    }
-  }
-
   var allEntriesButton = document.getElementById("all");
 
   allEntriesButton.onclick = function(e) {
@@ -604,31 +529,6 @@ map.on('load', function() {
       );
     }
   };
-
-  for (var tag in tags) {
-    var link = document.createElement("a");
-    link.href = "#";
-    link.textContent = tag;
-    link.className = "btn-primary";
-
-    link.onclick = function(e) {
-      var tagName = this.textContent;
-      e.preventDefault();
-      e.stopPropagation();
-      for (obj in a) {
-        if (tags[tagName].includes(obj)) {
-          map.setLayoutProperty(obj, "visibility", "visible");
-          map.setLayoutProperty(obj + "line", "visibility", "visible");
-        } else {
-          map.setLayoutProperty(obj, "visibility", "none");
-          map.setLayoutProperty(obj + "line", "visibility", "none");
-        }
-      }
-    };
-
-    var layers = document.getElementById("tags-menu");
-    layers.appendChild(link);
-  }
   // find what features are currently on view
   // multiple features are gathered that have the same source (or have the same source with 'line' added on)
   map.on("moveend", function() {
