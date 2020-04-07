@@ -102,13 +102,36 @@
                 <form id="entryForm" method="post">
                     <!-- First Row: Includes Map. -->
                     <div class="row row-equal-cols">
+                        <div class="col-lg-8 mt-3">
+                            <div class="card">
+                                <div class="card-header text-header-card">
+                                    <strong>
+                                      {% if LANGUAGE_CODE == 'en' %}
+                                      1. Please enter the zipcode of your community as a starting point.
+                                      {% elif LANGUAGE_CODE == 'es' %}
+                                      <!-- Google translate  -->
+                                      Ingrese el código postal de su comunidad como punto de partida.
+                                      {% endif %}
+                                    </strong>
+                                </div>
+                                <form role="form" id="zipcodeForm">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="zipcode" placeholder="Zipcode" required>
+            
+                                        <div class="invalid-feedback">
+                                            Please provide a valid zip.
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                         <!-- Map -->
                         <div class="col-lg-8 mt-3">
                             <div class="card">
                                 <div class="card-header text-header-card">
                                     <strong>
                                       {% if LANGUAGE_CODE == 'en' %}
-                                      1. What does your community look like?
+                                      2. What does your community look like?
                                       {% elif LANGUAGE_CODE == 'es' %}
                                       <!-- Google translate  -->
                                       ¿Cómo se ve tu comunidad?
@@ -180,7 +203,7 @@
                         <div class="col-lg-8  mt-3">
                             <div class="card">
                                 <div class="card-header text-header-card">
-                                    <strong>2. What brings your community together?</strong>
+                                    <strong>3. What brings your community together?</strong>
                                 </div>
                                 <div class="card-body">
                                     <p class="card-text">
