@@ -250,28 +250,6 @@ var PAINT_VALUES = {
   "LGBT Issues": "rgba(255, 192, 203,",
 };
 
-//builds proper format of location string based on mapbox data. city,state/province,country
-function parseReverseGeo(geoData) {
-  // debugger;
-  var region, countryName, placeName, returnStr;
-  if (geoData.context) {
-    $.each(geoData.context, function(i, v) {
-      if (v.id.indexOf("region") >= 0) {
-        region = v.text;
-      }
-      if (v.id.indexOf("country") >= 0) {
-        countryName = v.text;
-      }
-    });
-  }
-  if (region && countryName) {
-    returnStr = region + ", " + countryName;
-  } else {
-    returnStr = geoData.place_name;
-  }
-  return returnStr;
-}
-
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
@@ -367,6 +345,8 @@ function newLowerLegislatureLayer(state) {
 
 // issues add to properties
 issues = JSON.parse(issues);
+entry_names = JSON.parse(entry_names);
+entry_reasons = JSON.parse(entry_reasons);
 
 map.on('load', function() {
   var layers = map.getStyle().layers;
@@ -409,8 +389,6 @@ map.on('load', function() {
 
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
-  entry_names = JSON.parse(entry_names)
-  entry_reasons = JSON.parse(entry_reasons)
 
   for (obj in a) {
     // let catDict = {};
@@ -486,21 +464,6 @@ map.on('load', function() {
       },
     });
   }
-
-  // var allEntriesButton = document.getElementById("all");
-  //
-  // allEntriesButton.onclick = function(e) {
-  //   for (obj in a) {
-  //     map.setLayoutProperty(obj, "visibility", "visible");
-  //     map.setLayoutProperty(obj + "line", "visibility", "visible");
-  //     map.setPaintProperty(obj, "fill-color", "rgba(110, 178, 181,0.15)");
-  //     map.setPaintProperty(
-  //       obj + "line",
-  //       "line-color",
-  //       "rgba(110, 178, 181,0.3)"
-  //     );
-  //   }
-  // };
   // find what features are currently on view
   // multiple features are gathered that have the same source (or have the same source with 'line' added on)
   map.on("moveend", function() {
@@ -535,6 +498,7 @@ map.on('load', function() {
       }
     }
   });
+  // this is necessary so the map "moves" and queries the features above ^^
   map.flyTo({
     center: [-74.65545, 40.341701],
     zoom: 12,
@@ -615,27 +579,5 @@ for (i = 0; i < dropdown.length; i++) {
 
 // search bar function ! looks through the tags and the buttons themselves
 function searchTags() {
-  var input,
-    filter,
-    dropdowns,
-    sub,
-    i,
-    txtValueB,
-    txtValueS,
-    j,
-    buttons,
-    prev,
-    next,
-    skip;
-  input = document.getElementById("search-bar");
-  filter = input.value.toUpperCase();
-  // search among the tags themselves (buttons)
-  // maybe there is a more efficient way to do this, but this makes sense, for now
-  buttons = document.getElementsByClassName("dropdown-btn");
-  for (i = 0; i < buttons.length; i++) {
-    // the dropdown-container with sub tags
-    next = buttons[i].nextElementSibling;
-    txtValueB = buttons[i].textContent || buttons[i].innerText;
-    // the links within dropdown-container: sub tags themselves
-  }
+  // go through all names and all reasons - find ones that match... wait do we even want a search bar?
 }
