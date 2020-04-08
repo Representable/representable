@@ -5,7 +5,7 @@ repos:
       - id: black
         language_version: python3.7
   - repo: https://github.com/prettier/prettier
-    rev: next # change this to stable when branch is available
+    rev: "" # change this to stable when branch is available
     hooks:
       - id: prettier
         name: prettier
