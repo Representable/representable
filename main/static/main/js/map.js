@@ -515,20 +515,20 @@ map.on('load', function() {
     });
   }
 
-  var allEntriesButton = document.getElementById("all");
-
-  allEntriesButton.onclick = function(e) {
-    for (obj in a) {
-      map.setLayoutProperty(obj, "visibility", "visible");
-      map.setLayoutProperty(obj + "line", "visibility", "visible");
-      map.setPaintProperty(obj, "fill-color", "rgba(110, 178, 181,0.15)");
-      map.setPaintProperty(
-        obj + "line",
-        "line-color",
-        "rgba(110, 178, 181,0.3)"
-      );
-    }
-  };
+  // var allEntriesButton = document.getElementById("all");
+  // 
+  // allEntriesButton.onclick = function(e) {
+  //   for (obj in a) {
+  //     map.setLayoutProperty(obj, "visibility", "visible");
+  //     map.setLayoutProperty(obj + "line", "visibility", "visible");
+  //     map.setPaintProperty(obj, "fill-color", "rgba(110, 178, 181,0.15)");
+  //     map.setPaintProperty(
+  //       obj + "line",
+  //       "line-color",
+  //       "rgba(110, 178, 181,0.3)"
+  //     );
+  //   }
+  // };
   // find what features are currently on view
   // multiple features are gathered that have the same source (or have the same source with 'line' added on)
   map.on("moveend", function() {
