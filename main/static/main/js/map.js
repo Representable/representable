@@ -535,6 +535,10 @@ map.on('load', function() {
       }
     }
   });
+  map.flyTo({
+    center: [-74.65545, 40.341701],
+    zoom: 12,
+  });
 });
 
 //create a button that toggles layers based on their IDs
