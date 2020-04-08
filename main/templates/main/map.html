@@ -24,33 +24,6 @@
 {% endblock %}
 {% block content %}
 <div class="container-fluid">
-<div class="modal fade" id="zipcodeModal" tabindex="-1" role="dialog" aria-labelledby="zipcodeModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5>
-          {% if LANGUAGE_CODE == 'en' %}
-          Search for a Zipcode:
-          {% elif LANGUAGE_CODE == 'es' %}
-          <!-- Google translate -->
-          Busque un código postal:
-          {% endif %}
-        </h5>
-      </div>
-      <div class="modal-body">
-        <form role="form" id="zipcodeForm">
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="Zipcode" id="zipcode">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-          <a class="btn btn-secondary" href="/" role="button">Return to homepage</a>
-        <button id="zipSubmit" type="submit" class="btn btn-primary">Submit</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div class="row row-wide">
   <div>

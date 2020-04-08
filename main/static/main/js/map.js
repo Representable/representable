@@ -250,37 +250,6 @@ var PAINT_VALUES = {
   "LGBT Issues": "rgba(255, 192, 203,",
 };
 
-$(document).ready(function() {
-  $("#zipcodeModal").modal("show");
-});
-
-function modalZip(e) {
-  e.preventDefault();
-
-  var isnum = /^\d+$/.test($("#zipcode").val());
-  if (isnum) {
-    console.log("yuh");
-    $("#zipcodeModal").modal("hide");
-    // user puts in a zipcode and the map zooms to that loc
-    let geoObj = geocoder.query($("#zipcode").val(), function(err, res) {
-      console.log(err, res);
-    });
-    console.log(geoObj);
-    var q = "Edison";
-  } else {
-    // write out the error here:
-  }
-}
-
-$("#zipcodeModal").keypress(function(e) {
-  if (e.keyCode === 10 || e.keyCode === 13) {
-    modalZip(e);
-  }
-});
-$("#zipSubmit").click(function(e) {
-  modalZip(e);
-});
-
 //builds proper format of location string based on mapbox data. city,state/province,country
 function parseReverseGeo(geoData) {
   // debugger;
