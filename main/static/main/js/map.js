@@ -440,16 +440,18 @@ map.on('load', function() {
 
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
+  entry_names = JSON.parse(entry_names)
+  entry_reasons = JSON.parse(entry_reasons)
 
   for (obj in a) {
-    let catDict = {};
-    let catArray = [];
-    for (cat in issues) {
-      if (issues[cat][obj] !== undefined) {
-        catArray.push(cat);
-        catDict[cat] = issues[cat][obj];
-      }
-    }
+    // let catDict = {};
+    // let catArray = [];
+    // for (cat in issues) {
+    //   if (issues[cat][obj] !== undefined) {
+    //     catArray.push(cat);
+    //     catDict[cat] = issues[cat][obj];
+    //   }
+    // }
     // check how deeply nested the outer ring of the unioned polygon is
     final = [];
     // set the coordinates of the outer ring to final
@@ -473,8 +475,8 @@ map.on('load', function() {
             coordinates: final,
           },
           properties: {
-            issues: catDict,
-            category: catArray,
+            name: entry_names[obj],
+            reason: entry_reasons[obj],
           },
         },
       },
@@ -486,6 +488,7 @@ map.on('load', function() {
       },
     });
 
+// this has to be a separate layer bc mapbox doesn't allow flexibility with thickness of outline of polygons
     map.addLayer({
       id: obj + "line",
       type: "line",
@@ -498,8 +501,8 @@ map.on('load', function() {
             coordinates: final,
           },
           properties: {
-            issues: catDict,
-            category: catArray,
+            name: entry_names[obj],
+            reason: entry_reasons[obj],
           },
         },
       },
@@ -516,7 +519,7 @@ map.on('load', function() {
   }
 
   // var allEntriesButton = document.getElementById("all");
-  // 
+  //
   // allEntriesButton.onclick = function(e) {
   //   for (obj in a) {
   //     map.setLayoutProperty(obj, "visibility", "visible");
@@ -549,20 +552,8 @@ map.on('load', function() {
         if (!sources.includes(source)) {
           console.log(features[i]);
           sources.push(source);
-          var issues = JSON.parse(features[i].properties.issues);
-          var inner_content = "<span class='font-weight-light text-uppercase'><a style='display:inline;' href='/submission?map_id=" + source.slice(0, 8) + "'>Community ".concat(source.slice(0, 8), "</a></span><hr class='my-1'>\n",
-            "<span class='font-weight-light'>Issues:</span>");
-          if (features[i].properties.category !== "[]") {
-            var categories = JSON.parse(features[i].properties.category);
-            for (var cat in categories) {
-              inner_content +=
-                " <div class='p-1 my-1 bg-info text-white text-center '>" +
-                issues[categories[cat]] +
-                "</div>";
-            }
-          } else {
-            inner_content += " N/A";
-          }
+          var inner_content = "<span class='font-weight-light text-uppercase'><a style='display:inline;' href='/submission?map_id=" + source.slice(0, 8) + "'>".concat(features[i].properties.name, "</a></span><hr class='my-1'>\n",
+            "<span class='font-weight-light'>Why are you submitting this community?</span> <div class='p-1 my-1 bg-info text-white text-center '>", features[i].properties.reason, "</div>");
           var content = '<li class="list-group-item small">'.concat(
             inner_content,
             "</li>"
