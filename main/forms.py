@@ -25,7 +25,7 @@ from django_select2.forms import (
     ModelSelect2Widget,
     ModelSelect2TagWidget,
 )
-from .models import CommunityEntry, Issue, Tag
+from .models import CommunityEntry, Issue, Tag, Organization
 from django.forms import formset_factory
 from .choices import (
     POLICY_ISSUES,
@@ -195,4 +195,35 @@ class DeletionForm(ModelForm):
         widgets = {
             "user": forms.HiddenInput(),
             "entry_ID": forms.HiddenInput(),
+        }
+
+
+class OrganizationForm(ModelForm):
+    class Meta:
+        model = Organization
+        fields = [
+            "name",
+            "description",
+            "ext_link",
+            "link",
+        ]  # ,"admin_group","mod_group"]
+        widgets = {
+            "name": forms.TextInput(
+                attrs={"placeholder": "Name of Organization"}
+            ),
+            "description": forms.TextInput(
+                attrs={"placeholder": "Short Description"}
+            ),
+            "ext_link": forms.TextInput(
+                attrs={
+                    "placeholder": "External link to your organization. Include 'http'."
+                }
+            ),
+            "link": forms.TextInput(
+                attrs={
+                    "placeholder": "Will appear at Representable.org/org/[your-link]"
+                }
+            ),
+            # "admin_group": forms.HiddenInput(),
+            # "mod_group": forms.HiddenInput(),
         }

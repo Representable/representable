@@ -19,12 +19,12 @@
 #
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, CreateView
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from allauth.account.decorators import verified_email_required
 from django.forms import formset_factory
-from .forms import CommunityForm, IssueForm, DeletionForm
+from .forms import CommunityForm, IssueForm, DeletionForm, OrganizationForm
 from .models import CommunityEntry, Issue, Tag
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
@@ -45,6 +45,7 @@ from django.http import JsonResponse
 import shapely.wkt
 import reverse_geocoder as rg
 from state_abbrev import us_state_abbrev
+from django.contrib.auth.models import Group
 
 
 # ******************************************************************************#
@@ -91,10 +92,7 @@ class Index(TemplateView):
         context = super(Index, self).get_context_data(
             **kwargs
         )  # get the default context data
-        print("hello")
-        print(context)
-        print(get_language())
-        # print(LANGUAGE_CODE)
+
         context["mapbox_key"] = os.environ.get("DISTR_MAPBOX_KEY")
         return context
 
@@ -317,19 +315,20 @@ class Review(LoginRequiredMixin, TemplateView):
 
 # ******************************************************************************#
 
+
 class Submission(TemplateView):
     template_name = "main/submission.html"
     sha = hashlib.sha256()
-    NUM_DIGITS = 10 # TODO move to some place with constants
-    
+    NUM_DIGITS = 10  # TODO move to some place with constants
+
     def get(self, request, *args, **kwargs):
-        m_uuid = self.request.GET.get('map_id', None)
+        m_uuid = self.request.GET.get("map_id", None)
         # TODO: Are there security risks? Probably - we should hash the UUID and make that the permalink
-        print(m_uuid)
+
         if m_uuid is None:
-            pass # TODO need to fix here
+            pass  # TODO need to fix here
         query = CommunityEntry.objects.filter(entry_ID__startswith=m_uuid)
-        print(query)
+
         if len(query) == 0:
             context = {
                 "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
@@ -349,12 +348,13 @@ class Submission(TemplateView):
         entryPolyDict[m_uuid] = map_poly.coordinates
 
         context = {
-            "entry_name" : user_map.entry_name,
-            "entry_reason" : user_map.entry_reason,
+            "entry_name": user_map.entry_name,
+            "entry_reason": user_map.entry_reason,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
         }
         return render(request, self.template_name, context)
+
 
 # ******************************************************************************#
 
@@ -420,7 +420,7 @@ class Thanks(TemplateView):
 
     def get(self, request):
         context = {
-            "map_url" : request.GET['map_id'],
+            "map_url": request.GET["map_id"],
         }
         return render(request, self.template_name, context)
 
@@ -513,14 +513,46 @@ class EntryView(LoginRequiredMixin, View):
 
             m_uuid = str(entryForm.entry_ID).split("-")[0]
             full_url = self.success_url + "?map_id=" + m_uuid
-            return HttpResponseRedirect(full_url) 
+            return HttpResponseRedirect(full_url)
         context = {
             "form": form,
             "issue_formset": issue_formset,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
         }
-        # print(issue_formset)
         return render(request, self.template_name, context)
 
 
 # ******************************************************************************#
+
+
+class CreateOrg(LoginRequiredMixin, CreateView):
+    template_name = "main/organization/create.html"
+    form_class = OrganizationForm
+    # TODO: add a success url
+    success_url = "/org/thanks/"
+
+    def form_valid(self, form):
+        # TODO: change link to lowercase and again check if unique
+        link = form.cleaned_data.get("link")
+        admins = Group.objects.create(name=("admins_" + link))
+
+        # adds the current user to the admin group
+        admins.user_set.add(self.request.user)
+
+        mods = Group.objects.create(name=("mods_" + link))
+
+        form.instance.admin_group = admins
+        form.instance.mod_group = mods
+
+        return super().form_valid(form)
+
+
+# ******************************************************************************#
+
+
+class ThanksOrg(TemplateView):
+    template_name = "main/organization/thanks.html"
+
+
+class HomeOrg(TemplateView):
+    template_name = "main/organization/home.html"

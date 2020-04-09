@@ -18,11 +18,13 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 from django.contrib.postgres.fields import ArrayField
+from django.core.validators import RegexValidator
 
 # Geo App
 import uuid
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import Group
 from django.db import migrations
 from django.contrib.gis.db import models
 import datetime
@@ -156,6 +158,50 @@ class Issue(models.Model):
 
     def __str__(self):
         return self.description
+
+
+# ******************************************************************************#
+
+
+class Organization(models.Model):
+    """
+    Organization represents organizations with a user
+    Fields included:
+    - name: name of the organization
+    - description: description of the organization
+    - ext_link: external link to organization website
+    - link: relative link for organization page on Representable
+    - admin_group: the admins of the group, can moderate and manage
+    - mod_group: moderators who have the ability to approve submissions
+    """
+
+    name = models.CharField(max_length=128)
+    description = models.CharField(max_length=250, blank=True)
+    ext_link = models.URLField(max_length=200, blank=True)
+    link = models.CharField(
+        max_length=100,
+        validators=[
+            RegexValidator(
+                r"^[a-zA-Z0-9-]*$",
+                "Enter a valid link with only numbers, letters, and dashes (-).",
+            )
+        ],
+        blank=False,
+        unique=True,
+    )
+
+    admin_group = models.OneToOneField(
+        Group, on_delete=models.CASCADE, related_name="admin_group",
+    )
+    mod_group = models.OneToOneField(
+        Group, on_delete=models.CASCADE, related_name="mod_group",
+    )
+
+    class Meta:
+        ordering = ("description",)
+
+    def __str__(self):
+        return self.name
 
 
 # ******************************************************************************#
