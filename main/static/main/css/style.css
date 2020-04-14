@@ -779,6 +779,8 @@ label {
   border-radius: 3px;
 }
 
+.table tr:active,
+.table tr:hover,
 .items li:active,
 .items li:hover {
   background-color: #f5f5f5;

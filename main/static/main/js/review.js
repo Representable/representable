@@ -248,3 +248,16 @@ map.on("load", function() {
     });
   }
 });
+
+// on hover, highlight the community
+$(".sidenav").on('mouseenter','.community-review-span',function () {
+  console.log('HELLO THERE WORLD')
+    map.setPaintProperty(this.id + 'line', 'line-color', 'rgba(61, 114, 118, 0.5)');
+    map.setPaintProperty(this.id + 'line', 'line-width', 4);
+    map.setPaintProperty(this.id, 'fill-color', 'rgba(61, 114, 118,0.3)')
+});
+$(".sidenav").on('mouseleave','.community-review-span',function () {
+  map.setPaintProperty(this.id + 'line', 'line-color', 'rgba(110, 178, 181,0.3)');
+  map.setPaintProperty(this.id + 'line', 'line-width', 2);
+  map.setPaintProperty(this.id, 'fill-color', 'rgba(110, 178, 181,0.15)')
+});

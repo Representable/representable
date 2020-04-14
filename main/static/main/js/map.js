@@ -514,7 +514,6 @@ $("#community-list").on('mouseleave','li',function () {
   map.setPaintProperty(this.id + 'line', 'line-color', 'rgba(110, 178, 181,0.3)');
   map.setPaintProperty(this.id + 'line', 'line-width', 2);
   map.setPaintProperty(this.id, 'fill-color', 'rgba(110, 178, 181,0.15)')
-
 });
 
 //create a button that toggles layers based on their IDs

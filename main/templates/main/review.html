@@ -51,7 +51,7 @@
                         <th scope="col">Action</th>
                     </tr>
                     {% for c in communities %}
-                    <tr>
+                    <tr class="community-review-span" id={{c.entry_ID}}>
                         <td>
                           <span class="font-weight-light text-uppercase entry-name">
                             {% with link_text="/submission?map_id="|addstr:c.entry_ID|slice:27 %}
@@ -87,6 +87,7 @@
                     <h1>No entries!</h1>
                 </div>
                 {% endif %}
+                </div>
         </nav>
     </div>
     <div class="col-md-6 col-map col-wide">
