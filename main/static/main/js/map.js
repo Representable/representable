@@ -257,7 +257,7 @@ var map = new mapboxgl.Map({
   container: "map", // container id
   style: "mapbox://styles/mapbox/streets-v11", //color of the map -- dark-v10 or light-v9
   center: [-74.65545, 40.341701], // starting position - Princeton, NJ :)
-  zoom: 12, // starting zoom -- higher is closer
+  zoom: 10, // starting zoom -- higher is closer
 });
 
 // geocoder used for a search bar -- within the map itself
@@ -482,11 +482,10 @@ map.on('load', function() {
         !source.includes("upper")
       ) {
         if (!sources.includes(source)) {
-          console.log(features[i]);
           sources.push(source);
           var inner_content = "<span class='font-weight-light text-uppercase'><a style='display:inline;' href='/submission?map_id=" + source.slice(0, 8) + "'>".concat(features[i].properties.name, "</a></span><hr class='my-1'>\n",
             "<span class='font-weight-light'>Why are you submitting this community?</span> <div class='p-1 my-1 bg-info text-white text-center '>", features[i].properties.reason, "</div>");
-          var content = '<li class="list-group-item small">'.concat(
+          var content = '<li class="list-group-item small" id=' + source + '>'.concat(
             inner_content,
             "</li>"
           );
@@ -501,8 +500,21 @@ map.on('load', function() {
   // this is necessary so the map "moves" and queries the features above ^^
   map.flyTo({
     center: [-74.65545, 40.341701],
-    zoom: 12,
+    zoom: 10,
   });
+});
+
+// on hover, highlight the community
+$("#community-list").on('mouseenter','li',function () {
+    map.setPaintProperty(this.id + 'line', 'line-color', 'rgba(61, 114, 118, 0.5)');
+    map.setPaintProperty(this.id + 'line', 'line-width', 4);
+    map.setPaintProperty(this.id, 'fill-color', 'rgba(61, 114, 118,0.3)')
+});
+$("#community-list").on('mouseleave','li',function () {
+  map.setPaintProperty(this.id + 'line', 'line-color', 'rgba(110, 178, 181,0.3)');
+  map.setPaintProperty(this.id + 'line', 'line-width', 2);
+  map.setPaintProperty(this.id, 'fill-color', 'rgba(110, 178, 181,0.15)')
+
 });
 
 //create a button that toggles layers based on their IDs
