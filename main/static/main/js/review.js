@@ -247,15 +247,4 @@ map.on("load", function() {
       },
     });
   }
-
-  // this function iterates thru the issues, and adds a link to each one Which
-  // displays the right polygons
-  for (issue in issues) {
-    // the button element
-    var cat = document.getElementById(issue);
-
-    for (entry in issues[issue]) {
-      var entryId = document.getElementById(entry);
-    }
-  }
 });
