@@ -626,23 +626,22 @@ class CensusBlocksControl {
         this._map = map;
         this._container = document.createElement('div');
         this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
-        // this._container.textContent = 'Toggle Census Blocks';
+        var clicked = false;
         blocksLink.onclick = function(e) {
           for (let i = 0; i < states.length; i++) {
 
             var clickedLayer = states[i] + "-census-lines";
             e.preventDefault();
             e.stopPropagation();
-
-            var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
-            if (visibility === 'visible') {
-              map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+            if (clicked) {
+              map.setPaintProperty(clickedLayer, 'fill-opacity', 0.0);
               this.className = '';
             } else {
               this.className = 'active';
-              map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+              map.setPaintProperty(clickedLayer, 'fill-opacity', ['*', ['get', 'POP10'], .001]);
             }
           }
+          clicked = clicked ? false : true;
         };
         this._container.appendChild(blocksLink);
         return this._container;
@@ -711,12 +710,12 @@ function newCensusShading(state) {
     source: state + "-census",
     "source-layer": state + "census",
     layout: {
-      visibility: "none"
+      visibility: "visible"
     },
     paint: {
       "fill-outline-color": "rgb(71, 93, 204)",
       "fill-color": "rgb(71, 93, 204)",
-      "fill-opacity": ["*", ["get", "POP10"], .001]
+      "fill-opacity": 0
     },
   });
 }
