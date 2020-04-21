@@ -272,8 +272,8 @@ function getState(zipcode) {
   } else {
     state = "none";
   }
-  newCensusLines(state);
-  newHighlightLayer(state);
+  // newCensusShading(state);
+  // newHighlightLayer(state);
   sessionStorage.setItem("stateName", state);
   console.log(sessionStorage.getItem("stateName"));
 }
