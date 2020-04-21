@@ -89,6 +89,7 @@ class IssueForm(ModelForm):
         data = self.cleaned_data
         category = self.cleaned_data["category"]
         description = self.cleaned_data["description"]
+
         # Check that issues have both a category and a description
         if description and not category:
             msg = "Category Missing"
@@ -206,7 +207,7 @@ class OrganizationForm(ModelForm):
             "description",
             "ext_link",
             "link",
-        ]  # ,"admin_group","mod_group"]
+        ]
         widgets = {
             "name": forms.TextInput(
                 attrs={"placeholder": "Name of Organization"}
@@ -224,6 +225,4 @@ class OrganizationForm(ModelForm):
                     "placeholder": "Will appear at Representable.org/org/[your-link]"
                 }
             ),
-            # "admin_group": forms.HiddenInput(),
-            # "mod_group": forms.HiddenInput(),
         }
