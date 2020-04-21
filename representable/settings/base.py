@@ -227,3 +227,6 @@ elif DATABASES["default"]["ENGINE"] == "django.db.backends.sqlite3":
     DATABASES["default"][
         "ENGINE"
     ] = "django.contrib.gis.db.backends.spatialite"
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
