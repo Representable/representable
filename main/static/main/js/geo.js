@@ -134,6 +134,8 @@ var wkt_obj;
 var formsetFieldObject;
 var state;
 $(document).ready(function() {
+  // load tooltips (bootstrap)
+  $('[data-toggle="tooltip"]').tooltip();
   console.log(sessionStorage.getItem("stateName"));
   // console.log(state);
   console.log(sessionStorage.getItem("allChecks"));
@@ -604,7 +606,7 @@ class CensusBlocksControl {
         blocksLink.href = '#';
         blocksLink.className = 'active';
         blocksLink.style.width = '150px';
-        blocksLink.innerHTML = "<i class='fas fa-th-large'></i> Toggle Census Blocks";
+        blocksLink.innerHTML = "<span data-toggle='tooltip' title='Census blocks are the smallest unit of the US census - darker blocks have a higher population'><i class='fas fa-th-large'></i> Toggle Census Blocks</span>";
         this._map = map;
         this._container = document.createElement('div');
         this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
