@@ -35,7 +35,10 @@ urlpatterns = [
     path("privacy/", views.Privacy.as_view(), name="privacy"),
     path("terms/", views.Terms.as_view(), name="terms"),
     path("submission/", views.Submission.as_view(), name="submission"),
+    path(
+        "organizations/", views.Organizations.as_view(), name="organizations"
+    ),
     path("org/create/", views.CreateOrg.as_view(), name="create-org"),
     path("org/thanks/", views.ThanksOrg.as_view(), name="thanks-org"),
-    path("org/home/", views.HomeOrg.as_view(), name="home-org"),
+    path("org/<slug:link>/", views.OrgPortal.as_view(), name="org-portal"),
 ]

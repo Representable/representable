@@ -25,7 +25,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from allauth.account.decorators import verified_email_required
 from django.forms import formset_factory
 from .forms import CommunityForm, IssueForm, DeletionForm, OrganizationForm
-from .models import CommunityEntry, Issue, Tag
+from .models import CommunityEntry, Issue, Tag, Organization
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
 from django.utils.translation import gettext
@@ -554,5 +554,62 @@ class ThanksOrg(TemplateView):
     template_name = "main/organization/thanks.html"
 
 
-class HomeOrg(TemplateView):
+class OrgPortal(TemplateView):
     template_name = "main/organization/home.html"
+
+    def get(self, request, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        link = self.kwargs["link"]
+        print(link)
+        organization = Organization.objects.filter(link__exact=link)
+        if len(organization) != 1:
+            print("Organization does not exist or something else happened...")
+            context["org_exists"] = False
+        else:
+            context["org_exists"] = True
+            org_object = organization[0]
+            context["org_name"] = org_object.name
+            context["org_description"] = org_object.description
+            context["org_ext_link"] = org_object.ext_link
+        return render(request, self.template_name, context)
+
+
+class Organizations(LoginRequiredMixin, TemplateView):
+    """
+    This page works like a hub for organizations. It allows
+    users to create an organization, select which organization
+    they want to see, or redirects them to the only organization
+    they're part of.
+    """
+
+    template_name = "main/organizations.html"
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        user_orgs = self.request.user.groups.all()
+        if len(user_orgs) != 0:
+            group_ids = [group.pk for group in user_orgs]
+            admin_orgs = Organization.objects.filter(
+                admin_group_id__in=group_ids
+            )
+            admin_org_names = [org.name for org in admin_orgs]
+            admin_org_links = [org.link for org in admin_orgs]
+            moderator_orgs = Organization.objects.filter(
+                mod_group_id__in=group_ids
+            )
+            moderator_org_names = [org.name for org in moderator_orgs]
+            moderator_org_links = [org.link for org in moderator_orgs]
+            context["has_organizations"] = True
+            context["admin_org_names"] = admin_org_names
+            context["admin_org_links"] = admin_org_links
+            context["admin_orgs"] = dict(zip(admin_org_names, admin_org_links))
+            context["moderator_org_names"] = moderator_org_names
+            context["moderator_org_links"] = moderator_org_links
+            context["moderator_orgs"] = dict(
+                zip(moderator_org_names, moderator_org_links)
+            )
+        else:
+            context["has_organizations"] = False
+
+        return context

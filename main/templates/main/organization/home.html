@@ -5,12 +5,20 @@
 <div class="container">
   <div class="row row-content">
     <div class="col">
-      <h2 class="text-center">Organization Home</h2>
-      <p class="text-center"> Fill this with organization details and helpful links.
+      {% if org_exists %}
+        <h2 class="">{{ org_name }}</h2>
+        <p>{{ org_description }}</p>
+        <p>{{ org_ext_link }}</p>
+      {% else %}
+        <h2 class="text-center">Organization not found!</h2>
+        <p class="text-center">Check the URL or search for an organization.</p>
+      {% endif%}
+      
+      <!-- <p class=""> Fill this with organization details and helpful links.</p> -->
         <!--Ideas: - link to form to edit organization details
           - link to form to add admin users, mod users, and whitelist users
           - link to moderating page -->
-               </p>
+               
       </div>
   </div>
 </div>
