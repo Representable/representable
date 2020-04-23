@@ -547,30 +547,6 @@ class EntryView(LoginRequiredMixin, View):
 
 # ******************************************************************************#
 
-#
-# class CreateOrg(LoginRequiredMixin, CreateView):
-#     template_name = "main/organization/create.html"
-#     form_class = OrganizationForm
-#     # TODO: add a success url
-#     success_url = "/org/thanks/"
-#
-#     def form_valid(self, form):
-#         # TODO: change link to lowercase and again check if unique
-#         link = form.cleaned_data.get("link")
-#         admins = Group.objects.create(name=("admins_" + link))
-#
-#         # adds the current user to the admin group
-#         admins.user_set.add(self.request.user)
-#
-#         mods = Group.objects.create(name=("mods_" + link))
-#
-#         form.instance.admin_group = admins
-#         form.instance.mod_group = mods
-#
-#         return super().form_valid(form)
-
-# ******************************************************************************#
-
 
 class CreateOrg(LoginRequiredMixin, CreateView):
     template_name = "main/org/create.html"
@@ -643,7 +619,6 @@ class HomeOrg(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["sss"] = self.object.slug
         context["is_org_admin"] = self.request.user.is_org_admin(
             self.object.id
         )
