@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-from django.urls import path
+from django.urls import include, path
 
 from . import views
 from representable.settings.base import MAPBOX_KEY
@@ -35,7 +35,20 @@ urlpatterns = [
     path("privacy/", views.Privacy.as_view(), name="privacy"),
     path("terms/", views.Terms.as_view(), name="terms"),
     path("submission/", views.Submission.as_view(), name="submission"),
-    path("org/create/", views.CreateOrg.as_view(), name="create-org"),
-    path("org/thanks/", views.ThanksOrg.as_view(), name="thanks-org"),
-    path("org/home/", views.HomeOrg.as_view(), name="home-org"),
+    path("partners/create/", views.CreateOrg.as_view(), name="create_org"),
+    path(
+        "partners/<slug:slug>-<int:id>/",
+        include(
+            [
+                path("thanks/", views.ThanksOrg.as_view(), name="thanks_org"),
+                path("", views.HomeOrg.as_view(), name="home_org"),
+                path("edit/", views.EditOrg.as_view(), name="edit_org"),
+                path(
+                    "upload/whitelist",
+                    views.WhiteListUpdate.as_view(),
+                    name="upload_whitelist",
+                ),
+            ]
+        ),
+    ),
 ]

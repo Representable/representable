@@ -18,7 +18,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 from django.contrib.postgres.fields import ArrayField
-from django.core.validators import RegexValidator
+from django.template.defaultfilters import slugify
 
 # Geo App
 import uuid
@@ -27,13 +27,13 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import Group
 from django.db import migrations
 from django.contrib.gis.db import models
-import datetime
 from .choices import (
     POLICY_ISSUES,
     RACE_CHOICES,
     RELIGION_CHOICES,
     INDUSTRY_CHOICES,
 )
+from .utils import generate_unique_slug
 
 # ******************************************************************************#
 
@@ -161,6 +161,22 @@ class Issue(models.Model):
 
 
 # ******************************************************************************#
+class WhiteListEntry(models.Model):
+    """
+    A given whitelist entry with the following
+    fields included:
+    - email: whitelisted email
+    - date added: when the email was added to the whitelist
+    """
+
+    email = models.CharField(max_length=128)
+    date_added = models.DateField(auto_now_add=True, blank=True)
+
+    class Meta:
+        ordering = ("email",)
+
+
+# ******************************************************************************#
 
 
 class Organization(models.Model):
@@ -170,38 +186,41 @@ class Organization(models.Model):
     - name: name of the organization
     - description: description of the organization
     - ext_link: external link to organization website
-    - link: relative link for organization page on Representable
-    - admin_group: the admins of the group, can moderate and manage
-    - mod_group: moderators who have the ability to approve submissions
+    - members: members of the organization
+    - whitelist: emails that have been whitelisted to submit entries
     """
 
     name = models.CharField(max_length=128)
     description = models.CharField(max_length=250, blank=True)
     ext_link = models.URLField(max_length=200, blank=True)
-    link = models.CharField(
-        max_length=100,
-        validators=[
-            RegexValidator(
-                r"^[a-zA-Z0-9-]*$",
-                "Enter a valid link with only numbers, letters, and dashes (-).",
-            )
-        ],
-        blank=False,
-        unique=True,
-    )
-
-    admin_group = models.OneToOneField(
-        Group, on_delete=models.CASCADE, related_name="admin_group",
-    )
-    mod_group = models.OneToOneField(
-        Group, on_delete=models.CASCADE, related_name="mod_group",
-    )
+    slug = models.SlugField(unique=True)
+    members = models.ManyToManyField(User, through="Membership")
+    whitelist = models.ManyToManyField(WhiteListEntry, blank=True)
 
     class Meta:
         ordering = ("description",)
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = generate_unique_slug(Organization, self.name)
+        super(Organization, self).save(*args, **kwargs)
+
+    def get_url_kwargs(self):
+        return {"id": self.id, "slug": self.slug}
+
+
+# ******************************************************************************#
+
+
+class Membership(models.Model):
+    member = models.ForeignKey(User, on_delete=models.CASCADE)
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    date_joined = models.DateField(auto_now_add=True, blank=True)
+    is_org_admin = models.BooleanField(default=False)
+    is_org_moderator = models.BooleanField(default=False)
+    is_whitelisted = models.BooleanField(default=False)
 
 
 # ******************************************************************************#

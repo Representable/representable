@@ -206,7 +206,6 @@ class OrganizationForm(ModelForm):
             "name",
             "description",
             "ext_link",
-            "link",
         ]
         widgets = {
             "name": forms.TextInput(
@@ -220,9 +219,13 @@ class OrganizationForm(ModelForm):
                     "placeholder": "External link to your organization. Include 'http'."
                 }
             ),
-            "link": forms.TextInput(
-                attrs={
-                    "placeholder": "Will appear at Representable.org/org/[your-link]"
-                }
-            ),
         }
+
+
+class WhitelistUploadForm(forms.Form):
+    class Meta:
+        model = Organization
+        fields = [
+            "whitelist",
+        ]
+        widgets = {"whitelist": forms.FileField()}

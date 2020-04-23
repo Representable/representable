@@ -19,16 +19,30 @@
 #
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, ListView, CreateView
+from django.views.generic import TemplateView, ListView, CreateView, UpdateView
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from allauth.account.decorators import verified_email_required
 from django.forms import formset_factory
-from .forms import CommunityForm, IssueForm, DeletionForm, OrganizationForm
-from .models import CommunityEntry, Issue, Tag
+from .forms import (
+    CommunityForm,
+    IssueForm,
+    DeletionForm,
+    OrganizationForm,
+    WhitelistUploadForm,
+)
+from .models import (
+    CommunityEntry,
+    Issue,
+    Tag,
+    Membership,
+    Organization,
+    WhiteListEntry,
+)
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
 from django.utils.translation import gettext
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import (
     LANGUAGE_SESSION_KEY,
     check_for_language,
@@ -40,12 +54,14 @@ import geojson
 import os
 import json
 import re
+import csv
 import hashlib
 from django.http import JsonResponse
 import shapely.wkt
 import reverse_geocoder as rg
 from state_abbrev import us_state_abbrev
 from django.contrib.auth.models import Group
+from itertools import islice
 
 
 # ******************************************************************************#
@@ -524,25 +540,50 @@ class EntryView(LoginRequiredMixin, View):
 
 # ******************************************************************************#
 
+#
+# class CreateOrg(LoginRequiredMixin, CreateView):
+#     template_name = "main/organization/create.html"
+#     form_class = OrganizationForm
+#     # TODO: add a success url
+#     success_url = "/org/thanks/"
+#
+#     def form_valid(self, form):
+#         # TODO: change link to lowercase and again check if unique
+#         link = form.cleaned_data.get("link")
+#         admins = Group.objects.create(name=("admins_" + link))
+#
+#         # adds the current user to the admin group
+#         admins.user_set.add(self.request.user)
+#
+#         mods = Group.objects.create(name=("mods_" + link))
+#
+#         form.instance.admin_group = admins
+#         form.instance.mod_group = mods
+#
+#         return super().form_valid(form)
+
+# ******************************************************************************#
+
 
 class CreateOrg(LoginRequiredMixin, CreateView):
     template_name = "main/organization/create.html"
     form_class = OrganizationForm
-    # TODO: add a success url
-    success_url = "/org/thanks/"
 
     def form_valid(self, form):
-        # TODO: change link to lowercase and again check if unique
-        link = form.cleaned_data.get("link")
-        admins = Group.objects.create(name=("admins_" + link))
+        org = form.save()
+        # by default, make the user creating the org the admin
+        admin = Membership(
+            member=self.request.user,
+            organization=org,
+            is_org_admin=True,
+            is_org_moderator=False,
+            is_whitelisted=True,
+        )
+        admin.save()
 
-        # adds the current user to the admin group
-        admins.user_set.add(self.request.user)
-
-        mods = Group.objects.create(name=("mods_" + link))
-
-        form.instance.admin_group = admins
-        form.instance.mod_group = mods
+        self.success_url = reverse_lazy(
+            "main:thanks_org", kwargs=org.get_url_kwargs()
+        )
 
         return super().form_valid(form)
 
@@ -554,5 +595,50 @@ class ThanksOrg(TemplateView):
     template_name = "main/organization/thanks.html"
 
 
+# ******************************************************************************#
+
+
+class EditOrg(LoginRequiredMixin, UpdateView):
+    template_name = "main/organization/edit.html"
+    model = Organization
+    fields = ["name", "description", "ext_link"]
+
+
+# ******************************************************************************#
+
+
 class HomeOrg(TemplateView):
     template_name = "main/organization/home.html"
+
+
+# ******************************************************************************#
+
+
+class WhiteListUpdate(LoginRequiredMixin, UpdateView):
+    form_class = WhitelistUploadForm
+    # model = Organization
+    template_name = "main/organization/whitelist_upload.html"
+
+    def form_valid(self, form):
+        file = self.request.FILES["file"]
+        emails = []
+        max_line_count = 10000
+        line_count = 0
+        with open(file, "rb") as f:
+            for line in f:
+                matches = re.findall(r"[\w\.-]+@[\w\.-]+\.\w+", line)
+                for match in matches:
+                    instance = WhiteListEntry(email=match)
+                    emails.append(instance)
+                line_count += 1
+                # TODO: should throw error instead
+                if line_count == max_line_count:
+                    break
+        # batch
+        batch_size = 1000
+        while True:
+            batch = list(islice(emails, batch_size))
+            if not batch:
+                break
+            self.object.whitelist.objects.bulk_create(batch, batch_size)
+        return super().form_valid(form)
