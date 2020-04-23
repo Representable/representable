@@ -140,7 +140,9 @@ else:
             "ENGINE": "django.contrib.gis.db.backends.postgis",
             "NAME": os.environ.get("DISTR_DB_NAME", ""),
             "USER": os.environ.get("DISTR_DB_USER", ""),
-            "PASS": os.environ.get("DISTR_DB_PASS", ""),
+            "PASSWORD": os.environ.get("DISTR_DB_PASS", ""),
+            "HOST": "db",
+            "PORT": "5432",
         }
     }
 

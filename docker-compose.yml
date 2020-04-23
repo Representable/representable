@@ -1,0 +1,28 @@
+version: "3.1"
+
+services:
+  db:
+    image: "kartoza/postgis:11.0-2.5"
+    hostname: "db"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: representable333
+      POSTGRES_USER: representable
+      POSTGRES_DB: representable_db
+  django:
+    build: .
+    command: python ./manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - DISTR_DB_NAME
+      - DISTR_DB_USER
+      - DISTR_DB_PASS
+      - DISTR_MAPBOX_KEY
+      - DJANGO_SETTINGS_MODULE
+      - SECRET_KEY
+    depends_on:
+      - db
