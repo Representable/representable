@@ -37,14 +37,14 @@ urlpatterns = [
     path("submission/", views.Submission.as_view(), name="submission"),
     path("partners/create/", views.CreateOrg.as_view(), name="create_org"),
     path(
-        "partners/<slug:slug>-<int:id>/",
+        "partners/<slug:slug>-<int:pk>/",
         include(
             [
                 path("thanks/", views.ThanksOrg.as_view(), name="thanks_org"),
                 path("", views.HomeOrg.as_view(), name="home_org"),
                 path("edit/", views.EditOrg.as_view(), name="edit_org"),
                 path(
-                    "upload/whitelist",
+                    "upload-whitelist",
                     views.WhiteListUpdate.as_view(),
                     name="upload_whitelist",
                 ),

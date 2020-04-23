@@ -222,10 +222,11 @@ class OrganizationForm(ModelForm):
         }
 
 
-class WhitelistUploadForm(forms.Form):
+#
+class WhitelistUploadForm(OrganizationForm):
+    model = Organization
+
     class Meta:
-        model = Organization
-        fields = [
-            "whitelist",
-        ]
-        widgets = {"whitelist": forms.FileField()}
+        file = forms.FileField()
+
+        widgets = {"file": forms.FileInput()}

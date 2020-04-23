@@ -11,7 +11,7 @@
                     <h5 class="card-title text-center">
                         Upload an Email Whitelist
                       </h5>
-                      <form role="form" id="EmailWhitelist" method="post">{% csrf_token %}
+                      <form role="form" id="EmailWhitelist" method="post" enctype="multipart/form-data">{% csrf_token %}
 
                           <div class="form-group">
                         {% for field in form %}
@@ -23,6 +23,8 @@
                               {% endif %}
                           </div>
                       {% endfor %}
+                      <input type="file" value="Select file" name="file"/>
+
                       </div>
                       <div style="display: inline-block;">
                           <button id="save" form="EmailWhitelist" type="submit" class="btn btn-primary" value="Update">Submit</button>

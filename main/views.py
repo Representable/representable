@@ -19,9 +19,15 @@
 #
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, ListView, CreateView, UpdateView
+from django.views.generic import (
+    TemplateView,
+    ListView,
+    CreateView,
+    UpdateView,
+    DetailView,
+)
 from django.views import View
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from allauth.account.decorators import verified_email_required
 from django.forms import formset_factory
 from .forms import (
@@ -62,7 +68,8 @@ import reverse_geocoder as rg
 from state_abbrev import us_state_abbrev
 from django.contrib.auth.models import Group
 from itertools import islice
-
+from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
 
 # ******************************************************************************#
 
@@ -566,7 +573,7 @@ class EntryView(LoginRequiredMixin, View):
 
 
 class CreateOrg(LoginRequiredMixin, CreateView):
-    template_name = "main/organization/create.html"
+    template_name = "main/org/create.html"
     form_class = OrganizationForm
 
     def form_valid(self, form):
@@ -581,6 +588,26 @@ class CreateOrg(LoginRequiredMixin, CreateView):
         )
         admin.save()
 
+        admins = Group.objects.create(name=("admins_" + str(org.id)))
+        mods = Group.objects.create(name=("mods_" + str(org.id)))
+
+        content_type = ContentType.objects.get_for_model(Organization)
+        admin_permission = Permission.objects.create(
+            codename="org_admin_" + str(org.id),
+            name="Org Admin " + str(org.name),
+            content_type=content_type,
+        )
+        mod_permission = Permission.objects.create(
+            codename="org_moderator_" + str(org.id),
+            name="Org Moderator " + org.name,
+            content_type=content_type,
+        )
+
+        admins.permissions.add(admin_permission)
+        mods.permissions.add(mod_permission)
+
+        admins.user_set.add(self.request.user)
+
         self.success_url = reverse_lazy(
             "main:thanks_org", kwargs=org.get_url_kwargs()
         )
@@ -592,14 +619,17 @@ class CreateOrg(LoginRequiredMixin, CreateView):
 
 
 class ThanksOrg(TemplateView):
-    template_name = "main/organization/thanks.html"
+    template_name = "main/org/thanks.html"
 
 
 # ******************************************************************************#
+class OrgAdminRequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_org_admin(self.kwargs["pk"])
 
 
-class EditOrg(LoginRequiredMixin, UpdateView):
-    template_name = "main/organization/edit.html"
+class EditOrg(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
+    template_name = "main/org/edit.html"
     model = Organization
     fields = ["name", "description", "ext_link"]
 
@@ -607,38 +637,60 @@ class EditOrg(LoginRequiredMixin, UpdateView):
 # ******************************************************************************#
 
 
-class HomeOrg(TemplateView):
-    template_name = "main/organization/home.html"
+class HomeOrg(DetailView):
+    template_name = "main/org/home.html"
+    model = Organization
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["sss"] = self.object.slug
+        context["is_org_admin"] = self.request.user.is_org_admin(
+            self.object.id
+        )
+        context["is_org_moderator"] = self.request.user.is_org_moderator(
+            self.object.id
+        )
+
+        return context
 
 
 # ******************************************************************************#
 
 
-class WhiteListUpdate(LoginRequiredMixin, UpdateView):
-    form_class = WhitelistUploadForm
-    # model = Organization
-    template_name = "main/organization/whitelist_upload.html"
+class WhiteListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
+    form_class = OrganizationForm
+    model = Organization
+    template_name = "main/org/whitelist_upload.html"
 
     def form_valid(self, form):
         file = self.request.FILES["file"]
         emails = []
         max_line_count = 10000
         line_count = 0
-        with open(file, "rb") as f:
-            for line in f:
-                matches = re.findall(r"[\w\.-]+@[\w\.-]+\.\w+", line)
-                for match in matches:
-                    instance = WhiteListEntry(email=match)
-                    emails.append(instance)
-                line_count += 1
-                # TODO: should throw error instead
-                if line_count == max_line_count:
-                    break
-        # batch
-        batch_size = 1000
-        while True:
-            batch = list(islice(emails, batch_size))
-            if not batch:
+        for line in file:
+
+            matches = re.findall(b"[\w\.-]+@[\w\.-]+\.\w+", line)  # noqa: W605
+            for match in matches:
+                entry = WhiteListEntry(
+                    email=match.decode("utf-8"), organization=self.object
+                )
+                emails.append(entry)
+            line_count += 1
+            # TODO: should throw error instead
+            if line_count == max_line_count:
                 break
-            self.object.whitelist.objects.bulk_create(batch, batch_size)
+        # TODO: fix below batch code
+        # batch
+        batch_size = 10000
+        WhiteListEntry.objects.bulk_create(emails, batch_size)
+        # while True:
+        #     batch = list(islice(emails, batch_size))
+        #     if not batch:
+        #         break
+        #     self.object.whitelist.bulk_create(batch, batch_size)
+
+        self.success_url = reverse_lazy(
+            "main:home_org", kwargs=self.object.get_url_kwargs()
+        )
+
         return super().form_valid(form)

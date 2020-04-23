@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <div class="row row-content">
+    <div class="col">
+      <h2 class="text-center">{{ object.name }}</h2>
+      <div class="text-center">
+        <!-- <pre> {% filter force_escape %} {% debug %} {% endfilter %} </pre> -->
+
+          <p>Description: {{ object.description }}</p>
+          <url
+          <hr>
+          {% if is_org_admin %}
+            <a href="{% url 'main:edit_org' view.kwargs.slug  view.kwargs.pk %}">Edit</a>
+            <a href="{% url 'main:upload_whitelist' view.kwargs.slug  view.kwargs.pk %}">Upload Whitelist</a>
+
+          {% endif %}
+
+          </div>
+
+      </div>
+  </div>
+</div>
+{% endblock %}

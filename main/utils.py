@@ -12,6 +12,8 @@ def generate_unique_slug(model, field):
     Source: https://djangosnippets.org/snippets/10643/
     """
     origin_slug = slugify(field)
+    if origin_slug == "":
+        origin_slug = "partner"
     unique_slug = origin_slug
     numb = 1
     while model.objects.filter(slug=unique_slug).exists():

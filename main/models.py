@@ -19,6 +19,7 @@
 #
 from django.contrib.postgres.fields import ArrayField
 from django.template.defaultfilters import slugify
+from django.urls import reverse, reverse_lazy
 
 # Geo App
 import uuid
@@ -40,7 +41,13 @@ from .utils import generate_unique_slug
 
 class User(AbstractUser):
     # TODO: Add a language variable for each user
-    pass
+    def is_org_admin(self, org_id):
+        group = "admins_" + str(org_id)
+        return self.groups.filter(name=group).exists()
+
+    def is_org_moderator(self, org_id):
+        group = "mods_" + str(org_id)
+        return self.groups.filter(name=group).exists()
 
 
 # ******************************************************************************#
@@ -161,22 +168,6 @@ class Issue(models.Model):
 
 
 # ******************************************************************************#
-class WhiteListEntry(models.Model):
-    """
-    A given whitelist entry with the following
-    fields included:
-    - email: whitelisted email
-    - date added: when the email was added to the whitelist
-    """
-
-    email = models.CharField(max_length=128)
-    date_added = models.DateField(auto_now_add=True, blank=True)
-
-    class Meta:
-        ordering = ("email",)
-
-
-# ******************************************************************************#
 
 
 class Organization(models.Model):
@@ -187,7 +178,6 @@ class Organization(models.Model):
     - description: description of the organization
     - ext_link: external link to organization website
     - members: members of the organization
-    - whitelist: emails that have been whitelisted to submit entries
     """
 
     name = models.CharField(max_length=128)
@@ -195,7 +185,6 @@ class Organization(models.Model):
     ext_link = models.URLField(max_length=200, blank=True)
     slug = models.SlugField(unique=True)
     members = models.ManyToManyField(User, through="Membership")
-    whitelist = models.ManyToManyField(WhiteListEntry, blank=True)
 
     class Meta:
         ordering = ("description",)
@@ -208,7 +197,10 @@ class Organization(models.Model):
         super(Organization, self).save(*args, **kwargs)
 
     def get_url_kwargs(self):
-        return {"id": self.id, "slug": self.slug}
+        return {"pk": self.id, "slug": self.slug}
+
+    def get_absolute_url(self):
+        return reverse("main:home_org", kwargs=self.get_url_kwargs())
 
 
 # ******************************************************************************#
@@ -224,3 +216,20 @@ class Membership(models.Model):
 
 
 # ******************************************************************************#
+
+
+class WhiteListEntry(models.Model):
+    """
+    A given whitelist entry with the following
+    fields included:
+    - email: whitelisted email
+    - date added: when the email was added to the whitelist
+    - organization: the organization that created the link
+    """
+
+    email = models.CharField(max_length=128)
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    date_added = models.DateField(auto_now_add=True, blank=True)
+
+    class Meta:
+        ordering = ("email",)
