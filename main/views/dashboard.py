@@ -54,6 +54,22 @@ from django.contrib.contenttypes.models import ContentType
 # ******************************************************************************#
 
 
+class OrgAdminRequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_org_admin(self.kwargs["pk"])
+
+
+# ******************************************************************************#
+
+
+class OrgModRequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_org_moderator(self.kwargs["pk"])
+
+
+# ******************************************************************************#
+
+
 class IndexView(TemplateView):
     template_name = "main/dashboard/index.html"
 
@@ -109,12 +125,6 @@ class CreateOrg(LoginRequiredMixin, CreateView):
 
 class ThanksOrg(TemplateView):
     template_name = "main/dashboard/partners/thanks.html"
-
-
-# ******************************************************************************#
-class OrgAdminRequiredMixin(UserPassesTestMixin):
-    def test_func(self):
-        return self.request.user.is_org_admin(self.kwargs["pk"])
 
 
 class EditOrg(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):

@@ -5,6 +5,6 @@
     <p>{{object.description}}</p>
 
     <ul>
-      <li><a href="{% url 'main:partner_page' object.slug %}">Share this link!</a></li>
+      <li><a href="{% url 'main:campaign_page' view.kwargs.slug view.kwargs.pk%}">Share this link!</a></li>
     </ul>
 {% endblock %}

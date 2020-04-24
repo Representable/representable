@@ -1,3 +1,10 @@
+from ..models import (
+    Membership,
+    Organization,
+    WhiteListEntry,
+)
+
+# from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import (
     TemplateView,
     ListView,
@@ -7,9 +14,11 @@ from django.views.generic import (
 )
 
 
-class IndexView(TemplateView):
+class IndexView(ListView):
+    model = Organization
     template_name = "main/partners/index.html"
 
 
-class PartnerView(TemplateView):
-    template_name = "main/partners/index.html"
+class PartnerView(DetailView):
+    model = Organization
+    template_name = "main/partners/page.html"

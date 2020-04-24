@@ -134,29 +134,22 @@ class MainView(TemplateView):
 # ******************************************************************************#
 
 
-class Timeline(TemplateView):
-    template_name = "main/timeline.html"
-
-
-# ******************************************************************************#
-
-
 class About(TemplateView):
-    template_name = "main/about.html"
+    template_name = "main/pages/about.html"
 
 
 # ******************************************************************************#
 
 
 class Privacy(TemplateView):
-    template_name = "main/privacy.html"
+    template_name = "main/pages/privacy.html"
 
 
 # ******************************************************************************#
 
 
 class Terms(TemplateView):
-    template_name = "main/terms.html"
+    template_name = "main/pages/terms.html"
 
 
 # ******************************************************************************#

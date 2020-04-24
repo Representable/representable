@@ -25,7 +25,6 @@ from representable.settings.base import MAPBOX_KEY
 app_name = "main"
 urlpatterns = [
     path("", views.main.Index.as_view(), name="index"),
-    path("timeline/", views.main.Timeline.as_view(), name="timeline"),
     path("map/", views.main.Map.as_view(), name="map"),
     path("thanks/", views.main.Thanks.as_view(), name="thanks"),
     path("entry/", views.main.EntryView.as_view(), name="entry"),
@@ -35,11 +34,19 @@ urlpatterns = [
     path("privacy/", views.main.Privacy.as_view(), name="privacy"),
     path("terms/", views.main.Terms.as_view(), name="terms"),
     path("submission/", views.main.Submission.as_view(), name="submission"),
+    path(
+        "campaigns/", views.campaigns.IndexView.as_view(), name="campaign_list"
+    ),
     path("partners/", views.partners.IndexView.as_view(), name="partner_list"),
     path(
         "partners/<slug:slug>",
         views.partners.PartnerView.as_view(),
         name="partner_page",
+    ),
+    path(
+        "partners/<slug:slug>/campaigns/<int:pk>",
+        views.campaigns.CampaignView.as_view(),
+        name="campaign_page",
     ),
     path("dashboard/", views.dashboard.IndexView.as_view(), name="dashboard"),
     path(

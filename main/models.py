@@ -33,6 +33,7 @@ from .choices import (
     RACE_CHOICES,
     RELIGION_CHOICES,
     INDUSTRY_CHOICES,
+    STATES,
 )
 from .utils import generate_unique_slug
 
@@ -177,12 +178,17 @@ class Organization(models.Model):
     - name: name of the organization
     - description: description of the organization
     - ext_link: external link to organization website
+    - slug: internal representable link slug
     - members: members of the organization
     """
 
     name = models.CharField(max_length=128)
     description = models.CharField(max_length=250, blank=True)
     ext_link = models.URLField(max_length=200, blank=True)
+    states = ArrayField(
+        models.CharField(max_length=50, choices=STATES, blank=True),
+        blank=False,
+    )
     slug = models.SlugField(unique=True)
     members = models.ManyToManyField(User, through="Membership")
 
@@ -235,3 +241,32 @@ class WhiteListEntry(models.Model):
 
     class Meta:
         ordering = ("email",)
+
+
+# ******************************************************************************#
+
+
+class Campaign(models.Model):
+    """
+    Campaign represents an organization's entry collection campaign.
+    - name: name of the campaign
+    - description: description of the campaign
+    - organization: organization hosting the campaign
+    - start_date: when the campaign starts data collection
+    - end_date: when the campaign ends data collection
+    """
+
+    name = models.CharField(max_length=128)
+    description = models.CharField(max_length=250, blank=True)
+    state = models.CharField(
+        max_length=50, choices=STATES, default=None, blank=False
+    )
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    start_date = models.DateField(auto_now_add=True, blank=True)
+    end_date = models.DateField(blank=True)
+
+    class Meta:
+        ordering = ("description",)
+
+    def __str__(self):
+        return self.name
