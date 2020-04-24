@@ -253,6 +253,7 @@ class Campaign(models.Model):
     """
     Campaign represents an organization's entry collection campaign.
     - name: name of the campaign
+    - state: the state of the campaign
     - description: description of the campaign
     - organization: organization hosting the campaign
     - start_date: when the campaign starts data collection

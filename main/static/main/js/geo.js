@@ -272,8 +272,8 @@ function getState(zipcode) {
   } else {
     state = "none";
   }
-  newCensusLines(state);
-  newHighlightLayer(state);
+  // newCensusShading(state);
+  // newHighlightLayer(state);
   sessionStorage.setItem("stateName", state);
   console.log(sessionStorage.getItem("stateName"));
 }
@@ -283,7 +283,6 @@ function modalZip(e) {
 
   var isnum = /^\d+$/.test($("#zipcode").val());
   if (isnum) {
-    console.log("yuh");
     // Parse only first 4 digits of zipcode.
     zipcode = $("#zipcode").val();
     zipcode = zipcode.substring(0, 4);
@@ -609,20 +608,22 @@ class CensusBlocksControl {
         this._map = map;
         this._container = document.createElement('div');
         this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
-        // this._container.textContent = 'Toggle Census Blocks';
+        var clicked = false;
         blocksLink.onclick = function(e) {
-          var clickedLayer = state + "-census-lines";
-          e.preventDefault();
-          e.stopPropagation();
+          for (let i = 0; i < states.length; i++) {
 
-          var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
-          if (visibility === 'visible') {
-            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-            this.className = '';
-          } else {
-            this.className = 'active';
-            map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+            var clickedLayer = states[i] + "-census-lines";
+            e.preventDefault();
+            e.stopPropagation();
+            if (clicked) {
+              map.setPaintProperty(clickedLayer, 'fill-opacity', 0.0);
+              this.className = '';
+            } else {
+              this.className = 'active';
+              map.setPaintProperty(clickedLayer, 'fill-opacity', ['*', ['get', 'POP10'], .001]);
+            }
           }
+          clicked = clicked ? false : true;
         };
         this._container.appendChild(blocksLink);
         return this._container;
@@ -666,20 +667,37 @@ function newSourceLayer(name, mbCode) {
   });
 }
 // add a new layer of census block data
-function newCensusLines(state) {
+// function newCensusLines(state) {
+//   map.addLayer({
+//     id: state + "-census-lines",
+//     type: "line",
+//     source: state + "-census",
+//     "source-layer": state + "census",
+//     layout: {
+//       visibility: "visible",
+//       "line-join": "round",
+//       "line-cap": "round",
+//     },
+//     paint: {
+//       "line-color": "rgba(71, 93, 204, 0.5)",
+//       "line-width": 1,
+//     },
+//   });
+// }
+// add a new layer of census block data (transparent layer)
+function newCensusShading(state) {
   map.addLayer({
     id: state + "-census-lines",
-    type: "line",
+    type: "fill",
     source: state + "-census",
     "source-layer": state + "census",
     layout: {
-      visibility: "visible",
-      "line-join": "round",
-      "line-cap": "round",
+      visibility: "visible"
     },
     paint: {
-      "line-color": "rgba(71, 93, 204, 0.5)",
-      "line-width": 1,
+      "fill-outline-color": "rgb(71, 93, 204)",
+      "fill-color": "rgb(71, 93, 204)",
+      "fill-opacity": 0
     },
   });
 }
@@ -714,6 +732,12 @@ map.on("style.load", function() {
   // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
   for (let census in CENSUS_KEYS) {
     newSourceLayer(census, CENSUS_KEYS[census]);
+  }
+
+  for (let i = 0; i < states.length; i++) {
+    // newCensusLines(states[i]);
+    newCensusShading(states[i]);
+    newHighlightLayer(states[i]);
   }
 
   // Point centered at geocoded location
@@ -857,7 +881,6 @@ function highlightBlocks(drawn_polygon) {
     var southWestPointPixel = map.project(southWest);
 
     // var final_union = turf.union(turf.bboxPolygon([0, 0, 0, 0]), turf.bboxPolygon([0, 0, 1, 1]));
-    // TODO: update layer names for all states (will this work?)
     var features = map.queryRenderedFeatures(
       [southWestPointPixel, northEastPointPixel],
       { layers: [sessionStorage.getItem("stateName") + "-census-lines"] }

@@ -375,6 +375,9 @@ class Map(TemplateView):
     template_name = "main/map.html"
 
     def get_context_data(self, **kwargs):
+        # dictionary of entry names and reasons
+        entry_names = dict()
+        entry_reasons = dict()
         # the dict of issues + input of descriptions
         issues = dict()
         for obj in Issue.objects.all():
@@ -407,8 +410,12 @@ class Map(TemplateView):
                 or obj.census_blocks_polygon is None
             ):
                 s = "".join(obj.user_polygon.geojson)
+                entry_names[str(obj.entry_ID)] = obj.entry_name
+                entry_reasons[str(obj.entry_ID)] = obj.entry_reason
             else:
                 s = "".join(obj.census_blocks_polygon.geojson)
+                entry_names[str(obj.entry_ID)] = obj.entry_name
+                entry_reasons[str(obj.entry_ID)] = obj.entry_reason
 
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
@@ -416,6 +423,8 @@ class Map(TemplateView):
             entryPolyDict[obj.entry_ID] = struct.coordinates
 
         context = {
+            "entry_names": json.dumps(entry_names),
+            "entry_reasons": json.dumps(entry_reasons),
             "tags": json.dumps(tags),
             "issues": json.dumps(issues),
             "entries": json.dumps(entryPolyDict),

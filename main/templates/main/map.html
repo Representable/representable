@@ -16,103 +16,73 @@
 <!--  GeoCoder -->
 <meta name='robots' content='noindex, nofollow'>
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js'></script>
-<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
+<link rel='stylesheet'
+  href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
 <!-- Add css again to take precedence over mapbox css. -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+  integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <!--  Custom CSS -->
 <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
 {% endblock %}
 {% block content %}
 <div class="container-fluid">
-<div class="modal fade" id="zipcodeModal" tabindex="-1" role="dialog" aria-labelledby="zipcodeModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5>
-          {% if LANGUAGE_CODE == 'en' %}
-          Search for a Zipcode:
-          {% elif LANGUAGE_CODE == 'es' %}
-          <!-- Google translate -->
-          Busque un código postal:
-          {% endif %}
-        </h5>
-      </div>
-      <div class="modal-body">
-        <form role="form" id="zipcodeForm">
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="Zipcode" id="zipcode">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-          <a class="btn btn-secondary" href="/" role="button">Return to homepage</a>
-        <button id="zipSubmit" type="submit" class="btn btn-primary">Submit</button>
-      </div>
-    </div>
-  </div>
-</div>
 
-<div class="row row-wide">
-  <div>
-    <script type="text/javascript">
-      var issues = '{{ issues | escapejs }}';
-      var a = '{{ entries | escapejs}}';
-      var tags = '{{ tags | escapejs }}'
-    </script>
-  </div>
-  <div class="col-md-3 col-wide">
-    <nav id='menu'>
-      <div class="sidenav">
-        <div class="input-group mb-1">
-          <input class="form-control" id="search-bar" type="search" placeholder="Search tags" onkeyup="searchTags()" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-outline-primary" type="submit" onclick="searchTags()"><i class="fa fa-search"></i></button>
-          </div>
-        </div>
-        <div class="accordion" id="accordionExample">
-          <div class="card">
-            <div id="headingOne">
-              <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" style="width: 100%">
-                Data layers <i class="fas fa-caret-down"></i></button>
+  <div class="row row-wide">
+    <div>
+      <script type="text/javascript">
+        var issues = '{{ issues | escapejs }}';
+        var a = '{{ entries | escapejs }}';
+        var tags = '{{ tags | escapejs }}';
+        var entry_names = '{{ entry_names | escapejs}}';
+        var entry_reasons = '{{ entry_reasons | escapejs}}';
+      </script>
+    </div>
+    <div class="col-md-3 col-wide">
+      <nav id='menu'>
+        <div class="sidenav">
+          <div class="input-group mb-1">
+            <input class="form-control" id="search-bar" type="search" placeholder="Search communities"
+              onkeyup="searchTags()" aria-label="Search">
+            <div class="input-group-append">
+              <button class="btn btn-outline-primary" type="submit" onclick="searchTags()"><i
+                  class="fa fa-search"></i></button>
             </div>
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-              <div class="font-weight-light text-uppercase small" id="outline-menu">
+          </div>
+          <div class="accordion" id="accordionExample">
+            <div class="card">
+              <div id="headingOne">
+                <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne"
+                  aria-expanded="false" aria-controls="collapseOne" style="width: 100%">
+                  Data layers <i class="fas fa-caret-down"></i></button>
+              </div>
+              <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="font-weight-light text-uppercase small" id="outline-menu">
+                </div>
+              </div>
+            </div>
+            <div class="items card">
+              <div id="headingThree">
+                <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseThree"
+                  aria-expanded="true" aria-controls="collapseThree" style="width: 100%">
+                  Communities <i class="fas fa-caret-down"></i></button>
+              </div>
+              <div id="collapseThree" class="collapse show" aria-labelledby="headingThree"
+                data-parent="#accordionExample">
+                <ul class="list-group list-group-flush" id="community-list">
+                </ul>
               </div>
             </div>
           </div>
-          <div class="card">
-            <div id="headingTwo">
-              <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" style="width: 100%">
-                Issues <i class="fas fa-caret-down"></i></button>
-
-            </div>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-              <div class="dropdown-container" id="tags-menu"></div>
-              <!--TODO: Add issues for accordion-->
-              <div id="issue-dropdowns"></div>
-            </div>
-          </div>
-          <div class="items card">
-            <div id="headingThree">
-              <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree" style="width: 100%">
-                Communities <i class="fas fa-caret-down"></i></button>
-            </div>
-            <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionExample">
-              <ul class="list-group list-group-flush" id="community-list">
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="dropdown-container" id="tags-menu"></div>
-        <button class="dropdown-btn btn-canvas" id="all">Clear All Filters
-          <i class="fa"></i></button>
-    </nav>
-  </div>
-  <div class="col-md-9 col-map col-wide">
-    <div id='map' class="map-visualization"></div>
+          <div class="dropdown-container" id="tags-menu"></div>
+          <!-- <button class="dropdown-btn btn-canvas" id="all">Clear All Filters
+          <i class="fa"></i></button> -->
+      </nav>
+    </div>
+    <div class="col-md-9 col-map col-wide">
+      <div id='map' class="map-visualization"></div>
+    </div>
   </div>
 </div>
-<div>
 {% endblock %}
 
 {% block script %}
