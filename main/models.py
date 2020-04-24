@@ -193,7 +193,9 @@ class Organization(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        self.slug = generate_unique_slug(Organization, self.name)
+        # generate the slug once the first time the org is created
+        if not self.slug:
+            self.slug = generate_unique_slug(Organization, self.name)
         super(Organization, self).save(*args, **kwargs)
 
     def get_url_kwargs(self):
@@ -223,8 +225,8 @@ class WhiteListEntry(models.Model):
     A given whitelist entry with the following
     fields included:
     - email: whitelisted email
-    - date added: when the email was added to the whitelist
     - organization: the organization that created the link
+    - date added: when the email was added to the whitelist
     """
 
     email = models.CharField(max_length=128)

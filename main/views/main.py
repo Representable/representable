@@ -30,20 +30,16 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from allauth.account.decorators import verified_email_required
 from django.forms import formset_factory
-from .forms import (
+from ..forms import (
     CommunityForm,
     IssueForm,
     DeletionForm,
-    OrganizationForm,
-    WhitelistUploadForm,
 )
-from .models import (
+from ..models import (
     CommunityEntry,
     Issue,
     Tag,
     Membership,
-    Organization,
-    WhiteListEntry,
 )
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
@@ -543,129 +539,3 @@ class EntryView(LoginRequiredMixin, View):
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
         }
         return render(request, self.template_name, context)
-
-
-# ******************************************************************************#
-
-
-class CreateOrg(LoginRequiredMixin, CreateView):
-    template_name = "main/org/create.html"
-    form_class = OrganizationForm
-
-    def form_valid(self, form):
-        org = form.save()
-        # by default, make the user creating the org the admin
-        admin = Membership(
-            member=self.request.user,
-            organization=org,
-            is_org_admin=True,
-            is_org_moderator=False,
-            is_whitelisted=True,
-        )
-        admin.save()
-
-        admins = Group.objects.create(name=("admins_" + str(org.id)))
-        mods = Group.objects.create(name=("mods_" + str(org.id)))
-
-        content_type = ContentType.objects.get_for_model(Organization)
-        admin_permission = Permission.objects.create(
-            codename="org_admin_" + str(org.id),
-            name="Org Admin " + str(org.name),
-            content_type=content_type,
-        )
-        mod_permission = Permission.objects.create(
-            codename="org_moderator_" + str(org.id),
-            name="Org Moderator " + org.name,
-            content_type=content_type,
-        )
-
-        admins.permissions.add(admin_permission)
-        mods.permissions.add(mod_permission)
-
-        admins.user_set.add(self.request.user)
-
-        self.success_url = reverse_lazy(
-            "main:thanks_org", kwargs=org.get_url_kwargs()
-        )
-
-        return super().form_valid(form)
-
-
-# ******************************************************************************#
-
-
-class ThanksOrg(TemplateView):
-    template_name = "main/org/thanks.html"
-
-
-# ******************************************************************************#
-class OrgAdminRequiredMixin(UserPassesTestMixin):
-    def test_func(self):
-        return self.request.user.is_org_admin(self.kwargs["pk"])
-
-
-class EditOrg(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
-    template_name = "main/org/edit.html"
-    model = Organization
-    fields = ["name", "description", "ext_link"]
-
-
-# ******************************************************************************#
-
-
-class HomeOrg(DetailView):
-    template_name = "main/org/home.html"
-    model = Organization
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["is_org_admin"] = self.request.user.is_org_admin(
-            self.object.id
-        )
-        context["is_org_moderator"] = self.request.user.is_org_moderator(
-            self.object.id
-        )
-
-        return context
-
-
-# ******************************************************************************#
-
-
-class WhiteListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
-    form_class = OrganizationForm
-    model = Organization
-    template_name = "main/org/whitelist_upload.html"
-
-    def form_valid(self, form):
-        file = self.request.FILES["file"]
-        emails = []
-        max_line_count = 10000
-        line_count = 0
-        for line in file:
-
-            matches = re.findall(b"[\w\.-]+@[\w\.-]+\.\w+", line)  # noqa: W605
-            for match in matches:
-                entry = WhiteListEntry(
-                    email=match.decode("utf-8"), organization=self.object
-                )
-                emails.append(entry)
-            line_count += 1
-            # TODO: should throw error instead
-            if line_count == max_line_count:
-                break
-        # TODO: fix below batch code
-        # batch
-        batch_size = 10000
-        WhiteListEntry.objects.bulk_create(emails, batch_size)
-        # while True:
-        #     batch = list(islice(emails, batch_size))
-        #     if not batch:
-        #         break
-        #     self.object.whitelist.bulk_create(batch, batch_size)
-
-        self.success_url = reverse_lazy(
-            "main:home_org", kwargs=self.object.get_url_kwargs()
-        )
-
-        return super().form_valid(form)
