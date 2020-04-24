@@ -32,6 +32,7 @@ from allauth.account.decorators import verified_email_required
 from django.forms import formset_factory
 from ..forms import (
     CommunityForm,
+    CampaignForm,
     IssueForm,
     DeletionForm,
     OrganizationForm,
@@ -41,7 +42,9 @@ from ..models import (
     Membership,
     Organization,
     WhiteListEntry,
+    Campaign,
 )
+from django.shortcuts import get_object_or_404
 from django.views.generic.edit import FormView
 from django.urls import reverse, reverse_lazy
 import re
@@ -70,8 +73,22 @@ class OrgModRequiredMixin(UserPassesTestMixin):
 # ******************************************************************************#
 
 
-class IndexView(TemplateView):
+class IndexView(LoginRequiredMixin, ListView):
+    context_object_name = "org_list"
     template_name = "main/dashboard/index.html"
+
+    def get_queryset(self):
+        return Organization.objects.filter(
+            membership__member=self.request.user
+        )
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        context["campaigns"] = Campaign.objects.filter(
+            organization__in=self.get_queryset()
+        )
+        return context
 
 
 # ******************************************************************************#
@@ -88,7 +105,7 @@ class CreateOrg(LoginRequiredMixin, CreateView):
             member=self.request.user,
             organization=org,
             is_org_admin=True,
-            is_org_moderator=False,
+            is_org_moderator=True,
             is_whitelisted=True,
         )
         admin.save()
@@ -112,6 +129,7 @@ class CreateOrg(LoginRequiredMixin, CreateView):
         mods.permissions.add(mod_permission)
 
         admins.user_set.add(self.request.user)
+        mods.user_set.add(self.request.user)
 
         self.success_url = reverse_lazy(
             "main:thanks_org", kwargs=org.get_url_kwargs()
@@ -123,7 +141,7 @@ class CreateOrg(LoginRequiredMixin, CreateView):
 # ******************************************************************************#
 
 
-class ThanksOrg(TemplateView):
+class ThanksOrg(LoginRequiredMixin, TemplateView):
     template_name = "main/dashboard/partners/thanks.html"
 
 
@@ -136,9 +154,10 @@ class EditOrg(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
 # ******************************************************************************#
 
 
-class HomeOrg(DetailView):
+class HomeOrg(LoginRequiredMixin, DetailView):
     template_name = "main/dashboard/partners/index.html"
     model = Organization
+    pk_url_kwarg = "pk"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -159,6 +178,7 @@ class WhiteListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
     form_class = OrganizationForm
     model = Organization
     template_name = "main/dashboard/partners/whitelist_upload.html"
+    pk_url_kwarg = "pk"
 
     def form_valid(self, form):
         file = self.request.FILES["file"]
@@ -190,5 +210,92 @@ class WhiteListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
         # self.success_url = reverse_lazy(
         #     "main:home_org", kwargs=self.object.get_url_kwargs()
         # )
+
+        return super().form_valid(form)
+
+
+class CampaignHome(LoginRequiredMixin, DetailView):
+    template_name = "main/dashboard/campaigns/index.html"
+    model = Campaign
+    pk_url_kwarg = "cam_pk"
+
+
+class CampaignList(LoginRequiredMixin, TemplateView):
+    template_name = "main/dashboard/campaigns/list.html"
+    # model = Campaign
+    # #campaigns = Campaign.objects.all()
+    # pk_url_kwarg = 'cam_pk'
+    # #
+    # def get_queryset(self):
+    #    org = get_object_or_404(Organization, pk=self.kwargs["pk"])
+    #    return super(CampaignList, self).get_queryset().filter(organization=org)
+    # def get_queryset(self):
+    #     print(self.kwargs)
+    #     org = get_object_or_404(Organization, pk=self.kwargs["pk"])
+    #     return Campaign.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["is_org_admin"] = self.request.user.is_org_admin(
+            self.kwargs["pk"]
+        )
+        context["is_org_moderator"] = self.request.user.is_org_moderator(
+            self.kwargs["pk"]
+        )
+        context["org"] = get_object_or_404(Organization, pk=self.kwargs["pk"])
+        context[
+            "campaigns"
+        ] = (
+            Campaign.objects.all()
+        )  # filter(organization__id=self.kwargs["pk"])
+
+        return context
+
+
+class CreateCampaign(LoginRequiredMixin, CreateView):
+    template_name = "main/dashboard/campaigns/create.html"
+    form_class = CampaignForm
+    pk_url_kwarg = "cam_pk"
+
+    def form_valid(self, form):
+        # TODO: include a check to make sure this actually the user's org
+        form.instance.organization = get_object_or_404(
+            Organization, pk=self.kwargs["pk"]
+        )
+        object = form.save()
+
+        self.success_url = reverse_lazy(
+            "main:campaign_home",
+            kwargs={
+                "pk": self.kwargs["pk"],
+                "slug": self.kwargs["slug"],
+                "cam_pk": object.id,
+            },
+        )
+
+        return super().form_valid(form)
+
+
+class UpdateCampaign(LoginRequiredMixin, UpdateView):
+    template_name = "main/dashboard/campaigns/update.html"
+    form_class = CampaignForm
+    pk_url_kwarg = "cam_pk"
+
+    def form_valid(self, form):
+        # TODO: include a check to make sure this actually the user's org
+        form.instance.organization = get_object_or_404(
+            Organization, pk=self.kwargs["pk"]
+        )
+
+        object = form.save()
+
+        self.success_url = reverse_lazy(
+            "main:campaign_home",
+            kwargs={
+                "pk": self.kwargs["pk"],
+                "slug": self.kwargs["slug"],
+                "cam_pk": object.id,
+            },
+        )
 
         return super().form_valid(form)

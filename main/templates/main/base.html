@@ -7,21 +7,21 @@
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'main/fonts/Inter/inter.css' %}">
-    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
-    <link rel="shortcut icon" href="{% static 'img/favicon.ico' type='image/x-icon' %}">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'main/fonts/Inter/inter.css' %}">
+  <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+  <link rel="shortcut icon" href="{% static 'img/favicon.ico' type='image/x-icon' %}">
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139926191-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139926191-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
 
     function gtag() {
       dataLayer.push(arguments);
@@ -32,223 +32,223 @@
   </script>
 
 
-    {% block head %}
-    {% endblock %}
+  {% block head %}
+  {% endblock %}
 
-    <title>Representable</title>
+  <title>Representable</title>
 </head>
 
 <body>
-    <!--adapted from https://getbootstrap.com/docs/4.3/components/navbar/ -->
-    <!-- As a link -->
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="/">Representable</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+  <!--adapted from https://getbootstrap.com/docs/4.3/components/navbar/ -->
+  <!-- As a link -->
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <a class="navbar-brand" href="/">Representable</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-            </ul>
-            <ul class="nav navbar-nav navbar-right align-items-center">
-                <li class="nav-item mx-auto">
-                    <!-- Translate this? -->
-                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item mx-auto">
-                    <a class="nav-link" href='/about'>
-                        {% if LANGUAGE_CODE == 'en' %}
-                        About
-                        {% elif LANGUAGE_CODE == 'es' %}
-                        <!-- Google translate  -->
-                        Sobre nosotros
-                        {% endif %}
-                    </a>
-                </li>
-                <li class="nav-item mx-auto">
-                    <a class="nav-link" href='/map'>
-                        {% if LANGUAGE_CODE == 'en' %}
-                        Map
-                        {% elif LANGUAGE_CODE == 'es' %}
-                        <!-- Google translate  -->
-                        Mapa
-                        {% endif %}
-                    </a>
-                </li>
-                {% if user.is_authenticated %}</li>
-                <li class="nav-item mx-auto">
-                    {% if user.is_authenticated %}
-                    {% if user.is_staff %}
-                    <a class="nav-link" href='/review'>
-                        {% if LANGUAGE_CODE == 'en' %}
-                        Approve and view entries
-                        {% elif LANGUAGE_CODE == 'es' %}
-                        <!-- Google translate  -->
-                        Aprobar y ver entradas
-                        {% endif %}
-                    </a>
-                    {% else %}
-                    <a class="nav-link" href='/review'>
-                        {% if LANGUAGE_CODE == 'en' %}
-                        My entries
-                        {% elif LANGUAGE_CODE == 'es' %}
-                        <!-- Google translate  -->
-                        Mis entradas
-                        {% endif %}
-                    </a>
-                    {% endif %}
-                    {% endif %}
-                </li>
-                <li class="nav-item mx-auto">
-                    <a class="btn btn-outline-primary m-2" href="/entry">
-                        {% if LANGUAGE_CODE == 'en' %}
-                        New entry
-                        {% elif LANGUAGE_CODE == 'es' %}
-                        <!-- Google translate  -->
-                        Nueva entrada
-                        {% endif %}
-                    </a>
-                </li>
-                <li class="nav-item mx-auto">
-                    <a class="btn btn-primary m-2" href="/accounts/logout">
-                        {% if LANGUAGE_CODE == 'en' %}
-                        Log out
-                        {% elif LANGUAGE_CODE == 'es' %}
-                        <!-- Google translate  -->
-                        Cerrar sesión
-                        {% endif %}
-                    </a>
-                </li>
-                {% else %}
-                <li class="nav-item mx-auto">
-                    <a class="btn btn-outline-primary m-2" href="/accounts/login">
-                        {% if LANGUAGE_CODE == 'en' %}
-                        Log in
-                        {% elif LANGUAGE_CODE == 'es' %}
-                        <!-- Google translate  -->
-                        Iniciar sesión
-                        {% endif %}
-                    </a>
-                </li>
-                <li class="nav-item mx-auto">
-                    <a class="btn btn-primary m-2" href="/accounts/signup">
-                        {% if LANGUAGE_CODE == 'en' %}
-                        Sign up
-                        {% elif LANGUAGE_CODE == 'es' %}
-                        <!-- Google translate  -->
-                        Regístrate
-                        {% endif %}
-                    </a>
-                </li>
-                {% endif %}
-            </ul>
-            <!-- TODO: This should not necessarily be in the navbar - on mobile/iPad, it needs to be visible on main page. -->
-            <!-- References https://docs.djangoproject.com/en/2.2/topics/i18n/translation/#set-language-redirect-view -->
-            <!-- Also https://stackoverflow.com/questions/47874530/django-language-selection-from-dropdown-links-and-images -->
-            <ul class="nav navbar-nav navbar-right language menu">
-                <form action="{% url 'set_language' %}" method="post">
-                    {% csrf_token %}
-                    <input name="next" type="hidden" value="{{ redirect_to }}" />
-                    <select class="form-control" name="language" onchange="javascript:this.form.submit()">
-                        {% for lang in LANGUAGES %}
-                            <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected="selected"{% endif %}>
-                                {{ lang.1 }} ({{ lang.0 }})
-                            </option>
-                        {% endfor %}
-                    </select>
-                </form>
-            </ul>
-        </div>
-    </nav>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+      </ul>
+      <ul class="nav navbar-nav navbar-right align-items-center">
+        <li class="nav-item mx-auto">
+          <!-- Translate this? -->
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item mx-auto">
+          <a class="nav-link" href='/about'>
+            {% if LANGUAGE_CODE == 'en' %}
+            About
+            {% elif LANGUAGE_CODE == 'es' %}
+            <!-- Google translate  -->
+            Sobre nosotros
+            {% endif %}
+          </a>
+        </li>
+        <li class="nav-item mx-auto">
+          <a class="nav-link" href='/map'>
+            {% if LANGUAGE_CODE == 'en' %}
+            Map
+            {% elif LANGUAGE_CODE == 'es' %}
+            <!-- Google translate  -->
+            Mapa
+            {% endif %}
+          </a>
+        </li>
+        {% if user.is_authenticated %}</li>
+        <li class="nav-item mx-auto">
+          {% if user.is_authenticated %}
+          {% if user.is_staff %}
+          <a class="nav-link" href='/review'>
+            {% if LANGUAGE_CODE == 'en' %}
+            Approve and view entries
+            {% elif LANGUAGE_CODE == 'es' %}
+            <!-- Google translate  -->
+            Aprobar y ver entradas
+            {% endif %}
+          </a>
+          {% else %}
+          <a class="nav-link" href='/review'>
+            {% if LANGUAGE_CODE == 'en' %}
+            My entries
+            {% elif LANGUAGE_CODE == 'es' %}
+            <!-- Google translate  -->
+            Mis entradas
+            {% endif %}
+          </a>
+          {% endif %}
+          {% endif %}
+        </li>
+        <li class="nav-item mx-auto">
+          <a class="btn btn-outline-primary m-2" href="/entry">
+            {% if LANGUAGE_CODE == 'en' %}
+            New entry
+            {% elif LANGUAGE_CODE == 'es' %}
+            <!-- Google translate  -->
+            Nueva entrada
+            {% endif %}
+          </a>
+        </li>
+        <li class="nav-item mx-auto">
+          <a class="btn btn-primary m-2" href="/accounts/logout">
+            {% if LANGUAGE_CODE == 'en' %}
+            Log out
+            {% elif LANGUAGE_CODE == 'es' %}
+            <!-- Google translate  -->
+            Cerrar sesión
+            {% endif %}
+          </a>
+        </li>
+        {% else %}
+        <li class="nav-item mx-auto">
+          <a class="btn btn-outline-primary m-2" href="/accounts/login">
+            {% if LANGUAGE_CODE == 'en' %}
+            Log in
+            {% elif LANGUAGE_CODE == 'es' %}
+            <!-- Google translate  -->
+            Iniciar sesión
+            {% endif %}
+          </a>
+        </li>
+        <li class="nav-item mx-auto">
+          <a class="btn btn-primary m-2" href="/accounts/signup">
+            {% if LANGUAGE_CODE == 'en' %}
+            Sign up
+            {% elif LANGUAGE_CODE == 'es' %}
+            <!-- Google translate  -->
+            Regístrate
+            {% endif %}
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+      <!-- TODO: This should not necessarily be in the navbar - on mobile/iPad, it needs to be visible on main page. -->
+      <!-- References https://docs.djangoproject.com/en/2.2/topics/i18n/translation/#set-language-redirect-view -->
+      <!-- Also https://stackoverflow.com/questions/47874530/django-language-selection-from-dropdown-links-and-images -->
+      <ul class="nav navbar-nav navbar-right language menu">
+        <form action="{% url 'set_language' %}" method="post">
+          {% csrf_token %}
+          <input name="next" type="hidden" value="{{ redirect_to }}" />
+          <select class="form-control" name="language" onchange="javascript:this.form.submit()">
+            {% for lang in LANGUAGES %}
+            <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected="selected" {% endif %}>
+              {{ lang.1 }} ({{ lang.0 }})
+            </option>
+            {% endfor %}
+          </select>
+        </form>
+      </ul>
+    </div>
+  </nav>
 
-    {% block content %}
-    {% endblock %}
+  {% block content %}
+  {% endblock %}
 
 
-    <!-- Optional JavaScript -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <!-- Optional JavaScript -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
-    {% block script %}
-    {% endblock %}
+  {% block script %}
+  {% endblock %}
 
 </body>
 <footer class="pt-4 mb-md-5 pt-md-5 my-2 border-top">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-md">
-                <a href="/"><img class="mb-2" src="{% static 'img/representable_logo.svg' %}" alt="" width="24" height="24"></a>
-                <small class="d-block mb-3 text-muted">© 2019</small>
-            </div>
-            <div class="col-6 col-md">
-                <!-- <h5>Community Map</h5> -->
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="/entry">
-                            {% if LANGUAGE_CODE == 'en' %}
-                            Contribute
-                            {% elif LANGUAGE_CODE == 'es' %}
-                            <!-- Google translate  -->
-                            Contribuir
-                            {% endif %}
-                        </a></li>
-                    <li><a class="text-muted" href="/map">
-                            {% if LANGUAGE_CODE == 'en' %}
-                            View All Maps
-                            {% elif LANGUAGE_CODE == 'es' %}
-                            <!-- Google translate  -->
-                            Ver Todos Los Mapas
-                            {% endif %}
-                        </a></li>
-                    {% if user.is_authenticated %}
-                    {% if user.is_staff %}
-                    <li><a class="text-muted" href="/review">
-                    <li><a class="text-muted" href="/map">
-                            {% if LANGUAGE_CODE == 'en' %}
-                            Approve and View Entries
-                            {% elif LANGUAGE_CODE == 'es' %}
-                            <!-- Google translate  -->
-                            Aprobar Y Ver Entradas
-                            {% endif %}
-                        </a></li>
-                    </a></li>
-                    {% else %}
-                    <li><a class="text-muted" href="/review">
-                            {% if LANGUAGE_CODE == 'en' %}
-                            My Entries
-                            {% elif LANGUAGE_CODE == 'es' %}
-                            <!-- Google translate  -->
-                            Mis entradas
-                            {% endif %}
-                        </a></li>
-                    {% endif %}
-                    {% endif %}
-                </ul>
-            </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md">
+        <a href="/"><img class="mb-2" src="{% static 'img/representable_logo.svg' %}" alt="" width="24" height="24"></a>
+        <small class="d-block mb-3 text-muted">© 2019</small>
+      </div>
+      <div class="col-6 col-md">
+        <!-- <h5>Community Map</h5> -->
+        <ul class="list-unstyled text-small">
+          <li><a class="text-muted" href="/entry">
+              {% if LANGUAGE_CODE == 'en' %}
+              Contribute
+              {% elif LANGUAGE_CODE == 'es' %}
+              <!-- Google translate  -->
+              Contribuir
+              {% endif %}
+            </a></li>
+          <li><a class="text-muted" href="/map">
+              {% if LANGUAGE_CODE == 'en' %}
+              View All Maps
+              {% elif LANGUAGE_CODE == 'es' %}
+              <!-- Google translate  -->
+              Ver Todos Los Mapas
+              {% endif %}
+            </a></li>
+          {% if user.is_authenticated %}
+          {% if user.is_staff %}
+          <li><a class="text-muted" href="/review">
+          <li><a class="text-muted" href="/map">
+              {% if LANGUAGE_CODE == 'en' %}
+              Approve and View Entries
+              {% elif LANGUAGE_CODE == 'es' %}
+              <!-- Google translate  -->
+              Aprobar Y Ver Entradas
+              {% endif %}
+            </a></li>
+          </a></li>
+          {% else %}
+          <li><a class="text-muted" href="/review">
+              {% if LANGUAGE_CODE == 'en' %}
+              My Entries
+              {% elif LANGUAGE_CODE == 'es' %}
+              <!-- Google translate  -->
+              Mis entradas
+              {% endif %}
+            </a></li>
+          {% endif %}
+          {% endif %}
+        </ul>
+      </div>
 
-            <div class="col-6 col-md">
-                <!-- <h5>About</h5> -->
-                <ul class="list-unstyled text-small">
-                    <!-- <li><a class="text-muted" href="/about">About Us</a></li> -->
-                    <li><a class="text-muted" href="#">
-                            {% if LANGUAGE_CODE == 'en' %}
-                            Privacy
-                            {% elif LANGUAGE_CODE == 'es' %}
-                            <!-- Google translate  -->
-                            Intimidad
-                            {% endif %}
-                        </a></li>
-                    <li><a class="text-muted" href="#">
-                            {% if LANGUAGE_CODE == 'en' %}
-                            Terms
-                            {% elif LANGUAGE_CODE == 'es' %}
-                            <!-- Google translate  -->
-                            Condiciones
-                            {% endif %}</a></li>
-                </ul>
-            </div>
-        </div>
+      <div class="col-6 col-md">
+        <!-- <h5>About</h5> -->
+        <ul class="list-unstyled text-small">
+          <!-- <li><a class="text-muted" href="/about">About Us</a></li> -->
+          <li><a class="text-muted" href="#">
+              {% if LANGUAGE_CODE == 'en' %}
+              Privacy
+              {% elif LANGUAGE_CODE == 'es' %}
+              <!-- Google translate  -->
+              Intimidad
+              {% endif %}
+            </a></li>
+          <li><a class="text-muted" href="#">
+              {% if LANGUAGE_CODE == 'en' %}
+              Terms
+              {% elif LANGUAGE_CODE == 'es' %}
+              <!-- Google translate  -->
+              Condiciones
+              {% endif %}</a></li>
+        </ul>
+      </div>
     </div>
+  </div>
 </footer>
 
 </html>

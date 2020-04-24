@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <div class="row row-content">
+    <div class="col">
+      <h2 class="text-center">{{ object.name }}</h2>
+
+      <div class="text-center">
+        <p>Description: {{ object.description }}</p>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -25,13 +25,14 @@ from django_select2.forms import (
     ModelSelect2Widget,
     ModelSelect2TagWidget,
 )
-from .models import CommunityEntry, Issue, Tag, Organization
+from .models import CommunityEntry, Issue, Tag, Organization, Campaign
 from django.forms import formset_factory
 from .choices import (
     POLICY_ISSUES,
     RACE_CHOICES,
     RELIGION_CHOICES,
     INDUSTRY_CHOICES,
+    STATES,
 )
 from django.forms.formsets import BaseFormSet
 from django.contrib.gis.db import models
@@ -202,11 +203,7 @@ class DeletionForm(ModelForm):
 class OrganizationForm(ModelForm):
     class Meta:
         model = Organization
-        fields = [
-            "name",
-            "description",
-            "ext_link",
-        ]
+        fields = ["name", "description", "ext_link", "states"]
         widgets = {
             "name": forms.TextInput(
                 attrs={"placeholder": "Name of Organization"}
@@ -219,6 +216,9 @@ class OrganizationForm(ModelForm):
                     "placeholder": "External link to your organization. Include 'http'."
                 }
             ),
+            "states": Select2MultipleWidget(
+                choices=STATES, attrs={"data-placeholder": "Select States"},
+            ),
         }
 
 
@@ -230,3 +230,18 @@ class WhitelistUploadForm(OrganizationForm):
         file = forms.FileField()
 
         widgets = {"file": forms.FileInput()}
+
+
+class CampaignForm(ModelForm):
+    class Meta:
+        model = Campaign
+        fields = ["name", "description", "state", "start_date", "end_date"]
+        widgets = {
+            "name": forms.TextInput(attrs={"placeholder": "Name of Campaign"}),
+            "description": forms.TextInput(
+                attrs={"placeholder": "Short Description"}
+            ),
+            "state": forms.Select(
+                choices=STATES, attrs={"class": "form-control"}
+            ),
+        }

@@ -12,17 +12,19 @@
         <!--Ideas: - link to form to edit organization details
           - link to form to add admin users, mod users, and whitelist users
           - link to moderating page -->
-        {% if org_list %}
+        {% if has_organizations %}
           <p class="text">Manage your organizations by selecting one below.</p>
           <ul class="list-group my-3">
-              {% for org in org_list %}
+            {% if admin_orgs %}
+              {% for name, link in admin_orgs.items%}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                  {{ org.name }}
-                  <span class="badge badge-primary badge-pill float-left ">Member</span>
-                  <a class="btn btn-primary" href="{% url 'main:home_org' org.slug  org.id %}" role="button">See Organization <i class="fa fa-arrow-circle-right"></i></a>
+                  {{ name }}
+                  <span class="badge badge-primary badge-pill float-left ">Admin</span>
+                  <a class="btn btn-primary" href="/org/{{ link }}" role="button">See Organization <i class="fa fa-arrow-circle-right"></i></a>
                 </li>
               {% endfor %}
-            <!-- {% if moderator_org_names %}
+            {% endif %}
+            {% if moderator_org_names %}
               {% for name, link in admin_orgs.items%}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                   {{ name }}
@@ -30,7 +32,7 @@
                   <a class="btn btn-primary" href="/org/{{ link }}" role="button">See Organization <i class="fa fa-arrow-circle-right"></i></a>
                 </li>
               {% endfor %}
-            {% endif %} -->
+            {% endif %}
           </ul>
         {% else %}
           <p class="my-3">You're currently not part of any organizations.
@@ -39,7 +41,7 @@
         {% endif %}
         <div class="row row-content">
           <div class="mx-auto text-center" style="display:inline-block;">
-            <a class="btn btn-primary" href="{% url 'main:create_org' %}" role="button">Create New Organization</a>
+            <a class="btn btn-primary" href="/org/create" role="button">Create New Organization</a>
           </div>
         </div>
     </div>

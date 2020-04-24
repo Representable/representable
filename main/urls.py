@@ -39,12 +39,12 @@ urlpatterns = [
     ),
     path("partners/", views.partners.IndexView.as_view(), name="partner_list"),
     path(
-        "partners/<slug:slug>",
+        "partners/<slug:slug>/",
         views.partners.PartnerView.as_view(),
         name="partner_page",
     ),
     path(
-        "partners/<slug:slug>/campaigns/<int:pk>",
+        "campaigns/<int:cam_pk>/",
         views.campaigns.CampaignView.as_view(),
         name="campaign_page",
     ),
@@ -68,9 +68,29 @@ urlpatterns = [
                     "edit/", views.dashboard.EditOrg.as_view(), name="edit_org"
                 ),
                 path(
-                    "upload-whitelist",
+                    "upload-whitelist/",
                     views.WhiteListUpdate.as_view(),
                     name="upload_whitelist",
+                ),
+                path(
+                    "campaigns/",
+                    views.dashboard.CampaignList.as_view(),
+                    name="campaign_list",
+                ),
+                path(
+                    "campaigns/create/",
+                    views.dashboard.CreateCampaign.as_view(),
+                    name="create_campaign",
+                ),
+                path(
+                    "campaigns/<int:cam_pk>/",
+                    views.dashboard.CampaignHome.as_view(),
+                    name="campaign_home",
+                ),
+                path(
+                    "campaigns/<int:cam_pk>/edit/",
+                    views.dashboard.UpdateCampaign.as_view(),
+                    name="update_campaign",
                 ),
             ]
         ),

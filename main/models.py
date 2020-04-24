@@ -242,6 +242,9 @@ class WhiteListEntry(models.Model):
     class Meta:
         ordering = ("email",)
 
+    def __str__(self):
+        return self.email
+
 
 # ******************************************************************************#
 
@@ -254,6 +257,7 @@ class Campaign(models.Model):
     - organization: organization hosting the campaign
     - start_date: when the campaign starts data collection
     - end_date: when the campaign ends data collection
+    - is_active: is the campaign active
     """
 
     name = models.CharField(max_length=128)
@@ -262,11 +266,15 @@ class Campaign(models.Model):
         max_length=50, choices=STATES, default=None, blank=False
     )
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    start_date = models.DateField(auto_now_add=True, blank=True)
-    end_date = models.DateField(blank=True)
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         ordering = ("description",)
 
     def __str__(self):
         return self.name
+
+    # def get_absolute_url(self):
+    #     return reverse("main:home_campaign", kwargs={"id":self.organization, "pk": self.id}

@@ -17,8 +17,10 @@ from django.views.generic import (
 class IndexView(ListView):
     model = Organization
     template_name = "main/partners/index.html"
+    pk_url_kwarg = "pk"
 
 
 class PartnerView(DetailView):
     model = Organization
     template_name = "main/partners/page.html"
+    pk_url_kwarg = "pk"
