@@ -147,8 +147,8 @@ class ThanksOrg(LoginRequiredMixin, TemplateView):
 
 class EditOrg(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
     template_name = "main/dashboard/partners/edit.html"
+    form_class = OrganizationForm
     model = Organization
-    fields = ["name", "description", "ext_link"]
 
 
 # ******************************************************************************#
