@@ -152,10 +152,10 @@ class CommunityForm(ModelForm):
             "census_blocks_polygon_array": forms.HiddenInput(),
             "census_blocks_polygon": forms.HiddenInput(),
             "entry_name": forms.TextInput(
-                attrs={"placeholder": "<community_name>"}
+                attrs={"placeholder": "My local community..."}
             ),
             "entry_reason": forms.Textarea(
-                attrs={"placeholder": "<community_reason>", "rows": 5}
+                attrs={"placeholder": "This community is brought together by...", "rows": 5}
             ),
             "user_polygon": forms.HiddenInput(),
             "my_community": BootstrapRadioSelect(),
