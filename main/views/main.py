@@ -119,21 +119,6 @@ class Index(TemplateView):
 # ******************************************************************************#
 
 
-class MainView(TemplateView):
-    template_name = "main/main_test.html"
-
-    # Add extra context variables.
-    def get_context_data(self, **kwargs):
-        context = super(MainView, self).get_context_data(
-            **kwargs
-        )  # get the default context data
-        context["mapbox_key"] = os.environ.get("DISTR_MAPBOX_KEY")
-        return context
-
-
-# ******************************************************************************#
-
-
 class About(TemplateView):
     template_name = "main/pages/about.html"
 
@@ -329,7 +314,7 @@ class Review(LoginRequiredMixin, TemplateView):
 
 
 class Submission(TemplateView):
-    template_name = "main/submission.html"
+    template_name = "main/pages/submission.html"
     sha = hashlib.sha256()
     NUM_DIGITS = 10  # TODO move to some place with constants
 
@@ -372,7 +357,7 @@ class Submission(TemplateView):
 
 
 class Map(TemplateView):
-    template_name = "main/map.html"
+    template_name = "main/pages/map.html"
 
     def get_context_data(self, **kwargs):
         # dictionary of entry names and reasons
@@ -437,7 +422,7 @@ class Map(TemplateView):
 
 
 class Thanks(TemplateView):
-    template_name = "main/thanks.html"
+    template_name = "main/pages/thanks.html"
 
     def get(self, request):
         context = {
@@ -454,7 +439,7 @@ class EntryView(LoginRequiredMixin, View):
     EntryView displays the form and map selection screen.
     """
 
-    template_name = "main/entry.html"
+    template_name = "main/pages/entry.html"
     form_class = CommunityForm
     initial = {
         "key": "value",
