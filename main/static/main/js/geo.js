@@ -597,7 +597,7 @@ drawButton[0].innerHTML = "<i class='fas fa-draw-polygon'></i> Draw Polygon";
 var trashButton = document.getElementsByClassName("mapbox-gl-draw_trash");
 trashButton[0].backgroundImg = "";
 trashButton[0].id = "trash-button";
-trashButton[0].innerHTML = "<i class='fas fa-trash-alt'></i> Delete Polygon";
+trashButton[0].innerHTML = "<i class='fas fa-trash-alt'></i> Undo Polygon";
 
 // add button for toggling census Blocks
 class CensusBlocksControl {
