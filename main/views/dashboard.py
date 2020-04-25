@@ -36,7 +36,7 @@ from ..forms import (
     IssueForm,
     DeletionForm,
     OrganizationForm,
-    WhitelistUploadForm,
+    WhitelistForm,
 )
 from ..models import (
     Membership,
@@ -175,7 +175,7 @@ class HomeOrg(LoginRequiredMixin, DetailView):
 
 
 class WhiteListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
-    form_class = OrganizationForm
+    form_class = WhitelistForm
     model = Organization
     template_name = "main/dashboard/partners/whitelist_upload.html"
     pk_url_kwarg = "pk"

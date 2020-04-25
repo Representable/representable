@@ -208,8 +208,12 @@ class OrganizationForm(ModelForm):
             "name": forms.TextInput(
                 attrs={"placeholder": "Name of Organization"}
             ),
-            "description": forms.TextInput(
-                attrs={"placeholder": "Short Description"}
+            "description": forms.Textarea(
+                attrs={
+                    "placeholder": "Short Description",
+                    "rows": 4,
+                    "cols": 20,
+                }
             ),
             "ext_link": forms.TextInput(
                 attrs={
@@ -223,13 +227,13 @@ class OrganizationForm(ModelForm):
 
 
 #
-class WhitelistUploadForm(OrganizationForm):
-    model = Organization
-
+class WhitelistForm(ModelForm):
     class Meta:
-        file = forms.FileField()
-
-        widgets = {"file": forms.FileInput()}
+        model = Organization
+        fields = ["name"]
+        widgets = {
+            "name": forms.HiddenInput(),
+        }
 
 
 class CampaignForm(ModelForm):
@@ -238,7 +242,7 @@ class CampaignForm(ModelForm):
         fields = ["name", "description", "state", "start_date", "end_date"]
         widgets = {
             "name": forms.TextInput(attrs={"placeholder": "Name of Campaign"}),
-            "description": forms.TextInput(
+            "description": forms.Textarea(
                 attrs={"placeholder": "Short Description"}
             ),
             "state": forms.Select(

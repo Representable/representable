@@ -1,7 +1,9 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load widget_tweaks %}
+{% block head %}
 {{ form.media.css }}
+{% endblock %}
 
 {% block content %}
 <div class="container-fluid">
@@ -34,4 +36,7 @@
         </div>
     </div>
 </div>
+{% endblock %}
+{% block script %}
+{{ form.media.js }}
 {% endblock %}

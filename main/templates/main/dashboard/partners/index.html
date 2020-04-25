@@ -17,13 +17,12 @@
           <li><a href="{% url 'main:edit_org' view.kwargs.slug  view.kwargs.pk %}">Edit Details</a></li>
           <li><a href="{% url 'main:upload_whitelist' view.kwargs.slug  view.kwargs.pk %}">Upload Whitelist</a></li>
           <li><a href="{% url 'main:upload_whitelist' view.kwargs.slug  view.kwargs.pk %}">Manage Users (Coming Soon)</a></li>
-          <li><a href="{% url 'main:create_campaign' view.kwargs.slug  view.kwargs.pk %}">Create a New Campaign</a></li>
-          <li><a href="{% url 'main:campaign_list' view.kwargs.slug  view.kwargs.pk %}">View Campaigns</a></li>
-
         </ul>
 
         <!-- <h5>Campaigns</h5>
         <ul>
+        <li><a href="{% url 'main:create_campaign' view.kwargs.slug  view.kwargs.pk %}">Create a New Campaign</a></li>
+        <li><a href="{% url 'main:campaign_list' view.kwargs.slug  view.kwargs.pk %}">View Campaigns</a></li>
             {% for campaign in campaigns %}
             <li><a href="{% url 'main:campaign_home' slug=views.kwargs.slug pk=views.kwargs.pk c_pk=campaign.id %}">{{ campaign.name }}</a></li>
             {% endfor %}

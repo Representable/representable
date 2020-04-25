@@ -278,4 +278,4 @@ class Campaign(models.Model):
         return self.name
 
     # def get_absolute_url(self):
-    #     return reverse("main:home_campaign", kwargs={"id":self.organization, "pk": self.id}
+    #     return reverse("main:campaign_home", kwargs={"org_pk": self.id})
