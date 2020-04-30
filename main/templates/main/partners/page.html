@@ -5,6 +5,12 @@
   <div class="row my-5">
     <div class="col-9 mx-auto">
       <h2>{{object.name}}</h2>
+      <hr>
+      <p class="text-muted">
+      {% for state in object.states %}
+       {{state}}
+      {% endfor %}
+      </p>
       <p>{{object.description}}</p>
       <a class="btn btn-secondary" href="/partners" role="button">Return to Partners</a>
       <a class="btn btn-primary" href="{{ object.ext_link }}" role="button">Visit Partner Site <i class="fa fa-arrow-circle-right"></i></a>

@@ -153,6 +153,12 @@ footer {
   padding: 0;
 }
 
+.state-tag {
+  border-radius: 0.7rem;
+  background-color: #6C757D;
+  color: #fff !important;
+}
+
 /* Bootstrap Buttons. */
 
 /* This changes the color of the buttons so that it matches the Representable
