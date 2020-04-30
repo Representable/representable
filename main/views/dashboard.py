@@ -58,6 +58,10 @@ from django.contrib.contenttypes.models import ContentType
 
 
 class OrgAdminRequiredMixin(UserPassesTestMixin):
+    """
+    Checks if the user has administrative permissions for the given organization (checked through the pk field)
+    """
+
     def test_func(self):
         return self.request.user.is_org_admin(self.kwargs["pk"])
 
@@ -66,6 +70,10 @@ class OrgAdminRequiredMixin(UserPassesTestMixin):
 
 
 class OrgModRequiredMixin(UserPassesTestMixin):
+    """
+    Checks if the user has moderator permissions for the given organization (checked through the pk field)
+    """
+
     def test_func(self):
         return self.request.user.is_org_moderator(self.kwargs["pk"])
 
@@ -74,16 +82,20 @@ class OrgModRequiredMixin(UserPassesTestMixin):
 
 
 class IndexView(LoginRequiredMixin, ListView):
+    """
+    The dashboard home page.
+    """
+
     context_object_name = "org_list"
-    template_name = "main/dashboard/index.html"
+    template_name = "main/dashboard/index_new.html"
 
     def get_queryset(self):
+        # returns all the organizations that the user is a member of
         return Organization.objects.filter(
             membership__member=self.request.user
         )
 
     def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context["campaigns"] = Campaign.objects.filter(
             organization__in=self.get_queryset()
@@ -95,6 +107,10 @@ class IndexView(LoginRequiredMixin, ListView):
 
 
 class CreateOrg(LoginRequiredMixin, CreateView):
+    """
+    The view with a form to create an organization.
+    """
+
     template_name = "main/dashboard/partners/create.html"
     form_class = OrganizationForm
 
@@ -142,10 +158,18 @@ class CreateOrg(LoginRequiredMixin, CreateView):
 
 
 class ThanksOrg(LoginRequiredMixin, TemplateView):
+    """
+    The view that indicates a user has successfully created an organization.
+    """
+
     template_name = "main/dashboard/partners/thanks.html"
 
 
 class EditOrg(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
+    """
+    The view to update an organization details.
+    """
+
     template_name = "main/dashboard/partners/edit.html"
     form_class = OrganizationForm
     model = Organization
@@ -155,6 +179,10 @@ class EditOrg(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
 
 
 class HomeOrg(LoginRequiredMixin, DetailView):
+    """
+    The admin home page for an organization within the dashboard
+    """
+
     template_name = "main/dashboard/partners/index.html"
     model = Organization
     pk_url_kwarg = "pk"
@@ -175,6 +203,10 @@ class HomeOrg(LoginRequiredMixin, DetailView):
 
 
 class WhiteListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
+    """
+    The form to update the whitelist
+    """
+
     form_class = WhitelistForm
     model = Organization
     template_name = "main/dashboard/partners/whitelist_upload.html"
@@ -215,12 +247,22 @@ class WhiteListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
 
 
 class CampaignHome(LoginRequiredMixin, DetailView):
+    """
+    BETA view: the campaign home
+    Note: url rewrites currently not working with the given pk_url_kwarg.
+    """
+
     template_name = "main/dashboard/campaigns/index.html"
     model = Campaign
     pk_url_kwarg = "cam_pk"
 
 
 class CampaignList(LoginRequiredMixin, TemplateView):
+    """
+    BETA view: the dashboard list of campaigns
+    Note: url rewrites currently not working with the given pk_url_kwarg.
+    """
+
     template_name = "main/dashboard/campaigns/list.html"
     # model = Campaign
     # #campaigns = Campaign.objects.all()
@@ -253,6 +295,10 @@ class CampaignList(LoginRequiredMixin, TemplateView):
 
 
 class CreateCampaign(LoginRequiredMixin, CreateView):
+    """
+    BETA view: the view for the form to create a campaign
+    """
+
     template_name = "main/dashboard/campaigns/create.html"
     form_class = CampaignForm
     pk_url_kwarg = "cam_pk"
@@ -277,6 +323,10 @@ class CreateCampaign(LoginRequiredMixin, CreateView):
 
 
 class UpdateCampaign(LoginRequiredMixin, UpdateView):
+    """
+    BETA view: the view for the form to update campaign details
+    """
+
     template_name = "main/dashboard/campaigns/update.html"
     form_class = CampaignForm
     pk_url_kwarg = "cam_pk"

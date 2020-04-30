@@ -104,6 +104,10 @@ Documentation: https://docs.djangoproject.com/en/2.1/topics/class-based-views/
 
 
 class Index(TemplateView):
+    """
+    The main view/home page.
+    """
+
     template_name = "main/index.html"
 
     # Add extra context variables.
