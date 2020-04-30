@@ -6,10 +6,10 @@
     <div class="col-9 mx-auto">
       <h2>{{object.name}}</h2>
       <hr>
-      <p class="text-muted">
-      {% for state in object.states %}
-       {{state}}
-      {% endfor %}
+      <p>
+        {% for state in object.states %}
+        <span class="badge badge-secondary">{{state}}</span>
+        {% endfor %}
       </p>
       <p>{{object.description}}</p>
       <a class="btn btn-secondary" href="/partners" role="button">Return to Partners</a>
