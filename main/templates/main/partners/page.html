@@ -15,6 +15,10 @@
       <a class="btn btn-secondary my-3" href="/partners" role="button">Return to Partners</a>
       <a class="btn btn-primary" href="{{ object.ext_link }}" role="button">Visit Partner Site <i class="fa fa-arrow-circle-right"></i></a>
 
+    <ul>
+      <li><a href="{% url 'main:partner_map' object.slug %}">Link to organization map</a></li>
+      <li><a href="{% url 'main:partner_page' object.slug %}">Share this link!</a></li>
+    </ul>
     </div>
-  </div>
-  {% endblock %}
+    </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+<div class="row text-center row-content">
+  <div class="col">
+    <h2> Get Started
+    </h2>
+    <p class="font-weight-light">
+      <!--add details-->
+      Welcome to Representable! In order to get started with Representable, first make an account then create an organization.
+
+    </p>
+    <a class="btn btn-primary" href="{% url 'main:create_org' %}" role="button">Create New Organization</a>
+
+  </div>
+
+</div>
+
+{% endblock %}

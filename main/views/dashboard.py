@@ -25,6 +25,7 @@ from django.views.generic import (
     CreateView,
     UpdateView,
     DetailView,
+    DeleteView,
 )
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -43,21 +44,38 @@ from ..models import (
     Organization,
     WhiteListEntry,
     Campaign,
+    CommunityEntry,
+    Tag,
 )
 from django.shortcuts import get_object_or_404
 from django.views.generic.edit import FormView
 from django.urls import reverse, reverse_lazy
-import re
 
 from django.contrib.auth.models import Group
 from itertools import islice
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 
+from shapely.geometry import mapping
+import geojson
+import os
+import json
+import re
+import csv
+from state_abbrev import us_state_abbrev
+import hashlib
+from django.http import JsonResponse
+import shapely.wkt
+import reverse_geocoder as rg
+
 # ******************************************************************************#
 
 
 class OrgAdminRequiredMixin(UserPassesTestMixin):
+    """
+    Checks if the user has administrative permissions for the given organization (checked through the pk field)
+    """
+
     def test_func(self):
         return self.request.user.is_org_admin(self.kwargs["pk"])
 
@@ -66,6 +84,10 @@ class OrgAdminRequiredMixin(UserPassesTestMixin):
 
 
 class OrgModRequiredMixin(UserPassesTestMixin):
+    """
+    Checks if the user has moderator permissions for the given organization (checked through the pk field)
+    """
+
     def test_func(self):
         return self.request.user.is_org_moderator(self.kwargs["pk"])
 
@@ -74,16 +96,20 @@ class OrgModRequiredMixin(UserPassesTestMixin):
 
 
 class IndexView(LoginRequiredMixin, ListView):
+    """
+    The dashboard home page.
+    """
+
     context_object_name = "org_list"
     template_name = "main/dashboard/index.html"
 
     def get_queryset(self):
+        # returns all the organizations that the user is a member of
         return Organization.objects.filter(
             membership__member=self.request.user
         )
 
     def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context["campaigns"] = Campaign.objects.filter(
             organization__in=self.get_queryset()
@@ -92,9 +118,26 @@ class IndexView(LoginRequiredMixin, ListView):
 
 
 # ******************************************************************************#
+class EntryListView(LoginRequiredMixin, ListView):
+    model = CommunityEntry
+    template_name = "main/dashboard/entries/list.html"
+
+
+class ViewEntry(LoginRequiredMixin, DetailView):
+    model = CommunityEntry
+    template_name = "main/dashboard/entries/index.html"
+
+
+class DeleteEntry(LoginRequiredMixin, DeleteView):
+    model = CommunityEntry
+    success_url = reverse_lazy("dash_entry_list")
 
 
 class CreateOrg(LoginRequiredMixin, CreateView):
+    """
+    The view with a form to create an organization.
+    """
+
     template_name = "main/dashboard/partners/create.html"
     form_class = OrganizationForm
 
@@ -142,10 +185,18 @@ class CreateOrg(LoginRequiredMixin, CreateView):
 
 
 class ThanksOrg(LoginRequiredMixin, TemplateView):
+    """
+    The view that indicates a user has successfully created an organization.
+    """
+
     template_name = "main/dashboard/partners/thanks.html"
 
 
 class EditOrg(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
+    """
+    The view to update an organization details.
+    """
+
     template_name = "main/dashboard/partners/edit.html"
     form_class = OrganizationForm
     model = Organization
@@ -155,6 +206,10 @@ class EditOrg(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
 
 
 class HomeOrg(LoginRequiredMixin, DetailView):
+    """
+    The admin home page for an organization within the dashboard
+    """
+
     template_name = "main/dashboard/partners/index.html"
     model = Organization
     pk_url_kwarg = "pk"
@@ -175,6 +230,10 @@ class HomeOrg(LoginRequiredMixin, DetailView):
 
 
 class WhiteListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
+    """
+    The form to update the whitelist
+    """
+
     form_class = WhitelistForm
     model = Organization
     template_name = "main/dashboard/partners/whitelist_upload.html"
@@ -214,13 +273,112 @@ class WhiteListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
+class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
+    """
+    Page for organization to review submissions
+    """
+
+    template_name = "main/dashboard/partners/review.html"
+    form_class = DeletionForm
+    initial = {"key": "value"}
+
+    def centroid(self, pt_list):
+        if len(pt_list) > 0 and type(pt_list) == list:
+            if type(pt_list[0][0]) == list:
+                new_list = []
+                for x in pt_list:
+                    for y in x:
+                        new_list.append(y)
+                pt_list = new_list
+        length = len(pt_list)
+        sum_x = sum(
+            [x[1] for x in pt_list]
+        )  # TODO coords are reversed for some reason?
+        sum_y = sum([x[0] for x in pt_list])
+        return sum_x / length, sum_y / length
+
+    # https://www.agiliq.com/blog/2019/01/django-formview/
+    def get_initial(self):
+        initial = self.initial
+        if self.request.user.is_authenticated:
+            initial.update({"user": self.request.user})
+        return initial
+
+    def get_context_data(self, **kwargs):
+        form = self.form_class(initial=self.get_initial(), label_suffix="")
+
+        # the polygon coordinates
+        entryPolyDict = {}
+
+        # approved list of communities
+        approvedList = []
+
+        query = CommunityEntry.objects.filter(
+            organization__pk=self.kwargs["pk"]
+        )
+        for obj in query:
+            if not obj.census_blocks_polygon:
+                s = "".join(obj.user_polygon.geojson)
+            else:
+                s = "".join(obj.census_blocks_polygon.geojson)
+            struct = geojson.loads(s)
+            entryPolyDict[obj.entry_ID] = struct.coordinates
+            if obj.admin_approved:
+                # this is for coloring the map properly
+                approvedList.append(obj.entry_ID)
+
+        context = {
+            "form": form,
+            "entries": json.dumps(entryPolyDict),
+            "approved": json.dumps(approvedList),
+            "communities": query,
+            "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+        }
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, label_suffix="")
+
+        # TODO: verify that unauthorized users cannot use this post method
+        if form.is_valid():
+            query = CommunityEntry.objects.filter(
+                entry_ID=request.POST.get("c_id")
+            )
+            entry = query[0]
+            # TODO check whether authorized to edit state?
+            if (
+                "Approve" in request.POST
+            ):  # TODO need someone to review security
+                entry.admin_approved = True
+                entry.save()
+            elif "Unapprove" in request.POST:
+                entry.admin_approved = False
+                entry.save()
+            elif "Delete" in request.POST:
+                entry.delete()
+        context = (
+            self.get_context_data()
+        )  # TODO: Is there a problem with this?
+        return render(request, self.template_name, context)
+
+
 class CampaignHome(LoginRequiredMixin, DetailView):
+    """
+    BETA view: the campaign home
+    Note: url rewrites currently not working with the given pk_url_kwarg.
+    """
+
     template_name = "main/dashboard/campaigns/index.html"
     model = Campaign
     pk_url_kwarg = "cam_pk"
 
 
 class CampaignList(LoginRequiredMixin, TemplateView):
+    """
+    BETA view: the dashboard list of campaigns
+    Note: url rewrites currently not working with the given pk_url_kwarg.
+    """
+
     template_name = "main/dashboard/campaigns/list.html"
     # model = Campaign
     # #campaigns = Campaign.objects.all()
@@ -253,6 +411,10 @@ class CampaignList(LoginRequiredMixin, TemplateView):
 
 
 class CreateCampaign(LoginRequiredMixin, CreateView):
+    """
+    BETA view: the view for the form to create a campaign
+    """
+
     template_name = "main/dashboard/campaigns/create.html"
     form_class = CampaignForm
     pk_url_kwarg = "cam_pk"
@@ -277,6 +439,10 @@ class CreateCampaign(LoginRequiredMixin, CreateView):
 
 
 class UpdateCampaign(LoginRequiredMixin, UpdateView):
+    """
+    BETA view: the view for the form to update campaign details
+    """
+
     template_name = "main/dashboard/campaigns/update.html"
     form_class = CampaignForm
     pk_url_kwarg = "cam_pk"

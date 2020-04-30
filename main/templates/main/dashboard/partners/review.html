@@ -27,13 +27,15 @@
 <!--  Custom CSS -->
 <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
 {% endblock %}
+
 {% block content %}
+
+
 <div class="container-fluid">
 <div class="row row-wide">
     <div>
         <script type="text/javascript">
-            var issues = '{{ issues | escapejs }}';
-            var a = '{{ entries | escapejs }}';
+            var entries = '{{ entries | escapejs }}';
             var tags = '{{ tags | escapejs }}';
             var approved = '{{ approved | escapejs }}';
         </script>
@@ -54,28 +56,25 @@
                     <tr class="community-review-span" id={{c.entry_ID}}>
                         <td>
                           <span class="font-weight-light text-uppercase entry-name">
+                            <!-- TODO: Remove hard coded submission link  -->
                             {% with link_text="/submission?map_id="|addstr:c.entry_ID|slice:27 %}
                               <a href={{link_text}} style="padding: 6px">{{c.entry_name}}</a>
                             {% endwith %}
                           </span>
                           <br>
                             <span class="font-weight-light">{{c.entry_reason}}<br>
-                            {% if user.is_staff %}
                             <!-- we should have an author here too -->
                                 <b>Created by:</b></span> {{ c.user.username }}
-                            {% endif %}
                         </td>
                         <td>
                             <form method="post" action="">{% csrf_token %}
                                 {{ form }}
                                 <input type="hidden" name="c_id" value="{{ c }}">
-                                {% if user.is_staff %}
                                     {% if c.admin_approved %}
                                         <button type="submit" class="btn btn-warning", name="Unapprove">Unapprove</button>
                                     {% else %}
                                         <button type="submit" class="btn btn-success", name="Approve">Approve</button>
                                     {% endif %}
-                                {% endif %}
                                 <button type="submit" class="btn btn-danger", name="Delete">Delete</button>
                             </form>
                         </td>
@@ -103,5 +102,5 @@
 <script type="text/javascript">
     mapboxgl.accessToken = "{{ mapbox_key }}";
 </script>
-<script type="text/javascript" src="{% static 'main/js/review.js' %}"></script>
+<script type="text/javascript" src="{% static 'main/js/dash_review.js' %}"></script>
 {% endblock %}
