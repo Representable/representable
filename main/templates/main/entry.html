@@ -33,45 +33,6 @@
         sessionStorage.setItem("allChecks", "pass");
   console.log("passed");
 </script>
-    <div class="modal fade" id="zipcodeModal" tabindex="-1" role="dialog" aria-labelledby="zipcodeModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5>
-                        {% if LANGUAGE_CODE == 'en' %}
-                        Search for a Zipcode:
-                        {% elif LANGUAGE_CODE == 'es' %}
-                        <!-- Google translate -->
-                        Busque un código postal:
-                        {% endif %}
-                    </h5>
-                </div>
-                <div class="modal-body">
-                    <form role="form" id="zipcodeForm">
-                        <div class="form-group">
-                            <p>
-                                {% if LANGUAGE_CODE == 'en' %}
-                                To start, we need the zipcode of your community.
-                                {% elif LANGUAGE_CODE == 'es' %}
-                                <!-- Google translate -->
-                                Para comenzar, necesitamos el código postal de su comunidad.
-                                {% endif %}
-                            </p>
-                            <input type="text" class="form-control" id="zipcode" placeholder="Zipcode" required>
-
-                            <div class="invalid-feedback">
-                                Please provide a valid zip.
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <a class="btn btn-secondary" href="/" role="button">Return to homepage</a>
-                    <button id="zipSubmit" type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="row row-content">
         <div class="col">
             <h2 class="text-primary">
@@ -114,28 +75,25 @@
                                       {% endif %}
                                     </strong>
                                 </div>
-                                <form role="form" id="zipcodeForm">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="zipcode" placeholder="Zipcode" required>
-            
-                                        <div class="invalid-feedback">
-                                            Please provide a valid zip.
-                                        </div>
-                                    </div>
-                                </form>
+                                <div class ="px-3">
+                                    <p>
+                                        <div id="geocoder" class="geocoder"></div>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                         <!-- Map -->
                         <div class="col-lg-8 mt-3">
+                            <div class="blurtop">
                             <div class="card">
                                 <div class="card-header text-header-card">
                                     <strong>
-                                      {% if LANGUAGE_CODE == 'en' %}
-                                      2. What does your community look like?
-                                      {% elif LANGUAGE_CODE == 'es' %}
-                                      <!-- Google translate  -->
-                                      ¿Cómo se ve tu comunidad?
-                                      {% endif %}
+                                    {% if LANGUAGE_CODE == 'en' %}
+                                    2. What does your community look like?
+                                    {% elif LANGUAGE_CODE == 'es' %}
+                                    <!-- Google translate  -->
+                                    ¿Cómo se ve tu comunidad?
+                                    {% endif %}
                                     </strong>
                                 </div>
                                 <div id='map-card' class="card-body">
@@ -165,6 +123,7 @@
                                 </div>
                             </div>
                         </div>
+                        </div>
                         <div class="col-lg-4 mt-3">
                             <div class="card mb-3">
                                 <div class="card-header text-info-custom">
@@ -182,6 +141,7 @@
                                         1. Type in your zip code when prompted
                                         <hr>
                                         </hr>
+                                        <div class="blurtop">
                                         2. Press on <b> Draw Polygon </b> and draw a shape that includes everything you consider to be part of your community.
                                         <hr>
                                         </hr>
@@ -193,6 +153,7 @@
                                         <hr>
                                         </hr>
                                         4. Don't worry about making a mistake! You can always start again. Just press on <b> Delete Polygon </b> and again on <b> Draw Polygon </b>.
+                                    </div>
                                     </p>
                                 </div>
                             </div>
@@ -201,6 +162,7 @@
                     <!-- <hr> -->
                     <div class="row row-equal-cols">
                         <div class="col-lg-8  mt-3">
+                            <div class="blurtop">
                             <div class="card">
                                 <div class="card-header text-header-card">
                                     <strong>3. What brings your community together?</strong>
@@ -324,6 +286,7 @@
                                         {% endif %}
                                     </div>
                                 </div>
+                            </div>
                             </div>
                         </div>
                     </div>

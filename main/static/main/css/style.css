@@ -389,6 +389,12 @@ color scheme. See readme.md*/
   padding-right: 10px;
 }
 
+.blurtop {
+  filter: blur(3px);
+  z-index: 0;
+  pointer-events: none;
+}
+
 .map-demo {
   /*  position: absolute; */
   top: 100px;
