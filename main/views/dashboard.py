@@ -25,6 +25,7 @@ from django.views.generic import (
     CreateView,
     UpdateView,
     DetailView,
+    DeleteView,
 )
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -43,16 +44,29 @@ from ..models import (
     Organization,
     WhiteListEntry,
     Campaign,
+    CommunityEntry,
+    Tag,
 )
 from django.shortcuts import get_object_or_404
 from django.views.generic.edit import FormView
 from django.urls import reverse, reverse_lazy
-import re
 
 from django.contrib.auth.models import Group
 from itertools import islice
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
+
+from shapely.geometry import mapping
+import geojson
+import os
+import json
+import re
+import csv
+from state_abbrev import us_state_abbrev
+import hashlib
+from django.http import JsonResponse
+import shapely.wkt
+import reverse_geocoder as rg
 
 # ******************************************************************************#
 
@@ -104,6 +118,19 @@ class IndexView(LoginRequiredMixin, ListView):
 
 
 # ******************************************************************************#
+class EntryListView(LoginRequiredMixin, ListView):
+    model = CommunityEntry
+    template_name = "main/dashboard/entries/list.html"
+
+
+class ViewEntry(LoginRequiredMixin, DetailView):
+    model = CommunityEntry
+    template_name = "main/dashboard/entries/index.html"
+
+
+class DeleteEntry(LoginRequiredMixin, DeleteView):
+    model = CommunityEntry
+    success_url = reverse_lazy("dash_entry_list")
 
 
 class CreateOrg(LoginRequiredMixin, CreateView):
@@ -244,6 +271,129 @@ class WhiteListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
         # )
 
         return super().form_valid(form)
+
+
+class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
+    """
+    Page for organization to review submissions
+    """
+
+    template_name = "main/dashboard/partners/review.html"
+    form_class = DeletionForm
+    initial = {"key": "value"}
+
+    def centroid(self, pt_list):
+        if len(pt_list) > 0 and type(pt_list) == list:
+            if type(pt_list[0][0]) == list:
+                new_list = []
+                for x in pt_list:
+                    for y in x:
+                        new_list.append(y)
+                pt_list = new_list
+        length = len(pt_list)
+        sum_x = sum(
+            [x[1] for x in pt_list]
+        )  # TODO coords are reversed for some reason?
+        sum_y = sum([x[0] for x in pt_list])
+        return sum_x / length, sum_y / length
+
+    # https://www.agiliq.com/blog/2019/01/django-formview/
+    def get_initial(self):
+        initial = self.initial
+        if self.request.user.is_authenticated:
+            initial.update({"user": self.request.user})
+        return initial
+
+    def get_context_data(self, **kwargs):
+        form = self.form_class(initial=self.get_initial(), label_suffix="")
+
+        # the polygon coordinates
+        entryPolyDict = {}
+
+        user = self.request.user
+        approvedList = []  # TODO make list?
+
+        query = CommunityEntry.objects.filter(
+            organization__pk=self.kwargs["pk"]
+        )
+        viewableQuery = []
+        for obj in query:
+            if (
+                obj.census_blocks_polygon == ""
+                or obj.census_blocks_polygon is None
+            ):
+                s = "".join(obj.user_polygon.geojson)
+            else:
+                s = "".join(obj.census_blocks_polygon.geojson)
+            struct = geojson.loads(s)
+            ct = self.centroid(struct["coordinates"][0])
+            # https://github.com/thampiman/reverse-geocoder
+            # note that this is an offline reverse geocoding library
+            # reverse geocode to see which states this is in
+            results = rg.search(ct)
+            if len(results) == 0:
+                continue  # skip this community: reverse geocoding failed!
+            admins = [y for x, y in results[0].items()]
+            # get the states that the object is in
+
+            possib_states = set(
+                [
+                    us_state_abbrev[x]
+                    for x in us_state_abbrev.keys()
+                    if x in admins
+                ]
+            )
+            # CHANGE these permissions
+            # - check if moderator
+            # now make sure user is authorized to edit state
+            authorized = set(
+                [g.name.upper() for g in user.groups.all()]
+            )  # TODO assume all groups are state
+            if possib_states.issubset(authorized):
+                print("Authorized for states {}".format(possib_states))
+                # add it to viewable
+                entryPolyDict[obj.entry_ID] = struct.coordinates
+                viewableQuery.append(obj)
+                if obj.admin_approved:
+                    # this is for coloring the map properly
+                    approvedList.append(obj.entry_ID)
+            else:
+                print(type(query))
+                print("Not authorized for states.")
+        query = viewableQuery
+        context = {
+            "form": form,
+            "entries": json.dumps(entryPolyDict),
+            "approved": json.dumps(approvedList),
+            "communities": query,
+            "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+        }
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, label_suffix="")
+        # delete entry if form is valid and entry belongs to current user
+        if form.is_valid() and self.request.user.is_staff:
+            query = CommunityEntry.objects.filter(
+                entry_ID=request.POST.get("c_id")
+            )
+            entry = query[0]
+            # TODO check whether authorized to edit state?
+            if (
+                "Approve" in request.POST
+            ):  # TODO need someone to review security
+                entry.admin_approved = True
+                entry.save()
+            elif "Unapprove" in request.POST:
+                entry.admin_approved = False
+                entry.save()
+            elif "Delete" in request.POST:
+                entry.delete()
+
+        context = (
+            self.get_context_data()
+        )  # TODO: Is there a problem with this?
+        return render(request, self.template_name, context)
 
 
 class CampaignHome(LoginRequiredMixin, DetailView):

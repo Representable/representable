@@ -143,7 +143,7 @@ class Terms(TemplateView):
 
 # ******************************************************************************#
 class Review(LoginRequiredMixin, TemplateView):
-    template_name = "main/review.html"
+    template_name = "main/pages/review.html"
     form_class = DeletionForm
     initial = {"key": "value"}
 

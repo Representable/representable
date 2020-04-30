@@ -49,6 +49,21 @@ urlpatterns = [
     ),
     path("dashboard/", views.dashboard.IndexView.as_view(), name="dashboard"),
     path(
+        "dashboard/entries/<int:pk>",
+        views.dashboard.ViewEntry.as_view(),
+        name="dash_entry_list",
+    ),
+    path(
+        "dashboard/entries/<int:pk>",
+        views.dashboard.ViewEntry.as_view(),
+        name="dash_view_entry",
+    ),
+    path(
+        "dashboard/entries/<int:pk>/delete/",
+        views.dashboard.DeleteEntry.as_view(),
+        name="dash_delete_entry",
+    ),
+    path(
         "dashboard/partners/create/",
         views.dashboard.CreateOrg.as_view(),
         name="create_org",
