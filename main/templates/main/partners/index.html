@@ -1,10 +1,31 @@
 {% extends "main/base.html" %}
+{% load static %}
 
 {% block content %}
+<div class="container">
+  <div class="row row-content">
+    <div class="col-9 mx-auto">
     <h2>Partners</h2>
-    <ul>
+    <p>Learn more about the organizations using Representable.org to gather community data.</p>
+        <div class="row">
         {% for partner in object_list %}
-            <li><a href="{% url 'main:partner_page' partner.slug %}">{{ partner.name }}</a></li>
+        <div class="col-lg-6 col-sm-11">
+        <div class="card my-3">
+          <div class="card-body">
+            <h5>
+               <a href="{% url 'main:partner_page' partner.slug %}">
+                 <img class="mb-2" src="{% static 'img/representable_logo.svg' %}" alt="" width="24" height="24">
+                 {{ partner.name }}
+               </a>
+            </h5>
+            <p> {{ partner.description }} </p>
+            <a class="btn btn-primary" href="{% url 'main:partner_page' partner.slug %}" role="button">See Partner <i class="fa fa-arrow-circle-right"></i></a>
+            <a class="btn btn-primary" href="{{ partner.ext_link }}" role="button">Partner Site <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+            </div>
+            </div>
         {% endfor %}
-    </ul>
+        </div>
+    </div>
+    </div>
 {% endblock %}
