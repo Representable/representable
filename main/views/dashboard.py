@@ -101,7 +101,7 @@ class IndexView(LoginRequiredMixin, ListView):
     """
 
     context_object_name = "org_list"
-    template_name = "main/dashboard/index_new.html"
+    template_name = "main/dashboard/index.html"
 
     def get_queryset(self):
         # returns all the organizations that the user is a member of
@@ -310,57 +310,23 @@ class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
         # the polygon coordinates
         entryPolyDict = {}
 
-        user = self.request.user
-        approvedList = []  # TODO make list?
+        # approved list of communities
+        approvedList = []
 
         query = CommunityEntry.objects.filter(
             organization__pk=self.kwargs["pk"]
         )
-        viewableQuery = []
         for obj in query:
-            if (
-                obj.census_blocks_polygon == ""
-                or obj.census_blocks_polygon is None
-            ):
+            if not obj.census_blocks_polygon:
                 s = "".join(obj.user_polygon.geojson)
             else:
                 s = "".join(obj.census_blocks_polygon.geojson)
             struct = geojson.loads(s)
-            ct = self.centroid(struct["coordinates"][0])
-            # https://github.com/thampiman/reverse-geocoder
-            # note that this is an offline reverse geocoding library
-            # reverse geocode to see which states this is in
-            results = rg.search(ct)
-            if len(results) == 0:
-                continue  # skip this community: reverse geocoding failed!
-            admins = [y for x, y in results[0].items()]
-            # get the states that the object is in
+            entryPolyDict[obj.entry_ID] = struct.coordinates
+            if obj.admin_approved:
+                # this is for coloring the map properly
+                approvedList.append(obj.entry_ID)
 
-            possib_states = set(
-                [
-                    us_state_abbrev[x]
-                    for x in us_state_abbrev.keys()
-                    if x in admins
-                ]
-            )
-            # CHANGE these permissions
-            # - check if moderator
-            # now make sure user is authorized to edit state
-            authorized = set(
-                [g.name.upper() for g in user.groups.all()]
-            )  # TODO assume all groups are state
-            if possib_states.issubset(authorized):
-                print("Authorized for states {}".format(possib_states))
-                # add it to viewable
-                entryPolyDict[obj.entry_ID] = struct.coordinates
-                viewableQuery.append(obj)
-                if obj.admin_approved:
-                    # this is for coloring the map properly
-                    approvedList.append(obj.entry_ID)
-            else:
-                print(type(query))
-                print("Not authorized for states.")
-        query = viewableQuery
         context = {
             "form": form,
             "entries": json.dumps(entryPolyDict),
@@ -372,8 +338,9 @@ class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, label_suffix="")
-        # delete entry if form is valid and entry belongs to current user
-        if form.is_valid() and self.request.user.is_staff:
+
+        # TODO: verify that unauthorized users cannot use this post method
+        if form.is_valid():
             query = CommunityEntry.objects.filter(
                 entry_ID=request.POST.get("c_id")
             )
@@ -389,7 +356,6 @@ class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
                 entry.save()
             elif "Delete" in request.POST:
                 entry.delete()
-
         context = (
             self.get_context_data()
         )  # TODO: Is there a problem with this?

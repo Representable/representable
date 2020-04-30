@@ -27,11 +27,15 @@
 <!--  Custom CSS -->
 <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
 {% endblock %}
+
 {% block content %}
+
+
 <div class="container-fluid">
 <div class="row row-wide">
     <div>
         <script type="text/javascript">
+            var entries = '{{ entries | escapejs }}';
             var tags = '{{ tags | escapejs }}';
             var approved = '{{ approved | escapejs }}';
         </script>
@@ -52,6 +56,7 @@
                     <tr class="community-review-span" id={{c.entry_ID}}>
                         <td>
                           <span class="font-weight-light text-uppercase entry-name">
+                            <!-- TODO: Remove hard coded submission link  -->
                             {% with link_text="/submission?map_id="|addstr:c.entry_ID|slice:27 %}
                               <a href={{link_text}} style="padding: 6px">{{c.entry_name}}</a>
                             {% endwith %}

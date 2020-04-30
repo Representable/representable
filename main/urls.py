@@ -43,6 +43,11 @@ urlpatterns = [
         name="partner_page",
     ),
     path(
+        "partners/<slug:slug>/map",
+        views.partners.PartnerMap.as_view(),
+        name="partner_map",
+    ),
+    path(
         "campaigns/<int:cam_pk>/",
         views.campaigns.CampaignView.as_view(),
         name="campaign_page",
@@ -80,6 +85,11 @@ urlpatterns = [
                 ),
                 path(
                     "edit/", views.dashboard.EditOrg.as_view(), name="edit_org"
+                ),
+                path(
+                    "review/",
+                    views.dashboard.ReviewOrg.as_view(),
+                    name="review_org",
                 ),
                 path(
                     "upload-whitelist/",
