@@ -32,6 +32,12 @@ class PartnerView(DetailView):
     pk_url_kwarg = "pk"
 
 
+class WelcomeView(TemplateView):
+    model = Organization
+    template_name = "main/partners/get_started.html"
+    pk_url_kwarg = "pk"
+
+
 class PartnerMap(TemplateView):
     template_name = "main/partners/map.html"
 

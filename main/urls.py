@@ -38,6 +38,11 @@ urlpatterns = [
     ),
     path("partners/", views.partners.IndexView.as_view(), name="partner_list"),
     path(
+        "partners/welcome/",
+        views.partners.WelcomeView.as_view(),
+        name="partner_welcome",
+    ),
+    path(
         "partners/<slug:slug>/",
         views.partners.PartnerView.as_view(),
         name="partner_page",

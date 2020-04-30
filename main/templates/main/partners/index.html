@@ -2,6 +2,7 @@
 
 {% block content %}
     <h2>Partners</h2>
+    <p> Want to become a partner? Learn more <a href="{% url 'main:partner_welcome' %}">here!
     <ul>
         {% for partner in object_list %}
             <li><a href="{% url 'main:partner_page' partner.slug %}">{{ partner.name }}</a></li>
