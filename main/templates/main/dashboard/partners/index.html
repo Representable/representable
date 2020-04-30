@@ -14,10 +14,11 @@
       <url <hr>
         {% if is_org_admin %}
         <ul>
-          <li><a href="{% url 'main:edit_org' view.kwargs.slug  view.kwargs.pk %}">Edit Details</a></li>
-          <li><a href="{% url 'main:upload_whitelist' view.kwargs.slug  view.kwargs.pk %}">Upload Whitelist</a></li>
-          <li><a href="{% url 'main:upload_whitelist' view.kwargs.slug  view.kwargs.pk %}">Manage Users (Coming Soon)</a></li>
-          <li><a href="{% url 'main:review_org' view.kwargs.slug  view.kwargs.pk %}">Moderate Submissions</a></li>
+          <li><a href="{% url 'main:partner_map' object.slug %}">Link to organization map</a></li>
+          <li><a href="{% url 'main:edit_org' object.slug  object.pk %}">Edit Details</a></li>
+          <li><a href="{% url 'main:upload_whitelist' object.slug  object.pk %}">Upload Whitelist</a></li>
+          <li><a href="{% url 'main:upload_whitelist' object.slug  object.pk %}">Manage Users (Coming Soon)</a></li>
+          <li><a href="{% url 'main:review_org' object.slug  object.pk %}">Moderate Submissions</a></li>
 
         </ul>
 
