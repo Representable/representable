@@ -17,22 +17,81 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-from django.urls import path
+from django.urls import include, path
 
 from . import views
 from representable.settings.base import MAPBOX_KEY
 
 app_name = "main"
 urlpatterns = [
-    path("", views.Index.as_view(), name="index"),
-    path("timeline/", views.Timeline.as_view(), name="timeline"),
-    path("map/", views.Map.as_view(), name="map"),
-    path("thanks/", views.Thanks.as_view(), name="thanks"),
-    path("entry/", views.EntryView.as_view(), name="entry"),
-    path("main/", views.MainView.as_view(), name="main_test"),
-    path("about/", views.About.as_view(), name="MeetTheTeam"),
-    path("review/", views.Review.as_view(), name="review"),
-    path("privacy/", views.Privacy.as_view(), name="privacy"),
-    path("terms/", views.Terms.as_view(), name="terms"),
-    path("submission/", views.Submission.as_view(), name="submission"),
+    path("", views.main.Index.as_view(), name="index"),
+    path("map/", views.main.Map.as_view(), name="map"),
+    path("thanks/", views.main.Thanks.as_view(), name="thanks"),
+    path("entry/", views.main.EntryView.as_view(), name="entry"),
+    path("about/", views.main.About.as_view(), name="about"),
+    path("review/", views.main.Review.as_view(), name="review"),
+    path("privacy/", views.main.Privacy.as_view(), name="privacy"),
+    path("terms/", views.main.Terms.as_view(), name="terms"),
+    path("submission/", views.main.Submission.as_view(), name="submission"),
+    path(
+        "campaigns/", views.campaigns.IndexView.as_view(), name="campaign_list"
+    ),
+    path("partners/", views.partners.IndexView.as_view(), name="partner_list"),
+    path(
+        "partners/<slug:slug>/",
+        views.partners.PartnerView.as_view(),
+        name="partner_page",
+    ),
+    path(
+        "campaigns/<int:cam_pk>/",
+        views.campaigns.CampaignView.as_view(),
+        name="campaign_page",
+    ),
+    path("dashboard/", views.dashboard.IndexView.as_view(), name="dashboard"),
+    path(
+        "dashboard/partners/create/",
+        views.dashboard.CreateOrg.as_view(),
+        name="create_org",
+    ),
+    path(
+        "dashboard/partners/<slug:slug>-<int:pk>/",
+        include(
+            [
+                path("", views.dashboard.HomeOrg.as_view(), name="home_org"),
+                path(
+                    "thanks/",
+                    views.dashboard.ThanksOrg.as_view(),
+                    name="thanks_org",
+                ),
+                path(
+                    "edit/", views.dashboard.EditOrg.as_view(), name="edit_org"
+                ),
+                path(
+                    "upload-whitelist/",
+                    views.WhiteListUpdate.as_view(),
+                    name="upload_whitelist",
+                ),
+                path(
+                    "campaigns/",
+                    views.dashboard.CampaignList.as_view(),
+                    name="campaign_list",
+                ),
+                path(
+                    "campaigns/create/",
+                    views.dashboard.CreateCampaign.as_view(),
+                    name="create_campaign",
+                ),
+                path(
+                    "campaigns/<int:cam_pk>/",
+                    views.dashboard.CampaignHome.as_view(),
+                    name="campaign_home",
+                ),
+                path(
+                    "campaigns/<int:cam_pk>/edit/",
+                    views.dashboard.UpdateCampaign.as_view(),
+                    name="update_campaign",
+                ),
+            ]
+        ),
+    ),
 ]

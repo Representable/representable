@@ -1,0 +1,10 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    <h2>{{object.name}}</h2>
+    <p>{{object.description}}</p>
+
+    <ul>
+      <li><a href="{% url 'main:partner_page' object.slug %}">Share this link!</a></li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block content %}
+    <h2>{{object.name}}</h2>
+    <p>{{object.description}}</p>
+    <!-- <pre> {% filter force_escape %} {% debug %} {% endfilter %} </pre> -->
+
+    <ul>
+      <!-- <li><a href="{% url 'main:campaign_page' view.kwargs.slug view.kwargs.cam_pk%}">Share this link!</a></li> -->
+    </ul>
+{% endblock %}

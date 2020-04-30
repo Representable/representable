@@ -18,27 +18,37 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 from django.contrib.postgres.fields import ArrayField
+from django.template.defaultfilters import slugify
+from django.urls import reverse, reverse_lazy
 
 # Geo App
 import uuid
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import Group
 from django.db import migrations
 from django.contrib.gis.db import models
-import datetime
 from .choices import (
     POLICY_ISSUES,
     RACE_CHOICES,
     RELIGION_CHOICES,
     INDUSTRY_CHOICES,
+    STATES,
 )
+from .utils import generate_unique_slug
 
 # ******************************************************************************#
 
 
 class User(AbstractUser):
     # TODO: Add a language variable for each user
-    pass
+    def is_org_admin(self, org_id):
+        group = "admins_" + str(org_id)
+        return self.groups.filter(name=group).exists()
+
+    def is_org_moderator(self, org_id):
+        group = "mods_" + str(org_id)
+        return self.groups.filter(name=group).exists()
 
 
 # ******************************************************************************#
@@ -159,3 +169,113 @@ class Issue(models.Model):
 
 
 # ******************************************************************************#
+
+
+class Organization(models.Model):
+    """
+    Organization represents organizations with a user
+    Fields included:
+    - name: name of the organization
+    - description: description of the organization
+    - ext_link: external link to organization website
+    - slug: internal representable link slug
+    - members: members of the organization
+    """
+
+    name = models.CharField(max_length=128)
+    description = models.CharField(max_length=250, blank=True)
+    ext_link = models.URLField(max_length=200, blank=True)
+    states = ArrayField(
+        models.CharField(max_length=50, choices=STATES, blank=True),
+        blank=False,
+    )
+    slug = models.SlugField(unique=True)
+    members = models.ManyToManyField(User, through="Membership")
+
+    class Meta:
+        ordering = ("description",)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        # generate the slug once the first time the org is created
+        if not self.slug:
+            self.slug = generate_unique_slug(Organization, self.name)
+        super(Organization, self).save(*args, **kwargs)
+
+    def get_url_kwargs(self):
+        return {"pk": self.id, "slug": self.slug}
+
+    def get_absolute_url(self):
+        return reverse("main:home_org", kwargs=self.get_url_kwargs())
+
+
+# ******************************************************************************#
+
+
+class Membership(models.Model):
+    member = models.ForeignKey(User, on_delete=models.CASCADE)
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    date_joined = models.DateField(auto_now_add=True, blank=True)
+    is_org_admin = models.BooleanField(default=False)
+    is_org_moderator = models.BooleanField(default=False)
+    is_whitelisted = models.BooleanField(default=False)
+
+
+# ******************************************************************************#
+
+
+class WhiteListEntry(models.Model):
+    """
+    A given whitelist entry with the following
+    fields included:
+    - email: whitelisted email
+    - organization: the organization that created the link
+    - date added: when the email was added to the whitelist
+    """
+
+    email = models.CharField(max_length=128)
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    date_added = models.DateField(auto_now_add=True, blank=True)
+
+    class Meta:
+        ordering = ("email",)
+
+    def __str__(self):
+        return self.email
+
+
+# ******************************************************************************#
+
+
+class Campaign(models.Model):
+    """
+    Campaign represents an organization's entry collection campaign.
+    - name: name of the campaign
+    - state: the state of the campaign
+    - description: description of the campaign
+    - organization: organization hosting the campaign
+    - start_date: when the campaign starts data collection
+    - end_date: when the campaign ends data collection
+    - is_active: is the campaign active
+    """
+
+    name = models.CharField(max_length=128)
+    description = models.CharField(max_length=250, blank=True)
+    state = models.CharField(
+        max_length=50, choices=STATES, default=None, blank=False
+    )
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ("description",)
+
+    def __str__(self):
+        return self.name
+
+    # def get_absolute_url(self):
+    #     return reverse("main:campaign_home", kwargs={"org_pk": self.id})
