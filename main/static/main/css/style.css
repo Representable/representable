@@ -274,8 +274,6 @@ color scheme. See readme.md*/
 .dropdown-btn {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
-  /* color: black ! important; */
-  display: block;
   border: none;
   background: none;
   width: 100%;
@@ -290,6 +288,10 @@ color scheme. See readme.md*/
   background-color: rgb(240, 240, 240);
   color: #95a3b3;
   padding-left: 8px;
+}
+
+.entry-name {
+  color: #00c6a7;
 }
 
 /* Optional: Style the caret down icon */
@@ -783,6 +785,8 @@ label {
   border-radius: 3px;
 }
 
+.table tr:active,
+.table tr:hover,
 .items li:active,
 .items li:hover {
   background-color: #f5f5f5;

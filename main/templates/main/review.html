@@ -2,6 +2,7 @@
 {% load leaflet_tags %}
 {% load static %}
 {% load widget_tweaks %}
+{% load representable_extras %}
 
 
 {% block head %}
@@ -11,7 +12,7 @@
 <!-- https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ -->
 <!-- Mapbox GL JS -->
 <meta charset='utf-8' />
-<title>View Communities</title>
+<title>Review Communities</title>
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
@@ -32,7 +33,7 @@
     <div>
         <script type="text/javascript">
             var issues = '{{ issues | escapejs }}';
-            var a = '{{ entries | escapejs}}';
+            var a = '{{ entries | escapejs }}';
             var tags = '{{ tags | escapejs }}';
             var approved = '{{ approved | escapejs }}';
         </script>
@@ -46,15 +47,22 @@
                 {% if communities %}
                 <table class="table">
                     <tr>
-                        <th scope="col">Community ID</th>
+                        <th scope="col">Community Name</th>
                         <th scope="col">Action</th>
                     </tr>
                     {% for c in communities %}
-                    <tr>
-                        <td>{{c}}<br>
+                    <tr class="community-review-span" id={{c.entry_ID}}>
+                        <td>
+                          <span class="font-weight-light text-uppercase entry-name">
+                            {% with link_text="/submission?map_id="|addstr:c.entry_ID|slice:27 %}
+                              <a href={{link_text}} style="padding: 6px">{{c.entry_name}}</a>
+                            {% endwith %}
+                          </span>
+                          <br>
+                            <span class="font-weight-light">{{c.entry_reason}}<br>
                             {% if user.is_staff %}
                             <!-- we should have an author here too -->
-                                <b>Created by:</b> {{ c.user.username }}
+                                <b>Created by:</b></span> {{ c.user.username }}
                             {% endif %}
                         </td>
                         <td>
@@ -79,6 +87,7 @@
                     <h1>No entries!</h1>
                 </div>
                 {% endif %}
+                </div>
         </nav>
     </div>
     <div class="col-md-6 col-map col-wide">

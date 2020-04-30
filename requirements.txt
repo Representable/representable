@@ -5,7 +5,7 @@ chardet==3.0.4
 Click==7.0
 defusedxml==0.5.0
 dj-database-url==0.5.0
-Django==2.2.6
+Django==2.2.10
 django-allauth==0.39.1
 django-appconf==1.0.3
 django-bmemcached==0.2.4
@@ -17,7 +17,6 @@ django-redis-cache==2.0.0
 django-select2==6.3.1
 django-widget-tweaks==1.4.3
 Faker==1.0.5
-Flask==1.1.1
 geojson==2.4.1
 gunicorn==19.9.0
 idna==2.8
@@ -28,11 +27,8 @@ lazy-object-proxy==1.4.3
 licenseheaders==0.6
 MarkupSafe==1.1.1
 mccabe==0.6.1
-nltk==3.4
 numpy==1.17.4
 oauthlib==3.0.1
-opencv-python==4.1.0.25
-pandas==0.24.2
 psycopg2==2.7.6
 psycopg2-binary==2.7.7
 pycodestyle==2.5.0
