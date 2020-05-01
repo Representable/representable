@@ -188,8 +188,8 @@ map.on("load", function() {
     } else {
       final = a[obj];
     }
-    approved_color = "rgba(110, 178, 181,0.30)";
-    unapproved_color = "rgba(255, 50, 0,0.30)";
+    approved_color = "rgba(110, 178, 181,0.15)";
+    unapproved_color = "rgba(255, 50, 0,0.15)";
     if (approved.indexOf(obj) > -1) {
       color = approved_color;
     } else {
@@ -251,13 +251,34 @@ map.on("load", function() {
 
 // on hover, highlight the community
 $(".sidenav").on('mouseenter','.community-review-span',function () {
-  console.log('HELLO THERE WORLD')
-    map.setPaintProperty(this.id + 'line', 'line-color', 'rgba(61, 114, 118, 0.5)');
+  var isApproved = false;
+  if (map.getPaintProperty(this.id, 'fill-color') === 'rgba(110, 178, 181,0.15)') {
+    isApproved = true;
+  }
+  if (isApproved) {
+    map.setPaintProperty(this.id + 'line', 'line-color', 'rgba(0, 0, 0,0.5)');
     map.setPaintProperty(this.id + 'line', 'line-width', 4);
-    map.setPaintProperty(this.id, 'fill-color', 'rgba(61, 114, 118,0.3)')
+    map.setPaintProperty(this.id, 'fill-color', 'rgba(110, 178, 181,0.5)');
+  }
+  else {
+    map.setPaintProperty(this.id + 'line', 'line-color', 'rgba(0, 0, 0,0.5)');
+    map.setPaintProperty(this.id + 'line', 'line-width', 4);
+    map.setPaintProperty(this.id, 'fill-color', 'rgba(255, 50, 0,0.5)');
+  }
 });
 $(".sidenav").on('mouseleave','.community-review-span',function () {
-  map.setPaintProperty(this.id + 'line', 'line-color', 'rgba(110, 178, 181,0.3)');
-  map.setPaintProperty(this.id + 'line', 'line-width', 2);
-  map.setPaintProperty(this.id, 'fill-color', 'rgba(110, 178, 181,0.15)')
+  var isApproved = false;
+  if (map.getPaintProperty(this.id, 'fill-color') === 'rgba(110, 178, 181,0.5)') {
+    isApproved = true;
+  }
+  if (isApproved) {
+    map.setPaintProperty(this.id + 'line', 'line-color', 'rgba(0, 0, 0,0.2)');
+    map.setPaintProperty(this.id + 'line', 'line-width', 2);
+    map.setPaintProperty(this.id, 'fill-color', 'rgba(110, 178, 181,0.15)');
+  }
+  else {
+    map.setPaintProperty(this.id + 'line', 'line-color', 'rgba(0, 0, 0,0.2)');
+    map.setPaintProperty(this.id + 'line', 'line-width', 2);
+    map.setPaintProperty(this.id, 'fill-color', 'rgba(255, 50, 0,0.15)');
+  }
 });
