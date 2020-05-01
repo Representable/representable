@@ -212,26 +212,6 @@
 
 
                                     </div>
-                                    <!-- {# Is this your community? Field} -->
-                                    <div class="field-wrap">
-                                        <div class="form-error">
-                                            {{ form.my_community.label_tag }} <small class="text-danger">(Required)</small>
-                                            {% if form.my_community.errors %}
-                                            <script>
-                                                sessionStorage.setItem("allChecks", "fail");
-                                            </script>
-                                            <div>
-                                                <div id="my_community_missing" class="alert alert-warning map-alert" role="alert">
-                                                    You need to specify if you are part of this community.
-                                                </div>
-                                            </div>
-                                            {% endif %}
-                                        </div>
-                                        {{ form.my_community|append_attr:"class:form-control" }}
-                                        {% if form.my_community.help_text %}
-                                        <p class="help">{{ form.my_community.help_text|safe }}</p>
-                                        {% endif %}
-                                    </div>
                                 </div>
                             </div>
                             </div>

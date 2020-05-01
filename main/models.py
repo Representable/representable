@@ -110,14 +110,6 @@ class CommunityEntry(models.Model):
     entry_reason = models.TextField(
         max_length=500, blank=True, unique=False, default=""
     )
-    my_community = models.CharField(
-        "Is this your community?",
-        max_length=1,
-        choices=CHOICES,
-        default="Y",
-        blank=False,
-        null=False,
-    )
     admin_approved = models.BooleanField(default=False)
 
     def __str__(self):
