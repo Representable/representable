@@ -233,76 +233,6 @@ var states = [
   "wy",
 ];
 
-/* Colors for the different issue categories */
-var PAINT_VALUES = {
-  Zoning: "rgba(135, 191, 255,",
-  Policing: "rgba(63, 142, 252,",
-  Crime: "rgba(196, 178, 188,",
-  Nuisance: "rgba(223, 146, 142,",
-  School: "rgba(249, 160, 63,",
-  "Religion/Church": "rgba(234, 200, 30,",
-  "Race/Ethnicity": "rgba(178, 177, 207,",
-  "Immigration Status": "rgba(223, 41, 53,",
-  Socioeconomic: "rgba(253, 202, 64,",
-  Transportation: "rgba(242, 255, 73,",
-  "Neighborhood Identity/Official Definition": "rgba(251, 98, 246,",
-  Environmental: "rgba(150, 98, 26,",
-  "LGBT Issues": "rgba(255, 192, 203,",
-};
-
-$(document).ready(function() {
-  $("#zipcodeModal").modal("show");
-});
-
-function modalZip(e) {
-  e.preventDefault();
-
-  var isnum = /^\d+$/.test($("#zipcode").val());
-  if (isnum) {
-    console.log("yuh");
-    $("#zipcodeModal").modal("hide");
-    // user puts in a zipcode and the map zooms to that loc
-    let geoObj = geocoder.query($("#zipcode").val(), function(err, res) {
-      console.log(err, res);
-    });
-    console.log(geoObj);
-    var q = "Edison";
-  } else {
-    // write out the error here:
-  }
-}
-
-$("#zipcodeModal").keypress(function(e) {
-  if (e.keyCode === 10 || e.keyCode === 13) {
-    modalZip(e);
-  }
-});
-$("#zipSubmit").click(function(e) {
-  modalZip(e);
-});
-
-//builds proper format of location string based on mapbox data. city,state/province,country
-function parseReverseGeo(geoData) {
-  // debugger;
-  var region, countryName, placeName, returnStr;
-  if (geoData.context) {
-    $.each(geoData.context, function(i, v) {
-      if (v.id.indexOf("region") >= 0) {
-        region = v.text;
-      }
-      if (v.id.indexOf("country") >= 0) {
-        countryName = v.text;
-      }
-    });
-  }
-  if (region && countryName) {
-    returnStr = region + ", " + countryName;
-  } else {
-    returnStr = geoData.place_name;
-  }
-  return returnStr;
-}
-
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
@@ -310,7 +240,7 @@ var map = new mapboxgl.Map({
   container: "map", // container id
   style: "mapbox://styles/mapbox/streets-v11", //color of the map -- dark-v10 or light-v9
   center: [-74.65545, 40.341701], // starting position - Princeton, NJ :)
-  zoom: 12, // starting zoom -- higher is closer
+  zoom: 10, // starting zoom -- higher is closer
 });
 
 // geocoder used for a search bar -- within the map itself
@@ -396,36 +326,8 @@ function newLowerLegislatureLayer(state) {
   });
 }
 
-// issues add to properties
-issues = JSON.parse(issues);
-
-// TODO: change issue to a button, which iterates thru all the displayed features and selects for that issue
-for (issue in issues) {
-  var button = document.createElement("div");
-  button.className = "btn btn-info m-1";
-  button.id = issue;
-  button.textContent = issue;
-  var circle = document.createElement("i");
-  circle.className = "fa fa-circle";
-  circle.style.color = PAINT_VALUES[issue] + "1)";
-  circle.style.paddingLeft = "5px";
-  button.appendChild(circle);
-
-  var dropdowns = document.createElement("div");
-  dropdowns.className = "dropdown-container";
-
-  for (entry in issues[issue]) {
-    var link = document.createElement("a");
-    link.href = "#";
-    link.id = entry;
-    link.className = "btn-primary";
-    link.textContent = issues[issue][entry];
-    dropdowns.appendChild(link);
-  }
-  var issueDiv = document.getElementById("issue-dropdowns");
-  issueDiv.appendChild(button);
-  issueDiv.appendChild(dropdowns);
-}
+entry_names = JSON.parse(entry_names);
+entry_reasons = JSON.parse(entry_reasons);
 
 map.on('load', function() {
   var layers = map.getStyle().layers;
@@ -470,14 +372,6 @@ map.on('load', function() {
   a = JSON.parse(outputstr);
 
   for (obj in a) {
-    let catDict = {};
-    let catArray = [];
-    for (cat in issues) {
-      if (issues[cat][obj] !== undefined) {
-        catArray.push(cat);
-        catDict[cat] = issues[cat][obj];
-      }
-    }
     // check how deeply nested the outer ring of the unioned polygon is
     final = [];
     // set the coordinates of the outer ring to final
@@ -501,8 +395,8 @@ map.on('load', function() {
             coordinates: final,
           },
           properties: {
-            issues: catDict,
-            category: catArray,
+            name: entry_names[obj],
+            reason: entry_reasons[obj],
           },
         },
       },
@@ -514,6 +408,7 @@ map.on('load', function() {
       },
     });
 
+// this has to be a separate layer bc mapbox doesn't allow flexibility with thickness of outline of polygons
     map.addLayer({
       id: obj + "line",
       type: "line",
@@ -526,8 +421,8 @@ map.on('load', function() {
             coordinates: final,
           },
           properties: {
-            issues: catDict,
-            category: catArray,
+            name: entry_names[obj],
+            reason: entry_reasons[obj],
           },
         },
       },
@@ -541,93 +436,6 @@ map.on('load', function() {
         "line-width": 2,
       },
     });
-  }
-
-  // this function iterates thru the issues, and adds a link to each one Which
-  // displays the right polygons
-  for (issue in issues) {
-    console.log(issue);
-    // the button element
-    var cat = document.getElementById(issue);
-
-    cat.onclick = function(e) {
-      var issueId = this.id;
-      // iterate thru the polygons on the map
-      for (obj in a) {
-        if (issues[issueId][obj] === undefined) {
-          map.setLayoutProperty(obj, "visibility", "none");
-          map.setLayoutProperty(obj + "line", "visibility", "none");
-        } else {
-          map.setLayoutProperty(obj, "visibility", "visible");
-          map.setLayoutProperty(obj + "line", "visibility", "visible");
-          map.setPaintProperty(
-            obj + "line",
-            "line-color",
-            PAINT_VALUES[issueId] + "0.3)"
-          );
-          map.setPaintProperty(
-            obj,
-            "fill-color",
-            PAINT_VALUES[issueId] + "0.15)"
-          );
-        }
-      }
-    };
-    for (entry in issues[issue]) {
-      var entryId = document.getElementById(entry);
-      entryId.onclick = function(e) {
-        var thisId = this.id;
-        for (obj in a) {
-          if (thisId === obj) {
-            map.setLayoutProperty(obj, "visibility", "visible");
-            map.setLayoutProperty(obj + "line", "visibility", "visible");
-          } else {
-            map.setLayoutProperty(obj, "visibility", "none");
-            map.setLayoutProperty(obj + "line", "visibility", "none");
-          }
-        }
-      };
-    }
-  }
-
-  var allEntriesButton = document.getElementById("all");
-
-  allEntriesButton.onclick = function(e) {
-    for (obj in a) {
-      map.setLayoutProperty(obj, "visibility", "visible");
-      map.setLayoutProperty(obj + "line", "visibility", "visible");
-      map.setPaintProperty(obj, "fill-color", "rgba(110, 178, 181,0.15)");
-      map.setPaintProperty(
-        obj + "line",
-        "line-color",
-        "rgba(110, 178, 181,0.3)"
-      );
-    }
-  };
-
-  for (var tag in tags) {
-    var link = document.createElement("a");
-    link.href = "#";
-    link.textContent = tag;
-    link.className = "btn-primary";
-
-    link.onclick = function(e) {
-      var tagName = this.textContent;
-      e.preventDefault();
-      e.stopPropagation();
-      for (obj in a) {
-        if (tags[tagName].includes(obj)) {
-          map.setLayoutProperty(obj, "visibility", "visible");
-          map.setLayoutProperty(obj + "line", "visibility", "visible");
-        } else {
-          map.setLayoutProperty(obj, "visibility", "none");
-          map.setLayoutProperty(obj + "line", "visibility", "none");
-        }
-      }
-    };
-
-    var layers = document.getElementById("tags-menu");
-    layers.appendChild(link);
   }
   // find what features are currently on view
   // multiple features are gathered that have the same source (or have the same source with 'line' added on)
@@ -647,23 +455,10 @@ map.on('load', function() {
         !source.includes("upper")
       ) {
         if (!sources.includes(source)) {
-          console.log(features[i]);
           sources.push(source);
-          var issues = JSON.parse(features[i].properties.issues);
-          var inner_content = "<span class='font-weight-light text-uppercase'><a style='display:inline;' href='/submission?map_id=" + source.slice(0, 8) + "'>Community ".concat(source.slice(0, 8), "</a></span><hr class='my-1'>\n",
-            "<span class='font-weight-light'>Issues:</span>");
-          if (features[i].properties.category !== "[]") {
-            var categories = JSON.parse(features[i].properties.category);
-            for (var cat in categories) {
-              inner_content +=
-                " <div class='p-1 my-1 bg-info text-white text-center '>" +
-                issues[categories[cat]] +
-                "</div>";
-            }
-          } else {
-            inner_content += " N/A";
-          }
-          var content = '<li class="list-group-item small">'.concat(
+          var inner_content = "<span class='font-weight-light text-uppercase'><a style='display:inline;' href='/submission?map_id=" + source.slice(0, 8) + "'>".concat(features[i].properties.name, "</a></span><hr class='my-1'>\n",
+            "<span class='font-weight-light'>Why are you submitting this community?</span> <div class='p-1 my-1 bg-info text-white text-center '>", features[i].properties.reason, "</div>");
+          var content = '<li class="list-group-item small" id=' + source + '>'.concat(
             inner_content,
             "</li>"
           );
@@ -675,6 +470,23 @@ map.on('load', function() {
       }
     }
   });
+  // this is necessary so the map "moves" and queries the features above ^^
+  map.flyTo({
+    center: [-74.65545, 40.341701],
+    zoom: 10,
+  });
+});
+
+// on hover, highlight the community
+$("#community-list").on('mouseenter','li',function () {
+    map.setPaintProperty(this.id + 'line', 'line-color', 'rgba(61, 114, 118, 0.5)');
+    map.setPaintProperty(this.id + 'line', 'line-width', 4);
+    map.setPaintProperty(this.id, 'fill-color', 'rgba(61, 114, 118,0.3)')
+});
+$("#community-list").on('mouseleave','li',function () {
+  map.setPaintProperty(this.id + 'line', 'line-color', 'rgba(110, 178, 181,0.3)');
+  map.setPaintProperty(this.id + 'line', 'line-width', 2);
+  map.setPaintProperty(this.id, 'fill-color', 'rgba(110, 178, 181,0.15)')
 });
 
 //create a button that toggles layers based on their IDs
@@ -751,27 +563,5 @@ for (i = 0; i < dropdown.length; i++) {
 
 // search bar function ! looks through the tags and the buttons themselves
 function searchTags() {
-  var input,
-    filter,
-    dropdowns,
-    sub,
-    i,
-    txtValueB,
-    txtValueS,
-    j,
-    buttons,
-    prev,
-    next,
-    skip;
-  input = document.getElementById("search-bar");
-  filter = input.value.toUpperCase();
-  // search among the tags themselves (buttons)
-  // maybe there is a more efficient way to do this, but this makes sense, for now
-  buttons = document.getElementsByClassName("dropdown-btn");
-  for (i = 0; i < buttons.length; i++) {
-    // the dropdown-container with sub tags
-    next = buttons[i].nextElementSibling;
-    txtValueB = buttons[i].textContent || buttons[i].innerText;
-    // the links within dropdown-container: sub tags themselves
-  }
+  // go through all names and all reasons - find ones that match... wait do we even want a search bar?
 }

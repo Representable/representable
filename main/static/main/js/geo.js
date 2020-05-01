@@ -128,194 +128,73 @@ var states = [
   "wy",
 ];
 
+// dictionary with state neighbors without nebraska since there is
+// no census block data for nebraska
+var state_neighbors = {
+  ak: [],
+  al: ["fl", "ga", "ms", "tn"],
+  ar: ["la", "mo", "ms", "ok", "tn", "tx"],
+  az: ["ca", "co", "nv", "nm", "ut"],
+  ca: ["az", "nv", "or"],
+  co: ["az", "ks", "nm", "ok", "ut", "wy"],
+  ct: ["ma", "ny", "ri"],
+  dc: ["md", "va"],
+  de: ["md", "nj", "pa"],
+  fl: ["al", "ga"],
+  ga: ["al", "fl", "nc", "sc", "tn"],
+  hi: [],
+  ia: ["al", "mn", "mo", "sd", "wi"],
+  id: ["mt", "nv", "or", "ut", "wa", "wy"],
+  il: ["in", "ia", "mi", "ky", "mo", "wi"],
+  in: ["il", "ky", "mi", "oh"],
+  ks: ["co", "mo", "ok"],
+  ky: ["il", "in", "mo", "oh", "tn", "va", "wv"],
+  la: ["ar", "ms", "tx"],
+  ma: ["ct", "nh", "ny", "ri", "vt"],
+  md: ["de", "pa", "va", "wv"],
+  me: ["nh"],
+  mi: ["il", "in", "mn", "oh", "wi"],
+  mn: ["ia", "mi", "nd", "sd", "wi"],
+  mo: ["ar", "il", "ia", "ks", "ky", "ok", "tn"],
+  ms: ["al", "ar", "la", "tn"],
+  mt: ["id", "nd", "sd", "wy"],
+  nc: ["az", "ca", "id", "or", "ut"],
+  nd: ["mn", "mt", "sd"],
+  nh: ["me", "ma", "vt"],
+  nj: ["ny", "de", "pa"],
+  nm: ["az", "co", "ok", "tx", "ut"],
+  nv: ["az", "ca", "id", "or", "ut"],
+  ny: ["ct", "ma", "nj", "pa", "ri", "vt"],
+  oh: ["in", "ky", "mi", "pa", "wv"],
+  ok: ["ar", "co", "ks", "mo", "nm", "tx"],
+  or: ["ca", "id", "nv", "wa"],
+  pa: ["de", "md", "nj", "ny", "oh", "wv"],
+  ri: ["ct", "ma", "ny"],
+  sc: ["ga", "nc"],
+  sd: ["ia", "mn", "mt", "nd", "wy"],
+  tn: ["al", "ar", "ga", "ky", "ms", "mo", "nc", "va"],
+  tx: ["ar", "la", "nm", "ok"],
+  ut: ["az", "co", "id", "nv", "nm", "wy"],
+  va: ["ky", "md", "nc", "tn", "wv"],
+  vt: ["ma", "nh", "ny"],
+  wa: ["id", "or"],
+  wi: ["il", "ia", "mi", "mn"],
+  wv: ["ky", "md", "oh", "pa", "va"],
+  wy: ["co", "id", "mt", "sd", "ut"],
+};
 var wkt_obj;
 // Formset field object saves a deep copy of the original formset field object.
 // (If user deletes all fields, he can add one more according to this one).
 var formsetFieldObject;
 var state;
-$(document).ready(function() {
-  console.log(sessionStorage.getItem("stateName"));
-  // console.log(state);
-  console.log(sessionStorage.getItem("allChecks"));
-  if (sessionStorage.getItem("allChecks") == "pass") {
-    $("#zipcodeModal").modal("show");
-  }
-});
-
-function getState(zipcode) {
-  // Ensure param is a string to prevent unpredictable parsing results
-  if (typeof zipcode !== "string") {
-    console.log("Must pass the zipcode as a string.");
-    return;
-  }
-
-  // Ensure we have exactly 5 characters to parse
-  if (zipcode.length !== 5) {
-    console.log("Must pass a 5-digit zipcode.");
-    return;
-  }
-  // after error handling, it shud always be 5 digits:
-  zipcode = zipcode.substring(0, 4);
-  zipcode += "0";
-  // console.log(zipcode)
-  // Ensure we don't parse strings starting with 0 as octal values
-  const thiszip = parseInt(zipcode, 10);
-
-  // Code blocks alphabetized by state
-  if (thiszip >= 35000 && thiszip <= 36999) {
-    state = "al";
-  } else if (thiszip >= 99500 && thiszip <= 99999) {
-    state = "ak";
-  } else if (thiszip >= 85000 && thiszip <= 86999) {
-    state = "az";
-  } else if (thiszip >= 71600 && thiszip <= 72999) {
-    state = "ar";
-  } else if (thiszip >= 90000 && thiszip <= 96699) {
-    state = "ca";
-  } else if (thiszip >= 80000 && thiszip <= 81999) {
-    state = "co";
-  } else if (thiszip >= 6000 && thiszip <= 6999) {
-    state = "ct";
-  } else if (thiszip >= 19700 && thiszip <= 19999) {
-    state = "de";
-  } else if (thiszip >= 32000 && thiszip <= 34999) {
-    state = "fl";
-  } else if (thiszip >= 30000 && thiszip <= 31999) {
-    state = "ga";
-  } else if (thiszip >= 96700 && thiszip <= 96999) {
-    state = "hi";
-  } else if (thiszip >= 83200 && thiszip <= 83999) {
-    state = "ID";
-  } else if (thiszip >= 60000 && thiszip <= 62999) {
-    state = "il";
-  } else if (thiszip >= 46000 && thiszip <= 47999) {
-    state = "in";
-  } else if (thiszip >= 50000 && thiszip <= 52999) {
-    state = "ia";
-  } else if (thiszip >= 66000 && thiszip <= 67999) {
-    state = "ks";
-  } else if (thiszip >= 40000 && thiszip <= 42999) {
-    state = "ky";
-  } else if (thiszip >= 70000 && thiszip <= 71599) {
-    state = "la";
-  } else if (thiszip >= 3900 && thiszip <= 4999) {
-    state = "me";
-  } else if (thiszip >= 20600 && thiszip <= 21999) {
-    state = "md";
-  } else if (thiszip >= 1000 && thiszip <= 2799) {
-    state = "ma";
-  } else if (thiszip >= 48000 && thiszip <= 49999) {
-    state = "mi";
-  } else if (thiszip >= 55000 && thiszip <= 56999) {
-    state = "mn";
-  } else if (thiszip >= 38600 && thiszip <= 39999) {
-    state = "ms";
-  } else if (thiszip >= 63000 && thiszip <= 65999) {
-    state = "mo";
-  } else if (thiszip >= 59000 && thiszip <= 59999) {
-    state = "mt";
-  } else if (thiszip >= 27000 && thiszip <= 28999) {
-    state = "nc";
-  } else if (thiszip >= 58000 && thiszip <= 58999) {
-    state = "nd";
-  } else if (thiszip >= 68000 && thiszip <= 69999) {
-    state = "ne";
-  } else if (thiszip >= 88900 && thiszip <= 89999) {
-    state = "nv";
-  } else if (thiszip >= 3000 && thiszip <= 3899) {
-    state = "nh";
-  } else if (thiszip >= 7000 && thiszip <= 8999) {
-    state = "nj";
-  } else if (thiszip >= 87000 && thiszip <= 88499) {
-    state = "nm";
-  } else if (thiszip >= 10000 && thiszip <= 14999) {
-    state = "ny";
-  } else if (thiszip >= 43000 && thiszip <= 45999) {
-    state = "oh";
-  } else if (thiszip >= 73000 && thiszip <= 74999) {
-    state = "ok";
-  } else if (thiszip >= 97000 && thiszip <= 97999) {
-    state = "or";
-  } else if (thiszip >= 15000 && thiszip <= 19699) {
-    state = "pa";
-  } else if (thiszip >= 300 && thiszip <= 999) {
-    state = "pr";
-  } else if (thiszip >= 2800 && thiszip <= 2999) {
-    state = "ri";
-  } else if (thiszip >= 29000 && thiszip <= 29999) {
-    state = "sc";
-  } else if (thiszip >= 57000 && thiszip <= 57999) {
-    state = "sd";
-  } else if (thiszip >= 37000 && thiszip <= 38599) {
-    state = "tn";
-  } else if (
-    (thiszip >= 75000 && thiszip <= 79999) ||
-    (thiszip >= 88500 && thiszip <= 88599)
-  ) {
-    state = "tx";
-  } else if (thiszip >= 84000 && thiszip <= 84999) {
-    state = "ut";
-  } else if (thiszip >= 5000 && thiszip <= 5999) {
-    state = "vt";
-  } else if (thiszip >= 22000 && thiszip <= 24699) {
-    state = "va";
-  } else if (thiszip >= 20000 && thiszip <= 20599) {
-    state = "dc";
-  } else if (thiszip >= 98000 && thiszip <= 99499) {
-    state = "wa";
-  } else if (thiszip >= 24700 && thiszip <= 26999) {
-    state = "wv";
-  } else if (thiszip >= 53000 && thiszip <= 54999) {
-    state = "wi";
-  } else if (thiszip >= 82000 && thiszip <= 83199) {
-    state = "wy";
-  } else {
-    state = "none";
-  }
-  newCensusLines(state);
-  newHighlightLayer(state);
-  sessionStorage.setItem("stateName", state);
-  console.log(sessionStorage.getItem("stateName"));
-}
-
-function modalZip(e) {
-  e.preventDefault();
-
-  var isnum = /^\d+$/.test($("#zipcode").val());
-  if (isnum) {
-    console.log("yuh");
-    // Parse only first 4 digits of zipcode.
-    zipcode = $("#zipcode").val();
-    zipcode = zipcode.substring(0, 4);
-    zipcode += "0";
-    // console.log(zipcode)
-    $("#zipcodeModal").modal("hide");
-    // user puts in a zipcode and the map zooms to that loc
-    let geoObj = geocoder.query(zipcode, function(err, res) {
-      console.log(err, res);
-    });
-    console.log(geoObj);
-    let st = getState($("#zipcode").val());
-  } else {
-    // write out the error here:
-  }
-}
-
-$("#zipcodeModal").keypress(function(e) {
-  if (e.keyCode === 10 || e.keyCode === 13) {
-    modalZip(e);
-  }
-});
-$("#zipSubmit").click(function(e) {
-  modalZip(e);
-});
+var neighbors = [];
 
 //builds proper format of location string based on mapbox data. city,state/province,country
 function parseReverseGeo(geoData) {
   // debugger;
   var region, countryName, placeName, returnStr;
   if (geoData.context) {
-    $.each(geoData.context, function(i, v) {
+    $.each(geoData.context, function (i, v) {
       if (v.id.indexOf("region") >= 0) {
         region = v.text;
       }
@@ -336,7 +215,7 @@ function parseReverseGeo(geoData) {
 // Make buttons show the right skin.
 document.addEventListener(
   "DOMContentLoaded",
-  function() {
+  function () {
     var conditionRow = $(".form-row:not(:last)");
     conditionRow
       .find(".btn.add-form-row")
@@ -375,8 +254,11 @@ for (let i = 0; i < inputs.length; i++) {
 var geocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
   country: "us",
+  zoom: 10,
   mapboxgl: mapboxgl,
 });
+
+document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
 
 /* tutorial reference for draw control properties:
 https://bl.ocks.org/dnseminara/0790e53cef9867e848e716937727ab18
@@ -576,7 +458,6 @@ var draw = new MapboxDraw({
   ],
 });
 
-map.addControl(geocoder, "top-right");
 // Add controls outside of map.
 // Source: https://github.com/mapbox/mapbox-gl-draw/blob/master/docs/API.md
 map.addControl(draw);
@@ -586,7 +467,8 @@ drawControls = document.querySelector(".draw_polygon_map .mapboxgl-ctrl-group");
 drawControls.classList.add("draw-group");
 
 // Add nav control buttons.
-map.addControl(new mapboxgl.NavigationControl());
+var navControl = new mapboxgl.NavigationControl();
+map.addControl(navControl);
 
 /* Change mapbox draw button */
 var drawButton = document.getElementsByClassName("mapbox-gl-draw_polygon");
@@ -600,61 +482,67 @@ trashButton[0].innerHTML = "<i class='fas fa-trash-alt'></i> Delete Polygon";
 
 // add button for toggling census Blocks
 class CensusBlocksControl {
-    onAdd(map) {
-        var blocksLink = document.createElement('button');
-        blocksLink.href = '#';
-        blocksLink.className = 'active';
-        blocksLink.style.width = '150px';
-        blocksLink.innerHTML = "<i class='fas fa-th-large'></i> Toggle Census Blocks";
-        this._map = map;
-        this._container = document.createElement('div');
-        this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
-        // this._container.textContent = 'Toggle Census Blocks';
-        blocksLink.onclick = function(e) {
-          var clickedLayer = state + "-census-lines";
-          e.preventDefault();
-          e.stopPropagation();
+  onAdd(map) {
+    var blocksLink = document.createElement("button");
+    blocksLink.href = "#";
+    blocksLink.className = "active";
+    blocksLink.id = "toggle-census-blocks-btn";
+    blocksLink.style.width = "150px";
+    blocksLink.innerHTML =
+      "<i class='fas fa-th-large'></i> Toggle Census Blocks";
+    blocksLink.disabled = "disabled";
+    this._map = map;
+    this._container = document.createElement("div");
+    this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
+    var clicked = false;
+    blocksLink.onclick = function (e) {
+      for (let i = 0; i < states.length; i++) {
+        var clickedLayer = states[i] + "-census-lines";
+        e.preventDefault();
+        e.stopPropagation();
+        if (clicked) {
+          map.setPaintProperty(clickedLayer, "fill-opacity", 0.0);
+          this.className = "";
+        } else {
+          this.className = "active";
+          map.setPaintProperty(clickedLayer, "fill-opacity", [
+            "*",
+            ["get", "POP10"],
+            0.001,
+          ]);
+        }
+      }
+      clicked = clicked ? false : true;
+    };
+    this._container.appendChild(blocksLink);
+    return this._container;
+  }
 
-          var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
-          if (visibility === 'visible') {
-            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-            this.className = '';
-          } else {
-            this.className = 'active';
-            map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
-          }
-        };
-        this._container.appendChild(blocksLink);
-        return this._container;
-    }
-
-    onRemove() {
-        this._container.parentNode.removeChild(this._container);
-        this._map = undefined;
-    }
+  onRemove() {
+    this._container.parentNode.removeChild(this._container);
+    this._map = undefined;
+  }
 }
-map.addControl(new CensusBlocksControl(), 'top-left');
+map.addControl(new CensusBlocksControl(), "top-left");
+
+var mapContent = document.getElementById("map");
+var mapButtons = mapContent.getElementsByTagName("button");
+for (var i = 0; i < mapButtons.length; i++) {
+  mapButtons[i].disabled = true;
+}
 
 // Override Behavior for Draw-Button
-document.getElementById("draw-button").addEventListener("click", function(e) {
+document.getElementById("draw-button").addEventListener("click", function (e) {
   cleanAlerts();
   draw.deleteAll();
-  // TODO: change for all states
-  map.setFilter(sessionStorage.getItem("stateName") + "-blocks-highlighted", [
-    "in",
-    "GEOID10",
-  ]);
+  map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
   draw.changeMode("draw_polygon");
 });
 
-document.getElementById("trash-button").addEventListener("click", function(e) {
+document.getElementById("trash-button").addEventListener("click", function (e) {
   cleanAlerts();
   draw.deleteAll();
-  // TODO: change for all states
-  map.setFilter(sessionStorage.getItem("stateName") + "-blocks-highlighted", [
-    "in",
-    "GEOID10",
-  ]);
+  map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
   draw.changeMode("simple_select");
 });
 
@@ -666,20 +554,38 @@ function newSourceLayer(name, mbCode) {
   });
 }
 // add a new layer of census block data
-function newCensusLines(state) {
+// function newCensusLines(state) {
+//   map.addLayer({
+//     id: state + "-census-lines",
+//     type: "line",
+//     source: state + "-census",
+//     "source-layer": state + "census",
+//     layout: {
+//       visibility: "visible",
+//       "line-join": "round",
+//       "line-cap": "round",
+//     },
+//     paint: {
+//       "line-color": "rgba(71, 93, 204, 0.5)",
+//       "line-width": 1,
+//     },
+//   });
+// }
+// add a new layer of census block data (transparent layer)
+function newCensusShading(state) {
   map.addLayer({
+    minzoom: 10,
     id: state + "-census-lines",
-    type: "line",
+    type: "fill",
     source: state + "-census",
     "source-layer": state + "census",
     layout: {
       visibility: "visible",
-      "line-join": "round",
-      "line-cap": "round",
     },
     paint: {
-      "line-color": "rgba(71, 93, 204, 0.5)",
-      "line-width": 1,
+      "fill-outline-color": "rgb(71, 93, 204)",
+      "fill-color": "rgb(71, 93, 204)",
+      "fill-opacity": 0,
     },
   });
 }
@@ -698,11 +604,43 @@ function newHighlightLayer(state) {
   });
 }
 
+// [WIP] function to add the neighbor layers for the filter that queries
+// included census blocks
+function addNeighborLayersFilter() {
+  for (let i = 0; 0 < neighbors.length; i++) {
+    if (map.getLayer(neighbors[i] + "-blocks-highlighted")) {
+      map.setFilter(neighbors[i] + "-blocks-highlighted", ["in", "BLOCKID10"]);
+    }
+  }
+}
+
+function addStateNeighborLayers(new_neighbors, new_state) {
+  // remove the old state layer and add the new state layer
+  if (map.getLayer(state + "-blocks-highlighted"))
+    map.removeLayer(state + "-blocks-highlighted");
+  newHighlightLayer(new_state);
+  // iterate through all states in the new_neighbors
+  // if includes, don't add
+  // delete from old neighbors
+  // remove layers in the old neighbors list
+  for (let i = 0; i < new_neighbors.length; i++) {
+    if (!map.getLayer(new_neighbors[i] + "-blocks-highlighted")) {
+      newHighlightLayer(new_neighbors[i]);
+    } else {
+      let index = neighbors.indexOf(new_neighbor[i]);
+      neighbors.splice(index, 1);
+    }
+  }
+  for (let i = 0; i < neighbors.length; i++) {
+    if (map.getLayer(neighbors[i] + "-blocks-highlighted"))
+      map.removeLayer(neighbors[i] + "-blocks-highlighted");
+  }
+}
 /******************************************************************************/
 
 /* After the map style has loaded on the page, add a source layer and default
    styling for a single point. */
-map.on("style.load", function() {
+map.on("style.load", function () {
   map.addSource("single-point", {
     type: "geojson",
     data: {
@@ -714,6 +652,12 @@ map.on("style.load", function() {
   // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
   for (let census in CENSUS_KEYS) {
     newSourceLayer(census, CENSUS_KEYS[census]);
+  }
+
+  for (let i = 0; i < states.length; i++) {
+    // newCensusLines(states[i]);
+    newCensusShading(states[i]);
+    newHighlightLayer(states[i]);
   }
 
   // Point centered at geocoded location
@@ -729,18 +673,46 @@ map.on("style.load", function() {
 
   // Listen for the `geocoder.input` event that is triggered when a user
   // makes a selection and add a symbol that matches the result.
-  geocoder.on("result", function(ev) {
+  geocoder.on("result", function (ev) {
     map.getSource("single-point").setData(ev.result.geometry);
     var styleSpec = ev.result;
     var styleSpecBox = document.getElementById("json-response");
     var styleSpecText = JSON.stringify(styleSpec, null, 2);
-    // var syntaxStyleSpecText = syntaxHighlight(styleSpecText);
-    // styleSpecBox.innerHTML = syntaxStyleSpecText;
+    var divs = document.getElementsByClassName("blurtop");
+    for (let i = 0; i < divs.length; i++) {
+      divs[i].setAttribute(
+        "style",
+        "-webkit-filter: blur(0px); pointer-events: auto"
+      );
+      // divs[i].setAttribute("style","pointer-events: auto");
+    }
+    // Enable Map buttons
+    var mapContent = document.getElementById("map");
+    var mapButtons = mapContent.getElementsByTagName("button");
+    for (var i = 0; i < mapButtons.length; i++) {
+      mapButtons[i].disabled = false;
+    }
+
+    // get the state from the geocoder response
+    if (styleSpec.context.length >= 2) {
+      new_state = styleSpec.context[styleSpec.context.length - 2]["short_code"]
+        .toLowerCase()
+        .substring(3);
+    } else {
+      new_state = styleSpec.properties["short_code"].toLowerCase().substring(3);
+    }
+    // get the neighbors of the state if the state is different
+    if (state != new_state) {
+      new_neighbors = state_neighbors[new_state];
+      state = new_state;
+      neighbors = new_neighbors;
+      console.log(state);
+    }
   });
 });
 
 var wasLoaded = false;
-map.on("render", function() {
+map.on("render", function () {
   if (!map.loaded() || wasLoaded) return;
   wasLoaded = true;
   if (document.getElementById("id_user_polygon").value !== "") {
@@ -758,19 +730,19 @@ map.on("render", function() {
 
 /******************************************************************************/
 
-map.on("draw.create", function() {
+map.on("draw.create", function () {
   console.log("Draw create");
   updateCommunityEntry();
 });
-map.on("draw.delete", function() {
+map.on("draw.delete", function () {
   console.log("Draw delete");
   updateCommunityEntry();
 });
-map.on("draw.update", function() {
+map.on("draw.update", function () {
   console.log("Draw update");
   updateCommunityEntry();
 });
-map.on("draw.changeMode", function() {
+map.on("draw.changeMode", function () {
   console.log("Draw CM");
 });
 
@@ -857,10 +829,9 @@ function highlightBlocks(drawn_polygon) {
     var southWestPointPixel = map.project(southWest);
 
     // var final_union = turf.union(turf.bboxPolygon([0, 0, 0, 0]), turf.bboxPolygon([0, 0, 1, 1]));
-    // TODO: update layer names for all states (will this work?)
     var features = map.queryRenderedFeatures(
       [southWestPointPixel, northEastPointPixel],
-      { layers: [sessionStorage.getItem("stateName") + "-census-lines"] }
+      { layers: [state + "-census-lines"] }
     );
 
     var mpoly = [];
@@ -869,7 +840,7 @@ function highlightBlocks(drawn_polygon) {
       var total = 0.0;
 
       var filter = features.reduce(
-        function(memo, feature) {
+        function (memo, feature) {
           if (feature.geometry.type == "MultiPolygon") {
             var polyCon;
             // go through all the polygons and check to see if any of the polygons are contained
@@ -898,11 +869,7 @@ function highlightBlocks(drawn_polygon) {
       );
       //  sets filter - highlights blocks
       // TODO: update for all states
-      map.setFilter(
-        sessionStorage.getItem("stateName") + "-blocks-highlighted",
-        filter
-      );
-
+      map.setFilter(state + "-blocks-highlighted", filter);
     }
   } catch (err) {
     console.log("triangle shaped polygon was changed");
@@ -981,10 +948,7 @@ function updateCommunityEntry(e) {
     census_blocks_polygon_wkt = "";
     census_blocks_multipolygon_wkt = "";
     // TODO: update for all states
-    map.setFilter(sessionStorage.getItem("stateName") + "-blocks-highlighted", [
-      "in",
-      "GEOID10",
-    ]);
+    map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
   }
   // Update form fields
   census_blocks_polygon_wkt = "";
@@ -1004,98 +968,9 @@ function updateElementIndex(el, prefix, ndx) {
   var id_regex = new RegExp("(" + prefix + "-\\d+)");
   var replacement = prefix + "-" + ndx;
   if ($(el).attr("for"))
-    $(el).attr(
-      "for",
-      $(el)
-        .attr("for")
-        .replace(id_regex, replacement)
-    );
+    $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
   if (el.id) el.id = el.id.replace(id_regex, replacement);
   if (el.name) el.name = el.name.replace(id_regex, replacement);
 }
 
 /******************************************************************************/
-
-function cloneMore(selector, prefix) {
-  // Function that clones formset fields.
-  var newElement = $(selector).clone(true);
-  var total = $("#id_" + prefix + "-TOTAL_FORMS").val();
-  if (total >= 10) {
-    return false;
-  }
-  if (total == 0) {
-    newElement = formsetFieldObject;
-  }
-  newElement.find("#description_warning").remove();
-  newElement.find("#category_warning").remove();
-  newElement.find(":input").each(function() {
-    var name = $(this)
-      .attr("name")
-      .replace("-" + (total - 1) + "-", "-" + total + "-");
-    var id = "id_" + name;
-    $(this)
-      .attr({
-        name: name,
-        id: id,
-      })
-      .val("")
-      .removeAttr("checked");
-  });
-  total++;
-  $("#id_" + prefix + "-TOTAL_FORMS").val(total);
-  if (total == 1) {
-    $("#formset_container").after(newElement);
-  } else {
-    $(selector).after(newElement);
-  }
-  var conditionRow = $(".form-row:not(:last)");
-  conditionRow
-    .find(".btn.add-form-row")
-    .removeClass("btn-outline-success")
-    .addClass("btn-outline-danger")
-    .removeClass("add-form-row")
-    .addClass("remove-form-row")
-    .html('<span class="" aria-hidden="true">Remove</span>');
-  return false;
-}
-
-/******************************************************************************/
-/* Deletes the issue category and description when "remove" is pressed */
-function deleteForm(prefix, btn) {
-  // Function that deletes formset fields.
-  var total = parseInt($("#id_" + prefix + "-TOTAL_FORMS").val());
-  if (total == 1) {
-    // save last formset field object.
-    formsetFieldObject = $(".form-row:last").clone(true);
-  }
-  btn.closest(".form-row").remove();
-  var forms = $(".form-row");
-  console.log(forms.length);
-  $("#id_" + prefix + "-TOTAL_FORMS").val(forms.length);
-  for (var i = 0, formCount = forms.length; i < formCount; i++) {
-    $(forms.get(i))
-      .find(":input")
-      .each(function() {
-        updateElementIndex(this, prefix, i);
-      });
-  }
-  return false;
-}
-
-/******************************************************************************/
-
-$(document).on("click", ".add-form-row", function(e) {
-  // Add form click handler.
-  e.preventDefault();
-  cloneMore(".form-row:last", "form");
-  return false;
-});
-
-/******************************************************************************/
-
-$(document).on("click", ".remove-form-row", function(e) {
-  // Remove form click handler.
-  e.preventDefault();
-  deleteForm("form", $(this));
-  return false;
-});
