@@ -19,6 +19,12 @@ This means no changing anything like <a>, <li>, <p>, etc.
 
 */
 
+/* Entry Page: Geocoder Full Width */
+.mapboxgl-ctrl-geocoder {
+  width: 100%;
+  max-width: none;
+}
+
 /* Disable button hover when button is disabled. */
 button:disabled:hover {
   cursor: not-allowed;
@@ -350,7 +356,6 @@ color scheme. See readme.md*/
   min-width: 50%;
   margin-left: 25%;
 }
-
 .string {
   color: #314ccd;
 }
