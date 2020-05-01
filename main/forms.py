@@ -35,7 +35,6 @@ from .models import (
 )
 from django.forms import formset_factory
 from .choices import (
-    POLICY_ISSUES,
     RACE_CHOICES,
     RELIGION_CHOICES,
     INDUSTRY_CHOICES,
@@ -71,48 +70,6 @@ class TagSelect2Widget(ModelSelect2TagWidget):
                 val = self.queryset.create(name=str(val)).name
             cleaned_values.append(str(val))
         return cleaned_values
-
-
-class IssueForm(ModelForm):
-    class Meta:
-        model = Issue
-        fields = "__all__"
-        exclude = ("entry",)
-
-        widgets = {
-            "category": forms.Select(
-                choices=POLICY_ISSUES, attrs={"class": "form-control"}
-            ),
-            "description": forms.TextInput(
-                attrs={"placeholder": "Short Description"}
-            ),
-        }
-
-    def clean(self):
-        """
-        Adds validation to check that all issues have
-        both a description and a category.
-        Courtesy of: https://whoisnicoleharris.com/2015/01/06/implementing-django-formsets.html
-        """
-        data = self.cleaned_data
-        category = self.cleaned_data["category"]
-        description = self.cleaned_data["description"]
-
-        # Check that issues have both a category and a description
-        if description and not category:
-            msg = "Category Missing"
-            self.add_error("category", msg)
-            raise forms.ValidationError(
-                "All issues must have a category.", code="missing_category"
-            )
-        elif category and not description:
-            msg = "Description Missing"
-            self.add_error("description", msg)
-            raise forms.ValidationError(
-                "All issues must have a description.",
-                code="missing_description",
-            )
-        return data
 
 
 class BootstrapRadioSelect(forms.RadioSelect):
@@ -155,7 +112,6 @@ class CommunityForm(ModelForm):
                 attrs={"placeholder": "<community_reason>", "rows": 5}
             ),
             "user_polygon": forms.HiddenInput(),
-            "my_community": BootstrapRadioSelect(),
             "zipcode": forms.TextInput(attrs={"placeholder": "Your Zipcode"}),
         }
         labels = {
