@@ -75,7 +75,7 @@
                         {% endif %}
                     </a>
                 </li>
-                {% if user.is_authenticated %}</li>
+                {% if user.is_authenticated %}
                 <li class="nav-item mx-auto">
                     <a class="nav-link" href="{% url 'main:dashboard' %}">
                         {% if LANGUAGE_CODE == 'en' %}
@@ -88,7 +88,7 @@
                 </li>
                 {% endif %}
 
-                {% if user.is_authenticated %}</li>
+                {% if user.is_authenticated %}
                 <li class="nav-item mx-auto">
                     {% if user.is_authenticated %}
                     {% if user.is_staff %}
@@ -110,8 +110,9 @@
                         {% endif %}
                     </a>
                     {% endif %}
-                    {% endif %}
                 </li>
+                {% endif %}
+
                 <li class="nav-item mx-auto">
                     <a class="btn btn-outline-primary m-2" href="/entry">
                         {% if LANGUAGE_CODE == 'en' %}
