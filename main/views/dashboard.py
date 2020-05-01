@@ -38,6 +38,7 @@ from ..forms import (
     DeletionForm,
     OrganizationForm,
     WhitelistForm,
+    MemberForm,
 )
 from ..models import (
     Membership,
@@ -243,6 +244,40 @@ class ManageOrg(LoginRequiredMixin, OrgAdminRequiredMixin, TemplateView):
         context["members"] = members
 
         return context
+
+
+class CreateMember(LoginRequiredMixin, OrgAdminRequiredMixin, CreateView):
+    form_class = MemberForm
+    model = Membership
+    template_name = "main/dashboard/partners/member_form.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        members = Membership.objects.filter(organization__pk=self.kwargs["pk"])
+        context["organization"] = Organization.objects.get(
+            id=self.kwargs["pk"]
+        )
+        context["header"] = ["Email", "Permissions", "Date Joined"]
+        context["members"] = members
+
+        return context
+
+    def form_valid(self, form):
+        # add a check to see if member already exists, if so update
+        form.instance.organization = get_object_or_404(
+            Organization, pk=self.kwargs["pk"]
+        )
+        admins = Group.objects.get(name=("admins_" + str(self.kwargs["pk"])))
+        mods = Group.objects.get(name=("mods_" + str(self.kwargs["pk"])))
+
+        if form.instance.is_org_admin:
+            admins.user_set.add(self.request.user)
+            mods.user_set.add(self.request.user)
+        elif form.instance.is_org_moderator:
+            mods.user_set.add(self.request.user)
+
+        return super().form_valid(form)
 
 
 class WhiteListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):

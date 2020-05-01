@@ -120,6 +120,15 @@ class Membership(models.Model):
     is_org_moderator = models.BooleanField(default=False)
     is_whitelisted = models.BooleanField(default=False)
 
+    def get_absolute_url(self):
+        return reverse(
+            "main:home_org",
+            kwargs={
+                "slug": self.organization.slug,
+                "pk": self.organization.id,
+            },
+        )
+
 
 # ******************************************************************************#
 

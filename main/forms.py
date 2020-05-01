@@ -25,7 +25,14 @@ from django_select2.forms import (
     ModelSelect2Widget,
     ModelSelect2TagWidget,
 )
-from .models import CommunityEntry, Issue, Tag, Organization, Campaign
+from .models import (
+    CommunityEntry,
+    Issue,
+    Tag,
+    Organization,
+    Campaign,
+    Membership,
+)
 from django.forms import formset_factory
 from .choices import (
     POLICY_ISSUES,
@@ -237,3 +244,14 @@ class CampaignForm(ModelForm):
                 choices=STATES, attrs={"class": "form-control"}
             ),
         }
+
+
+class MemberForm(ModelForm):
+    class Meta:
+        model = Membership
+        fields = [
+            "member",
+            "is_org_admin",
+            "is_org_moderator",
+            "is_whitelisted",
+        ]
