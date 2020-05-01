@@ -27,20 +27,17 @@ from django_select2.forms import (
 )
 from .models import (
     CommunityEntry,
-    Issue,
     Tag,
     Organization,
     Campaign,
     Membership,
 )
-from django.forms import formset_factory
 from .choices import (
     RACE_CHOICES,
     RELIGION_CHOICES,
     INDUSTRY_CHOICES,
     STATES,
 )
-from django.forms.formsets import BaseFormSet
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Area
 
@@ -91,11 +88,6 @@ class CommunityForm(ModelForm):
             }
         )
         widgets = {
-            "entry_issues": ModelSelect2TagWidget(
-                model=Issue,
-                queryset=Issue.objects.all(),
-                search_fields=["name__icontains"],
-            ),
             "tags": TagSelect2Widget(
                 attrs={
                     "data-placeholder": "E.g. FlintWaterCrisis, KoreaTown, etc."

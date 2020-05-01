@@ -32,16 +32,13 @@ from allauth.account.decorators import verified_email_required
 from django.forms import formset_factory
 from ..forms import (
     CommunityForm,
-    IssueForm,
     DeletionForm,
 )
 from ..models import (
     CommunityEntry,
-    Issue,
     Tag,
     Membership,
 )
-
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
 from django.utils.translation import gettext

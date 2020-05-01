@@ -30,11 +30,9 @@ from django.views.generic import (
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from allauth.account.decorators import verified_email_required
-from django.forms import formset_factory
 from ..forms import (
     CommunityForm,
     CampaignForm,
-    IssueForm,
     DeletionForm,
     OrganizationForm,
     WhitelistForm,
