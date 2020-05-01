@@ -19,6 +19,11 @@ This means no changing anything like <a>, <li>, <p>, etc.
 
 */
 
+/* Disable button hover when button is disabled. */
+button:disabled:hover {
+  cursor: not-allowed;
+}
+
 /* Body and headings */
 /* Change the website default font. */
 body {
