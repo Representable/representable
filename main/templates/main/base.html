@@ -42,6 +42,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container-fluid">
         <a class="navbar-brand" href="/">Representable</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -60,7 +61,6 @@
                         {% if LANGUAGE_CODE == 'en' %}
                         About
                         {% elif LANGUAGE_CODE == 'es' %}
-                        <!-- Google translate  -->
                         Sobre nosotros
                         {% endif %}
                     </a>
@@ -70,7 +70,6 @@
                         {% if LANGUAGE_CODE == 'en' %}
                         Partners
                         {% elif LANGUAGE_CODE == 'es' %}
-                        <!-- Google translate  -->
                         Socios
                         {% endif %}
                     </a>
@@ -81,7 +80,6 @@
                         {% if LANGUAGE_CODE == 'en' %}
                         Dashboard
                         {% elif LANGUAGE_CODE == 'es' %}
-                        <!-- Google translate  -->
                         Tablero
                         {% endif %}
                     </a>
@@ -99,7 +97,6 @@
                         {% endif %}
                     </a>
                 </li>
-
                 <li class="nav-item mx-auto">
                     <a class="btn btn-outline-primary m-2" href="/entry">
                         {% if LANGUAGE_CODE == 'en' %}
@@ -160,6 +157,7 @@
                 </form>
             </ul>
         </div>
+      </div>
     </nav>
 
     {% block content %}
