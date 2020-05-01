@@ -169,15 +169,6 @@ map.on("load", function () {
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
   for (obj in a) {
-    let catDict = {};
-    let catArray = [];
-    for (cat in issues) {
-      if (issues[cat][obj] !== undefined) {
-        catArray.push(cat);
-
-        catDict[cat] = issues[cat][obj];
-      }
-    }
     // check how deeply nested the outer ring of the unioned polygon is
     final = [];
     // set the coordinates of the outer ring to final
@@ -205,12 +196,8 @@ map.on("load", function () {
           geometry: {
             type: "Polygon",
             coordinates: final,
-          },
-          properties: {
-            issues: catDict,
-            category: catArray,
-          },
-        },
+          }
+        }
       },
       layout: {
         visibility: "visible",
@@ -229,12 +216,8 @@ map.on("load", function () {
           geometry: {
             type: "Polygon",
             coordinates: final,
-          },
-          properties: {
-            issues: catDict,
-            category: catArray,
-          },
-        },
+          }
+        }
       },
       layout: {
         visibility: "visible",

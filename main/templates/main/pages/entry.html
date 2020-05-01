@@ -29,320 +29,191 @@
 
 {% block content %}
 <div class="container-fluid">
-  <script>
-    sessionStorage.setItem("allChecks", "pass");
-    console.log("passed");
-  </script>
-  <div class="modal fade" id="zipcodeModal" tabindex="-1" role="dialog" aria-labelledby="zipcodeModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5>
-            {% if LANGUAGE_CODE == 'en' %}
-            Search for a Zipcode:
-            {% elif LANGUAGE_CODE == 'es' %}
-            <!-- Google translate -->
-            Busque un código postal:
-            {% endif %}
-          </h5>
+    <script>
+        sessionStorage.setItem("allChecks", "pass");
+//   console.log("passed");
+</script>
+    <div class="row row-content">
+        <div class="col-sm-2">
         </div>
-        <div class="modal-body">
-          <form role="form" id="zipcodeForm">
-            <div class="form-group">
-              <p>
-                {% if LANGUAGE_CODE == 'en' %}
-                To start, we need the zipcode of your community.
-                {% elif LANGUAGE_CODE == 'es' %}
-                <!-- Google translate -->
-                Para comenzar, necesitamos el código postal de su comunidad.
-                {% endif %}
-              </p>
-              <input type="text" class="form-control" id="zipcode" placeholder="Zipcode" required>
-
-              <div class="invalid-feedback">
-                Please provide a valid zip.
-              </div>
+        <div class="col-sm-8">
+            <!-- START FORM BODY -->
+            <div class="row mt-3">
+                <!-- Entry Form -->
+                <form id="entryForm" method="post">
+                    <!-- First Row: Includes Map. -->
+                    <div class="row row-equal-cols">
+                        <div class="col-lg">
+                            <h2 class="text-primary">
+                                {% if LANGUAGE_CODE == 'en' %}
+                                Draw your community!
+                                {% elif LANGUAGE_CODE == 'es' %}
+                                <!-- Google translate  -->
+                                ¡Dibuja tu comunidad!
+                                {% endif %}
+                            </h2>
+                            <p class="p-about">
+                                  {% if LANGUAGE_CODE == 'en' %}
+                                  Representable helps fight against gerrymandering by empowering communities
+                                  to represent themselves more easily. Fill out the form below to
+                                  add your community
+                                  {% elif LANGUAGE_CODE == 'es' %}
+                                  <!-- Google translate  -->
+                                  Representable ayuda a luchar contra la gerrymandering empoderando a las comunidades
+                                  representarse más fácilmente. Complete el siguiente formulario para
+                                  agrega tu comunidad
+                                  {% endif %}
+                            </p>
+                            <div class="card">
+                                <div class="card-header text-header-card">
+                                    <strong>
+                                      {% if LANGUAGE_CODE == 'en' %}
+                                      1. Please enter the zipcode of your community as a starting point.
+                                      {% elif LANGUAGE_CODE == 'es' %}
+                                      <!-- Google translate  -->
+                                      Ingrese el código postal de su comunidad como punto de partida.
+                                      {% endif %}
+                                    </strong>
+                                </div>
+                                <div class ="px-3">
+                                    <p>
+                                        <div id="geocoder" class="geocoder"></div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-equal-cols">
+                        <!-- Map -->
+                        <div class="col-lg mt-3">
+                            <div class="blurtop">
+                            <div class="card">
+                                <div class="card-header text-header-card">
+                                    <strong>
+                                    {% if LANGUAGE_CODE == 'en' %}
+                                    2. What does your community look like?
+                                    {% elif LANGUAGE_CODE == 'es' %}
+                                    <!-- Google translate  -->
+                                    ¿Cómo se ve tu comunidad?
+                                    {% endif %}
+                                    </strong>
+                                </div>
+                                <div id='map-card' class="card-body">
+                                    <!-- {# Include form.entry_polygon error. } -->
+                                    <div id="map-error-alerts">
+                                        {% if form.user_polygon.errors %}
+                                        <script>
+                                            sessionStorage.setItem("allChecks", "fail");
+                                        </script>
+                                        <div id="polygon_missing" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                            {% if LANGUAGE_CODE == 'en' %}
+                                            You need to draw a polygon to submit the form.
+                                            {% elif LANGUAGE_CODE == 'es' %}
+                                            <!-- Google translate  -->
+                                            Debe dibujar un polígono para enviar el formulario.
+                                            {% endif %}
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    <div id='menu'>
+                                    </div>
+                                    <div id='map' class='draw_polygon_map'>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <hr> -->
+                    <div class="row row-equal-cols">
+                        <div class="col-lg  mt-3">
+                            <div class="blurtop">
+                            <div class="card">
+                                <div class="card-header text-header-card">
+                                    <strong>3. What brings your community together?</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        What name can we use to identify your community? <small class="text-danger">(Required)</small>
+                                        <!-- TODO we should find a better example -->
+                                        <br>
+                                        <small>For example: Princeton area student community</small>
+                                    </p>
+                                    {{ form.entry_name|append_attr:"class:form-control" }}
+                                    <hr>
+                                    <p class="card-text">
+                                        Why are you identifying this area as a community? <small class="text-danger">(Required)</small>
+                                        <!-- TODO we should find a better example -->
+                                        <br>
+                                        <small>For example: All of the on-campus Princeton University student body lives and studies in this geographic area.</small>
+                                    </p>
+                                    {{ form.entry_reason|append_attr:"class:form-control" }}
+                                    <hr>
+                                    <div class="field-wrap mt-3">
+                                        <p>What organization are you contributing as a part of? </p>
+                                        <div class="field-wrap">
+                                          {{ form.organization|append_attr:"class:form-control" }}
+                                          {% if form.organization.help_text %}
+                                          <p class="help">{{ form.organization_text|safe }}</p>
+                                          {% endif %}
+                                        </div>
+                                      </div>
+                                    {% csrf_token %}
+                                    <!-- {# Include the non-field error fields #} -->
+                                    {% if form.non_field_errors %}
+                                    <div class="non-field-errors">
+                                        {% for err in form.non_field_errors %}
+                                        <p class="form-error">{{ err }}</p>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                    <div id="main_community_form" class="form-group">
+                                        <!-- {# Include the hidden fields #} -->
+                                        {% for hidden in form.hidden_fields %}
+                                        {{ hidden }}
+                                        {% endfor %}
+                                        <!-- {# Tags Field} -->
+                                        <div class="field-wrap mt-3">
+                                            {{ form.tags.label_tag }}
+                                            <div class="form-error">
+                                                {{ form.tags.errors }}
+                                            </div>
+                                            {{ form.tags|append_attr:"class:form-control" }}
+                                            {% if form.tags.help_text %}
+                                            <p class="help">{{ form.tags.help_text|safe }}</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class='row mt-4 w-100'>
+                    <div class='col-12 text-center'>
+                        <div style="display: inline-block;">
+                            <button id="save" form="entryForm" type="submit" class="btn btn-primary" value="Submit">Submit Entry</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </form>
         </div>
-        <div class="modal-footer">
-          <a class="btn btn-secondary" href="/" role="button">Return to homepage</a>
-          <button id="zipSubmit" type="submit" class="btn btn-primary">Submit</button>
+        <div class="col-sm-2">
         </div>
-      </div>
     </div>
-  </div>
-  <div class="row row-content">
-    <div class="col">
-      <h2 class="text-primary">
-        {% if LANGUAGE_CODE == 'en' %}
-        Draw your community!
-        {% elif LANGUAGE_CODE == 'es' %}
-        <!-- Google translate  -->
-        ¡Dibuja tu comunidad!
-        {% endif %}
-      </h2>
-      <p class="p-about">
-        {% if LANGUAGE_CODE == 'en' %}
-        Representable helps fight against gerrymandering by empowering communities
-        to represent themselves more easily. Fill out the form below to
-        add your community
-        {% elif LANGUAGE_CODE == 'es' %}
-        <!-- Google translate  -->
-        Representable ayuda a luchar contra la gerrymandering empoderando a las comunidades
-        representarse más fácilmente. Complete el siguiente formulario para
-        agrega tu comunidad
-        {% endif %}
-      </p>
-    </div>
-    <div class="col-sm-12">
-      <!-- START FORM BODY -->
-      <div class="row mt-3">
-        <!-- Entry Form -->
-        <form id="entryForm" method="post">
-          <!-- First Row: Includes Map. -->
-          <div class="row row-equal-cols">
-            <!-- Map -->
-            <div class="col-lg-8 mt-3">
-              <div class="card">
-                <div class="card-header text-header-card">
-                  <strong>
-                    {% if LANGUAGE_CODE == 'en' %}
-                    1. What does your community look like?
-                    {% elif LANGUAGE_CODE == 'es' %}
-                    <!-- Google translate  -->
-                    ¿Cómo se ve tu comunidad?
-                    {% endif %}
-                  </strong>
-                </div>
-                <div id='map-card' class="card-body">
-                  <!-- {# Include form.entry_polygon error. } -->
-                  <div id="map-error-alerts">
-                    {% if form.user_polygon.errors %}
-                    <script>
-                      sessionStorage.setItem("allChecks", "fail");
-                    </script>
-                    <div id="polygon_missing" class="alert alert-warning alert-dismissible fade show" role="alert">
-                      {% if LANGUAGE_CODE == 'en' %}
-                      You need to draw a polygon to submit the form.
-                      {% elif LANGUAGE_CODE == 'es' %}
-                      <!-- Google translate  -->
-                      Debe dibujar un polígono para enviar el formulario.
-                      {% endif %}
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    {% endif %}
-                  </div>
-                  <div id='menu'>
-                  </div>
-                  <div id='map' class='draw_polygon_map'>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 mt-3">
-              <div class="card mb-3">
-                <div class="card-header text-info-custom">
-                  <b>
-                    {% if LANGUAGE_CODE == 'en' %}
-                    How do I draw my community?
-                    {% elif LANGUAGE_CODE == 'es' %}
-                    <!-- Google translate  -->
-                    ¿Cómo dibujo a mi comunidad?
-                    {% endif %}
-                  </b>
-                </div>
-                <div class="card-body">
-                  <p class="card-text">
-                    1. Type in your zip code when prompted
-                    <hr>
-                    </hr>
-                    2. Press on <b> Draw Polygon </b> and draw a shape that includes everything you consider to be part of your community.
-                    <hr>
-                    </hr>
-                    This shape can include schools, watersheds, parks, administrative
-                    buildings, commercial centers, etc.
-                    <hr>
-                    </hr>
-                    3. Once you're done drawing, <b> click on your polygon </b> to edit it.
-                    <hr>
-                    </hr>
-                    4. Don't worry about making a mistake! You can always start again. Just press on <b> Delete Polygon </b> and again on <b> Draw Polygon </b>.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- <hr> -->
-          <div class="row row-equal-cols">
-            <div class="col-lg-8  mt-3">
-              <div class="card">
-                <div class="card-header text-header-card">
-                  <strong>2. What brings your community together?</strong>
-                </div>
-                <div class="card-body">
-                  <p class="card-text">
-                    What name can we use to identify your community? <small class="text-danger">(Required)</small>
-                    <!-- TODO we should find a better example -->
-                    <br>
-                    <small>For example: Princeton area student community</small>
-                  </p>
-                  {{ form.entry_name|append_attr:"class:form-control" }}
-                  <hr>
-                  <p class="card-text">
-                    Why are you identifying this area as a community? <small class="text-danger">(Required)</small>
-                    <!-- TODO we should find a better example -->
-                    <br>
-                    <small>For example: All of the on-campus Princeton University student body lives and studies in this geographic area.</small>
-                  </p>
-                  {{ form.entry_reason|append_attr:"class:form-control" }}
-                  <hr>
-                  <div class="field-wrap mt-3">
-                    <p>What organization are you contributing as a part of? </p>
-                    <div class="field-wrap">
-                      {{ form.organization|append_attr:"class:form-control" }}
-                      {% if form.organization.help_text %}
-                      <p class="help">{{ form.organization_text|safe }}</p>
-                      {% endif %}
-                    </div>
-                  </div>
-                  <hr>
-                  <p class="card-text">
-                    What issues are relevant to your community?
-                  </p>
-                  {% csrf_token %}
-                  <!-- {# Include the non-field error fields #} -->
-                  {% if form.non_field_errors %}
-                  <div class="non-field-errors">
-                    {% for err in form.non_field_errors %}
-                    <p class="form-error">{{ err }}</p>
-                    {% endfor %}
-                  </div>
-                  {% endif %}
-                  <div id="main_community_form" class="form-group">
-                    <!-- {# Include the hidden fields #} -->
-                    {% for hidden in form.hidden_fields %}
-                    {{ hidden }}
-                    {% endfor %}
-                    <!-- Include Formset -->
-                    {{ issue_formset.management_form }}
-                    <!-- {# Include the formset.} -->
-                    {% for hidden_issue_field in issue_formset.hidden_fields %}
-                    {{ hidden_issue_field }}
-                    {% endfor %}
 
-                    {{ issue_formset.non_field_errors }}
-
-                    <div id="formset_container">
-                      {% for formset_row in issue_formset %}
-                      <div class="row form-row issues_formset mt-2">
-                        <div class="col-sm-5 mt-2">
-                          {{ formset_row.category|append_attr:"class:form-control" }}
-                          <!-- Error Codes Here -->
-                          {% if formset_row.category.errors %}
-                          <script>
-                            sessionStorage.setItem("allChecks", "fail");
-                          </script>
-                          {% for error in formset_row.category.errors %}
-                          <small id="category_warning" class="text-danger">{{ error|escape }}</small>
-                          {% endfor %}
-                          {% endif %}
-                        </div>
-                        <div class="col-sm-5 mt-2">
-                          {{ formset_row.description|append_attr:"class:form-control" }}
-                          <!-- Error Codes Here -->
-                          {% if formset_row.description.errors %}
-                          <script>
-                            sessionStorage.setItem("allChecks", "fail");
-                          </script>
-                          {% for error in formset_row.description.errors %}
-                          <small id="category_warning" class="text-danger">{{ error|escape }}</small>
-                          {% endfor %}
-                          {% endif %}
-                        </div>
-                        <div class="col-sm-2 mt-2">
-                          <button name="removeFormRow" class="btn btn-outline-danger remove-form-row">Remove</button>
-                        </div>
-                      </div>
-                      {% endfor %}
-                    </div>
-                    <!-- End formset container. -->
-                    <div class="row mt-3">
-                      <div class='col-sm-12'>
-                        <button name="addFormRow" class="btn btn-outline-success add-form-row">Add New Issue</button>
-                        <small> You can add maximum 10 issues. </small>
-                        <!-- 10 is arbitrary for now. Check forms.py -->
-                      </div>
-                    </div>
-                    <!-- {# Tags Field} -->
-                    <div class="field-wrap mt-3">
-                      {{ form.tags.label_tag }}
-                      <div class="form-error">
-                        {{ form.tags.errors }}
-                      </div>
-                      {{ form.tags|append_attr:"class:form-control" }}
-                      {% if form.tags.help_text %}
-                      <p class="help">{{ form.tags.help_text|safe }}</p>
-                      {% endif %}
-                    </div>
-
-
-                  </div>
-                  <!-- {# Is this your community? Field} -->
-                  <div class="field-wrap">
-                    <div class="form-error">
-                      {{ form.my_community.label_tag }} <small class="text-danger">(Required)</small>
-                      {% if form.my_community.errors %}
-                      <script>
-                        sessionStorage.setItem("allChecks", "fail");
-                      </script>
-                      <div>
-                        <div id="my_community_missing" class="alert alert-warning map-alert" role="alert">
-                          You need to specify if you are part of this community.
-                        </div>
-                      </div>
-                      {% endif %}
-                    </div>
-                    {{ form.my_community|append_attr:"class:form-control" }}
-                    {% if form.my_community.help_text %}
-                    <p class="help">{{ form.my_community.help_text|safe }}</p>
-                    {% endif %}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
-        <div class='row mt-4 w-100'>
-          <div class='col-12 text-center'>
-            <div class="alert alert-primary text-center" role="alert">
-              {% if LANGUAGE_CODE == 'en' %}
-              After you submit, your map will be reviewed by the Representable team. Once it's approved it will be shown on the <a href="/map" class="alert-link">Map</a> page.
-              {% elif LANGUAGE_CODE == 'es' %}
-              <!-- Google translate  -->
-              Después de enviar, su mapa será revisado por el equipo Representable. Una vez aprobado, se mostrará en la página <a href="/map" class="alert-link"> Mapa </a>
-              {% endif %}
-            </div>
-            <div style="display: inline-block;">
-              <button id="save" form="entryForm" type="submit" class="btn btn-primary" value="Submit">Submit Entry</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  {% endblock %}
-  {% block script %}
-  {{ form.media.js }}
-  <script type="text/javascript">
-    mapboxgl.accessToken = "{{ mapbox_key }}";
-  </script>
-  <script type="text/javascript" src="{% static 'main/js/wicket.js' %}"></script>
-  <script type="text/javascript" src="{% static 'main/js/geo.js' %}"></script>
-  <!-- Turf to get the bounding box. -->
-  <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
-  {% endblock %}
+    {% endblock %}
+    {% block script %}
+    {{ form.media.js }}
+    <script type="text/javascript">
+        mapboxgl.accessToken = "{{ mapbox_key }}";
+    </script>
+    <script type="text/javascript" src="{% static 'main/js/wicket.js' %}"></script>
+    <script type="text/javascript" src="{% static 'main/js/geo.js' %}"></script>
+    <!-- Turf to get the bounding box. -->
+    <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+    {% endblock %}
