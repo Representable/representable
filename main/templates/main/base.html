@@ -90,17 +90,6 @@
 
                 {% if user.is_authenticated %}
                 <li class="nav-item mx-auto">
-                    {% if user.is_authenticated %}
-                    {% if user.is_staff %}
-                    <a class="nav-link" href='/review'>
-                        {% if LANGUAGE_CODE == 'en' %}
-                        Approve and view entries
-                        {% elif LANGUAGE_CODE == 'es' %}
-                        <!-- Google translate  -->
-                        Aprobar y ver entradas
-                        {% endif %}
-                    </a>
-                    {% else %}
                     <a class="nav-link" href='/review'>
                         {% if LANGUAGE_CODE == 'en' %}
                         My entries
@@ -109,9 +98,7 @@
                         Mis entradas
                         {% endif %}
                     </a>
-                    {% endif %}
                 </li>
-                {% endif %}
 
                 <li class="nav-item mx-auto">
                     <a class="btn btn-outline-primary m-2" href="/entry">
