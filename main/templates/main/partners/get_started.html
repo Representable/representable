@@ -3,19 +3,36 @@
 
 {% block content %}
 <div class="container">
-<div class="row text-center row-content">
-  <div class="col">
-    <h2> Get Started
-    </h2>
-    <p class="font-weight-light">
-      <!--add details-->
-      Welcome to Representable! In order to get started with Representable, first make an account then create an organization.
-
-    </p>
-    <a class="btn btn-primary" href="{% url 'main:create_org' %}" role="button">Create New Organization</a>
+  <div class="row row-content">
+    <div class="col-lg-6 text-center my-5 order-md-2">
+      <img class="img-fluid align-bottom" src="{% static 'img/illustration.svg' %}"></img>
+      <h1 class="font-weight-light"> Get Started </h1>
+      <p class="font-weight-light">
+        Welcome to Representable! Follow these steps in order to create an organization.
+      </p>
+      <a class="btn btn-primary" href="{% url 'main:create_org' %}" role="button">Create New Organization</a>
+    </div>
+    <div class="col-lg-6 order-md-1">
+      <div class="card card-signin my-3">
+        <div class="card-body">
+          <h5><span class="badge badge-primary">1</span> Create an Organization</h5>
+          <p>Include a brief description, link, and the state(s) you operate in.</p>
+          <hr>
+          <h5><span class="badge badge-primary">2</span> Upload a Whitelist</h5>
+          <p>By uploading a .csv file of emails in your organization, you can automatically approve submissions from your members.</p>
+          <hr>
+          <h5><span class="badge badge-primary">3</span> Manage Membership</h5>
+          <p>Designate users as members, moderators, or admins on your organization dashboard.</p>
+          <hr>
+          <h5><span class="badge badge-primary">4</span> Moderate Submissions</h5>
+          <p>Review communities submitted under your organization.</p>
+          <hr>
+          <h5><span class="badge badge-primary">5</span> View Your Map</h5>
+          <p>Thank you for contributing to the fight against gerrymandering!</p>
+        </div>
+      </div>
+    </div>
 
   </div>
 
-</div>
-
-{% endblock %}
+  {% endblock %}

@@ -42,6 +42,19 @@ var LOWER_KEYS = {
   "mi-lower": "aa2ljvl2",
 };
 var states = ["nj", "va", "pa", "mi"];
+var PAINT_VALUES = {
+  "Criminal Justice": "rgba(135, 191, 255,",
+  "Civil Rights": "rgba(63, 142, 252,",
+  "Economic Affairs": "rgba(196, 178, 188,",
+  Education: "rgba(223, 146, 142,",
+  Environment: "rgba(249, 160, 63,",
+  "Health and Health Insurance": "rgba(234, 239, 177,",
+  "Internet Regulation": "rgba(178, 177, 207,",
+  "Women's Issues": "rgba(223, 41, 53,",
+  "LGBT Issues": "rgba(253, 202, 64,",
+  "National Security": "rgba(242, 255, 73,",
+  "Social Welfare": "rgba(251, 98, 246,",
+};
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
@@ -156,6 +169,15 @@ map.on("load", function () {
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
   for (obj in a) {
+    let catDict = {};
+    let catArray = [];
+    for (cat in issues) {
+      if (issues[cat][obj] !== undefined) {
+        catArray.push(cat);
+
+        catDict[cat] = issues[cat][obj];
+      }
+    }
     // check how deeply nested the outer ring of the unioned polygon is
     final = [];
     // set the coordinates of the outer ring to final
@@ -166,8 +188,8 @@ map.on("load", function () {
     } else {
       final = a[obj];
     }
-    approved_color = "rgba(110, 178, 181,0.30)";
-    unapproved_color = "rgba(255, 50, 0,0.30)";
+    approved_color = "rgba(110, 178, 181,0.15)";
+    unapproved_color = "rgba(255, 50, 0,0.15)";
     if (approved.indexOf(obj) > -1) {
       color = approved_color;
     } else {
@@ -183,6 +205,10 @@ map.on("load", function () {
           geometry: {
             type: "Polygon",
             coordinates: final,
+          },
+          properties: {
+            issues: catDict,
+            category: catArray,
           },
         },
       },
@@ -204,6 +230,10 @@ map.on("load", function () {
             type: "Polygon",
             coordinates: final,
           },
+          properties: {
+            issues: catDict,
+            category: catArray,
+          },
         },
       },
       layout: {
@@ -221,21 +251,36 @@ map.on("load", function () {
 
 // on hover, highlight the community
 $(".sidenav").on("mouseenter", ".community-review-span", function () {
-  console.log("HELLO THERE WORLD");
-  map.setPaintProperty(
-    this.id + "line",
-    "line-color",
-    "rgba(61, 114, 118, 0.5)"
-  );
-  map.setPaintProperty(this.id + "line", "line-width", 4);
-  map.setPaintProperty(this.id, "fill-color", "rgba(61, 114, 118,0.3)");
+  var isApproved = false;
+  if (
+    map.getPaintProperty(this.id, "fill-color") === "rgba(110, 178, 181,0.15)"
+  ) {
+    isApproved = true;
+  }
+  if (isApproved) {
+    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
+    map.setPaintProperty(this.id + "line", "line-width", 4);
+    map.setPaintProperty(this.id, "fill-color", "rgba(110, 178, 181,0.5)");
+  } else {
+    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
+    map.setPaintProperty(this.id + "line", "line-width", 4);
+    map.setPaintProperty(this.id, "fill-color", "rgba(255, 50, 0,0.5)");
+  }
 });
 $(".sidenav").on("mouseleave", ".community-review-span", function () {
-  map.setPaintProperty(
-    this.id + "line",
-    "line-color",
-    "rgba(110, 178, 181,0.3)"
-  );
-  map.setPaintProperty(this.id + "line", "line-width", 2);
-  map.setPaintProperty(this.id, "fill-color", "rgba(110, 178, 181,0.15)");
+  var isApproved = false;
+  if (
+    map.getPaintProperty(this.id, "fill-color") === "rgba(110, 178, 181,0.5)"
+  ) {
+    isApproved = true;
+  }
+  if (isApproved) {
+    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.2)");
+    map.setPaintProperty(this.id + "line", "line-width", 2);
+    map.setPaintProperty(this.id, "fill-color", "rgba(110, 178, 181,0.15)");
+  } else {
+    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.2)");
+    map.setPaintProperty(this.id + "line", "line-width", 2);
+    map.setPaintProperty(this.id, "fill-color", "rgba(255, 50, 0,0.15)");
+  }
 });

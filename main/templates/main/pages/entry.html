@@ -199,6 +199,16 @@
                   </p>
                   {{ form.entry_reason|append_attr:"class:form-control" }}
                   <hr>
+                  <div class="field-wrap mt-3">
+                    <p>What organization are you contributing as a part of? </p>
+                    <div class="field-wrap">
+                      {{ form.organization|append_attr:"class:form-control" }}
+                      {% if form.organization.help_text %}
+                      <p class="help">{{ form.organization_text|safe }}</p>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <hr>
                   <p class="card-text">
                     What issues are relevant to your community?
                   </p>
@@ -299,15 +309,6 @@
                     {% if form.my_community.help_text %}
                     <p class="help">{{ form.my_community.help_text|safe }}</p>
                     {% endif %}
-                  </div>
-                  <div class="field-wrap mt-3">
-                    <p>What organization are you contributing as a part of? </p>
-                    <div class="field-wrap">
-                      {{ form.organization|append_attr:"class:form-control" }}
-                      {% if form.organization.help_text %}
-                      <p class="help">{{ form.organization_text|safe }}</p>
-                      {% endif %}
-                    </div>
                   </div>
                 </div>
               </div>

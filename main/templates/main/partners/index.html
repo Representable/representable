@@ -1,11 +1,38 @@
 {% extends "main/base.html" %}
+{% load static %}
 
 {% block content %}
-    <h2>Partners</h2>
-    <p> Want to become a partner? Learn more <a href="{% url 'main:partner_welcome' %}">here!
-    <ul>
+<div class="container">
+  <div class="row row-content">
+    <div class="col-lg-9 mx-auto">
+      <h1 class="font-weight-light">Partners</h1>
+      <p>Learn more about the organizations using Representable.org to gather community data. Want to become a partner? Learn more <a href="{% url 'main:partner_welcome' %}">here!</p>
+      <div class="row">
+        <div class="card-columns">
         {% for partner in object_list %}
-            <li><a href="{% url 'main:partner_page' partner.slug %}">{{ partner.name }}</a></li>
+          <div class="card card-signin my-3">
+            <div class="card-body">
+              <h5>
+                <a href="{% url 'main:partner_page' partner.slug %}">
+                  <img class="mb-2" src="{% static 'img/representable_logo.svg' %}" alt="" width="24" height="24">
+                  {{ partner.name }}
+                </a>
+              </h5>
+              <hr>
+              <p>
+                {% for state in partner.states %}
+                <span class="badge badge-secondary">{{state}}</span>
+                {% endfor %}
+
+              </p>
+              <p> {{ partner.description }} </p>
+              <a class="btn btn-primary my-3" href="{% url 'main:partner_page' partner.slug %}" role="button">More Details</a>
+              <a class="btn btn-primary" href="{{ partner.ext_link }}" role="button">Partner Site <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
         {% endfor %}
-    </ul>
-{% endblock %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}

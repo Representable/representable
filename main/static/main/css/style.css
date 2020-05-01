@@ -164,6 +164,11 @@ footer {
   padding: 0;
 }
 
+.badge-primary {
+  background-color: #2a94f4;
+  border-color: #2a94f4;
+}
+
 /* Bootstrap Buttons. */
 
 /* This changes the color of the buttons so that it matches the Representable
@@ -275,6 +280,12 @@ color scheme. See readme.md*/
 
   .row-content {
     padding: 40px 40px 25px 40px;
+  }
+}
+
+@media (min-width: 576px) {
+  .card-columns {
+    column-count: 2;
   }
 }
 
