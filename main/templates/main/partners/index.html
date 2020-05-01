@@ -5,11 +5,11 @@
 <div class="container">
   <div class="row row-content">
     <div class="col-lg-9 mx-auto">
-      <h2>Partners</h2>
-      <p>Learn more about the organizations using Representable.org to gather community data.</p>
+      <h1 class="font-weight-light">Partners</h1>
+      <p>Learn more about the organizations using Representable.org to gather community data. Want to become a partner? Learn more <a href="{% url 'main:partner_welcome' %}">here!</p>
       <div class="row">
+        <div class="card-columns">
         {% for partner in object_list %}
-        <div class="col-lg-6 col-sm-11">
           <div class="card card-signin my-3">
             <div class="card-body">
               <h5>
@@ -30,8 +30,8 @@
               <a class="btn btn-primary" href="{{ partner.ext_link }}" role="button">Partner Site <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
-        </div>
         {% endfor %}
+        </div>
       </div>
     </div>
   </div>
