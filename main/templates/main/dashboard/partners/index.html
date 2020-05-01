@@ -56,6 +56,7 @@
               <a class="btn btn-primary" href="{% url 'main:manage_org' object.slug  object.pk %}" role="button">Manage <i class="fa fa-arrow-circle-right"></i></a>
             </li>
             {% endif %}
+            {% if is_org_moderator %}
 
             <li class="list-group-item d-flex justify-content-between align-items-center">
               <div>
@@ -64,6 +65,8 @@
               </div>
               <a class="btn btn-primary" href="{% url 'main:review_org' object.slug  object.pk %}" role="button">Moderate <i class="fa fa-arrow-circle-right"></i></a>
             </li>
+            {% endif %}
+
 
             <li class="list-group-item d-flex justify-content-between align-items-center">
               <div>

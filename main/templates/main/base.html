@@ -66,15 +66,28 @@
                     </a>
                 </li>
                 <li class="nav-item mx-auto">
-                    <a class="nav-link" href='/map'>
+                    <a class="nav-link" href="{% url 'main:partner_welcome' %}">
                         {% if LANGUAGE_CODE == 'en' %}
-                        Map
+                        Partners
                         {% elif LANGUAGE_CODE == 'es' %}
                         <!-- Google translate  -->
-                        Mapa
+                        Socios
                         {% endif %}
                     </a>
                 </li>
+                {% if user.is_authenticated %}</li>
+                <li class="nav-item mx-auto">
+                    <a class="nav-link" href="{% url 'main:dashboard' %}">
+                        {% if LANGUAGE_CODE == 'en' %}
+                        Dashboard
+                        {% elif LANGUAGE_CODE == 'es' %}
+                        <!-- Google translate  -->
+                        Tablero
+                        {% endif %}
+                    </a>
+                </li>
+                {% endif %}
+
                 {% if user.is_authenticated %}</li>
                 <li class="nav-item mx-auto">
                     {% if user.is_authenticated %}
