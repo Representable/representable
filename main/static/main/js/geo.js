@@ -130,58 +130,57 @@ var states = [
 
 // dictionary with state neighbors without nebraska since there is
 // no census block data for nebraska
-var state_neighbors  = {
-  "ak" : [],
-  "al" : ["fl", "ga", "ms", "tn"],
-  "ar" : ["la", "mo", "ms", "ok", "tn", "tx"],
-  "az" : ["ca", "co", "nv", "nm", "ut"],
-  "ca" : ["az", "nv", "or"],
-  "co" : ["az", "ks", "nm", "ok", "ut", "wy"],
-  "ct" : ["ma", "ny", "ri"],
-  "dc" : ["md", "va"],
-  "de" : ["md", "nj", "pa"],
-  "fl" : ["al", "ga"],
-  "ga" : ["al", "fl", "nc", "sc", "tn"],
-  "hi" : [],
-  "ia" : ["al", "mn", "mo", "sd", "wi"],
-  "id" : ["mt", "nv", "or", "ut", "wa", "wy"],
-  "il" : ["in", "ia", "mi", "ky", "mo", "wi"],
-  "in" : ["il", "ky", "mi", "oh"],
-  "ks" : ["co", "mo", "ok"],
-  "ky" : ["il", "in", "mo", "oh", "tn", "va", "wv"],
-  "la" : ["ar", "ms", "tx"],
-  "ma" : ["ct", "nh", "ny", "ri", "vt"],
-  "md" : ["de", "pa", "va", "wv"],
-  "me" : ["nh"],
-  "mi" : ["il", "in", "mn", "oh", "wi"],
-  "mn" : ["ia", "mi", "nd", "sd", "wi"],
-  "mo" : ["ar", "il", "ia", "ks", "ky", "ok", "tn"],
-  "ms" : ["al", "ar", "la", "tn"],
-  "mt" : ["id", "nd", "sd", "wy"],
-  "nc" : ["az", "ca", "id", "or", "ut"],
-  "nd" : ["mn", "mt", "sd"],
-  "nh" : ["me", "ma", "vt"],
-  "nj" : ["ny", "de", "pa"],
-  "nm" : ["az", "co", "ok", "tx", "ut"],
-  "nv" : ["az", "ca", "id", "or", "ut"],
-  "ny" : ["ct", "ma", "nj", "pa", "ri", "vt"],
-  "oh" : ["in", "ky", "mi", "pa", "wv"],
-  "ok" : ["ar", "co", "ks", "mo", "nm", "tx"],
-  "or" : ["ca", "id", "nv", "wa"],
-  "pa" : ["de", "md", "nj", "ny", "oh", "wv"],
-  "ri" : ["ct", "ma", "ny"],
-  "sc" : ["ga", "nc"],
-  "sd" : ["ia", "mn", "mt", "nd", "wy"],
-  "tn" : ["al", "ar", "ga", "ky", "ms", "mo", "nc", "va"],
-  "tx" : ["ar", "la", "nm", "ok"],
-  "ut" : ["az", "co", "id", "nv", "nm", "wy"],
-  "va" : ["ky", "md", "nc", "tn", "wv"],
-  "vt" : ["ma", "nh", "ny"],
-  "wa" : ["id", "or"],
-  "wi" : ["il", "ia", "mi", "mn"],
-  "wv" : ["ky", "md", "oh", "pa", "va"],
-  "wy" : ["co", "id", "mt", "sd", "ut"]
-
+var state_neighbors = {
+  ak: [],
+  al: ["fl", "ga", "ms", "tn"],
+  ar: ["la", "mo", "ms", "ok", "tn", "tx"],
+  az: ["ca", "co", "nv", "nm", "ut"],
+  ca: ["az", "nv", "or"],
+  co: ["az", "ks", "nm", "ok", "ut", "wy"],
+  ct: ["ma", "ny", "ri"],
+  dc: ["md", "va"],
+  de: ["md", "nj", "pa"],
+  fl: ["al", "ga"],
+  ga: ["al", "fl", "nc", "sc", "tn"],
+  hi: [],
+  ia: ["al", "mn", "mo", "sd", "wi"],
+  id: ["mt", "nv", "or", "ut", "wa", "wy"],
+  il: ["in", "ia", "mi", "ky", "mo", "wi"],
+  in: ["il", "ky", "mi", "oh"],
+  ks: ["co", "mo", "ok"],
+  ky: ["il", "in", "mo", "oh", "tn", "va", "wv"],
+  la: ["ar", "ms", "tx"],
+  ma: ["ct", "nh", "ny", "ri", "vt"],
+  md: ["de", "pa", "va", "wv"],
+  me: ["nh"],
+  mi: ["il", "in", "mn", "oh", "wi"],
+  mn: ["ia", "mi", "nd", "sd", "wi"],
+  mo: ["ar", "il", "ia", "ks", "ky", "ok", "tn"],
+  ms: ["al", "ar", "la", "tn"],
+  mt: ["id", "nd", "sd", "wy"],
+  nc: ["az", "ca", "id", "or", "ut"],
+  nd: ["mn", "mt", "sd"],
+  nh: ["me", "ma", "vt"],
+  nj: ["ny", "de", "pa"],
+  nm: ["az", "co", "ok", "tx", "ut"],
+  nv: ["az", "ca", "id", "or", "ut"],
+  ny: ["ct", "ma", "nj", "pa", "ri", "vt"],
+  oh: ["in", "ky", "mi", "pa", "wv"],
+  ok: ["ar", "co", "ks", "mo", "nm", "tx"],
+  or: ["ca", "id", "nv", "wa"],
+  pa: ["de", "md", "nj", "ny", "oh", "wv"],
+  ri: ["ct", "ma", "ny"],
+  sc: ["ga", "nc"],
+  sd: ["ia", "mn", "mt", "nd", "wy"],
+  tn: ["al", "ar", "ga", "ky", "ms", "mo", "nc", "va"],
+  tx: ["ar", "la", "nm", "ok"],
+  ut: ["az", "co", "id", "nv", "nm", "wy"],
+  va: ["ky", "md", "nc", "tn", "wv"],
+  vt: ["ma", "nh", "ny"],
+  wa: ["id", "or"],
+  wi: ["il", "ia", "mi", "mn"],
+  wv: ["ky", "md", "oh", "pa", "va"],
+  wy: ["co", "id", "mt", "sd", "ut"],
 };
 var wkt_obj;
 // Formset field object saves a deep copy of the original formset field object.
@@ -195,7 +194,7 @@ function parseReverseGeo(geoData) {
   // debugger;
   var region, countryName, placeName, returnStr;
   if (geoData.context) {
-    $.each(geoData.context, function(i, v) {
+    $.each(geoData.context, function (i, v) {
       if (v.id.indexOf("region") >= 0) {
         region = v.text;
       }
@@ -216,7 +215,7 @@ function parseReverseGeo(geoData) {
 // Make buttons show the right skin.
 document.addEventListener(
   "DOMContentLoaded",
-  function() {
+  function () {
     var conditionRow = $(".form-row:not(:last)");
     conditionRow
       .find(".btn.add-form-row")
@@ -259,7 +258,7 @@ var geocoder = new MapboxGeocoder({
   mapboxgl: mapboxgl,
 });
 
-document.getElementById('geocoder').appendChild(geocoder.onAdd(map))
+document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
 
 /* tutorial reference for draw control properties:
 https://bl.ocks.org/dnseminara/0790e53cef9867e848e716937727ab18
@@ -468,7 +467,8 @@ drawControls = document.querySelector(".draw_polygon_map .mapboxgl-ctrl-group");
 drawControls.classList.add("draw-group");
 
 // Add nav control buttons.
-map.addControl(new mapboxgl.NavigationControl());
+var navControl = new mapboxgl.NavigationControl();
+map.addControl(navControl);
 
 /* Change mapbox draw button */
 var drawButton = document.getElementsByClassName("mapbox-gl-draw_polygon");
@@ -482,61 +482,67 @@ trashButton[0].innerHTML = "<i class='fas fa-trash-alt'></i> Delete Polygon";
 
 // add button for toggling census Blocks
 class CensusBlocksControl {
-    onAdd(map) {
-        var blocksLink = document.createElement('button');
-        blocksLink.href = '#';
-        blocksLink.className = 'active';
-        blocksLink.style.width = '150px';
-        blocksLink.innerHTML = "<i class='fas fa-th-large'></i> Toggle Census Blocks";
-        this._map = map;
-        this._container = document.createElement('div');
-        this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
-        var clicked = false;
-        blocksLink.onclick = function(e) {
-          for (let i = 0; i < states.length; i++) {
+  onAdd(map) {
+    var blocksLink = document.createElement("button");
+    blocksLink.href = "#";
+    blocksLink.className = "active";
+    blocksLink.id = "toggle-census-blocks-btn";
+    blocksLink.style.width = "150px";
+    blocksLink.innerHTML =
+      "<i class='fas fa-th-large'></i> Toggle Census Blocks";
+    blocksLink.disabled = "disabled";
+    this._map = map;
+    this._container = document.createElement("div");
+    this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
+    var clicked = false;
+    blocksLink.onclick = function (e) {
+      for (let i = 0; i < states.length; i++) {
+        var clickedLayer = states[i] + "-census-lines";
+        e.preventDefault();
+        e.stopPropagation();
+        if (clicked) {
+          map.setPaintProperty(clickedLayer, "fill-opacity", 0.0);
+          this.className = "";
+        } else {
+          this.className = "active";
+          map.setPaintProperty(clickedLayer, "fill-opacity", [
+            "*",
+            ["get", "POP10"],
+            0.001,
+          ]);
+        }
+      }
+      clicked = clicked ? false : true;
+    };
+    this._container.appendChild(blocksLink);
+    return this._container;
+  }
 
-            var clickedLayer = states[i] + "-census-lines";
-            e.preventDefault();
-            e.stopPropagation();
-            if (clicked) {
-              map.setPaintProperty(clickedLayer, 'fill-opacity', 0.0);
-              this.className = '';
-            } else {
-              this.className = 'active';
-              map.setPaintProperty(clickedLayer, 'fill-opacity', ['*', ['get', 'POP10'], .001]);
-            }
-          }
-          clicked = clicked ? false : true;
-        };
-        this._container.appendChild(blocksLink);
-        return this._container;
-    }
-
-    onRemove() {
-        this._container.parentNode.removeChild(this._container);
-        this._map = undefined;
-    }
+  onRemove() {
+    this._container.parentNode.removeChild(this._container);
+    this._map = undefined;
+  }
 }
-map.addControl(new CensusBlocksControl(), 'top-left');
+map.addControl(new CensusBlocksControl(), "top-left");
+
+var mapContent = document.getElementById("map");
+var mapButtons = mapContent.getElementsByTagName("button");
+for (var i = 0; i < mapButtons.length; i++) {
+  mapButtons[i].disabled = true;
+}
 
 // Override Behavior for Draw-Button
-document.getElementById("draw-button").addEventListener("click", function(e) {
+document.getElementById("draw-button").addEventListener("click", function (e) {
   cleanAlerts();
   draw.deleteAll();
-  map.setFilter(state + "-blocks-highlighted", [
-    "in",
-    "GEOID10",
-  ]);
+  map.setFilter(state + "-blocks-highlighted", ["in", "GEOID10"]);
   draw.changeMode("draw_polygon");
 });
 
-document.getElementById("trash-button").addEventListener("click", function(e) {
+document.getElementById("trash-button").addEventListener("click", function (e) {
   cleanAlerts();
   draw.deleteAll();
-  map.setFilter(state + "-blocks-highlighted", [
-    "in",
-    "GEOID10",
-  ]);
+  map.setFilter(state + "-blocks-highlighted", ["in", "GEOID10"]);
   draw.changeMode("simple_select");
 });
 
@@ -574,12 +580,12 @@ function newCensusShading(state) {
     source: state + "-census",
     "source-layer": state + "census",
     layout: {
-      visibility: "visible"
+      visibility: "visible",
     },
     paint: {
       "fill-outline-color": "rgb(71, 93, 204)",
       "fill-color": "rgb(71, 93, 204)",
-      "fill-opacity": 0
+      "fill-opacity": 0,
     },
   });
 }
@@ -598,28 +604,26 @@ function newHighlightLayer(state) {
   });
 }
 
-// [WIP] function to add the neighbor layers for the filter that queries 
-// included census blocks 
+// [WIP] function to add the neighbor layers for the filter that queries
+// included census blocks
 function addNeighborLayersFilter() {
   for (let i = 0; 0 < neighbors.length; i++) {
     if (map.getLayer(neighbors[i] + "-blocks-highlighted")) {
-      map.setFilter(neighbors[i] + "-blocks-highlighted", [
-        "in",
-        "GEOID10",
-      ]);
+      map.setFilter(neighbors[i] + "-blocks-highlighted", ["in", "GEOID10"]);
     }
   }
 }
 
 function addStateNeighborLayers(new_neighbors, new_state) {
   // remove the old state layer and add the new state layer
-  if (map.getLayer(state + "-blocks-highlighted")) map.removeLayer(state + "-blocks-highlighted");
-  newHighlightLayer(new_state);	
+  if (map.getLayer(state + "-blocks-highlighted"))
+    map.removeLayer(state + "-blocks-highlighted");
+  newHighlightLayer(new_state);
   // iterate through all states in the new_neighbors
   // if includes, don't add
   // delete from old neighbors
   // remove layers in the old neighbors list
-  for (let i = 0; i < new_neighbors.length; i++) {	
+  for (let i = 0; i < new_neighbors.length; i++) {
     if (!map.getLayer(new_neighbors[i] + "-blocks-highlighted")) {
       newHighlightLayer(new_neighbors[i]);
     } else {
@@ -628,14 +632,15 @@ function addStateNeighborLayers(new_neighbors, new_state) {
     }
   }
   for (let i = 0; i < neighbors.length; i++) {
-    if (map.getLayer(neighbors[i] + "-blocks-highlighted")) map.removeLayer(neighbors[i] + "-blocks-highlighted");
+    if (map.getLayer(neighbors[i] + "-blocks-highlighted"))
+      map.removeLayer(neighbors[i] + "-blocks-highlighted");
   }
 }
 /******************************************************************************/
 
 /* After the map style has loaded on the page, add a source layer and default
    styling for a single point. */
-map.on("style.load", function() {
+map.on("style.load", function () {
   map.addSource("single-point", {
     type: "geojson",
     data: {
@@ -668,19 +673,31 @@ map.on("style.load", function() {
 
   // Listen for the `geocoder.input` event that is triggered when a user
   // makes a selection and add a symbol that matches the result.
-  geocoder.on("result", function(ev) {
+  geocoder.on("result", function (ev) {
     map.getSource("single-point").setData(ev.result.geometry);
     var styleSpec = ev.result;
     var styleSpecBox = document.getElementById("json-response");
     var styleSpecText = JSON.stringify(styleSpec, null, 2);
     var divs = document.getElementsByClassName("blurtop");
     for (let i = 0; i < divs.length; i++) {
-      divs[i].setAttribute("style","-webkit-filter: blur(0px); pointer-events: auto");
+      divs[i].setAttribute(
+        "style",
+        "-webkit-filter: blur(0px); pointer-events: auto"
+      );
       // divs[i].setAttribute("style","pointer-events: auto");
     }
+    // Enable Map buttons
+    var mapContent = document.getElementById("map");
+    var mapButtons = mapContent.getElementsByTagName("button");
+    for (var i = 0; i < mapButtons.length; i++) {
+      mapButtons[i].disabled = false;
+    }
+
     // get the state from the geocoder response
     if (styleSpec.context.length >= 2) {
-      new_state = styleSpec.context[styleSpec.context.length - 2]["short_code"].toLowerCase().substring(3);
+      new_state = styleSpec.context[styleSpec.context.length - 2]["short_code"]
+        .toLowerCase()
+        .substring(3);
     } else {
       new_state = styleSpec.properties["short_code"].toLowerCase().substring(3);
     }
@@ -694,7 +711,7 @@ map.on("style.load", function() {
 });
 
 var wasLoaded = false;
-map.on("render", function() {
+map.on("render", function () {
   if (!map.loaded() || wasLoaded) return;
   wasLoaded = true;
   if (document.getElementById("id_user_polygon").value !== "") {
@@ -712,19 +729,19 @@ map.on("render", function() {
 
 /******************************************************************************/
 
-map.on("draw.create", function() {
+map.on("draw.create", function () {
   console.log("Draw create");
   updateCommunityEntry();
 });
-map.on("draw.delete", function() {
+map.on("draw.delete", function () {
   console.log("Draw delete");
   updateCommunityEntry();
 });
-map.on("draw.update", function() {
+map.on("draw.update", function () {
   console.log("Draw update");
   updateCommunityEntry();
 });
-map.on("draw.changeMode", function() {
+map.on("draw.changeMode", function () {
   console.log("Draw CM");
 });
 
@@ -822,7 +839,7 @@ function highlightBlocks(drawn_polygon) {
       var total = 0.0;
 
       var filter = features.reduce(
-        function(memo, feature) {
+        function (memo, feature) {
           if (feature.geometry.type == "MultiPolygon") {
             var polyCon;
             // go through all the polygons and check to see if any of the polygons are contained
@@ -851,11 +868,7 @@ function highlightBlocks(drawn_polygon) {
       );
       //  sets filter - highlights blocks
       // TODO: update for all states
-      map.setFilter(
-        state + "-blocks-highlighted",
-        filter
-      );
-
+      map.setFilter(state + "-blocks-highlighted", filter);
     }
   } catch (err) {
     console.log("triangle shaped polygon was changed");
@@ -934,10 +947,7 @@ function updateCommunityEntry(e) {
     census_blocks_polygon_wkt = "";
     census_blocks_multipolygon_wkt = "";
     // TODO: update for all states
-    map.setFilter(state + "-blocks-highlighted", [
-      "in",
-      "GEOID10",
-    ]);
+    map.setFilter(state + "-blocks-highlighted", ["in", "GEOID10"]);
   }
   // Update form fields
   census_blocks_polygon_wkt = "";
@@ -957,12 +967,7 @@ function updateElementIndex(el, prefix, ndx) {
   var id_regex = new RegExp("(" + prefix + "-\\d+)");
   var replacement = prefix + "-" + ndx;
   if ($(el).attr("for"))
-    $(el).attr(
-      "for",
-      $(el)
-        .attr("for")
-        .replace(id_regex, replacement)
-    );
+    $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
   if (el.id) el.id = el.id.replace(id_regex, replacement);
   if (el.name) el.name = el.name.replace(id_regex, replacement);
 }
@@ -981,7 +986,7 @@ function cloneMore(selector, prefix) {
   }
   newElement.find("#description_warning").remove();
   newElement.find("#category_warning").remove();
-  newElement.find(":input").each(function() {
+  newElement.find(":input").each(function () {
     var name = $(this)
       .attr("name")
       .replace("-" + (total - 1) + "-", "-" + total + "-");
@@ -1028,7 +1033,7 @@ function deleteForm(prefix, btn) {
   for (var i = 0, formCount = forms.length; i < formCount; i++) {
     $(forms.get(i))
       .find(":input")
-      .each(function() {
+      .each(function () {
         updateElementIndex(this, prefix, i);
       });
   }
@@ -1037,7 +1042,7 @@ function deleteForm(prefix, btn) {
 
 /******************************************************************************/
 
-$(document).on("click", ".add-form-row", function(e) {
+$(document).on("click", ".add-form-row", function (e) {
   // Add form click handler.
   e.preventDefault();
   cloneMore(".form-row:last", "form");
@@ -1046,7 +1051,7 @@ $(document).on("click", ".add-form-row", function(e) {
 
 /******************************************************************************/
 
-$(document).on("click", ".remove-form-row", function(e) {
+$(document).on("click", ".remove-form-row", function (e) {
   // Remove form click handler.
   e.preventDefault();
   deleteForm("form", $(this));
