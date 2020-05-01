@@ -184,9 +184,6 @@
                                     </p>
                                     {{ form.entry_reason|append_attr:"class:form-control" }}
                                     <hr>
-                                    <p class="card-text">
-                                        What issues are relevant to your community?
-                                    </p>
                                     {% csrf_token %}
                                     <!-- {# Include the non-field error fields #} -->
                                     {% if form.non_field_errors %}
@@ -201,56 +198,6 @@
                                         {% for hidden in form.hidden_fields %}
                                         {{ hidden }}
                                         {% endfor %}
-                                        <!-- Include Formset -->
-                                        {{ issue_formset.management_form }}
-                                        <!-- {# Include the formset.} -->
-                                        {% for hidden_issue_field in issue_formset.hidden_fields %}
-                                        {{ hidden_issue_field }}
-                                        {% endfor %}
-
-                                        {{ issue_formset.non_field_errors }}
-
-                                        <div id="formset_container">
-                                            {% for formset_row in issue_formset %}
-                                            <div class="row form-row issues_formset mt-2">
-                                                <div class="col-sm-5 mt-2">
-                                                    {{ formset_row.category|append_attr:"class:form-control" }}
-                                                    <!-- Error Codes Here -->
-                                                    {% if formset_row.category.errors %}
-                                                    <script>
-                                                        sessionStorage.setItem("allChecks", "fail");
-                                                    </script>
-                                                    {% for error in formset_row.category.errors %}
-                                                    <small id="category_warning" class="text-danger">{{ error|escape }}</small>
-                                                    {% endfor %}
-                                                    {% endif %}
-                                                </div>
-                                                <div class="col-sm-5 mt-2">
-                                                    {{ formset_row.description|append_attr:"class:form-control" }}
-                                                    <!-- Error Codes Here -->
-                                                    {% if formset_row.description.errors %}
-                                                    <script>
-                                                        sessionStorage.setItem("allChecks", "fail");
-                                                    </script>
-                                                    {% for error in formset_row.description.errors %}
-                                                    <small id="category_warning" class="text-danger">{{ error|escape }}</small>
-                                                    {% endfor %}
-                                                    {% endif %}
-                                                </div>
-                                                <div class="col-sm-2 mt-2">
-                                                    <button name="removeFormRow" class="btn btn-outline-danger remove-form-row">Remove</button>
-                                                </div>
-                                            </div>
-                                            {% endfor %}
-                                        </div>
-                                        <!-- End formset container. -->
-                                        <div class="row mt-3">
-                                            <div class='col-sm-12'>
-                                                <button name="addFormRow" class="btn btn-outline-success add-form-row">Add New Issue</button>
-                                                <small> You can add maximum 10 issues. </small>
-                                                <!-- 10 is arbitrary for now. Check forms.py -->
-                                            </div>
-                                        </div>
                                         <!-- {# Tags Field} -->
                                         <div class="field-wrap mt-3">
                                             {{ form.tags.label_tag }}

@@ -42,19 +42,6 @@ var LOWER_KEYS = {
   "mi-lower": "aa2ljvl2",
 };
 var states = ["nj", "va", "pa", "mi"];
-var PAINT_VALUES = {
-  "Criminal Justice": "rgba(135, 191, 255,",
-  "Civil Rights": "rgba(63, 142, 252,",
-  "Economic Affairs": "rgba(196, 178, 188,",
-  Education: "rgba(223, 146, 142,",
-  Environment: "rgba(249, 160, 63,",
-  "Health and Health Insurance": "rgba(234, 239, 177,",
-  "Internet Regulation": "rgba(178, 177, 207,",
-  "Women's Issues": "rgba(223, 41, 53,",
-  "LGBT Issues": "rgba(253, 202, 64,",
-  "National Security": "rgba(242, 255, 73,",
-  "Social Welfare": "rgba(251, 98, 246,",
-};
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
@@ -169,15 +156,6 @@ map.on("load", function() {
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
   for (obj in a) {
-    let catDict = {};
-    let catArray = [];
-    for (cat in issues) {
-      if (issues[cat][obj] !== undefined) {
-        catArray.push(cat);
-
-        catDict[cat] = issues[cat][obj];
-      }
-    }
     // check how deeply nested the outer ring of the unioned polygon is
     final = [];
     // set the coordinates of the outer ring to final
@@ -206,10 +184,6 @@ map.on("load", function() {
             type: "Polygon",
             coordinates: final,
           },
-          properties: {
-            issues: catDict,
-            category: catArray,
-          },
         },
       },
       layout: {
@@ -229,10 +203,6 @@ map.on("load", function() {
           geometry: {
             type: "Polygon",
             coordinates: final,
-          },
-          properties: {
-            issues: catDict,
-            category: catArray,
           },
         },
       },

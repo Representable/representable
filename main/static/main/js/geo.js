@@ -525,7 +525,7 @@ document.getElementById("draw-button").addEventListener("click", function(e) {
   draw.deleteAll();
   map.setFilter(state + "-blocks-highlighted", [
     "in",
-    "GEOID10",
+    "BLOCKID10",
   ]);
   draw.changeMode("draw_polygon");
 });
@@ -535,7 +535,7 @@ document.getElementById("trash-button").addEventListener("click", function(e) {
   draw.deleteAll();
   map.setFilter(state + "-blocks-highlighted", [
     "in",
-    "GEOID10",
+    "BLOCKID10",
   ]);
   draw.changeMode("simple_select");
 });
@@ -605,7 +605,7 @@ function addNeighborLayersFilter() {
     if (map.getLayer(neighbors[i] + "-blocks-highlighted")) {
       map.setFilter(neighbors[i] + "-blocks-highlighted", [
         "in",
-        "GEOID10",
+        "BLOCKID10",
       ]);
     }
   }
@@ -676,7 +676,6 @@ map.on("style.load", function() {
     var divs = document.getElementsByClassName("blurtop");
     for (let i = 0; i < divs.length; i++) {
       divs[i].setAttribute("style","-webkit-filter: blur(0px); pointer-events: auto");
-      // divs[i].setAttribute("style","pointer-events: auto");
     }
     // get the state from the geocoder response
     if (styleSpec.context.length >= 2) {
@@ -689,6 +688,7 @@ map.on("style.load", function() {
       new_neighbors = state_neighbors[new_state];
       state = new_state;
       neighbors = new_neighbors;
+      console.log(state);
     }
   });
 });
@@ -936,7 +936,7 @@ function updateCommunityEntry(e) {
     // TODO: update for all states
     map.setFilter(state + "-blocks-highlighted", [
       "in",
-      "GEOID10",
+      "BLOCKID10",
     ]);
   }
   // Update form fields
