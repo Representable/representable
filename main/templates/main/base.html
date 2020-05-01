@@ -66,15 +66,28 @@
                     </a>
                 </li>
                 <li class="nav-item mx-auto">
-                    <a class="nav-link" href='/map'>
+                    <a class="nav-link" href="{% url 'main:partner_welcome' %}">
                         {% if LANGUAGE_CODE == 'en' %}
-                        Map
+                        Partners
                         {% elif LANGUAGE_CODE == 'es' %}
                         <!-- Google translate  -->
-                        Mapa
+                        Socios
                         {% endif %}
                     </a>
                 </li>
+                {% if user.is_authenticated %}</li>
+                <li class="nav-item mx-auto">
+                    <a class="nav-link" href="{% url 'main:dashboard' %}">
+                        {% if LANGUAGE_CODE == 'en' %}
+                        Dashboard
+                        {% elif LANGUAGE_CODE == 'es' %}
+                        <!-- Google translate  -->
+                        Tablero
+                        {% endif %}
+                    </a>
+                </li>
+                {% endif %}
+
                 {% if user.is_authenticated %}</li>
                 <li class="nav-item mx-auto">
                     {% if user.is_authenticated %}
@@ -177,7 +190,7 @@
         <div class="row">
             <div class="col-12 col-md">
                 <a href="/"><img class="mb-2" src="{% static 'img/representable_logo.svg' %}" alt="" width="24" height="24"></a>
-                <small class="d-block mb-3 text-muted">© 2019</small>
+                <small class="d-block mb-3 text-muted">© 2020</small>
             </div>
             <div class="col-6 col-md">
                 <!-- <h5>Community Map</h5> -->

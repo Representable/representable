@@ -233,23 +233,6 @@ var states = [
   "wy",
 ];
 
-/* Colors for the different issue categories */
-var PAINT_VALUES = {
-  Zoning: "rgba(135, 191, 255,",
-  Policing: "rgba(63, 142, 252,",
-  Crime: "rgba(196, 178, 188,",
-  Nuisance: "rgba(223, 146, 142,",
-  School: "rgba(249, 160, 63,",
-  "Religion/Church": "rgba(234, 200, 30,",
-  "Race/Ethnicity": "rgba(178, 177, 207,",
-  "Immigration Status": "rgba(223, 41, 53,",
-  Socioeconomic: "rgba(253, 202, 64,",
-  Transportation: "rgba(242, 255, 73,",
-  "Neighborhood Identity/Official Definition": "rgba(251, 98, 246,",
-  Environmental: "rgba(150, 98, 26,",
-  "LGBT Issues": "rgba(255, 192, 203,",
-};
-
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
@@ -290,20 +273,21 @@ function newSourceLayer(name, mbCode) {
 }
 // add a new layer of census block data
 function newCensusLayer(state, firstSymbolId) {
-  map.addLayer({
-    id: state.toUpperCase() + " Census Blocks",
-    type: "line",
-    source: state + "-census",
-    "source-layer": state + "census",
-    layout: {
-      visibility: "none",
+  map.addLayer(
+    {
+      id: state.toUpperCase() + " Census Blocks",
+      type: "line",
+      source: state + "-census",
+      "source-layer": state + "census",
+      layout: {
+        visibility: "none",
+      },
+      paint: {
+        "line-color": "rgba(106,137,204,0.7)",
+        "line-width": 3,
+      },
     },
-    paint: {
-      "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 3
-    }
-  },
-  firstSymbolId
+    firstSymbolId
   );
 }
 // add a new layer of upper state legislature data
@@ -320,8 +304,8 @@ function newUpperLegislatureLayer(state) {
     },
     paint: {
       "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 4
-    }
+      "line-width": 4,
+    },
   });
 }
 // add a new layer of lower state legislature data
@@ -338,22 +322,20 @@ function newLowerLegislatureLayer(state) {
     },
     paint: {
       "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 4
-    }
+      "line-width": 4,
+    },
   });
 }
 
-// issues add to properties
-issues = JSON.parse(issues);
 entry_names = JSON.parse(entry_names);
 entry_reasons = JSON.parse(entry_reasons);
 
-map.on('load', function() {
+map.on("load", function () {
   var layers = map.getStyle().layers;
   // Find the index of the first symbol layer in the map style
   var firstSymbolId;
   for (var i = 0; i < layers.length; i++) {
-    if (layers[i].type === 'symbol' && layers[i] !== 'road') {
+    if (layers[i].type === "symbol" && layers[i] !== "road") {
       firstSymbolId = layers[i].id;
       break;
     }
@@ -391,14 +373,6 @@ map.on('load', function() {
   a = JSON.parse(outputstr);
 
   for (obj in a) {
-    // let catDict = {};
-    // let catArray = [];
-    // for (cat in issues) {
-    //   if (issues[cat][obj] !== undefined) {
-    //     catArray.push(cat);
-    //     catDict[cat] = issues[cat][obj];
-    //   }
-    // }
     // check how deeply nested the outer ring of the unioned polygon is
     final = [];
     // set the coordinates of the outer ring to final
@@ -435,7 +409,7 @@ map.on('load', function() {
       },
     });
 
-// this has to be a separate layer bc mapbox doesn't allow flexibility with thickness of outline of polygons
+    // this has to be a separate layer bc mapbox doesn't allow flexibility with thickness of outline of polygons
     map.addLayer({
       id: obj + "line",
       type: "line",
@@ -466,7 +440,7 @@ map.on('load', function() {
   }
   // find what features are currently on view
   // multiple features are gathered that have the same source (or have the same source with 'line' added on)
-  map.on("moveend", function() {
+  map.on("moveend", function () {
     var sources = [];
     var features = map.queryRenderedFeatures();
     // clear the html so that we dont end up with duplicate communities
@@ -483,12 +457,20 @@ map.on('load', function() {
       ) {
         if (!sources.includes(source)) {
           sources.push(source);
-          var inner_content = "<span class='font-weight-light text-uppercase'><a style='display:inline;' href='/submission?map_id=" + source.slice(0, 8) + "'>".concat(features[i].properties.name, "</a></span><hr class='my-1'>\n",
-            "<span class='font-weight-light'>Why are you submitting this community?</span> <div class='p-1 my-1 bg-info text-white text-center '>", features[i].properties.reason, "</div>");
-          var content = '<li class="list-group-item small" id=' + source + '>'.concat(
-            inner_content,
-            "</li>"
-          );
+          var inner_content =
+            "<span class='font-weight-light text-uppercase'><a style='display:inline;' href='/submission?map_id=" +
+            source.slice(0, 8) +
+            "'>".concat(
+              features[i].properties.name,
+              "</a></span><hr class='my-1'>\n",
+              "<span class='font-weight-light'>Why are you submitting this community?</span> <div class='p-1 my-1 bg-info text-white text-center '>",
+              features[i].properties.reason,
+              "</div>"
+            );
+          var content =
+            '<li class="list-group-item small" id=' +
+            source +
+            ">".concat(inner_content, "</li>");
           // put the code into the html - display!
           document
             .getElementById("community-list")
@@ -505,15 +487,23 @@ map.on('load', function() {
 });
 
 // on hover, highlight the community
-$("#community-list").on('mouseenter','li',function () {
-    map.setPaintProperty(this.id + 'line', 'line-color', 'rgba(61, 114, 118, 0.5)');
-    map.setPaintProperty(this.id + 'line', 'line-width', 4);
-    map.setPaintProperty(this.id, 'fill-color', 'rgba(61, 114, 118,0.3)')
+$("#community-list").on("mouseenter", "li", function () {
+  map.setPaintProperty(
+    this.id + "line",
+    "line-color",
+    "rgba(61, 114, 118, 0.5)"
+  );
+  map.setPaintProperty(this.id + "line", "line-width", 4);
+  map.setPaintProperty(this.id, "fill-color", "rgba(61, 114, 118,0.3)");
 });
-$("#community-list").on('mouseleave','li',function () {
-  map.setPaintProperty(this.id + 'line', 'line-color', 'rgba(110, 178, 181,0.3)');
-  map.setPaintProperty(this.id + 'line', 'line-width', 2);
-  map.setPaintProperty(this.id, 'fill-color', 'rgba(110, 178, 181,0.15)')
+$("#community-list").on("mouseleave", "li", function () {
+  map.setPaintProperty(
+    this.id + "line",
+    "line-color",
+    "rgba(110, 178, 181,0.3)"
+  );
+  map.setPaintProperty(this.id + "line", "line-width", 2);
+  map.setPaintProperty(this.id, "fill-color", "rgba(110, 178, 181,0.15)");
 });
 
 //create a button that toggles layers based on their IDs
@@ -534,7 +524,7 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   link.className = "switch_1";
   link.checked = false;
 
-  link.onchange = function(e) {
+  link.onchange = function (e) {
     var txt = this.id;
     var clickedLayers = [];
     for (let i = 0; i < states.length; i++) {
@@ -575,7 +565,7 @@ var dropdown = document.getElementsByClassName("dropdown-btn");
 var i;
 
 for (i = 0; i < dropdown.length; i++) {
-  dropdown[i].addEventListener("click", function() {
+  dropdown[i].addEventListener("click", function () {
     this.classList.toggle("active");
     var dropdownContent = this.nextElementSibling;
     if (dropdownContent.style.display === "block") {

@@ -97,6 +97,16 @@ urlpatterns = [
                     name="review_org",
                 ),
                 path(
+                    "members/",
+                    views.dashboard.ManageOrg.as_view(),
+                    name="manage_org",
+                ),
+                path(
+                    "members/create",
+                    views.dashboard.CreateMember.as_view(),
+                    name="create_member",
+                ),
+                path(
                     "upload-whitelist/",
                     views.WhiteListUpdate.as_view(),
                     name="upload_whitelist",

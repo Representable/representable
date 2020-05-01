@@ -133,7 +133,7 @@ var wkt_obj;
 // (If user deletes all fields, he can add one more according to this one).
 var formsetFieldObject;
 var state;
-$(document).ready(function() {
+$(document).ready(function () {
   // load tooltips (bootstrap)
   $('[data-toggle="tooltip"]').tooltip();
   console.log(sessionStorage.getItem("stateName"));
@@ -292,7 +292,7 @@ function modalZip(e) {
     // console.log(zipcode)
     $("#zipcodeModal").modal("hide");
     // user puts in a zipcode and the map zooms to that loc
-    let geoObj = geocoder.query(zipcode, function(err, res) {
+    let geoObj = geocoder.query(zipcode, function (err, res) {
       console.log(err, res);
     });
     console.log(geoObj);
@@ -302,12 +302,12 @@ function modalZip(e) {
   }
 }
 
-$("#zipcodeModal").keypress(function(e) {
+$("#zipcodeModal").keypress(function (e) {
   if (e.keyCode === 10 || e.keyCode === 13) {
     modalZip(e);
   }
 });
-$("#zipSubmit").click(function(e) {
+$("#zipSubmit").click(function (e) {
   modalZip(e);
 });
 
@@ -316,7 +316,7 @@ function parseReverseGeo(geoData) {
   // debugger;
   var region, countryName, placeName, returnStr;
   if (geoData.context) {
-    $.each(geoData.context, function(i, v) {
+    $.each(geoData.context, function (i, v) {
       if (v.id.indexOf("region") >= 0) {
         region = v.text;
       }
@@ -337,7 +337,7 @@ function parseReverseGeo(geoData) {
 // Make buttons show the right skin.
 document.addEventListener(
   "DOMContentLoaded",
-  function() {
+  function () {
     var conditionRow = $(".form-row:not(:last)");
     conditionRow
       .find(".btn.add-form-row")
@@ -601,45 +601,49 @@ trashButton[0].innerHTML = "<i class='fas fa-trash-alt'></i> Undo Polygon";
 
 // add button for toggling census Blocks
 class CensusBlocksControl {
-    onAdd(map) {
-        var blocksLink = document.createElement('button');
-        blocksLink.href = '#';
-        blocksLink.className = 'active';
-        blocksLink.style.width = '150px';
-        blocksLink.innerHTML = "<span data-toggle='tooltip' title='Census blocks are the smallest unit of the US census - darker blocks have a higher population'><i class='fas fa-th-large'></i> Toggle Census Blocks</span>";
-        this._map = map;
-        this._container = document.createElement('div');
-        this._container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
-        var clicked = false;
-        blocksLink.onclick = function(e) {
-          for (let i = 0; i < states.length; i++) {
+  onAdd(map) {
+    var blocksLink = document.createElement("button");
+    blocksLink.href = "#";
+    blocksLink.className = "active";
+    blocksLink.style.width = "150px";
+    blocksLink.innerHTML =
+      "<span data-toggle='tooltip' title='Census blocks are the smallest unit of the US census - darker blocks have a higher population'><i class='fas fa-th-large'></i> Toggle Census Blocks</span>";
+    this._map = map;
+    this._container = document.createElement("div");
+    this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
+    var clicked = false;
+    blocksLink.onclick = function (e) {
+      for (let i = 0; i < states.length; i++) {
+        var clickedLayer = states[i] + "-census-lines";
+        e.preventDefault();
+        e.stopPropagation();
+        if (clicked) {
+          map.setPaintProperty(clickedLayer, "fill-opacity", 0.0);
+          this.className = "";
+        } else {
+          this.className = "active";
+          map.setPaintProperty(clickedLayer, "fill-opacity", [
+            "*",
+            ["get", "POP10"],
+            0.001,
+          ]);
+        }
+      }
+      clicked = clicked ? false : true;
+    };
+    this._container.appendChild(blocksLink);
+    return this._container;
+  }
 
-            var clickedLayer = states[i] + "-census-lines";
-            e.preventDefault();
-            e.stopPropagation();
-            if (clicked) {
-              map.setPaintProperty(clickedLayer, 'fill-opacity', 0.0);
-              this.className = '';
-            } else {
-              this.className = 'active';
-              map.setPaintProperty(clickedLayer, 'fill-opacity', ['*', ['get', 'POP10'], .001]);
-            }
-          }
-          clicked = clicked ? false : true;
-        };
-        this._container.appendChild(blocksLink);
-        return this._container;
-    }
-
-    onRemove() {
-        this._container.parentNode.removeChild(this._container);
-        this._map = undefined;
-    }
+  onRemove() {
+    this._container.parentNode.removeChild(this._container);
+    this._map = undefined;
+  }
 }
-map.addControl(new CensusBlocksControl(), 'top-left');
+map.addControl(new CensusBlocksControl(), "top-left");
 
 // Override Behavior for Draw-Button
-document.getElementById("draw-button").addEventListener("click", function(e) {
+document.getElementById("draw-button").addEventListener("click", function (e) {
   cleanAlerts();
   draw.deleteAll();
   // TODO: change for all states
@@ -650,7 +654,7 @@ document.getElementById("draw-button").addEventListener("click", function(e) {
   draw.changeMode("draw_polygon");
 });
 
-document.getElementById("trash-button").addEventListener("click", function(e) {
+document.getElementById("trash-button").addEventListener("click", function (e) {
   cleanAlerts();
   draw.deleteAll();
   // TODO: change for all states
@@ -694,12 +698,12 @@ function newCensusShading(state) {
     source: state + "-census",
     "source-layer": state + "census",
     layout: {
-      visibility: "visible"
+      visibility: "visible",
     },
     paint: {
       "fill-outline-color": "rgb(71, 93, 204)",
       "fill-color": "rgb(71, 93, 204)",
-      "fill-opacity": 0
+      "fill-opacity": 0,
     },
   });
 }
@@ -722,7 +726,7 @@ function newHighlightLayer(state) {
 
 /* After the map style has loaded on the page, add a source layer and default
    styling for a single point. */
-map.on("style.load", function() {
+map.on("style.load", function () {
   map.addSource("single-point", {
     type: "geojson",
     data: {
@@ -755,7 +759,7 @@ map.on("style.load", function() {
 
   // Listen for the `geocoder.input` event that is triggered when a user
   // makes a selection and add a symbol that matches the result.
-  geocoder.on("result", function(ev) {
+  geocoder.on("result", function (ev) {
     map.getSource("single-point").setData(ev.result.geometry);
     var styleSpec = ev.result;
     var styleSpecBox = document.getElementById("json-response");
@@ -766,7 +770,7 @@ map.on("style.load", function() {
 });
 
 var wasLoaded = false;
-map.on("render", function() {
+map.on("render", function () {
   if (!map.loaded() || wasLoaded) return;
   wasLoaded = true;
   if (document.getElementById("id_user_polygon").value !== "") {
@@ -784,19 +788,19 @@ map.on("render", function() {
 
 /******************************************************************************/
 
-map.on("draw.create", function() {
+map.on("draw.create", function () {
   console.log("Draw create");
   updateCommunityEntry();
 });
-map.on("draw.delete", function() {
+map.on("draw.delete", function () {
   console.log("Draw delete");
   updateCommunityEntry();
 });
-map.on("draw.update", function() {
+map.on("draw.update", function () {
   console.log("Draw update");
   updateCommunityEntry();
 });
-map.on("draw.changeMode", function() {
+map.on("draw.changeMode", function () {
   console.log("Draw CM");
 });
 
@@ -894,7 +898,7 @@ function highlightBlocks(drawn_polygon) {
       var total = 0.0;
 
       var filter = features.reduce(
-        function(memo, feature) {
+        function (memo, feature) {
           if (feature.geometry.type == "MultiPolygon") {
             var polyCon;
             // go through all the polygons and check to see if any of the polygons are contained
@@ -927,7 +931,6 @@ function highlightBlocks(drawn_polygon) {
         sessionStorage.getItem("stateName") + "-blocks-highlighted",
         filter
       );
-
     }
   } catch (err) {
     console.log("triangle shaped polygon was changed");
@@ -1029,12 +1032,7 @@ function updateElementIndex(el, prefix, ndx) {
   var id_regex = new RegExp("(" + prefix + "-\\d+)");
   var replacement = prefix + "-" + ndx;
   if ($(el).attr("for"))
-    $(el).attr(
-      "for",
-      $(el)
-        .attr("for")
-        .replace(id_regex, replacement)
-    );
+    $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
   if (el.id) el.id = el.id.replace(id_regex, replacement);
   if (el.name) el.name = el.name.replace(id_regex, replacement);
 }
@@ -1053,7 +1051,7 @@ function cloneMore(selector, prefix) {
   }
   newElement.find("#description_warning").remove();
   newElement.find("#category_warning").remove();
-  newElement.find(":input").each(function() {
+  newElement.find(":input").each(function () {
     var name = $(this)
       .attr("name")
       .replace("-" + (total - 1) + "-", "-" + total + "-");
@@ -1100,7 +1098,7 @@ function deleteForm(prefix, btn) {
   for (var i = 0, formCount = forms.length; i < formCount; i++) {
     $(forms.get(i))
       .find(":input")
-      .each(function() {
+      .each(function () {
         updateElementIndex(this, prefix, i);
       });
   }
@@ -1109,7 +1107,7 @@ function deleteForm(prefix, btn) {
 
 /******************************************************************************/
 
-$(document).on("click", ".add-form-row", function(e) {
+$(document).on("click", ".add-form-row", function (e) {
   // Add form click handler.
   e.preventDefault();
   cloneMore(".form-row:last", "form");
@@ -1118,7 +1116,7 @@ $(document).on("click", ".add-form-row", function(e) {
 
 /******************************************************************************/
 
-$(document).on("click", ".remove-form-row", function(e) {
+$(document).on("click", ".remove-form-row", function (e) {
   // Remove form click handler.
   e.preventDefault();
   deleteForm("form", $(this));

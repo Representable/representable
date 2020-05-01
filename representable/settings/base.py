@@ -75,6 +75,7 @@ INSTALLED_APPS = [
 ACCOUNT_SESSION_REMEMBER = True
 
 SITE_ID = 1
+SITE_NAME = "Represenetable.org"
 
 MIDDLEWARE = [
     # Simplified static file serving.
@@ -187,9 +188,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATIC_URL = "/static/"
 
-# workaround for django all auth
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 
@@ -227,3 +225,13 @@ elif DATABASES["default"]["ENGINE"] == "django.db.backends.sqlite3":
     DATABASES["default"][
         "ENGINE"
     ] = "django.contrib.gis.db.backends.spatialite"
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_HOST_USER = "apikey"
+EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

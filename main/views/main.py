@@ -32,12 +32,10 @@ from allauth.account.decorators import verified_email_required
 from django.forms import formset_factory
 from ..forms import (
     CommunityForm,
-    IssueForm,
     DeletionForm,
 )
 from ..models import (
     CommunityEntry,
-    Issue,
     Tag,
     Membership,
 )
@@ -73,24 +71,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.gis.geos import Point, Polygon, MultiPolygon
 from django.contrib.gis.db.models import Union
 from django.contrib.gis.geos import GEOSGeometry
-
-# ******************************************************************************#
-
-
-def category_clean(cat):
-    """ clean category names for clarity in visualizations """
-    cat = re.sub("_", " ", cat).title()
-    if cat == "Religion":
-        cat = "Religion/Church"
-    if cat == "Race":
-        cat = "Race/Ethnicity"
-    if cat == "Immigration":
-        cat = "Immigration Status"
-    if cat == "Neighborhood":
-        cat = "Neighborhood Identity/Official Definition"
-    if cat == "Lgbt":
-        cat = "LGBT Issues"
-    return cat
 
 
 # ******************************************************************************#
@@ -171,17 +151,6 @@ class Review(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         form = self.form_class(initial=self.get_initial(), label_suffix="")
-        # the dict of issues + input of descriptions
-        issues = dict()
-        for obj in Issue.objects.all():
-            cat = category_clean(obj.category)
-
-            if cat in issues:
-                issues[cat][str(obj.entry)] = obj.description
-            else:
-                issueInfo = dict()
-                issueInfo[str(obj.entry)] = obj.description
-                issues[cat] = issueInfo
 
         # the polygon coordinates
         entryPolyDict = dict()
@@ -263,7 +232,6 @@ class Review(LoginRequiredMixin, TemplateView):
         context = {
             "form": form,
             "tags": json.dumps(tags),
-            "issues": json.dumps(issues),
             "entries": json.dumps(entryPolyDict),
             "approved": json.dumps(approvedList),
             "communities": query,
@@ -296,17 +264,6 @@ class Review(LoginRequiredMixin, TemplateView):
             query = CommunityEntry.objects.filter(user=self.request.user)
             entry = query.get(entry_ID=request.POST.get("c_id"))
             entry.delete()
-
-        issues = dict()
-        for obj in Issue.objects.all():
-            cat = category_clean(obj.category)
-
-            if cat in issues:
-                issues[cat][str(obj.entry)] = obj.description
-            else:
-                issueInfo = dict()
-                issueInfo[str(obj.entry)] = obj.description
-                issues[cat] = issueInfo
 
         context = (
             self.get_context_data()
@@ -367,17 +324,6 @@ class Map(TemplateView):
         # dictionary of entry names and reasons
         entry_names = dict()
         entry_reasons = dict()
-        # the dict of issues + input of descriptions
-        issues = dict()
-        for obj in Issue.objects.all():
-            cat = category_clean(obj.category)
-
-            if cat in issues:
-                issues[cat][str(obj.entry)] = obj.description
-            else:
-                issueInfo = dict()
-                issueInfo[str(obj.entry)] = obj.description
-                issues[cat] = issueInfo
 
         # the polygon coordinates
         entryPolyDict = dict()
@@ -415,7 +361,6 @@ class Map(TemplateView):
             "entry_names": json.dumps(entry_names),
             "entry_reasons": json.dumps(entry_reasons),
             "tags": json.dumps(tags),
-            "issues": json.dumps(issues),
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
         }
@@ -454,8 +399,6 @@ class EntryView(LoginRequiredMixin, View):
         "form-INITIAL_FORMS": "0",
         "form-MAX_NUM_FORMS": "10",
     }
-    # Create the formset, specifying the form and formset we want to use.
-    IssueFormSet = formset_factory(IssueForm, extra=1)
 
     # https://www.agiliq.com/blog/2019/01/django-formview/
     def get_initial(self):
@@ -466,18 +409,15 @@ class EntryView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         form = self.form_class(initial=self.get_initial(), label_suffix="")
-        issue_formset = self.IssueFormSet(self.data)
         context = {
             "form": form,
-            "issue_formset": issue_formset,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
         }
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, label_suffix="")
-        issue_formset = self.IssueFormSet(request.POST)
-        if form.is_valid() and issue_formset.is_valid():
+        if form.is_valid():
             print("Entry form is valid")
             tag_name_qs = form.cleaned_data["tags"].values("name")
             entryForm = form.save(commit=False)
@@ -508,23 +448,11 @@ class EntryView(LoginRequiredMixin, View):
                 tag = Tag.objects.get(name=str(tag_name["name"]))
                 entryForm.tags.add(tag)
 
-            for issue_form in issue_formset:
-                category = issue_form.cleaned_data.get("category")
-                description = issue_form.cleaned_data.get("description")
-                # Ignore form row if it's completely empty.
-                if category and description:
-                    issue = issue_form.save(commit=False)
-                    # Set issueFormset form Foreign Key (entry) to the recently
-                    # created entryForm.
-                    issue.entry = entryForm
-                    issue.save()
-
             m_uuid = str(entryForm.entry_ID).split("-")[0]
             full_url = self.success_url + "?map_id=" + m_uuid
             return HttpResponseRedirect(full_url)
         context = {
             "form": form,
-            "issue_formset": issue_formset,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
         }
         return render(request, self.template_name, context)

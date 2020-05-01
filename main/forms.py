@@ -25,16 +25,19 @@ from django_select2.forms import (
     ModelSelect2Widget,
     ModelSelect2TagWidget,
 )
-from .models import CommunityEntry, Issue, Tag, Organization, Campaign
-from django.forms import formset_factory
+from .models import (
+    CommunityEntry,
+    Tag,
+    Organization,
+    Campaign,
+    Membership,
+)
 from .choices import (
-    POLICY_ISSUES,
     RACE_CHOICES,
     RELIGION_CHOICES,
     INDUSTRY_CHOICES,
     STATES,
 )
-from django.forms.formsets import BaseFormSet
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Area
 
@@ -66,48 +69,6 @@ class TagSelect2Widget(ModelSelect2TagWidget):
         return cleaned_values
 
 
-class IssueForm(ModelForm):
-    class Meta:
-        model = Issue
-        fields = "__all__"
-        exclude = ("entry",)
-
-        widgets = {
-            "category": forms.Select(
-                choices=POLICY_ISSUES, attrs={"class": "form-control"}
-            ),
-            "description": forms.TextInput(
-                attrs={"placeholder": "Short Description"}
-            ),
-        }
-
-    def clean(self):
-        """
-        Adds validation to check that all issues have
-        both a description and a category.
-        Courtesy of: https://whoisnicoleharris.com/2015/01/06/implementing-django-formsets.html
-        """
-        data = self.cleaned_data
-        category = self.cleaned_data["category"]
-        description = self.cleaned_data["description"]
-
-        # Check that issues have both a category and a description
-        if description and not category:
-            msg = "Category Missing"
-            self.add_error("category", msg)
-            raise forms.ValidationError(
-                "All issues must have a category.", code="missing_category"
-            )
-        elif category and not description:
-            msg = "Description Missing"
-            self.add_error("description", msg)
-            raise forms.ValidationError(
-                "All issues must have a description.",
-                code="missing_description",
-            )
-        return data
-
-
 class BootstrapRadioSelect(forms.RadioSelect):
     template_name = "forms/widgets/radio.html"
     option_template_name = "forms/widgets/radio_option.html"
@@ -127,11 +88,6 @@ class CommunityForm(ModelForm):
             }
         )
         widgets = {
-            "entry_issues": ModelSelect2TagWidget(
-                model=Issue,
-                queryset=Issue.objects.all(),
-                search_fields=["name__icontains"],
-            ),
             "tags": TagSelect2Widget(
                 attrs={
                     "data-placeholder": "E.g. FlintWaterCrisis, KoreaTown, etc."
@@ -145,10 +101,12 @@ class CommunityForm(ModelForm):
                 attrs={"placeholder": "My local community..."}
             ),
             "entry_reason": forms.Textarea(
-                attrs={"placeholder": "This community is brought together by...", "rows": 5}
+                attrs={
+                    "placeholder": "This community is brought together by...",
+                    "rows": 5,
+                }
             ),
             "user_polygon": forms.HiddenInput(),
-            "my_community": BootstrapRadioSelect(),
             "zipcode": forms.TextInput(attrs={"placeholder": "Your Zipcode"}),
         }
         labels = {
@@ -237,3 +195,14 @@ class CampaignForm(ModelForm):
                 choices=STATES, attrs={"class": "form-control"}
             ),
         }
+
+
+class MemberForm(ModelForm):
+    class Meta:
+        model = Membership
+        fields = [
+            "member",
+            "is_org_admin",
+            "is_org_moderator",
+            "is_whitelisted",
+        ]

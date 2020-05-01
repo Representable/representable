@@ -19,6 +19,17 @@ This means no changing anything like <a>, <li>, <p>, etc.
 
 */
 
+/* Entry Page: Geocoder Full Width */
+.mapboxgl-ctrl-geocoder {
+  width: 100%;
+  max-width: none;
+}
+
+/* Disable button hover when button is disabled. */
+button:disabled:hover {
+  cursor: not-allowed;
+}
+
 /* Body and headings */
 /* Change the website default font. */
 body {
@@ -370,7 +381,6 @@ color scheme. See readme.md*/
   min-width: 50%;
   margin-left: 25%;
 }
-
 .string {
   color: #314ccd;
 }
@@ -414,6 +424,12 @@ color scheme. See readme.md*/
   margin: 0 auto;
   padding-left: 10px;
   padding-right: 10px;
+}
+
+.blurtop {
+  filter: blur(3px);
+  z-index: 0;
+  pointer-events: none;
 }
 
 .map-demo {
@@ -804,8 +820,8 @@ label {
   border-radius: 3px;
 }
 
-.table tr:active,
-.table tr:hover,
+.table-review tr:active,
+.table-review tr:hover,
 .items li:active,
 .items li:hover {
   background-color: #f5f5f5;

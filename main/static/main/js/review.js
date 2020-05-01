@@ -144,7 +144,7 @@ function newLowerLegislatureLayer(state) {
   });
 }
 
-map.on("load", function() {
+map.on("load", function () {
   // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
   for (let census in CENSUS_KEYS) {
     newSourceLayer(census, CENSUS_KEYS[census]);
@@ -250,35 +250,37 @@ map.on("load", function() {
 });
 
 // on hover, highlight the community
-$(".sidenav").on('mouseenter','.community-review-span',function () {
+$(".sidenav").on("mouseenter", ".community-review-span", function () {
   var isApproved = false;
-  if (map.getPaintProperty(this.id, 'fill-color') === 'rgba(110, 178, 181,0.15)') {
+  if (
+    map.getPaintProperty(this.id, "fill-color") === "rgba(110, 178, 181,0.15)"
+  ) {
     isApproved = true;
   }
   if (isApproved) {
-    map.setPaintProperty(this.id + 'line', 'line-color', 'rgba(0, 0, 0,0.5)');
-    map.setPaintProperty(this.id + 'line', 'line-width', 4);
-    map.setPaintProperty(this.id, 'fill-color', 'rgba(110, 178, 181,0.5)');
-  }
-  else {
-    map.setPaintProperty(this.id + 'line', 'line-color', 'rgba(0, 0, 0,0.5)');
-    map.setPaintProperty(this.id + 'line', 'line-width', 4);
-    map.setPaintProperty(this.id, 'fill-color', 'rgba(255, 50, 0,0.5)');
+    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
+    map.setPaintProperty(this.id + "line", "line-width", 4);
+    map.setPaintProperty(this.id, "fill-color", "rgba(110, 178, 181,0.5)");
+  } else {
+    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
+    map.setPaintProperty(this.id + "line", "line-width", 4);
+    map.setPaintProperty(this.id, "fill-color", "rgba(255, 50, 0,0.5)");
   }
 });
-$(".sidenav").on('mouseleave','.community-review-span',function () {
+$(".sidenav").on("mouseleave", ".community-review-span", function () {
   var isApproved = false;
-  if (map.getPaintProperty(this.id, 'fill-color') === 'rgba(110, 178, 181,0.5)') {
+  if (
+    map.getPaintProperty(this.id, "fill-color") === "rgba(110, 178, 181,0.5)"
+  ) {
     isApproved = true;
   }
   if (isApproved) {
-    map.setPaintProperty(this.id + 'line', 'line-color', 'rgba(0, 0, 0,0.2)');
-    map.setPaintProperty(this.id + 'line', 'line-width', 2);
-    map.setPaintProperty(this.id, 'fill-color', 'rgba(110, 178, 181,0.15)');
-  }
-  else {
-    map.setPaintProperty(this.id + 'line', 'line-color', 'rgba(0, 0, 0,0.2)');
-    map.setPaintProperty(this.id + 'line', 'line-width', 2);
-    map.setPaintProperty(this.id, 'fill-color', 'rgba(255, 50, 0,0.15)');
+    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.2)");
+    map.setPaintProperty(this.id + "line", "line-width", 2);
+    map.setPaintProperty(this.id, "fill-color", "rgba(110, 178, 181,0.15)");
+  } else {
+    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.2)");
+    map.setPaintProperty(this.id + "line", "line-width", 2);
+    map.setPaintProperty(this.id, "fill-color", "rgba(255, 50, 0,0.15)");
   }
 });
