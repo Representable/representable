@@ -150,6 +150,9 @@ class OrganizationForm(ModelForm):
     class Meta:
         model = Organization
         fields = ["name", "description", "ext_link", "states"]
+        labels = {
+            "ext_link": "Link to Organization",
+        }
         widgets = {
             "name": forms.TextInput(
                 attrs={"placeholder": "Name of Organization"}
