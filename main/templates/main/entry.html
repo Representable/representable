@@ -169,22 +169,6 @@
                                             <p class="form-error">{{ err }}</p>
                                             {% endfor %}
                                         </div>
-                                        {% endif %}
-                                        <div id="main_community_form" class="form-group">
-                                            <!-- {# Include the hidden fields #} -->
-                                            {% for hidden in form.hidden_fields %}
-                                            {{ hidden }}
-                                            {% endfor %}
-                                            <!-- {# Tags Field} -->
-                                            <div class="field-wrap mt-3">
-                                                {{ form.tags.label_tag }}
-                                                <div class="form-error">
-                                                    {{ form.tags.errors }}
-                                                </div>
-
-
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
