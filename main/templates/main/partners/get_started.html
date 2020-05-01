@@ -4,15 +4,15 @@
 {% block content %}
 <div class="container">
   <div class="row row-content">
-    <div class="col-lg-6 text-center my-5 order-md-2">
-      <img class="img-fluid align-bottom" src="{% static 'img/illustration.svg' %}"></img>
+    <div class="col-lg-6 text-center my-5 order-md-1">
       <h1 class="font-weight-light"> Get Started </h1>
       <p class="font-weight-light">
         Welcome to Representable! Follow these steps in order to create an organization.
       </p>
       <a class="btn btn-primary" href="{% url 'main:create_org' %}" role="button">Create New Organization</a>
+      <img class="img-fluid align-bottom" src="{% static 'img/illustration.svg' %}"></img>
     </div>
-    <div class="col-lg-6 order-md-1">
+    <div class="col-lg-6 order-md-2">
       <div class="card card-signin my-3">
         <div class="card-body">
           <h5><span class="badge badge-primary">1</span> Create an Organization</h5>
