@@ -42,7 +42,7 @@ body {
 }
 
 body {
-  display: flex;
+  /* display: flex; */
   flex-flow: column;
 }
 
