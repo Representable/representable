@@ -75,7 +75,7 @@ INSTALLED_APPS = [
 ACCOUNT_SESSION_REMEMBER = True
 
 SITE_ID = 1
-SITE_NAME = "Represenetable.org"
+# SITE_NAME = "Represenetable.org"
 
 MIDDLEWARE = [
     # Simplified static file serving.
