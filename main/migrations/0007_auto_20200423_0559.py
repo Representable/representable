@@ -14,9 +14,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="organization",
             name="slug",
-            field=models.SlugField(
-                default=django.utils.timezone.now, unique=True
-            ),
+            field=models.SlugField(unique=True),
             preserve_default=False,
         ),
         migrations.AddField(
