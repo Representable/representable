@@ -157,22 +157,6 @@ var LOWER_KEYS = {
 };
 var states = ["ak", "al", "ar", "az", "ca", "co", "ct", "dc", "de", "fl", "ga", "hi", "ia", "id", "il", "in", "ks", "ky", "la", "ma", "md", "me", "mi", "mn", "mo", "ms", "mt", "nc", "nd", "nh", "nj", "nm", "nv", "ny", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "va", "vt", "wa", "wi", "wv", "wy"];
 
-/* Colors for the different issue categories */
-var PAINT_VALUES = {
-  "Zoning": "rgba(135, 191, 255,",
-  "Policing": "rgba(63, 142, 252,",
-  "Crime": "rgba(196, 178, 188,",
-  "Nuisance": "rgba(223, 146, 142,",
-  "School": "rgba(249, 160, 63,",
-  "Religion/Church": "rgba(234, 200, 30,",
-  "Race/Ethnicity": "rgba(178, 177, 207,",
-  "Immigration Status": "rgba(223, 41, 53,",
-  "Socioeconomic": "rgba(253, 202, 64,",
-  "Transportation": "rgba(242, 255, 73,",
-  "Neighborhood Identity/Official Definition": "rgba(251, 98, 246,",
-  "Environmental": "rgba(150, 98, 26,",
-  "LGBT Issues": "rgba(255, 192, 203,"
-};
 
 $(document).ready( function () {
     $("#zipcodeModal").modal("show");
@@ -345,8 +329,6 @@ function newLowerLegislatureLayer(state) {
     a = JSON.parse(outputstr);
 
     for (obj in a) {
-      let catDict = {};
-      let catArray = [];
       // check how deeply nested the outer ring of the unioned polygon is
       final = [];
       // set the coordinates of the outer ring to final
@@ -370,10 +352,6 @@ function newLowerLegislatureLayer(state) {
               'type': 'Polygon',
               'coordinates': final
             },
-            'properties': {
-              'issues': catDict,
-              'category': catArray
-            }
           }
         },
         'layout': {
@@ -393,10 +371,6 @@ function newLowerLegislatureLayer(state) {
             'geometry': {
               'type': 'Polygon',
               'coordinates': final
-            },
-            'properties': {
-              'issues': catDict,
-              'category': catArray
             }
           }
         },

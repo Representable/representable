@@ -161,9 +161,6 @@
                                         </p>
                                         {{ form.entry_reason|append_attr:"class:form-control" }}
                                         <hr>
-                                        <p class="card-text">
-                                            What issues are relevant to your community?
-                                        </p>
                                         {% csrf_token %}
                                         <!-- {# Include the non-field error fields #} -->
                                         {% if form.non_field_errors %}
@@ -172,108 +169,9 @@
                                             <p class="form-error">{{ err }}</p>
                                             {% endfor %}
                                         </div>
-                                        {% endif %}
-                                        <div id="main_community_form" class="form-group">
-                                            <!-- {# Include the hidden fields #} -->
-                                            {% for hidden in form.hidden_fields %}
-                                            {{ hidden }}
-                                            {% endfor %}
-                                            <!-- Include Formset -->
-                                            {{ issue_formset.management_form }}
-                                            <!-- {# Include the formset.} -->
-                                            {% for hidden_issue_field in issue_formset.hidden_fields %}
-                                            {{ hidden_issue_field }}
-                                            {% endfor %}
-
-                                            {{ issue_formset.non_field_errors }}
-
-                                            <div id="formset_container">
-                                                {% for formset_row in issue_formset %}
-                                                <div class="row form-row issues_formset mt-2">
-                                                    <div class="col-sm-5 mt-2">
-                                                        {{ formset_row.category|append_attr:"class:form-control" }}
-                                                        <!-- Error Codes Here -->
-                                                        {% if formset_row.category.errors %}
-                                                        <script>
-                                                            sessionStorage.setItem("allChecks", "fail");
-                                                        </script>
-                                                        {% for error in formset_row.category.errors %}
-                                                        <small id="category_warning"
-                                                            class="text-danger">{{ error|escape }}</small>
-                                                        {% endfor %}
-                                                        {% endif %}
-                                                    </div>
-                                                    <div class="col-sm-5 mt-2">
-                                                        {{ formset_row.description|append_attr:"class:form-control" }}
-                                                        <!-- Error Codes Here -->
-                                                        {% if formset_row.description.errors %}
-                                                        <script>
-                                                            sessionStorage.setItem("allChecks", "fail");
-                                                        </script>
-                                                        {% for error in formset_row.description.errors %}
-                                                        <small id="category_warning"
-                                                            class="text-danger">{{ error|escape }}</small>
-                                                        {% endfor %}
-                                                        {% endif %}
-                                                    </div>
-                                                    <div class="col-sm-2 mt-2">
-                                                        <button name="removeFormRow"
-                                                            class="btn btn-outline-danger remove-form-row">Remove</button>
-                                                    </div>
-                                                </div>
-                                                {% endfor %}
-                                            </div>
-                                            <!-- End formset container. -->
-                                            <div class="row mt-3">
-                                                <div class='col-sm-12'>
-                                                    <button name="addFormRow"
-                                                        class="btn btn-outline-success add-form-row">Add New
-                                                        Issue</button>
-                                                    <small> You can add maximum 10 issues. </small>
-                                                    <!-- 10 is arbitrary for now. Check forms.py -->
-                                                </div>
-                                            </div>
-                                            <!-- {# Tags Field} -->
-                                            <div class="field-wrap mt-3">
-                                                {{ form.tags.label_tag }}
-                                                <div class="form-error">
-                                                    {{ form.tags.errors }}
-                                                </div>
-                                                {{ form.tags|append_attr:"class:form-control" }}
-                                                {% if form.tags.help_text %}
-                                                <p class="help">{{ form.tags.help_text|safe }}</p>
-                                                {% endif %}
-                                            </div>
-
-
-                                        </div>
-                                        <!-- {# Is this your community? Field} -->
-                                        <div class="field-wrap">
-                                            <div class="form-error">
-                                                {{ form.my_community.label_tag }} <small
-                                                    class="text-danger">(Required)</small>
-                                                {% if form.my_community.errors %}
-                                                <script>
-                                                    sessionStorage.setItem("allChecks", "fail");
-                                                </script>
-                                                <div>
-                                                    <div id="my_community_missing" class="alert alert-warning map-alert"
-                                                        role="alert">
-                                                        You need to specify if you are part of this community.
-                                                    </div>
-                                                </div>
-                                                {% endif %}
-                                            </div>
-                                            {{ form.my_community|append_attr:"class:form-control" }}
-                                            {% if form.my_community.help_text %}
-                                            <p class="help">{{ form.my_community.help_text|safe }}</p>
-                                            {% endif %}
-                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
                 </form>
                 <div class='row mt-4 w-100'>
                     <div class='col-12 text-center'>
@@ -288,15 +186,17 @@
         <div class="col-sm-2">
         </div>
     </div>
+</div>
+</div>
+{% endblock %}
 
-    {% endblock %}
-    {% block script %}
-    {{ form.media.js }}
-    <script type="text/javascript">
-        mapboxgl.accessToken = "{{ mapbox_key }}";
-    </script>
-    <script type="text/javascript" src="{% static 'main/js/wicket.js' %}"></script>
-    <script type="text/javascript" src="{% static 'main/js/geo.js' %}"></script>
-    <!-- Turf to get the bounding box. -->
-    <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
-    {% endblock %}
+{% block script %}
+{{ form.media.js }}
+<script type="text/javascript">
+    mapboxgl.accessToken = "{{ mapbox_key }}";
+</script>
+<script type="text/javascript" src="{% static 'main/js/wicket.js' %}"></script>
+<script type="text/javascript" src="{% static 'main/js/geo.js' %}"></script>
+<!-- Turf to get the bounding box. -->
+<script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+{% endblock %}

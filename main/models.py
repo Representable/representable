@@ -27,7 +27,6 @@ from django.db import migrations
 from django.contrib.gis.db import models
 import datetime
 from .choices import (
-    POLICY_ISSUES,
     RACE_CHOICES,
     RELIGION_CHOICES,
     INDUSTRY_CHOICES,
@@ -111,14 +110,6 @@ class CommunityEntry(models.Model):
     entry_reason = models.TextField(
         max_length=500, blank=True, unique=False, default=""
     )
-    my_community = models.CharField(
-        "Is this your community?",
-        max_length=1,
-        choices=CHOICES,
-        default="Y",
-        blank=False,
-        null=False,
-    )
     admin_approved = models.BooleanField(default=False)
 
     def __str__(self):
@@ -126,36 +117,6 @@ class CommunityEntry(models.Model):
 
     class Meta:
         db_table = "community_entry"
-
-
-# ******************************************************************************#
-
-
-class Issue(models.Model):
-    """
-    Issue holds issues associated with each community entry.
-    Fields included:
-        - entry: Foreign Key that associates the issue to the entry.
-        - category: Category associated with issue.
-        - description: Description.
-    """
-
-    entry = models.ForeignKey(
-        CommunityEntry, on_delete=models.CASCADE, default=None
-    )
-    category = models.CharField(
-        max_length=50, choices=POLICY_ISSUES, default=None, blank=True
-    )
-    description = models.CharField(max_length=250, blank=True)
-
-    class Meta:
-        ordering = (
-            "category",
-            "description",
-        )
-
-    def __str__(self):
-        return self.description
 
 
 # ******************************************************************************#

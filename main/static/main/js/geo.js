@@ -535,14 +535,14 @@ for (var i = 0; i < mapButtons.length; i++) {
 document.getElementById("draw-button").addEventListener("click", function (e) {
   cleanAlerts();
   draw.deleteAll();
-  map.setFilter(state + "-blocks-highlighted", ["in", "GEOID10"]);
+  map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
   draw.changeMode("draw_polygon");
 });
 
 document.getElementById("trash-button").addEventListener("click", function (e) {
   cleanAlerts();
   draw.deleteAll();
-  map.setFilter(state + "-blocks-highlighted", ["in", "GEOID10"]);
+  map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
   draw.changeMode("simple_select");
 });
 
@@ -609,7 +609,7 @@ function newHighlightLayer(state) {
 function addNeighborLayersFilter() {
   for (let i = 0; 0 < neighbors.length; i++) {
     if (map.getLayer(neighbors[i] + "-blocks-highlighted")) {
-      map.setFilter(neighbors[i] + "-blocks-highlighted", ["in", "GEOID10"]);
+      map.setFilter(neighbors[i] + "-blocks-highlighted", ["in", "BLOCKID10"]);
     }
   }
 }
@@ -706,6 +706,7 @@ map.on("style.load", function () {
       new_neighbors = state_neighbors[new_state];
       state = new_state;
       neighbors = new_neighbors;
+      console.log(state);
     }
   });
 });
@@ -947,7 +948,7 @@ function updateCommunityEntry(e) {
     census_blocks_polygon_wkt = "";
     census_blocks_multipolygon_wkt = "";
     // TODO: update for all states
-    map.setFilter(state + "-blocks-highlighted", ["in", "GEOID10"]);
+    map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
   }
   // Update form fields
   census_blocks_polygon_wkt = "";
@@ -973,87 +974,3 @@ function updateElementIndex(el, prefix, ndx) {
 }
 
 /******************************************************************************/
-
-function cloneMore(selector, prefix) {
-  // Function that clones formset fields.
-  var newElement = $(selector).clone(true);
-  var total = $("#id_" + prefix + "-TOTAL_FORMS").val();
-  if (total >= 10) {
-    return false;
-  }
-  if (total == 0) {
-    newElement = formsetFieldObject;
-  }
-  newElement.find("#description_warning").remove();
-  newElement.find("#category_warning").remove();
-  newElement.find(":input").each(function () {
-    var name = $(this)
-      .attr("name")
-      .replace("-" + (total - 1) + "-", "-" + total + "-");
-    var id = "id_" + name;
-    $(this)
-      .attr({
-        name: name,
-        id: id,
-      })
-      .val("")
-      .removeAttr("checked");
-  });
-  total++;
-  $("#id_" + prefix + "-TOTAL_FORMS").val(total);
-  if (total == 1) {
-    $("#formset_container").after(newElement);
-  } else {
-    $(selector).after(newElement);
-  }
-  var conditionRow = $(".form-row:not(:last)");
-  conditionRow
-    .find(".btn.add-form-row")
-    .removeClass("btn-outline-success")
-    .addClass("btn-outline-danger")
-    .removeClass("add-form-row")
-    .addClass("remove-form-row")
-    .html('<span class="" aria-hidden="true">Remove</span>');
-  return false;
-}
-
-/******************************************************************************/
-/* Deletes the issue category and description when "remove" is pressed */
-function deleteForm(prefix, btn) {
-  // Function that deletes formset fields.
-  var total = parseInt($("#id_" + prefix + "-TOTAL_FORMS").val());
-  if (total == 1) {
-    // save last formset field object.
-    formsetFieldObject = $(".form-row:last").clone(true);
-  }
-  btn.closest(".form-row").remove();
-  var forms = $(".form-row");
-  console.log(forms.length);
-  $("#id_" + prefix + "-TOTAL_FORMS").val(forms.length);
-  for (var i = 0, formCount = forms.length; i < formCount; i++) {
-    $(forms.get(i))
-      .find(":input")
-      .each(function () {
-        updateElementIndex(this, prefix, i);
-      });
-  }
-  return false;
-}
-
-/******************************************************************************/
-
-$(document).on("click", ".add-form-row", function (e) {
-  // Add form click handler.
-  e.preventDefault();
-  cloneMore(".form-row:last", "form");
-  return false;
-});
-
-/******************************************************************************/
-
-$(document).on("click", ".remove-form-row", function (e) {
-  // Remove form click handler.
-  e.preventDefault();
-  deleteForm("form", $(this));
-  return false;
-});
