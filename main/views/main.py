@@ -19,16 +19,30 @@
 #
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, ListView
+from django.views.generic import (
+    TemplateView,
+    ListView,
+    CreateView,
+    UpdateView,
+    DetailView,
+)
 from django.views import View
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from allauth.account.decorators import verified_email_required
 from django.forms import formset_factory
-from .forms import CommunityForm, DeletionForm
-from .models import CommunityEntry, Tag
+from ..forms import (
+    CommunityForm,
+    DeletionForm,
+)
+from ..models import (
+    CommunityEntry,
+    Tag,
+    Membership,
+)
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
 from django.utils.translation import gettext
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import (
     LANGUAGE_SESSION_KEY,
     check_for_language,
@@ -40,12 +54,16 @@ import geojson
 import os
 import json
 import re
+import csv
 import hashlib
 from django.http import JsonResponse
 import shapely.wkt
 import reverse_geocoder as rg
 from state_abbrev import us_state_abbrev
-
+from django.contrib.auth.models import Group
+from itertools import islice
+from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
 
 # ******************************************************************************#
 
@@ -66,6 +84,10 @@ Documentation: https://docs.djangoproject.com/en/2.1/topics/class-based-views/
 
 
 class Index(TemplateView):
+    """
+    The main view/home page.
+    """
+
     template_name = "main/index.html"
 
     # Add extra context variables.
@@ -73,60 +95,35 @@ class Index(TemplateView):
         context = super(Index, self).get_context_data(
             **kwargs
         )  # get the default context data
-        print("hello")
-        print(context)
-        print(get_language())
-        # print(LANGUAGE_CODE)
+
         context["mapbox_key"] = os.environ.get("DISTR_MAPBOX_KEY")
         return context
-
-
-# ******************************************************************************#
-
-
-class MainView(TemplateView):
-    template_name = "main/main_test.html"
-
-    # Add extra context variables.
-    def get_context_data(self, **kwargs):
-        context = super(MainView, self).get_context_data(
-            **kwargs
-        )  # get the default context data
-        context["mapbox_key"] = os.environ.get("DISTR_MAPBOX_KEY")
-        return context
-
-
-# ******************************************************************************#
-
-
-class Timeline(TemplateView):
-    template_name = "main/timeline.html"
 
 
 # ******************************************************************************#
 
 
 class About(TemplateView):
-    template_name = "main/about.html"
+    template_name = "main/pages/about.html"
 
 
 # ******************************************************************************#
 
 
 class Privacy(TemplateView):
-    template_name = "main/privacy.html"
+    template_name = "main/pages/privacy.html"
 
 
 # ******************************************************************************#
 
 
 class Terms(TemplateView):
-    template_name = "main/terms.html"
+    template_name = "main/pages/terms.html"
 
 
 # ******************************************************************************#
 class Review(LoginRequiredMixin, TemplateView):
-    template_name = "main/review.html"
+    template_name = "main/pages/review.html"
     form_class = DeletionForm
     initial = {"key": "value"}
 
@@ -276,19 +273,20 @@ class Review(LoginRequiredMixin, TemplateView):
 
 # ******************************************************************************#
 
+
 class Submission(TemplateView):
-    template_name = "main/submission.html"
+    template_name = "main/pages/submission.html"
     sha = hashlib.sha256()
-    NUM_DIGITS = 10 # TODO move to some place with constants
+    NUM_DIGITS = 10  # TODO move to some place with constants
 
     def get(self, request, *args, **kwargs):
-        m_uuid = self.request.GET.get('map_id', None)
+        m_uuid = self.request.GET.get("map_id", None)
         # TODO: Are there security risks? Probably - we should hash the UUID and make that the permalink
-        print(m_uuid)
+
         if m_uuid is None:
-            pass # TODO need to fix here
+            pass  # TODO need to fix here
         query = CommunityEntry.objects.filter(entry_ID__startswith=m_uuid)
-        print(query)
+
         if len(query) == 0:
             context = {
                 "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
@@ -308,18 +306,19 @@ class Submission(TemplateView):
         entryPolyDict[m_uuid] = map_poly.coordinates
 
         context = {
-            "entry_name" : user_map.entry_name,
-            "entry_reason" : user_map.entry_reason,
+            "entry_name": user_map.entry_name,
+            "entry_reason": user_map.entry_reason,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
         }
         return render(request, self.template_name, context)
 
+
 # ******************************************************************************#
 
 
 class Map(TemplateView):
-    template_name = "main/map.html"
+    template_name = "main/pages/map.html"
 
     def get_context_data(self, **kwargs):
         # dictionary of entry names and reasons
@@ -372,11 +371,11 @@ class Map(TemplateView):
 
 
 class Thanks(TemplateView):
-    template_name = "main/thanks.html"
+    template_name = "main/pages/thanks.html"
 
     def get(self, request):
         context = {
-            "map_url" : request.GET['map_id'],
+            "map_url": request.GET["map_id"],
         }
         return render(request, self.template_name, context)
 
@@ -389,7 +388,7 @@ class EntryView(LoginRequiredMixin, View):
     EntryView displays the form and map selection screen.
     """
 
-    template_name = "main/entry.html"
+    template_name = "main/pages/entry.html"
     form_class = CommunityForm
     initial = {
         "key": "value",
@@ -459,6 +458,3 @@ class EntryView(LoginRequiredMixin, View):
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
         }
         return render(request, self.template_name, context)
-
-
-# ******************************************************************************#

@@ -1,0 +1,64 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <div class="row pt-3">
+    <div class="col">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'main:index' %}">Home</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'main:dashboard' %}">Dashboard</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'main:home_org' view.kwargs.slug view.kwargs.pk %}">Partners / {{ organization.name }}</a></li>
+          <li class="breadcrumb-item active" aria-current="page"> Membership</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+  <div class="row pt-2">
+    <div class="col">
+      <h4>
+        Manage Users
+      </h4>
+      <hr>
+      <div class="alert alert-primary" role="alert">
+        Need to add moderators or alter permissions? Add members <a href="{% url 'main:create_member' view.kwargs.slug view.kwargs.pk %}" class="alert-link">here</a>. 
+      </div>
+    </div>
+  </div>
+  <div class="row pt-3">
+    <div class="col-sm">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                {% for k in header %}
+                <th>{{k}}</th>
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for member in members %}
+              <tr>
+                <td>{{member.member.email}}</td>
+                 {% if member.is_org_admin %}
+                <td>Admin</td>
+                {% elif member.is_org_moderator %}
+                <td>Moderator</td>
+
+                {% else %}
+                <td>Member</td>
+
+                {% endif %}
+                <td>{{member.date_joined}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

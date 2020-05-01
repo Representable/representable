@@ -1,0 +1,67 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <div class="row pt-3">
+    <div class="col">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'main:index' %}">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'main:dashboard' %}">Dashboard</a></li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+    <div class="row pt-2">
+      <div class="col">
+        <h4>
+          Dashboard
+        </h4>
+        <hr>
+      </div>
+    </div>
+    <div class="row py-2">
+      <div class="col-sm">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <h5>
+              Organizations
+            </h5>
+            {% if org_list %}
+            <ul class="list-group my-3">
+              {% for org in org_list %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ org.name }}
+                <a class="btn btn-primary" href="{% url 'main:home_org' org.slug  org.id %}" role="button">Manage <i class="fa fa-arrow-circle-right"></i></a>
+              </li>
+              {% endfor %}
+              {% else %}
+              <p class="my-3">You're currently not part of any organizations.
+                Ask someone to add you to their organization or create a new one below.</p>
+              {% endif %}
+            </ul>
+            <div class="text-center"">
+            <a class=" btn btn-outline-primary" href="{% url 'main:create_org' %}" role="button">Create New</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <h5>
+              Quick Links
+            </h5>
+            <hr>
+            <div class="text-center"">
+          <a class=" btn btn-block btn-outline-primary" href="{% url 'main:create_org' %}" role="button">Create Organization</a>
+              <a class="btn btn-block btn-outline-primary" href="{% url 'main:entry' %}" role="button">Create Entry</a>
+              <a class="btn btn-block btn-outline-primary" href="{% url 'main:review' %}" role="button">My Submissions</a>
+
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  {% endblock %}

@@ -49,7 +49,7 @@ var CENSUS_KEYS = {
   "wa-census": "4a9umfkl",
   "wi-census": "52mhmiw7",
   "wv-census": "82nll1sy",
-  "wy-census": "9uwm30og"
+  "wy-census": "9uwm30og",
 };
 var UPPER_KEYS = {
   "ak-upper": "ajy4zns3",
@@ -101,7 +101,7 @@ var UPPER_KEYS = {
   "wa-upper": "21jsuobz",
   "wi-upper": "7wznqcw4",
   "wv-upper": "2oou05hr",
-  "wy-upper": "7lkxtzk5"
+  "wy-upper": "7lkxtzk5",
 };
 var LOWER_KEYS = {
   "ak-lower": "a7my06pf",
@@ -153,41 +153,89 @@ var LOWER_KEYS = {
   "wa-lower": "c9rk9gas",
   "wi-lower": "3q5v3n9v",
   "wv-lower": "aq380u5z",
-  "wy-lower": "93ya8fsx"
+  "wy-lower": "93ya8fsx",
 };
-var states = ["ak", "al", "ar", "az", "ca", "co", "ct", "dc", "de", "fl", "ga", "hi", "ia", "id", "il", "in", "ks", "ky", "la", "ma", "md", "me", "mi", "mn", "mo", "ms", "mt", "nc", "nd", "nh", "nj", "nm", "nv", "ny", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "va", "vt", "wa", "wi", "wv", "wy"];
+var states = [
+  "ak",
+  "al",
+  "ar",
+  "az",
+  "ca",
+  "co",
+  "ct",
+  "dc",
+  "de",
+  "fl",
+  "ga",
+  "hi",
+  "ia",
+  "id",
+  "il",
+  "in",
+  "ks",
+  "ky",
+  "la",
+  "ma",
+  "md",
+  "me",
+  "mi",
+  "mn",
+  "mo",
+  "ms",
+  "mt",
+  "nc",
+  "nd",
+  "nh",
+  "nj",
+  "nm",
+  "nv",
+  "ny",
+  "oh",
+  "ok",
+  "or",
+  "pa",
+  "ri",
+  "sc",
+  "sd",
+  "tn",
+  "tx",
+  "ut",
+  "va",
+  "vt",
+  "wa",
+  "wi",
+  "wv",
+  "wy",
+];
 
-
-$(document).ready( function () {
-    $("#zipcodeModal").modal("show");
+$(document).ready(function () {
+  $("#zipcodeModal").modal("show");
 });
 
 function modalZip(e) {
   e.preventDefault();
 
-  var isnum = /^\d+$/.test($('#zipcode').val());
+  var isnum = /^\d+$/.test($("#zipcode").val());
   if (isnum) {
     console.log("yuh");
-    $('#zipcodeModal').modal('hide');
+    $("#zipcodeModal").modal("hide");
     // user puts in a zipcode and the map zooms to that loc
-    let geoObj = geocoder.query($('#zipcode').val(),
-      function(err, res) {
-        console.log(err, res)
-      });
+    let geoObj = geocoder.query($("#zipcode").val(), function (err, res) {
+      console.log(err, res);
+    });
     console.log(geoObj);
     var q = "Edison";
-
   } else {
     // write out the error here:
   }
 }
 
-$('#zipcodeModal').keypress(function (e) {
-    if (e.keyCode === 10 || e.keyCode === 13) {
-        modalZip(e);
-    }
+$("#zipcodeModal").keypress(function (e) {
+  if (e.keyCode === 10 || e.keyCode === 13) {
+    modalZip(e);
+  }
 });
-$('#zipSubmit').click(function(e) {
+$("#zipSubmit").click(function (e) {
   modalZip(e);
 });
 
@@ -195,11 +243,11 @@ $('#zipSubmit').click(function(e) {
 function parseReverseGeo(geoData) {
   var region, countryName, placeName, returnStr;
   if (geoData.context) {
-    $.each(geoData.context, function(i, v) {
-      if (v.id.indexOf('region') >= 0) {
+    $.each(geoData.context, function (i, v) {
+      if (v.id.indexOf("region") >= 0) {
         region = v.text;
       }
-      if (v.id.indexOf('country') >= 0) {
+      if (v.id.indexOf("country") >= 0) {
         countryName = v.text;
       }
     });
@@ -216,28 +264,30 @@ function parseReverseGeo(geoData) {
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
 var map = new mapboxgl.Map({
-  container: 'map', // container id
-  style: 'mapbox://styles/mapbox/streets-v11', //color of the map -- dark-v10 or light-v9
+  container: "map", // container id
+  style: "mapbox://styles/mapbox/streets-v11", //color of the map -- dark-v10 or light-v9
   center: [-74.65545, 40.341701], // starting position - Princeton, NJ :)
-  zoom: 12 // starting zoom -- higher is closer
+  zoom: 12, // starting zoom -- higher is closer
 });
 
 // geocoder used for a search bar -- within the map itself
 var geocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
-  country: 'us',
-  mapboxgl: mapboxgl
+  country: "us",
+  mapboxgl: mapboxgl,
 });
-map.addControl(geocoder, 'top-right');
+map.addControl(geocoder, "top-right");
 
 // Add geolocate control to the map. -- this zooms in on the user's current location when pressed
 // Q: is it too confusing ? like the symbol doesn't exactly tell you what it does
-map.addControl(new mapboxgl.GeolocateControl({
-  positionOptions: {
-    enableHighAccuracy: true
-  },
-  trackUserLocation: true
-}));
+map.addControl(
+  new mapboxgl.GeolocateControl({
+    positionOptions: {
+      enableHighAccuracy: true,
+    },
+    trackUserLocation: true,
+  })
+);
 
 map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
 
@@ -245,170 +295,172 @@ map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
 function newSourceLayer(name, mbCode) {
   map.addSource(name, {
     type: "vector",
-    url: "mapbox://districter-team." + mbCode
+    url: "mapbox://districter-team." + mbCode,
   });
 }
 // add a new layer of census block data
 function newCensusLayer(state) {
   map.addLayer({
-    "id": state.toUpperCase() + " Census Blocks",
-    "type": "line",
-    "source": state + "-census",
+    id: state.toUpperCase() + " Census Blocks",
+    type: "line",
+    source: state + "-census",
     "source-layer": state + "census",
-    "layout": {
-      "visibility": "none"
+    layout: {
+      visibility: "none",
     },
-    "paint": {
+    paint: {
       "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 3
-    }
+      "line-width": 3,
+    },
   });
 }
 // add a new layer of upper state legislature data
 function newUpperLegislatureLayer(state) {
   map.addLayer({
-    "id": state.toUpperCase() + " State Legislature - Upper",
-    "type": "line",
-    "source": state + "-upper",
+    id: state.toUpperCase() + " State Legislature - Upper",
+    type: "line",
+    source: state + "-upper",
     "source-layer": state + "upper",
-    "layout": {
-      "visibility": "none",
+    layout: {
+      visibility: "none",
       "line-join": "round",
-      "line-cap": "round"
+      "line-cap": "round",
     },
-    "paint": {
+    paint: {
       "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 2
-    }
+      "line-width": 2,
+    },
   });
 }
 // add a new layer of lower state legislature data
 function newLowerLegislatureLayer(state) {
   map.addLayer({
-    "id": state.toUpperCase() + " State Legislature - Lower",
-    "type": "line",
-    "source": state + "-lower",
+    id: state.toUpperCase() + " State Legislature - Lower",
+    type: "line",
+    source: state + "-lower",
     "source-layer": state + "lower",
-    "layout": {
-      "visibility": "none",
+    layout: {
+      visibility: "none",
       "line-join": "round",
-      "line-cap": "round"
+      "line-cap": "round",
     },
-    "paint": {
+    paint: {
       "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 2
-    }
+      "line-width": 2,
+    },
   });
 }
-  
-  map.on('load', function() {
-    for (let census in CENSUS_KEYS) {
-      newSourceLayer(census, CENSUS_KEYS[census]);
-    }
-    // upper layers
-    for (let upper in UPPER_KEYS) {
-      if (states[i] !== "dc") {
-        newSourceLayer(upper, UPPER_KEYS[upper]);
-      }
-    }
-    // lower layers
-    for (let lower in LOWER_KEYS) {
-      if (states[i] !== "dc") {
-        newSourceLayer(lower, LOWER_KEYS[lower]);
-      }
-    }
-    for (let i = 0; i < states.length; i++) {
-      newCensusLayer(states[i]);
-      if (states[i] !== "dc") {
-        newUpperLegislatureLayer(states[i]);
-        newLowerLegislatureLayer(states[i]);
-      }
-    }
 
-    var outputstr = a.replace(/'/g, '"');
-    a = JSON.parse(outputstr);
-
-    for (obj in a) {
-      // check how deeply nested the outer ring of the unioned polygon is
-      final = [];
-      // set the coordinates of the outer ring to final
-      if (a[obj][0][0].length > 2) {
-        final = [a[obj][0][0]];
-      }
-      else if(a[obj][0].length > 2) {
-        final = [a[obj][0]];
-      }
-      else {
-        final = a[obj]
-      }
-      map.addLayer({
-        'id': obj,
-        'type': 'fill',
-        'source': {
-          'type': 'geojson',
-          'data': {
-            'type': 'Feature',
-            'geometry': {
-              'type': 'Polygon',
-              'coordinates': final
-            },
-          }
-        },
-        'layout': {
-          "visibility": "visible"
-        },
-        'paint': {
-          'fill-color': 'rgba(110, 178, 181,0.30)',
-        }
-      });
-      map.addLayer({
-        'id': obj + "line",
-        'type': 'line',
-        'source': {
-          'type': 'geojson',
-          'data': {
-            'type': 'Feature',
-            'geometry': {
-              'type': 'Polygon',
-              'coordinates': final
-            }
-          }
-        },
-        'layout': {
-          "visibility": "visible",
-          "line-join": "round",
-          "line-cap": "round"
-        },
-        'paint': {
-          'line-color': 'rgba(0, 0, 0,0.2)',
-          "line-width": 2
-        }
-      });
+map.on("load", function () {
+  for (let census in CENSUS_KEYS) {
+    newSourceLayer(census, CENSUS_KEYS[census]);
+  }
+  // upper layers
+  for (let upper in UPPER_KEYS) {
+    if (states[i] !== "dc") {
+      newSourceLayer(upper, UPPER_KEYS[upper]);
     }
-    const coordinates = final[0];
-    var bounds = coordinates.reduce(function(bounds, coord) {
-      return bounds.extend(coord);
-    }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
-    map.fitBounds(bounds, {
-      padding: 100
+  }
+  // lower layers
+  for (let lower in LOWER_KEYS) {
+    if (states[i] !== "dc") {
+      newSourceLayer(lower, LOWER_KEYS[lower]);
+    }
+  }
+  for (let i = 0; i < states.length; i++) {
+    newCensusLayer(states[i]);
+    if (states[i] !== "dc") {
+      newUpperLegislatureLayer(states[i]);
+      newLowerLegislatureLayer(states[i]);
+    }
+  }
+
+  var outputstr = a.replace(/'/g, '"');
+  a = JSON.parse(outputstr);
+
+  for (obj in a) {
+    // check how deeply nested the outer ring of the unioned polygon is
+    final = [];
+    // set the coordinates of the outer ring to final
+    if (a[obj][0][0].length > 2) {
+      final = [a[obj][0][0]];
+    } else if (a[obj][0].length > 2) {
+      final = [a[obj][0]];
+    } else {
+      final = a[obj];
+    }
+    map.addLayer({
+      id: obj,
+      type: "fill",
+      source: {
+        type: "geojson",
+        data: {
+          type: "Feature",
+          geometry: {
+            type: "Polygon",
+            coordinates: final,
+          },
+        },
+      },
+      layout: {
+        visibility: "visible",
+      },
+      paint: {
+        "fill-color": "rgba(110, 178, 181,0.30)",
+      },
     });
+    map.addLayer({
+      id: obj + "line",
+      type: "line",
+      source: {
+        type: "geojson",
+        data: {
+          type: "Feature",
+          geometry: {
+            type: "Polygon",
+            coordinates: final,
+          },
+        },
+      },
+      layout: {
+        visibility: "visible",
+        "line-join": "round",
+        "line-cap": "round",
+      },
+      paint: {
+        "line-color": "rgba(0, 0, 0,0.2)",
+        "line-width": 2,
+      },
+    });
+  }
+  const coordinates = final[0];
+  var bounds = coordinates.reduce(function (bounds, coord) {
+    return bounds.extend(coord);
+  }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
+  map.fitBounds(bounds, {
+    padding: 100,
   });
-  
-  //create a button that toggles layers based on their IDs
-var toggleableLayerIds = ['Census Blocks', 'State Legislature - Lower', 'State Legislature - Upper'];
+});
+
+//create a button that toggles layers based on their IDs
+var toggleableLayerIds = [
+  "Census Blocks",
+  "State Legislature - Lower",
+  "State Legislature - Upper",
+];
 
 for (var i = 0; i < toggleableLayerIds.length; i++) {
   var id = toggleableLayerIds[i];
 
-  var link = document.createElement('input');
+  var link = document.createElement("input");
 
-  link.value = id.replace(/\s+/g, '-').toLowerCase();
+  link.value = id.replace(/\s+/g, "-").toLowerCase();
   link.id = id;
-  link.type = 'checkbox';
-  link.className = 'switch_1';
+  link.type = "checkbox";
+  link.className = "switch_1";
   link.checked = false;
 
-  link.onchange = function(e) {
+  link.onchange = function (e) {
     var txt = this.id;
     var clickedLayers = [];
     for (let i = 0; i < states.length; i++) {
@@ -421,26 +473,26 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
     e.stopPropagation();
 
     for (var j = 0; j < clickedLayers.length; j++) {
-      var visibility = map.getLayoutProperty(clickedLayers[j], 'visibility');
+      var visibility = map.getLayoutProperty(clickedLayers[j], "visibility");
 
-      if (visibility === 'visible') {
-        map.setLayoutProperty(clickedLayers[j], 'visibility', 'none');
+      if (visibility === "visible") {
+        map.setLayoutProperty(clickedLayers[j], "visibility", "none");
       } else {
-        map.setLayoutProperty(clickedLayers[j], 'visibility', 'visible');
+        map.setLayoutProperty(clickedLayers[j], "visibility", "visible");
       }
     }
   };
   // in order to create the buttons
-  var div = document.createElement('div');
-  div.className = 'switch_box box_1';
-  var label = document.createElement('label');
-  label.setAttribute('for', id.replace(/\s+/g, '-').toLowerCase());
+  var div = document.createElement("div");
+  div.className = "switch_box box_1";
+  var label = document.createElement("label");
+  label.setAttribute("for", id.replace(/\s+/g, "-").toLowerCase());
   label.textContent = id;
-  var layers = document.getElementById('outline-menu');
+  var layers = document.getElementById("outline-menu");
   div.appendChild(link);
   div.appendChild(label);
   layers.appendChild(div);
-  var newline = document.createElement('br');
+  var newline = document.createElement("br");
 }
 
 /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content -
@@ -449,7 +501,7 @@ var dropdown = document.getElementsByClassName("dropdown-btn");
 var i;
 
 for (i = 0; i < dropdown.length; i++) {
-  dropdown[i].addEventListener("click", function() {
+  dropdown[i].addEventListener("click", function () {
     this.classList.toggle("active");
     var dropdownContent = this.nextElementSibling;
     if (dropdownContent.style.display === "block") {

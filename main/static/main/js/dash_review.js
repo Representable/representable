@@ -42,6 +42,7 @@ var LOWER_KEYS = {
   "mi-lower": "aa2ljvl2",
 };
 var states = ["nj", "va", "pa", "mi"];
+
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
@@ -150,21 +151,18 @@ map.on("load", function () {
     newLowerLegislatureLayer(states[i]);
   }
 
-  // tags add to properties
-  tags = JSON.parse(tags);
-
-  var outputstr = a.replace(/'/g, '"');
-  a = JSON.parse(outputstr);
-  for (obj in a) {
+  var outputstr = entries.replace(/'/g, '"');
+  entries = JSON.parse(outputstr);
+  for (obj in entries) {
     // check how deeply nested the outer ring of the unioned polygon is
     final = [];
     // set the coordinates of the outer ring to final
-    if (a[obj][0][0].length > 2) {
-      final = [a[obj][0][0]];
-    } else if (a[obj][0].length > 2) {
-      final = [a[obj][0]];
+    if (entries[obj][0][0].length > 2) {
+      final = [entries[obj][0][0]];
+    } else if (entries[obj][0].length > 2) {
+      final = [entries[obj][0]];
     } else {
-      final = a[obj];
+      final = entries[obj];
     }
     approved_color = "rgba(110, 178, 181,0.30)";
     unapproved_color = "rgba(255, 50, 0,0.30)";
@@ -221,7 +219,6 @@ map.on("load", function () {
 
 // on hover, highlight the community
 $(".sidenav").on("mouseenter", ".community-review-span", function () {
-  console.log("HELLO THERE WORLD");
   map.setPaintProperty(
     this.id + "line",
     "line-color",

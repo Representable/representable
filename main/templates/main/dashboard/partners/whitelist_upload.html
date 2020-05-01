@@ -1,0 +1,38 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                    <h5 class="card-title text-center">
+                        Upload an Email Whitelist
+                      </h5>
+                      <form role="form" id="EmailWhitelist" method="post" enctype="multipart/form-data">{% csrf_token %}
+
+                          <div class="form-group">
+                        {% for field in form %}
+                          <div class="fieldWrapper">
+                              {{ field.errors }}
+                              {{ field|append_attr:"class:form-control" }}
+                              {% if field.help_text %}
+                              <p class="help">{{ field.help_text|safe }}</p>
+                              {% endif %}
+                              <input type="file" value="Select file" name="file"/>
+                          </div>
+                      {% endfor %}
+
+                      </div>
+                      <div style="display: inline-block;">
+                          <button id="save" form="EmailWhitelist" type="submit" class="btn btn-primary" value="Update">Submit</button>
+                      </div>
+                      </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

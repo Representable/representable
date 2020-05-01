@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                    <h5 class="card-title text-center">
+                        {% if LANGUAGE_CODE == 'en' %}
+                            Thank you for creating an organization!
+                        {% elif LANGUAGE_CODE == 'es' %}
+                              <!-- Google translate  -->
+                              ¡Gracias por enviar su organización!
+                        {% endif %}
+                    </h5>
+                    <p class="text-center">We are excited to work with you to create high-quality maps of communities of interest.</p>
+                    <div class="text-center"> <a class="btn btn-primary btn-canvas font-weight-light text-uppercase" href="{% url 'main:home_org' view.kwargs.slug  view.kwargs.pk %}" role="button"><small>organization homepage</small></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

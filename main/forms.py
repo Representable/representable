@@ -25,14 +25,19 @@ from django_select2.forms import (
     ModelSelect2Widget,
     ModelSelect2TagWidget,
 )
-from .models import CommunityEntry, Tag
-from django.forms import formset_factory
+from .models import (
+    CommunityEntry,
+    Tag,
+    Organization,
+    Campaign,
+    Membership,
+)
 from .choices import (
     RACE_CHOICES,
     RELIGION_CHOICES,
     INDUSTRY_CHOICES,
+    STATES,
 )
-from django.forms.formsets import BaseFormSet
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Area
 
@@ -83,18 +88,6 @@ class CommunityForm(ModelForm):
             }
         )
         widgets = {
-            "race": Select2MultipleWidget(
-                choices=RACE_CHOICES,
-                attrs={"data-placeholder": "E.g. Black, Asian, etc."},
-            ),
-            "religion": Select2MultipleWidget(
-                choices=RELIGION_CHOICES,
-                attrs={"data-placeholder": "E.g. Christian, Hindu etc."},
-            ),
-            "industry": Select2MultipleWidget(
-                choices=INDUSTRY_CHOICES,
-                attrs={"data-placeholder": "E.g. Fishing, Professional etc."},
-            ),
             "tags": TagSelect2Widget(
                 attrs={
                     "data-placeholder": "E.g. FlintWaterCrisis, KoreaTown, etc."
@@ -148,3 +141,65 @@ class DeletionForm(ModelForm):
             "user": forms.HiddenInput(),
             "entry_ID": forms.HiddenInput(),
         }
+
+
+class OrganizationForm(ModelForm):
+    class Meta:
+        model = Organization
+        fields = ["name", "description", "ext_link", "states"]
+        widgets = {
+            "name": forms.TextInput(
+                attrs={"placeholder": "Name of Organization"}
+            ),
+            "description": forms.Textarea(
+                attrs={
+                    "placeholder": "Short Description",
+                    "rows": 4,
+                    "cols": 20,
+                }
+            ),
+            "ext_link": forms.TextInput(
+                attrs={
+                    "placeholder": "External link to your organization. Include 'http'."
+                }
+            ),
+            "states": Select2MultipleWidget(
+                choices=STATES, attrs={"data-placeholder": "Select States"},
+            ),
+        }
+
+
+#
+class WhitelistForm(ModelForm):
+    class Meta:
+        model = Organization
+        fields = ["name"]
+        widgets = {
+            "name": forms.HiddenInput(),
+        }
+
+
+class CampaignForm(ModelForm):
+    class Meta:
+        model = Campaign
+        fields = ["name", "description", "state", "start_date", "end_date"]
+        widgets = {
+            "name": forms.TextInput(attrs={"placeholder": "Name of Campaign"}),
+            "description": forms.Textarea(
+                attrs={"placeholder": "Short Description"}
+            ),
+            "state": forms.Select(
+                choices=STATES, attrs={"class": "form-control"}
+            ),
+        }
+
+
+class MemberForm(ModelForm):
+    class Meta:
+        model = Membership
+        fields = [
+            "member",
+            "is_org_admin",
+            "is_org_moderator",
+            "is_whitelisted",
+        ]

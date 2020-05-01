@@ -1,0 +1,106 @@
+{% extends 'main/base.html' %}
+{% load leaflet_tags %}
+{% load static %}
+{% load widget_tweaks %}
+{% load representable_extras %}
+
+
+{% block head %}
+{{ form.media.css }}
+{% leaflet_js %}
+{% leaflet_css %}
+<!-- https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ -->
+<!-- Mapbox GL JS -->
+<meta charset='utf-8' />
+<title>Review Communities</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--  GeoCoder -->
+<meta name='robots' content='noindex, nofollow'>
+
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
+<!-- Add css again to take precedence over mapbox css. -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<!--  Custom CSS -->
+<link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+<div class="row row-wide">
+    <div>
+        <script type="text/javascript">
+            var a = '{{ entries | escapejs }}';
+            var tags = '{{ tags | escapejs }}';
+            var approved = '{{ approved | escapejs }}';
+        </script>
+    </div>
+    <div class="col-md-6 col-wide">
+        <nav id='menu'>
+            <div class="sidenav">
+                <div class="dropdown-container"></div>
+                <div id="outline-menu">
+                </div>
+                {% if communities %}
+                <table class="table table-review">
+                    <tr>
+                        <th scope="col">Community Name</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    {% for c in communities %}
+                    <tr class="community-review-span" id={{c.entry_ID}}>
+                        <td>
+                          <span class="font-weight-light text-uppercase entry-name">
+                            {% with link_text="/submission?map_id="|addstr:c.entry_ID|slice:27 %}
+                              <a href={{link_text}} style="padding: 6px">{{c.entry_name}}</a>
+                            {% endwith %}
+                          </span>
+                          <br>
+                            <span class="font-weight-light">{{c.entry_reason}}<br>
+                            {% if user.is_staff %}
+                            <!-- we should have an author here too -->
+                                <b>Created by:</b></span> {{ c.user.username }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <form method="post" action="">{% csrf_token %}
+                                {{ form }}
+                                <input type="hidden" name="c_id" value="{{ c }}">
+                                {% if user.is_staff %}
+                                    {% if c.admin_approved %}
+                                        <button type="submit" class="btn btn-warning", name="Unapprove">Unapprove</button>
+                                    {% else %}
+                                        <button type="submit" class="btn btn-success", name="Approve">Approve</button>
+                                    {% endif %}
+                                {% endif %}
+                                <button type="submit" class="btn btn-danger", name="Delete">Delete</button>
+                            </form>
+                        </td>
+                    <tr>
+                    {% endfor %}
+                </table>
+                {% else %}
+                <div class=jumbotron>
+                    <h1>No entries!</h1>
+                </div>
+                {% endif %}
+                </div>
+        </nav>
+    </div>
+    <div class="col-md-6 col-map col-wide">
+        <div id='map' class="map-visualization"></div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block script %}
+{{ form.media.js }}
+<!--  Has to be at the end after the HTML loads.-->
+<script type="text/javascript">
+    mapboxgl.accessToken = "{{ mapbox_key }}";
+</script>
+<script type="text/javascript" src="{% static 'main/js/review.js' %}"></script>
+{% endblock %}

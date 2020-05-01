@@ -6,12 +6,11 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0003_delete_issue'),
+        ("main", "0003_delete_issue"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='communityentry',
-            name='my_community',
+            model_name="communityentry", name="my_community",
         ),
     ]

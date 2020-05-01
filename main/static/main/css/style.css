@@ -36,6 +36,16 @@ body {
   font-family: Inter, system-ui, sans-serif;
 }
 
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-flow: column;
+}
+
 /* Change hero card so that it doesn't display borders. */
 .hero-card .card {
   border-width: 0 !important;
@@ -102,6 +112,10 @@ body {
 
 .quote-footer {
   color: white;
+}
+
+footer {
+  margin-top: auto;
 }
 
 /* Class to make columns equal in height using flex. */
@@ -795,8 +809,8 @@ label {
   border-radius: 3px;
 }
 
-.table tr:active,
-.table tr:hover,
+.table-review tr:active,
+.table-review tr:hover,
 .items li:active,
 .items li:hover {
   background-color: #f5f5f5;

@@ -33,7 +33,7 @@
         for(h=0;h<l.length;h++)c(e,l[h]);var f="set set_once union unset remove delete".split(" ");e.get_group=function(){function a(c){b[c]=function(){call2_args=arguments;call2=[c].concat(Array.prototype.slice.call(call2_args,0));e.push([d,call2])}}for(var b={},d=["get_group"].concat(Array.prototype.slice.call(arguments,0)),c=0;c<f.length;c++)a(f[c]);return b};a._i.push([b,d,g])};a.__SV=1.2;b=c.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?
         MIXPANEL_CUSTOM_LIB_URL:"file:"===c.location.protocol&&"//cdn4.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn4.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn4.mxpnl.com/libs/mixpanel-2-latest.min.js";d=c.getElementsByTagName("script")[0];d.parentNode.insertBefore(b,d)}})(document,window.mixpanel||[]);
         mixpanel.init("d0cc0bfda7587bccdb286d10deeac993")</script>
-    
+
     {% block head %}
     {% endblock %}
 
@@ -66,15 +66,28 @@
                     </a>
                 </li>
                 <li class="nav-item mx-auto">
-                    <a class="nav-link" href='/map'>
+                    <a class="nav-link" href="{% url 'main:partner_welcome' %}">
                         {% if LANGUAGE_CODE == 'en' %}
-                        Map
+                        Partners
                         {% elif LANGUAGE_CODE == 'es' %}
                         <!-- Google translate  -->
-                        Mapa
+                        Socios
                         {% endif %}
                     </a>
                 </li>
+                {% if user.is_authenticated %}</li>
+                <li class="nav-item mx-auto">
+                    <a class="nav-link" href="{% url 'main:dashboard' %}">
+                        {% if LANGUAGE_CODE == 'en' %}
+                        Dashboard
+                        {% elif LANGUAGE_CODE == 'es' %}
+                        <!-- Google translate  -->
+                        Tablero
+                        {% endif %}
+                    </a>
+                </li>
+                {% endif %}
+
                 {% if user.is_authenticated %}</li>
                 <li class="nav-item mx-auto">
                     {% if user.is_authenticated %}
