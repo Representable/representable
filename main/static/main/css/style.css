@@ -793,8 +793,8 @@ label {
   border-radius: 3px;
 }
 
-.table tr:active,
-.table tr:hover,
+.table-review tr:active,
+.table-review tr:hover,
 .items li:active,
 .items li:hover {
   background-color: #f5f5f5;

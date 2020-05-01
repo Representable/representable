@@ -229,6 +229,22 @@ class HomeOrg(LoginRequiredMixin, DetailView):
 # ******************************************************************************#
 
 
+class ManageOrg(LoginRequiredMixin, OrgAdminRequiredMixin, TemplateView):
+    template_name = "main/dashboard/partners/membership.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        members = Membership.objects.filter(organization__pk=self.kwargs["pk"])
+        context["organization"] = Organization.objects.get(
+            id=self.kwargs["pk"]
+        )
+        context["header"] = ["Email", "Permissions", "Date Joined"]
+        context["members"] = members
+
+        return context
+
+
 class WhiteListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
     """
     The form to update the whitelist
