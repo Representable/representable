@@ -228,6 +228,7 @@ elif DATABASES["default"]["ENGINE"] == "django.db.backends.sqlite3":
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 EMAIL_HOST = "smtp.sendgrid.net"
