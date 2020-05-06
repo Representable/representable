@@ -42,6 +42,7 @@ class PartnerMap(TemplateView):
     template_name = "main/partners/map.html"
 
     def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         # dictionary of entry names and reasons
         entry_names = dict()
         entry_reasons = dict()
@@ -86,4 +87,8 @@ class PartnerMap(TemplateView):
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
         }
+        context["organization"] = Organization.objects.get(
+            slug=self.kwargs["slug"]
+        )
+        print(context)
         return context
