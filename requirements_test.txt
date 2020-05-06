@@ -42,7 +42,6 @@ requests-oauthlib==1.2.0
 reverse-geocoder==1.5.1
 scipy==1.3.3
 selenium==3.141.0
-Shapely==1.6.4.post2
 singledispatch==3.4.0.3
 six==1.12.0
 sqlparse==0.3.0
