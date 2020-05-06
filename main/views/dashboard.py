@@ -152,27 +152,6 @@ class CreateOrg(LoginRequiredMixin, CreateView):
         )
         admin.save()
 
-        admins = Group.objects.create(name=("admins_" + str(org.id)))
-        mods = Group.objects.create(name=("mods_" + str(org.id)))
-
-        content_type = ContentType.objects.get_for_model(Organization)
-        admin_permission = Permission.objects.create(
-            codename="org_admin_" + str(org.id),
-            name="Org Admin " + str(org.name),
-            content_type=content_type,
-        )
-        mod_permission = Permission.objects.create(
-            codename="org_moderator_" + str(org.id),
-            name="Org Moderator " + org.name,
-            content_type=content_type,
-        )
-
-        admins.permissions.add(admin_permission)
-        mods.permissions.add(mod_permission)
-
-        admins.user_set.add(self.request.user)
-        mods.user_set.add(self.request.user)
-
         self.success_url = reverse_lazy(
             "main:thanks_org", kwargs=org.get_url_kwargs()
         )
@@ -294,17 +273,18 @@ class WhiteListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
         max_line_count = 10000
         line_count = 0
         for line in file:
+            # TODO: should throw error when reach line count instead to alert user
+            while line_count < max_line_count:
+                matches = re.findall(
+                    b"[\w\.-]+@[\w\.-]+\.\w+", line
+                )  # noqa: W605
+                for match in matches:
+                    entry = WhiteListEntry(
+                        email=match.decode("utf-8"), organization=self.object
+                    )
+                    emails.append(entry)
+                line_count += 1
 
-            matches = re.findall(b"[\w\.-]+@[\w\.-]+\.\w+", line)  # noqa: W605
-            for match in matches:
-                entry = WhiteListEntry(
-                    email=match.decode("utf-8"), organization=self.object
-                )
-                emails.append(entry)
-            line_count += 1
-            # TODO: should throw error instead
-            if line_count == max_line_count:
-                break
         # TODO: fix below batch code
         # batch
         batch_size = 10000

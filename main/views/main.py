@@ -418,8 +418,9 @@ class EntryView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, label_suffix="")
         if form.is_valid():
-            print("Entry form is valid")
+            # grab tags from form
             tag_name_qs = form.cleaned_data["tags"].values("name")
+
             entryForm = form.save(commit=False)
             # get all the polygons from the array
             # This returns an array of Django GEOS Polygon types
@@ -443,7 +444,12 @@ class EntryView(LoginRequiredMixin, View):
 
                 entryForm.census_blocks_polygon = polygonUnion
 
+            if entryForm.organization:
+                if self.request.user.is_member(entryForm.organization.id):
+                    entryForm.admin_approved = True
+
             entryForm.save()
+
             for tag_name in tag_name_qs:
                 tag = Tag.objects.get(name=str(tag_name["name"]))
                 entryForm.tags.add(tag)
