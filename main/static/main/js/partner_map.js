@@ -253,7 +253,6 @@ var PAINT_VALUES = {
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
-console.log(organization)
 var map = new mapboxgl.Map({
   container: "map", // container id
   style: "mapbox://styles/mapbox/streets-v11", //color of the map -- dark-v10 or light-v9
@@ -394,7 +393,7 @@ map.on("load", function () {
 
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
-  var dest = [-74.65545, 40.341701]
+  var dest = [-74.65545, 40.341701];
 
   for (obj in a) {
     // let catDict = {};
@@ -415,7 +414,7 @@ map.on("load", function () {
     } else {
       final = a[obj];
     }
-    dest = final[0][0]
+    dest = final[0][0];
     // draw the polygon
     map.addLayer({
       id: obj,
@@ -521,20 +520,12 @@ map.on("load", function () {
 
 // on hover, highlight the community
 $("#community-list").on("mouseenter", "li", function () {
-  map.setPaintProperty(
-    this.id + "line",
-    "line-color",
-    "rgba(0, 0, 0, 0.8)"
-  );
+  map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0, 0.8)");
   map.setPaintProperty(this.id + "line", "line-width", 3);
   map.setPaintProperty(this.id, "fill-color", "rgba(61, 114, 118,0.3)");
 });
 $("#community-list").on("mouseleave", "li", function () {
-  map.setPaintProperty(
-    this.id + "line",
-    "line-color",
-    "rgba(0, 0, 0,0.5)"
-  );
+  map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
   map.setPaintProperty(this.id + "line", "line-width", 2);
   map.setPaintProperty(this.id, "fill-color", "rgba(110, 178, 181,0.15)");
 });

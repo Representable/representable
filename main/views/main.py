@@ -168,7 +168,6 @@ class Review(LoginRequiredMixin, TemplateView):
         user = self.request.user
         approvedList = list()  # TODO make list?
         if user.is_staff:
-            print("Staff")
             query = CommunityEntry.objects.all()
             viewableQuery = list()
             for obj in query:
@@ -247,8 +246,7 @@ class Review(LoginRequiredMixin, TemplateView):
             query = CommunityEntry.objects.filter(
                 entry_ID=request.POST.get("c_id")
             )
-            if len(query) == 0:
-                print("No map found")
+
             entry = query[0]
             # TODO check whether authorized to edit state?
             if (
