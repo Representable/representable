@@ -223,10 +223,16 @@ class ManageOrg(LoginRequiredMixin, OrgAdminRequiredMixin, TemplateView):
         return context
 
 
-class CreateMember(LoginRequiredMixin, OrgAdminRequiredMixin, CreateView):
-    form_class = MemberForm
+class CreateMember(LoginRequiredMixin, OrgAdminRequiredMixin, FormView):
     model = Membership
+    form_class = MemberForm
     template_name = "main/dashboard/partners/member_form.html"
+
+    def get_queryset(self):
+        queryset = Membership.objects.filter(
+            organization__pk=self.kwargs["pk"]
+        )
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -241,19 +247,32 @@ class CreateMember(LoginRequiredMixin, OrgAdminRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
-        # add a check to see if member already exists, if so update
         form.instance.organization = get_object_or_404(
             Organization, pk=self.kwargs["pk"]
         )
-        admins = Group.objects.get(name=("admins_" + str(self.kwargs["pk"])))
-        mods = Group.objects.get(name=("mods_" + str(self.kwargs["pk"])))
+        member = Membership.objects.filter(
+            organization__pk=self.kwargs["pk"], member=form.instance.member
+        )
+        if member:
+            member.update(
+                is_org_admin=form.instance.is_org_admin,
+                is_org_moderator=form.instance.is_org_moderator,
+                is_whitelisted=form.instance.is_whitelisted,
+            )
+        else:
+            # create new member with the given permissions
+            new_member = Membership(
+                member=form.instance.member,
+                organization=form.instance.organization,
+                is_org_admin=form.instance.is_org_admin,
+                is_org_moderator=form.instance.is_org_moderator,
+                is_whitelisted=form.instance.is_whitelisted,
+            )
+            new_member.save()
 
-        if form.instance.is_org_admin:
-            admins.user_set.add(self.request.user)
-            mods.user_set.add(self.request.user)
-        elif form.instance.is_org_moderator:
-            mods.user_set.add(self.request.user)
-
+        self.success_url = reverse_lazy(
+            "main:home_org", kwargs=form.instance.organization.get_url_kwargs()
+        )
         return super().form_valid(form)
 
 

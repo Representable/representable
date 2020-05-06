@@ -36,6 +36,7 @@ from ..forms import (
 )
 from ..models import (
     CommunityEntry,
+    WhiteListEntry,
     Tag,
     Membership,
 )
@@ -447,6 +448,24 @@ class EntryView(LoginRequiredMixin, View):
             if entryForm.organization:
                 if self.request.user.is_member(entryForm.organization.id):
                     entryForm.admin_approved = True
+                else:
+                    # check if user is on the whitelist
+                    whitelist_entry = WhiteListEntry.objects.filter(
+                        organization=entryForm.organization.id,
+                        email=self.request.user.email,
+                    )
+                    if whitelist_entry:
+                        # add user to membership
+                        member = Membership(
+                            member=self.request.user,
+                            organization=entryForm.organization,
+                            is_whitelisted=True,
+                        )
+                        member.save()
+
+                        # delete from whitelist now that we have added user as a member
+                        whitelist_entry.delete()
+                        entryForm.admin_approved = True
 
             entryForm.save()
 

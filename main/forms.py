@@ -31,6 +31,7 @@ from .models import (
     Organization,
     Campaign,
     Membership,
+    User,
 )
 from .choices import (
     RACE_CHOICES,
@@ -201,11 +202,20 @@ class CampaignForm(ModelForm):
 
 
 class MemberForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(MemberForm, self).__init__(*args, **kwargs)
+        self.fields["member"].widget.attrs.update({"class": "form-control"})
+        self.fields["is_org_moderator"].widget.attrs.update(
+            {"class": "form-control"}
+        )
+        self.fields["is_org_admin"].widget.attrs.update(
+            {"class": "form-control"}
+        )
+
     class Meta:
         model = Membership
         fields = [
             "member",
             "is_org_admin",
             "is_org_moderator",
-            "is_whitelisted",
         ]
