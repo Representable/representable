@@ -463,8 +463,7 @@ class EntryView(LoginRequiredMixin, View):
                         )
                         member.save()
 
-                        # delete from whitelist now that we have added user as a member
-                        whitelist_entry.delete()
+                        # approve this entry
                         entryForm.admin_approved = True
 
             entryForm.save()
