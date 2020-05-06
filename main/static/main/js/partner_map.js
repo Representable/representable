@@ -253,11 +253,12 @@ var PAINT_VALUES = {
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
+console.log(organization)
 var map = new mapboxgl.Map({
   container: "map", // container id
   style: "mapbox://styles/mapbox/streets-v11", //color of the map -- dark-v10 or light-v9
-  center: [-74.65545, 40.341701], // starting position - Princeton, NJ :)
-  zoom: 10, // starting zoom -- higher is closer
+  center: [-96.7026, 40.8136], // starting position - Princeton, NJ :)
+  zoom: 3, // starting zoom -- higher is closer
 });
 
 // geocoder used for a search bar -- within the map itself
@@ -296,12 +297,13 @@ function newCensusLayer(state, firstSymbolId) {
       type: "line",
       source: state + "-census",
       "source-layer": state + "census",
+      minzoom: 9,
       layout: {
         visibility: "none",
       },
       paint: {
-        "line-color": "rgba(106,137,204,0.7)",
-        "line-width": 3,
+        "line-color": "rgba(106,137,204,0.3)",
+        "line-width": 2,
       },
     },
     firstSymbolId
@@ -314,6 +316,7 @@ function newUpperLegislatureLayer(state) {
     type: "line",
     source: state + "-upper",
     "source-layer": state + "upper",
+    minzoom: 5,
     layout: {
       visibility: "none",
       "line-join": "round",
@@ -321,7 +324,7 @@ function newUpperLegislatureLayer(state) {
     },
     paint: {
       "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 4,
+      "line-width": 3,
     },
   });
 }
@@ -332,6 +335,7 @@ function newLowerLegislatureLayer(state) {
     type: "line",
     source: state + "-lower",
     "source-layer": state + "lower",
+    minzoom: 5,
     layout: {
       visibility: "none",
       "line-join": "round",
@@ -339,7 +343,7 @@ function newLowerLegislatureLayer(state) {
     },
     paint: {
       "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 4,
+      "line-width": 3,
     },
   });
 }
@@ -390,6 +394,7 @@ map.on("load", function () {
 
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
+  var dest = [-74.65545, 40.341701]
 
   for (obj in a) {
     // let catDict = {};
@@ -410,6 +415,7 @@ map.on("load", function () {
     } else {
       final = a[obj];
     }
+    dest = final[0][0]
     // draw the polygon
     map.addLayer({
       id: obj,
@@ -460,7 +466,7 @@ map.on("load", function () {
         "line-cap": "round",
       },
       paint: {
-        "line-color": "rgba(110, 178, 181,0.3)",
+        "line-color": "rgba(0, 0, 0,0.5)",
         "line-width": 2,
       },
     });
@@ -508,7 +514,7 @@ map.on("load", function () {
   });
   // this is necessary so the map "moves" and queries the features above ^^
   map.flyTo({
-    center: [-74.65545, 40.341701],
+    center: dest,
     zoom: 10,
   });
 });
@@ -518,16 +524,16 @@ $("#community-list").on("mouseenter", "li", function () {
   map.setPaintProperty(
     this.id + "line",
     "line-color",
-    "rgba(61, 114, 118, 0.5)"
+    "rgba(0, 0, 0, 0.8)"
   );
-  map.setPaintProperty(this.id + "line", "line-width", 4);
+  map.setPaintProperty(this.id + "line", "line-width", 3);
   map.setPaintProperty(this.id, "fill-color", "rgba(61, 114, 118,0.3)");
 });
 $("#community-list").on("mouseleave", "li", function () {
   map.setPaintProperty(
     this.id + "line",
     "line-color",
-    "rgba(110, 178, 181,0.3)"
+    "rgba(0, 0, 0,0.5)"
   );
   map.setPaintProperty(this.id + "line", "line-width", 2);
   map.setPaintProperty(this.id, "fill-color", "rgba(110, 178, 181,0.15)");

@@ -240,8 +240,8 @@ document.addEventListener(
 var map = new mapboxgl.Map({
   container: "map", // container id
   style: "mapbox://styles/mapbox/streets-v11", //hosted style id
-  center: [-74.65545, 40.341701], // starting position - Princeton, NJ :)
-  zoom: 9, // starting zoom
+  center: [-96.7026, 40.8136], // starting position - Lincoln, NE :)
+  zoom: 3, // starting zoom -- higher is closer
 });
 
 var layerList = document.getElementById("menu");
@@ -510,7 +510,7 @@ class CensusBlocksControl {
           map.setPaintProperty(clickedLayer, "fill-opacity", [
             "*",
             ["get", "POP10"],
-            0.001,
+            0.0005,
           ]);
         }
       }
@@ -586,8 +586,8 @@ function newCensusShading(state) {
       visibility: "visible",
     },
     paint: {
-      "fill-outline-color": "rgb(71, 93, 204)",
-      "fill-color": "rgb(71, 93, 204)",
+      "fill-outline-color": "rgb(0, 0, 0)",
+      "fill-color": "rgb(0, 0, 0)",
       "fill-opacity": 0,
     },
   });
@@ -607,8 +607,8 @@ function newHighlightLayer(state) {
   });
 }
 
-// [WIP] function to add the neighbor layers for the filter that queries 
-// included census blocks 
+// [WIP] function to add the neighbor layers for the filter that queries
+// included census blocks
 function addNeighborLayersFilter() {
   for (let i = 0; 0 < neighbors.length; i++) {
     if (map.getLayer(neighbors[i] + "-blocks-highlighted")) {
@@ -623,12 +623,12 @@ function addNeighborLayersFilter() {
 function addStateNeighborLayers(new_neighbors, new_state) {
   // remove the old state layer and add the new state layer
   if (map.getLayer(state + "-blocks-highlighted")) map.removeLayer(state + "-blocks-highlighted");
-  newHighlightLayer(new_state);	
+  newHighlightLayer(new_state);
   // iterate through all states in the new_neighbors
   // if includes, don't add
   // delete from old neighbors
   // remove layers in the old neighbors list
-  for (let i = 0; i < new_neighbors.length; i++) {	
+  for (let i = 0; i < new_neighbors.length; i++) {
     if (!map.getLayer(new_neighbors[i] + "-blocks-highlighted")) {
       newHighlightLayer(new_neighbors[i]);
     } else {
