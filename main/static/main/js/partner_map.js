@@ -394,7 +394,7 @@ map.on("load", function () {
 
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
-  var dest = [-74.65545, 40.341701]
+  var dest = []
 
   for (obj in a) {
     // let catDict = {};
@@ -512,11 +512,13 @@ map.on("load", function () {
       }
     }
   });
-  // this is necessary so the map "moves" and queries the features above ^^
-  map.flyTo({
-    center: dest,
-    zoom: 10,
-  });
+  if (dest !== []) {
+    // this is necessary so the map "moves" and queries the features above ^^
+    map.flyTo({
+      center: dest,
+      zoom: 10,
+    });
+  }
 });
 
 // on hover, highlight the community
