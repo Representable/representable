@@ -268,7 +268,7 @@ map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
 function newSourceLayer(name, mbCode) {
   map.addSource(name, {
     type: "vector",
-    url: "mapbox://districter-team." + mbCode,
+    url: "mapbox://" + mapbox_user_name + "." + mbCode,
   });
 }
 // add a new layer of census block data
@@ -433,7 +433,7 @@ map.on("load", function () {
         "line-cap": "round",
       },
       paint: {
-        "line-color": "rgba(110, 178, 181,0.3)",
+        "line-color": "rgba(0, 0, 0,0.3)",
         "line-width": 2,
       },
     });

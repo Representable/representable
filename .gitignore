@@ -122,4 +122,6 @@ staticfiles/
 geo_representable/
 NJBlocks.json
 
-.DS_Store
+*/*.DS_Store
+sendgrid.env
+sendgrid_integration.py

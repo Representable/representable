@@ -36,6 +36,7 @@ from ..forms import (
 )
 from ..models import (
     CommunityEntry,
+    WhiteListEntry,
     Tag,
     Membership,
 )
@@ -127,21 +128,6 @@ class Review(LoginRequiredMixin, TemplateView):
     form_class = DeletionForm
     initial = {"key": "value"}
 
-    def centroid(self, pt_list):
-        if len(pt_list) > 0 and type(pt_list) == list:
-            if type(pt_list[0][0]) == list:
-                new_list = []
-                for x in pt_list:
-                    for y in x:
-                        new_list.append(y)
-                pt_list = new_list
-        length = len(pt_list)
-        sum_x = sum(
-            [x[1] for x in pt_list]
-        )  # TODO coords are reversed for some reason?
-        sum_y = sum([x[0] for x in pt_list])
-        return sum_x / length, sum_y / length
-
     # https://www.agiliq.com/blog/2019/01/django-formview/
     def get_initial(self):
         initial = self.initial
@@ -151,7 +137,6 @@ class Review(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         form = self.form_class(initial=self.get_initial(), label_suffix="")
-
         # the polygon coordinates
         entryPolyDict = dict()
         # dictionary of tags to be displayed
@@ -165,109 +150,44 @@ class Review(LoginRequiredMixin, TemplateView):
             tags[str(obj)] = ids
 
         user = self.request.user
-        approvedList = list()  # TODO make list?
-        if user.is_staff:
-            print("Staff")
-            query = CommunityEntry.objects.all()
-            viewableQuery = list()
-            for obj in query:
-                if (
-                    obj.census_blocks_polygon == ""
-                    or obj.census_blocks_polygon is None
-                ):
-                    s = "".join(obj.user_polygon.geojson)
-                else:
-                    s = "".join(obj.census_blocks_polygon.geojson)
-                struct = geojson.loads(s)
-                ct = self.centroid(struct["coordinates"][0])
-                # https://github.com/thampiman/reverse-geocoder
-                # note that this is an offline reverse geocoding library
-                # reverse geocode to see which states this is in
-                results = rg.search(ct)
-                if len(results) == 0:
-                    continue  # skip this community: reverse geocoding failed!
-                admins = [y for x, y in results[0].items()]
-                # get the states that the object is in
-
-                possib_states = set(
-                    [
-                        us_state_abbrev[x]
-                        for x in us_state_abbrev.keys()
-                        if x in admins
-                    ]
-                )
-                # now make sure user is authorized to edit state
-                authorized = set(
-                    [g.name.upper() for g in user.groups.all()]
-                )  # TODO assume all groups are state
-                if possib_states.issubset(authorized):
-                    print("Authorized for states {}".format(possib_states))
-                    # add it to viewable
-                    entryPolyDict[obj.entry_ID] = struct.coordinates
-                    viewableQuery.append(obj)
-                    if obj.admin_approved:
-                        # this is for coloring the map properly
-                        approvedList.append(obj.entry_ID)
-                else:
-                    print(type(query))
-                    print("Not authorized for states.")
-            query = viewableQuery
-        else:
-            # in this case, just get the ones we made
-            query = CommunityEntry.objects.filter(user=self.request.user)
-            for obj in query:
-                if (
-                    obj.census_blocks_polygon == ""
-                    or obj.census_blocks_polygon is None
-                ):
-                    s = "".join(obj.user_polygon.geojson)
-                else:
-                    s = "".join(obj.census_blocks_polygon.geojson)
-                # add all the coordinates in the array
-                # at this point all the elements of the array are coordinates of the polygons
-                struct = geojson.loads(s)
-                entryPolyDict[obj.entry_ID] = struct.coordinates
-                if obj.admin_approved or True:
-                    approvedList.append(obj.entry_ID)
+        approvedList = list()
+        # in this case, just get the ones we made
+        query = CommunityEntry.objects.filter(user=user)
+        for obj in query:
+            if (
+                obj.census_blocks_polygon == ""
+                or obj.census_blocks_polygon is None
+            ):
+                s = "".join(obj.user_polygon.geojson)
+            else:
+                s = "".join(obj.census_blocks_polygon.geojson)
+            # add all the coordinates in the array
+            # at this point all the elements of the array are coordinates of the polygons
+            struct = geojson.loads(s)
+            entryPolyDict[obj.entry_ID] = struct.coordinates
         context = {
             "form": form,
             "tags": json.dumps(tags),
-            "entries": json.dumps(entryPolyDict),
+            "entry_poly_dict": json.dumps(entryPolyDict),
             "approved": json.dumps(approvedList),
             "communities": query,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+            "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
         return context
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, label_suffix="")
+        context = self.get_context_data()
         # delete entry if form is valid and entry belongs to current user
-        if form.is_valid() and self.request.user.is_staff:
-            query = CommunityEntry.objects.filter(
-                entry_ID=request.POST.get("c_id")
-            )
-            if len(query) == 0:
-                print("No map found")
-            entry = query[0]
-            # TODO check whether authorized to edit state?
-            if (
-                "Approve" in request.POST
-            ):  # TODO need someone to review security
-                entry.admin_approved = True
-                entry.save()
-            elif "Unapprove" in request.POST:
-                entry.admin_approved = False
-                entry.save()
-            elif "Delete" in request.POST:
-                entry.delete()
-        elif form.is_valid():  # not staff, just can delete own entries
+        if form.is_valid():
             query = CommunityEntry.objects.filter(user=self.request.user)
-            entry = query.get(entry_ID=request.POST.get("c_id"))
-            entry.delete()
-
-        context = (
-            self.get_context_data()
-        )  # TODO: Is there a problem with this?
+            try:
+                entry = query.get(entry_ID=request.POST.get("c_id"))
+                entry.delete()
+                form.save()
+            except Exception:
+                context["query_error"] = True
         return render(request, self.template_name, context)
 
 
@@ -310,6 +230,7 @@ class Submission(TemplateView):
             "entry_reason": user_map.entry_reason,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+            "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
         return render(request, self.template_name, context)
 
@@ -363,6 +284,7 @@ class Map(TemplateView):
             "tags": json.dumps(tags),
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+            "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
         return context
 
@@ -413,14 +335,16 @@ class EntryView(LoginRequiredMixin, View):
         context = {
             "form": form,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+            "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, label_suffix="")
         if form.is_valid():
-            print("Entry form is valid")
+            # grab tags from form
             tag_name_qs = form.cleaned_data["tags"].values("name")
+
             entryForm = form.save(commit=False)
             # get all the polygons from the array
             # This returns an array of Django GEOS Polygon types
@@ -444,7 +368,29 @@ class EntryView(LoginRequiredMixin, View):
 
                 entryForm.census_blocks_polygon = polygonUnion
 
+            if entryForm.organization:
+                if self.request.user.is_member(entryForm.organization.id):
+                    entryForm.admin_approved = True
+                else:
+                    # check if user is on the whitelist
+                    whitelist_entry = WhiteListEntry.objects.filter(
+                        organization=entryForm.organization.id,
+                        email=self.request.user.email,
+                    )
+                    if whitelist_entry:
+                        # add user to membership
+                        member = Membership(
+                            member=self.request.user,
+                            organization=entryForm.organization,
+                            is_whitelisted=True,
+                        )
+                        member.save()
+
+                        # approve this entry
+                        entryForm.admin_approved = True
+
             entryForm.save()
+
             for tag_name in tag_name_qs:
                 tag = Tag.objects.get(name=str(tag_name["name"]))
                 entryForm.tags.add(tag)
@@ -456,5 +402,6 @@ class EntryView(LoginRequiredMixin, View):
         context = {
             "form": form,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+            "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
         return render(request, self.template_name, context)

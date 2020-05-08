@@ -25,14 +25,15 @@
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js'></script>
 <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css' type='text/css' />
 <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+<script>
+    sessionStorage.setItem("allChecks", "pass");
+    var mapbox_user_name = "{{mapbox_user_name}}";
+//   console.log("passed");
+</script>
 {% endblock %}
 
 {% block content %}
 <div class="container-fluid">
-    <script>
-        sessionStorage.setItem("allChecks", "pass");
-//   console.log("passed");
-</script>
     <div class="row row-content">
         <div class="col-sm-2">
         </div>
@@ -68,10 +69,10 @@
                                 <div class="card-header text-header-card">
                                     <strong>
                                       {% if LANGUAGE_CODE == 'en' %}
-                                      1. Please enter the zipcode of your community as a starting point.
+                                      1. Search for a location to begin drawing your community.
                                       {% elif LANGUAGE_CODE == 'es' %}
                                       <!-- Google translate  -->
-                                      Ingrese el código postal de su comunidad como punto de partida.
+                                      1. Busque una ubicación para comenzar a dibujar su comunidad.
                                       {% endif %}
                                     </strong>
                                 </div>

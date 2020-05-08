@@ -30,23 +30,20 @@
   <div class="row row-wide">
     <div>
       <script type="text/javascript">
+        var organization = '{{ organization | escapejs }}'
         var issues = '{{ issues | escapejs }}';
         var a = '{{ entries | escapejs }}';
         var tags = '{{ tags | escapejs }}';
         var entry_names = '{{ entry_names | escapejs}}';
         var entry_reasons = '{{ entry_reasons | escapejs}}';
+        var mapbox_user_name = "{{mapbox_user_name}}";
       </script>
     </div>
     <div class="col-md-3 col-wide">
       <nav id='menu'>
         <div class="sidenav">
-          <div class="input-group mb-1">
-            <input class="form-control" id="search-bar" type="search" placeholder="Search communities"
-              onkeyup="searchTags()" aria-label="Search">
-            <div class="input-group-append">
-              <button class="btn btn-outline-primary" type="submit" onclick="searchTags()"><i
-                  class="fa fa-search"></i></button>
-            </div>
+          <div class="my-1">
+            <h4 class="font-weight-light text-center my-2"> {{ organization }} </h4>
           </div>
           <div class="accordion" id="accordionExample">
             <div class="card">

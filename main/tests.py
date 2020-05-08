@@ -18,12 +18,13 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 from django.test import TestCase, Client
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from main.forms import CommunityForm
 from main.views import EntryView
 from django.contrib.auth import get_user_model
 
 
-class UserTest(TestCase):
+class UserTest(StaticLiveServerTestCase):
     """
     Unit tests for user sign-up, log-in, and log-out.
     """
@@ -64,7 +65,7 @@ class UserTest(TestCase):
         # Fake user login.
         print("Testing User Login")
         self.client.login(username="johndoe", password="johndoe")
-        response = self.client.get("/main/")
+        response = self.client.get("/")
         self.assertTrue(response.context["user"].is_active)
         response = self.client.get("/entry/")
         self.assertEqual(response.status_code, 200)

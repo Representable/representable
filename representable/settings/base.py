@@ -39,7 +39,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howtodeployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ["SECRET_KEY"]
+if "TRAVIS" in os.environ:
+    SECRET_KEY = "TravisTestKey"
+    DEBUG = False
+    TEMPLATE_DEBUG = True
+else:
+    SECRET_KEY = os.environ["SECRET_KEY"]
 
 
 AUTHENTICATION_BACKENDS = (
@@ -226,17 +231,18 @@ elif DATABASES["default"]["ENGINE"] == "django.db.backends.sqlite3":
         "ENGINE"
     ] = "django.contrib.gis.db.backends.spatialite"
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
 ACCOUNT_EMAIL_REQUIRED = True
-# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-# # ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+# Can Log In With Either Email or Username
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 
-# SENDGRID_API_KEY = os.getenv("SEND_GRID_API_KEY")
-
-# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-# EMAIL_HOST = "smtp.sendgrid.net"
-# EMAIL_HOST_USER = "apikey"
-# EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# DEFAULT_FROM_EMAIL = "no-reply@representable.org"
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_HOST_USER = "apikey"
+EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = "no-reply@representable.org"
