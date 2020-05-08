@@ -298,7 +298,6 @@ class Thanks(TemplateView):
     def get(self, request):
         context = {
             "map_url": request.GET["map_id"],
-            "org_url": request.GET["org_url"],
         }
         return render(request, self.template_name, context)
 
@@ -397,7 +396,7 @@ class EntryView(LoginRequiredMixin, View):
             print("printing something out somya")
             print(entryForm)
             m_uuid = str(entryForm.entry_ID).split("-")[0]
-            full_url = self.success_url + "?map_id=" + m_uuid + "?org_url=" + "hello"
+            full_url = self.success_url + "?map_id=" + m_uuid
             return HttpResponseRedirect(full_url)
         context = {
             "form": form,
