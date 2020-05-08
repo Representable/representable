@@ -4,10 +4,7 @@ dist:           xenial   # required for Python >= 3.7
 language:       python
 python:
   - "3.7"
-# Start PostgreSQL
-services:
-    - postgresql
-# Specify Django version and the database
+
 env:
     global:
         - DJANGO_SETTINGS_MODULE="representable.settings"
@@ -15,12 +12,20 @@ env:
         - PIP_USE_MIRRORS=true
 # Install the version of PostGIS that matches your PostgreSQL version,
 # and activate the PostGIS extension using:
+services:
+  - postgresql
 addons:
   postgresql: "11.2"
   apt:
     packages:
     - postgresql-11-postgis-2.5
 
+before_install:
+  - sudo apt-get update
+  - sudo apt-get --yes remove postgresql\*
+  - sudo apt-get install -y postgresql-11 postgresql-client-11
+  - sudo cp /etc/postgresql/{9.6,11}/main/pg_hba.conf
+  - sudo service postgresql restart 11  
 # command to install dependencies
 install:
   - pip install -r requirements.txt
