@@ -9,7 +9,6 @@ services:
     - postgresql
 # Specify Django version and the database
 env:
-    - DJANGO=2.2 DB=postgres
     global:
         - DJANGO_SETTINGS_MODULE="representable.settings"
         - PYTHONPATH="/home/travis/build/representable/representable"
