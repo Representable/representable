@@ -76,7 +76,7 @@ map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
 function newSourceLayer(name, mbCode) {
   map.addSource(name, {
     type: "vector",
-    url: "mapbox://representable-team." + mbCode,
+    url: "mapbox://" + mapbox_user_name + "." + mbCode,
   });
 }
 // add a new layer of census block data

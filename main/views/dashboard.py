@@ -330,21 +330,6 @@ class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
     form_class = DeletionForm
     initial = {"key": "value"}
 
-    def centroid(self, pt_list):
-        if len(pt_list) > 0 and type(pt_list) == list:
-            if type(pt_list[0][0]) == list:
-                new_list = []
-                for x in pt_list:
-                    for y in x:
-                        new_list.append(y)
-                pt_list = new_list
-        length = len(pt_list)
-        sum_x = sum(
-            [x[1] for x in pt_list]
-        )  # TODO coords are reversed for some reason?
-        sum_y = sum([x[0] for x in pt_list])
-        return sum_x / length, sum_y / length
-
     # https://www.agiliq.com/blog/2019/01/django-formview/
     def get_initial(self):
         initial = self.initial
@@ -381,6 +366,7 @@ class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
             "approved": json.dumps(approvedList),
             "communities": query,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+            "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
         return context
 
