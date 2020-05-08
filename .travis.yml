@@ -12,7 +12,7 @@ env:
     - DJANGO=2.2 DB=postgres
     global:
         - DJANGO_SETTINGS_MODULE="representable.settings"
-        - PYTHONPATH="/home/travis/build/lauren-johnston/representable"
+        - PYTHONPATH="/home/travis/build/representable/representable"
         - PIP_USE_MIRRORS=true
 # Install the version of PostGIS that matches your PostgreSQL version,
 # and activate the PostGIS extension using:
@@ -40,6 +40,6 @@ script:
 notifications:
   email:
     recipients:
-      - marcu.theodor@gmail.com
+      - representableteam@gmail.com
     on_success: never
     on_failure: always
