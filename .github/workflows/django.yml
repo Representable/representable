@@ -31,9 +31,9 @@ jobs:
         python manage.py collectstatic --no-input
         python manage.py test
       env:
-        DISTR_DB_NAME: “test_db"
-        DISTR_DB_USER: “test"
-        DISTR_DB_PASS: “test123”
-        SECRET_KEY: “testkey”
-        DISTR_MAPBOX_KEY: “testkey2”
+        DISTR_DB_NAME: ${{ secrets.DISTR_DB_NAME }}
+        DISTR_DB_USER: ${{ secrets.DISTR_DB_USER }}
+        DISTR_DB_PASS: ${{ secrets.DISTR_DB_USER }}
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        DISTR_MAPBOX_KEY: ${{ secrets.DISTR_MAPBOX_KEY }}
       
