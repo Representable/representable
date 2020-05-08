@@ -166,18 +166,17 @@ map.on("load", function () {
   // tags add to properties
   tags = JSON.parse(tags);
 
-  var outputstr = a.replace(/'/g, '"');
-  a = JSON.parse(outputstr);
-  for (obj in a) {
+  var output_poly_json = JSON.parse(entry_poly_dict);
+  for (obj in output_poly_json) {
     // check how deeply nested the outer ring of the unioned polygon is
     final = [];
     // set the coordinates of the outer ring to final
-    if (a[obj][0][0].length > 2) {
-      final = [a[obj][0][0]];
-    } else if (a[obj][0].length > 2) {
-      final = [a[obj][0]];
+    if (output_poly_json[obj][0][0].length > 2) {
+      final = [output_poly_json[obj][0][0]];
+    } else if (output_poly_json[obj][0].length > 2) {
+      final = [output_poly_json[obj][0]];
     } else {
-      final = a[obj];
+      final = output_poly_json[obj];
     }
     approved_color = "rgba(110, 178, 181,0.15)";
     unapproved_color = "rgba(255, 50, 0,0.15)";
