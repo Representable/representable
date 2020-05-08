@@ -44,6 +44,11 @@
                 <div class="dropdown-container"></div>
                 <div id="outline-menu">
                 </div>
+                {% if query_error %}
+                <div class="alert alert-warning" role="alert">
+                    The community was already deleted.
+                </div>
+                {% endif %}
                 {% if communities %}
                 <table class="table table-review">
                     <tr>

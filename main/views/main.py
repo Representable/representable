@@ -165,7 +165,6 @@ class Review(LoginRequiredMixin, TemplateView):
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
             entryPolyDict[obj.entry_ID] = struct.coordinates
-        print("DONE!")
         context = {
             "form": form,
             "tags": json.dumps(tags),
@@ -179,15 +178,16 @@ class Review(LoginRequiredMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, label_suffix="")
+        context = self.get_context_data()
         # delete entry if form is valid and entry belongs to current user
         if form.is_valid():
             query = CommunityEntry.objects.filter(user=self.request.user)
-            entry = query.get(entry_ID=request.POST.get("c_id"))
-            entry.delete()
-            form.save()
-        context = (
-            self.get_context_data()
-        )  # TODO: Is there a problem with this?
+            try:
+                entry = query.get(entry_ID=request.POST.get("c_id"))
+                entry.delete()
+                form.save()
+            except Exception:
+                context["query_error"] = True
         return render(request, self.template_name, context)
 
 
