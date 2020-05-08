@@ -27,13 +27,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements_test.txt
     - name: Run Tests
-      run: |
-        python manage.py collectstatic --no-input
-        python manage.py test
       env:
         DISTR_DB_NAME: ${{ secrets.DISTR_DB_NAME }}
         DISTR_DB_USER: ${{ secrets.DISTR_DB_USER }}
         DISTR_DB_PASS: ${{ secrets.DISTR_DB_USER }}
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        DISTR_MAPBOX_KEY: ${{ secrets.DISTR_MAPBOX_KEY }}
-      
+        DISTR_MAPBOX_KEY: ${{ secrets.DISTR_MAPBOX_KEY }} 
+      run: |
+        python manage.py collectstatic --no-input
+        python manage.py test
+
