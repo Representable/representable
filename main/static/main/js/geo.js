@@ -130,57 +130,57 @@ var states = [
 
 // dictionary with state neighbors without nebraska since there is
 // no census block data for nebraska
-var state_neighbors  = {
-  "ak" : [],
-  "al" : ["fl", "ga", "ms", "tn"],
-  "ar" : ["la", "mo", "ms", "ok", "tn", "tx"],
-  "az" : ["ca", "co", "nv", "nm", "ut"],
-  "ca" : ["az", "nv", "or"],
-  "co" : ["az", "ks", "nm", "ok", "ut", "wy"],
-  "ct" : ["ma", "ny", "ri"],
-  "dc" : ["md", "va"],
-  "de" : ["md", "nj", "pa"],
-  "fl" : ["al", "ga"],
-  "ga" : ["al", "fl", "nc", "sc", "tn"],
-  "hi" : [],
-  "ia" : ["al", "mn", "mo", "sd", "wi"],
-  "id" : ["mt", "nv", "or", "ut", "wa", "wy"],
-  "il" : ["in", "ia", "mi", "ky", "mo", "wi"],
-  "in" : ["il", "ky", "mi", "oh"],
-  "ks" : ["co", "mo", "ok"],
-  "ky" : ["il", "in", "mo", "oh", "tn", "va", "wv"],
-  "la" : ["ar", "ms", "tx"],
-  "ma" : ["ct", "nh", "ny", "ri", "vt"],
-  "md" : ["de", "pa", "va", "wv"],
-  "me" : ["nh"],
-  "mi" : ["il", "in", "mn", "oh", "wi"],
-  "mn" : ["ia", "mi", "nd", "sd", "wi"],
-  "mo" : ["ar", "il", "ia", "ks", "ky", "ok", "tn"],
-  "ms" : ["al", "ar", "la", "tn"],
-  "mt" : ["id", "nd", "sd", "wy"],
-  "nc" : ["az", "ca", "id", "or", "ut"],
-  "nd" : ["mn", "mt", "sd"],
-  "nh" : ["me", "ma", "vt"],
-  "nj" : ["ny", "de", "pa"],
-  "nm" : ["az", "co", "ok", "tx", "ut"],
-  "nv" : ["az", "ca", "id", "or", "ut"],
-  "ny" : ["ct", "ma", "nj", "pa", "ri", "vt"],
-  "oh" : ["in", "ky", "mi", "pa", "wv"],
-  "ok" : ["ar", "co", "ks", "mo", "nm", "tx"],
-  "or" : ["ca", "id", "nv", "wa"],
-  "pa" : ["de", "md", "nj", "ny", "oh", "wv"],
-  "ri" : ["ct", "ma", "ny"],
-  "sc" : ["ga", "nc"],
-  "sd" : ["ia", "mn", "mt", "nd", "wy"],
-  "tn" : ["al", "ar", "ga", "ky", "ms", "mo", "nc", "va"],
-  "tx" : ["ar", "la", "nm", "ok"],
-  "ut" : ["az", "co", "id", "nv", "nm", "wy"],
-  "va" : ["ky", "md", "nc", "tn", "wv"],
-  "vt" : ["ma", "nh", "ny"],
-  "wa" : ["id", "or"],
-  "wi" : ["il", "ia", "mi", "mn"],
-  "wv" : ["ky", "md", "oh", "pa", "va"],
-  "wy" : ["co", "id", "mt", "sd", "ut"]
+var state_neighbors = {
+  ak: [],
+  al: ["fl", "ga", "ms", "tn"],
+  ar: ["la", "mo", "ms", "ok", "tn", "tx"],
+  az: ["ca", "co", "nv", "nm", "ut"],
+  ca: ["az", "nv", "or"],
+  co: ["az", "ks", "nm", "ok", "ut", "wy"],
+  ct: ["ma", "ny", "ri"],
+  dc: ["md", "va"],
+  de: ["md", "nj", "pa"],
+  fl: ["al", "ga"],
+  ga: ["al", "fl", "nc", "sc", "tn"],
+  hi: [],
+  ia: ["al", "mn", "mo", "sd", "wi"],
+  id: ["mt", "nv", "or", "ut", "wa", "wy"],
+  il: ["in", "ia", "mi", "ky", "mo", "wi"],
+  in: ["il", "ky", "mi", "oh"],
+  ks: ["co", "mo", "ok"],
+  ky: ["il", "in", "mo", "oh", "tn", "va", "wv"],
+  la: ["ar", "ms", "tx"],
+  ma: ["ct", "nh", "ny", "ri", "vt"],
+  md: ["de", "pa", "va", "wv"],
+  me: ["nh"],
+  mi: ["il", "in", "mn", "oh", "wi"],
+  mn: ["ia", "mi", "nd", "sd", "wi"],
+  mo: ["ar", "il", "ia", "ks", "ky", "ok", "tn"],
+  ms: ["al", "ar", "la", "tn"],
+  mt: ["id", "nd", "sd", "wy"],
+  nc: ["az", "ca", "id", "or", "ut"],
+  nd: ["mn", "mt", "sd"],
+  nh: ["me", "ma", "vt"],
+  nj: ["ny", "de", "pa"],
+  nm: ["az", "co", "ok", "tx", "ut"],
+  nv: ["az", "ca", "id", "or", "ut"],
+  ny: ["ct", "ma", "nj", "pa", "ri", "vt"],
+  oh: ["in", "ky", "mi", "pa", "wv"],
+  ok: ["ar", "co", "ks", "mo", "nm", "tx"],
+  or: ["ca", "id", "nv", "wa"],
+  pa: ["de", "md", "nj", "ny", "oh", "wv"],
+  ri: ["ct", "ma", "ny"],
+  sc: ["ga", "nc"],
+  sd: ["ia", "mn", "mt", "nd", "wy"],
+  tn: ["al", "ar", "ga", "ky", "ms", "mo", "nc", "va"],
+  tx: ["ar", "la", "nm", "ok"],
+  ut: ["az", "co", "id", "nv", "nm", "wy"],
+  va: ["ky", "md", "nc", "tn", "wv"],
+  vt: ["ma", "nh", "ny"],
+  wa: ["id", "or"],
+  wi: ["il", "ia", "mi", "mn"],
+  wv: ["ky", "md", "oh", "pa", "va"],
+  wy: ["co", "id", "mt", "sd", "ut"],
 };
 
 var wkt_obj;
@@ -263,7 +263,7 @@ var geocoder = new MapboxGeocoder({
   mapboxgl: mapboxgl,
 });
 
-document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
 
 /* tutorial reference for draw control properties:
 https://bl.ocks.org/dnseminara/0790e53cef9867e848e716937727ab18
@@ -532,10 +532,7 @@ document.getElementById("draw-button").addEventListener("click", function (e) {
   cleanAlerts();
   draw.deleteAll();
   // TODO: change for all states
-  map.setFilter(state + "-blocks-highlighted", [
-    "in",
-    "BLOCKID10",
-  ]);
+  map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
   draw.changeMode("draw_polygon");
 });
 
@@ -543,10 +540,7 @@ document.getElementById("trash-button").addEventListener("click", function (e) {
   cleanAlerts();
   draw.deleteAll();
   // TODO: change for all states
-  map.setFilter(state + "-blocks-highlighted", [
-    "in",
-    "BLOCKID10",
-  ]);
+  map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
   draw.changeMode("simple_select");
 });
 
@@ -554,7 +548,7 @@ document.getElementById("trash-button").addEventListener("click", function (e) {
 function newSourceLayer(name, mbCode) {
   map.addSource(name, {
     type: "vector",
-    url: "mapbox://districter-team." + mbCode,
+    url: "mapbox://" + mapbox_user_name + "." + mbCode,
   });
 }
 // add a new layer of census block data
@@ -612,17 +606,15 @@ function newHighlightLayer(state) {
 function addNeighborLayersFilter() {
   for (let i = 0; 0 < neighbors.length; i++) {
     if (map.getLayer(neighbors[i] + "-blocks-highlighted")) {
-      map.setFilter(neighbors[i] + "-blocks-highlighted", [
-        "in",
-        "BLOCKID10",
-      ]);
+      map.setFilter(neighbors[i] + "-blocks-highlighted", ["in", "BLOCKID10"]);
     }
   }
 }
 
 function addStateNeighborLayers(new_neighbors, new_state) {
   // remove the old state layer and add the new state layer
-  if (map.getLayer(state + "-blocks-highlighted")) map.removeLayer(state + "-blocks-highlighted");
+  if (map.getLayer(state + "-blocks-highlighted"))
+    map.removeLayer(state + "-blocks-highlighted");
   newHighlightLayer(new_state);
   // iterate through all states in the new_neighbors
   // if includes, don't add
@@ -637,7 +629,8 @@ function addStateNeighborLayers(new_neighbors, new_state) {
     }
   }
   for (let i = 0; i < neighbors.length; i++) {
-    if (map.getLayer(neighbors[i] + "-blocks-highlighted")) map.removeLayer(neighbors[i] + "-blocks-highlighted");
+    if (map.getLayer(neighbors[i] + "-blocks-highlighted"))
+      map.removeLayer(neighbors[i] + "-blocks-highlighted");
   }
 }
 
@@ -678,7 +671,7 @@ map.on("style.load", function () {
 
   // Listen for the `geocoder.input` event that is triggered when a user
   // makes a selection and add a symbol that matches the result.
-  geocoder.on("result", function(ev) {
+  geocoder.on("result", function (ev) {
     map.getSource("single-point").setData(ev.result.geometry);
     var styleSpec = ev.result;
     var styleSpecBox = document.getElementById("json-response");
@@ -698,7 +691,9 @@ map.on("style.load", function () {
     }
     // get the state from the geocoder response
     if (styleSpec.context.length >= 2) {
-      new_state = styleSpec.context[styleSpec.context.length - 2]["short_code"].toLowerCase().substring(3);
+      new_state = styleSpec.context[styleSpec.context.length - 2]["short_code"]
+        .toLowerCase()
+        .substring(3);
     } else {
       new_state = styleSpec.properties["short_code"].toLowerCase().substring(3);
     }
@@ -870,10 +865,7 @@ function highlightBlocks(drawn_polygon) {
       );
       //  sets filter - highlights blocks
       // TODO: update for all states
-      map.setFilter(
-        state + "-blocks-highlighted",
-        filter
-      );
+      map.setFilter(state + "-blocks-highlighted", filter);
     }
   } catch (err) {
     console.log("triangle shaped polygon was changed");

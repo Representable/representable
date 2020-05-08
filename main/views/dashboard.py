@@ -381,6 +381,7 @@ class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
             "approved": json.dumps(approvedList),
             "communities": query,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+            "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
         return context
 

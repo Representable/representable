@@ -25,14 +25,15 @@
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js'></script>
 <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css' type='text/css' />
 <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+<script>
+    sessionStorage.setItem("allChecks", "pass");
+    var mapbox_user_name = "{{mapbox_user_name}}";
+//   console.log("passed");
+</script>
 {% endblock %}
 
 {% block content %}
 <div class="container-fluid">
-    <script>
-        sessionStorage.setItem("allChecks", "pass");
-//   console.log("passed");
-</script>
     <div class="row row-content">
         <div class="col-sm-2">
         </div>

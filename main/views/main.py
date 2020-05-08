@@ -236,6 +236,7 @@ class Review(LoginRequiredMixin, TemplateView):
             "approved": json.dumps(approvedList),
             "communities": query,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+            "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
         return context
 
@@ -309,6 +310,7 @@ class Submission(TemplateView):
             "entry_reason": user_map.entry_reason,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+            "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
         return render(request, self.template_name, context)
 
@@ -362,6 +364,7 @@ class Map(TemplateView):
             "tags": json.dumps(tags),
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+            "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
         return context
 
@@ -411,6 +414,7 @@ class EntryView(LoginRequiredMixin, View):
         context = {
             "form": form,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+            "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
         return render(request, self.template_name, context)
 
@@ -476,5 +480,6 @@ class EntryView(LoginRequiredMixin, View):
         context = {
             "form": form,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+            "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
         return render(request, self.template_name, context)
