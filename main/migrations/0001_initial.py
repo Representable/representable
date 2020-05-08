@@ -180,14 +180,6 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "entry_name",
-                    models.CharField(default="Community_name", max_length=100),
-                ),
-                (
-                    "entry_reason",
-                    models.TextField(blank=True, default="", max_length=500),
-                ),
-                (
                     "my_community",
                     models.CharField(
                         choices=[
