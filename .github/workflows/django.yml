@@ -8,8 +8,6 @@ on:
 
 jobs:
   build:
-    environment:
-      - BASH_ENV: /etc/profile
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -27,7 +25,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements_test.txt
     - name: Run Tests
-      with:
+      env:
         DISTR_DB_NAME: ${{ secrets.DISTR_DB_NAME }}
         DISTR_DB_USER: ${{ secrets.DISTR_DB_USER }}
         DISTR_DB_PASS: ${{ secrets.DISTR_DB_USER }}
