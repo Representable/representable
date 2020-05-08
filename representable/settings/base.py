@@ -39,7 +39,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howtodeployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-if os.getenv("TRAVIS", None):
+if "TRAVIS" in os.environ:
     SECRET_KEY = "TravisTestKey"
     DEBUG = False
     TEMPLATE_DEBUG = True
