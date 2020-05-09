@@ -39,7 +39,7 @@ before_script:
 
 # command to run tests
 script:
-  - python manage.py test
+  - python3 manage.py test --settings=representable.settings.dev
 
 # Email settings
 notifications:
