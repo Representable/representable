@@ -34,6 +34,11 @@ urlpatterns = [
     path("terms/", views.main.Terms.as_view(), name="terms"),
     path("submission/", views.main.Submission.as_view(), name="submission"),
     path(
+        "<slug:slug>/thanks",
+        views.main.ThanksEntryOrg.as_view(),
+        name="thanks_entry_org",
+    ),
+    path(
         "campaigns/", views.campaigns.IndexView.as_view(), name="campaign_list"
     ),
     path("partners/", views.partners.IndexView.as_view(), name="partner_list"),

@@ -1,0 +1,38 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                    <h5 class="card-title text-center">
+                        {% if LANGUAGE_CODE == 'en' %}
+                            Thank you for your submission!
+                        {% elif LANGUAGE_CODE == 'es' %}
+                              <!-- Google translate  -->
+                              ¡Gracias por tu publicación!
+                        {% endif %}
+                    </h5>
+                    <div class="alert alert-primary text-center" role="alert">
+                        {% if LANGUAGE_CODE == 'en' %}
+                          Your map is now available publicly at the URL <a href="/partners/{{org_slug}}/map">Representable.org/partners/{{org_slug}}/map</a>! Feel free to tweet and share.
+                          It can also be endorsed by our local partners to be viewable on the <a href="/map">public map page</a>.
+                          <!-- Your map is now pending approval. It will be displayed on our map once it's approved by the Representable team. -->
+                        {% elif LANGUAGE_CODE == 'es' %}
+                          <!-- Google translate  -->
+                          Su mapa ahora está pendiente de aprobación. Se mostrará en nuestro mapa una vez que sea aprobado por el equipo Representable.
+                        {% endif %}
+
+                    </div>
+                    <div class="text-center"> <a class="btn btn-primary btn-canvas font-weight-light text-uppercase" href="/map" role="button"><small>Browse Entries</small></a>
+                        <a class="btn btn-primary btn-canvas font-weight-light text-uppercase" href="/entry" role="button"><small>New Entry</small></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

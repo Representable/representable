@@ -304,6 +304,16 @@ class Thanks(TemplateView):
 
 # ******************************************************************************#
 
+class ThanksEntryOrg(TemplateView):
+    template_name = "main/pages/thanksentryorg.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['org_slug'] = self.kwargs['slug']
+        return context
+
+# ******************************************************************************#
+
 
 class EntryView(LoginRequiredMixin, View):
     """
@@ -316,6 +326,7 @@ class EntryView(LoginRequiredMixin, View):
         "key": "value",
     }
     success_url = "/thanks/"
+    
     data = {
         "form-TOTAL_FORMS": "1",
         "form-INITIAL_FORMS": "0",
@@ -389,15 +400,19 @@ class EntryView(LoginRequiredMixin, View):
                         entryForm.admin_approved = True
 
             entryForm.save()
-
             for tag_name in tag_name_qs:
                 tag = Tag.objects.get(name=str(tag_name["name"]))
                 entryForm.tags.add(tag)
-            print("printing something out somya")
-            print(entryForm)
             m_uuid = str(entryForm.entry_ID).split("-")[0]
-            full_url = self.success_url + "?map_id=" + m_uuid
-            return HttpResponseRedirect(full_url)
+            if entryForm.organization == None:
+                full_url = self.success_url + "?map_id=" + m_uuid
+                return HttpResponseRedirect(full_url)
+            else:
+                kwargs = {"slug" : entryForm.organization.slug }
+                self.success_url = reverse_lazy(
+                    "main:thanks_entry_org", kwargs=kwargs
+                    )
+                return HttpResponseRedirect(self.success_url)
         context = {
             "form": form,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
