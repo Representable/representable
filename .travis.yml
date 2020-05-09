@@ -39,6 +39,7 @@ before_script:
 
 # command to run tests
 script:
+  - python3 manage.py collectstatic --settings=representable.settings.dev
   - python3 manage.py test --settings=representable.settings.dev
 
 # Email settings
