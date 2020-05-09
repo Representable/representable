@@ -196,7 +196,6 @@ $(document).ready(function () {
 
 //builds proper format of location string based on mapbox data. city,state/province,country
 function parseReverseGeo(geoData) {
-  // debugger;
   var region, countryName, placeName, returnStr;
   if (geoData.context) {
     $.each(geoData.context, function (i, v) {
@@ -531,7 +530,6 @@ map.addControl(new CensusBlocksControl(), "top-left");
 document.getElementById("draw-button").addEventListener("click", function (e) {
   cleanAlerts();
   draw.deleteAll();
-  // TODO: change for all states
   map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
   draw.changeMode("draw_polygon");
 });
@@ -539,7 +537,6 @@ document.getElementById("draw-button").addEventListener("click", function (e) {
 document.getElementById("trash-button").addEventListener("click", function (e) {
   cleanAlerts();
   draw.deleteAll();
-  // TODO: change for all states
   map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
   draw.changeMode("simple_select");
 });
@@ -551,24 +548,7 @@ function newSourceLayer(name, mbCode) {
     url: "mapbox://" + mapbox_user_name + "." + mbCode,
   });
 }
-// add a new layer of census block data
-// function newCensusLines(state) {
-//   map.addLayer({
-//     id: state + "-census-lines",
-//     type: "line",
-//     source: state + "-census",
-//     "source-layer": state + "census",
-//     layout: {
-//       visibility: "visible",
-//       "line-join": "round",
-//       "line-cap": "round",
-//     },
-//     paint: {
-//       "line-color": "rgba(71, 93, 204, 0.5)",
-//       "line-width": 1,
-//     },
-//   });
-// }
+
 // add a new layer of census block data (transparent layer)
 function newCensusShading(state) {
   map.addLayer({
@@ -854,7 +834,6 @@ function highlightBlocks(drawn_polygon) {
         ["in", "BLOCKID10"]
       );
       //  sets filter - highlights blocks
-      // TODO: update for all states
       map.setFilter(state + "-blocks-highlighted", filter);
     }
   } catch (err) {
