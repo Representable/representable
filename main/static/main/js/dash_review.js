@@ -49,8 +49,8 @@ var states = ["nj", "va", "pa", "mi"];
 var map = new mapboxgl.Map({
   container: "map", // container id
   style: "mapbox://styles/mapbox/light-v9", //color of the map -- dark-v10 or light-v9
-  center: [-74.65545, 40.341701], // starting position - Princeton, NJ :)
-  zoom: 12, // starting zoom -- higher is closer
+  center: [-96.7026, 40.8136], // starting position - Lincoln, Nebraska (middle of country lol)
+  zoom: 3, // starting zoom -- higher is closer
 });
 
 // geocoder used for a search bar -- within the map itself
@@ -153,6 +153,8 @@ map.on("load", function () {
 
   var outputstr = entries.replace(/'/g, '"');
   entries = JSON.parse(outputstr);
+  var dest = [];
+
   for (obj in entries) {
     // check how deeply nested the outer ring of the unioned polygon is
     final = [];
@@ -164,8 +166,9 @@ map.on("load", function () {
     } else {
       final = entries[obj];
     }
-    approved_color = "rgba(110, 178, 181,0.30)";
-    unapproved_color = "rgba(255, 50, 0,0.30)";
+    dest = final[0][0];
+    approved_color = "rgba(110, 178, 181,0.15)";
+    unapproved_color = "rgba(255, 50, 0,0.15)";
     if (approved.indexOf(obj) > -1) {
       color = approved_color;
     } else {
@@ -215,24 +218,47 @@ map.on("load", function () {
       },
     });
   }
+  if (dest !== []) {
+    // this is necessary so the map "moves" and queries the features above ^^
+    map.flyTo({
+      center: dest,
+      zoom: 10,
+    });
+  }
 });
 
 // on hover, highlight the community
 $(".sidenav").on("mouseenter", ".community-review-span", function () {
-  map.setPaintProperty(
-    this.id + "line",
-    "line-color",
-    "rgba(61, 114, 118, 0.5)"
-  );
-  map.setPaintProperty(this.id + "line", "line-width", 4);
-  map.setPaintProperty(this.id, "fill-color", "rgba(61, 114, 118,0.3)");
+  var isApproved = false;
+  if (
+    map.getPaintProperty(this.id, "fill-color") === "rgba(110, 178, 181,0.15)"
+  ) {
+    isApproved = true;
+  }
+  if (isApproved) {
+    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
+    map.setPaintProperty(this.id + "line", "line-width", 4);
+    map.setPaintProperty(this.id, "fill-color", "rgba(110, 178, 181,0.5)");
+  } else {
+    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
+    map.setPaintProperty(this.id + "line", "line-width", 4);
+    map.setPaintProperty(this.id, "fill-color", "rgba(255, 50, 0,0.5)");
+  }
 });
 $(".sidenav").on("mouseleave", ".community-review-span", function () {
-  map.setPaintProperty(
-    this.id + "line",
-    "line-color",
-    "rgba(110, 178, 181,0.3)"
-  );
-  map.setPaintProperty(this.id + "line", "line-width", 2);
-  map.setPaintProperty(this.id, "fill-color", "rgba(110, 178, 181,0.15)");
+  var isApproved = false;
+  if (
+    map.getPaintProperty(this.id, "fill-color") === "rgba(110, 178, 181,0.5)"
+  ) {
+    isApproved = true;
+  }
+  if (isApproved) {
+    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.2)");
+    map.setPaintProperty(this.id + "line", "line-width", 2);
+    map.setPaintProperty(this.id, "fill-color", "rgba(110, 178, 181,0.15)");
+  } else {
+    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.2)");
+    map.setPaintProperty(this.id + "line", "line-width", 2);
+    map.setPaintProperty(this.id, "fill-color", "rgba(255, 50, 0,0.15)");
+  }
 });

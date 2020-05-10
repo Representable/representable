@@ -257,7 +257,7 @@ console.log(organization)
 var map = new mapboxgl.Map({
   container: "map", // container id
   style: "mapbox://styles/mapbox/streets-v11", //color of the map -- dark-v10 or light-v9
-  center: [-96.7026, 40.8136], // starting position - Princeton, NJ :)
+  center: [-96.7026, 40.8136], // starting position - Lincoln, Nebraska (middle of country lol)
   zoom: 3, // starting zoom -- higher is closer
 });
 
@@ -394,7 +394,7 @@ map.on("load", function () {
 
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
-  var dest = []
+  var dest = [];
 
   for (obj in a) {
     // let catDict = {};
@@ -415,7 +415,7 @@ map.on("load", function () {
     } else {
       final = a[obj];
     }
-    dest = final[0][0]
+    dest = final[0][0];
     // draw the polygon
     map.addLayer({
       id: obj,
