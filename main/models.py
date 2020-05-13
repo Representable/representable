@@ -30,7 +30,6 @@ from django.db import migrations
 from django.contrib.gis.db import models
 from .choices import (
     STATES,
-    POLICY_ISSUES,
 )
 from .utils import generate_unique_slug
 

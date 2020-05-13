@@ -42,19 +42,6 @@ var LOWER_KEYS = {
   "mi-lower": "aa2ljvl2",
 };
 var states = ["nj", "va", "pa", "mi"];
-var PAINT_VALUES = {
-  "Criminal Justice": "rgba(135, 191, 255,",
-  "Civil Rights": "rgba(63, 142, 252,",
-  "Economic Affairs": "rgba(196, 178, 188,",
-  Education: "rgba(223, 146, 142,",
-  Environment: "rgba(249, 160, 63,",
-  "Health and Health Insurance": "rgba(234, 239, 177,",
-  "Internet Regulation": "rgba(178, 177, 207,",
-  "Women's Issues": "rgba(223, 41, 53,",
-  "LGBT Issues": "rgba(253, 202, 64,",
-  "National Security": "rgba(242, 255, 73,",
-  "Social Welfare": "rgba(251, 98, 246,",
-};
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
