@@ -46,8 +46,6 @@ class PartnerMap(TemplateView):
         # dictionary of entry names and reasons
         entry_names = dict()
         entry_reasons = dict()
-        # the dict of issues + input of descriptions
-        issues = dict()
 
         # the polygon coordinates
         entryPolyDict = dict()
@@ -83,9 +81,9 @@ class PartnerMap(TemplateView):
             "entry_names": json.dumps(entry_names),
             "entry_reasons": json.dumps(entry_reasons),
             "tags": json.dumps(tags),
-            "issues": json.dumps(issues),
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+            "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
         context["organization"] = Organization.objects.get(
             slug=self.kwargs["slug"]

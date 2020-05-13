@@ -128,59 +128,112 @@ var states = [
   "wy",
 ];
 
+var state_areas = {
+  "ak" : 665384,
+  "al" : 52420,
+  "ar" : 53178,
+  "az" : 113990,
+  "ca" : 163694,
+  "co" : 104093,
+  "ct" : 5543,
+  "dc" : 68,
+  "de" : 2488,
+  "fl" : 65757,
+  "ga" : 59425,
+  "hi" : 10931,
+  "ia" : 56272,
+  "id" : 83568,
+  "il" : 57913,
+  "in" : 36419,
+  "ks" : 82278,
+  "ky" : 40407,
+  "la" : 52378,
+  "ma" : 10554,
+  "md" : 12405,
+  "me" : 35379,
+  "mi" : 96713,
+  "mn" : 86935,
+  "mo" : 69706,
+  "ms" : 48431,
+  "mt" : 147039,
+  "nc" : 53819,
+  "nd" : 70698,
+  "nh" : 9349,
+  "nj" : 8722,
+  "nm" : 121590,
+  "nv" : 110571,
+  "ny" : 54554,
+  "oh" : 44825,
+  "ok" : 69898,
+  "or" : 98378,
+  "pa" : 46054,
+  "ri" : 1544,
+  "sc" : 32020,
+  "sd" : 77115,
+  "tn" : 42144,
+  "tx" : 268596,
+  "ut" : 84896,
+  "va" : 42774,
+  "vt" : 9616,
+  "wa" : 71297,
+  "wi" : 65496,
+  "wv" : 24230,
+  "wy" : 97813,
+}
+
 // dictionary with state neighbors without nebraska since there is
 // no census block data for nebraska
-var state_neighbors  = {
-  "ak" : [],
-  "al" : ["fl", "ga", "ms", "tn"],
-  "ar" : ["la", "mo", "ms", "ok", "tn", "tx"],
-  "az" : ["ca", "co", "nv", "nm", "ut"],
-  "ca" : ["az", "nv", "or"],
-  "co" : ["az", "ks", "nm", "ok", "ut", "wy"],
-  "ct" : ["ma", "ny", "ri"],
-  "dc" : ["md", "va"],
-  "de" : ["md", "nj", "pa"],
-  "fl" : ["al", "ga"],
-  "ga" : ["al", "fl", "nc", "sc", "tn"],
-  "hi" : [],
-  "ia" : ["al", "mn", "mo", "sd", "wi"],
-  "id" : ["mt", "nv", "or", "ut", "wa", "wy"],
-  "il" : ["in", "ia", "mi", "ky", "mo", "wi"],
-  "in" : ["il", "ky", "mi", "oh"],
-  "ks" : ["co", "mo", "ok"],
-  "ky" : ["il", "in", "mo", "oh", "tn", "va", "wv"],
-  "la" : ["ar", "ms", "tx"],
-  "ma" : ["ct", "nh", "ny", "ri", "vt"],
-  "md" : ["de", "pa", "va", "wv"],
-  "me" : ["nh"],
-  "mi" : ["il", "in", "mn", "oh", "wi"],
-  "mn" : ["ia", "mi", "nd", "sd", "wi"],
-  "mo" : ["ar", "il", "ia", "ks", "ky", "ok", "tn"],
-  "ms" : ["al", "ar", "la", "tn"],
-  "mt" : ["id", "nd", "sd", "wy"],
-  "nc" : ["az", "ca", "id", "or", "ut"],
-  "nd" : ["mn", "mt", "sd"],
-  "nh" : ["me", "ma", "vt"],
-  "nj" : ["ny", "de", "pa"],
-  "nm" : ["az", "co", "ok", "tx", "ut"],
-  "nv" : ["az", "ca", "id", "or", "ut"],
-  "ny" : ["ct", "ma", "nj", "pa", "ri", "vt"],
-  "oh" : ["in", "ky", "mi", "pa", "wv"],
-  "ok" : ["ar", "co", "ks", "mo", "nm", "tx"],
-  "or" : ["ca", "id", "nv", "wa"],
-  "pa" : ["de", "md", "nj", "ny", "oh", "wv"],
-  "ri" : ["ct", "ma", "ny"],
-  "sc" : ["ga", "nc"],
-  "sd" : ["ia", "mn", "mt", "nd", "wy"],
-  "tn" : ["al", "ar", "ga", "ky", "ms", "mo", "nc", "va"],
-  "tx" : ["ar", "la", "nm", "ok"],
-  "ut" : ["az", "co", "id", "nv", "nm", "wy"],
-  "va" : ["ky", "md", "nc", "tn", "wv"],
-  "vt" : ["ma", "nh", "ny"],
-  "wa" : ["id", "or"],
-  "wi" : ["il", "ia", "mi", "mn"],
-  "wv" : ["ky", "md", "oh", "pa", "va"],
-  "wy" : ["co", "id", "mt", "sd", "ut"]
+var state_neighbors = {
+  ak: [],
+  al: ["fl", "ga", "ms", "tn"],
+  ar: ["la", "mo", "ms", "ok", "tn", "tx"],
+  az: ["ca", "co", "nv", "nm", "ut"],
+  ca: ["az", "nv", "or"],
+  co: ["az", "ks", "nm", "ok", "ut", "wy"],
+  ct: ["ma", "ny", "ri"],
+  dc: ["md", "va"],
+  de: ["md", "nj", "pa"],
+  fl: ["al", "ga"],
+  ga: ["al", "fl", "nc", "sc", "tn"],
+  hi: [],
+  ia: ["al", "mn", "mo", "sd", "wi"],
+  id: ["mt", "nv", "or", "ut", "wa", "wy"],
+  il: ["in", "ia", "mi", "ky", "mo", "wi"],
+  in: ["il", "ky", "mi", "oh"],
+  ks: ["co", "mo", "ok"],
+  ky: ["il", "in", "mo", "oh", "tn", "va", "wv"],
+  la: ["ar", "ms", "tx"],
+  ma: ["ct", "nh", "ny", "ri", "vt"],
+  md: ["de", "pa", "va", "wv"],
+  me: ["nh"],
+  mi: ["il", "in", "mn", "oh", "wi"],
+  mn: ["ia", "mi", "nd", "sd", "wi"],
+  mo: ["ar", "il", "ia", "ks", "ky", "ok", "tn"],
+  ms: ["al", "ar", "la", "tn"],
+  mt: ["id", "nd", "sd", "wy"],
+  nc: ["az", "ca", "id", "or", "ut"],
+  nd: ["mn", "mt", "sd"],
+  nh: ["me", "ma", "vt"],
+  nj: ["ny", "de", "pa"],
+  nm: ["az", "co", "ok", "tx", "ut"],
+  nv: ["az", "ca", "id", "or", "ut"],
+  ny: ["ct", "ma", "nj", "pa", "ri", "vt"],
+  oh: ["in", "ky", "mi", "pa", "wv"],
+  ok: ["ar", "co", "ks", "mo", "nm", "tx"],
+  or: ["ca", "id", "nv", "wa"],
+  pa: ["de", "md", "nj", "ny", "oh", "wv"],
+  ri: ["ct", "ma", "ny"],
+  sc: ["ga", "nc"],
+  sd: ["ia", "mn", "mt", "nd", "wy"],
+  tn: ["al", "ar", "ga", "ky", "ms", "mo", "nc", "va"],
+  tx: ["ar", "la", "nm", "ok"],
+  ut: ["az", "co", "id", "nv", "nm", "wy"],
+  va: ["ky", "md", "nc", "tn", "wv"],
+  vt: ["ma", "nh", "ny"],
+  wa: ["id", "or"],
+  wi: ["il", "ia", "mi", "mn"],
+  wv: ["ky", "md", "oh", "pa", "va"],
+  wy: ["co", "id", "mt", "sd", "ut"],
 };
 
 var wkt_obj;
@@ -196,7 +249,6 @@ $(document).ready(function () {
 
 //builds proper format of location string based on mapbox data. city,state/province,country
 function parseReverseGeo(geoData) {
-  // debugger;
   var region, countryName, placeName, returnStr;
   if (geoData.context) {
     $.each(geoData.context, function (i, v) {
@@ -263,7 +315,7 @@ var geocoder = new MapboxGeocoder({
   mapboxgl: mapboxgl,
 });
 
-document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
 
 /* tutorial reference for draw control properties:
 https://bl.ocks.org/dnseminara/0790e53cef9867e848e716937727ab18
@@ -531,22 +583,14 @@ map.addControl(new CensusBlocksControl(), "top-left");
 document.getElementById("draw-button").addEventListener("click", function (e) {
   cleanAlerts();
   draw.deleteAll();
-  // TODO: change for all states
-  map.setFilter(state + "-blocks-highlighted", [
-    "in",
-    "BLOCKID10",
-  ]);
+  map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
   draw.changeMode("draw_polygon");
 });
 
 document.getElementById("trash-button").addEventListener("click", function (e) {
   cleanAlerts();
   draw.deleteAll();
-  // TODO: change for all states
-  map.setFilter(state + "-blocks-highlighted", [
-    "in",
-    "BLOCKID10",
-  ]);
+  map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
   draw.changeMode("simple_select");
 });
 
@@ -554,27 +598,10 @@ document.getElementById("trash-button").addEventListener("click", function (e) {
 function newSourceLayer(name, mbCode) {
   map.addSource(name, {
     type: "vector",
-    url: "mapbox://districter-team." + mbCode,
+    url: "mapbox://" + mapbox_user_name + "." + mbCode,
   });
 }
-// add a new layer of census block data
-// function newCensusLines(state) {
-//   map.addLayer({
-//     id: state + "-census-lines",
-//     type: "line",
-//     source: state + "-census",
-//     "source-layer": state + "census",
-//     layout: {
-//       visibility: "visible",
-//       "line-join": "round",
-//       "line-cap": "round",
-//     },
-//     paint: {
-//       "line-color": "rgba(71, 93, 204, 0.5)",
-//       "line-width": 1,
-//     },
-//   });
-// }
+
 // add a new layer of census block data (transparent layer)
 function newCensusShading(state) {
   map.addLayer({
@@ -612,17 +639,15 @@ function newHighlightLayer(state) {
 function addNeighborLayersFilter() {
   for (let i = 0; 0 < neighbors.length; i++) {
     if (map.getLayer(neighbors[i] + "-blocks-highlighted")) {
-      map.setFilter(neighbors[i] + "-blocks-highlighted", [
-        "in",
-        "BLOCKID10",
-      ]);
+      map.setFilter(neighbors[i] + "-blocks-highlighted", ["in", "BLOCKID10"]);
     }
   }
 }
 
 function addStateNeighborLayers(new_neighbors, new_state) {
   // remove the old state layer and add the new state layer
-  if (map.getLayer(state + "-blocks-highlighted")) map.removeLayer(state + "-blocks-highlighted");
+  if (map.getLayer(state + "-blocks-highlighted"))
+    map.removeLayer(state + "-blocks-highlighted");
   newHighlightLayer(new_state);
   // iterate through all states in the new_neighbors
   // if includes, don't add
@@ -637,7 +662,8 @@ function addStateNeighborLayers(new_neighbors, new_state) {
     }
   }
   for (let i = 0; i < neighbors.length; i++) {
-    if (map.getLayer(neighbors[i] + "-blocks-highlighted")) map.removeLayer(neighbors[i] + "-blocks-highlighted");
+    if (map.getLayer(neighbors[i] + "-blocks-highlighted"))
+      map.removeLayer(neighbors[i] + "-blocks-highlighted");
   }
 }
 
@@ -678,7 +704,7 @@ map.on("style.load", function () {
 
   // Listen for the `geocoder.input` event that is triggered when a user
   // makes a selection and add a symbol that matches the result.
-  geocoder.on("result", function(ev) {
+  geocoder.on("result", function (ev) {
     map.getSource("single-point").setData(ev.result.geometry);
     var styleSpec = ev.result;
     var styleSpecBox = document.getElementById("json-response");
@@ -698,7 +724,9 @@ map.on("style.load", function () {
     }
     // get the state from the geocoder response
     if (styleSpec.context.length >= 2) {
-      new_state = styleSpec.context[styleSpec.context.length - 2]["short_code"].toLowerCase().substring(3);
+      new_state = styleSpec.context[styleSpec.context.length - 2]["short_code"]
+        .toLowerCase()
+        .substring(3);
     } else {
       new_state = styleSpec.properties["short_code"].toLowerCase().substring(3);
     }
@@ -707,7 +735,6 @@ map.on("style.load", function () {
       new_neighbors = state_neighbors[new_state];
       state = new_state;
       neighbors = new_neighbors;
-      console.log(state);
     }
   });
 });
@@ -724,7 +751,6 @@ map.on("render", function () {
     wkt_obj = wkt.read(feature);
     var geoJsonFeature = wkt_obj.toJson();
     var featureIds = draw.add(geoJsonFeature);
-    console.log("Refresh");
     updateCommunityEntry();
   }
 });
@@ -732,20 +758,15 @@ map.on("render", function () {
 /******************************************************************************/
 
 map.on("draw.create", function () {
-  console.log("Draw create");
   updateCommunityEntry();
 });
 map.on("draw.delete", function () {
-  console.log("Draw delete");
   updateCommunityEntry();
 });
 map.on("draw.update", function () {
-  console.log("Draw update");
   updateCommunityEntry();
 });
-map.on("draw.changeMode", function () {
-  console.log("Draw CM");
-});
+map.on("draw.changeMode", function () {});
 
 /******************************************************************************/
 
@@ -762,7 +783,6 @@ function triggerDrawError(id, stringErrorText) {
   /*
         triggerDrawError creates a bootstrap alert placed on top of the map.
     */
-  console.log("triggerDrawError() called");
   // Remove success message.
   let oldSuccessAlert = document.getElementById("map-success-message");
   if (oldSuccessAlert) {
@@ -795,7 +815,6 @@ function triggerSuccessMessage() {
         triggerSuccessMessage lets the user know that they created a succesful
         polygon.
     */
-  console.log("triggerSuccessMessage() called");
   // Remove all map alert messages.
   cleanAlerts();
 
@@ -817,7 +836,6 @@ function triggerSuccessMessage() {
    blocks. Returns an array containing the census block polygons that are
    highlighted */
 function highlightBlocks(drawn_polygon) {
-  console.log("called highlight blocks");
   // once the above works, check the global scope of drawn_polygon
 
   var census_blocks_polygon = drawn_polygon;
@@ -869,11 +887,7 @@ function highlightBlocks(drawn_polygon) {
         ["in", "BLOCKID10"]
       );
       //  sets filter - highlights blocks
-      // TODO: update for all states
-      map.setFilter(
-        state + "-blocks-highlighted",
-        filter
-      );
+      map.setFilter(state + "-blocks-highlighted", filter);
     }
   } catch (err) {
     console.log("triangle shaped polygon was changed");
@@ -888,9 +902,7 @@ function highlightBlocks(drawn_polygon) {
 function addPoly(poly, polyArray, wkt) {
   // coordinates attribute that shud be converted and pushed
   var poly_json = JSON.stringify(poly);
-  // console.log(poly_json);
   var wkt_obj = wkt.read(poly_json);
-  // console.log(wkt_obj);
   var poly_wkt = wkt_obj.write();
   polyArray.push(poly_wkt);
   return polyArray;
@@ -899,8 +911,6 @@ function addPoly(poly, polyArray, wkt) {
 /* Responds to the user's actions and updates the geometry fields and the arrayfield
  in the form. */
 function updateCommunityEntry(e) {
-  console.log("updateCommunity entry called");
-
   var wkt = new Wkt.Wkt();
   var data = draw.getAll();
   var user_polygon_wkt;
@@ -913,7 +923,6 @@ function updateCommunityEntry(e) {
     // Check for kinks.
     let kinks = turf.kinks(drawn_polygon);
     if (kinks.features.length != 0) {
-      // console.log("Polygon contains kinks. Please redraw.")
       triggerDrawError(
         "polygon-kink-error",
         "Polygon lines should not overlap. Please draw your community again."
@@ -925,9 +934,8 @@ function updateCommunityEntry(e) {
     let area = turf.area(data);
     area = turf.convertArea(area, "meters", "miles");
 
-    // TODO: Need to make sure map does not cross state boundaries??? Maybe this is fine for communities...
-    // Use NJ State Area * 1/2 TODO: need to generalize?
-    let halfStateArea = 4350; // TODO use dictionary lookup based on zipcode
+    // coi is not too big
+    let halfStateArea = state_areas[state]/2;
     if (area > halfStateArea) {
       triggerDrawError(
         "map-area-size-error",
@@ -966,7 +974,6 @@ function updateCommunityEntry(e) {
   document.getElementById(
     "id_census_blocks_polygon_array"
   ).value = census_blocks_polygon_array;
-  console.log("Entry updated; map valid");
   triggerSuccessMessage();
 }
 /******************************************************************************/

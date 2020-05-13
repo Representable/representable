@@ -32,9 +32,10 @@
 <div class="row row-wide">
     <div>
         <script type="text/javascript">
-            var a = '{{ entries | escapejs }}';
+            var entry_poly_dict = '{{ entry_poly_dict | escapejs }}';
             var tags = '{{ tags | escapejs }}';
             var approved = '{{ approved | escapejs }}';
+            var mapbox_user_name = "{{mapbox_user_name}}";
         </script>
     </div>
     <div class="col-md-6 col-wide">
@@ -43,6 +44,11 @@
                 <div class="dropdown-container"></div>
                 <div id="outline-menu">
                 </div>
+                {% if query_error %}
+                <div class="alert alert-warning" role="alert">
+                    The community was already deleted.
+                </div>
+                {% endif %}
                 {% if communities %}
                 <table class="table table-review">
                     <tr>
@@ -59,22 +65,11 @@
                           </span>
                           <br>
                             <span class="font-weight-light">{{c.entry_reason}}<br>
-                            {% if user.is_staff %}
-                            <!-- we should have an author here too -->
-                                <b>Created by:</b></span> {{ c.user.username }}
-                            {% endif %}
                         </td>
                         <td>
                             <form method="post" action="">{% csrf_token %}
                                 {{ form }}
                                 <input type="hidden" name="c_id" value="{{ c }}">
-                                {% if user.is_staff %}
-                                    {% if c.admin_approved %}
-                                        <button type="submit" class="btn btn-warning", name="Unapprove">Unapprove</button>
-                                    {% else %}
-                                        <button type="submit" class="btn btn-success", name="Approve">Approve</button>
-                                    {% endif %}
-                                {% endif %}
                                 <button type="submit" class="btn btn-danger", name="Delete">Delete</button>
                             </form>
                         </td>
