@@ -150,9 +150,6 @@ map.on("load", function () {
     newLowerLegislatureLayer(states[i]);
   }
 
-  // tags add to properties
-  tags = JSON.parse(tags);
-
   output_poly_json = JSON.parse(entry_poly_dict);
   var dest = [];
 
