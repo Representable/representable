@@ -488,20 +488,12 @@ map.on("load", function () {
 
 // on hover, highlight the community
 $("#community-list").on("mouseenter", "li", function () {
-  map.setPaintProperty(
-    this.id + "line",
-    "line-color",
-    "rgba(61, 114, 118, 0.5)"
-  );
-  map.setPaintProperty(this.id + "line", "line-width", 4);
+  map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0, 0.8)");
+  map.setPaintProperty(this.id + "line", "line-width", 3);
   map.setPaintProperty(this.id, "fill-color", "rgba(61, 114, 118,0.3)");
 });
 $("#community-list").on("mouseleave", "li", function () {
-  map.setPaintProperty(
-    this.id + "line",
-    "line-color",
-    "rgba(110, 178, 181,0.3)"
-  );
+  map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
   map.setPaintProperty(this.id + "line", "line-width", 2);
   map.setPaintProperty(this.id, "fill-color", "rgba(110, 178, 181,0.15)");
 });
