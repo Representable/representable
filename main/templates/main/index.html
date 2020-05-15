@@ -8,6 +8,10 @@
 <meta charset='utf-8' />
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="{% static 'main/js/jquery.vmap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'main/js/jquery.vmap.usa.js' %}"></script>
+<script type="text/javascript" src="{% static 'main/js/main.js' %}"></script>
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.css' rel='stylesheet' />
 {% endblock %}
 
@@ -55,6 +59,9 @@
     <div class="col-lg-5 col-sm-12 col-md-5">
       <img class="img-fluid align-bottom my-3" src="{% static 'img/illustration.svg' %}"> </img>
     </div>
+  </div>
+  <div class="container my-5">
+    <div id="usa-map"></div>
   </div>
   <div class="border-bottom my-5">
     <div class="container" style="top:-50px;">
