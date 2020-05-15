@@ -17,28 +17,42 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
- let jQuery = window.jQuery
+let jQuery = window.jQuery
+let states = ['mi', 'tx', 'va']
 
- jQuery(document).ready(function () {
+jQuery(document).ready(function () {
   setUpUSAMap()
 })
 
 let setUpUSAMap = function () {
+  colors = {}
+  for (x in states) {
+    colors[states[x]] = '#7FD9C6'
+  }
   jQuery('#usa-map').vectorMap({
     map: 'usa_en',
-    backgroundColor: 'rgba(0, 0, 0, 0)',
+    backgroundColor: '#FFFFFF',
     enableZoom: false,
+    borderColor: '#FFFFFF',
     borderWidth: 2,
+    borderOpacity: 1,
     showTooltip: true,
-    selectedColor: null,
-    hoverColor: null,
-    colors: {
-      mo: '#C9DFAF',
-      fl: '#C9DFAF',
-      or: '#C9DFAF'
+    selectedColor: '#00C6A6',
+    hoverColor: '#00C6A6',
+    colors: colors,
+    onRegionClick: ignoreUnsupportedStates,
+    onRegionOver: ignoreUnsupportedStates,
+    onRegionSelect: function (event, code, region) {
+      window.location.href = "/entry"
     },
-    onRegionClick: function(event, code, region){
-      event.preventDefault();
+    onLabelShow: function (event, label, code) {
+      return ignoreUnsupportedStates(event, code)
     }
   });
+}
+
+const ignoreUnsupportedStates = function (event, code, region) {
+  if (!states.includes(code)) {
+    event.preventDefault()
+  }
 }
