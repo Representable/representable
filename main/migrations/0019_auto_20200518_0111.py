@@ -25,9 +25,4 @@ class Migration(migrations.Migration):
             name='economic_interests',
             field=models.TextField(default='', max_length=500),
         ),
-        migrations.AddField(
-            model_name='communityentry',
-            name='other_details',
-            field=models.TextField(default='', max_length=500),
-        ),
     ]

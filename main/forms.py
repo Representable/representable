@@ -127,12 +127,6 @@ class CommunityForm(ModelForm):
                     "rows": 5,
                 }
             ),
-            "other_details": forms.Textarea(
-                attrs={
-                    "placeholder": "Other Details",
-                    "rows": 5,
-                }
-            ),
             "user_name": forms.TextInput(
                 attrs={"placeholder": "User Name"}
             ),

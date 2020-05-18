@@ -234,9 +234,6 @@ class CommunityEntry(models.Model):
     comm_activities = models.TextField(
         max_length=500, blank=False, unique=False, default=""
     )
-    other_details = models.TextField(
-        max_length=500, blank=False, unique=False, default=""
-    )
     user_phone = PhoneField(blank=False, unique=False, default="")
     admin_approved = models.BooleanField(default=False)
 
