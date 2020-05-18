@@ -21,6 +21,9 @@ from django.contrib.postgres.fields import ArrayField
 from django.template.defaultfilters import slugify
 from django.urls import reverse, reverse_lazy
 
+# Phone number field
+from phone_field import PhoneField
+
 # Geo App
 import uuid
 from django.conf import settings
@@ -219,6 +222,22 @@ class CommunityEntry(models.Model):
     entry_reason = models.TextField(
         max_length=500, blank=False, unique=False, default=""
     )
+    user_name = models.CharField(
+        max_length=500, blank=False, unique=False, default=""
+    )
+    cultural_interests = models.TextField(
+        max_length=500, blank=False, unique=False, default=""
+    )
+    economic_interests = models.TextField(
+        max_length=500, blank=False, unique=False, default=""
+    )
+    comm_activities = models.TextField(
+        max_length=500, blank=False, unique=False, default=""
+    )
+    other_details = models.TextField(
+        max_length=500, blank=False, unique=False, default=""
+    )
+    user_phone = PhoneField(blank=False, unique=False, default="")
     admin_approved = models.BooleanField(default=False)
 
     def __str__(self):

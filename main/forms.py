@@ -42,6 +42,8 @@ from .choices import (
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Area
 
+from phone_field import PhoneField
+
 # https://django-select2.readthedocs.io/en/latest/django_select2.html
 
 
@@ -107,6 +109,34 @@ class CommunityForm(ModelForm):
                     "rows": 5,
                 }
             ),
+            "cultural_interests": forms.Textarea(
+                attrs={
+                    "placeholder": "Cultural interests",
+                    "rows": 5,
+                }
+            ),
+            "economic_interests": forms.Textarea(
+                attrs={
+                    "placeholder": "Economic interests",
+                    "rows": 5,
+                }
+            ),
+            "comm_activities": forms.Textarea(
+                attrs={
+                    "placeholder": "Community Activities and Services",
+                    "rows": 5,
+                }
+            ),
+            "other_details": forms.Textarea(
+                attrs={
+                    "placeholder": "Other Details",
+                    "rows": 5,
+                }
+            ),
+            "user_name": forms.TextInput(
+                attrs={"placeholder": "User Name"}
+            ),
+            "user_phone": PhoneField,
             "user_polygon": forms.HiddenInput(),
             "zipcode": forms.TextInput(attrs={"placeholder": "Your Zipcode"}),
         }
