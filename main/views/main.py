@@ -39,6 +39,7 @@ from ..models import (
     WhiteListEntry,
     Tag,
     Membership,
+    CampaignToken,
 )
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
@@ -331,10 +332,16 @@ class EntryView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         form = self.form_class(initial=self.get_initial(), label_suffix="")
+
+        has_token = False
+        if kwargs["token"]:
+            has_token = True
+
         context = {
             "form": form,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
+            "has_token": has_token,
         }
         return render(request, self.template_name, context)
 
@@ -387,6 +394,15 @@ class EntryView(LoginRequiredMixin, View):
 
                         # approve this entry
                         entryForm.admin_approved = True
+
+            if self.kwargs["token"]:
+                token = CampaignToken.objects.get(token=self.kwargs["token"])
+                if token:
+                    entryForm.campaign = token.campaign
+                    entryForm.organization = token.campaign.organization
+
+                    # if user has a token, auto approve submission
+                    entryForm.admin_approved = True
 
             entryForm.save()
 
