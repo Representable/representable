@@ -330,6 +330,16 @@ color scheme. See readme.md*/
     margin: auto;
     cursor: pointer;
 }
+#stateSelectionDropdown
+{
+  font-size: 2rem;
+  background: none;
+  outline: none;
+  border: none;
+  border-bottom: 0.15rem solid black;
+  border-radius: 0px;
+  -webkit-appearance: none;
+}
 
 /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
 .dropdown-container {

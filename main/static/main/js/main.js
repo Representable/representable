@@ -18,7 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 let jQuery = window.jQuery
-let states = ['mi', 'tx', 'va']
+let states = ['mi', 'nj', 'tx', 'va']
 let statesDatabase = {
   'AL': 'Alabama',
   'AK': 'Alaska',
@@ -96,6 +96,9 @@ let populateStateSelectionDropdown = function() {
     newOption.innerHTML = stateName
     selectElement.appendChild(newOption)
   }
+  jQuery('#stateSelectionDropdown').on('change', function() {
+    window.location = '/entry'
+  })
 }
 
 // source: https://github.com/10bestdesign/jqvmap
@@ -117,7 +120,11 @@ let setUpUSAMap = function () {
     colors: colors,
     onRegionClick: ignoreUnsupportedStates,
     onRegionOver: ignoreUnsupportedStates,
+    onRegionOut: ignoreUnsupportedStates,
     onRegionSelect: function (event, code, region) {
+      if (jQuery('#stateSelectionDropdown').val() !== code) {
+        jQuery('#stateSelectionDropdown').val(code)
+      }
       window.location.href = "/entry"
     },
     onLabelShow: function (event, label, code) {
@@ -129,5 +136,7 @@ let setUpUSAMap = function () {
 const ignoreUnsupportedStates = function (event, code, region) {
   if (!states.includes(code)) {
     event.preventDefault()
+  } else {
+    jQuery('#stateSelectionDropdown').val(code)
   }
 }
