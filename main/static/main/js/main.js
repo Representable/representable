@@ -97,7 +97,11 @@ let populateStateSelectionDropdown = function() {
     selectElement.appendChild(newOption)
   }
   jQuery('#stateSelectionDropdown').on('change', function() {
-    window.location = '/entry'
+    if (this.value !== 'mi') {
+      window.location = '/entry'
+    } else {
+      window.location = '/michigan'
+    }
   })
 }
 
@@ -125,7 +129,11 @@ let setUpUSAMap = function () {
       if (jQuery('#stateSelectionDropdown').val() !== code) {
         jQuery('#stateSelectionDropdown').val(code)
       }
-      window.location.href = "/entry"
+      if (code !== 'mi') {
+        window.location.href = '/entry'
+      } else {
+        window.location.href = '/michigan'
+      }
     },
     onLabelShow: function (event, label, code) {
       return ignoreUnsupportedStates(event, code)
