@@ -410,6 +410,25 @@ class CampaignHome(LoginRequiredMixin, DetailView):
     model = Campaign
     pk_url_kwarg = "cam_pk"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["is_org_admin"] = self.request.user.is_org_admin(
+            self.kwargs["pk"]
+        )
+        context["is_org_moderator"] = self.request.user.is_org_moderator(
+            self.kwargs["pk"]
+        )
+        campaign = get_object_or_404(Campaign, pk=self.kwargs["cam_pk"])
+        token = CampaignToken.objects.filter(campaign=campaign)
+        if not token:
+            token = CampaignToken.objects.create(campaign=campaign)
+        else:
+            # filter only the first token in case there are multiple
+            token = token[0]
+        context["token"] = token.token
+
+        return context
+
 
 class CampaignList(LoginRequiredMixin, TemplateView):
     """
