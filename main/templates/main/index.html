@@ -39,28 +39,15 @@
           Estamos creando un mapa de comunidades para terminar con la gerrymandering.
         {% endif %}
       </h5>
-      <a class="btn btn-primary btn-canvas mx-1 my-2" href="/entry" role="button">
-        {% if LANGUAGE_CODE == 'en' %}
-          Contribute
-        {% elif LANGUAGE_CODE == 'es' %}
-          <!-- Google translate  -->
-          Contribuir
-        {% endif %}
-      </a>
-      <a class="btn btn-primary btn-canvas mx-1 my-2" href="/partners/welcome" role="button">
-        {% if LANGUAGE_CODE == 'en' %}
-          Partner with us
-        {% elif LANGUAGE_CODE == 'es' %}
-          <!-- Google translate  -->
-          Asociarse con nosotros
-        {% endif %}
-      </a>
+      <p class="my-3 lead">
+        Select your state to begin</p>
     </div>
     <div class="col-lg-5 col-sm-12 col-md-5">
       <img class="img-fluid align-bottom my-3" src="{% static 'img/illustration.svg' %}"> </img>
     </div>
   </div>
   <div class="text-center">
+    <h5 class="my-3 lead">Draw your community in:</h5>
     <select id="stateSelectionDropdown">
       <option label="------------" value="select-a-state"></option>
     </select>
