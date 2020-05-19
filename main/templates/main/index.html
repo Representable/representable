@@ -24,156 +24,175 @@
       <!-- Shows on medium devices and higher. -->
       <h4 class="display-4 my-4 font-weight-medium d-none d-sm-block main-display-text-all">
         {% if LANGUAGE_CODE == 'en' %}
-          We're creating maps of communities to end gerrymandering.
+        We're creating maps of communities to end gerrymandering.
         {% elif LANGUAGE_CODE == 'es' %}
-          <!-- Google translate  -->
-          Estamos creando un mapa de comunidades para terminar con la gerrymandering.
+        <!-- Google translate  -->
+        Estamos creando un mapa de comunidades para terminar con la gerrymandering.
         {% endif %}
       </h4>
       <!-- Shows on small devices and lower. -->
       <h5 class="display-4 my-2 font-weight-medium d-sm-none main-display-text-sm">
         {% if LANGUAGE_CODE == 'en' %}
-          We're creating maps of communities to end gerrymandering.
+        We're creating maps of communities to end gerrymandering.
         {% elif LANGUAGE_CODE == 'es' %}
-          <!-- Google translate  -->
-          Estamos creando un mapa de comunidades para terminar con la gerrymandering.
+        <!-- Google translate  -->
+        Estamos creando un mapa de comunidades para terminar con la gerrymandering.
         {% endif %}
       </h5>
       <p class="my-3 lead">
         Select your state to begin drawing your community</p>
+      </div>
+      <div class="col-lg-5 col-sm-12 col-md-5">
+        <img class="img-fluid align-bottom my-3" src="{% static 'img/illustration.svg' %}"> </img>
+      </div>
     </div>
-    <div class="col-lg-5 col-sm-12 col-md-5">
-      <img class="img-fluid align-bottom my-3" src="{% static 'img/illustration.svg' %}"> </img>
+    <div class="my-5">
+      <div class="text-center">
+        <h1 class="my-3 font-weight-light">Draw your community in:</h1>
+        <select id="stateSelectionDropdown">
+          <option label="------------" value="select-a-state"></option>
+        </select>
+      </div>
+      <div>
+        <div id="usa-map"></div>
+      </div>
     </div>
-  </div>
-  <div class="text-center">
-    <h1 class="my-3 font-weight-light">Draw your community in:</h1>
-    <select id="stateSelectionDropdown">
-      <option label="------------" value="select-a-state"></option>
-    </select>
-  </div>
-  <div>
-    <div id="usa-map"></div>
-  </div>
-  <hr>
-  <div class="border-bottom my-5">
-    <div class="container" style="top:-50px;">
-      <h6 class="my-3 text-center">
-        New: View the Representable user manual <a target="_blank" href="https://drive.google.com/open?id=1JNnniBDFTF7Nge2SFhpleSTb3RNCoBpEKm6TsqIzXdg">here</a>!
-      </h6>
-      <h6 class="my-3 text-center">
-        Learn more about gerrymandering and Representable.org: <a target="_blank" href="https://drive.google.com/open?id=1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc">here</a>!
-      </h6>
-      <br>
+    <div class="row row-hero row-eq-height border-bottom border-top">
+      <div class="col-lg-5 col-sm-12 col-md-5 my-5">
+        <!-- credit for illustration to https://undraw.co/ !-->
+        <img class="img-fluid align-bottom my-3" src="{% static 'img/leader.svg' %}"> </img>
+      </div>
+      <div class="col-lg-7 col-sm-12 col-lg-7 my-5">
+        <h1 class="my-3 font-weight-light">Are you the leader of an organization?</h1>
+        <p class="my-3 lead">Many organizations have partnered with Representable.org to collect community-of-interest data. Get started by creating a partner profile.</p>
+        <a class="btn btn-primary mx-2 my-1" href="/partners/welcome" role="button">
+          {% if LANGUAGE_CODE == 'en' %}
+          Partner with us
+          {% elif LANGUAGE_CODE == 'es' %}
+          <!-- Google translate  -->
+          Asociarse con nosotros
+          {% endif %}
+        </a>
+      </div>
     </div>
-  </div>
-  <!-- What does Representable do? -->
-  <div class="container my-5">
-    <h3 class="my-3 text-center">
-      {% if LANGUAGE_CODE == 'en' %}
+    <div class="border-bottom my-5">
+      <div class="container" style="top:-50px;">
+        <h6 class="my-3 text-center">
+          New: View the Representable user manual <a target="_blank" href="https://drive.google.com/open?id=1JNnniBDFTF7Nge2SFhpleSTb3RNCoBpEKm6TsqIzXdg">here</a>!
+        </h6>
+        <h6 class="my-3 text-center">
+          Learn more about gerrymandering and Representable.org: <a target="_blank" href="https://drive.google.com/open?id=1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc">here</a>!
+        </h6>
+        <br>
+      </div>
+    </div>
+    <!-- What does Representable do? -->
+    <div class="container my-5">
+      <h3 class="my-3 text-center">
+        {% if LANGUAGE_CODE == 'en' %}
         What is Representable.org?
-      {% elif LANGUAGE_CODE == 'es' %}
+        {% elif LANGUAGE_CODE == 'es' %}
         <!-- Google translate  -->
         ¿Qué es Representable.org?
-      {% endif %}
-    </h3>
-    <p class="my-3 text-center lead">
-      {% if LANGUAGE_CODE == 'en' %}
+        {% endif %}
+      </h3>
+      <p class="my-3 text-center lead">
+        {% if LANGUAGE_CODE == 'en' %}
         We are an open-source tool that maps communities across the US.
         States, nonprofits, and journalists can use our data to test districts for gerrymandering. Visit <a href="/map">the map</a> to see Representable in action.
-      {% elif LANGUAGE_CODE == 'es' %}
+        {% elif LANGUAGE_CODE == 'es' %}
         <!-- Google translate  -->
         Somos una herramienta de código abierto que mapea comunidades en los Estados Unidos. Los estados, las organizaciones sin fines de lucro y los periodistas pueden usar nuestros datos para evaluar los distritos en busca de gerrymandering. Vea nuestro <a href="/map">mapa</a> para ver Representable en acción.
-      {% endif %}
-    </p>
+        {% endif %}
+      </p>
 
-  </div>
-  <!-- How To -->
-  <div class="row my-3">
-    <div class="col-sm my-3 shadow-sm mx-3">
-      <div class="card border-0">
-        <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/citizens.svg' %}"></img>
-        <div class="card-body text-center d-flex flex-column align-items-center">
-          <h5>
-            {% if LANGUAGE_CODE == 'en' %}
+    </div>
+    <!-- How To -->
+    <div class="row my-3">
+      <div class="col-sm my-3 shadow-sm mx-3">
+        <div class="card border-0">
+          <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/citizens.svg' %}"></img>
+          <div class="card-body text-center d-flex flex-column align-items-center">
+            <h5>
+              {% if LANGUAGE_CODE == 'en' %}
               For citizens
-            {% elif LANGUAGE_CODE == 'es' %}
+              {% elif LANGUAGE_CODE == 'es' %}
               <!-- Google translate  -->
               Para los ciudadanos
-            {% endif %}
-          </h5>
-          <p>
-            {% if LANGUAGE_CODE == 'en' %}
+              {% endif %}
+            </h5>
+            <p>
+              {% if LANGUAGE_CODE == 'en' %}
               Learn how to use Representable to draw your community.
-            {% elif LANGUAGE_CODE == 'es' %}
+              {% elif LANGUAGE_CODE == 'es' %}
               <!-- Google translate  -->
               Aprenda a usar Representable para dibujar su comunidad.
-            {% endif %}
-          </p>
-          <!-- <a class="btn btn-primary btn-canvas mt-auto" href="/entry" role="button">Get Started</a> -->
+              {% endif %}
+            </p>
+            <!-- <a class="btn btn-primary btn-canvas mt-auto" href="/entry" role="button">Get Started</a> -->
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-sm my-3 shadow-sm mx-3">
-      <div class="card border-0">
-        <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/map.svg' %}"></img>
-        <div class="card-body text-center flex-column align-items-center">
-          <h5 class="card-title">
-            {% if LANGUAGE_CODE == 'en' %}
+      <div class="col-sm my-3 shadow-sm mx-3">
+        <div class="card border-0">
+          <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/map.svg' %}"></img>
+          <div class="card-body text-center flex-column align-items-center">
+            <h5 class="card-title">
+              {% if LANGUAGE_CODE == 'en' %}
               For nonprofits
-            {% elif LANGUAGE_CODE == 'es' %}
+              {% elif LANGUAGE_CODE == 'es' %}
               <!-- Google translate  -->
               Para organizaciones sin fines de lucro
-            {% endif %}
-          </h5>
-          <p class="card-text">
-            {% if LANGUAGE_CODE == 'en' %}
+              {% endif %}
+            </h5>
+            <p class="card-text">
+              {% if LANGUAGE_CODE == 'en' %}
               Work with us to map communities across the United States.
-            {% elif LANGUAGE_CODE == 'es' %}
+              {% elif LANGUAGE_CODE == 'es' %}
               <!-- Google translate  -->
               Trabaje con nosotros para mapear comunidades en los Estados Unidos.
-            {% endif %}
-          </p>
-          <!-- <a class="btn btn-primary btn-canvas mt-auto" href="mailto: representableteam@gmail.com?subject=Hello!" role="button">Contact Us</a> -->
+              {% endif %}
+            </p>
+            <!-- <a class="btn btn-primary btn-canvas mt-auto" href="mailto: representableteam@gmail.com?subject=Hello!" role="button">Contact Us</a> -->
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-sm my-3 shadow-sm mx-3">
-      <div class="card border-0">
-        <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/redistricter.svg' %}"></img>
-        <div class="card-body text-center flex-column align-items-center">
-          <h5 class="card-title">
-            {% if LANGUAGE_CODE == 'en' %}
+      <div class="col-sm my-3 shadow-sm mx-3">
+        <div class="card border-0">
+          <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/redistricter.svg' %}"></img>
+          <div class="card-body text-center flex-column align-items-center">
+            <h5 class="card-title">
+              {% if LANGUAGE_CODE == 'en' %}
               For redistricters
-            {% elif LANGUAGE_CODE == 'es' %}
+              {% elif LANGUAGE_CODE == 'es' %}
               <!-- Google translate -->
               Para redistribuir distritos
-            {% endif %}
-          </h5>
-          <p class="card-text">
-            {% if LANGUAGE_CODE == 'en' %}
+              {% endif %}
+            </h5>
+            <p class="card-text">
+              {% if LANGUAGE_CODE == 'en' %}
               Use our data to protect communities during the map drawing process.
-            {% elif LANGUAGE_CODE == 'es' %}
+              {% elif LANGUAGE_CODE == 'es' %}
               <!-- Google translate  -->
               Use nuestros datos para proteger a las comunidades durante el proceso de dibujo del mapa.
-            {% endif %}
-          </p>
-          <!-- <a class="btn btn-primary btn-canvas mt-auto disabled" href="#" role="button">Coming Soon</a> -->
+              {% endif %}
+            </p>
+            <!-- <a class="btn btn-primary btn-canvas mt-auto disabled" href="#" role="button">Coming Soon</a> -->
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!--
-  <div class="jumbotron jumbotron-fluid what-is-gerrymandering rounded my-3">
+    <!--
+    <div class="jumbotron jumbotron-fluid what-is-gerrymandering rounded my-3">
     <div class="text-center">
-      <h3 class="my-3">What is Gerrymandering?</h3>
-      <blockquote class="blockquote m-5">
-        <p class="mb-0 my-2">"...The practice of drawing the boundaries of electoral districts in a way that gives one political party an unfair advantage over its rivals (political or partisan gerrymandering) or that dilutes the voting
-          power of members of ethnic or linguistic minority groups (racial gerrymandering)."</p>
-        <footer class="blockquote-footer quote-footer"><cite title="Source Title">Encyclopedia Britannica</cite></footer>
-      </blockquote>
-  </div> -->
+    <h3 class="my-3">What is Gerrymandering?</h3>
+    <blockquote class="blockquote m-5">
+    <p class="mb-0 my-2">"...The practice of drawing the boundaries of electoral districts in a way that gives one political party an unfair advantage over its rivals (political or partisan gerrymandering) or that dilutes the voting
+    power of members of ethnic or linguistic minority groups (racial gerrymandering)."</p>
+    <footer class="blockquote-footer quote-footer"><cite title="Source Title">Encyclopedia Britannica</cite></footer>
+  </blockquote>
+</div> -->
 </div>
 {% endblock %}
 
