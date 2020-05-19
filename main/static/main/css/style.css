@@ -341,6 +341,15 @@ color scheme. See readme.md*/
   -webkit-appearance: none;
 }
 
+.state {
+  top: 250px;
+  right: -50px;
+  position: absolute;
+  z-index: -999;
+  width: 700px;
+  opacity: 15%;
+}
+
 /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
 .dropdown-container {
   display: none;

@@ -123,6 +123,13 @@ class Terms(TemplateView):
 
 
 # ******************************************************************************#
+
+
+class Michigan(TemplateView):
+    template_name = "main/pages/michigan.html"
+
+
+# ******************************************************************************#
 class Review(LoginRequiredMixin, TemplateView):
     template_name = "main/pages/review.html"
     form_class = DeletionForm
