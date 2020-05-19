@@ -28,9 +28,7 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import Group
 from django.db import migrations
 from django.contrib.gis.db import models
-from .choices import (
-    STATES,
-)
+from .choices import STATES
 from .utils import generate_unique_slug
 
 # ******************************************************************************#
@@ -234,23 +232,21 @@ class CommunityEntry(models.Model):
 class Campaign(models.Model):
     """
     Campaign represents an organization's entry collection campaign.
+    - id: uuid for campaigns
     - name: name of the campaign
     - state: the state of the campaign
     - description: description of the campaign
     - organization: organization hosting the campaign
-    - start_date: when the campaign starts data collection
-    - end_date: when the campaign ends data collection
     - is_active: is the campaign active
     """
 
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=128)
     description = models.CharField(max_length=250, blank=True)
     state = models.CharField(
         max_length=50, choices=STATES, default=None, blank=False
     )
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    start_date = models.DateField(blank=True, null=True)
-    end_date = models.DateField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
 
     class Meta:
