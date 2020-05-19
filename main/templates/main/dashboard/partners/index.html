@@ -33,6 +33,33 @@
         </div>
       </div>
     </div>
+    <div class="col-sm">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5>
+            Campaigns
+          </h5>
+          <hr>
+          {% if campaigns %}
+          <ul class="list-group my-3">
+            {% for campaign in campaigns %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              {{ campaign.name }}
+              <a class="btn btn-primary" href="{% url 'main:campaign_home' object.slug  object.pk campaign.id %}" role="button">Manage <i class="fa fa-arrow-circle-right"></i></a>
+            </li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p class="my-3">You haven't created any campaigns for this organization.
+            Create a new one below to start collecting data.</p>
+          {% endif %}
+        <div class="text-center"">
+          <a class=" btn btn-outline-primary" href="{% url 'main:create_campaign' object.slug  object.pk %}" role="button">Create New</a>
+          </div>
+
+      </div>
+      </div>
+      </div>
   </div>
   <div class="row py-3">
     <div class="col-sm">
@@ -79,14 +106,5 @@
       </div>
     </div>
   </div>
-
-        <!-- <h5>Campaigns</h5>
-        <ul>
-        <li><a href="{% url 'main:create_campaign' view.kwargs.slug  view.kwargs.pk %}">Create a New Campaign</a></li>
-        <li><a href="{% url 'main:campaign_list' view.kwargs.slug  view.kwargs.pk %}">View Campaigns</a></li>
-            {% for campaign in campaigns %}
-            <li><a href="{% url 'main:campaign_home' slug=views.kwargs.slug pk=views.kwargs.pk c_pk=campaign.id %}">{{ campaign.name }}</a></li>
-            {% endfor %}
-        </ul> -->
 </div>
 {% endblock %}

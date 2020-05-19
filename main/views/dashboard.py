@@ -200,6 +200,9 @@ class HomeOrg(LoginRequiredMixin, DetailView):
         context["is_org_moderator"] = self.request.user.is_org_moderator(
             self.object.id
         )
+        context["campaigns"] = Campaign.objects.filter(
+            organization__id=self.kwargs["pk"]
+        )
 
         return context
 

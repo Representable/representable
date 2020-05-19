@@ -112,22 +112,17 @@ urlpatterns = [
                     name="upload_whitelist",
                 ),
                 path(
-                    "campaigns/",
-                    views.dashboard.CampaignList.as_view(),
-                    name="campaign_list",
-                ),
-                path(
                     "campaigns/create/",
                     views.dashboard.CreateCampaign.as_view(),
                     name="create_campaign",
                 ),
                 path(
-                    "campaigns/<int:cam_pk>/",
+                    "campaigns/<uuid:cam_pk>/",
                     views.dashboard.CampaignHome.as_view(),
                     name="campaign_home",
                 ),
                 path(
-                    "campaigns/<int:cam_pk>/edit/",
+                    "campaigns/<uuid:cam_pk>/edit/",
                     views.dashboard.UpdateCampaign.as_view(),
                     name="update_campaign",
                 ),
