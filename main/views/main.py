@@ -401,8 +401,9 @@ class EntryView(LoginRequiredMixin, View):
                     entryForm.campaign = token.campaign
                     entryForm.organization = token.campaign.organization
 
-                    # if user has a token, auto approve submission
-                    entryForm.admin_approved = True
+                    # if user has a token and campaign is active, auto approve submission
+                    if token.campaign.is_active:
+                        entryForm.admin_approved = True
 
             entryForm.save()
 
