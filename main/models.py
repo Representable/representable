@@ -167,68 +167,6 @@ class WhiteListEntry(models.Model):
 # ******************************************************************************#
 
 
-class CommunityEntry(models.Model):
-    """
-    Community Entry represents the entry created by the user when drawing their
-    COI.
-    Fields included:
-     - user: The user that created the entry. Foreign Key = User (Many to One)
-     - entry_ID: Randomly Generated via uuid.uuid4.
-     - organization: The organization that the user is submitting the entry to
-     - user_polygon:  User polygon contains the polygon drawn by the user.
-     - census_blocks_polygon_array: Array containing multiple polygons.
-     - census_blocks_polygon: The union of the census block polygons.
-
-    """
-
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
-    )
-    entry_ID = models.CharField(
-        max_length=100, blank=False, unique=True, default=uuid.uuid4
-    )
-    organization = models.ForeignKey(
-        Organization, on_delete=models.CASCADE, blank=True, null=True
-    )
-    user_polygon = models.PolygonField(
-        geography=True, serialize=True, blank=False
-    )
-    census_blocks_polygon_array = ArrayField(
-        models.PolygonField(
-            geography=True, blank=True, null=True, serialize=True
-        ),
-        blank=True,
-        null=True,
-    )
-    census_blocks_polygon = models.MultiPolygonField(
-        geography=True, serialize=True, blank=True, null=True
-    )
-    tags = models.ManyToManyField(Tag, blank=True)
-    CHOICES = (
-        ("Y", "Yes, this is my community."),
-        (
-            "N",
-            "No, I am creating this community on behalf of another group of people.",
-        ),
-    )
-    entry_name = models.CharField(
-        max_length=100, blank=False, unique=False, default=""
-    )
-    entry_reason = models.TextField(
-        max_length=500, blank=False, unique=False, default=""
-    )
-    admin_approved = models.BooleanField(default=False)
-
-    def __str__(self):
-        return str(self.entry_ID)
-
-    class Meta:
-        db_table = "community_entry"
-
-
-# ******************************************************************************#
-
-
 class Campaign(models.Model):
     """
     Campaign represents an organization's entry collection campaign.
@@ -276,3 +214,72 @@ class CampaignToken(models.Model):
         if not self.token:
             self.token = generate_unique_token(self.campaign.name)
         super(CampaignToken, self).save(*args, **kwargs)
+
+
+# ******************************************************************************#
+
+
+class CommunityEntry(models.Model):
+    """
+    Community Entry represents the entry created by the user when drawing their
+    COI.
+    Fields included:
+     - user: The user that created the entry. Foreign Key = User (Many to One)
+     - entry_ID: Randomly Generated via uuid.uuid4.
+     - organization: The organization that the user is submitting the entry to
+     - campaign: The campaign that the user is submitting the entry to
+     - user_polygon:  User polygon contains the polygon drawn by the user.
+     - census_blocks_polygon_array: Array containing multiple polygons.
+     - census_blocks_polygon: The union of the census block polygons.
+
+    """
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+    )
+    entry_ID = models.CharField(
+        max_length=100, blank=False, unique=True, default=uuid.uuid4
+    )
+    organization = models.ForeignKey(
+        Organization, on_delete=models.CASCADE, blank=True, null=True
+    )
+    campaign = models.ForeignKey(
+        Campaign, on_delete=models.CASCADE, blank=True, null=True
+    )
+    user_polygon = models.PolygonField(
+        geography=True, serialize=True, blank=False
+    )
+    census_blocks_polygon_array = ArrayField(
+        models.PolygonField(
+            geography=True, blank=True, null=True, serialize=True
+        ),
+        blank=True,
+        null=True,
+    )
+    census_blocks_polygon = models.MultiPolygonField(
+        geography=True, serialize=True, blank=True, null=True
+    )
+    tags = models.ManyToManyField(Tag, blank=True)
+    CHOICES = (
+        ("Y", "Yes, this is my community."),
+        (
+            "N",
+            "No, I am creating this community on behalf of another group of people.",
+        ),
+    )
+    entry_name = models.CharField(
+        max_length=100, blank=False, unique=False, default=""
+    )
+    entry_reason = models.TextField(
+        max_length=500, blank=False, unique=False, default=""
+    )
+    admin_approved = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.entry_ID)
+
+    class Meta:
+        db_table = "community_entry"
+
+
+# ******************************************************************************#
