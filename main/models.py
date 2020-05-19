@@ -246,6 +246,25 @@ class CommunityEntry(models.Model):
 
 # ******************************************************************************#
 
+class Address(models.Model):
+    entryID = models.ForeignKey(CommunityEntry, on_delete=models.CASCADE)
+    street = models.CharField(
+        max_length=500, blank=False, unique=False, default=""
+    )
+    state = models.CharField(
+        max_length=100, blank=False, unique=False, default=""
+    )
+    zipcode = models.CharField(
+        max_length=12, blank=False, unique=False, default=""
+    )
+
+    def __str__(self):
+        return str(self.street)
+
+    class Meta:
+        ordering = ("user",)
+
+# ******************************************************************************#
 
 class Campaign(models.Model):
     """

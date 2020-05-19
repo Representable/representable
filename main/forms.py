@@ -32,6 +32,7 @@ from .models import (
     Campaign,
     Membership,
     User,
+    Address,
 )
 from .choices import (
     RACE_CHOICES,
@@ -130,9 +131,21 @@ class CommunityForm(ModelForm):
             "user_name": forms.TextInput(
                 attrs={"placeholder": "User Name"}
             ),
+            "street": forms.TextInput(
+                attrs={"placeholder": "Street"}
+            ),
+            "city": forms.TextInput(
+                attrs={"placeholder": "City"}
+            ),
+            "state": forms.TextInput(
+                attrs={"placeholder": "State"}
+            ),
+            "zipcode": forms.TextInput(
+                attrs={"placeholder": "Zipcode"}
+            ),
             "user_phone": PhoneField,
             "user_polygon": forms.HiddenInput(),
-            "zipcode": forms.TextInput(attrs={"placeholder": "Your Zipcode"}),
+            # "zipcode": forms.TextInput(attrs={"placeholder": "Your Zipcode"}),
         }
         labels = {
             "tags": "Community Tags",
