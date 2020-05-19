@@ -98,7 +98,7 @@ let populateStateSelectionDropdown = function() {
   }
 }
 
-// https://github.com/10bestdesign/jqvmap
+// source: https://github.com/10bestdesign/jqvmap
 let setUpUSAMap = function () {
   colors = {}
   for (x in states) {
