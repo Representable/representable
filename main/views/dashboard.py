@@ -45,6 +45,7 @@ from ..models import (
     Campaign,
     CommunityEntry,
     Tag,
+    CampaignToken,
 )
 from django.shortcuts import get_object_or_404
 from django.views.generic.edit import FormView
@@ -462,6 +463,8 @@ class CreateCampaign(LoginRequiredMixin, CreateView):
             Organization, pk=self.kwargs["pk"]
         )
         object = form.save()
+
+        CampaignToken.objects.create(campaign=object)
 
         self.success_url = reverse_lazy(
             "main:campaign_home",

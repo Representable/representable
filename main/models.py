@@ -29,7 +29,7 @@ from django.contrib.auth.models import Group
 from django.db import migrations
 from django.contrib.gis.db import models
 from .choices import STATES
-from .utils import generate_unique_slug
+from .utils import generate_unique_slug, generate_unique_token
 
 # ******************************************************************************#
 
@@ -264,3 +264,15 @@ class Campaign(models.Model):
 
     def __str__(self):
         return self.name
+
+
+# ******************************************************************************#
+class CampaignToken(models.Model):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
+    token = models.CharField(max_length=100)
+
+    def save(self, *args, **kwargs):
+        # generate the unique token once the first time the token is created
+        if not self.token:
+            self.token = generate_unique_token(self.campaign.name)
+        super(CampaignToken, self).save(*args, **kwargs)
