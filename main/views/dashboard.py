@@ -480,25 +480,7 @@ class UpdateCampaign(LoginRequiredMixin, UpdateView):
     BETA view: the view for the form to update campaign details
     """
 
-    template_name = "main/dashboard/campaigns/update.html"
+    template_name = "main/dashboard/campaigns/edit.html"
+    model = Campaign
     form_class = CampaignForm
     pk_url_kwarg = "cam_pk"
-
-    def form_valid(self, form):
-        # TODO: include a check to make sure this actually the user's org
-        form.instance.organization = get_object_or_404(
-            Organization, pk=self.kwargs["pk"]
-        )
-
-        object = form.save()
-
-        self.success_url = reverse_lazy(
-            "main:campaign_home",
-            kwargs={
-                "pk": self.kwargs["pk"],
-                "slug": self.kwargs["slug"],
-                "cam_pk": object.id,
-            },
-        )
-
-        return super().form_valid(form)

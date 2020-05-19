@@ -33,9 +33,9 @@ urlpatterns = [
     path("privacy/", views.main.Privacy.as_view(), name="privacy"),
     path("terms/", views.main.Terms.as_view(), name="terms"),
     path("submission/", views.main.Submission.as_view(), name="submission"),
-    path(
-        "campaigns/", views.campaigns.IndexView.as_view(), name="campaign_list"
-    ),
+    # path(
+    #     "campaigns/", views.campaigns.IndexView.as_view(), name="campaign_list"
+    # ),
     path("partners/", views.partners.IndexView.as_view(), name="partner_list"),
     path(
         "partners/welcome/",
@@ -52,11 +52,11 @@ urlpatterns = [
         views.partners.PartnerMap.as_view(),
         name="partner_map",
     ),
-    path(
-        "campaigns/<int:cam_pk>/",
-        views.campaigns.CampaignView.as_view(),
-        name="campaign_page",
-    ),
+    # path(
+    #     "campaigns/<uuid:pk>/",
+    #     views.campaigns.CampaignView.as_view(),
+    #     name="campaign_page",
+    # ),
     path("dashboard/", views.dashboard.IndexView.as_view(), name="dashboard"),
     path(
         "dashboard/entries/<int:pk>",

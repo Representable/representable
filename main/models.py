@@ -252,5 +252,15 @@ class Campaign(models.Model):
     class Meta:
         ordering = ("description",)
 
+    def get_absolute_url(self):
+        return reverse(
+            "main:campaign_home",
+            kwargs={
+                "slug": self.organization.slug,
+                "pk": self.organization.id,
+                "cam_pk": self.id,
+            },
+        )
+
     def __str__(self):
         return self.name
