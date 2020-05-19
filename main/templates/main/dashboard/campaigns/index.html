@@ -29,7 +29,10 @@
 
           </p>
           <p> Description: {{ object.description }} </p>
+          {% if is_org_admin %}
           <a href="{% url 'main:update_campaign' object.organization.slug  object.organization.pk object.pk %}" role="button">Edit Details</a>
+          {% endif %}
+
         </div>
       </div>
     </div>
