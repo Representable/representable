@@ -264,7 +264,6 @@ function getCurrentSectionIndex(event) {
 }
 
 function openSectionElement(parent_section) {
-  print(parent_section.getAttribute("data-card-index"));
   var current_index = parent_section.getAttribute("data-card-index");
   openSection(current_index);
 }
