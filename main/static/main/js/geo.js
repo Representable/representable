@@ -853,6 +853,10 @@ map.on("style.load", function () {
     map.resize();
   });
 
+  $("#save").on("click", function () {
+    map.resize();
+  });
+
   // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
   for (let census in CENSUS_KEYS) {
     newSourceLayer(census, CENSUS_KEYS[census]);
