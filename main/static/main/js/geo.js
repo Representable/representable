@@ -269,6 +269,7 @@ function openSectionElement(parent_section) {
 }
 
 function openSection(section_ix) {
+  // Opens the section, but does not close anything else.
   var section_id = "card_section_" + section_ix;
   var section_elem = document.getElementById(section_id);
   var edit_button = section_elem.getElementsByClassName("button-edit")[0];
@@ -280,8 +281,6 @@ function openSection(section_ix) {
 
 function goToSection(section_ix) {
   // Scrolls the section with section_ix into view.
-  // It also expands the section.
-  // Also collapses the current section and enables the "Edit Section" button.
   var goto_section_id = "card_section_" + section_ix;
   var goto_section_elem = document.getElementById(goto_section_id);
   var edit_button = goto_section_elem.getElementsByClassName("button-edit")[0];
