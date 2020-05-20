@@ -375,8 +375,9 @@ document.addEventListener(
       var parent_section = form_error_arr[i].closest(".card-section");
       openSectionElement(parent_section);
     }
-    var form = document.getElementById("save");
-    form.addEventListener("click", function (event) {
+
+    var form_save_button = document.getElementById("save");
+    form_save_button.addEventListener("click", function (event) {
       // open all
       openAllSections(event);
     });
