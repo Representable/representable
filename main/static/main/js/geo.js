@@ -309,7 +309,7 @@ function toggleSection(event) {
 }
 
 function goToNextSection(event) {
-  // Handler for "Next Button".
+  // Handler for "Next" Button.
   // Gets the current section and calls goToSection() to scroll
   // it into view.
   var current_index = getCurrentSectionIndex(event);
@@ -324,6 +324,8 @@ function goToNextSection(event) {
 }
 
 function goToPreviousSection(event) {
+  // Go to previous section handler.
+  // Opens previous section, but does not hide anything.
   var current_index = getCurrentSectionIndex(event);
   var prev_index = parseInt(current_index) - 1;
   goToSection(prev_index);
