@@ -129,57 +129,57 @@ var states = [
 ];
 
 var state_areas = {
-  "ak" : 665384,
-  "al" : 52420,
-  "ar" : 53178,
-  "az" : 113990,
-  "ca" : 163694,
-  "co" : 104093,
-  "ct" : 5543,
-  "dc" : 68,
-  "de" : 2488,
-  "fl" : 65757,
-  "ga" : 59425,
-  "hi" : 10931,
-  "ia" : 56272,
-  "id" : 83568,
-  "il" : 57913,
-  "in" : 36419,
-  "ks" : 82278,
-  "ky" : 40407,
-  "la" : 52378,
-  "ma" : 10554,
-  "md" : 12405,
-  "me" : 35379,
-  "mi" : 96713,
-  "mn" : 86935,
-  "mo" : 69706,
-  "ms" : 48431,
-  "mt" : 147039,
-  "nc" : 53819,
-  "nd" : 70698,
-  "nh" : 9349,
-  "nj" : 8722,
-  "nm" : 121590,
-  "nv" : 110571,
-  "ny" : 54554,
-  "oh" : 44825,
-  "ok" : 69898,
-  "or" : 98378,
-  "pa" : 46054,
-  "ri" : 1544,
-  "sc" : 32020,
-  "sd" : 77115,
-  "tn" : 42144,
-  "tx" : 268596,
-  "ut" : 84896,
-  "va" : 42774,
-  "vt" : 9616,
-  "wa" : 71297,
-  "wi" : 65496,
-  "wv" : 24230,
-  "wy" : 97813,
-}
+  ak: 665384,
+  al: 52420,
+  ar: 53178,
+  az: 113990,
+  ca: 163694,
+  co: 104093,
+  ct: 5543,
+  dc: 68,
+  de: 2488,
+  fl: 65757,
+  ga: 59425,
+  hi: 10931,
+  ia: 56272,
+  id: 83568,
+  il: 57913,
+  in: 36419,
+  ks: 82278,
+  ky: 40407,
+  la: 52378,
+  ma: 10554,
+  md: 12405,
+  me: 35379,
+  mi: 96713,
+  mn: 86935,
+  mo: 69706,
+  ms: 48431,
+  mt: 147039,
+  nc: 53819,
+  nd: 70698,
+  nh: 9349,
+  nj: 8722,
+  nm: 121590,
+  nv: 110571,
+  ny: 54554,
+  oh: 44825,
+  ok: 69898,
+  or: 98378,
+  pa: 46054,
+  ri: 1544,
+  sc: 32020,
+  sd: 77115,
+  tn: 42144,
+  tx: 268596,
+  ut: 84896,
+  va: 42774,
+  vt: 9616,
+  wa: 71297,
+  wi: 65496,
+  wv: 24230,
+  wy: 97813,
+};
 
 // dictionary with state neighbors without nebraska since there is
 // no census block data for nebraska
@@ -235,6 +235,159 @@ var state_neighbors = {
   wv: ["ky", "md", "oh", "pa", "va"],
   wy: ["co", "id", "mt", "sd", "ut"],
 };
+
+// Helper print function
+function print(items) {
+  console.log(items);
+}
+
+/******************************************************************************/
+
+// Form Handling
+function openAllSections(event) {
+  var card_section_divs = document.getElementsByClassName("card-section");
+  for (var i = 0; i < card_section_divs.length; i++) {
+    print(card_section_divs[i]);
+    openSectionElement(card_section_divs[i]);
+  }
+}
+
+function getCurrentParentSection(event) {
+  var targetElement = event.target || event.srcElement;
+  var parent_section = targetElement.closest(".card-section");
+  return parent_section;
+}
+
+function getCurrentSectionIndex(event) {
+  var parent_section = getCurrentParentSection(event);
+  var current_index = parent_section.getAttribute("data-card-index");
+  return current_index;
+}
+
+function openSectionElement(parent_section) {
+  print(parent_section.getAttribute("data-card-index"));
+  var current_index = parent_section.getAttribute("data-card-index");
+  openSection(current_index);
+}
+
+function openSection(section_ix) {
+  var section_id = "card_section_" + section_ix;
+  var section_elem = document.getElementById(section_id);
+  var edit_button = section_elem.getElementsByClassName("button-edit")[0];
+  edit_button.value = "Hide Section";
+  section_elem.classList.add("active-section");
+  $("#" + section_id + " .collapse").collapse("show");
+  edit_button.style.display = "block";
+}
+
+function goToSection(section_ix) {
+  // Scrolls the section with section_ix into view.
+  // It also expands the section.
+  // Also collapses the current section and enables the "Edit Section" button.
+  var goto_section_id = "card_section_" + section_ix;
+  var goto_section_elem = document.getElementById(goto_section_id);
+  var edit_button = goto_section_elem.getElementsByClassName("button-edit")[0];
+  edit_button.value = "Hide Section";
+  edit_button.style.display = "block";
+  goto_section_elem.classList.add("active-section");
+  $("#" + goto_section_id + " .collapse").collapse("show");
+  goto_section_elem.scrollIntoView({ behavior: "smooth" });
+}
+
+function toggleSection(event) {
+  var section_ix = getCurrentSectionIndex(event);
+  var section_id = "card_section_" + section_ix;
+  var section_elem = document.getElementById(section_id);
+  var edit_button = section_elem.getElementsByClassName("button-edit")[0];
+  if (section_elem.classList.contains("active-section")) {
+    edit_button.value = "Edit Section";
+    section_elem.classList.remove("active-section");
+    $("#" + section_id + " .collapse").collapse("hide");
+  } else {
+    edit_button.value = "Hide Section";
+    section_elem.classList.add("active-section");
+    $("#" + section_id + " .collapse").collapse("show");
+  }
+  edit_button.style.display = "block";
+}
+
+function goToNextSection(event) {
+  // Handler for "Next Button".
+  // Gets the current section and calls goToSection() to scroll
+  // it into view.
+  var current_index = getCurrentSectionIndex(event);
+  var parent_section = getCurrentParentSection(event);
+  // for the current section, make sure that the hide section
+  // button shows correct state
+  var parent_section_edit_button = parent_section.querySelector(".button-edit");
+  parent_section_edit_button.style.display = "block";
+  parent_section_edit_button.value = "Hide Section";
+  var next_index = parseInt(current_index) + 1;
+  goToSection(next_index);
+}
+
+function goToPreviousSection(event) {
+  var current_index = getCurrentSectionIndex(event);
+  var prev_index = parseInt(current_index) - 1;
+  goToSection(prev_index);
+}
+
+function addButtonHandlers(card_section_divs) {
+  for (var i = 0; i < card_section_divs.length; i++) {
+    var card_section = card_section_divs[i];
+    var card_button_prev = card_section.querySelector(".button-prev");
+    if (typeof card_button_prev !== "undefined" && i - 1 >= 0) {
+      previous_section = card_section_divs[i - 1];
+      card_button_prev.addEventListener("click", function (event) {
+        goToPreviousSection(event);
+      });
+    }
+    var card_button_next = card_section.querySelector(".button-next");
+    if (
+      typeof card_button_next !== "undefined" &&
+      i + 1 < card_section_divs.length
+    ) {
+      next_section = card_section_divs[i + 1];
+      card_button_next.addEventListener("click", function (event) {
+        goToNextSection(event);
+      });
+    }
+    var card_button_edit = card_section.querySelector(".button-edit");
+    card_button_edit.addEventListener("click", function () {
+      toggleSection(event);
+    });
+  }
+}
+
+// Run after page loads
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
+    // Index All Collapsible Sections
+    card_section_divs = document.getElementsByClassName("card-section");
+    for (var i = 0; i < card_section_divs.length; i++) {
+      var card_section = card_section_divs[i];
+      var new_id = "card_section_" + i;
+      card_section.setAttribute("id", new_id);
+      card_section.setAttribute("data-card-index", i);
+    }
+    addButtonHandlers(card_section_divs);
+    // Check if form errors. Show the elements where they are present.
+    var form_error_arr = document.getElementsByClassName("form-error");
+    for (var i = 0; i < form_error_arr.length; i++) {
+      var parent_section = form_error_arr[i].closest(".card-section");
+      openSectionElement(parent_section);
+    }
+    var form = document.getElementById("save");
+    form.addEventListener("click", function (event) {
+      // open all
+      openAllSections(event);
+    });
+  },
+  false
+);
+
+/******************************************************************************/
 
 var wkt_obj;
 // Formset field object saves a deep copy of the original formset field object.
@@ -594,6 +747,21 @@ document.getElementById("trash-button").addEventListener("click", function (e) {
   draw.changeMode("simple_select");
 });
 
+function toggleMapButtons(state) {
+  var mapContent = document.getElementById("map");
+  var mapButtons = mapContent.getElementsByTagName("button");
+  for (var i = 0; i < mapButtons.length; i++) {
+    if (state.localeCompare("off") == 0) {
+      mapButtons[i].disabled = true;
+    } else if (state.localeCompare("on") == 0) {
+      mapButtons[i].disabled = false;
+    }
+  }
+}
+
+// Disable map buttons
+// toggleMapButtons("off");
+
 // add a new source layer
 function newSourceLayer(name, mbCode) {
   map.addSource(name, {
@@ -679,6 +847,11 @@ map.on("style.load", function () {
       features: [],
     },
   });
+  // Whenever a card section button is clicked, resize the map.
+  // This ensures that the map is always shown.
+  $(".card-section-button").on("click", function () {
+    map.resize();
+  });
 
   // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
   for (let census in CENSUS_KEYS) {
@@ -709,19 +882,22 @@ map.on("style.load", function () {
     var styleSpec = ev.result;
     var styleSpecBox = document.getElementById("json-response");
     var styleSpecText = JSON.stringify(styleSpec, null, 2);
-    var divs = document.getElementsByClassName("blurtop");
+    var divs = document.getElementsByClassName("collapse-card");
     for (let i = 0; i < divs.length; i++) {
       divs[i].setAttribute(
         "style",
-        "-webkit-filter: blur(0px); pointer-events: auto"
+        "-webkit-filter: blur(0px); pointer-events: auto;"
       );
     }
     // Enable Map buttons
-    var mapContent = document.getElementById("map");
-    var mapButtons = mapContent.getElementsByTagName("button");
-    for (var i = 0; i < mapButtons.length; i++) {
-      mapButtons[i].disabled = false;
-    }
+    // toggleMapButtons("on");
+    // Toggle Next Button
+    var card_section_0 = document.getElementById("card_section_0");
+    var geocoder_next_button = card_section_0.getElementsByClassName(
+      "button-next"
+    )[0];
+    geocoder_next_button.disabled = false;
+
     // get the state from the geocoder response
     if (styleSpec.context.length >= 2) {
       new_state = styleSpec.context[styleSpec.context.length - 2]["short_code"]
@@ -935,7 +1111,7 @@ function updateCommunityEntry(e) {
     area = turf.convertArea(area, "meters", "miles");
 
     // coi is not too big
-    let halfStateArea = state_areas[state]/2;
+    let halfStateArea = state_areas[state] / 2;
     if (area > halfStateArea) {
       triggerDrawError(
         "map-area-size-error",

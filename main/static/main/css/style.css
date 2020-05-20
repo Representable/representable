@@ -27,7 +27,7 @@ This means no changing anything like <a>, <li>, <p>, etc.
 
 /* Disable button hover when button is disabled. */
 button:disabled:hover {
-  cursor: not-allowed;
+  cursor: default;
 }
 
 /* Body and headings */
@@ -426,10 +426,20 @@ color scheme. See readme.md*/
   padding-right: 10px;
 }
 
-.blurtop {
-  filter: blur(3px);
-  z-index: 0;
-  pointer-events: none;
+/* Entry Form Management */
+
+.button-edit {
+  display: none;
+}
+
+.card-section-button {
+  display: block;
+}
+
+.collapse-card {
+  /* filter: blur(3px); */
+  /* z-index: 0; */
+  /* pointer-events: none; */
 }
 
 .map-demo {

@@ -42,44 +42,46 @@
             <div class="row mt-3">
                 <!-- Entry Form -->
                 <form id="entryForm" method="post">
-                    <!-- First Row: Includes Map. -->
+                    <!-- First Row -->
                     <div class="row row-equal-cols">
-                        <div class="col-lg">
-                            <h2 class="text-primary">
-                                {% if LANGUAGE_CODE == 'en' %}
-                                Draw your community!
-                                {% elif LANGUAGE_CODE == 'es' %}
-                                <!-- Google translate  -->
-                                ¡Dibuja tu comunidad!
-                                {% endif %}
-                            </h2>
-                            <p class="p-about">
-                                  {% if LANGUAGE_CODE == 'en' %}
-                                  Representable helps fight against gerrymandering by empowering communities
-                                  to represent themselves more easily. Fill out the form below to
-                                  add your community
-                                  {% elif LANGUAGE_CODE == 'es' %}
-                                  <!-- Google translate  -->
-                                  Representable ayuda a luchar contra la gerrymandering empoderando a las comunidades
-                                  representarse más fácilmente. Complete el siguiente formulario para
-                                  agrega tu comunidad
-                                  {% endif %}
-                            </p>
-                            <div class="card">
-                                <div class="card-header text-header-card">
-                                    <strong>
-                                      {% if LANGUAGE_CODE == 'en' %}
-                                      1. Search for a location to begin drawing your community.
-                                      {% elif LANGUAGE_CODE == 'es' %}
-                                      <!-- Google translate  -->
-                                      1. Busque una ubicación para comenzar a dibujar su comunidad.
-                                      {% endif %}
-                                    </strong>
-                                </div>
-                                <div class ="px-3">
-                                    <p>
-                                        <div id="geocoder" class="geocoder"></div>
-                                    </p>
+                        <div class="card-section active-section">
+                            <div class="col-lg">
+                                <h2 class="text-primary">
+                                    {% if LANGUAGE_CODE == 'en' %}
+                                    Draw your community!
+                                    {% elif LANGUAGE_CODE == 'es' %}
+                                    <!-- Google translate  -->
+                                    ¡Dibuja tu comunidad!
+                                    {% endif %}
+                                </h2>
+                                <p class="p-about">
+                                    {% if LANGUAGE_CODE == 'en' %}
+                                    Representable helps fight against gerrymandering by empowering communities
+                                    to represent themselves more easily. Fill out the form below to
+                                    add your community
+                                    {% elif LANGUAGE_CODE == 'es' %}
+                                    <!-- Google translate  -->
+                                    Representable ayuda a luchar contra la gerrymandering empoderando a las comunidades
+                                    representarse más fácilmente. Complete el siguiente formulario para
+                                    agrega tu comunidad
+                                    {% endif %}
+                                </p>
+                                <div class="card">
+                                    <div class="card-header text-header-card">
+                                        <strong>
+                                        {% if LANGUAGE_CODE == 'en' %}
+                                        1. Search for a location to begin drawing your community.
+                                        {% elif LANGUAGE_CODE == 'es' %}
+                                        <!-- Google translate  -->
+                                        1. Busque una ubicación para comenzar a dibujar su comunidad.
+                                        {% endif %}
+                                        </strong>
+                                        <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
+                                    </div>
+                                    <div class="card-body collapse show">
+                                        <div id="geocoder" class="geocoder my-3"></div>
+                                        <input class="btn btn-primary float-right card-section-button button-next" type="button" value="Next">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -87,42 +89,45 @@
                     <div class="row row-equal-cols">
                         <!-- Map -->
                         <div class="col-lg mt-3">
-                            <div class="blurtop">
-                            <div class="card">
-                                <div class="card-header text-header-card">
-                                    <strong>
-                                    {% if LANGUAGE_CODE == 'en' %}
-                                    2. What does your community look like?
-                                    {% elif LANGUAGE_CODE == 'es' %}
-                                    <!-- Google translate  -->
-                                    ¿Cómo se ve tu comunidad?
-                                    {% endif %}
-                                    </strong>
-                                </div>
-                                <div id='map-card' class="card-body">
-                                    <!-- {# Include form.entry_polygon error. } -->
-                                    <div id="map-error-alerts">
-                                        {% if form.user_polygon.errors %}
-                                        <script>
-                                            sessionStorage.setItem("allChecks", "fail");
-                                        </script>
-                                        <div id="polygon_missing" class="alert alert-warning alert-dismissible fade show" role="alert">
-                                            {% if LANGUAGE_CODE == 'en' %}
-                                            You need to draw a polygon to submit the form.
-                                            {% elif LANGUAGE_CODE == 'es' %}
-                                            <!-- Google translate  -->
-                                            Debe dibujar un polígono para enviar el formulario.
-                                            {% endif %}
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
+                            <div class="collapse-card card-section">
+                                <div class="card">
+                                    <div class="card-header text-header-card">
+                                        <strong>
+                                        {% if LANGUAGE_CODE == 'en' %}
+                                        2. What does your community look like?
+                                        {% elif LANGUAGE_CODE == 'es' %}
+                                        <!-- Google translate  -->
+                                        ¿Cómo se ve tu comunidad?
                                         {% endif %}
+                                        </strong>
+                                        <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
                                     </div>
-                                    <div id='menu'>
-                                    </div>
-                                    <div id='map' class='draw_polygon_map'>
-                                    </div>
+                                    <div id='map-card' class="card-body collapse">
+                                        <!-- {# Include form.entry_polygon error. } -->
+                                            <div class="map-bounding-box my-2">
+                                                <div id="map-error-alerts">
+                                                    {% if form.user_polygon.errors %}
+                                                    <script>
+                                                        sessionStorage.setItem("allChecks", "fail");
+                                                    </script>
+                                                    <div id="polygon_missing" class="alert alert-warning alert-dismissible fade show form-error" role="alert">
+                                                        {% if LANGUAGE_CODE == 'en' %}
+                                                        You need to draw a polygon to submit the form.
+                                                        {% elif LANGUAGE_CODE == 'es' %}
+                                                        <!-- Google translate  -->
+                                                        Debe dibujar un polígono para enviar el formulario.
+                                                        {% endif %}
+                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                                <div id='menu'></div>
+                                                <div id='map' class='draw_polygon_map' onload="map.resize()"></div>
+                                            </div>
+                                            <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
+                                            <input class="btn btn-primary float-right card-section-button button-next" type="button" value="Next">
                                     </div>
                                 </div>
                             </div>
@@ -131,65 +136,69 @@
                     <!-- <hr> -->
                     <div class="row row-equal-cols">
                         <div class="col-lg  mt-3">
-                            <div class="blurtop">
-                            <div class="card">
-                                <div class="card-header text-header-card">
-                                    <strong>3. What brings your community together?</strong>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        What name can we use to identify your community? <small class="text-danger">(Required)</small>
-                                        <!-- TODO we should find a better example -->
-                                        <br>
-                                        <small>For example: Princeton area student community</small>
-                                    </p>
-                                    {{ form.entry_name|append_attr:"class:form-control" }}
-                                    <hr>
-                                    <p class="card-text">
-                                        Why are you identifying this area as a community? <small class="text-danger">(Required)</small>
-                                        <!-- TODO we should find a better example -->
-                                        <br>
-                                        <small>For example: All of the on-campus Princeton University student body lives and studies in this geographic area.</small>
-                                    </p>
-                                    {{ form.entry_reason|append_attr:"class:form-control" }}
-                                    <hr>
-                                    <div class="field-wrap mt-3">
-                                        <p>What organization are you contributing as a part of? </p>
-                                        <div class="field-wrap">
-                                          {{ form.organization|append_attr:"class:form-control" }}
-                                          {% if form.organization.help_text %}
-                                          <p class="help">{{ form.organization_text|safe }}</p>
-                                          {% endif %}
-                                        </div>
-                                      </div>
-                                    {% csrf_token %}
-                                    <!-- {# Include the non-field error fields #} -->
-                                    {% if form.non_field_errors %}
-                                    <div class="non-field-errors">
-                                        {% for err in form.non_field_errors %}
-                                        <p class="form-error">{{ err }}</p>
-                                        {% endfor %}
+                            <div class="collapse-card card-section ">
+                                <div class="card">
+                                    <div class="card-header text-header-card">
+                                        <strong>3. What brings your community together?</strong>
+                                        <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
                                     </div>
-                                    {% endif %}
-                                    <div id="main_community_form" class="form-group">
-                                        <!-- {# Include the hidden fields #} -->
-                                        {% for hidden in form.hidden_fields %}
-                                        {{ hidden }}
-                                        {% endfor %}
-                                        <!-- {# Tags Field} -->
+                                    <div class="card-body collapse">
+                                        <p class="card-text">
+                                            What name can we use to identify your community? <small class="text-danger">(Required)</small>
+                                            <!-- TODO we should find a better example -->
+                                            <br>
+                                            <small>For example: Princeton area student community</small>
+                                        </p>
+                                        {{ form.entry_name|append_attr:"class:form-control" }}
+                                        <hr>
+                                        <p class="card-text">
+                                            Why are you identifying this area as a community? <small class="text-danger">(Required)</small>
+                                            <!-- TODO we should find a better example -->
+                                            <br>
+                                            <small>For example: All of the on-campus Princeton University student body lives and studies in this geographic area.</small>
+                                        </p>
+                                        {{ form.entry_reason|append_attr:"class:form-control" }}
+                                        <hr>
                                         <div class="field-wrap mt-3">
-                                            {{ form.tags.label_tag }}
-                                            <div class="form-error">
-                                                {{ form.tags.errors }}
-                                            </div>
-                                            {{ form.tags|append_attr:"class:form-control" }}
-                                            {% if form.tags.help_text %}
-                                            <p class="help">{{ form.tags.help_text|safe }}</p>
+                                            <p>What organization are you contributing as a part of? </p>
+                                            <div class="field-wrap">
+                                            {{ form.organization|append_attr:"class:form-control" }}
+                                            {% if form.organization.help_text %}
+                                            <p class="help">{{ form.organization_text|safe }}</p>
                                             {% endif %}
+                                            </div>
                                         </div>
+                                        {% csrf_token %}
+                                        <!-- {# Include the non-field error fields #} -->
+                                        {% if form.non_field_errors %}
+                                        <div class="non-field-errors form-error">
+                                            {% for err in form.non_field_errors %}
+                                            <p class="form-error">{{ err }}</p>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                        <div id="main_community_form" class="form-group">
+                                            <!-- {# Include the hidden fields #} -->
+                                            {% for hidden in form.hidden_fields %}
+                                            {{ hidden }}
+                                            {% endfor %}
+                                            <!-- {# Tags Field} -->
+                                            <div class="field-wrap mt-3">
+                                                {{ form.tags.label_tag }}
+                                                {% if form.tags.errors %}
+                                                <div class="form-error">
+                                                    {{ form.tags.errors }}
+                                                </div>
+                                                {% endif %}
+                                                {{ form.tags|append_attr:"class:form-control" }}
+                                                {% if form.tags.help_text %}
+                                                <p class="help">{{ form.tags.help_text|safe }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
                                     </div>
                                 </div>
-                            </div>
                             </div>
                         </div>
                     </div>
