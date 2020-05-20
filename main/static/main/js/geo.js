@@ -267,13 +267,13 @@ function getCurrentSectionIndex(event) {
 }
 
 function openSectionByElement(parent_section) {
-  // Opens The Section That Was Passed to it
+  // Opens The Section That Was Passed to it.
   var current_index = parent_section.getAttribute("data-card-index");
   openSectionByIndex(current_index);
 }
 
 function openSectionByIndex(section_ix) {
-  // Opens the section, but does not close anything else.
+  // Opens the section by index, but does not close anything else.
   var section_id = "card_section_" + section_ix;
   var section_elem = document.getElementById(section_id);
   var edit_button = section_elem.getElementsByClassName("button-edit")[0];
@@ -296,6 +296,8 @@ function goToSection(section_ix) {
 }
 
 function toggleSection(event) {
+  // Toggle Section By Event. If the section is on, it toggles it off.
+  // Otherwise, it toggles it on.
   var section_ix = getCurrentSectionIndex(event);
   var section_id = "card_section_" + section_ix;
   var section_elem = document.getElementById(section_id);
@@ -336,6 +338,7 @@ function goToPreviousSection(event) {
 }
 
 function addButtonHandlers(card_section_divs) {
+  // Adds handlers to all section buttons (visible and invisible).
   for (var i = 0; i < card_section_divs.length; i++) {
     var card_section = card_section_divs[i];
     var card_button_prev = card_section.querySelector(".button-prev");
@@ -362,7 +365,7 @@ function addButtonHandlers(card_section_divs) {
   }
 }
 
-// Run after page loads
+// Run after the DOM loads.
 document.addEventListener(
   "DOMContentLoaded",
   function () {
@@ -374,6 +377,7 @@ document.addEventListener(
       card_section.setAttribute("id", new_id);
       card_section.setAttribute("data-card-index", i);
     }
+    // Add handlers for the sections.
     addButtonHandlers(card_section_divs);
     // Check if form errors. Show the elements where they are present.
     var form_error_arr = document.getElementsByClassName("form-error");
@@ -381,7 +385,8 @@ document.addEventListener(
       var parent_section = form_error_arr[i].closest(".card-section");
       openSectionByElement(parent_section);
     }
-
+    // Add a listener for the save button so sections are expanded
+    // if there are errors.
     var form_save_button = document.getElementById("save");
     form_save_button.addEventListener("click", function (event) {
       // open all
