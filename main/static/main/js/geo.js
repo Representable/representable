@@ -260,12 +260,14 @@ function getCurrentParentSection(event) {
 }
 
 function getCurrentSectionIndex(event) {
+  // Gets The Section Index of the Current Event
   var parent_section = getCurrentParentSection(event);
   var current_index = parent_section.getAttribute("data-card-index");
   return current_index;
 }
 
 function openSectionByElement(parent_section) {
+  // Opens The Section That Was Passed to it
   var current_index = parent_section.getAttribute("data-card-index");
   openSectionByIndex(current_index);
 }
