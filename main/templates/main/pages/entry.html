@@ -102,7 +102,7 @@
                                 <div id='map-card' class="card-body">
                                     <!-- {# Include form.entry_polygon error. } -->
                                     <div id="map-error-alerts">
-                                        {% if form.user_polygon.errors %}
+                                        {% if comm_form.user_polygon.errors %}
                                         <script>
                                             sessionStorage.setItem("allChecks", "fail");
                                         </script>
@@ -142,9 +142,9 @@
                                         <!-- TODO we should find a better example -->
                                         <br>
                                     </p>
-                                    {{ form.user_name|append_attr:"class:form-control" }}
+                                    {{ comm_form.user_name|append_attr:"class:form-control" }}
                                     <hr>
-                                    {{ form.user_phone|append_attr:"class:form-control" }}
+                                    {{ comm_form.user_phone|append_attr:"class:form-control" }}
                                     <hr>
                                     <p class="card-text">
                                         What name can we use to identify your community? <small class="text-danger">(Required)</small>
@@ -152,21 +152,21 @@
                                         <br>
                                         <small>For example: Princeton area student community</small>
                                     </p>
-                                    {{ form.entry_name|append_attr:"class:form-control" }}
+                                    {{ comm_form.entry_name|append_attr:"class:form-control" }}
                                     <hr>
-                                    {{ form.cultural_interests|append_attr:"class:form-control" }}
+                                    {{ comm_form.cultural_interests|append_attr:"class:form-control" }}
                                     <hr>
-                                    {{ form.economic_interests|append_attr:"class:form-control" }}
+                                    {{ comm_form.economic_interests|append_attr:"class:form-control" }}
                                     <hr>
-                                    {{ form.comm_activities|append_attr:"class:form-control" }}
+                                    {{ comm_form.comm_activities|append_attr:"class:form-control" }}
                                     <hr>
-                                    {{ form.street|append_attr:"class:form-control" }}
+                                    {{ addr_form.street|append_attr:"class:form-control" }}
                                     <hr>
-                                    {{ form.city|append_attr:"class:form-control" }}
+                                    {{ addr_form.city|append_attr:"class:form-control" }}
                                     <hr>
-                                    {{ form.state|append_attr:"class:form-control" }}
+                                    {{ addr_form.state|append_attr:"class:form-control" }}
                                     <hr>
-                                    {{ form.zipcode|append_attr:"class:form-control" }}
+                                    {{ addr_form.zipcode|append_attr:"class:form-control" }}
                                     <hr>
                                     <p class="card-text">
                                         Why are you identifying this area as a community? <small class="text-danger">(Required)</small>
@@ -174,43 +174,49 @@
                                         <br>
                                         <small>For example: All of the on-campus Princeton University student body lives and studies in this geographic area.</small>
                                     </p>
-                                    {{ form.entry_reason|append_attr:"class:form-control" }}
+                                    {{ comm_form.entry_reason|append_attr:"class:form-control" }}
                                     <hr>
                                     <div class="field-wrap mt-3">
                                         <p>What organization are you contributing as a part of? </p>
                                         <div class="field-wrap">
-                                          {{ form.organization|append_attr:"class:form-control" }}
-                                          {% if form.organization.help_text %}
-                                          <p class="help">{{ form.organization_text|safe }}</p>
+                                          {{ comm_form.organization|append_attr:"class:form-control" }}
+                                          {% if comm_form.organization.help_text %}
+                                          <p class="help">{{ comm_form.organization_text|safe }}</p>
                                           {% endif %}
                                         </div>
                                       </div>
                                     {% csrf_token %}
                                     <!-- {# Include the non-field error fields #} -->
-                                    {% if form.non_field_errors %}
+                                    {% if comm_form.non_field_errors %}
                                     <div class="non-field-errors">
-                                        {% for err in form.non_field_errors %}
+                                        {% for err in comm_form.non_field_errors %}
                                         <p class="form-error">{{ err }}</p>
                                         {% endfor %}
                                     </div>
                                     {% endif %}
                                     <div id="main_community_form" class="form-group">
                                         <!-- {# Include the hidden fields #} -->
-                                        {% for hidden in form.hidden_fields %}
+                                        {% for hidden in comm_form.hidden_fields %}
                                         {{ hidden }}
                                         {% endfor %}
                                         <!-- {# Tags Field} -->
                                         <div class="field-wrap mt-3">
-                                            {{ form.tags.label_tag }}
+                                            {{ comm_form.tags.label_tag }}
                                             <div class="form-error">
-                                                {{ form.tags.errors }}
+                                                {{ comm_form.tags.errors }}
                                             </div>
-                                            {{ form.tags|append_attr:"class:form-control" }}
-                                            {% if form.tags.help_text %}
-                                            <p class="help">{{ form.tags.help_text|safe }}</p>
+                                            {{ comm_form.tags|append_attr:"class:form-control" }}
+                                            {% if comm_form.tags.help_text %}
+                                            <p class="help">{{ comm_form.tags.help_text|safe }}</p>
                                             {% endif %}
                                         </div>
                                     </div>
+                                    <!-- <div id="main_address_form" class="form-group">
+                                        {% for hidden in addr_form.hidden_fields %}
+                                        {{ hidden }}
+                                        {% endfor %}
+
+                                    </div> -->
                                 </div>
                             </div>
                             </div>

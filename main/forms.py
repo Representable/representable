@@ -77,6 +77,28 @@ class BootstrapRadioSelect(forms.RadioSelect):
     template_name = "forms/widgets/radio.html"
     option_template_name = "forms/widgets/radio_option.html"
 
+class AddressForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+    
+    class Meta:
+        model = Address
+        fields = ["entry_ID", "city", "state", "zipcode", "street"]
+
+        widgets = {
+            "street": forms.TextInput(
+                attrs={"placeholder": "Street"}
+            ),
+            "city": forms.TextInput(
+                attrs={"placeholder": "City"}
+            ),
+            "state": forms.TextInput(
+                attrs={"placeholder": "State"}
+            ),
+            "zipcode": forms.TextInput(
+                attrs={"placeholder": "Zipcode"}
+            )
+        }
 
 class CommunityForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -130,18 +152,7 @@ class CommunityForm(ModelForm):
             ),
             "user_name": forms.TextInput(
                 attrs={"placeholder": "User Name"}
-            ),
-            "street": forms.TextInput(
-                attrs={"placeholder": "Street"}
-            ),
-            "city": forms.TextInput(
-                attrs={"placeholder": "City"}
-            ),
-            "state": forms.TextInput(
-                attrs={"placeholder": "State"}
-            ),
-            "zipcode": forms.TextInput(
-                attrs={"placeholder": "Zipcode"}
+
             ),
             "user_phone": PhoneField,
             "user_polygon": forms.HiddenInput(),

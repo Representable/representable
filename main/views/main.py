@@ -33,12 +33,14 @@ from django.forms import formset_factory
 from ..forms import (
     CommunityForm,
     DeletionForm,
+    AddressForm,
 )
 from ..models import (
     CommunityEntry,
     WhiteListEntry,
     Tag,
     Membership,
+    Address,
 )
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
@@ -311,7 +313,9 @@ class EntryView(LoginRequiredMixin, View):
     """
 
     template_name = "main/pages/entry.html"
-    form_class = CommunityForm
+    community_form_class = CommunityForm
+    address_form_class = AddressForm
+    # form_class = CommunityForm
     initial = {
         "key": "value",
     }
@@ -330,24 +334,57 @@ class EntryView(LoginRequiredMixin, View):
         return initial
 
     def get(self, request, *args, **kwargs):
-        form = self.form_class(initial=self.get_initial(), label_suffix="")
+        comm_form = self.community_form_class(initial=self.get_initial(), label_suffix="")
+        addr_form = self.address_form_class(initial=self.get_initial(), label_suffix="")
         context = {
-            "form": form,
+            "comm_form": comm_form,
+            "addr_form": addr_form,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
         return render(request, self.template_name, context)
 
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST, label_suffix="")
-        if form.is_valid():
-            # grab tags from form
-            tag_name_qs = form.cleaned_data["tags"].values("name")
+    # def form_valid(self, addrform):
+    #     addr = addrform.save()
+    #     # by default, make the user creating the org the admin
+    #     admin = Address(
+    #         entry_ID=self.request.user,
+    #         organization=org,
+    #         is_org_admin=True,
+    #         is_org_moderator=True,
+    #         is_whitelisted=True,
+    #     )
+    #     admin.save()
 
-            entryForm = form.save(commit=False)
+    #     self.success_url = reverse_lazy(
+    #         "main:thanks_org", kwargs=org.get_url_kwargs()
+    #     )
+
+    #     return super().form_valid(form)
+
+    def post(self, request, *args, **kwargs):
+        comm_form = self.community_form_class(request.POST, label_suffix="")
+        addr_form = self.address_form_class(request.POST, label_suffix="")
+        # addr_form.data["entry_ID"] = comm_form.data["entry_ID"]
+        if comm_form.is_valid():
+            # grab tags from form
+            tag_name_qs = comm_form.cleaned_data["tags"].values("name")
+
+            entryForm = comm_form.save(commit=False)
+            # addrForm = addr_form.save(commit=False)
+            # addrForm.entry_ID = entryForm.entry_ID
+            # addrForm.save()
+            if addr_form.is_valid():
+                print("data validated buddy")
+                addrForm = addr_form.save(commit=False)
+                addrForm.entry_ID = entryForm.entry_ID
+                addrForm.save()
+            else:
+                print(addr_form)
             # get all the polygons from the array
+
             # This returns an array of Django GEOS Polygon types
-            polyArray = form.data["census_blocks_polygon_array"]
+            polyArray = comm_form.data["census_blocks_polygon_array"]
 
             if polyArray is not None and polyArray != "":
                 polyArray = polyArray.split("|")
@@ -397,8 +434,10 @@ class EntryView(LoginRequiredMixin, View):
             m_uuid = str(entryForm.entry_ID).split("-")[0]
             full_url = self.success_url + "?map_id=" + m_uuid
             return HttpResponseRedirect(full_url)
+        
         context = {
-            "form": form,
+            "comm_form": comm_form,
+            "addr_form": addr_form,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
