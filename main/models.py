@@ -247,7 +247,7 @@ class CommunityEntry(models.Model):
 # ******************************************************************************#
 
 class Address(models.Model):
-    entry_ID = models.ForeignKey(CommunityEntry, on_delete=models.CASCADE, default="")
+    entry = models.ForeignKey(CommunityEntry, on_delete=models.CASCADE, default="")
     street = models.CharField(
         max_length=500, blank=False, unique=False, default=""
     )
@@ -265,7 +265,7 @@ class Address(models.Model):
         return str(self.street)
 
     class Meta:
-        ordering = ("entry_ID",)
+        ordering = ("entry",)
 
 # ******************************************************************************#
 

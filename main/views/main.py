@@ -347,7 +347,6 @@ class EntryView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         comm_form = self.community_form_class(request.POST, label_suffix="")
         addr_form = self.address_form_class(request.POST, label_suffix="")
-        # addr_form.data["entry_ID"] = comm_form.data["entry_ID"]
         if comm_form.is_valid():
             # grab tags from form
             tag_name_qs = comm_form.cleaned_data["tags"].values("name")
@@ -401,7 +400,7 @@ class EntryView(LoginRequiredMixin, View):
             entryForm.save()
             if addr_form.is_valid():
                 addrForm = addr_form.save(commit=False)
-                addrForm.entry_ID = entryForm
+                addrForm.entry = entryForm
                 addrForm.save()
             else:
                 print(addr_form)
