@@ -231,3 +231,4 @@ elif DATABASES["default"]["ENGINE"] == "django.db.backends.sqlite3":
     ] = "django.contrib.gis.db.backends.spatialite"
 
 ACCOUNT_EMAIL_REQUIRED = True
+DEFAULT_FROM_EMAIL = "no-reply@representable.org"
