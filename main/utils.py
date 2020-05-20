@@ -1,4 +1,6 @@
 from django.utils.text import slugify
+import uuid
+import hashlib
 
 
 def generate_unique_slug(model, field):
@@ -20,3 +22,9 @@ def generate_unique_slug(model, field):
         unique_slug = "%s-%d" % (origin_slug, numb)
         numb += 1
     return unique_slug
+
+
+def generate_unique_token(campaign):
+    # adapted from: https://stackoverflow.com/questions/55062799/how-can-i-send-url-with-users-unique-id-and-token-in-django
+    salt = uuid.uuid4().hex + campaign
+    return hashlib.sha256(salt.encode("utf-8")).hexdigest()

@@ -29,7 +29,7 @@ from django.contrib.auth.models import Group
 from django.db import migrations
 from django.contrib.gis.db import models
 from .choices import STATES
-from .utils import generate_unique_slug
+from .utils import generate_unique_slug, generate_unique_token
 
 # ******************************************************************************#
 
@@ -167,6 +167,58 @@ class WhiteListEntry(models.Model):
 # ******************************************************************************#
 
 
+class Campaign(models.Model):
+    """
+    Campaign represents an organization's entry collection campaign.
+    - id: uuid for campaigns
+    - name: name of the campaign
+    - state: the state of the campaign
+    - description: description of the campaign
+    - organization: organization hosting the campaign
+    - is_active: is the campaign active
+    """
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=128)
+    description = models.CharField(max_length=250, blank=True)
+    state = models.CharField(
+        max_length=50, choices=STATES, default=None, blank=False
+    )
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ("description",)
+
+    def get_absolute_url(self):
+        return reverse(
+            "main:campaign_home",
+            kwargs={
+                "slug": self.organization.slug,
+                "pk": self.organization.id,
+                "cam_pk": self.id,
+            },
+        )
+
+    def __str__(self):
+        return self.name
+
+
+# ******************************************************************************#
+class CampaignToken(models.Model):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
+    token = models.CharField(max_length=100)
+
+    def save(self, *args, **kwargs):
+        # generate the unique token once the first time the token is created
+        if not self.token:
+            self.token = generate_unique_token(self.campaign.name)
+        super(CampaignToken, self).save(*args, **kwargs)
+
+
+# ******************************************************************************#
+
+
 class CommunityEntry(models.Model):
     """
     Community Entry represents the entry created by the user when drawing their
@@ -175,6 +227,7 @@ class CommunityEntry(models.Model):
      - user: The user that created the entry. Foreign Key = User (Many to One)
      - entry_ID: Randomly Generated via uuid.uuid4.
      - organization: The organization that the user is submitting the entry to
+     - campaign: The campaign that the user is submitting the entry to
      - user_polygon:  User polygon contains the polygon drawn by the user.
      - census_blocks_polygon_array: Array containing multiple polygons.
      - census_blocks_polygon: The union of the census block polygons.
@@ -189,6 +242,9 @@ class CommunityEntry(models.Model):
     )
     organization = models.ForeignKey(
         Organization, on_delete=models.CASCADE, blank=True, null=True
+    )
+    campaign = models.ForeignKey(
+        Campaign, on_delete=models.CASCADE, blank=True, null=True
     )
     user_polygon = models.PolygonField(
         geography=True, serialize=True, blank=False
@@ -227,40 +283,3 @@ class CommunityEntry(models.Model):
 
 
 # ******************************************************************************#
-
-
-class Campaign(models.Model):
-    """
-    Campaign represents an organization's entry collection campaign.
-    - id: uuid for campaigns
-    - name: name of the campaign
-    - state: the state of the campaign
-    - description: description of the campaign
-    - organization: organization hosting the campaign
-    - is_active: is the campaign active
-    """
-
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=128)
-    description = models.CharField(max_length=250, blank=True)
-    state = models.CharField(
-        max_length=50, choices=STATES, default=None, blank=False
-    )
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    is_active = models.BooleanField(default=True)
-
-    class Meta:
-        ordering = ("description",)
-
-    def get_absolute_url(self):
-        return reverse(
-            "main:campaign_home",
-            kwargs={
-                "slug": self.organization.slug,
-                "pk": self.organization.id,
-                "cam_pk": self.id,
-            },
-        )
-
-    def __str__(self):
-        return self.name
