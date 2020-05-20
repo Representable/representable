@@ -10,7 +10,6 @@ ALLOWED_HOSTS = ["www.representable.org", "representable.org"]
 
 DEBUG = False
 
-ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 # Can Log In With Either Email or Username
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
