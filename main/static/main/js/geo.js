@@ -245,13 +245,15 @@ function print(items) {
 
 // Form Handling
 function openAllSections(event) {
+  // Opens All Sections On Click.
   var card_section_divs = document.getElementsByClassName("card-section");
   for (var i = 0; i < card_section_divs.length; i++) {
-    openSectionElement(card_section_divs[i]);
+    openSectionByElement(card_section_divs[i]);
   }
 }
 
 function getCurrentParentSection(event) {
+  // Gets the Parent Section of this Event.
   var targetElement = event.target || event.srcElement;
   var parent_section = targetElement.closest(".card-section");
   return parent_section;
@@ -263,12 +265,12 @@ function getCurrentSectionIndex(event) {
   return current_index;
 }
 
-function openSectionElement(parent_section) {
+function openSectionByElement(parent_section) {
   var current_index = parent_section.getAttribute("data-card-index");
-  openSection(current_index);
+  openSectionByIndex(current_index);
 }
 
-function openSection(section_ix) {
+function openSectionByIndex(section_ix) {
   // Opens the section, but does not close anything else.
   var section_id = "card_section_" + section_ix;
   var section_elem = document.getElementById(section_id);
@@ -375,7 +377,7 @@ document.addEventListener(
     var form_error_arr = document.getElementsByClassName("form-error");
     for (var i = 0; i < form_error_arr.length; i++) {
       var parent_section = form_error_arr[i].closest(".card-section");
-      openSectionElement(parent_section);
+      openSectionByElement(parent_section);
     }
 
     var form_save_button = document.getElementById("save");
