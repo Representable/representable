@@ -45,6 +45,7 @@ from ..models import (
     Campaign,
     CommunityEntry,
     Tag,
+    CampaignToken,
 )
 from django.shortcuts import get_object_or_404
 from django.views.generic.edit import FormView
@@ -84,11 +85,26 @@ class OrgAdminRequiredMixin(UserPassesTestMixin):
 
 class OrgModRequiredMixin(UserPassesTestMixin):
     """
+    Checks if the user has at least moderator permissions for the given organization (checked through the pk field)
+    """
+
+    def test_func(self):
+        if self.request.user.is_org_moderator(
+            self.kwargs["pk"]
+        ) or self.request.user.is_org_admin(self.kwargs["pk"]):
+            return True
+
+
+# ******************************************************************************#
+
+
+class OrgMemberRequiredMixin(UserPassesTestMixin):
+    """
     Checks if the user has moderator permissions for the given organization (checked through the pk field)
     """
 
     def test_func(self):
-        return self.request.user.is_org_moderator(self.kwargs["pk"])
+        return self.request.user.is_member(self.kwargs["pk"])
 
 
 # ******************************************************************************#
@@ -183,7 +199,7 @@ class EditOrg(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
 # ******************************************************************************#
 
 
-class HomeOrg(LoginRequiredMixin, DetailView):
+class HomeOrg(LoginRequiredMixin, OrgMemberRequiredMixin, DetailView):
     """
     The admin home page for an organization within the dashboard
     """
@@ -199,6 +215,9 @@ class HomeOrg(LoginRequiredMixin, DetailView):
         )
         context["is_org_moderator"] = self.request.user.is_org_moderator(
             self.object.id
+        )
+        context["campaigns"] = Campaign.objects.filter(
+            organization__id=self.kwargs["pk"]
         )
 
         return context
@@ -396,35 +415,14 @@ class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
         return render(request, self.template_name, context)
 
 
-class CampaignHome(LoginRequiredMixin, DetailView):
+class CampaignHome(LoginRequiredMixin, OrgMemberRequiredMixin, DetailView):
     """
-    BETA view: the campaign home
-    Note: url rewrites currently not working with the given pk_url_kwarg.
+    The main campaign view
     """
 
     template_name = "main/dashboard/campaigns/index.html"
     model = Campaign
     pk_url_kwarg = "cam_pk"
-
-
-class CampaignList(LoginRequiredMixin, TemplateView):
-    """
-    BETA view: the dashboard list of campaigns
-    Note: url rewrites currently not working with the given pk_url_kwarg.
-    """
-
-    template_name = "main/dashboard/campaigns/list.html"
-    # model = Campaign
-    # #campaigns = Campaign.objects.all()
-    # pk_url_kwarg = 'cam_pk'
-    # #
-    # def get_queryset(self):
-    #    org = get_object_or_404(Organization, pk=self.kwargs["pk"])
-    #    return super(CampaignList, self).get_queryset().filter(organization=org)
-    # def get_queryset(self):
-    #     print(self.kwargs)
-    #     org = get_object_or_404(Organization, pk=self.kwargs["pk"])
-    #     return Campaign.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -434,19 +432,21 @@ class CampaignList(LoginRequiredMixin, TemplateView):
         context["is_org_moderator"] = self.request.user.is_org_moderator(
             self.kwargs["pk"]
         )
-        context["org"] = get_object_or_404(Organization, pk=self.kwargs["pk"])
-        context[
-            "campaigns"
-        ] = (
-            Campaign.objects.all()
-        )  # filter(organization__id=self.kwargs["pk"])
+        campaign = get_object_or_404(Campaign, pk=self.kwargs["cam_pk"])
+        token = CampaignToken.objects.filter(campaign=campaign)
+        if not token:
+            token = CampaignToken.objects.create(campaign=campaign)
+        else:
+            # filter only the first token in case there are multiple
+            token = token[0]
+        context["token"] = token.token
 
         return context
 
 
-class CreateCampaign(LoginRequiredMixin, CreateView):
+class CreateCampaign(LoginRequiredMixin, OrgAdminRequiredMixin, CreateView):
     """
-    BETA view: the view for the form to create a campaign
+    The view for the form to create a campaign
     """
 
     template_name = "main/dashboard/campaigns/create.html"
@@ -460,6 +460,8 @@ class CreateCampaign(LoginRequiredMixin, CreateView):
         )
         object = form.save()
 
+        CampaignToken.objects.create(campaign=object)
+
         self.success_url = reverse_lazy(
             "main:campaign_home",
             kwargs={
@@ -472,30 +474,12 @@ class CreateCampaign(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class UpdateCampaign(LoginRequiredMixin, UpdateView):
+class UpdateCampaign(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
     """
     BETA view: the view for the form to update campaign details
     """
 
-    template_name = "main/dashboard/campaigns/update.html"
+    template_name = "main/dashboard/campaigns/edit.html"
+    model = Campaign
     form_class = CampaignForm
     pk_url_kwarg = "cam_pk"
-
-    def form_valid(self, form):
-        # TODO: include a check to make sure this actually the user's org
-        form.instance.organization = get_object_or_404(
-            Organization, pk=self.kwargs["pk"]
-        )
-
-        object = form.save()
-
-        self.success_url = reverse_lazy(
-            "main:campaign_home",
-            kwargs={
-                "pk": self.kwargs["pk"],
-                "slug": self.kwargs["slug"],
-                "cam_pk": object.id,
-            },
-        )
-
-        return super().form_valid(form)
