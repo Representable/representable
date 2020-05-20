@@ -247,7 +247,6 @@ function print(items) {
 function openAllSections(event) {
   var card_section_divs = document.getElementsByClassName("card-section");
   for (var i = 0; i < card_section_divs.length; i++) {
-    print(card_section_divs[i]);
     openSectionElement(card_section_divs[i]);
   }
 }
