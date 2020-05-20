@@ -83,7 +83,7 @@ class AddressForm(ModelForm):
     
     class Meta:
         model = Address
-        fields = ["entry_ID", "city", "state", "zipcode", "street"]
+        fields = ["city", "state", "zipcode", "street"]
 
         widgets = {
             "street": forms.TextInput(

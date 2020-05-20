@@ -344,24 +344,6 @@ class EntryView(LoginRequiredMixin, View):
         }
         return render(request, self.template_name, context)
 
-    # def form_valid(self, addrform):
-    #     addr = addrform.save()
-    #     # by default, make the user creating the org the admin
-    #     admin = Address(
-    #         entry_ID=self.request.user,
-    #         organization=org,
-    #         is_org_admin=True,
-    #         is_org_moderator=True,
-    #         is_whitelisted=True,
-    #     )
-    #     admin.save()
-
-    #     self.success_url = reverse_lazy(
-    #         "main:thanks_org", kwargs=org.get_url_kwargs()
-    #     )
-
-    #     return super().form_valid(form)
-
     def post(self, request, *args, **kwargs):
         comm_form = self.community_form_class(request.POST, label_suffix="")
         addr_form = self.address_form_class(request.POST, label_suffix="")
@@ -371,16 +353,7 @@ class EntryView(LoginRequiredMixin, View):
             tag_name_qs = comm_form.cleaned_data["tags"].values("name")
 
             entryForm = comm_form.save(commit=False)
-            # addrForm = addr_form.save(commit=False)
-            # addrForm.entry_ID = entryForm.entry_ID
-            # addrForm.save()
-            if addr_form.is_valid():
-                print("data validated buddy")
-                addrForm = addr_form.save(commit=False)
-                addrForm.entry_ID = entryForm.entry_ID
-                addrForm.save()
-            else:
-                print(addr_form)
+
             # get all the polygons from the array
 
             # This returns an array of Django GEOS Polygon types
@@ -426,6 +399,12 @@ class EntryView(LoginRequiredMixin, View):
                         entryForm.admin_approved = True
 
             entryForm.save()
+            if addr_form.is_valid():
+                addrForm = addr_form.save(commit=False)
+                addrForm.entry_ID = entryForm
+                addrForm.save()
+            else:
+                print(addr_form)
 
             for tag_name in tag_name_qs:
                 tag = Tag.objects.get(name=str(tag_name["name"]))
