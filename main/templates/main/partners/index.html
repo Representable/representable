@@ -27,7 +27,9 @@
               </p>
               <p> {{ partner.description }} </p>
               <a class="btn btn-primary my-3" href="{% url 'main:partner_page' partner.slug %}" role="button">More Details</a>
-              <a class="btn btn-primary" href="{{ partner.ext_link }}" role="button">Partner Site <i class="fa fa-arrow-circle-right"></i></a>
+              {% if partner.ext_link %}<a class="btn btn-primary" href="{{ partner.ext_link }}" role="button">
+                Partner Site <i class="fa fa-arrow-circle-right"></i></a>
+              {% endif %}
             </div>
           </div>
         {% endfor %}

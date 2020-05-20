@@ -128,6 +128,59 @@ var states = [
   "wy",
 ];
 
+var state_areas = {
+  "ak" : 665384,
+  "al" : 52420,
+  "ar" : 53178,
+  "az" : 113990,
+  "ca" : 163694,
+  "co" : 104093,
+  "ct" : 5543,
+  "dc" : 68,
+  "de" : 2488,
+  "fl" : 65757,
+  "ga" : 59425,
+  "hi" : 10931,
+  "ia" : 56272,
+  "id" : 83568,
+  "il" : 57913,
+  "in" : 36419,
+  "ks" : 82278,
+  "ky" : 40407,
+  "la" : 52378,
+  "ma" : 10554,
+  "md" : 12405,
+  "me" : 35379,
+  "mi" : 96713,
+  "mn" : 86935,
+  "mo" : 69706,
+  "ms" : 48431,
+  "mt" : 147039,
+  "nc" : 53819,
+  "nd" : 70698,
+  "nh" : 9349,
+  "nj" : 8722,
+  "nm" : 121590,
+  "nv" : 110571,
+  "ny" : 54554,
+  "oh" : 44825,
+  "ok" : 69898,
+  "or" : 98378,
+  "pa" : 46054,
+  "ri" : 1544,
+  "sc" : 32020,
+  "sd" : 77115,
+  "tn" : 42144,
+  "tx" : 268596,
+  "ut" : 84896,
+  "va" : 42774,
+  "vt" : 9616,
+  "wa" : 71297,
+  "wi" : 65496,
+  "wv" : 24230,
+  "wy" : 97813,
+}
+
 // dictionary with state neighbors without nebraska since there is
 // no census block data for nebraska
 var state_neighbors = {
@@ -196,7 +249,6 @@ $(document).ready(function () {
 
 //builds proper format of location string based on mapbox data. city,state/province,country
 function parseReverseGeo(geoData) {
-  // debugger;
   var region, countryName, placeName, returnStr;
   if (geoData.context) {
     $.each(geoData.context, function (i, v) {
@@ -490,9 +542,9 @@ class CensusBlocksControl {
     var blocksLink = document.createElement("button");
     blocksLink.href = "#";
     blocksLink.className = "active";
-    blocksLink.style.width = "150px";
+    blocksLink.style.width = "140px";
     blocksLink.innerHTML =
-      "<span data-toggle='tooltip' title='Census blocks are the smallest unit of the US census - darker blocks have a higher population'><i class='fas fa-th-large'></i> Toggle Census Blocks</span>";
+      "<span data-toggle='tooltip' title='Census blocks are the smallest unit of the US census - darker blocks have a higher population'><i class='fas fa-th-large'></i> Show Census Blocks</span>";
     this._map = map;
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
@@ -531,7 +583,6 @@ map.addControl(new CensusBlocksControl(), "top-left");
 document.getElementById("draw-button").addEventListener("click", function (e) {
   cleanAlerts();
   draw.deleteAll();
-  // TODO: change for all states
   map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
   draw.changeMode("draw_polygon");
 });
@@ -539,7 +590,6 @@ document.getElementById("draw-button").addEventListener("click", function (e) {
 document.getElementById("trash-button").addEventListener("click", function (e) {
   cleanAlerts();
   draw.deleteAll();
-  // TODO: change for all states
   map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
   draw.changeMode("simple_select");
 });
@@ -551,24 +601,7 @@ function newSourceLayer(name, mbCode) {
     url: "mapbox://" + mapbox_user_name + "." + mbCode,
   });
 }
-// add a new layer of census block data
-// function newCensusLines(state) {
-//   map.addLayer({
-//     id: state + "-census-lines",
-//     type: "line",
-//     source: state + "-census",
-//     "source-layer": state + "census",
-//     layout: {
-//       visibility: "visible",
-//       "line-join": "round",
-//       "line-cap": "round",
-//     },
-//     paint: {
-//       "line-color": "rgba(71, 93, 204, 0.5)",
-//       "line-width": 1,
-//     },
-//   });
-// }
+
 // add a new layer of census block data (transparent layer)
 function newCensusShading(state) {
   map.addLayer({
@@ -854,7 +887,6 @@ function highlightBlocks(drawn_polygon) {
         ["in", "BLOCKID10"]
       );
       //  sets filter - highlights blocks
-      // TODO: update for all states
       map.setFilter(state + "-blocks-highlighted", filter);
     }
   } catch (err) {
@@ -902,9 +934,8 @@ function updateCommunityEntry(e) {
     let area = turf.area(data);
     area = turf.convertArea(area, "meters", "miles");
 
-    // TODO: Need to make sure map does not cross state boundaries??? Maybe this is fine for communities...
-    // Use NJ State Area * 1/2 TODO: need to generalize?
-    let halfStateArea = 4350; // TODO use dictionary lookup based on zipcode
+    // coi is not too big
+    let halfStateArea = state_areas[state]/2;
     if (area > halfStateArea) {
       triggerDrawError(
         "map-area-size-error",

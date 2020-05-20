@@ -59,23 +59,6 @@ INDUSTRY_CHOICES = (
     ("other", "Other"),
 )
 
-POLICY_ISSUES = (
-    ("", "Select Category"),
-    ("zoning", "Zoning"),
-    ("policing", "Policing"),
-    ("crime", "Crime"),
-    ("environmental", "Environmental"),
-    ("nuisance", "Nuisance"),
-    ("school", "School"),
-    ("religion", "Religion/Church"),
-    ("race", "Race/Ethnicity"),
-    ("immigration", "Immigration Status"),
-    ("socioeconomic", "Socioeconomic"),
-    ("transportation", "Transportation"),
-    ("neighborhood", "Neighborhood Identity/Official Definition"),
-    ("lgbt", "LGBT Issues"),
-)
-
 STATES = (
     ("AL", "Alabama"),
     ("AZ", "Arizona"),

@@ -233,30 +233,13 @@ var states = [
   "wy",
 ];
 
-/* Colors for the different issue categories */
-var PAINT_VALUES = {
-  Zoning: "rgba(135, 191, 255,",
-  Policing: "rgba(63, 142, 252,",
-  Crime: "rgba(196, 178, 188,",
-  Nuisance: "rgba(223, 146, 142,",
-  School: "rgba(249, 160, 63,",
-  "Religion/Church": "rgba(234, 200, 30,",
-  "Race/Ethnicity": "rgba(178, 177, 207,",
-  "Immigration Status": "rgba(223, 41, 53,",
-  Socioeconomic: "rgba(253, 202, 64,",
-  Transportation: "rgba(242, 255, 73,",
-  "Neighborhood Identity/Official Definition": "rgba(251, 98, 246,",
-  Environmental: "rgba(150, 98, 26,",
-  "LGBT Issues": "rgba(255, 192, 203,",
-};
-
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
 var map = new mapboxgl.Map({
   container: "map", // container id
   style: "mapbox://styles/mapbox/streets-v11", //color of the map -- dark-v10 or light-v9
-  center: [-96.7026, 40.8136], // starting position - Princeton, NJ :)
+  center: [-96.7026, 40.8136], // starting position - Lincoln, Nebraska (middle of country lol)
   zoom: 3, // starting zoom -- higher is closer
 });
 
@@ -347,8 +330,6 @@ function newLowerLegislatureLayer(state) {
   });
 }
 
-// issues add to properties
-issues = JSON.parse(issues);
 entry_names = JSON.parse(entry_names);
 entry_reasons = JSON.parse(entry_reasons);
 
@@ -393,17 +374,9 @@ map.on("load", function () {
 
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
-  var dest = [-74.65545, 40.341701];
+  var dest = [];
 
   for (obj in a) {
-    // let catDict = {};
-    // let catArray = [];
-    // for (cat in issues) {
-    //   if (issues[cat][obj] !== undefined) {
-    //     catArray.push(cat);
-    //     catDict[cat] = issues[cat][obj];
-    //   }
-    // }
     // check how deeply nested the outer ring of the unioned polygon is
     final = [];
     // set the coordinates of the outer ring to final
@@ -511,11 +484,13 @@ map.on("load", function () {
       }
     }
   });
-  // this is necessary so the map "moves" and queries the features above ^^
-  map.flyTo({
-    center: dest,
-    zoom: 10,
-  });
+  if (dest !== []) {
+    // this is necessary so the map "moves" and queries the features above ^^
+    map.flyTo({
+      center: dest,
+      zoom: 10,
+    });
+  }
 });
 
 // on hover, highlight the community

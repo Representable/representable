@@ -42,27 +42,14 @@ var LOWER_KEYS = {
   "mi-lower": "aa2ljvl2",
 };
 var states = ["nj", "va", "pa", "mi"];
-var PAINT_VALUES = {
-  "Criminal Justice": "rgba(135, 191, 255,",
-  "Civil Rights": "rgba(63, 142, 252,",
-  "Economic Affairs": "rgba(196, 178, 188,",
-  Education: "rgba(223, 146, 142,",
-  Environment: "rgba(249, 160, 63,",
-  "Health and Health Insurance": "rgba(234, 239, 177,",
-  "Internet Regulation": "rgba(178, 177, 207,",
-  "Women's Issues": "rgba(223, 41, 53,",
-  "LGBT Issues": "rgba(253, 202, 64,",
-  "National Security": "rgba(242, 255, 73,",
-  "Social Welfare": "rgba(251, 98, 246,",
-};
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
 var map = new mapboxgl.Map({
   container: "map", // container id
   style: "mapbox://styles/mapbox/light-v9", //color of the map -- dark-v10 or light-v9
-  center: [-74.65545, 40.341701], // starting position - Princeton, NJ :)
-  zoom: 12, // starting zoom -- higher is closer
+  center: [-96.7026, 40.8136], // starting position - Lincoln, Nebraska (middle of country lol)
+  zoom: 3, // starting zoom -- higher is closer
 });
 
 // geocoder used for a search bar -- within the map itself
@@ -163,10 +150,9 @@ map.on("load", function () {
     newLowerLegislatureLayer(states[i]);
   }
 
-  // tags add to properties
-  tags = JSON.parse(tags);
+  output_poly_json = JSON.parse(entry_poly_dict);
+  var dest = [];
 
-  var output_poly_json = JSON.parse(entry_poly_dict);
   for (obj in output_poly_json) {
     // check how deeply nested the outer ring of the unioned polygon is
     final = [];
@@ -178,6 +164,7 @@ map.on("load", function () {
     } else {
       final = output_poly_json[obj];
     }
+    dest = final[0][0];
     approved_color = "rgba(110, 178, 181,0.15)";
     unapproved_color = "rgba(255, 50, 0,0.15)";
     if (approved.indexOf(obj) > -1) {
@@ -227,6 +214,13 @@ map.on("load", function () {
         "line-color": "rgba(0, 0, 0,0.2)",
         "line-width": 2,
       },
+    });
+  }
+  if (dest !== []) {
+    // this is necessary so the map "moves" and queries the features above ^^
+    map.flyTo({
+      center: dest,
+      zoom: 10,
     });
   }
 });
