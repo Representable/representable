@@ -33,12 +33,14 @@ from django.forms import formset_factory
 from ..forms import (
     CommunityForm,
     DeletionForm,
+    AddressForm,
 )
 from ..models import (
     CommunityEntry,
     WhiteListEntry,
     Tag,
     Membership,
+    Address,
     CampaignToken,
 )
 from django.views.generic.edit import FormView
@@ -322,7 +324,9 @@ class EntryView(LoginRequiredMixin, View):
     """
 
     template_name = "main/pages/entry.html"
-    form_class = CommunityForm
+    community_form_class = CommunityForm
+    address_form_class = AddressForm
+    # form_class = CommunityForm
     initial = {
         "key": "value",
     }
@@ -342,14 +346,16 @@ class EntryView(LoginRequiredMixin, View):
         return initial
 
     def get(self, request, *args, **kwargs):
-        form = self.form_class(initial=self.get_initial(), label_suffix="")
+        comm_form = self.community_form_class(initial=self.get_initial(), label_suffix="")
+        addr_form = self.address_form_class(initial=self.get_initial(), label_suffix="")
 
         has_token = False
         if kwargs["token"]:
             has_token = True
 
         context = {
-            "form": form,
+            "comm_form": comm_form,
+            "addr_form": addr_form,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
             "has_token": has_token,
@@ -357,15 +363,18 @@ class EntryView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST, label_suffix="")
-        if form.is_valid():
+        comm_form = self.community_form_class(request.POST, label_suffix="")
+        addr_form = self.address_form_class(request.POST, label_suffix="")
+        if comm_form.is_valid():
             # grab tags from form
-            tag_name_qs = form.cleaned_data["tags"].values("name")
+            tag_name_qs = comm_form.cleaned_data["tags"].values("name")
 
-            entryForm = form.save(commit=False)
+            entryForm = comm_form.save(commit=False)
+
             # get all the polygons from the array
+
             # This returns an array of Django GEOS Polygon types
-            polyArray = form.data["census_blocks_polygon_array"]
+            polyArray = comm_form.data["census_blocks_polygon_array"]
 
             if polyArray is not None and polyArray != "":
                 polyArray = polyArray.split("|")
@@ -406,6 +415,7 @@ class EntryView(LoginRequiredMixin, View):
                         # approve this entry
                         entryForm.admin_approved = True
 
+            
             if self.kwargs["token"]:
                 token = CampaignToken.objects.get(token=self.kwargs["token"])
                 if token:
@@ -417,6 +427,11 @@ class EntryView(LoginRequiredMixin, View):
                         entryForm.admin_approved = True
 
             entryForm.save()
+            if addr_form.is_valid():
+                addrForm = addr_form.save(commit=False)
+                addrForm.entry = entryForm
+                addrForm.save()
+                
             for tag_name in tag_name_qs:
                 tag = Tag.objects.get(name=str(tag_name["name"]))
                 entryForm.tags.add(tag)
@@ -431,7 +446,8 @@ class EntryView(LoginRequiredMixin, View):
                     )
                 return HttpResponseRedirect(self.success_url)
         context = {
-            "form": form,
+            "comm_form": comm_form,
+            "addr_form": addr_form,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }

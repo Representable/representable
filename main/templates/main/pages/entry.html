@@ -108,7 +108,7 @@
                                         <!-- {# Include form.entry_polygon error. } -->
                                             <div class="map-bounding-box my-2">
                                                 <div id="map-error-alerts">
-                                                    {% if form.user_polygon.errors %}
+                                                    {% if comm_form.user_polygon.errors %}
                                                     <script>
                                                         sessionStorage.setItem("allChecks", "fail");
                                                     </script>
@@ -141,7 +141,45 @@
                             <div class="collapse-card card-section ">
                                 <div class="card">
                                     <div class="card-header text-header-card">
-                                        <strong>3. What brings your community together?</strong>
+                                        <strong>3. Identifying Information</strong>
+                                        <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
+                                    </div>
+                                    <div class="card-body collapse">
+                                        <p class="card-text">
+                                            Your Name <small class="text-danger">(Required)</small>
+                                        </p>
+                                        {{ comm_form.user_name|append_attr:"class:form-control" }}
+                                        <hr>
+                                        <p class="card-text">
+                                            Phone Number <small class="text-danger">(Required)</small>
+                                        </p>
+                                        {{ comm_form.user_phone|append_attr:"class:form-control" }}
+                                        <hr>
+                                        <p class="card-text">
+                                            Your Address <small class="text-danger">(Required)</small>
+                                        </p>
+                                        {{ addr_form.street|append_attr:"class:form-control" }}
+                                        <br>
+                                        {{ addr_form.city|append_attr:"class:form-control" }}
+                                        <br>
+                                        {{ addr_form.state|append_attr:"class:form-control" }}
+                                        <br>
+                                        {{ addr_form.zipcode|append_attr:"class:form-control" }}
+                                        <br>
+                                        <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
+                                        <input class="btn btn-primary float-right card-section-button button-next" type="button" value="Next">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row row-equal-cols">
+                        <div class="col-lg  mt-3">
+                            <div class="collapse-card card-section ">
+                                <div class="card">
+                                    <div class="card-header text-header-card">
+                                        <strong>4. What brings your community together?</strong>
                                         <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
                                     </div>
                                     <div class="card-body collapse">
@@ -151,7 +189,7 @@
                                             <br>
                                             <small>For example: Princeton area student community</small>
                                         </p>
-                                        {{ form.entry_name|append_attr:"class:form-control" }}
+                                        {{ comm_form.entry_name|append_attr:"class:form-control" }}
                                         <hr>
                                         <p class="card-text">
                                             Why are you identifying this area as a community? <small class="text-danger">(Required)</small>
@@ -159,51 +197,107 @@
                                             <br>
                                             <small>For example: All of the on-campus Princeton University student body lives and studies in this geographic area.</small>
                                         </p>
-                                        {{ form.entry_reason|append_attr:"class:form-control" }}
+                                        {{ comm_form.entry_reason|append_attr:"class:form-control" }}
                                         <hr>
                                         <div class="field-wrap mt-3">
                                             <p>What organization are you contributing as a part of? </p>
                                             <div class="field-wrap">
-                                            {{ form.organization|append_attr:"class:form-control" }}
-                                            {% if form.organization.help_text %}
-                                            <p class="help">{{ form.organization_text|safe }}</p>
+                                            {{ comm_form.organization|append_attr:"class:form-control" }}
+                                            {% if comm_form.organization.help_text %}
+                                            <p class="help">{{ comm_form.organization_text|safe }}</p>
                                             {% endif %}
                                             </div>
                                         </div>
                                         {% csrf_token %}
                                         <!-- {# Include the non-field error fields #} -->
-                                        {% if form.non_field_errors %}
+                                        {% if comm_form.non_field_errors %}
                                         <div class="non-field-errors form-error">
-                                            {% for err in form.non_field_errors %}
+                                            {% for err in comm_form.non_field_errors %}
                                             <p class="form-error">{{ err }}</p>
                                             {% endfor %}
                                         </div>
                                         {% endif %}
                                         <div id="main_community_form" class="form-group">
                                             <!-- {# Include the hidden fields #} -->
-                                            {% for hidden in form.hidden_fields %}
+                                            {% for hidden in comm_form.hidden_fields %}
                                             {{ hidden }}
                                             {% endfor %}
-                                            <!-- {# Tags Field} -->
-                                            <div class="field-wrap mt-3">
-                                                {{ form.tags.label_tag }}
-                                                {% if form.tags.errors %}
-                                                <div class="form-error">
-                                                    {{ form.tags.errors }}
-                                                </div>
-                                                {% endif %}
-                                                {{ form.tags|append_attr:"class:form-control" }}
-                                                {% if form.tags.help_text %}
-                                                <p class="help">{{ form.tags.help_text|safe }}</p>
-                                                {% endif %}
-                                            </div>
                                         </div>
+                                        <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
+                                        <input class="btn btn-primary float-right card-section-button button-next" type="button" value="Next">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-equal-cols">
+                        <div class="col-lg  mt-3">
+                            <div class="collapse-card card-section ">
+                                <div class="card">
+                                    <div class="card-header text-header-card">
+                                        <strong>5. Your Shared Cultural Interests</strong>
+                                        <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
+                                    </div>
+                                    <div class="card-body collapse">
+                                        <p class="card-text">
+                                            What fosters a sense of belonging in your Community? 
+                                            What common beliefs or values exist? <small class="text-danger">(Required)</small>
+                                        </p>
+                                        {{ comm_form.cultural_interests|append_attr:"class:form-control" }}
+                                        <br>
+                                        <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
+                                        <input class="btn btn-primary float-right card-section-button button-next" type="button" value="Next">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-equal-cols">
+                        <div class="col-lg  mt-3">
+                            <div class="collapse-card card-section ">
+                                <div class="card">
+                                    <div class="card-header text-header-card">
+                                        <strong>6. Shared Community activities and services</strong>
+                                        <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
+                                    </div>
+                                    <div class="card-body collapse">
+                                        <p class="card-text">
+                                            Where do people in your Community gather or socialize? 
+                                            Where does your Community get its services? <small class="text-danger">(Required)</small>
+                                        </p>
+                                        {{ comm_form.comm_activities|append_attr:"class:form-control" }}
+                                        <br>
+                                        <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
+                                        <input class="btn btn-primary float-right card-section-button button-next" type="button" value="Next">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-equal-cols">
+                        <div class="col-lg  mt-3">
+                            <div class="collapse-card card-section ">
+                                <div class="card">
+                                    <div class="card-header text-header-card">
+                                        <strong>7. Your Shared Economic Interests</strong>
+                                        <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
+                                    </div>
+                                    <div class="card-body collapse">
+                                        <p class="card-text">
+                                            Is there a shared economy in the geographic area of your Community? 
+                                            How and where are residents employed? What parts of a county, 
+                                            township or city are included in your Community? 
+                                            Are there shared environmental concerns such as landfills or water quality? <small class="text-danger">(Required)</small>
+                                        </p>
+                                        {{ comm_form.economic_interests|append_attr:"class:form-control" }}
+                                        <br>
                                         <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
                 </form>
                 <div class='row mt-4 w-100'>
                     <div class='col-12 text-center'>

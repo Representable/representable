@@ -57,3 +57,4 @@ virtualenv==16.4.3
 Werkzeug==0.15.4
 whitenoise==4.1.2
 wrapt==1.11.2
+django-phone-field==1.8.0
