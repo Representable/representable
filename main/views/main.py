@@ -41,6 +41,7 @@ from ..models import (
     Tag,
     Membership,
     Address,
+    CampaignToken,
 )
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
@@ -306,6 +307,16 @@ class Thanks(TemplateView):
 
 # ******************************************************************************#
 
+class ThanksEntryOrg(TemplateView):
+    template_name = "main/pages/thanksentryorg.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['org_slug'] = self.kwargs['slug']
+        return context
+
+# ******************************************************************************#
+
 
 class EntryView(LoginRequiredMixin, View):
     """
@@ -320,6 +331,7 @@ class EntryView(LoginRequiredMixin, View):
         "key": "value",
     }
     success_url = "/thanks/"
+    
     data = {
         "form-TOTAL_FORMS": "1",
         "form-INITIAL_FORMS": "0",
@@ -336,11 +348,17 @@ class EntryView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         comm_form = self.community_form_class(initial=self.get_initial(), label_suffix="")
         addr_form = self.address_form_class(initial=self.get_initial(), label_suffix="")
+
+        has_token = False
+        if kwargs["token"]:
+            has_token = True
+
         context = {
             "comm_form": comm_form,
             "addr_form": addr_form,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
+            "has_token": has_token,
         }
         return render(request, self.template_name, context)
 
@@ -397,22 +415,36 @@ class EntryView(LoginRequiredMixin, View):
                         # approve this entry
                         entryForm.admin_approved = True
 
+            
+            if self.kwargs["token"]:
+                token = CampaignToken.objects.get(token=self.kwargs["token"])
+                if token:
+                    entryForm.campaign = token.campaign
+                    entryForm.organization = token.campaign.organization
+
+                    # if user has a token and campaign is active, auto approve submission
+                    if token.campaign.is_active:
+                        entryForm.admin_approved = True
+
             entryForm.save()
             if addr_form.is_valid():
                 addrForm = addr_form.save(commit=False)
                 addrForm.entry = entryForm
                 addrForm.save()
-            else:
-                print(addr_form)
-
+                
             for tag_name in tag_name_qs:
                 tag = Tag.objects.get(name=str(tag_name["name"]))
                 entryForm.tags.add(tag)
-
             m_uuid = str(entryForm.entry_ID).split("-")[0]
-            full_url = self.success_url + "?map_id=" + m_uuid
-            return HttpResponseRedirect(full_url)
-        
+            if entryForm.organization == None:
+                full_url = self.success_url + "?map_id=" + m_uuid
+                return HttpResponseRedirect(full_url)
+            else:
+                kwargs = {"slug" : entryForm.organization.slug }
+                self.success_url = reverse_lazy(
+                    "main:thanks_entry_org", kwargs=kwargs
+                    )
+                return HttpResponseRedirect(self.success_url)
         context = {
             "comm_form": comm_form,
             "addr_form": addr_form,

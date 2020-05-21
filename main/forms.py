@@ -235,7 +235,7 @@ class WhitelistForm(ModelForm):
 class CampaignForm(ModelForm):
     class Meta:
         model = Campaign
-        fields = ["name", "description", "state", "start_date", "end_date"]
+        fields = ["name", "description", "state", "is_active"]
         widgets = {
             "name": forms.TextInput(attrs={"placeholder": "Name of Campaign"}),
             "description": forms.Textarea(
@@ -245,6 +245,7 @@ class CampaignForm(ModelForm):
                 choices=STATES, attrs={"class": "form-control"}
             ),
         }
+        labels = {"is_active": "Campaign is accepting submissions"}
 
 
 class MemberForm(ModelForm):
