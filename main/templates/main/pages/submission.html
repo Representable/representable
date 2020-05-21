@@ -11,6 +11,7 @@
 <title>View Map</title>
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+<script src='https://unpkg.com/shp-write@latest/shpwrite.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!--  GeoCoder -->
@@ -60,22 +61,26 @@
               <div class="container">
                 <b>Community name</b>
               </div>
-              <div class="card-body text-center d-flex flex-column align-items-center" id="outline-menu">
+              <div class="card-body d-flex flex-column" id="outline-menu">
                 {{ entry_name }}
               </div>
               <div class="container">
               <b>Why are you submitting this community?</b>
             </div>
-              <div class="card-body text-center d-flex flex-column align-items-center" id="outline-menu">
+              <div class="card-body d-flex flex-column" id="outline-menu">
                 {{ entry_reason }}
+              </div>
+              <div class="text-center">
+                <a class="btn btn-outline-primary btn-canvas mx-4" href="/partners/welcome" role="button">
+                  Export Shapefile
+                </a>
               </div>
             </div>
           </div>
           <!-- Note: TODO issues temporarily removed because it's just one map, could add back -->
           <!-- Note: TODO communities temporarily removed because it's just one map, could add back -->
         </div>
-        <div class="dropdown-container" id="tags-menu"></div>
-          <i class="fa"></i></button>
+        </div>
     </nav>
   </div>
   <div class="col-md-8 col-map col-wide">
