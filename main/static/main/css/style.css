@@ -442,6 +442,10 @@ color scheme. See readme.md*/
   /* pointer-events: none; */
 }
 
+.button-next-geocoder {
+  pointer-events: none;
+}
+
 .map-demo {
   /*  position: absolute; */
   top: 100px;

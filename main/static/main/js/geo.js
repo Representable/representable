@@ -394,6 +394,7 @@ document.addEventListener(
       // open all
       openAllSections(event);
     });
+    $('[data-toggle="tooltip"]').tooltip();
   },
   false
 );
@@ -912,6 +913,9 @@ map.on("style.load", function () {
       "button-next"
     )[0];
     geocoder_next_button.disabled = false;
+    $("button-next-geocoder").tooltip("hide");
+    var button_next_geocoder = document.querySelector(".button-next-geocoder");
+    button_next_geocoder.style.pointerEvents = "auto";
 
     // get the state from the geocoder response
     if (styleSpec.context.length >= 2) {
