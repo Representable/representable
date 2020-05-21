@@ -125,3 +125,4 @@ NJBlocks.json
 */*.DS_Store
 sendgrid.env
 sendgrid_integration.py
+get-pip.py
