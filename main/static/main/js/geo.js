@@ -291,8 +291,10 @@ function goToSection(section_ix) {
   edit_button.value = "Hide Section";
   edit_button.style.display = "block";
   goto_section_elem.classList.add("active-section");
-  $("#" + goto_section_id + " .collapse").collapse("show");
   goto_section_elem.scrollIntoView({ behavior: "smooth" });
+  $("#" + goto_section_id + " .collapse").collapse("show");
+  var delayInMilliseconds = 500;
+  setTimeout(function () {}, delayInMilliseconds);
 }
 
 function toggleSection(event) {
