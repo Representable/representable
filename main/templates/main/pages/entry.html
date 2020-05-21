@@ -199,17 +199,6 @@
                                         {% for hidden in comm_form.hidden_fields %}
                                         {{ hidden }}
                                         {% endfor %}
-                                        <!-- {# Tags Field} -->
-                                        <div class="field-wrap mt-3">
-                                            {{ comm_form.tags.label_tag }}
-                                            <div class="form-error">
-                                                {{ comm_form.tags.errors }}
-                                            </div>
-                                            {{ comm_form.tags|append_attr:"class:form-control" }}
-                                            {% if comm_form.tags.help_text %}
-                                            <p class="help">{{ comm_form.tags.help_text|safe }}</p>
-                                            {% endif %}
-                                        </div>
                                     </div>
                                 </div>
                             </div>
