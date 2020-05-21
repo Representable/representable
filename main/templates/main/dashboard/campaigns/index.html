@@ -3,16 +3,53 @@
 
 {% block content %}
 <div class="container">
-  <div class="row row-content">
+  <div class="row pt-3">
     <div class="col">
-      <h2 class="text-center">{{ object.name }}</h2>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'main:index' %}">Home</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'main:dashboard' %}">Dashboard</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'main:home_org' object.organization.slug  object.organization.pk %}">Partners / {{ object.organization.name }}</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Campaigns / {{ object.name }}</li>
 
-      <div class="text-center">
-        <p>Description: {{ object.description }}</p>
+        </ol>
+      </nav>
+    </div>
+  </div>
+  <div class="row pt-3">
+    <div class="col-sm">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5>
+            {{ object.name}}
+          </h5>
+          <hr>
+          <p> State:
+            <span class="badge badge-secondary">{{object.state}}</span>
+
+          </p>
+          <p> Description: {{ object.description }} </p>
+          {% if is_org_admin %}
+          <a href="{% url 'main:update_campaign' object.organization.slug  object.organization.pk object.pk %}" role="button">Edit Details</a>
+          {% endif %}
+
+        </div>
       </div>
-
-
+    </div>
+  </div>
+  <div class="row py-3">
+    <div class="col-sm">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5>
+            Gather Submissions!
+          </h5>
+          <hr>
+          <p>Copy this link and share it with people you'd like to contribute to this campaign: <a href="{% url 'main:entry' token %}">representable.org{% url 'main:entry' token %}</a></p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
 {% endblock %}

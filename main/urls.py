@@ -27,7 +27,10 @@ urlpatterns = [
     path("", views.main.Index.as_view(), name="index"),
     path("map/", views.main.Map.as_view(), name="map"),
     path("thanks/", views.main.Thanks.as_view(), name="thanks"),
-    path("entry/", views.main.EntryView.as_view(), name="entry"),
+    path(
+        "entry/", views.main.EntryView.as_view(), {"token": ""}, name="entry"
+    ),
+    path("entry/<token>", views.main.EntryView.as_view(), name="entry"),
     path("about/", views.main.About.as_view(), name="about"),
     path("review/", views.main.Review.as_view(), name="review"),
     path("privacy/", views.main.Privacy.as_view(), name="privacy"),
@@ -38,9 +41,9 @@ urlpatterns = [
         views.main.ThanksEntryOrg.as_view(),
         name="thanks_entry_org",
     ),
-    path(
-        "campaigns/", views.campaigns.IndexView.as_view(), name="campaign_list"
-    ),
+    # path(
+    #     "campaigns/", views.campaigns.IndexView.as_view(), name="campaign_list"
+    # ),
     path("partners/", views.partners.IndexView.as_view(), name="partner_list"),
     path(
         "partners/welcome/",
@@ -57,11 +60,11 @@ urlpatterns = [
         views.partners.PartnerMap.as_view(),
         name="partner_map",
     ),
-    path(
-        "campaigns/<int:cam_pk>/",
-        views.campaigns.CampaignView.as_view(),
-        name="campaign_page",
-    ),
+    # path(
+    #     "campaigns/<uuid:pk>/",
+    #     views.campaigns.CampaignView.as_view(),
+    #     name="campaign_page",
+    # ),
     path("dashboard/", views.dashboard.IndexView.as_view(), name="dashboard"),
     path(
         "dashboard/entries/<int:pk>",
@@ -117,22 +120,17 @@ urlpatterns = [
                     name="upload_whitelist",
                 ),
                 path(
-                    "campaigns/",
-                    views.dashboard.CampaignList.as_view(),
-                    name="campaign_list",
-                ),
-                path(
                     "campaigns/create/",
                     views.dashboard.CreateCampaign.as_view(),
                     name="create_campaign",
                 ),
                 path(
-                    "campaigns/<int:cam_pk>/",
+                    "campaigns/<uuid:cam_pk>/",
                     views.dashboard.CampaignHome.as_view(),
                     name="campaign_home",
                 ),
                 path(
-                    "campaigns/<int:cam_pk>/edit/",
+                    "campaigns/<uuid:cam_pk>/edit/",
                     views.dashboard.UpdateCampaign.as_view(),
                     name="update_campaign",
                 ),
