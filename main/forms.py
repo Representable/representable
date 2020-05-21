@@ -152,11 +152,9 @@ class CommunityForm(ModelForm):
             ),
             "user_name": forms.TextInput(
                 attrs={"placeholder": "User Name"}
-
             ),
             "user_phone": PhoneField,
             "user_polygon": forms.HiddenInput(),
-            # "zipcode": forms.TextInput(attrs={"placeholder": "Your Zipcode"}),
         }
         labels = {
             "tags": "Community Tags",

@@ -796,6 +796,9 @@ label {
 /* Fallback for IE
 -------------------------------------------------- */
 
+.phone-field-ext { display: none; }
+#id_user_phone_1 { display: none; }
+
 /* Communities */
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
   .form-group > label {
