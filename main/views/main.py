@@ -189,16 +189,17 @@ class Review(LoginRequiredMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, label_suffix="")
-        context = self.get_context_data()
         # delete entry if form is valid and entry belongs to current user
+        query_error = False
         if form.is_valid():
             query = CommunityEntry.objects.filter(user=self.request.user)
             try:
                 entry = query.get(entry_ID=request.POST.get("c_id"))
                 entry.delete()
-                form.save()
             except Exception:
-                context["query_error"] = True
+                query_error = True
+        context = self.get_context_data()
+        context["query_error"] = query_error
         return render(request, self.template_name, context)
 
 
@@ -446,6 +447,7 @@ class EntryView(LoginRequiredMixin, View):
             #     if token:
             #         entryForm.campaign = token.campaign
             #         entryForm.organization = token.campaign.organization
+
 
             #         # if user has a token and campaign is active, auto approve submission
             #         if token.campaign.is_active:
