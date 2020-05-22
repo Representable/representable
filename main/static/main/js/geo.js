@@ -244,12 +244,30 @@ function print(items) {
 /******************************************************************************/
 
 // Form Handling
+
+function showEditOnAll(event) {
+  // Shows the edit button on all sections
+  var card_section_divs = document.getElementsByClassName("card-section");
+  for (var i = 0; i < card_section_divs.length; i++) {
+    showEditonSection(card_section_divs[i]);
+  }
+}
+
 function openAllSections(event) {
   // Opens All Sections On Click.
   var card_section_divs = document.getElementsByClassName("card-section");
   for (var i = 0; i < card_section_divs.length; i++) {
     openSectionByElement(card_section_divs[i]);
   }
+}
+
+function showEditOnSection(parent_section) {
+  var current_index = parent_section.getAttribute("data-card-index");
+  var section_id = "card_section_" + section_ix;
+  var section_elem = document.getElementById(section_id);
+  var edit_button = section_elem.getElementsByClassName("button-edit")[0];
+  edit_button.value = "Hide Section";
+  edit_button.style.display = "block";
 }
 
 function getCurrentParentSection(event) {
@@ -279,7 +297,7 @@ function openSectionByIndex(section_ix) {
   var edit_button = section_elem.getElementsByClassName("button-edit")[0];
   edit_button.value = "Hide Section";
   section_elem.classList.add("active-section");
-  $("#" + section_id + " .collapse").collapse("show");
+  $("#" + section_id + " .collapse.card-body").collapse("show");
   edit_button.style.display = "block";
 }
 
@@ -292,7 +310,7 @@ function goToSection(section_ix) {
   edit_button.style.display = "block";
   goto_section_elem.classList.add("active-section");
   goto_section_elem.scrollIntoView({ behavior: "smooth" });
-  $("#" + goto_section_id + " .collapse").collapse("show");
+  $("#" + goto_section_id + " .collapse.card-body").collapse("show");
   var delayInMilliseconds = 500;
   setTimeout(function () {}, delayInMilliseconds);
 }
@@ -307,11 +325,11 @@ function toggleSection(event) {
   if (section_elem.classList.contains("active-section")) {
     edit_button.value = "Edit Section";
     section_elem.classList.remove("active-section");
-    $("#" + section_id + " .collapse").collapse("hide");
+    $("#" + section_id + " .collapse.card-body").collapse("hide");
   } else {
     edit_button.value = "Hide Section";
     section_elem.classList.add("active-section");
-    $("#" + section_id + " .collapse").collapse("show");
+    $("#" + section_id + " .collapse.card-body").collapse("show");
   }
   edit_button.style.display = "block";
 }
@@ -395,6 +413,15 @@ document.addEventListener(
       openAllSections(event);
     });
     $('[data-toggle="tooltip"]').tooltip();
+
+    // Check Poly Fields And Display Errors On Save
+    var user_polygon_field = document.getElementById("id_user_polygon");
+    var census_blocks_arr_field = document.getElementById(
+      "id_census_blocks_polygon_array"
+    );
+    var census_blocks_poly = document.getElementById(
+      "id_census_blocks_polygon"
+    );
   },
   false
 );
@@ -905,17 +932,9 @@ map.on("style.load", function () {
         "-webkit-filter: blur(0px); pointer-events: auto;"
       );
     }
-    // Enable Map buttons
-    // toggleMapButtons("on");
-    // Toggle Next Button
-    var card_section_0 = document.getElementById("card_section_0");
-    var geocoder_next_button = card_section_0.getElementsByClassName(
-      "button-next"
-    )[0];
-    geocoder_next_button.disabled = false;
-    $("button-next-geocoder").tooltip("hide");
-    var button_next_geocoder = document.querySelector(".button-next-geocoder");
-    button_next_geocoder.style.pointerEvents = "auto";
+
+    $(".map-bounding-box.collapse").collapse("show");
+    map.resize();
 
     // get the state from the geocoder response
     if (styleSpec.context.length >= 2) {
@@ -992,7 +1011,7 @@ function triggerDrawError(id, stringErrorText) {
   newAlert.innerHTML =
     '<div id="' +
     id +
-    '" class="alert alert-warning alert-dismissible fade show map-alert" role="alert">\
+    '" class="alert alert-danger alert-dismissible fade show map-alert" role="alert">\
                               ' +
     stringErrorText +
     '\
