@@ -1,12 +1,17 @@
 {% extends "main/base.html" %}
-{% load static %}
 
 {% block content %}
-    <h2>{{object.name}}</h2>
-    <p>{{object.description}}</p>
-    <!-- <pre> {% filter force_escape %} {% debug %} {% endfilter %} </pre> -->
-
-    <ul>
-      <!-- <li><a href="{% url 'main:campaign_page' view.kwargs.slug view.kwargs.cam_pk%}">Share this link!</a></li> -->
-    </ul>
+<div class="container">
+  <div class="row my-5">
+    <div class="col-9 mx-auto">
+      <h2>{{object.name}} Campaign</h2>
+      <hr>
+      <p>
+        <span class="badge badge-secondary">{{object.state}}</span>
+      </p>
+      <p>Organized by {{object.organization}}</p>
+      <p>{{object.description}}</p>
+      <a class="btn btn-primary my-3" href="{% url 'main:partner_map' object.organization.slug %}" role="button">View Map</a>
+    </div>
+    </div>
 {% endblock %}

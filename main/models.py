@@ -174,6 +174,7 @@ class Campaign(models.Model):
     """
     Campaign represents an organization's entry collection campaign.
     - id: uuid for campaigns
+    - slug: slug of campaign
     - name: name of the campaign
     - state: the state of the campaign
     - description: description of the campaign
@@ -182,6 +183,7 @@ class Campaign(models.Model):
     """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    slug = models.SlugField(unique=True)
     name = models.CharField(max_length=128)
     description = models.CharField(max_length=250, blank=True)
     state = models.CharField(
@@ -288,7 +290,9 @@ class CommunityEntry(models.Model):
     comm_activities = models.TextField(
         max_length=500, blank=False, unique=False, default=""
     )
-    user_phone = PhoneField(E164_only=True, blank=False, unique=False, default="")
+    user_phone = PhoneField(
+        E164_only=True, blank=False, unique=False, default=""
+    )
     admin_approved = models.BooleanField(default=False)
 
     def __str__(self):
@@ -300,8 +304,11 @@ class CommunityEntry(models.Model):
 
 # ******************************************************************************#
 
+
 class Address(models.Model):
-    entry = models.ForeignKey(CommunityEntry, on_delete=models.CASCADE, default="")
+    entry = models.ForeignKey(
+        CommunityEntry, on_delete=models.CASCADE, default=""
+    )
     street = models.CharField(
         max_length=500, blank=False, unique=False, default=""
     )
@@ -321,5 +328,5 @@ class Address(models.Model):
     class Meta:
         ordering = ("entry",)
 
-# ******************************************************************************#
 
+# ******************************************************************************#

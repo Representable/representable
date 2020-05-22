@@ -61,11 +61,12 @@ urlpatterns = [
         views.partners.PartnerMap.as_view(),
         name="partner_map",
     ),
-    # path(
-    #     "campaigns/<uuid:pk>/",
-    #     views.campaigns.CampaignView.as_view(),
-    #     name="campaign_page",
-    # ),
+    path("c/", views.campaigns.IndexView.as_view(), name="campaign_list",),
+    path(
+        "c/<slug:slug>/",
+        views.campaigns.CampaignView.as_view(),
+        name="campaign_page",
+    ),
     path("dashboard/", views.dashboard.IndexView.as_view(), name="dashboard"),
     path(
         "dashboard/entries/<int:pk>",
