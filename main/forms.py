@@ -77,28 +77,22 @@ class BootstrapRadioSelect(forms.RadioSelect):
     template_name = "forms/widgets/radio.html"
     option_template_name = "forms/widgets/radio_option.html"
 
+
 class AddressForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-    
+
     class Meta:
         model = Address
         fields = ["city", "state", "zipcode", "street"]
 
         widgets = {
-            "street": forms.TextInput(
-                attrs={"placeholder": "Street"}
-            ),
-            "city": forms.TextInput(
-                attrs={"placeholder": "City"}
-            ),
-            "state": forms.TextInput(
-                attrs={"placeholder": "State"}
-            ),
-            "zipcode": forms.TextInput(
-                attrs={"placeholder": "Zipcode"}
-            )
+            "street": forms.TextInput(attrs={"placeholder": "Street"}),
+            "city": forms.TextInput(attrs={"placeholder": "City"}),
+            "state": forms.TextInput(attrs={"placeholder": "State"}),
+            "zipcode": forms.TextInput(attrs={"placeholder": "Zipcode"}),
         }
+
 
 class CommunityForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -112,6 +106,12 @@ class CommunityForm(ModelForm):
             error_messages={
                 "required": "User polygon missing. Please draw your community."
             }
+        )
+        census_blocks_polygon_array = models.PolygonField(
+            error_messages={"required": "Census blocks array missing."}
+        )
+        census_blocks_polygon = models.PolygonField(
+            error_messages={"required": "Census blocks polygon missing."}
         )
         widgets = {
             "tags": TagSelect2Widget(
@@ -133,16 +133,10 @@ class CommunityForm(ModelForm):
                 }
             ),
             "cultural_interests": forms.Textarea(
-                attrs={
-                    "placeholder": "Cultural interests",
-                    "rows": 5,
-                }
+                attrs={"placeholder": "Cultural interests", "rows": 5}
             ),
             "economic_interests": forms.Textarea(
-                attrs={
-                    "placeholder": "Economic interests",
-                    "rows": 5,
-                }
+                attrs={"placeholder": "Economic interests", "rows": 5}
             ),
             "comm_activities": forms.Textarea(
                 attrs={
@@ -150,9 +144,7 @@ class CommunityForm(ModelForm):
                     "rows": 5,
                 }
             ),
-            "user_name": forms.TextInput(
-                attrs={"placeholder": "User Name"}
-            ),
+            "user_name": forms.TextInput(attrs={"placeholder": "User Name"}),
             "user_phone": PhoneField,
             "user_polygon": forms.HiddenInput(),
         }
@@ -168,18 +160,19 @@ class CommunityForm(ModelForm):
         Make sure that the user polygon contains no kinks and has an acceptable area.
         https://gis.stackexchange.com/questions/288103/how-to-convert-the-area-to-feets-in-geodjango
         """
-
         data = self.cleaned_data["user_polygon"]
         # Check kinks
         if not data.valid:
-            raise forms.ValidationError("Polygon contains kinks.")
-        # Check area
-        polygon = data.transform(3857, clone=True)
-        area = Area(sq_m=polygon.area)
-        # Use NJ State Area * 1/2
-        halfStateArea = 4350
-        if area.sq_mi > halfStateArea:
-            raise forms.ValidationError("Area is too big.")
+            raise forms.ValidationError(
+                "Polygon contains kinks.", code="polygon_kinks"
+            )
+        # # Check area
+        # polygon = data.transform(3857, clone=True)
+        # area = Area(sq_m=polygon.area)
+        # # Use NJ State Area * 1/2
+        # halfStateArea = 4350
+        # if area.sq_mi > halfStateArea:
+        #     raise forms.ValidationError("Area is too big.", code="area_too_big")
         return data
 
 

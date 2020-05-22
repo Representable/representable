@@ -244,12 +244,30 @@ function print(items) {
 /******************************************************************************/
 
 // Form Handling
+
+function showEditOnAll(event) {
+  // Shows the edit button on all sections
+  var card_section_divs = document.getElementsByClassName("card-section");
+  for (var i = 0; i < card_section_divs.length; i++) {
+    showEditonSection(card_section_divs[i]);
+  }
+}
+
 function openAllSections(event) {
   // Opens All Sections On Click.
   var card_section_divs = document.getElementsByClassName("card-section");
   for (var i = 0; i < card_section_divs.length; i++) {
     openSectionByElement(card_section_divs[i]);
   }
+}
+
+function showEditOnSection(parent_section) {
+  var current_index = parent_section.getAttribute("data-card-index");
+  var section_id = "card_section_" + section_ix;
+  var section_elem = document.getElementById(section_id);
+  var edit_button = section_elem.getElementsByClassName("button-edit")[0];
+  edit_button.value = "Hide Section";
+  edit_button.style.display = "block";
 }
 
 function getCurrentParentSection(event) {
@@ -395,6 +413,15 @@ document.addEventListener(
       openAllSections(event);
     });
     $('[data-toggle="tooltip"]').tooltip();
+
+    // Check Poly Fields And Display Errors On Save
+    var user_polygon_field = document.getElementById("id_user_polygon");
+    var census_blocks_arr_field = document.getElementById(
+      "id_census_blocks_polygon_array"
+    );
+    var census_blocks_poly = document.getElementById(
+      "id_census_blocks_polygon"
+    );
   },
   false
 );
