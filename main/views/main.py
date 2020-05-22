@@ -228,6 +228,7 @@ class Submission(TemplateView):
         entryPolyDict[m_uuid] = map_poly.coordinates
 
         context = {
+            "community": user_map,
             "entry_name": user_map.entry_name,
             "entry_reason": user_map.entry_reason,
             "entries": json.dumps(entryPolyDict),
@@ -241,18 +242,27 @@ class ExportView(TemplateView):
     template = "main/pages/export.html"
     # Create the HttpResponse object with the appropriate CSV header.
     def get(self, request, *args, **kwargs):
+        m_uuid = self.request.GET.get("map_id", None)
+        # TODO: Are there security risks? Probably - we should hash the UUID and make that the permalink
 
-        response = HttpResponse(content_type="text/csv")
+        if m_uuid is None:
+            pass  # TODO need to fix here
+        query = CommunityEntry.objects.filter(entry_ID__startswith=m_uuid)
+
+        if len(query) == 0:
+            context = {
+                "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+            }
+            return render(request, self.template_name, context)
+        user_map = query[0]
+        map_geojson = serialize('geojson', query, geometry_field='census_blocks_polygon', fields=('entry_name', 'entry_reason',))
+        print("geojson of the map !!!!!!!!!!!")
+        print(map_geojson)
+
+        response = HttpResponse(content_type="application/geojson")
         response[
             "Content-Disposition"
-        ] = 'attachment; filename="somefilename.csv"'
-
-        # The data is hard-coded here, but you could load it from a database or
-        # some other source.
-        csv_data = (
-            ("First row", "Foo", "Bar", "Baz"),
-            ("Second row", "A", "B", "C", '"Testing"', "Here's a quote"),
-        )
+        ] = 'attachment; filename=".geojson"''
 
         t = loader.get_template("main/pages/export.txt")
         c = {"data": csv_data}

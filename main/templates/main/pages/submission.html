@@ -1,6 +1,8 @@
 {% extends 'main/base.html' %}
 {% load leaflet_tags %}
 {% load static %}
+{% load representable_extras %}
+
 
 {% block head %}
 {% leaflet_js %}
@@ -70,9 +72,9 @@
                 {{ entry_reason }}
               </div>
               <div class="text-center">
-                <a class="btn btn-outline-primary btn-canvas mx-4" href="/partners/welcome" role="button" download="community.geojson">
-                  Export Shapefile
-                </a>
+                {% with link_text="/export?map_id="|addstr:community.entry_ID|slice:27 %}
+                  <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button">Export GeoJSON</a>
+                {% endwith %}
               </div>
             </div>
           </div>
