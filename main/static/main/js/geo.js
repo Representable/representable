@@ -344,6 +344,7 @@ function addButtonHandlers(card_section_divs) {
   for (var i = 0; i < card_section_divs.length; i++) {
     var card_section = card_section_divs[i];
     var card_button_prev = card_section.querySelector(".button-prev");
+    print(card_button_prev);
     if (typeof card_button_prev !== "undefined" && i - 1 >= 0) {
       previous_section = card_section_divs[i - 1];
       card_button_prev.addEventListener("click", function (event) {

@@ -42,129 +42,108 @@
             <div class="row mt-3">
                 <!-- Entry Form -->
                 <form id="entryForm" method="post">
-                    <!-- First Row -->
                     <div class="row row-equal-cols">
-                        <div class="card-section active-section">
-                            <div class="col-lg">
-                                <h2 class="text-primary">
-                                    {% if LANGUAGE_CODE == 'en' %}
-                                    Draw your community!
-                                    {% elif LANGUAGE_CODE == 'es' %}
-                                    <!-- Google translate  -->
-                                    ¡Dibuja tu comunidad!
-                                    {% endif %}
-                                </h2>
-                                <p class="p-about">
-                                    {% if LANGUAGE_CODE == 'en' %}
-                                    Representable helps fight against gerrymandering by empowering communities
-                                    to represent themselves more easily. Fill out the form below to
-                                    add your community
-                                    {% elif LANGUAGE_CODE == 'es' %}
-                                    <!-- Google translate  -->
-                                    Representable ayuda a luchar contra la gerrymandering empoderando a las comunidades
-                                    representarse más fácilmente. Complete el siguiente formulario para
-                                    agrega tu comunidad
-                                    {% endif %}
-                                </p>
+                        <div class="col-lg  m-2">
+                            <h2 class="text-primary">
+                                {% if LANGUAGE_CODE == 'en' %}
+                                Add your community!
+                                {% elif LANGUAGE_CODE == 'es' %}
+                                <!-- Google translate  -->
+                                ¡Dibuja tu comunidad!
+                                {% endif %}
+                            </h2>
+                            <p class="p-about">
+                                {% if LANGUAGE_CODE == 'en' %}
+                                Representable helps fight against gerrymandering by empowering communities
+                                to represent themselves more easily. Fill out the form below to
+                                add your community.
+                                {% elif LANGUAGE_CODE == 'es' %}
+                                <!-- Google translate  -->
+                                Representable ayuda a luchar contra la gerrymandering empoderando a las comunidades
+                                representarse más fácilmente. Complete el siguiente formulario para
+                                agrega tu comunidad.
+                                {% endif %}
+                            </p>
+                            <p class="p-about">
+                                This form will help you add your community to Representable so you can
+                                make sure your voice is heard.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row row-equal-cols">
+                        <div class="col-lg  m-2">
+                            <div class="collapse-card card-section active-section">
                                 <div class="card">
                                     <div class="card-header text-header-card">
-                                        <strong>
-                                        {% if LANGUAGE_CODE == 'en' %}
-                                        1. Search for a location to begin drawing your community.
-                                        {% elif LANGUAGE_CODE == 'es' %}
-                                        <!-- Google translate  -->
-                                        1. Busque una ubicación para comenzar a dibujar su comunidad.
-                                        {% endif %}
-                                        </strong>
+                                        <strong>1. Personal Information</strong>
                                         <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
                                     </div>
                                     <div class="card-body collapse show">
-                                        <div id="geocoder" class="geocoder my-3"></div>
-                                        <span class="d-inline-block float-right" data-toggle="tooltip" data-placement="bottom" title="Enter Location to Continue">
-                                            <input class="btn btn-primary float-right card-section-button button-next button-next-geocoder" type="button" value="Next"  disabled>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row row-equal-cols">
-                        <!-- Map -->
-                        <div class="col-lg mt-3">
-                            <div class="collapse-card card-section">
-                                <div class="card">
-                                    <div class="card-header text-header-card">
-                                        <strong>
-                                        {% if LANGUAGE_CODE == 'en' %}
-                                        2. What does your community look like?
-                                        {% elif LANGUAGE_CODE == 'es' %}
-                                        <!-- Google translate  -->
-                                        ¿Cómo se ve tu comunidad?
-                                        {% endif %}
-                                        </strong>
-                                        <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
-                                    </div>
-                                    <div id='map-card' class="card-body collapse">
-                                        <!-- {# Include form.entry_polygon error. } -->
-                                            <div class="map-bounding-box my-2">
-                                                <div id="map-error-alerts">
-                                                    {% if comm_form.user_polygon.errors %}
-                                                    <script>
-                                                        sessionStorage.setItem("allChecks", "fail");
-                                                    </script>
-                                                    <div id="polygon_missing" class="alert alert-warning alert-dismissible fade show form-error" role="alert">
-                                                        {% if LANGUAGE_CODE == 'en' %}
-                                                        You need to draw a polygon to submit the form.
-                                                        {% elif LANGUAGE_CODE == 'es' %}
-                                                        <!-- Google translate  -->
-                                                        Debe dibujar un polígono para enviar el formulario.
-                                                        {% endif %}
-                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    {% endif %}
-                                                </div>
-                                                <div id='menu'></div>
-                                                <div id='map' class='draw_polygon_map' onload="map.resize()"></div>
+                                        <div class="alert alert-info" role="alert">
+                                            <h5 class="alert-heading">Why do we need your information?</h3>
+                                            <p class="card-text">Your personal privacy is our priority. We gather personal information to verify that
+                                            you are a real person. If you choose to submit this entry to a campaign, your information will be shared with
+                                            the administrators of the campaign. This information is not shared publicly.
+                                            <br>
+                                            <a href="/privacy"> Learn more about our commitment to privacy on our Privacy Policy page.</a></p>
+                                          </div>
+                                        <p class="card-text">
+                                            Your Name <small class="text-danger">(Required)</small>
+                                        </p>
+                                        <div class="row my-2">
+                                            <div class="col-6">
+                                                {{ comm_form.user_name|append_attr:"class:form-control" }}
                                             </div>
-                                            <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
-                                            <input class="btn btn-primary float-right card-section-button button-next" type="button" value="Next">
+                                        </div>
+                                        <p class="card-text">
+                                            Phone Number <small class="text-danger">(Required)</small>
+                                        </p>
+                                        <div class="form-row my-2">
+                                            <div class="col-4">
+                                                {{ comm_form.user_phone|append_attr:"class:form-control" }}
+                                            </div>
+                                        </div>
+                                        <p class="card-text">
+                                            Your Address <small class="text-danger">(Required)</small>
+                                        </p>
+                                        <div class="form-row my-2">
+                                            <div class="col-6">
+                                                {{ addr_form.street|append_attr:"class:form-control" }}
+                                            </div>
+                                        </div>
+                                        <div class="form-row my-2">
+                                            <div class="col-4">
+                                                {{ addr_form.city|append_attr:"class:form-control" }}
+                                            </div>
+                                        </div>
+                                        <div class="form-row my-2">
+                                            <div class="col-2">
+                                                {{ addr_form.state|append_attr:"class:form-control" }}
+                                            </div>
+                                            <div class="col-2">
+                                                {{ addr_form.zipcode|append_attr:"class:form-control" }}
+                                            </div>
+                                        </div>
+                                        <input class="btn btn-primary float-right card-section-button button-next" type="button" value="Next">
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- <hr> -->
                     <div class="row row-equal-cols">
-                        <div class="col-lg  mt-3">
+                        <div class="col-lg m-2">
                             <div class="collapse-card card-section ">
                                 <div class="card">
                                     <div class="card-header text-header-card">
-                                        <strong>3. Identifying Information</strong>
+                                        <strong>2. Your Shared Cultural Interests</strong>
                                         <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
                                     </div>
                                     <div class="card-body collapse">
                                         <p class="card-text">
-                                            Your Name <small class="text-danger">(Required)</small>
+                                            What fosters a sense of belonging in your Community? 
+                                            What common beliefs or values exist? <small class="text-danger">(Required)</small>
                                         </p>
-                                        {{ comm_form.user_name|append_attr:"class:form-control" }}
-                                        <hr>
-                                        <p class="card-text">
-                                            Phone Number <small class="text-danger">(Required)</small>
-                                        </p>
-                                        {{ comm_form.user_phone|append_attr:"class:form-control" }}
-                                        <hr>
-                                        <p class="card-text">
-                                            Your Address <small class="text-danger">(Required)</small>
-                                        </p>
-                                        {{ addr_form.street|append_attr:"class:form-control" }}
-                                        <br>
-                                        {{ addr_form.city|append_attr:"class:form-control" }}
-                                        <br>
-                                        {{ addr_form.state|append_attr:"class:form-control" }}
-                                        <br>
-                                        {{ addr_form.zipcode|append_attr:"class:form-control" }}
+                                        {{ comm_form.cultural_interests|append_attr:"class:form-control" }}
                                         <br>
                                         <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
                                         <input class="btn btn-primary float-right card-section-button button-next" type="button" value="Next">
@@ -173,13 +152,58 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row row-equal-cols">
-                        <div class="col-lg  mt-3">
+                        <div class="col-lg  m-2">
                             <div class="collapse-card card-section ">
                                 <div class="card">
                                     <div class="card-header text-header-card">
-                                        <strong>4. What brings your community together?</strong>
+                                        <strong>3. Shared Community Activities and Services</strong>
+                                        <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
+                                    </div>
+                                    <div class="card-body collapse">
+                                        <p class="card-text">
+                                            Where do people in your Community gather or socialize? 
+                                            Where does your Community get its services? <small class="text-danger">(Required)</small>
+                                        </p>
+                                        {{ comm_form.comm_activities|append_attr:"class:form-control" }}
+                                        <br>
+                                        <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
+                                        <input class="btn btn-primary float-right card-section-button button-next" type="button" value="Next">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-equal-cols">
+                        <div class="col-lg m-2">
+                            <div class="collapse-card card-section ">
+                                <div class="card">
+                                    <div class="card-header text-header-card">
+                                        <strong>4. Your Shared Economic Interests</strong>
+                                        <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
+                                    </div>
+                                    <div class="card-body collapse">
+                                        <p class="card-text">
+                                            Is there a shared economy in the geographic area of your Community? 
+                                            How and where are residents employed? What parts of a county, 
+                                            township or city are included in your Community? 
+                                            Are there shared environmental concerns such as landfills or water quality? <small class="text-danger">(Required)</small>
+                                        </p>
+                                        {{ comm_form.economic_interests|append_attr:"class:form-control" }}
+                                        <br>
+                                        <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
+                                        <input class="btn btn-primary float-right card-section-button button-next" type="button" value="Next">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-equal-cols">
+                        <div class="col-lg  m-2">
+                            <div class="collapse-card card-section ">
+                                <div class="card">
+                                    <div class="card-header text-header-card">
+                                        <strong>5. Community Name and Other Interests</strong>
                                         <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
                                     </div>
                                     <div class="card-body collapse">
@@ -231,73 +255,76 @@
                         </div>
                     </div>
                     <div class="row row-equal-cols">
-                        <div class="col-lg  mt-3">
-                            <div class="collapse-card card-section ">
+                        <div class="collapse-card card-section">
+                            <div class="col-lg">
                                 <div class="card">
                                     <div class="card-header text-header-card">
-                                        <strong>5. Your Shared Cultural Interests</strong>
+                                        <strong>
+                                        {% if LANGUAGE_CODE == 'en' %}
+                                        1. Search for a location to begin drawing your community.
+                                        {% elif LANGUAGE_CODE == 'es' %}
+                                        <!-- Google translate  -->
+                                        1. Busque una ubicación para comenzar a dibujar su comunidad.
+                                        {% endif %}
+                                        </strong>
                                         <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
                                     </div>
                                     <div class="card-body collapse">
-                                        <p class="card-text">
-                                            What fosters a sense of belonging in your Community? 
-                                            What common beliefs or values exist? <small class="text-danger">(Required)</small>
-                                        </p>
-                                        {{ comm_form.cultural_interests|append_attr:"class:form-control" }}
-                                        <br>
-                                        <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
-                                        <input class="btn btn-primary float-right card-section-button button-next" type="button" value="Next">
+                                        <div id="geocoder" class="geocoder my-3"></div>
+                                        <span class="d-inline-block float-right" data-toggle="tooltip" data-placement="bottom" title="Enter Location to Continue">
+                                            <input class="btn btn-primary float-right card-section-button button-next button-next-geocoder" type="button" value="Next"  disabled>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row row-equal-cols">
-                        <div class="col-lg  mt-3">
-                            <div class="collapse-card card-section ">
+                        <!-- Map -->
+                        <div class="col-lg mt-3">
+                            <div class="collapse-card card-section">
                                 <div class="card">
                                     <div class="card-header text-header-card">
-                                        <strong>6. Shared Community activities and services</strong>
+                                        <strong>
+                                        {% if LANGUAGE_CODE == 'en' %}
+                                        6. What does your community look like?
+                                        {% elif LANGUAGE_CODE == 'es' %}
+                                        <!-- Google translate  -->
+                                        ¿Cómo se ve tu comunidad?
+                                        {% endif %}
+                                        </strong>
                                         <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
                                     </div>
-                                    <div class="card-body collapse">
-                                        <p class="card-text">
-                                            Where do people in your Community gather or socialize? 
-                                            Where does your Community get its services? <small class="text-danger">(Required)</small>
-                                        </p>
-                                        {{ comm_form.comm_activities|append_attr:"class:form-control" }}
-                                        <br>
-                                        <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
-                                        <input class="btn btn-primary float-right card-section-button button-next" type="button" value="Next">
+                                    <div id='map-card' class="card-body collapse">
+                                        <!-- {# Include form.entry_polygon error. } -->
+                                            <div class="map-bounding-box my-2">
+                                                <div id="map-error-alerts">
+                                                    {% if comm_form.user_polygon.errors %}
+                                                    <script>
+                                                        sessionStorage.setItem("allChecks", "fail");
+                                                    </script>
+                                                    <div id="polygon_missing" class="alert alert-warning alert-dismissible fade show form-error" role="alert">
+                                                        {% if LANGUAGE_CODE == 'en' %}
+                                                        You need to draw a polygon to submit the form.
+                                                        {% elif LANGUAGE_CODE == 'es' %}
+                                                        <!-- Google translate  -->
+                                                        Debe dibujar un polígono para enviar el formulario.
+                                                        {% endif %}
+                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                                <div id='menu'></div>
+                                                <div id='map' class='draw_polygon_map' onload="map.resize()"></div>
+                                            </div>
+                                            <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row row-equal-cols">
-                        <div class="col-lg  mt-3">
-                            <div class="collapse-card card-section ">
-                                <div class="card">
-                                    <div class="card-header text-header-card">
-                                        <strong>7. Your Shared Economic Interests</strong>
-                                        <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
-                                    </div>
-                                    <div class="card-body collapse">
-                                        <p class="card-text">
-                                            Is there a shared economy in the geographic area of your Community? 
-                                            How and where are residents employed? What parts of a county, 
-                                            township or city are included in your Community? 
-                                            Are there shared environmental concerns such as landfills or water quality? <small class="text-danger">(Required)</small>
-                                        </p>
-                                        {{ comm_form.economic_interests|append_attr:"class:form-control" }}
-                                        <br>
-                                        <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
                 </form>
                 <div class='row mt-4 w-100'>
                     <div class='col-12 text-center'>
