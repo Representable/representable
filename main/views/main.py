@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.views.generic import (
     TemplateView,
@@ -266,18 +266,11 @@ class ExportView(TemplateView):
             }
             return render(request, self.template_name, context)
         user_map = query[0]
-        map_geojson = serialize('geojson', query, geometry_field='census_blocks_polygon', fields=('entry_name', 'entry_reason',))
-        print("geojson of the map !!!!!!!!!!!")
-        print(map_geojson)
+        map_geojson = serialize('geojson', query,
+            geometry_field='census_blocks_polygon',
+            fields=('user_name', 'user_phone', 'entry_name', 'entry_reason', 'cultural_interests', 'economic_interests', 'comm_activities', ))
 
-        response = HttpResponse(content_type="application/geojson")
-        response[
-            "Content-Disposition"
-        ] = 'attachment; filename=".geojson"''
-
-        t = loader.get_template("main/pages/export.txt")
-        c = {"data": csv_data}
-        response.write(t.render(c))
+        response = HttpResponse(map_geojson, content_type="application/json")
         return response
 
 
