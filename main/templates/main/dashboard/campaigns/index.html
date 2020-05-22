@@ -37,7 +37,7 @@
       </div>
     </div>
   </div>
-  <div class="row py-3">
+  <div class="row pt-3">
     <div class="col-sm">
       <div class="card shadow-sm h-100">
         <div class="card-body">
@@ -50,6 +50,22 @@
       </div>
     </div>
   </div>
+  <div class="row py-3">
+    <div class="col-sm">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5>
+            Map of Campaign Submissions
+          </h5>
+          <hr>
+          <p>Click the button below to view a map of all submissions.</p>
+          <p><a class="btn btn-outline-primary my-3" href="{% url 'main:partner_map' object.organization.slug object.slug %}" role="button">View map of communities</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </div>
 
 {% endblock %}

@@ -16,7 +16,7 @@
       {% endif %}
       <a class="btn btn-primary my-3" href="{% url 'main:entry' campaign=object.slug %}" role="button">Draw my community</a>
 
-      <a class="btn btn-outline-primary my-3" href="{% url 'main:partner_map' object.organization.slug %}" role="button">View map of communities</a>
+      <a class="btn btn-outline-primary my-3" href="{% url 'main:partner_map' object.organization.slug object.slug %}" role="button">View map of communities</a>
     </div>
     </div>
 {% endblock %}
