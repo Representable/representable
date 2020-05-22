@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+  <div class="row row-hero row-eq-height my-5">
+    <div class="col-12 text-center">
+      <h1 class="font-weight-light">Welcome to Michigan!</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <p class="lead">Learn more about redistricting in Michigan</p>
+      <p>That thought was immediately followed by its negation: Why bother? The same incidents, the same references and the same outrages would inevitably be picked over by other writers; for all our social distancing, we’d all be crowding around the same material. I also knew that anything I wrote could soon be — in fact was almost certain to be — contradicted by new developments. But what worried me most was that certain points of emphasis in my writing would later prove to have been misjudged, and that this would somehow reveal that my heart had been in the wrong place all along.</p>
+    </div>
+  </div>
+  <div class="card card-signin my-3">
+    <div class="card-body">
+      <h5><span class="badge badge-primary">Coming Soon!</span> Campaigns in Michigan</h5>
+      <p>But here, where everything is divided, where the unscathed can’t quite believe the wounded, the levity sounds like anything but solidarity. Covid-19 was initially heralded as a great equalizer, and there was some evidence of this in some countries. But it arrived in America and immediately became American: classist, capitalist, complacent.</p>
+    </div>
+  </div>
+  <div class="col-12 text-center">
+    <a class="btn btn-primary btn-canvas my-5" href="/entry" role="button">Start Drawing</a>
+  </div>
+  <div>
+    <object type="image/svg+xml" class="state" data="{% static 'img/states/MI.svg' %}"></object>
+  </div>
+</div>
+{% endblock %}
