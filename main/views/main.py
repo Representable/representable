@@ -188,16 +188,17 @@ class Review(LoginRequiredMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, label_suffix="")
-        context = self.get_context_data()
         # delete entry if form is valid and entry belongs to current user
+        query_error = False
         if form.is_valid():
             query = CommunityEntry.objects.filter(user=self.request.user)
             try:
                 entry = query.get(entry_ID=request.POST.get("c_id"))
                 entry.delete()
-                form.save()
             except Exception:
-                context["query_error"] = True
+                query_error = True
+        context = self.get_context_data()
+        context["query_error"] = query_error
         return render(request, self.template_name, context)
 
 
@@ -314,13 +315,15 @@ class Thanks(TemplateView):
 
 # ******************************************************************************#
 
+
 class ThanksEntryOrg(TemplateView):
     template_name = "main/pages/thanksentryorg.html"
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['org_slug'] = self.kwargs['slug']
+        context["org_slug"] = self.kwargs["slug"]
         return context
+
 
 # ******************************************************************************#
 
@@ -338,7 +341,7 @@ class EntryView(LoginRequiredMixin, View):
         "key": "value",
     }
     success_url = "/thanks/"
-    
+
     data = {
         "form-TOTAL_FORMS": "1",
         "form-INITIAL_FORMS": "0",
@@ -353,8 +356,12 @@ class EntryView(LoginRequiredMixin, View):
         return initial
 
     def get(self, request, *args, **kwargs):
-        comm_form = self.community_form_class(initial=self.get_initial(), label_suffix="")
-        addr_form = self.address_form_class(initial=self.get_initial(), label_suffix="")
+        comm_form = self.community_form_class(
+            initial=self.get_initial(), label_suffix=""
+        )
+        addr_form = self.address_form_class(
+            initial=self.get_initial(), label_suffix=""
+        )
 
         has_token = False
         if kwargs["token"]:
@@ -422,7 +429,6 @@ class EntryView(LoginRequiredMixin, View):
                         # approve this entry
                         entryForm.admin_approved = True
 
-            
             if self.kwargs["token"]:
                 token = CampaignToken.objects.get(token=self.kwargs["token"])
                 if token:
@@ -438,19 +444,19 @@ class EntryView(LoginRequiredMixin, View):
                 addrForm = addr_form.save(commit=False)
                 addrForm.entry = entryForm
                 addrForm.save()
-                
+
             for tag_name in tag_name_qs:
                 tag = Tag.objects.get(name=str(tag_name["name"]))
                 entryForm.tags.add(tag)
             m_uuid = str(entryForm.entry_ID).split("-")[0]
-            if entryForm.organization == None:
+            if entryForm.organization is None:
                 full_url = self.success_url + "?map_id=" + m_uuid
                 return HttpResponseRedirect(full_url)
             else:
-                kwargs = {"slug" : entryForm.organization.slug }
+                kwargs = {"slug": entryForm.organization.slug}
                 self.success_url = reverse_lazy(
                     "main:thanks_entry_org", kwargs=kwargs
-                    )
+                )
                 return HttpResponseRedirect(self.success_url)
         context = {
             "comm_form": comm_form,
