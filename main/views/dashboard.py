@@ -365,9 +365,16 @@ class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
         # approved list of communities
         approvedList = []
 
-        query = CommunityEntry.objects.filter(
-            organization__pk=self.kwargs["pk"]
-        )
+        if self.kwargs["campaign"]:
+            query = CommunityEntry.objects.filter(
+                organization__pk=self.kwargs["pk"],
+                campaign__slug=self.kwargs["campaign"],
+            )
+        else:
+            query = CommunityEntry.objects.filter(
+                organization__pk=self.kwargs["pk"]
+            )
+
         for obj in query:
             if not obj.census_blocks_polygon:
                 s = "".join(obj.user_polygon.geojson)

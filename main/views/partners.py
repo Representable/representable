@@ -4,6 +4,7 @@ from ..models import (
     WhiteListEntry,
     Tag,
     CommunityEntry,
+    Campaign,
 )
 
 # from django.views.generic.detail import SingleObjectMixin
@@ -18,6 +19,7 @@ from django.views.generic import (
 import json
 import os
 import geojson
+from django.shortcuts import get_object_or_404
 
 
 class IndexView(ListView):
@@ -59,9 +61,16 @@ class PartnerMap(TemplateView):
                 ids.append(str(id))
             tags[str(obj)] = ids
         # get the polygon from db and pass it on to html
-        query = CommunityEntry.objects.filter(
-            organization__slug=self.kwargs["slug"], admin_approved=True
-        )
+        if self.kwargs["campaign"]:
+            query = CommunityEntry.objects.filter(
+                organization__slug=self.kwargs["slug"],
+                campaign__slug=self.kwargs["campaign"],
+                admin_approved=True,
+            )
+        else:
+            query = CommunityEntry.objects.filter(
+                organization__slug=self.kwargs["slug"], admin_approved=True
+            )
         for obj in query:
             if not obj.census_blocks_polygon:
                 s = "".join(obj.user_polygon.geojson)
@@ -88,5 +97,8 @@ class PartnerMap(TemplateView):
         context["organization"] = Organization.objects.get(
             slug=self.kwargs["slug"]
         )
-        print(context)
+        if self.kwargs["campaign"]:
+            context["campaign"] = get_object_or_404(
+                Campaign, slug=self.kwargs["campaign"]
+            ).name
         return context

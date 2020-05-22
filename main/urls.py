@@ -68,7 +68,13 @@ urlpatterns = [
         name="partner_page",
     ),
     path(
-        "partners/<slug:slug>/map",
+        "partners/<slug:slug>/map/",
+        views.partners.PartnerMap.as_view(),
+        {"campaign": ""},
+        name="partner_map",
+    ),
+    path(
+        "partners/<slug:slug>/map/<slug:campaign>/",
         views.partners.PartnerMap.as_view(),
         name="partner_map",
     ),
@@ -114,6 +120,12 @@ urlpatterns = [
                 ),
                 path(
                     "review/",
+                    views.dashboard.ReviewOrg.as_view(),
+                    {"campaign": ""},
+                    name="review_org",
+                ),
+                path(
+                    "review/<slug:campaign>/",
                     views.dashboard.ReviewOrg.as_view(),
                     name="review_org",
                 ),
