@@ -486,6 +486,7 @@ var map = new mapboxgl.Map({
   style: "mapbox://styles/mapbox/streets-v11", //hosted style id
   center: [-96.7026, 40.8136], // starting position - Lincoln, NE :)
   zoom: 3, // starting zoom -- higher is closer
+  maxZoom: 17, // camelCase. There's no official documentation for this smh :/
 });
 
 var layerList = document.getElementById("menu");
@@ -503,7 +504,6 @@ for (let i = 0; i < inputs.length; i++) {
 var geocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
   country: "us",
-  zoom: 10,
   mapboxgl: mapboxgl,
 });
 
