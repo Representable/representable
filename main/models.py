@@ -183,9 +183,9 @@ class Campaign(models.Model):
     """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    slug = models.SlugField(unique=True, null=True)
+    slug = models.SlugField(null=True, unique=True)
     name = models.CharField(max_length=128)
-    description = models.CharField(max_length=250, blank=True)
+    description = models.CharField(max_length=250, blank=True, null=True)
     state = models.CharField(
         max_length=50, choices=STATES, default=None, blank=False
     )
