@@ -174,6 +174,7 @@ class Campaign(models.Model):
     """
     Campaign represents an organization's entry collection campaign.
     - id: uuid for campaigns
+    - slug: slug of campaign
     - name: name of the campaign
     - state: the state of the campaign
     - description: description of the campaign
@@ -182,8 +183,9 @@ class Campaign(models.Model):
     """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    slug = models.SlugField(null=True, unique=True)
     name = models.CharField(max_length=128)
-    description = models.CharField(max_length=250, blank=True)
+    description = models.CharField(max_length=250, blank=True, null=True)
     state = models.CharField(
         max_length=50, choices=STATES, default=None, blank=False
     )
@@ -192,6 +194,12 @@ class Campaign(models.Model):
 
     class Meta:
         ordering = ("description",)
+
+    def save(self, *args, **kwargs):
+        # generate the slug once the first time the org is created
+        if not self.slug:
+            self.slug = generate_unique_slug(Campaign, self.name)
+        super(Campaign, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse(
@@ -288,7 +296,9 @@ class CommunityEntry(models.Model):
     comm_activities = models.TextField(
         max_length=500, blank=False, unique=False, default=""
     )
-    user_phone = PhoneField(E164_only=True, blank=False, unique=False, default="")
+    user_phone = PhoneField(
+        E164_only=True, blank=False, unique=False, default=""
+    )
     admin_approved = models.BooleanField(default=False)
 
     def __str__(self):
@@ -300,8 +310,11 @@ class CommunityEntry(models.Model):
 
 # ******************************************************************************#
 
+
 class Address(models.Model):
-    entry = models.ForeignKey(CommunityEntry, on_delete=models.CASCADE, default="")
+    entry = models.ForeignKey(
+        CommunityEntry, on_delete=models.CASCADE, default=""
+    )
     street = models.CharField(
         max_length=500, blank=False, unique=False, default=""
     )
@@ -321,5 +334,5 @@ class Address(models.Model):
     class Meta:
         ordering = ("entry",)
 
-# ******************************************************************************#
 
+# ******************************************************************************#

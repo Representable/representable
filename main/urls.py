@@ -28,9 +28,23 @@ urlpatterns = [
     path("map/", views.main.Map.as_view(), name="map"),
     path("thanks/", views.main.Thanks.as_view(), name="thanks"),
     path(
-        "entry/", views.main.EntryView.as_view(), {"token": ""}, name="entry"
+        "entry/",
+        views.main.EntryView.as_view(),
+        {"token": "", "campaign": ""},
+        name="entry",
     ),
-    path("entry/<token>", views.main.EntryView.as_view(), name="entry"),
+    path(
+        "entry/c/<slug:campaign>/",
+        views.main.EntryView.as_view(),
+        {"token": ""},
+        name="entry",
+    ),
+    path(
+        "entry/t/<token>/",
+        views.main.EntryView.as_view(),
+        {"campaign": ""},
+        name="entry",
+    ),
     path("about/", views.main.About.as_view(), name="about"),
     path("review/", views.main.Review.as_view(), name="review"),
     path("privacy/", views.main.Privacy.as_view(), name="privacy"),
@@ -42,9 +56,6 @@ urlpatterns = [
         views.main.ThanksEntryOrg.as_view(),
         name="thanks_entry_org",
     ),
-    # path(
-    #     "campaigns/", views.campaigns.IndexView.as_view(), name="campaign_list"
-    # ),
     path("partners/", views.partners.IndexView.as_view(), name="partner_list"),
     path(
         "partners/welcome/",
@@ -61,11 +72,12 @@ urlpatterns = [
         views.partners.PartnerMap.as_view(),
         name="partner_map",
     ),
-    # path(
-    #     "campaigns/<uuid:pk>/",
-    #     views.campaigns.CampaignView.as_view(),
-    #     name="campaign_page",
-    # ),
+    # path("c/", views.campaigns.IndexView.as_view(), name="campaign_list",),
+    path(
+        "c/<slug:slug>/",
+        views.campaigns.CampaignView.as_view(),
+        name="campaign_page",
+    ),
     path("dashboard/", views.dashboard.IndexView.as_view(), name="dashboard"),
     path(
         "dashboard/entries/<int:pk>",

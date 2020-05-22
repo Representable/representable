@@ -199,6 +199,7 @@
                                         </p>
                                         {{ comm_form.entry_reason|append_attr:"class:form-control" }}
                                         <hr>
+                                        {% if not has_campaign and not has_token %}
                                         <div class="field-wrap mt-3">
                                             <p>What organization are you contributing as a part of? </p>
                                             <div class="field-wrap">
@@ -208,6 +209,7 @@
                                             {% endif %}
                                             </div>
                                         </div>
+                                        {% endif %}
                                         {% csrf_token %}
                                         <!-- {# Include the non-field error fields #} -->
                                         {% if comm_form.non_field_errors %}
