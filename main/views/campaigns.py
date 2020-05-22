@@ -12,8 +12,10 @@ from django.views.generic import (
 class IndexView(ListView):
     model = Campaign
     template_name = "main/campaigns/index.html"
+    pk_url_kwarg = "cam_pk"
 
 
 class CampaignView(DetailView):
     model = Campaign
     template_name = "main/campaigns/page.html"
+    pk_url_kwarg = "cam_pk"
