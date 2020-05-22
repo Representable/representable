@@ -276,35 +276,36 @@
                                         <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
                                     </div>
                                     <div id='map-card' class="card-body collapse">
-                                        <strong>
-                                            {% if LANGUAGE_CODE == 'en' %}
-                                            Search for a location to begin drawing your community.
-                                            {% elif LANGUAGE_CODE == 'es' %}
-                                            <!-- Google translate  -->
-                                            Busque una ubicación para comenzar a dibujar su comunidad.
-                                            {% endif %}
-                                        </strong>
-                                        <div id="geocoder" class="geocoder my-3"></div>
+   
                                         <!-- {# Include form.entry_polygon error. } -->
-                                            <div class="map-bounding-box my-2 collapse">
-                                                <div id="map-error-alerts">
-                                                    {% if comm_form.user_polygon.errors %}
-                                                    <script>
-                                                        sessionStorage.setItem("allChecks", "fail");
-                                                    </script>
-                                                    <div id="polygon_missing" class="alert alert-warning alert-dismissible fade show form-error" role="alert">
-                                                        {% if LANGUAGE_CODE == 'en' %}
-                                                        You need to draw a polygon to submit the form.
-                                                        {% elif LANGUAGE_CODE == 'es' %}
-                                                        <!-- Google translate  -->
-                                                        Debe dibujar un polígono para enviar el formulario.
-                                                        {% endif %}
-                                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
+                                            <div id="map-error-alerts">
+                                                {% if comm_form.user_polygon.errors %}
+                                                <script>
+                                                    sessionStorage.setItem("allChecks", "fail");
+                                                </script>
+                                                <div id="polygon_missing" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
+                                                    {% if LANGUAGE_CODE == 'en' %}
+                                                    You need to draw a polygon to submit the form.
+                                                    {% elif LANGUAGE_CODE == 'es' %}
+                                                    <!-- Google translate  -->
+                                                    Debe dibujar un polígono para enviar el formulario.
                                                     {% endif %}
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
                                                 </div>
+                                                {% endif %}
+                                            </div>
+                                            <strong>
+                                                {% if LANGUAGE_CODE == 'en' %}
+                                                Search for a location to begin drawing your community.
+                                                {% elif LANGUAGE_CODE == 'es' %}
+                                                <!-- Google translate  -->
+                                                Busque una ubicación para comenzar a dibujar su comunidad.
+                                                {% endif %}
+                                            </strong>
+                                            <div id="geocoder" class="geocoder my-3"></div>
+                                            <div class="map-bounding-box my-2 collapse">
                                                 <div class="map-box">
                                                     <div id='menu'></div>
                                                     <div id='map' class='draw_polygon_map' onload="map.resize()"></div>

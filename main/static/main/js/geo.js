@@ -984,7 +984,7 @@ function triggerDrawError(id, stringErrorText) {
   newAlert.innerHTML =
     '<div id="' +
     id +
-    '" class="alert alert-warning alert-dismissible fade show map-alert" role="alert">\
+    '" class="alert alert-danger alert-dismissible fade show map-alert" role="alert">\
                               ' +
     stringErrorText +
     '\
