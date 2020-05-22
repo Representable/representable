@@ -14,7 +14,9 @@
       <p>That thought was immediately followed by its negation: Why bother? The same incidents, the same references and the same outrages would inevitably be picked over by other writers; for all our social distancing, we’d all be crowding around the same material. I also knew that anything I wrote could soon be — in fact was almost certain to be — contradicted by new developments. But what worried me most was that certain points of emphasis in my writing would later prove to have been misjudged, and that this would somehow reveal that my heart had been in the wrong place all along.</p>
 
       {% endif %}
-      <a class="btn btn-outline-primary my-3" href="{% url 'main:partner_map' object.organization.slug %}" role="button">View Map</a>
+      <a class="btn btn-primary my-3" href="{% url 'main:entry' campaign=object.slug %}" role="button">Draw my community</a>
+
+      <a class="btn btn-outline-primary my-3" href="{% url 'main:partner_map' object.organization.slug %}" role="button">View map of communities</a>
     </div>
     </div>
 {% endblock %}
