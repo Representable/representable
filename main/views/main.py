@@ -268,7 +268,7 @@ class ExportView(TemplateView):
         user_map = query[0]
         map_geojson = serialize('geojson', query,
             geometry_field='census_blocks_polygon',
-            fields=('user_name', 'user_phone', 'entry_name', 'entry_reason', 'cultural_interests', 'economic_interests', 'comm_activities', ))
+            fields=('entry_name', 'entry_reason', 'cultural_interests', 'economic_interests', 'comm_activities', ))
 
         response = HttpResponse(map_geojson, content_type="application/json")
         return response
