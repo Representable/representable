@@ -220,7 +220,7 @@ map.on("load", function () {
     // this is necessary so the map "moves" and queries the features above ^^
     map.flyTo({
       center: dest,
-      zoom: 10,
+      zoom: 12,
     });
   }
 });

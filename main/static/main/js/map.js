@@ -239,8 +239,8 @@ var states = [
 var map = new mapboxgl.Map({
   container: "map", // container id
   style: "mapbox://styles/mapbox/streets-v11", //color of the map -- dark-v10 or light-v9
-  center: [-74.65545, 40.341701], // starting position - Princeton, NJ :)
-  zoom: 10, // starting zoom -- higher is closer
+  center: [-96.7026, 40.8136], // starting position - Lincoln, Nebraska (middle of country lol)
+  zoom: 3, // starting zoom -- higher is closer
 });
 
 // geocoder used for a search bar -- within the map itself
@@ -371,6 +371,7 @@ map.on("load", function () {
 
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
+  var dest = [];
 
   for (obj in a) {
     // check how deeply nested the outer ring of the unioned polygon is
@@ -383,6 +384,7 @@ map.on("load", function () {
     } else {
       final = a[obj];
     }
+    dest = final[0][0];
     // draw the polygon
     map.addLayer({
       id: obj,
@@ -479,11 +481,13 @@ map.on("load", function () {
       }
     }
   });
-  // this is necessary so the map "moves" and queries the features above ^^
-  map.flyTo({
-    center: [-74.65545, 40.341701],
-    zoom: 10,
-  });
+  if (dest !== []) {
+    // this is necessary so the map "moves" and queries the features above ^^
+    map.flyTo({
+      center: dest,
+      zoom: 12,
+    });
+  }
 });
 
 // on hover, highlight the community
@@ -568,9 +572,4 @@ for (i = 0; i < dropdown.length; i++) {
     // add logic for polygons
     // map.setFilter('users', ['in', 'orgs', ...targetIDs]);
   });
-}
-
-// search bar function ! looks through the tags and the buttons themselves
-function searchTags() {
-  // go through all names and all reasons - find ones that match... wait do we even want a search bar?
 }

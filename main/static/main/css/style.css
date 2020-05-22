@@ -27,7 +27,7 @@ This means no changing anything like <a>, <li>, <p>, etc.
 
 /* Disable button hover when button is disabled. */
 button:disabled:hover {
-  cursor: not-allowed;
+  cursor: default;
 }
 
 /* Body and headings */
@@ -107,6 +107,9 @@ body {
 @media only screen and (max-width: 768px) {
   .what-is-gerrymandering p {
     font-size: 16px;
+  }
+  body #usa-map{
+    min-height: 300px;
   }
 }
 
@@ -318,6 +321,35 @@ color scheme. See readme.md*/
   outline: none;
 }
 
+/* landing page map */
+#usa-map
+{
+    width: 100%;
+    height: 100%;
+    min-height: 600px;
+    margin: auto;
+    cursor: pointer;
+}
+#stateSelectionDropdown
+{
+  font-size: 2rem;
+  background: none;
+  outline: none;
+  border: none;
+  border-bottom: 0.15rem solid black;
+  border-radius: 0px;
+  -webkit-appearance: none;
+}
+
+.state {
+  top: 250px;
+  right: -50px;
+  position: absolute;
+  z-index: -999;
+  width: 700px;
+  opacity: 15%;
+}
+
 /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
 .dropdown-container {
   display: none;
@@ -426,9 +458,23 @@ color scheme. See readme.md*/
   padding-right: 10px;
 }
 
-.blurtop {
-  filter: blur(3px);
-  z-index: 0;
+/* Entry Form Management */
+
+.button-edit {
+  display: none;
+}
+
+.card-section-button {
+  display: block;
+}
+
+.collapse-card {
+  /* filter: blur(3px); */
+  /* z-index: 0; */
+  /* pointer-events: none; */
+}
+
+.button-next-geocoder {
   pointer-events: none;
 }
 
@@ -795,6 +841,9 @@ label {
 
 /* Fallback for IE
 -------------------------------------------------- */
+
+.phone-field-ext { display: none; }
+#id_user_phone_1 { display: none; }
 
 /* Communities */
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {

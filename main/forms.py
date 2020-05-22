@@ -32,6 +32,7 @@ from .models import (
     Campaign,
     Membership,
     User,
+    Address,
 )
 from .choices import (
     RACE_CHOICES,
@@ -41,6 +42,8 @@ from .choices import (
 )
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Area
+
+from phone_field import PhoneField
 
 # https://django-select2.readthedocs.io/en/latest/django_select2.html
 
@@ -74,6 +77,28 @@ class BootstrapRadioSelect(forms.RadioSelect):
     template_name = "forms/widgets/radio.html"
     option_template_name = "forms/widgets/radio_option.html"
 
+class AddressForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+    
+    class Meta:
+        model = Address
+        fields = ["city", "state", "zipcode", "street"]
+
+        widgets = {
+            "street": forms.TextInput(
+                attrs={"placeholder": "Street"}
+            ),
+            "city": forms.TextInput(
+                attrs={"placeholder": "City"}
+            ),
+            "state": forms.TextInput(
+                attrs={"placeholder": "State"}
+            ),
+            "zipcode": forms.TextInput(
+                attrs={"placeholder": "Zipcode"}
+            )
+        }
 
 class CommunityForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -107,8 +132,29 @@ class CommunityForm(ModelForm):
                     "rows": 5,
                 }
             ),
+            "cultural_interests": forms.Textarea(
+                attrs={
+                    "placeholder": "Cultural interests",
+                    "rows": 5,
+                }
+            ),
+            "economic_interests": forms.Textarea(
+                attrs={
+                    "placeholder": "Economic interests",
+                    "rows": 5,
+                }
+            ),
+            "comm_activities": forms.Textarea(
+                attrs={
+                    "placeholder": "Community Activities and Services",
+                    "rows": 5,
+                }
+            ),
+            "user_name": forms.TextInput(
+                attrs={"placeholder": "User Name"}
+            ),
+            "user_phone": PhoneField,
             "user_polygon": forms.HiddenInput(),
-            "zipcode": forms.TextInput(attrs={"placeholder": "Your Zipcode"}),
         }
         labels = {
             "tags": "Community Tags",

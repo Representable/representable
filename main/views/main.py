@@ -33,13 +33,16 @@ from django.forms import formset_factory
 from ..forms import (
     CommunityForm,
     DeletionForm,
+    AddressForm,
 )
 from ..models import (
     CommunityEntry,
     WhiteListEntry,
     Tag,
     Membership,
+    Address,
     CampaignToken,
+    Campaign,
 )
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
@@ -125,6 +128,13 @@ class Terms(TemplateView):
 
 
 # ******************************************************************************#
+
+
+class Michigan(TemplateView):
+    template_name = "main/pages/michigan.html"
+
+
+# ******************************************************************************#
 class Review(LoginRequiredMixin, TemplateView):
     template_name = "main/pages/review.html"
     form_class = DeletionForm
@@ -180,16 +190,17 @@ class Review(LoginRequiredMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, label_suffix="")
-        context = self.get_context_data()
         # delete entry if form is valid and entry belongs to current user
+        query_error = False
         if form.is_valid():
             query = CommunityEntry.objects.filter(user=self.request.user)
             try:
                 entry = query.get(entry_ID=request.POST.get("c_id"))
                 entry.delete()
-                form.save()
             except Exception:
-                context["query_error"] = True
+                query_error = True
+        context = self.get_context_data()
+        context["query_error"] = query_error
         return render(request, self.template_name, context)
 
 
@@ -340,17 +351,32 @@ class Thanks(TemplateView):
 # ******************************************************************************#
 
 
+class ThanksEntryOrg(TemplateView):
+    template_name = "main/pages/thanksentryorg.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["org_slug"] = self.kwargs["slug"]
+        return context
+
+
+# ******************************************************************************#
+
+
 class EntryView(LoginRequiredMixin, View):
     """
     EntryView displays the form and map selection screen.
     """
 
     template_name = "main/pages/entry.html"
-    form_class = CommunityForm
+    community_form_class = CommunityForm
+    address_form_class = AddressForm
+    # form_class = CommunityForm
     initial = {
         "key": "value",
     }
     success_url = "/thanks/"
+
     data = {
         "form-TOTAL_FORMS": "1",
         "form-INITIAL_FORMS": "0",
@@ -365,30 +391,44 @@ class EntryView(LoginRequiredMixin, View):
         return initial
 
     def get(self, request, *args, **kwargs):
-        form = self.form_class(initial=self.get_initial(), label_suffix="")
+        comm_form = self.community_form_class(
+            initial=self.get_initial(), label_suffix=""
+        )
+        addr_form = self.address_form_class(
+            initial=self.get_initial(), label_suffix=""
+        )
 
         has_token = False
         if kwargs["token"]:
             has_token = True
 
+        has_campaign = False
+        if kwargs["campaign"]:
+            has_campaign = True
+
         context = {
-            "form": form,
+            "comm_form": comm_form,
+            "addr_form": addr_form,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
             "has_token": has_token,
+            "has_campaign": has_campaign,
         }
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST, label_suffix="")
-        if form.is_valid():
+        comm_form = self.community_form_class(request.POST, label_suffix="")
+        addr_form = self.address_form_class(request.POST, label_suffix="")
+        if comm_form.is_valid():
             # grab tags from form
-            tag_name_qs = form.cleaned_data["tags"].values("name")
+            tag_name_qs = comm_form.cleaned_data["tags"].values("name")
 
-            entryForm = form.save(commit=False)
+            entryForm = comm_form.save(commit=False)
+
             # get all the polygons from the array
+
             # This returns an array of Django GEOS Polygon types
-            polyArray = form.data["census_blocks_polygon_array"]
+            polyArray = comm_form.data["census_blocks_polygon_array"]
 
             if polyArray is not None and polyArray != "":
                 polyArray = polyArray.split("|")
@@ -407,6 +447,12 @@ class EntryView(LoginRequiredMixin, View):
                     polygonUnion = MultiPolygon(polygonUnion)
 
                 entryForm.census_blocks_polygon = polygonUnion
+
+            if self.kwargs["campaign"]:
+                campaign = Campaign.objects.get(slug=self.kwargs["campaign"])
+                if campaign:
+                    entryForm.campaign = campaign
+                    entryForm.organization = campaign.organization
 
             if entryForm.organization:
                 if self.request.user.is_member(entryForm.organization.id):
@@ -429,27 +475,40 @@ class EntryView(LoginRequiredMixin, View):
                         # approve this entry
                         entryForm.admin_approved = True
 
-            if self.kwargs["token"]:
-                token = CampaignToken.objects.get(token=self.kwargs["token"])
-                if token:
-                    entryForm.campaign = token.campaign
-                    entryForm.organization = token.campaign.organization
+            # TODO: Determine role of campaign tokens (one time link, etc.)
+            # if self.kwargs["token"]:
+            #     token = CampaignToken.objects.get(token=self.kwargs["token"])
+            #     if token:
+            #         entryForm.campaign = token.campaign
+            #         entryForm.organization = token.campaign.organization
 
-                    # if user has a token and campaign is active, auto approve submission
-                    if token.campaign.is_active:
-                        entryForm.admin_approved = True
+
+            #         # if user has a token and campaign is active, auto approve submission
+            #         if token.campaign.is_active:
+            #             entryForm.admin_approved = True
 
             entryForm.save()
+            if addr_form.is_valid():
+                addrForm = addr_form.save(commit=False)
+                addrForm.entry = entryForm
+                addrForm.save()
 
             for tag_name in tag_name_qs:
                 tag = Tag.objects.get(name=str(tag_name["name"]))
                 entryForm.tags.add(tag)
-
             m_uuid = str(entryForm.entry_ID).split("-")[0]
-            full_url = self.success_url + "?map_id=" + m_uuid
-            return HttpResponseRedirect(full_url)
+            if entryForm.organization is None:
+                full_url = self.success_url + "?map_id=" + m_uuid
+                return HttpResponseRedirect(full_url)
+            else:
+                kwargs = {"slug": entryForm.organization.slug}
+                self.success_url = reverse_lazy(
+                    "main:thanks_entry_org", kwargs=kwargs
+                )
+                return HttpResponseRedirect(self.success_url)
         context = {
-            "form": form,
+            "comm_form": comm_form,
+            "addr_form": addr_form,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
