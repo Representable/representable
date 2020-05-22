@@ -195,6 +195,12 @@ class Campaign(models.Model):
     class Meta:
         ordering = ("description",)
 
+    def save(self, *args, **kwargs):
+        # generate the slug once the first time the org is created
+        if not self.slug:
+            self.slug = generate_unique_slug(Campaign, self.name)
+        super(Campaign, self).save(*args, **kwargs)
+
     def get_absolute_url(self):
         return reverse(
             "main:campaign_home",
