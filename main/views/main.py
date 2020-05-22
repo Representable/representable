@@ -472,7 +472,6 @@ class EntryView(LoginRequiredMixin, View):
                     "main:thanks_entry_org", kwargs=kwargs
                 )
                 return HttpResponseRedirect(self.success_url)
-        print(comm_form)
         context = {
             "comm_form": comm_form,
             "addr_form": addr_form,
