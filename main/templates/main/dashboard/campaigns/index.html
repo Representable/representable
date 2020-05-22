@@ -37,35 +37,42 @@
       </div>
     </div>
   </div>
-  <div class="row pt-3">
-    <div class="col-sm">
-      <div class="card shadow-sm h-100">
-        <div class="card-body">
-          <h5>
-            Gather Submissions!
-          </h5>
-          <hr>
-          <p>Copy this link and share it with people you'd like to contribute to this campaign: <a href="{% url 'main:campaign_page' object.slug %}">representable.org{% url 'main:campaign_page' object.slug %}</a></p>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="row py-3">
     <div class="col-sm">
-      <div class="card shadow-sm h-100">
+      <div class="card shadow-sm my-3">
         <div class="card-body">
-          <h5>
-            Map of Campaign Submissions
-          </h5>
-          <hr>
-          <p>Click the button below to view a map of all submissions.</p>
-          <p><a class="btn btn-outline-primary my-3" href="{% url 'main:partner_map' object.organization.slug object.slug %}" role="button">View map of communities</a>
-          </p>
+          <h5>Getting Started</h5>
+          <ul class="list-group my-3">
+            {% if is_org_admin or is_org_moderator %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <h5><span class="badge badge-secondary"><i class="fas fa-share-alt"></i></span> Gather Submissions</h5>
+                <p>Gather submissions for this campaign! Copy this link and share it with people you'd like to contribute to this campaign: <a href="{% url 'main:campaign_page' object.slug %}">representable.org{% url 'main:campaign_page' object.slug %}</a></p>
+              </div>
+              <a class="btn btn-primary" href="{% url 'main:campaign_page' object.slug %}" role="button">View <i class="fa fa-arrow-circle-right"></i></a>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <h5><span class="badge badge-secondary"><i class="fas fa-flag"></i></span> Moderate Submissions</h5>
+                <p>Review communities submitted to this campaign.</p>
+              </div>
+              <a class="btn btn-primary" href="{% url 'main:review_org' object.organization.slug  object.organization.pk object.slug %}" role="button">Moderate <i class="fa fa-arrow-circle-right"></i></a>
+            </li>
+            {% endif %}
+
+
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <h5><span class="badge badge-secondary"><i class="fas fa-map-marker-alt"></i></span> View/Share Your Map</h5>
+                <p>Your campaign's map is live at: <a href="{% url 'main:partner_map' object.organization.slug object.slug %}">representable.org{% url 'main:partner_map' object.organization.slug object.slug %}</a></p></div>
+                <a class="btn btn-primary" href="{% url 'main:partner_map' object.organization.slug object.slug %}"  role="button">View <i class="fa fa-arrow-circle-right"></i></a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
-  
 </div>
 
 {% endblock %}
