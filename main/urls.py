@@ -36,6 +36,7 @@ urlpatterns = [
     path("privacy/", views.main.Privacy.as_view(), name="privacy"),
     path("terms/", views.main.Terms.as_view(), name="terms"),
     path("submission/", views.main.Submission.as_view(), name="submission"),
+    path("export/", views.main.ExportView.as_view(), name="export"),
     # path(
     #     "campaigns/", views.campaigns.IndexView.as_view(), name="campaign_list"
     # ),

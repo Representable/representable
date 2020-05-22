@@ -58,6 +58,7 @@ import json
 import re
 import csv
 import hashlib
+from django.template import loader
 from django.http import JsonResponse
 import shapely.wkt
 import reverse_geocoder as rg
@@ -235,6 +236,28 @@ class Submission(TemplateView):
         }
         return render(request, self.template_name, context)
 
+
+class ExportView(TemplateView):
+    template = "main/pages/export.html"
+    # Create the HttpResponse object with the appropriate CSV header.
+    def get(self, request, *args, **kwargs):
+
+        response = HttpResponse(content_type="text/csv")
+        response[
+            "Content-Disposition"
+        ] = 'attachment; filename="somefilename.csv"'
+
+        # The data is hard-coded here, but you could load it from a database or
+        # some other source.
+        csv_data = (
+            ("First row", "Foo", "Bar", "Baz"),
+            ("Second row", "A", "B", "C", '"Testing"', "Here's a quote"),
+        )
+
+        t = loader.get_template("main/pages/export.txt")
+        c = {"data": csv_data}
+        response.write(t.render(c))
+        return response
 
 
 # ******************************************************************************#
