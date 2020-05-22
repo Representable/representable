@@ -906,17 +906,6 @@ map.on("style.load", function () {
         "-webkit-filter: blur(0px); pointer-events: auto;"
       );
     }
-    // Enable Map buttons
-    // toggleMapButtons("on");
-    // Toggle Next Button
-    var card_section_0 = document.getElementById("card_section_0");
-    var geocoder_next_button = card_section_0.getElementsByClassName(
-      "button-next"
-    )[0];
-    geocoder_next_button.disabled = false;
-    $("button-next-geocoder").tooltip("hide");
-    var button_next_geocoder = document.querySelector(".button-next-geocoder");
-    button_next_geocoder.style.pointerEvents = "auto";
 
     // get the state from the geocoder response
     if (styleSpec.context.length >= 2) {
