@@ -4,14 +4,17 @@
 <div class="container">
   <div class="row my-5">
     <div class="col-9 mx-auto">
-      <h2>{{object.name}} Campaign</h2>
+      <h2>{{object.name}}</h2>
+      <p>Organized by <a href="{% url 'main:partner_page' object.organization.slug %}">{{object.organization}}</a></p>
       <hr>
-      <p>
-        <span class="badge badge-secondary">{{object.state}}</span>
-      </p>
-      <p>Organized by {{object.organization}}</p>
       <p>{{object.description}}</p>
-      <a class="btn btn-primary my-3" href="{% url 'main:partner_map' object.organization.slug %}" role="button">View Map</a>
+
+      {% if object.state == "MI" %}
+      <h4>General Information about MI Redistricting Efforts</h4>
+      <p>That thought was immediately followed by its negation: Why bother? The same incidents, the same references and the same outrages would inevitably be picked over by other writers; for all our social distancing, we’d all be crowding around the same material. I also knew that anything I wrote could soon be — in fact was almost certain to be — contradicted by new developments. But what worried me most was that certain points of emphasis in my writing would later prove to have been misjudged, and that this would somehow reveal that my heart had been in the wrong place all along.</p>
+
+      {% endif %}
+      <a class="btn btn-outline-primary my-3" href="{% url 'main:partner_map' object.organization.slug %}" role="button">View Map</a>
     </div>
     </div>
 {% endblock %}
