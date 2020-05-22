@@ -73,7 +73,7 @@
               </div>
               <div class="text-center">
                 {% with link_text="/export?map_id="|addstr:community.entry_ID|slice:27 %}
-                  <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{community.entry_ID|slice:8}}.json">Export GeoJSON</a>
+                  <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{community.entry_ID|slice:8}}.geojson">Export GeoJSON</a>
                 {% endwith %}
               </div>
             </div>
