@@ -279,7 +279,7 @@ function openSectionByIndex(section_ix) {
   var edit_button = section_elem.getElementsByClassName("button-edit")[0];
   edit_button.value = "Hide Section";
   section_elem.classList.add("active-section");
-  $("#" + section_id + " .collapse").collapse("show");
+  $("#" + section_id + " .collapse.card-body").collapse("show");
   edit_button.style.display = "block";
 }
 
@@ -292,7 +292,7 @@ function goToSection(section_ix) {
   edit_button.style.display = "block";
   goto_section_elem.classList.add("active-section");
   goto_section_elem.scrollIntoView({ behavior: "smooth" });
-  $("#" + goto_section_id + " .collapse").collapse("show");
+  $("#" + goto_section_id + " .collapse.card-body").collapse("show");
   var delayInMilliseconds = 500;
   setTimeout(function () {}, delayInMilliseconds);
 }
@@ -307,11 +307,11 @@ function toggleSection(event) {
   if (section_elem.classList.contains("active-section")) {
     edit_button.value = "Edit Section";
     section_elem.classList.remove("active-section");
-    $("#" + section_id + " .collapse").collapse("hide");
+    $("#" + section_id + " .collapse.card-body").collapse("hide");
   } else {
     edit_button.value = "Hide Section";
     section_elem.classList.add("active-section");
-    $("#" + section_id + " .collapse").collapse("show");
+    $("#" + section_id + " .collapse.card-body").collapse("show");
   }
   edit_button.style.display = "block";
 }
@@ -905,6 +905,9 @@ map.on("style.load", function () {
         "-webkit-filter: blur(0px); pointer-events: auto;"
       );
     }
+
+    $(".map-bounding-box.collapse").collapse("show");
+    map.resize();
 
     // get the state from the geocoder response
     if (styleSpec.context.length >= 2) {

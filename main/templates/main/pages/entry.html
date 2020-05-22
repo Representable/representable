@@ -281,7 +281,7 @@
                                         </strong>
                                         <div id="geocoder" class="geocoder my-3"></div>
                                         <!-- {# Include form.entry_polygon error. } -->
-                                            <div class="map-bounding-box my-2">
+                                            <div class="map-bounding-box my-2 collapse">
                                                 <div id="map-error-alerts">
                                                     {% if comm_form.user_polygon.errors %}
                                                     <script>
@@ -300,8 +300,10 @@
                                                     </div>
                                                     {% endif %}
                                                 </div>
-                                                <div id='menu'></div>
-                                                <div id='map' class='draw_polygon_map' onload="map.resize()"></div>
+                                                <div class="map-box">
+                                                    <div id='menu'></div>
+                                                    <div id='map' class='draw_polygon_map' onload="map.resize()"></div>
+                                                </div>
                                             </div>
                                             <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
                                     </div>
