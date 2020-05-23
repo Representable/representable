@@ -132,6 +132,8 @@ function newLowerLegislatureLayer(state) {
   });
 }
 
+var community_bounds = {};
+
 map.on("load", function () {
   // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
   // for (let census in CENSUS_KEYS) {
@@ -153,7 +155,7 @@ map.on("load", function () {
 
   var outputstr = entries.replace(/'/g, '"');
   entries = JSON.parse(outputstr);
-  var dest = [];
+  var zooming = true;
 
   for (obj in entries) {
     // check how deeply nested the outer ring of the unioned polygon is
@@ -166,7 +168,16 @@ map.on("load", function () {
     } else {
       final = entries[obj];
     }
-    dest = final[0][0];
+    // add info to bounds list for zooming
+    // ok zoomer
+    var fit = new L.Polygon(final).getBounds();
+    var southWest = new mapboxgl.LngLat(fit['_southWest']['lat'], fit['_southWest']['lng']);
+    var northEast = new mapboxgl.LngLat(fit['_northEast']['lat'], fit['_northEast']['lng']);
+    community_bounds[obj] = new mapboxgl.LngLatBounds(southWest, northEast)
+    if (zooming) {
+      map.fitBounds(community_bounds[obj], {padding: 100});
+      zooming = false;
+    }
     approved_color = "rgba(110, 178, 181,0.15)";
     unapproved_color = "rgba(255, 50, 0,0.15)";
     if (approved.indexOf(obj) > -1) {
@@ -218,13 +229,11 @@ map.on("load", function () {
       },
     });
   }
-  if (dest !== []) {
-    // this is necessary so the map "moves" and queries the features above ^^
-    map.flyTo({
-      center: dest,
-      zoom: 12,
-    });
-  }
+});
+
+// on click, zoom to community
+$(".community-review-span").click(function () {
+  map.fitBounds(community_bounds[this.id], {padding: 100});
 });
 
 // on hover, highlight the community

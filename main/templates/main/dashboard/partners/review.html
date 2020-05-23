@@ -48,18 +48,17 @@
                 <div id="outline-menu">
                 </div>
                 {% if communities %}
-                <table class="table table-review">
-                    <tr>
+                <table class="table table-hover">
+                    <thead>
                         <th scope="col">Community Name</th>
                         <th scope="col">Action</th>
-                    </tr>
+                    </thead>
                     {% for c in communities %}
                     <tr class="community-review-span" id={{c.entry_ID}}>
                         <td>
                           <span class="font-weight-light text-uppercase entry-name">
-                            <!-- TODO: Remove hard coded submission link  -->
                             {% with link_text="/submission?map_id="|addstr:c.entry_ID|slice:27 %}
-                              <a href={{link_text}} style="padding: 6px">{{c.entry_name}}</a>
+                              <a href={{link_text}}>{{c.entry_name}}</a>
                             {% endwith %}
                           </span>
                           <br>

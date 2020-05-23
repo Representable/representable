@@ -344,6 +344,10 @@ map.on("load", function () {
       final = a[obj];
     }
     dest = final[0][0];
+    var fit = new L.Polygon(final).getBounds();
+    var southWest = new mapboxgl.LngLat(fit['_southWest']['lat'], fit['_southWest']['lng']);
+    var northEast = new mapboxgl.LngLat(fit['_northEast']['lat'], fit['_northEast']['lng']);
+    map.fitBounds(new mapboxgl.LngLatBounds(southWest, northEast), {padding: 100});
     map.addLayer({
       id: obj,
       type: "fill",
@@ -386,20 +390,6 @@ map.on("load", function () {
         "line-color": "rgba(0, 0, 0,0.2)",
         "line-width": 2,
       },
-    });
-  }
-  const coordinates = final[0];
-  var bounds = coordinates.reduce(function (bounds, coord) {
-    return bounds.extend(coord);
-  }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
-  map.fitBounds(bounds, {
-    padding: 100,
-  });
-  if (dest !== []) {
-    // this is necessary so the map "moves" and queries the features above ^^
-    map.flyTo({
-      center: dest,
-      zoom: 12,
     });
   }
 });

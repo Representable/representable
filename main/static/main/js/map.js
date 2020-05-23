@@ -329,6 +329,7 @@ function newLowerLegislatureLayer(state) {
 
 entry_names = JSON.parse(entry_names);
 entry_reasons = JSON.parse(entry_reasons);
+var community_bounds = {};
 
 map.on("load", function () {
   var layers = map.getStyle().layers;
@@ -371,7 +372,7 @@ map.on("load", function () {
 
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
-  var dest = [];
+  var zooming = true;
 
   for (obj in a) {
     // check how deeply nested the outer ring of the unioned polygon is
@@ -384,7 +385,16 @@ map.on("load", function () {
     } else {
       final = a[obj];
     }
-    dest = final[0][0];
+    // add info to bounds list for zooming
+    // ok zoomer
+    var fit = new L.Polygon(final).getBounds();
+    var southWest = new mapboxgl.LngLat(fit['_southWest']['lat'], fit['_southWest']['lng']);
+    var northEast = new mapboxgl.LngLat(fit['_northEast']['lat'], fit['_northEast']['lng']);
+    community_bounds[obj] = new mapboxgl.LngLatBounds(southWest, northEast)
+    if (zooming) {
+      map.fitBounds(community_bounds[obj], {padding: 100});
+      zooming = false;
+    }
     // draw the polygon
     map.addLayer({
       id: obj,
@@ -481,13 +491,6 @@ map.on("load", function () {
       }
     }
   });
-  if (dest !== []) {
-    // this is necessary so the map "moves" and queries the features above ^^
-    map.flyTo({
-      center: dest,
-      zoom: 12,
-    });
-  }
 });
 
 // on hover, highlight the community

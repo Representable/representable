@@ -59,7 +59,11 @@
                     {% for c in communities %}
                     <tr class="community-review-span" id={{c.entry_ID}}>
                         <td>
-                          <span class="font-weight-light text-uppercase entry-name">{{c.entry_name}}</span>
+                          <span class="font-weight-light text-uppercase entry-name">
+                            {% with link_text="/submission?map_id="|addstr:c.entry_ID|slice:27 %}
+                              <a href={{link_text}}>{{c.entry_name}}</a>
+                            {% endwith %}
+                          </span>
                           <br>
                             <span class="font-weight-light">{{c.entry_reason}}<br>
                         </td>
@@ -67,9 +71,6 @@
                             <form method="post" action="">{% csrf_token %}
                                 {{ form }}
                                 <input type="hidden" name="c_id" value="{{ c }}">
-                                {% with link_text="/submission?map_id="|addstr:c.entry_ID|slice:27 %}
-                                  <a class="btn btn-outline-primary" href={{link_text}} style="padding: 6px">View</a>
-                                {% endwith %}
                                                                 <button type="submit" class="btn btn-danger", name="Delete">Delete</button>
                             </form>
                         </td>
