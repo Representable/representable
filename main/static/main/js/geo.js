@@ -724,7 +724,7 @@ drawButton[0].innerHTML = "<i class='fas fa-draw-polygon'></i> Draw Polygon";
 var trashButton = document.getElementsByClassName("mapbox-gl-draw_trash");
 trashButton[0].backgroundImg = "";
 trashButton[0].id = "trash-button";
-trashButton[0].innerHTML = "<i class='fas fa-trash-alt'></i> Undo Polygon";
+trashButton[0].innerHTML = "<i class='fas fa-trash-alt'></i> Delete Selection";
 
 function toggleInstructionBox() {
   var instruction_box = document.querySelector(".instruction-box");
@@ -745,6 +745,38 @@ function hideInstructionBox() {
   instruction_box.style.display = "none";
 }
 
+class ClearMapButton {
+  onAdd(map) {
+    var clear_map_button = document.createElement("button");
+    clear_map_button.href = "#";
+    clear_map_button.type = "button";
+    clear_map_button.backgroundImg = "";
+
+    clear_map_button.classList.add("active");
+    clear_map_button.classList.add("map_clear_button");
+    clear_map_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
+    clear_map_button.innerHTML = "<i class='fas fa-times'></i> Clear Drawing";
+    this._map = map;
+    this._container = document.createElement("div");
+    this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
+    clear_map_button.addEventListener("click", function (e) {
+      cleanAlerts();
+      draw.deleteAll();
+      hideInstructionBox();
+      updateCommunityEntry(e);
+    });
+    this._container.appendChild(clear_map_button);
+    return this._container;
+  }
+
+  onRemove() {
+    this._container.parentNode.removeChild(this._container);
+    this._map = undefined;
+  }
+}
+map.addControl(new ClearMapButton(), "top-right");
+var map_clear_map_button = document.querySelector(".map_clear_button");
+drawControls.appendChild(map_clear_map_button);
 // add button for toggling edit mode.
 class MapEditButton {
   onAdd(map) {
@@ -783,6 +815,7 @@ map.addControl(new MapEditButton(), "top-right");
 
 var map_edit_button = document.querySelector(".map_edit_button");
 drawControls.appendChild(map_edit_button);
+
 class FinishDrawButton {
   onAdd(map) {
     var map_edit_button = document.createElement("button");
@@ -824,6 +857,8 @@ drawControls.appendChild(map_finish_drawing_button);
 
 // Add nav control buttons.
 map.addControl(new mapboxgl.NavigationControl());
+
+var user_polygon_id = undefined;
 
 // add button for toggling census Blocks
 class CensusBlocksControl {
@@ -868,6 +903,16 @@ class CensusBlocksControl {
 }
 map.addControl(new CensusBlocksControl(), "top-left");
 
+document
+  .querySelector(".map_clear_button")
+  .addEventListener("click", function (e) {
+    cleanAlerts();
+    hideInstructionBox();
+    draw.deleteAll();
+    map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
+    draw.changeMode("simple_select");
+  });
+
 // Override Behavior for Draw-Button
 document.getElementById("draw-button").addEventListener("click", function (e) {
   cleanAlerts();
@@ -880,7 +925,6 @@ document.getElementById("draw-button").addEventListener("click", function (e) {
 document.getElementById("trash-button").addEventListener("click", function (e) {
   cleanAlerts();
   hideInstructionBox();
-  draw.deleteAll();
   map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
   draw.changeMode("simple_select");
 });
@@ -1079,7 +1123,12 @@ map.on("draw.delete", function () {
 map.on("draw.update", function () {
   updateCommunityEntry();
 });
-map.on("draw.changeMode", function () {});
+map.on("draw.changeMode", function () {
+  updateCommunityEntry();
+});
+map.on("draw.selectionchange", function () {
+  updateCommunityEntry();
+});
 
 /******************************************************************************/
 
