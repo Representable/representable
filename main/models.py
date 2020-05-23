@@ -282,23 +282,27 @@ class CommunityEntry(models.Model):
         max_length=100, blank=False, unique=False, default=""
     )
     entry_reason = models.TextField(
-        max_length=500, blank=False, unique=False, default=""
+        max_length=500, blank=True, unique=False, default=""
     )
     user_name = models.CharField(
         max_length=500, blank=False, unique=False, default=""
     )
     cultural_interests = models.TextField(
-        max_length=500, blank=False, unique=False, default=""
+        max_length=500, blank=True, unique=False, default=""
     )
     economic_interests = models.TextField(
-        max_length=500, blank=False, unique=False, default=""
+        max_length=500, blank=True, unique=False, default=""
     )
     comm_activities = models.TextField(
-        max_length=500, blank=False, unique=False, default=""
+        max_length=500, blank=True, unique=False, default=""
+    )
+    other_considerations = models.TextField(
+        max_length=500, blank=True, unique=False, default=""
     )
     user_phone = PhoneField(
         E164_only=True, blank=False, unique=False, default=""
     )
+    created_at = models.DateTimeField(auto_now_add=True)
     admin_approved = models.BooleanField(default=False)
 
     def __str__(self):
