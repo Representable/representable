@@ -178,17 +178,12 @@ class CommunityForm(ModelForm):
         comm_activities = self.cleaned_data.get("comm_activities")
         other_considerations = self.cleaned_data.get("other_considerations")
         if not phone.is_usa:
-            errors["user_phone"]= "Invalid phone number."
+            errors["user_phone"] = "Invalid phone number."
         if cultural_interests is "" and economic_interests is "" and comm_activities is "" and other_considerations is "":
             errors["cultural_interests"] = "Blank interest fields."
         if errors:
             raise forms.ValidationError(errors) 
 
-    def clean_user_phone(self, *args, **kwargs):
-        phone = self.cleaned_data.get("user_phone")
-        if not phone.is_usa:
-            raise forms.ValidationError("Invalid phone number.", code="invalid_phone_number")
-        return phone
 
 class DeletionForm(ModelForm):
     class Meta:
