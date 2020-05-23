@@ -733,16 +733,24 @@ class MapEditButton {
     map_edit_button.href = "#";
     map_edit_button.type = "button";
     map_edit_button.backgroundImg = "";
+
     map_edit_button.classList.add("active");
     map_edit_button.classList.add("map_edit_button");
-    map_edit_button.innerHTML = "<i class='fas fa-edit'></i> Undo Polygon";
+    map_edit_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
+    map_edit_button.innerHTML =
+      "<i class='fas fa-edit'></i> <span>Edit Polygon</span>";
     this._map = map;
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
     map_edit_button.addEventListener("click", function (e) {
-      print("button ppressed");
       cleanAlerts();
-      // draw.changeMode("direct_select");
+      var all_features = draw.getAll();
+      print(all_features.features);
+      if (all_features.features.length > 0) {
+        draw.changeMode("direct_select", {
+          featureId: all_features.features[0].id,
+        });
+      }
     });
     this._container.appendChild(map_edit_button);
     return this._container;
@@ -754,6 +762,9 @@ class MapEditButton {
   }
 }
 map.addControl(new MapEditButton(), "top-right");
+
+var map_edit_button = document.querySelector(".map_edit_button");
+drawControls.appendChild(map_edit_button);
 
 // Add nav control buttons.
 map.addControl(new mapboxgl.NavigationControl());
