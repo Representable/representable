@@ -154,26 +154,7 @@ class CommunityForm(ModelForm):
             "industry": "List Industries/Profressions (At Least One, Multiple Accepted)",
             "religion": "List Religions (At Least One, Multiple Accepted)",
         }
-
-    # def clean_user_polygon(self):
-    #     """
-    #     Make sure that the user polygon contains no kinks and has an acceptable area.
-    #     https://gis.stackexchange.com/questions/288103/how-to-convert-the-area-to-feets-in-geodjango
-    #     """
-    #     data = self.cleaned_data["user_polygon"]
-    #     # Check kinks
-    #     if not data.valid:
-    #         raise forms.ValidationError(
-    #             "Polygon contains kinks.", code="polygon_kinks"
-    #         )
-    #     # # Check area
-    #     # polygon = data.transform(3857, clone=True)
-    #     # area = Area(sq_m=polygon.area)
-    #     # # Use NJ State Area * 1/2
-    #     # halfStateArea = 4350
-    #     # if area.sq_mi > halfStateArea:
-    #     #     raise forms.ValidationError("Area is too big.", code="area_too_big")
-    #     return data
+        
 
     def clean(self):
         """
