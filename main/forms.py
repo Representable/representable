@@ -133,13 +133,24 @@ class CommunityForm(ModelForm):
                 }
             ),
             "cultural_interests": forms.Textarea(
-                attrs={"placeholder": "Cultural interests", "rows": 5}
+                attrs={"placeholder": "Examples: Age groups, religious groups, " \
+                    "arts and cultural centers, languages, immigration status, " \
+                    "ethnic groups such as Detroit’s Mexican Town or " \
+                    "Dearborn’s Middle Eastern community, historic settlements " \
+                    "such as Leland’s Fishtown.", "rows": 5}
             ),
             "economic_interests": forms.Textarea(
-                attrs={"placeholder": "Economic interests", "rows": 5}
+                attrs={"placeholder": "Examples: Tech firms and their employees, tourism, "\
+                    "agriculture such as the cherry growers, shipping and "\
+                    "transportation hubs, manufacturing centers, natural resources, "\
+                    "university towns, unemployment issues, waterfront "\
+                    "communities, business associations.", "rows": 5}
             ),
             "comm_activities": forms.Textarea(
-                attrs={"placeholder": "Community Activities and Services", "rows": 5,}
+                attrs={"placeholder": "Examples: Shopping areas, schools and colleges, parks "\
+                    "and recreation areas, lakes and water ways, healthcare services, " \
+                    "and other activities and services that help define " \
+                    "your Community.", "rows": 5,}
             ),
             "other_considerations" : forms.Textarea(
                 attrs={"placeholder": "Community Activities and Services", "rows": 5,}
