@@ -702,7 +702,7 @@ var draw = new MapboxDraw({
       filter: ["all", ["==", "$type", "Point"], ["==", "meta", "midpoint"]],
       paint: {
         "circle-radius": 5,
-        "circle-color": "#3c6382",
+        "circle-color": "#e74c3c",
       },
     },
   ],
@@ -726,6 +726,25 @@ trashButton[0].backgroundImg = "";
 trashButton[0].id = "trash-button";
 trashButton[0].innerHTML = "<i class='fas fa-trash-alt'></i> Undo Polygon";
 
+function toggleInstructionBox() {
+  var instruction_box = document.querySelector(".instruction-box");
+  if (instruction_box.style.display == "block") {
+    instruction_box.style.display = "none";
+  } else {
+    instruction_box.style.display = "block";
+  }
+}
+
+function showInstructionBox() {
+  var instruction_box = document.querySelector(".instruction-box");
+  instruction_box.style.display = "block";
+}
+
+function hideInstructionBox() {
+  var instruction_box = document.querySelector(".instruction-box");
+  instruction_box.style.display = "none";
+}
+
 // add button for toggling edit mode.
 class MapEditButton {
   onAdd(map) {
@@ -743,6 +762,7 @@ class MapEditButton {
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
     map_edit_button.addEventListener("click", function (e) {
       cleanAlerts();
+      showInstructionBox();
       var all_features = draw.getAll();
       if (all_features.features.length > 0) {
         draw.changeMode("direct_select", {
@@ -779,6 +799,7 @@ class FinishDrawButton {
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
     map_edit_button.addEventListener("click", function (e) {
       cleanAlerts();
+      hideInstructionBox();
       var all_features = draw.getAll();
       if (all_features.features.length > 0) {
         draw.changeMode("simple_select", {
@@ -850,6 +871,7 @@ map.addControl(new CensusBlocksControl(), "top-left");
 // Override Behavior for Draw-Button
 document.getElementById("draw-button").addEventListener("click", function (e) {
   cleanAlerts();
+  hideInstructionBox();
   draw.deleteAll();
   map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
   draw.changeMode("draw_polygon");
@@ -857,6 +879,7 @@ document.getElementById("draw-button").addEventListener("click", function (e) {
 
 document.getElementById("trash-button").addEventListener("click", function (e) {
   cleanAlerts();
+  hideInstructionBox();
   draw.deleteAll();
   map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
   draw.changeMode("simple_select");
