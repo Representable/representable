@@ -139,10 +139,10 @@ class CommunityForm(ModelForm):
                 attrs={"placeholder": "Economic interests", "rows": 5}
             ),
             "comm_activities": forms.Textarea(
-                attrs={
-                    "placeholder": "Community Activities and Services",
-                    "rows": 5,
-                }
+                attrs={"placeholder": "Community Activities and Services", "rows": 5,}
+            ),
+            "other_considerations" : forms.Textarea(
+                attrs={"placeholder": "Community Activities and Services", "rows": 5,}
             ),
             "user_name": forms.TextInput(attrs={"placeholder": "User Name"}),
             "user_phone": PhoneField,
@@ -154,26 +154,35 @@ class CommunityForm(ModelForm):
             "industry": "List Industries/Profressions (At Least One, Multiple Accepted)",
             "religion": "List Religions (At Least One, Multiple Accepted)",
         }
+        
 
-    def clean_user_polygon(self):
+    def clean(self):
         """
         Make sure that the user polygon contains no kinks and has an acceptable area.
         https://gis.stackexchange.com/questions/288103/how-to-convert-the-area-to-feets-in-geodjango
+        Make sure that at least one of the interest fields is filled out.
+        Check if the phone number is a valid US number.
         """
-        data = self.cleaned_data["user_polygon"]
-        # Check kinks
-        if not data.valid:
-            raise forms.ValidationError(
-                "Polygon contains kinks.", code="polygon_kinks"
-            )
-        # # Check area
-        # polygon = data.transform(3857, clone=True)
-        # area = Area(sq_m=polygon.area)
-        # # Use NJ State Area * 1/2
-        # halfStateArea = 4350
-        # if area.sq_mi > halfStateArea:
-        #     raise forms.ValidationError("Area is too big.", code="area_too_big")
-        return data
+        errors={}
+        # check if the user drew a polygon
+        if "user_polygon" not in self.cleaned_data:
+            errors["user_polygon"] = "Polygon doesn't exist"
+        else:
+            data = self.cleaned_data["user_polygon"]
+        # Check kinks in the polygon
+            if not data.valid:
+                errors["user_polygon"] = "Polygon contains kinks."
+        phone = self.cleaned_data.get("user_phone")
+        cultural_interests = self.cleaned_data.get("cultural_interests")
+        economic_interests = self.cleaned_data.get("economic_interests")
+        comm_activities = self.cleaned_data.get("comm_activities")
+        other_considerations = self.cleaned_data.get("other_considerations")
+        if not phone.is_usa:
+            errors["user_phone"] = "Invalid phone number."
+        if cultural_interests is "" and economic_interests is "" and comm_activities is "" and other_considerations is "":
+            errors["cultural_interests"] = "Blank interest fields."
+        if errors:
+            raise forms.ValidationError(errors)  
 
 
 class DeletionForm(ModelForm):

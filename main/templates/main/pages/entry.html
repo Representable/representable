@@ -98,6 +98,26 @@
                                                 {{ comm_form.user_name|append_attr:"class:form-control" }}
                                             </div>
                                         </div>
+
+                                        <div id="phone-error-alerts">
+                                            {% if comm_form.user_phone.errors %}
+                                            <script>
+                                                sessionStorage.setItem("allChecks", "fail");
+                                            </script>
+                                            <div id="phone_invalid" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
+                                                {% if LANGUAGE_CODE == 'en' %}
+                                                Please enter a valid US Phone Number.
+                                                {% elif LANGUAGE_CODE == 'es' %}
+                                                <!-- Google translate  -->
+                                                Ingrese un número de teléfono válido de EE. UU.
+                                                {% endif %}
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+
                                         <p class="card-text">
                                             Phone Number <small class="text-danger">(Required)</small>
                                         </p>
@@ -137,25 +157,44 @@
                         <div class="col-lg m-2">
                             <div class="collapse-card card-section ">
                                 <div class="card">
+                                    <div id="interests-error-alerts">
+                                        {% if comm_form.cultural_interests.errors %}
+                                        <script>
+                                            sessionStorage.setItem("allChecks", "fail");
+                                        </script>
+                                        <div id="interests_missing" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
+                                            {% if LANGUAGE_CODE == 'en' %}
+                                            Please fill out at least one of the interest fields.
+                                            {% elif LANGUAGE_CODE == 'es' %}
+                                            <!-- Google translate  -->
+                                            Complete al menos uno de los campos de interés.
+                                            {% endif %}
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+
                                     <div class="card-header text-header-card">
                                         <strong>2. Your Shared Cultural Interests</strong>
                                         <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
                                     </div>
                                     <div class="card-body collapse">
-                                        <div class="row mb-2">
-                                            <div class="col-10">
-                                                <p class="card-text">
-                                                    What fosters a sense of belonging in your Community? 
-                                                    What common beliefs or values exist? <small class="text-danger">(Required)</small>
+                                        <p class="card-text">
+                                            What fosters a sense of belonging in your Community? 
+                                            What common beliefs or values exist? <small class="text-danger">(Recommended)</small>
+                                        </p>
+                                        <div class="accordion" id="cultural_interests_accordion">
+                                            <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#cultural_interests_example" aria-expanded="false" aria-controls="collapseOne">
+                                            Show Examples
+                                            </button>
+                                            <div id="cultural_interests_example" class="collapse" aria-labelledby="headingOne" data-parent="#cultural_interests_accordion">
+                                                <p class="collapse-in ml-0">
+                                                    Age groups, religious groups, arts and cultural centers, languages, immigration status, 
+                                                    ethnic groups such as Detroit’s Mexican Town or Dearborn’s Middle Eastern community, 
+                                                    historic settlements such as Leland’s Fishtown.
                                                 </p>
-                                            </div>
-                                            <div class="col-2">
-                                                <button type="button" class="btn btn-outline-dark btn-sm float-right" data-toggle="tooltip" data-placement="right" 
-                                                title="Age groups, religious groups, arts and cultural centers, languages, immigration status, 
-                                                ethnic groups such as Detroit’s Mexican Town or Dearborn’s Middle Eastern community,
-                                                 historic settlements such as Leland’s Fishtown.">
-                                                    Show Examples
-                                                </button>
                                             </div>
                                         </div>
                                         {{ comm_form.cultural_interests|append_attr:"class:form-control" }}
@@ -176,20 +215,20 @@
                                         <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
                                     </div>
                                     <div class="card-body collapse">
-                                        <div class="row mb-2">
-                                            <div class="col-10">
-                                                <p class="card-text">
-                                                    Where do people in your Community gather or socialize? 
-                                                    Where does your Community get its services? <small class="text-danger">(Required)</small>
+                                        <p class="card-text">
+                                            Where do people in your Community gather or socialize? 
+                                            Where does your Community get its services? <small class="text-danger">(Recommended)</small>
+                                        </p>
+                                        <div class="accordion" id="comm_activities_accordion">
+                                            <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#comm_activities_example" aria-expanded="false" aria-controls="collapseOne">
+                                            Show Examples
+                                            </button>
+                                            <div id="comm_activities_example" class="collapse" aria-labelledby="headingOne" data-parent="#comm_activities_accordion">
+                                                <p class="collapse-in ml-0">
+                                                    Shopping areas, schools and colleges, parks and recreation areas, 
+                                                    lakes and water ways, healthcare services, and other activities and services that 
+                                                    help define your Community.
                                                 </p>
-                                            </div>
-                                            <div class="col-2">
-                                                <button type="button" class="btn btn-outline-dark btn-sm float-right" data-toggle="tooltip" data-placement="right" 
-                                                title="Shopping areas, schools and colleges, parks and recreation areas, 
-                                                lakes and water ways, healthcare services, and other activities and services that
-                                                 help define your Community.">
-                                                    Show Examples
-                                                </button>
                                             </div>
                                         </div>
                                         {{ comm_form.comm_activities|append_attr:"class:form-control" }}
@@ -210,22 +249,22 @@
                                         <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
                                     </div>
                                     <div class="card-body collapse">
-                                        <div class="row mb-2">
-                                            <div class="col-10">
-                                                <p class="card-text">
-                                                    Is there a shared economy in the geographic area of your Community? 
-                                                    How and where are residents employed? What parts of a county, 
-                                                    township or city are included in your Community? 
-                                                    Are there shared environmental concerns such as landfills or water quality? <small class="text-danger">(Required)</small>
+                                        <p class="card-text">
+                                            Is there a shared economy in the geographic area of your Community? 
+                                            How and where are residents employed? What parts of a county, 
+                                            township or city are included in your Community? 
+                                            Are there shared environmental concerns such as landfills or water quality? <small class="text-danger">(Recommended)</small>
+                                        </p>
+                                        <div class="accordion" id="economic_interests_accordion">
+                                            <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#economic_interests_example" aria-expanded="false" aria-controls="collapseOne">
+                                            Show Examples
+                                            </button>
+                                            <div id="economic_interests_example" class="collapse" aria-labelledby="headingOne" data-parent="#economic_interests_accordion">
+                                                <p class="collapse-in ml-0">
+                                                    Tech firms and their employees, tourism, agriculture such as the cherry growers, 
+                                                    shipping and transportation hubs, manufacturing centers, natural resources, university towns, 
+                                                    unemployment issues, waterfront communities, business associations. 
                                                 </p>
-                                            </div>
-                                            <div class="col-2">
-                                                <button type="button" class="btn btn-outline-dark btn-sm float-right" data-toggle="tooltip" data-placement="right" 
-                                                title="Tech firms and their employees, tourism, agriculture such as the cherry growers,
-                                                 shipping and transportation hubs, manufacturing centers, natural resources, university towns, 
-                                                 unemployment issues, waterfront communities, business associations. ">
-                                                    Show Examples
-                                                </button>
                                             </div>
                                         </div>
                                         {{ comm_form.economic_interests|append_attr:"class:form-control" }}
@@ -255,10 +294,9 @@
                                         {{ comm_form.entry_name|append_attr:"class:form-control" }}
                                         <hr>
                                         <p class="card-text">
-                                            Why are you identifying this area as a community? <small class="text-danger">(Required)</small>
+                                            What are the issues facing this community and how would you like the redistricting
+                                             commission in your state to help?<small class="text-danger"> (Recommended)</small>
                                             <!-- TODO we should find a better example -->
-                                            <br>
-                                            <small>For example: All of the on-campus Princeton University student body lives and studies in this geographic area.</small>
                                         </p>
                                         {{ comm_form.entry_reason|append_attr:"class:form-control" }}
                                         <hr>
