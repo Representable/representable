@@ -184,6 +184,11 @@ class CommunityForm(ModelForm):
         if errors:
             raise forms.ValidationError(errors) 
 
+    def clean_user_phone(self, *args, **kwargs):
+        phone = self.cleaned_data.get("user_phone")
+        if not phone.is_usa:
+            raise forms.ValidationError("Invalid phone number.", code="invalid_phone_number")
+        return phone
 
 class DeletionForm(ModelForm):
     class Meta:
