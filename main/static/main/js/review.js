@@ -17,31 +17,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-/**************************************************************************/
-/* this file loads the visualization stuff ! for review.html -- loads layers of
-census blocks, state legislature, and drawn polygons */
-/**************************************************************************/
-// the mapbox keys to load tilesets
-// when adding a new state: put it into CENSUS_KEYS, UPPER_KEYS, LOWER_KEYS, and state array
-var CENSUS_KEYS = {
-  "nj-census": "aq1twwkc",
-  "va-census": "48cgf8ll",
-  "pa-census": "0k2ks83t",
-  "mi-census": "7bb2ddev",
-};
-var UPPER_KEYS = {
-  "nj-upper": "9fogw4w4",
-  "va-upper": "3b1qryb8",
-  "pa-upper": "33mtf25i",
-  "mi-upper": "5bvjx29f",
-};
-var LOWER_KEYS = {
-  "nj-lower": "8w0imag4",
-  "va-lower": "9xpukpnx",
-  "pa-lower": "c2qg68h1",
-  "mi-lower": "aa2ljvl2",
-};
-var states = ["nj", "va", "pa", "mi"];
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
