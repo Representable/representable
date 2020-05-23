@@ -133,8 +133,8 @@ class CommunityForm(ModelForm):
                 }
             ),
             "cultural_interests": forms.Textarea(
-                attrs={"placeholder": "Examples: Age groups, religious groups, " \
-                    "arts and cultural centers, languages, immigration status, " \
+                attrs={"placeholder": "Examples: Age groups, religious groups," \
+                    " arts and cultural centers, languages, immigration status, " \
                     "ethnic groups such as Detroit’s Mexican Town or " \
                     "Dearborn’s Middle Eastern community, historic settlements " \
                     "such as Leland’s Fishtown.", "rows": 5}
