@@ -157,6 +157,25 @@
                         <div class="col-lg m-2">
                             <div class="collapse-card card-section ">
                                 <div class="card">
+                                    <div id="interests-error-alerts">
+                                        {% if comm_form.cultural_interests.errors %}
+                                        <script>
+                                            sessionStorage.setItem("allChecks", "fail");
+                                        </script>
+                                        <div id="interests_missing" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
+                                            {% if LANGUAGE_CODE == 'en' %}
+                                            Please fill out at least one of the interest fields.
+                                            {% elif LANGUAGE_CODE == 'es' %}
+                                            <!-- Google translate  -->
+                                            Complete al menos uno de los campos de interés.
+                                            {% endif %}
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+
                                     <div class="card-header text-header-card">
                                         <strong>2. Your Shared Cultural Interests</strong>
                                         <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
@@ -164,7 +183,7 @@
                                     <div class="card-body collapse">
                                         <p class="card-text">
                                             What fosters a sense of belonging in your Community? 
-                                            What common beliefs or values exist? <small class="text-danger">(Required)</small>
+                                            What common beliefs or values exist? <small class="text-danger">(Recommended)</small>
                                         </p>
                                         {{ comm_form.cultural_interests|append_attr:"class:form-control" }}
                                         <br>
@@ -186,7 +205,7 @@
                                     <div class="card-body collapse">
                                         <p class="card-text">
                                             Where do people in your Community gather or socialize? 
-                                            Where does your Community get its services? <small class="text-danger">(Required)</small>
+                                            Where does your Community get its services? <small class="text-danger">(Recommended)</small>
                                         </p>
                                         {{ comm_form.comm_activities|append_attr:"class:form-control" }}
                                         <br>
@@ -210,7 +229,7 @@
                                             Is there a shared economy in the geographic area of your Community? 
                                             How and where are residents employed? What parts of a county, 
                                             township or city are included in your Community? 
-                                            Are there shared environmental concerns such as landfills or water quality? <small class="text-danger">(Required)</small>
+                                            Are there shared environmental concerns such as landfills or water quality? <small class="text-danger">(Recommended)</small>
                                         </p>
                                         {{ comm_form.economic_interests|append_attr:"class:form-control" }}
                                         <br>
@@ -239,10 +258,9 @@
                                         {{ comm_form.entry_name|append_attr:"class:form-control" }}
                                         <hr>
                                         <p class="card-text">
-                                            Why are you identifying this area as a community? <small class="text-danger">(Required)</small>
+                                            What are the issues facing this community and how would you like the redistricting
+                                             commission in your state to help?<small class="text-danger"> (Recommended)</small>
                                             <!-- TODO we should find a better example -->
-                                            <br>
-                                            <small>For example: All of the on-campus Princeton University student body lives and studies in this geographic area.</small>
                                         </p>
                                         {{ comm_form.entry_reason|append_attr:"class:form-control" }}
                                         <hr>
