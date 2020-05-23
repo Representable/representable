@@ -405,6 +405,7 @@ document.addEventListener(
       var parent_section = form_error_arr[i].closest(".card-section");
       openSectionByElement(parent_section);
     }
+    openAllSections();
     // Add a listener for the save button so sections are expanded
     // if there are errors.
     var form_save_button = document.getElementById("save");
@@ -715,9 +716,6 @@ map.addControl(draw);
 drawControls = document.querySelector(".draw_polygon_map .mapboxgl-ctrl-group");
 drawControls.classList.add("draw-group");
 
-// Add nav control buttons.
-map.addControl(new mapboxgl.NavigationControl());
-
 /* Change mapbox draw button */
 var drawButton = document.getElementsByClassName("mapbox-gl-draw_polygon");
 drawButton[0].backgroundImg = "";
@@ -727,6 +725,38 @@ var trashButton = document.getElementsByClassName("mapbox-gl-draw_trash");
 trashButton[0].backgroundImg = "";
 trashButton[0].id = "trash-button";
 trashButton[0].innerHTML = "<i class='fas fa-trash-alt'></i> Undo Polygon";
+
+// add button for toggling edit mode.
+class MapEditButton {
+  onAdd(map) {
+    var map_edit_button = document.createElement("button");
+    map_edit_button.href = "#";
+    map_edit_button.type = "button";
+    map_edit_button.backgroundImg = "";
+    map_edit_button.classList.add("active");
+    map_edit_button.classList.add("map_edit_button");
+    map_edit_button.innerHTML = "<i class='fas fa-edit'></i> Undo Polygon";
+    this._map = map;
+    this._container = document.createElement("div");
+    this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
+    map_edit_button.addEventListener("click", function (e) {
+      print("button ppressed");
+      cleanAlerts();
+      // draw.changeMode("direct_select");
+    });
+    this._container.appendChild(map_edit_button);
+    return this._container;
+  }
+
+  onRemove() {
+    this._container.parentNode.removeChild(this._container);
+    this._map = undefined;
+  }
+}
+map.addControl(new MapEditButton(), "top-right");
+
+// Add nav control buttons.
+map.addControl(new mapboxgl.NavigationControl());
 
 // add button for toggling census Blocks
 class CensusBlocksControl {
