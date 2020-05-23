@@ -142,10 +142,22 @@
                                         <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
                                     </div>
                                     <div class="card-body collapse">
-                                        <p class="card-text">
-                                            What fosters a sense of belonging in your Community? 
-                                            What common beliefs or values exist? <small class="text-danger">(Required)</small>
-                                        </p>
+                                        <div class="row mb-2">
+                                            <div class="col-10">
+                                                <p class="card-text">
+                                                    What fosters a sense of belonging in your Community? 
+                                                    What common beliefs or values exist? <small class="text-danger">(Required)</small>
+                                                </p>
+                                            </div>
+                                            <div class="col-2">
+                                                <button type="button" class="btn btn-outline-dark btn-sm float-right" data-toggle="tooltip" data-placement="right" 
+                                                title="Age groups, religious groups, arts and cultural centers, languages, immigration status, 
+                                                ethnic groups such as Detroit’s Mexican Town or Dearborn’s Middle Eastern community,
+                                                 historic settlements such as Leland’s Fishtown.">
+                                                    Show Examples
+                                                </button>
+                                            </div>
+                                        </div>
                                         {{ comm_form.cultural_interests|append_attr:"class:form-control" }}
                                         <br>
                                         <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
@@ -164,10 +176,22 @@
                                         <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
                                     </div>
                                     <div class="card-body collapse">
-                                        <p class="card-text">
-                                            Where do people in your Community gather or socialize? 
-                                            Where does your Community get its services? <small class="text-danger">(Required)</small>
-                                        </p>
+                                        <div class="row mb-2">
+                                            <div class="col-10">
+                                                <p class="card-text">
+                                                    Where do people in your Community gather or socialize? 
+                                                    Where does your Community get its services? <small class="text-danger">(Required)</small>
+                                                </p>
+                                            </div>
+                                            <div class="col-2">
+                                                <button type="button" class="btn btn-outline-dark btn-sm float-right" data-toggle="tooltip" data-placement="right" 
+                                                title="Shopping areas, schools and colleges, parks and recreation areas, 
+                                                lakes and water ways, healthcare services, and other activities and services that
+                                                 help define your Community.">
+                                                    Show Examples
+                                                </button>
+                                            </div>
+                                        </div>
                                         {{ comm_form.comm_activities|append_attr:"class:form-control" }}
                                         <br>
                                         <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
@@ -186,12 +210,24 @@
                                         <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
                                     </div>
                                     <div class="card-body collapse">
-                                        <p class="card-text">
-                                            Is there a shared economy in the geographic area of your Community? 
-                                            How and where are residents employed? What parts of a county, 
-                                            township or city are included in your Community? 
-                                            Are there shared environmental concerns such as landfills or water quality? <small class="text-danger">(Required)</small>
-                                        </p>
+                                        <div class="row mb-2">
+                                            <div class="col-10">
+                                                <p class="card-text">
+                                                    Is there a shared economy in the geographic area of your Community? 
+                                                    How and where are residents employed? What parts of a county, 
+                                                    township or city are included in your Community? 
+                                                    Are there shared environmental concerns such as landfills or water quality? <small class="text-danger">(Required)</small>
+                                                </p>
+                                            </div>
+                                            <div class="col-2">
+                                                <button type="button" class="btn btn-outline-dark btn-sm float-right" data-toggle="tooltip" data-placement="right" 
+                                                title="Tech firms and their employees, tourism, agriculture such as the cherry growers,
+                                                 shipping and transportation hubs, manufacturing centers, natural resources, university towns, 
+                                                 unemployment issues, waterfront communities, business associations. ">
+                                                    Show Examples
+                                                </button>
+                                            </div>
+                                        </div>
                                         {{ comm_form.economic_interests|append_attr:"class:form-control" }}
                                         <br>
                                         <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
