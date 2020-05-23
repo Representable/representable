@@ -745,7 +745,6 @@ class MapEditButton {
     map_edit_button.addEventListener("click", function (e) {
       cleanAlerts();
       var all_features = draw.getAll();
-      print(all_features.features);
       if (all_features.features.length > 0) {
         draw.changeMode("direct_select", {
           featureId: all_features.features[0].id,
