@@ -175,6 +175,11 @@ class CommunityForm(ModelForm):
         #     raise forms.ValidationError("Area is too big.", code="area_too_big")
         return data
 
+    def clean_user_phone(self, *args, **kwargs):
+        phone = self.cleaned_data.get("user_phone")
+        if not phone.is_usa:
+            raise forms.ValidationError("Invalid phone number.", code="invalid_phone_number")
+        return phone
 
 class DeletionForm(ModelForm):
     class Meta:
