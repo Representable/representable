@@ -137,6 +137,25 @@
                         <div class="col-lg m-2">
                             <div class="collapse-card card-section ">
                                 <div class="card">
+                                    <div id="interests-error-alerts">
+                                        {% if comm_form.cultural_interests.errors %}
+                                        <script>
+                                            sessionStorage.setItem("allChecks", "fail");
+                                        </script>
+                                        <div id="interests_missing" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
+                                            {% if LANGUAGE_CODE == 'en' %}
+                                            Please fill out at least one of the interest fields.
+                                            {% elif LANGUAGE_CODE == 'es' %}
+                                            <!-- Google translate  -->
+                                            Complete al menos uno de los campos de interés.
+                                            {% endif %}
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+
                                     <div class="card-header text-header-card">
                                         <strong>2. Your Shared Cultural Interests</strong>
                                         <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">

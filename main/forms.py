@@ -176,11 +176,21 @@ class CommunityForm(ModelForm):
     #     return data
 
     def clean(self):
+        """
+        Make sure that the user polygon contains no kinks and has an acceptable area.
+        https://gis.stackexchange.com/questions/288103/how-to-convert-the-area-to-feets-in-geodjango
+        Make sure that at least one of the interest fields is filled out.
+        Check if the phone number is a valid US number.
+        """
         errors={}
-        data = self.cleaned_data["user_polygon"]
+        # check if the user drew a polygon
+        if "user_polygon" not in self.cleaned_data:
+            errors["user_polygon"] = "Polygon doesn't exist"
+        else:
+            data = self.cleaned_data["user_polygon"]
         # Check kinks in the polygon
-        if not data.valid:
-            errors["user_polygon"] = "Polygon contains kinks."
+            if not data.valid:
+                errors["user_polygon"] = "Polygon contains kinks."
         phone = self.cleaned_data.get("user_phone")
         cultural_interests = self.cleaned_data.get("cultural_interests")
         economic_interests = self.cleaned_data.get("economic_interests")
@@ -188,7 +198,7 @@ class CommunityForm(ModelForm):
         other_considerations = self.cleaned_data.get("other_considerations")
         if not phone.is_usa:
             errors["user_phone"]= "Invalid phone number."
-        if cultural_interests is None and economic_interests is None and comm_activities is None and other_considerations is None:
+        if cultural_interests is "" and economic_interests is "" and comm_activities is "" and other_considerations is "":
             errors["cultural_interests"] = "Blank interest fields."
         if errors:
             raise forms.ValidationError(errors)
