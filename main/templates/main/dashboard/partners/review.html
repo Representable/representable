@@ -62,10 +62,35 @@
                             {% endwith %}
                           </span>
                           <br>
-                          <span class="font-weight-light"><b>Created by:</b> {{ c.user_name }}
+                          <span class="font-weight-light"><b>Created by:</b>
+                            {% if c.user_name %}
+                              {{ c.user_name }}
+                            {% else %}
+                              {{ c.user.username }}
+                            {% endif %}
                             <br>
-                            {{c.entry_reason}}
+                            <span class="comm-content">
+                              <span class="more-content">
+                                {% if c.entry_reason %}
+                                  <b> Entry Reason: </b>{{c.entry_reason}}
+                                  <br>
+                                {% endif %}
+                                {% if c.cultural_interests %}
+                                  <b> Cultural Interests: </b>{{c.cultural_interests}}
+                                  <br>
+                                {% endif %}
+                                {% if c.economic_interests %}
+                                  <b> Economic Interests: </b>{{c.economic_interests}}
+                                  <br>
+                                {% endif %}
+                                {% if c.comm_activities %}
+                                  <b> Community Activities: </b>{{c.comm_activities}}
+                                  <br>
+                                {% endif %}
+                              </span>
+                              <a href="#" class="small read-more" data-content="toggle-text">Read More</a>
                             </span>
+                          </span>
 
                         </td>
                         <td>
