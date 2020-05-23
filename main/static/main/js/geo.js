@@ -737,8 +737,7 @@ class MapEditButton {
     map_edit_button.classList.add("active");
     map_edit_button.classList.add("map_edit_button");
     map_edit_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
-    map_edit_button.innerHTML =
-      "<i class='fas fa-edit'></i> <span>Edit Polygon</span>";
+    map_edit_button.innerHTML = "<i class='fas fa-edit'></i> Edit Polygon";
     this._map = map;
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
@@ -764,6 +763,43 @@ map.addControl(new MapEditButton(), "top-right");
 
 var map_edit_button = document.querySelector(".map_edit_button");
 drawControls.appendChild(map_edit_button);
+class FinishDrawButton {
+  onAdd(map) {
+    var map_edit_button = document.createElement("button");
+    map_edit_button.href = "#";
+    map_edit_button.type = "button";
+    map_edit_button.backgroundImg = "";
+
+    map_edit_button.classList.add("active");
+    map_edit_button.classList.add("map_finish_drawing_button");
+    map_edit_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
+    map_edit_button.innerHTML = "<i class='fas fa-check'></i> Finish Drawing";
+    this._map = map;
+    this._container = document.createElement("div");
+    this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
+    map_edit_button.addEventListener("click", function (e) {
+      cleanAlerts();
+      var all_features = draw.getAll();
+      if (all_features.features.length > 0) {
+        draw.changeMode("simple_select", {
+          featureId: all_features.features[0].id,
+        });
+      }
+    });
+    this._container.appendChild(map_edit_button);
+    return this._container;
+  }
+
+  onRemove() {
+    this._container.parentNode.removeChild(this._container);
+    this._map = undefined;
+  }
+}
+map.addControl(new FinishDrawButton(), "top-right");
+var map_finish_drawing_button = document.querySelector(
+  ".map_finish_drawing_button"
+);
+drawControls.appendChild(map_finish_drawing_button);
 
 // Add nav control buttons.
 map.addControl(new mapboxgl.NavigationControl());
