@@ -302,7 +302,7 @@ class CommunityEntry(models.Model):
     user_phone = PhoneField(
         E164_only=True, blank=False, unique=False, default=""
     )
-    created_at = models.DateTimeField(auto_now_add=True)
+    # created_at = models.DateTimeField(auto_now_add=True)
     admin_approved = models.BooleanField(default=False)
 
     def __str__(self):
