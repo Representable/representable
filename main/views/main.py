@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.views.generic import (
     TemplateView,
@@ -61,6 +61,7 @@ import json
 import re
 import csv
 import hashlib
+from django.template import loader
 from django.http import JsonResponse
 import shapely.wkt
 import reverse_geocoder as rg
@@ -238,6 +239,7 @@ class Submission(TemplateView):
         entryPolyDict[m_uuid] = map_poly.coordinates
 
         context = {
+            "community": user_map,
             "entry_name": user_map.entry_name,
             "entry_reason": user_map.entry_reason,
             "entries": json.dumps(entryPolyDict),
@@ -245,6 +247,31 @@ class Submission(TemplateView):
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
         return render(request, self.template_name, context)
+
+
+class ExportView(TemplateView):
+    template = "main/pages/export.html"
+    # Create the HttpResponse object with the appropriate CSV header.
+    def get(self, request, *args, **kwargs):
+        m_uuid = self.request.GET.get("map_id", None)
+        # TODO: Are there security risks? Probably - we should hash the UUID and make that the permalink
+
+        if m_uuid is None:
+            pass  # TODO need to fix here
+        query = CommunityEntry.objects.filter(entry_ID__startswith=m_uuid)
+
+        if len(query) == 0:
+            context = {
+                "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+            }
+            return render(request, self.template_name, context)
+        user_map = query[0]
+        map_geojson = serialize('geojson', query,
+            geometry_field='census_blocks_polygon',
+            fields=('entry_name', 'entry_reason', 'cultural_interests', 'economic_interests', 'comm_activities', ))
+
+        response = HttpResponse(map_geojson, content_type="application/json")
+        return response
 
 
 # ******************************************************************************#

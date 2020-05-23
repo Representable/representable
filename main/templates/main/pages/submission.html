@@ -1,6 +1,8 @@
 {% extends 'main/base.html' %}
 {% load leaflet_tags %}
 {% load static %}
+{% load representable_extras %}
+
 
 {% block head %}
 {% leaflet_js %}
@@ -60,22 +62,26 @@
               <div class="container">
                 <b>Community name</b>
               </div>
-              <div class="card-body text-center d-flex flex-column align-items-center" id="outline-menu">
+              <div class="card-body d-flex flex-column" id="outline-menu">
                 {{ entry_name }}
               </div>
               <div class="container">
               <b>Why are you submitting this community?</b>
             </div>
-              <div class="card-body text-center d-flex flex-column align-items-center" id="outline-menu">
+              <div class="card-body d-flex flex-column" id="outline-menu">
                 {{ entry_reason }}
+              </div>
+              <div class="text-center">
+                {% with link_text="/export?map_id="|addstr:community.entry_ID|slice:27 %}
+                  <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{community.entry_ID|slice:8}}.geojson">Export GeoJSON</a>
+                {% endwith %}
               </div>
             </div>
           </div>
           <!-- Note: TODO issues temporarily removed because it's just one map, could add back -->
           <!-- Note: TODO communities temporarily removed because it's just one map, could add back -->
         </div>
-        <div class="dropdown-container" id="tags-menu"></div>
-          <i class="fa"></i></button>
+        </div>
     </nav>
   </div>
   <div class="col-md-8 col-map col-wide">

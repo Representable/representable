@@ -208,57 +208,10 @@ var states = [
   "wy",
 ];
 
+
 $(document).ready(function () {
-  $("#zipcodeModal").modal("show");
+
 });
-
-function modalZip(e) {
-  e.preventDefault();
-
-  var isnum = /^\d+$/.test($("#zipcode").val());
-  if (isnum) {
-    console.log("yuh");
-    $("#zipcodeModal").modal("hide");
-    // user puts in a zipcode and the map zooms to that loc
-    let geoObj = geocoder.query($("#zipcode").val(), function (err, res) {
-      console.log(err, res);
-    });
-    console.log(geoObj);
-    var q = "Edison";
-  } else {
-    // write out the error here:
-  }
-}
-
-$("#zipcodeModal").keypress(function (e) {
-  if (e.keyCode === 10 || e.keyCode === 13) {
-    modalZip(e);
-  }
-});
-$("#zipSubmit").click(function (e) {
-  modalZip(e);
-});
-
-//builds proper format of location string based on mapbox data. city,state/province,country
-function parseReverseGeo(geoData) {
-  var region, countryName, placeName, returnStr;
-  if (geoData.context) {
-    $.each(geoData.context, function (i, v) {
-      if (v.id.indexOf("region") >= 0) {
-        region = v.text;
-      }
-      if (v.id.indexOf("country") >= 0) {
-        countryName = v.text;
-      }
-    });
-  }
-  if (region && countryName) {
-    returnStr = region + ", " + countryName;
-  } else {
-    returnStr = geoData.place_name;
-  }
-  return returnStr;
-}
 
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
