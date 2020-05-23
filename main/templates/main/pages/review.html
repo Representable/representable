@@ -33,7 +33,6 @@
     <div>
         <script type="text/javascript">
             var entry_poly_dict = '{{ entry_poly_dict | escapejs }}';
-            var tags = '{{ tags | escapejs }}';
             var approved = '{{ approved | escapejs }}';
             var mapbox_user_name = "{{mapbox_user_name}}";
         </script>
@@ -50,19 +49,17 @@
                 </div>
                 {% endif %}
                 {% if communities %}
-                <table class="table table-review">
+                <table class="table table-hover">
+                  <thead>
                     <tr>
                         <th scope="col">Community Name</th>
                         <th scope="col">Action</th>
                     </tr>
+                    </thead>
                     {% for c in communities %}
                     <tr class="community-review-span" id={{c.entry_ID}}>
                         <td>
-                          <span class="font-weight-light text-uppercase entry-name">
-                            {% with link_text="/submission?map_id="|addstr:c.entry_ID|slice:27 %}
-                              <a href={{link_text}} style="padding: 6px">{{c.entry_name}}</a>
-                            {% endwith %}
-                          </span>
+                          <span class="font-weight-light text-uppercase entry-name">{{c.entry_name}}</span>
                           <br>
                             <span class="font-weight-light">{{c.entry_reason}}<br>
                         </td>
@@ -70,7 +67,10 @@
                             <form method="post" action="">{% csrf_token %}
                                 {{ form }}
                                 <input type="hidden" name="c_id" value="{{ c }}">
-                                <button type="submit" class="btn btn-danger", name="Delete">Delete</button>
+                                {% with link_text="/submission?map_id="|addstr:c.entry_ID|slice:27 %}
+                                  <a class="btn btn-outline-primary" href={{link_text}} style="padding: 6px">View</a>
+                                {% endwith %}
+                                                                <button type="submit" class="btn btn-danger", name="Delete">Delete</button>
                             </form>
                         </td>
                     <tr>

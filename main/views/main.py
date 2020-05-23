@@ -151,15 +151,6 @@ class Review(LoginRequiredMixin, TemplateView):
         form = self.form_class(initial=self.get_initial(), label_suffix="")
         # the polygon coordinates
         entryPolyDict = dict()
-        # dictionary of tags to be displayed
-        tags = dict()
-        for obj in Tag.objects.all():
-            # manytomany query
-            entries = obj.communityentry_set.all()
-            ids = []
-            for id in entries:
-                ids.append(str(id))
-            tags[str(obj)] = ids
 
         user = self.request.user
         approvedList = list()
@@ -179,7 +170,6 @@ class Review(LoginRequiredMixin, TemplateView):
             entryPolyDict[obj.entry_ID] = struct.coordinates
         context = {
             "form": form,
-            "tags": json.dumps(tags),
             "entry_poly_dict": json.dumps(entryPolyDict),
             "approved": json.dumps(approvedList),
             "communities": query,

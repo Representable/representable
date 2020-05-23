@@ -18,8 +18,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 /**************************************************************************/
-/* this file loads the visualization stuff ! for map.html -- loads layers of
-census blocks, state legislature, and drawn polygons + tags to select ur favs */
+/* this file loads the visualization stuff ! for review.html -- loads layers of
+census blocks, state legislature, and drawn polygons */
 /**************************************************************************/
 // the mapbox keys to load tilesets
 // when adding a new state: put it into CENSUS_KEYS, UPPER_KEYS, LOWER_KEYS, and state array
@@ -131,24 +131,26 @@ function newLowerLegislatureLayer(state) {
   });
 }
 
+var community_bounds = {};
+
 map.on("load", function () {
   // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
-  for (let census in CENSUS_KEYS) {
-    newSourceLayer(census, CENSUS_KEYS[census]);
-  }
-  // upper layers
-  for (let upper in UPPER_KEYS) {
-    newSourceLayer(upper, UPPER_KEYS[upper]);
-  }
-  // lower layers
-  for (let lower in LOWER_KEYS) {
-    newSourceLayer(lower, LOWER_KEYS[lower]);
-  }
-  for (let i = 0; i < states.length; i++) {
-    newCensusLayer(states[i]);
-    newUpperLegislatureLayer(states[i]);
-    newLowerLegislatureLayer(states[i]);
-  }
+  // for (let census in CENSUS_KEYS) {
+  //   newSourceLayer(census, CENSUS_KEYS[census]);
+  // }
+  // // upper layers
+  // for (let upper in UPPER_KEYS) {
+  //   newSourceLayer(upper, UPPER_KEYS[upper]);
+  // }
+  // // lower layers
+  // for (let lower in LOWER_KEYS) {
+  //   newSourceLayer(lower, LOWER_KEYS[lower]);
+  // }
+  // for (let i = 0; i < states.length; i++) {
+  //   newCensusLayer(states[i]);
+  //   newUpperLegislatureLayer(states[i]);
+  //   newLowerLegislatureLayer(states[i]);
+  // }
 
   output_poly_json = JSON.parse(entry_poly_dict);
   var dest = [];
@@ -156,6 +158,7 @@ map.on("load", function () {
   for (obj in output_poly_json) {
     // check how deeply nested the outer ring of the unioned polygon is
     final = [];
+    dest = [];
     // set the coordinates of the outer ring to final
     if (output_poly_json[obj][0][0].length > 2) {
       final = [output_poly_json[obj][0][0]];
@@ -165,13 +168,19 @@ map.on("load", function () {
       final = output_poly_json[obj];
     }
     dest = final[0][0];
-    approved_color = "rgba(110, 178, 181,0.15)";
-    unapproved_color = "rgba(255, 50, 0,0.15)";
-    if (approved.indexOf(obj) > -1) {
-      color = approved_color;
-    } else {
-      color = unapproved_color;
-    }
+    // add info to bounds list for zooming
+    // ok zoomer
+    var fit = new L.Polygon(final).getBounds();
+    var southWest = new mapboxgl.LngLat(fit['_southWest']['lat'], fit['_southWest']['lng']);
+    var northEast = new mapboxgl.LngLat(fit['_northEast']['lat'], fit['_northEast']['lng']);
+    community_bounds[obj] = new mapboxgl.LngLatBounds(southWest, northEast)
+    color = "rgba(110, 178, 181,0.15)";
+    // unapproved_color = "rgba(255, 50, 0,0.15)";
+    // if (approved.indexOf(obj) > -1) {
+    //   color = approved_color;
+    // } else {
+    //   color = unapproved_color;
+    // }
     map.addLayer({
       id: obj,
       type: "fill",
@@ -223,6 +232,11 @@ map.on("load", function () {
       zoom: 12,
     });
   }
+});
+
+// on click, zoom to community
+$(".community-review-span").click(function () {
+  map.fitBounds(community_bounds[this.id]);
 });
 
 // on hover, highlight the community

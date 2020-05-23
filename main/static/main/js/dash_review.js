@@ -134,22 +134,22 @@ function newLowerLegislatureLayer(state) {
 
 map.on("load", function () {
   // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
-  for (let census in CENSUS_KEYS) {
-    newSourceLayer(census, CENSUS_KEYS[census]);
-  }
-  // upper layers
-  for (let upper in UPPER_KEYS) {
-    newSourceLayer(upper, UPPER_KEYS[upper]);
-  }
-  // lower layers
-  for (let lower in LOWER_KEYS) {
-    newSourceLayer(lower, LOWER_KEYS[lower]);
-  }
-  for (let i = 0; i < states.length; i++) {
-    newCensusLayer(states[i]);
-    newUpperLegislatureLayer(states[i]);
-    newLowerLegislatureLayer(states[i]);
-  }
+  // for (let census in CENSUS_KEYS) {
+  //   newSourceLayer(census, CENSUS_KEYS[census]);
+  // }
+  // // upper layers
+  // for (let upper in UPPER_KEYS) {
+  //   newSourceLayer(upper, UPPER_KEYS[upper]);
+  // }
+  // // lower layers
+  // for (let lower in LOWER_KEYS) {
+  //   newSourceLayer(lower, LOWER_KEYS[lower]);
+  // }
+  // for (let i = 0; i < states.length; i++) {
+  //   newCensusLayer(states[i]);
+  //   newUpperLegislatureLayer(states[i]);
+  //   newLowerLegislatureLayer(states[i]);
+  // }
 
   var outputstr = entries.replace(/'/g, '"');
   entries = JSON.parse(outputstr);

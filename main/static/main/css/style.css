@@ -866,10 +866,3 @@ label {
   padding: 1px 5px;
   border-radius: 3px;
 }
-
-.table-review tr:active,
-.table-review tr:hover,
-.items li:active,
-.items li:hover {
-  background-color: #f5f5f5;
-}
