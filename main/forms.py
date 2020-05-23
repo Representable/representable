@@ -182,7 +182,7 @@ class CommunityForm(ModelForm):
         if cultural_interests is "" and economic_interests is "" and comm_activities is "" and other_considerations is "":
             errors["cultural_interests"] = "Blank interest fields."
         if errors:
-            raise forms.ValidationError(errors) 
+            raise forms.ValidationError(errors)  
 
 
 class DeletionForm(ModelForm):
