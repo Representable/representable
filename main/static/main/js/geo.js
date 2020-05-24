@@ -737,6 +737,7 @@ class ClearMapButton {
     clear_map_button.classList.add("active");
     clear_map_button.classList.add("map_clear_button");
     clear_map_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
+    clear_map_button.id = "map_clear_button";
     clear_map_button.innerHTML =
       "<i class='fas fa-trash-alt'></i> Clear Polygon";
     this._map = map;
@@ -758,7 +759,7 @@ class ClearMapButton {
   }
 }
 map.addControl(new ClearMapButton(), "top-right");
-var map_clear_map_button = document.querySelector(".map_clear_button");
+var map_clear_map_button = document.getElementById("map_clear_button");
 drawControls.appendChild(map_clear_map_button);
 // add button for toggling edit mode.
 class MapEditButton {
@@ -937,7 +938,7 @@ class CensusBlocksControl {
 map.addControl(new CensusBlocksControl(), "top-left");
 
 document
-  .querySelector(".map_clear_button")
+  .getElementById("map_clear_button")
   .addEventListener("click", function (e) {
     cleanAlerts();
     hideInstructionBox();
