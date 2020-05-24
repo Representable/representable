@@ -79,15 +79,20 @@
                                         <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
                                     </div>
                                     <div class="card-body collapse show">
-                                        <div class="alert alert-info" role="alert">
-                                            <h5 class="alert-heading">Why do we need your information?</h3>
-                                            <p class="card-text">
-                                                Your personal privacy is our highest priority. We gather personal information to verify that you are a real person.
-                                            </p>
-                                            <p class="card-text">
-                                                If you choose to submit this entry to a campaign, the administrators of the campaign will have access to this information.
-                                            </p>
-                                          </div>
+                                        <div class="accordion" id="privacy_accordion">
+                                            <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" data-target="#privacy_example" aria-expanded="false" aria-controls="collapseOne">
+                                            Why do we need your information?
+                                            </button>
+                                            <div id="privacy_example" class="collapse" aria-labelledby="headingOne" data-parent="#privacy_accordion">
+                                                <p class="collapse-in ml-0">
+                                                    Your personal privacy is our highest priority. We gather personal
+                                                    information to verify that you are a real person. If you choose to
+                                                    submit this entry to a campaign, the administrators of the campaign
+                                                    will have access to this information. Learn more about our
+                                                    commitment to privacy on our <a href="{% url 'main:privacy' %}">Privacy</a> and <a href="{% url 'main:terms' %}">Terms</a> pages.
+                                                </p>
+                                            </div>
+                                        </div>
                                         <p class="card-text">
                                             Your Name <small class="text-danger">(Required)</small>
                                         </p>
@@ -403,13 +408,13 @@
                                     <div class="card-body collapse show">
                                         <p class="card-text">
                                             Your privacy is our priority. We don't share your personal information
-                                            with anyone unless otherwise noted. <a href="/privacy"> Learn more about
+                                            with anyone unless otherwise noted. <a href="{% url 'main:privacy' %}"> Learn more about
                                             our commitment to privacy on our Privacy Policy page.</a>
                                         </p>
                                         <div class="toc-check">
                                             <input class="toc-check-input" type="checkbox" value="" id="toc_check" required>
                                             <label class="toc-check-label" for="toc_check">
-                                                Click here to indicate that you have read and agree to the <a href="/terms">Terms of Use</a> and <a href="/privacy">Privacy Policy</a>.
+                                                Click here to indicate that you have read and agree to the <a href="{% url 'main:terms' %}">Terms of Use</a> and <a href="{% url 'main:privacy' %}">Privacy Policy</a>.
                                             </label>
                                         </div>
                                     </div>
