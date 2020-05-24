@@ -1217,7 +1217,6 @@ map.on("draw.changeMode", function (event) {
   updateCommunityEntry(event);
 });
 map.on("draw.selectionchange", function (event) {
-  // updateCommunityEntry(event);
   // The event object contains the featues that were selected.
   var selected_objects = event;
   var selected_points = selected_objects.points;
@@ -1229,6 +1228,7 @@ map.on("draw.selectionchange", function (event) {
   } else {
     hideDeleteFeatureButton();
   }
+  updateCommunityEntry(event);
 });
 
 /******************************************************************************/
@@ -1417,6 +1417,7 @@ function updateCommunityEntry(e) {
     if (census_blocks_polygon_array != undefined) {
       census_blocks_polygon_array = census_blocks_polygon_array.join("|");
     }
+    triggerSuccessMessage();
   } else {
     // sets an empty filter - unhighlights everything
     // sets the form fields as empty
@@ -1428,10 +1429,7 @@ function updateCommunityEntry(e) {
     // "in",
     // "BLOCKID10",
     // ]);
-    triggerDrawError(
-      "no-polygon-saved",
-      "You must draw a polygon to continue."
-    );
+    triggerDrawError("polygon_missing", "You must draw a polygon to continue.");
   }
   // Update form fields
   census_blocks_polygon_wkt = "";
@@ -1442,7 +1440,6 @@ function updateCommunityEntry(e) {
   document.getElementById(
     "id_census_blocks_polygon_array"
   ).value = census_blocks_polygon_array;
-  triggerSuccessMessage();
 }
 /******************************************************************************/
 
