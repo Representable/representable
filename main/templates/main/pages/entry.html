@@ -353,7 +353,12 @@
                                             <div class="map-bounding-box my-2 collapse">
                                                 <div class="map-box">
                                                     <div id='menu'></div>
-                                                    <div id='map' class='draw_polygon_map' onload="map.resize()"></div>
+                                                    <div id='map' class='draw_polygon_map' onload="map.resize()">
+                                                        <div id="instruction-box-id" class="instruction-box">
+                                                            <p class="mb-0">Click on a blue vertex <i class="fas fa-circle blue-circle"></i> to move it or delete it. Drag vertex to move it or press "Delete Vertex" to delete it.</p>
+                                                            <p class="mb-0">Click on a red midpoint vertex  <i class="fas fa-circle red-circle"></i> to add a new vertex.</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                     </div>
