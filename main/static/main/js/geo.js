@@ -1367,10 +1367,10 @@ function updateCommunityEntry(e) {
     census_blocks_polygon_wkt = "";
     census_blocks_multipolygon_wkt = "";
     // TODO: update for all states
-    map.setFilter(sessionStorage.getItem("stateName") + "-blocks-highlighted", [
-      "in",
-      "BLOCKID10",
-    ]);
+    // map.setFilter(sessionStorage.getItem("stateName") + "-blocks-highlighted", [
+    // "in",
+    // "BLOCKID10",
+    // ]);
   }
   // Update form fields
   census_blocks_polygon_wkt = "";
