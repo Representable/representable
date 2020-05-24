@@ -79,7 +79,7 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="alert alert-info" role="alert">
-                                            <h5 class="alert-heading">Why do we need your information?</h3>
+                                            <h5 class="alert-heading">Why do we need your information?</h5>
                                             <p class="card-text">
                                                 Your personal privacy is our highest priority. We gather personal information to verify that you are a real person.
                                             </p>
@@ -161,7 +161,6 @@
                                     <div class="card-body">
                                         {% if comm_form.cultural_interests.errors %}
                                         <div id="interests-error-alerts">
-                                            
                                             <script>
                                                 sessionStorage.setItem("allChecks", "fail");
                                             </script>
@@ -180,7 +179,7 @@
                                         </div>
                                         {% endif %}
                                         <!-- Cultural -->
-                                        <h3> Your Shared Cultural Interests </h3>
+                                        <h6> Your Shared Cultural Interests </h6>
                                         <p class="card-text">
                                             What fosters a sense of belonging in your Community? 
                                             What common beliefs or values exist? <small class="text-danger">(Recommended)</small>
@@ -199,7 +198,7 @@
                                         </div>
                                         {{ comm_form.cultural_interests|append_attr:"class:form-control" }}
                                         <!-- Activities -->
-                                        <h3>Shared Community Activities and Services</h3>
+                                        <h6>Shared Community Activities and Services</h6>
                                         <p class="card-text">
                                             Where do people in your Community gather or socialize? 
                                             Where does your Community get its services? <small class="text-danger">(Recommended)</small>
@@ -218,7 +217,7 @@
                                         </div>
                                         {{ comm_form.comm_activities|append_attr:"class:form-control" }}
                                         <!--  Economic -->
-                                        <h3>Your Shared Economic Interests</h3>
+                                        <h6>Your Shared Economic Interests</h6>
                                         <p class="card-text">
                                             Is there a shared economy in the geographic area of your Community? 
                                             How and where are residents employed? What parts of a county, 
@@ -358,7 +357,7 @@
                 <div class='row row-equal-cols'>
                     <div class='col-lg text-center m-2'>
                         <div class="alert alert-warning text-left" role="alert">
-                            <h5 class="alert-heading">What happens next?</h3>
+                            <h5 class="alert-heading">What happens next?</h5>
                             <p class="card-text">
                                 By adding your map to Representable.org you're not submitting a map to a redistricting commission. 
                             </p>
