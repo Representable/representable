@@ -83,4 +83,10 @@ class PartnerMap(TemplateView):
             context["campaign"] = get_object_or_404(
                 Campaign, slug=self.kwargs["campaign"]
             ).name
+        context["is_org_admin"] = self.request.user.is_org_admin(
+            Organization.objects.get(slug=self.kwargs["slug"]).id
+        )
+        context["is_org_moderator"] = self.request.user.is_org_moderator(
+            Organization.objects.get(slug=self.kwargs["slug"]).id
+        )
         return context

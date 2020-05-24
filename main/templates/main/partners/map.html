@@ -73,14 +73,25 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                       {% endwith %}
                     </span>
                     <br>
+                    {% if is_org_admin or is_org_moderator %}
+                      {% if c.user_name %}
+                      {{ c.user_name }}
+                      {% else %}
+                      {{ c.user.username }}
+                      {% endif %}
+                      <br>
+                    {% endif %}
                     {% if campaign is None %}
                     {% if c.campaign %}
-                    <b> Campaign: </b>{{c.campaign}}
+                    <b>Campaign: </b>{{c.campaign}}
                     <br>
                     {% endif %}
                     {% endif %}
                     <span class="comm-content">
                       <span class="more-content">
+                        {% if is_org_admin or is_org_moderator %}
+                        {{ c.user_phone }}<br>
+                        {% endif %}
                         {% if c.entry_reason %}
                         <b> Entry Reason</b><br>{{c.entry_reason}}
                         <br>
@@ -105,6 +116,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                     {% endfor %}
                   </table>
                   {% endif %}
+                  <p class="loading my-5 text-center">Loading Communities...</p>
                 </div>
               </div>
             </div>

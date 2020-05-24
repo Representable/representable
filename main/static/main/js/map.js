@@ -261,6 +261,7 @@ map.on("load", function () {
     map.setPaintProperty(this.id + "line", "line-width", 2);
     map.setPaintProperty(this.id, "fill-opacity", 0.15);
   });
+  $(".loading").delay(1200).fadeOut(1000);
 });
 
 // on click, zoom to community
