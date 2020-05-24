@@ -156,30 +156,33 @@
                         <div class="col-lg m-2">
                             <div class="collapse-card card-section ">
                                 <div class="card">
-                                    <div id="interests-error-alerts">
-                                        {% if comm_form.cultural_interests.errors %}
-                                        <script>
-                                            sessionStorage.setItem("allChecks", "fail");
-                                        </script>
-                                        <div id="interests_missing" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
-                                            {% if LANGUAGE_CODE == 'en' %}
-                                            Please fill out at least one of the interest fields.
-                                            {% elif LANGUAGE_CODE == 'es' %}
-                                            <!-- Google translate  -->
-                                            Complete al menos uno de los campos de interés.
-                                            {% endif %}
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        {% endif %}
-                                    </div>
-
                                     <div class="card-header text-header-card">
-                                        <strong>2. Your Shared Cultural Interests</strong>
+                                        <strong>2. Your Community's Shared Interests</strong>
                                         <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
                                     </div>
                                     <div class="card-body">
+                                        {% if comm_form.cultural_interests.errors %}
+                                        <div id="interests-error-alerts">
+                                            
+                                            <script>
+                                                sessionStorage.setItem("allChecks", "fail");
+                                            </script>
+                                            <div id="interests_missing" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
+                                                {% if LANGUAGE_CODE == 'en' %}
+                                                Please fill out at least one of the interest fields.
+                                                {% elif LANGUAGE_CODE == 'es' %}
+                                                <!-- Google translate  -->
+                                                Complete al menos uno de los campos de interés.
+                                                {% endif %}
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            
+                                        </div>
+                                        {% endif %}
+                                        <!-- Cultural -->
+                                        <h3> Your Shared Cultural Interests </h3>
                                         <p class="card-text">
                                             What fosters a sense of belonging in your Community? 
                                             What common beliefs or values exist? <small class="text-danger">(Recommended)</small>
@@ -197,21 +200,8 @@
                                             </div>
                                         </div>
                                         {{ comm_form.cultural_interests|append_attr:"class:form-control" }}
-                                        <br>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row row-equal-cols">
-                        <div class="col-lg  m-2">
-                            <div class="card-section ">
-                                <div class="card">
-                                    <div class="card-header text-header-card">
-                                        <strong>3. Shared Community Activities and Services</strong>
-                                        <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
-                                    </div>
-                                    <div class="card-body">
+                                        <!-- Activities -->
+                                        <h3>Shared Community Activities and Services</h3>
                                         <p class="card-text">
                                             Where do people in your Community gather or socialize? 
                                             Where does your Community get its services? <small class="text-danger">(Recommended)</small>
@@ -229,21 +219,8 @@
                                             </div>
                                         </div>
                                         {{ comm_form.comm_activities|append_attr:"class:form-control" }}
-                                        <br>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row row-equal-cols">
-                        <div class="col-lg m-2">
-                            <div class="collapse-card card-section ">
-                                <div class="card">
-                                    <div class="card-header text-header-card">
-                                        <strong>4. Your Shared Economic Interests</strong>
-                                        <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
-                                    </div>
-                                    <div class="card-body">
+                                        <!--  Economic -->
+                                        <h3>Your Shared Economic Interests</h3>
                                         <p class="card-text">
                                             Is there a shared economy in the geographic area of your Community? 
                                             How and where are residents employed? What parts of a county, 
@@ -264,6 +241,7 @@
                                         </div>
                                         {{ comm_form.economic_interests|append_attr:"class:form-control" }}
                                         <br>
+                                        <!-- Other -->
                                     </div>
                                 </div>
                             </div>
