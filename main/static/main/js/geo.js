@@ -241,6 +241,16 @@ function print(items) {
   console.log(items);
 }
 
+// change "Show Examples" to "Hide Examples" on click
+function changeText(element) {
+  if (element.innerText == "Show Examples") {
+    element.innerText = "Hide Examples";
+  }
+  else {
+    element.innerText = "Show Examples";
+  }
+}
+
 /******************************************************************************/
 
 // Form Handling

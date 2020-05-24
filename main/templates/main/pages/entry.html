@@ -185,6 +185,18 @@
                                             What fosters a sense of belonging in your Community? 
                                             What common beliefs or values exist? <small class="text-danger">(Recommended)</small>
                                         </p>
+                                        <div class="accordion" id="cultural_interests_accordion">
+                                            <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#cultural_interests_example" aria-expanded="false" aria-controls="collapseOne">
+                                            Show Examples
+                                            </button>
+                                            <div id="cultural_interests_example" class="collapse" aria-labelledby="headingOne" data-parent="#cultural_interests_accordion">
+                                                <p class="collapse-in ml-0">
+                                                    Age groups, religious groups, arts and cultural centers, languages, immigration status, 
+                                                    ethnic groups such as Detroit’s Mexican Town or Dearborn’s Middle Eastern community, 
+                                                    historic settlements such as Leland’s Fishtown.
+                                                </p>
+                                            </div>
+                                        </div>
                                         {{ comm_form.cultural_interests|append_attr:"class:form-control" }}
                                         <br>
                                         <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
@@ -207,6 +219,18 @@
                                             Where do people in your Community gather or socialize? 
                                             Where does your Community get its services? <small class="text-danger">(Recommended)</small>
                                         </p>
+                                        <div class="accordion" id="comm_activities_accordion">
+                                            <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#comm_activities_example" aria-expanded="false" aria-controls="collapseOne">
+                                            Show Examples
+                                            </button>
+                                            <div id="comm_activities_example" class="collapse" aria-labelledby="headingOne" data-parent="#comm_activities_accordion">
+                                                <p class="collapse-in ml-0">
+                                                    Shopping areas, schools and colleges, parks and recreation areas, 
+                                                    lakes and water ways, healthcare services, and other activities and services that 
+                                                    help define your Community.
+                                                </p>
+                                            </div>
+                                        </div>
                                         {{ comm_form.comm_activities|append_attr:"class:form-control" }}
                                         <br>
                                         <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
@@ -231,6 +255,18 @@
                                             township or city are included in your Community? 
                                             Are there shared environmental concerns such as landfills or water quality? <small class="text-danger">(Recommended)</small>
                                         </p>
+                                        <div class="accordion" id="economic_interests_accordion">
+                                            <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#economic_interests_example" aria-expanded="false" aria-controls="collapseOne">
+                                            Show Examples
+                                            </button>
+                                            <div id="economic_interests_example" class="collapse" aria-labelledby="headingOne" data-parent="#economic_interests_accordion">
+                                                <p class="collapse-in ml-0">
+                                                    Tech firms and their employees, tourism, agriculture such as the cherry growers, 
+                                                    shipping and transportation hubs, manufacturing centers, natural resources, university towns, 
+                                                    unemployment issues, waterfront communities, business associations. 
+                                                </p>
+                                            </div>
+                                        </div>
                                         {{ comm_form.economic_interests|append_attr:"class:form-control" }}
                                         <br>
                                         <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
