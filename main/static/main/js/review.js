@@ -154,7 +154,7 @@ map.on("load", function () {
       map.fitBounds(community_bounds[obj], {padding: 100});
       zooming = false;
     }
-    color = "rgba(110, 178, 181,0.15)";
+    color = "rgb(110, 178, 181)";
     // unapproved_color = "rgba(255, 50, 0,0.15)";
     // if (approved.indexOf(obj) > -1) {
     //   color = approved_color;
@@ -179,6 +179,7 @@ map.on("load", function () {
       },
       paint: {
         "fill-color": color,
+        "fill-opacity": 0.15
       },
     });
     map.addLayer({
@@ -212,38 +213,13 @@ $(".community-review-span").click(function () {
   map.fitBounds(community_bounds[this.id], {padding: 100});
 });
 
-// on hover, highlight the community
-$(".sidenav").on("mouseenter", ".community-review-span", function () {
-  var isApproved = false;
-  if (
-    map.getPaintProperty(this.id, "fill-color") === "rgba(110, 178, 181,0.15)"
-  ) {
-    isApproved = true;
-  }
-  if (isApproved) {
-    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
-    map.setPaintProperty(this.id + "line", "line-width", 4);
-    map.setPaintProperty(this.id, "fill-color", "rgba(110, 178, 181,0.5)");
-  } else {
-    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
-    map.setPaintProperty(this.id + "line", "line-width", 4);
-    map.setPaintProperty(this.id, "fill-color", "rgba(255, 50, 0,0.5)");
-  }
-});
-$(".sidenav").on("mouseleave", ".community-review-span", function () {
-  var isApproved = false;
-  if (
-    map.getPaintProperty(this.id, "fill-color") === "rgba(110, 178, 181,0.5)"
-  ) {
-    isApproved = true;
-  }
-  if (isApproved) {
-    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.2)");
-    map.setPaintProperty(this.id + "line", "line-width", 2);
-    map.setPaintProperty(this.id, "fill-color", "rgba(110, 178, 181,0.15)");
-  } else {
-    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.2)");
-    map.setPaintProperty(this.id + "line", "line-width", 2);
-    map.setPaintProperty(this.id, "fill-color", "rgba(255, 50, 0,0.15)");
-  }
+// hover to highlight
+$(".community-review-span").hover(function() {
+  map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
+  map.setPaintProperty(this.id + "line", "line-width", 4);
+  map.setPaintProperty(this.id, "fill-opacity", 0.5);
+}, function () {
+  map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.2)");
+  map.setPaintProperty(this.id + "line", "line-width", 2);
+  map.setPaintProperty(this.id, "fill-opacity", 0.15);
 });

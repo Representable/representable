@@ -204,7 +204,8 @@ map.on("load", function () {
         visibility: "visible",
       },
       paint: {
-        "fill-color": "rgba(110, 178, 181,0.15)",
+        "fill-color": "rgb(110, 178, 181)",
+        "fill-opacity": 0.15
       },
     });
 
@@ -232,7 +233,7 @@ map.on("load", function () {
         "line-cap": "round",
       },
       paint: {
-        "line-color": "rgba(0, 0, 0,0.5)",
+        "line-color": "rgba(0, 0, 0,0.2)",
         "line-width": 2,
       },
     });
@@ -282,14 +283,14 @@ map.on("load", function () {
 
 // on hover, highlight the community
 $("#community-list").on("mouseenter", "li", function () {
-  map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0, 0.8)");
-  map.setPaintProperty(this.id + "line", "line-width", 3);
-  map.setPaintProperty(this.id, "fill-color", "rgba(61, 114, 118,0.3)");
+  map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0, 0.5)");
+  map.setPaintProperty(this.id + "line", "line-width", 4);
+  map.setPaintProperty(this.id, "fill-opacity", 0.5);
 });
 $("#community-list").on("mouseleave", "li", function () {
-  map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
+  map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.2)");
   map.setPaintProperty(this.id + "line", "line-width", 2);
-  map.setPaintProperty(this.id, "fill-color", "rgba(110, 178, 181,0.15)");
+  map.setPaintProperty(this.id, "fill-opacity", 0.15);
 });
 
 //create a button that toggles layers based on their IDs
