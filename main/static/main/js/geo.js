@@ -869,7 +869,6 @@ function hideInstructionBox() {
   instruction_box.style.display = "none";
   if (draw != null) {
     var all_features = draw.getAll();
-    print(all_features);
     draw.changeMode("simple_select");
     // draw.changeMode("simple_select", {
     // featureIds: [all_features.features[0].id]
