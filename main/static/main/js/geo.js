@@ -717,33 +717,15 @@ drawControls = document.querySelector(".draw_polygon_map .mapboxgl-ctrl-group");
 drawControls.classList.add("draw-group");
 
 /* Change mapbox draw button */
-var drawButton = document.getElementsByClassName("mapbox-gl-draw_polygon");
-drawButton[0].backgroundImg = "";
-drawButton[0].id = "draw-button";
-drawButton[0].innerHTML = "<i class='fas fa-draw-polygon'></i> Draw Polygon";
-var trashButton = document.getElementsByClassName("mapbox-gl-draw_trash");
-trashButton[0].backgroundImg = "";
-trashButton[0].id = "trash-button";
-trashButton[0].innerHTML = "<i class='fas fa-trash-alt'></i> Delete Selection";
-
-function toggleInstructionBox() {
-  var instruction_box = document.querySelector(".instruction-box");
-  if (instruction_box.style.display == "block") {
-    instruction_box.style.display = "none";
-  } else {
-    instruction_box.style.display = "block";
-  }
-}
-
-function showInstructionBox() {
-  var instruction_box = document.querySelector(".instruction-box");
-  instruction_box.style.display = "block";
-}
-
-function hideInstructionBox() {
-  var instruction_box = document.querySelector(".instruction-box");
-  instruction_box.style.display = "none";
-}
+var drawButton = document.querySelector(".mapbox-gl-draw_polygon");
+drawButton.backgroundImg = "";
+drawButton.id = "draw-button";
+drawButton.innerHTML = "<i class='fas fa-draw-polygon'></i> Draw Polygon";
+var delete_feature_button = document.querySelector(".mapbox-gl-draw_trash");
+delete_feature_button.backgroundImg = "";
+delete_feature_button.id = "trash-button";
+delete_feature_button.innerHTML =
+  "<i class='fas fa-minus-square'></i> Delete Vertex";
 
 class ClearMapButton {
   onAdd(map) {
@@ -755,7 +737,8 @@ class ClearMapButton {
     clear_map_button.classList.add("active");
     clear_map_button.classList.add("map_clear_button");
     clear_map_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
-    clear_map_button.innerHTML = "<i class='fas fa-times'></i> Clear Drawing";
+    clear_map_button.innerHTML =
+      "<i class='fas fa-trash-alt'></i> Clear Drawing";
     this._map = map;
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
@@ -854,6 +837,35 @@ var map_finish_drawing_button = document.querySelector(
   ".map_finish_drawing_button"
 );
 drawControls.appendChild(map_finish_drawing_button);
+// Add trash button last and hide it.
+var oldChild = drawControls.removeChild(delete_feature_button);
+drawControls.appendChild(delete_feature_button);
+delete_feature_button.style.display = "none";
+
+function toggleInstructionBox() {
+  var instruction_box = document.querySelector(".instruction-box");
+  if (instruction_box.style.display == "block") {
+    showInstructionBox();
+  } else {
+    hideInstructionBox();
+  }
+}
+
+function showInstructionBox() {
+  var instruction_box = document.querySelector(".instruction-box");
+  instruction_box.style.display = "block";
+  if (delete_feature_button != null) {
+    delete_feature_button.style.display = "block";
+  }
+}
+
+function hideInstructionBox() {
+  var instruction_box = document.querySelector(".instruction-box");
+  instruction_box.style.display = "none";
+  if (delete_feature_button != null) {
+    delete_feature_button.style.display = "none";
+  }
+}
 
 // Add nav control buttons.
 map.addControl(new mapboxgl.NavigationControl());
@@ -924,9 +936,8 @@ document.getElementById("draw-button").addEventListener("click", function (e) {
 
 document.getElementById("trash-button").addEventListener("click", function (e) {
   cleanAlerts();
-  hideInstructionBox();
   map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
-  draw.changeMode("simple_select");
+  draw.changeMode("direct-select");
 });
 
 function toggleMapButtons(state) {
@@ -1126,8 +1137,18 @@ map.on("draw.update", function () {
 map.on("draw.changeMode", function () {
   updateCommunityEntry();
 });
-map.on("draw.selectionchange", function () {
+map.on("draw.selectionchange", function (event) {
   updateCommunityEntry();
+  // The event object contains the featues that were selected.
+  var selected_objects = event;
+  var selected_points = selected_objects.points;
+  var selected_features = selected_objects.features;
+  if (selected_points.length > 0) {
+    // The user selected a point. Show delete vertex.
+    showInstructionBox();
+  } else {
+    hideDeleteVertexButton();
+  }
 });
 
 /******************************************************************************/
