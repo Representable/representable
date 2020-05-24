@@ -719,11 +719,11 @@ drawControls.classList.add("draw-group");
 /* Change mapbox draw button */
 var drawButton = document.querySelector(".mapbox-gl-draw_polygon");
 drawButton.backgroundImg = "";
-drawButton.id = "draw-button";
+drawButton.id = "draw-button-id";
 drawButton.innerHTML = "<i class='fas fa-draw-polygon'></i> Draw Polygon";
 var delete_feature_button = document.querySelector(".mapbox-gl-draw_trash");
 delete_feature_button.backgroundImg = "";
-delete_feature_button.id = "delete-feature-button";
+delete_feature_button.id = "delete-feature-button-id";
 delete_feature_button.innerHTML =
   "<i class='fas fa-minus-square'></i> Delete Vertex";
 
@@ -735,9 +735,9 @@ class ClearMapButton {
     clear_map_button.backgroundImg = "";
 
     clear_map_button.classList.add("active");
-    clear_map_button.classList.add("map_clear_button");
+    clear_map_button.classList.add("map-clear-button");
     clear_map_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
-    clear_map_button.id = "map_clear_button";
+    clear_map_button.id = "map-clear-button-id";
     clear_map_button.innerHTML =
       "<i class='fas fa-trash-alt'></i> Clear Polygon";
     this._map = map;
@@ -759,7 +759,7 @@ class ClearMapButton {
   }
 }
 map.addControl(new ClearMapButton(), "top-right");
-var map_clear_map_button = document.getElementById("map_clear_button");
+var map_clear_map_button = document.getElementById("map-clear-button-id");
 drawControls.appendChild(map_clear_map_button);
 // add button for toggling edit mode.
 class MapEditButton {
@@ -770,8 +770,9 @@ class MapEditButton {
     map_edit_button.backgroundImg = "";
 
     map_edit_button.classList.add("active");
-    map_edit_button.classList.add("map_edit_button");
+    map_edit_button.classList.add("map-edit-button");
     map_edit_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
+    map_edit_button.id = "map-edit-button-id";
     map_edit_button.innerHTML = "<i class='fas fa-edit'></i> Edit Polygon";
     this._map = map;
     this._container = document.createElement("div");
@@ -796,25 +797,26 @@ class MapEditButton {
   }
 }
 map.addControl(new MapEditButton(), "top-right");
-
-var map_edit_button = document.querySelector(".map_edit_button");
+var map_edit_button = document.getElementById("map-edit-button-id");
 drawControls.appendChild(map_edit_button);
 
 class FinishDrawButton {
   onAdd(map) {
-    var map_edit_button = document.createElement("button");
-    map_edit_button.href = "#";
-    map_edit_button.type = "button";
-    map_edit_button.backgroundImg = "";
+    var finish_draw_button = document.createElement("button");
+    finish_draw_button.href = "#";
+    finish_draw_button.type = "button";
+    finish_draw_button.backgroundImg = "";
 
-    map_edit_button.classList.add("active");
-    map_edit_button.classList.add("map_finish_drawing_button");
-    map_edit_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
-    map_edit_button.innerHTML = "<i class='fas fa-check'></i> Finish Drawing";
+    finish_draw_button.classList.add("active");
+    finish_draw_button.classList.add("map-finish-drawing-button");
+    finish_draw_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
+    finish_draw_button.id = "map-finish-drawing-button-id";
+    finish_draw_button.innerHTML =
+      "<i class='fas fa-check'></i> Finish Drawing";
     this._map = map;
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
-    map_edit_button.addEventListener("click", function (e) {
+    finish_draw_button.addEventListener("click", function (e) {
       cleanAlerts();
       hideInstructionBox();
       var all_features = draw.getAll();
@@ -824,7 +826,7 @@ class FinishDrawButton {
         });
       }
     });
-    this._container.appendChild(map_edit_button);
+    this._container.appendChild(finish_draw_button);
     return this._container;
   }
 
@@ -834,8 +836,8 @@ class FinishDrawButton {
   }
 }
 map.addControl(new FinishDrawButton(), "top-right");
-var map_finish_drawing_button = document.querySelector(
-  ".map_finish_drawing_button"
+var map_finish_drawing_button = document.getElementById(
+  "map-finish-drawing-button-id"
 );
 drawControls.appendChild(map_finish_drawing_button);
 // Add trash button last and hide it.
@@ -843,8 +845,13 @@ var oldChild = drawControls.removeChild(delete_feature_button);
 drawControls.appendChild(delete_feature_button);
 delete_feature_button.style.display = "none";
 
+function showMapEditButtons() {
+  var map_edit_button = document.getElementById("");
+}
+
 function toggleInstructionBox() {
-  var instruction_box = document.querySelector(".instruction-box");
+  // Show instruction box on map for edit mode.
+  var instruction_box = document.getElementById("instruction-box-id");
   if (instruction_box.style.display == "block") {
     hideInstructionBox();
   } else {
@@ -853,7 +860,7 @@ function toggleInstructionBox() {
 }
 
 function showInstructionBox() {
-  var instruction_box = document.querySelector(".instruction-box");
+  var instruction_box = document.getElementById("instruction-box-id");
   instruction_box.style.display = "block";
   if (draw != null) {
     var all_features = draw.getAll();
@@ -866,7 +873,7 @@ function showInstructionBox() {
 }
 
 function hideInstructionBox() {
-  var instruction_box = document.querySelector(".instruction-box");
+  var instruction_box = document.getElementById("instruction-box-id");
   instruction_box.style.display = "none";
   if (draw != null) {
     var all_features = draw.getAll();
@@ -938,26 +945,30 @@ class CensusBlocksControl {
 map.addControl(new CensusBlocksControl(), "top-left");
 
 document
-  .getElementById("map_clear_button")
+  .getElementById("map-clear-button-id")
   .addEventListener("click", function (e) {
     cleanAlerts();
     hideInstructionBox();
     draw.deleteAll();
     map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
     draw.changeMode("simple_select");
+    hideMapEditButtons();
   });
 
 // Override Behavior for Draw-Button
-document.getElementById("draw-button").addEventListener("click", function (e) {
-  cleanAlerts();
-  hideInstructionBox();
-  draw.deleteAll();
-  map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
-  draw.changeMode("draw_polygon");
-});
+document
+  .getElementById("draw-button-id")
+  .addEventListener("click", function (e) {
+    cleanAlerts();
+    hideInstructionBox();
+    draw.deleteAll();
+    map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
+    draw.changeMode("draw_polygon");
+    showMapEditButtons();
+  });
 
 document
-  .getElementById("delete-feature-button")
+  .getElementById("delete-feature-button-id")
   .addEventListener("click", function (e) {
     cleanAlerts();
     map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
