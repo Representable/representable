@@ -964,6 +964,7 @@ document
       var all_features = draw.getAll();
       if (all_features.features.length > 0) {
         var polygon = all_features.features[0];
+        highlightBlocks(polygon);
         draw.changeMode("direct_select", {
           featureId: polygon.id,
         });
@@ -1141,7 +1142,7 @@ map.on("style.load", function () {
 });
 
 var wasLoaded = false;
-map.on("render", function () {
+map.on("render", function (event) {
   if (!map.loaded() || wasLoaded) return;
   wasLoaded = true;
   if (document.getElementById("id_user_polygon").value !== "") {
@@ -1152,26 +1153,26 @@ map.on("render", function () {
     wkt_obj = wkt.read(feature);
     var geoJsonFeature = wkt_obj.toJson();
     var featureIds = draw.add(geoJsonFeature);
-    updateCommunityEntry();
+    updateCommunityEntry(event);
   }
 });
 
 /******************************************************************************/
 
-map.on("draw.create", function () {
-  updateCommunityEntry();
+map.on("draw.create", function (event) {
+  updateCommunityEntry(event);
 });
-map.on("draw.delete", function () {
-  updateCommunityEntry();
+map.on("draw.delete", function (event) {
+  updateCommunityEntry(event);
 });
-map.on("draw.update", function () {
-  updateCommunityEntry();
+map.on("draw.update", function (event) {
+  updateCommunityEntry(event);
 });
-map.on("draw.changeMode", function () {
-  updateCommunityEntry();
+map.on("draw.changeMode", function (event) {
+  updateCommunityEntry(event);
 });
 map.on("draw.selectionchange", function (event) {
-  updateCommunityEntry();
+  updateCommunityEntry(event);
   // The event object contains the featues that were selected.
   var selected_objects = event;
   var selected_points = selected_objects.points;
