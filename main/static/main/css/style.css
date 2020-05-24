@@ -21,8 +21,8 @@ This means no changing anything like <a>, <li>, <p>, etc.
   bottom: 40px;
   left: 10px;
   background-color: rgba(255, 255, 255, 0.9);
-  padding: 15px;
-  text-align: center;
+  padding: 10px;
+  text-align: left;
   border-radius: 10px;
   z-index: 10;
   display: none;

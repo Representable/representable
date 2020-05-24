@@ -845,9 +845,9 @@ delete_feature_button.style.display = "none";
 function toggleInstructionBox() {
   var instruction_box = document.querySelector(".instruction-box");
   if (instruction_box.style.display == "block") {
-    showInstructionBox();
-  } else {
     hideInstructionBox();
+  } else {
+    showInstructionBox();
   }
 }
 
