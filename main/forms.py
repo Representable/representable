@@ -128,32 +128,45 @@ class CommunityForm(ModelForm):
             ),
             "entry_reason": forms.Textarea(
                 attrs={
-                    "placeholder": "This community is brought together by...",
+                    "placeholder": "Example: This community is brought together by ... and we'd like the commission to\
+                                    keep us in the same district so we can be represented by one person",
                     "rows": 5,
                 }
             ),
             "cultural_interests": forms.Textarea(
-                attrs={"placeholder": "Examples: Age groups, religious groups," \
-                    " arts and cultural centers, languages, immigration status, " \
-                    "ethnic groups such as Detroit’s Mexican Town or " \
-                    "Dearborn’s Middle Eastern community, historic settlements " \
-                    "such as Leland’s Fishtown.", "rows": 5}
+                attrs={
+                    "placeholder": "Examples: Age groups, religious groups,"
+                    " arts and cultural centers, languages, immigration status, "
+                    "ethnic groups such as Detroit’s Mexican Town or "
+                    "Dearborn’s Middle Eastern community, historic settlements "
+                    "such as Leland’s Fishtown.",
+                    "rows": 5,
+                }
             ),
             "economic_interests": forms.Textarea(
-                attrs={"placeholder": "Examples: Tech firms and their employees, tourism, "\
-                    "agriculture such as the cherry growers, shipping and "\
-                    "transportation hubs, manufacturing centers, natural resources, "\
-                    "university towns, unemployment issues, waterfront "\
-                    "communities, business associations.", "rows": 5}
+                attrs={
+                    "placeholder": "Examples: Tech firms and their employees, tourism, "
+                    "agriculture such as the cherry growers, shipping and "
+                    "transportation hubs, manufacturing centers, natural resources, "
+                    "university towns, unemployment issues, waterfront "
+                    "communities, business associations.",
+                    "rows": 5,
+                }
             ),
             "comm_activities": forms.Textarea(
-                attrs={"placeholder": "Examples: Shopping areas, schools and colleges, parks "\
-                    "and recreation areas, lakes and water ways, healthcare services, " \
-                    "and other activities and services that help define " \
-                    "your Community.", "rows": 5,}
+                attrs={
+                    "placeholder": "Examples: Shopping areas, schools and colleges, parks "
+                    "and recreation areas, lakes and water ways, healthcare services, "
+                    "and other activities and services that help define "
+                    "your Community.",
+                    "rows": 5,
+                }
             ),
-            "other_considerations" : forms.Textarea(
-                attrs={"placeholder": "Community Activities and Services", "rows": 5,}
+            "other_considerations": forms.Textarea(
+                attrs={
+                    "placeholder": "Include any other considerations that are not reflected in the questions above.",
+                    "rows": 5,
+                }
             ),
             "user_name": forms.TextInput(attrs={"placeholder": "User Name"}),
             "user_phone": PhoneField,
@@ -165,7 +178,6 @@ class CommunityForm(ModelForm):
             "industry": "List Industries/Profressions (At Least One, Multiple Accepted)",
             "religion": "List Religions (At Least One, Multiple Accepted)",
         }
-        
 
     def clean(self):
         """
@@ -174,13 +186,13 @@ class CommunityForm(ModelForm):
         Make sure that at least one of the interest fields is filled out.
         Check if the phone number is a valid US number.
         """
-        errors={}
+        errors = {}
         # check if the user drew a polygon
         if "user_polygon" not in self.cleaned_data:
             errors["user_polygon"] = "Polygon doesn't exist"
         else:
             data = self.cleaned_data["user_polygon"]
-        # Check kinks in the polygon
+            # Check kinks in the polygon
             if not data.valid:
                 errors["user_polygon"] = "Polygon contains kinks."
         phone = self.cleaned_data.get("user_phone")
@@ -190,10 +202,15 @@ class CommunityForm(ModelForm):
         other_considerations = self.cleaned_data.get("other_considerations")
         if not phone.is_usa:
             errors["user_phone"] = "Invalid phone number."
-        if cultural_interests is "" and economic_interests is "" and comm_activities is "" and other_considerations is "":
+        if (
+            cultural_interests == ""
+            and economic_interests == ""
+            and comm_activities == ""
+            and other_considerations == ""
+        ):
             errors["cultural_interests"] = "Blank interest fields."
         if errors:
-            raise forms.ValidationError(errors)  
+            raise forms.ValidationError(errors)
 
 
 class DeletionForm(ModelForm):

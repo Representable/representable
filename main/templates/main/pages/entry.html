@@ -179,10 +179,10 @@
                                         </div>
                                         {% endif %}
                                         <!-- Cultural -->
-                                        <h6> Your Shared Cultural Interests </h6>
-                                        <p class="card-text">
+                                        <h5 class="card-text"> Your Shared Cultural Interests <small class="text-info">(Recommended)</small></h5>
+                                        <p class="card-text mb-0">
                                             What fosters a sense of belonging in your Community? 
-                                            What common beliefs or values exist? <small class="text-danger">(Recommended)</small>
+                                            What common beliefs or values exist?
                                         </p>
                                         <div class="accordion" id="cultural_interests_accordion">
                                             <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#cultural_interests_example" aria-expanded="false" aria-controls="collapseOne">
@@ -197,11 +197,12 @@
                                             </div>
                                         </div>
                                         {{ comm_form.cultural_interests|append_attr:"class:form-control" }}
+                                        <hr>
                                         <!-- Activities -->
-                                        <h6>Shared Community Activities and Services</h6>
-                                        <p class="card-text">
+                                        <h5 class="card-text"> Shared Community Activities and Services <small class="text-info">(Recommended)</small></h5>
+                                        <p class="card-text mb-0">
                                             Where do people in your Community gather or socialize? 
-                                            Where does your Community get its services? <small class="text-danger">(Recommended)</small>
+                                            Where does your Community get its services?
                                         </p>
                                         <div class="accordion" id="comm_activities_accordion">
                                             <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#comm_activities_example" aria-expanded="false" aria-controls="collapseOne">
@@ -216,13 +217,14 @@
                                             </div>
                                         </div>
                                         {{ comm_form.comm_activities|append_attr:"class:form-control" }}
+                                        <hr>
                                         <!--  Economic -->
-                                        <h6>Your Shared Economic Interests</h6>
-                                        <p class="card-text">
+                                        <h5 class="card-text">Your Shared Economic Interests <small class="text-info">(Recommended)</small></h5>
+                                        <p class="card-text mb-0">
                                             Is there a shared economy in the geographic area of your Community? 
                                             How and where are residents employed? What parts of a county, 
                                             township or city are included in your Community? 
-                                            Are there shared environmental concerns such as landfills or water quality? <small class="text-danger">(Recommended)</small>
+                                            Are there shared environmental concerns such as landfills or water quality?
                                         </p>
                                         <div class="accordion" id="economic_interests_accordion">
                                             <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#economic_interests_example" aria-expanded="false" aria-controls="collapseOne">
@@ -237,8 +239,14 @@
                                             </div>
                                         </div>
                                         {{ comm_form.economic_interests|append_attr:"class:form-control" }}
-                                        <br>
+                                        <hr>
                                         <!-- Other -->
+                                        <h5 class="card-text">Your Other Interests <small class="text-info">(Recommended)</small></h5>
+                                        <p class="card-text mb-1">
+                                            What other interests does your community care about? Please add anything
+                                            that does not fit in the sections above.
+                                        </p>
+                                        {{ comm_form.other_considerations|append_attr:"class:form-control" }}
                                     </div>
                                 </div>
                             </div>
@@ -249,9 +257,16 @@
                             <div class="collapse-card card-section ">
                                 <div class="card">
                                     <div class="card-header text-header-card">
-                                        <strong>5. Community Name and Other Interests</strong>
+                                        <strong>3. Your Community's Issues and Name</strong>
                                     </div>
                                     <div class="card-body">
+                                        <p class="card-text">
+                                            What are the issues facing this community and how would you like the redistricting
+                                             commission in your state to help?<small class="text-info"> (Recommended)</small>
+                                            <!-- TODO we should find a better example -->
+                                        </p>
+                                        {{ comm_form.entry_reason|append_attr:"class:form-control" }}
+                                        <hr>
                                         <p class="card-text">
                                             What name can we use to identify your community? <small class="text-danger">(Required)</small>
                                             <!-- TODO we should find a better example -->
@@ -259,13 +274,6 @@
                                             <small>For example: Princeton area student community</small>
                                         </p>
                                         {{ comm_form.entry_name|append_attr:"class:form-control" }}
-                                        <hr>
-                                        <p class="card-text">
-                                            What are the issues facing this community and how would you like the redistricting
-                                             commission in your state to help?<small class="text-danger"> (Recommended)</small>
-                                            <!-- TODO we should find a better example -->
-                                        </p>
-                                        {{ comm_form.entry_reason|append_attr:"class:form-control" }}
                                         <hr>
                                         {% if not has_campaign and not has_token %}
                                         <div class="field-wrap mt-3">
