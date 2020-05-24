@@ -178,15 +178,10 @@
             <div class="col-6 col-md">
                 <!-- <h5>Community Map</h5> -->
                 <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="/entry">
-                            {% if LANGUAGE_CODE == 'en' %}
-                            Contribute
-                            {% elif LANGUAGE_CODE == 'es' %}
-                            <!-- Google translate  -->
-                            Contribuir
-                            {% endif %}
+                    <li><a class="text-muted" href="{% url 'main:entry' %}">
+                            Draw Your Community
                         </a></li>
-                    <li><a class="text-muted" href="/map">
+                    <li><a class="text-muted" href="{% url 'main:map' %}">
                             {% if LANGUAGE_CODE == 'en' %}
                             View All Maps
                             {% elif LANGUAGE_CODE == 'es' %}
@@ -195,19 +190,7 @@
                             {% endif %}
                         </a></li>
                     {% if user.is_authenticated %}
-                    {% if user.is_staff %}
-                    <li><a class="text-muted" href="/review">
-                    <li><a class="text-muted" href="/map">
-                            {% if LANGUAGE_CODE == 'en' %}
-                            Approve and View Entries
-                            {% elif LANGUAGE_CODE == 'es' %}
-                            <!-- Google translate  -->
-                            Aprobar Y Ver Entradas
-                            {% endif %}
-                        </a></li>
-                    </a></li>
-                    {% else %}
-                    <li><a class="text-muted" href="/review">
+                    <li><a class="text-muted" href="{% url 'main:review' %}">
                             {% if LANGUAGE_CODE == 'en' %}
                             My Entries
                             {% elif LANGUAGE_CODE == 'es' %}
@@ -216,7 +199,6 @@
                             {% endif %}
                         </a></li>
                     {% endif %}
-                    {% endif %}
                 </ul>
             </div>
 
@@ -224,7 +206,7 @@
                 <!-- <h5>About</h5> -->
                 <ul class="list-unstyled text-small">
                     <!-- <li><a class="text-muted" href="/about">About Us</a></li> -->
-                    <li><a class="text-muted" href="/privacy">
+                    <li><a class="text-muted" href="{% url 'main:terms' %}">
                             {% if LANGUAGE_CODE == 'en' %}
                             Privacy
                             {% elif LANGUAGE_CODE == 'es' %}
@@ -232,7 +214,7 @@
                             Intimidad
                             {% endif %}
                         </a></li>
-                    <li><a class="text-muted" href="/terms">
+                    <li><a class="text-muted" href="{% url 'main:terms' %}">
                             {% if LANGUAGE_CODE == 'en' %}
                             Terms
                             {% elif LANGUAGE_CODE == 'es' %}
