@@ -1222,6 +1222,7 @@ map.on("draw.selectionchange", function (event) {
   if (selected_points.length > 0) {
     // The user selected a point. Show delete vertex.
     showDeleteFeatureButton();
+    showInstructionBox();
   } else {
     hideDeleteFeatureButton();
   }
