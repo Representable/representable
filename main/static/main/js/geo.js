@@ -738,7 +738,7 @@ class ClearMapButton {
     clear_map_button.classList.add("map_clear_button");
     clear_map_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
     clear_map_button.innerHTML =
-      "<i class='fas fa-trash-alt'></i> Clear Drawing";
+      "<i class='fas fa-trash-alt'></i> Clear Polygon";
     this._map = map;
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
@@ -854,11 +854,23 @@ function toggleInstructionBox() {
 function showInstructionBox() {
   var instruction_box = document.querySelector(".instruction-box");
   instruction_box.style.display = "block";
+  if (draw != null) {
+    var all_features = draw.getAll();
+    draw.changeMode("direct-select", {
+      featureId: all_features.features[0].id,
+    });
+  }
 }
 
 function hideInstructionBox() {
   var instruction_box = document.querySelector(".instruction-box");
   instruction_box.style.display = "none";
+  if (draw != null) {
+    var all_features = draw.getAll();
+    draw.changeMode("direct-select", {
+      featureIds: [all_features.features[0].id],
+    });
+  }
 }
 
 function showDeleteFeatureButton() {
