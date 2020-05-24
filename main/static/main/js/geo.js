@@ -846,7 +846,31 @@ drawControls.appendChild(delete_feature_button);
 delete_feature_button.style.display = "none";
 
 function showMapEditButtons() {
-  var map_edit_button = document.getElementById("");
+  var map_edit_button = document.getElementById("map-edit-button-id");
+  map_edit_button.style.display = "block";
+  var map_clear_map_button = document.getElementById("map-clear-button-id");
+  map_clear_map_button.style.display = "block";
+  var finish_draw_button = document.getElementById(
+    "map-finish-drawing-button-id"
+  );
+  finish_draw_button.style.display = "block";
+}
+
+function hideMapEditButtons() {
+  var map_edit_button = document.getElementById("map-edit-button-id");
+  map_edit_button.style.display = "none";
+  var map_clear_map_button = document.getElementById("map-clear-button-id");
+  map_clear_map_button.style.display = "none";
+  var finish_draw_button = document.getElementById(
+    "map-finish-drawing-button-id"
+  );
+  finish_draw_button.style.display = "none";
+  var map_delete_vertex_button = document.getElementById(
+    "delete-feature-button-id"
+  );
+  if (map_delete_vertex_button != null) {
+    map_delete_vertex_button.style.display = "none";
+  }
 }
 
 function toggleInstructionBox() {
