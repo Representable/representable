@@ -50,8 +50,10 @@
                 {% if communities %}
                 <table class="table table-hover">
                     <thead>
-                        <th scope="col">Community Name</th>
-                        <th scope="col">Action</th>
+                      <tr>
+                        <th class="table-col-large" scope="col">Community Information</th>
+                        <th class="table-col-small" scope="col">Action</th>
+                      </tr>
                     </thead>
                     {% for c in communities %}
                     <tr class="community-review-span" id={{c.entry_ID}}>

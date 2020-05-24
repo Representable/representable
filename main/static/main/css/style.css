@@ -325,6 +325,16 @@ color scheme. See readme.md*/
   display: inline
 }
 
+.table-col-large {
+  width: 70%;
+}
+.table-col-small {
+  width: 30%;
+}
+.table {
+  word-break: break-word;
+}
+
 /* landing page map */
 #usa-map {
   width: 100%;
