@@ -401,7 +401,7 @@
                                 <div class="card">
                                     <div class="card-header text-header-card">
                                         <strong>
-                                        Your Privacy
+                                        Privacy and Terms of Use
                                         </strong>
                                         <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
                                     </div>
@@ -414,7 +414,10 @@
                                         <div class="toc-check">
                                             <input class="toc-check-input" type="checkbox" value="" id="toc_check" required>
                                             <label class="toc-check-label" for="toc_check">
-                                                Click here to indicate that you have read and agree to the <a href="{% url 'main:terms' %}">Terms of Use</a> and <a href="{% url 'main:privacy' %}">Privacy Policy</a>.
+                                                Click here to indicate that you have read and agree to the 
+                                                <a href="{% url 'main:terms' %}">Terms of Use</a> and 
+                                                <a href="{% url 'main:privacy' %}">Privacy Policy</a>. 
+                                                <small class="text-danger">(Required)</small>
                                             </label>
                                         </div>
                                     </div>
