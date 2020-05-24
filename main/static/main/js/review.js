@@ -222,3 +222,11 @@ map.on("load", function () {
 $(".community-review-span").click(function () {
   map.fitBounds(community_bounds[this.id], {padding: 100});
 });
+
+document.querySelectorAll(".comm-content").forEach(function (p) {
+  p.querySelector("a").addEventListener("click", function (e) {
+    e.stopPropagation();
+    p.classList.toggle("show");
+    this.textContent = p.classList.contains("show") ? "Show Less" : "Show More";
+  });
+});
