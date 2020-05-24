@@ -854,14 +854,20 @@ function toggleInstructionBox() {
 function showInstructionBox() {
   var instruction_box = document.querySelector(".instruction-box");
   instruction_box.style.display = "block";
-  if (delete_feature_button != null) {
-    delete_feature_button.style.display = "block";
-  }
 }
 
 function hideInstructionBox() {
   var instruction_box = document.querySelector(".instruction-box");
   instruction_box.style.display = "none";
+}
+
+function showDeleteFeatureButton() {
+  if (delete_feature_button != null) {
+    delete_feature_button.style.display = "block";
+  }
+}
+
+function hideDeleteFeatureButton() {
   if (delete_feature_button != null) {
     delete_feature_button.style.display = "none";
   }
@@ -1146,8 +1152,9 @@ map.on("draw.selectionchange", function (event) {
   if (selected_points.length > 0) {
     // The user selected a point. Show delete vertex.
     showInstructionBox();
+    showDeleteFeatureButton();
   } else {
-    hideDeleteVertexButton();
+    hideDeleteFeatureButton();
   }
 });
 
