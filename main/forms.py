@@ -128,8 +128,7 @@ class CommunityForm(ModelForm):
             ),
             "entry_reason": forms.Textarea(
                 attrs={
-                    "placeholder": "Example: This community is brought together by ... and we'd like the commission to\
-                                    keep us in the same district so we can be represented by one person",
+                    "placeholder": """Example: Our tart cherry farmers extend over two counties and we hope you can put them together in a single State Senate district. """,
                     "rows": 5,
                 }
             ),
