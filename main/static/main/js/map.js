@@ -111,16 +111,6 @@ function newLowerLegislatureLayer(state) {
   });
 }
 
-// show more button
-document.querySelectorAll(".comm-content").forEach(function (p) {
-  p.querySelector("a").addEventListener("click", function () {
-    p.classList.toggle("show");
-    this.textContent = p.classList.contains("show") ? "Show Less" : "Show More";
-  });
-});
-
-entry_names = JSON.parse(entry_names);
-entry_reasons = JSON.parse(entry_reasons);
 var community_bounds = {};
 
 map.on("load", function () {
@@ -197,10 +187,6 @@ map.on("load", function () {
             type: "Polygon",
             coordinates: final,
           },
-          properties: {
-            name: entry_names[obj],
-            reason: entry_reasons[obj],
-          },
         },
       },
       layout: {
@@ -265,22 +251,30 @@ map.on("load", function () {
       }
     });
   });
-});
-
-// hover to highlight
-$(".community-review-span").hover(function() {
-  map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
-  map.setPaintProperty(this.id + "line", "line-width", 4);
-  map.setPaintProperty(this.id, "fill-opacity", 0.5);
-}, function () {
-  map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.2)");
-  map.setPaintProperty(this.id + "line", "line-width", 2);
-  map.setPaintProperty(this.id, "fill-opacity", 0.15);
+  // hover to highlight
+  $(".community-review-span").hover(function() {
+    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
+    map.setPaintProperty(this.id + "line", "line-width", 4);
+    map.setPaintProperty(this.id, "fill-opacity", 0.5);
+  }, function () {
+    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.2)");
+    map.setPaintProperty(this.id + "line", "line-width", 2);
+    map.setPaintProperty(this.id, "fill-opacity", 0.15);
+  });
 });
 
 // on click, zoom to community
 $(".community-review-span").click(function () {
   map.fitBounds(community_bounds[this.id], {padding: 100});
+});
+
+// show more button
+document.querySelectorAll(".comm-content").forEach(function (p) {
+  p.querySelector("a").addEventListener("click", function (e) {
+    e.stopPropagation();
+    p.classList.toggle("show");
+    this.textContent = p.classList.contains("show") ? "Show Less" : "Show More";
+  });
 });
 
 //create a button that toggles layers based on their IDs

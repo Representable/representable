@@ -51,8 +51,8 @@ function newCensusLayer(state) {
       visibility: "none",
     },
     paint: {
-      "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 3,
+      "line-color": "rgba(106,137,204,0.3)",
+      "line-width": 1,
     },
   });
 }
@@ -234,23 +234,4 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   div.appendChild(label);
   layers.appendChild(div);
   var newline = document.createElement("br");
-}
-
-/* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content -
-This allows the user to have multiple dropdowns without any conflict */
-var dropdown = document.getElementsByClassName("dropdown-btn");
-var i;
-
-for (i = 0; i < dropdown.length; i++) {
-  dropdown[i].addEventListener("click", function () {
-    this.classList.toggle("active");
-    var dropdownContent = this.nextElementSibling;
-    if (dropdownContent.style.display === "block") {
-      dropdownContent.style.display = "none";
-    } else {
-      dropdownContent.style.display = "block";
-    }
-    // add logic for polygons
-    // map.setFilter('users', ['in', 'orgs', ...targetIDs]);
-  });
 }

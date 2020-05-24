@@ -58,19 +58,35 @@
                 Community Information <i class="fas fa-caret-down"></i></button>
             </div>
             <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample">
-              <br>
-              <div class="container">
-                <b>Community name</b>
-              </div>
-              <div class="card-body d-flex flex-column" id="outline-menu">
-                {{ entry_name }}
-              </div>
-              <div class="container">
-              <b>Why are you submitting this community?</b>
-            </div>
-              <div class="card-body d-flex flex-column" id="outline-menu">
-                {{ entry_reason }}
-              </div>
+              <table class="table">
+                <tr>
+                  <td>
+                    <span class="font-weight-light text-uppercase entry-name">
+                      <h5>{{community.entry_name}}</h5>
+                    </span>
+                    <br>
+                    <span class="font-weight-light">
+                          {% if community.entry_reason %}
+                          <b> Entry Reason: </b>{{community.entry_reason}}
+                          <br>
+                          {% endif %}
+                          {% if community.cultural_interests %}
+                          <b> Cultural Interests: </b>{{community.cultural_interests}}
+                          <br>
+                          {% endif %}
+                          {% if community.economic_interests %}
+                          <b> Economic Interests: </b>{{community.economic_interests}}
+                          <br>
+                          {% endif %}
+                          {% if community.comm_activities %}
+                          <b> Community Activities: </b>{{community.comm_activities}}
+                          <br>
+                          {% endif %}
+                    </span>
+
+                  </td>
+                  <tr>
+                  </table>
               <div class="text-center">
                 {% with link_text="/export?map_id="|addstr:community.entry_ID|slice:27 %}
                   <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{community.entry_ID|slice:8}}.geojson">Export GeoJSON</a>

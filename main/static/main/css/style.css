@@ -337,6 +337,9 @@ color scheme. See readme.md*/
 .hidden {
   display: none;
 }
+.small-link {
+  cursor: pointer;
+}
 
 /* landing page map */
 #usa-map {
@@ -348,12 +351,6 @@ color scheme. See readme.md*/
 }
 #stateSelectionDropdown {
   font-size: 2rem;
-  background: none;
-  outline: none;
-  border: none;
-  border-bottom: 0.15rem solid black;
-  border-radius: 0px;
-  -webkit-appearance: none;
 }
 
 .state {

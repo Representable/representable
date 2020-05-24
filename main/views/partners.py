@@ -45,21 +45,9 @@ class PartnerMap(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # dictionary of entry names and reasons
-        entry_names = dict()
-        entry_reasons = dict()
 
         # the polygon coordinates
         entryPolyDict = dict()
-        # dictionary of tags to be displayed
-        tags = dict()
-        for obj in Tag.objects.all():
-            # manytomany query
-            entries = obj.communityentry_set.all()
-            ids = []
-            for id in entries:
-                ids.append(str(id))
-            tags[str(obj)] = ids
         # get the polygon from db and pass it on to html
         if self.kwargs["campaign"]:
             query = CommunityEntry.objects.filter(
@@ -74,12 +62,8 @@ class PartnerMap(TemplateView):
         for obj in query:
             if not obj.census_blocks_polygon:
                 s = "".join(obj.user_polygon.geojson)
-                entry_names[str(obj.entry_ID)] = obj.entry_name
-                entry_reasons[str(obj.entry_ID)] = obj.entry_reason
             else:
                 s = "".join(obj.census_blocks_polygon.geojson)
-                entry_names[str(obj.entry_ID)] = obj.entry_name
-                entry_reasons[str(obj.entry_ID)] = obj.entry_reason
 
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
@@ -87,9 +71,7 @@ class PartnerMap(TemplateView):
             entryPolyDict[obj.entry_ID] = struct.coordinates
 
         context = {
-            "entry_names": json.dumps(entry_names),
-            "entry_reasons": json.dumps(entry_reasons),
-            "tags": json.dumps(tags),
+            "communities": query,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
