@@ -27,6 +27,24 @@ This means no changing anything like <a>, <li>, <p>, etc.
 .toc-check-input {
   display: inline;
 }
+/* Entry page instructions. */
+.instruction-box {
+  position: absolute;
+  bottom: 40px;
+  left: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+  text-align: left;
+  border-radius: 10px;
+  z-index: 10;
+  display: none;
+}
+.red-circle {
+  color: #e74c3c;
+}
+.blue-circle {
+  color: #2a94f4;
+}
 
 /* Entry Page: Geocoder Full Width */
 .mapboxgl-ctrl-geocoder {
