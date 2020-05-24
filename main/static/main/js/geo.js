@@ -961,7 +961,17 @@ document
   .addEventListener("click", function (e) {
     cleanAlerts();
     map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
-    draw.changeMode("direct-select");
+    if (draw != null) {
+      var all_features = draw.getAll();
+      if (all_features.features.length > 0) {
+        var polygon = all_features.features[0];
+        draw.changeMode("direct_select", {
+          featureId: polygon.id,
+        });
+      } else {
+        draw.changeMode("simple_select");
+      }
+    }
   });
 
 function toggleMapButtons(state) {
