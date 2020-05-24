@@ -724,6 +724,7 @@ drawButton.innerHTML = "<i class='fas fa-draw-polygon'></i> Draw Polygon";
 var delete_feature_button = document.querySelector(".mapbox-gl-draw_trash");
 delete_feature_button.backgroundImg = "";
 delete_feature_button.id = "delete-feature-button-id";
+delete_feature_button.style.display = "none";
 delete_feature_button.innerHTML =
   "<i class='fas fa-minus-square'></i> Delete Vertex";
 
@@ -738,6 +739,7 @@ class ClearMapButton {
     clear_map_button.classList.add("map-clear-button");
     clear_map_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
     clear_map_button.id = "map-clear-button-id";
+    clear_map_button.style.display = "none";
     clear_map_button.innerHTML =
       "<i class='fas fa-trash-alt'></i> Clear Polygon";
     this._map = map;
@@ -772,6 +774,7 @@ class MapEditButton {
     map_edit_button.classList.add("map-edit-button");
     map_edit_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
     map_edit_button.id = "map-edit-button-id";
+    map_edit_button.style.display = "none";
     map_edit_button.innerHTML = "<i class='fas fa-edit'></i> Edit Polygon";
     this._map = map;
     this._container = document.createElement("div");
@@ -809,6 +812,7 @@ class FinishDrawButton {
     finish_draw_button.classList.add("map-finish-drawing-button");
     finish_draw_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
     finish_draw_button.id = "map-finish-drawing-button-id";
+    finish_draw_button.style.display = "none";
     finish_draw_button.innerHTML =
       "<i class='fas fa-check'></i> Finish Drawing";
     this._map = map;
