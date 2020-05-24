@@ -909,14 +909,20 @@ function hideInstructionBox() {
 }
 
 function showDeleteFeatureButton() {
-  if (delete_feature_button != null) {
-    delete_feature_button.style.display = "block";
+  var map_delete_feature_button = document.getElementById(
+    "delete-feature-button-id"
+  );
+  if (map_delete_feature_button != null) {
+    map_delete_feature_button.style.display = "block";
   }
 }
 
 function hideDeleteFeatureButton() {
-  if (delete_feature_button != null) {
-    delete_feature_button.style.display = "none";
+  var map_delete_feature_button = document.getElementById(
+    "delete-feature-button-id"
+  );
+  if (map_delete_feature_button != null) {
+    map_delete_feature_button.style.display = "none";
   }
 }
 
