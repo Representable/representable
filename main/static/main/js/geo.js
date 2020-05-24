@@ -743,11 +743,10 @@ class ClearMapButton {
     this._map = map;
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
-    clear_map_button.addEventListener("click", function (e) {
-      cleanAlerts();
+    clear_map_button.addEventListener("click", function (event) {
       draw.deleteAll();
       hideInstructionBox();
-      updateCommunityEntry(e);
+      updateCommunityEntry(event);
     });
     this._container.appendChild(clear_map_button);
     return this._container;
@@ -778,7 +777,6 @@ class MapEditButton {
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
     map_edit_button.addEventListener("click", function (e) {
-      cleanAlerts();
       toggleInstructionBox();
       var all_features = draw.getAll();
       if (all_features.features.length > 0) {
@@ -816,8 +814,7 @@ class FinishDrawButton {
     this._map = map;
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
-    finish_draw_button.addEventListener("click", function (e) {
-      cleanAlerts();
+    finish_draw_button.addEventListener("click", function (event) {
       hideInstructionBox();
       var all_features = draw.getAll();
       if (all_features.features.length > 0) {
@@ -825,6 +822,7 @@ class FinishDrawButton {
           featureId: all_features.features[0].id,
         });
       }
+      updateCommunityEntry(event);
     });
     this._container.appendChild(finish_draw_button);
     return this._container;
@@ -901,7 +899,12 @@ function hideInstructionBox() {
   instruction_box.style.display = "none";
   if (draw != null) {
     var all_features = draw.getAll();
-    draw.changeMode("simple_select");
+    // draw.changeMode("simple_select");
+    if (all_features.features.length > 0) {
+      draw.changeMode("simple_select", {
+        featureIds: [all_features.features[0].id],
+      });
+    }
     // draw.changeMode("simple_select", {
     // featureIds: [all_features.features[0].id]
     // });
@@ -974,10 +977,10 @@ class CensusBlocksControl {
 }
 map.addControl(new CensusBlocksControl(), "top-left");
 
+// override behavior for clear map button
 document
   .getElementById("map-clear-button-id")
   .addEventListener("click", function (e) {
-    cleanAlerts();
     hideInstructionBox();
     draw.deleteAll();
     map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
@@ -989,7 +992,6 @@ document
 document
   .getElementById("draw-button-id")
   .addEventListener("click", function (e) {
-    cleanAlerts();
     hideInstructionBox();
     draw.deleteAll();
     map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
@@ -997,16 +999,17 @@ document
     showMapEditButtons();
   });
 
+// override behavior for delete button
 document
   .getElementById("delete-feature-button-id")
-  .addEventListener("click", function (e) {
-    cleanAlerts();
+  .addEventListener("click", function (event) {
     map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
     if (draw != null) {
       var all_features = draw.getAll();
       if (all_features.features.length > 0) {
         var polygon = all_features.features[0];
         highlightBlocks(polygon);
+        updateCommunityEntry(event);
         draw.changeMode("direct_select", {
           featureId: polygon.id,
         });
@@ -1214,7 +1217,7 @@ map.on("draw.changeMode", function (event) {
   updateCommunityEntry(event);
 });
 map.on("draw.selectionchange", function (event) {
-  updateCommunityEntry(event);
+  // updateCommunityEntry(event);
   // The event object contains the featues that were selected.
   var selected_objects = event;
   var selected_points = selected_objects.points;
@@ -1371,6 +1374,7 @@ function addPoly(poly, polyArray, wkt) {
 /* Responds to the user's actions and updates the geometry fields and the arrayfield
  in the form. */
 function updateCommunityEntry(e) {
+  cleanAlerts();
   var wkt = new Wkt.Wkt();
   var data = draw.getAll();
   var user_polygon_wkt;
@@ -1424,6 +1428,10 @@ function updateCommunityEntry(e) {
     // "in",
     // "BLOCKID10",
     // ]);
+    triggerDrawError(
+      "no-polygon-saved",
+      "You must draw a polygon to continue."
+    );
   }
   // Update form fields
   census_blocks_polygon_wkt = "";
