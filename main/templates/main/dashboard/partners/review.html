@@ -36,7 +36,6 @@
     <div>
       <script type="text/javascript">
         var entries = '{{ entries | escapejs }}';
-        var tags = '{{ tags | escapejs }}';
         var approved = '{{ approved | escapejs }}';
         var mapbox_user_name = "{{mapbox_user_name}}";
       </script>
@@ -44,6 +43,12 @@
     <div class="col-md-6 col-wide">
       <nav id='menu'>
         <div class="sidenav">
+          <div class="my-1">
+            <h4 class="font-weight-light text-center my-2"> {{ organization }} </h4>
+            {% if campaign %}
+            <p class="font-weight-light text-center">{{ campaign }} </p>
+            {% endif %}
+          </div>
           <div class="dropdown-container"></div>
           <div id="outline-menu">
           </div>
@@ -64,40 +69,44 @@
                   {% endwith %}
                 </span>
                 <br>
-                <span class="font-weight-light"><b>Created by:</b>
-                  {% if c.user_name %}
-                  {{ c.user_name }}
-                  {% else %}
-                  {{ c.user.username }}
-                  {% endif %}
-                  <br>
-                  <span class="comm-content">
-                    <span class="more-content">
-                      <b>Phone Number: </b>{{c.user_phone}}
-                      <br>
-                      <!-- <b>Address: </b>{{c.user.address}}
-                      <br> -->
-                      {% if c.entry_reason %}
-                      <b> Entry Reason: </b>{{c.entry_reason}}
-                      <br>
-                      {% endif %}
-                      {% if c.cultural_interests %}
-                      <b> Cultural Interests: </b>{{c.cultural_interests}}
-                      <br>
-                      {% endif %}
-                      {% if c.economic_interests %}
-                      <b> Economic Interests: </b>{{c.economic_interests}}
-                      <br>
-                      {% endif %}
-                      {% if c.comm_activities %}
-                      <b> Community Activities: </b>{{c.comm_activities}}
-                      <br>
-                      {% endif %}
-                    </span>
-                    <u><a class="small read-more small-link">Show More</a></u>
+                <b>Created by:</b>
+                {% if c.user_name %}
+                {{ c.user_name }}
+                {% else %}
+                {{ c.user.username }}
+                {% endif %}
+                <br>
+                {% if campaign is None %}
+                {% if c.campaign %}
+                <b> Campaign: </b>{{c.campaign}}
+                <br>
+                {% endif %}
+                {% endif %}
+                <span class="comm-content">
+                  <span class="more-content">
+                    <b>Phone Number: </b>{{c.user_phone}}
+                    <br>
+                    <!-- <b>Address: </b>{{c.user.address}}
+                    <br> -->
+                    {% if c.entry_reason %}
+                    <b> Entry Reason: </b>{{c.entry_reason}}
+                    <br>
+                    {% endif %}
+                    {% if c.cultural_interests %}
+                    <b> Cultural Interests: </b>{{c.cultural_interests}}
+                    <br>
+                    {% endif %}
+                    {% if c.economic_interests %}
+                    <b> Economic Interests: </b>{{c.economic_interests}}
+                    <br>
+                    {% endif %}
+                    {% if c.comm_activities %}
+                    <b> Community Activities: </b>{{c.comm_activities}}
+                    <br>
+                    {% endif %}
                   </span>
+                  <u><a class="small read-more small-link">Show More</a></u>
                 </span>
-
               </td>
               <td>
                 <form method="post" action="">{% csrf_token %}

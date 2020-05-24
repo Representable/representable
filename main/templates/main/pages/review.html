@@ -65,30 +65,35 @@
                   {% endwith %}
                 </span>
                 <br>
-                <span class="font-weight-light">
-                  <span class="comm-content">
-                    <span class="more-content">
-                      {% if c.entry_reason %}
-                      <b> Entry Reason: </b>{{c.entry_reason}}
-                      <br>
-                      {% endif %}
-                      {% if c.cultural_interests %}
-                      <b> Cultural Interests: </b>{{c.cultural_interests}}
-                      <br>
-                      {% endif %}
-                      {% if c.economic_interests %}
-                      <b> Economic Interests: </b>{{c.economic_interests}}
-                      <br>
-                      {% endif %}
-                      {% if c.comm_activities %}
-                      <b> Community Activities: </b>{{c.comm_activities}}
-                      <br>
-                      {% endif %}
-                    </span>
-                    <u><a class="small read-more small-link">Show More</a></u>
+                {% if c.organization %}
+                <b> Organization: </b>{{c.organization}}
+                <br>
+                {% endif %}
+                {% if c.campaign %}
+                <b> Campaign: </b>{{c.campaign}}
+                <br>
+                {% endif %}
+                <span class="comm-content">
+                  <span class="more-content">
+                    {% if c.entry_reason %}
+                    <b> Entry Reason: </b>{{c.entry_reason}}
+                    <br>
+                    {% endif %}
+                    {% if c.cultural_interests %}
+                    <b> Cultural Interests: </b>{{c.cultural_interests}}
+                    <br>
+                    {% endif %}
+                    {% if c.economic_interests %}
+                    <b> Economic Interests: </b>{{c.economic_interests}}
+                    <br>
+                    {% endif %}
+                    {% if c.comm_activities %}
+                    <b> Community Activities: </b>{{c.comm_activities}}
+                    <br>
+                    {% endif %}
                   </span>
+                  <u><a class="small read-more small-link">Show More</a></u>
                 </span>
-
               </td>
               <td>
                 <form method="post" action="">{% csrf_token %}
