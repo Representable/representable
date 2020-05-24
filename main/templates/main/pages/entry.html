@@ -77,18 +77,21 @@
                                     <div class="card-header text-header-card">
                                         <strong>1. Your Personal Information</strong>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="alert alert-info" role="alert">
-                                            <h5 class="alert-heading">Why do we need your information?</h5>
-                                            <p class="card-text">
-                                                Your personal privacy is our highest priority. We gather personal information to verify that you are a real person.
-                                            </p>
-                                            <p class="card-text">
-                                                If you choose to submit this entry to a campaign, the administrators of the campaign will have access to this information.
-                                            </p>
-                                            <p class="card-text"></p>
-                                            <a href="/privacy"> Learn more about our commitment to privacy on our Privacy Policy page.</a></p>
-                                          </div>
+                                    <div class="card-body collapse show">
+                                        <div class="accordion" id="privacy_accordion">
+                                            <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" data-target="#privacy_example" aria-expanded="false" aria-controls="collapseOne">
+                                            Why do we need your information?
+                                            </button>
+                                            <div id="privacy_example" class="collapse" aria-labelledby="headingOne" data-parent="#privacy_accordion">
+                                                <p class="collapse-in ml-0">
+                                                    Your personal privacy is our highest priority. We gather personal
+                                                    information to verify that you are a real person. If you choose to
+                                                    submit this entry to a campaign, the administrators of the campaign
+                                                    will have access to this information. Learn more about our
+                                                    commitment to privacy on our <a href="{% url 'main:privacy' %}">Privacy</a> and <a href="{% url 'main:terms' %}">Terms</a> pages.
+                                                </p>
+                                            </div>
+                                        </div>
                                         <p class="card-text">
                                             Your Name <small class="text-danger">(Required)</small>
                                         </p>
@@ -366,29 +369,61 @@
                             </div>
                         </div>
                     </div>
-                </form>
-                <div class='row row-equal-cols'>
-                    <div class='col-lg text-center m-2'>
-                        <div class="alert alert-warning text-left" role="alert">
-                            <h5 class="alert-heading">What happens next?</h5>
-                            <p class="card-text">
-                                By adding your map to Representable.org you're not submitting a map to a redistricting commission. 
-                            </p>
-                            <p class="card-text">
-                                You will be able to submit a map to a commission as soon as information about the submission process becomes available 
-                                in your state. We'll attempt to contact you once that's available. Make sure to check the Representable.org 
-                                website regularly for new information about the process in your state.
-                            </p>
-                            <p class="card-text">
-                                If you submitted the map to a campaign, the campaign may choose to send your submission to a 
-                                redistricting commmission on your behalf.
-                            </p>
-                          </div>
-                        <div style="display: inline-block;">
-                            <button id="save" form="entryForm" type="submit" class="btn btn-primary" value="Submit">Save Entry</button>
+                    <div class="row row-equal-cols">
+                        <!-- Map -->
+                        <div class="col-lg m-2">
+                            <div class="collapse-card card-section">
+                                <div class="card">
+                                    <div class="card-header text-header-card">
+                                        <strong>
+                                        Privacy and Terms of Use
+                                        </strong>
+                                        <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
+                                    </div>
+                                    <div class="card-body collapse show">
+                                        <p class="card-text">
+                                            Your privacy is our priority. We don't share your personal information
+                                            with anyone unless otherwise noted. <a href="{% url 'main:privacy' %}"> Learn more about
+                                            our commitment to privacy on our Privacy Policy page.</a>
+                                        </p>
+                                        <div class="toc-check">
+                                            <input class="toc-check-input" type="checkbox" value="" id="toc_check" required>
+                                            <label class="toc-check-label" for="toc_check">
+                                                Click here to indicate that you have read and agree to the 
+                                                <a href="{% url 'main:terms' %}">Terms of Use</a> and 
+                                                <a href="{% url 'main:privacy' %}">Privacy Policy</a>. 
+                                                <small class="text-danger">(Required)</small>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+
+                    <div class='row row-equal-cols'>
+                        <div class='col-lg text-center m-2'>
+                            <div class="alert alert-primary text-left" role="alert">
+                                <h5 class="alert-heading">What happens next?</h3>
+                                <p class="card-text">
+                                    By adding your map to Representable.org you're not submitting a map to a redistricting commission. 
+                                </p>
+                                <p class="card-text">
+                                    You will be able to submit a map to a commission as soon as information about the submission process becomes available 
+                                    in your state. We'll attempt to contact you once that's available. Make sure to check the Representable.org 
+                                    website regularly for new information about the process in your state.
+                                </p>
+                                <p class="card-text">
+                                    If you submitted the map to a campaign, the campaign may choose to send your submission to a 
+                                    redistricting commmission on your behalf.
+                                </p>
+                            </div>
+                            <div style="display: inline-block;">
+                                <button id="save" form="entryForm" type="submit" class="btn btn-primary" value="Submit">Save Entry</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="col-sm-2">
