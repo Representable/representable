@@ -128,7 +128,7 @@ class CommunityForm(ModelForm):
             ),
             "entry_reason": forms.Textarea(
                 attrs={
-                    "placeholder": """Example: Our tart cherry farmers extend over two counties and we hope you can put them together in a single State Senate/Congressional district. """,
+                    "placeholder": """Example: Our farmers extend over two counties and we hope you can put them together in a single State Senate district. """,
                     "rows": 5,
                 }
             ),
