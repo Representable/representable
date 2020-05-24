@@ -75,12 +75,11 @@
                             <div class="collapse-card card-section active-section">
                                 <div class="card">
                                     <div class="card-header text-header-card">
-                                        <strong>1. Personal Information</strong>
-                                        <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
+                                        <strong>1. Your Personal Information</strong>
                                     </div>
-                                    <div class="card-body collapse show">
+                                    <div class="card-body">
                                         <div class="alert alert-info" role="alert">
-                                            <h5 class="alert-heading">Why do we need your information?</h3>
+                                            <h5 class="alert-heading">Why do we need your information?</h5>
                                             <p class="card-text">
                                                 Your personal privacy is our highest priority. We gather personal information to verify that you are a real person.
                                             </p>
@@ -147,7 +146,6 @@
                                                 {{ addr_form.zipcode|append_attr:"class:form-control" }}
                                             </div>
                                         </div>
-                                        <input class="btn btn-primary float-right card-section-button button-next" type="button" value="Next">
                                     </div>
                                 </div>
                             </div>
@@ -157,33 +155,34 @@
                         <div class="col-lg m-2">
                             <div class="collapse-card card-section ">
                                 <div class="card">
-                                    <div id="interests-error-alerts">
+                                    <div class="card-header text-header-card">
+                                        <strong>2. Your Community's Shared Interests</strong>
+                                    </div>
+                                    <div class="card-body">
                                         {% if comm_form.cultural_interests.errors %}
-                                        <script>
-                                            sessionStorage.setItem("allChecks", "fail");
-                                        </script>
-                                        <div id="interests_missing" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
-                                            {% if LANGUAGE_CODE == 'en' %}
-                                            Please fill out at least one of the interest fields.
-                                            {% elif LANGUAGE_CODE == 'es' %}
-                                            <!-- Google translate  -->
-                                            Complete al menos uno de los campos de interés.
-                                            {% endif %}
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
+                                        <div id="interests-error-alerts">
+                                            <script>
+                                                sessionStorage.setItem("allChecks", "fail");
+                                            </script>
+                                            <div id="interests_missing" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
+                                                {% if LANGUAGE_CODE == 'en' %}
+                                                Please fill out at least one of the interest fields.
+                                                {% elif LANGUAGE_CODE == 'es' %}
+                                                <!-- Google translate  -->
+                                                Complete al menos uno de los campos de interés.
+                                                {% endif %}
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            
                                         </div>
                                         {% endif %}
-                                    </div>
-
-                                    <div class="card-header text-header-card">
-                                        <strong>2. Your Shared Cultural Interests</strong>
-                                        <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
-                                    </div>
-                                    <div class="card-body collapse">
-                                        <p class="card-text">
-                                            What fosters a sense of belonging in your Community? 
-                                            What common beliefs or values exist? <small class="text-danger">(Recommended)</small>
+                                        <!-- Cultural -->
+                                        <h5 class="card-text">Cultural Interests</h5>
+                                        <p class="card-text mb-0">
+                                            What fosters a sense of belonging in your community? 
+                                            What common beliefs or values exist? <small class="text-primary">(Recommended)</small>
                                         </p>
                                         <div class="accordion" id="cultural_interests_accordion">
                                             <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#cultural_interests_example" aria-expanded="false" aria-controls="collapseOne">
@@ -198,26 +197,12 @@
                                             </div>
                                         </div>
                                         {{ comm_form.cultural_interests|append_attr:"class:form-control" }}
-                                        <br>
-                                        <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
-                                        <input class="btn btn-primary float-right card-section-button button-next" type="button" value="Next">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row row-equal-cols">
-                        <div class="col-lg  m-2">
-                            <div class="collapse-card card-section ">
-                                <div class="card">
-                                    <div class="card-header text-header-card">
-                                        <strong>3. Shared Community Activities and Services</strong>
-                                        <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
-                                    </div>
-                                    <div class="card-body collapse">
-                                        <p class="card-text">
-                                            Where do people in your Community gather or socialize? 
-                                            Where does your Community get its services? <small class="text-danger">(Recommended)</small>
+                                        <hr>
+                                        <!-- Activities -->
+                                        <h5 class="card-text">Community Activities and Services</h5>
+                                        <p class="card-text mb-0">
+                                            Where do people in your community gather or socialize? 
+                                            Where does your community get its services? <small class="text-primary">(Recommended)</small>
                                         </p>
                                         <div class="accordion" id="comm_activities_accordion">
                                             <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#comm_activities_example" aria-expanded="false" aria-controls="collapseOne">
@@ -227,33 +212,19 @@
                                                 <p class="collapse-in ml-0">
                                                     Shopping areas, schools and colleges, parks and recreation areas, 
                                                     lakes and water ways, healthcare services, and other activities and services that 
-                                                    help define your Community.
+                                                    help define your community.
                                                 </p>
                                             </div>
                                         </div>
                                         {{ comm_form.comm_activities|append_attr:"class:form-control" }}
-                                        <br>
-                                        <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
-                                        <input class="btn btn-primary float-right card-section-button button-next" type="button" value="Next">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row row-equal-cols">
-                        <div class="col-lg m-2">
-                            <div class="collapse-card card-section ">
-                                <div class="card">
-                                    <div class="card-header text-header-card">
-                                        <strong>4. Your Shared Economic Interests</strong>
-                                        <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
-                                    </div>
-                                    <div class="card-body collapse">
-                                        <p class="card-text">
-                                            Is there a shared economy in the geographic area of your Community? 
+                                        <hr>
+                                        <!--  Economic -->
+                                        <h5 class="card-text">Economic Interests</h5>
+                                        <p class="card-text mb-0">
+                                            Is there a shared economy in the geographic area of your community? 
                                             How and where are residents employed? What parts of a county, 
-                                            township or city are included in your Community? 
-                                            Are there shared environmental concerns such as landfills or water quality? <small class="text-danger">(Recommended)</small>
+                                            township or city are included in your community? 
+                                            Are there shared environmental concerns such as landfills or water quality? <small class="text-primary">(Recommended)</small>
                                         </p>
                                         <div class="accordion" id="economic_interests_accordion">
                                             <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#economic_interests_example" aria-expanded="false" aria-controls="collapseOne">
@@ -268,9 +239,14 @@
                                             </div>
                                         </div>
                                         {{ comm_form.economic_interests|append_attr:"class:form-control" }}
-                                        <br>
-                                        <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
-                                        <input class="btn btn-primary float-right card-section-button button-next" type="button" value="Next">
+                                        <hr>
+                                        <!-- Other -->
+                                        <h5 class="card-text">Other Interests</h5>
+                                        <p class="card-text mb-1">
+                                            What other interests does your community care about? Please add anything
+                                            that does not fit in the sections above. <small class="text-primary">(Recommended)</small>
+                                        </p>
+                                        {{ comm_form.other_considerations|append_attr:"class:form-control" }}
                                     </div>
                                 </div>
                             </div>
@@ -281,10 +257,16 @@
                             <div class="collapse-card card-section ">
                                 <div class="card">
                                     <div class="card-header text-header-card">
-                                        <strong>5. Community Name and Other Interests</strong>
-                                        <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
+                                        <strong>3. Your Community's Issues and Name</strong>
                                     </div>
-                                    <div class="card-body collapse">
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                            What are the issues facing your community and do you have any suggestions
+                                            for how the redistricting commission in your state could help address these issues?<small class="text-primary"> (Recommended)</small>
+                                            <!-- TODO we should find a better example -->
+                                        </p>
+                                        {{ comm_form.entry_reason|append_attr:"class:form-control" }}
+                                        <hr>
                                         <p class="card-text">
                                             What name can we use to identify your community? <small class="text-danger">(Required)</small>
                                             <!-- TODO we should find a better example -->
@@ -292,13 +274,6 @@
                                             <small>For example: Princeton area student community</small>
                                         </p>
                                         {{ comm_form.entry_name|append_attr:"class:form-control" }}
-                                        <hr>
-                                        <p class="card-text">
-                                            What are the issues facing this community and how would you like the redistricting
-                                             commission in your state to help?<small class="text-danger"> (Recommended)</small>
-                                            <!-- TODO we should find a better example -->
-                                        </p>
-                                        {{ comm_form.entry_reason|append_attr:"class:form-control" }}
                                         <hr>
                                         {% if not has_campaign and not has_token %}
                                         <div class="field-wrap mt-3">
@@ -326,8 +301,6 @@
                                             {{ hidden }}
                                             {% endfor %}
                                         </div>
-                                        <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
-                                        <input class="btn btn-primary float-right card-section-button button-next" type="button" value="Next">
                                     </div>
                                 </div>
                             </div>
@@ -347,10 +320,8 @@
                                         6. Dibuja tu comunidad
                                         {% endif %}
                                         </strong>
-                                        <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
                                     </div>
-                                    <div id='map-card' class="card-body collapse">
-   
+                                    <div id='map-card' class="card-body">
                                         <!-- {# Include form.entry_polygon error. } -->
                                             <div id="map-error-alerts">
                                                 {% if comm_form.user_polygon.errors %}
@@ -390,7 +361,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <input class="btn btn-primary float-left card-section-button button-prev" type="button" value="Previous">
                                     </div>
                                 </div>
                             </div>
@@ -400,7 +370,7 @@
                 <div class='row row-equal-cols'>
                     <div class='col-lg text-center m-2'>
                         <div class="alert alert-warning text-left" role="alert">
-                            <h5 class="alert-heading">What happens next?</h3>
+                            <h5 class="alert-heading">What happens next?</h5>
                             <p class="card-text">
                                 By adding your map to Representable.org you're not submitting a map to a redistricting commission. 
                             </p>

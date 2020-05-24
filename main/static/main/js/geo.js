@@ -245,197 +245,10 @@ function print(items) {
 function changeText(element) {
   if (element.innerText == "Show Examples") {
     element.innerText = "Hide Examples";
-  }
-  else {
+  } else {
     element.innerText = "Show Examples";
   }
 }
-
-/******************************************************************************/
-
-// Form Handling
-
-function showEditOnAll(event) {
-  // Shows the edit button on all sections
-  var card_section_divs = document.getElementsByClassName("card-section");
-  for (var i = 0; i < card_section_divs.length; i++) {
-    showEditonSection(card_section_divs[i]);
-  }
-}
-
-function openAllSections(event) {
-  // Opens All Sections On Click.
-  var card_section_divs = document.getElementsByClassName("card-section");
-  for (var i = 0; i < card_section_divs.length; i++) {
-    openSectionByElement(card_section_divs[i]);
-  }
-}
-
-function showEditOnSection(parent_section) {
-  var current_index = parent_section.getAttribute("data-card-index");
-  var section_id = "card_section_" + section_ix;
-  var section_elem = document.getElementById(section_id);
-  var edit_button = section_elem.getElementsByClassName("button-edit")[0];
-  edit_button.value = "Hide Section";
-  edit_button.style.display = "block";
-}
-
-function getCurrentParentSection(event) {
-  // Gets the Parent Section of this Event.
-  var targetElement = event.target || event.srcElement;
-  var parent_section = targetElement.closest(".card-section");
-  return parent_section;
-}
-
-function getCurrentSectionIndex(event) {
-  // Gets The Section Index of the Current Event
-  var parent_section = getCurrentParentSection(event);
-  var current_index = parent_section.getAttribute("data-card-index");
-  return current_index;
-}
-
-function openSectionByElement(parent_section) {
-  // Opens The Section That Was Passed to it.
-  var current_index = parent_section.getAttribute("data-card-index");
-  openSectionByIndex(current_index);
-}
-
-function openSectionByIndex(section_ix) {
-  // Opens the section by index, but does not close anything else.
-  var section_id = "card_section_" + section_ix;
-  var section_elem = document.getElementById(section_id);
-  var edit_button = section_elem.getElementsByClassName("button-edit")[0];
-  edit_button.value = "Hide Section";
-  section_elem.classList.add("active-section");
-  $("#" + section_id + " .collapse.card-body").collapse("show");
-  edit_button.style.display = "block";
-}
-
-function goToSection(section_ix) {
-  // Scrolls the section with section_ix into view.
-  var goto_section_id = "card_section_" + section_ix;
-  var goto_section_elem = document.getElementById(goto_section_id);
-  var edit_button = goto_section_elem.getElementsByClassName("button-edit")[0];
-  edit_button.value = "Hide Section";
-  edit_button.style.display = "block";
-  goto_section_elem.classList.add("active-section");
-  goto_section_elem.scrollIntoView({ behavior: "smooth" });
-  $("#" + goto_section_id + " .collapse.card-body").collapse("show");
-  var delayInMilliseconds = 500;
-  setTimeout(function () {}, delayInMilliseconds);
-}
-
-function toggleSection(event) {
-  // Toggle Section By Event. If the section is on, it toggles it off.
-  // Otherwise, it toggles it on.
-  var section_ix = getCurrentSectionIndex(event);
-  var section_id = "card_section_" + section_ix;
-  var section_elem = document.getElementById(section_id);
-  var edit_button = section_elem.getElementsByClassName("button-edit")[0];
-  if (section_elem.classList.contains("active-section")) {
-    edit_button.value = "Edit Section";
-    section_elem.classList.remove("active-section");
-    $("#" + section_id + " .collapse.card-body").collapse("hide");
-  } else {
-    edit_button.value = "Hide Section";
-    section_elem.classList.add("active-section");
-    $("#" + section_id + " .collapse.card-body").collapse("show");
-  }
-  edit_button.style.display = "block";
-}
-
-function goToNextSection(event) {
-  // Handler for "Next" Button.
-  // Gets the current section and calls goToSection() to scroll
-  // it into view.
-  var current_index = getCurrentSectionIndex(event);
-  var parent_section = getCurrentParentSection(event);
-  // for the current section, make sure that the hide section
-  // button shows correct state
-  var parent_section_edit_button = parent_section.querySelector(".button-edit");
-  parent_section_edit_button.style.display = "block";
-  parent_section_edit_button.value = "Hide Section";
-  var next_index = parseInt(current_index) + 1;
-  goToSection(next_index);
-}
-
-function goToPreviousSection(event) {
-  // Go to previous section handler.
-  // Opens previous section, but does not hide anything.
-  var current_index = getCurrentSectionIndex(event);
-  var prev_index = parseInt(current_index) - 1;
-  goToSection(prev_index);
-}
-
-function addButtonHandlers(card_section_divs) {
-  // Adds handlers to all section buttons (visible and invisible).
-  for (var i = 0; i < card_section_divs.length; i++) {
-    var card_section = card_section_divs[i];
-    var card_button_prev = card_section.querySelector(".button-prev");
-    if (typeof card_button_prev !== "undefined" && i - 1 >= 0) {
-      previous_section = card_section_divs[i - 1];
-      card_button_prev.addEventListener("click", function (event) {
-        goToPreviousSection(event);
-      });
-    }
-    var card_button_next = card_section.querySelector(".button-next");
-    if (
-      typeof card_button_next !== "undefined" &&
-      i + 1 < card_section_divs.length
-    ) {
-      next_section = card_section_divs[i + 1];
-      card_button_next.addEventListener("click", function (event) {
-        goToNextSection(event);
-      });
-    }
-    var card_button_edit = card_section.querySelector(".button-edit");
-    card_button_edit.addEventListener("click", function () {
-      toggleSection(event);
-    });
-  }
-}
-
-// Run after the DOM loads.
-document.addEventListener(
-  "DOMContentLoaded",
-  function () {
-    // Index All Collapsible Sections
-    card_section_divs = document.getElementsByClassName("card-section");
-    for (var i = 0; i < card_section_divs.length; i++) {
-      var card_section = card_section_divs[i];
-      var new_id = "card_section_" + i;
-      card_section.setAttribute("id", new_id);
-      card_section.setAttribute("data-card-index", i);
-    }
-    // Add handlers for the sections.
-    addButtonHandlers(card_section_divs);
-    // Check if form errors. Show the elements where they are present.
-    var form_error_arr = document.getElementsByClassName("form-error");
-    for (var i = 0; i < form_error_arr.length; i++) {
-      var parent_section = form_error_arr[i].closest(".card-section");
-      openSectionByElement(parent_section);
-    }
-    openAllSections();
-    // Add a listener for the save button so sections are expanded
-    // if there are errors.
-    var form_save_button = document.getElementById("save");
-    form_save_button.addEventListener("click", function (event) {
-      // open all
-      openAllSections(event);
-    });
-    $('[data-toggle="tooltip"]').tooltip();
-
-    // Check Poly Fields And Display Errors On Save
-    var user_polygon_field = document.getElementById("id_user_polygon");
-    var census_blocks_arr_field = document.getElementById(
-      "id_census_blocks_polygon_array"
-    );
-    var census_blocks_poly = document.getElementById(
-      "id_census_blocks_polygon"
-    );
-  },
-  false
-);
 
 /******************************************************************************/
 
@@ -484,6 +297,14 @@ document.addEventListener(
       .removeClass("add-form-row")
       .addClass("remove-form-row")
       .html('<span class="" aria-hidden="true">Remove</span>');
+    // Check Poly Fields And Display Errors On Save
+    var user_polygon_field = document.getElementById("id_user_polygon");
+    var census_blocks_arr_field = document.getElementById(
+      "id_census_blocks_polygon_array"
+    );
+    var census_blocks_poly = document.getElementById(
+      "id_census_blocks_polygon"
+    );
   },
   false
 );
@@ -1172,13 +993,6 @@ map.on("style.load", function () {
     var styleSpec = ev.result;
     var styleSpecBox = document.getElementById("json-response");
     var styleSpecText = JSON.stringify(styleSpec, null, 2);
-    var divs = document.getElementsByClassName("collapse-card");
-    for (let i = 0; i < divs.length; i++) {
-      divs[i].setAttribute(
-        "style",
-        "-webkit-filter: blur(0px); pointer-events: auto;"
-      );
-    }
 
     $(".map-bounding-box.collapse").collapse("show");
     map.resize();
