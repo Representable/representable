@@ -22,7 +22,7 @@
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
 var map = new mapboxgl.Map({
   container: "map", // container id
-  style: "mapbox://styles/mapbox/streets-v11", //color of the map -- dark-v10 or light-v9
+  style: "mapbox://styles/mapbox/light-v9", //color of the map -- dark-v10 or light-v9 or streets-v11
   center: [-96.7026, 40.8136], // starting position - Lincoln, Nebraska (middle of country lol)
   zoom: 3, // starting zoom -- higher is closer
 });
@@ -67,8 +67,8 @@ function newCensusLayer(state, firstSymbolId) {
         visibility: "none",
       },
       paint: {
-        "line-color": "rgba(106,137,204,0.7)",
-        "line-width": 3,
+        "line-color": "rgba(106,137,204,0.3)",
+        "line-width": 1,
       },
     },
     firstSymbolId
@@ -111,6 +111,14 @@ function newLowerLegislatureLayer(state) {
   });
 }
 
+// show more button
+document.querySelectorAll(".comm-content").forEach(function (p) {
+  p.querySelector("a").addEventListener("click", function () {
+    p.classList.toggle("show");
+    this.textContent = p.classList.contains("show") ? "Show Less" : "Show More";
+  });
+});
+
 entry_names = JSON.parse(entry_names);
 entry_reasons = JSON.parse(entry_reasons);
 var community_bounds = {};
@@ -149,8 +157,6 @@ map.on("load", function () {
     }
   }
 
-  // tags add to properties
-  tags = JSON.parse(tags);
   // send elements to javascript as geojson objects and make them show on the map by
   // calling the addTo
 
@@ -218,10 +224,6 @@ map.on("load", function () {
             type: "Polygon",
             coordinates: final,
           },
-          properties: {
-            name: entry_names[obj],
-            reason: entry_reasons[obj],
-          },
         },
       },
       layout: {
@@ -240,10 +242,7 @@ map.on("load", function () {
   map.on("moveend", function () {
     var sources = [];
     var features = map.queryRenderedFeatures();
-    // clear the html so that we dont end up with duplicate communities
-    document.getElementById("community-list").innerHTML = "";
     for (var i = 0; i < features.length; i++) {
-      // through all the features which are rendered, get info abt them
       var source = features[i].source;
       if (
         source !== "composite" &&
@@ -254,40 +253,34 @@ map.on("load", function () {
       ) {
         if (!sources.includes(source)) {
           sources.push(source);
-          var inner_content =
-            "<span class='font-weight-light text-uppercase'><a style='display:inline;' href='/submission?map_id=" +
-            source.slice(0, 8) +
-            "'>".concat(
-              features[i].properties.name,
-              "</a></span><hr class='my-1'>\n",
-              "<span class='font-weight-light'>Why are you submitting this community?</span> <div class='p-1 my-1 bg-info text-white text-center '>",
-              features[i].properties.reason,
-              "</div>"
-            );
-          var content =
-            '<li class="list-group-item small" id=' +
-            source +
-            ">".concat(inner_content, "</li>");
-          // put the code into the html - display!
-          document
-            .getElementById("community-list")
-            .insertAdjacentHTML("beforeend", content);
         }
       }
     }
+    // only display those on the map
+    $(".community-review-span").each(function(i, obj) {
+      if ($.inArray(obj.id, sources) !== -1) {
+        $(obj).show();
+      } else {
+        $(obj).hide();
+      }
+    });
   });
 });
 
-// on hover, highlight the community
-$("#community-list").on("mouseenter", "li", function () {
-  map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0, 0.5)");
+// hover to highlight
+$(".community-review-span").hover(function() {
+  map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
   map.setPaintProperty(this.id + "line", "line-width", 4);
   map.setPaintProperty(this.id, "fill-opacity", 0.5);
-});
-$("#community-list").on("mouseleave", "li", function () {
+}, function () {
   map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.2)");
   map.setPaintProperty(this.id + "line", "line-width", 2);
   map.setPaintProperty(this.id, "fill-opacity", 0.15);
+});
+
+// on click, zoom to community
+$(".community-review-span").click(function () {
+  map.fitBounds(community_bounds[this.id], {padding: 100});
 });
 
 //create a button that toggles layers based on their IDs
@@ -316,7 +309,6 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
         clickedLayers.push(states[i].toUpperCase() + " " + txt);
       }
     }
-    // var clickedLayers = ["NJ " + txt, "VA " + txt, "PA " + txt, "MI " + txt];
     e.preventDefault();
     e.stopPropagation();
 
@@ -341,23 +333,4 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   div.appendChild(label);
   layers.appendChild(div);
   var newline = document.createElement("br");
-}
-
-/* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content -
-This allows the user to have multiple dropdowns without any conflict */
-var dropdown = document.getElementsByClassName("dropdown-btn");
-var i;
-
-for (i = 0; i < dropdown.length; i++) {
-  dropdown[i].addEventListener("click", function () {
-    this.classList.toggle("active");
-    var dropdownContent = this.nextElementSibling;
-    if (dropdownContent.style.display === "block") {
-      dropdownContent.style.display = "none";
-    } else {
-      dropdownContent.style.display = "block";
-    }
-    // add logic for polygons
-    // map.setFilter('users', ['in', 'orgs', ...targetIDs]);
-  });
 }

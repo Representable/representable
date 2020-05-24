@@ -318,11 +318,11 @@ color scheme. See readme.md*/
 }
 
 .comm-content .more-content{
-  display: none
+  display: none;
 }
 
 .comm-content.show .more-content {
-  display: inline
+  display: inline;
 }
 
 .table-col-large {
@@ -333,6 +333,9 @@ color scheme. See readme.md*/
 }
 .table {
   word-break: break-word;
+}
+.hidden {
+  display: none;
 }
 
 /* landing page map */

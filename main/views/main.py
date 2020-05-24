@@ -277,15 +277,8 @@ class Map(TemplateView):
 
         # the polygon coordinates
         entryPolyDict = dict()
-        # dictionary of tags to be displayed
-        tags = dict()
-        for obj in Tag.objects.all():
-            # manytomany query
-            entries = obj.communityentry_set.all()
-            ids = []
-            for id in entries:
-                ids.append(str(id))
-            tags[str(obj)] = ids
+        # all communities for display TODO: might need to limit this? or go by state
+        query = CommunityEntry.objects.all();
         # get the polygon from db and pass it on to html
         for obj in CommunityEntry.objects.all():
             if not obj.admin_approved:
@@ -310,7 +303,7 @@ class Map(TemplateView):
         context = {
             "entry_names": json.dumps(entry_names),
             "entry_reasons": json.dumps(entry_reasons),
-            "tags": json.dumps(tags),
+            "communities": query,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
