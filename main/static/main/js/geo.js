@@ -777,7 +777,7 @@ class MapEditButton {
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
     map_edit_button.addEventListener("click", function (e) {
       cleanAlerts();
-      showInstructionBox();
+      toggleInstructionBox();
       var all_features = draw.getAll();
       if (all_features.features.length > 0) {
         draw.changeMode("direct_select", {
