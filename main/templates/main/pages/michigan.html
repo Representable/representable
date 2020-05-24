@@ -2,28 +2,24 @@
 {% load static %}
 {% block content %}
 <div class="container">
-  <div class="row row-hero row-eq-height my-5">
-    <div class="col-12 text-center">
-      <h1 class="font-weight-light">Welcome to Michigan!</h1>
-    </div>
-  </div>
-  <div class="row">
+  <div class="row row-hero my-5">
     <div class="col-12">
-      <p class="lead">Learn more about redistricting in Michigan</p>
-      <p>That thought was immediately followed by its negation: Why bother? The same incidents, the same references and the same outrages would inevitably be picked over by other writers; for all our social distancing, we’d all be crowding around the same material. I also knew that anything I wrote could soon be — in fact was almost certain to be — contradicted by new developments. But what worried me most was that certain points of emphasis in my writing would later prove to have been misjudged, and that this would somehow reveal that my heart had been in the wrong place all along.</p>
+      <h1 class="font-weight-light text-center">Welcome to Michigan!</h1>
+      <p class="lead">Redistricting in Michigan</p>
+      <p>In 2021, a group of Michigan citizens will convene as part of the Independent Citizens Redistricting Commission to draw new state legislative and congressional districts. These district maps will inform how citizens vote, how much their votes matter, and which politicians win elections to represent communities for the next 10 years!</p>
+      <p>In order to make sure these new district lines are fair and impartial, it’s important that the citizens on the Redistricting Commission have public input from as many Michiganders as possible on where their communities are and what binds them together. If mapmakers have your community information, they’re less likely to split your community apart.</p>
+
+      <div class="card card-signin my-3">
+        <div class="card-body">
+          <h5><span class="badge badge-primary">Coming Soon!</span> Partners in Michigan</h5>
+          <p>Different policy groups in Michigan are teaming up to ensure that your community information is collected to best preserve your communities interests. Soon, you'll be able to select from organizations in Michigan and submit your community's information directly to them. In the meantime, you can draw your community by clicking the button below to save and export your community's details for your own use and/or share it with Michigan's Redistricting Commission in the future.</p>
+        </div>
+      </div>
+      <div class = "text-center">
+        <a class="btn btn-primary btn-canvas my-3 btn-lg font-weight-light" href="{% url 'main:entry' %}" role="button">Draw my community</a>
+      </div>
     </div>
   </div>
-  <div class="card card-signin my-3">
-    <div class="card-body">
-      <h5><span class="badge badge-primary">Coming Soon!</span> Campaigns in Michigan</h5>
-      <p>But here, where everything is divided, where the unscathed can’t quite believe the wounded, the levity sounds like anything but solidarity. Covid-19 was initially heralded as a great equalizer, and there was some evidence of this in some countries. But it arrived in America and immediately became American: classist, capitalist, complacent.</p>
-    </div>
-  </div>
-  <div class="col-12 text-center">
-    <a class="btn btn-primary btn-canvas my-5" href="/entry" role="button">Start Drawing</a>
-  </div>
-  <div>
     <object type="image/svg+xml" class="state" data="{% static 'img/states/MI.svg' %}"></object>
-  </div>
 </div>
 {% endblock %}
