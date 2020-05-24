@@ -723,7 +723,7 @@ drawButton.id = "draw-button";
 drawButton.innerHTML = "<i class='fas fa-draw-polygon'></i> Draw Polygon";
 var delete_feature_button = document.querySelector(".mapbox-gl-draw_trash");
 delete_feature_button.backgroundImg = "";
-delete_feature_button.id = "trash-button";
+delete_feature_button.id = "delete-feature-button";
 delete_feature_button.innerHTML =
   "<i class='fas fa-minus-square'></i> Delete Vertex";
 
@@ -856,9 +856,11 @@ function showInstructionBox() {
   instruction_box.style.display = "block";
   if (draw != null) {
     var all_features = draw.getAll();
-    draw.changeMode("direct-select", {
-      featureId: all_features.features[0].id,
-    });
+    if (all_features.features.length > 0) {
+      draw.changeMode("direct_select", {
+        featureId: all_features.features[0].id,
+      });
+    }
   }
 }
 
@@ -867,9 +869,11 @@ function hideInstructionBox() {
   instruction_box.style.display = "none";
   if (draw != null) {
     var all_features = draw.getAll();
-    draw.changeMode("direct-select", {
-      featureIds: [all_features.features[0].id],
-    });
+    print(all_features);
+    draw.changeMode("simple_select");
+    // draw.changeMode("simple_select", {
+    // featureIds: [all_features.features[0].id]
+    // });
   }
 }
 
@@ -952,11 +956,13 @@ document.getElementById("draw-button").addEventListener("click", function (e) {
   draw.changeMode("draw_polygon");
 });
 
-document.getElementById("trash-button").addEventListener("click", function (e) {
-  cleanAlerts();
-  map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
-  draw.changeMode("direct-select");
-});
+document
+  .getElementById("delete-feature-button")
+  .addEventListener("click", function (e) {
+    cleanAlerts();
+    map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
+    draw.changeMode("direct-select");
+  });
 
 function toggleMapButtons(state) {
   var mapContent = document.getElementById("map");
@@ -1163,7 +1169,6 @@ map.on("draw.selectionchange", function (event) {
   var selected_features = selected_objects.features;
   if (selected_points.length > 0) {
     // The user selected a point. Show delete vertex.
-    showInstructionBox();
     showDeleteFeatureButton();
   } else {
     hideDeleteFeatureButton();
