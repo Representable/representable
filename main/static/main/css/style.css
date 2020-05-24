@@ -164,13 +164,7 @@ footer {
 /* Clear floats after the columns */
 
 .row-content {
-  background-color: #fff;
-  color: #000;
   padding: 15px;
-}
-
-.row-content a {
-  color: #00c6a7;
 }
 
 .row-about {
@@ -184,10 +178,6 @@ footer {
 .row-wide {
   background-color: white;
   color: #000;
-}
-
-.row-wide a {
-  color: #00c6a7;
 }
 
 .col-wide {
