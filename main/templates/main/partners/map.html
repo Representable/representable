@@ -87,9 +87,13 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                       {{ c.user.username }}
                       {% endif %} |
                       {% if c.user_phone %}
-                      {{ c.user_phone }} |
-                      {{streets|get_item:c.entry_ID}},
+                      {{ c.user_phone }}
+                      {% endif %}
+                      {% if c.entry_ID in streets %}
+                      | {{streets|get_item:c.entry_ID}},
                       {{cities|get_item:c.entry_ID}} <br>
+                      {% else %}
+                      <br>
                       {% endif %}
                     {% endif %}
                     </span>
