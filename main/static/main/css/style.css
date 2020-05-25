@@ -189,6 +189,18 @@ footer {
   border-color: #2a94f4;
 }
 
+/* Help dropup */
+
+#dropuphelp {
+  position: fixed; 
+  bottom: 40px; 
+  right: 40px; 
+  z-index: 1010;
+}
+
+.dropdown-menu a{
+  color: #333;
+}
 /* Bootstrap Buttons. */
 
 /* This changes the color of the buttons so that it matches the Representable
