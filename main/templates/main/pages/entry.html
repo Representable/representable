@@ -352,7 +352,7 @@
                                                 Busque una ubicación para comenzar a dibujar su comunidad.
                                                 {% endif %}
                                             </strong>
-                                            <button id="toast_btn" class="btn btn-secondary btn-sm float-right" type="button" onclick="showToast()">Video Tutorial</button>
+                                            <button class="btn btn-secondary btn-sm float-right" onclick="showVideoPopup()" type="button">Video Tutorial</button>
                                             <div id="geocoder" class="geocoder my-3"></div>
                                             <div class="map-bounding-box my-2 collapse">
                                                 <div class="map-box">
@@ -428,6 +428,18 @@
             </div> 
         </div>
         <div class="col-sm-2">
+        </div>
+        <div class="row">
+        <div id="video_popup" class="card shadow col-sm-4 col-md-6 col-lg-5 d-none">
+            <div id="video_popup_body" class="card-body">
+                <h5 class="card-title">
+                    Video Tutorial <button type="button" class="close" onclick="closePopup()">&times;</button> 
+                </h5> 
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/rWPPW8f-svw" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 
