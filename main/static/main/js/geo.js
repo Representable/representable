@@ -250,6 +250,14 @@ function changeText(element) {
   }
 }
 
+function showVideoPopup() {
+  $("#video_popup").removeClass("d-none");
+}
+
+function closePopup() {
+  $("#video_popup").addClass("d-none");
+}
+
 /******************************************************************************/
 
 var wkt_obj;
