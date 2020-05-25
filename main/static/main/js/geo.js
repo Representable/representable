@@ -852,7 +852,6 @@ document
       var all_features = draw.getAll();
       if (all_features.features.length > 0) {
         var polygon = all_features.features[0];
-        highlightBlocks(polygon);
         updateCommunityEntry(event);
         draw.changeMode("direct_select", {
           featureId: polygon.id,
@@ -1213,19 +1212,13 @@ function addPoly(poly, polyArray, wkt) {
   return polyArray;
 }
 
-function updateFormFields(
-  user_polygon_wkt,
-  census_blocks_polygon_wkt,
-  census_blocks_polygon_array
-) {
+function updateFormFields(user_polygon_wkt, census_blocks_polygon_array) {
   // Update form fields
   document.getElementById("id_user_polygon").value = user_polygon_wkt;
   document.getElementById(
-    "id_census_blocks_polygon"
-  ).value = census_blocks_polygon_wkt;
-  document.getElementById(
     "id_census_blocks_polygon_array"
   ).value = census_blocks_polygon_array;
+  // "census_blocks_polygon" gets saved in the post() function in django
 }
 
 /* Responds to the user's actions and updates the geometry fields and the arrayfield
@@ -1237,9 +1230,8 @@ function updateCommunityEntry(event) {
   var data = draw.getAll();
   var data_features = data.features;
   var user_polygon_wkt = "";
-  var census_blocks_polygon_wkt = "";
   var drawn_polygon = "";
-  var census_blocks_polygon_array = "";
+  var census_blocks_polygon_array;
 
   // Check if the feature has data
   if (data_features.length > 0) {
@@ -1255,10 +1247,10 @@ function updateCommunityEntry(event) {
     // sets an empty filter - unhighlights everything
     // sets the form fields as empty
     // TODO: update for all states
-    // map.setFilter(sessionStorage.getItem("stateName") + "-blocks-highlighted", [
-    // "in",
-    // "BLOCKID10",
-    // ]);
+    map.setFilter(sessionStorage.getItem("stateName") + "-blocks-highlighted", [
+      "in",
+      "BLOCKID10",
+    ]);
     triggerDrawError("polygon_missing", "You must draw a polygon to continue.");
   } else {
     // Update User Polygon with the GeoJson data.
@@ -1303,11 +1295,7 @@ function updateCommunityEntry(event) {
     }
     triggerSuccessMessage();
   }
-  updateFormFields(
-    user_polygon_wkt,
-    census_blocks_polygon_wkt,
-    census_blocks_polygon_array
-  );
+  updateFormFields(user_polygon_wkt, census_blocks_polygon_array);
 }
 /******************************************************************************/
 
