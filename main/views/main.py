@@ -229,7 +229,7 @@ class Submission(TemplateView):
         entryPolyDict[m_uuid] = map_poly.coordinates
 
         context = {
-            "community": user_map,
+            "c": user_map,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
