@@ -191,7 +191,12 @@ footer {
 
 /* Help dropup */
 
-#dropuphelp { position: fixed; bottom: 30px; right: 30px; z-index: 10;}
+#dropuphelp { 
+  position: fixed; 
+  bottom: 30px; 
+  right: 30px; 
+  z-index: 1010;
+}
 
 .dropdown-menu a{
   color: #333;
