@@ -5,6 +5,7 @@ from ..models import (
     Tag,
     CommunityEntry,
     Campaign,
+    Address
 )
 
 # from django.views.generic.detail import SingleObjectMixin
@@ -48,6 +49,9 @@ class PartnerMap(TemplateView):
 
         # the polygon coordinates
         entryPolyDict = dict()
+        # address Information
+        streets = {}
+        cities = {}
         # get the polygon from db and pass it on to html
         if self.kwargs["campaign"]:
             query = CommunityEntry.objects.filter(
@@ -60,6 +64,9 @@ class PartnerMap(TemplateView):
                 organization__slug=self.kwargs["slug"], admin_approved=True
             )
         for obj in query:
+            for a in Address.objects.filter(entry=obj):
+                streets[obj.entry_ID] = a.street
+                cities[obj.entry_ID] = a.city + ", " + a.state + " " + a.zipcode
             if not obj.census_blocks_polygon:
                 s = "".join(obj.user_polygon.geojson)
             else:
@@ -71,6 +78,8 @@ class PartnerMap(TemplateView):
             entryPolyDict[obj.entry_ID] = struct.coordinates
 
         context = {
+            "streets": streets,
+            "cities": cities,
             "communities": query,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),

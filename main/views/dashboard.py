@@ -46,6 +46,7 @@ from ..models import (
     CommunityEntry,
     Tag,
     CampaignToken,
+    Address
 )
 from django.shortcuts import get_object_or_404
 from django.views.generic.edit import FormView
@@ -365,6 +366,10 @@ class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
         # approved list of communities
         approvedList = []
 
+        # list of addresses
+        streets = {}
+        cities = {}
+
         if self.kwargs["campaign"]:
             query = CommunityEntry.objects.filter(
                 organization__pk=self.kwargs["pk"],
@@ -376,6 +381,10 @@ class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
             )
 
         for obj in query:
+            for a in Address.objects.filter(entry=obj):
+                streets[obj.entry_ID] = a.street
+                cities[obj.entry_ID] = a.city + ", " + a.state + " " + a.zipcode
+
             if not obj.census_blocks_polygon:
                 s = "".join(obj.user_polygon.geojson)
             else:
@@ -385,8 +394,9 @@ class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
             if obj.admin_approved:
                 # this is for coloring the map properly
                 approvedList.append(obj.entry_ID)
-
         context = {
+            "streets": streets,
+            "cities": cities,
             "form": form,
             "entries": json.dumps(entryPolyDict),
             "approved": json.dumps(approvedList),
