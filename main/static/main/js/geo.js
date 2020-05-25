@@ -1213,6 +1213,21 @@ function addPoly(poly, polyArray, wkt) {
   return polyArray;
 }
 
+function updateFormFields(
+  user_polygon_wkt,
+  census_blocks_polygon_wkt,
+  census_blocks_polygon_array
+) {
+  // Update form fields
+  document.getElementById("id_user_polygon").value = user_polygon_wkt;
+  document.getElementById(
+    "id_census_blocks_polygon"
+  ).value = census_blocks_polygon_wkt;
+  document.getElementById(
+    "id_census_blocks_polygon_array"
+  ).value = census_blocks_polygon_array;
+}
+
 /* Responds to the user's actions and updates the geometry fields and the arrayfield
  in the form. */
 function updateCommunityEntry(event) {
@@ -1288,15 +1303,11 @@ function updateCommunityEntry(event) {
     }
     triggerSuccessMessage();
   }
-
-  // Update form fields
-  document.getElementById("id_user_polygon").value = user_polygon_wkt;
-  document.getElementById(
-    "id_census_blocks_polygon"
-  ).value = census_blocks_polygon_wkt;
-  document.getElementById(
-    "id_census_blocks_polygon_array"
-  ).value = census_blocks_polygon_array;
+  updateFormFields(
+    user_polygon_wkt,
+    census_blocks_polygon_wkt,
+    census_blocks_polygon_array
+  );
 }
 /******************************************************************************/
 
