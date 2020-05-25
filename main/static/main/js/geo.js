@@ -293,6 +293,29 @@ function parseReverseGeo(geoData) {
 }
 
 /******************************************************************************/
+
+function formValidation() {
+  // Check Poly Fields And Display Errors On Save
+  print("form validation");
+  var user_polygon_field = document.getElementById("id_user_polygon");
+  if (user_polygon_field.value == null || user_polygon_field.value == "") {
+    triggerMissingPolygonError();
+    return false;
+  }
+  var census_blocks_arr_field = document.getElementById(
+    "id_census_blocks_polygon_array"
+  );
+  if (
+    census_blocks_arr_field.value == null ||
+    census_blocks_arr_field.value == ""
+  ) {
+    triggerMissingPolygonError();
+    return false;
+  }
+  var census_blocks_poly = document.getElementById("id_census_blocks_polygon");
+  return true;
+}
+
 // Make buttons show the right skin.
 document.addEventListener(
   "DOMContentLoaded",
@@ -305,14 +328,10 @@ document.addEventListener(
       .removeClass("add-form-row")
       .addClass("remove-form-row")
       .html('<span class="" aria-hidden="true">Remove</span>');
-    // Check Poly Fields And Display Errors On Save
-    var user_polygon_field = document.getElementById("id_user_polygon");
-    var census_blocks_arr_field = document.getElementById(
-      "id_census_blocks_polygon_array"
-    );
-    var census_blocks_poly = document.getElementById(
-      "id_census_blocks_polygon"
-    );
+    var entry_form_button = document.getElementById("save");
+    entry_form_button.addEventListener("click", function (event) {
+      formValidation();
+    });
   },
   false
 );
@@ -1083,7 +1102,15 @@ function cleanAlerts() {
   }
 }
 
+function triggerMissingPolygonError() {
+  triggerDrawError(
+    "polygon_missing",
+    "You must draw a polygon to submit this entry."
+  );
+}
+
 function triggerDrawError(id, stringErrorText) {
+  print("appended error");
   /*
         triggerDrawError creates a bootstrap alert placed on top of the map.
     */
@@ -1110,6 +1137,7 @@ function triggerDrawError(id, stringErrorText) {
                                   </button>\
                           </div>';
   document.getElementById("map-error-alerts").appendChild(newAlert);
+  print("appended error");
 }
 
 /******************************************************************************/
@@ -1251,7 +1279,7 @@ function updateCommunityEntry(event) {
       "in",
       "BLOCKID10",
     ]);
-    triggerDrawError("polygon_missing", "You must draw a polygon to continue.");
+    triggerMissingPolygonError();
   } else {
     // Update User Polygon with the GeoJson data.
     drawn_polygon = data.features[0];
