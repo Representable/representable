@@ -82,9 +82,12 @@
                 {{ c.user.username }}
                 {% endif %} |
                 {% if c.user_phone %}
-                {{ c.user_phone }} |
-                {{streets|get_item:c.entry_ID}},
-                {{cities|get_item:c.entry_ID}}
+                {% endif %}
+                {% if c.entry_ID in streets %}
+                | {{streets|get_item:c.entry_ID}},
+                {{cities|get_item:c.entry_ID}} <br>
+                {% else %}
+                <br>
                 {% endif %}
                 </span>
                 <br>
