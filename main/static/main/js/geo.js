@@ -585,7 +585,7 @@ class ClearMapButton {
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
     clear_map_button.addEventListener("click", function (event) {
-      draw.deleteAll();
+      draw.trash();
       hideInstructionBox();
       updateCommunityEntry(event);
     });
@@ -834,7 +834,8 @@ document
 // Override Behavior for Draw-Button
 document
   .getElementById("draw-button-id")
-  .addEventListener("click", function (e) {
+  .addEventListener("click", function (event) {
+    print("draw listener");
     hideInstructionBox();
     draw.deleteAll();
     map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
@@ -1042,17 +1043,22 @@ map.on("render", function (event) {
 
 map.on("draw.create", function (event) {
   updateCommunityEntry(event);
+  print("create");
 });
 map.on("draw.delete", function (event) {
   updateCommunityEntry(event);
+  print("delete");
 });
 map.on("draw.update", function (event) {
   updateCommunityEntry(event);
+  print("updated");
 });
 map.on("draw.changeMode", function (event) {
+  print("change mode");
   updateCommunityEntry(event);
 });
 map.on("draw.selectionchange", function (event) {
+  print("selection_change");
   // The event object contains the featues that were selected.
   var selected_objects = event;
   var selected_points = selected_objects.points;
@@ -1209,15 +1215,37 @@ function addPoly(poly, polyArray, wkt) {
 
 /* Responds to the user's actions and updates the geometry fields and the arrayfield
  in the form. */
-function updateCommunityEntry(e) {
+function updateCommunityEntry(event) {
   cleanAlerts();
   var wkt = new Wkt.Wkt();
+  // get all data from draw
   var data = draw.getAll();
-  var user_polygon_wkt;
-  var census_blocks_polygon_wkt;
-  var drawn_polygon;
-  var census_blocks_polygon_array;
-  if (data.features.length > 0) {
+  var data_features = data.features;
+  var user_polygon_wkt = "";
+  var census_blocks_polygon_wkt = "";
+  var drawn_polygon = "";
+  var census_blocks_polygon_array = "";
+
+  // Check if the feature has data
+  if (data_features.length > 0) {
+    var data_geometry = data.features[0].geometry;
+    // .coordinates stores an array in an array. The nested array contains
+    // the points.
+    var coordinates = data_geometry.coordinates[0];
+    var coordinates_length = coordinates.length;
+  }
+
+  // Check if the map stores a valid polygon
+  if (data_features.length == 0 || coordinates_length < 3) {
+    // sets an empty filter - unhighlights everything
+    // sets the form fields as empty
+    // TODO: update for all states
+    // map.setFilter(sessionStorage.getItem("stateName") + "-blocks-highlighted", [
+    // "in",
+    // "BLOCKID10",
+    // ]);
+    triggerDrawError("polygon_missing", "You must draw a polygon to continue.");
+  } else {
     // Update User Polygon with the GeoJson data.
     drawn_polygon = data.features[0];
     // Validate User Polygon Area
@@ -1231,10 +1259,11 @@ function updateCommunityEntry(e) {
       draw.trash();
       return;
     }
+    print("after kinks");
     // Calculate area and convert it from square meters into square miles.
     let area = turf.area(data);
     area = turf.convertArea(area, "meters", "miles");
-
+    print("after area");
     // coi is not too big
     let halfStateArea = state_areas[state] / 2;
     if (area > halfStateArea) {
@@ -1243,33 +1272,24 @@ function updateCommunityEntry(e) {
         "Polygon area too large. Please draw your community again."
       );
       draw.trash();
+      print("in trash!");
       return;
     }
+    print("after trash");
     // Save user polygon.
     var user_polygon_json = JSON.stringify(drawn_polygon["geometry"]);
     wkt_obj = wkt.read(user_polygon_json);
     user_polygon_wkt = wkt_obj.write();
     // save census blocks multipolygon
     census_blocks_polygon_array = highlightBlocks(drawn_polygon);
+    print("after highlight");
     if (census_blocks_polygon_array != undefined) {
       census_blocks_polygon_array = census_blocks_polygon_array.join("|");
     }
     triggerSuccessMessage();
-  } else {
-    // sets an empty filter - unhighlights everything
-    // sets the form fields as empty
-    user_polygon_wkt = "";
-    census_blocks_polygon_wkt = "";
-    census_blocks_multipolygon_wkt = "";
-    // TODO: update for all states
-    // map.setFilter(sessionStorage.getItem("stateName") + "-blocks-highlighted", [
-    // "in",
-    // "BLOCKID10",
-    // ]);
-    triggerDrawError("polygon_missing", "You must draw a polygon to continue.");
   }
+
   // Update form fields
-  census_blocks_polygon_wkt = "";
   document.getElementById("id_user_polygon").value = user_polygon_wkt;
   document.getElementById(
     "id_census_blocks_polygon"
