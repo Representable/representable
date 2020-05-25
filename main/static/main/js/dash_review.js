@@ -17,32 +17,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-/**************************************************************************/
-/* this file loads the visualization stuff ! for map.html -- loads layers of
-census blocks, state legislature, and drawn polygons + tags to select ur favs */
-/**************************************************************************/
-// the mapbox keys to load tilesets
-// when adding a new state: put it into CENSUS_KEYS, UPPER_KEYS, LOWER_KEYS, and state array
-var CENSUS_KEYS = {
-  "nj-census": "aq1twwkc",
-  "va-census": "48cgf8ll",
-  "pa-census": "0k2ks83t",
-  "mi-census": "7bb2ddev",
-};
-var UPPER_KEYS = {
-  "nj-upper": "9fogw4w4",
-  "va-upper": "3b1qryb8",
-  "pa-upper": "33mtf25i",
-  "mi-upper": "5bvjx29f",
-};
-var LOWER_KEYS = {
-  "nj-lower": "8w0imag4",
-  "va-lower": "9xpukpnx",
-  "pa-lower": "c2qg68h1",
-  "mi-lower": "aa2ljvl2",
-};
-var states = ["nj", "va", "pa", "mi"];
-
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
@@ -132,28 +106,30 @@ function newLowerLegislatureLayer(state) {
   });
 }
 
+var community_bounds = {};
+
 map.on("load", function () {
   // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
-  for (let census in CENSUS_KEYS) {
-    newSourceLayer(census, CENSUS_KEYS[census]);
-  }
-  // upper layers
-  for (let upper in UPPER_KEYS) {
-    newSourceLayer(upper, UPPER_KEYS[upper]);
-  }
-  // lower layers
-  for (let lower in LOWER_KEYS) {
-    newSourceLayer(lower, LOWER_KEYS[lower]);
-  }
-  for (let i = 0; i < states.length; i++) {
-    newCensusLayer(states[i]);
-    newUpperLegislatureLayer(states[i]);
-    newLowerLegislatureLayer(states[i]);
-  }
+  // for (let census in CENSUS_KEYS) {
+  //   newSourceLayer(census, CENSUS_KEYS[census]);
+  // }
+  // // upper layers
+  // for (let upper in UPPER_KEYS) {
+  //   newSourceLayer(upper, UPPER_KEYS[upper]);
+  // }
+  // // lower layers
+  // for (let lower in LOWER_KEYS) {
+  //   newSourceLayer(lower, LOWER_KEYS[lower]);
+  // }
+  // for (let i = 0; i < states.length; i++) {
+  //   newCensusLayer(states[i]);
+  //   newUpperLegislatureLayer(states[i]);
+  //   newLowerLegislatureLayer(states[i]);
+  // }
 
   var outputstr = entries.replace(/'/g, '"');
   entries = JSON.parse(outputstr);
-  var dest = [];
+  var zooming = true;
 
   for (obj in entries) {
     // check how deeply nested the outer ring of the unioned polygon is
@@ -166,9 +142,19 @@ map.on("load", function () {
     } else {
       final = entries[obj];
     }
-    dest = final[0][0];
-    approved_color = "rgba(110, 178, 181,0.15)";
-    unapproved_color = "rgba(255, 50, 0,0.15)";
+    // add info to bounds list for zooming
+    // ok zoomer
+    var fit = new L.Polygon(final).getBounds();
+    var southWest = new mapboxgl.LngLat(fit['_southWest']['lat'], fit['_southWest']['lng']);
+    var northEast = new mapboxgl.LngLat(fit['_northEast']['lat'], fit['_northEast']['lng']);
+    community_bounds[obj] = new mapboxgl.LngLatBounds(southWest, northEast)
+    if (zooming) {
+      map.fitBounds(community_bounds[obj], {padding: 100});
+      zooming = false;
+    }
+
+    approved_color = "rgb(110, 178, 181)";
+    unapproved_color = "rgb(255, 50, 0)";
     if (approved.indexOf(obj) > -1) {
       color = approved_color;
     } else {
@@ -192,6 +178,7 @@ map.on("load", function () {
       },
       paint: {
         "fill-color": color,
+        "fill-opacity": 0.15
       },
     });
     map.addLayer({
@@ -218,47 +205,27 @@ map.on("load", function () {
       },
     });
   }
-  if (dest !== []) {
-    // this is necessary so the map "moves" and queries the features above ^^
-    map.flyTo({
-      center: dest,
-      zoom: 12,
-    });
-  }
+  // hover to highlight
+  $(".community-review-span").hover(function() {
+    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
+    map.setPaintProperty(this.id + "line", "line-width", 4);
+    map.setPaintProperty(this.id, "fill-opacity", 0.5);
+  }, function () {
+    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.2)");
+    map.setPaintProperty(this.id + "line", "line-width", 2);
+    map.setPaintProperty(this.id, "fill-opacity", 0.15);
+  });
 });
 
-// on hover, highlight the community
-$(".sidenav").on("mouseenter", ".community-review-span", function () {
-  var isApproved = false;
-  if (
-    map.getPaintProperty(this.id, "fill-color") === "rgba(110, 178, 181,0.15)"
-  ) {
-    isApproved = true;
-  }
-  if (isApproved) {
-    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
-    map.setPaintProperty(this.id + "line", "line-width", 4);
-    map.setPaintProperty(this.id, "fill-color", "rgba(110, 178, 181,0.5)");
-  } else {
-    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
-    map.setPaintProperty(this.id + "line", "line-width", 4);
-    map.setPaintProperty(this.id, "fill-color", "rgba(255, 50, 0,0.5)");
-  }
+// on click, zoom to community
+$(".community-review-span").click(function () {
+  map.fitBounds(community_bounds[this.id], {padding: 100});
 });
-$(".sidenav").on("mouseleave", ".community-review-span", function () {
-  var isApproved = false;
-  if (
-    map.getPaintProperty(this.id, "fill-color") === "rgba(110, 178, 181,0.5)"
-  ) {
-    isApproved = true;
-  }
-  if (isApproved) {
-    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.2)");
-    map.setPaintProperty(this.id + "line", "line-width", 2);
-    map.setPaintProperty(this.id, "fill-color", "rgba(110, 178, 181,0.15)");
-  } else {
-    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.2)");
-    map.setPaintProperty(this.id + "line", "line-width", 2);
-    map.setPaintProperty(this.id, "fill-color", "rgba(255, 50, 0,0.15)");
-  }
+
+document.querySelectorAll(".comm-content").forEach(function (p) {
+  p.querySelector("a").addEventListener("click", function (e) {
+    e.stopPropagation();
+    p.classList.toggle("show");
+    this.textContent = p.classList.contains("show") ? "Show Less" : "Show More";
+  });
 });

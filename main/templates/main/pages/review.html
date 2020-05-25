@@ -29,73 +29,104 @@
 {% endblock %}
 {% block content %}
 <div class="container-fluid">
-<div class="row row-wide">
+  <div class="row row-wide">
     <div>
-        <script type="text/javascript">
-            var entry_poly_dict = '{{ entry_poly_dict | escapejs }}';
-            var tags = '{{ tags | escapejs }}';
-            var approved = '{{ approved | escapejs }}';
-            var mapbox_user_name = "{{mapbox_user_name}}";
-        </script>
+      <script type="text/javascript">
+        var entry_poly_dict = '{{ entry_poly_dict | escapejs }}';
+        var approved = '{{ approved | escapejs }}';
+        var mapbox_user_name = "{{mapbox_user_name}}";
+      </script>
     </div>
     <div class="col-md-6 col-wide">
-        <nav id='menu'>
-            <div class="sidenav">
-                <div class="dropdown-container"></div>
-                <div id="outline-menu">
-                </div>
-                {% if query_error %}
-                <div class="alert alert-warning" role="alert">
-                    The community was already deleted.
-                </div>
+      <nav id='menu'>
+        <div class="sidenav">
+          <div class="dropdown-container"></div>
+          <div id="outline-menu">
+          </div>
+          {% if query_error %}
+          <div class="alert alert-warning" role="alert">
+            The community was already deleted.
+          </div>
+          {% endif %}
+          {% if communities %}
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th class="table-col-large" scope="col">Community Information</th>
+                <th class="table-col-small" scope="col">Action</th>
+              </tr>
+            </thead>
+            {% for c in communities %}
+            <tr class="community-review-span" id={{c.entry_ID}}>
+              <td>
+                <span class="font-weight-light text-uppercase entry-name">
+                  {% with link_text="/submission?map_id="|addstr:c.entry_ID|slice:27 %}
+                  <a href={{link_text}}>{{c.entry_name}}</a>
+                  {% endwith %}
+                </span>
+                <br>
+                {% if c.organization %}
+                <b> Organization: </b>{{c.organization}}
+                <br>
                 {% endif %}
-                {% if communities %}
-                <table class="table table-review">
-                    <tr>
-                        <th scope="col">Community Name</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                    {% for c in communities %}
-                    <tr class="community-review-span" id={{c.entry_ID}}>
-                        <td>
-                          <span class="font-weight-light text-uppercase entry-name">
-                            {% with link_text="/submission?map_id="|addstr:c.entry_ID|slice:27 %}
-                              <a href={{link_text}} style="padding: 6px">{{c.entry_name}}</a>
-                            {% endwith %}
-                          </span>
-                          <br>
-                            <span class="font-weight-light">{{c.entry_reason}}<br>
-                        </td>
-                        <td>
-                            <form method="post" action="">{% csrf_token %}
-                                {{ form }}
-                                <input type="hidden" name="c_id" value="{{ c }}">
-                                <button type="submit" class="btn btn-danger", name="Delete">Delete</button>
-                            </form>
-                        </td>
-                    <tr>
-                    {% endfor %}
-                </table>
-                {% else %}
-                <div class=jumbotron>
-                    <h1>No entries!</h1>
-                </div>
+                {% if c.campaign %}
+                <b> Campaign: </b>{{c.campaign}}
+                <br>
                 {% endif %}
-                </div>
-        </nav>
+                <span class="comm-content">
+                  <span class="more-content">
+                    {% if c.entry_reason %}
+                    <b> Entry Reason</b><br>{{c.entry_reason}}
+                    <br>
+                    {% endif %}
+                    {% if c.cultural_interests %}
+                    <b> Cultural Interests</b><br>{{c.cultural_interests}}
+                    <br>
+                    {% endif %}
+                    {% if c.economic_interests %}
+                    <b> Economic Interests</b><br>{{c.economic_interests}}
+                    <br>
+                    {% endif %}
+                    {% if c.comm_activities %}
+                    <b> Community Activities</b><br>{{c.comm_activities}}
+                    <br>
+                    {% endif %}
+                  </span>
+                  <u><a class="small read-more small-link">Show More</a></u>
+                </span>
+              </td>
+              <td>
+                <form method="post" action="">{% csrf_token %}
+                  {{ form }}
+                  <input type="hidden" name="c_id" value="{{ c }}">
+                  <button type="submit" class="btn btn-danger", name="Delete">Delete</button>
+                </form>
+              </td>
+              <tr>
+                {% endfor %}
+              </table>
+              {% else %}
+              <div class=jumbotron>
+                <h3 class="font-weight-light">No entries!</h3>
+                <p class="font-weight-light">Join us in the fight against gerrymandering. Visit the <a href="/">home page</a> to select a state and draw your community.</p>
+              </div>
+              {% endif %}
+            </div>
+          </nav>
+        </div>
+        <div class="col-md-6 col-map col-wide">
+          <div id='map' class="map-visualization"></div>
+        </div>
+      </div>
     </div>
-    <div class="col-md-6 col-map col-wide">
-        <div id='map' class="map-visualization"></div>
-    </div>
-</div>
-</div>
-{% endblock %}
+    {% endblock %}
 
-{% block script %}
-{{ form.media.js }}
-<!--  Has to be at the end after the HTML loads.-->
-<script type="text/javascript">
-    mapboxgl.accessToken = "{{ mapbox_key }}";
-</script>
-<script type="text/javascript" src="{% static 'main/js/review.js' %}"></script>
-{% endblock %}
+    {% block script %}
+    {{ form.media.js }}
+    <!--  Has to be at the end after the HTML loads.-->
+    <script type="text/javascript">
+      mapboxgl.accessToken = "{{ mapbox_key }}";
+    </script>
+    <script type="text/javascript" src="{% static 'main/js/review.js' %}"></script>
+    <script type="text/javascript" src="{% static 'main/js/components/keys.js' %}"></script>
+    {% endblock %}
