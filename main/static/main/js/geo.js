@@ -659,11 +659,13 @@ class FinishDrawButton {
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
     finish_draw_button.addEventListener("click", function (event) {
       hideInstructionBox();
+      print("Draw button listener");
       var all_features = draw.getAll();
       if (all_features.features.length > 0) {
         draw.changeMode("simple_select", {
           featureId: all_features.features[0].id,
         });
+        print("features!!!");
       }
       updateCommunityEntry(event);
     });
@@ -1216,6 +1218,7 @@ function updateCommunityEntry(e) {
   var user_polygon_wkt;
   var census_blocks_polygon_wkt;
   var drawn_polygon;
+  var census_blocks_polygon_array;
   if (data.features.length > 0) {
     // Update User Polygon with the GeoJson data.
     drawn_polygon = data.features[0];
@@ -1255,6 +1258,7 @@ function updateCommunityEntry(e) {
     }
     triggerSuccessMessage();
   } else {
+    print("TEST");
     // sets an empty filter - unhighlights everything
     // sets the form fields as empty
     user_polygon_wkt = "";
