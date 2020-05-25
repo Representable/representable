@@ -659,7 +659,6 @@ class FinishDrawButton {
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
     finish_draw_button.addEventListener("click", function (event) {
       hideInstructionBox();
-      print("Draw button listener");
       var all_features = draw.getAll();
       if (all_features.features.length > 0) {
         draw.changeMode("simple_select", {
@@ -1257,7 +1256,6 @@ function updateCommunityEntry(e) {
     }
     triggerSuccessMessage();
   } else {
-    print("TEST");
     // sets an empty filter - unhighlights everything
     // sets the form fields as empty
     user_polygon_wkt = "";
