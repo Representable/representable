@@ -164,13 +164,7 @@ footer {
 /* Clear floats after the columns */
 
 .row-content {
-  background-color: #fff;
-  color: #000;
   padding: 15px;
-}
-
-.row-content a {
-  color: #00c6a7;
 }
 
 .row-about {
@@ -186,10 +180,6 @@ footer {
   color: #000;
 }
 
-.row-wide a {
-  color: #00c6a7;
-}
-
 .col-wide {
   padding: 0;
 }
@@ -199,6 +189,22 @@ footer {
   border-color: #2a94f4;
 }
 
+/* Help dropup */
+
+#dropuphelp {
+  position: fixed; 
+  bottom: 40px; 
+  right: 40px; 
+  z-index: 1010;
+}
+
+.dropdown-menu a{
+  color: #333;
+}
+
+.dropdown-menu {
+  z-index: 1010;
+}
 /* Bootstrap Buttons. */
 
 #video_popup {
@@ -370,6 +376,31 @@ color scheme. See readme.md*/
   outline: none;
 }
 
+.comm-content .more-content{
+  display: none;
+}
+
+.comm-content.show .more-content {
+  display: inline;
+}
+
+.table-col-large {
+  width: 70%;
+}
+.table-col-small {
+  width: 30%;
+}
+.table {
+  margin-bottom: 0;
+  word-break: break-word;
+}
+.hidden {
+  display: none;
+}
+.small-link {
+  cursor: pointer;
+}
+
 /* landing page map */
 #usa-map {
   width: 100%;
@@ -380,12 +411,6 @@ color scheme. See readme.md*/
 }
 #stateSelectionDropdown {
   font-size: 2rem;
-  background: none;
-  outline: none;
-  border: none;
-  border-bottom: 0.15rem solid black;
-  border-radius: 0px;
-  -webkit-appearance: none;
 }
 
 .state {
@@ -918,11 +943,4 @@ label {
   color: white;
   padding: 1px 5px;
   border-radius: 3px;
-}
-
-.table-review tr:active,
-.table-review tr:hover,
-.items li:active,
-.items li:hover {
-  background-color: #f5f5f5;
 }

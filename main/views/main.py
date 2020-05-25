@@ -151,15 +151,6 @@ class Review(LoginRequiredMixin, TemplateView):
         form = self.form_class(initial=self.get_initial(), label_suffix="")
         # the polygon coordinates
         entryPolyDict = dict()
-        # dictionary of tags to be displayed
-        tags = dict()
-        for obj in Tag.objects.all():
-            # manytomany query
-            entries = obj.communityentry_set.all()
-            ids = []
-            for id in entries:
-                ids.append(str(id))
-            tags[str(obj)] = ids
 
         user = self.request.user
         approvedList = list()
@@ -179,7 +170,6 @@ class Review(LoginRequiredMixin, TemplateView):
             entryPolyDict[obj.entry_ID] = struct.coordinates
         context = {
             "form": form,
-            "tags": json.dumps(tags),
             "entry_poly_dict": json.dumps(entryPolyDict),
             "approved": json.dumps(approvedList),
             "communities": query,
@@ -240,14 +230,13 @@ class Submission(TemplateView):
 
         context = {
             "community": user_map,
-            "entry_name": user_map.entry_name,
-            "entry_reason": user_map.entry_reason,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
         return render(request, self.template_name, context)
 
+# ******************************************************************************#
 
 class ExportView(TemplateView):
     template = "main/pages/export.html"
@@ -281,21 +270,11 @@ class Map(TemplateView):
     template_name = "main/pages/map.html"
 
     def get_context_data(self, **kwargs):
-        # dictionary of entry names and reasons
-        entry_names = dict()
-        entry_reasons = dict()
 
         # the polygon coordinates
         entryPolyDict = dict()
-        # dictionary of tags to be displayed
-        tags = dict()
-        for obj in Tag.objects.all():
-            # manytomany query
-            entries = obj.communityentry_set.all()
-            ids = []
-            for id in entries:
-                ids.append(str(id))
-            tags[str(obj)] = ids
+        # all communities for display TODO: might need to limit this? or go by state
+        query = CommunityEntry.objects.all();
         # get the polygon from db and pass it on to html
         for obj in CommunityEntry.objects.all():
             if not obj.admin_approved:
@@ -305,12 +284,8 @@ class Map(TemplateView):
                 or obj.census_blocks_polygon is None
             ):
                 s = "".join(obj.user_polygon.geojson)
-                entry_names[str(obj.entry_ID)] = obj.entry_name
-                entry_reasons[str(obj.entry_ID)] = obj.entry_reason
             else:
                 s = "".join(obj.census_blocks_polygon.geojson)
-                entry_names[str(obj.entry_ID)] = obj.entry_name
-                entry_reasons[str(obj.entry_ID)] = obj.entry_reason
 
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
@@ -318,9 +293,7 @@ class Map(TemplateView):
             entryPolyDict[obj.entry_ID] = struct.coordinates
 
         context = {
-            "entry_names": json.dumps(entry_names),
-            "entry_reasons": json.dumps(entry_reasons),
-            "tags": json.dumps(tags),
+            "communities": query,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),

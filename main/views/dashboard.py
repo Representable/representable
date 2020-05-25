@@ -394,6 +394,13 @@ class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
+        context["organization"] = Organization.objects.get(
+            slug=self.kwargs["slug"]
+        )
+        if self.kwargs["campaign"]:
+            context["campaign"] = get_object_or_404(
+                Campaign, slug=self.kwargs["campaign"]
+            ).name
         return context
 
     def post(self, request, *args, **kwargs):
