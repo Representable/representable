@@ -665,9 +665,8 @@ class FinishDrawButton {
         draw.changeMode("simple_select", {
           featureId: all_features.features[0].id,
         });
-        print("features!!!");
+        updateCommunityEntry(event);
       }
-      updateCommunityEntry(event);
     });
     this._container.appendChild(finish_draw_button);
     return this._container;
