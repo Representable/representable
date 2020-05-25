@@ -15,6 +15,37 @@ and rules, since this can lead to unintended consequences.
 This means no changing anything like <a>, <li>, <p>, etc.
 */
 
+/* TOC Checkbox*/
+.toc-check {
+  display: inline;
+}
+
+.toc-check-label {
+  display: inline;
+}
+
+.toc-check-input {
+  display: inline;
+}
+/* Entry page instructions. */
+.instruction-box {
+  position: absolute;
+  bottom: 40px;
+  left: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+  text-align: left;
+  border-radius: 10px;
+  z-index: 10;
+  display: none;
+}
+.red-circle {
+  color: #e74c3c;
+}
+.blue-circle {
+  color: #2a94f4;
+}
+
 /* Entry Page: Geocoder Full Width */
 .mapboxgl-ctrl-geocoder {
   width: 100%;
@@ -133,13 +164,7 @@ footer {
 /* Clear floats after the columns */
 
 .row-content {
-  background-color: #fff;
-  color: #000;
   padding: 15px;
-}
-
-.row-content a {
-  color: #00c6a7;
 }
 
 .row-about {
@@ -153,10 +178,6 @@ footer {
 .row-wide {
   background-color: white;
   color: #000;
-}
-
-.row-wide a {
-  color: #00c6a7;
 }
 
 .col-wide {
@@ -324,6 +345,31 @@ color scheme. See readme.md*/
   outline: none;
 }
 
+.comm-content .more-content{
+  display: none;
+}
+
+.comm-content.show .more-content {
+  display: inline;
+}
+
+.table-col-large {
+  width: 70%;
+}
+.table-col-small {
+  width: 30%;
+}
+.table {
+  margin-bottom: 0;
+  word-break: break-word;
+}
+.hidden {
+  display: none;
+}
+.small-link {
+  cursor: pointer;
+}
+
 /* landing page map */
 #usa-map {
   width: 100%;
@@ -334,12 +380,6 @@ color scheme. See readme.md*/
 }
 #stateSelectionDropdown {
   font-size: 2rem;
-  background: none;
-  outline: none;
-  border: none;
-  border-bottom: 0.15rem solid black;
-  border-radius: 0px;
-  -webkit-appearance: none;
 }
 
 .state {
@@ -872,11 +912,4 @@ label {
   color: white;
   padding: 1px 5px;
   border-radius: 3px;
-}
-
-.table-review tr:active,
-.table-review tr:hover,
-.items li:active,
-.items li:hover {
-  background-color: #f5f5f5;
 }

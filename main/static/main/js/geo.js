@@ -245,196 +245,10 @@ function print(items) {
 function changeText(element) {
   if (element.innerText == "Show Examples") {
     element.innerText = "Hide Examples";
-  }
-  else {
+  } else {
     element.innerText = "Show Examples";
   }
 }
-
-/******************************************************************************/
-
-// Form Handling
-
-function showEditOnAll(event) {
-  // Shows the edit button on all sections
-  var card_section_divs = document.getElementsByClassName("card-section");
-  for (var i = 0; i < card_section_divs.length; i++) {
-    showEditonSection(card_section_divs[i]);
-  }
-}
-
-function openAllSections(event) {
-  // Opens All Sections On Click.
-  var card_section_divs = document.getElementsByClassName("card-section");
-  for (var i = 0; i < card_section_divs.length; i++) {
-    openSectionByElement(card_section_divs[i]);
-  }
-}
-
-function showEditOnSection(parent_section) {
-  var current_index = parent_section.getAttribute("data-card-index");
-  var section_id = "card_section_" + section_ix;
-  var section_elem = document.getElementById(section_id);
-  var edit_button = section_elem.getElementsByClassName("button-edit")[0];
-  edit_button.value = "Hide Section";
-  edit_button.style.display = "block";
-}
-
-function getCurrentParentSection(event) {
-  // Gets the Parent Section of this Event.
-  var targetElement = event.target || event.srcElement;
-  var parent_section = targetElement.closest(".card-section");
-  return parent_section;
-}
-
-function getCurrentSectionIndex(event) {
-  // Gets The Section Index of the Current Event
-  var parent_section = getCurrentParentSection(event);
-  var current_index = parent_section.getAttribute("data-card-index");
-  return current_index;
-}
-
-function openSectionByElement(parent_section) {
-  // Opens The Section That Was Passed to it.
-  var current_index = parent_section.getAttribute("data-card-index");
-  openSectionByIndex(current_index);
-}
-
-function openSectionByIndex(section_ix) {
-  // Opens the section by index, but does not close anything else.
-  var section_id = "card_section_" + section_ix;
-  var section_elem = document.getElementById(section_id);
-  var edit_button = section_elem.getElementsByClassName("button-edit")[0];
-  edit_button.value = "Hide Section";
-  section_elem.classList.add("active-section");
-  $("#" + section_id + " .collapse.card-body").collapse("show");
-  edit_button.style.display = "block";
-}
-
-function goToSection(section_ix) {
-  // Scrolls the section with section_ix into view.
-  var goto_section_id = "card_section_" + section_ix;
-  var goto_section_elem = document.getElementById(goto_section_id);
-  var edit_button = goto_section_elem.getElementsByClassName("button-edit")[0];
-  edit_button.value = "Hide Section";
-  edit_button.style.display = "block";
-  goto_section_elem.classList.add("active-section");
-  goto_section_elem.scrollIntoView({ behavior: "smooth" });
-  $("#" + goto_section_id + " .collapse.card-body").collapse("show");
-  var delayInMilliseconds = 500;
-  setTimeout(function () {}, delayInMilliseconds);
-}
-
-function toggleSection(event) {
-  // Toggle Section By Event. If the section is on, it toggles it off.
-  // Otherwise, it toggles it on.
-  var section_ix = getCurrentSectionIndex(event);
-  var section_id = "card_section_" + section_ix;
-  var section_elem = document.getElementById(section_id);
-  var edit_button = section_elem.getElementsByClassName("button-edit")[0];
-  if (section_elem.classList.contains("active-section")) {
-    edit_button.value = "Edit Section";
-    section_elem.classList.remove("active-section");
-    $("#" + section_id + " .collapse.card-body").collapse("hide");
-  } else {
-    edit_button.value = "Hide Section";
-    section_elem.classList.add("active-section");
-    $("#" + section_id + " .collapse.card-body").collapse("show");
-  }
-  edit_button.style.display = "block";
-}
-
-function goToNextSection(event) {
-  // Handler for "Next" Button.
-  // Gets the current section and calls goToSection() to scroll
-  // it into view.
-  var current_index = getCurrentSectionIndex(event);
-  var parent_section = getCurrentParentSection(event);
-  // for the current section, make sure that the hide section
-  // button shows correct state
-  var parent_section_edit_button = parent_section.querySelector(".button-edit");
-  parent_section_edit_button.style.display = "block";
-  parent_section_edit_button.value = "Hide Section";
-  var next_index = parseInt(current_index) + 1;
-  goToSection(next_index);
-}
-
-function goToPreviousSection(event) {
-  // Go to previous section handler.
-  // Opens previous section, but does not hide anything.
-  var current_index = getCurrentSectionIndex(event);
-  var prev_index = parseInt(current_index) - 1;
-  goToSection(prev_index);
-}
-
-function addButtonHandlers(card_section_divs) {
-  // Adds handlers to all section buttons (visible and invisible).
-  for (var i = 0; i < card_section_divs.length; i++) {
-    var card_section = card_section_divs[i];
-    var card_button_prev = card_section.querySelector(".button-prev");
-    if (typeof card_button_prev !== "undefined" && i - 1 >= 0) {
-      previous_section = card_section_divs[i - 1];
-      card_button_prev.addEventListener("click", function (event) {
-        goToPreviousSection(event);
-      });
-    }
-    var card_button_next = card_section.querySelector(".button-next");
-    if (
-      typeof card_button_next !== "undefined" &&
-      i + 1 < card_section_divs.length
-    ) {
-      next_section = card_section_divs[i + 1];
-      card_button_next.addEventListener("click", function (event) {
-        goToNextSection(event);
-      });
-    }
-    var card_button_edit = card_section.querySelector(".button-edit");
-    card_button_edit.addEventListener("click", function () {
-      toggleSection(event);
-    });
-  }
-}
-
-// Run after the DOM loads.
-document.addEventListener(
-  "DOMContentLoaded",
-  function () {
-    // Index All Collapsible Sections
-    card_section_divs = document.getElementsByClassName("card-section");
-    for (var i = 0; i < card_section_divs.length; i++) {
-      var card_section = card_section_divs[i];
-      var new_id = "card_section_" + i;
-      card_section.setAttribute("id", new_id);
-      card_section.setAttribute("data-card-index", i);
-    }
-    // Add handlers for the sections.
-    addButtonHandlers(card_section_divs);
-    // Check if form errors. Show the elements where they are present.
-    var form_error_arr = document.getElementsByClassName("form-error");
-    for (var i = 0; i < form_error_arr.length; i++) {
-      var parent_section = form_error_arr[i].closest(".card-section");
-      openSectionByElement(parent_section);
-    }
-    // Add a listener for the save button so sections are expanded
-    // if there are errors.
-    var form_save_button = document.getElementById("save");
-    form_save_button.addEventListener("click", function (event) {
-      // open all
-      openAllSections(event);
-    });
-    $('[data-toggle="tooltip"]').tooltip();
-
-    // Check Poly Fields And Display Errors On Save
-    var user_polygon_field = document.getElementById("id_user_polygon");
-    var census_blocks_arr_field = document.getElementById(
-      "id_census_blocks_polygon_array"
-    );
-    var census_blocks_poly = document.getElementById(
-      "id_census_blocks_polygon"
-    );
-  },
-  false
-);
 
 /******************************************************************************/
 
@@ -483,6 +297,14 @@ document.addEventListener(
       .removeClass("add-form-row")
       .addClass("remove-form-row")
       .html('<span class="" aria-hidden="true">Remove</span>');
+    // Check Poly Fields And Display Errors On Save
+    var user_polygon_field = document.getElementById("id_user_polygon");
+    var census_blocks_arr_field = document.getElementById(
+      "id_census_blocks_polygon_array"
+    );
+    var census_blocks_poly = document.getElementById(
+      "id_census_blocks_polygon"
+    );
   },
   false
 );
@@ -600,7 +422,7 @@ var draw = new MapboxDraw({
         "line-join": "round",
       },
       paint: {
-        "line-color": "#60a3bc",
+        "line-color": "#2A94F4",
         "line-width": 2,
       },
     },
@@ -613,7 +435,7 @@ var draw = new MapboxDraw({
         "line-join": "round",
       },
       paint: {
-        "line-color": "#60a3bc",
+        "line-color": "#2A94F4",
         "line-dasharray": [0.2, 2],
         "line-width": 2,
       },
@@ -629,7 +451,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 10,
-        "circle-color": "#3c6382",
+        "circle-color": "#2A94F4",
       },
     },
     {
@@ -643,7 +465,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 4,
-        "circle-color": "#3c6382",
+        "circle-color": "#2A94F4",
       },
     },
     {
@@ -674,7 +496,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 3,
-        "circle-color": "#3c6382",
+        "circle-color": "#2A94F4",
       },
     },
     {
@@ -702,7 +524,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 5,
-        "circle-color": "#3c6382",
+        "circle-color": "#2A94F4",
       },
     },
     {
@@ -711,7 +533,7 @@ var draw = new MapboxDraw({
       filter: ["all", ["==", "$type", "Point"], ["==", "meta", "midpoint"]],
       paint: {
         "circle-radius": 5,
-        "circle-color": "#3c6382",
+        "circle-color": "#e74c3c",
       },
     },
   ],
@@ -725,18 +547,227 @@ map.addControl(draw);
 drawControls = document.querySelector(".draw_polygon_map .mapboxgl-ctrl-group");
 drawControls.classList.add("draw-group");
 
+/* Change mapbox draw button */
+var drawButton = document.querySelector(".mapbox-gl-draw_polygon");
+drawButton.backgroundImg = "";
+drawButton.id = "draw-button-id";
+drawButton.innerHTML = "<i class='fas fa-draw-polygon'></i> Draw Polygon";
+var delete_feature_button = document.querySelector(".mapbox-gl-draw_trash");
+delete_feature_button.backgroundImg = "";
+delete_feature_button.id = "delete-feature-button-id";
+delete_feature_button.style.display = "none";
+delete_feature_button.innerHTML =
+  "<i class='fas fa-minus-square'></i> Delete Vertex";
+
+class ClearMapButton {
+  onAdd(map) {
+    var clear_map_button = document.createElement("button");
+    clear_map_button.href = "#";
+    clear_map_button.type = "button";
+    clear_map_button.backgroundImg = "";
+
+    clear_map_button.classList.add("active");
+    clear_map_button.classList.add("map-clear-button");
+    clear_map_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
+    clear_map_button.id = "map-clear-button-id";
+    clear_map_button.style.display = "none";
+    clear_map_button.innerHTML =
+      "<i class='fas fa-trash-alt'></i> Clear Polygon";
+    this._map = map;
+    this._container = document.createElement("div");
+    this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
+    clear_map_button.addEventListener("click", function (event) {
+      draw.deleteAll();
+      hideInstructionBox();
+      updateCommunityEntry(event);
+    });
+    this._container.appendChild(clear_map_button);
+    return this._container;
+  }
+
+  onRemove() {
+    this._container.parentNode.removeChild(this._container);
+    this._map = undefined;
+  }
+}
+map.addControl(new ClearMapButton(), "top-right");
+var map_clear_map_button = document.getElementById("map-clear-button-id");
+drawControls.appendChild(map_clear_map_button);
+// add button for toggling edit mode.
+class MapEditButton {
+  onAdd(map) {
+    var map_edit_button = document.createElement("button");
+    map_edit_button.href = "#";
+    map_edit_button.type = "button";
+    map_edit_button.backgroundImg = "";
+
+    map_edit_button.classList.add("active");
+    map_edit_button.classList.add("map-edit-button");
+    map_edit_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
+    map_edit_button.id = "map-edit-button-id";
+    map_edit_button.style.display = "none";
+    map_edit_button.innerHTML = "<i class='fas fa-edit'></i> Edit Polygon";
+    this._map = map;
+    this._container = document.createElement("div");
+    this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
+    map_edit_button.addEventListener("click", function (e) {
+      toggleInstructionBox();
+      var all_features = draw.getAll();
+      if (all_features.features.length > 0) {
+        draw.changeMode("direct_select", {
+          featureId: all_features.features[0].id,
+        });
+      }
+    });
+    this._container.appendChild(map_edit_button);
+    return this._container;
+  }
+
+  onRemove() {
+    this._container.parentNode.removeChild(this._container);
+    this._map = undefined;
+  }
+}
+map.addControl(new MapEditButton(), "top-right");
+var map_edit_button = document.getElementById("map-edit-button-id");
+drawControls.appendChild(map_edit_button);
+
+class FinishDrawButton {
+  onAdd(map) {
+    var finish_draw_button = document.createElement("button");
+    finish_draw_button.href = "#";
+    finish_draw_button.type = "button";
+    finish_draw_button.backgroundImg = "";
+
+    finish_draw_button.classList.add("active");
+    finish_draw_button.classList.add("map-finish-drawing-button");
+    finish_draw_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
+    finish_draw_button.id = "map-finish-drawing-button-id";
+    finish_draw_button.style.display = "none";
+    finish_draw_button.innerHTML =
+      "<i class='fas fa-check'></i> Finish Drawing";
+    this._map = map;
+    this._container = document.createElement("div");
+    this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
+    finish_draw_button.addEventListener("click", function (event) {
+      hideInstructionBox();
+      var all_features = draw.getAll();
+      if (all_features.features.length > 0) {
+        draw.changeMode("simple_select", {
+          featureId: all_features.features[0].id,
+        });
+      }
+      updateCommunityEntry(event);
+    });
+    this._container.appendChild(finish_draw_button);
+    return this._container;
+  }
+
+  onRemove() {
+    this._container.parentNode.removeChild(this._container);
+    this._map = undefined;
+  }
+}
+map.addControl(new FinishDrawButton(), "top-right");
+var map_finish_drawing_button = document.getElementById(
+  "map-finish-drawing-button-id"
+);
+drawControls.appendChild(map_finish_drawing_button);
+// Add trash button last and hide it.
+var oldChild = drawControls.removeChild(delete_feature_button);
+drawControls.appendChild(delete_feature_button);
+delete_feature_button.style.display = "none";
+
+function showMapEditButtons() {
+  var map_edit_button = document.getElementById("map-edit-button-id");
+  map_edit_button.style.display = "block";
+  var map_clear_map_button = document.getElementById("map-clear-button-id");
+  map_clear_map_button.style.display = "block";
+  var finish_draw_button = document.getElementById(
+    "map-finish-drawing-button-id"
+  );
+  finish_draw_button.style.display = "block";
+}
+
+function hideMapEditButtons() {
+  var map_edit_button = document.getElementById("map-edit-button-id");
+  map_edit_button.style.display = "none";
+  var map_clear_map_button = document.getElementById("map-clear-button-id");
+  map_clear_map_button.style.display = "none";
+  var finish_draw_button = document.getElementById(
+    "map-finish-drawing-button-id"
+  );
+  finish_draw_button.style.display = "none";
+  var map_delete_vertex_button = document.getElementById(
+    "delete-feature-button-id"
+  );
+  if (map_delete_vertex_button != null) {
+    map_delete_vertex_button.style.display = "none";
+  }
+}
+
+function toggleInstructionBox() {
+  // Show instruction box on map for edit mode.
+  var instruction_box = document.getElementById("instruction-box-id");
+  if (instruction_box.style.display == "block") {
+    hideInstructionBox();
+  } else {
+    showInstructionBox();
+  }
+}
+
+function showInstructionBox() {
+  var instruction_box = document.getElementById("instruction-box-id");
+  instruction_box.style.display = "block";
+  if (draw != null) {
+    var all_features = draw.getAll();
+    if (all_features.features.length > 0) {
+      draw.changeMode("direct_select", {
+        featureId: all_features.features[0].id,
+      });
+    }
+  }
+}
+
+function hideInstructionBox() {
+  var instruction_box = document.getElementById("instruction-box-id");
+  instruction_box.style.display = "none";
+  if (draw != null) {
+    var all_features = draw.getAll();
+    // draw.changeMode("simple_select");
+    if (all_features.features.length > 0) {
+      draw.changeMode("simple_select", {
+        featureIds: [all_features.features[0].id],
+      });
+    }
+    // draw.changeMode("simple_select", {
+    // featureIds: [all_features.features[0].id]
+    // });
+  }
+}
+
+function showDeleteFeatureButton() {
+  var map_delete_feature_button = document.getElementById(
+    "delete-feature-button-id"
+  );
+  if (map_delete_feature_button != null) {
+    map_delete_feature_button.style.display = "block";
+  }
+}
+
+function hideDeleteFeatureButton() {
+  var map_delete_feature_button = document.getElementById(
+    "delete-feature-button-id"
+  );
+  if (map_delete_feature_button != null) {
+    map_delete_feature_button.style.display = "none";
+  }
+}
+
 // Add nav control buttons.
 map.addControl(new mapboxgl.NavigationControl());
 
-/* Change mapbox draw button */
-var drawButton = document.getElementsByClassName("mapbox-gl-draw_polygon");
-drawButton[0].backgroundImg = "";
-drawButton[0].id = "draw-button";
-drawButton[0].innerHTML = "<i class='fas fa-draw-polygon'></i> Draw Polygon";
-var trashButton = document.getElementsByClassName("mapbox-gl-draw_trash");
-trashButton[0].backgroundImg = "";
-trashButton[0].id = "trash-button";
-trashButton[0].innerHTML = "<i class='fas fa-trash-alt'></i> Undo Polygon";
+var user_polygon_id = undefined;
 
 // add button for toggling census Blocks
 class CensusBlocksControl {
@@ -781,20 +812,47 @@ class CensusBlocksControl {
 }
 map.addControl(new CensusBlocksControl(), "top-left");
 
-// Override Behavior for Draw-Button
-document.getElementById("draw-button").addEventListener("click", function (e) {
-  cleanAlerts();
-  draw.deleteAll();
-  map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
-  draw.changeMode("draw_polygon");
-});
+// override behavior for clear map button
+document
+  .getElementById("map-clear-button-id")
+  .addEventListener("click", function (e) {
+    hideInstructionBox();
+    draw.deleteAll();
+    map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
+    draw.changeMode("simple_select");
+    hideMapEditButtons();
+  });
 
-document.getElementById("trash-button").addEventListener("click", function (e) {
-  cleanAlerts();
-  draw.deleteAll();
-  map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
-  draw.changeMode("simple_select");
-});
+// Override Behavior for Draw-Button
+document
+  .getElementById("draw-button-id")
+  .addEventListener("click", function (e) {
+    hideInstructionBox();
+    draw.deleteAll();
+    map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
+    draw.changeMode("draw_polygon");
+    showMapEditButtons();
+  });
+
+// override behavior for delete button
+document
+  .getElementById("delete-feature-button-id")
+  .addEventListener("click", function (event) {
+    map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
+    if (draw != null) {
+      var all_features = draw.getAll();
+      if (all_features.features.length > 0) {
+        var polygon = all_features.features[0];
+        highlightBlocks(polygon);
+        updateCommunityEntry(event);
+        draw.changeMode("direct_select", {
+          featureId: polygon.id,
+        });
+      } else {
+        draw.changeMode("simple_select");
+      }
+    }
+  });
 
 function toggleMapButtons(state) {
   var mapContent = document.getElementById("map");
@@ -935,13 +993,6 @@ map.on("style.load", function () {
     var styleSpec = ev.result;
     var styleSpecBox = document.getElementById("json-response");
     var styleSpecText = JSON.stringify(styleSpec, null, 2);
-    var divs = document.getElementsByClassName("collapse-card");
-    for (let i = 0; i < divs.length; i++) {
-      divs[i].setAttribute(
-        "style",
-        "-webkit-filter: blur(0px); pointer-events: auto;"
-      );
-    }
 
     $(".map-bounding-box.collapse").collapse("show");
     map.resize();
@@ -964,7 +1015,7 @@ map.on("style.load", function () {
 });
 
 var wasLoaded = false;
-map.on("render", function () {
+map.on("render", function (event) {
   if (!map.loaded() || wasLoaded) return;
   wasLoaded = true;
   if (document.getElementById("id_user_polygon").value !== "") {
@@ -975,22 +1026,38 @@ map.on("render", function () {
     wkt_obj = wkt.read(feature);
     var geoJsonFeature = wkt_obj.toJson();
     var featureIds = draw.add(geoJsonFeature);
-    updateCommunityEntry();
+    updateCommunityEntry(event);
   }
 });
 
 /******************************************************************************/
 
-map.on("draw.create", function () {
-  updateCommunityEntry();
+map.on("draw.create", function (event) {
+  updateCommunityEntry(event);
 });
-map.on("draw.delete", function () {
-  updateCommunityEntry();
+map.on("draw.delete", function (event) {
+  updateCommunityEntry(event);
 });
-map.on("draw.update", function () {
-  updateCommunityEntry();
+map.on("draw.update", function (event) {
+  updateCommunityEntry(event);
 });
-map.on("draw.changeMode", function () {});
+map.on("draw.changeMode", function (event) {
+  updateCommunityEntry(event);
+});
+map.on("draw.selectionchange", function (event) {
+  // The event object contains the featues that were selected.
+  var selected_objects = event;
+  var selected_points = selected_objects.points;
+  var selected_features = selected_objects.features;
+  if (selected_points.length > 0) {
+    // The user selected a point. Show delete vertex.
+    showDeleteFeatureButton();
+    showInstructionBox();
+  } else {
+    hideDeleteFeatureButton();
+  }
+  updateCommunityEntry(event);
+});
 
 /******************************************************************************/
 
@@ -1135,6 +1202,7 @@ function addPoly(poly, polyArray, wkt) {
 /* Responds to the user's actions and updates the geometry fields and the arrayfield
  in the form. */
 function updateCommunityEntry(e) {
+  cleanAlerts();
   var wkt = new Wkt.Wkt();
   var data = draw.getAll();
   var user_polygon_wkt;
@@ -1177,6 +1245,7 @@ function updateCommunityEntry(e) {
     if (census_blocks_polygon_array != undefined) {
       census_blocks_polygon_array = census_blocks_polygon_array.join("|");
     }
+    triggerSuccessMessage();
   } else {
     // sets an empty filter - unhighlights everything
     // sets the form fields as empty
@@ -1184,10 +1253,11 @@ function updateCommunityEntry(e) {
     census_blocks_polygon_wkt = "";
     census_blocks_multipolygon_wkt = "";
     // TODO: update for all states
-    map.setFilter(sessionStorage.getItem("stateName") + "-blocks-highlighted", [
-      "in",
-      "BLOCKID10",
-    ]);
+    // map.setFilter(sessionStorage.getItem("stateName") + "-blocks-highlighted", [
+    // "in",
+    // "BLOCKID10",
+    // ]);
+    triggerDrawError("polygon_missing", "You must draw a polygon to continue.");
   }
   // Update form fields
   census_blocks_polygon_wkt = "";
@@ -1198,7 +1268,6 @@ function updateCommunityEntry(e) {
   document.getElementById(
     "id_census_blocks_polygon_array"
   ).value = census_blocks_polygon_array;
-  triggerSuccessMessage();
 }
 /******************************************************************************/
 
