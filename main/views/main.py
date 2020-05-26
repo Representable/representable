@@ -62,7 +62,6 @@ import re
 import csv
 import hashlib
 from django.template import loader
-from django.http import JsonResponse
 import shapely.wkt
 import reverse_geocoder as rg
 from state_abbrev import us_state_abbrev
@@ -236,28 +235,34 @@ class Submission(TemplateView):
         }
         return render(request, self.template_name, context)
 
+
 # ******************************************************************************#
+
 
 class ExportView(TemplateView):
     template = "main/pages/export.html"
-    # Create the HttpResponse object with the appropriate CSV header.
+
     def get(self, request, *args, **kwargs):
         m_uuid = self.request.GET.get("map_id", None)
-        # TODO: Are there security risks? Probably - we should hash the UUID and make that the permalink
-
-        if m_uuid is None:
-            pass  # TODO need to fix here
-        query = CommunityEntry.objects.filter(entry_ID__startswith=m_uuid)
-
-        if len(query) == 0:
+        if m_uuid:
+            query = CommunityEntry.objects.filter(entry_ID__startswith=m_uuid)
+        if not query:
             context = {
                 "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             }
             return render(request, self.template_name, context)
-        user_map = query[0]
-        map_geojson = serialize('geojson', query,
-            geometry_field='census_blocks_polygon',
-            fields=('entry_name', 'entry_reason', 'cultural_interests', 'economic_interests', 'comm_activities', ))
+        map_geojson = serialize(
+            "geojson",
+            query,
+            geometry_field="census_blocks_polygon",
+            fields=(
+                "entry_name",
+                "entry_reason",
+                "cultural_interests",
+                "economic_interests",
+                "comm_activities",
+            ),
+        )
 
         response = HttpResponse(map_geojson, content_type="application/json")
         return response
@@ -274,7 +279,7 @@ class Map(TemplateView):
         # the polygon coordinates
         entryPolyDict = dict()
         # all communities for display TODO: might need to limit this? or go by state
-        query = CommunityEntry.objects.all();
+        query = CommunityEntry.objects.all()
         # get the polygon from db and pass it on to html
         for obj in CommunityEntry.objects.all():
             if not obj.admin_approved:
@@ -307,22 +312,16 @@ class Map(TemplateView):
 class Thanks(TemplateView):
     template_name = "main/pages/thanks.html"
 
-    def get(self, request):
-        context = {
-            "map_url": request.GET["map_id"],
-        }
-        return render(request, self.template_name, context)
-
-
-# ******************************************************************************#
-
-
-class ThanksEntryOrg(TemplateView):
-    template_name = "main/pages/thanksentryorg.html"
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["org_slug"] = self.kwargs["slug"]
+
+        has_campaign = False
+        if kwargs["campaign"]:
+            has_campaign = True
+
+        context["map_url"] = self.kwargs["map_id"]
+        context["campaign"] = self.kwargs["campaign"]
+        context["has_campaign"] = has_campaign
         return context
 
 
@@ -448,7 +447,6 @@ class EntryView(LoginRequiredMixin, View):
             #         entryForm.campaign = token.campaign
             #         entryForm.organization = token.campaign.organization
 
-
             #         # if user has a token and campaign is active, auto approve submission
             #         if token.campaign.is_active:
             #             entryForm.admin_approved = True
@@ -463,15 +461,20 @@ class EntryView(LoginRequiredMixin, View):
                 tag = Tag.objects.get(name=str(tag_name["name"]))
                 entryForm.tags.add(tag)
             m_uuid = str(entryForm.entry_ID).split("-")[0]
-            if entryForm.organization is None:
-                full_url = self.success_url + "?map_id=" + m_uuid
-                return HttpResponseRedirect(full_url)
-            else:
-                kwargs = {"slug": entryForm.organization.slug}
+            if not entryForm.campaign:
                 self.success_url = reverse_lazy(
-                    "main:thanks_entry_org", kwargs=kwargs
+                    "main:thanks", kwargs={"map_id": m_uuid}
                 )
-                return HttpResponseRedirect(self.success_url)
+            else:
+                self.success_url = reverse_lazy(
+                    "main:thanks",
+                    kwargs={
+                        "map_id": m_uuid,
+                        "slug": entryForm.organization.slug,
+                        "campaign": entryForm.campaign.slug,
+                    },
+                )
+            return HttpResponseRedirect(self.success_url)
         context = {
             "comm_form": comm_form,
             "addr_form": addr_form,
