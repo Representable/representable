@@ -1037,6 +1037,191 @@ function addStateNeighborLayers(new_neighbors, new_state) {
 
 /******************************************************************************/
 
+// initialize shepherd.js tour
+let myTour = new Shepherd.Tour({
+  defaultStepOptions: {
+    cancelIcon: {
+      enabled: true
+    },
+    classes: 'class-1 class-2',
+    scrollTo: { behavior: 'smooth', block: 'center' }
+  }  
+  });
+
+
+myTour.addStep({
+  title: 'Community of Interest Drawing Tutorial',
+  text: 'Now that you are ready to draw out your community of interest, follow the steps to learn about the mapping tool!',
+  buttons: [
+    {
+      action() {
+        return this.complete();
+      },
+      classes: 'shepherd-button-secondary',
+      text: 'Exit'
+    },
+    {
+      action() {
+        return this.next();
+      },
+      text: 'Next'
+    }
+  ]
+});
+
+
+myTour.addStep({
+  title: 'Map Controls',
+  text: 'Use these controls to orient yourself before drawing out your community of interest. You can \
+  zoom in, zoom out and/or reset the map bearing to north using these side buttons.',
+  attachTo: {
+    element: '.mapboxgl-ctrl-zoom-out',
+    on: 'left'
+  },
+  buttons: [
+    {
+      action() {
+        return this.back();
+      },
+      classes: 'shepherd-button-secondary',
+      text: 'Back'
+    },
+    {
+      action() {
+        return this.next();
+      },
+      text: 'Next'
+    }
+  ]
+});
+
+myTour.addStep({
+  title: 'Show/Hide Census Blocks',
+  text: 'Census blocks are the building blocks when it comes to creating districing maps. Click on this button \
+  to show/hide census blocks on the map.',
+  attachTo: {
+    element: '.active',
+    on: 'bottom'
+  },
+  buttons: [
+    {
+      action() {
+        return this.back();
+      },
+      classes: 'shepherd-button-secondary',
+      text: 'Back'
+    },
+    {
+      action() {
+        return this.next();
+      },
+      text: 'Next'
+    }
+  ]
+});
+
+myTour.addStep({
+  title: 'Draw your community of interest',
+  text: 'Begin drawing the polygon that represents your community of interest by clicking on this button.',
+  attachTo: {
+    element: '#draw-button-id',
+    on: 'bottom'
+  },
+  buttons: [
+    {
+      action() {
+        return this.back();
+      },
+      classes: 'shepherd-button-secondary',
+      text: 'Back'
+    },
+    {
+      action() {
+        // show the other control buttons for the tutorial
+        document.getElementById("draw-button-id").click();
+        return this.next();
+      },
+      text: 'Next'
+    }
+  ],
+});
+  
+myTour.addStep({
+  title: 'Delete Polygon',
+  text: 'Delete the polygon you have drawn or restart the drawing process by clicking this button.',
+  attachTo: {
+    element: '#map-clear-button-id',
+    on: 'bottom'
+  },
+  buttons: [
+    {
+      action() {
+        return this.back();
+      },
+      classes: 'shepherd-button-secondary',
+      text: 'Back'
+    },
+    {
+      action() {
+        return this.next();
+      },
+      text: 'Next'
+    }
+  ]
+});
+
+myTour.addStep({
+  title: 'Edit Polygon',
+  text: 'Add vertices to your polygon for those fine adjustments by clicking this button and then \
+  dragging the vertices to tweak your polygon to your liking.',
+  attachTo: {
+    element: '#map-edit-button-id',
+    on: 'bottom'
+  },
+  buttons: [
+    {
+      action() {
+        return this.back();
+      },
+      classes: 'shepherd-button-secondary',
+      text: 'Back'
+    },
+    {
+      action() {
+        return this.next();
+      },
+      text: 'Next'
+    }
+  ]
+});
+
+myTour.addStep({
+  title: 'Finish Drawing',
+  text: `Once you are done fine-tuning your polygon to reflect the geographical boundaries of 
+  your community of interest click here and move on to the last part of the form!`,
+  attachTo: {
+    element: '#map-finish-drawing-button-id',
+    on: 'bottom'
+  },
+  buttons: [
+    {
+      action() {
+        return this.back();
+      },
+      classes: 'shepherd-button-secondary',
+      text: 'Back'
+    },
+    {
+      action() {
+        return this.complete();
+      },
+      text: 'Done'
+    }
+  ]
+});
+
+/******************************************************************************/
+
 /* After the map style has loaded on the page, add a source layer and default
    styling for a single point. */
 map.on("style.load", function () {
@@ -1082,6 +1267,7 @@ map.on("style.load", function () {
   // Listen for the `geocoder.input` event that is triggered when a user
   // makes a selection and add a symbol that matches the result.
   geocoder.on("result", function (ev) {
+    $("#shepherd-btn").removeClass("d-none");
     map.getSource("single-point").setData(ev.result.geometry);
     var styleSpec = ev.result;
     var styleSpecBox = document.getElementById("json-response");

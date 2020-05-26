@@ -20,6 +20,9 @@
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
 <!--  Turf JS for calculating the area. -->
 <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script>
+<!-- Shepherd.js -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@latest/dist/css/shepherd.css"/>
+<script src="https://cdn.jsdelivr.net/npm/shepherd.js@latest/dist/js/shepherd.min.js"></script> 
 
 <!--  Mapbox Draw -->
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js'></script>
@@ -574,7 +577,10 @@
                                                 {% endif %}
                                                 <small class="text-danger">(Required)</small>
                                             </strong>
-                                            <button class="btn btn-secondary btn-sm mb-2 float-right" onclick="showVideoPopup()" type="button">Video Tutorial</button>
+                                            <span class="btn-group float-right">
+                                                <button class="btn btn-secondary btn-sm mb-2 mr-2 d-none" id="shepherd-btn" onclick="myTour.start()" type="button">Step-by-step guide</button>
+                                                <button class="btn btn-secondary btn-sm mb-2" onclick="showVideoPopup()" type="button">Video Tutorial</button>
+                                            </span>
                                             <div id="geocoder" class="geocoder my-3"></div>
                                             <div class="map-bounding-box my-2 collapse">
                                                 <div class="map-box">
