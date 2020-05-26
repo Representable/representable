@@ -129,7 +129,7 @@
                                                 </div>
                                             {% endif %}
                                         </div>
-                                        <p class="card-text">
+                                        <p class="card-text mb-1 mt-2">
 
                                             Your Name <small class="text-danger">(Required)</small>
                                         </p>
@@ -183,7 +183,7 @@
                                                 </div>
                                             {% endif %}
                                         </div>
-                                        <p class="card-text">
+                                        <p class="card-text mb-1 mt-2">
                                             Your Address <small class="text-danger">(Required)</small>
                                         </p>
                                         <div id="street_error_alerts">
@@ -203,8 +203,9 @@
                                                 </div>
                                             {% endif %}
                                         </div>
-                                        <div class="form-row my-2">
-                                            <div class="col-6">
+                                        <div class="form-row my-1">
+                                            <div class="col-xs-2 col-md-6">
+                                                <small class="m-2">Street</small>
                                                 {{ addr_form.street|append_attr:"class:form-control" }}
                                             </div>
                                         </div>
@@ -225,11 +226,6 @@
                                                 </div>
                                             {% endif %}
                                         </div>
-                                        <div class="form-row my-2">
-                                            <div class="col-4">
-                                                {{ addr_form.city|append_attr:"class:form-control" }}
-                                            </div>
-                                        </div>
                                         <div id="state_error_alerts">
                                             {% if addr_form.state.errors %}
                                                 <script>
@@ -247,6 +243,16 @@
                                                 </div>
                                             {% endif %}
                                         </div>
+                                        <div class="form-row my-1">
+                                            <div class="col-xs-2 col-md-2">
+                                                <small class="m-2">City</small>
+                                                {{ addr_form.city|append_attr:"class:form-control" }}
+                                            </div>
+                                            <div class="col-xs-2 col-md-2">
+                                                <small class="m-2">State</small>
+                                                {{ addr_form.state|append_attr:"class:form-control" }}
+                                            </div>
+                                        </div>
                                         <div id="zipcode_error_alerts">
                                             {% if addr_form.zipcode.errors %}
                                                 <script>
@@ -263,11 +269,6 @@
                                                     </button>
                                                 </div>
                                             {% endif %}
-                                        </div>
-                                        <div class="form-row my-2">
-                                            <div class="col-2">
-                                                {{ addr_form.state|append_attr:"class:form-control" }}
-                                            </div>
                                         </div>
                                         <div class="form-row my-1">
                                             <div class="col-xs-2 col-md-4">
@@ -293,7 +294,7 @@
                                             <script>
                                                 sessionStorage.setItem("allChecks", "fail");
                                             </script>
-                                            <div id="interests_missing" class="alert  django-alert alert-dismissible fade show form-error" role="alert">
+                                            <div id="interests_missing" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
                                                 {% if LANGUAGE_CODE == 'en' %}
                                                 Please fill out at least one of the interest fields.
                                                 {% elif LANGUAGE_CODE == 'es' %}
