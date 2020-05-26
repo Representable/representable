@@ -965,8 +965,8 @@ let myTour = new Shepherd.Tour({
 
 
 myTour.addStep({
-  title: 'Community Drawing Tutorial',
-  text: `Now that you are ready to draw out your community of interest, follow the steps to learn about the mapping tool!`,
+  title: 'Community of Interest Drawing Tutorial',
+  text: 'Now that you are ready to draw out your community of interest, follow the steps to learn about the mapping tool!',
   buttons: [
     {
       action() {
@@ -987,8 +987,8 @@ myTour.addStep({
 
 myTour.addStep({
   title: 'Map Controls',
-  text: `Use these controls to orient yourself before drawing out your community of interest. You can \
-  zoom in, zoom out and/or reset the map bearing to north using these side buttons.`,
+  text: 'Use these controls to orient yourself before drawing out your community of interest. You can \
+  zoom in, zoom out and/or reset the map bearing to north using these side buttons.',
   attachTo: {
     element: '.mapboxgl-ctrl-zoom-out',
     on: 'left'
@@ -1011,9 +1011,9 @@ myTour.addStep({
 });
 
 myTour.addStep({
-  title: 'Show/Hide Census lines',
-  text: `Census blocks are the building blocks when it comes to creating districing maps. Click on this button \
-  to show/hide census blocks on the map.`,
+  title: 'Show/Hide Census Blocks',
+  text: 'Census blocks are the building blocks when it comes to creating districing maps. Click on this button \
+  to show/hide census blocks on the map.',
   attachTo: {
     element: '.active',
     on: 'bottom'
@@ -1037,7 +1037,7 @@ myTour.addStep({
 
 myTour.addStep({
   title: 'Draw your community of interest',
-  text: `Begin drawing the polygon that represents your community of interest by clicking on this button.`,
+  text: 'Begin drawing the polygon that represents your community of interest by clicking on this button.',
   attachTo: {
     element: '#draw-button-id',
     on: 'bottom'
@@ -1063,7 +1063,7 @@ myTour.addStep({
   
 myTour.addStep({
   title: 'Delete Polygon',
-  text: `Delete the polygon you have drawn or restart the drawing process by clicking this button.`,
+  text: 'Delete the polygon you have drawn or restart the drawing process by clicking this button.',
   attachTo: {
     element: '#map-clear-button-id',
     on: 'bottom'
@@ -1087,8 +1087,8 @@ myTour.addStep({
 
 myTour.addStep({
   title: 'Edit Polygon',
-  text: `Add vertices to your polygon for those fine adjustments by clicking this button and then \
-  dragging the vertices to tweak your polygon to your liking.`,
+  text: 'Add vertices to your polygon for those fine adjustments by clicking this button and then \
+  dragging the vertices to tweak your polygon to your liking.',
   attachTo: {
     element: '#map-edit-button-id',
     on: 'bottom'
