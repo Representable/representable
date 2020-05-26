@@ -348,7 +348,7 @@ function formValidation() {
     comm_activities_field.classList.add("has_error");
     other_considerations_field.classList.add("has_error");
     var interets_alert = document.getElementById("need_one_interest");
-    interets_alert.classList.remove("d-none").add("d-block");
+    interets_alert.classList.remove("d-none");
   }
 
   // Check Poly Fields And Display Errors On Save
@@ -368,6 +368,10 @@ function formValidation() {
     flag = false;
   }
   var census_blocks_poly = document.getElementById("id_census_blocks_polygon");
+  if (flag == false) {
+    // Add alert.
+    document.getElementById("form_error").classList.remove("d-none");
+  }
   return flag;
 }
 
@@ -393,6 +397,7 @@ document.addEventListener(
     if (document_alerts.length > 0) {
       let first_alert = document_alerts[0];
       first_alert.scrollIntoView();
+      document.getElementById("form_error").classList.remove("d-none");
     }
   },
   false

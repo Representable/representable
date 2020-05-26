@@ -77,6 +77,17 @@
                                 {% endfor %}
                             </div>
                             {% endif %}
+                            {% if comm_form.errors %}
+                            <div id="django_form_errors">
+                            </div>
+                            {% endif %}
+                            <div id="form_error" class="alert alert-danger alert-dismissible fade show form-error d-none" role="alert">
+                                There was an error in submitting your community. Please check over and 
+                                ensure that you have filled out all required fields.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div class="row row-equal-cols">
