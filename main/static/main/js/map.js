@@ -172,7 +172,7 @@ map.on("load", function () {
     var northEast = new mapboxgl.LngLat(fit['_northEast']['lat'], fit['_northEast']['lng']);
     community_bounds[obj] = new mapboxgl.LngLatBounds(southWest, northEast)
     if (zooming) {
-      map.fitBounds(community_bounds[obj], {padding: 100});
+      map.fitBounds(community_bounds[obj], {padding: 200});
       zooming = false;
     }
     // draw the polygon
@@ -261,7 +261,7 @@ map.on("load", function () {
     map.setPaintProperty(this.id + "line", "line-width", 2);
     map.setPaintProperty(this.id, "fill-opacity", 0.15);
   });
-  $(".loading").delay(1200).fadeOut(1000);
+  $(".loading").delay(1500).fadeOut(1000);
 });
 
 // on click, zoom to community

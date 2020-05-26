@@ -67,45 +67,61 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                 {% for c in communities %}
                 <tr class="community-review-span hidden" id={{c.entry_ID}}>
                   <td>
-                    <span class="font-weight-light text-uppercase entry-name">
+                    <span class="text-uppercase entry-name">
                       {% with link_text="/submission?map_id="|addstr:c.entry_ID|slice:27 %}
                       <a href={{link_text}}>{{c.entry_name}}</a>
                       {% endwith %}
                     </span>
+                    <hr class="my-1">
+                    {% if campaign is None %}
+                    {% if c.campaign %}
+                    <span class="badge badge-pill badge-secondary">{{c.campaign}}</span>
                     <br>
+                    {% endif %}
+                    {% endif %}
+                    <span class="small text-muted">
                     {% if is_org_admin or is_org_moderator %}
                       {% if c.user_name %}
                       {{ c.user_name }}
                       {% else %}
                       {{ c.user.username }}
+                      {% endif %} |
+                      {% if c.user_phone %}
+                      {{ c.user_phone }}
                       {% endif %}
+                      {% if c.entry_ID in streets %}
+                      | {{streets|get_item:c.entry_ID}},
+                      {{cities|get_item:c.entry_ID}} <br>
+                      {% else %}
                       <br>
+                      {% endif %}
                     {% endif %}
-                    {% if campaign is None %}
-                    {% if c.campaign %}
-                    <b>Campaign: </b>{{c.campaign}}
-                    <br>
-                    {% endif %}
-                    {% endif %}
-                    <span class="comm-content">
+                    </span>
+                    <span class="font-weight-light comm-content">
                       <span class="more-content">
-                        {% if is_org_admin or is_org_moderator %}
-                        {{ c.user_phone }}<br>
-                        {% endif %}
-                        {% if c.entry_reason %}
-                        <b> Entry Reason</b><br>{{c.entry_reason}}
-                        <br>
-                        {% endif %}
                         {% if c.cultural_interests %}
-                        <b> Cultural Interests</b><br>{{c.cultural_interests}}
-                        <br>
-                        {% endif %}
-                        {% if c.economic_interests %}
-                        <b> Economic Interests</b><br>{{c.economic_interests}}
+                        <b><i class="fas fa-palette"></i> Cultural Interests</b><br>
+                        <span class="text-muted small">{{c.cultural_interests}}</span>
                         <br>
                         {% endif %}
                         {% if c.comm_activities %}
-                        <b> Community Activities</b><br>{{c.comm_activities}}
+                        <b><i class="fas fa-hiking"></i> Community Activities</b><br>
+                        <span class="text-muted small">{{c.comm_activities}}</span>
+                        <br>
+                        {% endif %}
+                        {% if c.economic_interests %}
+                        <b><i class="fas fa-comments-dollar"></i> Economic Interests</b><br>
+                        <span class="text-muted small">{{c.economic_interests}}</span>
+                        <br>
+                        {% endif %}
+                        {% if c.other_considerations %}
+                        <b><i class="fas fa-users"></i> Other Interests</b><br>
+                        <span class="text-muted small">{{c.other_considerations}}</span>
+                        <br>
+                        {% endif %}
+                        {% if c.entry_reason %}
+                        <b><i class="fas fa-newspaper"></i> Community Issues</b><br>
+                        <span class="text-muted small">{{c.entry_reason}}</span>
                         <br>
                         {% endif %}
                       </span>
