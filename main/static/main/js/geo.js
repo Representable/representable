@@ -320,7 +320,6 @@ function formValidation() {
   for (var i = 0; i < form_elements.length; i++) {
     if (form_elements[i].required) {
       if (!checkFieldById(form_elements[i].id)) {
-        print(form_elements[i].id);
         return false;
       }
     }
@@ -888,7 +887,6 @@ document
 document
   .getElementById("draw-button-id")
   .addEventListener("click", function (event) {
-    print("draw listener");
     hideInstructionBox();
     draw.deleteAll();
     map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
@@ -1032,7 +1030,6 @@ map.on("style.load", function () {
 
   for (let i = 0; i < states.length; i++) {
     // newCensusLines(states[i]);
-    print("LOADED HIGHLIGHT LAYER");
     newCensusShading(states[i]);
     newHighlightLayer(states[i]);
   }
@@ -1088,7 +1085,6 @@ map.on("render", function (event) {
     wkt_obj = wkt.read(feature);
     var geoJsonFeature = wkt_obj.toJson();
     var featureIds = draw.add(geoJsonFeature);
-    print(geoJsonFeature.coordinates[0]);
     updateCommunityEntry(event);
     map.flyTo({
       center: geoJsonFeature.coordinates[0][0],
@@ -1102,22 +1098,17 @@ map.on("render", function (event) {
 
 map.on("draw.create", function (event) {
   updateCommunityEntry(event);
-  print("create");
 });
 map.on("draw.delete", function (event) {
   updateCommunityEntry(event);
-  print("delete");
 });
 map.on("draw.update", function (event) {
   updateCommunityEntry(event);
-  print("updated");
 });
 map.on("draw.changeMode", function (event) {
-  print("change mode");
   updateCommunityEntry(event);
 });
 map.on("draw.selectionchange", function (event) {
-  print("selection_change");
   // The event object contains the featues that were selected.
   var selected_objects = event;
   var selected_points = selected_objects.points;
@@ -1151,7 +1142,6 @@ function triggerMissingPolygonError() {
 }
 
 function triggerDrawError(id, stringErrorText) {
-  print("appended error");
   /*
         triggerDrawError creates a bootstrap alert placed on top of the map.
     */
@@ -1178,7 +1168,6 @@ function triggerDrawError(id, stringErrorText) {
                                   </button>\
                           </div>';
   document.getElementById("map-error-alerts").appendChild(newAlert);
-  print("appended error");
 }
 
 /******************************************************************************/
@@ -1335,11 +1324,9 @@ function updateCommunityEntry(event) {
       draw.trash();
       return;
     }
-    print("after kinks");
     // Calculate area and convert it from square meters into square miles.
     let area = turf.area(data);
     area = turf.convertArea(area, "meters", "miles");
-    print("after area");
     // coi is not too big
     let halfStateArea = state_areas[state] / 2;
     if (area > halfStateArea) {
@@ -1348,17 +1335,14 @@ function updateCommunityEntry(event) {
         "Polygon area too large. Please draw your community again."
       );
       draw.trash();
-      print("in trash!");
       return;
     }
-    print("after trash");
     // Save user polygon.
     var user_polygon_json = JSON.stringify(drawn_polygon["geometry"]);
     wkt_obj = wkt.read(user_polygon_json);
     user_polygon_wkt = wkt_obj.write();
     // save census blocks multipolygon
     census_blocks_polygon_array = highlightBlocks(drawn_polygon);
-    print("after highlight");
     if (census_blocks_polygon_array != undefined) {
       census_blocks_polygon_array = census_blocks_polygon_array.join("|");
     }
