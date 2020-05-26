@@ -387,7 +387,7 @@ document.addEventListener(
     entry_form_button.addEventListener("click", function (event) {
       formValidation();
     });
-    state = sessionStorage.getItem("state_code");
+    state = sessionStorage.getItem("state_name");
     // If there are alerts, scroll to first one.
     var document_alerts = document.getElementsByClassName("django-alert");
     if (document_alerts.length > 0) {
@@ -1098,7 +1098,7 @@ map.on("style.load", function () {
       neighbors = new_neighbors;
     }
     // Save state to session storage
-    sessionStorage.setItem("state_code", state);
+    sessionStorage.setItem("state_name", state);
   });
 });
 
@@ -1321,12 +1321,17 @@ function updateCommunityEntry(event) {
   var census_blocks_polygon_array;
 
   // Check if the feature has data
-  if (data_features.length > 0) {
+  if (data_features && data_features.length > 0) {
     var data_geometry = data.features[0].geometry;
     // .coordinates stores an array in an array. The nested array contains
     // the points.
     var coordinates = data_geometry.coordinates[0];
-    var coordinates_length = coordinates.length;
+    var coordinates_length;
+    if (coordinates) {
+      coordinates_length = coordinates.length;
+    } else {
+      coordinates_length = 0;
+    }
   }
 
   // Check if the map stores a valid polygon
@@ -1334,10 +1339,10 @@ function updateCommunityEntry(event) {
     // sets an empty filter - unhighlights everything
     // sets the form fields as empty
     // TODO: update for all states
-    map.setFilter(sessionStorage.getItem("stateName") + "-blocks-highlighted", [
-      "in",
-      "BLOCKID10",
-    ]);
+    map.setFilter(
+      sessionStorage.getItem("state_name") + "-blocks-highlighted",
+      ["in", "BLOCKID10"]
+    );
     triggerMissingPolygonError();
   } else {
     // Update User Polygon with the GeoJson data.
