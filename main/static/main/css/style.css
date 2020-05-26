@@ -15,6 +15,18 @@ and rules, since this can lead to unintended consequences.
 This means no changing anything like <a>, <li>, <p>, etc.
 */
 
+form:invalid {
+  border-color: red;
+}
+
+.has_error {
+  border-color: red;
+}
+
+.has_success {
+  border-color: red;
+}
+
 /* TOC Checkbox*/
 .toc-check {
   display: inline;
@@ -192,13 +204,13 @@ footer {
 /* Help dropup */
 
 #dropuphelp {
-  position: fixed; 
-  bottom: 40px; 
-  right: 40px; 
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
   z-index: 1010;
 }
 
-.dropdown-menu a{
+.dropdown-menu a {
   color: #333;
 }
 
@@ -208,8 +220,8 @@ footer {
 /* Bootstrap Buttons. */
 
 #video_popup {
-  position: fixed; 
-  bottom: 90px; 
+  position: fixed;
+  bottom: 90px;
   right: 24px;
   z-index: 1000;
 }
@@ -350,18 +362,19 @@ color scheme. See readme.md*/
 }
 
 /* override what the popup looks like on small devices */
-@media (max-width:600px)  { 
-  #video_popup {  
-    width:300px;
+@media (max-width: 600px) {
+  #video_popup {
+    width: 300px;
     bottom: 90px;
-    right: 10px; 
-    z-index: 1000 !important;}
+    right: 10px;
+    z-index: 1000 !important;
+  }
 
   #video_popup_body {
     padding-right: 0.05rem;
     padding-left: 0.05rem;
-   }
   }
+}
 
 /* Style the sidenav links and the dropdown button */
 
@@ -376,7 +389,7 @@ color scheme. See readme.md*/
   outline: none;
 }
 
-.comm-content .more-content{
+.comm-content .more-content {
   display: none;
 }
 
