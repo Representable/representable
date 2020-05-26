@@ -365,6 +365,7 @@ document.addEventListener(
     entry_form_button.addEventListener("click", function (event) {
       formValidation();
     });
+    state = sessionStorage.getItem("state_code");
   },
   false
 );
@@ -1031,6 +1032,7 @@ map.on("style.load", function () {
 
   for (let i = 0; i < states.length; i++) {
     // newCensusLines(states[i]);
+    print("LOADED HIGHLIGHT LAYER");
     newCensusShading(states[i]);
     newHighlightLayer(states[i]);
   }
@@ -1069,6 +1071,8 @@ map.on("style.load", function () {
       state = new_state;
       neighbors = new_neighbors;
     }
+    // Save state to session storage
+    sessionStorage.setItem("state_code", state);
   });
 });
 
