@@ -355,7 +355,10 @@
                                                 Busque una ubicación para comenzar a dibujar su comunidad.
                                                 {% endif %}
                                             </strong>
-                                            <button class="btn btn-secondary btn-sm mb-2 float-right" onclick="showVideoPopup()" type="button">Video Tutorial</button>
+                                            <span class="btn-group float-right">
+                                                <button class="btn btn-secondary btn-sm mb-2 mr-2 d-none" id="shepherd-btn" onclick="myTour.start()" type="button">Step-by-step guide</button>
+                                                <button class="btn btn-secondary btn-sm mb-2" onclick="showVideoPopup()" type="button">Video Tutorial</button>
+                                            </span>
                                             <div id="geocoder" class="geocoder my-3"></div>
                                             <div class="map-bounding-box my-2 collapse">
                                                 <div class="map-box">
@@ -466,8 +469,4 @@
     <script type="text/javascript" src="{% static 'main/js/geo.js' %}"></script>
     <!-- Turf to get the bounding box. -->
     <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
-    <!-- Shepherd js
-    <link rel="stylesheet" href="./shepherd.js/dist/css/shepherd.css"/>
-    <script src="https://cdn.jsdelivr.net/npm/shepherd.js@latest/dist/js/shepherd.min.js"></script> -->
-    <!-- <script src="./shepherd.js/dist/js/shepherd.min.js"></script> -->
     {% endblock %}

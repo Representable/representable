@@ -981,8 +981,33 @@ myTour.addStep({
       },
       text: 'Next'
     }
-  ],
-  id: 'creating'
+  ]
+});
+
+
+myTour.addStep({
+  title: 'Map Controls',
+  text: `Use these controls to orient yourself before drawing out your community of interest. You can \
+  zoom in, zoom out and/or reset the map bearing to north using these side buttons.`,
+  attachTo: {
+    element: '.mapboxgl-ctrl-zoom-out',
+    on: 'left'
+  },
+  buttons: [
+    {
+      action() {
+        return this.back();
+      },
+      classes: 'shepherd-button-secondary',
+      text: 'Back'
+    },
+    {
+      action() {
+        return this.next();
+      },
+      text: 'Next'
+    }
+  ]
 });
 
 myTour.addStep({
@@ -1007,8 +1032,7 @@ myTour.addStep({
       },
       text: 'Next'
     }
-  ],
-  id: 'creating'
+  ]
 });
 
 myTour.addStep({
@@ -1035,7 +1059,6 @@ myTour.addStep({
       text: 'Next'
     }
   ],
-  id: 'creating'
 });
   
 myTour.addStep({
@@ -1059,8 +1082,7 @@ myTour.addStep({
       },
       text: 'Next'
     }
-  ],
-  id: 'creating'
+  ]
 });
 
 myTour.addStep({
@@ -1085,8 +1107,7 @@ myTour.addStep({
       },
       text: 'Next'
     }
-  ],
-  id: 'creating'
+  ]
 });
 
 myTour.addStep({
@@ -1111,8 +1132,7 @@ myTour.addStep({
       },
       text: 'Next'
     }
-  ],
-  id: 'creating'
+  ]
 });
 
 /******************************************************************************/
@@ -1162,7 +1182,7 @@ map.on("style.load", function () {
   // Listen for the `geocoder.input` event that is triggered when a user
   // makes a selection and add a symbol that matches the result.
   geocoder.on("result", function (ev) {
-    myTour.start();
+    $("#shepherd-btn").removeClass("d-none");
     map.getSource("single-point").setData(ev.result.geometry);
     var styleSpec = ev.result;
     var styleSpecBox = document.getElementById("json-response");
