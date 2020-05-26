@@ -80,8 +80,9 @@
                 {{ c.user_name }}
                 {% else %}
                 {{ c.user.username }}
-                {% endif %} |
+                {% endif %}
                 {% if c.user_phone %}
+                | {{ c.user_phone }}
                 {% endif %}
                 {% if c.entry_ID in streets %}
                 | {{streets|get_item:c.entry_ID}},
@@ -90,7 +91,6 @@
                 <br>
                 {% endif %}
                 </span>
-                <br>
                 <span class="font-weight-light comm-content">
                   <span class="more-content">
                     {% if c.cultural_interests %}

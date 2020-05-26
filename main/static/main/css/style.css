@@ -192,9 +192,9 @@ footer {
 /* Help dropup */
 
 #dropuphelp {
-  position: fixed; 
-  bottom: 40px; 
-  right: 40px; 
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
   z-index: 1010;
 }
 
@@ -208,8 +208,8 @@ footer {
 /* Bootstrap Buttons. */
 
 #video_popup {
-  position: fixed; 
-  bottom: 90px; 
+  position: fixed;
+  bottom: 90px;
   right: 24px;
   z-index: 1000;
 }
@@ -350,11 +350,11 @@ color scheme. See readme.md*/
 }
 
 /* override what the popup looks like on small devices */
-@media (max-width:600px)  { 
-  #video_popup {  
+@media (max-width:600px)  {
+  #video_popup {
     width:300px;
     bottom: 90px;
-    right: 10px; 
+    right: 10px;
     z-index: 1000 !important;}
 
   #video_popup_body {
