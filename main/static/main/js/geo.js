@@ -307,32 +307,58 @@ function hideMap() {
 function checkFieldById(field_id) {
   var field = document.getElementById(field_id);
   if (field.value == null || field.value == "") {
-    field.classList.add("has-error");
+    field.classList.add("has_error");
+    print(field.id);
     return false;
   }
-  field.classList.add("has-success");
+  field.classList.add("hass_success");
   return true;
 }
 
 function formValidation() {
   // Check Normal Fields
+  var flag = true;
   var form_elements = document.getElementById("entryForm").elements;
   for (var i = 0; i < form_elements.length; i++) {
     if (form_elements[i].required) {
       if (!checkFieldById(form_elements[i].id)) {
-        return false;
+        flag = false;
       }
     }
   }
+  print("hello");
 
-  var user_name = document.getElementById("id_user_name");
-  if (user_name.value == null || user_name.value == "") {
+  var cultural_interests_field = document.getElementById(
+    "id_cultural_interests"
+  );
+  var economic_intetersts_field = document.getElementById(
+    "id_economic_interests"
+  );
+  var comm_activities_field = document.getElementById("id_comm_activities");
+  var other_considerations_field = document.getElementById(
+    "id_other_considerations"
+  );
+
+  if (
+    cultural_interests_field.value == "" &&
+    economic_intetersts_field.value == "" &&
+    comm_activities_field.value == "" &&
+    other_considerations_field.value == ""
+  ) {
+    print("test");
+    cultural_interests_field.classList.add("has_error");
+    economic_intetersts_field.classList.add("has_error");
+    comm_activities_field.classList.add("has_error");
+    other_considerations_field.classList.add("has_error");
+    var interets_alert = document.getElementById("need_one_interest");
+    interets_alert.classList.remove("d-none").add("d-block");
   }
+
   // Check Poly Fields And Display Errors On Save
   var user_polygon_field = document.getElementById("id_user_polygon");
   if (user_polygon_field.value == null || user_polygon_field.value == "") {
     triggerMissingPolygonError();
-    return false;
+    flag = false;
   }
   var census_blocks_arr_field = document.getElementById(
     "id_census_blocks_polygon_array"
@@ -342,10 +368,10 @@ function formValidation() {
     census_blocks_arr_field.value == ""
   ) {
     triggerMissingPolygonError();
-    return false;
+    flag = false;
   }
   var census_blocks_poly = document.getElementById("id_census_blocks_polygon");
-  return true;
+  return flag;
 }
 
 // Make buttons show the right skin.

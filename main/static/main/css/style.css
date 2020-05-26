@@ -15,7 +15,15 @@ and rules, since this can lead to unintended consequences.
 This means no changing anything like <a>, <li>, <p>, etc.
 */
 
-input:invalid {
+form:invalid {
+  border-color: red;
+}
+
+.has_error {
+  border-color: red;
+}
+
+.has_success {
   border-color: red;
 }
 
