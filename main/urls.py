@@ -69,13 +69,13 @@ urlpatterns = [
         name="partner_page",
     ),
     path(
-        "partners/<slug:slug>/map/",
+        "map/p/<slug:slug>/",
         views.partners.PartnerMap.as_view(),
         {"campaign": ""},
         name="partner_map",
     ),
     path(
-        "partners/<slug:slug>/map/<slug:campaign>/",
+        "map/p/<slug:slug>/<slug:campaign>/",
         views.partners.PartnerMap.as_view(),
         name="partner_map",
     ),

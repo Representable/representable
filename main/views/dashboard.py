@@ -46,7 +46,7 @@ from ..models import (
     CommunityEntry,
     Tag,
     CampaignToken,
-    Address
+    Address,
 )
 from django.shortcuts import get_object_or_404
 from django.views.generic.edit import FormView
@@ -383,7 +383,9 @@ class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
         for obj in query:
             for a in Address.objects.filter(entry=obj):
                 streets[obj.entry_ID] = a.street
-                cities[obj.entry_ID] = a.city + ", " + a.state + " " + a.zipcode
+                cities[obj.entry_ID] = (
+                    a.city + ", " + a.state + " " + a.zipcode
+                )
 
             if not obj.census_blocks_polygon:
                 s = "".join(obj.user_polygon.geojson)
@@ -416,13 +418,11 @@ class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, label_suffix="")
 
-        # TODO: verify that unauthorized users cannot use this post method
         if form.is_valid():
             query = CommunityEntry.objects.filter(
                 entry_ID=request.POST.get("c_id")
             )
             entry = query[0]
-            # TODO check whether authorized to edit state?
             if (
                 "Approve" in request.POST
             ):  # TODO need someone to review security
@@ -456,14 +456,6 @@ class CampaignHome(LoginRequiredMixin, OrgMemberRequiredMixin, DetailView):
         context["is_org_moderator"] = self.request.user.is_org_moderator(
             self.kwargs["pk"]
         )
-        # campaign = get_object_or_404(Campaign, pk=self.kwargs["cam_pk"])
-        # token = CampaignToken.objects.filter(campaign=campaign)
-        # if not token:
-        #     token = CampaignToken.objects.create(campaign=campaign)
-        # else:
-        #     # filter only the first token in case there are multiple
-        #     token = token[0]
-        # context["token"] = token.token
 
         return context
 
@@ -484,8 +476,6 @@ class CreateCampaign(LoginRequiredMixin, OrgAdminRequiredMixin, CreateView):
         )
         object = form.save()
 
-        # CampaignToken.objects.create(campaign=object)
-
         self.success_url = reverse_lazy(
             "main:campaign_home",
             kwargs={
@@ -500,7 +490,7 @@ class CreateCampaign(LoginRequiredMixin, OrgAdminRequiredMixin, CreateView):
 
 class UpdateCampaign(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
     """
-    BETA view: the view for the form to update campaign details
+    The view for the form to update campaign details
     """
 
     template_name = "main/dashboard/campaigns/edit.html"
