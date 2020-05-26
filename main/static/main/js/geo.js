@@ -294,6 +294,16 @@ function parseReverseGeo(geoData) {
 
 /******************************************************************************/
 
+function showMap() {
+  $(".map-bounding-box.collapse").collapse("show");
+  map.resize();
+}
+
+function hideMap() {
+  $(".map-bounding-box.collapse").collapse("hide");
+  map.resize();
+}
+
 function formValidation() {
   // Check Poly Fields And Display Errors On Save
   print("form validation");
@@ -1021,9 +1031,7 @@ map.on("style.load", function () {
     var styleSpecBox = document.getElementById("json-response");
     var styleSpecText = JSON.stringify(styleSpec, null, 2);
 
-    $(".map-bounding-box.collapse").collapse("show");
-    map.resize();
-
+    showMap();
     // get the state from the geocoder response
     if (styleSpec.context.length >= 2) {
       new_state = styleSpec.context[styleSpec.context.length - 2]["short_code"]
@@ -1322,6 +1330,7 @@ function updateCommunityEntry(event) {
       census_blocks_polygon_array = census_blocks_polygon_array.join("|");
     }
     triggerSuccessMessage();
+    showMap();
   }
   updateFormFields(user_polygon_wkt, census_blocks_polygon_array);
 }
