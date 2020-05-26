@@ -68,6 +68,15 @@
                                 This form will help you add your community to Representable so you can
                                 make sure your voice is heard.
                             </p>
+                            {% csrf_token %}
+                            <!-- {# Include the non-field error fields #} -->
+                            {% if comm_form.non_field_errors %}
+                            <div class="non-field-errors form-error">
+                                {% for err in comm_form.non_field_errors %}
+                                <p class="form-error">{{ err }}</p>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="row row-equal-cols">
@@ -289,15 +298,7 @@
                                             </div>
                                         </div>
                                         {% endif %}
-                                        {% csrf_token %}
-                                        <!-- {# Include the non-field error fields #} -->
-                                        {% if comm_form.non_field_errors %}
-                                        <div class="non-field-errors form-error">
-                                            {% for err in comm_form.non_field_errors %}
-                                            <p class="form-error">{{ err }}</p>
-                                            {% endfor %}
-                                        </div>
-                                        {% endif %}
+
                                         <div id="main_community_form" class="form-group">
                                             <!-- {# Include the hidden fields #} -->
                                             {% for hidden in comm_form.hidden_fields %}
