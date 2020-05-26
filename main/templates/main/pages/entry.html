@@ -132,7 +132,8 @@
                                                 </div>
                                             {% endif %}
                                         </div>
-                                        <p class="card-text">
+                                        <p class="card-text mb-1 mt-2">
+
                                             Your Name <small class="text-danger">(Required)</small>
                                         </p>
                                         <div class="row my-2">
@@ -160,7 +161,7 @@
                                             {% endif %}
                                         </div>
 
-                                        <p class="card-text">
+                                        <p class="card-text mb-1 mt-2">
                                             Phone Number <small class="text-danger">(Required)</small>
                                         </p>
                                         <div class="form-row my-2">
@@ -185,7 +186,7 @@
                                                 </div>
                                             {% endif %}
                                         </div>
-                                        <p class="card-text">
+                                        <p class="card-text mb-1 mt-2">
                                             Your Address <small class="text-danger">(Required)</small>
                                         </p>
                                         <div id="street_error_alerts">
@@ -205,8 +206,9 @@
                                                 </div>
                                             {% endif %}
                                         </div>
-                                        <div class="form-row my-2">
-                                            <div class="col-6">
+                                        <div class="form-row my-1">
+                                            <div class="col-xs-2 col-md-6">
+                                                <small class="m-2">Street</small>
                                                 {{ addr_form.street|append_attr:"class:form-control" }}
                                             </div>
                                         </div>
@@ -227,11 +229,6 @@
                                                 </div>
                                             {% endif %}
                                         </div>
-                                        <div class="form-row my-2">
-                                            <div class="col-4">
-                                                {{ addr_form.city|append_attr:"class:form-control" }}
-                                            </div>
-                                        </div>
                                         <div id="state_error_alerts">
                                             {% if addr_form.state.errors %}
                                                 <script>
@@ -248,6 +245,16 @@
                                                     </button>
                                                 </div>
                                             {% endif %}
+                                        </div>
+                                        <div class="form-row my-1">
+                                            <div class="col-xs-2 col-md-2">
+                                                <small class="m-2">City</small>
+                                                {{ addr_form.city|append_attr:"class:form-control" }}
+                                            </div>
+                                            <div class="col-xs-2 col-md-2">
+                                                <small class="m-2">State</small>
+                                                {{ addr_form.state|append_attr:"class:form-control" }}
+                                            </div>
                                         </div>
                                         <div id="zipcode_error_alerts">
                                             {% if addr_form.zipcode.errors %}
@@ -266,11 +273,9 @@
                                                 </div>
                                             {% endif %}
                                         </div>
-                                        <div class="form-row my-2">
-                                            <div class="col-2">
-                                                {{ addr_form.state|append_attr:"class:form-control" }}
-                                            </div>
-                                            <div class="col-2">
+                                        <div class="form-row my-1">
+                                            <div class="col-xs-2 col-md-4">
+                                                <small class="m-2">Zipcode</small>
                                                 {{ addr_form.zipcode|append_attr:"class:form-control" }}
                                             </div>
                                         </div>
@@ -292,7 +297,7 @@
                                             <script>
                                                 sessionStorage.setItem("allChecks", "fail");
                                             </script>
-                                            <div id="interests_missing" class="alert  django-alert alert-dismissible fade show form-error" role="alert">
+                                            <div id="interests_missing" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
                                                 {% if LANGUAGE_CODE == 'en' %}
                                                 Please fill out at least one of the interest fields.
                                                 {% elif LANGUAGE_CODE == 'es' %}
@@ -506,7 +511,7 @@
                                             What name can we use to identify your community? <small class="text-danger">(Required)</small>
                                             <!-- TODO we should find a better example -->
                                             <br>
-                                            <small>For example: Princeton area student community</small>
+                                            <small>For example: Cherry Farmers Community</small>
                                         </p>
                                         {{ comm_form.entry_name|append_attr:"class:form-control" }}
                                         <hr>
@@ -541,10 +546,10 @@
                                     <div class="card-header text-header-card">
                                         <strong>
                                         {% if LANGUAGE_CODE == 'en' %}
-                                        6. Draw Your Community
+                                        4. Draw Your Community
                                         {% elif LANGUAGE_CODE == 'es' %}
                                         <!-- Google translate  -->
-                                        6. Dibuja tu comunidad
+                                        4. Dibuja tu comunidad
                                         {% endif %}
                                         </strong>
                                     </div>
@@ -642,21 +647,6 @@
 
                     <div class='row row-equal-cols'>
                         <div class='col-lg text-center m-2'>
-                            <div class="alert alert-primary text-left" role="alert">
-                                <h5 class="alert-heading">What happens next?</h3>
-                                <p class="card-text">
-                                    By adding your map to Representable.org you're not submitting a map to a redistricting commission. 
-                                </p>
-                                <p class="card-text">
-                                    You will be able to submit a map to a commission as soon as information about the submission process becomes available 
-                                    in your state. We'll attempt to contact you once that's available. Make sure to check the Representable.org 
-                                    website regularly for new information about the process in your state.
-                                </p>
-                                <p class="card-text">
-                                    If you submitted the map to a campaign, the campaign may choose to send your submission to a 
-                                    redistricting commmission on your behalf.
-                                </p>
-                            </div>
                             <div style="display: inline-block;">
                                 <button id="save" form="entryForm" type="submit" class="btn btn-primary" value="Submit">Save Entry</button>
                             </div>

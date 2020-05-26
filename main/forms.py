@@ -162,7 +162,7 @@ class CommunityForm(ModelForm):
                     "rows": 5,
                 }
             ),
-            "user_name": forms.TextInput(attrs={"placeholder": "User Name"}),
+            "user_name": forms.TextInput(attrs={"placeholder": "Full Name"}),
             # user_phone uses django-phone-field, but doesn't have args for placeholder
             # use the textInput widget instead
             "user_phone": forms.TextInput(attrs={"placeholder": "Phone Number"}),
