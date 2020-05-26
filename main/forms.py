@@ -167,7 +167,7 @@ class CommunityForm(ModelForm):
                     "rows": 5,
                 }
             ),
-            "user_name": forms.TextInput(attrs={"placeholder": "User Name"}),
+            "user_name": forms.TextInput(attrs={"placeholder": "Full Name"}),
             "user_phone": PhoneField,
             "user_polygon": forms.HiddenInput(),
         }

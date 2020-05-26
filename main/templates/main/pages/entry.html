@@ -92,7 +92,7 @@
                                                 </p>
                                             </div>
                                         </div>
-                                        <p class="card-text">
+                                        <p class="card-text mb-1 mt-2">
                                             Your Name <small class="text-danger">(Required)</small>
                                         </p>
                                         <div class="row my-2">
@@ -120,7 +120,7 @@
                                             {% endif %}
                                         </div>
 
-                                        <p class="card-text">
+                                        <p class="card-text mb-1 mt-2">
                                             Phone Number <small class="text-danger">(Required)</small>
                                         </p>
                                         <div class="form-row my-2">
@@ -128,24 +128,29 @@
                                                 {{ comm_form.user_phone|append_attr:"class:form-control" }}
                                             </div>
                                         </div>
-                                        <p class="card-text">
+
+                                        <p class="card-text mb-1 mt-2">
                                             Your Address <small class="text-danger">(Required)</small>
                                         </p>
-                                        <div class="form-row my-2">
-                                            <div class="col-6">
+                                        <div class="form-row my-1">
+                                            <div class="col-md-8">
+                                                <small class="m-2">Street</small>
                                                 {{ addr_form.street|append_attr:"class:form-control" }}
                                             </div>
                                         </div>
-                                        <div class="form-row my-2">
-                                            <div class="col-4">
+                                        <div class="form-row my-1">
+                                            <div class="col-md-6">
+                                                <small class="m-2">City</small>
                                                 {{ addr_form.city|append_attr:"class:form-control" }}
                                             </div>
-                                        </div>
-                                        <div class="form-row my-2">
-                                            <div class="col-2">
+                                            <div class="col-xs-2 col-md-2">
+                                                <small class="m-2">State</small>
                                                 {{ addr_form.state|append_attr:"class:form-control" }}
                                             </div>
-                                            <div class="col-2">
+                                        </div>
+                                        <div class="form-row my-1">
+                                            <div class="col-xs-2 col-md-4">
+                                                <small class="m-2">Zipcode</small>
                                                 {{ addr_form.zipcode|append_attr:"class:form-control" }}
                                             </div>
                                         </div>
