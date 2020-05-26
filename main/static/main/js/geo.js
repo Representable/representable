@@ -1128,9 +1128,9 @@ myTour.addStep({
     },
     {
       action() {
-        return this.next();
+        return this.complete();
       },
-      text: 'Next'
+      text: 'Done'
     }
   ]
 });
