@@ -14,7 +14,7 @@
       </nav>
     </div>
   </div>
-  <div class="row pt-3">
+  <div class="row">
     <div class="col-sm">
       <div class="card shadow-sm h-100">
         <div class="card-body">
@@ -70,16 +70,22 @@
       </div>
       </div>
   </div>
-  <div class="row py-3">
+  <div class="row pb-3">
     <div class="col-sm">
       <div class="card shadow-sm my-3">
         <div class="card-body">
           <h5>Getting Started</h5>
-          <ul class="list-group my-3">
-            {% if is_org_admin %}
+          <ul class="list-group my-3">{% if is_org_admin %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
               <div>
-                <h5><span class="badge badge-secondary"><i class="fas fa-file-upload"></i></span> Upload an Email Whitelist (Coming Soon)</h5>
+                <h5><span class="badge badge-secondary"><i class="fas fa-plus-square"></i></span> Create a Campaign</h5>
+                <p>Create a campaign to start collecting submissions.<p>
+              </div>
+              <a class="btn btn-primary" href="{% url 'main:create_campaign' object.slug  object.pk %}" role="button">Create <i class="fa fa-arrow-circle-right"></i></a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <h5><span class="badge badge-secondary"><i class="fas fa-file-upload"></i></span> Upload an Email Whitelist</h5>
                 <p>By uploading a .csv file of your organization members' emails, you can automatically approve submissions from your members.<p>
               </div>
               <a class="btn btn-primary" href="{% url 'main:upload_whitelist' object.slug  object.pk %}" role="button">Upload <i class="fa fa-arrow-circle-right"></i></a>
@@ -90,20 +96,14 @@
                 <p>Designate users as members, moderators, or admins on your organization dashboard.</p>
               </div>
               <a class="btn btn-primary" href="{% url 'main:manage_org' object.slug  object.pk %}" role="button">Manage <i class="fa fa-arrow-circle-right"></i></a>
-            </li>
-            {% endif %}
-            {% if is_org_admin or is_org_moderator %}
-
+            </li>{% endif %}{% if is_org_admin or is_org_moderator %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
               <div>
                 <h5><span class="badge badge-secondary"><i class="fas fa-flag"></i></span> Moderate Submissions</h5>
                 <p>Review communities submitted under your organization.</p>
               </div>
               <a class="btn btn-primary" href="{% url 'main:review_org' object.slug  object.pk %}" role="button">Moderate <i class="fa fa-arrow-circle-right"></i></a>
-            </li>
-            {% endif %}
-
-
+            </li>{% endif %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
               <div>
                 <h5><span class="badge badge-secondary"><i class="fas fa-map-marker-alt"></i></span> View/Share Your Map</h5>

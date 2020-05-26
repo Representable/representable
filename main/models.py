@@ -95,7 +95,7 @@ class Organization(models.Model):
     """
 
     name = models.CharField(max_length=128)
-    description = models.CharField(max_length=250, blank=True)
+    description = models.CharField(max_length=500, blank=True)
     ext_link = models.URLField(max_length=200, blank=True)
     states = ArrayField(
         models.CharField(max_length=50, choices=STATES, blank=True),
@@ -179,17 +179,19 @@ class Campaign(models.Model):
     - state: the state of the campaign
     - description: description of the campaign
     - organization: organization hosting the campaign
+    - created_at: when the campaign was created
     - is_active: is the campaign active
     """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     slug = models.SlugField(null=True, unique=True)
     name = models.CharField(max_length=128)
-    description = models.CharField(max_length=250, blank=True, null=True)
+    description = models.CharField(max_length=700, blank=True, null=True)
     state = models.CharField(
         max_length=50, choices=STATES, default=None, blank=False
     )
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
 
     class Meta:
