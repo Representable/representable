@@ -293,6 +293,88 @@ function parseReverseGeo(geoData) {
 }
 
 /******************************************************************************/
+
+function showMap() {
+  $(".map-bounding-box.collapse").collapse("show");
+  map.resize();
+}
+
+function hideMap() {
+  $(".map-bounding-box.collapse").collapse("hide");
+  map.resize();
+}
+
+function checkFieldById(field_id) {
+  var field = document.getElementById(field_id);
+  if (field.value == null || field.value == "") {
+    field.classList.add("has_error");
+    return false;
+  }
+  field.classList.add("hass_success");
+  return true;
+}
+
+function formValidation() {
+  // Check Normal Fields
+  var flag = true;
+  var form_elements = document.getElementById("entryForm").elements;
+  for (var i = 0; i < form_elements.length; i++) {
+    if (form_elements[i].required) {
+      if (!checkFieldById(form_elements[i].id)) {
+        flag = false;
+      }
+    }
+  }
+
+  var cultural_interests_field = document.getElementById(
+    "id_cultural_interests"
+  );
+  var economic_intetersts_field = document.getElementById(
+    "id_economic_interests"
+  );
+  var comm_activities_field = document.getElementById("id_comm_activities");
+  var other_considerations_field = document.getElementById(
+    "id_other_considerations"
+  );
+
+  if (
+    cultural_interests_field.value == "" &&
+    economic_intetersts_field.value == "" &&
+    comm_activities_field.value == "" &&
+    other_considerations_field.value == ""
+  ) {
+    cultural_interests_field.classList.add("has_error");
+    economic_intetersts_field.classList.add("has_error");
+    comm_activities_field.classList.add("has_error");
+    other_considerations_field.classList.add("has_error");
+    var interets_alert = document.getElementById("need_one_interest");
+    interets_alert.classList.remove("d-none");
+  }
+
+  // Check Poly Fields And Display Errors On Save
+  var user_polygon_field = document.getElementById("id_user_polygon");
+  if (user_polygon_field.value == null || user_polygon_field.value == "") {
+    triggerMissingPolygonError();
+    flag = false;
+  }
+  var census_blocks_arr_field = document.getElementById(
+    "id_census_blocks_polygon_array"
+  );
+  if (
+    census_blocks_arr_field.value == null ||
+    census_blocks_arr_field.value == ""
+  ) {
+    triggerMissingPolygonError();
+    flag = false;
+  }
+  var census_blocks_poly = document.getElementById("id_census_blocks_polygon");
+  if (flag == false) {
+    // Add alert.
+    document.getElementById("form_error").classList.remove("d-none");
+  }
+  return flag;
+}
+
 // Make buttons show the right skin.
 document.addEventListener(
   "DOMContentLoaded",
@@ -305,14 +387,18 @@ document.addEventListener(
       .removeClass("add-form-row")
       .addClass("remove-form-row")
       .html('<span class="" aria-hidden="true">Remove</span>');
-    // Check Poly Fields And Display Errors On Save
-    var user_polygon_field = document.getElementById("id_user_polygon");
-    var census_blocks_arr_field = document.getElementById(
-      "id_census_blocks_polygon_array"
-    );
-    var census_blocks_poly = document.getElementById(
-      "id_census_blocks_polygon"
-    );
+    var entry_form_button = document.getElementById("save");
+    entry_form_button.addEventListener("click", function (event) {
+      formValidation();
+    });
+    state = sessionStorage.getItem("state_name");
+    // If there are alerts, scroll to first one.
+    var document_alerts = document.getElementsByClassName("django-alert");
+    if (document_alerts.length > 0) {
+      let first_alert = document_alerts[0];
+      first_alert.scrollIntoView();
+      document.getElementById("form_error").classList.remove("d-none");
+    }
   },
   false
 );
@@ -585,7 +671,7 @@ class ClearMapButton {
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
     clear_map_button.addEventListener("click", function (event) {
-      draw.deleteAll();
+      draw.trash();
       hideInstructionBox();
       updateCommunityEntry(event);
     });
@@ -664,8 +750,8 @@ class FinishDrawButton {
         draw.changeMode("simple_select", {
           featureId: all_features.features[0].id,
         });
+        updateCommunityEntry(event);
       }
-      updateCommunityEntry(event);
     });
     this._container.appendChild(finish_draw_button);
     return this._container;
@@ -834,7 +920,7 @@ document
 // Override Behavior for Draw-Button
 document
   .getElementById("draw-button-id")
-  .addEventListener("click", function (e) {
+  .addEventListener("click", function (event) {
     hideInstructionBox();
     draw.deleteAll();
     map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
@@ -851,7 +937,6 @@ document
       var all_features = draw.getAll();
       if (all_features.features.length > 0) {
         var polygon = all_features.features[0];
-        highlightBlocks(polygon);
         updateCommunityEntry(event);
         draw.changeMode("direct_select", {
           featureId: polygon.id,
@@ -1002,9 +1087,7 @@ map.on("style.load", function () {
     var styleSpecBox = document.getElementById("json-response");
     var styleSpecText = JSON.stringify(styleSpec, null, 2);
 
-    $(".map-bounding-box.collapse").collapse("show");
-    map.resize();
-
+    showMap();
     // get the state from the geocoder response
     if (styleSpec.context.length >= 2) {
       new_state = styleSpec.context[styleSpec.context.length - 2]["short_code"]
@@ -1019,6 +1102,8 @@ map.on("style.load", function () {
       state = new_state;
       neighbors = new_neighbors;
     }
+    // Save state to session storage
+    sessionStorage.setItem("state_name", state);
   });
 });
 
@@ -1035,6 +1120,11 @@ map.on("render", function (event) {
     var geoJsonFeature = wkt_obj.toJson();
     var featureIds = draw.add(geoJsonFeature);
     updateCommunityEntry(event);
+    map.flyTo({
+      center: geoJsonFeature.coordinates[0][0],
+      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+      zoom: 8,
+    });
   }
 });
 
@@ -1076,6 +1166,13 @@ function cleanAlerts() {
   for (i = 0; i < mapAlertMessages.length; i++) {
     mapAlertMessages[i].remove();
   }
+}
+
+function triggerMissingPolygonError() {
+  triggerDrawError(
+    "polygon_missing",
+    "You must draw a polygon to submit this entry."
+  );
 }
 
 function triggerDrawError(id, stringErrorText) {
@@ -1207,16 +1304,52 @@ function addPoly(poly, polyArray, wkt) {
   return polyArray;
 }
 
+function updateFormFields(user_polygon_wkt, census_blocks_polygon_array) {
+  // Update form fields
+  document.getElementById("id_user_polygon").value = user_polygon_wkt;
+  document.getElementById(
+    "id_census_blocks_polygon_array"
+  ).value = census_blocks_polygon_array;
+  // "census_blocks_polygon" gets saved in the post() function in django
+}
+
 /* Responds to the user's actions and updates the geometry fields and the arrayfield
  in the form. */
-function updateCommunityEntry(e) {
+function updateCommunityEntry(event) {
   cleanAlerts();
   var wkt = new Wkt.Wkt();
+  // get all data from draw
   var data = draw.getAll();
-  var user_polygon_wkt;
-  var census_blocks_polygon_wkt;
-  var drawn_polygon;
-  if (data.features.length > 0) {
+  var data_features = data.features;
+  var user_polygon_wkt = "";
+  var drawn_polygon = "";
+  var census_blocks_polygon_array;
+
+  // Check if the feature has data
+  if (data_features && data_features.length > 0) {
+    var data_geometry = data.features[0].geometry;
+    // .coordinates stores an array in an array. The nested array contains
+    // the points.
+    var coordinates = data_geometry.coordinates[0];
+    var coordinates_length;
+    if (coordinates) {
+      coordinates_length = coordinates.length;
+    } else {
+      coordinates_length = 0;
+    }
+  }
+
+  // Check if the map stores a valid polygon
+  if (data_features.length == 0 || coordinates_length < 3) {
+    // sets an empty filter - unhighlights everything
+    // sets the form fields as empty
+    // TODO: update for all states
+    map.setFilter(
+      sessionStorage.getItem("state_name") + "-blocks-highlighted",
+      ["in", "BLOCKID10"]
+    );
+    triggerMissingPolygonError();
+  } else {
     // Update User Polygon with the GeoJson data.
     drawn_polygon = data.features[0];
     // Validate User Polygon Area
@@ -1233,7 +1366,6 @@ function updateCommunityEntry(e) {
     // Calculate area and convert it from square meters into square miles.
     let area = turf.area(data);
     area = turf.convertArea(area, "meters", "miles");
-
     // coi is not too big
     let halfStateArea = state_areas[state] / 2;
     if (area > halfStateArea) {
@@ -1254,28 +1386,9 @@ function updateCommunityEntry(e) {
       census_blocks_polygon_array = census_blocks_polygon_array.join("|");
     }
     triggerSuccessMessage();
-  } else {
-    // sets an empty filter - unhighlights everything
-    // sets the form fields as empty
-    user_polygon_wkt = "";
-    census_blocks_polygon_wkt = "";
-    census_blocks_multipolygon_wkt = "";
-    // TODO: update for all states
-    // map.setFilter(sessionStorage.getItem("stateName") + "-blocks-highlighted", [
-    // "in",
-    // "BLOCKID10",
-    // ]);
-    triggerDrawError("polygon_missing", "You must draw a polygon to continue.");
+    showMap();
   }
-  // Update form fields
-  census_blocks_polygon_wkt = "";
-  document.getElementById("id_user_polygon").value = user_polygon_wkt;
-  document.getElementById(
-    "id_census_blocks_polygon"
-  ).value = census_blocks_polygon_wkt;
-  document.getElementById(
-    "id_census_blocks_polygon_array"
-  ).value = census_blocks_polygon_array;
+  updateFormFields(user_polygon_wkt, census_blocks_polygon_array);
 }
 /******************************************************************************/
 

@@ -26,7 +26,6 @@ app_name = "main"
 urlpatterns = [
     path("", views.main.Index.as_view(), name="index"),
     path("map/", views.main.Map.as_view(), name="map"),
-    path("thanks/", views.main.Thanks.as_view(), name="thanks"),
     path(
         "entry/",
         views.main.EntryView.as_view(),
@@ -52,9 +51,15 @@ urlpatterns = [
     path("michigan/", views.main.Michigan.as_view(), name="michigan"),
     path("submission/", views.main.Submission.as_view(), name="submission"),
     path(
-        "<slug:slug>/thanks",
-        views.main.ThanksEntryOrg.as_view(),
-        name="thanks_entry_org",
+        "thanks/id/<map_id>",
+        views.main.Thanks.as_view(),
+        {"slug": "", "campaign": ""},
+        name="thanks",
+    ),
+    path(
+        "thanks/c/<slug:slug>/<slug:campaign>/<map_id>",
+        views.main.Thanks.as_view(),
+        name="thanks",
     ),
     path("export/", views.main.ExportView.as_view(), name="export"),
     path("partners/", views.partners.IndexView.as_view(), name="partner_list"),
@@ -69,13 +74,13 @@ urlpatterns = [
         name="partner_page",
     ),
     path(
-        "partners/<slug:slug>/map/",
+        "map/p/<slug:slug>/",
         views.partners.PartnerMap.as_view(),
         {"campaign": ""},
         name="partner_map",
     ),
     path(
-        "partners/<slug:slug>/map/<slug:campaign>/",
+        "map/p/<slug:slug>/<slug:campaign>/",
         views.partners.PartnerMap.as_view(),
         name="partner_map",
     ),

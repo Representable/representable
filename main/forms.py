@@ -73,11 +73,6 @@ class TagSelect2Widget(ModelSelect2TagWidget):
         return cleaned_values
 
 
-class BootstrapRadioSelect(forms.RadioSelect):
-    template_name = "forms/widgets/radio.html"
-    option_template_name = "forms/widgets/radio_option.html"
-
-
 class AddressForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -168,7 +163,9 @@ class CommunityForm(ModelForm):
                 }
             ),
             "user_name": forms.TextInput(attrs={"placeholder": "Full Name"}),
-            "user_phone": PhoneField,
+            # user_phone uses django-phone-field, but doesn't have args for placeholder
+            # use the textInput widget instead
+            "user_phone": forms.TextInput(attrs={"placeholder": "Phone Number"}),
             "user_polygon": forms.HiddenInput(),
         }
         labels = {
@@ -264,29 +261,30 @@ class WhitelistForm(ModelForm):
 class CampaignForm(ModelForm):
     class Meta:
         model = Campaign
-        fields = ["name", "description", "state", "is_active"]
+        fields = ["name", "description", "state"]
         widgets = {
-            "name": forms.TextInput(attrs={"placeholder": "Name of Campaign"}),
+            "name": forms.TextInput(
+                attrs={
+                    "placeholder": "Name of Campaign",
+                    "class": "form-control",
+                }
+            ),
             "description": forms.Textarea(
-                attrs={"placeholder": "Short Description"}
+                attrs={
+                    "placeholder": "Short Description",
+                    "class": "form-control",
+                }
             ),
             "state": forms.Select(
                 choices=STATES, attrs={"class": "form-control"}
             ),
         }
-        labels = {"is_active": "Campaign is accepting submissions"}
 
 
 class MemberForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(MemberForm, self).__init__(*args, **kwargs)
         self.fields["member"].widget.attrs.update({"class": "form-control"})
-        self.fields["is_org_moderator"].widget.attrs.update(
-            {"class": "form-control"}
-        )
-        self.fields["is_org_admin"].widget.attrs.update(
-            {"class": "form-control"}
-        )
 
     class Meta:
         model = Membership
@@ -295,3 +293,7 @@ class MemberForm(ModelForm):
             "is_org_admin",
             "is_org_moderator",
         ]
+        labels = {
+            "is_org_admin": "Administrator",
+            "is_org_moderator": "Moderator",
+        }
