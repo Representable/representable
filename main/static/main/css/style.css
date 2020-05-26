@@ -16,7 +16,7 @@ This means no changing anything like <a>, <li>, <p>, etc.
 */
 
 input:invalid {
-  border: 1px solid red;
+  border-color: red;
 }
 
 /* TOC Checkbox*/

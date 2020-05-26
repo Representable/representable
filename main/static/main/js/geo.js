@@ -1088,7 +1088,13 @@ map.on("render", function (event) {
     wkt_obj = wkt.read(feature);
     var geoJsonFeature = wkt_obj.toJson();
     var featureIds = draw.add(geoJsonFeature);
+    print(geoJsonFeature.coordinates[0]);
     updateCommunityEntry(event);
+    map.flyTo({
+      center: geoJsonFeature.coordinates[0][0],
+      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+      zoom: 8,
+    });
   }
 });
 
