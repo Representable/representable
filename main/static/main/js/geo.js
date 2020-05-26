@@ -308,7 +308,6 @@ function checkFieldById(field_id) {
   var field = document.getElementById(field_id);
   if (field.value == null || field.value == "") {
     field.classList.add("has_error");
-    print(field.id);
     return false;
   }
   field.classList.add("hass_success");
@@ -326,7 +325,6 @@ function formValidation() {
       }
     }
   }
-  print("hello");
 
   var cultural_interests_field = document.getElementById(
     "id_cultural_interests"
@@ -345,7 +343,6 @@ function formValidation() {
     comm_activities_field.value == "" &&
     other_considerations_field.value == ""
   ) {
-    print("test");
     cultural_interests_field.classList.add("has_error");
     economic_intetersts_field.classList.add("has_error");
     comm_activities_field.classList.add("has_error");
@@ -391,6 +388,12 @@ document.addEventListener(
       formValidation();
     });
     state = sessionStorage.getItem("state_code");
+    // If there are alerts, scroll to first one.
+    var document_alerts = document.getElementsByClassName("django-alert");
+    if (document_alerts.length > 0) {
+      let first_alert = document_alerts[0];
+      first_alert.scrollIntoView();
+    }
   },
   false
 );

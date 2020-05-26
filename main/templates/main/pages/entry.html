@@ -106,7 +106,7 @@
                                                 <script>
                                                     sessionStorage.setItem("allChecks", "fail");
                                                 </script>
-                                                <div id="user_name_errors" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
+                                                <div id="user_name_errors" class="alert  django-alert alert-dismissible fade show form-error" role="alert">
                                                     <ul class="m-0">
                                                     {% for error in comm_form.user_name.errors %}
                                                         <li>{{ error|escape }}</li>
@@ -132,7 +132,7 @@
                                             <script>
                                                 sessionStorage.setItem("allChecks", "fail");
                                             </script>
-                                            <div id="phone_invalid" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
+                                            <div id="phone_invalid" class="alert  django-alert alert-dismissible fade show form-error" role="alert">
                                                 {% if LANGUAGE_CODE == 'en' %}
                                                 Please enter a valid US Phone Number.
                                                 {% elif LANGUAGE_CODE == 'es' %}
@@ -159,7 +159,7 @@
                                                 <script>
                                                     sessionStorage.setItem("allChecks", "fail");
                                                 </script>
-                                                <div id="addr_form_errors" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
+                                                <div id="addr_form_errors" class="alert  django-alert alert-dismissible fade show form-error" role="alert">
                                                     <ul class="m-0">
                                                     {% for error in addr_form.errors %}
                                                         <li>{{ error|escape }}</li>
@@ -179,7 +179,7 @@
                                                 <script>
                                                     sessionStorage.setItem("allChecks", "fail");
                                                 </script>
-                                                <div id="street_errors" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
+                                                <div id="street_errors" class="alert  django-alert alert-dismissible fade show form-error" role="alert">
                                                     <ul class="m-0">
                                                     {% for error in addr_form.street.errors %}
                                                         <li>{{ error|escape }}</li>
@@ -201,7 +201,7 @@
                                                 <script>
                                                     sessionStorage.setItem("allChecks", "fail");
                                                 </script>
-                                                <div id="city_errors" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
+                                                <div id="city_errors" class="alert  django-alert alert-dismissible fade show form-error" role="alert">
                                                     <ul class="m-0">
                                                     {% for error in addr_form.city.errors %}
                                                         <li>{{ error|escape }}</li>
@@ -223,7 +223,7 @@
                                                 <script>
                                                     sessionStorage.setItem("allChecks", "fail");
                                                 </script>
-                                                <div id="state_errors" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
+                                                <div id="state_errors" class="alert  django-alert alert-dismissible fade show form-error" role="alert">
                                                     <ul class="m-0">
                                                     {% for error in addr_form.state.errors %}
                                                         <li>{{ error|escape }}</li>
@@ -240,7 +240,7 @@
                                                 <script>
                                                     sessionStorage.setItem("allChecks", "fail");
                                                 </script>
-                                                <div id="zipcode_errors" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
+                                                <div id="zipcode_errors" class="alert  django-alert alert-dismissible fade show form-error" role="alert">
                                                     <ul class="m-0">
                                                     {% for error in addr_form.zipcode.errors %}
                                                         <li>{{ error|escape }}</li>
@@ -278,7 +278,7 @@
                                             <script>
                                                 sessionStorage.setItem("allChecks", "fail");
                                             </script>
-                                            <div id="interests_missing" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
+                                            <div id="interests_missing" class="alert  django-alert alert-dismissible fade show form-error" role="alert">
                                                 {% if LANGUAGE_CODE == 'en' %}
                                                 Please fill out at least one of the interest fields.
                                                 {% elif LANGUAGE_CODE == 'es' %}
@@ -304,7 +304,7 @@
                                                 <script>
                                                     sessionStorage.setItem("allChecks", "fail");
                                                 </script>
-                                                <div id="cultural_interests_errors" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
+                                                <div id="cultural_interests_errors" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
                                                     <ul class="m-0">
                                                     {% for error in comm_form.cultural_interests.errors %}
                                                         <li class="m-0">{{ error|escape }}</li>
@@ -341,7 +341,7 @@
                                                 <script>
                                                     sessionStorage.setItem("allChecks", "fail");
                                                 </script>
-                                                <div id="activities_errors" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
+                                                <div id="activities_errors" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
                                                     <ul>
                                                     {% for error in comm_form.comm_activities.errors %}
                                                         <li>{{ error|escape }}</li>
@@ -378,7 +378,7 @@
                                                 <script>
                                                     sessionStorage.setItem("allChecks", "fail");
                                                 </script>
-                                                <div id="economic_errors" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
+                                                <div id="economic_errors" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
                                                     <ul class="m-0">
                                                     {% for error in comm_form.economic_interests.errors %}
                                                         <li>{{ error|escape }}</li>
@@ -417,7 +417,7 @@
                                                 <script>
                                                     sessionStorage.setItem("allChecks", "fail");
                                                 </script>
-                                                <div id="economic_errors" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
+                                                <div id="economic_errors" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
                                                     <ul class="m-0">
                                                     {% for error in comm_form.other_consideration.errors %}
                                                         <li>{{ error|escape }}</li>
@@ -452,7 +452,7 @@
                                                 <script>
                                                     sessionStorage.setItem("allChecks", "fail");
                                                 </script>
-                                                <div id="entry_reason_errors" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
+                                                <div id="entry_reason_errors" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
                                                     <ul class="m-0">
                                                     {% for error in comm_form.entry_reason.errors %}
                                                         <li>{{ error|escape }}</li>
@@ -476,7 +476,7 @@
                                                 <script>
                                                     sessionStorage.setItem("allChecks", "fail");
                                                 </script>
-                                                <div id="entry_name_errors" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
+                                                <div id="entry_name_errors" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
                                                     <ul class="m-0">
                                                     {% for error in comm_form.entry_name.errors %}
                                                         <li>{{ error|escape }}</li>
@@ -541,7 +541,7 @@
                                                 <script>
                                                     sessionStorage.setItem("allChecks", "fail");
                                                 </script>
-                                                <div id="polygon_missing" class="alert alert-danger alert-dismissible fade show form-error" role="alert">
+                                                <div id="polygon_missing" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
                                                     {% if LANGUAGE_CODE == 'en' %}
                                                     You need to draw a polygon to submit the form.
                                                     {% elif LANGUAGE_CODE == 'es' %}
