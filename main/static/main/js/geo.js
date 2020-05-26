@@ -304,9 +304,32 @@ function hideMap() {
   map.resize();
 }
 
+function checkFieldById(field_id) {
+  var field = document.getElementById(field_id);
+  if (field.value == null || field.value == "") {
+    field.classList.add("has-error");
+    return false;
+  }
+  field.classList.add("has-success");
+  return true;
+}
+
 function formValidation() {
+  // Check Normal Fields
+  var form_elements = document.getElementById("entryForm").elements;
+  for (var i = 0; i < form_elements.length; i++) {
+    if (form_elements[i].required) {
+      if (!checkFieldById(form_elements[i].id)) {
+        print(form_elements[i].id);
+        return false;
+      }
+    }
+  }
+
+  var user_name = document.getElementById("id_user_name");
+  if (user_name.value == null || user_name.value == "") {
+  }
   // Check Poly Fields And Display Errors On Save
-  print("form validation");
   var user_polygon_field = document.getElementById("id_user_polygon");
   if (user_polygon_field.value == null || user_polygon_field.value == "") {
     triggerMissingPolygonError();
