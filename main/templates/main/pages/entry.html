@@ -44,29 +44,14 @@
                 <form id="entryForm" method="post" onSubmit="return validate();">
                     <div class="row row-equal-cols">
                         <div class="col-lg  m-2">
-                            <h2 class="text-primary">
-                                {% if LANGUAGE_CODE == 'en' %}
-                                Add your community!
-                                {% elif LANGUAGE_CODE == 'es' %}
-                                <!-- Google translate  -->
-                                ¡Dibuja tu comunidad!
-                                {% endif %}
-                            </h2>
-                            <p class="p-about">
-                                {% if LANGUAGE_CODE == 'en' %}
-                                Representable helps fight against gerrymandering by empowering communities
-                                to represent themselves more easily. Fill out the form below to
-                                add your community.
-                                {% elif LANGUAGE_CODE == 'es' %}
-                                <!-- Google translate  -->
-                                Representable ayuda a luchar contra la gerrymandering empoderando a las comunidades
-                                representarse más fácilmente. Complete el siguiente formulario para
-                                agrega tu comunidad.
-                                {% endif %}
-                            </p>
-                            <p class="p-about">
-                                This form will help you add your community to Representable so you can
-                                make sure your voice is heard.
+                            <h1 class="font-weight-light">
+                                Add your community
+                            </h1>
+
+                            <p class="">
+                                Fill out the form below to
+                                add your community to Representable.org
+                                and make your voice heard.
                             </p>
                             {% csrf_token %}
                             <!-- {# Include the non-field error fields #} -->
