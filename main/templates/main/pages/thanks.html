@@ -1,7 +1,5 @@
 {% extends 'main/base.html' %}
 {% load static %}
-
-
 {% block content %}
 <div class="container-fluid">
     <div class="row">
@@ -9,28 +7,28 @@
             <div class="card card-signin my-5">
                 <div class="card-body">
                     <h5 class="card-title text-center">
-                        {% if LANGUAGE_CODE == 'en' %}
                             Thank you for your submission!
-                        {% elif LANGUAGE_CODE == 'es' %}
-                              <!-- Google translate  -->
-                              ¡Gracias por tu publicación!
-                        {% endif %}
                     </h5>
-                    <div class="alert alert-primary text-center" role="alert">
-                        {% if LANGUAGE_CODE == 'en' %}
-                          Your map is now available publicly at the URL <a href="/submission?map_id={{ map_url }}">Representable.org/submission?map_id={{ map_url }}</a>! Feel free to tweet and share.
-                          It can also be endorsed by our local partners to be viewable on the <a href="/map">public map page</a>.
-                          <!-- Your map is now pending approval. It will be displayed on our map once it's approved by the Representable team. -->
-                        {% elif LANGUAGE_CODE == 'es' %}
-                          <!-- Google translate  -->
-                          Su mapa ahora está pendiente de aprobación. Se mostrará en nuestro mapa una vez que sea aprobado por el equipo Representable.
-                        {% endif %}
-
-                    </div>
                     <div class="text-center">
-                        <a class="btn btn-primary btn-canvas font-weight-light text-uppercase" href="/map" role="button"><small>Browse Entries</small></a>
-                        <a class="btn btn-primary btn-canvas font-weight-light text-uppercase" href="/entry" role="button"><small>New Entry</small></a>
-                    </div>
+                        <div class="alert alert-primary" role="alert">
+                            <p>By adding your map to Representable.org you're not submitting a map to a redistricting commission. We will add information about submitting to the commission as soon as information becomes available in your state.</p>
+                            <p>In the meantime, you can export your community in GeoJSON format using the link below.</p>
+                        </div>
+                        <ul class="list-group my-3">
+                            <li class="list-group-item justify-content-between align-items-center">
+                                <h5>View/Export Your Community</h5>
+                                <p>Your community map is now live here: <br><a href="/submission?map_id={{ map_url }}">Representable.org/submission?map_id={{ map_url }}</a><br>Feel free to tweet and share.</p>
+                              <a class="btn btn-outline-primary" href="/submission?map_id={{ map_url }}" role="button">View Community</a>
+                            </li>
+                            {% if has_campaign %}
+                            <li class="list-group-item justify-content-between align-items-center">
+                                  <h5>Campaign Map</h5>
+                                  <p>View all communities submitted to this campaign.</p>
+                                  <a class="btn btn-outline-primary" href="{% url 'main:partner_map' view.kwargs.slug view.kwargs.campaign %}"  role="button">View Campaign Map</a>
+                              </li>
+                            {% endif %}
+                          </ul>
+                        </div>
                 </div>
             </div>
         </div>

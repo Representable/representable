@@ -12,6 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'main/fonts/Inter/inter.css' %}">
     <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
@@ -141,7 +142,7 @@
             <!-- TODO: This should not necessarily be in the navbar - on mobile/iPad, it needs to be visible on main page. -->
             <!-- References https://docs.djangoproject.com/en/2.2/topics/i18n/translation/#set-language-redirect-view -->
             <!-- Also https://stackoverflow.com/questions/47874530/django-language-selection-from-dropdown-links-and-images -->
-            <ul class="nav navbar-nav navbar-right language menu">
+            <!-- <ul class="nav navbar-nav navbar-right language menu">
                 <form action="{% url 'set_language' %}" method="post">
                     {% csrf_token %}
                     <input name="next" type="hidden" value="{{ redirect_to }}" />
@@ -153,14 +154,13 @@
                         {% endfor %}
                     </select>
                 </form>
-            </ul>
+            </ul> -->
         </div>
     </nav>
 
     {% block content %}
     {% endblock %}
     <!-- Optional JavaScript -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
@@ -178,15 +178,10 @@
             <div class="col-6 col-md">
                 <!-- <h5>Community Map</h5> -->
                 <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="/entry">
-                            {% if LANGUAGE_CODE == 'en' %}
-                            Contribute
-                            {% elif LANGUAGE_CODE == 'es' %}
-                            <!-- Google translate  -->
-                            Contribuir
-                            {% endif %}
+                    <li><a class="text-muted" href="{% url 'main:entry' %}">
+                            Draw Your Community
                         </a></li>
-                    <li><a class="text-muted" href="/map">
+                    <li><a class="text-muted" href="{% url 'main:map' %}">
                             {% if LANGUAGE_CODE == 'en' %}
                             View All Maps
                             {% elif LANGUAGE_CODE == 'es' %}
@@ -195,19 +190,7 @@
                             {% endif %}
                         </a></li>
                     {% if user.is_authenticated %}
-                    {% if user.is_staff %}
-                    <li><a class="text-muted" href="/review">
-                    <li><a class="text-muted" href="/map">
-                            {% if LANGUAGE_CODE == 'en' %}
-                            Approve and View Entries
-                            {% elif LANGUAGE_CODE == 'es' %}
-                            <!-- Google translate  -->
-                            Aprobar Y Ver Entradas
-                            {% endif %}
-                        </a></li>
-                    </a></li>
-                    {% else %}
-                    <li><a class="text-muted" href="/review">
+                    <li><a class="text-muted" href="{% url 'main:review' %}">
                             {% if LANGUAGE_CODE == 'en' %}
                             My Entries
                             {% elif LANGUAGE_CODE == 'es' %}
@@ -216,15 +199,13 @@
                             {% endif %}
                         </a></li>
                     {% endif %}
-                    {% endif %}
                 </ul>
             </div>
 
             <div class="col-6 col-md">
                 <!-- <h5>About</h5> -->
                 <ul class="list-unstyled text-small">
-                    <!-- <li><a class="text-muted" href="/about">About Us</a></li> -->
-                    <li><a class="text-muted" href="#">
+                    <li><a class="text-muted" href="{% url 'main:privacy' %}">
                             {% if LANGUAGE_CODE == 'en' %}
                             Privacy
                             {% elif LANGUAGE_CODE == 'es' %}
@@ -232,7 +213,7 @@
                             Intimidad
                             {% endif %}
                         </a></li>
-                    <li><a class="text-muted" href="#">
+                    <li><a class="text-muted" href="{% url 'main:terms' %}">
                             {% if LANGUAGE_CODE == 'en' %}
                             Terms
                             {% elif LANGUAGE_CODE == 'es' %}

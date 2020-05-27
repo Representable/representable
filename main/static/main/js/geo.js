@@ -129,57 +129,57 @@ var states = [
 ];
 
 var state_areas = {
-  "ak" : 665384,
-  "al" : 52420,
-  "ar" : 53178,
-  "az" : 113990,
-  "ca" : 163694,
-  "co" : 104093,
-  "ct" : 5543,
-  "dc" : 68,
-  "de" : 2488,
-  "fl" : 65757,
-  "ga" : 59425,
-  "hi" : 10931,
-  "ia" : 56272,
-  "id" : 83568,
-  "il" : 57913,
-  "in" : 36419,
-  "ks" : 82278,
-  "ky" : 40407,
-  "la" : 52378,
-  "ma" : 10554,
-  "md" : 12405,
-  "me" : 35379,
-  "mi" : 96713,
-  "mn" : 86935,
-  "mo" : 69706,
-  "ms" : 48431,
-  "mt" : 147039,
-  "nc" : 53819,
-  "nd" : 70698,
-  "nh" : 9349,
-  "nj" : 8722,
-  "nm" : 121590,
-  "nv" : 110571,
-  "ny" : 54554,
-  "oh" : 44825,
-  "ok" : 69898,
-  "or" : 98378,
-  "pa" : 46054,
-  "ri" : 1544,
-  "sc" : 32020,
-  "sd" : 77115,
-  "tn" : 42144,
-  "tx" : 268596,
-  "ut" : 84896,
-  "va" : 42774,
-  "vt" : 9616,
-  "wa" : 71297,
-  "wi" : 65496,
-  "wv" : 24230,
-  "wy" : 97813,
-}
+  ak: 665384,
+  al: 52420,
+  ar: 53178,
+  az: 113990,
+  ca: 163694,
+  co: 104093,
+  ct: 5543,
+  dc: 68,
+  de: 2488,
+  fl: 65757,
+  ga: 59425,
+  hi: 10931,
+  ia: 56272,
+  id: 83568,
+  il: 57913,
+  in: 36419,
+  ks: 82278,
+  ky: 40407,
+  la: 52378,
+  ma: 10554,
+  md: 12405,
+  me: 35379,
+  mi: 96713,
+  mn: 86935,
+  mo: 69706,
+  ms: 48431,
+  mt: 147039,
+  nc: 53819,
+  nd: 70698,
+  nh: 9349,
+  nj: 8722,
+  nm: 121590,
+  nv: 110571,
+  ny: 54554,
+  oh: 44825,
+  ok: 69898,
+  or: 98378,
+  pa: 46054,
+  ri: 1544,
+  sc: 32020,
+  sd: 77115,
+  tn: 42144,
+  tx: 268596,
+  ut: 84896,
+  va: 42774,
+  vt: 9616,
+  wa: 71297,
+  wi: 65496,
+  wv: 24230,
+  wy: 97813,
+};
 
 // dictionary with state neighbors without nebraska since there is
 // no census block data for nebraska
@@ -236,6 +236,30 @@ var state_neighbors = {
   wy: ["co", "id", "mt", "sd", "ut"],
 };
 
+// Helper print function
+function print(items) {
+  console.log(items);
+}
+
+// change "Show Examples" to "Hide Examples" on click
+function changeText(element) {
+  if (element.innerText == "Show Examples") {
+    element.innerText = "Hide Examples";
+  } else {
+    element.innerText = "Show Examples";
+  }
+}
+
+function showVideoPopup() {
+  $("#video_popup").removeClass("d-none");
+}
+
+function closePopup() {
+  $("#video_popup").addClass("d-none");
+}
+
+/******************************************************************************/
+
 var wkt_obj;
 // Formset field object saves a deep copy of the original formset field object.
 // (If user deletes all fields, he can add one more according to this one).
@@ -269,6 +293,88 @@ function parseReverseGeo(geoData) {
 }
 
 /******************************************************************************/
+
+function showMap() {
+  $(".map-bounding-box.collapse").collapse("show");
+  map.resize();
+}
+
+function hideMap() {
+  $(".map-bounding-box.collapse").collapse("hide");
+  map.resize();
+}
+
+function checkFieldById(field_id) {
+  var field = document.getElementById(field_id);
+  if (field.value == null || field.value == "") {
+    field.classList.add("has_error");
+    return false;
+  }
+  field.classList.add("hass_success");
+  return true;
+}
+
+function formValidation() {
+  // Check Normal Fields
+  var flag = true;
+  var form_elements = document.getElementById("entryForm").elements;
+  for (var i = 0; i < form_elements.length; i++) {
+    if (form_elements[i].required) {
+      if (!checkFieldById(form_elements[i].id)) {
+        flag = false;
+      }
+    }
+  }
+
+  var cultural_interests_field = document.getElementById(
+    "id_cultural_interests"
+  );
+  var economic_intetersts_field = document.getElementById(
+    "id_economic_interests"
+  );
+  var comm_activities_field = document.getElementById("id_comm_activities");
+  var other_considerations_field = document.getElementById(
+    "id_other_considerations"
+  );
+
+  if (
+    cultural_interests_field.value == "" &&
+    economic_intetersts_field.value == "" &&
+    comm_activities_field.value == "" &&
+    other_considerations_field.value == ""
+  ) {
+    cultural_interests_field.classList.add("has_error");
+    economic_intetersts_field.classList.add("has_error");
+    comm_activities_field.classList.add("has_error");
+    other_considerations_field.classList.add("has_error");
+    var interets_alert = document.getElementById("need_one_interest");
+    interets_alert.classList.remove("d-none");
+  }
+
+  // Check Poly Fields And Display Errors On Save
+  var user_polygon_field = document.getElementById("id_user_polygon");
+  if (user_polygon_field.value == null || user_polygon_field.value == "") {
+    triggerMissingPolygonError();
+    flag = false;
+  }
+  var census_blocks_arr_field = document.getElementById(
+    "id_census_blocks_polygon_array"
+  );
+  if (
+    census_blocks_arr_field.value == null ||
+    census_blocks_arr_field.value == ""
+  ) {
+    triggerMissingPolygonError();
+    flag = false;
+  }
+  var census_blocks_poly = document.getElementById("id_census_blocks_polygon");
+  if (flag == false) {
+    // Add alert.
+    document.getElementById("form_error").classList.remove("d-none");
+  }
+  return flag;
+}
+
 // Make buttons show the right skin.
 document.addEventListener(
   "DOMContentLoaded",
@@ -281,6 +387,18 @@ document.addEventListener(
       .removeClass("add-form-row")
       .addClass("remove-form-row")
       .html('<span class="" aria-hidden="true">Remove</span>');
+    var entry_form_button = document.getElementById("save");
+    entry_form_button.addEventListener("click", function (event) {
+      formValidation();
+    });
+    state = sessionStorage.getItem("state_name");
+    // If there are alerts, scroll to first one.
+    var document_alerts = document.getElementsByClassName("django-alert");
+    if (document_alerts.length > 0) {
+      let first_alert = document_alerts[0];
+      first_alert.scrollIntoView();
+      document.getElementById("form_error").classList.remove("d-none");
+    }
   },
   false
 );
@@ -294,6 +412,7 @@ var map = new mapboxgl.Map({
   style: "mapbox://styles/mapbox/streets-v11", //hosted style id
   center: [-96.7026, 40.8136], // starting position - Lincoln, NE :)
   zoom: 3, // starting zoom -- higher is closer
+  maxZoom: 17, // camelCase. There's no official documentation for this smh :/
 });
 
 var layerList = document.getElementById("menu");
@@ -311,7 +430,6 @@ for (let i = 0; i < inputs.length; i++) {
 var geocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
   country: "us",
-  zoom: 10,
   mapboxgl: mapboxgl,
 });
 
@@ -398,7 +516,7 @@ var draw = new MapboxDraw({
         "line-join": "round",
       },
       paint: {
-        "line-color": "#60a3bc",
+        "line-color": "#2A94F4",
         "line-width": 2,
       },
     },
@@ -411,7 +529,7 @@ var draw = new MapboxDraw({
         "line-join": "round",
       },
       paint: {
-        "line-color": "#60a3bc",
+        "line-color": "#2A94F4",
         "line-dasharray": [0.2, 2],
         "line-width": 2,
       },
@@ -427,7 +545,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 10,
-        "circle-color": "#3c6382",
+        "circle-color": "#2A94F4",
       },
     },
     {
@@ -441,7 +559,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 4,
-        "circle-color": "#3c6382",
+        "circle-color": "#2A94F4",
       },
     },
     {
@@ -472,7 +590,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 3,
-        "circle-color": "#3c6382",
+        "circle-color": "#2A94F4",
       },
     },
     {
@@ -500,7 +618,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 5,
-        "circle-color": "#3c6382",
+        "circle-color": "#2A94F4",
       },
     },
     {
@@ -509,7 +627,7 @@ var draw = new MapboxDraw({
       filter: ["all", ["==", "$type", "Point"], ["==", "meta", "midpoint"]],
       paint: {
         "circle-radius": 5,
-        "circle-color": "#3c6382",
+        "circle-color": "#e74c3c",
       },
     },
   ],
@@ -523,18 +641,227 @@ map.addControl(draw);
 drawControls = document.querySelector(".draw_polygon_map .mapboxgl-ctrl-group");
 drawControls.classList.add("draw-group");
 
+/* Change mapbox draw button */
+var drawButton = document.querySelector(".mapbox-gl-draw_polygon");
+drawButton.backgroundImg = "";
+drawButton.id = "draw-button-id";
+drawButton.innerHTML = "<i class='fas fa-draw-polygon'></i> Draw Polygon";
+var delete_feature_button = document.querySelector(".mapbox-gl-draw_trash");
+delete_feature_button.backgroundImg = "";
+delete_feature_button.id = "delete-feature-button-id";
+delete_feature_button.style.display = "none";
+delete_feature_button.innerHTML =
+  "<i class='fas fa-minus-square'></i> Delete Vertex";
+
+class ClearMapButton {
+  onAdd(map) {
+    var clear_map_button = document.createElement("button");
+    clear_map_button.href = "#";
+    clear_map_button.type = "button";
+    clear_map_button.backgroundImg = "";
+
+    clear_map_button.classList.add("active");
+    clear_map_button.classList.add("map-clear-button");
+    clear_map_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
+    clear_map_button.id = "map-clear-button-id";
+    clear_map_button.style.display = "none";
+    clear_map_button.innerHTML =
+      "<i class='fas fa-trash-alt'></i> Clear Polygon";
+    this._map = map;
+    this._container = document.createElement("div");
+    this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
+    clear_map_button.addEventListener("click", function (event) {
+      draw.trash();
+      hideInstructionBox();
+      updateCommunityEntry(event);
+    });
+    this._container.appendChild(clear_map_button);
+    return this._container;
+  }
+
+  onRemove() {
+    this._container.parentNode.removeChild(this._container);
+    this._map = undefined;
+  }
+}
+map.addControl(new ClearMapButton(), "top-right");
+var map_clear_map_button = document.getElementById("map-clear-button-id");
+drawControls.appendChild(map_clear_map_button);
+// add button for toggling edit mode.
+class MapEditButton {
+  onAdd(map) {
+    var map_edit_button = document.createElement("button");
+    map_edit_button.href = "#";
+    map_edit_button.type = "button";
+    map_edit_button.backgroundImg = "";
+
+    map_edit_button.classList.add("active");
+    map_edit_button.classList.add("map-edit-button");
+    map_edit_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
+    map_edit_button.id = "map-edit-button-id";
+    map_edit_button.style.display = "none";
+    map_edit_button.innerHTML = "<i class='fas fa-edit'></i> Edit Polygon";
+    this._map = map;
+    this._container = document.createElement("div");
+    this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
+    map_edit_button.addEventListener("click", function (e) {
+      toggleInstructionBox();
+      var all_features = draw.getAll();
+      if (all_features.features.length > 0) {
+        draw.changeMode("direct_select", {
+          featureId: all_features.features[0].id,
+        });
+      }
+    });
+    this._container.appendChild(map_edit_button);
+    return this._container;
+  }
+
+  onRemove() {
+    this._container.parentNode.removeChild(this._container);
+    this._map = undefined;
+  }
+}
+map.addControl(new MapEditButton(), "top-right");
+var map_edit_button = document.getElementById("map-edit-button-id");
+drawControls.appendChild(map_edit_button);
+
+class FinishDrawButton {
+  onAdd(map) {
+    var finish_draw_button = document.createElement("button");
+    finish_draw_button.href = "#";
+    finish_draw_button.type = "button";
+    finish_draw_button.backgroundImg = "";
+
+    finish_draw_button.classList.add("active");
+    finish_draw_button.classList.add("map-finish-drawing-button");
+    finish_draw_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
+    finish_draw_button.id = "map-finish-drawing-button-id";
+    finish_draw_button.style.display = "none";
+    finish_draw_button.innerHTML =
+      "<i class='fas fa-check'></i> Finish Drawing";
+    this._map = map;
+    this._container = document.createElement("div");
+    this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
+    finish_draw_button.addEventListener("click", function (event) {
+      hideInstructionBox();
+      var all_features = draw.getAll();
+      if (all_features.features.length > 0) {
+        draw.changeMode("simple_select", {
+          featureId: all_features.features[0].id,
+        });
+        updateCommunityEntry(event);
+      }
+    });
+    this._container.appendChild(finish_draw_button);
+    return this._container;
+  }
+
+  onRemove() {
+    this._container.parentNode.removeChild(this._container);
+    this._map = undefined;
+  }
+}
+map.addControl(new FinishDrawButton(), "top-right");
+var map_finish_drawing_button = document.getElementById(
+  "map-finish-drawing-button-id"
+);
+drawControls.appendChild(map_finish_drawing_button);
+// Add trash button last and hide it.
+var oldChild = drawControls.removeChild(delete_feature_button);
+drawControls.appendChild(delete_feature_button);
+delete_feature_button.style.display = "none";
+
+function showMapEditButtons() {
+  var map_edit_button = document.getElementById("map-edit-button-id");
+  map_edit_button.style.display = "block";
+  var map_clear_map_button = document.getElementById("map-clear-button-id");
+  map_clear_map_button.style.display = "block";
+  var finish_draw_button = document.getElementById(
+    "map-finish-drawing-button-id"
+  );
+  finish_draw_button.style.display = "block";
+}
+
+function hideMapEditButtons() {
+  var map_edit_button = document.getElementById("map-edit-button-id");
+  map_edit_button.style.display = "none";
+  var map_clear_map_button = document.getElementById("map-clear-button-id");
+  map_clear_map_button.style.display = "none";
+  var finish_draw_button = document.getElementById(
+    "map-finish-drawing-button-id"
+  );
+  finish_draw_button.style.display = "none";
+  var map_delete_vertex_button = document.getElementById(
+    "delete-feature-button-id"
+  );
+  if (map_delete_vertex_button != null) {
+    map_delete_vertex_button.style.display = "none";
+  }
+}
+
+function toggleInstructionBox() {
+  // Show instruction box on map for edit mode.
+  var instruction_box = document.getElementById("instruction-box-id");
+  if (instruction_box.style.display == "block") {
+    hideInstructionBox();
+  } else {
+    showInstructionBox();
+  }
+}
+
+function showInstructionBox() {
+  var instruction_box = document.getElementById("instruction-box-id");
+  instruction_box.style.display = "block";
+  if (draw != null) {
+    var all_features = draw.getAll();
+    if (all_features.features.length > 0) {
+      draw.changeMode("direct_select", {
+        featureId: all_features.features[0].id,
+      });
+    }
+  }
+}
+
+function hideInstructionBox() {
+  var instruction_box = document.getElementById("instruction-box-id");
+  instruction_box.style.display = "none";
+  if (draw != null) {
+    var all_features = draw.getAll();
+    // draw.changeMode("simple_select");
+    if (all_features.features.length > 0) {
+      draw.changeMode("simple_select", {
+        featureIds: [all_features.features[0].id],
+      });
+    }
+    // draw.changeMode("simple_select", {
+    // featureIds: [all_features.features[0].id]
+    // });
+  }
+}
+
+function showDeleteFeatureButton() {
+  var map_delete_feature_button = document.getElementById(
+    "delete-feature-button-id"
+  );
+  if (map_delete_feature_button != null) {
+    map_delete_feature_button.style.display = "block";
+  }
+}
+
+function hideDeleteFeatureButton() {
+  var map_delete_feature_button = document.getElementById(
+    "delete-feature-button-id"
+  );
+  if (map_delete_feature_button != null) {
+    map_delete_feature_button.style.display = "none";
+  }
+}
+
 // Add nav control buttons.
 map.addControl(new mapboxgl.NavigationControl());
 
-/* Change mapbox draw button */
-var drawButton = document.getElementsByClassName("mapbox-gl-draw_polygon");
-drawButton[0].backgroundImg = "";
-drawButton[0].id = "draw-button";
-drawButton[0].innerHTML = "<i class='fas fa-draw-polygon'></i> Draw Polygon";
-var trashButton = document.getElementsByClassName("mapbox-gl-draw_trash");
-trashButton[0].backgroundImg = "";
-trashButton[0].id = "trash-button";
-trashButton[0].innerHTML = "<i class='fas fa-trash-alt'></i> Undo Polygon";
+var user_polygon_id = undefined;
 
 // add button for toggling census Blocks
 class CensusBlocksControl {
@@ -579,20 +906,61 @@ class CensusBlocksControl {
 }
 map.addControl(new CensusBlocksControl(), "top-left");
 
-// Override Behavior for Draw-Button
-document.getElementById("draw-button").addEventListener("click", function (e) {
-  cleanAlerts();
-  draw.deleteAll();
-  map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
-  draw.changeMode("draw_polygon");
-});
+// override behavior for clear map button
+document
+  .getElementById("map-clear-button-id")
+  .addEventListener("click", function (e) {
+    hideInstructionBox();
+    draw.deleteAll();
+    map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
+    draw.changeMode("simple_select");
+    hideMapEditButtons();
+  });
 
-document.getElementById("trash-button").addEventListener("click", function (e) {
-  cleanAlerts();
-  draw.deleteAll();
-  map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
-  draw.changeMode("simple_select");
-});
+// Override Behavior for Draw-Button
+document
+  .getElementById("draw-button-id")
+  .addEventListener("click", function (event) {
+    hideInstructionBox();
+    draw.deleteAll();
+    map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
+    draw.changeMode("draw_polygon");
+    showMapEditButtons();
+  });
+
+// override behavior for delete button
+document
+  .getElementById("delete-feature-button-id")
+  .addEventListener("click", function (event) {
+    map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
+    if (draw != null) {
+      var all_features = draw.getAll();
+      if (all_features.features.length > 0) {
+        var polygon = all_features.features[0];
+        updateCommunityEntry(event);
+        draw.changeMode("direct_select", {
+          featureId: polygon.id,
+        });
+      } else {
+        draw.changeMode("simple_select");
+      }
+    }
+  });
+
+function toggleMapButtons(state) {
+  var mapContent = document.getElementById("map");
+  var mapButtons = mapContent.getElementsByTagName("button");
+  for (var i = 0; i < mapButtons.length; i++) {
+    if (state.localeCompare("off") == 0) {
+      mapButtons[i].disabled = true;
+    } else if (state.localeCompare("on") == 0) {
+      mapButtons[i].disabled = false;
+    }
+  }
+}
+
+// Disable map buttons
+// toggleMapButtons("off");
 
 // add a new source layer
 function newSourceLayer(name, mbCode) {
@@ -669,6 +1037,191 @@ function addStateNeighborLayers(new_neighbors, new_state) {
 
 /******************************************************************************/
 
+// initialize shepherd.js tour
+let myTour = new Shepherd.Tour({
+  defaultStepOptions: {
+    cancelIcon: {
+      enabled: true
+    },
+    classes: 'class-1 class-2',
+    scrollTo: { behavior: 'smooth', block: 'center' }
+  }  
+  });
+
+
+myTour.addStep({
+  title: 'Community of Interest Drawing Tutorial',
+  text: 'Now that you are ready to draw out your community of interest, follow the steps to learn about the mapping tool!',
+  buttons: [
+    {
+      action() {
+        return this.complete();
+      },
+      classes: 'shepherd-button-secondary',
+      text: 'Exit'
+    },
+    {
+      action() {
+        return this.next();
+      },
+      text: 'Next'
+    }
+  ]
+});
+
+
+myTour.addStep({
+  title: 'Map Controls',
+  text: 'Use these controls to orient yourself before drawing out your community of interest. You can \
+  zoom in, zoom out and/or reset the map bearing to north using these side buttons.',
+  attachTo: {
+    element: '.mapboxgl-ctrl-zoom-out',
+    on: 'left'
+  },
+  buttons: [
+    {
+      action() {
+        return this.back();
+      },
+      classes: 'shepherd-button-secondary',
+      text: 'Back'
+    },
+    {
+      action() {
+        return this.next();
+      },
+      text: 'Next'
+    }
+  ]
+});
+
+myTour.addStep({
+  title: 'Show/Hide Census Blocks',
+  text: 'Census blocks are the building blocks when it comes to creating districing maps. Click on this button \
+  to show/hide census blocks on the map.',
+  attachTo: {
+    element: '.active',
+    on: 'bottom'
+  },
+  buttons: [
+    {
+      action() {
+        return this.back();
+      },
+      classes: 'shepherd-button-secondary',
+      text: 'Back'
+    },
+    {
+      action() {
+        return this.next();
+      },
+      text: 'Next'
+    }
+  ]
+});
+
+myTour.addStep({
+  title: 'Draw your community of interest',
+  text: 'Begin drawing the polygon that represents your community of interest by clicking on this button.',
+  attachTo: {
+    element: '#draw-button-id',
+    on: 'bottom'
+  },
+  buttons: [
+    {
+      action() {
+        return this.back();
+      },
+      classes: 'shepherd-button-secondary',
+      text: 'Back'
+    },
+    {
+      action() {
+        // show the other control buttons for the tutorial
+        document.getElementById("draw-button-id").click();
+        return this.next();
+      },
+      text: 'Next'
+    }
+  ],
+});
+  
+myTour.addStep({
+  title: 'Delete Polygon',
+  text: 'Delete the polygon you have drawn or restart the drawing process by clicking this button.',
+  attachTo: {
+    element: '#map-clear-button-id',
+    on: 'bottom'
+  },
+  buttons: [
+    {
+      action() {
+        return this.back();
+      },
+      classes: 'shepherd-button-secondary',
+      text: 'Back'
+    },
+    {
+      action() {
+        return this.next();
+      },
+      text: 'Next'
+    }
+  ]
+});
+
+myTour.addStep({
+  title: 'Edit Polygon',
+  text: 'Add vertices to your polygon for those fine adjustments by clicking this button and then \
+  dragging the vertices to tweak your polygon to your liking.',
+  attachTo: {
+    element: '#map-edit-button-id',
+    on: 'bottom'
+  },
+  buttons: [
+    {
+      action() {
+        return this.back();
+      },
+      classes: 'shepherd-button-secondary',
+      text: 'Back'
+    },
+    {
+      action() {
+        return this.next();
+      },
+      text: 'Next'
+    }
+  ]
+});
+
+myTour.addStep({
+  title: 'Finish Drawing',
+  text: `Once you are done fine-tuning your polygon to reflect the geographical boundaries of 
+  your community of interest click here and move on to the last part of the form!`,
+  attachTo: {
+    element: '#map-finish-drawing-button-id',
+    on: 'bottom'
+  },
+  buttons: [
+    {
+      action() {
+        return this.back();
+      },
+      classes: 'shepherd-button-secondary',
+      text: 'Back'
+    },
+    {
+      action() {
+        return this.complete();
+      },
+      text: 'Done'
+    }
+  ]
+});
+
+/******************************************************************************/
+
 /* After the map style has loaded on the page, add a source layer and default
    styling for a single point. */
 map.on("style.load", function () {
@@ -678,6 +1231,15 @@ map.on("style.load", function () {
       type: "FeatureCollection",
       features: [],
     },
+  });
+  // Whenever a card section button is clicked, resize the map.
+  // This ensures that the map is always shown.
+  $(".card-section-button").on("click", function () {
+    map.resize();
+  });
+
+  $("#save").on("click", function () {
+    map.resize();
   });
 
   // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
@@ -705,23 +1267,13 @@ map.on("style.load", function () {
   // Listen for the `geocoder.input` event that is triggered when a user
   // makes a selection and add a symbol that matches the result.
   geocoder.on("result", function (ev) {
+    $("#shepherd-btn").removeClass("d-none");
     map.getSource("single-point").setData(ev.result.geometry);
     var styleSpec = ev.result;
     var styleSpecBox = document.getElementById("json-response");
     var styleSpecText = JSON.stringify(styleSpec, null, 2);
-    var divs = document.getElementsByClassName("blurtop");
-    for (let i = 0; i < divs.length; i++) {
-      divs[i].setAttribute(
-        "style",
-        "-webkit-filter: blur(0px); pointer-events: auto"
-      );
-    }
-    // Enable Map buttons
-    var mapContent = document.getElementById("map");
-    var mapButtons = mapContent.getElementsByTagName("button");
-    for (var i = 0; i < mapButtons.length; i++) {
-      mapButtons[i].disabled = false;
-    }
+
+    showMap();
     // get the state from the geocoder response
     if (styleSpec.context.length >= 2) {
       new_state = styleSpec.context[styleSpec.context.length - 2]["short_code"]
@@ -736,11 +1288,13 @@ map.on("style.load", function () {
       state = new_state;
       neighbors = new_neighbors;
     }
+    // Save state to session storage
+    sessionStorage.setItem("state_name", state);
   });
 });
 
 var wasLoaded = false;
-map.on("render", function () {
+map.on("render", function (event) {
   if (!map.loaded() || wasLoaded) return;
   wasLoaded = true;
   if (document.getElementById("id_user_polygon").value !== "") {
@@ -751,22 +1305,43 @@ map.on("render", function () {
     wkt_obj = wkt.read(feature);
     var geoJsonFeature = wkt_obj.toJson();
     var featureIds = draw.add(geoJsonFeature);
-    updateCommunityEntry();
+    updateCommunityEntry(event);
+    map.flyTo({
+      center: geoJsonFeature.coordinates[0][0],
+      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+      zoom: 8,
+    });
   }
 });
 
 /******************************************************************************/
 
-map.on("draw.create", function () {
-  updateCommunityEntry();
+map.on("draw.create", function (event) {
+  updateCommunityEntry(event);
 });
-map.on("draw.delete", function () {
-  updateCommunityEntry();
+map.on("draw.delete", function (event) {
+  updateCommunityEntry(event);
 });
-map.on("draw.update", function () {
-  updateCommunityEntry();
+map.on("draw.update", function (event) {
+  updateCommunityEntry(event);
 });
-map.on("draw.changeMode", function () {});
+map.on("draw.changeMode", function (event) {
+  updateCommunityEntry(event);
+});
+map.on("draw.selectionchange", function (event) {
+  // The event object contains the featues that were selected.
+  var selected_objects = event;
+  var selected_points = selected_objects.points;
+  var selected_features = selected_objects.features;
+  if (selected_points.length > 0) {
+    // The user selected a point. Show delete vertex.
+    showDeleteFeatureButton();
+    showInstructionBox();
+  } else {
+    hideDeleteFeatureButton();
+  }
+  updateCommunityEntry(event);
+});
 
 /******************************************************************************/
 
@@ -777,6 +1352,13 @@ function cleanAlerts() {
   for (i = 0; i < mapAlertMessages.length; i++) {
     mapAlertMessages[i].remove();
   }
+}
+
+function triggerMissingPolygonError() {
+  triggerDrawError(
+    "polygon_missing",
+    "You must draw a polygon to submit this entry."
+  );
 }
 
 function triggerDrawError(id, stringErrorText) {
@@ -797,7 +1379,7 @@ function triggerDrawError(id, stringErrorText) {
   newAlert.innerHTML =
     '<div id="' +
     id +
-    '" class="alert alert-warning alert-dismissible fade show map-alert" role="alert">\
+    '" class="alert alert-danger alert-dismissible fade show map-alert" role="alert">\
                               ' +
     stringErrorText +
     '\
@@ -908,15 +1490,52 @@ function addPoly(poly, polyArray, wkt) {
   return polyArray;
 }
 
+function updateFormFields(user_polygon_wkt, census_blocks_polygon_array) {
+  // Update form fields
+  document.getElementById("id_user_polygon").value = user_polygon_wkt;
+  document.getElementById(
+    "id_census_blocks_polygon_array"
+  ).value = census_blocks_polygon_array;
+  // "census_blocks_polygon" gets saved in the post() function in django
+}
+
 /* Responds to the user's actions and updates the geometry fields and the arrayfield
  in the form. */
-function updateCommunityEntry(e) {
+function updateCommunityEntry(event) {
+  cleanAlerts();
   var wkt = new Wkt.Wkt();
+  // get all data from draw
   var data = draw.getAll();
-  var user_polygon_wkt;
-  var census_blocks_polygon_wkt;
-  var drawn_polygon;
-  if (data.features.length > 0) {
+  var data_features = data.features;
+  var user_polygon_wkt = "";
+  var drawn_polygon = "";
+  var census_blocks_polygon_array;
+
+  // Check if the feature has data
+  if (data_features && data_features.length > 0) {
+    var data_geometry = data.features[0].geometry;
+    // .coordinates stores an array in an array. The nested array contains
+    // the points.
+    var coordinates = data_geometry.coordinates[0];
+    var coordinates_length;
+    if (coordinates) {
+      coordinates_length = coordinates.length;
+    } else {
+      coordinates_length = 0;
+    }
+  }
+
+  // Check if the map stores a valid polygon
+  if (data_features.length == 0 || coordinates_length < 3) {
+    // sets an empty filter - unhighlights everything
+    // sets the form fields as empty
+    // TODO: update for all states
+    map.setFilter(
+      sessionStorage.getItem("state_name") + "-blocks-highlighted",
+      ["in", "BLOCKID10"]
+    );
+    triggerMissingPolygonError();
+  } else {
     // Update User Polygon with the GeoJson data.
     drawn_polygon = data.features[0];
     // Validate User Polygon Area
@@ -933,9 +1552,8 @@ function updateCommunityEntry(e) {
     // Calculate area and convert it from square meters into square miles.
     let area = turf.area(data);
     area = turf.convertArea(area, "meters", "miles");
-
     // coi is not too big
-    let halfStateArea = state_areas[state]/2;
+    let halfStateArea = state_areas[state] / 2;
     if (area > halfStateArea) {
       triggerDrawError(
         "map-area-size-error",
@@ -953,28 +1571,10 @@ function updateCommunityEntry(e) {
     if (census_blocks_polygon_array != undefined) {
       census_blocks_polygon_array = census_blocks_polygon_array.join("|");
     }
-  } else {
-    // sets an empty filter - unhighlights everything
-    // sets the form fields as empty
-    user_polygon_wkt = "";
-    census_blocks_polygon_wkt = "";
-    census_blocks_multipolygon_wkt = "";
-    // TODO: update for all states
-    map.setFilter(sessionStorage.getItem("stateName") + "-blocks-highlighted", [
-      "in",
-      "BLOCKID10",
-    ]);
+    triggerSuccessMessage();
+    showMap();
   }
-  // Update form fields
-  census_blocks_polygon_wkt = "";
-  document.getElementById("id_user_polygon").value = user_polygon_wkt;
-  document.getElementById(
-    "id_census_blocks_polygon"
-  ).value = census_blocks_polygon_wkt;
-  document.getElementById(
-    "id_census_blocks_polygon_array"
-  ).value = census_blocks_polygon_array;
-  triggerSuccessMessage();
+  updateFormFields(user_polygon_wkt, census_blocks_polygon_array);
 }
 /******************************************************************************/
 

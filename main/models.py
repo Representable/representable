@@ -21,6 +21,9 @@ from django.contrib.postgres.fields import ArrayField
 from django.template.defaultfilters import slugify
 from django.urls import reverse, reverse_lazy
 
+# Phone number field
+from phone_field import PhoneField
+
 # Geo App
 import uuid
 from django.conf import settings
@@ -28,10 +31,8 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import Group
 from django.db import migrations
 from django.contrib.gis.db import models
-from .choices import (
-    STATES,
-)
-from .utils import generate_unique_slug
+from .choices import STATES
+from .utils import generate_unique_slug, generate_unique_token
 
 # ******************************************************************************#
 
@@ -94,7 +95,7 @@ class Organization(models.Model):
     """
 
     name = models.CharField(max_length=128)
-    description = models.CharField(max_length=250, blank=True)
+    description = models.CharField(max_length=500, blank=True)
     ext_link = models.URLField(max_length=200, blank=True)
     states = ArrayField(
         models.CharField(max_length=50, choices=STATES, blank=True),
@@ -169,6 +170,68 @@ class WhiteListEntry(models.Model):
 # ******************************************************************************#
 
 
+class Campaign(models.Model):
+    """
+    Campaign represents an organization's entry collection campaign.
+    - id: uuid for campaigns
+    - slug: slug of campaign
+    - name: name of the campaign
+    - state: the state of the campaign
+    - description: description of the campaign
+    - organization: organization hosting the campaign
+    - created_at: when the campaign was created
+    - is_active: is the campaign active
+    """
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    slug = models.SlugField(null=True, unique=True)
+    name = models.CharField(max_length=128)
+    description = models.CharField(max_length=700, blank=True, null=True)
+    state = models.CharField(
+        max_length=50, choices=STATES, default=None, blank=False
+    )
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ("description",)
+
+    def save(self, *args, **kwargs):
+        # generate the slug once the first time the org is created
+        if not self.slug:
+            self.slug = generate_unique_slug(Campaign, self.name)
+        super(Campaign, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse(
+            "main:campaign_home",
+            kwargs={
+                "slug": self.organization.slug,
+                "pk": self.organization.id,
+                "cam_pk": self.id,
+            },
+        )
+
+    def __str__(self):
+        return self.name
+
+
+# ******************************************************************************#
+class CampaignToken(models.Model):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
+    token = models.CharField(max_length=100)
+
+    def save(self, *args, **kwargs):
+        # generate the unique token once the first time the token is created
+        if not self.token:
+            self.token = generate_unique_token(self.campaign.name)
+        super(CampaignToken, self).save(*args, **kwargs)
+
+
+# ******************************************************************************#
+
+
 class CommunityEntry(models.Model):
     """
     Community Entry represents the entry created by the user when drawing their
@@ -177,6 +240,7 @@ class CommunityEntry(models.Model):
      - user: The user that created the entry. Foreign Key = User (Many to One)
      - entry_ID: Randomly Generated via uuid.uuid4.
      - organization: The organization that the user is submitting the entry to
+     - campaign: The campaign that the user is submitting the entry to
      - user_polygon:  User polygon contains the polygon drawn by the user.
      - census_blocks_polygon_array: Array containing multiple polygons.
      - census_blocks_polygon: The union of the census block polygons.
@@ -191,6 +255,9 @@ class CommunityEntry(models.Model):
     )
     organization = models.ForeignKey(
         Organization, on_delete=models.CASCADE, blank=True, null=True
+    )
+    campaign = models.ForeignKey(
+        Campaign, on_delete=models.CASCADE, blank=True, null=True
     )
     user_polygon = models.PolygonField(
         geography=True, serialize=True, blank=False
@@ -217,8 +284,27 @@ class CommunityEntry(models.Model):
         max_length=100, blank=False, unique=False, default=""
     )
     entry_reason = models.TextField(
+        max_length=500, blank=True, unique=False, default=""
+    )
+    user_name = models.CharField(
         max_length=500, blank=False, unique=False, default=""
     )
+    cultural_interests = models.TextField(
+        max_length=500, blank=True, unique=False, default=""
+    )
+    economic_interests = models.TextField(
+        max_length=500, blank=True, unique=False, default=""
+    )
+    comm_activities = models.TextField(
+        max_length=500, blank=True, unique=False, default=""
+    )
+    other_considerations = models.TextField(
+        max_length=500, blank=True, unique=False, default=""
+    )
+    user_phone = PhoneField(
+        E164_only=True, blank=False, unique=False, default=""
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
     admin_approved = models.BooleanField(default=False)
 
     def __str__(self):
@@ -231,30 +317,28 @@ class CommunityEntry(models.Model):
 # ******************************************************************************#
 
 
-class Campaign(models.Model):
-    """
-    Campaign represents an organization's entry collection campaign.
-    - name: name of the campaign
-    - state: the state of the campaign
-    - description: description of the campaign
-    - organization: organization hosting the campaign
-    - start_date: when the campaign starts data collection
-    - end_date: when the campaign ends data collection
-    - is_active: is the campaign active
-    """
-
-    name = models.CharField(max_length=128)
-    description = models.CharField(max_length=250, blank=True)
-    state = models.CharField(
-        max_length=50, choices=STATES, default=None, blank=False
+class Address(models.Model):
+    entry = models.ForeignKey(
+        CommunityEntry, on_delete=models.CASCADE, default=""
     )
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    start_date = models.DateField(blank=True, null=True)
-    end_date = models.DateField(blank=True, null=True)
-    is_active = models.BooleanField(default=True)
-
-    class Meta:
-        ordering = ("description",)
+    street = models.CharField(
+        max_length=500, blank=False, unique=False, default=""
+    )
+    city = models.CharField(
+        max_length=100, blank=False, unique=False, default=""
+    )
+    state = models.CharField(
+        max_length=100, blank=False, unique=False, default=""
+    )
+    zipcode = models.CharField(
+        max_length=12, blank=False, unique=False, default=""
+    )
 
     def __str__(self):
-        return self.name
+        return str(self.street)
+
+    class Meta:
+        ordering = ("entry",)
+
+
+# ******************************************************************************#

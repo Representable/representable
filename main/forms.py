@@ -32,6 +32,7 @@ from .models import (
     Campaign,
     Membership,
     User,
+    Address,
 )
 from .choices import (
     RACE_CHOICES,
@@ -41,6 +42,8 @@ from .choices import (
 )
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Area
+
+from phone_field import PhoneField
 
 # https://django-select2.readthedocs.io/en/latest/django_select2.html
 
@@ -70,9 +73,20 @@ class TagSelect2Widget(ModelSelect2TagWidget):
         return cleaned_values
 
 
-class BootstrapRadioSelect(forms.RadioSelect):
-    template_name = "forms/widgets/radio.html"
-    option_template_name = "forms/widgets/radio_option.html"
+class AddressForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    class Meta:
+        model = Address
+        fields = ["city", "state", "zipcode", "street"]
+
+        widgets = {
+            "street": forms.TextInput(attrs={"placeholder": "Street"}),
+            "city": forms.TextInput(attrs={"placeholder": "City"}),
+            "state": forms.TextInput(attrs={"placeholder": "State"}),
+            "zipcode": forms.TextInput(attrs={"placeholder": "Zipcode"}),
+        }
 
 
 class CommunityForm(ModelForm):
@@ -87,6 +101,12 @@ class CommunityForm(ModelForm):
             error_messages={
                 "required": "User polygon missing. Please draw your community."
             }
+        )
+        census_blocks_polygon_array = models.PolygonField(
+            error_messages={"required": "Census blocks array missing."}
+        )
+        census_blocks_polygon = models.PolygonField(
+            error_messages={"required": "Census blocks polygon missing."}
         )
         widgets = {
             "tags": TagSelect2Widget(
@@ -103,12 +123,27 @@ class CommunityForm(ModelForm):
             ),
             "entry_reason": forms.Textarea(
                 attrs={
-                    "placeholder": "This community is brought together by...",
+                    "placeholder": """Example: Our farmers extend over two counties and we hope you can put them together in a single State Senate district. """,
                     "rows": 5,
                 }
             ),
+            "cultural_interests": forms.Textarea(
+                attrs={"rows": 5}
+            ),
+            "economic_interests": forms.Textarea(
+                attrs={"rows": 5}
+            ),
+            "comm_activities": forms.Textarea(
+                attrs={"rows": 5}
+            ),
+            "other_considerations": forms.Textarea(
+                attrs={"rows": 5}
+            ),
+            "user_name": forms.TextInput(attrs={"placeholder": "Full Name"}),
+            # user_phone uses django-phone-field, but doesn't have args for placeholder
+            # use the textInput widget instead
+            "user_phone": forms.TextInput(attrs={"placeholder": "Phone Number"}),
             "user_polygon": forms.HiddenInput(),
-            "zipcode": forms.TextInput(attrs={"placeholder": "Your Zipcode"}),
         }
         labels = {
             "tags": "Community Tags",
@@ -117,24 +152,38 @@ class CommunityForm(ModelForm):
             "religion": "List Religions (At Least One, Multiple Accepted)",
         }
 
-    def clean_user_polygon(self):
+    def clean(self):
         """
         Make sure that the user polygon contains no kinks and has an acceptable area.
         https://gis.stackexchange.com/questions/288103/how-to-convert-the-area-to-feets-in-geodjango
+        Make sure that at least one of the interest fields is filled out.
+        Check if the phone number is a valid US number.
         """
-
-        data = self.cleaned_data["user_polygon"]
-        # Check kinks
-        if not data.valid:
-            raise forms.ValidationError("Polygon contains kinks.")
-        # Check area
-        polygon = data.transform(3857, clone=True)
-        area = Area(sq_m=polygon.area)
-        # Use NJ State Area * 1/2
-        halfStateArea = 4350
-        if area.sq_mi > halfStateArea:
-            raise forms.ValidationError("Area is too big.")
-        return data
+        errors = {}
+        # check if the user drew a polygon
+        if "user_polygon" not in self.cleaned_data:
+            errors["user_polygon"] = "Polygon doesn't exist"
+        else:
+            data = self.cleaned_data["user_polygon"]
+            # Check kinks in the polygon
+            if not data.valid:
+                errors["user_polygon"] = "Polygon contains kinks."
+        phone = self.cleaned_data.get("user_phone")
+        cultural_interests = self.cleaned_data.get("cultural_interests")
+        economic_interests = self.cleaned_data.get("economic_interests")
+        comm_activities = self.cleaned_data.get("comm_activities")
+        other_considerations = self.cleaned_data.get("other_considerations")
+        if not phone.is_usa:
+            errors["user_phone"] = "Invalid phone number."
+        if (
+            cultural_interests == ""
+            and economic_interests == ""
+            and comm_activities == ""
+            and other_considerations == ""
+        ):
+            errors["cultural_interests"] = "Blank interest fields."
+        if errors:
+            raise forms.ValidationError(errors)
 
 
 class DeletionForm(ModelForm):
@@ -189,11 +238,19 @@ class WhitelistForm(ModelForm):
 class CampaignForm(ModelForm):
     class Meta:
         model = Campaign
-        fields = ["name", "description", "state", "start_date", "end_date"]
+        fields = ["name", "description", "state"]
         widgets = {
-            "name": forms.TextInput(attrs={"placeholder": "Name of Campaign"}),
+            "name": forms.TextInput(
+                attrs={
+                    "placeholder": "Name of Campaign",
+                    "class": "form-control",
+                }
+            ),
             "description": forms.Textarea(
-                attrs={"placeholder": "Short Description"}
+                attrs={
+                    "placeholder": "Short Description",
+                    "class": "form-control",
+                }
             ),
             "state": forms.Select(
                 choices=STATES, attrs={"class": "form-control"}
@@ -205,12 +262,6 @@ class MemberForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(MemberForm, self).__init__(*args, **kwargs)
         self.fields["member"].widget.attrs.update({"class": "form-control"})
-        self.fields["is_org_moderator"].widget.attrs.update(
-            {"class": "form-control"}
-        )
-        self.fields["is_org_admin"].widget.attrs.update(
-            {"class": "form-control"}
-        )
 
     class Meta:
         model = Membership
@@ -219,3 +270,7 @@ class MemberForm(ModelForm):
             "is_org_admin",
             "is_org_moderator",
         ]
+        labels = {
+            "is_org_admin": "Administrator",
+            "is_org_moderator": "Moderator",
+        }

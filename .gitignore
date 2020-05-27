@@ -1,4 +1,5 @@
 # Adapted from https://djangowaves.com/tips-tricks/gitignore-for-a-django-project/
+.DS_Store
 # Django #
 *.log
 *.pot
@@ -125,3 +126,4 @@ NJBlocks.json
 */*.DS_Store
 sendgrid.env
 sendgrid_integration.py
+get-pip.py

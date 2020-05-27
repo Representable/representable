@@ -1,12 +1,23 @@
 {% extends "main/base.html" %}
-{% load static %}
 
 {% block content %}
-    <h2>{{object.name}}</h2>
-    <p>{{object.description}}</p>
-    <!-- <pre> {% filter force_escape %} {% debug %} {% endfilter %} </pre> -->
+<div class="container">
+  <div class="row my-5">
+    <div class="col-9 mx-auto">
+      <h2>{{object.name}}</h2>
+      <p>Organized by <a href="{% url 'main:partner_page' object.organization.slug %}">{{object.organization}}</a></p>
+      <hr>
+      <h5>Our Campaign</h5>
+      <p>{{object.description}}</p>
 
-    <ul>
-      <!-- <li><a href="{% url 'main:campaign_page' view.kwargs.slug view.kwargs.cam_pk%}">Share this link!</a></li> -->
-    </ul>
+      {% if object.state == "MI" %}
+      <h5>Redistricting in Michigan</h5>
+      <p>In 2021, a group of Michigan citizens will convene as part of the Independent Citizens Redistricting Commission to draw new state legislative and congressional districts. These district maps will inform how citizens vote, how much influence their votes have, and which politicians win elections to represent communities for the next 10 years!</p>
+      <p>It's important the these new district lines are fair and impartial. The best way to draw good district maps is to give the citizens on the Redistricting Commission a lot of public input from Michiganders like yourself! The Commission needs to know where your community is, and what binds it together. If mapmakers have your community information, they’re less likely to split your community apart.</p>
+      <p>You can draw your community by clicking the 'Draw My Community' button below. When you're done drawing your map, you'll be able to save and export your community information for your own use. In the future, you will also be able to share your community with the Michigan's Redistricting Commission and other policy groups.</p>
+      {% endif %}
+        <a class="btn btn-primary btn-lg my-3" href="{% url 'main:entry' campaign=object.slug %}" role="button">Draw my community</a>
+      <!-- <a class="btn btn-outline-primary my-3" href="{% url 'main:partner_map' object.organization.slug object.slug %}" role="button">View map of communities</a> -->
+    </div>
+    </div>
 {% endblock %}

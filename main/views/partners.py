@@ -4,6 +4,8 @@ from ..models import (
     WhiteListEntry,
     Tag,
     CommunityEntry,
+    Campaign,
+    Address
 )
 
 # from django.views.generic.detail import SingleObjectMixin
@@ -18,6 +20,7 @@ from django.views.generic import (
 import json
 import os
 import geojson
+from django.shortcuts import get_object_or_404
 
 
 class IndexView(ListView):
@@ -43,34 +46,31 @@ class PartnerMap(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # dictionary of entry names and reasons
-        entry_names = dict()
-        entry_reasons = dict()
 
         # the polygon coordinates
         entryPolyDict = dict()
-        # dictionary of tags to be displayed
-        tags = dict()
-        for obj in Tag.objects.all():
-            # manytomany query
-            entries = obj.communityentry_set.all()
-            ids = []
-            for id in entries:
-                ids.append(str(id))
-            tags[str(obj)] = ids
+        # address Information
+        streets = {}
+        cities = {}
         # get the polygon from db and pass it on to html
-        query = CommunityEntry.objects.filter(
-            organization__slug=self.kwargs["slug"], admin_approved=True
-        )
+        if self.kwargs["campaign"]:
+            query = CommunityEntry.objects.filter(
+                organization__slug=self.kwargs["slug"],
+                campaign__slug=self.kwargs["campaign"],
+                admin_approved=True,
+            )
+        else:
+            query = CommunityEntry.objects.filter(
+                organization__slug=self.kwargs["slug"], admin_approved=True
+            )
         for obj in query:
+            for a in Address.objects.filter(entry=obj):
+                streets[obj.entry_ID] = a.street
+                cities[obj.entry_ID] = a.city + ", " + a.state + " " + a.zipcode
             if not obj.census_blocks_polygon:
                 s = "".join(obj.user_polygon.geojson)
-                entry_names[str(obj.entry_ID)] = obj.entry_name
-                entry_reasons[str(obj.entry_ID)] = obj.entry_reason
             else:
                 s = "".join(obj.census_blocks_polygon.geojson)
-                entry_names[str(obj.entry_ID)] = obj.entry_name
-                entry_reasons[str(obj.entry_ID)] = obj.entry_reason
 
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
@@ -78,9 +78,9 @@ class PartnerMap(TemplateView):
             entryPolyDict[obj.entry_ID] = struct.coordinates
 
         context = {
-            "entry_names": json.dumps(entry_names),
-            "entry_reasons": json.dumps(entry_reasons),
-            "tags": json.dumps(tags),
+            "streets": streets,
+            "cities": cities,
+            "communities": query,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
@@ -88,5 +88,15 @@ class PartnerMap(TemplateView):
         context["organization"] = Organization.objects.get(
             slug=self.kwargs["slug"]
         )
-        print(context)
+        if self.kwargs["campaign"]:
+            context["campaign"] = get_object_or_404(
+                Campaign, slug=self.kwargs["campaign"]
+            ).name
+        if (self.request.user.is_authenticated):
+            context["is_org_admin"] = self.request.user.is_org_admin(
+                Organization.objects.get(slug=self.kwargs["slug"]).id
+            )
+            context["is_org_moderator"] = self.request.user.is_org_moderator(
+                Organization.objects.get(slug=self.kwargs["slug"]).id
+            )
         return context

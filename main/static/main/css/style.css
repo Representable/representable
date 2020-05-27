@@ -8,16 +8,55 @@ Authors: S. Arora, K. Barnes, P.Iyer, L. Johnston, T. Marcu
 /* IMPORTANT - READ BELOW BEFORE ADDING - IMPORTANT*/
 
 /*
-
 WHEN CHANGING CSS MAKE SURE YOU ARE AS SPECIFIC AS POSSIBLE.
-
 This means, if you're only changing something for a small section of the website,
 define new CSS classes and rules, and don't change default Bootstrap classes
 and rules, since this can lead to unintended consequences.
-
 This means no changing anything like <a>, <li>, <p>, etc.
-
 */
+
+form:invalid {
+  border-color: red;
+}
+
+.has_error {
+  border-color: red;
+}
+
+.has_success {
+  border-color: red;
+}
+
+/* TOC Checkbox*/
+.toc-check {
+  display: inline;
+}
+
+.toc-check-label {
+  display: inline;
+}
+
+.toc-check-input {
+  display: inline;
+}
+/* Entry page instructions. */
+.instruction-box {
+  position: absolute;
+  bottom: 40px;
+  left: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+  text-align: left;
+  border-radius: 10px;
+  z-index: 10;
+  display: none;
+}
+.red-circle {
+  color: #e74c3c;
+}
+.blue-circle {
+  color: #2a94f4;
+}
 
 /* Entry Page: Geocoder Full Width */
 .mapboxgl-ctrl-geocoder {
@@ -27,7 +66,7 @@ This means no changing anything like <a>, <li>, <p>, etc.
 
 /* Disable button hover when button is disabled. */
 button:disabled:hover {
-  cursor: not-allowed;
+  cursor: default;
 }
 
 /* Body and headings */
@@ -108,6 +147,9 @@ body {
   .what-is-gerrymandering p {
     font-size: 16px;
   }
+  body #usa-map {
+    min-height: 300px;
+  }
 }
 
 .quote-footer {
@@ -134,13 +176,7 @@ footer {
 /* Clear floats after the columns */
 
 .row-content {
-  background-color: #fff;
-  color: #000;
   padding: 15px;
-}
-
-.row-content a {
-  color: #00c6a7;
 }
 
 .row-about {
@@ -156,10 +192,6 @@ footer {
   color: #000;
 }
 
-.row-wide a {
-  color: #00c6a7;
-}
-
 .col-wide {
   padding: 0;
 }
@@ -169,7 +201,30 @@ footer {
   border-color: #2a94f4;
 }
 
+/* Help dropup */
+
+#dropuphelp {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 1010;
+}
+
+.dropdown-menu a {
+  color: #333;
+}
+
+.dropdown-menu {
+  z-index: 1010;
+}
 /* Bootstrap Buttons. */
+
+#video_popup {
+  position: fixed;
+  bottom: 90px;
+  right: 24px;
+  z-index: 1000;
+}
 
 /* This changes the color of the buttons so that it matches the Representable
 color scheme. See readme.md*/
@@ -305,8 +360,24 @@ color scheme. See readme.md*/
     height: 100%;
   }
 }
+
+/* override what the popup looks like on small devices */
+@media (max-width: 600px) {
+  #video_popup {
+    width: 300px;
+    bottom: 90px;
+    right: 10px;
+    z-index: 1000 !important;
+  }
+
+  #video_popup_body {
+    padding-right: 0.05rem;
+    padding-left: 0.05rem;
+  }
+}
+
 /* Style the sidenav links and the dropdown button */
-.sidenav a,
+
 .dropdown-btn {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
@@ -316,6 +387,52 @@ color scheme. See readme.md*/
   text-align: left;
   cursor: pointer;
   outline: none;
+}
+
+.comm-content .more-content {
+  display: none;
+}
+
+.comm-content.show .more-content {
+  display: inline;
+}
+
+.table-col-large {
+  width: 70%;
+}
+.table-col-small {
+  width: 30%;
+}
+.table {
+  margin-bottom: 0;
+  word-break: break-word;
+}
+.hidden {
+  display: none;
+}
+.small-link {
+  cursor: pointer;
+}
+
+/* landing page map */
+#usa-map {
+  width: 100%;
+  height: 100%;
+  min-height: 600px;
+  margin: auto;
+  cursor: pointer;
+}
+#stateSelectionDropdown {
+  font-size: 2rem;
+}
+
+.state {
+  top: 250px;
+  right: -50px;
+  position: absolute;
+  z-index: -999;
+  width: 700px;
+  opacity: 15%;
 }
 
 /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
@@ -426,9 +543,23 @@ color scheme. See readme.md*/
   padding-right: 10px;
 }
 
-.blurtop {
-  filter: blur(3px);
-  z-index: 0;
+/* Entry Form Management */
+
+.button-edit {
+  display: none;
+}
+
+.card-section-button {
+  display: block;
+}
+
+.collapse-card {
+  /* filter: blur(3px); */
+  /* z-index: 0; */
+  /* pointer-events: none; */
+}
+
+.button-next-geocoder {
   pointer-events: none;
 }
 
@@ -796,6 +927,13 @@ label {
 /* Fallback for IE
 -------------------------------------------------- */
 
+.phone-field-ext {
+  display: none;
+}
+#id_user_phone_1 {
+  display: none;
+}
+
 /* Communities */
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
   .form-group > label {
@@ -818,11 +956,4 @@ label {
   color: white;
   padding: 1px 5px;
   border-radius: 3px;
-}
-
-.table-review tr:active,
-.table-review tr:hover,
-.items li:active,
-.items li:hover {
-  background-color: #f5f5f5;
 }

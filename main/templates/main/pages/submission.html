@@ -1,6 +1,8 @@
 {% extends 'main/base.html' %}
 {% load leaflet_tags %}
 {% load static %}
+{% load representable_extras %}
+
 
 {% block head %}
 {% leaflet_js %}
@@ -25,70 +27,106 @@
 {% block content %}
 <div class="container-fluid">
 
-<div class="row row-wide">
-  <div>
-    <script type="text/javascript">
-      let a = '{{ entries | escapejs}}';
-      var mapbox_user_name = "{{mapbox_user_name}}";
-    </script>
-  </div>
-  {% if entries is None %}
+  <div class="row row-wide">
+    <div>
+      <script type="text/javascript">
+        let a = '{{ entries | escapejs}}';
+        var mapbox_user_name = "{{mapbox_user_name}}";
+      </script>
+    </div>
+    {% if entries is None %}
     <script>
       alert('No map found with the given map_id.');
     </script>
-  {% endif %}
-  <div class="col-md-4 col-wide">
-    <nav id='menu'>
-      <div class="sidenav">
-        <div class="accordion" id="accordionExample">
-          <div class="card">
-            <div id="headingOne">
-              <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" style="width: 100%">
-                Data layers <i class="fas fa-caret-down"></i></button>
+    {% endif %}
+    <div class="col-md-4 col-wide">
+      <nav id='menu'>
+        <div class="sidenav">
+          <div class="accordion" id="accordionExample">
+            <div class="card">
+              <div id="headingOne">
+                <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" style="width: 100%">
+                  Data layers <i class="fas fa-caret-down"></i></button>
+                </div>
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                  <div class="font-weight-light text-uppercase small" id="outline-menu">
+                  </div>
+                  <!-- <button class="dropdown-btn btn-canvas" id="all">Clear All Filters -->
+                </div>
+                <div id="headingTwo">
+                  <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" style="width: 100%">
+                    Community Information <i class="fas fa-caret-down"></i></button>
+                  </div>
+                  <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                    <table class="table">
+                      <tr>
+                        <td>
+                          <span class="text-uppercase entry-name">
+                            <h5>{{c.entry_name}}</h5>
+                          </span>
+                          <hr class="my-1">
+                          {% if c.organization %}
+                          <span class="badge badge-pill badge-primary">{{c.organization}}</span>
+                          <br>
+                          {% endif %}
+                          {% if c.campaign %}
+                          <span class="badge badge-pill badge-secondary">{{c.campaign}}</span>
+                          <br>
+                          {% endif %}
+                          {% if c.cultural_interests %}
+                          <b><i class="fas fa-palette"></i> Cultural Interests</b><br>
+                          <span class="text-muted small">{{c.cultural_interests}}</span>
+                          <br>
+                          {% endif %}
+                          {% if c.comm_activities %}
+                          <b><i class="fas fa-hiking"></i> Community Activities</b><br>
+                          <span class="text-muted small">{{c.comm_activities}}</span>
+                          <br>
+                          {% endif %}
+                          {% if c.economic_interests %}
+                          <b><i class="fas fa-comments-dollar"></i> Economic Interests</b><br>
+                          <span class="text-muted small">{{c.economic_interests}}</span>
+                          <br>
+                          {% endif %}
+                          {% if c.other_considerations %}
+                          <b><i class="fas fa-users"></i> Other Interests</b><br>
+                          <span class="text-muted small">{{c.other_considerations}}</span>
+                          <br>
+                          {% endif %}
+                          {% if c.entry_reason %}
+                          <b><i class="fas fa-newspaper"></i> Community Issues</b><br>
+                          <span class="text-muted small">{{c.entry_reason}}</span>
+                          <br>
+                          {% endif %}
+
+                        </td>
+                        <tr>
+                        </table>
+                        <div class="text-center">
+                          {% with link_text="/export?map_id="|addstr:c.entry_ID|slice:27 %}
+                          <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{community.entry_ID|slice:8}}.geojson">Export GeoJSON</a>
+                          {% endwith %}
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Note: TODO issues temporarily removed because it's just one map, could add back -->
+                    <!-- Note: TODO communities temporarily removed because it's just one map, could add back -->
+                  </div>
+                </div>
+              </nav>
             </div>
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-              <div class="font-weight-light text-uppercase small" id="outline-menu">
-              </div>
-              <!-- <button class="dropdown-btn btn-canvas" id="all">Clear All Filters -->
-            </div>
-            <div id="headingTwo">
-              <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" style="width: 100%">
-                Community Information <i class="fas fa-caret-down"></i></button>
-            </div>
-            <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample">
-              <br>
-              <div class="container">
-                <b>Community name</b>
-              </div>
-              <div class="card-body text-center d-flex flex-column align-items-center" id="outline-menu">
-                {{ entry_name }}
-              </div>
-              <div class="container">
-              <b>Why are you submitting this community?</b>
-            </div>
-              <div class="card-body text-center d-flex flex-column align-items-center" id="outline-menu">
-                {{ entry_reason }}
-              </div>
+            <div class="col-md-8 col-map col-wide">
+              <div id='map' class="map-visualization"></div>
             </div>
           </div>
-          <!-- Note: TODO issues temporarily removed because it's just one map, could add back -->
-          <!-- Note: TODO communities temporarily removed because it's just one map, could add back -->
-        </div>
-        <div class="dropdown-container" id="tags-menu"></div>
-          <i class="fa"></i></button>
-    </nav>
-  </div>
-  <div class="col-md-8 col-map col-wide">
-    <div id='map' class="map-visualization"></div>
-  </div>
-</div>
-<div>
-{% endblock %}
+          <div>
+            {% endblock %}
 
-{% block script %}
-<!--  Has to be at the end after the HTML loads.-->
-<script type="text/javascript">
-  mapboxgl.accessToken = "{{ mapbox_key }}";
-</script>
-<script type="text/javascript" src="{% static 'main/js/submission.js' %}"></script>
-{% endblock %}
+            {% block script %}
+            <!--  Has to be at the end after the HTML loads.-->
+            <script type="text/javascript">
+              mapboxgl.accessToken = "{{ mapbox_key }}";
+            </script>
+            <script type="text/javascript" src="{% static 'main/js/components/keys.js' %}"></script>
+            <script type="text/javascript" src="{% static 'main/js/submission.js' %}"></script>
+            {% endblock %}

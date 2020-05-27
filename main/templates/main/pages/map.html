@@ -1,6 +1,8 @@
 {% extends 'main/base.html' %}
 {% load leaflet_tags %}
 {% load static %}
+{% load representable_extras %}
+
 
 {% block head %}
 {% leaflet_js %}
@@ -17,10 +19,10 @@
 <meta name='robots' content='noindex, nofollow'>
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js'></script>
 <link rel='stylesheet'
-  href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
+href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
 <!-- Add css again to take precedence over mapbox css. -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-  integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <!--  Custom CSS -->
 <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
 
@@ -31,29 +33,19 @@
     <div>
       <script type="text/javascript">
         var a = '{{ entries | escapejs }}';
-        var tags = '{{ tags | escapejs }}';
-        var entry_names = '{{ entry_names | escapejs}}';
-        var entry_reasons = '{{ entry_reasons | escapejs}}';
         var mapbox_user_name = "{{mapbox_user_name}}";
       </script>
     </div>
-    <div class="col-md-3 col-wide">
+    <div class="col-md-4 col-wide">
       <nav id='menu'>
         <div class="sidenav">
-          <div class="input-group mb-1">
-            <input class="form-control" id="search-bar" type="search" placeholder="Search communities"
-              onkeyup="searchTags()" aria-label="Search">
-            <div class="input-group-append">
-              <button class="btn btn-outline-primary" type="submit" onclick="searchTags()"><i
-                  class="fa fa-search"></i></button>
-            </div>
-          </div>
           <div class="accordion" id="accordionExample">
             <div class="card">
+              <small class="font-weight-light mx-1 my-1">Please note: Representable.org is in beta. This page may not be updated as frequently as other aspects of the website.</small>
               <div id="headingOne">
                 <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne"
-                  aria-expanded="false" aria-controls="collapseOne" style="width: 100%">
-                  Data layers <i class="fas fa-caret-down"></i></button>
+                aria-expanded="false" aria-controls="collapseOne" style="width: 100%">
+                Data layers <i class="fas fa-caret-down"></i></button>
               </div>
               <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="font-weight-light text-uppercase small" id="outline-menu">
@@ -63,32 +55,81 @@
             <div class="items card">
               <div id="headingThree">
                 <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseThree"
-                  aria-expanded="true" aria-controls="collapseThree" style="width: 100%">
-                  Communities <i class="fas fa-caret-down"></i></button>
+                aria-expanded="true" aria-controls="collapseThree" style="width: 100%">
+                Communities <i class="fas fa-caret-down"></i></button>
               </div>
-              <div id="collapseThree" class="collapse show" aria-labelledby="headingThree"
-                data-parent="#accordionExample">
-                <ul class="list-group list-group-flush" id="community-list">
-                </ul>
+              {% if communities %}
+              <table class="table table-hover">
+                {% for c in communities %}
+                <tr class="community-review-span hidden" id={{c.entry_ID}}>
+                  <td>
+                    <span class="text-uppercase entry-name">
+                      {% with link_text="/submission?map_id="|addstr:c.entry_ID|slice:27 %}
+                      <a href={{link_text}}>{{c.entry_name}}</a>
+                      {% endwith %}
+                    </span>
+                    <hr class="my-1">
+                    {% if c.organization %}
+                    <span class="badge badge-pill badge-primary">{{c.organization}}</span>
+                    <br>
+                    {% endif %}
+                    {% if c.campaign %}
+                    <span class="badge badge-pill badge-secondary">{{c.campaign}}</span>
+                    <br>
+                    {% endif %}
+                    <span class="font-weight-light comm-content">
+                      <span class="more-content">
+                        {% if c.cultural_interests %}
+                        <b><i class="fas fa-palette"></i> Cultural Interests</b><br>
+                        <span class="text-muted small">{{c.cultural_interests}}</span>
+                        <br>
+                        {% endif %}
+                        {% if c.comm_activities %}
+                        <b><i class="fas fa-hiking"></i> Community Activities</b><br>
+                        <span class="text-muted small">{{c.comm_activities}}</span>
+                        <br>
+                        {% endif %}
+                        {% if c.economic_interests %}
+                        <b><i class="fas fa-comments-dollar"></i> Economic Interests</b><br>
+                        <span class="text-muted small">{{c.economic_interests}}</span>
+                        <br>
+                        {% endif %}
+                        {% if c.other_considerations %}
+                        <b><i class="fas fa-users"></i> Other Interests</b><br>
+                        <span class="text-muted small">{{c.other_considerations}}</span>
+                        <br>
+                        {% endif %}
+                        {% if c.entry_reason %}
+                        <b><i class="fas fa-newspaper"></i> Community Issues</b><br>
+                        <span class="text-muted small">{{c.entry_reason}}</span>
+                        <br>
+                        {% endif %}
+                      </span>
+                      <u><a class="small read-more small-link">Show More</a></u>
+                    </span>
+                  </td>
+                  <tr>
+                    {% endfor %}
+                  </table>
+                  {% endif %}
+                  <p class="loading my-5 text-center">Loading Communities...</p>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="dropdown-container" id="tags-menu"></div>
-          <!-- <button class="dropdown-btn btn-canvas" id="all">Clear All Filters
-          <i class="fa"></i></button> -->
-      </nav>
+          </nav>
+        </div>
+        <div class="col-md-8 col-map col-wide">
+          <div id='map' class="map-visualization"></div>
+        </div>
+      </div>
     </div>
-    <div class="col-md-9 col-map col-wide">
-      <div id='map' class="map-visualization"></div>
-    </div>
-  </div>
-</div>
-{% endblock %}
+    {% endblock %}
 
-{% block script %}
-<!--  Has to be at the end after the HTML loads.-->
-<script type="text/javascript">
-  mapboxgl.accessToken = "{{ mapbox_key }}";
-</script>
-<script type="text/javascript" src="{% static 'main/js/map.js' %}"></script>
-{% endblock %}
+    {% block script %}
+    <!--  Has to be at the end after the HTML loads.-->
+    <script type="text/javascript">
+      mapboxgl.accessToken = "{{ mapbox_key }}";
+    </script>
+    <script type="text/javascript" src="{% static 'main/js/components/keys.js' %}"></script>
+    <script type="text/javascript" src="{% static 'main/js/map.js' %}"></script>
+    {% endblock %}

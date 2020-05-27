@@ -26,16 +26,42 @@ app_name = "main"
 urlpatterns = [
     path("", views.main.Index.as_view(), name="index"),
     path("map/", views.main.Map.as_view(), name="map"),
-    path("thanks/", views.main.Thanks.as_view(), name="thanks"),
-    path("entry/", views.main.EntryView.as_view(), name="entry"),
+    path(
+        "entry/",
+        views.main.EntryView.as_view(),
+        {"token": "", "campaign": ""},
+        name="entry",
+    ),
+    path(
+        "entry/c/<slug:campaign>/",
+        views.main.EntryView.as_view(),
+        {"token": ""},
+        name="entry",
+    ),
+    path(
+        "entry/t/<token>/",
+        views.main.EntryView.as_view(),
+        {"campaign": ""},
+        name="entry",
+    ),
     path("about/", views.main.About.as_view(), name="about"),
     path("review/", views.main.Review.as_view(), name="review"),
     path("privacy/", views.main.Privacy.as_view(), name="privacy"),
     path("terms/", views.main.Terms.as_view(), name="terms"),
+    path("michigan/", views.main.Michigan.as_view(), name="michigan"),
     path("submission/", views.main.Submission.as_view(), name="submission"),
     path(
-        "campaigns/", views.campaigns.IndexView.as_view(), name="campaign_list"
+        "thanks/id/<map_id>",
+        views.main.Thanks.as_view(),
+        {"slug": "", "campaign": ""},
+        name="thanks",
     ),
+    path(
+        "thanks/c/<slug:slug>/<slug:campaign>/<map_id>",
+        views.main.Thanks.as_view(),
+        name="thanks",
+    ),
+    path("export/", views.main.ExportView.as_view(), name="export"),
     path("partners/", views.partners.IndexView.as_view(), name="partner_list"),
     path(
         "partners/welcome/",
@@ -48,12 +74,19 @@ urlpatterns = [
         name="partner_page",
     ),
     path(
-        "partners/<slug:slug>/map",
+        "map/p/<slug:slug>/",
         views.partners.PartnerMap.as_view(),
+        {"campaign": ""},
         name="partner_map",
     ),
     path(
-        "campaigns/<int:cam_pk>/",
+        "map/p/<slug:slug>/<slug:campaign>/",
+        views.partners.PartnerMap.as_view(),
+        name="partner_map",
+    ),
+    # path("c/", views.campaigns.IndexView.as_view(), name="campaign_list",),
+    path(
+        "c/<slug:slug>/",
         views.campaigns.CampaignView.as_view(),
         name="campaign_page",
     ),
@@ -94,6 +127,12 @@ urlpatterns = [
                 path(
                     "review/",
                     views.dashboard.ReviewOrg.as_view(),
+                    {"campaign": ""},
+                    name="review_org",
+                ),
+                path(
+                    "review/<slug:campaign>/",
+                    views.dashboard.ReviewOrg.as_view(),
                     name="review_org",
                 ),
                 path(
@@ -112,22 +151,17 @@ urlpatterns = [
                     name="upload_whitelist",
                 ),
                 path(
-                    "campaigns/",
-                    views.dashboard.CampaignList.as_view(),
-                    name="campaign_list",
-                ),
-                path(
                     "campaigns/create/",
                     views.dashboard.CreateCampaign.as_view(),
                     name="create_campaign",
                 ),
                 path(
-                    "campaigns/<int:cam_pk>/",
+                    "campaigns/<uuid:cam_pk>/",
                     views.dashboard.CampaignHome.as_view(),
                     name="campaign_home",
                 ),
                 path(
-                    "campaigns/<int:cam_pk>/edit/",
+                    "campaigns/<uuid:cam_pk>/edit/",
                     views.dashboard.UpdateCampaign.as_view(),
                     name="update_campaign",
                 ),

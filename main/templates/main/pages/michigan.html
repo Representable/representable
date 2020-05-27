@@ -1,0 +1,24 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+  <div class="row row-hero my-5">
+    <div class="col-12">
+      <h1 class="font-weight-light text-center mb-3">Welcome to Michigan!</h1>
+      <p>In 2021, a group of Michigan citizens will convene as part of the Independent Citizens Redistricting Commission to draw new state legislative and congressional districts. These district maps will inform how citizens vote, how much influence their votes have, and which politicians win elections to represent communities for the next 10 years!</p>
+      <p>It's important the these new district lines are fair and impartial. The best way to draw good district maps is to give the citizens on the Redistricting Commission a lot of public input from Michiganders like yourself! The Commission needs to know where your community is, and what binds it together. If mapmakers have your community information, they’re less likely to split your community apart.</p>
+      <div class="card card-signin my-3">
+        <div class="card-body">
+          <h5>Partners in Michigan</h5>
+          <p>Many organizations in Michigan are teaming up to collect community information so your community's interests can be protected. Soon you'll be able to use Representable to select from these organizations and submit your community's information directly to them.</p>
+          <p>In the meantime, you can draw your community by clicking the button below. When you're done drawing your map, you'll be able to save and export your community information for your own use. In the future, you will also be able to share your community with the Michigan's Redistricting Commission and other policy groups.</p>
+        </div>
+      </div>
+      <div class = "text-center">
+        <a class="btn btn-primary btn-canvas my-3 btn-lg font-weight-light" href="{% url 'main:entry' %}" role="button">Draw my community</a>
+      </div>
+    </div>
+  </div>
+    <object type="image/svg+xml" class="state" data="{% static 'img/states/MI.svg' %}"></object>
+</div>
+{% endblock %}
