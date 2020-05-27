@@ -142,7 +142,7 @@
             <!-- TODO: This should not necessarily be in the navbar - on mobile/iPad, it needs to be visible on main page. -->
             <!-- References https://docs.djangoproject.com/en/2.2/topics/i18n/translation/#set-language-redirect-view -->
             <!-- Also https://stackoverflow.com/questions/47874530/django-language-selection-from-dropdown-links-and-images -->
-            <ul class="nav navbar-nav navbar-right language menu">
+            <!-- <ul class="nav navbar-nav navbar-right language menu">
                 <form action="{% url 'set_language' %}" method="post">
                     {% csrf_token %}
                     <input name="next" type="hidden" value="{{ redirect_to }}" />
@@ -154,7 +154,7 @@
                         {% endfor %}
                     </select>
                 </form>
-            </ul>
+            </ul> -->
         </div>
     </nav>
 
