@@ -21,7 +21,7 @@
       <!-- Shows on medium devices and higher. -->
       <h4 class="display-4 my-4 font-weight-medium d-none d-sm-block main-display-text-all">
         {% if LANGUAGE_CODE == 'en' %}
-        We're creating maps of communities to end gerrymandering.
+        Redistricting is coming. Let’s make it fair.
         {% elif LANGUAGE_CODE == 'es' %}
         <!-- Google translate  -->
         Estamos creando un mapa de comunidades para terminar con la gerrymandering.
@@ -30,14 +30,22 @@
       <!-- Shows on small devices and lower. -->
       <h5 class="display-4 my-2 font-weight-medium d-sm-none main-display-text-sm">
         {% if LANGUAGE_CODE == 'en' %}
-        We're creating maps of communities to end gerrymandering.
+        Redistricting is coming. Let’s make it fair.
         {% elif LANGUAGE_CODE == 'es' %}
         <!-- Google translate  -->
         Estamos creando un mapa de comunidades para terminar con la gerrymandering.
         {% endif %}
       </h5>
-      <p class="font-weight-light lead">Add your community to participate</p>
-      <a class="btn btn-primary my-1" href="#select" role="button">Get Started</a>
+      <h4 class="font-weight-light d-none d-sm-block text-muted my-4">
+        We’re creating maps of communities to fight for fair representation. Add your community to the map today and make your voice heard.
+      </h4>
+      <p class="d-sm-none font-weight-medium text-muted my-2">
+        We’re creating maps of communities to fight for fair representation. Add your community to the map today and make your voice heard.
+      </p>
+      <!-- <p class="font-weight-light text-muted my-4 main-display-text-sm">
+        We’re creating maps of communities to fight for fair representation. Add your community to the map today and make your voice heard.
+      </p> -->
+      <a class="btn btn-primary mb-5 mt-2" href="#select" role="button">Get Started &rarr;</a>
       </div>
       <div class="col-lg-5 col-sm-12 col-md-5">
         <img class="img-fluid align-bottom my-3" src="{% static 'img/illustration.svg' %}"> </img>
@@ -53,15 +61,13 @@
         ¿Qué es Representable.org?
         {% endif %}
       </h3>
-      <p class="my-3 text-center lead">
-        {% if LANGUAGE_CODE == 'en' %}
-        We are an open-source tool that maps communities across the US.
-        States, nonprofits, and journalists can use our data to test districts for gerrymandering.
+      <p class="my-3 d-none d-sm-block text-center">
+        We are a free, web-based platform designed to collect large-scale community data to support fair redistricting. Our tool offers actionable data & maps that show where Communities of Interest are located, and the economic and social interests that bind them together. This unprecedented digital data can support mapmakers, improve the public input process for marginalized communities, and support organizations with data to evaluate proposed maps. Join us to fight gerrymandering and mobilize all communities to get the representation they deserve.
         Learn more about gerrymandering and Representable.org in the <a target="_blank" href="https://drive.google.com/open?id=1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc">Official Education Guide.</a>
-        {% elif LANGUAGE_CODE == 'es' %}
-        <!-- Google translate  -->
-        Somos una herramienta de código abierto que mapea comunidades en los Estados Unidos. Los estados, las organizaciones sin fines de lucro y los periodistas pueden usar nuestros datos para evaluar los distritos en busca de gerrymandering. Vea nuestro <a href="/map">mapa</a> para ver Representable en acción.
-        {% endif %}
+      </p>
+      <p class="my-3 d-sm-none small text-center">
+        We are a free, web-based platform designed to collect large-scale community data to support fair redistricting. Our tool offers actionable data & maps that show where Communities of Interest are located, and the economic and social interests that bind them together. This unprecedented digital data can support mapmakers, improve the public input process for marginalized communities, and support organizations with data to evaluate proposed maps. Join us to fight gerrymandering and mobilize all communities to get the representation they deserve.
+        Learn more about gerrymandering and Representable.org in the <a target="_blank" href="https://drive.google.com/open?id=1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc">Official Education Guide.</a>
       </p>
     </div>
     <!-- How To -->
@@ -172,10 +178,10 @@
         <p class="my-3 lead">Many organizations have partnered with Representable.org to collect community-of-interest data. Get started by creating a partner profile.</p>
         <a class="btn btn-primary mx-2 my-1" href="/partners/welcome" role="button">
           {% if LANGUAGE_CODE == 'en' %}
-          Partner with us
+          Partner with us  &rarr;
           {% elif LANGUAGE_CODE == 'es' %}
           <!-- Google translate  -->
-          Asociarse con nosotros
+          Asociarse con nosotros  &rarr;
           {% endif %}
         </a>
       </div>

@@ -25,6 +25,16 @@ jQuery(document).ready(function () {
   populateStateSelectionDropdown()
 })
 
+var $root = $('html, body');
+
+$('a[href^="#"]').click(function () {
+    $root.animate({
+        scrollTop: $( $.attr(this, 'href') ).offset().top
+    }, 500);
+
+    return false;
+});
+
 let populateStateSelectionDropdown = function() {
   let selectElement = document.getElementById('stateSelectionDropdown')
   for (x in states) {
