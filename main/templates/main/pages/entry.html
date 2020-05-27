@@ -47,29 +47,14 @@
                 <form id="entryForm" method="post" onSubmit="return validate();">
                     <div class="row row-equal-cols">
                         <div class="col-lg  m-2">
-                            <h2 class="text-primary">
-                                {% if LANGUAGE_CODE == 'en' %}
-                                Add your community!
-                                {% elif LANGUAGE_CODE == 'es' %}
-                                <!-- Google translate  -->
-                                ¡Dibuja tu comunidad!
-                                {% endif %}
-                            </h2>
-                            <p class="p-about">
-                                {% if LANGUAGE_CODE == 'en' %}
-                                Representable helps fight against gerrymandering by empowering communities
-                                to represent themselves more easily. Fill out the form below to
-                                add your community.
-                                {% elif LANGUAGE_CODE == 'es' %}
-                                <!-- Google translate  -->
-                                Representable ayuda a luchar contra la gerrymandering empoderando a las comunidades
-                                representarse más fácilmente. Complete el siguiente formulario para
-                                agrega tu comunidad.
-                                {% endif %}
-                            </p>
-                            <p class="p-about">
-                                This form will help you add your community to Representable so you can
-                                make sure your voice is heard.
+                            <h1 class="font-weight-light">
+                                Add your community
+                            </h1>
+
+                            <p class="">
+                                Fill out the form below to
+                                add your community to Representable.org
+                                and make your voice heard.
                             </p>
                             {% csrf_token %}
                             <!-- {# Include the non-field error fields #} -->
@@ -514,18 +499,6 @@
                                             <small>For example: Cherry Farmers Community</small>
                                         </p>
                                         {{ comm_form.entry_name|append_attr:"class:form-control" }}
-                                        <hr>
-                                        {% if not has_campaign and not has_token %}
-                                        <div class="field-wrap mt-3">
-                                            <p>What organization are you contributing as a part of? </p>
-                                            <div class="field-wrap">
-                                            {{ comm_form.organization|append_attr:"class:form-control" }}
-                                            {% if comm_form.organization.help_text %}
-                                            <p class="help">{{ comm_form.organization_text|safe }}</p>
-                                            {% endif %}
-                                            </div>
-                                        </div>
-                                        {% endif %}
 
                                         <div id="main_community_form" class="form-group">
                                             <!-- {# Include the hidden fields #} -->
