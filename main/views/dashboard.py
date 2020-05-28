@@ -237,7 +237,7 @@ class ManageOrg(LoginRequiredMixin, OrgAdminRequiredMixin, TemplateView):
         context["organization"] = Organization.objects.get(
             id=self.kwargs["pk"]
         )
-        context["header"] = ["Email", "Permissions", "Date Joined"]
+        context["header"] = ["Username", "Permissions", "Date Joined"]
         context["members"] = members
 
         return context
@@ -261,7 +261,7 @@ class CreateMember(LoginRequiredMixin, OrgAdminRequiredMixin, FormView):
         context["organization"] = Organization.objects.get(
             id=self.kwargs["pk"]
         )
-        context["header"] = ["Email", "Permissions", "Date Joined"]
+        context["header"] = ["Username", "Permissions", "Date Joined"]
         context["members"] = members
 
         return context
