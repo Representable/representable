@@ -152,7 +152,6 @@ map.on("load", function () {
 
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
-  var zooming = true;
 
   for (obj in a) {
     // check how deeply nested the outer ring of the unioned polygon is
@@ -171,10 +170,6 @@ map.on("load", function () {
     var southWest = new mapboxgl.LngLat(fit['_southWest']['lat'], fit['_southWest']['lng']);
     var northEast = new mapboxgl.LngLat(fit['_northEast']['lat'], fit['_northEast']['lng']);
     community_bounds[obj] = new mapboxgl.LngLatBounds(southWest, northEast)
-    if (zooming) {
-      map.fitBounds(community_bounds[obj], {padding: 200});
-      zooming = false;
-    }
     // draw the polygon
     map.addLayer({
       id: obj,
@@ -261,7 +256,22 @@ map.on("load", function () {
     map.setPaintProperty(this.id + "line", "line-width", 2);
     map.setPaintProperty(this.id, "fill-opacity", 0.15);
   });
-  $(".loading").delay(1500).fadeOut(1000);
+  // loading icon
+  $(".loader").delay(500).fadeOut(500);
+  // fly to state if org, otherwise stay on map
+  if (state !== "") {
+    map.flyTo({
+      center: statesLngLat[state],
+      zoom: 5,
+      essential: true // this animation is considered essential with respect to prefers-reduced-motion
+    });
+  } else {
+    map.flyTo({
+      center: [-96.7026, 40.8136],
+      zoom: 3,
+      essential: true // this animation is considered essential with respect to prefers-reduced-motion
+    });
+  }
 });
 
 // on click, zoom to community
