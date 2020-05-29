@@ -64,7 +64,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                 Communities <i class="fas fa-caret-down"></i></button>
               </div>
               {% if communities %}
-              <table class="table table-hover">
+              <table id="collapseThree" class="collapse show table table-hover">
                 {% for c in communities %}
                 <tr class="community-review-span hidden" id={{c.entry_ID}}>
                   <td>
