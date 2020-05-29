@@ -578,12 +578,6 @@ color scheme. See readme.md*/
   display: block;
 }
 
-.collapse-card {
-  /* filter: blur(3px); */
-  /* z-index: 0; */
-  /* pointer-events: none; */
-}
-
 .button-next-geocoder {
   pointer-events: none;
 }
