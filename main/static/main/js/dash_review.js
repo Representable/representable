@@ -147,11 +147,7 @@ map.on("load", function () {
     var fit = new L.Polygon(final).getBounds();
     var southWest = new mapboxgl.LngLat(fit['_southWest']['lat'], fit['_southWest']['lng']);
     var northEast = new mapboxgl.LngLat(fit['_northEast']['lat'], fit['_northEast']['lng']);
-    community_bounds[obj] = new mapboxgl.LngLatBounds(southWest, northEast)
-    if (zooming) {
-      map.fitBounds(community_bounds[obj], {padding: 100});
-      zooming = false;
-    }
+    community_bounds[obj] = new mapboxgl.LngLatBounds(southWest, northEast);
 
     approved_color = "rgb(110, 178, 181)";
     unapproved_color = "rgb(255, 50, 0)";
@@ -215,6 +211,20 @@ map.on("load", function () {
     map.setPaintProperty(this.id + "line", "line-width", 2);
     map.setPaintProperty(this.id, "fill-opacity", 0.15);
   });
+  // fly to state if org, otherwise stay on map
+  if (state !== "") {
+    map.flyTo({
+      center: statesLngLat[state],
+      zoom: 5,
+      essential: true // this animation is considered essential with respect to prefers-reduced-motion
+    });
+  } else {
+    map.flyTo({
+      center: [-96.7026, 40.8136],
+      zoom: 3,
+      essential: true // this animation is considered essential with respect to prefers-reduced-motion
+    });
+  }
 });
 
 // on click, zoom to community
