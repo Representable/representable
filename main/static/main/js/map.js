@@ -55,6 +55,7 @@ function newSourceLayer(name, mbCode) {
     url: "mapbox://" + mapbox_user_name + "." + mbCode,
   });
 }
+
 // add a new layer of census block data
 function newCensusLayer(state, firstSymbolId) {
   map.addLayer(
@@ -146,6 +147,25 @@ map.on("load", function () {
       newLowerLegislatureLayer(states[i]);
     }
   }
+  map.addSource("counties", {
+    type: "vector",
+    url: "mapbox://mapbox.hist-pres-election-county"
+  });
+  map.addLayer(
+    {
+      id: "counties",
+      type: "line",
+      source: "counties",
+      "source-layer": "historical_pres_elections_county",
+      layout: {
+        visibility: "none"
+      },
+      paint: {
+        "line-color": "rgba(106,137,204,0.7)",
+        "line-width": 2,
+      }
+    }
+  );
 
   // send elements to javascript as geojson objects and make them show on the map by
   // calling the addTo
@@ -293,6 +313,7 @@ var toggleableLayerIds = [
   "Census Blocks",
   "State Legislature - Lower",
   "State Legislature - Upper",
+  "counties"
 ];
 
 for (var i = 0; i < toggleableLayerIds.length; i++) {
@@ -309,9 +330,13 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   link.onchange = function (e) {
     var txt = this.id;
     var clickedLayers = [];
-    for (let i = 0; i < states.length; i++) {
-      if (states[i] !== "dc" || txt === "Census Blocks") {
-        clickedLayers.push(states[i].toUpperCase() + " " + txt);
+    if (txt === "counties") {
+      clickedLayers.push("counties");
+    } else {
+      for (let i = 0; i < states.length; i++) {
+        if (states[i] !== "dc" || txt === "Census Blocks") {
+          clickedLayers.push(states[i].toUpperCase() + " " + txt);
+        }
       }
     }
     e.preventDefault();

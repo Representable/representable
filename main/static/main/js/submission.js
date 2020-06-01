@@ -116,6 +116,25 @@ map.on("load", function () {
       newLowerLegislatureLayer(states[i]);
     }
   }
+  map.addSource("counties", {
+    type: "vector",
+    url: "mapbox://mapbox.hist-pres-election-county"
+  });
+  map.addLayer(
+    {
+      id: "counties",
+      type: "line",
+      source: "counties",
+      "source-layer": "historical_pres_elections_county",
+      layout: {
+        visibility: "none"
+      },
+      paint: {
+        "line-color": "rgba(106,137,204,0.7)",
+        "line-width": 2,
+      }
+    }
+  );
 
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
@@ -188,6 +207,7 @@ var toggleableLayerIds = [
   "Census Blocks",
   "State Legislature - Lower",
   "State Legislature - Upper",
+  "counties"
 ];
 
 for (var i = 0; i < toggleableLayerIds.length; i++) {
@@ -204,9 +224,13 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   link.onchange = function (e) {
     var txt = this.id;
     var clickedLayers = [];
-    for (let i = 0; i < states.length; i++) {
-      if (states[i] !== "dc" || txt === "Census Blocks") {
-        clickedLayers.push(states[i].toUpperCase() + " " + txt);
+    if (txt === "counties") {
+      clickedLayers.push(txt);
+    } else {
+      for (let i = 0; i < states.length; i++) {
+        if (states[i] !== "dc" || txt === "Census Blocks") {
+          clickedLayers.push(states[i].toUpperCase() + " " + txt);
+        }
       }
     }
     // var clickedLayers = ["NJ " + txt, "VA " + txt, "PA " + txt, "MI " + txt];
