@@ -466,31 +466,6 @@
                                         <strong>3. Your Community's Issues and Name</strong>
                                     </div>
                                     <div class="card-body">
-                                        <div id="entry_reason_error_alerts">
-                                            {% if comm_form.entry_reason.errors %}
-                                                <script>
-                                                    sessionStorage.setItem("allChecks", "fail");
-                                                </script>
-                                                <div id="entry_reason_errors" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
-                                                    <ul class="m-0">
-                                                    {% for error in comm_form.entry_reason.errors %}
-                                                        <li>{{ error|escape }}</li>
-                                                    {% endfor %}
-                                                    </ul>
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                            {% endif %}
-                                        </div>
-
-                                        <p class="card-text">
-                                            What are the issues facing your community and do you have any suggestions
-                                            for how the redistricting commission in your state could help address these issues?<small class="text-primary"> (Recommended)</small>
-                                            <!-- TODO we should find a better example -->
-                                        </p>
-                                        {{ comm_form.entry_reason|append_attr:"class:form-control" }}
-                                        <hr>
                                         <div id="entry_name_error_alerts">
                                             {% if comm_form.entry_name.errors %}
                                                 <script>
