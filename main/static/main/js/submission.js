@@ -59,7 +59,7 @@ function newCensusLayer(state) {
 // add a new layer of upper state legislature data
 function newUpperLegislatureLayer(state) {
   map.addLayer({
-    id: state.toUpperCase() + " State Legislature - Upper",
+    id: state.toUpperCase() + " State Legislature - Senate",
     type: "line",
     source: state + "-upper",
     "source-layer": state + "upper",
@@ -77,7 +77,7 @@ function newUpperLegislatureLayer(state) {
 // add a new layer of lower state legislature data
 function newLowerLegislatureLayer(state) {
   map.addLayer({
-    id: state.toUpperCase() + " State Legislature - Lower",
+    id: state.toUpperCase() + " State Legislature - House/Assembly",
     type: "line",
     source: state + "-lower",
     "source-layer": state + "lower",
@@ -205,8 +205,8 @@ map.on("load", function () {
 //create a button that toggles layers based on their IDs
 var toggleableLayerIds = [
   "Census Blocks",
-  "State Legislature - Lower",
-  "State Legislature - Upper",
+  "State Legislature - House/Assembly",
+  "State Legislature - Senate",
   "counties"
 ];
 
