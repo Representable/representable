@@ -119,7 +119,7 @@ class CommunityForm(ModelForm):
             "census_blocks_polygon_array": forms.HiddenInput(),
             "census_blocks_polygon": forms.HiddenInput(),
             "entry_name": forms.TextInput(
-                attrs={"placeholder": "My local community..."}
+                attrs={"placeholder": "Community Name"}
             ),
             "entry_reason": forms.Textarea(attrs={"rows": 5}),
             "cultural_interests": forms.Textarea(attrs={"rows": 5}),
