@@ -240,32 +240,34 @@ map.on("load", function () {
   }
   // find what features are currently on view
   // multiple features are gathered that have the same source (or have the same source with 'line' added on)
-  map.on("moveend", function () {
-    var sources = [];
-    var features = map.queryRenderedFeatures();
-    for (var i = 0; i < features.length; i++) {
-      var source = features[i].source;
-      if (
-        source !== "composite" &&
-        !source.includes("line") &&
-        !source.includes("census") &&
-        !source.includes("lower") &&
-        !source.includes("upper")
-      ) {
-        if (!sources.includes(source)) {
-          sources.push(source);
+  if (state === "") {
+    map.on("moveend", function () {
+      var sources = [];
+      var features = map.queryRenderedFeatures();
+      for (var i = 0; i < features.length; i++) {
+        var source = features[i].source;
+        if (
+          source !== "composite" &&
+          !source.includes("line") &&
+          !source.includes("census") &&
+          !source.includes("lower") &&
+          !source.includes("upper")
+        ) {
+          if (!sources.includes(source)) {
+            sources.push(source);
+          }
         }
       }
-    }
-    // only display those on the map
-    $(".community-review-span").each(function(i, obj) {
-      if ($.inArray(obj.id, sources) !== -1) {
-        $(obj).show();
-      } else {
-        $(obj).hide();
-      }
+      // only display those on the map
+      $(".community-review-span").each(function(i, obj) {
+        if ($.inArray(obj.id, sources) !== -1) {
+          $(obj).show();
+        } else {
+          $(obj).hide();
+        }
+      });
     });
-  });
+  }
   // hover to highlight
   $(".community-review-span").hover(function() {
     map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
