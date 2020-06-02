@@ -463,7 +463,7 @@
                             <div class="collapse-card card-section ">
                                 <div class="card">
                                     <div class="card-header text-header-card">
-                                        <strong>3. Your Community's Issues and Name</strong>
+                                        <strong>3. Your Community's Name</strong>
                                     </div>
                                     <div class="card-body">
                                         <div id="entry_name_error_alerts">
@@ -538,13 +538,10 @@
                                                 {% endif %}
                                             </div>
                                             <strong>
-                                                {% if LANGUAGE_CODE == 'en' %}
-                                                Search for a location to begin drawing your community.
-                                                {% elif LANGUAGE_CODE == 'es' %}
-                                                <!-- Google translate  -->
-                                                Busque una ubicación para comenzar a dibujar su comunidad.
-                                                {% endif %}
-                                                <small class="text-danger">(Required)</small>
+                                                <p>
+                                                    Search for a location, such as address, city, or zipcode to begin drawing your community.
+                                                    <small class="text-danger">(Required)</small>
+                                                </p>
                                             </strong>
                                             <span class="float-right">
                                                 <button class="btn btn-secondary btn-sm mb-2 mr-2 d-none" id="shepherd-btn" onclick="myTour.start()" type="button">Step-by-step guide</button>
