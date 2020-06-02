@@ -420,7 +420,7 @@
                                         {{ comm_form.cultural_interests|append_attr:"class:form-control" }}
                                         <hr>
                                         <!-- Other -->
-                                        <h5 class="card-text">Other Interests</h5>
+                                        <h5 class="card-text">Other Interests and Issues</h5>
                                         <!-- <div id="other_error_alerts">
                                             {% if comm_form.other_considerations.errors %}
                                                 <script>
@@ -439,9 +439,19 @@
                                             {% endif %}
                                         </div> -->
                                         <p class="card-text mb-1">
-                                            What other interests does your community care about? Please add anything
-                                            that does not fit in the sections above.
+                                            What other interests does your community care about? Do you have any suggestions
+                                            for how the redistricting commission in your state could help address these issues?
                                         </p>
+                                        <div class="accordion" id="other_interests_accordion">
+                                            <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#other_interests_example" aria-expanded="false" aria-controls="collapseOne">
+                                            Show Example
+                                            </button>
+                                            <div id="other_interests_example" class="collapse" aria-labelledby="headingOne" data-parent="#other_interests_accordion">
+                                                <p class="collapse-in ml-0">
+                                                    Our farmers extend over two counties and we hope you can put them together in a single State Senate district. 
+                                                </p>
+                                            </div>
+                                        </div>
                                         {{ comm_form.other_considerations|append_attr:"class:form-control" }}
                                     </div>
                                 </div>
@@ -473,6 +483,7 @@
                                                 </div>
                                             {% endif %}
                                         </div>
+
                                         <p class="card-text">
                                             What are the issues facing your community and do you have any suggestions
                                             for how the redistricting commission in your state could help address these issues?<small class="text-primary"> (Recommended)</small>
