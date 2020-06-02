@@ -828,6 +828,7 @@ label {
   color: black;
   padding: 6px 8px 6px 16px;
   flex: 1;
+  margin-bottom: 0rem;
 }
 
 /* LOGIN */

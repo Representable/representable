@@ -78,7 +78,7 @@ function newCensusLayer(state, firstSymbolId) {
 // add a new layer of upper state legislature data
 function newUpperLegislatureLayer(state) {
   map.addLayer({
-    id: state.toUpperCase() + " State Legislature - Upper",
+    id: state.toUpperCase() + " State Legislature - Senate",
     type: "line",
     source: state + "-upper",
     "source-layer": state + "upper",
@@ -89,14 +89,14 @@ function newUpperLegislatureLayer(state) {
     },
     paint: {
       "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 4,
+      "line-width": 2,
     },
   });
 }
 // add a new layer of lower state legislature data
 function newLowerLegislatureLayer(state) {
   map.addLayer({
-    id: state.toUpperCase() + " State Legislature - Lower",
+    id: state.toUpperCase() + " State Legislature - House/Assembly",
     type: "line",
     source: state + "-lower",
     "source-layer": state + "lower",
@@ -107,7 +107,7 @@ function newLowerLegislatureLayer(state) {
     },
     paint: {
       "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 4,
+      "line-width": 2,
     },
   });
 }
@@ -313,8 +313,8 @@ document.querySelectorAll(".comm-content").forEach(function (p) {
 //create a button that toggles layers based on their IDs
 var toggleableLayerIds = [
   "Census Blocks",
-  "State Legislature - Lower",
-  "State Legislature - Upper",
+  "State Legislature - House/Assembly",
+  "State Legislature - Senate",
   "counties"
 ];
 
