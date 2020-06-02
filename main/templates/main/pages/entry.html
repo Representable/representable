@@ -54,7 +54,9 @@
                             <p class="">
                                 Fill out the form below to
                                 add your community to Representable.org
-                                and make your voice heard.
+                                and make your voice heard. 
+                                <br>
+                                Follow the instructions in each section to get started.
                             </p>
                             {% csrf_token %}
                             <!-- {# Include the non-field error fields #} -->
@@ -83,7 +85,7 @@
                             <div class="collapse-card card-section active-section">
                                 <div class="card">
                                     <div class="card-header text-header-card">
-                                        <strong>1. Your Personal Information</strong>
+                                        <strong>1. Your Identifying Information</strong>
                                     </div>
                                     <div class="card-body collapse show">
                                         <div class="accordion" id="privacy_accordion">
@@ -277,18 +279,19 @@
                                         <strong>2. Your Community's Shared Interests</strong>
                                     </div>
                                     <div class="card-body">
+                                        <p>
+                                            To submit your community entry, you must provide a response to at least one of the questions below.
+                                            Please respond to all the questions that apply.
+                                        </p>
+                                        <hr>
+                                        <!-- Form Errors -->
                                         {% if comm_form.cultural_interests.errors %}
                                         <div id="interests-error-alerts">
                                             <script>
                                                 sessionStorage.setItem("allChecks", "fail");
                                             </script>
                                             <div id="interests_missing" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
-                                                {% if LANGUAGE_CODE == 'en' %}
                                                 Please fill out at least one of the interest fields.
-                                                {% elif LANGUAGE_CODE == 'es' %}
-                                                <!-- Google translate  -->
-                                                Complete al menos uno de los campos de interés.
-                                                {% endif %}
                                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -301,80 +304,8 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <!-- Cultural -->
-                                        <h5 class="card-text">Cultural Interests</h5>
-                                        <!-- <div id="cultural_interests_error_alerts">
-                                            {% if comm_form.cultural_interests.errors %}
-                                                <script>
-                                                    sessionStorage.setItem("allChecks", "fail");
-                                                </script>
-                                                <div id="cultural_interests_errors" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
-                                                    <ul class="m-0">
-                                                    {% for error in comm_form.cultural_interests.errors %}
-                                                        <li class="m-0">{{ error|escape }}</li>
-                                                    {% endfor %}
-                                                    </ul>
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                            {% endif %}
-                                        </div> -->
-                                        <p class="card-text mb-0">
-                                            What fosters a sense of belonging in your community? 
-                                            What common beliefs or values exist? <small class="text-primary">(Recommended)</small>
-                                        </p>
-                                        <div class="accordion" id="cultural_interests_accordion">
-                                            <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#cultural_interests_example" aria-expanded="false" aria-controls="collapseOne">
-                                            Show Examples
-                                            </button>
-                                            <div id="cultural_interests_example" class="collapse" aria-labelledby="headingOne" data-parent="#cultural_interests_accordion">
-                                                <p class="collapse-in ml-0">
-                                                    Age groups, religious groups, arts and cultural centers, languages, immigration status, 
-                                                    ethnic groups such as Detroit’s Mexican Town or Dearborn’s Middle Eastern community, 
-                                                    historic settlements such as Leland’s Fishtown.
-                                                </p>
-                                            </div>
-                                        </div>
-                                        {{ comm_form.cultural_interests|append_attr:"class:form-control" }}
-                                        <hr>
-                                        <!-- Activities -->
-                                        <h5 class="card-text">Community Activities and Services</h5>
-                                        <!-- <div id="activities_error_alerts">
-                                            {% if comm_form.comm_activities.errors %}
-                                                <script>
-                                                    sessionStorage.setItem("allChecks", "fail");
-                                                </script>
-                                                <div id="activities_errors" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
-                                                    <ul>
-                                                    {% for error in comm_form.comm_activities.errors %}
-                                                        <li>{{ error|escape }}</li>
-                                                    {% endfor %}
-                                                    </ul>
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                            {% endif %}
-                                        </div> -->
-                                        <p class="card-text mb-0">
-                                            Where do people in your community gather or socialize? 
-                                            Where does your community get its services? <small class="text-primary">(Recommended)</small>
-                                        </p>
-                                        <div class="accordion" id="comm_activities_accordion">
-                                            <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#comm_activities_example" aria-expanded="false" aria-controls="collapseOne">
-                                            Show Examples
-                                            </button>
-                                            <div id="comm_activities_example" class="collapse" aria-labelledby="headingOne" data-parent="#comm_activities_accordion">
-                                                <p class="collapse-in ml-0">
-                                                    Shopping areas, schools and colleges, parks and recreation areas, 
-                                                    lakes and water ways, healthcare services, and other activities and services that 
-                                                    help define your community.
-                                                </p>
-                                            </div>
-                                        </div>
-                                        {{ comm_form.comm_activities|append_attr:"class:form-control" }}
-                                        <hr>
+                                        <!-- Form Errors END -->
+                                        <!-- Sections: -->
                                         <!--  Economic -->
                                         <h5 class="card-text">Economic Interests</h5>
                                         <!-- <div id="economic_error_alerts">
@@ -398,7 +329,7 @@
                                             Is there a shared economy in the geographic area of your community? 
                                             How and where are residents employed? What parts of a county, 
                                             township or city are included in your community? 
-                                            Are there shared environmental concerns such as landfills or water quality? <small class="text-primary">(Recommended)</small>
+                                            Are there shared environmental concerns such as landfills or water quality?
                                         </p>
                                         <div class="accordion" id="economic_interests_accordion">
                                             <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#economic_interests_example" aria-expanded="false" aria-controls="collapseOne">
@@ -414,8 +345,82 @@
                                         </div>
                                         {{ comm_form.economic_interests|append_attr:"class:form-control" }}
                                         <hr>
+                                        <!-- Activities -->
+                                        <h5 class="card-text">Community Activities and Services</h5>
+                                        <!-- <div id="activities_error_alerts">
+                                            {% if comm_form.comm_activities.errors %}
+                                                <script>
+                                                    sessionStorage.setItem("allChecks", "fail");
+                                                </script>
+                                                <div id="activities_errors" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
+                                                    <ul>
+                                                    {% for error in comm_form.comm_activities.errors %}
+                                                        <li>{{ error|escape }}</li>
+                                                    {% endfor %}
+                                                    </ul>
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                            {% endif %}
+                                        </div> -->
+                                        <p class="card-text mb-0">
+                                            Where do people in your community gather or socialize? 
+                                            Where does your community get its services?
+                                        </p>
+                                        <div class="accordion" id="comm_activities_accordion">
+                                            <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#comm_activities_example" aria-expanded="false" aria-controls="collapseOne">
+                                            Show Examples
+                                            </button>
+                                            <div id="comm_activities_example" class="collapse" aria-labelledby="headingOne" data-parent="#comm_activities_accordion">
+                                                <p class="collapse-in ml-0">
+                                                    Shopping areas, schools and colleges, parks and recreation areas, 
+                                                    lakes and water ways, healthcare services, and other activities and services that 
+                                                    help define your community.
+                                                </p>
+                                            </div>
+                                        </div>
+                                        {{ comm_form.comm_activities|append_attr:"class:form-control" }}
+                                        <hr>
+                                        <!-- Cultural -->
+                                        <h5 class="card-text">Cultural or Historical Interests</h5>
+                                        <!-- <div id="cultural_interests_error_alerts">
+                                            {% if comm_form.cultural_interests.errors %}
+                                                <script>
+                                                    sessionStorage.setItem("allChecks", "fail");
+                                                </script>
+                                                <div id="cultural_interests_errors" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
+                                                    <ul class="m-0">
+                                                    {% for error in comm_form.cultural_interests.errors %}
+                                                        <li class="m-0">{{ error|escape }}</li>
+                                                    {% endfor %}
+                                                    </ul>
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                            {% endif %}
+                                        </div> -->
+                                        <p class="card-text mb-0">
+                                            What fosters a sense of belonging in your community? 
+                                            What common beliefs or values exist?
+                                        </p>
+                                        <div class="accordion" id="cultural_interests_accordion">
+                                            <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#cultural_interests_example" aria-expanded="false" aria-controls="collapseOne">
+                                            Show Examples
+                                            </button>
+                                            <div id="cultural_interests_example" class="collapse" aria-labelledby="headingOne" data-parent="#cultural_interests_accordion">
+                                                <p class="collapse-in ml-0">
+                                                    Age groups, religious groups, arts and cultural centers, languages, immigration status, 
+                                                    ethnic groups such as Detroit’s Mexican Town or Dearborn’s Middle Eastern community, 
+                                                    historic settlements such as Leland’s Fishtown.
+                                                </p>
+                                            </div>
+                                        </div>
+                                        {{ comm_form.cultural_interests|append_attr:"class:form-control" }}
+                                        <hr>
                                         <!-- Other -->
-                                        <h5 class="card-text">Other Interests</h5>
+                                        <h5 class="card-text">Other Interests and Concerns</h5>
                                         <!-- <div id="other_error_alerts">
                                             {% if comm_form.other_considerations.errors %}
                                                 <script>
@@ -434,9 +439,19 @@
                                             {% endif %}
                                         </div> -->
                                         <p class="card-text mb-1">
-                                            What other interests does your community care about? Please add anything
-                                            that does not fit in the sections above. <small class="text-primary">(Recommended)</small>
+                                            What other interests does your community care about? Do you have any suggestions
+                                            for how the redistricting commission in your state could help address these concerns?
                                         </p>
+                                        <div class="accordion" id="other_interests_accordion">
+                                            <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#other_interests_example" aria-expanded="false" aria-controls="collapseOne">
+                                            Show Example
+                                            </button>
+                                            <div id="other_interests_example" class="collapse" aria-labelledby="headingOne" data-parent="#other_interests_accordion">
+                                                <p class="collapse-in ml-0">
+                                                    Our farmers extend over two counties and we hope you can put them together in a single State Senate district. 
+                                                </p>
+                                            </div>
+                                        </div>
                                         {{ comm_form.other_considerations|append_attr:"class:form-control" }}
                                     </div>
                                 </div>
@@ -448,33 +463,9 @@
                             <div class="collapse-card card-section ">
                                 <div class="card">
                                     <div class="card-header text-header-card">
-                                        <strong>3. Your Community's Issues and Name</strong>
+                                        <strong>3. Your Community's Name</strong>
                                     </div>
                                     <div class="card-body">
-                                        <div id="entry_reason_error_alerts">
-                                            {% if comm_form.entry_reason.errors %}
-                                                <script>
-                                                    sessionStorage.setItem("allChecks", "fail");
-                                                </script>
-                                                <div id="entry_reason_errors" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
-                                                    <ul class="m-0">
-                                                    {% for error in comm_form.entry_reason.errors %}
-                                                        <li>{{ error|escape }}</li>
-                                                    {% endfor %}
-                                                    </ul>
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                            {% endif %}
-                                        </div>
-                                        <p class="card-text">
-                                            What are the issues facing your community and do you have any suggestions
-                                            for how the redistricting commission in your state could help address these issues?<small class="text-primary"> (Recommended)</small>
-                                            <!-- TODO we should find a better example -->
-                                        </p>
-                                        {{ comm_form.entry_reason|append_attr:"class:form-control" }}
-                                        <hr>
                                         <div id="entry_name_error_alerts">
                                             {% if comm_form.entry_name.errors %}
                                                 <script>
@@ -547,13 +538,10 @@
                                                 {% endif %}
                                             </div>
                                             <strong>
-                                                {% if LANGUAGE_CODE == 'en' %}
-                                                Search for a location to begin drawing your community.
-                                                {% elif LANGUAGE_CODE == 'es' %}
-                                                <!-- Google translate  -->
-                                                Busque una ubicación para comenzar a dibujar su comunidad.
-                                                {% endif %}
-                                                <small class="text-danger">(Required)</small>
+                                                <p>
+                                                    Search for a location, such as address, city, or zipcode to begin drawing your community.
+                                                    <small class="text-danger">(Required)</small>
+                                                </p>
                                             </strong>
                                             <span class="float-right">
                                                 <button class="btn btn-secondary btn-sm mb-2 mr-2 d-none" id="shepherd-btn" onclick="myTour.start()" type="button">Step-by-step guide</button>
@@ -561,12 +549,16 @@
                                             </span>
                                             <div id="geocoder" class="geocoder my-3"></div>
                                             <div class="map-bounding-box my-2 collapse">
+                                                <p>Drawing your community will start highlighting census blocks.
+                                                   Make sure that all your community is contained within the highlighted blocks.
+                                                   This will help the Redistricting Commission draw fairer districts using your entry.
+                                                </p>
                                                 <div class="map-box">
                                                     <div id='menu'></div>
                                                     <div id='map' class='draw_polygon_map' onload="map.resize()">
                                                         <div id="instruction-box-id" class="instruction-box">
-                                                            <p class="mb-0">Click on a blue vertex <i class="fas fa-circle blue-circle"></i> to move it or delete it. Drag vertex to move it or press "Delete Vertex" to delete it.</p>
-                                                            <p class="mb-0">Click on a red midpoint vertex  <i class="fas fa-circle red-circle"></i> to add a new vertex.</p>
+                                                            <p class="mb-0">Click on a blue point <i class="fas fa-circle blue-circle"></i> to move it or delete it. Drag point to move it or press "Delete point" to delete it.</p>
+                                                            <p class="mb-0">Click on a red midpoint point  <i class="fas fa-circle red-circle"></i> to add a new point.</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -602,6 +594,9 @@
                                                 <small class="text-danger">(Required)</small>
                                             </label>
                                         </div>
+                                        <hr>
+                                        Any saved communities are final. In order to edit a saved community you will need
+                                        to create a new community and delete the old one.
                                     </div>
                                 </div>
                             </div>
@@ -621,7 +616,7 @@
                     <div class='row row-equal-cols'>
                         <div class='col-lg text-center m-2'>
                             <div style="display: inline-block;">
-                                <button id="save" form="entryForm" type="submit" class="btn btn-primary" value="Submit">Save Entry</button>
+                                <button id="save" form="entryForm" type="submit" class="btn btn-primary" value="Submit">Save Community</button>
                             </div>
                         </div>
                     </div>

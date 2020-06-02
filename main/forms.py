@@ -119,30 +119,19 @@ class CommunityForm(ModelForm):
             "census_blocks_polygon_array": forms.HiddenInput(),
             "census_blocks_polygon": forms.HiddenInput(),
             "entry_name": forms.TextInput(
-                attrs={"placeholder": "My local community..."}
+                attrs={"placeholder": "Community Name"}
             ),
-            "entry_reason": forms.Textarea(
-                attrs={
-                    "placeholder": """Example: Our farmers extend over two counties and we hope you can put them together in a single State Senate district. """,
-                    "rows": 5,
-                }
-            ),
-            "cultural_interests": forms.Textarea(
-                attrs={"rows": 5}
-            ),
-            "economic_interests": forms.Textarea(
-                attrs={"rows": 5}
-            ),
-            "comm_activities": forms.Textarea(
-                attrs={"rows": 5}
-            ),
-            "other_considerations": forms.Textarea(
-                attrs={"rows": 5}
-            ),
+            "entry_reason": forms.Textarea(attrs={"rows": 5}),
+            "cultural_interests": forms.Textarea(attrs={"rows": 5}),
+            "economic_interests": forms.Textarea(attrs={"rows": 5}),
+            "comm_activities": forms.Textarea(attrs={"rows": 5}),
+            "other_considerations": forms.Textarea(attrs={"rows": 5}),
             "user_name": forms.TextInput(attrs={"placeholder": "Full Name"}),
             # user_phone uses django-phone-field, but doesn't have args for placeholder
             # use the textInput widget instead
-            "user_phone": forms.TextInput(attrs={"placeholder": "Phone Number"}),
+            "user_phone": forms.TextInput(
+                attrs={"placeholder": "Phone Number"}
+            ),
             "user_polygon": forms.HiddenInput(),
         }
         labels = {
