@@ -651,7 +651,7 @@ delete_feature_button.backgroundImg = "";
 delete_feature_button.id = "delete-feature-button-id";
 delete_feature_button.style.display = "none";
 delete_feature_button.innerHTML =
-  "<i class='fas fa-minus-square'></i> Delete Vertex";
+  "<i class='fas fa-minus-square'></i> Delete Point";
 
 class ClearMapButton {
   onAdd(map) {
