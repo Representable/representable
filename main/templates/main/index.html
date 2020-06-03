@@ -20,21 +20,11 @@
     <div class="col-lg-7 col-sm-12 col-md-7">
       <!-- Shows on medium devices and higher. -->
       <h4 class="display-4 my-4 font-weight-medium d-none d-sm-block main-display-text-all">
-        {% if LANGUAGE_CODE == 'en' %}
         Redistricting is coming. Let’s make it fair.
-        {% elif LANGUAGE_CODE == 'es' %}
-        <!-- Google translate  -->
-        Estamos creando un mapa de comunidades para terminar con la gerrymandering.
-        {% endif %}
       </h4>
       <!-- Shows on small devices and lower. -->
       <h5 class="display-4 my-2 font-weight-medium d-sm-none main-display-text-sm">
-        {% if LANGUAGE_CODE == 'en' %}
         Redistricting is coming. Let’s make it fair.
-        {% elif LANGUAGE_CODE == 'es' %}
-        <!-- Google translate  -->
-        Estamos creando un mapa de comunidades para terminar con la gerrymandering.
-        {% endif %}
       </h5>
       <h4 class="font-weight-light d-none d-sm-block text-muted my-4">
         We’re creating maps of communities to fight for fair representation. Add your community to the map today and make your voice heard.
@@ -54,20 +44,15 @@
     <!-- What does Representable do? -->
     <div id="learn-more" class="container my-5">
       <h3 class="my-5 text-center">
-        {% if LANGUAGE_CODE == 'en' %}
         What is Representable.org?
-        {% elif LANGUAGE_CODE == 'es' %}
-        <!-- Google translate  -->
-        ¿Qué es Representable.org?
-        {% endif %}
       </h3>
       <p class="my-3 d-none d-sm-block text-center">
-        We are a free, web-based platform designed to collect large-scale community data to support fair redistricting. Our tool offers actionable data & maps that show where Communities of Interest are located, and the economic and social interests that bind them together. This unprecedented digital data can support mapmakers, improve the public input process for marginalized communities, and support organizations with data to evaluate proposed maps. Join us to fight gerrymandering and mobilize all communities to get the representation they deserve.
-        Learn more about gerrymandering and Representable.org in the <a target="_blank" href="https://drive.google.com/open?id=1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc">Official Education Guide.</a>
+        Representable is a free, web-based platform designed to collect data provided by Communities to support redistricting work. Our tool offers a platform for Community members to provide information about the geographic boundaries of their Community, alongside the cultural, historic, economic, and other interests that bind them together. Data and maps gathered with Representable are standardized and easy to understand, supporting mapmakers, journalists, non-profits, and policy groups as they draw and evaluate the maps that will be used in Congressional and State legislature elections. Join us to fight gerrymandering and mobilize communities to get the representation they deserve through a fair and transparent map drawing process.
+        Interested in learning more? Check out our <a target="_blank" href="https://drive.google.com/open?id=1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc">Official Education Guide.</a>
       </p>
       <p class="my-3 d-sm-none small text-center">
-        We are a free, web-based platform designed to collect large-scale community data to support fair redistricting. Our tool offers actionable data & maps that show where Communities of Interest are located, and the economic and social interests that bind them together. This unprecedented digital data can support mapmakers, improve the public input process for marginalized communities, and support organizations with data to evaluate proposed maps. Join us to fight gerrymandering and mobilize all communities to get the representation they deserve.
-        Learn more about gerrymandering and Representable.org in the <a target="_blank" href="https://drive.google.com/open?id=1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc">Official Education Guide.</a>
+        Representable is a free, web-based platform designed to collect data provided by Communities to support redistricting work. Our tool offers a platform for Community members to provide information about the geographic boundaries of their Community, alongside the cultural, historic, economic, and other interests that bind them together. Data and maps gathered with Representable are standardized and easy to understand, supporting mapmakers, journalists, non-profits, and policy groups as they draw and evaluate the maps that will be used in Congressional and State legislature elections. Join us to fight gerrymandering and mobilize communities to get the representation they deserve through a fair and transparent map drawing process.
+        Interested in learning more? Check out our <a target="_blank" href="https://drive.google.com/open?id=1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc">Official Education Guide.</a>
       </p>
     </div>
     <!-- How To -->
@@ -77,20 +62,10 @@
           <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/citizens.svg' %}"></img>
           <div class="card-body text-center d-flex flex-column align-items-center">
             <h5>
-              {% if LANGUAGE_CODE == 'en' %}
               For citizens
-              {% elif LANGUAGE_CODE == 'es' %}
-              <!-- Google translate  -->
-              Para los ciudadanos
-              {% endif %}
             </h5>
             <p>
-              {% if LANGUAGE_CODE == 'en' %}
               Learn how to use Representable to draw your community.
-              {% elif LANGUAGE_CODE == 'es' %}
-              <!-- Google translate  -->
-              Aprenda a usar Representable para dibujar su comunidad.
-              {% endif %}
             </p>
             <div class="text-center">
               <a class="btn btn-outline-primary mx-2 my-1" href="#select" role="button">Add your community</a>
@@ -104,20 +79,10 @@
           <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/map.svg' %}"></img>
           <div class="card-body text-center flex-column align-items-center">
             <h5 class="card-title">
-              {% if LANGUAGE_CODE == 'en' %}
               For nonprofits
-              {% elif LANGUAGE_CODE == 'es' %}
-              <!-- Google translate  -->
-              Para organizaciones sin fines de lucro
-              {% endif %}
             </h5>
             <p class="card-text">
-              {% if LANGUAGE_CODE == 'en' %}
               Work with us to map communities across the United States.
-              {% elif LANGUAGE_CODE == 'es' %}
-              <!-- Google translate  -->
-              Trabaje con nosotros para mapear comunidades en los Estados Unidos.
-              {% endif %}
             </p>
             <div class="text-center">
               <a class="btn btn-outline-primary mx-2 my-1" href="#partner" role="button">Partner with us</a>
@@ -131,20 +96,10 @@
           <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/redistricter.svg' %}"></img>
           <div class="card-body text-center flex-column align-items-center">
             <h5 class="card-title">
-              {% if LANGUAGE_CODE == 'en' %}
               For redistricters
-              {% elif LANGUAGE_CODE == 'es' %}
-              <!-- Google translate -->
-              Para redistribuir distritos
-              {% endif %}
             </h5>
             <p class="card-text">
-              {% if LANGUAGE_CODE == 'en' %}
               Use our data to protect communities during the map drawing process.
-              {% elif LANGUAGE_CODE == 'es' %}
-              <!-- Google translate  -->
-              Use nuestros datos para proteger a las comunidades durante el proceso de dibujo del mapa.
-              {% endif %}
             </p>
             <div class="text-center">
               <a class="btn btn-outline-secondary mx-2 my-1 disabled" href="#" role="button">Coming soon!</a>
@@ -177,12 +132,7 @@
         <h1 class="my-3 font-weight-light">Are you the leader of an organization?</h1>
         <p class="my-3 lead">Many organizations have partnered with Representable.org to collect community-of-interest data. Get started by creating a partner profile.</p>
         <a class="btn btn-primary mx-2 my-1" href="/partners/welcome" role="button">
-          {% if LANGUAGE_CODE == 'en' %}
           Partner with us  &rarr;
-          {% elif LANGUAGE_CODE == 'es' %}
-          <!-- Google translate  -->
-          Asociarse con nosotros  &rarr;
-          {% endif %}
         </a>
       </div>
     </div>

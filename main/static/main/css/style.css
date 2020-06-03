@@ -51,11 +51,11 @@ form:invalid {
   z-index: 10;
   display: none;
 }
-.red-circle {
-  color: #e74c3c;
-}
 .blue-circle {
-  color: #2a94f4;
+  color: #34495e;
+}
+.orange-circle {
+  color: #e67e22;
 }
 
 /* Entry Page: Geocoder Full Width */
@@ -149,6 +149,9 @@ body {
   }
   body #usa-map {
     min-height: 300px;
+  }
+  #stateSelectionDropdown {
+    font-size: 1rem !important;
   }
 }
 
@@ -418,21 +421,50 @@ color scheme. See readme.md*/
 #usa-map {
   width: 100%;
   height: 100%;
-  min-height: 600px;
+  min-height: 580px;
   margin: auto;
   cursor: pointer;
 }
 #stateSelectionDropdown {
-  font-size: 2rem;
+  font-size: 1.5rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23000000'><polygon points='0,0 100,0 50,50'/></svg>")
+    no-repeat;
+  background-size: 12px;
+  background-position: calc(100% - 20px) center;
+  background-repeat: no-repeat;
+  background-color: #efefef;
+  border-radius: 0.25rem;
+  padding: 5px;
+  width: 14rem;
 }
 
 .state {
-  top: 250px;
-  right: -50px;
-  position: absolute;
-  z-index: -999;
-  width: 700px;
+  width: 200px;
   opacity: 15%;
+}
+
+.loader {
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 8px solid #2a94f4; /* Blue */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 2s linear infinite;
+}
+.viz-dropdown {
+  border-radius: 0px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
@@ -551,12 +583,6 @@ color scheme. See readme.md*/
 
 .card-section-button {
   display: block;
-}
-
-.collapse-card {
-  /* filter: blur(3px); */
-  /* z-index: 0; */
-  /* pointer-events: none; */
 }
 
 .button-next-geocoder {
@@ -803,6 +829,7 @@ label {
   color: black;
   padding: 6px 8px 6px 16px;
   flex: 1;
+  margin-bottom: 0rem;
 }
 
 /* LOGIN */

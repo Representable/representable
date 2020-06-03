@@ -34,6 +34,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
       <script type="text/javascript">
         var a = '{{ entries | escapejs }}';
         var mapbox_user_name = "{{mapbox_user_name}}";
+        var state = '';
       </script>
     </div>
     <div class="col-md-4 col-wide">
@@ -43,7 +44,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
             <div class="card">
               <small class="font-weight-light mx-1 my-1">Please note: Representable.org is in beta. This page may not be updated as frequently as other aspects of the website.</small>
               <div id="headingOne">
-                <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne"
+                <button class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne"
                 aria-expanded="false" aria-controls="collapseOne" style="width: 100%">
                 Data layers <i class="fas fa-caret-down"></i></button>
               </div>
@@ -54,12 +55,12 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
             </div>
             <div class="items card">
               <div id="headingThree">
-                <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseThree"
+                <button class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseThree"
                 aria-expanded="true" aria-controls="collapseThree" style="width: 100%">
                 Communities <i class="fas fa-caret-down"></i></button>
               </div>
               {% if communities %}
-              <table class="table table-hover">
+              <table id="collapseThree" class="collapse show table table-hover">
                 {% for c in communities %}
                 <tr class="community-review-span hidden" id={{c.entry_ID}}>
                   <td>
@@ -112,7 +113,9 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                     {% endfor %}
                   </table>
                   {% endif %}
-                  <p class="loading my-5 text-center">Loading Communities...</p>
+                  <div class="d-flex justify-content-center">
+                    <div class="loader my-5"></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -132,4 +135,5 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
     </script>
     <script type="text/javascript" src="{% static 'main/js/components/keys.js' %}"></script>
     <script type="text/javascript" src="{% static 'main/js/map.js' %}"></script>
+    <script type="text/javascript" src="{% static 'main/js/components/states.js' %}"></script>
     {% endblock %}

@@ -32,6 +32,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
     <div>
       <script type="text/javascript">
         var a = '{{ entries | escapejs }}';
+        var state = '{{ state }}'
         var mapbox_user_name = "{{mapbox_user_name}}";
       </script>
     </div>
@@ -40,14 +41,14 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
         <div class="sidenav">
           <div class="accordion" id="accordionExample">
             <div class="card">
-              <div class="my-1 border-bottom">
+              <div class="my-1">
                 <h4 class="font-weight-light text-center my-2"> {{ organization }} </h4>
                 {% if campaign %}
                 <p class="font-weight-light text-center">{{ campaign }} </p>
                 {% endif %}
               </div>
               <div id="headingOne">
-                <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne"
+                <button class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne"
                 aria-expanded="false" aria-controls="collapseOne" style="width: 100%">
                 Data layers <i class="fas fa-caret-down"></i></button>
               </div>
@@ -58,14 +59,14 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
             </div>
             <div class="items card">
               <div id="headingThree">
-                <button class="btn font-weight-light" type="button" data-toggle="collapse" data-target="#collapseThree"
+                <button class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseThree"
                 aria-expanded="true" aria-controls="collapseThree" style="width: 100%">
                 Communities <i class="fas fa-caret-down"></i></button>
               </div>
               {% if communities %}
-              <table class="table table-hover">
+              <table id="collapseThree" class="collapse show table table-hover">
                 {% for c in communities %}
-                <tr class="community-review-span hidden" id={{c.entry_ID}}>
+                <tr class="community-review-span" id={{c.entry_ID}}>
                   <td>
                     <span class="text-uppercase entry-name">
                       {% with link_text="/submission?map_id="|addstr:c.entry_ID|slice:27 %}
@@ -132,7 +133,6 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                     {% endfor %}
                   </table>
                   {% endif %}
-                  <p class="loading my-5 text-center">Loading Communities...</p>
                 </div>
               </div>
             </div>
@@ -151,5 +151,6 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
       mapboxgl.accessToken = "{{ mapbox_key }}";
     </script>
     <script type="text/javascript" src="{% static 'main/js/components/keys.js' %}"></script>
+    <script type="text/javascript" src="{% static 'main/js/components/states.js' %}"></script>
     <script type="text/javascript" src="{% static 'main/js/map.js' %}"></script>
     {% endblock %}

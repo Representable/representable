@@ -516,7 +516,7 @@ var draw = new MapboxDraw({
         "line-join": "round",
       },
       paint: {
-        "line-color": "#2A94F4",
+        "line-color": "#34495e",
         "line-width": 2,
       },
     },
@@ -529,7 +529,7 @@ var draw = new MapboxDraw({
         "line-join": "round",
       },
       paint: {
-        "line-color": "#2A94F4",
+        "line-color": "#34495e",
         "line-dasharray": [0.2, 2],
         "line-width": 2,
       },
@@ -545,7 +545,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 10,
-        "circle-color": "#2A94F4",
+        "circle-color": "#34495e",
       },
     },
     {
@@ -559,7 +559,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 4,
-        "circle-color": "#2A94F4",
+        "circle-color": "#34495e",
       },
     },
     {
@@ -590,7 +590,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 3,
-        "circle-color": "#2A94F4",
+        "circle-color": "#34495e",
       },
     },
     {
@@ -618,7 +618,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 5,
-        "circle-color": "#2A94F4",
+        "circle-color": "#34495e",
       },
     },
     {
@@ -627,7 +627,7 @@ var draw = new MapboxDraw({
       filter: ["all", ["==", "$type", "Point"], ["==", "meta", "midpoint"]],
       paint: {
         "circle-radius": 5,
-        "circle-color": "#e74c3c",
+        "circle-color": "#e67e22",
       },
     },
   ],
@@ -651,7 +651,7 @@ delete_feature_button.backgroundImg = "";
 delete_feature_button.id = "delete-feature-button-id";
 delete_feature_button.style.display = "none";
 delete_feature_button.innerHTML =
-  "<i class='fas fa-minus-square'></i> Delete Vertex";
+  "<i class='fas fa-minus-square'></i> Delete Point";
 
 class ClearMapButton {
   onAdd(map) {
@@ -671,9 +671,11 @@ class ClearMapButton {
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
     clear_map_button.addEventListener("click", function (event) {
-      draw.trash();
       hideInstructionBox();
-      updateCommunityEntry(event);
+      draw.deleteAll();
+      map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
+      draw.changeMode("simple_select");
+      hideMapEditButtons();
     });
     this._container.appendChild(clear_map_button);
     return this._container;
@@ -905,33 +907,23 @@ class CensusBlocksControl {
   }
 }
 map.addControl(new CensusBlocksControl(), "top-left");
-
-// override behavior for clear map button
-document
-  .getElementById("map-clear-button-id")
-  .addEventListener("click", function (e) {
-    hideInstructionBox();
-    draw.deleteAll();
-    map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
-    draw.changeMode("simple_select");
-    hideMapEditButtons();
-  });
-
 // Override Behavior for Draw-Button
-document
-  .getElementById("draw-button-id")
-  .addEventListener("click", function (event) {
+document.getElementById("draw-button-id").addEventListener(
+  "click",
+  function (event) {
     hideInstructionBox();
     draw.deleteAll();
     map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
     draw.changeMode("draw_polygon");
     showMapEditButtons();
-  });
+  },
+  true
+);
 
 // override behavior for delete button
-document
-  .getElementById("delete-feature-button-id")
-  .addEventListener("click", function (event) {
+document.getElementById("delete-feature-button-id").addEventListener(
+  "click",
+  function (event) {
     map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
     if (draw != null) {
       var all_features = draw.getAll();
@@ -945,7 +937,9 @@ document
         draw.changeMode("simple_select");
       }
     }
-  });
+  },
+  true
+);
 
 function toggleMapButtons(state) {
   var mapContent = document.getElementById("map");
@@ -1041,99 +1035,101 @@ function addStateNeighborLayers(new_neighbors, new_state) {
 let myTour = new Shepherd.Tour({
   defaultStepOptions: {
     cancelIcon: {
-      enabled: true
+      enabled: true,
     },
-    classes: 'class-1 class-2',
-    scrollTo: { behavior: 'smooth', block: 'center' }
-  }  
-  });
-
+    classes: "class-1 class-2",
+    scrollTo: { behavior: "smooth", block: "center" },
+  },
+});
 
 myTour.addStep({
-  title: 'Community of Interest Drawing Tutorial',
-  text: 'Now that you are ready to draw out your community of interest, follow the steps to learn about the mapping tool!',
+  title: "Community of Interest Drawing Tutorial",
+  text:
+    "Now that you are ready to draw out your community of interest, follow the steps to learn about the mapping tool!",
   buttons: [
     {
       action() {
         return this.complete();
       },
-      classes: 'shepherd-button-secondary',
-      text: 'Exit'
+      classes: "shepherd-button-secondary",
+      text: "Exit",
     },
     {
       action() {
         return this.next();
       },
-      text: 'Next'
-    }
-  ]
+      text: "Next",
+    },
+  ],
 });
 
-
 myTour.addStep({
-  title: 'Map Controls',
-  text: 'Use these controls to orient yourself before drawing out your community of interest. You can \
-  zoom in, zoom out and/or reset the map bearing to north using these side buttons.',
+  title: "Map Controls",
+  text:
+    "Use these controls to orient yourself before drawing out your community of interest. You can \
+  zoom in, zoom out and/or reset the map bearing to north using these side buttons.",
   attachTo: {
-    element: '.mapboxgl-ctrl-zoom-out',
-    on: 'left'
+    element: ".mapboxgl-ctrl-zoom-out",
+    on: "left",
   },
   buttons: [
     {
       action() {
         return this.back();
       },
-      classes: 'shepherd-button-secondary',
-      text: 'Back'
+      classes: "shepherd-button-secondary",
+      text: "Back",
     },
     {
       action() {
         return this.next();
       },
-      text: 'Next'
-    }
-  ]
+      text: "Next",
+    },
+  ],
 });
 
 myTour.addStep({
-  title: 'Show/Hide Census Blocks',
-  text: 'Census blocks are the building blocks when it comes to creating districing maps. Click on this button \
-  to show/hide census blocks on the map.',
+  title: "Show/Hide Census Blocks",
+  text:
+    "Census blocks are the building blocks when it comes to creating districing maps. Click on this button \
+  to show/hide census blocks on the map.",
   attachTo: {
-    element: '.active',
-    on: 'bottom'
+    element: ".active",
+    on: "bottom",
   },
   buttons: [
     {
       action() {
         return this.back();
       },
-      classes: 'shepherd-button-secondary',
-      text: 'Back'
+      classes: "shepherd-button-secondary",
+      text: "Back",
     },
     {
       action() {
         return this.next();
       },
-      text: 'Next'
-    }
-  ]
+      text: "Next",
+    },
+  ],
 });
 
 myTour.addStep({
-  title: 'Draw your community of interest',
-  text: 'Begin drawing the polygon that represents your community of interest by clicking on this button.',
+  title: "Draw your community of interest",
+  text:
+    "Begin drawing the polygon that represents your community of interest by clicking on this button.",
   attachTo: {
-    element: '#draw-button-id',
-    on: 'bottom'
+    element: "#draw-button-id",
+    on: "bottom",
   },
   buttons: [
     {
       action() {
         return this.back();
       },
-      classes: 'shepherd-button-secondary',
-      text: 'Back'
+      classes: "shepherd-button-secondary",
+      text: "Back",
     },
     {
       action() {
@@ -1141,83 +1137,85 @@ myTour.addStep({
         document.getElementById("draw-button-id").click();
         return this.next();
       },
-      text: 'Next'
-    }
+      text: "Next",
+    },
   ],
 });
-  
+
 myTour.addStep({
-  title: 'Delete Polygon',
-  text: 'Delete the polygon you have drawn or restart the drawing process by clicking this button.',
+  title: "Delete Polygon",
+  text:
+    "Delete the polygon you have drawn or restart the drawing process by clicking this button.",
   attachTo: {
-    element: '#map-clear-button-id',
-    on: 'bottom'
+    element: "#map-clear-button-id",
+    on: "bottom",
   },
   buttons: [
     {
       action() {
         return this.back();
       },
-      classes: 'shepherd-button-secondary',
-      text: 'Back'
+      classes: "shepherd-button-secondary",
+      text: "Back",
     },
     {
       action() {
         return this.next();
       },
-      text: 'Next'
-    }
-  ]
+      text: "Next",
+    },
+  ],
 });
 
 myTour.addStep({
-  title: 'Edit Polygon',
-  text: 'Add vertices to your polygon for those fine adjustments by clicking this button and then \
-  dragging the vertices to tweak your polygon to your liking.',
+  title: "Edit Polygon",
+  text:
+    "Add vertices to your polygon for those fine adjustments by clicking this button and then \
+  dragging the vertices to tweak your polygon to your liking.",
   attachTo: {
-    element: '#map-edit-button-id',
-    on: 'bottom'
+    element: "#map-edit-button-id",
+    on: "bottom",
   },
   buttons: [
     {
       action() {
         return this.back();
       },
-      classes: 'shepherd-button-secondary',
-      text: 'Back'
+      classes: "shepherd-button-secondary",
+      text: "Back",
     },
     {
       action() {
         return this.next();
       },
-      text: 'Next'
-    }
-  ]
+      text: "Next",
+    },
+  ],
 });
 
 myTour.addStep({
-  title: 'Finish Drawing',
+  title: "Finish Drawing",
   text: `Once you are done fine-tuning your polygon to reflect the geographical boundaries of 
   your community of interest click here and move on to the last part of the form!`,
   attachTo: {
-    element: '#map-finish-drawing-button-id',
-    on: 'bottom'
+    element: "#map-finish-drawing-button-id",
+    on: "bottom",
   },
   buttons: [
     {
       action() {
         return this.back();
       },
-      classes: 'shepherd-button-secondary',
-      text: 'Back'
+      classes: "shepherd-button-secondary",
+      text: "Back",
     },
     {
       action() {
         return this.complete();
       },
-      text: 'Done'
-    }
-  ]
+      text: "Done",
+    },
+  ],
 });
 
 /******************************************************************************/
