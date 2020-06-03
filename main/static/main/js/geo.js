@@ -516,7 +516,7 @@ var draw = new MapboxDraw({
         "line-join": "round",
       },
       paint: {
-        "line-color": "#2A94F4",
+        "line-color": "#00B094",
         "line-width": 2,
       },
     },
@@ -529,7 +529,7 @@ var draw = new MapboxDraw({
         "line-join": "round",
       },
       paint: {
-        "line-color": "#2A94F4",
+        "line-color": "#00B094",
         "line-dasharray": [0.2, 2],
         "line-width": 2,
       },
@@ -545,7 +545,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 10,
-        "circle-color": "#2A94F4",
+        "circle-color": "#00B094",
       },
     },
     {
@@ -559,7 +559,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 4,
-        "circle-color": "#2A94F4",
+        "circle-color": "#00B094",
       },
     },
     {
@@ -590,7 +590,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 3,
-        "circle-color": "#2A94F4",
+        "circle-color": "#00B094",
       },
     },
     {
@@ -618,7 +618,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 5,
-        "circle-color": "#2A94F4",
+        "circle-color": "#00B094",
       },
     },
     {
