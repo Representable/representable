@@ -547,15 +547,10 @@
                                                 {% endif %}
                                             </div>
                                             <strong>
-                                                {% if LANGUAGE_CODE == 'en' %}
                                                 Search for a location to begin drawing your community.
-                                                {% elif LANGUAGE_CODE == 'es' %}
-                                                <!-- Google translate  -->
-                                                Busque una ubicación para comenzar a dibujar su comunidad.
-                                                {% endif %}
                                                 <small class="text-danger">(Required)</small>
                                             </strong>
-                                            <span class="float-right">
+                                            <span class="float-right my-2">
                                                 <button class="btn btn-secondary btn-sm mb-2 mr-2 d-none" id="shepherd-btn" onclick="myTour.start()" type="button">Step-by-step guide</button>
                                                 <button class="btn btn-secondary btn-sm mb-2" onclick="showVideoPopup()" type="button">Video Tutorial</button>
                                             </span>
@@ -583,7 +578,7 @@
                                 <div class="card">
                                     <div class="card-header text-header-card">
                                         <strong>
-                                        Privacy and Terms of Use
+                                        5. Privacy and Terms of Use
                                         </strong>
                                         <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
                                     </div>
