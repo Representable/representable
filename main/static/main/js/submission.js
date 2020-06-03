@@ -59,7 +59,7 @@ function newCensusLayer(state) {
 // add a new layer of upper state legislature data
 function newUpperLegislatureLayer(state) {
   map.addLayer({
-    id: state.toUpperCase() + " State Legislature - Upper",
+    id: state.toUpperCase() + " State Legislature - Senate",
     type: "line",
     source: state + "-upper",
     "source-layer": state + "upper",
@@ -77,7 +77,7 @@ function newUpperLegislatureLayer(state) {
 // add a new layer of lower state legislature data
 function newLowerLegislatureLayer(state) {
   map.addLayer({
-    id: state.toUpperCase() + " State Legislature - Lower",
+    id: state.toUpperCase() + " State Legislature - House/Assembly",
     type: "line",
     source: state + "-lower",
     "source-layer": state + "lower",
@@ -116,6 +116,25 @@ map.on("load", function () {
       newLowerLegislatureLayer(states[i]);
     }
   }
+  map.addSource("counties", {
+    type: "vector",
+    url: "mapbox://mapbox.hist-pres-election-county"
+  });
+  map.addLayer(
+    {
+      id: "counties",
+      type: "line",
+      source: "counties",
+      "source-layer": "historical_pres_elections_county",
+      layout: {
+        visibility: "none"
+      },
+      paint: {
+        "line-color": "rgba(106,137,204,0.7)",
+        "line-width": 2,
+      }
+    }
+  );
 
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
@@ -186,8 +205,9 @@ map.on("load", function () {
 //create a button that toggles layers based on their IDs
 var toggleableLayerIds = [
   "Census Blocks",
-  "State Legislature - Lower",
-  "State Legislature - Upper",
+  "State Legislature - House/Assembly",
+  "State Legislature - Senate",
+  "counties"
 ];
 
 for (var i = 0; i < toggleableLayerIds.length; i++) {
@@ -204,9 +224,13 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   link.onchange = function (e) {
     var txt = this.id;
     var clickedLayers = [];
-    for (let i = 0; i < states.length; i++) {
-      if (states[i] !== "dc" || txt === "Census Blocks") {
-        clickedLayers.push(states[i].toUpperCase() + " " + txt);
+    if (txt === "counties") {
+      clickedLayers.push(txt);
+    } else {
+      for (let i = 0; i < states.length; i++) {
+        if (states[i] !== "dc" || txt === "Census Blocks") {
+          clickedLayers.push(states[i].toUpperCase() + " " + txt);
+        }
       }
     }
     // var clickedLayers = ["NJ " + txt, "VA " + txt, "PA " + txt, "MI " + txt];

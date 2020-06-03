@@ -55,6 +55,7 @@ function newSourceLayer(name, mbCode) {
     url: "mapbox://" + mapbox_user_name + "." + mbCode,
   });
 }
+
 // add a new layer of census block data
 function newCensusLayer(state, firstSymbolId) {
   map.addLayer(
@@ -77,7 +78,7 @@ function newCensusLayer(state, firstSymbolId) {
 // add a new layer of upper state legislature data
 function newUpperLegislatureLayer(state) {
   map.addLayer({
-    id: state.toUpperCase() + " State Legislature - Upper",
+    id: state.toUpperCase() + " State Legislature - Senate",
     type: "line",
     source: state + "-upper",
     "source-layer": state + "upper",
@@ -88,14 +89,14 @@ function newUpperLegislatureLayer(state) {
     },
     paint: {
       "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 4,
+      "line-width": 2,
     },
   });
 }
 // add a new layer of lower state legislature data
 function newLowerLegislatureLayer(state) {
   map.addLayer({
-    id: state.toUpperCase() + " State Legislature - Lower",
+    id: state.toUpperCase() + " State Legislature - House/Assembly",
     type: "line",
     source: state + "-lower",
     "source-layer": state + "lower",
@@ -106,7 +107,7 @@ function newLowerLegislatureLayer(state) {
     },
     paint: {
       "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 4,
+      "line-width": 2,
     },
   });
 }
@@ -146,6 +147,25 @@ map.on("load", function () {
       newLowerLegislatureLayer(states[i]);
     }
   }
+  map.addSource("counties", {
+    type: "vector",
+    url: "mapbox://mapbox.hist-pres-election-county"
+  });
+  map.addLayer(
+    {
+      id: "counties",
+      type: "line",
+      source: "counties",
+      "source-layer": "historical_pres_elections_county",
+      layout: {
+        visibility: "none"
+      },
+      paint: {
+        "line-color": "rgba(106,137,204,0.7)",
+        "line-width": 2,
+      }
+    }
+  );
 
   // send elements to javascript as geojson objects and make them show on the map by
   // calling the addTo
@@ -220,32 +240,34 @@ map.on("load", function () {
   }
   // find what features are currently on view
   // multiple features are gathered that have the same source (or have the same source with 'line' added on)
-  map.on("moveend", function () {
-    var sources = [];
-    var features = map.queryRenderedFeatures();
-    for (var i = 0; i < features.length; i++) {
-      var source = features[i].source;
-      if (
-        source !== "composite" &&
-        !source.includes("line") &&
-        !source.includes("census") &&
-        !source.includes("lower") &&
-        !source.includes("upper")
-      ) {
-        if (!sources.includes(source)) {
-          sources.push(source);
+  if (state === "") {
+    map.on("moveend", function () {
+      var sources = [];
+      var features = map.queryRenderedFeatures();
+      for (var i = 0; i < features.length; i++) {
+        var source = features[i].source;
+        if (
+          source !== "composite" &&
+          !source.includes("line") &&
+          !source.includes("census") &&
+          !source.includes("lower") &&
+          !source.includes("upper")
+        ) {
+          if (!sources.includes(source)) {
+            sources.push(source);
+          }
         }
       }
-    }
-    // only display those on the map
-    $(".community-review-span").each(function(i, obj) {
-      if ($.inArray(obj.id, sources) !== -1) {
-        $(obj).show();
-      } else {
-        $(obj).hide();
-      }
+      // only display those on the map
+      $(".community-review-span").each(function(i, obj) {
+        if ($.inArray(obj.id, sources) !== -1) {
+          $(obj).show();
+        } else {
+          $(obj).hide();
+        }
+      });
     });
-  });
+  }
   // hover to highlight
   $(".community-review-span").hover(function() {
     map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
@@ -291,8 +313,9 @@ document.querySelectorAll(".comm-content").forEach(function (p) {
 //create a button that toggles layers based on their IDs
 var toggleableLayerIds = [
   "Census Blocks",
-  "State Legislature - Lower",
-  "State Legislature - Upper",
+  "State Legislature - House/Assembly",
+  "State Legislature - Senate",
+  "counties"
 ];
 
 for (var i = 0; i < toggleableLayerIds.length; i++) {
@@ -309,9 +332,13 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   link.onchange = function (e) {
     var txt = this.id;
     var clickedLayers = [];
-    for (let i = 0; i < states.length; i++) {
-      if (states[i] !== "dc" || txt === "Census Blocks") {
-        clickedLayers.push(states[i].toUpperCase() + " " + txt);
+    if (txt === "counties") {
+      clickedLayers.push("counties");
+    } else {
+      for (let i = 0; i < states.length; i++) {
+        if (states[i] !== "dc" || txt === "Census Blocks") {
+          clickedLayers.push(states[i].toUpperCase() + " " + txt);
+        }
       }
     }
     e.preventDefault();

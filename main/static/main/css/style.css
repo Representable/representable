@@ -441,11 +441,7 @@ color scheme. See readme.md*/
 }
 
 .state {
-  top: 250px;
-  right: -50px;
-  position: absolute;
-  z-index: -999;
-  width: 700px;
+  width: 200px;
   opacity: 15%;
 }
 
@@ -456,6 +452,9 @@ color scheme. See readme.md*/
   width: 60px;
   height: 60px;
   animation: spin 2s linear infinite;
+}
+.viz-dropdown {
+  border-radius: 0px;
 }
 
 @keyframes spin {
@@ -825,6 +824,7 @@ label {
   color: black;
   padding: 6px 8px 6px 16px;
   flex: 1;
+  margin-bottom: 0rem;
 }
 
 /* LOGIN */
