@@ -516,7 +516,7 @@ var draw = new MapboxDraw({
         "line-join": "round",
       },
       paint: {
-        "line-color": "#00B094",
+        "line-color": "#34495e",
         "line-width": 2,
       },
     },
@@ -529,7 +529,7 @@ var draw = new MapboxDraw({
         "line-join": "round",
       },
       paint: {
-        "line-color": "#00B094",
+        "line-color": "#34495e",
         "line-dasharray": [0.2, 2],
         "line-width": 2,
       },
@@ -545,7 +545,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 10,
-        "circle-color": "#00B094",
+        "circle-color": "#34495e",
       },
     },
     {
@@ -559,7 +559,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 4,
-        "circle-color": "#00B094",
+        "circle-color": "#34495e",
       },
     },
     {
@@ -590,7 +590,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 3,
-        "circle-color": "#00B094",
+        "circle-color": "#34495e",
       },
     },
     {
@@ -618,7 +618,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 5,
-        "circle-color": "#00B094",
+        "circle-color": "#34495e",
       },
     },
     {
@@ -627,7 +627,7 @@ var draw = new MapboxDraw({
       filter: ["all", ["==", "$type", "Point"], ["==", "meta", "midpoint"]],
       paint: {
         "circle-radius": 5,
-        "circle-color": "#e74c3c",
+        "circle-color": "#e67e22",
       },
     },
   ],
