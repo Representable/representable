@@ -516,7 +516,7 @@ var draw = new MapboxDraw({
         "line-join": "round",
       },
       paint: {
-        "line-color": "#2A94F4",
+        "line-color": "#00B094",
         "line-width": 2,
       },
     },
@@ -529,7 +529,7 @@ var draw = new MapboxDraw({
         "line-join": "round",
       },
       paint: {
-        "line-color": "#2A94F4",
+        "line-color": "#00B094",
         "line-dasharray": [0.2, 2],
         "line-width": 2,
       },
@@ -545,7 +545,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 10,
-        "circle-color": "#2A94F4",
+        "circle-color": "#00B094",
       },
     },
     {
@@ -559,7 +559,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 4,
-        "circle-color": "#2A94F4",
+        "circle-color": "#00B094",
       },
     },
     {
@@ -590,7 +590,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 3,
-        "circle-color": "#2A94F4",
+        "circle-color": "#00B094",
       },
     },
     {
@@ -618,7 +618,7 @@ var draw = new MapboxDraw({
       ],
       paint: {
         "circle-radius": 5,
-        "circle-color": "#2A94F4",
+        "circle-color": "#00B094",
       },
     },
     {
@@ -671,9 +671,11 @@ class ClearMapButton {
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
     clear_map_button.addEventListener("click", function (event) {
-      draw.trash();
       hideInstructionBox();
-      updateCommunityEntry(event);
+      draw.deleteAll();
+      map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
+      draw.changeMode("simple_select");
+      hideMapEditButtons();
     });
     this._container.appendChild(clear_map_button);
     return this._container;
@@ -905,33 +907,23 @@ class CensusBlocksControl {
   }
 }
 map.addControl(new CensusBlocksControl(), "top-left");
-
-// override behavior for clear map button
-document
-  .getElementById("map-clear-button-id")
-  .addEventListener("click", function (e) {
-    hideInstructionBox();
-    draw.deleteAll();
-    map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
-    draw.changeMode("simple_select");
-    hideMapEditButtons();
-  });
-
 // Override Behavior for Draw-Button
-document
-  .getElementById("draw-button-id")
-  .addEventListener("click", function (event) {
+document.getElementById("draw-button-id").addEventListener(
+  "click",
+  function (event) {
     hideInstructionBox();
     draw.deleteAll();
     map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
     draw.changeMode("draw_polygon");
     showMapEditButtons();
-  });
+  },
+  true
+);
 
 // override behavior for delete button
-document
-  .getElementById("delete-feature-button-id")
-  .addEventListener("click", function (event) {
+document.getElementById("delete-feature-button-id").addEventListener(
+  "click",
+  function (event) {
     map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
     if (draw != null) {
       var all_features = draw.getAll();
@@ -945,7 +937,9 @@ document
         draw.changeMode("simple_select");
       }
     }
-  });
+  },
+  true
+);
 
 function toggleMapButtons(state) {
   var mapContent = document.getElementById("map");
