@@ -441,11 +441,7 @@ color scheme. See readme.md*/
 }
 
 .state {
-  top: 250px;
-  right: -50px;
-  position: absolute;
-  z-index: -999;
-  width: 700px;
+  width: 200px;
   opacity: 15%;
 }
 
