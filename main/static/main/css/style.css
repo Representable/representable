@@ -51,11 +51,11 @@ form:invalid {
   z-index: 10;
   display: none;
 }
-.red-circle {
-  color: #e74c3c;
+.blue-circle {
+  color: #34495e;
 }
-.green-circle {
-  color: #00b094;
+.orange-circle {
+  color: #e67e22;
 }
 
 /* Entry Page: Geocoder Full Width */
