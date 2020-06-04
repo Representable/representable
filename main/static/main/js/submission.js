@@ -156,7 +156,8 @@ map.on("load", function () {
     var fit = new L.Polygon(final).getBounds();
     var southWest = new mapboxgl.LngLat(fit['_southWest']['lat'], fit['_southWest']['lng']);
     var northEast = new mapboxgl.LngLat(fit['_northEast']['lat'], fit['_northEast']['lng']);
-    map.fitBounds(new mapboxgl.LngLatBounds(southWest, northEast), {padding: 100});
+    var commBounds = new mapboxgl.LngLatBounds(southWest, northEast);
+    map.fitBounds(commBounds, {padding: 100});
     map.addLayer({
       id: obj,
       type: "fill",
@@ -201,6 +202,50 @@ map.on("load", function () {
       },
     });
   }
+  // pdf export button
+  $("#pdf-button").on("click", function() {
+    map.fitBounds(commBounds, {padding: 100});
+    setTimeout(function() {
+      var doc = new jsPDF();
+      var width = doc.internal.pageSize.getWidth();
+      var height = doc.internal.pageSize.getHeight();
+
+      var entryName = window.document.getElementById("entry-name");
+      doc.fromHTML(entryName, 20, 20, {'width': 180});
+
+      var org = "Organization: " + window.document.getElementById("org-text").textContent;
+      var campaign = "Campaign: " + window.document.getElementById("campaign-text").textContent;
+      doc.setFontSize(12);
+      if (org !== null) {
+        doc.text(20, 35, org);
+      }
+      if (campaign !== null) {
+        doc.text(20, 45, campaign);
+      }
+
+      var imgData = map.getCanvas().toDataURL("image/png");
+      doc.addImage(imgData, 'PNG', 20, 70, 170, 160);
+      doc.addPage();
+
+      var elementHandler = {
+        '#ignorePDF': function (element, renderer) {
+          return true;
+        },
+        '#entry-name': function (element, renderer) {
+          return true;
+        }
+      };
+      var source = window.document.getElementById("table-content");
+      doc.fromHTML(
+        source,
+        15,
+        15,
+        {
+          'width': 180,'elementHandlers': elementHandler
+      });
+      doc.save("map.pdf");
+    }, 1500);
+  });
 });
 
 //create a button that toggles layers based on their IDs
@@ -260,23 +305,3 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   layers.appendChild(div);
   var newline = document.createElement("br");
 }
-
-// pdf export button
-$("#pdf-button").on("click", function() {
-  var doc = new jsPDF();
-  var source = window.document.getElementById("table-content");
-  console.log(source);
-  // map.getCanvas().toBlob(function (blob) {
-  //   console.log(blob);
-  //   doc.addImage(blob, 'PNG', 15, 15, 180, 160)
-  //   // doc.addImage(blob, 'PNG', 15, 40, 180, 160);
-  // })
-  doc.fromHTML(source, 15, 15, {'width': 180});
-  doc.addPage();
-
-  var imgData = map.getCanvas().toDataURL("image/png");
-  doc.addImage(imgData, 'PNG', 15, 15, 180, 160);
-  console.log(imgData);
-
-  doc.save("map.pdf");
-});
