@@ -17,6 +17,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!--  GeoCoder -->
 <meta name='robots' content='noindex, nofollow'>
+<script type="text/javascript" src="//cdn.jsdelivr.net/canvas-toblob/0.1/canvas-toBlob.min.js"></script>
+<script type="text/javascript" src="//cdn.rawgit.com/eligrey/FileSaver.js/1.3.3/FileSaver.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js'></script>
 <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
 <!-- Add css again to take precedence over mapbox css. -->
@@ -58,7 +61,7 @@
                     Community Information <i class="fas fa-caret-down"></i></button>
                   </div>
                   <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                    <table class="table">
+                    <table class="table" id="table-content">
                       <tr>
                         <td>
                           <span class="text-uppercase entry-name">
@@ -105,6 +108,7 @@
                         <div class="text-center">
                           {% with link_text="/export?map_id="|addstr:c.entry_ID|slice:27 %}
                           <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{community.entry_ID|slice:8}}.geojson">Export GeoJSON</a>
+                          <span class="btn btn-outline-primary btn-canvas mx-4" role="button" id="pdf-button">Export PDF</span>
                           {% endwith %}
                         </div>
                       </div>

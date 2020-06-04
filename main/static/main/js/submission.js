@@ -10,6 +10,7 @@ var map = new mapboxgl.Map({
   style: "mapbox://styles/mapbox/streets-v11", //color of the map -- dark-v10 or light-v9
   center: [-96.7026, 40.8136], // starting position - Lincoln, Nebraska (middle of country lol)
   zoom: 3, // starting zoom -- higher is closer
+  preserveDrawingBuffer: true,
 });
 
 // geocoder used for a search bar -- within the map itself
@@ -259,3 +260,23 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   layers.appendChild(div);
   var newline = document.createElement("br");
 }
+
+// pdf export button
+$("#pdf-button").on("click", function() {
+  var doc = new jsPDF();
+  var source = window.document.getElementById("table-content");
+  console.log(source);
+  // map.getCanvas().toBlob(function (blob) {
+  //   console.log(blob);
+  //   doc.addImage(blob, 'PNG', 15, 15, 180, 160)
+  //   // doc.addImage(blob, 'PNG', 15, 40, 180, 160);
+  // })
+  doc.fromHTML(source, 15, 15, {'width': 180});
+  doc.addPage();
+
+  var imgData = map.getCanvas().toDataURL("image/png");
+  doc.addImage(imgData, 'PNG', 15, 15, 180, 160);
+  console.log(imgData);
+
+  doc.save("map.pdf");
+});
