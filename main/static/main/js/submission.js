@@ -212,20 +212,27 @@ map.on("load", function () {
 
       var entryName = window.document.getElementById("entry-name");
       doc.fromHTML(entryName, 20, 20, {'width': 180});
+      var rLink = "View this community at " + window.location.href;
+      doc.setFontSize(12);
+      doc.text(20, 35, rLink);
 
       var org = "Organization: " + window.document.getElementById("org-text").textContent;
       var campaign = "Campaign: " + window.document.getElementById("campaign-text").textContent;
-      doc.setFontSize(12);
       if (org !== null) {
-        doc.text(20, 35, org);
+        doc.text(20, 45, org);
       }
       if (campaign !== null) {
-        doc.text(20, 45, campaign);
+        doc.text(20, 55, campaign);
       }
 
       var imgData = map.getCanvas().toDataURL("image/png");
-      doc.addImage(imgData, 'PNG', 20, 70, 170, 160);
+      // calculate ratio of map so it isn't squashed / stretched
+      var mapDim = map.getCanvas().getBoundingClientRect();
+      var mapPDFHeight = (mapDim.height*170) / mapDim.width;
+      doc.addImage(imgData, 'PNG', 20, 70, 170, mapPDFHeight);
       doc.addPage();
+      doc.setFontSize(24);
+      doc.text(20, 20, 'Community Information');
 
       var elementHandler = {
         '#ignorePDF': function (element, renderer) {
@@ -238,8 +245,8 @@ map.on("load", function () {
       var source = window.document.getElementById("table-content");
       doc.fromHTML(
         source,
-        15,
-        15,
+        20,
+        25,
         {
           'width': 180,'elementHandlers': elementHandler
       });
@@ -247,7 +254,6 @@ map.on("load", function () {
     }, 1500);
   });
 });
-
 //create a button that toggles layers based on their IDs
 var toggleableLayerIds = [
   "Census Blocks",
