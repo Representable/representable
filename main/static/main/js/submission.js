@@ -205,10 +205,13 @@ map.on("load", function () {
   // pdf export button
   $("#pdf-button").on("click", function() {
     map.fitBounds(commBounds, {padding: 100});
+    // display loading popup
+    var instruction_box = document.getElementById("pdf-loading-box");
+    instruction_box.style.display = "block";
     setTimeout(function() {
+      // loading popup disappears
+      instruction_box.style.display = "none";
       var doc = new jsPDF();
-      var width = doc.internal.pageSize.getWidth();
-      var height = doc.internal.pageSize.getHeight();
 
       var entryName = window.document.getElementById("entry-name");
       doc.fromHTML(entryName, 20, 20, {'width': 180});
