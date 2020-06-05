@@ -221,13 +221,13 @@ map.on("load", function () {
       doc.setFontSize(12);
       doc.text(20, 35, rLink);
 
-      var org = "Organization: " + window.document.getElementById("org-text").textContent;
-      var campaign = "Campaign: " + window.document.getElementById("campaign-text").textContent;
+      var org = window.document.getElementById("org-text");
+      var campaign = window.document.getElementById("campaign-text");
       if (org !== null) {
-        doc.text(20, 45, org);
+        doc.text(20, 45, "Organization: " + org.textContent);
       }
       if (campaign !== null) {
-        doc.text(20, 55, campaign);
+        doc.text(20, 55, "Campaign: " + campaign.textContent);
       }
 
       var imgData = map.getCanvas().toDataURL("image/png");
