@@ -203,7 +203,9 @@ map.on("load", function () {
     });
   }
   // pdf export button
+  // TODO: if creator of community -> include identifying info
   $("#pdf-button").on("click", function() {
+    // make the map look good for the PDF ! TODO: un-select other layers like census blocks (turn into functions)
     map.fitBounds(commBounds, {padding: 100});
     // display loading popup
     var instruction_box = document.getElementById("pdf-loading-box");
