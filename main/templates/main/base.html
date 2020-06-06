@@ -205,7 +205,7 @@
             <div class="col-6 col-md">
                 <!-- <h5>About</h5> -->
                 <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="{% url 'main:privacy' %}">
+                    <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="{% url 'main:privacy' %}">
                             {% if LANGUAGE_CODE == 'en' %}
                             Privacy
                             {% elif LANGUAGE_CODE == 'es' %}
@@ -213,14 +213,14 @@
                             Intimidad
                             {% endif %}
                         </a></li>
-                    <li><a class="text-muted" href="{% url 'main:terms' %}">
+                    <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="{% url 'main:terms' %}">
                             {% if LANGUAGE_CODE == 'en' %}
                             Terms
                             {% elif LANGUAGE_CODE == 'es' %}
                             <!-- Google translate  -->
                             Condiciones
                             {% endif %}</a></li>
-                    <li><a class="text-muted" href="https://forms.gle/1LRVNqR31AfAtD6p7">
+                    <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="https://forms.gle/1LRVNqR31AfAtD6p7">
                             {% if LANGUAGE_CODE == 'en' %}
                             Send Feedback
                             {% elif LANGUAGE_CODE == 'es' %}
