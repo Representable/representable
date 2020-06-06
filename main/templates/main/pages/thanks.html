@@ -23,9 +23,9 @@
                             </li>
                             {% if has_campaign %}
                             <li class="list-group-item justify-content-between align-items-center">
-                                  <h5>Campaign Map</h5>
-                                  <p>View all communities submitted to this campaign.</p>
-                                  <a class="btn btn-outline-primary" href="{% url 'main:partner_map' view.kwargs.slug view.kwargs.campaign %}"  role="button">View Campaign Map</a>
+                                  <h5>{{campaign_name}} Map</h5>
+                                  <p>View all communities submitted to {{campaign_name}}.</p>
+                                  <a class="btn btn-outline-primary" href="{% url 'main:partner_map' view.kwargs.slug view.kwargs.campaign %}"  role="button">View Map</a>
                               </li>
                             {% endif %}
                         </ul>

@@ -7,13 +7,14 @@
       <h2>{{object.name}}</h2>
       <p>Organized by <a href="{% url 'main:partner_page' object.organization.slug %}">{{object.organization}}</a></p>
       <hr>
-      <h5>Our Campaign</h5>
       <p>{{object.description}}</p>
 
       {% if object.state == "MI" %}
+      <p>When you are so we can improve this website. The Feedback Form appears at the bottom of each page.</p>
+      <p>Thank you for helping to ensure that all people in Michigan will have an easy-to-use tool to draw their own community maps, which can be used to submit testimony to the Independent Citizens Redistricting Commission.</p>
       <h5>Redistricting in Michigan</h5>
-      <p>Michigan has a new Independent Citizens Redistricting Commission voted into law in 2018 by the people of this State. Representable will help you tell the Commission about your Community and draw a map of your Community boundaries so the Commission can fairly consider your Community when it draws new voting district lines.</p>
-      <p>In the past, voting districts were drawn by politicians and their consultants behind closed doors with little public input.  However, the shape of voting district maps can influence election outcomes, so it is important that new district maps be drawn in a fair and impartial manner.</p>
+      <p>Michigan has a new Independent Citizens Redistricting Commission voted into law in 2018 by the people of this State. Representable will help you tell the Commission about your community and draw a map of your community boundaries so the Commission can fairly consider your community when it draws new voting district lines.</p>
+      <p>In the past, voting districts were drawn by politicians and their consultants behind closed doors with little or no public input. However, the shape of voting district maps can influence election outcomes, so it is important that new district maps be drawn in a transparent and impartial manner.</p>
       <h5 class="border-top pt-3">The Michigan Constitution now requires that voting district maps drawn by the new Commission meet seven criteria, ranked in order of priority.</h5>
       <div class="row">
         <div class="col-12">
@@ -28,9 +29,12 @@
           </ol>
         </div>
       </div>
-      <p class="border-top pt-2">Third on this list is the requirement for the new Commission to consider the state’s diverse populations and <b>“communities of interest”</b> . A Community is defined in the Michigan Constitution as populations that share cultural or historical characteristics or economic interests. A Community does not include relationships with political parties, incumbents or political candidates. Click Draw my community below to share your community of interest and give your community the voice it deserves!</p>
+      <p class="border-top pt-2">Third on this list is the requirement for the new Commission to consider the state’s diverse populations and “communities of interest” (referred to in this program as “Communities”). A Community is defined in the Michigan Constitution as populations that share cultural or historical characteristics or economic interests. A Community does not include relationships with political parties, incumbents or political candidates.</p>
+      <p>This program is designed to help you provide information about your Community to the Commission and draw a geographic map of the boundaries of your Community. </p>
+      <p>It will provide a consistent format for Communities to use so the information will be easier for the Commission to consider in drawing the new voting district maps. </p>
+      <p>Click "Draw My Community" below to share information about your Community and give your Community the voice it deserves!</p>
       {% endif %}
-        <a class="btn btn-primary btn-lg my-3" href="{% url 'main:entry' campaign=object.slug %}" role="button">Draw my community</a>
+        <a class="btn btn-primary btn-lg my-3" href="{% url 'main:entry' campaign=object.slug %}" role="button">Draw My Community</a>
       <!-- <a class="btn btn-outline-primary my-3" href="{% url 'main:partner_map' object.organization.slug object.slug %}" role="button">View map of communities</a> -->
     </div>
     </div>

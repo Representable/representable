@@ -43,8 +43,6 @@ from .choices import (
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Area
 
-from phone_field import PhoneField
-
 # https://django-select2.readthedocs.io/en/latest/django_select2.html
 
 
@@ -127,11 +125,6 @@ class CommunityForm(ModelForm):
             "comm_activities": forms.Textarea(attrs={"rows": 5}),
             "other_considerations": forms.Textarea(attrs={"rows": 5}),
             "user_name": forms.TextInput(attrs={"placeholder": "Full Name"}),
-            # user_phone uses django-phone-field, but doesn't have args for placeholder
-            # use the textInput widget instead
-            "user_phone": forms.TextInput(
-                attrs={"placeholder": "Phone Number"}
-            ),
             "user_polygon": forms.HiddenInput(),
         }
         labels = {
@@ -146,7 +139,6 @@ class CommunityForm(ModelForm):
         Make sure that the user polygon contains no kinks and has an acceptable area.
         https://gis.stackexchange.com/questions/288103/how-to-convert-the-area-to-feets-in-geodjango
         Make sure that at least one of the interest fields is filled out.
-        Check if the phone number is a valid US number.
         """
         errors = {}
         # check if the user drew a polygon
@@ -157,13 +149,10 @@ class CommunityForm(ModelForm):
             # Check kinks in the polygon
             if not data.valid:
                 errors["user_polygon"] = "Polygon contains kinks."
-        phone = self.cleaned_data.get("user_phone")
         cultural_interests = self.cleaned_data.get("cultural_interests")
         economic_interests = self.cleaned_data.get("economic_interests")
         comm_activities = self.cleaned_data.get("comm_activities")
         other_considerations = self.cleaned_data.get("other_considerations")
-        if not phone.is_usa:
-            errors["user_phone"] = "Invalid phone number."
         if (
             cultural_interests == ""
             and economic_interests == ""

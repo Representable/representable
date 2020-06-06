@@ -98,7 +98,7 @@
                                                     information to verify that you are a real person. If you choose to
                                                     submit this entry to a campaign, the administrators of the campaign
                                                     will have access to this information. Learn more about our
-                                                    commitment to privacy on our <a href="{% url 'main:privacy' %}">Privacy</a> and <a href="{% url 'main:terms' %}">Terms</a> pages.
+                                                    commitment to privacy on our <a target="_blank" rel="noopener noreferrer" href="{% url 'main:privacy' %}">Privacy</a> and <a target="_blank" rel="noopener noreferrer" href="{% url 'main:terms' %}">Terms</a> pages.
                                                 </p>
                                             </div>
                                         </div>
@@ -129,33 +129,6 @@
                                             </div>
                                         </div>
 
-                                        <div id="phone-error-alerts">
-                                            {% if comm_form.user_phone.errors %}
-                                            <script>
-                                                sessionStorage.setItem("allChecks", "fail");
-                                            </script>
-                                            <div id="phone_invalid" class="alert  django-alert alert-dismissible fade show form-error" role="alert">
-                                                {% if LANGUAGE_CODE == 'en' %}
-                                                Please enter a valid US Phone Number.
-                                                {% elif LANGUAGE_CODE == 'es' %}
-                                                <!-- Google translate  -->
-                                                Ingrese un número de teléfono válido de EE. UU.
-                                                {% endif %}
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            {% endif %}
-                                        </div>
-
-                                        <p class="card-text mb-1 mt-2">
-                                            Phone Number <small class="text-danger">(Required)</small>
-                                        </p>
-                                        <div class="form-row my-2">
-                                            <div class="col-4">
-                                                {{ comm_form.user_phone|append_attr:"class:form-control"|append_attr:"placeholder:Phone Number" }}
-                                            </div>
-                                        </div>
                                         <div id="addr_form_error_alerts">
                                             {% if addr_form.errors %}
                                                 <script>
@@ -579,16 +552,20 @@
                                     </div>
                                     <div class="card-body collapse show">
                                         <p class="card-text">
-                                            Your privacy is our priority. We don't share your personal information
-                                            with anyone unless otherwise noted. <a href="{% url 'main:privacy' %}"> Learn more about
-                                            our commitment to privacy on our Privacy Policy page.</a>
+                                            Your privacy is our highest priority. We gather your Identifying information to verify
+                                            that you are a real person. We will not publicly share anyone's individual personal information,
+                                            such as name, address, or email.
+                                            {% if has_campaign %}
+                                            <br>
+                                            We will only share your information with {{organization_name}} because you are adding the community through their page.
+                                            {% endif %}
                                         </p>
                                         <div class="toc-check">
                                             <input class="toc-check-input" type="checkbox" value="" id="toc_check" required>
                                             <label class="toc-check-label" for="toc_check">
-                                                Click here to indicate that you have read and agree to the 
-                                                <a href="{% url 'main:terms' %}">Terms of Use</a> and 
-                                                <a href="{% url 'main:privacy' %}">Privacy Policy</a>. 
+                                                Click here to indicate that you have read and agree to the
+                                                <a target="_blank" rel="noopener noreferrer" href="{% url 'main:terms' %}">Terms of Use</a> and 
+                                                <a target="_blank" rel="noopener noreferrer" href="{% url 'main:privacy' %}">Privacy Policy</a>. 
                                                 <small class="text-danger">(Required)</small>
                                             </label>
                                         </div>
