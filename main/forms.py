@@ -125,11 +125,6 @@ class CommunityForm(ModelForm):
             "comm_activities": forms.Textarea(attrs={"rows": 5}),
             "other_considerations": forms.Textarea(attrs={"rows": 5}),
             "user_name": forms.TextInput(attrs={"placeholder": "Full Name"}),
-            # user_phone uses django-phone-field, but doesn't have args for placeholder
-            # use the textInput widget instead
-            # "user_phone": forms.TextInput(
-            # attrs={"placeholder": "Phone Number"}
-            # ),
             "user_polygon": forms.HiddenInput(),
         }
         labels = {
@@ -144,7 +139,6 @@ class CommunityForm(ModelForm):
         Make sure that the user polygon contains no kinks and has an acceptable area.
         https://gis.stackexchange.com/questions/288103/how-to-convert-the-area-to-feets-in-geodjango
         Make sure that at least one of the interest fields is filled out.
-        Check if the phone number is a valid US number.
         """
         errors = {}
         # check if the user drew a polygon
