@@ -368,8 +368,13 @@ class EntryView(LoginRequiredMixin, View):
             has_token = True
 
         has_campaign = False
+        organization_name = ""
         if kwargs["campaign"]:
             has_campaign = True
+            campaign_slug = self.kwargs["campaign"]
+            campaign = Campaign.objects.get(slug=campaign_slug)
+            organization = campaign.organization
+            organization_name = organization.name
 
         context = {
             "comm_form": comm_form,
@@ -378,6 +383,7 @@ class EntryView(LoginRequiredMixin, View):
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
             "has_token": has_token,
             "has_campaign": has_campaign,
+            "organization_name": organization_name,
         }
         return render(request, self.template_name, context)
 
