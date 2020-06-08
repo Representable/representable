@@ -70,10 +70,13 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "phone_field",
+    "rest_framework",
     # 'allauth.socialaccount.providers.facebook',
     # 'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.linkedin',
     # 'allauth.socialaccount.providers.linkedin_oauth2',
+    "api.apps.ApiConfig",  # activate the new app
 ]
 
 ACCOUNT_SESSION_REMEMBER = True
@@ -235,3 +238,6 @@ ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 
 ACCOUNT_EMAIL_REQUIRED = True
 DEFAULT_FROM_EMAIL = "no-reply@representable.org"
+
+
+REST_FRAMEWORK = {}
