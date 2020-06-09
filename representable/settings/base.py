@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.linkedin',
     # 'allauth.socialaccount.providers.linkedin_oauth2',
     "api.apps.ApiConfig",  # activate the new app
+    "frontend",
 ]
 
 ACCOUNT_SESSION_REMEMBER = True
