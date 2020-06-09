@@ -58,6 +58,24 @@ class User(AbstractUser):
         else:
             return False
 
+    def is_generic_admin(self):
+        if Membership.objects.filter(member=self, is_org_admin=True):
+            return True
+        else:
+            return False
+
+    def is_generic_moderator(self):
+        if Membership.objects.filter(member=self, is_org_moderator=True):
+            return True
+        else:
+            return False
+
+    def is_generic_member(self):
+        if Membership.objects.filter(member=self):
+            return True
+        else:
+            return False
+
 
 # ******************************************************************************#
 
