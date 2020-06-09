@@ -6,3 +6,4 @@ class OrganizationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Organization
         fields = ("name", "description", "ext_link", "states")
+        lookup_field = "slug"
