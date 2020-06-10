@@ -43,6 +43,15 @@
         var member = "{{member}}";
         var moderator = "{{moderator}}";
         var admin = "{{admin}}";
+        var session_auth_state = sessionStorage.getItem('session_auth_state');
+        if (!session_auth_state) {
+            session_auth_state = false;
+        }
+        {% if user.is_authenticated %}
+        var is_auth = true;
+        {% else %}
+        var is_auth = false;
+        {% endif %}
       </script>
 </head>
 
