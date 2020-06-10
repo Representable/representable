@@ -310,7 +310,7 @@ function checkFieldById(field_id) {
     field.classList.add("has_error");
     return false;
   }
-  field.classList.add("hass_success");
+  field.classList.add("has_success");
   return true;
 }
 
@@ -398,6 +398,26 @@ document.addEventListener(
       let first_alert = document_alerts[0];
       first_alert.scrollIntoView();
       document.getElementById("form_error").classList.remove("d-none");
+    }
+
+    // Tracking
+    var form_elements = document.getElementById("entryForm").elements;
+    for (var i = 0; i < form_elements.length; i++) {
+      var field = form_elements[i];
+      if (
+        field &&
+        (field.nodeName == "INPUT" || field.nodeName == "TEXTAREA") &&
+        field.classList.contains("form-control")
+      ) {
+        field.addEventListener("focus", function (event) {
+          if (!event.target.classList.contains("done")) {
+            event.target.classList.add("done");
+            mixpanel.track("Entry Page Section Focus", {
+              field_id: event.target.id,
+            });
+          }
+        });
+      }
     }
   },
   false
