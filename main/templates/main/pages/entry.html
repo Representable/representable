@@ -31,7 +31,18 @@
 <script>
     sessionStorage.setItem("allChecks", "pass");
     var mapbox_user_name = "{{mapbox_user_name}}";
-//   console.log("passed");
+    var campaign_id = "{{campaign_id}}";
+    var organization_id = "{{organization_id}}";
+    var campaign_name = "{{campaign_name}}";
+    var organization_name = "{{organization_name}}";
+    mixpanel.track("Campaign Page Loaded",
+    {
+     "campaign_id": campaign_id,
+     "campaign_name": campaign_name,
+     "organization_id": organization_id,
+     "organization_name": organization_name,
+    }
+  );
 </script>
 {% endblock %}
 
@@ -579,7 +590,7 @@
                     </div>
                 </div>
                 <div id="dropuphelp2" class="btn-floating btn-group shadow-lg dropup">
-                    <button type="button" class="btn fixed-action-btn btn-secondary shadow-lg dropdown-toggle" id="dropuphelp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick="function() {mixpanel.track('Help Button Clicked');}">
+                    <button type="button" class="btn fixed-action-btn btn-secondary shadow-lg dropdown-toggle" id="dropuphelp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-question-circle" aria-hidden="true"></i><span class="d-none d-sm-inline"> Help</span>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropuphelp">

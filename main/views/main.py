@@ -378,12 +378,18 @@ class EntryView(LoginRequiredMixin, View):
 
         has_campaign = False
         organization_name = ""
+        organization_id = None
+        campaign_name = ""
+        campaign_id = None
         if kwargs["campaign"]:
             has_campaign = True
             campaign_slug = self.kwargs["campaign"]
             campaign = Campaign.objects.get(slug=campaign_slug)
+            campaign_name = campaign.name
+            campaign_id = campaign.id
             organization = campaign.organization
             organization_name = organization.name
+            organization_id = organization.id
 
         context = {
             "comm_form": comm_form,
@@ -393,6 +399,9 @@ class EntryView(LoginRequiredMixin, View):
             "has_token": has_token,
             "has_campaign": has_campaign,
             "organization_name": organization_name,
+            "organization_id": organization_id,
+            "campaign_name": campaign_name,
+            "campaign_id": campaign_id,
         }
         return render(request, self.template_name, context)
 
