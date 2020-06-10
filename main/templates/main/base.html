@@ -63,83 +63,46 @@
                 </li>
                 <li class="nav-item mx-auto">
                     <a class="nav-link" href='/about'>
-                        {% if LANGUAGE_CODE == 'en' %}
                         About
-                        {% elif LANGUAGE_CODE == 'es' %}
-                        Sobre nosotros
-                        {% endif %}
                     </a>
                 </li>
                 <li class="nav-item mx-auto">
                     <a class="nav-link" href="{% url 'main:partner_welcome' %}">
-                        {% if LANGUAGE_CODE == 'en' %}
                         Partners
-                        {% elif LANGUAGE_CODE == 'es' %}
-                        Socios
-                        {% endif %}
                     </a>
                 </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item mx-auto">
                     <a class="nav-link" href="{% url 'main:dashboard' %}">
-                        {% if LANGUAGE_CODE == 'en' %}
                         Dashboard
-                        {% elif LANGUAGE_CODE == 'es' %}
-                        Tablero
-                        {% endif %}
                     </a>
                 </li>
                 {% endif %}
                 {% if user.is_authenticated %}
                 <li class="nav-item mx-auto">
                     <a class="nav-link" href='/review'>
-                        {% if LANGUAGE_CODE == 'en' %}
                         My entries
-                        {% elif LANGUAGE_CODE == 'es' %}
-                        <!-- Google translate  -->
-                        Mis entradas
-                        {% endif %}
                     </a>
                 </li>
                 <li class="nav-item mx-auto">
                     <a class="btn btn-outline-primary m-2" href="/entry">
-                        {% if LANGUAGE_CODE == 'en' %}
                         New entry
-                        {% elif LANGUAGE_CODE == 'es' %}
-                        <!-- Google translate  -->
-                        Nueva entrada
-                        {% endif %}
                     </a>
                 </li>
                 <li class="nav-item mx-auto">
-                    <a class="btn btn-primary m-2" href="/accounts/logout">
-                        {% if LANGUAGE_CODE == 'en' %}
+                    <a class="btn btn-primary m-2 log-out-started" href="/accounts/logout">
                         Log out
-                        {% elif LANGUAGE_CODE == 'es' %}
-                        <!-- Google translate  -->
-                        Cerrar sesión
-                        {% endif %}
                     </a>
                 </li>
                 {% else %}
                 <li class="nav-item mx-auto">
-                    <a class="btn btn-outline-primary m-2" href="/accounts/login">
-                        {% if LANGUAGE_CODE == 'en' %}
+                    <a class="btn btn-outline-primary m-2 log-in-started" href="/accounts/login">
                         Log in
-                        {% elif LANGUAGE_CODE == 'es' %}
-                        <!-- Google translate  -->
-                        Iniciar sesión
-                        {% endif %}
                     </a>
                 </li>
                 <li class="nav-item mx-auto">
-                    <a class="btn btn-primary m-2" href="/accounts/signup">
-                        {% if LANGUAGE_CODE == 'en' %}
+                    <a class="btn btn-primary m-2 sign-up-started" href="/accounts/signup">
                         Sign up
-                        {% elif LANGUAGE_CODE == 'es' %}
-                        <!-- Google translate  -->
-                        Regístrate
-                        {% endif %}
                     </a>
                 </li>
                 {% endif %}
@@ -187,21 +150,11 @@
                             Draw Your Community
                         </a></li>
                     <li><a class="text-muted" href="{% url 'main:map' %}">
-                            {% if LANGUAGE_CODE == 'en' %}
                             View All Maps
-                            {% elif LANGUAGE_CODE == 'es' %}
-                            <!-- Google translate  -->
-                            Ver Todos Los Mapas
-                            {% endif %}
                         </a></li>
                     {% if user.is_authenticated %}
                     <li><a class="text-muted" href="{% url 'main:review' %}">
-                            {% if LANGUAGE_CODE == 'en' %}
                             My Entries
-                            {% elif LANGUAGE_CODE == 'es' %}
-                            <!-- Google translate  -->
-                            Mis entradas
-                            {% endif %}
                         </a></li>
                     {% endif %}
                 </ul>
@@ -211,27 +164,14 @@
                 <!-- <h5>About</h5> -->
                 <ul class="list-unstyled text-small">
                     <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="{% url 'main:privacy' %}">
-                            {% if LANGUAGE_CODE == 'en' %}
                             Privacy
-                            {% elif LANGUAGE_CODE == 'es' %}
-                            <!-- Google translate  -->
-                            Intimidad
-                            {% endif %}
                         </a></li>
                     <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="{% url 'main:terms' %}">
-                            {% if LANGUAGE_CODE == 'en' %}
                             Terms
-                            {% elif LANGUAGE_CODE == 'es' %}
-                            <!-- Google translate  -->
-                            Condiciones
-                            {% endif %}</a></li>
+                        </a></li>
                     <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="https://forms.gle/1LRVNqR31AfAtD6p7">
-                            {% if LANGUAGE_CODE == 'en' %}
                             Send Feedback
-                            {% elif LANGUAGE_CODE == 'es' %}
-                            <!-- Google translate  -->
-                            Enviar Comentarios
-                            {% endif %}</a></li>
+                    </a></li>
                 </ul>
             </div>
         </div>
