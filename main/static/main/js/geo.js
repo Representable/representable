@@ -870,7 +870,8 @@ class CensusBlocksControl {
   onAdd(map) {
     var blocksLink = document.createElement("button");
     blocksLink.href = "#";
-    blocksLink.className = "active";
+    blocksLink.classList.add("active");
+    blocksLink.classList.add("blocks-toggle-btn");
     blocksLink.style.width = "140px";
     blocksLink.innerHTML =
       "<span data-toggle='tooltip' title='Census blocks are the smallest unit of the US census - darker blocks have a higher population'><i class='fas fa-th-large'></i> Show Census Blocks</span>";
@@ -1095,7 +1096,7 @@ myTour.addStep({
     "Census blocks are the building blocks when it comes to creating districing maps. Click on this button \
   to show/hide census blocks on the map.",
   attachTo: {
-    element: ".active",
+    element: ".blocks-toggle-btn",
     on: "bottom",
   },
   buttons: [
