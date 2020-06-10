@@ -1,6 +1,20 @@
 {% extends "main/base.html" %}
 
 {% block content %}
+<script type="text/javascript">
+  var campaign_id = "{{campaign_id}}";
+  var organization_id = "{{organization_id}}";
+  var campaign_name = "{{campaign_name}}";
+  var organization_name = "{{organization_name}}";
+  mixpanel.track("Campaign Page Loaded",
+    {
+     "campaign_id": campaign_id,
+     "campaign_name": campaign_name,
+     "organization_id": organization_id,
+     "organization_name": organization_name,
+    }
+  );
+</script>
 <div class="container">
   <div class="row my-5">
     <div class="col-9 mx-auto">
