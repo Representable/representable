@@ -15,7 +15,7 @@
         <p class="card-text text-center"><i class="fas fa-search text-primary m-1"></i>Find your community.</p>
         <p class="card-text text-center"><i class="fas fa-pencil-ruler text-primary m-1"></i>Draw it on a map.</p>
         <p class="card-text text-center"><i class="fas fa-paper-plane text-primary m-1"></i>Submit it!</p>
-        <form class="form-signin signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+        <form id="sign-up-form" class="form-signin signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
           {% csrf_token %}
           <div class="form-group">
             {% for field in form %}

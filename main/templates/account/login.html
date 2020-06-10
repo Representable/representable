@@ -14,7 +14,7 @@
         <div class="card card-signin my-5">
             <div class="card-body">
                 <h4 class="card-title text-center">Welcome back! Sign in below.</h4>
-                <form class="form-signin login" method="POST" action="{% url 'account_login' %}">{% csrf_token %}
+                <form id="log-in-form" class="form-signin login" method="POST" action="{% url 'account_login' %}">{% csrf_token %}
                     {% csrf_token %}
                     <div class="form-group">
                         {% for field in form %}
