@@ -24,17 +24,20 @@ def get_user_type(request):
     Adds the user type to the context.
     """
     user = request.user
+    user_email = ""
     user_type = "visitor"
     member = False
     moderator = False
     admin = False
     if user.is_authenticated:
+        user_email = user.email
         user_type = "user"
         member = user.is_generic_member
         moderator = user.is_generic_moderator
         admin = user.is_generic_admin
 
     return {
+        "user_email": user_email,
         "user_type": user_type,
         "member": member,
         "moderator": moderator,
