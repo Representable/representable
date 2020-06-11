@@ -911,7 +911,8 @@ class CensusBlocksControl {
   onAdd(map) {
     var blocksLink = document.createElement("button");
     blocksLink.href = "#";
-    blocksLink.className = "active";
+    blocksLink.classList.add("active");
+    blocksLink.classList.add("blocks-toggle-btn");
     blocksLink.style.width = "140px";
     blocksLink.innerHTML =
       "<span data-toggle='tooltip' title='Census blocks are the smallest unit of the US census - darker blocks have a higher population'><i class='fas fa-th-large'></i> Show Census Blocks</span>";
@@ -1136,7 +1137,7 @@ myTour.addStep({
     "Census blocks are the building blocks when it comes to creating districing maps. Click on this button \
   to show/hide census blocks on the map.",
   attachTo: {
-    element: ".active",
+    element: ".blocks-toggle-btn",
     on: "bottom",
   },
   buttons: [
@@ -1158,8 +1159,7 @@ myTour.addStep({
 
 myTour.addStep({
   title: "Draw your community of interest",
-  text:
-    "Begin drawing the polygon that represents your community of interest by clicking on this button.",
+  text: "Begin drawing your community of interest by clicking on this button.",
   attachTo: {
     element: "#draw-button-id",
     on: "bottom",
@@ -1184,9 +1184,9 @@ myTour.addStep({
 });
 
 myTour.addStep({
-  title: "Delete Polygon",
+  title: "Delete Community",
   text:
-    "Delete the polygon you have drawn or restart the drawing process by clicking this button.",
+    "Delete the community you have drawn or restart the drawing process by clicking this button.",
   attachTo: {
     element: "#map-clear-button-id",
     on: "bottom",
@@ -1211,8 +1211,8 @@ myTour.addStep({
 myTour.addStep({
   title: "Edit Polygon",
   text:
-    "Add vertices to your polygon for those fine adjustments by clicking this button and then \
-  dragging the vertices to tweak your polygon to your liking.",
+    "Add points to your community for those fine adjustments by clicking this button and then \
+  dragging the points to tweak your community to your liking.",
   attachTo: {
     element: "#map-edit-button-id",
     on: "bottom",
@@ -1236,7 +1236,7 @@ myTour.addStep({
 
 myTour.addStep({
   title: "Finish Drawing",
-  text: `Once you are done fine-tuning your polygon to reflect the geographical boundaries of 
+  text: `Once you are done fine-tuning your drawing to reflect the geographical boundaries of 
   your community of interest click here and move on to the last part of the form!`,
   attachTo: {
     element: "#map-finish-drawing-button-id",

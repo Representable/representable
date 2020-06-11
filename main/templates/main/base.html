@@ -91,16 +91,17 @@
                 {% if user.is_authenticated %}
                 <li class="nav-item mx-auto">
                     <a class="nav-link" href='/review'>
-                        My entries
+
+                        My communities
                     </a>
                 </li>
                 <li class="nav-item mx-auto">
-                    <a class="btn btn-outline-primary m-2 new-entry" href="/entry">
-                        New entry
+                    <a class="btn btn-outline-primary m-2" href="/entry">
+                        Add community
                     </a>
                 </li>
                 <li class="nav-item mx-auto">
-                    <a class="btn btn-primary m-2 log-out-started" href="/accounts/logout">
+                    <a class="btn btn-primary m-2" href="/accounts/logout">
                         Log out
                     </a>
                 </li>
@@ -157,14 +158,14 @@
                 <!-- <h5>Community Map</h5> -->
                 <ul class="list-unstyled text-small">
                     <li><a class="text-muted" href="{% url 'main:entry' %}">
-                            Draw Your Community
+                            Add Your Community
                         </a></li>
                     <li><a class="text-muted" href="{% url 'main:map' %}">
                             View All Maps
                         </a></li>
                     {% if user.is_authenticated %}
                     <li><a class="text-muted" href="{% url 'main:review' %}">
-                            My Entries
+                            My Communities
                         </a></li>
                     {% endif %}
                 </ul>
@@ -175,11 +176,11 @@
                 <ul class="list-unstyled text-small">
                     <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="{% url 'main:privacy' %}">
                             Privacy
-                        </a></li>
+                    </a></li>
                     <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="{% url 'main:terms' %}">
                             Terms
-                        </a></li>
-                    <li><a class="text-muted footer-send-feedback" target="_blank" rel="noopener noreferrer" href="https://forms.gle/1LRVNqR31AfAtD6p7">
+                    </a></li>
+                    <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="https://forms.gle/1LRVNqR31AfAtD6p7">
                             Send Feedback
                     </a></li>
                 </ul>

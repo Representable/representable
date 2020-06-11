@@ -526,8 +526,7 @@
                                                     <small class="text-danger">(Required)</small>
                                             </strong>
                                             <span class="float-right my-2">
-                                                <button  id="shepherd-btn"class="btn btn-secondary btn-sm mb-2 mr-2 d-none" onclick="myTour.start()" type="button">Step-by-step guide</button>
-                                                <button id="video-tutorial" class="btn btn-secondary btn-sm mb-2" onclick="showVideoPopup()" type="button">Video Tutorial</button>
+                                                <button class="btn btn-secondary btn-sm mb-2 mr-2 d-none" id="shepherd-btn" onclick="myTour.start()" type="button">Step-by-step guide</button>
                                             </span>
                                             <div id="geocoder" class="geocoder my-3"></div>
                                             <div class="map-bounding-box my-2 collapse">
@@ -594,8 +593,7 @@
                     <i class="fa fa-question-circle" aria-hidden="true"></i><span class="d-none d-sm-inline"> Help</span>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropuphelp">
-                    <a class="dropdown-item dropdown-user-guide" href="https://drive.google.com/open?id=1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc" target=_blank>User Guide</a>
-                    <a class="dropdown-item dropdown-send-feedback" href="https://docs.google.com/forms/d/e/1FAIpQLSfeyoZ87pS67iTh2c3t5031XqoNFNAdwF6Pt1NUns_z_Myxaw/viewform">Report Error/Send Feedback</a>
+                    <a class="dropdown-item" href="https://docs.google.com/forms/d/e/1FAIpQLSfeyoZ87pS67iTh2c3t5031XqoNFNAdwF6Pt1NUns_z_Myxaw/viewform">Report Error/Send Feedback</a>
                     </div>
                 </div>
 
@@ -610,18 +608,6 @@
             </div> 
         </div>
         <div class="col-sm-2">
-        </div>
-        <div class="row">
-        <div id="video_popup" class="card shadow col-sm-4 col-md-4 col-lg-4 d-none">
-            <div id="video_popup_body" class="card-body">
-                <h5 class="card-title">
-                    Video Tutorial <button type="button" class="close" onclick="closePopup()">&times;</button> 
-                </h5> 
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/rWPPW8f-svw" allowfullscreen></iframe>
-                </div>
-            </div>
-        </div>
         </div>
     </div>
 
