@@ -130,4 +130,4 @@ get-pip.py
 
 # node
 node_modules/
-static/
+./static/
