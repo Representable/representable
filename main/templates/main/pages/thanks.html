@@ -13,7 +13,7 @@
                         <div class="alert alert-primary" role="alert">
                             <p>This tool is meant for non-partisan use by communities and their members to provide information to the Redistricting Commission.</p>
                             <p>By adding your map to Representable.org you're not submitting a map to a redistricting commission. We will add information about submitting to the commission as soon as information becomes available in your state.</p>
-                            <p>In the meantime, you can export your community in GeoJSON format using the link below.</p>
+                            <p>In the meantime, you can export your community in GeoJSON or PDF format using the link below.</p>
                         </div>
                         <ul class="list-group my-3">
                             <li class="list-group-item justify-content-between align-items-center">
@@ -28,8 +28,6 @@
                                   <a class="btn btn-outline-primary" href="{% url 'main:partner_map' view.kwargs.slug view.kwargs.campaign %}"  role="button">View Map</a>
                               </li>
                             {% endif %}
-                        </ul>
-                        <ul class="list-group my-3">
                             <li class="list-group-item justify-content-between align-items-center">
                                 <h5>Do you have any feedback for us?</h5>
                                 <p>We are interested in your feedback. If you found a bug or have any suggestions for us, please send them to us by pressing on the button below.</p>

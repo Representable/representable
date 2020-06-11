@@ -22,7 +22,7 @@
 <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script>
 <!-- Shepherd.js -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@latest/dist/css/shepherd.css"/>
-<script src="https://cdn.jsdelivr.net/npm/shepherd.js@latest/dist/js/shepherd.min.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/shepherd.js@latest/dist/js/shepherd.min.js"></script>
 
 <!--  Mapbox Draw -->
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js'></script>
@@ -54,7 +54,7 @@
                             <p class="">
                                 Fill out the form below to
                                 add your community to Representable.org
-                                and make your voice heard. 
+                                and make your voice heard.
                                 <br>
                                 Follow the instructions in each section to get started.
                             </p>
@@ -72,7 +72,7 @@
                             </div>
                             {% endif %}
                             <div id="form_error" class="alert alert-danger alert-dismissible fade show form-error d-none" role="alert">
-                                There was an error in submitting your community. Please check over and 
+                                There was an error in submitting your community. Please check over and
                                 ensure that you have filled out all required fields.
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -299,9 +299,9 @@
                                             {% endif %}
                                         </div> -->
                                         <p class="card-text mb-0">
-                                            Is there a shared economy in the geographic area of your community? 
-                                            How and where are residents employed? What parts of a county, 
-                                            township or city are included in your community? 
+                                            Is there a shared economy in the geographic area of your community?
+                                            How and where are residents employed? What parts of a county,
+                                            township or city are included in your community?
                                             Are there shared environmental concerns such as landfills or water quality?
                                         </p>
                                         <div class="accordion" id="economic_interests_accordion">
@@ -310,9 +310,9 @@
                                             </button>
                                             <div id="economic_interests_example" class="collapse" aria-labelledby="headingOne" data-parent="#economic_interests_accordion">
                                                 <p class="collapse-in ml-0">
-                                                    Tech firms and their employees, tourism, agriculture such as the cherry growers, 
-                                                    shipping and transportation hubs, manufacturing centers, natural resources, university towns, 
-                                                    unemployment issues, waterfront communities, business associations. 
+                                                    Tech firms and their employees, tourism, agriculture such as the cherry growers,
+                                                    shipping and transportation hubs, manufacturing centers, natural resources, university towns,
+                                                    unemployment issues, waterfront communities, business associations.
                                                 </p>
                                             </div>
                                         </div>
@@ -338,7 +338,7 @@
                                             {% endif %}
                                         </div> -->
                                         <p class="card-text mb-0">
-                                            Where do people in your community gather or socialize? 
+                                            Where do people in your community gather or socialize?
                                             Where does your community get its services?
                                         </p>
                                         <div class="accordion" id="comm_activities_accordion">
@@ -347,8 +347,8 @@
                                             </button>
                                             <div id="comm_activities_example" class="collapse" aria-labelledby="headingOne" data-parent="#comm_activities_accordion">
                                                 <p class="collapse-in ml-0">
-                                                    Shopping areas, schools and colleges, parks and recreation areas, 
-                                                    lakes and water ways, healthcare services, and other activities and services that 
+                                                    Shopping areas, schools and colleges, parks and recreation areas,
+                                                    lakes and water ways, healthcare services, and other activities and services that
                                                     help define your community.
                                                 </p>
                                             </div>
@@ -375,7 +375,7 @@
                                             {% endif %}
                                         </div> -->
                                         <p class="card-text mb-0">
-                                            What fosters a sense of belonging in your community? 
+                                            What fosters a sense of belonging in your community?
                                             What common beliefs or values exist?
                                         </p>
                                         <div class="accordion" id="cultural_interests_accordion">
@@ -384,8 +384,8 @@
                                             </button>
                                             <div id="cultural_interests_example" class="collapse" aria-labelledby="headingOne" data-parent="#cultural_interests_accordion">
                                                 <p class="collapse-in ml-0">
-                                                    Age groups, religious groups, arts and cultural centers, languages, immigration status, 
-                                                    ethnic groups such as Detroit’s Mexican Town or Dearborn’s Middle Eastern community, 
+                                                    Age groups, religious groups, arts and cultural centers, languages, immigration status,
+                                                    ethnic groups such as Detroit’s Mexican Town or Dearborn’s Middle Eastern community,
                                                     historic settlements such as Leland’s Fishtown.
                                                 </p>
                                             </div>
@@ -421,7 +421,7 @@
                                             </button>
                                             <div id="other_interests_example" class="collapse" aria-labelledby="headingOne" data-parent="#other_interests_accordion">
                                                 <p class="collapse-in ml-0">
-                                                    Our farmers extend over two counties and we hope you can put them together in a single State Senate district. 
+                                                    Our farmers extend over two counties and we hope you can put them together in a single State Senate district.
                                                 </p>
                                             </div>
                                         </div>
@@ -528,7 +528,7 @@
                                                     <div id='menu'></div>
                                                     <div id='map' class='draw_polygon_map' onload="map.resize()">
                                                         <div id="instruction-box-id" class="instruction-box">
-                                                            <p class="mb-0">Click on a dark blue point <i class="fas fa-circle blue-circle"></i> to move it or delete it. Drag point to move it or press "Delete point" to delete it.</p>
+                                                            <p class="mb-0">Click on a dark blue point <i class="fas fa-circle blue-circle"></i> to move it or delete it. Drag point to move it or press "Delete Point" to delete it.</p>
                                                             <p class="mb-0">Click on a orange midpoint  <i class="fas fa-circle orange-circle"></i> to add a new point.</p>
                                                         </div>
                                                     </div>
@@ -564,8 +564,8 @@
                                             <input class="toc-check-input" type="checkbox" value="" id="toc_check" required>
                                             <label class="toc-check-label" for="toc_check">
                                                 Click here to indicate that you have read and agree to the
-                                                <a target="_blank" rel="noopener noreferrer" href="{% url 'main:terms' %}">Terms of Use</a> and 
-                                                <a target="_blank" rel="noopener noreferrer" href="{% url 'main:privacy' %}">Privacy Policy</a>. 
+                                                <a target="_blank" rel="noopener noreferrer" href="{% url 'main:terms' %}">Terms of Use</a> and
+                                                <a target="_blank" rel="noopener noreferrer" href="{% url 'main:privacy' %}">Privacy Policy</a>.
                                                 <small class="text-danger">(Required)</small>
                                             </label>
                                         </div>
@@ -596,7 +596,7 @@
                         </div>
                     </div>
                 </form>
-            </div> 
+            </div>
         </div>
         <div class="col-sm-2">
         </div>
@@ -604,8 +604,8 @@
         <div id="video_popup" class="card shadow col-sm-4 col-md-4 col-lg-4 d-none">
             <div id="video_popup_body" class="card-body">
                 <h5 class="card-title">
-                    Video Tutorial <button type="button" class="close" onclick="closePopup()">&times;</button> 
-                </h5> 
+                    Video Tutorial <button type="button" class="close" onclick="closePopup()">&times;</button>
+                </h5>
                 <div class="embed-responsive embed-responsive-16by9">
                     <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/rWPPW8f-svw" allowfullscreen></iframe>
                 </div>
