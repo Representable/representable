@@ -19,13 +19,13 @@
                             <li class="list-group-item justify-content-between align-items-center">
                                 <h5>View/Export Your Community</h5>
                                 <p>Your community map is now live here: <br><a href="/submission?map_id={{ map_url }}">Representable.org/submission?map_id={{ map_url }}</a><br>Feel free to tweet and share.</p>
-                              <a class="btn btn-outline-primary" href="/submission?map_id={{ map_url }}" role="button">View Community</a>
+                              <a class="btn btn-outline-primary thanks-submission-link" href="/submission?map_id={{ map_url }}" role="button">View Community</a>
                             </li>
                             {% if has_campaign %}
                             <li class="list-group-item justify-content-between align-items-center">
                                   <h5>{{campaign_name}} Map</h5>
                                   <p>View all communities submitted to {{campaign_name}}.</p>
-                                  <a class="btn btn-outline-primary" href="{% url 'main:partner_map' view.kwargs.slug view.kwargs.campaign %}"  role="button">View Map</a>
+                                  <a class="btn btn-outline-primary thanks-campaign-map" href="{% url 'main:partner_map' view.kwargs.slug view.kwargs.campaign %}"  role="button">View Map</a>
                               </li>
                             {% endif %}
                         </ul>
@@ -33,7 +33,7 @@
                             <li class="list-group-item justify-content-between align-items-center">
                                 <h5>Do you have any feedback for us?</h5>
                                 <p>We are interested in your feedback. If you found a bug or have any suggestions for us, please send them to us by pressing on the button below.</p>
-                              <a class="btn btn-outline-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSfeyoZ87pS67iTh2c3t5031XqoNFNAdwF6Pt1NUns_z_Myxaw/viewform" role="button">Send Feedback</a>
+                              <a class="btn btn-outline-primary thanks-send-feedback" href="https://docs.google.com/forms/d/e/1FAIpQLSfeyoZ87pS67iTh2c3t5031XqoNFNAdwF6Pt1NUns_z_Myxaw/viewform" role="button">Send Feedback</a>
                             </li>
                         </ul>
                     </div>
