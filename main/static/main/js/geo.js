@@ -252,6 +252,12 @@ function changeText(element) {
 
 function showVideoPopup() {
   $("#video_popup").removeClass("d-none");
+  mixpanel.track("Video Popup", {
+    campaign_id: campaign_id,
+    campaign_name: campaign_name,
+    organization_id: organization_id,
+    organization_name: organization_name,
+  });
 }
 
 function closePopup() {
@@ -310,7 +316,7 @@ function checkFieldById(field_id) {
     field.classList.add("has_error");
     return false;
   }
-  field.classList.add("hass_success");
+  field.classList.add("has_success");
   return true;
 }
 
@@ -320,7 +326,7 @@ function formValidation() {
   var form_elements = document.getElementById("entryForm").elements;
   for (var i = 0; i < form_elements.length; i++) {
     if (form_elements[i].required) {
-      if (!checkFieldById(form_elements[i].id)) {
+      if (checkFieldById(form_elements[i].id) == false) {
         flag = false;
       }
     }
@@ -399,6 +405,42 @@ document.addEventListener(
       first_alert.scrollIntoView();
       document.getElementById("form_error").classList.remove("d-none");
     }
+
+    // Tracking
+    var form_elements = document.getElementById("entryForm").elements;
+    for (var i = 0; i < form_elements.length; i++) {
+      var field = form_elements[i];
+      if (
+        field &&
+        (field.nodeName == "INPUT" || field.nodeName == "TEXTAREA") &&
+        field.classList.contains("form-control")
+      ) {
+        field.addEventListener("focus", function (event) {
+          if (event.target.classList.contains("done") == false) {
+            event.target.classList.add("done");
+            mixpanel.track("Entry Page Section Focus", {
+              field_id: event.target.id,
+              campaign_id: campaign_id,
+              campaign_name: campaign_name,
+              organization_id: organization_id,
+              organization_name: organization_name,
+            });
+          }
+        });
+      }
+    }
+    // Shepherd JS
+    document
+      .getElementById("shepherd-btn")
+      .addEventListener("click", function (event) {
+        mixpanel.track("Shepherd JS", {
+          campaign_id: campaign_id,
+          campaign_name: campaign_name,
+          organization_id: organization_id,
+          organization_name: organization_name,
+        });
+      });
+    sessionStorage.setItem("map_drawn_successfully", false);
   },
   false
 );
@@ -752,7 +794,6 @@ class FinishDrawButton {
         draw.changeMode("simple_select", {
           featureId: all_features.features[0].id,
         });
-        updateCommunityEntry(event);
       }
     });
     this._container.appendChild(finish_draw_button);
@@ -1017,7 +1058,7 @@ function addStateNeighborLayers(new_neighbors, new_state) {
   // delete from old neighbors
   // remove layers in the old neighbors list
   for (let i = 0; i < new_neighbors.length; i++) {
-    if (!map.getLayer(new_neighbors[i] + "-blocks-highlighted")) {
+    if (map.getLayer(new_neighbors[i] + "-blocks-highlighted") == false) {
       newHighlightLayer(new_neighbors[i]);
     } else {
       let index = neighbors.indexOf(new_neighbor[i]);
@@ -1288,12 +1329,20 @@ map.on("style.load", function () {
     }
     // Save state to session storage
     sessionStorage.setItem("state_name", state);
+
+    // Tracking
+    mixpanel.track("Geocoder Search Successful", {
+      campaign_id: campaign_id,
+      campaign_name: campaign_name,
+      organization_id: organization_id,
+      organization_name: organization_name,
+    });
   });
 });
 
 var wasLoaded = false;
 map.on("render", function (event) {
-  if (!map.loaded() || wasLoaded) return;
+  if (map.loaded() == false || wasLoaded) return;
   wasLoaded = true;
   if (document.getElementById("id_user_polygon").value !== "") {
     // If page refreshes (or the submission fails), get the polygon
@@ -1386,6 +1435,7 @@ function triggerDrawError(id, stringErrorText) {
                                   </button>\
                           </div>';
   document.getElementById("map-error-alerts").appendChild(newAlert);
+  sessionStorage.setItem("map_drawn_successfully", false);
 }
 
 /******************************************************************************/
@@ -1407,6 +1457,16 @@ function triggerSuccessMessage() {
                                   </button>\
                           </div>';
   document.getElementById("map-error-alerts").appendChild(newAlert);
+  var map_drawn_flag = sessionStorage.getItem("map_drawn_successfully");
+  if (map_drawn_flag == "false") {
+    mixpanel.track("Map Drawing Successful", {
+      campaign_id: campaign_id,
+      campaign_name: campaign_name,
+      organization_id: organization_id,
+      organization_name: organization_name,
+    });
+    sessionStorage.setItem("map_drawn_successfully", true);
+  }
 }
 
 /******************************************************************************/

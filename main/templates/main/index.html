@@ -35,7 +35,7 @@
       <!-- <p class="font-weight-light text-muted my-4 main-display-text-sm">
         We’re creating maps of communities to fight for fair representation. Add your community to the map today and make your voice heard.
       </p> -->
-      <a class="btn btn-primary mb-5 mt-2" href="#select" role="button">Get Started &rarr;</a>
+      <a id="get-started-btn" class="btn btn-primary mb-5 mt-2" href="#select" role="button">Get Started &rarr;</a>
       </div>
       <div class="col-lg-5 col-sm-12 col-md-5">
         <img class="img-fluid align-bottom my-3" src="{% static 'img/illustration.svg' %}"> </img>
@@ -49,11 +49,11 @@
       <h1 class="text-center font-weight-light">What is Representable.org?</h1>
       <p class="my-3 d-none d-sm-block text-center">
         Representable is a free, web-based platform designed to collect data provided by Communities to support redistricting work. Our tool offers a platform for Community members to provide information about the geographic boundaries of their Community, alongside the cultural, historic, economic, and other interests that bind them together. Data and maps gathered with Representable are standardized and easy to understand, supporting mapmakers, journalists, non-profits, and policy groups as they draw and evaluate the maps that will be used in Congressional and State legislature elections. Join us to fight gerrymandering and mobilize communities to get the representation they deserve through a impartial and transparent map drawing process.
-        Interested in learning more? Check out our <a target="_blank" href="https://drive.google.com/open?id=1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc">Official Education Guide.</a>
+        Interested in learning more? Check out our <a id="edu-guide-link" target="_blank" href="https://drive.google.com/open?id=1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc">Official Education Guide.</a>
       </p>
       <p class="my-3 d-sm-none small text-center">
         Representable is a free, web-based platform designed to collect data provided by Communities to support redistricting work. Our tool offers a platform for Community members to provide information about the geographic boundaries of their Community, alongside the cultural, historic, economic, and other interests that bind them together. Data and maps gathered with Representable are standardized and easy to understand, supporting mapmakers, journalists, non-profits, and policy groups as they draw and evaluate the maps that will be used in Congressional and State legislature elections. Join us to fight gerrymandering and mobilize communities to get the representation they deserve through a impartial and transparent map drawing process.
-        Interested in learning more? Check out our <a target="_blank" href="https://drive.google.com/open?id=1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc">Official Education Guide.</a>
+        Interested in learning more? Check out our <a id="edu-guide-link" target="_blank" href="https://drive.google.com/open?id=1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc">Official Education Guide.</a>
       </p>
     </div>
     <!-- How To -->
@@ -69,7 +69,7 @@
               Learn how to use Representable to draw your community.
             </p>
             <div class="text-center">
-              <a class="btn btn-outline-primary mx-2 my-1" href="#select" role="button">Add your community</a>
+              <a id="card-add-community-btn" class="btn btn-outline-primary mx-2 my-1" href="#select" role="button">Add your community</a>
             </div>
             <!-- <a class="btn btn-primary btn-canvas mt-auto" href="/entry" role="button">Get Started</a> -->
           </div>
@@ -86,7 +86,7 @@
               Work with us to map communities across the United States.
             </p>
             <div class="text-center">
-              <a class="btn btn-outline-primary mx-2 my-1" href="#partner" role="button">Partner with us</a>
+              <a id="card-partner-btn" class="btn btn-outline-primary mx-2 my-1" href="#partner" role="button">Partner with us</a>
             </div>
             <!-- <a class="btn btn-primary btn-canvas mt-auto" href="mailto: representableteam@gmail.com?subject=Hello!" role="button">Contact Us</a> -->
           </div>
@@ -132,7 +132,7 @@
       <div class="col-lg-7 col-sm-12 col-lg-7 my-5">
         <h1 class="my-3 font-weight-light">Are you the leader of an organization?</h1>
         <p class="my-3 lead">Many organizations have partnered with Representable.org to collect community-of-interest data. Get started by creating a partner profile.</p>
-        <a class="btn btn-primary mx-2 my-1" href="/partners/welcome" role="button">
+        <a id="hero-partner-btn" class="btn btn-primary mx-2 my-1" href="/partners/welcome" role="button">
           Partner with us  &rarr;
         </a>
       </div>
@@ -159,4 +159,15 @@
 <script type="text/javascript" src="{% static 'main/js/components/jquery.vmap.usa.js' %}"></script>
 <script type="text/javascript" src="{% static 'main/js/main.js' %}"></script>
 <script type="text/javascript" src="{% static 'main/js/components/states.js' %}"></script>
+<script type="text/javascript">
+  // Track Front Page Buttons
+  document.getElementById("get-started-btn").addEventListener("click", function() {
+      mixpanel.track("Get Started Pressed");
+  });
+
+  mixpanel.track_links("#edu-guide-link", "Educational Guide Link");
+  mixpanel.track_links("#card-add-community-btn", "Card Add Community Click");
+  mixpanel.track_links("#edu-guide-link-btn", "Card Partner Click");
+  mixpanel.track_links("#hero-partner-btn", "Hero Partner With Us Click");
+</script>
 {% endblock %}

@@ -31,7 +31,18 @@
 <script>
     sessionStorage.setItem("allChecks", "pass");
     var mapbox_user_name = "{{mapbox_user_name}}";
-//   console.log("passed");
+    var campaign_id = "{{campaign_id}}";
+    var organization_id = "{{organization_id}}";
+    var campaign_name = "{{campaign_name}}";
+    var organization_name = "{{organization_name}}";
+    mixpanel.track("Entry Page Loaded",
+    {
+     "campaign_id": campaign_id,
+     "campaign_name": campaign_name,
+     "organization_id": organization_id,
+     "organization_name": organization_name,
+    }
+    );
 </script>
 {% endblock %}
 
@@ -608,6 +619,25 @@
     </script>
     <script type="text/javascript" src="{% static 'main/js/wicket.js' %}"></script>
     <script type="text/javascript" src="{% static 'main/js/geo.js' %}"></script>
+    <script type="text/javascript">
+        // Entry page
+        mixpanel.track_links(".dropdown-user-guide", "User Guide Link Pressed (Entry Help Dropdown)");
+        mixpanel.track_links(".dropdown-send-feedback", "Send Feedback Link Pressed (Entry Help Dropdown)");
+
+        document.getElementById("dropuphelp").addEventListener("click",
+            function(){
+                mixpanel.track("Dropup Help Button Pressed (Entry Page)");
+            }
+        );
+
+        mixpanel.track_forms("#entryForm", "Entry Form Submitted", {
+            "campaign_id": campaign_id,
+            "campaign_name": campaign_name,
+            "organization_id": organization_id,
+            "organization_name": organization_name,
+        });
+
+    </script>
     <!-- Turf to get the bounding box. -->
     <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
     {% endblock %}
