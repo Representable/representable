@@ -1,4 +1,5 @@
 import React from "react";
+import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -32,6 +33,12 @@ function Copyright() {
 }
 
 const drawerWidth = 240;
+
+console.log(process.env.REACT_APP_REP_MAPBOX_KEY);
+
+const Map = ReactMapboxGl({
+  accessToken: process.env.REACT_APP_REP_MAPBOX_KEY
+});
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -112,7 +119,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Map() {
+export default function MapboxMap() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -182,7 +189,17 @@ export default function Map() {
           <Typography component="h1" variant="h2" color="inherit" noWrap>
             Map
           </Typography>
-          {/* Start adding map code here */}
+          <Map
+          style="mapbox://styles/mapbox/streets-v9"
+          containerStyle={{
+            height: '100vh',
+            width: '100vw'
+          }}
+          >
+          <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
+          <Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
+          </Layer>
+          </Map>;
 
           <Box pt={4}>
             <Copyright />

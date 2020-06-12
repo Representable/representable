@@ -2,10 +2,10 @@ import React from "react";
 import { render } from "react-dom";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import Dashboard from "./routes/Dashboard";
-import Map from "./routes/Map";
+import MapboxMap from "./routes/Map";
 
 const App = () => (
-  <Map></Map>
+  <MapboxMap></MapboxMap>
   // TODO: Fix Routes
   // <Router>
   //   <div className="App">

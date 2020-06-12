@@ -8,6 +8,7 @@ module.exports = {
           loader: "babel-loader",
         },
       },
+      { test: /\.css$/, loader: 'ignore-loader' }
     ],
   },
 };
