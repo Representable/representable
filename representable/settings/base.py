@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.sites",
+    "django.contrib.flatpages",
     "django.contrib.staticfiles",
     "main",
     "leaflet",
@@ -71,16 +72,11 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "phone_field",
-    # 'allauth.socialaccount.providers.facebook',
-    # 'allauth.socialaccount.providers.google',
-    # 'allauth.socialaccount.providers.linkedin',
-    # 'allauth.socialaccount.providers.linkedin_oauth2',
 ]
 
 ACCOUNT_SESSION_REMEMBER = True
 
 SITE_ID = 1
-# SITE_NAME = "Represenetable.org"
 
 MIDDLEWARE = [
     # Simplified static file serving.
