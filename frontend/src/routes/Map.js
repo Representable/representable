@@ -16,6 +16,7 @@ import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
+import { mainListItems, secondaryListItems } from "../components/listItems";
 
 function Copyright() {
   return (

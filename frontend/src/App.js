@@ -1,16 +1,25 @@
-import React, { Suspense, lazy } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-const Dashboard = lazy(() => import("./routes/Dashboard"));
-const Map = lazy(() => import("./routes/Map"));
+import React from "react";
+import { render } from "react-dom";
+import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+import Dashboard from "./routes/Dashboard";
+import Map from "./routes/Map";
 
 const App = () => (
   <Router>
-    <Suspense fallback={<div>Loading...</div>}>
+    <div className="App">
+      <ul>
+        <li>
+          <Link to="/dash">Home</Link>
+        </li>
+        <li>
+          <Link to="/map">Page 1</Link>
+        </li>
+      </ul>
       <Switch>
-        <Route path="/app" component={Dashboard} />
+        <Route path="/dash" component={Dashboard} />
         <Route path="/map" component={Map} />
       </Switch>
-    </Suspense>
+    </div>
   </Router>
 );
 export default App;
