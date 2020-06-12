@@ -35,23 +35,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from api.views import OrganizationViewSet
-
-router = routers.DefaultRouter()
-router.register(r"organizations", OrganizationViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    path("beta/api/", include(router.urls)),
-    path(
-        "api-auth/", include("rest_framework.urls", namespace="rest_framework")
-    ),
-    path("", include("frontend.urls")),
-    path("", include("main.urls")),
     path("admin/", admin.site.urls),
     # path('accounts/', include('django.contrib.auth.urls')),
     path("accounts/", include("allauth.urls")),
     path("select2/", include("django_select2.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
+    path("", include("frontend.urls")),
+    path("", include("main.urls")),
+    path("", include("api.urls")),
 ]
