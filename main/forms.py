@@ -23,52 +23,20 @@ from django_select2.forms import (
     Select2MultipleWidget,
     Select2Widget,
     ModelSelect2Widget,
-    ModelSelect2TagWidget,
 )
 from .models import (
     CommunityEntry,
-    Tag,
     Organization,
     Campaign,
     Membership,
     User,
     Address,
 )
-from .choices import (
-    RACE_CHOICES,
-    RELIGION_CHOICES,
-    INDUSTRY_CHOICES,
-    STATES,
-)
+from .choices import STATES
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Area
 
 # https://django-select2.readthedocs.io/en/latest/django_select2.html
-
-
-class TagSelect2Widget(ModelSelect2TagWidget):
-    model = Tag
-    search_fields = ["name__icontains"]
-    queryset = model.objects.all()
-    # Check if tag name is in the db already. If not, add it.
-
-    def value_from_datadict(self, data, files, name):
-        values = super().value_from_datadict(data, files, name)
-        cleaned_values = []
-        names = []
-        for val in values:
-            # Do any names in the db match this value?
-            qs = self.queryset.filter(**{"name__exact": str(val)})
-            # Add the names to 'names'
-            newNames = set(getattr(entry, "name") for entry in qs)
-            for name in newNames:
-                names.append(str(name))
-
-        for val in values:
-            if str(val) not in names:
-                val = self.queryset.create(name=str(val)).name
-            cleaned_values.append(str(val))
-        return cleaned_values
 
 
 class AddressForm(ModelForm):
@@ -107,11 +75,6 @@ class CommunityForm(ModelForm):
             error_messages={"required": "Census blocks polygon missing."}
         )
         widgets = {
-            "tags": TagSelect2Widget(
-                attrs={
-                    "data-placeholder": "E.g. FlintWaterCrisis, KoreaTown, etc."
-                }
-            ),
             "user": forms.HiddenInput(),
             "entry_ID": forms.HiddenInput(),
             "census_blocks_polygon_array": forms.HiddenInput(),
@@ -126,12 +89,6 @@ class CommunityForm(ModelForm):
             "other_considerations": forms.Textarea(attrs={"rows": 5}),
             "user_name": forms.TextInput(attrs={"placeholder": "Full Name"}),
             "user_polygon": forms.HiddenInput(),
-        }
-        labels = {
-            "tags": "Community Tags",
-            "race": "List Racial Groups (At Least One, Multiple Accepted)",
-            "industry": "List Industries/Profressions (At Least One, Multiple Accepted)",
-            "religion": "List Religions (At Least One, Multiple Accepted)",
         }
 
     def clean(self):
