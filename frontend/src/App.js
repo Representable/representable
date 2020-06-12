@@ -5,22 +5,20 @@ import Dashboard from "./routes/Dashboard";
 import Map from "./routes/Map";
 
 const App = () => (
-  <Router>
-    <div className="App">
-      <ul>
-        <li>
-          <Link to="/dash">Home</Link>
-        </li>
-        <li>
-          <Link to="/map">Page 1</Link>
-        </li>
-      </ul>
-      <Switch>
-        <Route path="/dash" component={Dashboard} />
-        <Route path="/map" component={Map} />
-      </Switch>
-    </div>
-  </Router>
+  <Map></Map>
+  // TODO: Fix Routes
+  // <Router>
+  //   <div className="App">
+  //     <ul>
+  //       <li><Link to="/home">Home</Link></li>
+  //       <li><Link to="/map">Page 1</Link></li>
+  //     </ul>
+  //     <Switch>
+  //       <Route path="/home" component={Dashboard} />
+  //       <Route path="/map" component={Map} />
+  //     </Switch>
+  //     </div>
+  // </Router>
 );
 export default App;
 

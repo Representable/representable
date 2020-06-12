@@ -179,7 +179,11 @@ export default function Map() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          Map
+          <Typography component="h1" variant="h2" color="inherit" noWrap>
+            Map
+          </Typography>
+          {/* Start adding map code here */}
+
           <Box pt={4}>
             <Copyright />
           </Box>
