@@ -527,6 +527,7 @@
                                             </strong>
                                             <span class="float-right my-2">
                                                 <button class="btn btn-secondary btn-sm mb-2 mr-2 d-none" id="shepherd-btn" onclick="myTour.start()" type="button">Step-by-step guide</button>
+                                                <button class="btn btn-secondary btn-sm mb-2" onclick="showVideoPopup()" type="button">Video Tutorial</button>
                                             </span>
                                             <div id="geocoder" class="geocoder my-3"></div>
                                             <div class="map-bounding-box my-2 collapse">
@@ -609,6 +610,18 @@
         </div>
         <div class="col-sm-2">
         </div>
+        <div class="row">
+            <div id="video_popup" class="card shadow col-sm-4 col-md-4 col-lg-4 d-none">
+                <div id="video_popup_body" class="card-body">
+                    <h5 class="card-title">
+                        Video Tutorial <button type="button" class="close" onclick="closePopup()">&times;</button> 
+                    </h5> 
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/cVrnMXf-47Q" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            </div>
     </div>
 
     {% endblock %}
