@@ -1,5 +1,7 @@
 import React from "react";
-import ReactMapboxGl, { Layer, Feature, ZoomControl } from 'react-mapbox-gl';
+import ReactMapboxGl, { Layer, Feature, MapContext } from 'react-mapbox-gl';
+import ReactDOM from 'react-dom'
+import mapboxgl from 'mapbox-gl'
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -191,9 +193,20 @@ export default function MapboxMap() {
           containerStyle={{
             height: '80vh',
             width: '100%'
-          }}
-          >
-            <ZoomControl />
+          }}>
+          <MapContext.Consumer>
+            {(map) => {
+              // geocoder used for a search bar -- within the map itself
+              var geocoder = new MapboxGeocoder({
+                accessToken: mapboxgl.accessToken,
+                country: "us",
+                mapboxgl: mapboxgl,
+              });
+              map.addControl(geocoder, "top-right");
+              map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
+
+            }}
+          </MapContext.Consumer>
             <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
               <Feature coordinates={[-96.7026, 40.8136]} />
             </Layer>
