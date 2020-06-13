@@ -18,6 +18,18 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+from django.conf import settings
+
+
+def get_mixpanel_token(request):
+    """
+    Adds the mixpanel token to the context from the dev/prod settings.
+    """
+    mixpanel_token = settings.MIXPANEL_TOKEN
+    return {
+        "mixpanel_token": mixpanel_token,
+    }
+
 
 def get_user_type(request):
     """
