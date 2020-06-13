@@ -1,5 +1,5 @@
 import React from "react";
-import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
+import ReactMapboxGl, { Layer, Feature, ZoomControl } from 'react-mapbox-gl';
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -34,10 +34,8 @@ function Copyright() {
 
 const drawerWidth = 240;
 
-console.log(process.env.REACT_APP_REP_MAPBOX_KEY);
-
 const Map = ReactMapboxGl({
-  accessToken: process.env.REACT_APP_REP_MAPBOX_KEY
+  accessToken: mapbox_key
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -186,19 +184,19 @@ export default function MapboxMap() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Typography component="h1" variant="h2" color="inherit" noWrap>
-            Map
-          </Typography>
           <Map
           style="mapbox://styles/mapbox/streets-v9"
+          zoom={[3]}
+          center={[-96.7026, 40.8136]}
           containerStyle={{
-            height: '100vh',
-            width: '100vw'
+            height: '80vh',
+            width: '100%'
           }}
           >
-          <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
-          <Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
-          </Layer>
+            <ZoomControl />
+            <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
+              <Feature coordinates={[-96.7026, 40.8136]} />
+            </Layer>
           </Map>;
 
           <Box pt={4}>
