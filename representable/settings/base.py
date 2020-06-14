@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "phone_field",
     "rest_framework",
+    "corsheaders",
     # 'allauth.socialaccount.providers.facebook',
     # 'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.linkedin',
@@ -92,6 +93,7 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -242,3 +244,5 @@ DEFAULT_FROM_EMAIL = "no-reply@representable.org"
 
 
 REST_FRAMEWORK = {}
+
+CORS_ORIGIN_ALLOW_ALL = False
