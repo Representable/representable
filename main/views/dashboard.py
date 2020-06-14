@@ -44,7 +44,6 @@ from ..models import (
     WhiteListEntry,
     Campaign,
     CommunityEntry,
-    Tag,
     CampaignToken,
     Address,
 )
@@ -315,8 +314,8 @@ class WhiteListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
             # TODO: should throw error when reach line count instead to alert user
             while line_count < max_line_count:
                 matches = re.findall(
-                    b"[\w\.-]+@[\w\.-]+\.\w+", line
-                )  # noqa: W605
+                    b"[\w\.-]+@[\w\.-]+\.\w+", line  # noqa: W605
+                )
                 for match in matches:
                     entry = WhiteListEntry(
                         email=match.decode("utf-8"), organization=self.object
@@ -406,9 +405,7 @@ class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
-        org = Organization.objects.get(
-            slug=self.kwargs["slug"]
-        )
+        org = Organization.objects.get(slug=self.kwargs["slug"])
         context["organization"] = org
         context["state"] = org.states[0]
         if self.kwargs["campaign"]:

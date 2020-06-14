@@ -2,10 +2,9 @@ from ..models import (
     Membership,
     Organization,
     WhiteListEntry,
-    Tag,
     CommunityEntry,
     Campaign,
-    Address
+    Address,
 )
 
 # from django.views.generic.detail import SingleObjectMixin
@@ -66,7 +65,9 @@ class PartnerMap(TemplateView):
         for obj in query:
             for a in Address.objects.filter(entry=obj):
                 streets[obj.entry_ID] = a.street
-                cities[obj.entry_ID] = a.city + ", " + a.state + " " + a.zipcode
+                cities[obj.entry_ID] = (
+                    a.city + ", " + a.state + " " + a.zipcode
+                )
             if not obj.census_blocks_polygon:
                 s = "".join(obj.user_polygon.geojson)
             else:
@@ -85,16 +86,14 @@ class PartnerMap(TemplateView):
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
-        org = Organization.objects.get(
-            slug=self.kwargs["slug"]
-        )
+        org = Organization.objects.get(slug=self.kwargs["slug"])
         context["organization"] = org
         context["state"] = org.states[0]
         if self.kwargs["campaign"]:
             context["campaign"] = get_object_or_404(
                 Campaign, slug=self.kwargs["campaign"]
             ).name
-        if (self.request.user.is_authenticated):
+        if self.request.user.is_authenticated:
             context["is_org_admin"] = self.request.user.is_org_admin(
                 Organization.objects.get(slug=self.kwargs["slug"]).id
             )
