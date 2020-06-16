@@ -1,6 +1,7 @@
 ---
 id: docasaurus1
-title: Overview
+title: Docasaurus Overview
+sidebar_label: Overview
 ---
 
 ### Editing a Page
@@ -35,6 +36,7 @@ This file should have the following lines:
 ---
 id: django1
 title: Overview
+sidebar_label: Overview
 ---
 
 ### Title
