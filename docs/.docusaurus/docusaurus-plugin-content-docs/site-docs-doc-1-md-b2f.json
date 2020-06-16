@@ -4,7 +4,7 @@
   "description": "1. Create a virtual environment",
   "source": "@site/docs/doc1.md",
   "permalink": "/docs/doc1",
-  "editUrl": "https://github.com/Representable/docs/edit/master/docs/doc1.md",
+  "editUrl": "https://github.com/Representable/representable/edit/master/docs/docs/doc1.md",
   "sidebar": "someSidebar",
   "next": {
     "title": "Contribution Guidelines",

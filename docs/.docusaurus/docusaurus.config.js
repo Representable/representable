@@ -65,7 +65,7 @@ export default {
             },
             {
               label: "GitHub",
-              href: "https://github.com/representable/docs",
+              href: "https://github.com/representable/representable",
             },
           ],
         },
@@ -79,7 +79,7 @@ export default {
   baseUrl: "/",
   favicon: "img/favicon.ico",
   organizationName: "representable",
-  projectName: "docs",
+  projectName: "representable",
   presets: [
     [
       "@docusaurus/preset-classic",
@@ -87,11 +87,13 @@ export default {
         docs: {
           homePageId: "doc1",
           sidebarPath: "/Users/lauren/sw/representable/docs/sidebars.js",
-          editUrl: "https://github.com/Representable/docs/edit/master/",
+          editUrl:
+            "https://github.com/Representable/representable/edit/master/docs/",
         },
         blog: {
           showReadingTime: true,
-          editUrl: "https://github.com/Representable/docs/edit/master/",
+          editUrl:
+            "https://github.com/Representable/representable/edit/master/docs/",
         },
         theme: {
           customCss: "/Users/lauren/sw/representable/docs/src/css/custom.css",

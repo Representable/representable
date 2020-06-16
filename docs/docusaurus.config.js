@@ -65,7 +65,7 @@ module.exports = {
             },
             {
               label: "GitHub",
-              href: "https://github.com/representable/docs",
+              href: "https://github.com/representable/representable",
             },
           ],
         },
@@ -82,12 +82,14 @@ module.exports = {
           homePageId: "doc1",
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
-          editUrl: "https://github.com/Representable/representable/docs/edit/master/",
+          editUrl:
+            "https://github.com/Representable/representable/edit/master/docs/",
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
-          editUrl: "https://github.com/Representable/representable/docs/edit/master/",
+          editUrl:
+            "https://github.com/Representable/representable/edit/master/docs/",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),

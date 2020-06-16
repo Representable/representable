@@ -4,7 +4,7 @@
   "description": "Production workflow",
   "source": "@site/docs/doc2.md",
   "permalink": "/docs/doc2",
-  "editUrl": "https://github.com/Representable/docs/edit/master/docs/doc2.md",
+  "editUrl": "https://github.com/Representable/representable/edit/master/docs/docs/doc2.md",
   "sidebar": "someSidebar",
   "previous": {
     "title": "Getting Started",
