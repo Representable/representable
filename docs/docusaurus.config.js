@@ -5,7 +5,7 @@ module.exports = {
   baseUrl: "/",
   favicon: "img/favicon.ico",
   organizationName: "representable", // Usually your GitHub org/user name.
-  projectName: "docs", // Usually your repo name.
+  projectName: "representable", // Usually your repo name.
   themeConfig: {
     navbar: {
       title: "Representable",
@@ -82,12 +82,12 @@ module.exports = {
           homePageId: "doc1",
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
-          editUrl: "https://github.com/Representable/docs/edit/master/",
+          editUrl: "https://github.com/Representable/representable/docs/edit/master/",
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
-          editUrl: "https://github.com/Representable/docs/edit/master/",
+          editUrl: "https://github.com/Representable/representable/docs/edit/master/",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
