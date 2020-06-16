@@ -9,5 +9,9 @@
   "previous": {
     "title": "Contribution Guidelines",
     "permalink": "/docs/doc2"
+  },
+  "next": {
+    "title": "Django Introduction",
+    "permalink": "/docs/django1"
   }
 }

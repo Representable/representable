@@ -6,6 +6,10 @@
   "permalink": "/docs/doc1",
   "editUrl": "https://github.com/Representable/representable/edit/master/docs/docs/doc1.md",
   "sidebar": "someSidebar",
+  "previous": {
+    "title": "First Steps",
+    "permalink": "/docs/setup"
+  },
   "next": {
     "title": "Contribution Guidelines",
     "permalink": "/docs/doc2"

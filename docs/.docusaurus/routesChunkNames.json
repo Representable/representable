@@ -75,6 +75,14 @@
     "component": "component---theme-doc-page-1-be-9be",
     "docsMetadata": "docsMetadata---docs-route-20-a-f24"
   },
+  "/docs/django1": {
+    "component": "component---theme-doc-item-178-a40",
+    "content": "content---docs-django-173-e-fbf"
+  },
+  "/docs/django2": {
+    "component": "component---theme-doc-item-178-a40",
+    "content": "content---docs-django-2-f-30-d05"
+  },
   "/docs/doc1": {
     "component": "component---theme-doc-item-178-a40",
     "content": "content---docsb-2-f-e09"
@@ -86,5 +94,9 @@
   "/docs/doc3": {
     "component": "component---theme-doc-item-178-a40",
     "content": "content---docs-doc-3616-40c"
+  },
+  "/docs/setup": {
+    "component": "component---theme-doc-item-178-a40",
+    "content": "content---docs-setup-384-edd"
   }
 }

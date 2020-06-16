@@ -58,6 +58,16 @@ export default [
 
     routes: [
       {
+        path: "/docs/django1",
+        component: ComponentCreator("/docs/django1"),
+        exact: true,
+      },
+      {
+        path: "/docs/django2",
+        component: ComponentCreator("/docs/django2"),
+        exact: true,
+      },
+      {
         path: "/docs/doc1",
         component: ComponentCreator("/docs/doc1"),
         exact: true,
@@ -70,6 +80,11 @@ export default [
       {
         path: "/docs/doc3",
         component: ComponentCreator("/docs/doc3"),
+        exact: true,
+      },
+      {
+        path: "/docs/setup",
+        component: ComponentCreator("/docs/setup"),
         exact: true,
       },
     ],

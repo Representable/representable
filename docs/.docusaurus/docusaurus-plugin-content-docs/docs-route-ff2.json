@@ -3,8 +3,13 @@
     "someSidebar": [
       {
         "type": "category",
-        "label": "Docusaurus",
+        "label": "Getting Started",
         "items": [
+          {
+            "type": "link",
+            "label": "First Steps",
+            "href": "/docs/setup"
+          },
           {
             "type": "link",
             "label": "Getting Started",
@@ -21,12 +26,31 @@
             "href": "/docs/doc3"
           }
         ]
+      },
+      {
+        "type": "category",
+        "label": "Django",
+        "items": [
+          {
+            "type": "link",
+            "label": "Django Introduction",
+            "href": "/docs/django1"
+          },
+          {
+            "type": "link",
+            "label": "Entry Page",
+            "href": "/docs/django2"
+          }
+        ]
       }
     ]
   },
   "permalinkToSidebar": {
+    "/docs/django1": "someSidebar",
+    "/docs/django2": "someSidebar",
     "/docs/doc1": "someSidebar",
     "/docs/doc2": "someSidebar",
-    "/docs/doc3": "someSidebar"
+    "/docs/doc3": "someSidebar",
+    "/docs/setup": "someSidebar"
   }
 }

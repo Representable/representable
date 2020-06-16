@@ -103,6 +103,22 @@ export default {
     "@site/blog/2020-06-09-welcome.md",
     require.resolveWeak("@site/blog/2020-06-09-welcome.md"),
   ],
+  "content---docs-django-173-e-fbf": [
+    () =>
+      import(
+        /* webpackChunkName: 'content---docs-django-173-e-fbf' */ "@site/docs/django1.md"
+      ),
+    "@site/docs/django1.md",
+    require.resolveWeak("@site/docs/django1.md"),
+  ],
+  "content---docs-django-2-f-30-d05": [
+    () =>
+      import(
+        /* webpackChunkName: 'content---docs-django-2-f-30-d05' */ "@site/docs/django2.md"
+      ),
+    "@site/docs/django2.md",
+    require.resolveWeak("@site/docs/django2.md"),
+  ],
   "content---docs-doc-2-df-3-eaa": [
     () =>
       import(
@@ -118,6 +134,14 @@ export default {
       ),
     "@site/docs/doc3.md",
     require.resolveWeak("@site/docs/doc3.md"),
+  ],
+  "content---docs-setup-384-edd": [
+    () =>
+      import(
+        /* webpackChunkName: 'content---docs-setup-384-edd' */ "@site/docs/setup.md"
+      ),
+    "@site/docs/setup.md",
+    require.resolveWeak("@site/docs/setup.md"),
   ],
   "content---docsb-2-f-e09": [
     () =>

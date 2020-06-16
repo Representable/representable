@@ -1,0 +1,13 @@
+{
+  "id": "django2",
+  "title": "Entry Page",
+  "description": "Contributing to the Entry Page",
+  "source": "@site/docs/django2.md",
+  "permalink": "/docs/django2",
+  "editUrl": "https://github.com/Representable/representable/edit/master/docs/docs/django2.md",
+  "sidebar": "someSidebar",
+  "previous": {
+    "title": "Django Introduction",
+    "permalink": "/docs/django1"
+  }
+}
