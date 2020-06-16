@@ -307,35 +307,17 @@ class WhiteListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         file = self.request.FILES["file"]
-        emails = []
-        max_line_count = 10000
+        max_line_count = 5000
         line_count = 0
         for line in file:
-            # TODO: should throw error when reach line count instead to alert user
-            while line_count < max_line_count:
-                matches = re.findall(
-                    b"[\w\.-]+@[\w\.-]+\.\w+", line  # noqa: W605
+            matches = re.findall(b"[\w\.-]+@[\w\.-]+\.\w+", line)  # noqa: W605
+            for match in matches:
+                WhiteListEntry.objects.create(
+                    email=match.decode("utf-8"), organization=self.object
                 )
-                for match in matches:
-                    entry = WhiteListEntry(
-                        email=match.decode("utf-8"), organization=self.object
-                    )
-                    emails.append(entry)
-                line_count += 1
-
-        # TODO: fix below batch code
-        # batch
-        batch_size = 10000
-        WhiteListEntry.objects.bulk_create(emails, batch_size)
-        # while True:
-        #     batch = list(islice(emails, batch_size))
-        #     if not batch:
-        #         break
-        #     self.object.whitelist.bulk_create(batch, batch_size)
-
-        # self.success_url = reverse_lazy(
-        #     "main:home_org", kwargs=self.object.get_url_kwargs()
-        # )
+            if line_count == max_line_count:
+                break
+            line_count += 1
 
         return super().form_valid(form)
 
