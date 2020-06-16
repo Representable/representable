@@ -29,17 +29,39 @@
       },
       {
         "type": "category",
-        "label": "Django",
+        "label": "Django Project",
         "items": [
           {
             "type": "link",
-            "label": "Django Introduction",
+            "label": "Overview",
             "href": "/docs/django1"
           },
           {
             "type": "link",
             "label": "Entry Page",
             "href": "/docs/django2"
+          }
+        ]
+      },
+      {
+        "type": "category",
+        "label": "Visualizations App",
+        "items": [
+          {
+            "type": "link",
+            "label": "Overview",
+            "href": "/docs/viz1"
+          }
+        ]
+      },
+      {
+        "type": "category",
+        "label": "Doc Editing Guide",
+        "items": [
+          {
+            "type": "link",
+            "label": "Overview",
+            "href": "/docs/docasaurus1"
           }
         ]
       }
@@ -51,6 +73,8 @@
     "/docs/doc1": "someSidebar",
     "/docs/doc2": "someSidebar",
     "/docs/doc3": "someSidebar",
-    "/docs/setup": "someSidebar"
+    "/docs/docasaurus1": "someSidebar",
+    "/docs/setup": "someSidebar",
+    "/docs/viz1": "someSidebar"
   }
 }

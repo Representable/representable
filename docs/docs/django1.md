@@ -1,6 +1,6 @@
 ---
 id: django1
-title: Django Introduction
+title: Overview
 ---
 
 ### Project Structure

@@ -7,7 +7,11 @@
   "editUrl": "https://github.com/Representable/representable/edit/master/docs/docs/django2.md",
   "sidebar": "someSidebar",
   "previous": {
-    "title": "Django Introduction",
+    "title": "Overview",
     "permalink": "/docs/django1"
+  },
+  "next": {
+    "title": "Overview",
+    "permalink": "/docs/viz1"
   }
 }

@@ -135,6 +135,14 @@ export default {
     "@site/docs/doc3.md",
     require.resolveWeak("@site/docs/doc3.md"),
   ],
+  "content---docs-docasaurus-1-fa-6-f7b": [
+    () =>
+      import(
+        /* webpackChunkName: 'content---docs-docasaurus-1-fa-6-f7b' */ "@site/docs/docasaurus1.md"
+      ),
+    "@site/docs/docasaurus1.md",
+    require.resolveWeak("@site/docs/docasaurus1.md"),
+  ],
   "content---docs-setup-384-edd": [
     () =>
       import(
@@ -142,6 +150,14 @@ export default {
       ),
     "@site/docs/setup.md",
     require.resolveWeak("@site/docs/setup.md"),
+  ],
+  "content---docs-viz-136-c-51d": [
+    () =>
+      import(
+        /* webpackChunkName: 'content---docs-viz-136-c-51d' */ "@site/docs/viz1.md"
+      ),
+    "@site/docs/viz1.md",
+    require.resolveWeak("@site/docs/viz1.md"),
   ],
   "content---docsb-2-f-e09": [
     () =>

@@ -1,0 +1,17 @@
+{
+  "id": "viz1",
+  "title": "Overview",
+  "description": "Description",
+  "source": "@site/docs/viz1.md",
+  "permalink": "/docs/viz1",
+  "editUrl": "https://github.com/Representable/representable/edit/master/docs/docs/viz1.md",
+  "sidebar": "someSidebar",
+  "previous": {
+    "title": "Entry Page",
+    "permalink": "/docs/django2"
+  },
+  "next": {
+    "title": "Overview",
+    "permalink": "/docs/docasaurus1"
+  }
+}

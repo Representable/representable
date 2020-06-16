@@ -1,6 +1,6 @@
 {
   "id": "django1",
-  "title": "Django Introduction",
+  "title": "Overview",
   "description": "Project Structure",
   "source": "@site/docs/django1.md",
   "permalink": "/docs/django1",

@@ -1,0 +1,13 @@
+{
+  "id": "docasaurus1",
+  "title": "Overview",
+  "description": "Editing a Page",
+  "source": "@site/docs/docasaurus1.md",
+  "permalink": "/docs/docasaurus1",
+  "editUrl": "https://github.com/Representable/representable/edit/master/docs/docs/docasaurus1.md",
+  "sidebar": "someSidebar",
+  "previous": {
+    "title": "Overview",
+    "permalink": "/docs/viz1"
+  }
+}

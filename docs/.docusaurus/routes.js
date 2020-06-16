@@ -83,8 +83,18 @@ export default [
         exact: true,
       },
       {
+        path: "/docs/docasaurus1",
+        component: ComponentCreator("/docs/docasaurus1"),
+        exact: true,
+      },
+      {
         path: "/docs/setup",
         component: ComponentCreator("/docs/setup"),
+        exact: true,
+      },
+      {
+        path: "/docs/viz1",
+        component: ComponentCreator("/docs/viz1"),
         exact: true,
       },
     ],
