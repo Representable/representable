@@ -11,9 +11,9 @@ Scroll to the bottom of each page in the docasaurus and click `edit this page`. 
 
 #### 1. Add to the Sidebar
 
-Go to `sidebars.js` and find the section that you want to add to. For example I may decide that I want to add a new doc "django3" to the Django Project section.
+Go to `sidebars.js` and find the section that you want to add to. For example I may decide that I want to add a new doc called `django3` to the `Django Project` section.
 
-Then, I would add Django3 to the end of the line:
+Then, I would add `django3` to the end of the line as shown:
 
 ```
 module.exports = {
