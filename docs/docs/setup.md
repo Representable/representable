@@ -3,6 +3,12 @@ id: setup
 title: First Steps
 ---
 
+:::caution
+
+This section is a work in progress.
+
+:::
+
 ### Recommended Setup
 
 - Python (install python)

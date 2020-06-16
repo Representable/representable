@@ -5,6 +5,10 @@ title: Overview
 
 ### Project Structure
 
-[ Add info ]
+:::caution
+
+This section is a work in progress.
+
+:::
 
 ### Helpful Links

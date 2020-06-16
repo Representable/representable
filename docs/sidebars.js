@@ -4,5 +4,6 @@ module.exports = {
     "Django Project": ["django1", "django2"],
     "React Visualizations App": ["viz1"],
     "Docs Editing Guide": ["docasaurus1", "docasaurus2"],
+    "API Reference": ["api1"],
   },
 };
