@@ -34,7 +34,7 @@ This file should have the following lines:
 
 ```
 ---
-id: django1
+id: django3
 title: Overview
 sidebar_label: Overview
 ---
