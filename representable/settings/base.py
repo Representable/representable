@@ -54,6 +54,8 @@ AUTHENTICATION_BACKENDS = (
 # Application definition
 
 INSTALLED_APPS = [
+    "django.contrib.sites",
+    "djangocms_admin_style",
     "whitenoise.runserver_nostatic",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -61,9 +63,12 @@ INSTALLED_APPS = [
     "django.contrib.gis",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "django.contrib.sites",
     "django.contrib.staticfiles",
     "main",
+    "cms",
+    "menus",
+    "treebeard",
+    "sekizai",
     "leaflet",
     "django_select2",
     "widget_tweaks",
@@ -94,6 +99,10 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "cms.middleware.user.CurrentUserMiddleware",
+    "cms.middleware.page.CurrentPageMiddleware",
+    "cms.middleware.toolbar.ToolbarMiddleware",
+    "cms.middleware.language.LanguageCookieMiddleware",
 ]
 
 ROOT_URLCONF = "representable.urls"
@@ -111,6 +120,9 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "main.context_processors.mixpanel.get_user_type",
                 "main.context_processors.mixpanel.get_mixpanel_token",
+                "cms.context_processors.cms_settings",
+                "sekizai.context_processors.sekizai",
+                "django.template.context_processors.i18n",
             ],
         },
     },
@@ -169,25 +181,6 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = "main.User"
 LOGIN_REDIRECT_URL = "/"
 
-# Internationalization
-# https://docs.djangoproject.com/en/2.1/topics/i18n/
-
-# Provide a lists of languages which your site supports.
-LANGUAGES = (
-    ("en", _("English")),
-    ("es", _("Spanish")),
-)
-
-LANGUAGE_CODE = "en-us"
-
-TIME_ZONE = "UTC"
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
@@ -238,3 +231,17 @@ ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 
 ACCOUNT_EMAIL_REQUIRED = True
 DEFAULT_FROM_EMAIL = "no-reply@representable.org"
+
+LANGUAGE_CODE = "en"
+LANGUAGES = [
+    ("en", "English"),
+    ("es", "Spanish"),
+]
+
+SITE_ID = 1
+
+CMS_TEMPLATES = [
+    ("home.html", "Home page template"),
+]
+
+X_FRAME_OPTIONS = "SAMEORIGIN"

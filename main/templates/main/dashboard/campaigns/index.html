@@ -7,7 +7,7 @@
     <div class="col">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{% url 'main:index' %}">Home</a></li>
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
           <li class="breadcrumb-item"><a href="{% url 'main:dashboard' %}">Dashboard</a></li>
           <li class="breadcrumb-item"><a href="{% url 'main:home_org' object.organization.slug  object.organization.pk %}">Partners / {{ object.organization.name }}</a></li>
           <li class="breadcrumb-item active" aria-current="page">Campaigns / {{ object.name }}</li>
