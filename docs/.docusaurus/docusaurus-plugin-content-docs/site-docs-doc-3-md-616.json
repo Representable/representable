@@ -1,0 +1,13 @@
+{
+  "id": "doc3",
+  "title": "Postgres and Geodjango Tutorial",
+  "description": "Adapted from Eleanor Stribling.",
+  "source": "@site/docs/doc3.md",
+  "permalink": "/docs/doc3",
+  "editUrl": "https://github.com/Representable/docs/edit/master/docs/doc3.md",
+  "sidebar": "someSidebar",
+  "previous": {
+    "title": "Contribution Guidelines",
+    "permalink": "/docs/doc2"
+  }
+}
