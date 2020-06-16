@@ -1,16 +1,14 @@
-# for node / react projects 
-# dependencies
+# Dependencies
 /node_modules
-/.pnp
-.pnp.js
 
-# testing
-/coverage
-
-# production
+# Production
 /build
 
-# misc
+# Generated files
+.docusaurus
+.cache-loader
+
+# Misc
 .DS_Store
 .env.local
 .env.development.local

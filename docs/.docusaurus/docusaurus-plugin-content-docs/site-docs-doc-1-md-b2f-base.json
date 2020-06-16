@@ -45,7 +45,7 @@
       },
       {
         "type": "category",
-        "label": "Visualizations App",
+        "label": "React Visualizations App",
         "items": [
           {
             "type": "link",
@@ -56,7 +56,7 @@
       },
       {
         "type": "category",
-        "label": "Doc Editing Guide",
+        "label": "Docs Editing Guide",
         "items": [
           {
             "type": "link",
