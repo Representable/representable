@@ -33,6 +33,7 @@ class CommunityResource(resources.ModelResource):
         fields = (
             "id",
             "user_name",
+            "user__email",
             "entry_name",
             "cultural_interests",
             "economic_interests",
@@ -44,6 +45,7 @@ class CommunityResource(resources.ModelResource):
         export_order = (
             "id",
             "user_name",
+            "user__email",
             "entry_name",
             "cultural_interests",
             "economic_interests",
