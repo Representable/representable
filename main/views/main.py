@@ -38,7 +38,6 @@ from ..forms import (
 from ..models import (
     CommunityEntry,
     WhiteListEntry,
-    Tag,
     Membership,
     Address,
     CampaignToken,
@@ -378,12 +377,18 @@ class EntryView(LoginRequiredMixin, View):
 
         has_campaign = False
         organization_name = ""
+        organization_id = None
+        campaign_name = ""
+        campaign_id = None
         if kwargs["campaign"]:
             has_campaign = True
             campaign_slug = self.kwargs["campaign"]
             campaign = Campaign.objects.get(slug=campaign_slug)
+            campaign_name = campaign.name
+            campaign_id = campaign.id
             organization = campaign.organization
             organization_name = organization.name
+            organization_id = organization.id
 
         context = {
             "comm_form": comm_form,
@@ -393,6 +398,9 @@ class EntryView(LoginRequiredMixin, View):
             "has_token": has_token,
             "has_campaign": has_campaign,
             "organization_name": organization_name,
+            "organization_id": organization_id,
+            "campaign_name": campaign_name,
+            "campaign_id": campaign_id,
         }
         return render(request, self.template_name, context)
 
@@ -400,12 +408,7 @@ class EntryView(LoginRequiredMixin, View):
         comm_form = self.community_form_class(request.POST, label_suffix="")
         addr_form = self.address_form_class(request.POST, label_suffix="")
         if comm_form.is_valid():
-            # grab tags from form
-            tag_name_qs = comm_form.cleaned_data["tags"].values("name")
-
             entryForm = comm_form.save(commit=False)
-
-            # get all the polygons from the array
 
             # This returns an array of Django GEOS Polygon types
             polyArray = comm_form.data["census_blocks_polygon_array"]
@@ -472,9 +475,6 @@ class EntryView(LoginRequiredMixin, View):
                 addrForm.entry = entryForm
                 addrForm.save()
 
-            for tag_name in tag_name_qs:
-                tag = Tag.objects.get(name=str(tag_name["name"]))
-                entryForm.tags.add(tag)
             m_uuid = str(entryForm.entry_ID).split("-")[0]
             if not entryForm.campaign:
                 self.success_url = reverse_lazy(

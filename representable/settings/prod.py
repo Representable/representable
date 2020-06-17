@@ -20,7 +20,4 @@ EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-# disables browsable api in production
-REST_FRAMEWORK = {
-    "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",)
-}
+MIXPANEL_TOKEN = "d0cc0bfda7587bccdb286d10deeac993"

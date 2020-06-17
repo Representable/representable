@@ -15,7 +15,7 @@
         <p class="card-text text-center"><i class="fas fa-search text-primary m-1"></i>Find your community.</p>
         <p class="card-text text-center"><i class="fas fa-pencil-ruler text-primary m-1"></i>Draw it on a map.</p>
         <p class="card-text text-center"><i class="fas fa-paper-plane text-primary m-1"></i>Submit it!</p>
-        <form class="form-signin signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+        <form id="sign-up-form" class="form-signin signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
           {% csrf_token %}
           <div class="form-group">
             {% for field in form %}
@@ -32,7 +32,7 @@
           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
           {% endif %}
           <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">{% trans "Sign Up" %}</button>
-          <p class="card-text text-center my-3 align-text-bottom">Already have an account? <a href="/accounts/login">Log In</a></p>
+          <p class="card-text text-center my-3 align-text-bottom">Already have an account? <a class="log-in-started" href="/accounts/login">Log In</a></p>
           <p class="card-text text-center my-3 align-text-bottom"><i class="fas fa-lock m-1 text-primary"></i>Making an account helps us protect legitimate submissions.</p>
 
         </form>

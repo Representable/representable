@@ -41,11 +41,3 @@ before_script:
 script:
   - python3 manage.py collectstatic --settings=representable.settings.dev
   - python3 manage.py test --settings=representable.settings.dev
-
-# Email settings
-notifications:
-  email:
-    recipients:
-      - representableteam@gmail.com
-    on_success: never
-    on_failure: always

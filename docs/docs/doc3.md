@@ -1,8 +1,9 @@
-# GeoDjango and Postgres Tutorial
+---
+id: doc3
+title: Postgres and Geodjango Tutorial
+---
 
-_by Theodor Marcu (Reach out if you have questions!)_
-
-Taken from https://medium.com/agatha-codes/painless-postgresql-django-d4f03364989 and adapted.
+Adapted from [Eleanor Stribling](https://medium.com/agatha-codes/painless-postgresql-django-d4f03364989).
 
 1. Install required requirements `pip install -r requirements.txt`. You may need to install libmemcached first.
 2. Install PostgreSQL from: https://postgresapp.com/downloads.html. Choose the first download option: Postgres.app with PostgreSQL 11. If you don't already have postgres, do "brew install postgres".
