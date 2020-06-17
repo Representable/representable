@@ -1,5 +1,5 @@
 ---
-id: vanillaviz
+id: vanillaviz2
 title: Mapbox Tilesets
 ---
 Contact Kyle (ktbarnes@princeton.edu) with any questions!

@@ -1,5 +1,5 @@
 ---
-id: vanillaviz
+id: vanillaviz1
 title: The Basics
 ---
 Contact Kyle (ktbarnes@princeton.edu) with any questions!
