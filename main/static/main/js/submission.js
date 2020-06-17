@@ -255,7 +255,12 @@ map.on("load", function () {
         {
           'width': 180,'elementHandlers': elementHandler
       });
-      doc.save("map.pdf");
+      // get entry name in order to name the PDF
+      var pdfName = $('#entry-name').text().replace(/ /g,"_");
+      pdfName = pdfName.replace("____________________________", "");
+      pdfName = pdfName.replace("__________________________", "");
+      pdfName = pdfName.replace(/(\r\n|\n|\r)/gm,"");
+      doc.save(pdfName + ".pdf");
     }, 1500);
   });
 });

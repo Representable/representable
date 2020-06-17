@@ -3,6 +3,11 @@ id: viz1
 title: Overview
 ---
 
+### React Visualizations App
+This app is currently under development as we move from a vanilla JS model for visualizations to a react app which can be integrated on the various pages which display communities. This should enable more flexibility when it comes to displaying communities in a variety of ways.
+
+It uses [material UI](https://material-ui.com/) as a framework and [react-mapbox-gl](https://github.com/alex3165/react-mapbox-gl) to integrate mapping. Check out the [dashboard spec doc](https://docs.google.com/document/d/18EQxKDEkfHtKu50I6MMd_zul50u1sBrxyU3JDU9q3Ic/edit#) for more details.
+
 ### Description
 
 Viz is a React-based visualizations tool for communities of interest that interfaces with the Django/Postgres Backend via REST API (Django Rest Framework).
