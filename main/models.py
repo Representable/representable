@@ -58,23 +58,23 @@ class User(AbstractUser):
         else:
             return False
 
+    def is_generic_admin(self):
+        if Membership.objects.filter(member=self, is_org_admin=True):
+            return True
+        else:
+            return False
 
-# ******************************************************************************#
+    def is_generic_moderator(self):
+        if Membership.objects.filter(member=self, is_org_moderator=True):
+            return True
+        else:
+            return False
 
-
-class Tag(models.Model):
-    """
-    Referenced https://docs.djangoproject.com/en/2.2/topics/forms/modelforms/#a-full-example
-    The tag table stores tags associated with different entries.
-    """
-
-    name = models.CharField(max_length=100, primary_key=True)
-
-    class Meta:
-        ordering = ("name",)
-
-    def __str__(self):
-        return self.name
+    def is_generic_member(self):
+        if Membership.objects.filter(member=self):
+            return True
+        else:
+            return False
 
 
 # ******************************************************************************#
@@ -269,14 +269,7 @@ class CommunityEntry(models.Model):
     census_blocks_polygon = models.MultiPolygonField(
         geography=True, serialize=True, blank=True, null=True
     )
-    tags = models.ManyToManyField(Tag, blank=True)
-    CHOICES = (
-        ("Y", "Yes, this is my community."),
-        (
-            "N",
-            "No, I am creating this community on behalf of another group of people.",
-        ),
-    )
+
     entry_name = models.CharField(
         max_length=100, blank=False, unique=False, default=""
     )

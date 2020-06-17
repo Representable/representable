@@ -28,10 +28,21 @@
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js'></script>
 <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css' type='text/css' />
 <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
-<script>
+<script type="text/javascript">
     sessionStorage.setItem("allChecks", "pass");
     var mapbox_user_name = "{{mapbox_user_name}}";
-//   console.log("passed");
+    var campaign_id = "{{campaign_id}}";
+    var organization_id = "{{organization_id}}";
+    var campaign_name = "{{campaign_name}}";
+    var organization_name = "{{organization_name}}";
+    mixpanel.track("Entry Page Loaded",
+    {
+     "campaign_id": campaign_id,
+     "campaign_name": campaign_name,
+     "organization_id": organization_id,
+     "organization_name": organization_name,
+    }
+    );
 </script>
 {% endblock %}
 
@@ -583,7 +594,6 @@
                     <i class="fa fa-question-circle" aria-hidden="true"></i><span class="d-none d-sm-inline"> Help</span>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropuphelp">
-                    <a class="dropdown-item" href="https://drive.google.com/open?id=1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc" target=_blank>User Guide</a>
                     <a class="dropdown-item" href="https://docs.google.com/forms/d/e/1FAIpQLSfeyoZ87pS67iTh2c3t5031XqoNFNAdwF6Pt1NUns_z_Myxaw/viewform">Report Error/Send Feedback</a>
                     </div>
                 </div>
@@ -601,17 +611,17 @@
         <div class="col-sm-2">
         </div>
         <div class="row">
-        <div id="video_popup" class="card shadow col-sm-4 col-md-4 col-lg-4 d-none">
-            <div id="video_popup_body" class="card-body">
-                <h5 class="card-title">
-                    Video Tutorial <button type="button" class="close" onclick="closePopup()">&times;</button>
-                </h5>
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/rWPPW8f-svw" allowfullscreen></iframe>
+            <div id="video_popup" class="card shadow col-sm-4 col-md-4 col-lg-4 d-none">
+                <div id="video_popup_body" class="card-body">
+                    <h5 class="card-title">
+                        Video Tutorial <button type="button" class="close" onclick="closePopup()">&times;</button>
+                    </h5>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/cVrnMXf-47Q" allowfullscreen></iframe>
+                    </div>
                 </div>
             </div>
-        </div>
-        </div>
+            </div>
     </div>
 
     {% endblock %}
@@ -622,6 +632,25 @@
     </script>
     <script type="text/javascript" src="{% static 'main/js/wicket.js' %}"></script>
     <script type="text/javascript" src="{% static 'main/js/geo.js' %}"></script>
+    <script type="text/javascript">
+        // Entry page
+        mixpanel.track_links(".dropdown-user-guide", "User Guide Link Pressed (Entry Help Dropdown)");
+        mixpanel.track_links(".dropdown-send-feedback", "Send Feedback Link Pressed (Entry Help Dropdown)");
+
+        document.getElementById("dropuphelp").addEventListener("click",
+            function(){
+                mixpanel.track("Dropup Help Button Pressed (Entry Page)");
+            }
+        );
+
+        mixpanel.track_forms("#entryForm", "Entry Form Submitted", {
+            "campaign_id": campaign_id,
+            "campaign_name": campaign_name,
+            "organization_id": organization_id,
+            "organization_name": organization_name,
+        });
+
+    </script>
     <!-- Turf to get the bounding box. -->
     <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
     {% endblock %}

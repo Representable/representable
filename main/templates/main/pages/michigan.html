@@ -1,6 +1,11 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% block content %}
+<script type="text/javascript">
+  mixpanel.track("State Page Loaded",
+    {"state":"Michigan"}
+  );
+</script>
 <div class="container">
   <div class="row row-hero my-5">
     <div class="col-12">

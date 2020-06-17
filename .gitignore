@@ -128,6 +128,7 @@ sendgrid.env
 sendgrid_integration.py
 get-pip.py
 
-# node
-node_modules/
-static/
+# for node / react projects 
+# dependencies
+node_modules
+/coverage
