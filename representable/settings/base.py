@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.sites",
     "django.contrib.staticfiles",
+    "import_export",
     "main",
     "leaflet",
     "django_select2",

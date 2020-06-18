@@ -1,8 +1,17 @@
-# Upload & Display Data on Mapbox
+---
+id: vanillaviz2
+title: Mapbox Tilesets
+---
+Contact Kyle (ktbarnes@princeton.edu) with any questions!
 
-_by Kyle Barnes (reach out for questions)_
+### How to upload data to mapbox tilesets
 
-1. Find your data ! Census blocks and a lot of other shapefiles are available from the census website at https://www.census.gov/cgi-bin/geo/shapefiles/index.php and the specific population data is included in these files ftp://ftp2.census.gov/geo/tiger/TIGER2010BLKPOPHU/
+:::note
+
+This is how we uploaded census blocks + state legislature borders. Counties are through Mapbox's existing election data tileset. Also note that for some reason Nebraska's files don't show on Mapbox? This is an ongoing mystery.
+
+:::
+1. Find your data ! Census blocks and a lot of other shapefiles are available from the census website at https://www.census.gov/cgi-bin/geo/shapefiles/index.php
 2. Install tippecanoe (https://github.com/mapbox/tippecanoe)
 
 ```
@@ -25,14 +34,14 @@ ogr2ogr -f GeoJSON {file-name}.geojson {file-name}.shp
 
 4. Convert to mbtiles (much smaller!): `tippecanoe -zg -o {file-name}.mbtiles --drop-densest-as-needed --extend-zooms-if-still-dropping {file-name}.geojson`
 5. Install mapbox cli: `pip install mapboxcli`
-6. Export mapbox token (ask me if you need it, different from mapbox key): `export MAPBOX_ACCESS_TOKEN={TOKEN}`
-7. upload the file: `mapbox upload representable-team.{name} {file-name}.geojson`
+6. Export mapbox token (ask Kyle if you need it, different from mapbox key): `export MAPBOX_ACCESS_TOKEN={TOKEN}`
+7. upload the file: `mapbox upload mapbox_user_name.{name} {file-name}.geojson`
 8. now you can edit the javascript
 
 ```
 map.addSource("source-name", {
   type: "vector",
-  url: "mapbox://representable-team.{name}"
+  url: "mapbox://mapbox_user_name.{name}"
 });
 ```
 
