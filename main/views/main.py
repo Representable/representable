@@ -39,6 +39,7 @@ from ..models import (
     CommunityEntry,
     WhiteListEntry,
     Membership,
+    Organization,
     Address,
     CampaignToken,
     Campaign,
@@ -225,13 +226,27 @@ class Submission(TemplateView):
         map_poly = geojson.loads(s)
         entryPolyDict = {}
         entryPolyDict[m_uuid] = map_poly.coordinates
+        for a in Address.objects.filter(entry=user_map):
+            street = a.street
+            city = (a.city + ", " + a.state + " " + a.zipcode)
 
         context = {
+            "street": street,
+            "city": city,
             "c": user_map,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
+        if self.request.user.is_authenticated:
+            if user_map.organization:
+                context["is_org_admin"] = self.request.user.is_org_admin(
+                    Organization.objects.get(name=user_map.organization.name).id
+                )
+                context["is_org_moderator"] = self.request.user.is_org_moderator(
+                    Organization.objects.get(name=user_map.organization.name).id
+                )
+            context["is_community_author"] = self.request.user == user_map.user
         return render(request, self.template_name, context)
 
 

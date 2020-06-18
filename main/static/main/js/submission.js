@@ -94,6 +94,15 @@ function newLowerLegislatureLayer(state) {
   });
 }
 
+function sanitizeString(x) {
+  x = x.replace(/ /g,"_");
+  x = x.replace("____________________________", "");
+  x = x.replace("__________________________", "");
+  x = x.replace(/(\r\n|\n|\r)/gm,"");
+  x = x.replace(/[^\x00-\x7F]/g, "");
+  return x;
+}
+
 map.on("load", function () {
   for (let census in CENSUS_KEYS) {
     newSourceLayer(census, CENSUS_KEYS[census]);
@@ -256,14 +265,12 @@ map.on("load", function () {
           'width': 180,'elementHandlers': elementHandler
       });
       // get entry name in order to name the PDF
-      var pdfName = $('#entry-name').text().replace(/ /g,"_");
-      pdfName = pdfName.replace("____________________________", "");
-      pdfName = pdfName.replace("__________________________", "");
-      pdfName = pdfName.replace(/(\r\n|\n|\r)/gm,"");
+      var pdfName = sanitizeString($('#entry-name').text())
       doc.save(pdfName + ".pdf");
     }, 1500);
   });
 });
+
 //create a button that toggles layers based on their IDs
 var toggleableLayerIds = [
   "Census Blocks",
