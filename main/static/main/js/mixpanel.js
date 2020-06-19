@@ -24,7 +24,7 @@ mixpanel.track_forms("#log-out-form", "Log Out Completed");
 // Track returning user log in.
 if (is_auth == true && session_auth_state == false) {
   mixpanel.track("Log In Completed");
-  mixpanel.alias(user_email);
+  mixpanel.alias(user_id);
   session_auth_state = true;
   sessionStorage.setItem("session_auth_state", true);
 }
