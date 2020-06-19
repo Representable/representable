@@ -271,14 +271,33 @@ class ExportView(TemplateView):
             geometry_field="census_blocks_polygon",
             fields=(
                 "entry_name",
-                "entry_reason",
                 "cultural_interests",
                 "economic_interests",
                 "comm_activities",
+                "other_considerations",
             ),
         )
+        gj = json.loads(map_geojson)
+        user_map = query[0]
+        if user_map.organization:
+            gj['features'][0]['properties']['organization'] = user_map.organization.name
+        if user_map.campaign:
+            gj['features'][0]['properties']['campaign'] = user_map.campaign.name
+        if self.request.user.is_authenticated:
+            is_org_leader = user_map.organization and (
+            self.request.user.is_org_admin(Organization.objects.get(name=user_map.organization.name).id)
+            or self.request.user.is_org_moderator(Organization.objects.get(name=user_map.organization.name).id)
+            )
+            if (
+                is_org_leader
+                or self.request.user == user_map.user
+            ):
+                gj['features'][0]['properties']['author_name'] = user_map.user_name
+                for a in Address.objects.filter(entry=user_map):
+                    addy = a.street + " " + a.city + ", " + a.state + " " + a.zipcode
+                    gj['features'][0]['properties']['address'] = addy
 
-        response = HttpResponse(map_geojson, content_type="application/json")
+        response = HttpResponse(json.dumps(gj), content_type="application/json")
         return response
 
 
