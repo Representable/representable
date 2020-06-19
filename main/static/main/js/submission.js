@@ -94,7 +94,7 @@ function newLowerLegislatureLayer(state) {
   });
 }
 
-function sanitizeString(x) {
+function sanitizePDF(x) {
   x = x.replace(/ /g,"_");
   x = x.replace("____________________________", "");
   x = x.replace("__________________________", "");
@@ -226,24 +226,42 @@ map.on("load", function () {
 
       var entryName = window.document.getElementById("entry-name");
       doc.fromHTML(entryName, 20, 20, {'width': 180});
-      var rLink = "View this community at " + window.location.href;
+      doc.setFontSize(10);
+      doc.setTextColor(150);
+      // identifying info
+      var userName = window.document.getElementById("user-name");
+      var adStreet = window.document.getElementById("address-street");
+      var adCity = window.document.getElementById("address-city");
+      if (userName !== null) {
+        doc.text(20, 35, userName.textContent);
+      }
+      if (adStreet !== null) {
+        doc.text(20, 40, adStreet.textContent);
+      }
+      if (adCity !== null) {
+        doc.text(20, 45, adCity.textContent);
+      }
       doc.setFontSize(12);
-      doc.text(20, 35, rLink);
+      doc.setTextColor(0);
+      // link to view on rep
+      var rLink = "View this community at " + window.location.href;
+      doc.text(20, 53, rLink);
 
       var org = window.document.getElementById("org-text");
       var campaign = window.document.getElementById("campaign-text");
       if (org !== null) {
-        doc.text(20, 45, "Organization: " + org.textContent);
+        doc.text(20, 61, "Organization: " + org.textContent);
       }
       if (campaign !== null) {
-        doc.text(20, 55, "Campaign: " + campaign.textContent);
+        doc.text(20, 69, "Campaign: " + campaign.textContent);
       }
 
       var imgData = map.getCanvas().toDataURL("image/png");
       // calculate ratio of map so it isn't squashed / stretched
       var mapDim = map.getCanvas().getBoundingClientRect();
       var mapPDFHeight = (mapDim.height*170) / mapDim.width;
-      doc.addImage(imgData, 'PNG', 20, 70, 170, mapPDFHeight);
+      doc.addImage(imgData, 'PNG', 20, 75, 170, mapPDFHeight);
+      // next page
       doc.addPage();
       doc.setFontSize(24);
       doc.text(20, 20, 'Community Information');
@@ -256,16 +274,17 @@ map.on("load", function () {
           return true;
         }
       };
-      var source = window.document.getElementById("table-content");
+      // entry fields
+      var table = window.document.getElementById("table-content");
       doc.fromHTML(
-        source,
+        table,
         20,
         25,
         {
           'width': 180,'elementHandlers': elementHandler
       });
       // get entry name in order to name the PDF
-      var pdfName = sanitizeString($('#entry-name').text())
+      var pdfName = sanitizePDF($('#entry-name').text())
       doc.save(pdfName + ".pdf");
     }, 1500);
   });
