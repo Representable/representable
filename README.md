@@ -11,12 +11,19 @@ Check out our [Docs](https://docs.representable.org) site for a guide to install
 Our core team is currently 8 members strong, though we've been supported by many others along the way. 
 
 Somya Arora
+
 Kyle Barnes
+
 Jessie Fielding
+
 Preeti Iyer
+
 Lauren Johnston
+
 Olivia Kusio
+
 Theo Marcu
+
 Edward Tian
 
 ### General Issue Reporting
