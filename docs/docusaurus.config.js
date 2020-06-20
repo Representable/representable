@@ -21,6 +21,11 @@ module.exports = {
           position: "left",
         },
         { to: "blog/", label: "Blog", position: "left" },
+        {
+          to: "https://github.com/Representable/representable/",
+          label: "Github",
+          position: "right",
+        },
       ],
     },
     footer: {
