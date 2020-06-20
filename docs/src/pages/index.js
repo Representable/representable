@@ -14,7 +14,7 @@ function Home() {
       title={`Hello from ${siteConfig.title}`}
       description="We’re creating maps of communities to fight for fair representation. Add your community to the map today and make your voice heard."
     >
-      <header className={classnames("hero hero--primary", styles.heroBanner)}>
+      <header className={classnames("hero", styles.heroBanner)}>
         <div className="container">
           <img
             className={classnames(styles.heroBannerLogo, "margin-vert--md")}
@@ -25,7 +25,7 @@ function Home() {
           <div className={styles.buttons}>
             <Link
               className={classnames(
-                "button button--outline button--secondary button--lg",
+                "button button--secondary button--lg",
                 styles.getStarted
               )}
               to={useBaseUrl("docs/")}
