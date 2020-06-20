@@ -1,5 +1,5 @@
 module.exports = {
-  title: "Representable.org Docs",
+  title: "Representable Docs",
   tagline: "Getting started with Representable.org",
   url: "https://representable-docs.netlify.app",
   baseUrl: "/",
