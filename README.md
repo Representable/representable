@@ -1,65 +1,29 @@
 # Representable
 
-We're creating maps of communities to end gerrymandering.
+Representable is creating maps of communities to fight for equal and impartial representation. The core web app is written in Django with Javascript/HTML/CSS frontend and Postgres/PostGIS backend. Our mapping & visualization app, currently in beta, is written in React & built using `createreactapp` and `Material UI`.
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-### 1. Create a virtual environment
+### Documentation
+Check out our [Docs](https://docs.representable.org) site for a guide to installing Representable and contributing to various parts of the site. If you find any issues, we would love to know! Please open an issue request for any incomplete documentation. 
 
-```
-pip install virtualenv --user
-virtualenv venv
-. venv/bin/activate
-# when done with work:
-deactivate
-```
+### Active Contributors
+Our core team is currently 8 members strong, though we've been supported by many others along the way. 
 
-### 2. Install requirements
+Somya Arora
+Kyle Barnes
+Jessie Fielding
+Preeti Iyer
+Lauren Johnston
+Olivia Kusio
+Theo Marcu
+Edward Tian
 
-```
-pip install -r requirements.txt
-```
+### General Issue Reporting
+For bug reports and general feature requests, please open an [issue request](https://github.com/Representable/representable/issues/new/choose). We welcome all feedback and suggestions!
 
-### 3. Add Environment variables
+### Reporting Security Issues
+We take security very seriously at Representable.org. Please send an email to [team@representable.org](mailto:team@representable.org) with any security issues and we'll open a private issue request with your concerns. We aim to respond to all security issues in a timely manner.
 
-You can find the mapbox API key referenced below by logging into the Mapbox.com account.
-
-```
-vim ~/.bash_profile
-# Add the following lines:
-export DISTR_DB_NAME="..."
-export DISTR_DB_USER="..."
-export DISTR_DB_PASS="..."
-export DISTR_MAPBOX_KEY="COPY_THIS_FROM_MAPBOX_ACCOUNT"
-export DJANGO_SETTINGS_MODULE=representable.settings.dev
-```
-
-Save and launch a new terminal session.
-
-### 4. Follow postgres, mapbox setup instructions
-
-Go to docs/postgres, docs/geodjango, and docs/mapbox_tippecanoe for details.
-
-### 5. Start server
-
-```
-cd representable
-python manage.py migrate
-python manage.py runserver
-```
-
-### 6. Helpful Heroku commands
-
-```
-git push heroku master
-heroku config:set VARIABLE=value
-heroku config:unset VARIABLE
-```
-
-## Representable Official Colors
-
-Light Blue (Active States/Buttons): <p color="#000000" background-color="#2A94F4">#2A94F4</p>
-Light Green (Active States/Buttons): <p color="#000000" background-color="#00C6A7">#00C6A7</p>
-
-Dark Blue (Inactive States/Buttons): <p color="#000000" background-color="#2176C2">#2176C2</p>
-Dark Green (Inactive States/Buttons): <p color="#000000" background-color="#00B094">#00B094</p>
+### License
+Representable is under the GPL-3.0 License.
