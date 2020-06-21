@@ -19,19 +19,17 @@
 <!-- Main Content -->
 {% block content %}
 <div class="container">
-  {% placeholder index_content %}
-  {% block index_content %}{% endblock %}
 
   <!-- Illustration -->
   <div class="row row-hero row-eq-height my-5 border-bottom">
     <div class="col-lg-7 col-sm-12 col-md-7">
       <!-- Shows on medium devices and higher. -->
       <h4 class="display-4 my-4 font-weight-medium d-none d-sm-block main-display-text-all">
-        Redistricting is coming. Let’s make it impartial.
+        {% placeholder hero-title or %}Redistricting is coming. Let’s make it impartial.{% endplaceholder %}
       </h4>
       <!-- Shows on small devices and lower. -->
       <h5 class="display-4 my-2 font-weight-medium d-sm-none main-display-text-sm">
-        Redistricting is coming. Let’s make it impartial.
+        {% placeholder hero-title or %}Redistricting is coming. Let’s make it impartial.{% endplaceholder %}
       </h5>
       <h4 class="font-weight-light d-none d-sm-block text-muted my-4">
         We’re creating maps of communities to fight for your representation. Add your community to the map today and make your voice heard.

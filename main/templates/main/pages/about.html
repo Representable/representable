@@ -1,5 +1,4 @@
-<!-- code adapted from: https://codepen.io/shamim539/pen/VvLLdV?editors=1010 -->
-{% extends 'main/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% load cms_tags %}
 
@@ -14,64 +13,13 @@
 <div class="row text-center row-content">
   <div class="col">
     <h2>
-      About Us
+    About  Us
     </h2>
     <p class="lead">
-      {% placeholder "feature" %}
-      {% placeholder "content" %}
-      {% placeholder "splashbox" %}
+      {% placeholder text or %}We’re a team of engineers and policy researchers who are excited to create technical solutions for civic issues. Coming from a wide array of backgrounds, we put our technical and policy experience together to make a powerful crowdsourced tool which we hope can change the current polarized political landscape of how districts are made in the United States. We’re committed to giving a voice to those who have been marginalized or politically diluted by gerrymandering and look forward to turning Representable into a national tool for political equity.{% endplaceholder%}
     </p>
   </div>
 
-</div>
-<div class="row text-center">
-  <div class="col my-2">
-    <h4>
-      Founding Team
-    </h4>
-    </div>
-    </div>
-  <div class="row row-content">
-  <div class="col-md-4 col-lg">
-    <div class="card border-0 shadow-sm">
-      <img src="{% static 'img/somya.jpeg' %}" class="card-img-top" alt="...">
-      <div class="card-body text-center">
-        <h6 class="card-title">Somya Arora</h6>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4 col-lg">
-    <div class="card border-0 shadow-sm" >
-      <img src="{% static 'img/kyle.jpeg' %}" class="card-img-top" alt="...">
-      <div class="card-body text-center">
-        <h6 class="card-title">Kyle Barnes</h6>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4 col-lg">
-    <div class="card border-0 shadow-sm" >
-      <img src="{% static 'img/preeti.jpeg' %}" class="card-img-top" alt="...">
-      <div class="card-body text-center">
-        <h6 class="card-title">Preeti Iyer</h6>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4 col-lg">
-    <div class="card border-0 shadow-sm" >
-      <img src="{% static 'img/lauren.jpeg' %}" class="card-img-top" alt="...">
-      <div class="card-body text-center">
-        <h6 class="card-title">Lauren Johnston</h6>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4 col-lg">
-    <div class="card border-0 shadow-sm" >
-      <img src="{% static 'img/theo.jpeg' %}" class="card-img-top" alt="...">
-      <div class="card-body text-center">
-        <h6 class="card-title">Theodor Marcu</h6>
-      </div>
-    </div>
-  </div>
 </div>
 </div>
 {% endblock %}

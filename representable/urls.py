@@ -40,11 +40,10 @@ from django.conf import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("main.urls"), name="Index"),
-    # path('accounts/', include('django.contrib.auth.urls')),
     path("accounts/", include("allauth.urls")),
     path("select2/", include("django_select2.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
+    path("", include("main.urls"), name="Index"),
     re_path(r"^", include("cms.urls")),
 ]
 

@@ -60,3 +60,4 @@ wrapt==1.11.2
 django-phone-field==1.8.0
 django-cms==3.7.3
 django-import-export==2.2.0
+djangocms-text-ckeditor==3.9.1

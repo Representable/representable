@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cms_tags %}
+
+{% block head %}
+{% block title %}
+<title>{% page_attribute "page_title" %}</title>
+{% endblock %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+<div class="row text-center row-content">
+  <div class="col">
+    <h2>
+    {% page_attribute "page_title" %}
+    </h2>
+    <p class="lead">
+      {% placeholder "content" %}
+    </p>
+  </div>
+
+</div>
+</div>
+{% endblock %}

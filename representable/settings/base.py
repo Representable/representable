@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     "treebeard",
     "menus",
     "sekizai",
+    "djangocms_text_ckeditor",
     "djangocms_admin_style",
     "leaflet",
     "django_select2",
@@ -245,9 +246,25 @@ LANGUAGES = [
 SITE_ID = 1
 
 CMS_TEMPLATES = [
+    ("page.html", "Basic page template"),
     ("main/index.html", "Home page template"),
     ("main/pages/about.html", "About page template"),
 ]
 
+CMS_PLACEHOLDER_CONF = {
+    "content": {
+        "name": _("Content"),
+        "plugins": ["TextPlugin"],
+        "default_plugins": [
+            {
+                "plugin_type": "TextPlugin",
+                "values": {
+                    "body": '<p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vel nibh orci. Ut et faucibus nisl, at laoreet est. Sed tristique, est ac iaculis dapibus, tellus justo fringilla felis, a auctor elit mauris nec odio. </p>'
+                },
+                "children": [],
+            },
+        ],
+    }
+}
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
