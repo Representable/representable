@@ -37,7 +37,7 @@ The `main` application is structured as listed below. Here's some quick definiti
  ┗ 📜utils.py
 ```
 
-The templates and views folders are structured into three main categories:
+The templates and views folders are structured into four main categories:
 
 - `campaigns`: public templates/views for campaigns launched by organizations
 - `dashboard`: private templates/views for managing submissions and launching campaigns.
