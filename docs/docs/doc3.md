@@ -8,23 +8,16 @@ Adapted from [Eleanor Stribling](https://medium.com/agatha-codes/painless-postgr
 1. Install required requirements `pip install -r requirements.txt`. You may need to install libmemcached first.
 2. Install PostgreSQL from: https://postgresapp.com/downloads.html. Choose the first download option: Postgres.app with PostgreSQL 11. If you don't already have postgres, do "brew install postgres".
 3. Make sure to start a Postgres server. Use the default settings on Port 5432.
-4. Use the information I texted you to create a Postgres user with the DISTR_DB_USER, a database with DISTR_DB_NAME, and password DISTR_DB_PASS.
-5. Create the user and database from the command line:
+4. Create the user and database from the command line:
 
 ```
 # Open postgres
 psql postgres
-# Create user
-CREATE USER representable WITH encrypted password '<pass_here>';
-# Give User permission to create databases
+CREATE USER representable WITH encrypted password 'representable333';
 ALTER ROLE representable WITH CREATEDB;
-# Check that your user was set up correctly
-\du
-# Create DB
 CREATE DATABASE representable_db WITH OWNER representable;
 GRANT ALL PRIVILEGES ON DATABASE representable_db to representable;
-# Check that DB was created correctly
-\l
+
 ```
 
 6. Add the following to your .bash_profile and .bashrc (copy/paste, then change the ...s ). This is so that we don't store passwords/info in clear text. Ask me for them if you don't have them anymore!
