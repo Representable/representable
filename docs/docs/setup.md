@@ -38,10 +38,10 @@ Install PostgreSQL from: https://postgresapp.com/downloads.html. Choose the firs
 psql postgres
 ```
 
-5. Next, run the following lines to create the local database:
+5. Next, run the following lines to create the local database, after modifying the first line to include the proper DB password:
 
 ```
-CREATE USER representable WITH encrypted password 'representable333';
+CREATE USER representable WITH encrypted password '<INSERT PASSWORD HERE>';
 ALTER ROLE representable WITH CREATEDB;
 CREATE DATABASE representable_db WITH OWNER representable;
 GRANT ALL PRIVILEGES ON DATABASE representable_db to representable;
