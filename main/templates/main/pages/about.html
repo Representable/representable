@@ -1,6 +1,13 @@
 <!-- code adapted from: https://codepen.io/shamim539/pen/VvLLdV?editors=1010 -->
 {% extends 'main/base.html' %}
 {% load static %}
+{% load cms_tags %}
+
+{% block head %}
+{% block title %}
+<title>{% page_attribute "page_title" %}</title>
+{% endblock %}
+{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -10,14 +17,9 @@
       About Us
     </h2>
     <p class="lead">
-      We’re a team of engineers and policy researchers
-      who are excited to create technical solutions for civic issues.
-      Coming from a wide array of backgrounds, we put our technical and policy experience
-      together to make a powerful crowdsourced tool which we hope can change the current
-      polarized political landscape of how districts are made in the United States.
-      We’re committed to giving a voice to those who have been marginalized or politically
-      diluted by gerrymandering and look forward to turning Representable into a national
-      tool for political equity.
+      {% placeholder "feature" %}
+      {% placeholder "content" %}
+      {% placeholder "splashbox" %}
     </p>
   </div>
 

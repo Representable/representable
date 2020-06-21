@@ -34,13 +34,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import re_path, path, include
+from django.conf.urls.static import static
+from django.conf.urls.i18n import i18n_patterns
+from django.conf import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("main.urls")),
-    re_path(r"^", include("cms.urls")),
+    path("", include("main.urls"), name="Index"),
     # path('accounts/', include('django.contrib.auth.urls')),
     path("accounts/", include("allauth.urls")),
     path("select2/", include("django_select2.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
+    re_path(r"^", include("cms.urls")),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

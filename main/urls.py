@@ -43,7 +43,7 @@ urlpatterns = [
         {"campaign": ""},
         name="entry",
     ),
-    path("about/", views.main.About.as_view(), name="about"),
+    # path("about/", views.main.About.as_view(), name="about"),
     path("review/", views.main.Review.as_view(), name="review"),
     path("privacy/", views.main.Privacy.as_view(), name="privacy"),
     path("terms/", views.main.Terms.as_view(), name="terms"),

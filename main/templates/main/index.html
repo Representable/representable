@@ -1,7 +1,11 @@
 {% extends 'main/base.html' %}
+{% load cms_tags %}
 {% load leaflet_tags %}
 {% load static %}
 {% block head %}
+{% block title %}
+<title>{% page_attribute "page_title" %}</title>
+{% endblock %}
 {% leaflet_js %}
 {% leaflet_css %}
 <!--  Mapbox GL JS-->
@@ -15,6 +19,9 @@
 <!-- Main Content -->
 {% block content %}
 <div class="container">
+  {% placeholder index_content %}
+  {% block index_content %}{% endblock %}
+
   <!-- Illustration -->
   <div class="row row-hero row-eq-height my-5 border-bottom">
     <div class="col-lg-7 col-sm-12 col-md-7">

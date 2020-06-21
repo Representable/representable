@@ -55,7 +55,6 @@ AUTHENTICATION_BACKENDS = (
 
 INSTALLED_APPS = [
     "django.contrib.sites",
-    "djangocms_admin_style",
     "whitenoise.runserver_nostatic",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -66,9 +65,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "main",
     "cms",
-    "menus",
     "treebeard",
+    "menus",
     "sekizai",
+    "djangocms_admin_style",
     "leaflet",
     "django_select2",
     "widget_tweaks",
@@ -120,8 +120,8 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "main.context_processors.mixpanel.get_user_type",
                 "main.context_processors.mixpanel.get_mixpanel_token",
-                "cms.context_processors.cms_settings",
                 "sekizai.context_processors.sekizai",
+                "cms.context_processors.cms_settings",
                 "django.template.context_processors.i18n",
             ],
         },
@@ -188,6 +188,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATIC_URL = "/static/"
 
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
+
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 
@@ -241,7 +244,12 @@ LANGUAGES = [
 SITE_ID = 1
 
 CMS_TEMPLATES = [
-    ("home.html", "Home page template"),
+    ("main/index.html", "Home page template"),
+    ("main/pages/about.html", "About page template"),
+]
+
+LANGUAGES = [
+    ("en", "English"),
 ]
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
