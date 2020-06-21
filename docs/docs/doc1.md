@@ -3,9 +3,9 @@ id: doc1
 title: Starting the Django Server
 ---
 
-### 1. Change your directory to where you cloned the Representable codebase locally
+### 1. Change into your local directory
 
-For example:
+From Terminal, change into the local directory to where you cloned the Representable codebase locally. For example:
 
 ```
 cd representable
@@ -22,7 +22,7 @@ You can install it as follows on MacOS:
 brew install pre-commit
 ```
 
-Then type:
+After running the line above, type:
 
 ```
 pre-commit install
@@ -53,4 +53,4 @@ python manage.py runserver
 
 ### 6. Open the local server
 
-Visit your browser at http://127.0.0.1:8000/ to see the website!
+Visit your browser at http://127.0.0.1:8000/ to see the website! Now you're all set to start contributing.
