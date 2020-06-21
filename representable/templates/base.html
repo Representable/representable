@@ -121,22 +121,6 @@
                 </li>
                 {% endif %}
             </ul>
-            <!-- TODO: This should not necessarily be in the navbar - on mobile/iPad, it needs to be visible on main page. -->
-            <!-- References https://docs.djangoproject.com/en/2.2/topics/i18n/translation/#set-language-redirect-view -->
-            <!-- Also https://stackoverflow.com/questions/47874530/django-language-selection-from-dropdown-links-and-images -->
-            <!-- <ul class="nav navbar-nav navbar-right language menu">
-                <form action="{% url 'set_language' %}" method="post">
-                    {% csrf_token %}
-                    <input name="next" type="hidden" value="{{ redirect_to }}" />
-                    <select class="form-control" name="language" onchange="javascript:this.form.submit()">
-                        {% for lang in LANGUAGES %}
-                            <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected="selected"{% endif %}>
-                                {{ lang.1 }} ({{ lang.0 }})
-                            </option>
-                        {% endfor %}
-                    </select>
-                </form>
-            </ul> -->
         </div>
     </nav>
 
@@ -158,7 +142,6 @@
                 <p class="d-block mb-3 text-muted">© Representable 2020</p>
             </div>
             <div class="col-6 col-md">
-                <!-- <h5>Community Map</h5> -->
                 <ul class="list-unstyled text-small">
                     <li><a class="text-muted" href="{% url 'main:entry' %}">
                             Add Your Community
@@ -175,7 +158,6 @@
             </div>
 
             <div class="col-6 col-md">
-                <!-- <h5>About</h5> -->
                 <ul class="list-unstyled text-small">
                     <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="{% url 'main:privacy' %}">
                             Privacy
