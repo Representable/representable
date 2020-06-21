@@ -35,10 +35,6 @@ export DJANGO_SETTINGS_MODULE=representable.settings.dev
 
 Save and launch a new terminal session.
 
-### 4. Follow postgres, mapbox setup instructions
-
-See the next docs page for details.
-
 ### 5. Start server
 
 ```
