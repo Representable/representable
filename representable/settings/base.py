@@ -249,8 +249,5 @@ CMS_TEMPLATES = [
     ("main/pages/about.html", "About page template"),
 ]
 
-LANGUAGES = [
-    ("en", "English"),
-]
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
