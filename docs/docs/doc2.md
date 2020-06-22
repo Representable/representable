@@ -3,10 +3,13 @@ id: doc2
 title: Contribution Guidelines
 ---
 
+Now that you've got your local development environment setup, please read through the guide below to understand the development process.
+
 ## Production workflow
 
-- At the beginning of every sprint, we'll create a feature roadmap and add corresponding GitHub issues under a given milestone. We'll also set a deadline that marks the day when we'll rollout these features.
-- DevOps (currently [@lauren-johnston](https://github.com/lauren-johnston) and [@arorasomya](https://github.com/arorasomya)) are responsible for making sure all issues are created, assigned, and added to the sprint feature tracker.
+- All issues and feature requests are added to the [Product Backlog](https://github.com/orgs/Representable/projects/1?fullscreen=true). This is how we keep track of all the things we want to do and prioritize them.
+- At the beginning of every sprint, we'll create a feature roadmap and add corresponding GitHub issues, pulling from the Product Backlog, under a given milestone. We'll also set a deadline that marks the day when we'll rollout these features.
+- DevOps (currently [@lauren-johnston](https://github.com/lauren-johnston) and [@arorasomya](https://github.com/arorasomya)) are responsible for making sure all issues are created, assigned, and added to the [Roadmap Tracker](https://github.com/orgs/Representable/projects/3?fullscreen=true).
 
 ### Coding
 
