@@ -25,7 +25,7 @@ Use the default settings on Port 5432.
 
 Type:
 ```
-psql -- version
+psql --version
 ```
 The output of the command will be something like `psql (PostgreSQL) 12.3`. You'll use this version to set the Postgres path.
 
