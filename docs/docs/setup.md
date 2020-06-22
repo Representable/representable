@@ -31,7 +31,7 @@ The following tools will be helpful for setting up your development environment.
 | GitHub Pull Requests and Issues | VS Code Extension for GitHub  | [Link](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-pull-request-github) |
 | Git History | VS Code Extension for GitHub that tells you who committed each line of code  | [Link](https://marketplace.visualstudio.com/items?itemName=donjayamanne.githistory) |
 | Python (Linter/Debugger) | VS Code Extension for Python  | [Link](https://marketplace.visualstudio.com/items?itemName=ms-python.python) |
-| Django (Syntax highlighting) | VS Code Extension for GitHub that highlights syntax and provides helpful code snippets.  | [Link](https://marketplace.visualstudio.com/items?itemName=batisteo.vscode-django) |
+| Django (Syntax highlighting) | VS Code Extension for Django that highlights syntax and provides helpful code snippets.  | [Link](https://marketplace.visualstudio.com/items?itemName=batisteo.vscode-django) |
 | Markdown All in One  |  VS Code Extension for Markdown  | [Link](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)    |
 | Postico (Mac Only) | A modern PostgreSQL client that lets you inspect your database | [Link](https://eggerapps.at/postico/)  |
 
