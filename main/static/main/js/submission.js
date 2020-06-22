@@ -244,7 +244,7 @@ map.on("load", function () {
       doc.setFontSize(12);
       doc.setTextColor(0);
       // link to view on rep
-      var rLink = "View this community at " + window.location.href;
+      var rLink = "View this community at: " + window.location.href;
       doc.text(20, 53, rLink);
 
       var org = window.document.getElementById("org-text");
