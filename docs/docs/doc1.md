@@ -5,7 +5,7 @@ title: Starting the Django Server
 
 ### 1. Add database and Mapbox settings to your local environment
 
-From the Terminal, add the following settings to your `bash_profile`. This will add these context variables to your local environment. 
+From the Terminal, add the following settings to your `.bash_profile`. Everything you add to the `.bash_profile` will become part of your local environment. 
 
 First, type:
 ```
