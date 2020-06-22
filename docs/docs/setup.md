@@ -32,7 +32,7 @@ The following tools will be helpful for setting up your development environment.
 
 ## 2. Cloning the Repo
 
-The easiest way to clone the repo to begin editing locally is to visit the Github repository and click `Clone or download` then `Open in Desktop`.
+The easiest way to clone the repo to begin editing locally is to visit the [Github repository](https://github.com/Representable/representable) and click `Clone or download` then `Open in Desktop`.
 
 ![clone](/img/clone.png "Cloning the repo")
 
