@@ -57,6 +57,7 @@ export SECRET_KEY="..."
 export MAPBOX_USER_NAME="..."
 export DISTR_MAPBOX_KEY="..."
 export DJANGO_SETTINGS_MODULE=representable.settings.dev
+export SENDGRID_API_KEY="..."
 ```
 
 To save these changes, press `Ctrl-X` then `Y`. After saving the file, **restart the Terminal** for the changes to go into effect.
