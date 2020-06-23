@@ -13,6 +13,7 @@ This tutorial will guide you through the installation of PostGIS, an extension f
 brew install postgis
 brew install gdal
 brew install libgeoip
+brew install libmemcached
 ```
 
 #### 2. Create PostGis Extension

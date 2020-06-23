@@ -3,7 +3,7 @@ id: doc2
 title: Contribution Guidelines
 ---
 
-Now that you've got your local development environment setup, please read through the guide below to understand the development process.
+Now that you've got your local development environment set up, please read through the guide below to understand the development process.
 
 ## Production workflow
 
