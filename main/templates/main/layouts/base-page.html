@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+<div class="row row-content">
+  <div class="col">
+    <h2 class="text-center">
+    {% block title %}
+    {% endblock %}
+    </h2>
+        {% block page-content %}
+        {% endblock %}
+  </div>
+
+</div>
+</div>
+{% endblock %}
