@@ -237,5 +237,15 @@ elif DATABASES["default"]["ENGINE"] == "django.db.backends.sqlite3":
 # Can Log In With Either Email or Username
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_HOST_USER = "apikey"
+EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 ACCOUNT_EMAIL_REQUIRED = True
 DEFAULT_FROM_EMAIL = "no-reply@representable.org"

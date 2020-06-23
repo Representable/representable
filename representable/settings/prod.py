@@ -10,14 +10,4 @@ ALLOWED_HOSTS = ["www.representable.org", "representable.org"]
 
 DEBUG = False
 
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-
-ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
-SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
-EMAIL_HOST = "smtp.sendgrid.net"
-EMAIL_HOST_USER = "apikey"
-EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-
 MIXPANEL_TOKEN = "d0cc0bfda7587bccdb286d10deeac993"
