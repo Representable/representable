@@ -1,6 +1,6 @@
 module.exports = {
   someSidebar: {
-    "Getting Started": ["setup", "doc1", "doc2", "doc3"],
+    "Getting Started": ["setup", "postgres", "geodjango", "doc1", "doc2"],
     "Django Project": ["django1", "django2"],
     "React Visualizations App": ["viz1"],
     "Vanilla JS Visualizations": ["vanillaviz1", "vanillaviz2"],

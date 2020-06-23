@@ -130,12 +130,12 @@ class Terms(TemplateView):
 
 
 class Michigan(TemplateView):
-    template_name = "main/pages/michigan.html"
+    template_name = "main/michigan.html"
 
 
 # ******************************************************************************#
 class Review(LoginRequiredMixin, TemplateView):
-    template_name = "main/pages/review.html"
+    template_name = "main/review.html"
     form_class = DeletionForm
     initial = {"key": "value"}
 
@@ -197,7 +197,7 @@ class Review(LoginRequiredMixin, TemplateView):
 
 
 class Submission(TemplateView):
-    template_name = "main/pages/submission.html"
+    template_name = "main/submission.html"
     sha = hashlib.sha256()
     NUM_DIGITS = 10  # TODO move to some place with constants
 
@@ -250,7 +250,7 @@ class Submission(TemplateView):
 
 
 class ExportView(TemplateView):
-    template = "main/pages/export.html"
+    template = "main/export.html"
 
     def get(self, request, *args, **kwargs):
         m_uuid = self.request.GET.get("map_id", None)
@@ -301,7 +301,7 @@ class ExportView(TemplateView):
 
 
 class Map(TemplateView):
-    template_name = "main/pages/map.html"
+    template_name = "main/map.html"
 
     def get_context_data(self, **kwargs):
 
@@ -339,7 +339,7 @@ class Map(TemplateView):
 
 
 class Thanks(TemplateView):
-    template_name = "main/pages/thanks.html"
+    template_name = "main/thanks.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -371,7 +371,7 @@ class EntryView(LoginRequiredMixin, View):
     EntryView displays the form and map selection screen.
     """
 
-    template_name = "main/pages/entry.html"
+    template_name = "main/entry.html"
     community_form_class = CommunityForm
     address_form_class = AddressForm
     # form_class = CommunityForm
