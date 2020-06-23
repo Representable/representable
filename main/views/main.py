@@ -241,10 +241,10 @@ class Submission(TemplateView):
         if self.request.user.is_authenticated:
             if user_map.organization:
                 context["is_org_admin"] = self.request.user.is_org_admin(
-                    Organization.objects.get(name=user_map.organization.name).id
+                    Organization.objects.get(slug=user_map.organization.slug).id
                 )
                 context["is_org_moderator"] = self.request.user.is_org_moderator(
-                    Organization.objects.get(name=user_map.organization.name).id
+                    Organization.objects.get(slug=user_map.organization.slug).id
                 )
             context["is_community_author"] = self.request.user == user_map.user
         return render(request, self.template_name, context)
@@ -285,8 +285,8 @@ class ExportView(TemplateView):
             gj['features'][0]['properties']['campaign'] = user_map.campaign.name
         if self.request.user.is_authenticated:
             is_org_leader = user_map.organization and (
-            self.request.user.is_org_admin(Organization.objects.get(name=user_map.organization.name).id)
-            or self.request.user.is_org_moderator(Organization.objects.get(name=user_map.organization.name).id)
+            self.request.user.is_org_admin(Organization.objects.get(slug=user_map.organization.slug).id)
+            or self.request.user.is_org_moderator(Organization.objects.get(slug=user_map.organization.slug).id)
             )
             if (
                 is_org_leader
