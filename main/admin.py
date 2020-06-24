@@ -24,6 +24,27 @@ from import_export.admin import ImportExportModelAdmin
 from main.models import CommunityEntry
 from .models import User
 
+from django import forms
+from ckeditor.widgets import CKEditorWidget
+
+from .models import State, Campaign
+
+
+class StateAdminForm(forms.ModelForm):
+    content = forms.CharField(widget=CKEditorWidget())
+
+    class Meta:
+        model = State
+        fields = ("id", "name", "abbr", "content")
+
+
+class StateAdmin(admin.ModelAdmin):
+    form = StateAdminForm
+    list_display = ("name", "abbr", "get_campaigns")
+
+
+admin.site.register(State, StateAdmin)
+
 admin.site.register(User, UserAdmin)
 
 
