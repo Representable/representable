@@ -39,6 +39,7 @@ from ..models import (
     CommunityEntry,
     WhiteListEntry,
     Membership,
+    Organization,
     Address,
     CampaignToken,
     Campaign,
@@ -232,6 +233,14 @@ class Submission(TemplateView):
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
+        for a in Address.objects.filter(entry=user_map):
+            context["street"] = a.street
+            context["city"] = (a.city + ", " + a.state + " " + a.zipcode)
+        if self.request.user.is_authenticated:
+            if user_map.organization:
+                context["is_org_admin"] = self.request.user.is_org_admin(user_map.organization_id)
+                context["is_org_moderator"] = self.request.user.is_org_moderator(user_map.organization_id)
+            context["is_community_author"] = self.request.user == user_map.user
         return render(request, self.template_name, context)
 
 
@@ -256,14 +265,33 @@ class ExportView(TemplateView):
             geometry_field="census_blocks_polygon",
             fields=(
                 "entry_name",
-                "entry_reason",
                 "cultural_interests",
                 "economic_interests",
                 "comm_activities",
+                "other_considerations",
             ),
         )
+        gj = json.loads(map_geojson)
+        user_map = query[0]
+        if user_map.organization:
+            gj['features'][0]['properties']['organization'] = user_map.organization.name
+        if user_map.campaign:
+            gj['features'][0]['properties']['campaign'] = user_map.campaign.name
+        if self.request.user.is_authenticated:
+            is_org_leader = user_map.organization and (
+            self.request.user.is_org_admin(user_map.organization_id)
+            or self.request.user.is_org_moderator(user_map.organization_id)
+            )
+            if (
+                is_org_leader
+                or self.request.user == user_map.user
+            ):
+                gj['features'][0]['properties']['author_name'] = user_map.user_name
+                for a in Address.objects.filter(entry=user_map):
+                    addy = a.street + " " + a.city + ", " + a.state + " " + a.zipcode
+                    gj['features'][0]['properties']['address'] = addy
 
-        response = HttpResponse(map_geojson, content_type="application/json")
+        response = HttpResponse(json.dumps(gj), content_type="application/json")
         return response
 
 
