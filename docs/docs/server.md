@@ -6,10 +6,10 @@ title: Running the Server
 ### 1. Check that your virtual environment is activated
 
 :::note
-If you haven't created your virtual environment, please return to the [previous docs page](doc1).
+If you haven't created your virtual environment, please return to the [previous docs page](/docs/doc1).
 :::
 
-From the terminal, you should see the name of your virtual environment at the beginning of each line. For example, if you made your virtual environment under the name venv it should appear as `(venv) <computer-name>:representable <user-name>$`. 
+From the terminal, you should see the name of your virtual environment at the beginning of each line. For example, if you made your virtual environment under the name venv it should appear as `(venv) <computer-name>:representable <user-name>$`.
 
 ### 2. Check that you've installed requirements
 
