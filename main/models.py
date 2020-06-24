@@ -349,4 +349,4 @@ class State(models.Model):
     get_campaigns.allow_tags = True
 
     class Meta:
-        db_table = "states"
+        db_table = "state"
