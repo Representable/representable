@@ -31,6 +31,9 @@ from django.contrib.gis.db import models
 from .choices import STATES
 from .utils import generate_unique_slug, generate_unique_token
 
+# state model editable content field
+from ckeditor.fields import RichTextField
+
 # ******************************************************************************#
 
 
@@ -329,3 +332,21 @@ class Address(models.Model):
 
 
 # ******************************************************************************#
+
+
+class State(models.Model):
+
+    name = models.CharField(
+        max_length=500, blank=False, unique=False, default=""
+    )
+    abbr = models.CharField(max_length=2, blank=False, unique=True, default="")
+
+    content = RichTextField()
+
+    def get_campaigns(self):
+        return Campaign.objects.filter(state=self.abbr.upper())
+
+    get_campaigns.allow_tags = True
+
+    class Meta:
+        db_table = "states"
