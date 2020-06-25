@@ -15,7 +15,9 @@
       {% endautoescape %}
 
         <div class="col-4 d-none d-sm-block">
-          <object type="image/svg+xml" class="state" data="{% static 'img/states/MI.svg' %}"></object>
+        {% with "img/states/"|add:state_obj.abbr|add:".svg" as svg %}
+          <object type="image/svg+xml" class="state" data="{% static svg %}"></object>
+          {% endwith %}
         </div>
       </div>
 
