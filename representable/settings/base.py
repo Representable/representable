@@ -239,3 +239,4 @@ ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 
 ACCOUNT_EMAIL_REQUIRED = True
 DEFAULT_FROM_EMAIL = "no-reply@representable.org"
+ACCOUNT_EMAIL_VERIFICATION = "optional"
