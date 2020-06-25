@@ -1,8 +1,10 @@
 ---
 id: docasaurus1
-title: Docasaurus Overview
+title: Docusaurus Overview
 sidebar_label: Overview
 ---
+
+The Representable Docs are built with Docusaurus. For a detailed explanation of customizing Docusaurus sites, visit the [Docusaurus website](https://v2.docusaurus.io/docs/docs-introduction). However, the guide below will help you get started with some key features including editing a page and adding a new one.
 
 ### Editing a Page
 
