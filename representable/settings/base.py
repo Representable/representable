@@ -234,8 +234,13 @@ elif DATABASES["default"]["ENGINE"] == "django.db.backends.sqlite3":
         "ENGINE"
     ] = "django.contrib.gis.db.backends.spatialite"
 
-# Can Log In With Either Email or Username
-ACCOUNT_AUTHENTICATION_METHOD = "username_email"
-
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_EMAIL_REQUIRED = True
-DEFAULT_FROM_EMAIL = "no-reply@representable.org"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = "smtp.gmail.com"  # I used gmail in my case
+EMAIL_HOST_USER = "representableteam@gmail.com"
+EMAIL_HOST_PASSWORD = os.environ.get("GMAIL_PASS")
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = "representableteam@gmail.com"
