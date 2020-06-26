@@ -132,7 +132,7 @@ class Membership(models.Model):
     date_joined = models.DateField(auto_now_add=True, blank=True)
     is_org_admin = models.BooleanField(default=False)
     is_org_moderator = models.BooleanField(default=False)
-    is_whitelisted = models.BooleanField(default=False)
+    is_allowlisted = models.BooleanField(default=False)
 
     def get_absolute_url(self):
         return reverse(
@@ -147,13 +147,13 @@ class Membership(models.Model):
 # ******************************************************************************#
 
 
-class WhiteListEntry(models.Model):
+class AllowList(models.Model):
     """
-    A given whitelist entry with the following
+    A given allowlist entry with the following
     fields included:
-    - email: whitelisted email
+    - email: allowlisted email
     - organization: the organization that created the link
-    - date added: when the email was added to the whitelist
+    - date added: when the email was added to the allowlist
     """
 
     email = models.CharField(max_length=128)
