@@ -31,11 +31,22 @@ from .models import State, Campaign
 
 
 class StateAdminForm(forms.ModelForm):
-    content = forms.CharField(widget=CKEditorWidget())
+    content1 = forms.CharField(widget=CKEditorWidget())
+    content2 = forms.CharField(widget=CKEditorWidget())
+    content3 = forms.CharField(widget=CKEditorWidget())
+    content4 = forms.CharField(widget=CKEditorWidget())
 
     class Meta:
         model = State
-        fields = ("id", "name", "abbr", "content")
+        fields = (
+            "id",
+            "name",
+            "abbr",
+            "content1",
+            "content2",
+            "content3",
+            "content4",
+        )
 
 
 class StateAdmin(admin.ModelAdmin):
