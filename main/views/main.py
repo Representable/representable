@@ -37,7 +37,7 @@ from ..forms import (
 )
 from ..models import (
     CommunityEntry,
-    WhiteListEntry,
+    AllowList,
     Membership,
     Organization,
     Address,
@@ -235,11 +235,17 @@ class Submission(TemplateView):
         }
         for a in Address.objects.filter(entry=user_map):
             context["street"] = a.street
-            context["city"] = (a.city + ", " + a.state + " " + a.zipcode)
+            context["city"] = a.city + ", " + a.state + " " + a.zipcode
         if self.request.user.is_authenticated:
             if user_map.organization:
-                context["is_org_admin"] = self.request.user.is_org_admin(user_map.organization_id)
-                context["is_org_moderator"] = self.request.user.is_org_moderator(user_map.organization_id)
+                context["is_org_admin"] = self.request.user.is_org_admin(
+                    user_map.organization_id
+                )
+                context[
+                    "is_org_moderator"
+                ] = self.request.user.is_org_moderator(
+                    user_map.organization_id
+                )
             context["is_community_author"] = self.request.user == user_map.user
         return render(request, self.template_name, context)
 
@@ -274,24 +280,37 @@ class ExportView(TemplateView):
         gj = json.loads(map_geojson)
         user_map = query[0]
         if user_map.organization:
-            gj['features'][0]['properties']['organization'] = user_map.organization.name
+            gj["features"][0]["properties"][
+                "organization"
+            ] = user_map.organization.name
         if user_map.campaign:
-            gj['features'][0]['properties']['campaign'] = user_map.campaign.name
+            gj["features"][0]["properties"][
+                "campaign"
+            ] = user_map.campaign.name
         if self.request.user.is_authenticated:
             is_org_leader = user_map.organization and (
-            self.request.user.is_org_admin(user_map.organization_id)
-            or self.request.user.is_org_moderator(user_map.organization_id)
+                self.request.user.is_org_admin(user_map.organization_id)
+                or self.request.user.is_org_moderator(user_map.organization_id)
             )
-            if (
-                is_org_leader
-                or self.request.user == user_map.user
-            ):
-                gj['features'][0]['properties']['author_name'] = user_map.user_name
+            if is_org_leader or self.request.user == user_map.user:
+                gj["features"][0]["properties"][
+                    "author_name"
+                ] = user_map.user_name
                 for a in Address.objects.filter(entry=user_map):
-                    addy = a.street + " " + a.city + ", " + a.state + " " + a.zipcode
-                    gj['features'][0]['properties']['address'] = addy
+                    addy = (
+                        a.street
+                        + " "
+                        + a.city
+                        + ", "
+                        + a.state
+                        + " "
+                        + a.zipcode
+                    )
+                    gj["features"][0]["properties"]["address"] = addy
 
-        response = HttpResponse(json.dumps(gj), content_type="application/json")
+        response = HttpResponse(
+            json.dumps(gj), content_type="application/json"
+        )
         return response
 
 
@@ -469,17 +488,17 @@ class EntryView(LoginRequiredMixin, View):
                 if self.request.user.is_member(entryForm.organization.id):
                     entryForm.admin_approved = True
                 else:
-                    # check if user is on the whitelist
-                    whitelist_entry = WhiteListEntry.objects.filter(
+                    # check if user is on the allowlist
+                    allowlist_entry = AllowList.objects.filter(
                         organization=entryForm.organization.id,
                         email=self.request.user.email,
                     )
-                    if whitelist_entry:
+                    if allowlist_entry:
                         # add user to membership
                         member = Membership(
                             member=self.request.user,
                             organization=entryForm.organization,
-                            is_whitelisted=True,
+                            is_allowlisted=True,
                         )
                         member.save()
 
