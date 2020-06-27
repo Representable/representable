@@ -161,7 +161,7 @@ class OrganizationForm(ModelForm):
 
 
 #
-class WhitelistForm(ModelForm):
+class AllowlistForm(ModelForm):
     class Meta:
         model = Organization
         fields = ["name"]

@@ -146,9 +146,9 @@ urlpatterns = [
                     name="create_member",
                 ),
                 path(
-                    "upload-whitelist/",
-                    views.WhiteListUpdate.as_view(),
-                    name="upload_whitelist",
+                    "upload-allowlist/",
+                    views.AllowListUpdate.as_view(),
+                    name="upload_allowlist",
                 ),
                 path(
                     "campaigns/create/",
