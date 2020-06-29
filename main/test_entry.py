@@ -1,6 +1,7 @@
 from django.test import TestCase, Client
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.contrib.auth import get_user_model
+from .models import CommunityEntry
 
 from main.views import EntryView
 from main.forms import CommunityForm
@@ -33,6 +34,17 @@ class EntryTest(StaticLiveServerTestCase):
     def test_template(self):
         # self.assertTemplateUsed(self.response, '/main/templates/main/entry.html')
         # Testing Page Active
-        # response = self.client.get("/")
-        # self.assertTrue(response.context["user"].is_active)
+        self.assertTrue(self.response.context["user"].is_active)
         self.assertEqual(self.response.status_code, 200)
+
+    # def test_get_absolute_url(self):
+    #     print("Test create entry")
+    #     entry = CommunityEntry.objects.create(user=self.user)
+    #     self.assertFalse(entry.is_valid())
+    #     #self.assertIsNotNone(entry.get_absolute_url())
+    #     #CommunityForm.save(form)
+
+    def test_empty_form(self):
+        data = {}
+        form = CommunityForm(data=data)
+        self.assertFalse(CommunityForm.is_valid(form))
