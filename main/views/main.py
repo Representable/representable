@@ -145,7 +145,8 @@ class StatePage(TemplateView):
         state = State.objects.filter(abbr=abbr.upper())
         if not state:
             return redirect("/")
-        return render(request, self.template_name, {"state_obj": state[0]})
+        campaigns = state[0].get_campaigns()
+        return render(request, self.template_name, {"state_obj": state[0], "campaigns": campaigns})
 
 
 # ******************************************************************************#

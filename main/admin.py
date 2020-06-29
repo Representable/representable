@@ -31,10 +31,9 @@ from .models import State, Campaign
 
 
 class StateAdminForm(forms.ModelForm):
-    content1 = forms.CharField(widget=CKEditorWidget())
-    content2 = forms.CharField(widget=CKEditorWidget())
-    content3 = forms.CharField(widget=CKEditorWidget())
-    content4 = forms.CharField(widget=CKEditorWidget())
+    content_news = forms.CharField(widget=CKEditorWidget())
+    content_criteria = forms.CharField(widget=CKEditorWidget())
+    content_coi = forms.CharField(widget=CKEditorWidget())
 
     class Meta:
         model = State
@@ -42,10 +41,9 @@ class StateAdminForm(forms.ModelForm):
             "id",
             "name",
             "abbr",
-            "content1",
-            "content2",
-            "content3",
-            "content4",
+            "content_news",
+            "content_criteria",
+            "content_coi",
         )
 
 

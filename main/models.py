@@ -341,10 +341,9 @@ class State(models.Model):
     )
     abbr = models.CharField(max_length=2, blank=False, unique=True, default="")
 
-    content1 = RichTextField()
-    content2 = RichTextField()
-    content3 = RichTextField()
-    content4 = RichTextField()
+    content_news = RichTextField()
+    content_criteria = RichTextField()
+    content_coi = RichTextField()
 
     def get_campaigns(self):
         return Campaign.objects.filter(state=self.abbr.upper())
