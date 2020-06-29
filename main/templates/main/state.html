@@ -1,0 +1,37 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+<script type="text/javascript">
+  mixpanel.track("State Page Loaded",
+    {"state":"Michigan"}
+  );
+</script>
+<div class="container">
+  <div class="row row-hero my-5">
+    <div class="col-12">
+      <h1 class="font-weight-light text-center mb-3">Welcome to {{ state_obj.name }}!</h1>
+      {% autoescape off %}
+      {{ state_obj.content }}
+      {% endautoescape %}
+
+        <div class="col-4 d-none d-sm-block">
+        {% with "img/states/"|add:state_obj.abbr|add:".svg" as svg %}
+          <object type="image/svg+xml" class="state" data="{% static svg %}"></object>
+          {% endwith %}
+        </div>
+      </div>
+
+      <div class="card card-signin my-3">
+        <div class="card-body">
+          <h5>Partners in {{ state_obj.name }}</h5>
+          <p>Many organizations in {{ state_obj.name }} are teaming up to collect community information so your community's interests can be protected. Soon you'll be able to use Representable to select from these organizations and submit your community's information directly to them.</p>
+          <p>In the meantime, you can draw your community by clicking the button below. When you're done drawing your map, you'll be able to save and export your community information for your own use. In the future, you will also be able to share your community with the {{ state_obj.name }} Redistricting Commission and other policy groups.</p>
+        </div>
+      </div>
+      <div class = "text-center">
+        <a class="btn btn-primary btn-canvas my-3 btn-lg font-weight-light" href="{% url 'main:entry' %}" role="button">Draw my community</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
