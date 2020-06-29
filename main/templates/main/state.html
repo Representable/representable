@@ -15,13 +15,8 @@
 
   <div class="row">
     <div class="col-6">
-      <h5>Redistricting News</h5>
       {% autoescape off %}
-      {{ state_obj.content1 }}
-      {% endautoescape %}
-      <h5>How Representable.org Can Help</h5>
-      {% autoescape off %}
-      {{ state_obj.content2 }}
+      {{ state_obj.content_news }}
       {% endautoescape %}
     </div>
     <div class="col-6">
@@ -43,7 +38,7 @@
       </h5>
       <div class="collapse" id="collapseCriteria">
           {% autoescape off %}
-          {{ state_obj.content3 }}
+          {{ state_obj.content_criteria }}
           {% endautoescape %}
       </div>
     </div>
@@ -52,20 +47,41 @@
     <div class="col-12">
       <h5 class="mt-3">Communities of Interest</h5>
       {% autoescape off %}
-      {{ state_obj.content4 }}
+      {{ state_obj.content_coi }}
       {% endautoescape %}
     </div>
   </div>
   <div class="card card-signin my-3">
     <div class="card-body">
       <h2 class="font-weight-light">Data Collection Campaigns in {{ state_obj.name }}</h2>
-      <p>Organizations in {{ state_obj.name }} are running campaigns to collect community information so your community's interests can be protected. You can use Representable to submit your community's information directly to these organizations.
-      </p>
-      <!-- Include sliding deck of organizations-->
+      <p>Organizations in {{ state_obj.name }} are running campaigns to collect community information so your community's interests can be protected. You can use Representable to submit your community's information directly to these organizations.</p>
+      {% if campaigns %}
+        <hr>
+        {% for campaign in campaigns %}
+        <div class="row">
+          <div class="col-10">
+          <h5>{{ campaign.name }}</h5>
+          <h6 class="text-muted">{{ campaign.organization }}</h6>
+          <p>{{ campaign.description }}</p>
+          </div>
+          <div class="col-2">
+            <a class="btn btn-outline-primary" href="{% url 'main:entry' campaign=campaign.slug %}">Join Campaign</a>
+          </div>
+        </div>
+        <hr>
+        {% endfor %}
+      {% else %}
+      <p>There are currently no public campaigns in {{ state_obj.name }} collecting community information. In the meantime, you can still contribute to Representable by clicking Draw My Community below!</p>
+      {% endif %}
     </div>
   </div>
-  <div class = "text-center">
-    <a class="btn btn-primary btn-canvas my-3 btn-lg font-weight-light" href="{% url 'main:entry' %}" role="button">Draw my community</a>
+  <div class="row my-3">
+    <div class="col-8">
+      <h5 class="font-weight-light my-3">If you would like to create your own community independently of a partner organization, you can draw and export your community here.</h5>
+    </div>
+    <div class="col-4">
+      <a class="btn btn-primary btn-canvas my-3 btn-lg font-weight-light" href="{% url 'main:entry' %}" role="button">Draw my community</a>
+    </div>
   </div>
 </div>
 </div>
