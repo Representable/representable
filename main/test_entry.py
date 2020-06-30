@@ -59,6 +59,16 @@ class EntryTest(StaticLiveServerTestCase):
         data = {
             "entry_ID": "9330c85d-7d52-485f-ab18-78e336f3fd49",
             "user_id": 64,
+            "user_polygon": "SRID=4326",
+            "census_blocks_polygon_array": "",
+            "census_blocks_polygon": "",
+            "entry_name": "test",
+            "entry_reason": "test",
+            "user_name": "johndoe",
+            "cultural_interests": "test",
+            "economic_interests": "test",
+            "comm_activities": "test",
+            "other_considerations": "test",
         }
         form = CommunityForm(data=data)
         form.save()
