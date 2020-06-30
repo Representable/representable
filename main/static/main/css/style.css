@@ -442,8 +442,8 @@ color scheme. See readme.md*/
 }
 
 .state {
-  width: 200px;
-  opacity: 15%;
+  max-width: 70%;
+  height: 50vh;
 }
 
 .loader {

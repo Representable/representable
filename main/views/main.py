@@ -43,6 +43,7 @@ from ..models import (
     Address,
     CampaignToken,
     Campaign,
+    State,
 )
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
@@ -131,6 +132,21 @@ class Terms(TemplateView):
 
 class Michigan(TemplateView):
     template_name = "main/michigan.html"
+
+
+# ******************************************************************************#
+
+
+class StatePage(TemplateView):
+    template_name = "main/state.html"
+
+    def get(self, request, abbr, *args, **kwargs):
+
+        state = State.objects.filter(abbr=abbr.upper())
+        if not state:
+            return redirect("/")
+        campaigns = state[0].get_campaigns()
+        return render(request, self.template_name, {"state_obj": state[0], "campaigns": campaigns})
 
 
 # ******************************************************************************#
