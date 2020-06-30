@@ -1,12 +1,18 @@
 from django.test import TestCase, Client
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.contrib.auth import get_user_model
-from .models import CommunityEntry
+from .models import CommunityEntry, Address
 
 from main.views import EntryView
-from main.forms import CommunityForm
+from main.forms import CommunityForm, AddressForm
 from django.template import RequestContext
 from django.template.loader import render_to_string
+import uuid
+
+# must be imported after other models
+from django.contrib.gis.geos import Point, Polygon, MultiPolygon
+from django.contrib.gis.db.models import Union
+from django.contrib.gis.geos import GEOSGeometry
 
 
 class EntryTest(StaticLiveServerTestCase):
@@ -53,15 +59,36 @@ class EntryTest(StaticLiveServerTestCase):
         # )
         self.assertFalse(CommunityForm.is_valid(form))
 
-    # Reference: www.obeythetestinggoat.com/book/chapter_simple_form.html
+    # Reference 1: www.obeythetestinggoat.com/book/chapter_simple_form.html
+    # Reference 2: https://micropyramid.com/blog/django-unit-test-cases-with-forms-and-views/
+    # Reference 3: https://www.agiliq.com/blog/2019/01/django-formview/
     def test_valid_form(self):
+        community_entry_count = CommunityEntry.objects.count()
+        test_entry_id = uuid.uuid4()
+        # Polygon from the Princeton, NJ area.
+        test_user_polygon = "POLYGON((-74.67798754813946 40.350287285206235,-74.66723219285659 40.35216311168625,-74.66324575520535 40.34828906481454,-74.67372770832687 40.34435489217273,-74.67798754813946 40.350287285206235))"
+        test_census_blocks_polygon_array = "POLYGON((-74.66634750366211 40.351123031789,-74.66574668884277 40.35017456869076,-74.6654462814331 40.34974939124777,-74.66694831848145 40.34916067959381,-74.66797828674316 40.35066515471735,-74.66634750366211 40.351123031789))|POLYGON((-74.66797828674316 40.35066515471735,-74.66694831848145 40.34916067959381,-74.66926574707031 40.34824489569556,-74.67072486877441 40.34991292135075,-74.66797828674316 40.35066515471735))|POLYGON((-74.67209815979004 40.35020727453693,-74.67119693756104 40.34991292135075,-74.67166900634766 40.34981480333656,-74.67201232910156 40.34961856687988,-74.67192649841309 40.34988021536188,-74.67209815979004 40.35020727453693))|POLYGON((-74.67377185821533 40.35095950462028,-74.67291355133057 40.35066515471735,-74.67222690582275 40.35033809776283,-74.67196941375732 40.350043745147644,-74.67192649841309 40.3497166851796,-74.6726131439209 40.34876820230292,-74.67329978942871 40.34808136154808,-74.67420101165771 40.34752534248071,-74.67527389526367 40.347067440983466,-74.67638969421387 40.348571962800975,-74.67570304870605 40.34886632183975,-74.6751880645752 40.34922609225356,-74.674973487854 40.34948774225822,-74.6744155883789 40.35033809776283,-74.67377185821533 40.35095950462028))"
+        # Replicate steps from the EntryView post().
+        polyArray = test_census_blocks_polygon_array.split("|")
+        newPolyArr = []
+        # union them one at a time- does not work
+        for stringPolygon in polyArray:
+            new_poly = GEOSGeometry(stringPolygon, srid=4326)
+            newPolyArr.append(new_poly)
 
+        mpoly = MultiPolygon(newPolyArr)
+        polygonUnion = mpoly.unary_union
+        polygonUnion.normalize()
+        # if one polygon is returned, create a multipolygon
+        if polygonUnion.geom_typeid == 3:
+            polygonUnion = MultiPolygon(polygonUnion)
+        test_census_blocks_polygon = polygonUnion
         data = {
-            "entry_ID": "9330c85d-7d52-485f-ab18-78e336f3fd49",
-            "user_id": 64,
-            "user_polygon": "SRID=4326",
-            "census_blocks_polygon_array": "",
-            "census_blocks_polygon": "",
+            "entry_ID": test_entry_id,
+            "user": self.user.id,
+            "user_polygon": test_user_polygon,
+            "census_blocks_polygon_array": test_census_blocks_polygon_array,
+            "census_blocks_polygon": test_census_blocks_polygon,
             "entry_name": "test",
             "entry_reason": "test",
             "user_name": "johndoe",
@@ -70,9 +97,31 @@ class EntryTest(StaticLiveServerTestCase):
             "comm_activities": "test",
             "other_considerations": "test",
         }
-        form = CommunityForm(data=data)
-        form.save()
-        self.assertTrue(CommunityForm.is_valid(form))
+        entry_form = CommunityForm(data)
+        # Form should pass now without the address form.
+        self.assertTrue(CommunityForm.is_valid(entry_form))
+        saved_entry_form = entry_form.save()
+        # Check that the form was successfully added.
+        self.assertTrue(
+            CommunityEntry.objects.count() == community_entry_count + 1
+        )
+
+        # Address form test.
+        address_count = Address.objects.count()
+        address_form_data = {
+            "street": "Test Street",
+            "city": "Test City",
+            "state": "Test State",
+            "zipcode": "Test Zipcode",
+        }
+        address_form = AddressForm(address_form_data)
+        self.assertTrue(AddressForm.is_valid(address_form))
+        # Check that we can add a saved entry to an address.
+        saved_address_form = address_form.save(commit=False)
+        saved_address_form.entry = saved_entry_form
+        saved_address_form.save()
+        # Check that the address was successfully added.
+        self.assertTrue(Address.objects.count() == address_count + 1)
 
     # def post_invalid_input(self):
     #     list_ = CommunityEntry.objects.create()
