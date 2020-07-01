@@ -35,13 +35,13 @@ from ..forms import (
     CampaignForm,
     DeletionForm,
     OrganizationForm,
-    WhitelistForm,
+    AllowlistForm,
     MemberForm,
 )
 from ..models import (
     Membership,
     Organization,
-    WhiteListEntry,
+    AllowList,
     Campaign,
     CommunityEntry,
     CampaignToken,
@@ -164,7 +164,7 @@ class CreateOrg(LoginRequiredMixin, CreateView):
             organization=org,
             is_org_admin=True,
             is_org_moderator=True,
-            is_whitelisted=True,
+            is_allowlisted=True,
         )
         admin.save()
 
@@ -276,7 +276,7 @@ class CreateMember(LoginRequiredMixin, OrgAdminRequiredMixin, FormView):
             member.update(
                 is_org_admin=form.instance.is_org_admin,
                 is_org_moderator=form.instance.is_org_moderator,
-                is_whitelisted=form.instance.is_whitelisted,
+                is_allowlisted=form.instance.is_allowlisted,
             )
         else:
             # create new member with the given permissions
@@ -285,7 +285,7 @@ class CreateMember(LoginRequiredMixin, OrgAdminRequiredMixin, FormView):
                 organization=form.instance.organization,
                 is_org_admin=form.instance.is_org_admin,
                 is_org_moderator=form.instance.is_org_moderator,
-                is_whitelisted=form.instance.is_whitelisted,
+                is_allowlisted=form.instance.is_allowlisted,
             )
             new_member.save()
 
@@ -295,14 +295,14 @@ class CreateMember(LoginRequiredMixin, OrgAdminRequiredMixin, FormView):
         return super().form_valid(form)
 
 
-class WhiteListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
+class AllowListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
     """
-    The form to update the whitelist
+    The form to update the allowlist
     """
 
-    form_class = WhitelistForm
+    form_class = AllowlistForm
     model = Organization
-    template_name = "main/dashboard/partners/whitelist_upload.html"
+    template_name = "main/dashboard/partners/allowlist_upload.html"
     pk_url_kwarg = "pk"
 
     def form_valid(self, form):
@@ -312,7 +312,7 @@ class WhiteListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
         for line in file:
             matches = re.findall(b"[\w\.-]+@[\w\.-]+\.\w+", line)  # noqa: W605
             for match in matches:
-                WhiteListEntry.objects.create(
+                AllowList.objects.create(
                     email=match.decode("utf-8"), organization=self.object
                 )
             if line_count == max_line_count:

@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "phone_field",
+    "ckeditor",
     # 'allauth.socialaccount.providers.facebook',
     # 'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.linkedin',
@@ -239,3 +240,7 @@ ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 
 ACCOUNT_EMAIL_REQUIRED = True
 DEFAULT_FROM_EMAIL = "no-reply@representable.org"
+
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7

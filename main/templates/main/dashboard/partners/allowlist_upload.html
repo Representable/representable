@@ -9,9 +9,9 @@
             <div class="card card-signin my-5">
                 <div class="card-body">
                     <h5 class="card-title text-center">
-                        Upload an Email Whitelist
+                        Upload an Email List to Pre-Approve Submissions
                       </h5>
-                      <form role="form" id="EmailWhitelist" method="post" enctype="multipart/form-data">{% csrf_token %}
+                      <form role="form" id="EmailAllowlist" method="post" enctype="multipart/form-data">{% csrf_token %}
 
                           <div class="form-group">
                         {% for field in form %}
@@ -27,7 +27,7 @@
 
                       </div>
                       <div style="display: inline-block;">
-                          <button id="save" form="EmailWhitelist" type="submit" class="btn btn-primary" value="Update">Submit</button>
+                          <button id="save" form="EmailAllowlist" type="submit" class="btn btn-primary" value="Update">Submit</button>
                       </div>
                       </form>
                 </div>

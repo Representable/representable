@@ -31,6 +31,9 @@ from django.contrib.gis.db import models
 from .choices import STATES
 from .utils import generate_unique_slug, generate_unique_token
 
+# state model editable content field
+from ckeditor.fields import RichTextField
+
 # ******************************************************************************#
 
 
@@ -129,7 +132,7 @@ class Membership(models.Model):
     date_joined = models.DateField(auto_now_add=True, blank=True)
     is_org_admin = models.BooleanField(default=False)
     is_org_moderator = models.BooleanField(default=False)
-    is_whitelisted = models.BooleanField(default=False)
+    is_allowlisted = models.BooleanField(default=False)
 
     def get_absolute_url(self):
         return reverse(
@@ -144,13 +147,13 @@ class Membership(models.Model):
 # ******************************************************************************#
 
 
-class WhiteListEntry(models.Model):
+class AllowList(models.Model):
     """
-    A given whitelist entry with the following
+    A given allowlist entry with the following
     fields included:
-    - email: whitelisted email
+    - email: allowlisted email
     - organization: the organization that created the link
-    - date added: when the email was added to the whitelist
+    - date added: when the email was added to the allowlist
     """
 
     email = models.CharField(max_length=128)
@@ -329,3 +332,23 @@ class Address(models.Model):
 
 
 # ******************************************************************************#
+
+
+class State(models.Model):
+
+    name = models.CharField(
+        max_length=500, blank=False, unique=False, default=""
+    )
+    abbr = models.CharField(max_length=2, blank=False, unique=True, default="")
+
+    content_news = RichTextField()
+    content_criteria = RichTextField()
+    content_coi = RichTextField()
+
+    def get_campaigns(self):
+        return Campaign.objects.filter(state=self.abbr.upper())
+
+    get_campaigns.allow_tags = True
+
+    class Meta:
+        db_table = "state"

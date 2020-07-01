@@ -1,0 +1,497 @@
+[
+  {
+    "model": "main.state",
+    "pk": 1,
+    "fields": {
+      "name": "Alabama",
+      "abbr": "AL",
+      "content1": "<p> Redistricting information for Alabama is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 2,
+    "fields": {
+      "name": "Alaska",
+      "abbr": "AK",
+      "content1": "<p> Redistricting information for Alaska is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 3,
+    "fields": {
+      "name": "Arizona",
+      "abbr": "AZ",
+      "content1": "<p> Redistricting information for Arizona is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 4,
+    "fields": {
+      "name": "Arkansas",
+      "abbr": "AR",
+      "content1": "<p> Redistricting information for Arkansas is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 5,
+    "fields": {
+      "name": "California",
+      "abbr": "CA",
+      "content1": "<p> Redistricting information for California is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 6,
+    "fields": {
+      "name": "Colorado",
+      "abbr": "CO",
+      "content1": "<p> Redistricting information for Colorado is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 7,
+    "fields": {
+      "name": "Connecticut",
+      "abbr": "CT",
+      "content1": "<p> Redistricting information for Connecticut is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 8,
+    "fields": {
+      "name": "Delaware",
+      "abbr": "DE",
+      "content1": "<p> Redistricting information for Delaware is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 9,
+    "fields": {
+      "name": "District of Columbia",
+      "abbr": "DC",
+      "content1": "<p> Redistricting information for District of Columbia is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 10,
+    "fields": {
+      "name": "Florida",
+      "abbr": "FL",
+      "content1": "<p> Redistricting information for Florida is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 11,
+    "fields": {
+      "name": "Georgia",
+      "abbr": "GA",
+      "content1": "<p> Redistricting information for Georgia is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 12,
+    "fields": {
+      "name": "Hawaii",
+      "abbr": "HI",
+      "content1": "<p> Redistricting information for Hawaii is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 13,
+    "fields": {
+      "name": "Idaho",
+      "abbr": "ID",
+      "content1": "<p> Redistricting information for Idaho is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 14,
+    "fields": {
+      "name": "Illinois",
+      "abbr": "IL",
+      "content1": "<p> Redistricting information for Illinois is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 15,
+    "fields": {
+      "name": "Indiana",
+      "abbr": "IN",
+      "content1": "<p> Redistricting information for Indiana is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 16,
+    "fields": {
+      "name": "Iowa",
+      "abbr": "IA",
+      "content1": "<p> Redistricting information for Iowa is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 17,
+    "fields": {
+      "name": "Kansas",
+      "abbr": "KS",
+      "content1": "<p> Redistricting information for Kansas is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 18,
+    "fields": {
+      "name": "Kentucky",
+      "abbr": "KY",
+      "content1": "<p> Redistricting information for Kentucky is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 19,
+    "fields": {
+      "name": "Louisiana",
+      "abbr": "LA",
+      "content1": "<p> Redistricting information for Louisiana is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 20,
+    "fields": {
+      "name": "Maine",
+      "abbr": "ME",
+      "content1": "<p> Redistricting information for Maine is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 21,
+    "fields": {
+      "name": "Maryland",
+      "abbr": "MD",
+      "content1": "<p> Redistricting information for Maryland is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 22,
+    "fields": {
+      "name": "Massachusetts",
+      "abbr": "MA",
+      "content1": "<p> Redistricting information for Massachusetts is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 23,
+    "fields": {
+      "name": "Michigan",
+      "abbr": "MI",
+      "content1": "<p> Redistricting information for Michigan is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 24,
+    "fields": {
+      "name": "Minnesota",
+      "abbr": "MN",
+      "content1": "<p> Redistricting information for Minnesota is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 25,
+    "fields": {
+      "name": "Mississippi",
+      "abbr": "MS",
+      "content1": "<p> Redistricting information for Mississippi is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 26,
+    "fields": {
+      "name": "Missouri",
+      "abbr": "MO",
+      "content1": "<p> Redistricting information for Missouri is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 27,
+    "fields": {
+      "name": "Montana",
+      "abbr": "MT",
+      "content1": "<p> Redistricting information for Montana is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 28,
+    "fields": {
+      "name": "Nebraska",
+      "abbr": "NE",
+      "content1": "<p> Redistricting information for Nebraska is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 29,
+    "fields": {
+      "name": "Nevada",
+      "abbr": "NV",
+      "content1": "<p> Redistricting information for Nevada is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 30,
+    "fields": {
+      "name": "New Hampshire",
+      "abbr": "NH",
+      "content1": "<p> Redistricting information for New Hampshire is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 31,
+    "fields": {
+      "name": "New Jersey",
+      "abbr": "NJ",
+      "content1": "<p> Redistricting information for New Jersey is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 32,
+    "fields": {
+      "name": "New Mexico",
+      "abbr": "NM",
+      "content1": "<p> Redistricting information for New Mexico is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 33,
+    "fields": {
+      "name": "New York",
+      "abbr": "NY",
+      "content1": "<p> Redistricting information for New York is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 34,
+    "fields": {
+      "name": "North Carolina",
+      "abbr": "NC",
+      "content1": "<p> Redistricting information for North Carolina is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 35,
+    "fields": {
+      "name": "North Dakota",
+      "abbr": "ND",
+      "content1": "<p> Redistricting information for North Dakota is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 36,
+    "fields": {
+      "name": "Northern Mariana Islands",
+      "abbr": "MP",
+      "content1": "<p> Redistricting information for Northern Mariana Islands is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 37,
+    "fields": {
+      "name": "Ohio",
+      "abbr": "OH",
+      "content1": "<p> Redistricting information for Ohio is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 38,
+    "fields": {
+      "name": "Oklahoma",
+      "abbr": "OK",
+      "content1": "<p> Redistricting information for Oklahoma is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 39,
+    "fields": {
+      "name": "Oregon",
+      "abbr": "OR",
+      "content1": "<p> Redistricting information for Oregon is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 40,
+    "fields": {
+      "name": "Palau",
+      "abbr": "PW",
+      "content1": "<p> Redistricting information for Palau is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 41,
+    "fields": {
+      "name": "Pennsylvania",
+      "abbr": "PA",
+      "content1": "<p> Redistricting information for Pennsylvania is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 42,
+    "fields": {
+      "name": "Puerto Rico",
+      "abbr": "PR",
+      "content1": "<p> Redistricting information for Puerto Rico is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 43,
+    "fields": {
+      "name": "Rhode Island",
+      "abbr": "RI",
+      "content1": "<p> Redistricting information for Rhode Island is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 44,
+    "fields": {
+      "name": "South Carolina",
+      "abbr": "SC",
+      "content1": "<p> Redistricting information for South Carolina is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 45,
+    "fields": {
+      "name": "South Dakota",
+      "abbr": "SD",
+      "content1": "<p> Redistricting information for South Dakota is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 46,
+    "fields": {
+      "name": "Tennessee",
+      "abbr": "TN",
+      "content1": "<p> Redistricting information for Tennessee is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 47,
+    "fields": {
+      "name": "Texas",
+      "abbr": "TX",
+      "content1": "<p> Redistricting information for Texas is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 48,
+    "fields": {
+      "name": "Utah",
+      "abbr": "UT",
+      "content1": "<p> Redistricting information for Utah is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 49,
+    "fields": {
+      "name": "Vermont",
+      "abbr": "VT",
+      "content1": "<p> Redistricting information for Vermont is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 50,
+    "fields": {
+      "name": "Virgin Islands",
+      "abbr": "VI",
+      "content1": "<p> Redistricting information for Virgin Islands is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 51,
+    "fields": {
+      "name": "Virginia",
+      "abbr": "VA",
+      "content1": "<p> Redistricting information for Virginia is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 52,
+    "fields": {
+      "name": "Washington",
+      "abbr": "WA",
+      "content1": "<p> Redistricting information for Washington is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 53,
+    "fields": {
+      "name": "West Virginia",
+      "abbr": "WV",
+      "content1": "<p> Redistricting information for West Virginia is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 54,
+    "fields": {
+      "name": "Wisconsin",
+      "abbr": "WI",
+      "content1": "<p> Redistricting information for Wisconsin is on its way! </p>"
+    }
+  },
+  {
+    "model": "main.state",
+    "pk": 55,
+    "fields": {
+      "name": "Wyoming",
+      "abbr": "WY",
+      "content1": "<p> Redistricting information for Wyoming is on its way! </p>"
+    }
+  }
+]

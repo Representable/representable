@@ -49,6 +49,7 @@ urlpatterns = [
     path("privacy/", views.main.Privacy.as_view(), name="privacy"),
     path("terms/", views.main.Terms.as_view(), name="terms"),
     path("michigan/", views.main.Michigan.as_view(), name="michigan"),
+    path("state/<abbr>/", views.main.StatePage.as_view(), name="state"),
     path("submission/", views.main.Submission.as_view(), name="submission"),
     path(
         "thanks/id/<map_id>",
@@ -146,9 +147,9 @@ urlpatterns = [
                     name="create_member",
                 ),
                 path(
-                    "upload-whitelist/",
-                    views.WhiteListUpdate.as_view(),
-                    name="upload_whitelist",
+                    "upload-allowlist/",
+                    views.AllowListUpdate.as_view(),
+                    name="upload_allowlist",
                 ),
                 path(
                     "campaigns/create/",

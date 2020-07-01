@@ -1,7 +1,6 @@
 from ..models import (
     Membership,
     Organization,
-    WhiteListEntry,
     CommunityEntry,
     Campaign,
     Address,
