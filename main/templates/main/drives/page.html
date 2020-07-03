@@ -2,14 +2,14 @@
 
 {% block content %}
 <script type="text/javascript">
-  var campaign_id = "{{campaign_id}}";
+  var drive_id = "{{drive_id}}";
   var organization_id = "{{organization_id}}";
-  var campaign_name = "{{campaign_name}}";
+  var drive_name = "{{drive_name}}";
   var organization_name = "{{organization_name}}";
   mixpanel.track("Drive Page Loaded",
     {
-     "campaign_id": campaign_id,
-     "campaign_name": campaign_name,
+     "drive_id": drive_id,
+     "drive_name": drive_name,
      "organization_id": organization_id,
      "organization_name": organization_name,
     }
@@ -48,7 +48,7 @@
       <p>It will provide a consistent format for Communities to use so the information will be easier for the Commission to consider in drawing the new voting district maps. </p>
       <p>Click "Draw My Community" below to share information about your Community and give your Community the voice it deserves!</p>
       {% endif %}
-        <a class="btn btn-primary btn-lg my-3 campaign-new-entry" href="{% url 'main:entry' campaign=object.slug %}" role="button">Draw My Community</a>
+        <a class="btn btn-primary btn-lg my-3 drive-new-entry" href="{% url 'main:entry' drive=object.slug %}" role="button">Draw My Community</a>
       <!-- <a class="btn btn-outline-primary my-3" href="{% url 'main:partner_map' object.organization.slug object.slug %}" role="button">View map of communities</a> -->
     </div>
     </div>

@@ -11,27 +11,27 @@ from django.views.generic import (
 
 class IndexView(ListView):
     model = Drive
-    template_name = "main/campaigns/index.html"
+    template_name = "main/drives/index.html"
     pk_url_kwarg = "cam_pk"
 
 
 class DriveView(DetailView):
     model = Drive
-    template_name = "main/campaigns/page.html"
+    template_name = "main/drives/page.html"
     pk_url_kwarg = "cam_pk"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Get Drive Slug and Organization Name
-        campaign_slug = self.kwargs["slug"]
-        campaign = Drive.objects.get(slug=campaign_slug)
-        campaign_id = campaign.id
-        campaign_name = campaign.name
-        organization = campaign.organization
+        drive_slug = self.kwargs["slug"]
+        drive = Drive.objects.get(slug=drive_slug)
+        drive_id = drive.id
+        drive_name = drive.name
+        organization = drive.organization
         organization_id = organization.id
         organization_name = organization.name
-        context["campaign_id"] = campaign_id
-        context["campaign_name"] = campaign_name
+        context["drive_id"] = drive_id
+        context["drive_name"] = drive_name
         context["organization_id"] = organization_id
         context["organization_name"] = organization_name
         return context

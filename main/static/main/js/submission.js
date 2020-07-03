@@ -250,12 +250,12 @@ map.on("load", function () {
       doc.text(20, 53, rLink);
 
       var org = window.document.getElementById("org-text");
-      var campaign = window.document.getElementById("campaign-text");
+      var drive = window.document.getElementById("drive-text");
       if (org !== null) {
         doc.text(20, 61, "Organization: " + org.textContent);
       }
-      if (campaign !== null) {
-        doc.text(20, 69, "Drive: " + campaign.textContent);
+      if (drive !== null) {
+        doc.text(20, 69, "Drive: " + drive.textContent);
       }
 
       var imgData = map.getCanvas().toDataURL("image/png");

@@ -49,7 +49,7 @@ class StateAdminForm(forms.ModelForm):
 
 class StateAdmin(admin.ModelAdmin):
     form = StateAdminForm
-    list_display = ("name", "abbr", "get_campaigns")
+    list_display = ("name", "abbr", "get_drives")
 
 
 admin.site.register(State, StateAdmin)
@@ -92,10 +92,10 @@ class CommunityAdmin(ImportExportModelAdmin):
         "user_name",
         "entry_name",
         "organization",
-        "campaign",
+        "drive",
     )
     list_filter = (
-        "campaign",
+        "drive",
         "organization",
     )
     resource_class = CommunityResource

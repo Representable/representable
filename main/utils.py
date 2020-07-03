@@ -24,7 +24,7 @@ def generate_unique_slug(model, field):
     return unique_slug
 
 
-def generate_unique_token(campaign):
+def generate_unique_token(drive):
     # adapted from: https://stackoverflow.com/questions/55062799/how-can-i-send-url-with-users-unique-id-and-token-in-django
-    salt = uuid.uuid4().hex + campaign
+    salt = uuid.uuid4().hex + drive
     return hashlib.sha256(salt.encode("utf-8")).hexdigest()
