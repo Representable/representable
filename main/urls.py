@@ -33,10 +33,16 @@ urlpatterns = [
         name="entry",
     ),
     path(
-        "entry/c/<slug:drive>/",
+        "entry/drive/<slug:drive>/",
         views.main.EntryView.as_view(),
         {"token": ""},
         name="entry",
+    ),
+    path(
+        "entry/c/<slug:drive>/",
+        views.main.EntryView.as_view(),
+        {"token": ""},
+        name="entry_legacy",  # for old links
     ),
     path(
         "entry/t/<token>/",
@@ -58,7 +64,7 @@ urlpatterns = [
         name="thanks",
     ),
     path(
-        "thanks/c/<slug:slug>/<slug:drive>/<map_id>",
+        "thanks/drive/<slug:slug>/<slug:drive>/<map_id>",
         views.main.Thanks.as_view(),
         name="thanks",
     ),
@@ -85,9 +91,16 @@ urlpatterns = [
         views.partners.PartnerMap.as_view(),
         name="partner_map",
     ),
-    # path("c/", views.drives.IndexView.as_view(), name="drive_list",),
     path(
-        "c/<slug:slug>/", views.drives.DriveView.as_view(), name="drive_page",
+        "drive/<slug:slug>/",
+        views.drives.DriveView.as_view(),
+        name="drive_page",
+    ),
+    # keeping this for now to maintain link to user testing campaign
+    path(
+        "c/<slug:slug>/",
+        views.drives.DriveView.as_view(),
+        name="drive_page_legacy",
     ),
     path("dashboard/", views.dashboard.IndexView.as_view(), name="dashboard"),
     path(
