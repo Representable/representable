@@ -9,9 +9,9 @@
             <div class="card card-signin my-5">
                 <div class="card-body">
                     <h5 class="card-title text-center">
-                        Update your Campaign
+                        Update your Drive
                       </h5>
-                      <form role="form" id="UpdateCampaign" method="post">{% csrf_token %}
+                      <form role="form" id="UpdateDrive" method="post">{% csrf_token %}
 
                           <div class="form-group">
                         {% for field in form %}
@@ -25,7 +25,7 @@
                       {% endfor %}
                       </div>
                       <div style="display: inline-block;">
-                          <button id="save" form="UpdateCampaign" type="submit" class="btn btn-primary" value="Submit">Submit</button>
+                          <button id="save" form="UpdateDrive" type="submit" class="btn btn-primary" value="Submit">Submit</button>
                       </div>
                       </form>
                 </div>

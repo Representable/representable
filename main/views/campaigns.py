@@ -1,4 +1,4 @@
-from ..models import Campaign
+from ..models import Drive
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
@@ -10,21 +10,21 @@ from django.views.generic import (
 
 
 class IndexView(ListView):
-    model = Campaign
+    model = Drive
     template_name = "main/campaigns/index.html"
     pk_url_kwarg = "cam_pk"
 
 
-class CampaignView(DetailView):
-    model = Campaign
+class DriveView(DetailView):
+    model = Drive
     template_name = "main/campaigns/page.html"
     pk_url_kwarg = "cam_pk"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Get Campaign Slug and Organization Name
+        # Get Drive Slug and Organization Name
         campaign_slug = self.kwargs["slug"]
-        campaign = Campaign.objects.get(slug=campaign_slug)
+        campaign = Drive.objects.get(slug=campaign_slug)
         campaign_id = campaign.id
         campaign_name = campaign.name
         organization = campaign.organization

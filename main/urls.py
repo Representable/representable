@@ -88,7 +88,7 @@ urlpatterns = [
     # path("c/", views.campaigns.IndexView.as_view(), name="campaign_list",),
     path(
         "c/<slug:slug>/",
-        views.campaigns.CampaignView.as_view(),
+        views.campaigns.DriveView.as_view(),
         name="campaign_page",
     ),
     path("dashboard/", views.dashboard.IndexView.as_view(), name="dashboard"),
@@ -153,17 +153,17 @@ urlpatterns = [
                 ),
                 path(
                     "campaigns/create/",
-                    views.dashboard.CreateCampaign.as_view(),
+                    views.dashboard.CreateDrive.as_view(),
                     name="create_campaign",
                 ),
                 path(
                     "campaigns/<uuid:cam_pk>/",
-                    views.dashboard.CampaignHome.as_view(),
+                    views.dashboard.DriveHome.as_view(),
                     name="campaign_home",
                 ),
                 path(
                     "campaigns/<uuid:cam_pk>/edit/",
-                    views.dashboard.UpdateCampaign.as_view(),
+                    views.dashboard.UpdateDrive.as_view(),
                     name="update_campaign",
                 ),
             ]

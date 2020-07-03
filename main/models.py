@@ -170,9 +170,9 @@ class AllowList(models.Model):
 # ******************************************************************************#
 
 
-class Campaign(models.Model):
+class Drive(models.Model):
     """
-    Campaign represents an organization's entry collection campaign.
+    Drive represents an organization's entry collection campaign.
     - id: uuid for campaigns
     - slug: slug of campaign
     - name: name of the campaign
@@ -200,8 +200,8 @@ class Campaign(models.Model):
     def save(self, *args, **kwargs):
         # generate the slug once the first time the org is created
         if not self.slug:
-            self.slug = generate_unique_slug(Campaign, self.name)
-        super(Campaign, self).save(*args, **kwargs)
+            self.slug = generate_unique_slug(Drive, self.name)
+        super(Drive, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse(
@@ -218,15 +218,15 @@ class Campaign(models.Model):
 
 
 # ******************************************************************************#
-class CampaignToken(models.Model):
-    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
+class DriveToken(models.Model):
+    campaign = models.ForeignKey(Drive, on_delete=models.CASCADE)
     token = models.CharField(max_length=100)
 
     def save(self, *args, **kwargs):
         # generate the unique token once the first time the token is created
         if not self.token:
             self.token = generate_unique_token(self.campaign.name)
-        super(CampaignToken, self).save(*args, **kwargs)
+        super(DriveToken, self).save(*args, **kwargs)
 
 
 # ******************************************************************************#
@@ -257,7 +257,7 @@ class CommunityEntry(models.Model):
         Organization, on_delete=models.CASCADE, blank=True, null=True
     )
     campaign = models.ForeignKey(
-        Campaign, on_delete=models.CASCADE, blank=True, null=True
+        Drive, on_delete=models.CASCADE, blank=True, null=True
     )
     user_polygon = models.PolygonField(
         geography=True, serialize=True, blank=False
@@ -346,7 +346,7 @@ class State(models.Model):
     content_coi = RichTextField()
 
     def get_campaigns(self):
-        return Campaign.objects.filter(state=self.abbr.upper())
+        return Drive.objects.filter(state=self.abbr.upper())
 
     get_campaigns.allow_tags = True
 

@@ -41,8 +41,8 @@ from ..models import (
     Membership,
     Organization,
     Address,
-    CampaignToken,
-    Campaign,
+    DriveToken,
+    Drive,
     State,
 )
 from django.views.generic.edit import FormView
@@ -146,7 +146,11 @@ class StatePage(TemplateView):
         if not state:
             return redirect("/")
         campaigns = state[0].get_campaigns()
-        return render(request, self.template_name, {"state_obj": state[0], "campaigns": campaigns})
+        return render(
+            request,
+            self.template_name,
+            {"state_obj": state[0], "campaigns": campaigns},
+        )
 
 
 # ******************************************************************************#
@@ -383,7 +387,7 @@ class Thanks(TemplateView):
         if kwargs["campaign"]:
             has_campaign = True
             campaign_slug = self.kwargs["campaign"]
-            campaign = Campaign.objects.get(slug=campaign_slug)
+            campaign = Drive.objects.get(slug=campaign_slug)
             campaign_name = campaign.name
             organization = campaign.organization
             organization_name = organization.name
@@ -446,7 +450,7 @@ class EntryView(LoginRequiredMixin, View):
         if kwargs["campaign"]:
             has_campaign = True
             campaign_slug = self.kwargs["campaign"]
-            campaign = Campaign.objects.get(slug=campaign_slug)
+            campaign = Drive.objects.get(slug=campaign_slug)
             campaign_name = campaign.name
             campaign_id = campaign.id
             organization = campaign.organization
@@ -495,7 +499,7 @@ class EntryView(LoginRequiredMixin, View):
                 entryForm.census_blocks_polygon = polygonUnion
 
             if self.kwargs["campaign"]:
-                campaign = Campaign.objects.get(slug=self.kwargs["campaign"])
+                campaign = Drive.objects.get(slug=self.kwargs["campaign"])
                 if campaign:
                     entryForm.campaign = campaign
                     entryForm.organization = campaign.organization
@@ -523,7 +527,7 @@ class EntryView(LoginRequiredMixin, View):
 
             # TODO: Determine role of campaign tokens (one time link, etc.)
             # if self.kwargs["token"]:
-            #     token = CampaignToken.objects.get(token=self.kwargs["token"])
+            #     token = DriveToken.objects.get(token=self.kwargs["token"])
             #     if token:
             #         entryForm.campaign = token.campaign
             #         entryForm.organization = token.campaign.organization

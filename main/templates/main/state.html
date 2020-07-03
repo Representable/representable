@@ -52,7 +52,7 @@
   </div>
   <div class="card card-signin my-3">
     <div class="card-body">
-      <h2 class="font-weight-light">Data Collection Campaigns in {{ state_obj.name }}</h2>
+      <h2 class="font-weight-light">Data Collection Drives in {{ state_obj.name }}</h2>
       <p>Organizations in {{ state_obj.name }} are running campaigns to collect community information so your community's interests can be protected. You can use Representable to submit your community's information directly to these organizations.</p>
       {% if campaigns %}
         <hr>
@@ -64,7 +64,7 @@
           <p>{{ campaign.description }}</p>
           </div>
           <div class="col-2">
-            <a class="btn btn-outline-primary" href="{% url 'main:entry' campaign=campaign.slug %}">Join Campaign</a>
+            <a class="btn btn-outline-primary" href="{% url 'main:entry' campaign=campaign.slug %}">Join Drive</a>
           </div>
         </div>
         <hr>

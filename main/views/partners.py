@@ -2,7 +2,7 @@ from ..models import (
     Membership,
     Organization,
     CommunityEntry,
-    Campaign,
+    Drive,
     Address,
 )
 
@@ -90,7 +90,7 @@ class PartnerMap(TemplateView):
         context["state"] = org.states[0]
         if self.kwargs["campaign"]:
             context["campaign"] = get_object_or_404(
-                Campaign, slug=self.kwargs["campaign"]
+                Drive, slug=self.kwargs["campaign"]
             ).name
         if self.request.user.is_authenticated:
             context["is_org_admin"] = self.request.user.is_org_admin(

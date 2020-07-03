@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-    <h2>Campaigns</h2>
+    <h2>Drives</h2>
     <ul>
         {% for campaign in object_list %}
             <li><a href="{% url 'main:campaign_page' campaign.slug %}">{{ campaign.name }}</a></li>

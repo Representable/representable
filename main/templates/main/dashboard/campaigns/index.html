@@ -10,7 +10,7 @@
           <li class="breadcrumb-item"><a href="{% url 'main:index' %}">Home</a></li>
           <li class="breadcrumb-item"><a href="{% url 'main:dashboard' %}">Dashboard</a></li>
           <li class="breadcrumb-item"><a href="{% url 'main:home_org' object.organization.slug  object.organization.pk %}">Partners / {{ object.organization.name }}</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Campaigns / {{ object.name }}</li>
+          <li class="breadcrumb-item active" aria-current="page">Drives / {{ object.name }}</li>
 
         </ol>
       </nav>
@@ -78,7 +78,7 @@
       <div class="card shadow-sm h-100">
         <div class="card-body">
           <h5>
-            Delete Campaign
+            Delete Drive
           </h5>
           <hr>
           <p>Press 'Delete' if you're sure you want to permanently delete this campaign. Warning: you won't be able to undo this.</p>

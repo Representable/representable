@@ -27,7 +27,7 @@ from .models import User
 from django import forms
 from ckeditor.widgets import CKEditorWidget
 
-from .models import State, Campaign
+from .models import State, Drive
 
 
 class StateAdminForm(forms.ModelForm):
