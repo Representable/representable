@@ -41,7 +41,7 @@
       <div class="card shadow-sm h-100">
         <div class="card-body">
           <h5>
-            Drives
+            Community Mapping Drives
           </h5>
           <hr>
           {% if drives %}
@@ -55,7 +55,7 @@
           </ul>
           {% else %}
           {% if is_org_admin %}
-          <p class="my-3">You haven't created any drives for this organization.
+          <p class="my-3">You haven't created any community mapping drives for this organization.
             Create a new one below to start collecting data.</p>
             {% endif %}
           {% endif %}
@@ -78,8 +78,8 @@
           <ul class="list-group my-3">{% if is_org_admin %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
               <div>
-                <h5><span class="badge badge-secondary"><i class="fas fa-plus-square"></i></span> Create a Drive</h5>
-                <p>Create a drive to start collecting submissions.<p>
+                <h5><span class="badge badge-secondary"><i class="fas fa-plus-square"></i></span> Create a Community Mapping Drive</h5>
+                <p>Create a community mapping drive to start collecting submissions.<p>
               </div>
               <a class="btn btn-primary" href="{% url 'main:create_drive' object.slug  object.pk %}" role="button">Create <i class="fa fa-arrow-circle-right"></i></a>
             </li>
