@@ -18,13 +18,12 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 from django.test import TestCase, Client
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from main.forms import CommunityForm
 from main.views import EntryView
 from django.contrib.auth import get_user_model
 
 
-class UserTest(StaticLiveServerTestCase):
+class UserTest(TestCase):
     """
     Unit tests for user sign-up, log-in, and log-out.
     """

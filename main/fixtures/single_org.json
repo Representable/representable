@@ -1,0 +1,56 @@
+[
+  {
+    "model": "main.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$psBMnOAwghfS$9XkflU7+PJcSA7WsjiTrfF13wOmW7EP3uA5zFUBvBIs=",
+      "last_login": "2020-06-26T00:40:28.538Z",
+      "is_superuser": false,
+      "username": "test_user",
+      "first_name": "",
+      "last_name": "",
+      "email": "test@me.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2020-06-26T00:40:28.410Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "main.organization",
+    "pk": 1,
+    "fields": {
+      "name": "Fixture Test Organization",
+      "description": "My org",
+      "ext_link": "",
+      "states": "[\"MI\"]",
+      "slug": "test-organization"
+    }
+  },
+  {
+    "model": "main.membership",
+    "pk": 1,
+    "fields": {
+      "member": ["test_user"],
+      "organization": 1,
+      "date_joined": "2020-06-26",
+      "is_org_admin": true,
+      "is_org_moderator": true,
+      "is_allowlisted": true
+    }
+  },
+  {
+    "model": "main.drive",
+    "pk": "33345339-1fd6-4778-828d-f965192fcb28",
+    "fields": {
+      "slug": "test-1",
+      "name": "Test",
+      "description": "Test",
+      "state": "MI",
+      "organization": 1,
+      "created_at": "2020-06-26T00:36:52.834Z",
+      "is_active": true
+    }
+  }
+]

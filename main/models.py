@@ -90,6 +90,7 @@ class Organization(models.Model):
     - name: name of the organization
     - description: description of the organization
     - ext_link: external link to organization website
+    - states: the states that the organization operates in
     - slug: internal representable link slug
     - members: members of the organization
     """
