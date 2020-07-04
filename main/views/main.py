@@ -506,14 +506,6 @@ class EntryView(LoginRequiredMixin, View):
                         email=self.request.user.email,
                     )
                     if allowlist_entry:
-                        # add user to membership
-                        member = Membership(
-                            member=self.request.user,
-                            organization=entryForm.organization,
-                            is_allowlisted=True,
-                        )
-                        member.save()
-
                         # approve this entry
                         entryForm.admin_approved = True
 
