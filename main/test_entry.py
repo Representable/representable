@@ -29,12 +29,7 @@ class EntryTest(TestCase):
         self.response = c.get("/entry/")
 
     def tearDown(self):
-        # Fake user logout.
-        print("Test User Logout")
         self.client.logout()
-
-        # Destroy fake user.
-        print("Test User Delete")
         self.user.delete()
 
     def test_template(self):
