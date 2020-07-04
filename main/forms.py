@@ -27,7 +27,7 @@ from django_select2.forms import (
 from .models import (
     CommunityEntry,
     Organization,
-    Campaign,
+    Drive,
     Membership,
     User,
     Address,
@@ -170,14 +170,14 @@ class AllowlistForm(ModelForm):
         }
 
 
-class CampaignForm(ModelForm):
+class DriveForm(ModelForm):
     class Meta:
-        model = Campaign
+        model = Drive
         fields = ["name", "description", "state"]
         widgets = {
             "name": forms.TextInput(
                 attrs={
-                    "placeholder": "Name of Campaign",
+                    "placeholder": "Name of Drive",
                     "class": "form-control",
                 }
             ),

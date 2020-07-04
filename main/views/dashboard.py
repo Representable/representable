@@ -32,7 +32,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from allauth.account.decorators import verified_email_required
 from ..forms import (
     CommunityForm,
-    CampaignForm,
+    DriveForm,
     DeletionForm,
     OrganizationForm,
     AllowlistForm,
@@ -42,9 +42,9 @@ from ..models import (
     Membership,
     Organization,
     AllowList,
-    Campaign,
+    Drive,
     CommunityEntry,
-    CampaignToken,
+    DriveToken,
     Address,
 )
 from django.shortcuts import get_object_or_404
@@ -126,7 +126,7 @@ class IndexView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["campaigns"] = Campaign.objects.filter(
+        context["drives"] = Drive.objects.filter(
             organization__in=self.get_queryset()
         )
         return context
@@ -216,7 +216,7 @@ class HomeOrg(LoginRequiredMixin, OrgMemberRequiredMixin, DetailView):
         context["is_org_moderator"] = self.request.user.is_org_moderator(
             self.object.id
         )
-        context["campaigns"] = Campaign.objects.filter(
+        context["drives"] = Drive.objects.filter(
             organization__id=self.kwargs["pk"]
         )
 
@@ -351,10 +351,10 @@ class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
         streets = {}
         cities = {}
 
-        if self.kwargs["campaign"]:
+        if self.kwargs["drive"]:
             query = CommunityEntry.objects.filter(
                 organization__pk=self.kwargs["pk"],
-                campaign__slug=self.kwargs["campaign"],
+                drive__slug=self.kwargs["drive"],
             )
         else:
             query = CommunityEntry.objects.filter(
@@ -390,9 +390,9 @@ class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
         org = Organization.objects.get(slug=self.kwargs["slug"])
         context["organization"] = org
         context["state"] = org.states[0]
-        if self.kwargs["campaign"]:
-            context["campaign"] = get_object_or_404(
-                Campaign, slug=self.kwargs["campaign"]
+        if self.kwargs["drive"]:
+            context["drive"] = get_object_or_404(
+                Drive, slug=self.kwargs["drive"]
             ).name
         return context
 
@@ -420,13 +420,13 @@ class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
         return render(request, self.template_name, context)
 
 
-class CampaignHome(LoginRequiredMixin, OrgMemberRequiredMixin, DetailView):
+class DriveHome(LoginRequiredMixin, OrgMemberRequiredMixin, DetailView):
     """
-    The main campaign view
+    The main drive view
     """
 
-    template_name = "main/dashboard/campaigns/index.html"
-    model = Campaign
+    template_name = "main/dashboard/drives/index.html"
+    model = Drive
     pk_url_kwarg = "cam_pk"
 
     def get_context_data(self, **kwargs):
@@ -441,13 +441,13 @@ class CampaignHome(LoginRequiredMixin, OrgMemberRequiredMixin, DetailView):
         return context
 
 
-class CreateCampaign(LoginRequiredMixin, OrgAdminRequiredMixin, CreateView):
+class CreateDrive(LoginRequiredMixin, OrgAdminRequiredMixin, CreateView):
     """
-    The view for the form to create a campaign
+    The view for the form to create a drive
     """
 
-    template_name = "main/dashboard/campaigns/create.html"
-    form_class = CampaignForm
+    template_name = "main/dashboard/drives/create.html"
+    form_class = DriveForm
     pk_url_kwarg = "cam_pk"
 
     def form_valid(self, form):
@@ -458,7 +458,7 @@ class CreateCampaign(LoginRequiredMixin, OrgAdminRequiredMixin, CreateView):
         object = form.save()
 
         self.success_url = reverse_lazy(
-            "main:campaign_home",
+            "main:drive_home",
             kwargs={
                 "pk": self.kwargs["pk"],
                 "slug": self.kwargs["slug"],
@@ -469,12 +469,12 @@ class CreateCampaign(LoginRequiredMixin, OrgAdminRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class UpdateCampaign(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
+class UpdateDrive(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
     """
-    The view for the form to update campaign details
+    The view for the form to update drive details
     """
 
-    template_name = "main/dashboard/campaigns/edit.html"
-    model = Campaign
-    form_class = CampaignForm
+    template_name = "main/dashboard/drives/edit.html"
+    model = Drive
+    form_class = DriveForm
     pk_url_kwarg = "cam_pk"

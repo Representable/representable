@@ -90,6 +90,7 @@ class Organization(models.Model):
     - name: name of the organization
     - description: description of the organization
     - ext_link: external link to organization website
+    - states: the states that the organization operates in
     - slug: internal representable link slug
     - members: members of the organization
     """
@@ -170,17 +171,17 @@ class AllowList(models.Model):
 # ******************************************************************************#
 
 
-class Campaign(models.Model):
+class Drive(models.Model):
     """
-    Campaign represents an organization's entry collection campaign.
-    - id: uuid for campaigns
-    - slug: slug of campaign
-    - name: name of the campaign
-    - state: the state of the campaign
-    - description: description of the campaign
-    - organization: organization hosting the campaign
-    - created_at: when the campaign was created
-    - is_active: is the campaign active
+    Drive represents an organization's entry collection drive.
+    - id: uuid for drives
+    - slug: slug of drive
+    - name: name of the drive
+    - state: the state of the drive
+    - description: description of the drive
+    - organization: organization hosting the drive
+    - created_at: when the drive was created
+    - is_active: is the drive active
     """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -200,12 +201,12 @@ class Campaign(models.Model):
     def save(self, *args, **kwargs):
         # generate the slug once the first time the org is created
         if not self.slug:
-            self.slug = generate_unique_slug(Campaign, self.name)
-        super(Campaign, self).save(*args, **kwargs)
+            self.slug = generate_unique_slug(Drive, self.name)
+        super(Drive, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse(
-            "main:campaign_home",
+            "main:drive_home",
             kwargs={
                 "slug": self.organization.slug,
                 "pk": self.organization.id,
@@ -218,15 +219,15 @@ class Campaign(models.Model):
 
 
 # ******************************************************************************#
-class CampaignToken(models.Model):
-    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
+class DriveToken(models.Model):
+    drive = models.ForeignKey(Drive, on_delete=models.CASCADE)
     token = models.CharField(max_length=100)
 
     def save(self, *args, **kwargs):
         # generate the unique token once the first time the token is created
         if not self.token:
-            self.token = generate_unique_token(self.campaign.name)
-        super(CampaignToken, self).save(*args, **kwargs)
+            self.token = generate_unique_token(self.drive.name)
+        super(DriveToken, self).save(*args, **kwargs)
 
 
 # ******************************************************************************#
@@ -240,7 +241,7 @@ class CommunityEntry(models.Model):
      - user: The user that created the entry. Foreign Key = User (Many to One)
      - entry_ID: Randomly Generated via uuid.uuid4.
      - organization: The organization that the user is submitting the entry to
-     - campaign: The campaign that the user is submitting the entry to
+     - drive: The drive that the user is submitting the entry to
      - user_polygon:  User polygon contains the polygon drawn by the user.
      - census_blocks_polygon_array: Array containing multiple polygons.
      - census_blocks_polygon: The union of the census block polygons.
@@ -256,8 +257,8 @@ class CommunityEntry(models.Model):
     organization = models.ForeignKey(
         Organization, on_delete=models.CASCADE, blank=True, null=True
     )
-    campaign = models.ForeignKey(
-        Campaign, on_delete=models.CASCADE, blank=True, null=True
+    drive = models.ForeignKey(
+        Drive, on_delete=models.CASCADE, blank=True, null=True
     )
     user_polygon = models.PolygonField(
         geography=True, serialize=True, blank=False
@@ -345,10 +346,10 @@ class State(models.Model):
     content_criteria = RichTextField()
     content_coi = RichTextField()
 
-    def get_campaigns(self):
-        return Campaign.objects.filter(state=self.abbr.upper())
+    def get_drives(self):
+        return Drive.objects.filter(state=self.abbr.upper())
 
-    get_campaigns.allow_tags = True
+    get_drives.allow_tags = True
 
     class Meta:
         db_table = "state"
