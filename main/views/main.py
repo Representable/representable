@@ -41,8 +41,8 @@ from ..models import (
     Membership,
     Organization,
     Address,
-    CampaignToken,
-    Campaign,
+    DriveToken,
+    Drive,
     State,
 )
 from django.views.generic.edit import FormView
@@ -145,8 +145,12 @@ class StatePage(TemplateView):
         state = State.objects.filter(abbr=abbr.upper())
         if not state:
             return redirect("/")
-        campaigns = state[0].get_campaigns()
-        return render(request, self.template_name, {"state_obj": state[0], "campaigns": campaigns})
+        drives = state[0].get_drives()
+        return render(
+            request,
+            self.template_name,
+            {"state_obj": state[0], "drives": drives},
+        )
 
 
 # ******************************************************************************#
@@ -299,10 +303,8 @@ class ExportView(TemplateView):
             gj["features"][0]["properties"][
                 "organization"
             ] = user_map.organization.name
-        if user_map.campaign:
-            gj["features"][0]["properties"][
-                "campaign"
-            ] = user_map.campaign.name
+        if user_map.drive:
+            gj["features"][0]["properties"]["drive"] = user_map.drive.name
         if self.request.user.is_authenticated:
             is_org_leader = user_map.organization and (
                 self.request.user.is_org_admin(user_map.organization_id)
@@ -377,22 +379,22 @@ class Thanks(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        has_campaign = False
+        has_drive = False
         organization_name = ""
-        campaign_name = ""
-        if kwargs["campaign"]:
-            has_campaign = True
-            campaign_slug = self.kwargs["campaign"]
-            campaign = Campaign.objects.get(slug=campaign_slug)
-            campaign_name = campaign.name
-            organization = campaign.organization
+        drive_name = ""
+        if kwargs["drive"]:
+            has_drive = True
+            drive_slug = self.kwargs["drive"]
+            drive = Drive.objects.get(slug=drive_slug)
+            drive_name = drive.name
+            organization = drive.organization
             organization_name = organization.name
 
         context["map_url"] = self.kwargs["map_id"]
-        context["campaign"] = self.kwargs["campaign"]
-        context["has_campaign"] = has_campaign
+        context["drive"] = self.kwargs["drive"]
+        context["has_drive"] = has_drive
         context["organization_name"] = organization_name
-        context["campaign_name"] = campaign_name
+        context["drive_name"] = drive_name
         return context
 
 
@@ -438,18 +440,18 @@ class EntryView(LoginRequiredMixin, View):
         if kwargs["token"]:
             has_token = True
 
-        has_campaign = False
+        has_drive = False
         organization_name = ""
         organization_id = None
-        campaign_name = ""
-        campaign_id = None
-        if kwargs["campaign"]:
-            has_campaign = True
-            campaign_slug = self.kwargs["campaign"]
-            campaign = Campaign.objects.get(slug=campaign_slug)
-            campaign_name = campaign.name
-            campaign_id = campaign.id
-            organization = campaign.organization
+        drive_name = ""
+        drive_id = None
+        if kwargs["drive"]:
+            has_drive = True
+            drive_slug = self.kwargs["drive"]
+            drive = Drive.objects.get(slug=drive_slug)
+            drive_name = drive.name
+            drive_id = drive.id
+            organization = drive.organization
             organization_name = organization.name
             organization_id = organization.id
 
@@ -459,11 +461,11 @@ class EntryView(LoginRequiredMixin, View):
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
             "has_token": has_token,
-            "has_campaign": has_campaign,
+            "has_drive": has_drive,
             "organization_name": organization_name,
             "organization_id": organization_id,
-            "campaign_name": campaign_name,
-            "campaign_id": campaign_id,
+            "drive_name": drive_name,
+            "drive_id": drive_id,
         }
         return render(request, self.template_name, context)
 
@@ -494,11 +496,11 @@ class EntryView(LoginRequiredMixin, View):
 
                 entryForm.census_blocks_polygon = polygonUnion
 
-            if self.kwargs["campaign"]:
-                campaign = Campaign.objects.get(slug=self.kwargs["campaign"])
-                if campaign:
-                    entryForm.campaign = campaign
-                    entryForm.organization = campaign.organization
+            if self.kwargs["drive"]:
+                drive = Drive.objects.get(slug=self.kwargs["drive"])
+                if drive:
+                    entryForm.drive = drive
+                    entryForm.organization = drive.organization
 
             if entryForm.organization:
                 if self.request.user.is_member(entryForm.organization.id):
@@ -521,15 +523,15 @@ class EntryView(LoginRequiredMixin, View):
                         # approve this entry
                         entryForm.admin_approved = True
 
-            # TODO: Determine role of campaign tokens (one time link, etc.)
+            # TODO: Determine role of drive tokens (one time link, etc.)
             # if self.kwargs["token"]:
-            #     token = CampaignToken.objects.get(token=self.kwargs["token"])
+            #     token = DriveToken.objects.get(token=self.kwargs["token"])
             #     if token:
-            #         entryForm.campaign = token.campaign
-            #         entryForm.organization = token.campaign.organization
+            #         entryForm.drive = token.drive
+            #         entryForm.organization = token.drive.organization
 
-            #         # if user has a token and campaign is active, auto approve submission
-            #         if token.campaign.is_active:
+            #         # if user has a token and drive is active, auto approve submission
+            #         if token.drive.is_active:
             #             entryForm.admin_approved = True
 
             entryForm.save()
@@ -539,7 +541,7 @@ class EntryView(LoginRequiredMixin, View):
                 addrForm.save()
 
             m_uuid = str(entryForm.entry_ID).split("-")[0]
-            if not entryForm.campaign:
+            if not entryForm.drive:
                 self.success_url = reverse_lazy(
                     "main:thanks", kwargs={"map_id": m_uuid}
                 )
@@ -549,7 +551,7 @@ class EntryView(LoginRequiredMixin, View):
                     kwargs={
                         "map_id": m_uuid,
                         "slug": entryForm.organization.slug,
-                        "campaign": entryForm.campaign.slug,
+                        "drive": entryForm.drive.slug,
                     },
                 )
             return HttpResponseRedirect(self.success_url)

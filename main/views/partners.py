@@ -2,7 +2,7 @@ from ..models import (
     Membership,
     Organization,
     CommunityEntry,
-    Campaign,
+    Drive,
     Address,
 )
 
@@ -51,10 +51,10 @@ class PartnerMap(TemplateView):
         streets = {}
         cities = {}
         # get the polygon from db and pass it on to html
-        if self.kwargs["campaign"]:
+        if self.kwargs["drive"]:
             query = CommunityEntry.objects.filter(
                 organization__slug=self.kwargs["slug"],
-                campaign__slug=self.kwargs["campaign"],
+                drive__slug=self.kwargs["drive"],
                 admin_approved=True,
             )
         else:
@@ -88,9 +88,9 @@ class PartnerMap(TemplateView):
         org = Organization.objects.get(slug=self.kwargs["slug"])
         context["organization"] = org
         context["state"] = org.states[0]
-        if self.kwargs["campaign"]:
-            context["campaign"] = get_object_or_404(
-                Campaign, slug=self.kwargs["campaign"]
+        if self.kwargs["drive"]:
+            context["drive"] = get_object_or_404(
+                Drive, slug=self.kwargs["drive"]
             ).name
         if self.request.user.is_authenticated:
             context["is_org_admin"] = self.request.user.is_org_admin(

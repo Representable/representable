@@ -25,7 +25,7 @@ To understand how the entry page works, let's first understand how the /entry UR
 There are three types of entry page URL paths, as defined in `/main/urls.py`:
 
 - `/entry/` is the default URL that will be used by most users. To access the `/entry/` URL, all you have to do is click on "Add community" in the navbar or go to `representable.org/entry`. This is the vanilla entry page.
-- `/entry/c/<slug:campaign>/` is the URL used by campaigns. This allows users to submit a COI directly to a campaign organized by a partner organization. The `<slug:campaign>` part refers strictly to the slug of the campaign, e.g. `campaign-name-slug`, which allows the entry to submit the form to the right place.
+- `/entry/c/<slug:drive>/` is the URL used by drives. This allows users to submit a COI directly to a drive organized by a partner organization. The `<slug:drive>` part refers strictly to the slug of the drive, e.g. `drive-name-slug`, which allows the entry to submit the form to the right place.
 - `/entry/t/<token>` is the URL used for one-time tokens. This is still WIP.
 
 #### The `EntryView` View
@@ -62,11 +62,13 @@ class EntryView(LoginRequiredMixin, View):
 The `get_initial()` function is used to pre-populate the form fields. In this case, the `get_initial()` function pre-populates the `user` field when it is called on a model form.
 
 #### 3. `get(self, request, *args, **kwargs)`
-The `get()` function overrides the generic View `get()`. This function is called whenever a user requests the entry page and gets the page ready for use. The `get()` function is responsible for two main tasks on the entry page:
-- Pre-populate the `comm_form` (community form) and the `addr_form` (address form) using the `get_initial()` function.
-- Set the right context variables. The context variables are used to pass information from the Python view and database to the HTML template and JS code. 
 
-If the user loads the view via the `/entry/c/<slug:campaign>/` URL, the `get()` function will add campaign-specific variables to the context, which allows the entry form to link the COI to a specific campaign. This is done with the help of the `kwargs` parameter.
+The `get()` function overrides the generic View `get()`. This function is called whenever a user requests the entry page and gets the page ready for use. The `get()` function is responsible for two main tasks on the entry page:
+
+- Pre-populate the `comm_form` (community form) and the `addr_form` (address form) using the `get_initial()` function.
+- Set the right context variables. The context variables are used to pass information from the Python view and database to the HTML template and JS code.
+
+If the user loads the view via the `/entry/c/<slug:drive>/` URL, the `get()` function will add drive-specific variables to the context, which allows the entry form to link the COI to a specific drive. This is done with the help of the `kwargs` parameter.
 
 #### 4. `post(self, request, *args, **kwargs)`
 
@@ -74,10 +76,10 @@ The `post()` function overrides the generic View `post()` and it is called whene
 
 - Checking if the form is valid by calling `comm_form.is_valid()`, which in turns calls `clean()` in the `CommunityForm` class in `forms.py`.
 - Combines the census block polygons that make up the COI into one multipolygon (lines 410-431).
-- If the user is using a campaign URL, links the entry to the respective campaign (lines 433-458).
+- If the user is using a drive URL, links the entry to the respective drive (lines 433-458).
 - If the user is on the allow list for the organization, auto-approves the entry (displays it on the organization map) (lines 439-459).
 - Checks that the address is valid and saves it.
-- Redirects user to the right Thanks page (for campaigns or generic).
+- Redirects user to the right Thanks page (for drives or generic).
 - Adds the right context variables.
 
 Notes:
@@ -97,16 +99,15 @@ Among other things, model forms allow us to display custom error messages and va
 The front-end template is integral to the entry form. This is because the template displays the form in a user-accessible way, but also because the template integrates the JavaScript code that enables different form error checking and the map drawing feature.
 
 #### Map Drawing
+
 The map drawing section is one of the most complex in the Representable.org app. The code for this section is written in `/main/static/main/js/geo.js`, which contains a set of scripts that:
 
 - Handle map states.
 - Add custom buttons to the map.
 - Display custom error codes during the map drawing process.
 
-
 :::caution
 
 The map drawing section is a work in progress.
 
 :::
-

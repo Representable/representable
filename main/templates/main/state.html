@@ -52,25 +52,25 @@
   </div>
   <div class="card card-signin my-3">
     <div class="card-body">
-      <h2 class="font-weight-light">Data Collection Campaigns in {{ state_obj.name }}</h2>
-      <p>Organizations in {{ state_obj.name }} are running campaigns to collect community information so your community's interests can be protected. You can use Representable to submit your community's information directly to these organizations.</p>
-      {% if campaigns %}
+      <h2 class="font-weight-light">Community Mapping Drives in {{ state_obj.name }}</h2>
+      <p>Organizations in {{ state_obj.name }} are running community mapping drives to collect community information so your community's interests can be protected. You can use Representable to submit your community's information directly to these organizations.</p>
+      {% if drives %}
         <hr>
-        {% for campaign in campaigns %}
+        {% for drive in drives %}
         <div class="row">
           <div class="col-10">
-          <h5>{{ campaign.name }}</h5>
-          <h6 class="text-muted">{{ campaign.organization }}</h6>
-          <p>{{ campaign.description }}</p>
+          <h5>{{ drive.name }}</h5>
+          <h6 class="text-muted">{{ drive.organization }}</h6>
+          <p>{{ drive.description }}</p>
           </div>
           <div class="col-2">
-            <a class="btn btn-outline-primary" href="{% url 'main:entry' campaign=campaign.slug %}">Join Campaign</a>
+            <a class="btn btn-outline-primary" href="{% url 'main:entry' drive=drive.slug %}">Join Drive</a>
           </div>
         </div>
         <hr>
         {% endfor %}
       {% else %}
-      <p>There are currently no public campaigns in {{ state_obj.name }} collecting community information. In the meantime, you can still contribute to Representable by clicking Draw My Community below!</p>
+      <p>There are currently no public drives in {{ state_obj.name }} collecting community information. In the meantime, you can still contribute to Representable by clicking Draw My Community below!</p>
       {% endif %}
     </div>
   </div>

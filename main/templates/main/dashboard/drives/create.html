@@ -9,15 +9,15 @@
             <div class="card card-signin my-5">
                 <div class="card-body">
                     <h5 class="card-title text-center">
-                        Update your Campaign
+                        Create a Drive
                       </h5>
-                      <form role="form" id="UpdateCampaign" method="post">{% csrf_token %}
+                      <form role="form" id="CreateDrive" method="post">{% csrf_token %}
 
                           <div class="form-group">
                         {% for field in form %}
                           <div class="fieldWrapper">
                               {{ field.errors }}
-                              {{ field.label_tag }} {{ field|append_attr:"class:form-control" }}
+                              {{ field.label_tag }}{{ field }}
                               {% if field.help_text %}
                               <p class="help">{{ field.help_text|safe }}</p>
                               {% endif %}
@@ -25,7 +25,7 @@
                       {% endfor %}
                       </div>
                       <div style="display: inline-block;">
-                          <button id="save" form="UpdateCampaign" type="submit" class="btn btn-primary" value="Submit">Submit</button>
+                          <button id="save" form="CreateDrive" type="submit" class="btn btn-primary" value="Submit">Submit</button>
                       </div>
                       </form>
                 </div>

@@ -33,7 +33,7 @@ if (is_auth == true && session_auth_state == false) {
 mixpanel.track_forms("#account-confirm-form", "Account Confirmed");
 
 // Track New Entry
-mixpanel.track_links(".campaign-new-entry", "Campaign New Entry Started");
+mixpanel.track_links(".drive-new-entry", "Drive New Entry Started");
 mixpanel.track_links(".new-entry", "New Entry Started");
 
 // Thanks Page
@@ -42,8 +42,8 @@ mixpanel.track_links(
   "Submission Link Pressed (Thanks Page)"
 );
 mixpanel.track_links(
-  ".thanks-campaign-map",
-  "Campaign Map Link Pressed (Thanks Page"
+  ".thanks-drive-map",
+  "Drive Map Link Pressed (Thanks Page"
 );
 mixpanel.track_links(
   ".thanks-send-feedback",

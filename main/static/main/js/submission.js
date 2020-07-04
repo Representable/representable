@@ -1,6 +1,4 @@
-$(document).ready(function () {
-
-});
+$(document).ready(function () {});
 
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
@@ -95,10 +93,10 @@ function newLowerLegislatureLayer(state) {
 }
 
 function sanitizePDF(x) {
-  x = x.replace(/ /g,"_");
+  x = x.replace(/ /g, "_");
   x = x.replace("____________________________", "");
   x = x.replace("__________________________", "");
-  x = x.replace(/(\r\n|\n|\r)/gm,"");
+  x = x.replace(/(\r\n|\n|\r)/gm, "");
   x = x.replace(/[^\x00-\x7F]/g, "");
   return x;
 }
@@ -128,23 +126,21 @@ map.on("load", function () {
   }
   map.addSource("counties", {
     type: "vector",
-    url: "mapbox://mapbox.hist-pres-election-county"
+    url: "mapbox://mapbox.hist-pres-election-county",
   });
-  map.addLayer(
-    {
-      id: "counties",
-      type: "line",
-      source: "counties",
-      "source-layer": "historical_pres_elections_county",
-      layout: {
-        visibility: "none"
-      },
-      paint: {
-        "line-color": "rgba(106,137,204,0.7)",
-        "line-width": 2,
-      }
-    }
-  );
+  map.addLayer({
+    id: "counties",
+    type: "line",
+    source: "counties",
+    "source-layer": "historical_pres_elections_county",
+    layout: {
+      visibility: "none",
+    },
+    paint: {
+      "line-color": "rgba(106,137,204,0.7)",
+      "line-width": 2,
+    },
+  });
 
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
@@ -163,10 +159,16 @@ map.on("load", function () {
     }
     dest = final[0][0];
     var fit = new L.Polygon(final).getBounds();
-    var southWest = new mapboxgl.LngLat(fit['_southWest']['lat'], fit['_southWest']['lng']);
-    var northEast = new mapboxgl.LngLat(fit['_northEast']['lat'], fit['_northEast']['lng']);
+    var southWest = new mapboxgl.LngLat(
+      fit["_southWest"]["lat"],
+      fit["_southWest"]["lng"]
+    );
+    var northEast = new mapboxgl.LngLat(
+      fit["_northEast"]["lat"],
+      fit["_northEast"]["lng"]
+    );
     var commBounds = new mapboxgl.LngLatBounds(southWest, northEast);
-    map.fitBounds(commBounds, {padding: 100});
+    map.fitBounds(commBounds, { padding: 100 });
     map.addLayer({
       id: obj,
       type: "fill",
@@ -213,19 +215,19 @@ map.on("load", function () {
   }
   // pdf export button
   // TODO: if creator of community -> include identifying info
-  $("#pdf-button").on("click", function() {
+  $("#pdf-button").on("click", function () {
     // make the map look good for the PDF ! TODO: un-select other layers like census blocks (turn into functions)
-    map.fitBounds(commBounds, {padding: 100});
+    map.fitBounds(commBounds, { padding: 100 });
     // display loading popup
     var instruction_box = document.getElementById("pdf-loading-box");
     instruction_box.style.display = "block";
-    setTimeout(function() {
+    setTimeout(function () {
       // loading popup disappears
       instruction_box.style.display = "none";
       var doc = new jsPDF();
 
       var entryName = window.document.getElementById("entry-name");
-      doc.fromHTML(entryName, 20, 20, {'width': 180});
+      doc.fromHTML(entryName, 20, 20, { width: 180 });
       doc.setFontSize(10);
       doc.setTextColor(150);
       // identifying info
@@ -248,43 +250,40 @@ map.on("load", function () {
       doc.text(20, 53, rLink);
 
       var org = window.document.getElementById("org-text");
-      var campaign = window.document.getElementById("campaign-text");
+      var drive = window.document.getElementById("drive-text");
       if (org !== null) {
         doc.text(20, 61, "Organization: " + org.textContent);
       }
-      if (campaign !== null) {
-        doc.text(20, 69, "Campaign: " + campaign.textContent);
+      if (drive !== null) {
+        doc.text(20, 69, "Drive: " + drive.textContent);
       }
 
       var imgData = map.getCanvas().toDataURL("image/png");
       // calculate ratio of map so it isn't squashed / stretched
       var mapDim = map.getCanvas().getBoundingClientRect();
-      var mapPDFHeight = (mapDim.height*170) / mapDim.width;
-      doc.addImage(imgData, 'PNG', 20, 75, 170, mapPDFHeight);
+      var mapPDFHeight = (mapDim.height * 170) / mapDim.width;
+      doc.addImage(imgData, "PNG", 20, 75, 170, mapPDFHeight);
       // next page
       doc.addPage();
       doc.setFontSize(24);
-      doc.text(20, 20, 'Community Information');
+      doc.text(20, 20, "Community Information");
 
       var elementHandler = {
-        '#ignorePDF': function (element, renderer) {
+        "#ignorePDF": function (element, renderer) {
           return true;
         },
-        '#entry-name': function (element, renderer) {
+        "#entry-name": function (element, renderer) {
           return true;
-        }
+        },
       };
       // entry fields
       var table = window.document.getElementById("table-content");
-      doc.fromHTML(
-        table,
-        20,
-        25,
-        {
-          'width': 180,'elementHandlers': elementHandler
+      doc.fromHTML(table, 20, 25, {
+        width: 180,
+        elementHandlers: elementHandler,
       });
       // get entry name in order to name the PDF
-      var pdfName = sanitizePDF($('#entry-name').text())
+      var pdfName = sanitizePDF($("#entry-name").text());
       doc.save(pdfName + ".pdf");
     }, 1500);
   });
@@ -295,7 +294,7 @@ var toggleableLayerIds = [
   "Census Blocks",
   "State Legislature - House/Assembly",
   "State Legislature - Senate",
-  "counties"
+  "counties",
 ];
 
 for (var i = 0; i < toggleableLayerIds.length; i++) {

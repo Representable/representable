@@ -1,5 +1,4 @@
 from django.test import TestCase, Client
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.contrib.auth import get_user_model
 from .models import CommunityEntry, Address
 
@@ -16,7 +15,7 @@ from django.contrib.gis.db import models
 from django.contrib.gis.geos import GEOSGeometry
 
 
-class EntryTest(StaticLiveServerTestCase):
+class EntryTest(TestCase):
     def setUp(self):
         # Create a fake user.
         self.client = Client()
@@ -30,12 +29,7 @@ class EntryTest(StaticLiveServerTestCase):
         self.response = c.get("/entry/")
 
     def tearDown(self):
-        # Fake user logout.
-        print("Test User Logout")
         self.client.logout()
-
-        # Destroy fake user.
-        print("Test User Delete")
         self.user.delete()
 
     def test_template(self):

@@ -253,8 +253,8 @@ function changeText(element) {
 function showVideoPopup() {
   $("#video_popup").removeClass("d-none");
   mixpanel.track("Video Popup", {
-    campaign_id: campaign_id,
-    campaign_name: campaign_name,
+    drive_id: drive_id,
+    drive_name: drive_name,
     organization_id: organization_id,
     organization_name: organization_name,
   });
@@ -420,8 +420,8 @@ document.addEventListener(
             event.target.classList.add("done");
             mixpanel.track("Entry Page Section Focus", {
               field_id: event.target.id,
-              campaign_id: campaign_id,
-              campaign_name: campaign_name,
+              drive_id: drive_id,
+              drive_name: drive_name,
               organization_id: organization_id,
               organization_name: organization_name,
             });
@@ -434,8 +434,8 @@ document.addEventListener(
       .getElementById("shepherd-btn")
       .addEventListener("click", function (event) {
         mixpanel.track("Shepherd JS", {
-          campaign_id: campaign_id,
-          campaign_name: campaign_name,
+          drive_id: drive_id,
+          drive_name: drive_name,
           organization_id: organization_id,
           organization_name: organization_name,
         });
@@ -1332,8 +1332,8 @@ map.on("style.load", function () {
 
     // Tracking
     mixpanel.track("Geocoder Search Successful", {
-      campaign_id: campaign_id,
-      campaign_name: campaign_name,
+      drive_id: drive_id,
+      drive_name: drive_name,
       organization_id: organization_id,
       organization_name: organization_name,
     });
@@ -1460,8 +1460,8 @@ function triggerSuccessMessage() {
   var map_drawn_flag = sessionStorage.getItem("map_drawn_successfully");
   if (map_drawn_flag == "false") {
     mixpanel.track("Map Drawing Successful", {
-      campaign_id: campaign_id,
-      campaign_name: campaign_name,
+      drive_id: drive_id,
+      drive_name: drive_name,
       organization_id: organization_id,
       organization_name: organization_name,
     });
