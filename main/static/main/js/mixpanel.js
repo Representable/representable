@@ -1,8 +1,6 @@
 // Handle mixpanel code.
 var properties = {
   user_type: user_type,
-  member: member,
-  moderator: moderator,
   admin: admin,
 };
 mixpanel.register(properties);

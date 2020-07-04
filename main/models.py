@@ -47,34 +47,8 @@ class User(AbstractUser):
         else:
             return False
 
-    def is_org_moderator(self, org_id):
-        if Membership.objects.filter(
-            member=self, organization__pk=org_id, is_org_moderator=True
-        ):
-            return True
-        else:
-            return False
-
-    def is_member(self, org_id):
-        if Membership.objects.filter(member=self, organization__pk=org_id):
-            return True
-        else:
-            return False
-
     def is_generic_admin(self):
         if Membership.objects.filter(member=self, is_org_admin=True):
-            return True
-        else:
-            return False
-
-    def is_generic_moderator(self):
-        if Membership.objects.filter(member=self, is_org_moderator=True):
-            return True
-        else:
-            return False
-
-    def is_generic_member(self):
-        if Membership.objects.filter(member=self):
             return True
         else:
             return False
@@ -131,9 +105,7 @@ class Membership(models.Model):
     member = models.ForeignKey(User, on_delete=models.CASCADE)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     date_joined = models.DateField(auto_now_add=True, blank=True)
-    is_org_admin = models.BooleanField(default=False)
-    is_org_moderator = models.BooleanField(default=False)
-    is_allowlisted = models.BooleanField(default=False)
+    is_org_admin = models.BooleanField(default=True)
 
     def get_absolute_url(self):
         return reverse(

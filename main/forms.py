@@ -202,10 +202,4 @@ class MemberForm(ModelForm):
         model = Membership
         fields = [
             "member",
-            "is_org_admin",
-            "is_org_moderator",
         ]
-        labels = {
-            "is_org_admin": "Administrator",
-            "is_org_moderator": "Moderator",
-        }
