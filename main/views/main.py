@@ -403,7 +403,6 @@ class EntryView(LoginRequiredMixin, View):
     template_name = "main/entry.html"
     community_form_class = CommunityForm
     address_form_class = AddressForm
-    # form_class = CommunityForm
     initial = {
         "key": "value",
     }
