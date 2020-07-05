@@ -27,8 +27,13 @@ from django.views.generic import (
     DetailView,
 )
 from django.views import View
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from allauth.account.decorators import verified_email_required
+from allauth.account.admin import EmailAddress
+from allauth.account.adapter import DefaultAccountAdapter
+
+from django.utils.decorators import method_decorator
 from django.forms import formset_factory
 from ..forms import (
     CommunityForm,
@@ -235,11 +240,17 @@ class Submission(TemplateView):
         }
         for a in Address.objects.filter(entry=user_map):
             context["street"] = a.street
-            context["city"] = (a.city + ", " + a.state + " " + a.zipcode)
+            context["city"] = a.city + ", " + a.state + " " + a.zipcode
         if self.request.user.is_authenticated:
             if user_map.organization:
-                context["is_org_admin"] = self.request.user.is_org_admin(user_map.organization_id)
-                context["is_org_moderator"] = self.request.user.is_org_moderator(user_map.organization_id)
+                context["is_org_admin"] = self.request.user.is_org_admin(
+                    user_map.organization_id
+                )
+                context[
+                    "is_org_moderator"
+                ] = self.request.user.is_org_moderator(
+                    user_map.organization_id
+                )
             context["is_community_author"] = self.request.user == user_map.user
         return render(request, self.template_name, context)
 
@@ -274,24 +285,37 @@ class ExportView(TemplateView):
         gj = json.loads(map_geojson)
         user_map = query[0]
         if user_map.organization:
-            gj['features'][0]['properties']['organization'] = user_map.organization.name
+            gj["features"][0]["properties"][
+                "organization"
+            ] = user_map.organization.name
         if user_map.campaign:
-            gj['features'][0]['properties']['campaign'] = user_map.campaign.name
+            gj["features"][0]["properties"][
+                "campaign"
+            ] = user_map.campaign.name
         if self.request.user.is_authenticated:
             is_org_leader = user_map.organization and (
-            self.request.user.is_org_admin(user_map.organization_id)
-            or self.request.user.is_org_moderator(user_map.organization_id)
+                self.request.user.is_org_admin(user_map.organization_id)
+                or self.request.user.is_org_moderator(user_map.organization_id)
             )
-            if (
-                is_org_leader
-                or self.request.user == user_map.user
-            ):
-                gj['features'][0]['properties']['author_name'] = user_map.user_name
+            if is_org_leader or self.request.user == user_map.user:
+                gj["features"][0]["properties"][
+                    "author_name"
+                ] = user_map.user_name
                 for a in Address.objects.filter(entry=user_map):
-                    addy = a.street + " " + a.city + ", " + a.state + " " + a.zipcode
-                    gj['features'][0]['properties']['address'] = addy
+                    addy = (
+                        a.street
+                        + " "
+                        + a.city
+                        + ", "
+                        + a.state
+                        + " "
+                        + a.zipcode
+                    )
+                    gj["features"][0]["properties"]["address"] = addy
 
-        response = HttpResponse(json.dumps(gj), content_type="application/json")
+        response = HttpResponse(
+            json.dumps(gj), content_type="application/json"
+        )
         return response
 
 
@@ -336,29 +360,45 @@ class Map(TemplateView):
 # ******************************************************************************#
 
 
-class Thanks(TemplateView):
+class Thanks(LoginRequiredMixin, TemplateView):
     template_name = "main/thanks.html"
 
+    # @method_decorator(login_required())
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        if EmailAddress.objects.filter(
+            user=self.request.user, verified=True
+        ).exists():
+            context = super().get_context_data(**kwargs)
+            has_campaign = False
+            organization_name = ""
+            campaign_name = ""
+            if kwargs["campaign"]:
+                has_campaign = True
+                campaign_slug = self.kwargs["campaign"]
+                campaign = Campaign.objects.get(slug=campaign_slug)
+                campaign_name = campaign.name
+                organization = campaign.organization
+                organization_name = organization.name
 
-        has_campaign = False
-        organization_name = ""
-        campaign_name = ""
-        if kwargs["campaign"]:
-            has_campaign = True
-            campaign_slug = self.kwargs["campaign"]
-            campaign = Campaign.objects.get(slug=campaign_slug)
-            campaign_name = campaign.name
-            organization = campaign.organization
-            organization_name = organization.name
+            context["verified"] = True
+            context["map_url"] = self.kwargs["map_id"]
+            context["campaign"] = self.kwargs["campaign"]
+            context["has_campaign"] = has_campaign
+            context["organization_name"] = organization_name
+            context["campaign_name"] = campaign_name
+            return context
+        else:
+            # email = EmailAddress.objects.get(user=self.request.user)
+            # DefaultAccountAdapter.send_confirmation_mail(self, email, None, False)
+            context = super().get_context_data(**kwargs)
 
-        context["map_url"] = self.kwargs["map_id"]
-        context["campaign"] = self.kwargs["campaign"]
-        context["has_campaign"] = has_campaign
-        context["organization_name"] = organization_name
-        context["campaign_name"] = campaign_name
-        return context
+            context["verified"] = False
+            context["map_url"] = self.kwargs["map_id"]
+            context["campaign"] = self.kwargs["campaign"]
+            context["has_campaign"] = False
+            context["organization_name"] = "TESTING"
+            context["campaign_name"] = "TESTING"
+            return context
 
 
 # ******************************************************************************#

@@ -7,12 +7,23 @@
             <div class="card card-signin my-5">
                 <div class="card-body">
                     <h5 class="card-title text-center">
+                        {% if verified %}
                             Thank you for your submission!
+                        {% endif %}
+                        {% if not verified %}
+                            Please Verify Your Email
+                        {% endif %}
                     </h5>
                     <div class="text-center">
                         <div class="alert alert-primary" role="alert">
+                            {% if verified %}
                             <p>This tool is meant for non-partisan use by communities and their members to provide information to the Redistricting Commission.</p>
                             <p>By adding your map to Representable.org you're not submitting a map to a redistricting commission. We will add information about submitting to the commission as soon as information becomes available in your state.</p>
+                            {% endif %}
+                            {% if not verified %}
+                            <p> Thank you for submitting your map. The next step is to verify your email. We have resent an email verification link to your inbox</p>
+                            <p> Account verification allows Representable.org and our partner organizations to submit credible maps to Redistricting Commisions ensuring that your entry has an impact in ending gerrymandering. </p>
+                            {% endif %}
                             <p>In the meantime, you can export your community in GeoJSON or PDF format using the link below.</p>
                         </div>
                         <ul class="list-group my-3">
@@ -29,9 +40,16 @@
                               </li>
                             {% endif %}
                             <li class="list-group-item justify-content-between align-items-center">
+                                {% if verified %}
                                 <h5>Do you have any feedback for us?</h5>
                                 <p>We are interested in your feedback. If you found a bug or have any suggestions for us, please send them to us by pressing on the button below.</p>
                               <a class="btn btn-outline-primary thanks-send-feedback" href="https://docs.google.com/forms/d/e/1FAIpQLSfeyoZ87pS67iTh2c3t5031XqoNFNAdwF6Pt1NUns_z_Myxaw/viewform" role="button">Send Feedback</a>
+                                {% endif %}
+                                {% if not verified %}
+                                <h5>Having trouble with email verification?</h5>
+                                <p> We are here to help! Let us know if you didn't recieve an email verification link or want to provide feedback by contacting Team@Representable.org </p>
+                                <a class="btn btn-outline-primary thanks-send-feedback" href="https://docs.google.com/forms/d/e/1FAIpQLSfeyoZ87pS67iTh2c3t5031XqoNFNAdwF6Pt1NUns_z_Myxaw/viewform" role="button">Send an Email</a>
+                                {% endif %}
                             </li>
                         </ul>
                     </div>
