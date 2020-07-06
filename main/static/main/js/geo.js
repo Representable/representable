@@ -1299,12 +1299,24 @@ map.on("style.load", function () {
       "line-width": 1,
     },
   });
+  map.addLayer({
+    id: "mi-blocks-highlighted",
+    type: "fill",
+    source: "mibg",
+    "source-layer": "mibg",
+    paint: {
+      "fill-outline-color": "#1e3799",
+      "fill-color": "#4a69bd",
+      "fill-opacity": 0.7,
+    },
+    filter: ["in", "GEOID", ""],
+  });
 
-  for (let i = 0; i < states.length; i++) {
-    // newCensusLines(states[i]);
-    newCensusShading(states[i]);
-    newHighlightLayer(states[i]);
-  }
+  // for (let i = 0; i < states.length; i++) {
+  //   // newCensusLines(states[i]);
+  //   newCensusShading(states[i]);
+  //   newHighlightLayer(states[i]);
+  // }
 
   // Point centered at geocoded location
   map.addLayer({
@@ -1504,7 +1516,7 @@ function highlightBlocks(drawn_polygon) {
     // var final_union = turf.union(turf.bboxPolygon([0, 0, 0, 0]), turf.bboxPolygon([0, 0, 1, 1]));
     var features = map.queryRenderedFeatures(
       [southWestPointPixel, northEastPointPixel],
-      { layers: [state + "-census-lines"] }
+      { layers: ["mibg"] }
     );
 
     var mpoly = [];
@@ -1526,19 +1538,19 @@ function highlightBlocks(drawn_polygon) {
               polyCon = turf.polygon([feature.geometry.coordinates[0]]);
             }
             if (turf.booleanContains(drawn_polygon, polyCon)) {
-              memo.push(feature.properties.BLOCKID10);
+              memo.push(feature.properties.GEOID);
               mpoly = addPoly(polyCon.geometry, mpoly, wkt);
             }
           } else {
             if (turf.booleanContains(drawn_polygon, feature.geometry)) {
-              memo.push(feature.properties.BLOCKID10);
+              memo.push(feature.properties.GEOID);
               polyCon = turf.polygon([feature.geometry.coordinates[0]]);
               mpoly = addPoly(polyCon.geometry, mpoly, wkt);
             }
           }
           return memo;
         },
-        ["in", "BLOCKID10"]
+        ["in", "GEOID"]
       );
       //  sets filter - highlights blocks
       map.setFilter(state + "-blocks-highlighted", filter);
