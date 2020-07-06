@@ -365,43 +365,61 @@ class Thanks(LoginRequiredMixin, TemplateView):
 
     # @method_decorator(login_required())
     def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        has_campaign = False
+        organization_name = ""
+        campaign_name = ""
+        if kwargs["campaign"]:
+            has_campaign = True
+            campaign_slug = self.kwargs["campaign"]
+            campaign = Campaign.objects.get(slug=campaign_slug)
+            campaign_name = campaign.name
+            organization = campaign.organization
+            organization_name = organization.name
+
         if EmailAddress.objects.filter(
             user=self.request.user, verified=True
         ).exists():
-            context = super().get_context_data(**kwargs)
-            has_campaign = False
-            organization_name = ""
-            campaign_name = ""
-            if kwargs["campaign"]:
-                has_campaign = True
-                campaign_slug = self.kwargs["campaign"]
-                campaign = Campaign.objects.get(slug=campaign_slug)
-                campaign_name = campaign.name
-                organization = campaign.organization
-                organization_name = organization.name
-
             context["verified"] = True
-            context["map_url"] = self.kwargs["map_id"]
-            context["campaign"] = self.kwargs["campaign"]
-            context["has_campaign"] = has_campaign
-            context["organization_name"] = organization_name
-            context["campaign_name"] = campaign_name
-            return context
         else:
             # email = EmailAddress.objects.get(user=self.request.user)
-            # DefaultAccountAdapter.send_confirmation_mail(self, email, None, False)
-            context = super().get_context_data(**kwargs)
+            # DefaultAccountAdapter.send_confirmation_mail(self.request, email, None, False)
+            # current_site = get_current_site(request)
+            #
+            # activate_url = self.get_email_confirmation_url(
+            #     request,
+            #     emailconfirmation)
+            #
+            # ctx = {
+            #     "user": emailconfirmation.email_address.user,
+            #     "activate_url": activate_url,
+            #     "current_site": current_site,
+            #     "key": emailconfirmation.key,
+            # }
+            # email_template = 'account/email/email_confirmation'
+            # self.send_mail(email_template,
+            #                emailconfirmation.email_address.email,
+            #                ctx)
 
+            # DefaultAccountAdapter.send_confirmation_mail(self.request, self.request.user, None, False)
             context["verified"] = False
-            context["map_url"] = self.kwargs["map_id"]
-            context["campaign"] = self.kwargs["campaign"]
-            context["has_campaign"] = False
-            context["organization_name"] = "TESTING"
-            context["campaign_name"] = "TESTING"
-            return context
+
+        context["map_url"] = self.kwargs["map_id"]
+        context["campaign"] = self.kwargs["campaign"]
+        context["has_campaign"] = has_campaign
+        context["organization_name"] = organization_name
+        context["campaign_name"] = campaign_name
+
+        return context
 
 
 # ******************************************************************************#
+
+"""
+@method_decorator(login_required)
+def dispatch(self, request, *args, **kwargs):
+    return super(Thanks, self).dispatch(request, *args, **kwargs)
+"""
 
 
 class EntryView(LoginRequiredMixin, View):
