@@ -30,8 +30,9 @@ from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from allauth.account.decorators import verified_email_required
-from allauth.account.admin import EmailAddress
+from allauth.account.admin import EmailAddress, EmailConfirmation
 from allauth.account.adapter import DefaultAccountAdapter
+from allauth.account.utils import send_email_confirmation
 
 from django.utils.decorators import method_decorator
 from django.forms import formset_factory
@@ -382,8 +383,15 @@ class Thanks(LoginRequiredMixin, TemplateView):
         ).exists():
             context["verified"] = True
         else:
-            # email = EmailAddress.objects.get(user=self.request.user)
-            # DefaultAccountAdapter.send_confirmation_mail(self.request, email, None, False)
+            user_email_address = EmailAddress.objects.get(
+                user=self.request.user
+            )
+            user_email_confirmation = EmailConfirmation.objects.get(
+                email_address=user_email_address
+            )
+            send_email_confirmation(
+                self.request, user_email_confirmation, False
+            )
             # current_site = get_current_site(request)
             #
             # activate_url = self.get_email_confirmation_url(
