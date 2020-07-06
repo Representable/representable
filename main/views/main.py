@@ -56,6 +56,7 @@ from django.utils.translation import (
     to_locale,
 )
 from shapely.geometry import mapping
+from geojson_rewind import rewind
 import geojson
 import os
 import json
@@ -297,7 +298,9 @@ class ExportView(TemplateView):
                 "other_considerations",
             ),
         )
-        gj = json.loads(map_geojson)
+        gj = geojson.loads(map_geojson)
+        gj = rewind(gj)
+        del gj["crs"]
         user_map = query[0]
         if user_map.organization:
             gj["features"][0]["properties"][
@@ -327,7 +330,7 @@ class ExportView(TemplateView):
                     gj["features"][0]["properties"]["address"] = addy
 
         response = HttpResponse(
-            json.dumps(gj), content_type="application/json"
+            geojson.dumps(gj), content_type="application/json"
         )
         return response
 
