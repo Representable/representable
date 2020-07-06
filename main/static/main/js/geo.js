@@ -1307,7 +1307,7 @@ map.on("style.load", function () {
     paint: {
       "fill-outline-color": "#1e3799",
       "fill-color": "#4a69bd",
-      "fill-opacity": 0.7,
+      "fill-opacity": 0.5,
     },
     filter: ["in", "GEOID", ""],
   });
@@ -1319,15 +1319,15 @@ map.on("style.load", function () {
   // }
 
   // Point centered at geocoded location
-  map.addLayer({
-    id: "point",
-    source: "single-point",
-    type: "circle",
-    paint: {
-      "circle-radius": 10,
-      "circle-color": "#007cbf",
-    },
-  });
+  // map.addLayer({
+  //   id: "point",
+  //   source: "single-point",
+  //   type: "circle",
+  //   paint: {
+  //     "circle-radius": 10,
+  //     "circle-color": "#007cbf",
+  //   },
+  // });
 
   // Listen for the `geocoder.input` event that is triggered when a user
   // makes a selection and add a symbol that matches the result.
