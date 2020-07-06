@@ -1236,7 +1236,7 @@ myTour.addStep({
 
 myTour.addStep({
   title: "Finish Drawing",
-  text: `Once you are done fine-tuning your drawing to reflect the geographical boundaries of 
+  text: `Once you are done fine-tuning your drawing to reflect the geographical boundaries of
   your community of interest click here and move on to the last part of the form!`,
   attachTo: {
     element: "#map-finish-drawing-button-id",
@@ -1285,6 +1285,20 @@ map.on("style.load", function () {
   for (let census in CENSUS_KEYS) {
     newSourceLayer(census, CENSUS_KEYS[census]);
   }
+  newSourceLayer("mibg", "65kwp6kr");
+  map.addLayer({
+    id: "mibg",
+    type: "line",
+    source: "mibg",
+    "source-layer": "mibg",
+    layout: {
+      visibility: "visible",
+    },
+    paint: {
+      "line-color": "rgba(0,0,0,0.15)",
+      "line-width": 1,
+    },
+  });
 
   for (let i = 0; i < states.length; i++) {
     // newCensusLines(states[i]);
