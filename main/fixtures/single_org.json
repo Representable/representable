@@ -18,6 +18,24 @@
     }
   },
   {
+    "model": "main.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$psBMnOAwghfS$9XkflU7+PJcSA7WsjiTrfF13wOmW7EP3uA5zFUBvBIs=",
+      "last_login": "2020-06-26T00:40:28.538Z",
+      "is_superuser": false,
+      "username": "test_member",
+      "first_name": "",
+      "last_name": "",
+      "email": "test_member@me.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2020-06-26T00:40:28.410Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
     "model": "main.organization",
     "pk": 1,
     "fields": {
@@ -35,9 +53,17 @@
       "member": ["test_user"],
       "organization": 1,
       "date_joined": "2020-06-26",
-      "is_org_admin": true,
-      "is_org_moderator": true,
-      "is_allowlisted": true
+      "is_org_admin": true
+    }
+  },
+  {
+    "model": "main.membership",
+    "pk": 2,
+    "fields": {
+      "member": ["test_member"],
+      "organization": 1,
+      "date_joined": "2020-06-26",
+      "is_org_admin": false
     }
   },
   {

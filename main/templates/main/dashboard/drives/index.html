@@ -29,9 +29,7 @@
 
           </p>
           <p> Description: {{ object.description }} </p>
-          {% if is_org_admin %}
           <a href="{% url 'main:update_drive' object.organization.slug  object.organization.pk object.pk %}" role="button">Edit Details</a>
-          {% endif %}
 
         </div>
       </div>
@@ -43,7 +41,6 @@
         <div class="card-body">
           <h5>Getting Started</h5>
           <ul class="list-group my-3">
-            {% if is_org_admin or is_org_moderator %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
               <div>
                 <h5><span class="badge badge-secondary"><i class="fas fa-share-alt"></i></span> Gather Submissions</h5>
@@ -59,7 +56,6 @@
               </div>
               <a class="btn btn-primary" href="{% url 'main:review_org' object.organization.slug  object.organization.pk object.slug %}" role="button">Moderate <i class="fa fa-arrow-circle-right"></i></a>
             </li>
-            {% endif %}
 
 
             <li class="list-group-item d-flex justify-content-between align-items-center">

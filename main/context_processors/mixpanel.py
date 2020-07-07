@@ -38,20 +38,14 @@ def get_user_type(request):
     user = request.user
     user_id = ""
     user_type = "visitor"
-    member = False
-    moderator = False
     admin = False
     if user.is_authenticated:
         user_id = user.id
         user_type = "user"
-        member = user.is_generic_member
-        moderator = user.is_generic_moderator
         admin = user.is_generic_admin
 
     return {
         "user_id": user_id,
         "user_type": user_type,
-        "member": member,
-        "moderator": moderator,
         "admin": admin,
     }

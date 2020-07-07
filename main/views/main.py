@@ -262,11 +262,6 @@ class Submission(TemplateView):
                 context["is_org_admin"] = self.request.user.is_org_admin(
                     user_map.organization_id
                 )
-                context[
-                    "is_org_moderator"
-                ] = self.request.user.is_org_moderator(
-                    user_map.organization_id
-                )
             context["is_community_author"] = self.request.user == user_map.user
         return render(request, self.template_name, context)
 
@@ -311,7 +306,6 @@ class ExportView(TemplateView):
         if self.request.user.is_authenticated:
             is_org_leader = user_map.organization and (
                 self.request.user.is_org_admin(user_map.organization_id)
-                or self.request.user.is_org_moderator(user_map.organization_id)
             )
             if is_org_leader or self.request.user == user_map.user:
                 gj["features"][0]["properties"][
@@ -412,7 +406,6 @@ class EntryView(LoginRequiredMixin, View):
     template_name = "main/entry.html"
     community_form_class = CommunityForm
     address_form_class = AddressForm
-    # form_class = CommunityForm
     initial = {
         "key": "value",
     }
@@ -515,14 +508,6 @@ class EntryView(LoginRequiredMixin, View):
                         email=self.request.user.email,
                     )
                     if allowlist_entry:
-                        # add user to membership
-                        member = Membership(
-                            member=self.request.user,
-                            organization=entryForm.organization,
-                            is_allowlisted=True,
-                        )
-                        member.save()
-
                         # approve this entry
                         entryForm.admin_approved = True
 
