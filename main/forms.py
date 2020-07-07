@@ -82,11 +82,11 @@ class CommunityForm(ModelForm):
             "entry_name": forms.TextInput(
                 attrs={"placeholder": "Community Name"}
             ),
-            "entry_reason": forms.Textarea(attrs={"rows": 5}),
-            "cultural_interests": forms.Textarea(attrs={"rows": 5}),
-            "economic_interests": forms.Textarea(attrs={"rows": 5}),
-            "comm_activities": forms.Textarea(attrs={"rows": 5}),
-            "other_considerations": forms.Textarea(attrs={"rows": 5}),
+            "entry_reason": forms.Textarea(attrs={"rows": 3}),
+            "cultural_interests": forms.Textarea(attrs={"rows": 3}),
+            "economic_interests": forms.Textarea(attrs={"rows": 3}),
+            "comm_activities": forms.Textarea(attrs={"rows": 3}),
+            "other_considerations": forms.Textarea(attrs={"rows": 3}),
             "user_name": forms.TextInput(attrs={"placeholder": "Full Name"}),
             "user_polygon": forms.HiddenInput(),
         }
