@@ -22,7 +22,7 @@
       </h4>
       <hr>
       <div class="alert alert-primary" role="alert">
-        Need to add moderators or alter permissions? Add members <a href="{% url 'main:create_member' view.kwargs.slug view.kwargs.pk %}" class="alert-link">here</a>. 
+        Need to add administrators? Add them <a href="{% url 'main:create_member' view.kwargs.slug view.kwargs.pk %}" class="alert-link">here</a>. 
       </div>
     </div>
   </div>
@@ -44,8 +44,6 @@
                 <td>{{member.member.username}}</td>
                  {% if member.is_org_admin %}
                 <td>Admin</td>
-                {% elif member.is_org_moderator %}
-                <td>Moderator</td>
 
                 {% else %}
                 <td>Member</td>

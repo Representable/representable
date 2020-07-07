@@ -10,7 +10,7 @@
           <li class="breadcrumb-item"><a href="{% url 'main:index' %}">Home</a></li>
           <li class="breadcrumb-item"><a href="{% url 'main:dashboard' %}">Dashboard</a></li>
           <li class="breadcrumb-item"><a href="{% url 'main:home_org' object.organization.slug  object.organization.pk %}">Partners / {{ object.organization.name }}</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Campaigns / {{ object.name }}</li>
+          <li class="breadcrumb-item active" aria-current="page">Drives / {{ object.name }}</li>
 
         </ol>
       </nav>
@@ -29,9 +29,7 @@
 
           </p>
           <p> Description: {{ object.description }} </p>
-          {% if is_org_admin %}
-          <a href="{% url 'main:update_campaign' object.organization.slug  object.organization.pk object.pk %}" role="button">Edit Details</a>
-          {% endif %}
+          <a href="{% url 'main:update_drive' object.organization.slug  object.organization.pk object.pk %}" role="button">Edit Details</a>
 
         </div>
       </div>
@@ -43,29 +41,27 @@
         <div class="card-body">
           <h5>Getting Started</h5>
           <ul class="list-group my-3">
-            {% if is_org_admin or is_org_moderator %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
               <div>
                 <h5><span class="badge badge-secondary"><i class="fas fa-share-alt"></i></span> Gather Submissions</h5>
-                <p>Gather submissions for this campaign! Copy this link and share it with people you'd like to contribute to this campaign: <a href="{% url 'main:campaign_page' object.slug %}">representable.org{% url 'main:campaign_page' object.slug %}</a></p>
+                <p>Gather submissions for this drive! Copy this link and share it with people you'd like to contribute to this drive: <a href="{% url 'main:drive_page' object.slug %}">representable.org{% url 'main:drive_page' object.slug %}</a></p>
               </div>
-              <a class="btn btn-primary" href="{% url 'main:campaign_page' object.slug %}" role="button">View <i class="fa fa-arrow-circle-right"></i></a>
+              <a class="btn btn-primary" href="{% url 'main:drive_page' object.slug %}" role="button">View <i class="fa fa-arrow-circle-right"></i></a>
             </li>
 
             <li class="list-group-item d-flex justify-content-between align-items-center">
               <div>
                 <h5><span class="badge badge-secondary"><i class="fas fa-flag"></i></span> Moderate Submissions</h5>
-                <p>Review communities submitted to this campaign.</p>
+                <p>Review communities submitted to this drive.</p>
               </div>
               <a class="btn btn-primary" href="{% url 'main:review_org' object.organization.slug  object.organization.pk object.slug %}" role="button">Moderate <i class="fa fa-arrow-circle-right"></i></a>
             </li>
-            {% endif %}
 
 
             <li class="list-group-item d-flex justify-content-between align-items-center">
               <div>
                 <h5><span class="badge badge-secondary"><i class="fas fa-map-marker-alt"></i></span> View/Share Your Map</h5>
-                <p>Your campaign's map is live at: <a href="{% url 'main:partner_map' object.organization.slug object.slug %}">representable.org{% url 'main:partner_map' object.organization.slug object.slug %}</a></p></div>
+                <p>Your drive's map is live at: <a href="{% url 'main:partner_map' object.organization.slug object.slug %}">representable.org{% url 'main:partner_map' object.organization.slug object.slug %}</a></p></div>
                 <a class="btn btn-primary" href="{% url 'main:partner_map' object.organization.slug object.slug %}"  role="button">View <i class="fa fa-arrow-circle-right"></i></a>
             </li>
           </ul>
@@ -78,10 +74,10 @@
       <div class="card shadow-sm h-100">
         <div class="card-body">
           <h5>
-            Delete Campaign
+            Delete Drive
           </h5>
           <hr>
-          <p>Press 'Delete' if you're sure you want to permanently delete this campaign. Warning: you won't be able to undo this.</p>
+          <p>Press 'Delete' if you're sure you want to permanently delete this drive. Warning: you won't be able to undo this.</p>
           {% if is_org_admin %}
             <button type="submit" class="btn btn-danger", name="Delete">Delete</button>
           {% endif %}

@@ -29,19 +29,25 @@ urlpatterns = [
     path(
         "entry/",
         views.main.EntryView.as_view(),
-        {"token": "", "campaign": ""},
+        {"token": "", "drive": ""},
         name="entry",
     ),
     path(
-        "entry/c/<slug:campaign>/",
+        "entry/drive/<slug:drive>/",
         views.main.EntryView.as_view(),
         {"token": ""},
         name="entry",
     ),
     path(
+        "entry/c/<slug:drive>/",
+        views.main.EntryView.as_view(),
+        {"token": ""},
+        name="entry_legacy",  # for old links
+    ),
+    path(
         "entry/t/<token>/",
         views.main.EntryView.as_view(),
-        {"campaign": ""},
+        {"drive": ""},
         name="entry",
     ),
     path("about/", views.main.About.as_view(), name="about"),
@@ -54,11 +60,11 @@ urlpatterns = [
     path(
         "thanks/id/<map_id>",
         views.main.Thanks.as_view(),
-        {"slug": "", "campaign": ""},
+        {"slug": "", "drive": ""},
         name="thanks",
     ),
     path(
-        "thanks/c/<slug:slug>/<slug:campaign>/<map_id>",
+        "thanks/drive/<slug:slug>/<slug:drive>/<map_id>",
         views.main.Thanks.as_view(),
         name="thanks",
     ),
@@ -77,19 +83,24 @@ urlpatterns = [
     path(
         "map/p/<slug:slug>/",
         views.partners.PartnerMap.as_view(),
-        {"campaign": ""},
+        {"drive": ""},
         name="partner_map",
     ),
     path(
-        "map/p/<slug:slug>/<slug:campaign>/",
+        "map/p/<slug:slug>/<slug:drive>/",
         views.partners.PartnerMap.as_view(),
         name="partner_map",
     ),
-    # path("c/", views.campaigns.IndexView.as_view(), name="campaign_list",),
+    path(
+        "drive/<slug:slug>/",
+        views.drives.DriveView.as_view(),
+        name="drive_page",
+    ),
+    # keeping this for now to maintain link to user testing campaign
     path(
         "c/<slug:slug>/",
-        views.campaigns.CampaignView.as_view(),
-        name="campaign_page",
+        views.drives.DriveView.as_view(),
+        name="drive_page_legacy",
     ),
     path("dashboard/", views.dashboard.IndexView.as_view(), name="dashboard"),
     path(
@@ -128,11 +139,11 @@ urlpatterns = [
                 path(
                     "review/",
                     views.dashboard.ReviewOrg.as_view(),
-                    {"campaign": ""},
+                    {"drive": ""},
                     name="review_org",
                 ),
                 path(
-                    "review/<slug:campaign>/",
+                    "review/<slug:drive>/",
                     views.dashboard.ReviewOrg.as_view(),
                     name="review_org",
                 ),
@@ -152,19 +163,19 @@ urlpatterns = [
                     name="upload_allowlist",
                 ),
                 path(
-                    "campaigns/create/",
-                    views.dashboard.CreateCampaign.as_view(),
-                    name="create_campaign",
+                    "drives/create/",
+                    views.dashboard.CreateDrive.as_view(),
+                    name="create_drive",
                 ),
                 path(
-                    "campaigns/<uuid:cam_pk>/",
-                    views.dashboard.CampaignHome.as_view(),
-                    name="campaign_home",
+                    "drives/<uuid:cam_pk>/",
+                    views.dashboard.DriveHome.as_view(),
+                    name="drive_home",
                 ),
                 path(
-                    "campaigns/<uuid:cam_pk>/edit/",
-                    views.dashboard.UpdateCampaign.as_view(),
-                    name="update_campaign",
+                    "drives/<uuid:cam_pk>/edit/",
+                    views.dashboard.UpdateDrive.as_view(),
+                    name="update_drive",
                 ),
             ]
         ),

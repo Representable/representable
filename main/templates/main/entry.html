@@ -31,14 +31,14 @@
 <script type="text/javascript">
     sessionStorage.setItem("allChecks", "pass");
     var mapbox_user_name = "{{mapbox_user_name}}";
-    var campaign_id = "{{campaign_id}}";
+    var drive_id = "{{drive_id}}";
     var organization_id = "{{organization_id}}";
-    var campaign_name = "{{campaign_name}}";
+    var drive_name = "{{drive_name}}";
     var organization_name = "{{organization_name}}";
     mixpanel.track("Entry Page Loaded",
     {
-     "campaign_id": campaign_id,
-     "campaign_name": campaign_name,
+     "drive_id": drive_id,
+     "drive_name": drive_name,
      "organization_id": organization_id,
      "organization_name": organization_name,
     }
@@ -107,7 +107,7 @@
                                                 <p class="collapse-in ml-0">
                                                     Your personal privacy is our highest priority. We gather personal
                                                     information to verify that you are a real person. If you choose to
-                                                    submit this entry to a campaign, the administrators of the campaign
+                                                    submit this entry to a drive, the administrators of the drive
                                                     will have access to this information. Learn more about our
                                                     commitment to privacy on our <a target="_blank" rel="noopener noreferrer" href="{% url 'main:privacy' %}">Privacy</a> and <a target="_blank" rel="noopener noreferrer" href="{% url 'main:terms' %}">Terms</a> pages.
                                                 </p>
@@ -311,8 +311,7 @@
                                         </div> -->
                                         <p class="card-text mb-0">
                                             Is there a shared economy in the geographic area of your community?
-                                            How and where are residents employed? What parts of a county,
-                                            township or city are included in your community?
+                                            How and where are residents employed?
                                             Are there shared environmental concerns such as landfills or water quality?
                                         </p>
                                         <div class="accordion" id="economic_interests_accordion">
@@ -566,7 +565,7 @@
                                             Your privacy is our highest priority. We gather your Identifying information to verify
                                             that you are a real person. We will not publicly share anyone's individual personal information,
                                             such as name, address, or email.
-                                            {% if has_campaign %}
+                                            {% if has_drive %}
                                             <br>
                                             We will only share your information with {{organization_name}} because you are adding the community through their page.
                                             {% endif %}
@@ -644,8 +643,8 @@
         );
 
         mixpanel.track_forms("#entryForm", "Entry Form Submitted", {
-            "campaign_id": campaign_id,
-            "campaign_name": campaign_name,
+            "drive_id": drive_id,
+            "drive_name": drive_name,
             "organization_id": organization_id,
             "organization_name": organization_name,
         });

@@ -43,8 +43,8 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
             <div class="card">
               <div class="my-1">
                 <h4 class="font-weight-light text-center my-2"> {{ organization }} </h4>
-                {% if campaign %}
-                <p class="font-weight-light text-center">{{ campaign }} </p>
+                {% if drive %}
+                <p class="font-weight-light text-center">{{ drive }} </p>
                 {% endif %}
               </div>
               <div id="headingOne">
@@ -74,14 +74,14 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                       {% endwith %}
                     </span>
                     <hr class="my-1">
-                    {% if campaign is None %}
-                    {% if c.campaign %}
-                    <span class="badge badge-pill badge-secondary">{{c.campaign}}</span>
+                    {% if drive is None %}
+                    {% if c.drive %}
+                    <span class="badge badge-pill badge-secondary">{{c.drive}}</span>
                     <br>
                     {% endif %}
                     {% endif %}
                     <span class="small text-muted">
-                    {% if is_org_admin or is_org_moderator %}
+                    {% if is_org_admin %}
                       {% if c.user_name %}
                       {{ c.user_name }}
                       {% else %}

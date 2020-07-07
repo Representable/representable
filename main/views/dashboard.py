@@ -32,7 +32,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from allauth.account.decorators import verified_email_required
 from ..forms import (
     CommunityForm,
-    CampaignForm,
+    DriveForm,
     DeletionForm,
     OrganizationForm,
     AllowlistForm,
@@ -42,9 +42,9 @@ from ..models import (
     Membership,
     Organization,
     AllowList,
-    Campaign,
+    Drive,
     CommunityEntry,
-    CampaignToken,
+    DriveToken,
     Address,
 )
 from django.shortcuts import get_object_or_404
@@ -83,33 +83,6 @@ class OrgAdminRequiredMixin(UserPassesTestMixin):
 # ******************************************************************************#
 
 
-class OrgModRequiredMixin(UserPassesTestMixin):
-    """
-    Checks if the user has at least moderator permissions for the given organization (checked through the pk field)
-    """
-
-    def test_func(self):
-        if self.request.user.is_org_moderator(
-            self.kwargs["pk"]
-        ) or self.request.user.is_org_admin(self.kwargs["pk"]):
-            return True
-
-
-# ******************************************************************************#
-
-
-class OrgMemberRequiredMixin(UserPassesTestMixin):
-    """
-    Checks if the user has moderator permissions for the given organization (checked through the pk field)
-    """
-
-    def test_func(self):
-        return self.request.user.is_member(self.kwargs["pk"])
-
-
-# ******************************************************************************#
-
-
 class IndexView(LoginRequiredMixin, ListView):
     """
     The dashboard home page.
@@ -121,12 +94,12 @@ class IndexView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         # returns all the organizations that the user is a member of
         return Organization.objects.filter(
-            membership__member=self.request.user
+            membership__member=self.request.user, membership__is_org_admin=True
         )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["campaigns"] = Campaign.objects.filter(
+        context["drives"] = Drive.objects.filter(
             organization__in=self.get_queryset()
         )
         return context
@@ -159,13 +132,7 @@ class CreateOrg(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         org = form.save()
         # by default, make the user creating the org the admin
-        admin = Membership(
-            member=self.request.user,
-            organization=org,
-            is_org_admin=True,
-            is_org_moderator=True,
-            is_allowlisted=True,
-        )
+        admin = Membership(member=self.request.user, organization=org,)
         admin.save()
 
         self.success_url = reverse_lazy(
@@ -199,7 +166,7 @@ class EditOrg(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
 # ******************************************************************************#
 
 
-class HomeOrg(LoginRequiredMixin, OrgMemberRequiredMixin, DetailView):
+class HomeOrg(LoginRequiredMixin, OrgAdminRequiredMixin, DetailView):
     """
     The admin home page for an organization within the dashboard
     """
@@ -213,10 +180,7 @@ class HomeOrg(LoginRequiredMixin, OrgMemberRequiredMixin, DetailView):
         context["is_org_admin"] = self.request.user.is_org_admin(
             self.object.id
         )
-        context["is_org_moderator"] = self.request.user.is_org_moderator(
-            self.object.id
-        )
-        context["campaigns"] = Campaign.objects.filter(
+        context["drives"] = Drive.objects.filter(
             organization__id=self.kwargs["pk"]
         )
 
@@ -272,20 +236,11 @@ class CreateMember(LoginRequiredMixin, OrgAdminRequiredMixin, FormView):
         member = Membership.objects.filter(
             organization__pk=self.kwargs["pk"], member=form.instance.member
         )
-        if member:
-            member.update(
-                is_org_admin=form.instance.is_org_admin,
-                is_org_moderator=form.instance.is_org_moderator,
-                is_allowlisted=form.instance.is_allowlisted,
-            )
-        else:
+        if not member:
             # create new member with the given permissions
             new_member = Membership(
                 member=form.instance.member,
                 organization=form.instance.organization,
-                is_org_admin=form.instance.is_org_admin,
-                is_org_moderator=form.instance.is_org_moderator,
-                is_allowlisted=form.instance.is_allowlisted,
             )
             new_member.save()
 
@@ -322,7 +277,7 @@ class AllowListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
+class ReviewOrg(LoginRequiredMixin, OrgAdminRequiredMixin, TemplateView):
     """
     Page for organization to review submissions
     """
@@ -351,10 +306,10 @@ class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
         streets = {}
         cities = {}
 
-        if self.kwargs["campaign"]:
+        if self.kwargs["drive"]:
             query = CommunityEntry.objects.filter(
                 organization__pk=self.kwargs["pk"],
-                campaign__slug=self.kwargs["campaign"],
+                drive__slug=self.kwargs["drive"],
             )
         else:
             query = CommunityEntry.objects.filter(
@@ -390,9 +345,9 @@ class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
         org = Organization.objects.get(slug=self.kwargs["slug"])
         context["organization"] = org
         context["state"] = org.states[0]
-        if self.kwargs["campaign"]:
-            context["campaign"] = get_object_or_404(
-                Campaign, slug=self.kwargs["campaign"]
+        if self.kwargs["drive"]:
+            context["drive"] = get_object_or_404(
+                Drive, slug=self.kwargs["drive"]
             ).name
         return context
 
@@ -420,13 +375,13 @@ class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
         return render(request, self.template_name, context)
 
 
-class CampaignHome(LoginRequiredMixin, OrgMemberRequiredMixin, DetailView):
+class DriveHome(LoginRequiredMixin, OrgAdminRequiredMixin, DetailView):
     """
-    The main campaign view
+    The main drive view
     """
 
-    template_name = "main/dashboard/campaigns/index.html"
-    model = Campaign
+    template_name = "main/dashboard/drives/index.html"
+    model = Drive
     pk_url_kwarg = "cam_pk"
 
     def get_context_data(self, **kwargs):
@@ -434,20 +389,17 @@ class CampaignHome(LoginRequiredMixin, OrgMemberRequiredMixin, DetailView):
         context["is_org_admin"] = self.request.user.is_org_admin(
             self.kwargs["pk"]
         )
-        context["is_org_moderator"] = self.request.user.is_org_moderator(
-            self.kwargs["pk"]
-        )
 
         return context
 
 
-class CreateCampaign(LoginRequiredMixin, OrgAdminRequiredMixin, CreateView):
+class CreateDrive(LoginRequiredMixin, OrgAdminRequiredMixin, CreateView):
     """
-    The view for the form to create a campaign
+    The view for the form to create a drive
     """
 
-    template_name = "main/dashboard/campaigns/create.html"
-    form_class = CampaignForm
+    template_name = "main/dashboard/drives/create.html"
+    form_class = DriveForm
     pk_url_kwarg = "cam_pk"
 
     def form_valid(self, form):
@@ -458,7 +410,7 @@ class CreateCampaign(LoginRequiredMixin, OrgAdminRequiredMixin, CreateView):
         object = form.save()
 
         self.success_url = reverse_lazy(
-            "main:campaign_home",
+            "main:drive_home",
             kwargs={
                 "pk": self.kwargs["pk"],
                 "slug": self.kwargs["slug"],
@@ -469,12 +421,12 @@ class CreateCampaign(LoginRequiredMixin, OrgAdminRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class UpdateCampaign(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
+class UpdateDrive(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
     """
-    The view for the form to update campaign details
+    The view for the form to update drive details
     """
 
-    template_name = "main/dashboard/campaigns/edit.html"
-    model = Campaign
-    form_class = CampaignForm
+    template_name = "main/dashboard/drives/edit.html"
+    model = Drive
+    form_class = DriveForm
     pk_url_kwarg = "cam_pk"

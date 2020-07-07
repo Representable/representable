@@ -445,6 +445,18 @@ color scheme. See readme.md*/
   max-width: 70%;
   height: 50vh;
 }
+.state-sm {
+  width: 2rem;
+}
+@media only screen and (min-width: 768px) {
+  .state-sm {
+    display: none;
+  }
+}
+.ws-normal {
+  white-space: normal;
+}
+
 
 .loader {
   border: 8px solid #f3f3f3; /* Light grey */

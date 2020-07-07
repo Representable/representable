@@ -27,7 +27,7 @@ from django_select2.forms import (
 from .models import (
     CommunityEntry,
     Organization,
-    Campaign,
+    Drive,
     Membership,
     User,
     Address,
@@ -82,11 +82,11 @@ class CommunityForm(ModelForm):
             "entry_name": forms.TextInput(
                 attrs={"placeholder": "Community Name"}
             ),
-            "entry_reason": forms.Textarea(attrs={"rows": 5}),
-            "cultural_interests": forms.Textarea(attrs={"rows": 5}),
-            "economic_interests": forms.Textarea(attrs={"rows": 5}),
-            "comm_activities": forms.Textarea(attrs={"rows": 5}),
-            "other_considerations": forms.Textarea(attrs={"rows": 5}),
+            "entry_reason": forms.Textarea(attrs={"rows": 3}),
+            "cultural_interests": forms.Textarea(attrs={"rows": 3}),
+            "economic_interests": forms.Textarea(attrs={"rows": 3}),
+            "comm_activities": forms.Textarea(attrs={"rows": 3}),
+            "other_considerations": forms.Textarea(attrs={"rows": 3}),
             "user_name": forms.TextInput(attrs={"placeholder": "Full Name"}),
             "user_polygon": forms.HiddenInput(),
         }
@@ -170,14 +170,14 @@ class AllowlistForm(ModelForm):
         }
 
 
-class CampaignForm(ModelForm):
+class DriveForm(ModelForm):
     class Meta:
-        model = Campaign
+        model = Drive
         fields = ["name", "description", "state"]
         widgets = {
             "name": forms.TextInput(
                 attrs={
-                    "placeholder": "Name of Campaign",
+                    "placeholder": "Name of Drive",
                     "class": "form-control",
                 }
             ),
@@ -202,10 +202,4 @@ class MemberForm(ModelForm):
         model = Membership
         fields = [
             "member",
-            "is_org_admin",
-            "is_org_moderator",
         ]
-        labels = {
-            "is_org_admin": "Administrator",
-            "is_org_moderator": "Moderator",
-        }
