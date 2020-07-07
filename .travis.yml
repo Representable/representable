@@ -11,6 +11,9 @@ env:
         - PYTHONPATH="/home/travis/build/representable/representable"
         - PIP_USE_MIRRORS=true
         - SECRET_KEY="testkey-travisci"
+        - PGPORT=5433
+        - PGVER=12
+
 # Install the version of PostGIS that matches your PostgreSQL version,
 # and activate the PostGIS extension using:
 addons:
@@ -20,11 +23,7 @@ addons:
       - postgresql-client-12
       - postgresql-12-postgis-3
       - postgresql-12-postgis-3-scripts
-# https://github.com/hisener/postgresql-travis
-before_install:
-  - sudo sed -i 's/port = 5433/port = 5432/' /etc/postgresql/12/main/postgresql.conf
-  - sudo cp /etc/postgresql/{9.3,12}/main/pg_hba.conf
-  - sudo pg_ctlcluster 12 main restart
+
 # command to install dependencies
 install:
   - pip install -r requirements.txt
