@@ -28,11 +28,7 @@ from django.views.generic import (
 )
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
-from allauth.account.decorators import verified_email_required
-from allauth.account.admin import EmailAddress, EmailConfirmation
-from allauth.account.adapter import DefaultAccountAdapter
-from allauth.account.utils import send_email_confirmation
+from allauth.account.models import EmailConfirmation, EmailAddress
 
 from django.utils.decorators import method_decorator
 from django.forms import formset_factory
@@ -386,12 +382,15 @@ class Thanks(LoginRequiredMixin, TemplateView):
             user_email_address = EmailAddress.objects.get(
                 user=self.request.user
             )
-            user_email_confirmation = EmailConfirmation.objects.get(
-                email_address=user_email_address
-            )
-            send_email_confirmation(
-                self.request, user_email_confirmation, False
-            )
+            user_email_address.send_confirmation(None, False)
+
+            # print(user_email_address)
+            # user_email_confirmation = EmailConfirmation.objects.get(email_address =
+            #     user_email_address
+            # )
+            # send_email_confirmation(
+            #     self.request, user_email_address, False
+            # )
             # current_site = get_current_site(request)
             #
             # activate_url = self.get_email_confirmation_url(
@@ -409,7 +408,6 @@ class Thanks(LoginRequiredMixin, TemplateView):
             #                emailconfirmation.email_address.email,
             #                ctx)
 
-            # DefaultAccountAdapter.send_confirmation_mail(self.request, self.request.user, None, False)
             context["verified"] = False
 
         context["map_url"] = self.kwargs["map_id"]
