@@ -25,14 +25,17 @@ addons:
       - postgresql-12-postgis-3-scripts
 
 # command to install dependencies
+
+before_install:
+  - sudo sed -i 's/port = 5433/port = 5432/' /etc/postgresql/12/main/postgresql.conf
+  - sudo cp /etc/postgresql/12/main/pg_hba.conf
+  - sudo pg_ctlcluster 12 main restart
+  - sh -c 'until pg_isready -p 5433; do echo "Wait for Postgres to restart"; sleep 2; done'
+  - psql -c 'create database travis_ci_test;' -U postgres
+  - psql -U postgres -c "create extension postgis;"
+  
 install:
   - pip install -r requirements.txt
-
-# Run before script.
-before_script:
-    - psql --version
-    - psql -c 'create database travis_ci_test;' -U postgres
-    - psql -U postgres -c "create extension postgis;"
 
 # command to run tests
 script:
