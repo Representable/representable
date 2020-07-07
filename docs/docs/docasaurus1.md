@@ -8,7 +8,7 @@ The Representable Docs are built with Docusaurus. For a detailed explanation of 
 
 ### Editing a Page
 
-Scroll to the bottom of each page in the docasaurus and click `edit this page`. If you have access to editing the docs, you will be taken to a page to edit them. Then, you can commit directly to the master branch.
+Scroll to the bottom of each page in the docasaurus and click `edit this page`. If you have access to editing the docs, you will be taken to a page to edit them. Then, you can commit directly to the main branch.
 
 ### Adding a Page
 
