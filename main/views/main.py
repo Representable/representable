@@ -33,6 +33,8 @@ from allauth.account.models import (
     EmailAddress,
     EmailConfirmationHMAC,
 )
+from allauth.account import adapter
+from allauth.account.app_settings import ADAPTER
 from django.forms import formset_factory
 from ..forms import (
     CommunityForm,
@@ -75,6 +77,7 @@ from django.contrib.auth.models import Group
 from itertools import islice
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
+
 
 # ******************************************************************************#
 
@@ -402,12 +405,16 @@ class Thanks(LoginRequiredMixin, TemplateView):
                 user=self.request.user
             )
 
-            # user_email_address.send_confirmation(None, False)
-
             user_email_confirmation = EmailConfirmationHMAC(
                 email_address=user_email_address
             )
-            user_email_confirmation.send(None, False)
+
+            # default_adapter = adapter.get_adapter()
+
+            # default_adapter.send_confirmation_mail(self.request, user_email_confirmation, False)
+            # user_email_address.send_confirmation(None, False)
+
+            user_email_confirmation.send(self.request, False)
             context["verified"] = False
 
         context["map_url"] = self.kwargs["map_id"]
