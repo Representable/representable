@@ -83,33 +83,6 @@ class OrgAdminRequiredMixin(UserPassesTestMixin):
 # ******************************************************************************#
 
 
-class OrgModRequiredMixin(UserPassesTestMixin):
-    """
-    Checks if the user has at least moderator permissions for the given organization (checked through the pk field)
-    """
-
-    def test_func(self):
-        if self.request.user.is_org_moderator(
-            self.kwargs["pk"]
-        ) or self.request.user.is_org_admin(self.kwargs["pk"]):
-            return True
-
-
-# ******************************************************************************#
-
-
-class OrgMemberRequiredMixin(UserPassesTestMixin):
-    """
-    Checks if the user has moderator permissions for the given organization (checked through the pk field)
-    """
-
-    def test_func(self):
-        return self.request.user.is_member(self.kwargs["pk"])
-
-
-# ******************************************************************************#
-
-
 class IndexView(LoginRequiredMixin, ListView):
     """
     The dashboard home page.
@@ -121,7 +94,7 @@ class IndexView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         # returns all the organizations that the user is a member of
         return Organization.objects.filter(
-            membership__member=self.request.user
+            membership__member=self.request.user, membership__is_org_admin=True
         )
 
     def get_context_data(self, **kwargs):
@@ -159,13 +132,7 @@ class CreateOrg(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         org = form.save()
         # by default, make the user creating the org the admin
-        admin = Membership(
-            member=self.request.user,
-            organization=org,
-            is_org_admin=True,
-            is_org_moderator=True,
-            is_allowlisted=True,
-        )
+        admin = Membership(member=self.request.user, organization=org,)
         admin.save()
 
         self.success_url = reverse_lazy(
@@ -199,7 +166,7 @@ class EditOrg(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
 # ******************************************************************************#
 
 
-class HomeOrg(LoginRequiredMixin, OrgMemberRequiredMixin, DetailView):
+class HomeOrg(LoginRequiredMixin, OrgAdminRequiredMixin, DetailView):
     """
     The admin home page for an organization within the dashboard
     """
@@ -211,9 +178,6 @@ class HomeOrg(LoginRequiredMixin, OrgMemberRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["is_org_admin"] = self.request.user.is_org_admin(
-            self.object.id
-        )
-        context["is_org_moderator"] = self.request.user.is_org_moderator(
             self.object.id
         )
         context["drives"] = Drive.objects.filter(
@@ -272,20 +236,11 @@ class CreateMember(LoginRequiredMixin, OrgAdminRequiredMixin, FormView):
         member = Membership.objects.filter(
             organization__pk=self.kwargs["pk"], member=form.instance.member
         )
-        if member:
-            member.update(
-                is_org_admin=form.instance.is_org_admin,
-                is_org_moderator=form.instance.is_org_moderator,
-                is_allowlisted=form.instance.is_allowlisted,
-            )
-        else:
+        if not member:
             # create new member with the given permissions
             new_member = Membership(
                 member=form.instance.member,
                 organization=form.instance.organization,
-                is_org_admin=form.instance.is_org_admin,
-                is_org_moderator=form.instance.is_org_moderator,
-                is_allowlisted=form.instance.is_allowlisted,
             )
             new_member.save()
 
@@ -322,7 +277,7 @@ class AllowListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
-class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
+class ReviewOrg(LoginRequiredMixin, OrgAdminRequiredMixin, TemplateView):
     """
     Page for organization to review submissions
     """
@@ -420,7 +375,7 @@ class ReviewOrg(LoginRequiredMixin, OrgModRequiredMixin, TemplateView):
         return render(request, self.template_name, context)
 
 
-class DriveHome(LoginRequiredMixin, OrgMemberRequiredMixin, DetailView):
+class DriveHome(LoginRequiredMixin, OrgAdminRequiredMixin, DetailView):
     """
     The main drive view
     """
@@ -432,9 +387,6 @@ class DriveHome(LoginRequiredMixin, OrgMemberRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["is_org_admin"] = self.request.user.is_org_admin(
-            self.kwargs["pk"]
-        )
-        context["is_org_moderator"] = self.request.user.is_org_moderator(
             self.kwargs["pk"]
         )
 
