@@ -28,4 +28,4 @@ This command generates static content into the `build` directory and can be serv
 
 ### Deployment
 
-Deploys automatically to netlify when you push to master.
+Deploys automatically to netlify when you push to main.

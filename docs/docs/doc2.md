@@ -13,10 +13,10 @@ Now that you've got your local development environment set up, please read throu
 
 ### Coding
 
-- When you're starting a new feature, open a branch off the master branch to start making your changes with the relevant issue in mind.
-- If the feature that you're working on takes a long time, you wanna make sure that your code is constantly being updated to the changes being pushed by teammates. In order to keep your feature branch updated to prevent conflicts later on, make sure to sync up your branch with master - by pulling changes in master and merging master with your branch. Syncing your branch daily is usually good practice.
-- When you're ready to open a PR, open a PR to the master or to a chosen dev branch for features that aren't ready to be merged with the master branch yet. Try to make the PR as small as possible so that your reviewer can easily see what you've done. Be descriptive in your PR! Include screenshots if possible. Write "resolves #<issue_number>" at the end of your PR to automatically close the issue when the PR is merged.
-- You need at least one review for any PR to the master branch.
+- When you're starting a new feature, open a branch off the main branch to start making your changes with the relevant issue in mind.
+- If the feature that you're working on takes a long time, you wanna make sure that your code is constantly being updated to the changes being pushed by teammates. In order to keep your feature branch updated to prevent conflicts later on, make sure to sync up your branch with main - by pulling changes in main and merging main with your branch. Syncing your branch daily is usually good practice.
+- When you're ready to open a PR, open a PR to the main or to a chosen dev branch for features that aren't ready to be merged with the main branch yet. Try to make the PR as small as possible so that your reviewer can easily see what you've done. Be descriptive in your PR! Include screenshots if possible. Write "resolves #<issue_number>" at the end of your PR to automatically close the issue when the PR is merged.
+- You need at least one review for any PR to the main branch.
 
 ### Reviewing
 
@@ -30,7 +30,7 @@ You've been assigned to review a PR. Now what?
 
 ### Merging an Approved PR
 
-Once your reviewers have approved your PR, you can merge with master. Try to merge in a timely manner, soon after reviewers have approved the PR, unless there are merge conflicts. Note: it should always be the person who opened the PR that merges it so that they have ownership over their own changes (and get full credit for it).
+Once your reviewers have approved your PR, you can merge with main. Try to merge in a timely manner, soon after reviewers have approved the PR, unless there are merge conflicts. Note: it should always be the person who opened the PR that merges it so that they have ownership over their own changes (and get full credit for it).
 
 ### Pushing Fixes
 
@@ -38,4 +38,4 @@ In rare cases, there may be a bug in production that needs immediate attention b
 
 ### Releasing to Production
 
-The DevOps team is responsible for merging the current state of the master branch to the production branch on the rollout deadline. Any pushes to production trigger an auto deployment to Heroku. Most contributors will not have direct push access to the production branch to prevent rollout confusion. If you're interested in managing this process, and are a current contributor, however, DevOps would love to have you join the team!
+The DevOps team is responsible for merging the current state of the main branch to the production branch on the rollout deadline. Any pushes to production trigger an auto deployment to Heroku. Most contributors will not have direct push access to the production branch to prevent rollout confusion. If you're interested in managing this process, and are a current contributor, however, DevOps would love to have you join the team!
