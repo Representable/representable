@@ -1206,12 +1206,15 @@ function highlightBlocks(drawn_polygon) {
   try {
     var northEastPointPixel = map.project(northEast);
     var southWestPointPixel = map.project(southWest);
+    var features = [];
 
     // var final_union = turf.union(turf.bboxPolygon([0, 0, 0, 0]), turf.bboxPolygon([0, 0, 1, 1]));
-    var features = map.queryRenderedFeatures(
-      [southWestPointPixel, northEastPointPixel],
-      { layers: [state + "-census-lines"] }
-    );
+    if (states.includes(state)) {
+      features = map.queryRenderedFeatures(
+        [southWestPointPixel, northEastPointPixel],
+        { layers: [state + "-census-lines"] }
+      );
+    }
 
     var mpoly = [];
     var wkt = new Wkt.Wkt();
@@ -1347,9 +1350,7 @@ function updateCommunityEntry(event) {
     wkt_obj = wkt.read(user_polygon_json);
     user_polygon_wkt = wkt_obj.write();
     // save census blocks multipolygon
-    if (states.includes(state)) {
       census_blocks_polygon_array = highlightBlocks(drawn_polygon);
-    }
     if (census_blocks_polygon_array != undefined) {
       census_blocks_polygon_array = census_blocks_polygon_array.join("|");
     }
