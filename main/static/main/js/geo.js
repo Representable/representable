@@ -502,7 +502,9 @@ class ClearMapButton {
     clear_map_button.addEventListener("click", function (event) {
       hideInstructionBox();
       draw.deleteAll();
-      map.setFilter(state + "-bg-highlighted", ["in", "BLOCKID10"]);
+      if (states.includes(state)) {
+        map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
+      }
       draw.changeMode("simple_select");
       hideMapEditButtons();
     });
@@ -699,7 +701,9 @@ document.getElementById("draw-button-id").addEventListener(
   function (event) {
     hideInstructionBox();
     draw.deleteAll();
-    map.setFilter(state + "-bg-highlighted", ["in", "BLOCKID10"]);
+    if (states.includes(state)) {
+      map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
+    }
     draw.changeMode("draw_polygon");
     showMapEditButtons();
   },
@@ -710,7 +714,7 @@ document.getElementById("draw-button-id").addEventListener(
 document.getElementById("delete-feature-button-id").addEventListener(
   "click",
   function (event) {
-    map.setFilter(state + "-bg-highlighted", ["in", "BLOCKID10"]);
+    map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
     if (draw != null) {
       var all_features = draw.getAll();
       if (all_features.features.length > 0) {
@@ -786,7 +790,7 @@ function newHighlightLayer(state) {
 function addNeighborLayersFilter() {
   for (let i = 0; 0 < neighbors.length; i++) {
     if (map.getLayer(neighbors[i] + "-bg-highlighted")) {
-      map.setFilter(neighbors[i] + "-bg-highlighted", ["in", "BLOCKID10"]);
+      map.setFilter(neighbors[i] + "-bg-highlighted", ["in", "GEOID"]);
     }
   }
 }
@@ -1029,9 +1033,9 @@ map.on("style.load", function () {
     newSourceLayer(bg, BG_KEYS[bg]);
   }
 
-  for (let i = 0; i < statesBG.length; i++) {
-    newCensusLines(statesBG[i]);
-    newHighlightLayer(statesBG[i]);
+  for (let i = 0; i < states.length; i++) {
+    newCensusLines(states[i]);
+    newHighlightLayer(states[i]);
   }
 
   // Point centered at geocoded location
@@ -1330,10 +1334,12 @@ function updateCommunityEntry(event) {
     // sets an empty filter - unhighlights everything
     // sets the form fields as empty
     // TODO: update for all states
-    map.setFilter(
-      sessionStorage.getItem("state_name") + "-bg-highlighted",
-      ["in", "BLOCKID10"]
-    );
+    if (states.includes(state)) {
+      map.setFilter(
+        sessionStorage.getItem("state_name") + "-bg-highlighted",
+        ["in", "GEOID"]
+      );
+    }
     triggerMissingPolygonError();
   } else {
     // Update User Polygon with the GeoJson data.
@@ -1367,7 +1373,9 @@ function updateCommunityEntry(event) {
     wkt_obj = wkt.read(user_polygon_json);
     user_polygon_wkt = wkt_obj.write();
     // save census blocks multipolygon
-    census_blocks_polygon_array = highlightBlocks(drawn_polygon);
+    if (states.includes(state)) {
+      census_blocks_polygon_array = highlightBlocks(drawn_polygon);
+    }
     if (census_blocks_polygon_array != undefined) {
       census_blocks_polygon_array = census_blocks_polygon_array.join("|");
     }
