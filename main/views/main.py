@@ -530,7 +530,7 @@ class EntryView(LoginRequiredMixin, View):
                     entryForm.organization = drive.organization
 
             if entryForm.organization:
-                if self.request.user.is_member(entryForm.organization.id):
+                if self.request.user.is_org_admin(entryForm.organization.id):
                     entryForm.admin_approved = True
                 else:
                     # check if user is on the allowlist
