@@ -786,7 +786,7 @@ function newHighlightLayer(state) {
 }
 
 // [WIP] function to add the neighbor layers for the filter that queries
-// included census blocks
+// included census block groups
 function addNeighborLayersFilter() {
   for (let i = 0; 0 < neighbors.length; i++) {
     if (map.getLayer(neighbors[i] + "-bg-highlighted")) {
@@ -1002,7 +1002,7 @@ map.on("style.load", function () {
     map.resize();
   });
 
-  // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
+  // this is where the census block groups are loaded, from a url to the mbtiles file uploaded to mapbox
   for (let bg in BG_KEYS) {
     newSourceLayer(bg, BG_KEYS[bg]);
   }
@@ -1191,7 +1191,7 @@ function triggerSuccessMessage() {
 
 /******************************************************************************/
 
-/* Takes the user drawn polygon and queries census blocks that are contained
+/* Takes the user drawn polygon and queries census block groups that are contained
    within the drawn polygon. appends them to the filter and highlights those
    blocks. Returns an array containing the census block polygons that are
    highlighted */
@@ -1228,18 +1228,18 @@ function highlightBlocks(drawn_polygon) {
             // go through all the polygons and check to see if any of the polygons are contained
             // call intersect AND contained
             // following if statements cover corner cases
-            // if census blocks are multipolygons, create a polygon using
+            // if census block groups are multipolygons, create a polygon using
             if (feature.geometry.coordinates[0][0].length > 2) {
               polyCon = turf.polygon([feature.geometry.coordinates[0][0]]);
             } else {
               polyCon = turf.polygon([feature.geometry.coordinates[0]]);
             }
-            if (turf.booleanContains(drawn_polygon, polyCon)) {
+            if (turf.booleanOverlap(drawn_polygon, polyCon) || turf.booleanContains(drawn_polygon, polyCon)) {
               memo.push(feature.properties.GEOID);
               mpoly = addPoly(polyCon.geometry, mpoly, wkt);
             }
           } else {
-            if (turf.booleanContains(drawn_polygon, feature.geometry)) {
+            if (turf.booleanOverlap(drawn_polygon, feature.geometry) || turf.booleanContains(drawn_polygon, feature.geometry)) {
               memo.push(feature.properties.GEOID);
               polyCon = turf.polygon([feature.geometry.coordinates[0]]);
               mpoly = addPoly(polyCon.geometry, mpoly, wkt);
@@ -1349,7 +1349,7 @@ function updateCommunityEntry(event) {
     var user_polygon_json = JSON.stringify(drawn_polygon["geometry"]);
     wkt_obj = wkt.read(user_polygon_json);
     user_polygon_wkt = wkt_obj.write();
-    // save census blocks multipolygon
+    // save census block groups multipolygon
       census_blocks_polygon_array = highlightBlocks(drawn_polygon);
     if (census_blocks_polygon_array != undefined) {
       census_blocks_polygon_array = census_blocks_polygon_array.join("|");
