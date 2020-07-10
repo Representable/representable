@@ -28,7 +28,13 @@ from django.views.generic import (
 )
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from allauth.account.decorators import verified_email_required
+from allauth.account.models import (
+    EmailConfirmation,
+    EmailAddress,
+    EmailConfirmationHMAC,
+)
+from allauth.account import adapter
+from allauth.account.app_settings import ADAPTER
 from django.forms import formset_factory
 from ..forms import (
     CommunityForm,
@@ -71,6 +77,7 @@ from django.contrib.auth.models import Group
 from itertools import islice
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
+
 
 # ******************************************************************************#
 
@@ -372,7 +379,7 @@ class Map(TemplateView):
 # ******************************************************************************#
 
 
-class Thanks(TemplateView):
+class Thanks(LoginRequiredMixin, TemplateView):
     template_name = "main/thanks.html"
 
     def get_context_data(self, **kwargs):
@@ -389,11 +396,33 @@ class Thanks(TemplateView):
             organization = drive.organization
             organization_name = organization.name
 
+        if EmailAddress.objects.filter(
+            user=self.request.user, verified=True
+        ).exists():
+            context["verified"] = True
+        else:
+            user_email_address = EmailAddress.objects.get(
+                user=self.request.user
+            )
+
+            user_email_confirmation = EmailConfirmationHMAC(
+                email_address=user_email_address
+            )
+
+            # default_adapter = adapter.get_adapter()
+
+            # default_adapter.send_confirmation_mail(self.request, user_email_confirmation, False)
+            # user_email_address.send_confirmation(None, False)
+
+            user_email_confirmation.send(self.request, False)
+            context["verified"] = False
+
         context["map_url"] = self.kwargs["map_id"]
         context["drive"] = self.kwargs["drive"]
         context["has_drive"] = has_drive
         context["organization_name"] = organization_name
         context["drive_name"] = drive_name
+
         return context
 
 
