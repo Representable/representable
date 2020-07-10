@@ -714,7 +714,9 @@ document.getElementById("draw-button-id").addEventListener(
 document.getElementById("delete-feature-button-id").addEventListener(
   "click",
   function (event) {
-    map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
+    if (states.includes(state)) {
+      map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
+    }
     if (draw != null) {
       var all_features = draw.getAll();
       if (all_features.features.length > 0) {
