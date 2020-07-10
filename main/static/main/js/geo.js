@@ -879,32 +879,6 @@ myTour.addStep({
 });
 
 myTour.addStep({
-  title: "Show/Hide Census Blocks",
-  text:
-    "Census blocks are the building blocks when it comes to creating districing maps. Click on this button \
-  to show/hide census blocks on the map.",
-  attachTo: {
-    element: ".blocks-toggle-btn",
-    on: "bottom",
-  },
-  buttons: [
-    {
-      action() {
-        return this.back();
-      },
-      classes: "shepherd-button-secondary",
-      text: "Back",
-    },
-    {
-      action() {
-        return this.next();
-      },
-      text: "Next",
-    },
-  ],
-});
-
-myTour.addStep({
   title: "Draw your community of interest",
   text: "Begin drawing your community of interest by clicking on this button.",
   attachTo: {
