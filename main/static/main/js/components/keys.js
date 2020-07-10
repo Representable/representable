@@ -207,3 +207,19 @@ var states = [
   "wv",
   "wy",
 ];
+var statesBG = [
+  "il",
+  "mi",
+  "nj",
+  "pa",
+  "tx",
+  "va",
+];
+var BG_KEYS = {
+  "ilbg": "2yul2f76",
+  "mibg": "65kwp6kr",
+  "njbg": "1ksdxf88",
+  "pabg": "c35vqnuq",
+  "txbg": "5x05l0of",
+  "vabg": "3pmrtqs2",
+};
