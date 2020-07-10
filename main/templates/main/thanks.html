@@ -32,11 +32,11 @@
                                 <p>Your community map is now live here: <br><a href="/submission?map_id={{ map_url }}">Representable.org/submission?map_id={{ map_url }}</a><br>Feel free to tweet and share.</p>
                               <a class="btn btn-outline-primary thanks-submission-link" href="/submission?map_id={{ map_url }}" role="button">View Community</a>
                             </li>
-                            {% if has_campaign %}
+                            {% if has_drive %}
                             <li class="list-group-item justify-content-between align-items-center">
-                                  <h5>{{campaign_name}} Map</h5>
-                                  <p>View all communities submitted to {{campaign_name}}.</p>
-                                  <a class="btn btn-outline-primary thanks-campaign-map" href="{% url 'main:partner_map' view.kwargs.slug view.kwargs.campaign %}"  role="button">View Map</a>
+                                  <h5>{{drive_name}} Map</h5>
+                                  <p>View all communities submitted to {{drive_name}}.</p>
+                                  <a class="btn btn-outline-primary thanks-drive-map" href="{% url 'main:partner_map' view.kwargs.slug view.kwargs.drive %}"  role="button">View Map</a>
                               </li>
                             {% endif %}
                             <li class="list-group-item justify-content-between align-items-center">
