@@ -1232,7 +1232,7 @@ function highlightBlocks(drawn_polygon) {
     // var final_union = turf.union(turf.bboxPolygon([0, 0, 0, 0]), turf.bboxPolygon([0, 0, 1, 1]));
     var features = map.queryRenderedFeatures(
       [southWestPointPixel, northEastPointPixel],
-      { layers: ["mibg"] }
+      { layers: [state + "-census-lines"] }
     );
 
     var mpoly = [];
