@@ -9,7 +9,7 @@
 <div class="container">
   <div class="row row-hero my-5">
     <div class="col-12">
-      <h1 class="font-weight-light text-center mb-3">Welcome to {{ state_obj.name }}!
+      <h1 class="font-weight-light text-center mb-3">Welcome to {{ state_obj.name }}
         {% with "img/states/"|add:state_obj.abbr|add:".svg" as svg %}
               <object type="image/svg+xml" class="state-sm" data="{% static svg %}"></object>
         {% endwith %}
@@ -24,11 +24,11 @@
       {% endautoescape %}
     </div>
     <div class="col-6 d-none d-sm-block">
-      <div class="text-center">
       {% with "img/states/"|add:state_obj.abbr|add:".svg" as svg %}
-      <object type="image/svg+xml" class="state" data="{% static svg %}"></object>
-      {% endwith %}
+      <div class="card card-signin mx-auto h-100 py-4">
+        <object type="image/svg+xml" class="state h-100" data="{% static svg %}"></object>
       </div>
+      {% endwith %}
     </div>
   </div>
 
@@ -46,8 +46,8 @@
       </div>
     </div>
   </div>
-  <div class="row bg-light">
-    <div class="col-12 px-5">
+  <div class="jumbotron">
+    <div class="px-5">
       <h5 class="mt-3">Communities of Interest</h5>
       {% autoescape off %}
       {{ state_obj.content_coi }}
@@ -68,7 +68,7 @@
           <p>{{ drive.description }}</p>
           </div>
           <div class="col-sm-3">
-            <a class="btn btn-outline-primary" href="{% url 'main:entry' drive=drive.slug %}">Join Drive</a>
+            <a class="btn btn-lg btn-primary" href="{% url 'main:entry' drive=drive.slug %}">Join Drive</a>
           </div>
         </div>
         <hr>

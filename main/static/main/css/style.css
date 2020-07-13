@@ -444,6 +444,7 @@ color scheme. See readme.md*/
 .state {
   max-width: 70%;
   height: 50vh;
+  margin: auto;
 }
 .state-sm {
   width: 2rem;
@@ -854,7 +855,7 @@ label {
 .card-signin {
   border: 0;
   border-radius: 1rem;
-  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.3rem 0.6rem 0 rgba(0, 0, 0, 0.1);
 }
 
 .card-signin .card-title {
