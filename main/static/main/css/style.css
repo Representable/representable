@@ -25,6 +25,7 @@ Bootstrap is better in that case. https://getbootstrap.com/docs/4.5/getting-star
   left: 1em;
   right: 1em;
   z-index: 100;
+  display: none;
 }
 
 .consent-banner .btn-toolbar {

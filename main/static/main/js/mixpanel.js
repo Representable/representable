@@ -57,26 +57,27 @@ mixpanel.track_links(
 // Consent banner code
 
 function checkUserConsent() {
-  console.log("Checking user consent.");
+  console.log("checking consent");
   var user_consent = localStorage.getItem("user_consent");
   if (user_consent == null) {
-    console.log("No consent yet.");
     showConsentBanner();
   } else {
     // storage stores strings in most browsers. need to parse it.
     user_consent = JSON.parse(user_consent);
     hideConsentBanner();
-    console.log("Retrieved consent:" + user_consent);
     if (!user_consent) {
       // disable mixpanel tracking
       mixpanel.opt_out_tracking();
       // disable google analytics
       window["ga-disable-UA-139926191-1"] = true;
+      showOptOutSettings();
     } else {
       // enable mixpanel tracking
       mixpanel.opt_in_tracking();
       // enable google analytics
       window["ga-disable-UA-139926191-1"] = false;
+      // show settings
+      showOptInSettings();
     }
   }
 }
@@ -92,13 +93,35 @@ function hideConsentBanner() {
 }
 
 function setConsentTrue() {
-  console.log("setting consent true");
   localStorage.setItem("user_consent", "true");
   hideConsentBanner();
+  showOptInSettings();
 }
 
 function setConsentFalse() {
-  console.log("setting consent false");
   localStorage.setItem("user_consent", "false");
   hideConsentBanner();
+  showOptOutSettings();
+}
+
+function showOptInSettings() {
+  let opt_in_settings = document.getElementById("consent-settings-opt-in");
+  if (opt_in_settings != null) {
+    opt_in_settings.style.display = "block";
+  }
+  let opt_out_settings = document.getElementById("consent-settings-opt-out");
+  if (opt_out_settings != null) {
+    opt_out_settings.style.display = "none";
+  }
+}
+
+function showOptOutSettings() {
+  let opt_in_settings = document.getElementById("consent-settings-opt-in");
+  if (opt_in_settings != null) {
+    opt_in_settings.style.display = "none";
+  }
+  let opt_out_settings = document.getElementById("consent-settings-opt-out");
+  if (opt_out_settings != null) {
+    opt_out_settings.style.display = "block";
+  }
 }
