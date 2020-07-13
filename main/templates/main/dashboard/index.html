@@ -63,28 +63,5 @@
         </div>
       </div>
     </div>
-     <div class="row pb-3">
-      <div class="col-sm">
-        <div class="card shadow-sm h-100">
-          <div class="card-body">
-            <h5>
-              Account Settings
-            </h5>
-            <hr>
-            <h6>Reset password</h6>
-            <p>Reset your password by pressing on the following button. You will receive an email with the appropiate instructions.</p>
-            <a href="{% url 'account_reset_password' %}" class="btn btn-outline-primary">Reset password</a>
-            <hr>
-            <h6>Cookie Settings</h6>
-            <p>We use Mixpanel and Google Analytics to collect anonymized information about users' website usage. We use this information to improve our website experience. You can control whether we have access to this information or not.</p>
-            <p>Based on our records, you have <strong>opted-in</strong> for anonymized information collection. To <strong>opt-out</strong>, press on the button below.</p>
-            <button onclick="setConsentFalse()" class="btn btn-outline-primary my-1">Opt-out</button>
-            <p>Based on our records, you have <strong>opted-out</strong> of anonymized information collection. To <strong>opt-in</strong>, press on the button below.</p>
-            <button onclick="setConsentTrue()" class="btn btn-outline-primary my-1">Opt-in</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </div>
   {% endblock %}
