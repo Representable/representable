@@ -60,6 +60,7 @@ function checkUserConsent() {
   var user_consent = localStorage.getItem("user_consent");
   if (user_consent == null) {
     showConsentBanner();
+    hideTrackingSettings();
   } else {
     // storage stores strings in most browsers. need to parse it.
     user_consent = JSON.parse(user_consent);
@@ -104,6 +105,7 @@ function setConsentFalse() {
 }
 
 function showOptInSettings() {
+  showTrackingSettings();
   let opt_in_settings = document.getElementById("consent-settings-opt-in");
   if (opt_in_settings != null) {
     opt_in_settings.style.display = "block";
@@ -115,6 +117,7 @@ function showOptInSettings() {
 }
 
 function showOptOutSettings() {
+  showTrackingSettings();
   let opt_in_settings = document.getElementById("consent-settings-opt-in");
   if (opt_in_settings != null) {
     opt_in_settings.style.display = "none";
@@ -122,5 +125,19 @@ function showOptOutSettings() {
   let opt_out_settings = document.getElementById("consent-settings-opt-out");
   if (opt_out_settings != null) {
     opt_out_settings.style.display = "block";
+  }
+}
+
+function hideTrackingSettings() {
+  let tracking_settings = document.getElementById("tracking-settings");
+  if (tracking_settings != null) {
+    tracking_settings.style.display = "none";
+  }
+}
+
+function showTrackingSettings() {
+  let tracking_settings = document.getElementById("tracking-settings");
+  if (tracking_settings != null) {
+    tracking_settings.style.display = "block";
   }
 }
