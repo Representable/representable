@@ -53,3 +53,52 @@ mixpanel.track_links(
   ".footer-send-feedback",
   "Send Feedback Link Pressed (Footer)"
 );
+
+// Consent banner code
+
+function checkUserConsent() {
+  console.log("Checking user consent.");
+  var user_consent = localStorage.getItem("user_consent");
+  if (user_consent == null) {
+    console.log("No consent yet.");
+    showConsentBanner();
+  } else {
+    // storage stores strings in most browsers. need to parse it.
+    user_consent = JSON.parse(user_consent);
+    hideConsentBanner();
+    console.log("Retrieved consent:" + user_consent);
+    if (!user_consent) {
+      // disable mixpanel tracking
+      mixpanel.opt_out_tracking();
+      // disable google analytics
+      window["ga-disable-UA-139926191-1"] = true;
+    } else {
+      // enable mixpanel tracking
+      mixpanel.opt_in_tracking();
+      // enable google analytics
+      window["ga-disable-UA-139926191-1"] = false;
+    }
+  }
+}
+
+function showConsentBanner() {
+  var consent_banner = document.getElementById("id-consent-banner");
+  consent_banner.style.display = "block";
+}
+
+function hideConsentBanner() {
+  var consent_banner = document.getElementById("id-consent-banner");
+  consent_banner.style.display = "none";
+}
+
+function setConsentTrue() {
+  console.log("setting consent true");
+  localStorage.setItem("user_consent", "true");
+  hideConsentBanner();
+}
+
+function setConsentFalse() {
+  console.log("setting consent false");
+  localStorage.setItem("user_consent", "false");
+  hideConsentBanner();
+}
