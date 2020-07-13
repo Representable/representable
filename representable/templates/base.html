@@ -132,6 +132,16 @@
     {% endblock %}
 
 </body>
+{% comment %}  Cookie consent banner. {% endcomment %}
+<div class="alert alert-primary consent-banner text-center" role="alert">
+    <h6 class="m-1">Cookie and Privacy Consent</h6>
+    <p class="m-1">Representable.org uses third-party cookies to improve our website experience and understand our traffic. Opt-out or approve this behavior below.</p>
+    <div class="btn-toolbar m-1 text-center" role="toolbar" aria-label="Toolbar with button groups">
+        <a href="#" class="btn btn-primary mx-1">Approve</a>
+        <a href="#" class="btn btn-secondary mx-1">Opt-out</a>
+    </div>
+    <p class="m-1">By continuing to use Representable.org, you consent to our <a target="_blank" rel="noopener noreferrer" href="{% url 'main:privacy' %}">Privacy Policy</a> and <a target="_blank" rel="noopener noreferrer" href="{% url 'main:terms' %}">Terms</a>.</p>
+</div>
 <footer class="pt-4 mb-md-5 pt-md-5 border-top">
     <div class="container">
         <div class="row">

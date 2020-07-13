@@ -13,8 +13,25 @@ This means, if you're only changing something for a small section of the website
 define new CSS classes and rules, and don't change default Bootstrap classes
 and rules, since this can lead to unintended consequences.
 This means no changing anything like <a>, <li>, <p>, etc.
+
+You can change them if you want to change the entire website, but customizing 
+Bootstrap is better in that case. https://getbootstrap.com/docs/4.5/getting-started/theming/
 */
 
+/* Consent Banner CSS */
+.consent-banner {
+  position: fixed;
+  bottom: 0;
+  left: 1em;
+  right: 1em;
+  z-index: 100;
+}
+
+.consent-banner .btn-toolbar {
+  justify-content: center;
+}
+
+/* Entry Form CSS */
 form:invalid {
   border-color: red;
 }
@@ -456,7 +473,6 @@ color scheme. See readme.md*/
 .ws-normal {
   white-space: normal;
 }
-
 
 .loader {
   border: 8px solid #f3f3f3; /* Light grey */
