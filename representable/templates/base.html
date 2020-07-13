@@ -125,9 +125,9 @@
     {% comment %}  Cookie consent banner. {% endcomment %}
     <div id="id-consent-banner" class="alert alert-primary consent-banner text-center" role="alert">
         <h6 class="m-1">Notice about cookies and privacy</h6>
-        <p class="m-1">Representable.org uses third-party cookies to improve our website experience and understand our traffic. Approve or opt-out from this behavior below.</p>
+        <p class="m-1">Representable.org uses third-party cookies to improve our website experience and understand our traffic. Opt in or out from this behavior below.</p>
         <div class="btn-toolbar m-1 text-center" role="toolbar" aria-label="Toolbar with button groups">
-            <button onclick="setConsentTrue();" class="btn btn-primary mx-1">Approve</button>
+            <button onclick="setConsentTrue();" class="btn btn-primary mx-1">Opt-in</button>
             <button onclick="setConsentFalse();" class="btn btn-primary mx-1">Opt-out</button>
         </div>
         <p class="m-1">By continuing to use Representable.org, you consent to our <a target="_blank" rel="noopener noreferrer" href="{% url 'main:privacy' %}">Privacy Policy</a> and <a target="_blank" rel="noopener noreferrer" href="{% url 'main:terms' %}">Terms</a>.</p>
@@ -177,7 +177,7 @@
                             Terms
                     </a></li>
                     <li><a class="text-muted" onclick="showConsentBanner(); return false;" href="#">
-                        Privacy Consent Settings
+                        Tracking Settings
                     </a></li>
                     <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="https://forms.gle/1LRVNqR31AfAtD6p7">
                             Send Feedback
