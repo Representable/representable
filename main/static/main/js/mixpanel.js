@@ -57,7 +57,6 @@ mixpanel.track_links(
 // Consent banner code
 
 function checkUserConsent() {
-  console.log("checking consent");
   var user_consent = localStorage.getItem("user_consent");
   if (user_consent == null) {
     showConsentBanner();
