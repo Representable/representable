@@ -157,7 +157,7 @@ var UPPER_KEYS = {
 };
 var BG_KEYS = {
   "ilbg": "2yul2f76",
-  "mibg": "65kwp6kr",
+  "mibg": "6rmkafit",
   "njbg": "1ksdxf88",
   "pabg": "c35vqnuq",
   "txbg": "5x05l0of",

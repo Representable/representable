@@ -755,20 +755,36 @@ function newSourceLayer(name, mbCode) {
     url: "mapbox://" + mapbox_user_name + "." + mbCode,
   });
 }
-
-// add a new layer of census block data (transparent layer)
+// census block data - lines only, always visible
 function newCensusLines(state) {
   map.addLayer({
     id: state + "-census-lines",
     type: "line",
     source: state + "bg",
     "source-layer": state + "bg",
-    layout: {
-      visibility: "visible",
-    },
     paint: {
-      "line-color": "rgba(0,0,0,0.15)",
+      "line-color": "rgba(0,0,0,0.3)",
       "line-width": 1,
+    }
+  })
+}
+
+// add a new layer of census block data (transparent layer)
+function newCensusShading(state) {
+  map.addLayer({
+    id: state + "-census-shading",
+    type: "fill",
+    source: state + "bg",
+    "source-layer": state + "bg",
+    paint: {
+      "fill-outline-color": "#000000",
+      "fill-color": "#000000",
+      'fill-opacity': [
+          'case',
+          ['boolean', ['feature-state', 'hover'], false],
+          0.2,
+          0
+        ]
     },
   });
 }
@@ -1010,6 +1026,7 @@ map.on("style.load", function () {
   }
 
   for (let i = 0; i < states.length; i++) {
+    newCensusShading(states[i]);
     newCensusLines(states[i]);
     newHighlightLayer(states[i]);
   }
@@ -1024,6 +1041,30 @@ map.on("style.load", function () {
   //     "circle-color": "#007cbf",
   //   },
   // });
+
+  map.on('click', function(e) {
+    // set bbox as 10px reactangle area around clicked point
+    var bbox = [
+      [e.point.x - 10, e.point.y - 10],
+      [e.point.x + 10, e.point.y + 10]
+    ];
+    var features = map.queryRenderedFeatures(bbox, {
+      layers: ['mi-census-shading']
+    });
+
+    // Run through the selected features and set a filter
+    // to match features with unique FIPS codes to activate
+    // the `counties-highlighted` layer.
+    var filter = features.reduce(
+      function(memo, feature) {
+        memo.push(feature.properties.GEOID);
+        return memo;
+      },
+      ['in', 'GEOID']
+    );
+
+    map.setFilter('mi-bg-highlighted', filter);
+  });
 
   // Listen for the `geocoder.input` event that is triggered when a user
   // makes a selection and add a symbol that matches the result.
@@ -1081,6 +1122,37 @@ map.on("render", function (event) {
       zoom: 8,
     });
   }
+});
+
+// When the user moves their mouse over the state-fill layer, we'll update the
+// feature state for the feature under the mouse.
+var bgID = null;
+map.on('mousemove', 'mi-census-shading', function(e) {
+  if (e.features.length > 0) {
+    if (bgID) {
+      map.setFeatureState(
+        { source: 'mibg', sourceLayer: 'mibg', id: bgID },
+        { hover: false }
+      );
+    }
+    bgID = e.features[0].id;
+    map.setFeatureState(
+      { source: 'mibg', sourceLayer: 'mibg', id: bgID },
+      { hover: true }
+    );
+  }
+});
+
+// When the mouse leaves the state-fill layer, update the feature state of the
+// previously hovered feature.
+map.on('mouseleave', 'mi-census-shading', function() {
+  if (bgID) {
+    map.setFeatureState(
+      { source: 'mibg', sourceLayer: 'mibg', id: bgID },
+      { hover: false }
+    );
+  }
+  bgID = null;
 });
 
 /******************************************************************************/
