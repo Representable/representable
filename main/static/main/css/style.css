@@ -22,10 +22,11 @@ Bootstrap is better in that case. https://getbootstrap.com/docs/4.5/getting-star
 .consent-banner {
   position: fixed;
   bottom: 0;
-  left: 1em;
-  right: 1em;
+  left: 0;
+  right: 0;
   z-index: 100;
   display: none;
+  /* background-color: #ecf0f1; */
 }
 
 .consent-banner .btn-toolbar {

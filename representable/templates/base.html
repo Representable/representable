@@ -123,14 +123,14 @@
         </div>
     </nav>
     {% comment %}  Cookie consent banner. {% endcomment %}
-    <div id="id-consent-banner" class="alert alert-primary consent-banner text-center" role="alert">
-        <h6 class="m-1">Notice about cookies and privacy</h6>
-        <p class="m-1">Representable.org uses third-party cookies to improve our website experience and understand our traffic. Opt in or out from this behavior below.</p>
-        <div class="btn-toolbar m-1 text-center" role="toolbar" aria-label="Toolbar with button groups">
-            <button onclick="setConsentTrue();" class="btn btn-primary mx-1">Opt In</button>
-            <button onclick="setConsentFalse();" class="btn btn-primary mx-1">Opt Out</button>
-        </div>
-        <p class="m-1">By continuing to use Representable.org, you consent to our <a target="_blank" rel="noopener noreferrer" href="{% url 'main:privacy' %}">Privacy Policy</a> and <a target="_blank" rel="noopener noreferrer" href="{% url 'main:terms' %}">Terms</a>.</p>
+    <div id="id-consent-banner" class="alert alert-secondary alert-dismissable consent-banner text-center m-0" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="setConsentFalse();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h6 class="my-1">Notice about cookies and privacy</h6>
+        <p class="my-1"><small>Representable.org uses third-party cookies to improve our website experience and understand our traffic. To opt in, press on the button below.</small></p>
+        <button onclick="setConsentTrue();" class="btn btn-primary btn-sm my-0">Accept</button>
+        {% comment %} <p class="m-1">By continuing to use Representable.org, you consent to our <a target="_blank" rel="noopener noreferrer" href="{% url 'main:privacy' %}">Privacy Policy</a> and <a target="_blank" rel="noopener noreferrer" href="{% url 'main:terms' %}">Terms</a>.</p> {% endcomment %}
     </div>
     {% block content %}
     {% endblock %}
