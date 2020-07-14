@@ -1043,18 +1043,16 @@ map.on("style.load", function () {
   // });
 
   map.on('click', function(e) {
-    // set bbox as 10px reactangle area around clicked point
+    // set bbox as rectangle area around clicked point
     var bbox = [
-      [e.point.x - 10, e.point.y - 10],
-      [e.point.x + 10, e.point.y + 10]
+      [e.point.x - 20, e.point.y - 20],
+      [e.point.x + 20, e.point.y + 20]
     ];
     var features = map.queryRenderedFeatures(bbox, {
       layers: ['mi-census-shading']
     });
 
-    // Run through the selected features and set a filter
-    // to match features with unique FIPS codes to activate
-    // the `counties-highlighted` layer.
+    // Run through the selected features and set a filter based on GEOID
     var filter = features.reduce(
       function(memo, feature) {
         memo.push(feature.properties.GEOID);
@@ -1124,22 +1122,37 @@ map.on("render", function (event) {
   }
 });
 
-// When the user moves their mouse over the state-fill layer, we'll update the
+// When the user moves their mouse over the census shading layer, we'll update the
 // feature state for the feature under the mouse.
 var bgID = null;
+var features = [];
 map.on('mousemove', 'mi-census-shading', function(e) {
   if (e.features.length > 0) {
-    if (bgID) {
+    // create a constantly updated list of the features which have been highlighted in foreach loop
+    // before highlighting, go thru that list, and deselect all
+    var bbox = [
+      [e.point.x - 20, e.point.y - 20],
+      [e.point.x + 20, e.point.y + 20]
+    ];
+    var hoverFeatures = map.queryRenderedFeatures(bbox, {
+      layers: ['mi-census-shading']
+    });
+    features.forEach(function(feature) {
+        bgID = feature.id;
+        map.setFeatureState(
+          { source: 'mibg', sourceLayer: 'mibg', id: bgID },
+          { hover: false }
+        );
+    });
+    features = [];
+    hoverFeatures.forEach(function(feature) {
+      features.push(feature);
+      bgID = feature.id;
       map.setFeatureState(
         { source: 'mibg', sourceLayer: 'mibg', id: bgID },
-        { hover: false }
+        { hover: true }
       );
-    }
-    bgID = e.features[0].id;
-    map.setFeatureState(
-      { source: 'mibg', sourceLayer: 'mibg', id: bgID },
-      { hover: true }
-    );
+    });
   }
 });
 
