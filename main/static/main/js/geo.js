@@ -284,8 +284,8 @@ var draw = new MapboxDraw({
         ["!=", "mode", "static"],
       ],
       paint: {
-        "fill-color": "#60a3bc",
-        "fill-outline-color": "#60a3bc",
+        "fill-color": "#4a69bd",
+        "fill-outline-color": "#4a69bd",
         "fill-opacity": 0.2,
       },
     },
@@ -294,9 +294,9 @@ var draw = new MapboxDraw({
       type: "fill",
       filter: ["all", ["==", "active", "true"], ["==", "$type", "Polygon"]],
       paint: {
-        "fill-color": "#60a3bc",
-        "fill-outline-color": "#60a3bc",
-        "fill-opacity": 0.5,
+        "fill-color": "#4a69bd",
+        "fill-outline-color": "#4a69bd",
+        "fill-opacity": 0.4,
       },
     },
     {
@@ -313,7 +313,7 @@ var draw = new MapboxDraw({
         "line-join": "round",
       },
       paint: {
-        "line-color": "#60a3bc",
+        "line-color": "#4a69bd",
         "line-width": 2,
       },
     },
@@ -326,7 +326,7 @@ var draw = new MapboxDraw({
         "line-join": "round",
       },
       paint: {
-        "line-color": "#60a3bc",
+        "line-color": "#4a69bd",
         "line-dasharray": [0.2, 2],
         "line-width": 2,
       },
@@ -781,7 +781,7 @@ function newHighlightLayer(state) {
     paint: {
       "fill-outline-color": "#1e3799",
       "fill-color": "#4a69bd",
-      "fill-opacity": 0.5,
+      "fill-opacity": 0.4,
     },
     filter: ["in", "GEOID", ""],
   });
