@@ -1061,6 +1061,15 @@ map.on("style.load", function () {
       ['in', 'GEOID']
     );
 
+    currentSelection = map.getFilter('mi-bg-highlighted');
+    currentSelection.forEach(function(feature) {
+      if (feature !== 'in' &&
+          feature !== 'GEOID' &&
+          feature !== '') {
+        filter.push(feature);
+      }
+    });
+
     map.setFilter('mi-bg-highlighted', filter);
   });
 
