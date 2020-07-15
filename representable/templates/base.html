@@ -36,7 +36,7 @@
     0)))}}var e=a;"undefined"!==typeof g?e=a[g]=[]:g="mixpanel";e.people=e.people||[];e.toString=function(b){var a="mixpanel";"mixpanel"!==g&&(a+="."+g);b||(a+=" (stub)");return a};e.people.toString=function(){return e.toString(1)+".people (stub)"};l="disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" ");
     for(h=0;h<l.length;h++)c(e,l[h]);var f="set set_once union unset remove delete".split(" ");e.get_group=function(){function a(c){b[c]=function(){call2_args=arguments;call2=[c].concat(Array.prototype.slice.call(call2_args,0));e.push([d,call2])}}for(var b={},d=["get_group"].concat(Array.prototype.slice.call(arguments,0)),c=0;c<f.length;c++)a(f[c]);return b};a._i.push([b,d,g])};a.__SV=1.2;b=c.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?
     MIXPANEL_CUSTOM_LIB_URL:"file:"===c.location.protocol&&"//cdn4.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn4.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn4.mxpnl.com/libs/mixpanel-2-latest.min.js";d=c.getElementsByTagName("script")[0];d.parentNode.insertBefore(b,d)}})(document,window.mixpanel||[]);
-    mixpanel.init(mixpanel_token);</script><!-- end Mixpanel -->
+    mixpanel.init(mixpanel_token, {opt_out_tracking_by_default: true});</script><!-- end Mixpanel -->
     {% block head %}
     {% endblock %}
 
@@ -54,6 +54,7 @@
         {% else %}
         var is_auth = false;
         {% endif %}
+
       </script>
 </head>
 
@@ -121,13 +122,25 @@
             </ul>
         </div>
     </nav>
-
+    {% comment %}  Cookie consent banner. {% endcomment %}
+    <div id="id-consent-banner" class="alert alert-secondary alert-dismissable consent-banner text-center m-0" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="setConsentFalse();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h6 class="my-1">Notice about cookies and privacy</h6>
+        <p class="my-1"><small>Representable.org uses third-party cookies to improve our website experience and understand our traffic. To opt in, press on the button below.</small></p>
+        <button onclick="setConsentTrue();" class="btn btn-primary btn-sm my-0">Accept</button>
+        {% comment %} <p class="m-1">By continuing to use Representable.org, you consent to our <a target="_blank" rel="noopener noreferrer" href="{% url 'main:privacy' %}">Privacy Policy</a> and <a target="_blank" rel="noopener noreferrer" href="{% url 'main:terms' %}">Terms</a>.</p> {% endcomment %}
+    </div>
     {% block content %}
     {% endblock %}
     <!-- Optional JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script type="text/javascript" src="{% static 'main/js/mixpanel.js' %}"></script>
+    <script type="text/javascript">
+    checkUserConsent();
+    </script>
     {% block script %}
     {% endblock %}
 
@@ -162,6 +175,9 @@
                     </a></li>
                     <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="{% url 'main:terms' %}">
                             Terms
+                    </a></li>
+                    <li><a class="text-muted" onclick="showConsentBanner(); return false;" href="#">
+                        Tracking Settings
                     </a></li>
                     <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="https://forms.gle/1LRVNqR31AfAtD6p7">
                             Send Feedback

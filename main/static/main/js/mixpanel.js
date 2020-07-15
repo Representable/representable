@@ -53,3 +53,91 @@ mixpanel.track_links(
   ".footer-send-feedback",
   "Send Feedback Link Pressed (Footer)"
 );
+
+// Consent banner code
+
+function checkUserConsent() {
+  var user_consent = localStorage.getItem("user_consent");
+  if (user_consent == null) {
+    showConsentBanner();
+    hideTrackingSettings();
+  } else {
+    // storage stores strings in most browsers. need to parse it.
+    user_consent = JSON.parse(user_consent);
+    hideConsentBanner();
+    if (!user_consent) {
+      // disable mixpanel tracking
+      mixpanel.opt_out_tracking();
+      // disable google analytics
+      window["ga-disable-UA-139926191-1"] = true;
+      showOptOutSettings();
+    } else {
+      // enable mixpanel tracking
+      mixpanel.opt_in_tracking();
+      // enable google analytics
+      window["ga-disable-UA-139926191-1"] = false;
+      // show settings
+      showOptInSettings();
+    }
+  }
+}
+
+function showConsentBanner() {
+  var consent_banner = document.getElementById("id-consent-banner");
+  consent_banner.style.display = "block";
+}
+
+function hideConsentBanner() {
+  var consent_banner = document.getElementById("id-consent-banner");
+  consent_banner.style.display = "none";
+}
+
+function setConsentTrue() {
+  localStorage.setItem("user_consent", "true");
+  hideConsentBanner();
+  showOptInSettings();
+}
+
+function setConsentFalse() {
+  localStorage.setItem("user_consent", "false");
+  hideConsentBanner();
+  showOptOutSettings();
+}
+
+function showOptInSettings() {
+  showTrackingSettings();
+  let opt_in_settings = document.getElementById("consent-settings-opt-in");
+  if (opt_in_settings != null) {
+    opt_in_settings.style.display = "block";
+  }
+  let opt_out_settings = document.getElementById("consent-settings-opt-out");
+  if (opt_out_settings != null) {
+    opt_out_settings.style.display = "none";
+  }
+}
+
+function showOptOutSettings() {
+  showTrackingSettings();
+  let opt_in_settings = document.getElementById("consent-settings-opt-in");
+  if (opt_in_settings != null) {
+    opt_in_settings.style.display = "none";
+  }
+  let opt_out_settings = document.getElementById("consent-settings-opt-out");
+  if (opt_out_settings != null) {
+    opt_out_settings.style.display = "block";
+  }
+}
+
+function hideTrackingSettings() {
+  let tracking_settings = document.getElementById("tracking-settings");
+  if (tracking_settings != null) {
+    tracking_settings.style.display = "none";
+  }
+}
+
+function showTrackingSettings() {
+  let tracking_settings = document.getElementById("tracking-settings");
+  if (tracking_settings != null) {
+    tracking_settings.style.display = "block";
+  }
+}
