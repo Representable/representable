@@ -578,13 +578,10 @@ color scheme. See readme.md*/
   float: none;
 }
 
-.draw-group > button {
-  display: block;
-  width: 100%;
-  background-image: none;
-  margin: 0 auto;
-  padding-left: 10px;
-  padding-right: 10px;
+.draw-group {
+  width: 100% !important;
+  padding: 5px 10px 0px 10px !important;
+  height: 100% !important;
 }
 
 /* Entry Form Management */

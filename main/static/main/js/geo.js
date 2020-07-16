@@ -264,245 +264,28 @@ var geocoder = new MapboxGeocoder({
 
 document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
 
-/* tutorial reference for draw control properties:
-https://bl.ocks.org/dnseminara/0790e53cef9867e848e716937727ab18
-*/
-var draw = new MapboxDraw({
-  displayControlsDefault: false,
-  controls: {
-    polygon: true,
-    trash: true,
-  },
-  styles: [
-    {
-      id: "gl-draw-polygon-fill-inactive",
-      type: "fill",
-      filter: [
-        "all",
-        ["==", "active", "false"],
-        ["==", "$type", "Polygon"],
-        ["!=", "mode", "static"],
-      ],
-      paint: {
-        "fill-color": "#4a69bd",
-        "fill-outline-color": "#4a69bd",
-        "fill-opacity": 0.2,
-      },
-    },
-    {
-      id: "gl-draw-polygon-fill-active",
-      type: "fill",
-      filter: ["all", ["==", "active", "true"], ["==", "$type", "Polygon"]],
-      paint: {
-        "fill-color": "#4a69bd",
-        "fill-outline-color": "#4a69bd",
-        "fill-opacity": 0.4,
-      },
-    },
-    {
-      id: "gl-draw-polygon-stroke-inactive",
-      type: "line",
-      filter: [
-        "all",
-        ["==", "active", "false"],
-        ["==", "$type", "Polygon"],
-        ["!=", "mode", "static"],
-      ],
-      layout: {
-        "line-cap": "round",
-        "line-join": "round",
-      },
-      paint: {
-        "line-color": "#4a69bd",
-        "line-width": 2,
-      },
-    },
-    {
-      id: "gl-draw-polygon-stroke-active",
-      type: "line",
-      filter: ["all", ["==", "active", "true"], ["==", "$type", "Polygon"]],
-      layout: {
-        "line-cap": "round",
-        "line-join": "round",
-      },
-      paint: {
-        "line-color": "#4a69bd",
-        "line-dasharray": [0.2, 2],
-        "line-width": 2,
-      },
-    },
-    {
-      id: "gl-draw-line-inactive",
-      type: "line",
-      filter: [
-        "all",
-        ["==", "active", "false"],
-        ["==", "$type", "LineString"],
-        ["!=", "mode", "static"],
-      ],
-      layout: {
-        "line-cap": "round",
-        "line-join": "round",
-      },
-      paint: {
-        "line-color": "#34495e",
-        "line-width": 2,
-      },
-    },
-    {
-      id: "gl-draw-line-active",
-      type: "line",
-      filter: ["all", ["==", "$type", "LineString"], ["==", "active", "true"]],
-      layout: {
-        "line-cap": "round",
-        "line-join": "round",
-      },
-      paint: {
-        "line-color": "#34495e",
-        "line-dasharray": [0.2, 2],
-        "line-width": 2,
-      },
-    }, // basic tools - default settings
-    {
-      id: "gl-draw-polygon-and-line-vertex-stroke-inactive",
-      type: "circle",
-      filter: [
-        "all",
-        ["==", "meta", "vertex"],
-        ["==", "$type", "Point"],
-        ["!=", "mode", "static"],
-      ],
-      paint: {
-        "circle-radius": 10,
-        "circle-color": "#34495e",
-      },
-    },
-    {
-      id: "gl-draw-polygon-and-line-vertex-inactive",
-      type: "circle",
-      filter: [
-        "all",
-        ["==", "meta", "vertex"],
-        ["==", "$type", "Point"],
-        ["!=", "mode", "static"],
-      ],
-      paint: {
-        "circle-radius": 4,
-        "circle-color": "#34495e",
-      },
-    },
-    {
-      id: "gl-draw-point-point-stroke-inactive",
-      type: "circle",
-      filter: [
-        "all",
-        ["==", "active", "false"],
-        ["==", "$type", "Point"],
-        ["==", "meta", "feature"],
-        ["!=", "mode", "static"],
-      ],
-      paint: {
-        "circle-radius": 5,
-        "circle-opacity": 1,
-        "circle-color": "#fff",
-      },
-    },
-    {
-      id: "gl-draw-point-inactive",
-      type: "circle",
-      filter: [
-        "all",
-        ["==", "active", "false"],
-        ["==", "$type", "Point"],
-        ["==", "meta", "feature"],
-        ["!=", "mode", "static"],
-      ],
-      paint: {
-        "circle-radius": 3,
-        "circle-color": "#34495e",
-      },
-    },
-    {
-      id: "gl-draw-point-stroke-active",
-      type: "circle",
-      filter: [
-        "all",
-        ["==", "$type", "Point"],
-        ["==", "active", "true"],
-        ["!=", "meta", "midpoint"],
-      ],
-      paint: {
-        "circle-radius": 7,
-        "circle-color": "#fff",
-      },
-    },
-    {
-      id: "gl-draw-point-active",
-      type: "circle",
-      filter: [
-        "all",
-        ["==", "$type", "Point"],
-        ["!=", "meta", "midpoint"],
-        ["==", "active", "true"],
-      ],
-      paint: {
-        "circle-radius": 5,
-        "circle-color": "#34495e",
-      },
-    },
-    {
-      id: "gl-draw-polygon-midpoint",
-      type: "circle",
-      filter: ["all", ["==", "$type", "Point"], ["==", "meta", "midpoint"]],
-      paint: {
-        "circle-radius": 5,
-        "circle-color": "#e67e22",
-      },
-    },
-  ],
-});
-
 // Add controls outside of map.
 // Source: https://github.com/mapbox/mapbox-gl-draw/blob/master/docs/API.md
-map.addControl(draw);
 // Insert class into draw buttons so we can differentiate their styling from
 // from the nav buttons below.
-drawControls = document.querySelector(".draw_polygon_map .mapboxgl-ctrl-group");
-drawControls.classList.add("draw-group");
 
 /* Change mapbox draw button */
-var drawButton = document.querySelector(".mapbox-gl-draw_polygon");
-drawButton.backgroundImg = "";
-drawButton.id = "draw-button-id";
-drawButton.innerHTML = "<i class='fas fa-draw-polygon'></i> Draw Polygon";
-var delete_feature_button = document.querySelector(".mapbox-gl-draw_trash");
-delete_feature_button.backgroundImg = "";
-delete_feature_button.id = "delete-feature-button-id";
-delete_feature_button.style.display = "none";
-delete_feature_button.innerHTML =
-  "<i class='fas fa-minus-square'></i> Delete Point";
-
   class SelectRadiusButton {
     onAdd(map) {
-      var radius_button = document.createElement("button");
-      radius_button.href = "#";
-      radius_button.type = "button";
-      radius_button.backgroundImg = "";
+      var radius_control = document.createElement("button");
+      radius_control.href = "#";
+      radius_control.type = "button";
+      radius_control.backgroundImg = "";
 
-      radius_button.classList.add("active");
-      // radius_button.classList.add("map-clear-button");
-      radius_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
-      radius_button.id = "map-radius-button-id";
-      radius_button.style.display = "none";
-      radius_button.innerHTML =
-        "Selection Size";
+      radius_control.classList.add("draw-group");
+      radius_control.id = "map-radius-control-id";
+      radius_control.style.display = "block";
+      radius_control.innerHTML =
+        '<form><div class="form-group"><input type="range" min="1" max="100" value="20" class="custom-range" id="radius-control"><p>Select Radius: <span id="radius-value">20</span></p></div></form>';
       this._map = map;
       this._container = document.createElement("div");
       this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
-      radius_button.addEventListener("click", function (event) {
-        console.log("select size button clicked");
-      });
-      this._container.appendChild(radius_button);
+      this._container.appendChild(radius_control);
       return this._container;
     }
 
@@ -512,159 +295,14 @@ delete_feature_button.innerHTML =
     }
   }
   map.addControl(new SelectRadiusButton(), "top-right");
-  var map_radius_button = document.getElementById("map-radius-button-id");
-  map_radius_button.style.display = "block";
-  drawControls.appendChild(map_radius_button);
 
-class ClearMapButton {
-  onAdd(map) {
-    var clear_map_button = document.createElement("button");
-    clear_map_button.href = "#";
-    clear_map_button.type = "button";
-    clear_map_button.backgroundImg = "";
-
-    clear_map_button.classList.add("active");
-    clear_map_button.classList.add("map-clear-button");
-    clear_map_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
-    clear_map_button.id = "map-clear-button-id";
-    clear_map_button.style.display = "none";
-    clear_map_button.innerHTML =
-      "<i class='fas fa-trash-alt'></i> Clear Polygon";
-    this._map = map;
-    this._container = document.createElement("div");
-    this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
-    clear_map_button.addEventListener("click", function (event) {
-      hideInstructionBox();
-      draw.deleteAll();
-      if (states.includes(state)) {
-        map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
-      }
-      draw.changeMode("simple_select");
-      hideMapEditButtons();
-    });
-    this._container.appendChild(clear_map_button);
-    return this._container;
+  var slider = document.getElementById("radius-control");
+  var rangeVal = document.getElementById("radius-value")
+  slider.oninput = function() {
+    var size = this.value;
+    drawRadius = parseInt(size);
+    rangeVal.innerHTML = size;
   }
-
-  onRemove() {
-    this._container.parentNode.removeChild(this._container);
-    this._map = undefined;
-  }
-}
-map.addControl(new ClearMapButton(), "top-right");
-var map_clear_map_button = document.getElementById("map-clear-button-id");
-drawControls.appendChild(map_clear_map_button);
-// add button for toggling edit mode.
-class MapEditButton {
-  onAdd(map) {
-    var map_edit_button = document.createElement("button");
-    map_edit_button.href = "#";
-    map_edit_button.type = "button";
-    map_edit_button.backgroundImg = "";
-
-    map_edit_button.classList.add("active");
-    map_edit_button.classList.add("map-edit-button");
-    map_edit_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
-    map_edit_button.id = "map-edit-button-id";
-    map_edit_button.style.display = "none";
-    map_edit_button.innerHTML = "<i class='fas fa-edit'></i> Edit Polygon";
-    this._map = map;
-    this._container = document.createElement("div");
-    this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
-    map_edit_button.addEventListener("click", function (e) {
-      toggleInstructionBox();
-      var all_features = draw.getAll();
-      if (all_features.features.length > 0) {
-        draw.changeMode("direct_select", {
-          featureId: all_features.features[0].id,
-        });
-      }
-    });
-    this._container.appendChild(map_edit_button);
-    return this._container;
-  }
-
-  onRemove() {
-    this._container.parentNode.removeChild(this._container);
-    this._map = undefined;
-  }
-}
-map.addControl(new MapEditButton(), "top-right");
-var map_edit_button = document.getElementById("map-edit-button-id");
-drawControls.appendChild(map_edit_button);
-
-class FinishDrawButton {
-  onAdd(map) {
-    var finish_draw_button = document.createElement("button");
-    finish_draw_button.href = "#";
-    finish_draw_button.type = "button";
-    finish_draw_button.backgroundImg = "";
-
-    finish_draw_button.classList.add("active");
-    finish_draw_button.classList.add("map-finish-drawing-button");
-    finish_draw_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
-    finish_draw_button.id = "map-finish-drawing-button-id";
-    finish_draw_button.style.display = "none";
-    finish_draw_button.innerHTML =
-      "<i class='fas fa-check'></i> Finish Drawing";
-    this._map = map;
-    this._container = document.createElement("div");
-    this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
-    finish_draw_button.addEventListener("click", function (event) {
-      hideInstructionBox();
-      var all_features = draw.getAll();
-      if (all_features.features.length > 0) {
-        draw.changeMode("simple_select", {
-          featureId: all_features.features[0].id,
-        });
-      }
-    });
-    this._container.appendChild(finish_draw_button);
-    return this._container;
-  }
-
-  onRemove() {
-    this._container.parentNode.removeChild(this._container);
-    this._map = undefined;
-  }
-}
-map.addControl(new FinishDrawButton(), "top-right");
-var map_finish_drawing_button = document.getElementById(
-  "map-finish-drawing-button-id"
-);
-drawControls.appendChild(map_finish_drawing_button);
-// Add trash button last and hide it.
-var oldChild = drawControls.removeChild(delete_feature_button);
-drawControls.appendChild(delete_feature_button);
-delete_feature_button.style.display = "none";
-
-function showMapEditButtons() {
-  var map_edit_button = document.getElementById("map-edit-button-id");
-  map_edit_button.style.display = "block";
-  var map_clear_map_button = document.getElementById("map-clear-button-id");
-  map_clear_map_button.style.display = "block";
-  var finish_draw_button = document.getElementById(
-    "map-finish-drawing-button-id"
-  );
-  finish_draw_button.style.display = "block";
-}
-
-function hideMapEditButtons() {
-  var map_edit_button = document.getElementById("map-edit-button-id");
-  map_edit_button.style.display = "none";
-  var map_clear_map_button = document.getElementById("map-clear-button-id");
-  map_clear_map_button.style.display = "none";
-  var finish_draw_button = document.getElementById(
-    "map-finish-drawing-button-id"
-  );
-  finish_draw_button.style.display = "none";
-  var map_delete_vertex_button = document.getElementById(
-    "delete-feature-button-id"
-  );
-  if (map_delete_vertex_button != null) {
-    map_delete_vertex_button.style.display = "none";
-  }
-}
 
 function toggleInstructionBox() {
   // Show instruction box on map for edit mode.
@@ -706,66 +344,11 @@ function hideInstructionBox() {
   }
 }
 
-function showDeleteFeatureButton() {
-  var map_delete_feature_button = document.getElementById(
-    "delete-feature-button-id"
-  );
-  if (map_delete_feature_button != null) {
-    map_delete_feature_button.style.display = "block";
-  }
-}
-
-function hideDeleteFeatureButton() {
-  var map_delete_feature_button = document.getElementById(
-    "delete-feature-button-id"
-  );
-  if (map_delete_feature_button != null) {
-    map_delete_feature_button.style.display = "none";
-  }
-}
-
 // Add nav control buttons.
 map.addControl(new mapboxgl.NavigationControl());
 
 var user_polygon_id = undefined;
 
-// Override Behavior for Draw-Button
-document.getElementById("draw-button-id").addEventListener(
-  "click",
-  function (event) {
-    hideInstructionBox();
-    draw.deleteAll();
-    if (states.includes(state)) {
-      map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
-    }
-    draw.changeMode("draw_polygon");
-    showMapEditButtons();
-  },
-  true
-);
-
-// override behavior for delete button
-document.getElementById("delete-feature-button-id").addEventListener(
-  "click",
-  function (event) {
-    if (states.includes(state)) {
-      map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
-    }
-    if (draw != null) {
-      var all_features = draw.getAll();
-      if (all_features.features.length > 0) {
-        var polygon = all_features.features[0];
-        updateCommunityEntry(event);
-        draw.changeMode("direct_select", {
-          featureId: polygon.id,
-        });
-      } else {
-        draw.changeMode("simple_select");
-      }
-    }
-  },
-  true
-);
 
 function toggleMapButtons(state) {
   var mapContent = document.getElementById("map");
@@ -1210,35 +793,6 @@ map.on('mouseleave', 'mi-census-shading', function() {
     );
   }
   bgID = null;
-});
-
-/******************************************************************************/
-
-map.on("draw.create", function (event) {
-  updateCommunityEntry(event);
-});
-map.on("draw.delete", function (event) {
-  updateCommunityEntry(event);
-});
-map.on("draw.update", function (event) {
-  updateCommunityEntry(event);
-});
-map.on("draw.changeMode", function (event) {
-  updateCommunityEntry(event);
-});
-map.on("draw.selectionchange", function (event) {
-  // The event object contains the featues that were selected.
-  var selected_objects = event;
-  var selected_points = selected_objects.points;
-  var selected_features = selected_objects.features;
-  if (selected_points.length > 0) {
-    // The user selected a point. Show delete vertex.
-    showDeleteFeatureButton();
-    showInstructionBox();
-  } else {
-    hideDeleteFeatureButton();
-  }
-  updateCommunityEntry(event);
 });
 
 /******************************************************************************/
