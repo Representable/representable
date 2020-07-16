@@ -58,7 +58,6 @@ var wkt_obj;
 // (If user deletes all fields, he can add one more according to this one).
 var formsetFieldObject;
 var state;
-var neighbors = [];
 $(document).ready(function () {
   // load tooltips (bootstrap)
   $('[data-toggle="tooltip"]').tooltip();
@@ -787,39 +786,6 @@ function newHighlightLayer(state) {
   });
 }
 
-// [WIP] function to add the neighbor layers for the filter that queries
-// included census block groups
-function addNeighborLayersFilter() {
-  for (let i = 0; 0 < neighbors.length; i++) {
-    if (map.getLayer(neighbors[i] + "-bg-highlighted")) {
-      map.setFilter(neighbors[i] + "-bg-highlighted", ["in", "GEOID"]);
-    }
-  }
-}
-
-function addStateNeighborLayers(new_neighbors, new_state) {
-  // remove the old state layer and add the new state layer
-  if (map.getLayer(state + "-bg-highlighted"))
-    map.removeLayer(state + "-bg-highlighted");
-  newHighlightLayer(new_state);
-  // iterate through all states in the new_neighbors
-  // if includes, don't add
-  // delete from old neighbors
-  // remove layers in the old neighbors list
-  for (let i = 0; i < new_neighbors.length; i++) {
-    if (map.getLayer(new_neighbors[i] + "-bg-highlighted") == false) {
-      newHighlightLayer(new_neighbors[i]);
-    } else {
-      let index = neighbors.indexOf(new_neighbor[i]);
-      neighbors.splice(index, 1);
-    }
-  }
-  for (let i = 0; i < neighbors.length; i++) {
-    if (map.getLayer(neighbors[i] + "-bg-highlighted"))
-      map.removeLayer(neighbors[i] + "-bg-highlighted");
-  }
-}
-
 /******************************************************************************/
 
 // initialize shepherd.js tour
@@ -1029,7 +995,7 @@ map.on("style.load", function () {
     } else {
       new_state = styleSpec.properties["short_code"].toLowerCase().substring(3);
     }
-    // get the neighbors of the state if the state is different
+    // if searching for a different state than what is currently loaded
     if (state != new_state) {
       // clear the map each time you Search
       hideInstructionBox();
@@ -1044,7 +1010,6 @@ map.on("style.load", function () {
       newHighlightLayer(new_state);
       map.setLayoutProperty(state + "-census-lines", 'visibility', 'none');
       state = new_state;
-      neighbors = new_neighbors;
     }
 
     // Save state to session storage
