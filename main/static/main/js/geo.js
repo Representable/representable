@@ -1008,22 +1008,8 @@ map.on("style.load", function () {
   for (let bg in BG_KEYS) {
     newSourceLayer(bg, BG_KEYS[bg]);
   }
-
-  for (let i = 0; i < states.length; i++) {
-    newCensusLines(states[i]);
-    newHighlightLayer(states[i]);
-  }
-
-  // Point centered at geocoded location
-  // map.addLayer({
-  //   id: "point",
-  //   source: "single-point",
-  //   type: "circle",
-  //   paint: {
-  //     "circle-radius": 10,
-  //     "circle-color": "#007cbf",
-  //   },
-  // });
+  newCensusLines(state);
+  newHighlightLayer(state);
 
   // Listen for the `geocoder.input` event that is triggered when a user
   // makes a selection and add a symbol that matches the result.
@@ -1045,10 +1031,22 @@ map.on("style.load", function () {
     }
     // get the neighbors of the state if the state is different
     if (state != new_state) {
-      new_neighbors = state_neighbors[new_state];
+      // clear the map each time you Search
+      hideInstructionBox();
+      draw.deleteAll();
+      if (states.includes(state)) {
+        map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
+      }
+      draw.changeMode("simple_select");
+      hideMapEditButtons();
+      // add block groups, remove those of previous state
+      newCensusLines(new_state);
+      newHighlightLayer(new_state);
+      map.setLayoutProperty(state + "-census-lines", 'visibility', 'none');
       state = new_state;
       neighbors = new_neighbors;
     }
+
     // Save state to session storage
     sessionStorage.setItem("state_name", state);
 
