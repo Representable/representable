@@ -974,8 +974,11 @@ map.on("style.load", function () {
   for (let bg in BG_KEYS) {
     newSourceLayer(bg, BG_KEYS[bg]);
   }
-  newCensusLines(state);
-  newHighlightLayer(state);
+  if (states.includes(state)) {
+    newCensusLines(state);
+    newHighlightLayer(state);
+  }
+
 
   // Listen for the `geocoder.input` event that is triggered when a user
   // makes a selection and add a symbol that matches the result.
@@ -1001,14 +1004,15 @@ map.on("style.load", function () {
       hideInstructionBox();
       draw.deleteAll();
       if (states.includes(state)) {
-        map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
+        map.setLayoutProperty(state + "-census-lines", 'visibility', 'none');
       }
       draw.changeMode("simple_select");
       hideMapEditButtons();
-      // add block groups, remove those of previous state
-      newCensusLines(new_state);
-      newHighlightLayer(new_state);
-      map.setLayoutProperty(state + "-census-lines", 'visibility', 'none');
+      if (states.includes(new_state)) {
+        // add block groups, remove those of previous state
+        newCensusLines(new_state);
+        newHighlightLayer(new_state);
+      }
       state = new_state;
     }
 
