@@ -314,7 +314,7 @@ class ClearMapButton {
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
     clear_button.addEventListener("click", function (event) {
-      map.setFilter(state + "-bg-highlighted", ["in", "BLOCKID10"]);
+      map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
     });
     this._container.appendChild(clear_button);
     return this._container;
@@ -327,6 +327,7 @@ class ClearMapButton {
 }
 map.addControl(new ClearMapButton(), "top-right");
 
+var eraseMode = false;
 class EraserButton {
   onAdd(map) {
     var eraser_button = document.createElement("button");
@@ -341,31 +342,18 @@ class EraserButton {
     this._map = map;
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
-    eraser_button.addEventListener("click", function (event) {
-      map.on('click', function(e) {
-        // set bbox as rectangle area around clicked point
-        var bbox = [
-          [e.point.x - drawRadius, e.point.y - drawRadius],
-          [e.point.x + drawRadius, e.point.y + drawRadius]
-        ];
-        var features = map.queryRenderedFeatures(bbox, {
-          layers: ['mi-census-shading']
-        });
-
-        // get what is currently selected as filter
-        var filter = map.getFilter('mi-bg-highlighted');
-
-        // TODO: Run through the selected features and remove those which are in features array (queried)
-        var filter = features.reduce(
-          function(memo, feature) {
-            memo.push(feature.properties.GEOID);
-            return memo;
-          },
-          ['in', 'GEOID']
-        );
-
-        map.setFilter('mi-bg-highlighted', filter);
-      });
+    var clicked = false;
+    eraser_button.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (clicked) {
+        eraseMode = false;
+        eraser_button.style.backgroundColor = "transparent";
+      } else {
+        eraseMode = true;
+        eraser_button.style.backgroundColor = "#e0e0e0";
+      }
+      clicked = eraseMode;
     });
     this._container.appendChild(eraser_button);
     return this._container;
@@ -739,27 +727,40 @@ map.on("style.load", function () {
       [e.point.x - drawRadius, e.point.y - drawRadius],
       [e.point.x + drawRadius, e.point.y + drawRadius]
     ];
-    var features = map.queryRenderedFeatures(bbox, {
+    var queryFeatures = map.queryRenderedFeatures(bbox, {
       layers: ['mi-census-shading']
     });
+    var features = [];
+    for (let i = 0; i < queryFeatures.length; i++) {
+      features.push(queryFeatures[i].properties.GEOID);
+    }
 
-    // Run through the selected features and set a filter based on GEOID
-    var filter = features.reduce(
-      function(memo, feature) {
-        memo.push(feature.properties.GEOID);
-        return memo;
-      },
-      ['in', 'GEOID']
-    );
+    var filter = [];
+    var currentSelection = map.getFilter('mi-bg-highlighted');
+    if (eraseMode) {
+      currentSelection.forEach(function(feature) {
+        if (!features.includes(feature)) {
+          filter.push(feature);
+        }
+      });
+    } else {
+      // Run through the queried features and set a filter based on GEOID
+      filter = features.reduce(
+        function(memo, feature) {
+          memo.push(feature);
+          return memo;
+        },
+        ['in', 'GEOID']
+      );
 
-    currentSelection = map.getFilter('mi-bg-highlighted');
-    currentSelection.forEach(function(feature) {
-      if (feature !== 'in' &&
-      feature !== 'GEOID' &&
-      feature !== '') {
-        filter.push(feature);
-      }
-    });
+      currentSelection.forEach(function(feature) {
+        if (feature !== 'in' &&
+        feature !== 'GEOID' &&
+        feature !== '') {
+          filter.push(feature);
+        }
+      });
+    }
 
     map.setFilter('mi-bg-highlighted', filter);
   });
