@@ -482,6 +482,40 @@ delete_feature_button.style.display = "none";
 delete_feature_button.innerHTML =
   "<i class='fas fa-minus-square'></i> Delete Point";
 
+  class SelectRadiusButton {
+    onAdd(map) {
+      var radius_button = document.createElement("button");
+      radius_button.href = "#";
+      radius_button.type = "button";
+      radius_button.backgroundImg = "";
+
+      radius_button.classList.add("active");
+      // radius_button.classList.add("map-clear-button");
+      radius_button.classList.add("mapbox-gl-draw_ctrl-draw-btn");
+      radius_button.id = "map-radius-button-id";
+      radius_button.style.display = "none";
+      radius_button.innerHTML =
+        "Selection Size";
+      this._map = map;
+      this._container = document.createElement("div");
+      this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
+      radius_button.addEventListener("click", function (event) {
+        console.log("select size button clicked");
+      });
+      this._container.appendChild(radius_button);
+      return this._container;
+    }
+
+    onRemove() {
+      this._container.parentNode.removeChild(this._container);
+      this._map = undefined;
+    }
+  }
+  map.addControl(new SelectRadiusButton(), "top-right");
+  var map_radius_button = document.getElementById("map-radius-button-id");
+  map_radius_button.style.display = "block";
+  drawControls.appendChild(map_radius_button);
+
 class ClearMapButton {
   onAdd(map) {
     var clear_map_button = document.createElement("button");
@@ -1045,8 +1079,8 @@ map.on("style.load", function () {
   map.on('click', function(e) {
     // set bbox as rectangle area around clicked point
     var bbox = [
-      [e.point.x - 20, e.point.y - 20],
-      [e.point.x + 20, e.point.y + 20]
+      [e.point.x - drawRadius, e.point.y - drawRadius],
+      [e.point.x + drawRadius, e.point.y + drawRadius]
     ];
     var features = map.queryRenderedFeatures(bbox, {
       layers: ['mi-census-shading']
@@ -1135,13 +1169,14 @@ map.on("render", function (event) {
 // feature state for the feature under the mouse.
 var bgID = null;
 var features = [];
+var drawRadius = 20;
 map.on('mousemove', 'mi-census-shading', function(e) {
   if (e.features.length > 0) {
     // create a constantly updated list of the features which have been highlighted in foreach loop
     // before highlighting, go thru that list, and deselect all
     var bbox = [
-      [e.point.x - 20, e.point.y - 20],
-      [e.point.x + 20, e.point.y + 20]
+      [e.point.x - drawRadius, e.point.y - drawRadius],
+      [e.point.x + drawRadius, e.point.y + drawRadius]
     ];
     var hoverFeatures = map.queryRenderedFeatures(bbox, {
       layers: ['mi-census-shading']
