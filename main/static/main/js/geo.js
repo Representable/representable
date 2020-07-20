@@ -379,31 +379,11 @@ function toggleInstructionBox() {
 function showInstructionBox() {
   var instruction_box = document.getElementById("instruction-box-id");
   instruction_box.style.display = "block";
-  if (draw != null) {
-    var all_features = draw.getAll();
-    if (all_features.features.length > 0) {
-      draw.changeMode("direct_select", {
-        featureId: all_features.features[0].id,
-      });
-    }
-  }
 }
 
 function hideInstructionBox() {
   var instruction_box = document.getElementById("instruction-box-id");
   instruction_box.style.display = "none";
-  if (draw != null) {
-    var all_features = draw.getAll();
-    // draw.changeMode("simple_select");
-    if (all_features.features.length > 0) {
-      draw.changeMode("simple_select", {
-        featureIds: [all_features.features[0].id],
-      });
-    }
-    // draw.changeMode("simple_select", {
-    // featureIds: [all_features.features[0].id]
-    // });
-  }
 }
 
 // Add nav control buttons.
@@ -712,6 +692,27 @@ map.on("style.load", function () {
     var features = [];
     for (let i = 0; i < queryFeatures.length; i++) {
       features.push(queryFeatures[i].properties.GEOID);
+      // from highlightBlocks method
+      // TODO: if eraseMode, remove polygon
+      // TODO: for both cases, check if part of existing mpoly
+      // TODO: make mpoly a sessionStorage var
+      var mpoly = [];
+      var wkt = new Wkt.Wkt();
+      if (features.length >= 1) {
+        var total = 0.0;
+        if (feature.geometry.type == "MultiPolygon") {
+          var polyCon;
+          if (feature.geometry.coordinates[0][0].length > 2) {
+            polyCon = turf.polygon([feature.geometry.coordinates[0][0]]);
+          } else {
+            polyCon = turf.polygon([feature.geometry.coordinates[0]]);
+          }
+          mpoly = addPoly(polyCon.geometry, mpoly, wkt);
+        } else {
+          polyCon = turf.polygon([feature.geometry.coordinates[0]]);
+          mpoly = addPoly(polyCon.geometry, mpoly, wkt);
+        }
+      }
     }
 
     var filter = [];
@@ -783,9 +784,9 @@ var wasLoaded = false;
 map.on("render", function (event) {
   if (map.loaded() == false || wasLoaded) return;
   wasLoaded = true;
+  // TODO: change to be a test of whether or not there is a highlighted bg layer
   if (document.getElementById("id_user_polygon").value !== "") {
-    // If page refreshes (or the submission fails), get the polygon
-    // from the field and draw it again.
+    // TODO: update so that the map flies to the highlighted blocks + calls updateCommunityEntry
     var feature = document.getElementById("id_user_polygon").value;
     var wkt = new Wkt.Wkt();
     wkt_obj = wkt.read(feature);
@@ -926,84 +927,6 @@ function triggerSuccessMessage() {
   }
 }
 
-/******************************************************************************/
-
-/* Takes the user drawn polygon and queries census block groups that are contained
-within the drawn polygon. appends them to the filter and highlights those
-blocks. Returns an array containing the census block polygons that are
-highlighted */
-function highlightBlocks(drawn_polygon) {
-  // once the above works, check the global scope of drawn_polygon
-
-  var census_blocks_polygon = drawn_polygon;
-  var polygonBoundingBox = turf.bbox(census_blocks_polygon);
-  // get the bounds of the polygon to reduce the number of blocks you are querying from
-  var southWest = [polygonBoundingBox[0], polygonBoundingBox[1]];
-  var northEast = [polygonBoundingBox[2], polygonBoundingBox[3]];
-  try {
-    var northEastPointPixel = map.project(northEast);
-    var southWestPointPixel = map.project(southWest);
-    var features = [];
-
-    // var final_union = turf.union(turf.bboxPolygon([0, 0, 0, 0]), turf.bboxPolygon([0, 0, 1, 1]));
-    if (states.includes(state)) {
-      features = map.queryRenderedFeatures(
-        [southWestPointPixel, northEastPointPixel],
-        { layers: [state + "-census-lines"] }
-      );
-    }
-
-    var mpoly = [];
-    var wkt = new Wkt.Wkt();
-    if (features.length >= 1) {
-      var total = 0.0;
-
-      var filter = features.reduce(
-        function (memo, feature) {
-          if (feature.geometry.type == "MultiPolygon") {
-            var polyCon;
-            // go through all the polygons and check to see if any of the polygons are contained
-            // call intersect AND contained
-            // following if statements cover corner cases
-            // if census block groups are multipolygons, create a polygon using
-            if (feature.geometry.coordinates[0][0].length > 2) {
-              polyCon = turf.polygon([feature.geometry.coordinates[0][0]]);
-            } else {
-              polyCon = turf.polygon([feature.geometry.coordinates[0]]);
-            }
-            if (
-              turf.booleanOverlap(drawn_polygon, polyCon) ||
-              turf.booleanContains(drawn_polygon, polyCon)
-            ) {
-              memo.push(feature.properties.GEOID);
-              mpoly = addPoly(polyCon.geometry, mpoly, wkt);
-            }
-          } else {
-            if (
-              turf.booleanOverlap(drawn_polygon, feature.geometry) ||
-              turf.booleanContains(drawn_polygon, feature.geometry)
-            ) {
-              memo.push(feature.properties.GEOID);
-              polyCon = turf.polygon([feature.geometry.coordinates[0]]);
-              mpoly = addPoly(polyCon.geometry, mpoly, wkt);
-            }
-          }
-          return memo;
-        },
-        ["in", "GEOID"]
-      );
-      //  sets filter - highlights blocks
-      map.setFilter(state + "-bg-highlighted", filter);
-    }
-  } catch (err) {
-    console.log("triangle shaped polygon was changed");
-  }
-
-  return mpoly;
-}
-
-/******************************************************************************/
-
 /*  Pushes poly in its wkt forms to the polyArray */
 function addPoly(poly, polyArray, wkt) {
   // coordinates attribute that shud be converted and pushed
@@ -1014,9 +937,8 @@ function addPoly(poly, polyArray, wkt) {
   return polyArray;
 }
 
-function updateFormFields(user_polygon_wkt, census_blocks_polygon_array) {
+function updateFormFields(census_blocks_polygon_array) {
   // Update form fields
-  document.getElementById("id_user_polygon").value = user_polygon_wkt;
   document.getElementById(
     "id_census_blocks_polygon_array"
   ).value = census_blocks_polygon_array;
@@ -1027,80 +949,15 @@ function updateFormFields(user_polygon_wkt, census_blocks_polygon_array) {
 in the form. */
 function updateCommunityEntry(event) {
   cleanAlerts();
-  var wkt = new Wkt.Wkt();
-  // get all data from draw
-  var data = draw.getAll();
-  var data_features = data.features;
-  var user_polygon_wkt = "";
-  var drawn_polygon = "";
-  var census_blocks_polygon_array;
-
-  // Check if the feature has data
-  if (data_features && data_features.length > 0) {
-    var data_geometry = data.features[0].geometry;
-    // .coordinates stores an array in an array. The nested array contains
-    // the points.
-    var coordinates = data_geometry.coordinates[0];
-    var coordinates_length;
-    if (coordinates) {
-      coordinates_length = coordinates.length;
-    } else {
-      coordinates_length = 0;
-    }
-  }
-
-  // Check if the map stores a valid polygon
-  if (data_features.length == 0 || coordinates_length < 3) {
-    // sets an empty filter - unhighlights everything
-    // sets the form fields as empty
-    // TODO: update for all states
-    if (states.includes(state)) {
-      map.setFilter(sessionStorage.getItem("state_name") + "-bg-highlighted", [
-        "in",
-        "GEOID",
-      ]);
-    }
-    triggerMissingPolygonError();
-  } else {
-    // Update User Polygon with the GeoJson data.
-    drawn_polygon = data.features[0];
-    // Validate User Polygon Area
-    // Check for kinks.
-    let kinks = turf.kinks(drawn_polygon);
-    if (kinks.features.length != 0) {
-      triggerDrawError(
-        "polygon-kink-error",
-        "Polygon lines should not overlap. Please draw your community again."
-      );
-      draw.trash();
-      return;
-    }
-    // Calculate area and convert it from square meters into square miles.
-    let area = turf.area(data);
-    area = turf.convertArea(area, "meters", "miles");
-    // coi is not too big
-    let halfStateArea = state_areas[state] / 2;
-    if (area > halfStateArea) {
-      triggerDrawError(
-        "map-area-size-error",
-        "Polygon area too large. Please draw your community again."
-      );
-      draw.trash();
-      return;
-    }
-    // Save user polygon.
-    var user_polygon_json = JSON.stringify(drawn_polygon["geometry"]);
-    wkt_obj = wkt.read(user_polygon_json);
-    user_polygon_wkt = wkt_obj.write();
+  // TODO: use turf or something to determine if highlighted layer is compact & contiguous
     // save census block groups multipolygon
-    census_blocks_polygon_array = highlightBlocks(drawn_polygon);
+    census_blocks_polygon_array = mpoly;
     if (census_blocks_polygon_array != undefined) {
       census_blocks_polygon_array = census_blocks_polygon_array.join("|");
     }
     triggerSuccessMessage();
     showMap();
-  }
-  updateFormFields(user_polygon_wkt, census_blocks_polygon_array);
+  updateFormFields(census_blocks_polygon_array);
 }
 /******************************************************************************/
 
