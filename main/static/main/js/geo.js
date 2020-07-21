@@ -486,6 +486,10 @@ myTour.addStep({
     },
     {
       action() {
+        // adjust draw size
+        document.getElementById("radius-control").value = 30;
+
+        document.getElementById("radius-value").textContent = "30";
         return this.next();
       },
       text: "Next",
@@ -523,9 +527,7 @@ myTour.addStep({
 
 myTour.addStep({
   title: "Eraser ",
-  text:
-    "User the Eraser tool to erase selected units from your map. \
-         Click again to return to the select tool",
+  text: "Use the Eraser tool to erase selected units from your map.",
   attachTo: {
     element: "#map-eraser-button-id",
     on: "bottom",
@@ -542,8 +544,64 @@ myTour.addStep({
     },
     {
       action() {
+        // adjust to smaller eraser size
+        document.getElementById("radius-control").value = 15;
+
+        document.getElementById("radius-value").textContent = "15";
+        return this.next();
+      },
+      text: "Next",
+    },
+  ],
+});
+
+myTour.addStep({
+  title: "Adjust Eraser Size",
+  text:
+    "You can also adjust the size of your eraser with the select radius bar \
+  ",
+  attachTo: {
+    element: "#map-radius-control-id",
+    on: "top",
+  },
+  buttons: [
+    {
+      action() {
+        return this.back();
+      },
+      classes: "shepherd-button-secondary",
+      text: "Back",
+    },
+    {
+      action() {
         // Exit eraser
         document.getElementById("map-eraser-button-id").click();
+        return this.next();
+      },
+      text: "Next",
+    },
+  ],
+});
+
+myTour.addStep({
+  title: "Eraser ",
+  text: "Another click deselects eraser and returns us to the select tool.",
+  attachTo: {
+    element: "#map-eraser-button-id",
+    on: "bottom",
+  },
+  buttons: [
+    {
+      action() {
+        // Open eraser
+        document.getElementById("map-eraser-button-id").click();
+        return this.back();
+      },
+      classes: "shepherd-button-secondary",
+      text: "Back",
+    },
+    {
+      action() {
         return this.next();
       },
       text: "Next",
@@ -579,7 +637,7 @@ myTour.addStep({
 myTour.addStep({
   title: "Finish Drawing",
   text: `Once you are done fine-tuning your drawing to reflect the geographical boundaries of
-  your community of interest you can move on to the sections below to save your community!`,
+  your community of interest you can continue on to save your community!`,
   attachTo: {
     element: "#map-finish-drawing-button-id",
     on: "bottom",
@@ -747,7 +805,10 @@ map.on("render", function (e) {
     wkt_obj = wkt.read(bgPoly);
     var geoJsonFeature = wkt_obj.toJson();
     // re-display the polygon
-    map.setFilter("mi-bg-highlighted", JSON.parse(sessionStorage.getItem("bgFilter")));
+    map.setFilter(
+      "mi-bg-highlighted",
+      JSON.parse(sessionStorage.getItem("bgFilter"))
+    );
     updateCommunityEntry();
     map.flyTo({
       center: geoJsonFeature.coordinates[0][0],
@@ -896,7 +957,7 @@ function updatePoly(poly, polyArray, wkt) {
   }
   var isSelected = polyArray.includes(poly_wkt);
   if (isSelected && eraseMode) {
-    polyArray = polyArray.filter(e => e !== poly_wkt);
+    polyArray = polyArray.filter((e) => e !== poly_wkt);
   } else if (!isSelected && !eraseMode) {
     polyArray.push(poly_wkt);
   }
