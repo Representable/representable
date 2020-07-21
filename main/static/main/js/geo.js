@@ -884,18 +884,19 @@ function triggerSuccessMessage() {
 
 /*  Pushes poly in its wkt forms to the polyArray */
 function updatePoly(poly, polyArray, wkt) {
-  // coordinates attribute that shud be converted and pushed
+  // get polygon into usable format
   var poly_json = JSON.stringify(poly);
   var wkt_obj = wkt.read(poly_json);
   var poly_wkt = wkt_obj.write();
+  // initial selection -- polyArray is null at first
   if (polyArray === null) {
     polyArray = [];
     polyArray.push(poly_wkt);
   }
-  if (eraseMode) {
-    polyArray.pop(poly_wkt);
-  }
-  if (!polyArray.includes(poly_wkt) && !eraseMode) {
+  var isSelected = polyArray.includes(poly_wkt);
+  if (isSelected && eraseMode) {
+    polyArray = polyArray.filter(e => e !== poly_wkt);
+  } else if (!isSelected && !eraseMode) {
     polyArray.push(poly_wkt);
   }
   return polyArray;
@@ -915,8 +916,6 @@ function updateCommunityEntry() {
   cleanAlerts();
   // TODO: use turf or something to determine if highlighted layer is compact & contiguous
   // save census block groups multipolygon
-  console.log("updateCommunityEntry called");
-  console.log(JSON.parse(sessionStorage.getItem("mpoly")));
   census_blocks_polygon_array = JSON.parse(sessionStorage.getItem("mpoly"));
   if (census_blocks_polygon_array != undefined) {
     census_blocks_polygon_array = census_blocks_polygon_array.join("|");
