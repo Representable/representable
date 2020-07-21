@@ -309,6 +309,9 @@ class ClearMapButton {
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
     clear_button.addEventListener("click", function (event) {
       map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
+      sessionStorage.setItem("bgFilter", "[]");
+      sessionStorage.setItem("mpoly", "[]");
+      updateCommunityEntry();
     });
     this._container.appendChild(clear_button);
     return this._container;
@@ -455,39 +458,6 @@ function newHighlightLayer(state) {
   });
 }
 
-// [WIP] function to add the neighbor layers for the filter that queries
-// included census block groups
-function addNeighborLayersFilter() {
-  for (let i = 0; 0 < neighbors.length; i++) {
-    if (map.getLayer(neighbors[i] + "-bg-highlighted")) {
-      map.setFilter(neighbors[i] + "-bg-highlighted", ["in", "GEOID"]);
-    }
-  }
-}
-
-function addStateNeighborLayers(new_neighbors, new_state) {
-  // remove the old state layer and add the new state layer
-  if (map.getLayer(state + "-bg-highlighted"))
-    map.removeLayer(state + "-bg-highlighted");
-  newHighlightLayer(new_state);
-  // iterate through all states in the new_neighbors
-  // if includes, don't add
-  // delete from old neighbors
-  // remove layers in the old neighbors list
-  for (let i = 0; i < new_neighbors.length; i++) {
-    if (map.getLayer(new_neighbors[i] + "-bg-highlighted") == false) {
-      newHighlightLayer(new_neighbors[i]);
-    } else {
-      let index = neighbors.indexOf(new_neighbor[i]);
-      neighbors.splice(index, 1);
-    }
-  }
-  for (let i = 0; i < neighbors.length; i++) {
-    if (map.getLayer(neighbors[i] + "-bg-highlighted"))
-      map.removeLayer(neighbors[i] + "-bg-highlighted");
-  }
-}
-
 /******************************************************************************/
 
 // initialize shepherd.js tour
@@ -632,9 +602,6 @@ myTour.addStep({
 
 /******************************************************************************/
 
-// the selected area (multipolygon) for saving
-var mpoly = new Array();
-sessionStorage.setItem("mpoly", JSON.stringify(mpoly));
 /* After the map style has loaded on the page, add a source layer and default
 styling for a single point. */
 map.on("style.load", function () {
@@ -666,6 +633,7 @@ map.on("style.load", function () {
     newHighlightLayer(states[i]);
   }
 
+  // when selecting or erasing
   map.on("click", function (e) {
     // set bbox as rectangle area around clicked point
     var bbox = [
@@ -726,7 +694,8 @@ map.on("style.load", function () {
     }
 
     map.setFilter("mi-bg-highlighted", filter);
-    updateCommunityEntry(e);
+    sessionStorage.setItem("bgFilter", JSON.stringify(filter));
+    updateCommunityEntry();
   });
 
   // Listen for the `geocoder.input` event that is triggered when a user
@@ -767,7 +736,7 @@ map.on("style.load", function () {
 });
 
 var wasLoaded = false;
-map.on("render", function (event) {
+map.on("render", function (e) {
   if (map.loaded() == false || wasLoaded) return;
   wasLoaded = true;
   // test if polygon has been drawn
@@ -776,12 +745,13 @@ map.on("render", function (event) {
     var wkt = new Wkt.Wkt();
     wkt_obj = wkt.read(bgPoly);
     var geoJsonFeature = wkt_obj.toJson();
-    var featureIds = draw.add(geoJsonFeature);
-    updateCommunityEntry(event);
+    // re-display the polygon
+    map.setFilter("mi-bg-highlighted", JSON.parse(sessionStorage.getItem("bgFilter")));
+    updateCommunityEntry();
     map.flyTo({
       center: geoJsonFeature.coordinates[0][0],
       essential: true, // this animation is considered essential with respect to prefers-reduced-motion
-      zoom: 8,
+      zoom: 10,
     });
   }
 });
@@ -918,6 +888,10 @@ function updatePoly(poly, polyArray, wkt) {
   var poly_json = JSON.stringify(poly);
   var wkt_obj = wkt.read(poly_json);
   var poly_wkt = wkt_obj.write();
+  if (polyArray === null) {
+    polyArray = [];
+    polyArray.push(poly_wkt);
+  }
   if (eraseMode) {
     polyArray.pop(poly_wkt);
   }
@@ -937,10 +911,12 @@ function updateFormFields(census_blocks_polygon_array) {
 
 /* Responds to the user's actions and updates the geometry fields and the arrayfield
 in the form. */
-function updateCommunityEntry(event) {
+function updateCommunityEntry() {
   cleanAlerts();
   // TODO: use turf or something to determine if highlighted layer is compact & contiguous
   // save census block groups multipolygon
+  console.log("updateCommunityEntry called");
+  console.log(JSON.parse(sessionStorage.getItem("mpoly")));
   census_blocks_polygon_array = JSON.parse(sessionStorage.getItem("mpoly"));
   if (census_blocks_polygon_array != undefined) {
     census_blocks_polygon_array = census_blocks_polygon_array.join("|");
