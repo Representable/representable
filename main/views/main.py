@@ -278,6 +278,43 @@ class Submission(TemplateView):
 # ******************************************************************************#
 
 
+def make_geojson(request, entry):
+    map_geojson = serialize(
+        "geojson",
+        [entry],
+        geometry_field="census_blocks_polygon",
+        fields=(
+            "entry_name",
+            "cultural_interests",
+            "economic_interests",
+            "comm_activities",
+            "other_considerations",
+        ),
+    )
+    gj = geojson.loads(map_geojson)
+    gj = rewind(gj)
+    del gj["crs"]
+    user_map = entry
+    if user_map.organization:
+        gj["features"][0]["properties"][
+            "organization"
+        ] = user_map.organization.name
+    if user_map.drive:
+        gj["features"][0]["properties"]["drive"] = user_map.drive.name
+    if request.user.is_authenticated:
+        is_org_leader = user_map.organization and (
+            request.user.is_org_admin(user_map.organization_id)
+        )
+        if is_org_leader or request.user == user_map.user:
+            gj["features"][0]["properties"]["author_name"] = user_map.user_name
+            for a in Address.objects.filter(entry=user_map):
+                addy = (
+                    a.street + " " + a.city + ", " + a.state + " " + a.zipcode
+                )
+                gj["features"][0]["properties"]["address"] = addy
+    return gj
+
+
 class ExportView(TemplateView):
     template = "main/export.html"
 
@@ -290,47 +327,48 @@ class ExportView(TemplateView):
                 "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             }
             return render(request, self.template_name, context)
-        map_geojson = serialize(
-            "geojson",
-            query,
-            geometry_field="census_blocks_polygon",
-            fields=(
-                "entry_name",
-                "cultural_interests",
-                "economic_interests",
-                "comm_activities",
-                "other_considerations",
-            ),
-        )
-        gj = geojson.loads(map_geojson)
-        gj = rewind(gj)
-        del gj["crs"]
-        user_map = query[0]
-        if user_map.organization:
-            gj["features"][0]["properties"][
-                "organization"
-            ] = user_map.organization.name
-        if user_map.drive:
-            gj["features"][0]["properties"]["drive"] = user_map.drive.name
-        if self.request.user.is_authenticated:
-            is_org_leader = user_map.organization and (
-                self.request.user.is_org_admin(user_map.organization_id)
-            )
-            if is_org_leader or self.request.user == user_map.user:
-                gj["features"][0]["properties"][
-                    "author_name"
-                ] = user_map.user_name
-                for a in Address.objects.filter(entry=user_map):
-                    addy = (
-                        a.street
-                        + " "
-                        + a.city
-                        + ", "
-                        + a.state
-                        + " "
-                        + a.zipcode
-                    )
-                    gj["features"][0]["properties"]["address"] = addy
+        gj = make_geojson(request, query[0])
+        # map_geojson = serialize(
+        #     "geojson",
+        #     query,
+        #     geometry_field="census_blocks_polygon",
+        #     fields=(
+        #         "entry_name",
+        #         "cultural_interests",
+        #         "economic_interests",
+        #         "comm_activities",
+        #         "other_considerations",
+        #     ),
+        # )
+        # gj = geojson.loads(map_geojson)
+        # gj = rewind(gj)
+        # del gj["crs"]
+        # user_map = query[0]
+        # if user_map.organization:
+        #     gj["features"][0]["properties"][
+        #         "organization"
+        #     ] = user_map.organization.name
+        # if user_map.drive:
+        #     gj["features"][0]["properties"]["drive"] = user_map.drive.name
+        # if self.request.user.is_authenticated:
+        #     is_org_leader = user_map.organization and (
+        #         self.request.user.is_org_admin(user_map.organization_id)
+        #     )
+        #     if is_org_leader or self.request.user == user_map.user:
+        #         gj["features"][0]["properties"][
+        #             "author_name"
+        #         ] = user_map.user_name
+        #         for a in Address.objects.filter(entry=user_map):
+        #             addy = (
+        #                 a.street
+        #                 + " "
+        #                 + a.city
+        #                 + ", "
+        #                 + a.state
+        #                 + " "
+        #                 + a.zipcode
+        #             )
+        #             gj["features"][0]["properties"]["address"] = addy
 
         response = HttpResponse(
             geojson.dumps(gj), content_type="application/json"
