@@ -312,7 +312,8 @@ def make_geojson(request, entry):
                     a.street + " " + a.city + ", " + a.state + " " + a.zipcode
                 )
                 gj["features"][0]["properties"]["address"] = addy
-    return gj
+    feature = gj["features"][0]
+    return feature
 
 
 class ExportView(TemplateView):
