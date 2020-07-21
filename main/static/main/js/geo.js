@@ -144,12 +144,6 @@ function formValidation() {
     interets_alert.classList.remove("d-none");
   }
 
-  // Check Poly Fields And Display Errors On Save
-  var user_polygon_field = document.getElementById("id_user_polygon");
-  if (user_polygon_field.value == null || user_polygon_field.value == "") {
-    triggerMissingPolygonError();
-    flag = false;
-  }
   var census_blocks_arr_field = document.getElementById(
     "id_census_blocks_polygon_array"
   );
@@ -638,6 +632,9 @@ myTour.addStep({
 
 /******************************************************************************/
 
+// the selected area (multipolygon) for saving
+var mpoly = new Array();
+sessionStorage.setItem("mpoly", JSON.stringify(mpoly));
 /* After the map style has loaded on the page, add a source layer and default
 styling for a single point. */
 map.on("style.load", function () {
@@ -669,17 +666,6 @@ map.on("style.load", function () {
     newHighlightLayer(states[i]);
   }
 
-  // Point centered at geocoded location
-  // map.addLayer({
-  //   id: "point",
-  //   source: "single-point",
-  //   type: "circle",
-  //   paint: {
-  //     "circle-radius": 10,
-  //     "circle-color": "#007cbf",
-  //   },
-  // });
-
   map.on("click", function (e) {
     // set bbox as rectangle area around clicked point
     var bbox = [
@@ -690,30 +676,29 @@ map.on("style.load", function () {
       layers: ["mi-census-shading"],
     });
     var features = [];
+    mpoly = JSON.parse(sessionStorage.getItem("mpoly"));
     for (let i = 0; i < queryFeatures.length; i++) {
-      features.push(queryFeatures[i].properties.GEOID);
-      // from highlightBlocks method
-      // TODO: if eraseMode, remove polygon
-      // TODO: for both cases, check if part of existing mpoly
-      // TODO: make mpoly a sessionStorage var
-      var mpoly = [];
+      var feature = queryFeatures[i];
+      // push to highlight layer for visibility
+      features.push(feature.properties.GEOID);
       var wkt = new Wkt.Wkt();
       if (features.length >= 1) {
-        var total = 0.0;
         if (feature.geometry.type == "MultiPolygon") {
+          // polyCon : the turf polygon from coordinates
           var polyCon;
           if (feature.geometry.coordinates[0][0].length > 2) {
             polyCon = turf.polygon([feature.geometry.coordinates[0][0]]);
           } else {
             polyCon = turf.polygon([feature.geometry.coordinates[0]]);
           }
-          mpoly = addPoly(polyCon.geometry, mpoly, wkt);
+          mpoly = updatePoly(polyCon.geometry, mpoly, wkt);
         } else {
           polyCon = turf.polygon([feature.geometry.coordinates[0]]);
-          mpoly = addPoly(polyCon.geometry, mpoly, wkt);
+          mpoly = updatePoly(polyCon.geometry, mpoly, wkt);
         }
       }
     }
+    sessionStorage.setItem("mpoly", JSON.stringify(mpoly));
 
     var filter = [];
     var currentSelection = map.getFilter("mi-bg-highlighted");
@@ -741,6 +726,7 @@ map.on("style.load", function () {
     }
 
     map.setFilter("mi-bg-highlighted", filter);
+    updateCommunityEntry(e);
   });
 
   // Listen for the `geocoder.input` event that is triggered when a user
@@ -784,12 +770,11 @@ var wasLoaded = false;
 map.on("render", function (event) {
   if (map.loaded() == false || wasLoaded) return;
   wasLoaded = true;
-  // TODO: change to be a test of whether or not there is a highlighted bg layer
-  if (document.getElementById("id_user_polygon").value !== "") {
-    // TODO: update so that the map flies to the highlighted blocks + calls updateCommunityEntry
-    var feature = document.getElementById("id_user_polygon").value;
+  // test if polygon has been drawn
+  var bgPoly = document.getElementById("id_census_blocks_polygon_array").value;
+  if (bgPoly !== "") {
     var wkt = new Wkt.Wkt();
-    wkt_obj = wkt.read(feature);
+    wkt_obj = wkt.read(bgPoly);
     var geoJsonFeature = wkt_obj.toJson();
     var featureIds = draw.add(geoJsonFeature);
     updateCommunityEntry(event);
@@ -928,12 +913,17 @@ function triggerSuccessMessage() {
 }
 
 /*  Pushes poly in its wkt forms to the polyArray */
-function addPoly(poly, polyArray, wkt) {
+function updatePoly(poly, polyArray, wkt) {
   // coordinates attribute that shud be converted and pushed
   var poly_json = JSON.stringify(poly);
   var wkt_obj = wkt.read(poly_json);
   var poly_wkt = wkt_obj.write();
-  polyArray.push(poly_wkt);
+  if (eraseMode) {
+    polyArray.pop(poly_wkt);
+  }
+  if (!polyArray.includes(poly_wkt) && !eraseMode) {
+    polyArray.push(poly_wkt);
+  }
   return polyArray;
 }
 
@@ -950,13 +940,13 @@ in the form. */
 function updateCommunityEntry(event) {
   cleanAlerts();
   // TODO: use turf or something to determine if highlighted layer is compact & contiguous
-    // save census block groups multipolygon
-    census_blocks_polygon_array = mpoly;
-    if (census_blocks_polygon_array != undefined) {
-      census_blocks_polygon_array = census_blocks_polygon_array.join("|");
-    }
-    triggerSuccessMessage();
-    showMap();
+  // save census block groups multipolygon
+  census_blocks_polygon_array = JSON.parse(sessionStorage.getItem("mpoly"));
+  if (census_blocks_polygon_array != undefined) {
+    census_blocks_polygon_array = census_blocks_polygon_array.join("|");
+  }
+  triggerSuccessMessage();
+  showMap();
   updateFormFields(census_blocks_polygon_array);
 }
 /******************************************************************************/
