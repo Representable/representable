@@ -239,8 +239,8 @@ class CommunityEntry(models.Model):
         models.PolygonField(
             geography=True, blank=True, null=True, serialize=True
         ),
-        blank=True,
-        null=True,
+        blank=False,
+        null=True
     )
     census_blocks_polygon = models.MultiPolygonField(
         geography=True, serialize=True, blank=True, null=True

@@ -149,7 +149,8 @@ function formValidation() {
   );
   if (
     census_blocks_arr_field.value == null ||
-    census_blocks_arr_field.value == ""
+    census_blocks_arr_field.value == "" ||
+    census_blocks_arr_field.value == "[]"
   ) {
     triggerMissingPolygonError();
     flag = false;
@@ -917,6 +918,13 @@ function updateCommunityEntry() {
   // TODO: use turf or something to determine if highlighted layer is compact & contiguous
   // save census block groups multipolygon
   census_blocks_polygon_array = JSON.parse(sessionStorage.getItem("mpoly"));
+  // check if map stores no polygon - clear map + sessionStorage if so
+  if (census_blocks_polygon_array === "[]") {
+    map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
+    sessionStorage.setItem("bgFilter", "[]");
+    sessionStorage.setItem("mpoly", "[]");
+    triggerMissingPolygonError();
+  }
   if (census_blocks_polygon_array != undefined) {
     census_blocks_polygon_array = census_blocks_polygon_array.join("|");
   }
