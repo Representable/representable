@@ -124,6 +124,9 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                   <tr>
                     {% endfor %}
                   </table>
+                  <div>
+                    <a class="btn btn-outline-primary btn-canvas mx-4" href={{multi_export_link}} role="button" download="communities.geojson">Export GeoJSON</a>
+                  </div>
                   {% endif %}
                 </div>
               </div>
