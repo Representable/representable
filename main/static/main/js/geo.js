@@ -22,219 +22,6 @@
 // GEO Js file for handling map drawing.
 /* https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ */
 // Polygon Drawn By User
-var CENSUS_KEYS = {
-  "ak-census": "40xiqgvl",
-  "al-census": "5wnfuadx",
-  "ar-census": "cfn0gxes",
-  "az-census": "d1hc4dk1",
-  "ca-census": "dgvz11d5",
-  "co-census": "10cpzey1",
-  "ct-census": "acwqf5pz",
-  "dc-census": "da466hfz",
-  "de-census": "1bx4au31",
-  "fl-census": "7hpatmow",
-  "ga-census": "5lx08ma9",
-  "hi-census": "82epj1e0",
-  "ia-census": "4jkzgaf9",
-  "id-census": "6s8r1pl0",
-  "il-census": "awf7y438",
-  "in-census": "1fn3qhnn",
-  "ks-census": "ad6ys13i",
-  "ky-census": "0q4sl8dv",
-  "la-census": "7zyid6d0",
-  "ma-census": "1bvt0bee",
-  "md-census": "1zwr1qu7",
-  "me-census": "cyabkjlh",
-  "mi-census": "5elaw49i",
-  "mn-census": "561za3yv",
-  "mo-census": "56j9wugl",
-  "ms-census": "33ictlz4",
-  "mt-census": "1qescrvy",
-  "nc-census": "2i44h0gn",
-  "nd-census": "2jj6oy57",
-  "ne-census": "4hcty1f0",
-  "nh-census": "8q2e3yu3",
-  "nj-census": "0yrce8nw",
-  "nm-census": "164i2lmn",
-  "nv-census": "42p3cqhj",
-  "ny-census": "3i3eca1x",
-  "oh-census": "18ik8ger",
-  "ok-census": "34ou4tm9",
-  "or-census": "66y60ac5",
-  "pa-census": "4oz1cx84",
-  "ri-census": "6p13pxdt",
-  "sc-census": "a7ddwoo9",
-  "sd-census": "aztmscpz",
-  "tn-census": "8io3xzps",
-  "tx-census": "773he449",
-  "ut-census": "2tq7r5as",
-  "va-census": "58tbtkkj",
-  "vt-census": "914alme3",
-  "wa-census": "4a9umfkl",
-  "wi-census": "52mhmiw7",
-  "wv-census": "82nll1sy",
-  "wy-census": "9uwm30og",
-};
-var states = [
-  "ak",
-  "al",
-  "ar",
-  "az",
-  "ca",
-  "co",
-  "ct",
-  "dc",
-  "de",
-  "fl",
-  "ga",
-  "hi",
-  "ia",
-  "id",
-  "il",
-  "in",
-  "ks",
-  "ky",
-  "la",
-  "ma",
-  "md",
-  "me",
-  "mi",
-  "mn",
-  "mo",
-  "ms",
-  "mt",
-  "nc",
-  "nd",
-  "nh",
-  "nj",
-  "nm",
-  "nv",
-  "ny",
-  "oh",
-  "ok",
-  "or",
-  "pa",
-  "ri",
-  "sc",
-  "sd",
-  "tn",
-  "tx",
-  "ut",
-  "va",
-  "vt",
-  "wa",
-  "wi",
-  "wv",
-  "wy",
-];
-
-var state_areas = {
-  ak: 665384,
-  al: 52420,
-  ar: 53178,
-  az: 113990,
-  ca: 163694,
-  co: 104093,
-  ct: 5543,
-  dc: 68,
-  de: 2488,
-  fl: 65757,
-  ga: 59425,
-  hi: 10931,
-  ia: 56272,
-  id: 83568,
-  il: 57913,
-  in: 36419,
-  ks: 82278,
-  ky: 40407,
-  la: 52378,
-  ma: 10554,
-  md: 12405,
-  me: 35379,
-  mi: 96713,
-  mn: 86935,
-  mo: 69706,
-  ms: 48431,
-  mt: 147039,
-  nc: 53819,
-  nd: 70698,
-  nh: 9349,
-  nj: 8722,
-  nm: 121590,
-  nv: 110571,
-  ny: 54554,
-  oh: 44825,
-  ok: 69898,
-  or: 98378,
-  pa: 46054,
-  ri: 1544,
-  sc: 32020,
-  sd: 77115,
-  tn: 42144,
-  tx: 268596,
-  ut: 84896,
-  va: 42774,
-  vt: 9616,
-  wa: 71297,
-  wi: 65496,
-  wv: 24230,
-  wy: 97813,
-};
-
-// dictionary with state neighbors without nebraska since there is
-// no census block data for nebraska
-var state_neighbors = {
-  ak: [],
-  al: ["fl", "ga", "ms", "tn"],
-  ar: ["la", "mo", "ms", "ok", "tn", "tx"],
-  az: ["ca", "co", "nv", "nm", "ut"],
-  ca: ["az", "nv", "or"],
-  co: ["az", "ks", "nm", "ok", "ut", "wy"],
-  ct: ["ma", "ny", "ri"],
-  dc: ["md", "va"],
-  de: ["md", "nj", "pa"],
-  fl: ["al", "ga"],
-  ga: ["al", "fl", "nc", "sc", "tn"],
-  hi: [],
-  ia: ["al", "mn", "mo", "sd", "wi"],
-  id: ["mt", "nv", "or", "ut", "wa", "wy"],
-  il: ["in", "ia", "mi", "ky", "mo", "wi"],
-  in: ["il", "ky", "mi", "oh"],
-  ks: ["co", "mo", "ok"],
-  ky: ["il", "in", "mo", "oh", "tn", "va", "wv"],
-  la: ["ar", "ms", "tx"],
-  ma: ["ct", "nh", "ny", "ri", "vt"],
-  md: ["de", "pa", "va", "wv"],
-  me: ["nh"],
-  mi: ["il", "in", "mn", "oh", "wi"],
-  mn: ["ia", "mi", "nd", "sd", "wi"],
-  mo: ["ar", "il", "ia", "ks", "ky", "ok", "tn"],
-  ms: ["al", "ar", "la", "tn"],
-  mt: ["id", "nd", "sd", "wy"],
-  nc: ["az", "ca", "id", "or", "ut"],
-  nd: ["mn", "mt", "sd"],
-  nh: ["me", "ma", "vt"],
-  nj: ["ny", "de", "pa"],
-  nm: ["az", "co", "ok", "tx", "ut"],
-  nv: ["az", "ca", "id", "or", "ut"],
-  ny: ["ct", "ma", "nj", "pa", "ri", "vt"],
-  oh: ["in", "ky", "mi", "pa", "wv"],
-  ok: ["ar", "co", "ks", "mo", "nm", "tx"],
-  or: ["ca", "id", "nv", "wa"],
-  pa: ["de", "md", "nj", "ny", "oh", "wv"],
-  ri: ["ct", "ma", "ny"],
-  sc: ["ga", "nc"],
-  sd: ["ia", "mn", "mt", "nd", "wy"],
-  tn: ["al", "ar", "ga", "ky", "ms", "mo", "nc", "va"],
-  tx: ["ar", "la", "nm", "ok"],
-  ut: ["az", "co", "id", "nv", "nm", "wy"],
-  va: ["ky", "md", "nc", "tn", "wv"],
-  vt: ["ma", "nh", "ny"],
-  wa: ["id", "or"],
-  wi: ["il", "ia", "mi", "mn"],
-  wv: ["ky", "md", "oh", "pa", "va"],
-  wy: ["co", "id", "mt", "sd", "ut"],
-};
 
 // Helper print function
 function print(items) {
@@ -271,7 +58,6 @@ var wkt_obj;
 // (If user deletes all fields, he can add one more according to this one).
 var formsetFieldObject;
 var state;
-var neighbors = [];
 $(document).ready(function () {
   // load tooltips (bootstrap)
   $('[data-toggle="tooltip"]').tooltip();
@@ -497,8 +283,8 @@ var draw = new MapboxDraw({
         ["!=", "mode", "static"],
       ],
       paint: {
-        "fill-color": "#60a3bc",
-        "fill-outline-color": "#60a3bc",
+        "fill-color": "#4a69bd",
+        "fill-outline-color": "#4a69bd",
         "fill-opacity": 0.2,
       },
     },
@@ -507,9 +293,9 @@ var draw = new MapboxDraw({
       type: "fill",
       filter: ["all", ["==", "active", "true"], ["==", "$type", "Polygon"]],
       paint: {
-        "fill-color": "#60a3bc",
-        "fill-outline-color": "#60a3bc",
-        "fill-opacity": 0.5,
+        "fill-color": "#4a69bd",
+        "fill-outline-color": "#4a69bd",
+        "fill-opacity": 0.4,
       },
     },
     {
@@ -526,7 +312,7 @@ var draw = new MapboxDraw({
         "line-join": "round",
       },
       paint: {
-        "line-color": "#60a3bc",
+        "line-color": "#4a69bd",
         "line-width": 2,
       },
     },
@@ -539,7 +325,7 @@ var draw = new MapboxDraw({
         "line-join": "round",
       },
       paint: {
-        "line-color": "#60a3bc",
+        "line-color": "#4a69bd",
         "line-dasharray": [0.2, 2],
         "line-width": 2,
       },
@@ -715,7 +501,9 @@ class ClearMapButton {
     clear_map_button.addEventListener("click", function (event) {
       hideInstructionBox();
       draw.deleteAll();
-      map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
+      if (states.includes(state)) {
+        map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
+      }
       draw.changeMode("simple_select");
       hideMapEditButtons();
     });
@@ -906,56 +694,15 @@ map.addControl(new mapboxgl.NavigationControl());
 
 var user_polygon_id = undefined;
 
-// add button for toggling census Blocks
-class CensusBlocksControl {
-  onAdd(map) {
-    var blocksLink = document.createElement("button");
-    blocksLink.href = "#";
-    blocksLink.classList.add("active");
-    blocksLink.classList.add("blocks-toggle-btn");
-    blocksLink.style.width = "140px";
-    blocksLink.innerHTML =
-      "<span data-toggle='tooltip' title='Census blocks are the smallest unit of the US census - darker blocks have a higher population'><i class='fas fa-th-large'></i> Show Census Blocks</span>";
-    this._map = map;
-    this._container = document.createElement("div");
-    this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
-    var clicked = false;
-    blocksLink.onclick = function (e) {
-      for (let i = 0; i < states.length; i++) {
-        var clickedLayer = states[i] + "-census-lines";
-        e.preventDefault();
-        e.stopPropagation();
-        if (clicked) {
-          map.setPaintProperty(clickedLayer, "fill-opacity", 0.0);
-          this.className = "";
-        } else {
-          this.className = "active";
-          map.setPaintProperty(clickedLayer, "fill-opacity", [
-            "*",
-            ["get", "POP10"],
-            0.0005,
-          ]);
-        }
-      }
-      clicked = clicked ? false : true;
-    };
-    this._container.appendChild(blocksLink);
-    return this._container;
-  }
-
-  onRemove() {
-    this._container.parentNode.removeChild(this._container);
-    this._map = undefined;
-  }
-}
-map.addControl(new CensusBlocksControl(), "top-left");
 // Override Behavior for Draw-Button
 document.getElementById("draw-button-id").addEventListener(
   "click",
   function (event) {
     hideInstructionBox();
     draw.deleteAll();
-    map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
+    if (states.includes(state)) {
+      map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
+    }
     draw.changeMode("draw_polygon");
     showMapEditButtons();
   },
@@ -966,7 +713,9 @@ document.getElementById("draw-button-id").addEventListener(
 document.getElementById("delete-feature-button-id").addEventListener(
   "click",
   function (event) {
-    map.setFilter(state + "-blocks-highlighted", ["in", "BLOCKID10"]);
+    if (states.includes(state)) {
+      map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
+    }
     if (draw != null) {
       var all_features = draw.getAll();
       if (all_features.features.length > 0) {
@@ -1007,68 +756,34 @@ function newSourceLayer(name, mbCode) {
 }
 
 // add a new layer of census block data (transparent layer)
-function newCensusShading(state) {
+function newCensusLines(state) {
   map.addLayer({
     id: state + "-census-lines",
-    type: "fill",
-    source: state + "-census",
-    "source-layer": state + "census",
+    type: "line",
+    source: state + "bg",
+    "source-layer": state + "bg",
     layout: {
       visibility: "visible",
     },
     paint: {
-      "fill-outline-color": "rgb(0, 0, 0)",
-      "fill-color": "rgb(0, 0, 0)",
-      "fill-opacity": 0,
+      "line-color": "rgba(0,0,0,0.15)",
+      "line-width": 1,
     },
   });
 }
 function newHighlightLayer(state) {
   map.addLayer({
-    id: state + "-blocks-highlighted",
+    id: state + "-bg-highlighted",
     type: "fill",
-    source: state + "-census",
-    "source-layer": state + "census",
+    source: state + "bg",
+    "source-layer": state + "bg",
     paint: {
       "fill-outline-color": "#1e3799",
       "fill-color": "#4a69bd",
-      "fill-opacity": 0.7,
+      "fill-opacity": 0.4,
     },
-    filter: ["in", "BLOCKID10", ""],
+    filter: ["in", "GEOID", ""],
   });
-}
-
-// [WIP] function to add the neighbor layers for the filter that queries
-// included census blocks
-function addNeighborLayersFilter() {
-  for (let i = 0; 0 < neighbors.length; i++) {
-    if (map.getLayer(neighbors[i] + "-blocks-highlighted")) {
-      map.setFilter(neighbors[i] + "-blocks-highlighted", ["in", "BLOCKID10"]);
-    }
-  }
-}
-
-function addStateNeighborLayers(new_neighbors, new_state) {
-  // remove the old state layer and add the new state layer
-  if (map.getLayer(state + "-blocks-highlighted"))
-    map.removeLayer(state + "-blocks-highlighted");
-  newHighlightLayer(new_state);
-  // iterate through all states in the new_neighbors
-  // if includes, don't add
-  // delete from old neighbors
-  // remove layers in the old neighbors list
-  for (let i = 0; i < new_neighbors.length; i++) {
-    if (map.getLayer(new_neighbors[i] + "-blocks-highlighted") == false) {
-      newHighlightLayer(new_neighbors[i]);
-    } else {
-      let index = neighbors.indexOf(new_neighbor[i]);
-      neighbors.splice(index, 1);
-    }
-  }
-  for (let i = 0; i < neighbors.length; i++) {
-    if (map.getLayer(neighbors[i] + "-blocks-highlighted"))
-      map.removeLayer(neighbors[i] + "-blocks-highlighted");
-  }
 }
 
 /******************************************************************************/
@@ -1113,32 +828,6 @@ myTour.addStep({
   attachTo: {
     element: ".mapboxgl-ctrl-zoom-out",
     on: "left",
-  },
-  buttons: [
-    {
-      action() {
-        return this.back();
-      },
-      classes: "shepherd-button-secondary",
-      text: "Back",
-    },
-    {
-      action() {
-        return this.next();
-      },
-      text: "Next",
-    },
-  ],
-});
-
-myTour.addStep({
-  title: "Show/Hide Census Blocks",
-  text:
-    "Census blocks are the building blocks when it comes to creating districing maps. Click on this button \
-  to show/hide census blocks on the map.",
-  attachTo: {
-    element: ".blocks-toggle-btn",
-    on: "bottom",
   },
   buttons: [
     {
@@ -1236,7 +925,7 @@ myTour.addStep({
 
 myTour.addStep({
   title: "Finish Drawing",
-  text: `Once you are done fine-tuning your drawing to reflect the geographical boundaries of 
+  text: `Once you are done fine-tuning your drawing to reflect the geographical boundaries of
   your community of interest click here and move on to the last part of the form!`,
   attachTo: {
     element: "#map-finish-drawing-button-id",
@@ -1281,27 +970,15 @@ map.on("style.load", function () {
     map.resize();
   });
 
-  // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
-  for (let census in CENSUS_KEYS) {
-    newSourceLayer(census, CENSUS_KEYS[census]);
+  // this is where the census block groups are loaded, from a url to the mbtiles file uploaded to mapbox
+  for (let bg in BG_KEYS) {
+    newSourceLayer(bg, BG_KEYS[bg]);
+  }
+  if (states.includes(state)) {
+    newCensusLines(state);
+    newHighlightLayer(state);
   }
 
-  for (let i = 0; i < states.length; i++) {
-    // newCensusLines(states[i]);
-    newCensusShading(states[i]);
-    newHighlightLayer(states[i]);
-  }
-
-  // Point centered at geocoded location
-  map.addLayer({
-    id: "point",
-    source: "single-point",
-    type: "circle",
-    paint: {
-      "circle-radius": 10,
-      "circle-color": "#007cbf",
-    },
-  });
 
   // Listen for the `geocoder.input` event that is triggered when a user
   // makes a selection and add a symbol that matches the result.
@@ -1321,12 +998,24 @@ map.on("style.load", function () {
     } else {
       new_state = styleSpec.properties["short_code"].toLowerCase().substring(3);
     }
-    // get the neighbors of the state if the state is different
+    // if searching for a different state than what is currently loaded
     if (state != new_state) {
-      new_neighbors = state_neighbors[new_state];
+      // clear the map each time you Search
+      hideInstructionBox();
+      draw.deleteAll();
+      if (states.includes(state)) {
+        map.setLayoutProperty(state + "-census-lines", 'visibility', 'none');
+      }
+      draw.changeMode("simple_select");
+      hideMapEditButtons();
+      if (states.includes(new_state)) {
+        // add block groups, remove those of previous state
+        newCensusLines(new_state);
+        newHighlightLayer(new_state);
+      }
       state = new_state;
-      neighbors = new_neighbors;
     }
+
     // Save state to session storage
     sessionStorage.setItem("state_name", state);
 
@@ -1471,7 +1160,7 @@ function triggerSuccessMessage() {
 
 /******************************************************************************/
 
-/* Takes the user drawn polygon and queries census blocks that are contained
+/* Takes the user drawn polygon and queries census block groups that are contained
    within the drawn polygon. appends them to the filter and highlights those
    blocks. Returns an array containing the census block polygons that are
    highlighted */
@@ -1486,12 +1175,15 @@ function highlightBlocks(drawn_polygon) {
   try {
     var northEastPointPixel = map.project(northEast);
     var southWestPointPixel = map.project(southWest);
+    var features = [];
 
     // var final_union = turf.union(turf.bboxPolygon([0, 0, 0, 0]), turf.bboxPolygon([0, 0, 1, 1]));
-    var features = map.queryRenderedFeatures(
-      [southWestPointPixel, northEastPointPixel],
-      { layers: [state + "-census-lines"] }
-    );
+    if (states.includes(state)) {
+      features = map.queryRenderedFeatures(
+        [southWestPointPixel, northEastPointPixel],
+        { layers: [state + "-census-lines"] }
+      );
+    }
 
     var mpoly = [];
     var wkt = new Wkt.Wkt();
@@ -1505,29 +1197,29 @@ function highlightBlocks(drawn_polygon) {
             // go through all the polygons and check to see if any of the polygons are contained
             // call intersect AND contained
             // following if statements cover corner cases
-            // if census blocks are multipolygons, create a polygon using
+            // if census block groups are multipolygons, create a polygon using
             if (feature.geometry.coordinates[0][0].length > 2) {
               polyCon = turf.polygon([feature.geometry.coordinates[0][0]]);
             } else {
               polyCon = turf.polygon([feature.geometry.coordinates[0]]);
             }
-            if (turf.booleanContains(drawn_polygon, polyCon)) {
-              memo.push(feature.properties.BLOCKID10);
+            if (turf.booleanOverlap(drawn_polygon, polyCon) || turf.booleanContains(drawn_polygon, polyCon)) {
+              memo.push(feature.properties.GEOID);
               mpoly = addPoly(polyCon.geometry, mpoly, wkt);
             }
           } else {
-            if (turf.booleanContains(drawn_polygon, feature.geometry)) {
-              memo.push(feature.properties.BLOCKID10);
+            if (turf.booleanOverlap(drawn_polygon, feature.geometry) || turf.booleanContains(drawn_polygon, feature.geometry)) {
+              memo.push(feature.properties.GEOID);
               polyCon = turf.polygon([feature.geometry.coordinates[0]]);
               mpoly = addPoly(polyCon.geometry, mpoly, wkt);
             }
           }
           return memo;
         },
-        ["in", "BLOCKID10"]
+        ["in", "GEOID"]
       );
       //  sets filter - highlights blocks
-      map.setFilter(state + "-blocks-highlighted", filter);
+      map.setFilter(state + "-bg-highlighted", filter);
     }
   } catch (err) {
     console.log("triangle shaped polygon was changed");
@@ -1588,10 +1280,12 @@ function updateCommunityEntry(event) {
     // sets an empty filter - unhighlights everything
     // sets the form fields as empty
     // TODO: update for all states
-    map.setFilter(
-      sessionStorage.getItem("state_name") + "-blocks-highlighted",
-      ["in", "BLOCKID10"]
-    );
+    if (states.includes(state)) {
+      map.setFilter(
+        sessionStorage.getItem("state_name") + "-bg-highlighted",
+        ["in", "GEOID"]
+      );
+    }
     triggerMissingPolygonError();
   } else {
     // Update User Polygon with the GeoJson data.
@@ -1624,8 +1318,8 @@ function updateCommunityEntry(event) {
     var user_polygon_json = JSON.stringify(drawn_polygon["geometry"]);
     wkt_obj = wkt.read(user_polygon_json);
     user_polygon_wkt = wkt_obj.write();
-    // save census blocks multipolygon
-    census_blocks_polygon_array = highlightBlocks(drawn_polygon);
+    // save census block groups multipolygon
+      census_blocks_polygon_array = highlightBlocks(drawn_polygon);
     if (census_blocks_polygon_array != undefined) {
       census_blocks_polygon_array = census_blocks_polygon_array.join("|");
     }
