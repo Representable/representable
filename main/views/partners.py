@@ -94,11 +94,18 @@ class PartnerMap(TemplateView):
         org = Organization.objects.get(slug=self.kwargs["slug"])
         context["organization"] = org
         context["state"] = org.states[0]
-        context["multi_export_link"] = "/multiexport/" + self.kwargs["drive"]
+        if not self.kwargs["drive"]:
+            context["multi_export_link"] = (
+                "/multiexport/org/" + self.kwargs["slug"]
+            )
+
         if self.kwargs["drive"]:
             context["drive"] = get_object_or_404(
                 Drive, slug=self.kwargs["drive"]
             ).name
+            context["multi_export_link"] = (
+                "/multiexport/drive/" + self.kwargs["drive"]
+            )
         if self.request.user.is_authenticated:
             context["is_org_admin"] = self.request.user.is_org_admin(
                 Organization.objects.get(slug=self.kwargs["slug"]).id
@@ -112,10 +119,14 @@ class PartnerMap(TemplateView):
 class MultiExportView(TemplateView):
     template = "main/export.html"
 
-    def get(self, request, drive, *args, **kwargs):
-        d_slug = drive
-        if d_slug:
-            query = CommunityEntry.objects.filter(drive__slug=d_slug)
+    def get(self, request, drive=None, org=None, **kwargs):
+
+        if drive:
+            query = CommunityEntry.objects.filter(drive__slug=drive)
+
+        if org:
+            query = CommunityEntry.objects.filter(organization__slug=org)
+
         if not query:
             # TODO: if the query is empty, return something more appropriate
             # than an empty geojson? - jf

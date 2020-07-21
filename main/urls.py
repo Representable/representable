@@ -70,7 +70,12 @@ urlpatterns = [
     ),
     path("export/", views.main.ExportView.as_view(), name="export"),
     path(
-        "multiexport/<drive>",
+        "multiexport/drive/<drive>",
+        views.partners.MultiExportView.as_view(),
+        name="multi_export",
+    ),
+    path(
+        "multiexport/org/<org>",
         views.partners.MultiExportView.as_view(),
         name="multi_export",
     ),
