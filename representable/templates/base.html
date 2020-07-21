@@ -91,25 +91,28 @@
                 </li>
                 {% endif %}
 
-                {% if user.is_authenticated %}
-                <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="{% url 'main:dashboard' %}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Dashboard
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{% url 'main:dashboard' %}">Dashboard</a>
-                  <a class="dropdown-item" href='/review'>My Communities</a>
-                </div>
-                </li>
-                {% endif %}
-
-                {% if user.is_authenticated %}
-<!--                <li class="nav-item mx-auto">-->
-<!--                    <a class="nav-link" href='/review'>-->
-
-<!--                        My communities-->
-<!--                    </a>-->
+<!--                {% if user.is_authenticated %}-->
+<!--                <li class="nav-item dropdown">-->
+<!--                <a class="nav-link dropdown-toggle" href="{% url 'main:dashboard' %}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                  Dashboard-->
+<!--                </a>-->
+<!--                <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--                    <a class="dropdown-item" href="{% url 'main:dashboard' %}">Dashboard</a>-->
+<!--                  <a class="dropdown-item" href='/review'>My Communities</a>-->
+<!--                </div>-->
 <!--                </li>-->
+<!--                {% endif %}-->
+                {% if user.is_authenticated %}
+                <li class="nav-item mx-auto">
+                    <a class="nav-link" href="{% url 'main:dashboard' %}">
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item mx-auto">
+                    <a class="nav-link" href='/review'>
+                        My communities
+                    </a>
+                </li>
                 <li class="nav-item mx-auto">
                     <a class="btn btn-outline-primary m-2" href="/entry">
                         Add community
