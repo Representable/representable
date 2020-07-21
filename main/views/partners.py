@@ -19,6 +19,12 @@ import json
 import os
 import geojson
 from django.shortcuts import get_object_or_404
+from geojson_rewind import rewind
+from django.core.serializers import serialize
+from django.http import HttpResponse
+from django.shortcuts import render
+
+from .main import make_geojson
 
 
 class IndexView(ListView):
@@ -88,6 +94,7 @@ class PartnerMap(TemplateView):
         org = Organization.objects.get(slug=self.kwargs["slug"])
         context["organization"] = org
         context["state"] = org.states[0]
+        context["multi_export_link"] = "/multiexport/" + self.kwargs["drive"]
         if self.kwargs["drive"]:
             context["drive"] = get_object_or_404(
                 Drive, slug=self.kwargs["drive"]
@@ -97,3 +104,78 @@ class PartnerMap(TemplateView):
                 Organization.objects.get(slug=self.kwargs["slug"]).id
             )
         return context
+
+
+# ******************************************************************************#
+
+
+class MultiExportView(TemplateView):
+    template = "main/export.html"
+
+    def get(self, request, drive, *args, **kwargs):
+        d_slug = drive
+        if d_slug:
+            query = CommunityEntry.objects.filter(drive__slug=d_slug)
+        if not query:
+            # TODO: if the query is empty, return something more appropriate
+            # than an empty geojson? - jf
+
+            return HttpResponse(
+                geojson.dumps({}), content_type="application/json"
+            )
+        all_gj = []
+        for entry in query:
+            # map_geojson = serialize(
+            #     "geojson",
+            #     [entry],
+            #     geometry_field="census_blocks_polygon",
+            #     fields=(
+            #         "entry_name",
+            #         "cultural_interests",
+            #         "economic_interests",
+            #         "comm_activities",
+            #         "other_considerations",
+            #     ),
+            # )
+            # gj = geojson.loads(map_geojson)
+            # gj = rewind(gj)
+            # del gj["crs"]
+            # user_map = entry
+            # if user_map.organization:
+            #     gj["features"][0]["properties"][
+            #         "organization"
+            #     ] = user_map.organization.name
+            # if user_map.drive:
+            #     gj["features"][0]["properties"]["drive"] = user_map.drive.name
+            # if self.request.user.is_authenticated:
+            #     is_org_leader = user_map.organization and (
+            #         self.request.user.is_org_admin(user_map.organization_id)
+            #     )
+            #     if is_org_leader or self.request.user == user_map.user:
+            #         gj["features"][0]["properties"][
+            #             "author_name"
+            #         ] = user_map.user_name
+            #         for a in Address.objects.filter(entry=user_map):
+            #             addy = (
+            #                 a.street
+            #                 + " "
+            #                 + a.city
+            #                 + ", "
+            #                 + a.state
+            #                 + " "
+            #                 + a.zipcode
+            #             )
+            #             gj["features"][0]["properties"]["address"] = addy
+            #             all_gj.append(gj)
+
+            gj = make_geojson(request, entry)
+            all_gj.append(gj)
+
+        final = geojson.FeatureCollection(all_gj)
+        response = HttpResponse(
+            geojson.dumps(final), content_type="application/json"
+        )
+        return response
+
+
+# ******************************************************************************#
