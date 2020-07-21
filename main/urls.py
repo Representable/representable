@@ -69,6 +69,11 @@ urlpatterns = [
         name="thanks",
     ),
     path("export/", views.main.ExportView.as_view(), name="export"),
+    path(
+        "multiexport/<drive>",
+        views.partners.MultiExportView.as_view(),
+        name="multi_export",
+    ),
     path("partners/", views.partners.IndexView.as_view(), name="partner_list"),
     path(
         "partners/welcome/",
