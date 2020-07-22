@@ -122,10 +122,14 @@ class MultiExportView(TemplateView):
     def get(self, request, drive=None, org=None, **kwargs):
 
         if drive:
-            query = CommunityEntry.objects.filter(drive__slug=drive)
+            query = CommunityEntry.objects.filter(
+                drive__slug=drive, admin_approved=True
+            )
 
         if org:
-            query = CommunityEntry.objects.filter(organization__slug=org)
+            query = CommunityEntry.objects.filter(
+                organization__slug=org, admin_approved=True
+            )
 
         if not query:
             # TODO: if the query is empty, return something more appropriate
@@ -136,10 +140,13 @@ class MultiExportView(TemplateView):
             )
         all_gj = []
         for entry in query:
+            if not entry.organization:
+                continue
             gj = make_geojson(request, entry)
             all_gj.append(gj)
 
         final = geojson.FeatureCollection(all_gj)
+
         response = HttpResponse(
             geojson.dumps(final), content_type="application/json"
         )
