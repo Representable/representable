@@ -267,14 +267,15 @@ class SelectRadiusButton {
     radius_control.type = "button";
     radius_control.backgroundImg = "";
 
-    radius_control.classList.add("draw-group");
+    radius_control.classList.add("active");
     radius_control.id = "map-radius-control-id";
     radius_control.style.display = "block";
     radius_control.innerHTML =
-      '<form><div class="form-group"><input type="range" min="1" max="100" value="20" class="custom-range" id="radius-control"><p>Select Radius: <span id="radius-value">20</span></p></div></form>';
+      '<form><input type="range" min="1" max="100" value="20" class="custom-range" id="radius-control"><p style="margin: 0;">Selection Size: <span id="radius-value">20</span></p></form>';
     this._map = map;
     this._container = document.createElement("div");
-    this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
+    this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group draw-group";
+    this._container.id = "draw-group-container"
     this._container.appendChild(radius_control);
     return this._container;
   }
@@ -285,6 +286,7 @@ class SelectRadiusButton {
   }
 }
 map.addControl(new SelectRadiusButton(), "top-right");
+var drawControls = document.getElementById("draw-group-container");
 
 var slider = document.getElementById("radius-control");
 var rangeVal = document.getElementById("radius-value");
@@ -294,37 +296,6 @@ slider.oninput = function () {
   rangeVal.innerHTML = size;
 };
 
-class ClearMapButton {
-  onAdd(map) {
-    var clear_button = document.createElement("button");
-    clear_button.href = "#";
-    clear_button.type = "button";
-    clear_button.backgroundImg = "";
-
-    clear_button.classList.add("draw-group");
-    clear_button.id = "map-clear-button-id";
-    clear_button.style.display = "block";
-    clear_button.innerHTML = "<i class='fas fa-trash-alt'></i> Clear Selection";
-    this._map = map;
-    this._container = document.createElement("div");
-    this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
-    clear_button.addEventListener("click", function (event) {
-      map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
-      sessionStorage.setItem("bgFilter", "[]");
-      sessionStorage.setItem("mpoly", "[]");
-      updateCommunityEntry();
-    });
-    this._container.appendChild(clear_button);
-    return this._container;
-  }
-
-  onRemove() {
-    this._container.parentNode.removeChild(this._container);
-    this._map = undefined;
-  }
-}
-map.addControl(new ClearMapButton(), "top-right");
-
 var eraseMode = false;
 class EraserButton {
   onAdd(map) {
@@ -333,13 +304,11 @@ class EraserButton {
     eraser_button.type = "button";
     eraser_button.backgroundImg = "";
 
-    eraser_button.classList.add("draw-group");
+    eraser_button.classList.add("active");
     eraser_button.id = "map-eraser-button-id";
     eraser_button.style.display = "block";
-    eraser_button.innerHTML = "Eraser";
+    eraser_button.innerHTML = "<i class='fas fa-eraser'></i> Toggle Eraser";
     this._map = map;
-    this._container = document.createElement("div");
-    this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group";
     var clicked = false;
     eraser_button.addEventListener("click", function (e) {
       e.preventDefault();
@@ -353,8 +322,7 @@ class EraserButton {
       }
       clicked = eraseMode;
     });
-    this._container.appendChild(eraser_button);
-    return this._container;
+    return eraser_button;
   }
 
   onRemove() {
@@ -363,6 +331,39 @@ class EraserButton {
   }
 }
 map.addControl(new EraserButton(), "top-right");
+var mapEraser = document.getElementById("map-eraser-button-id");
+drawControls.appendChild(mapEraser);
+
+class ClearMapButton {
+  onAdd(map) {
+    var clear_button = document.createElement("button");
+    clear_button.href = "#";
+    clear_button.type = "button";
+    clear_button.backgroundImg = "";
+
+    clear_button.classList.add("active");
+    clear_button.id = "map-clear-button-id";
+    clear_button.style.display = "block";
+    clear_button.innerHTML = "<i class='fas fa-trash-alt'></i> Clear Selection";
+    this._map = map;
+    clear_button.addEventListener("click", function (event) {
+      map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
+      sessionStorage.setItem("bgFilter", "[]");
+      sessionStorage.setItem("mpoly", "[]");
+      updateCommunityEntry();
+    });
+    return clear_button;
+  }
+
+  onRemove() {
+    this._container.parentNode.removeChild(this._container);
+    this._map = undefined;
+  }
+}
+map.addControl(new ClearMapButton(), "top-right");
+var mapClearButton = document.getElementById("map-clear-button-id");
+drawControls.appendChild(mapClearButton)
+
 
 function toggleInstructionBox() {
   // Show instruction box on map for edit mode.
