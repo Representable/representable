@@ -693,6 +693,7 @@ map.on("style.load", function () {
     newHighlightLayer(states[i]);
   }
 
+  var drawRadius = 20;
   // when selecting or erasing
   map.on("click", function (e) {
     // set bbox as rectangle area around clicked point
@@ -701,7 +702,7 @@ map.on("style.load", function () {
       [e.point.x + drawRadius, e.point.y + drawRadius],
     ];
     var queryFeatures = map.queryRenderedFeatures(bbox, {
-      layers: ["mi-census-shading"],
+      layers: [state + "-census-shading"],
     });
     var features = [];
     mpoly = JSON.parse(sessionStorage.getItem("mpoly"));
@@ -729,7 +730,7 @@ map.on("style.load", function () {
     sessionStorage.setItem("mpoly", JSON.stringify(mpoly));
 
     var filter = [];
-    var currentSelection = map.getFilter("mi-bg-highlighted");
+    var currentSelection = map.getFilter(state + "-bg-highlighted");
     if (eraseMode) {
       currentSelection.forEach(function (feature) {
         if (!features.includes(feature)) {
@@ -753,7 +754,7 @@ map.on("style.load", function () {
       });
     }
 
-    map.setFilter("mi-bg-highlighted", filter);
+    map.setFilter(state + "-bg-highlighted", filter);
     sessionStorage.setItem("bgFilter", JSON.stringify(filter));
     updateCommunityEntry();
   });
@@ -785,6 +786,55 @@ map.on("style.load", function () {
     // Save state to session storage
     sessionStorage.setItem("state_name", state);
 
+    // When the user moves their mouse over the census shading layer, we'll update the
+    // feature state for the feature under the mouse.
+    var bgID = null;
+    var features = [];
+    var stateCensus = state + "-census-shading";
+    map.on("mousemove", stateCensus, function (e) {
+      if (e.features.length > 0) {
+        // create a constantly updated list of the features which have been highlighted in foreach loop
+        // before highlighting, go thru that list, and deselect all
+        var bbox = [
+          [e.point.x - drawRadius, e.point.y - drawRadius],
+          [e.point.x + drawRadius, e.point.y + drawRadius],
+        ];
+        var hoverFeatures = map.queryRenderedFeatures(bbox, {
+          layers: [state + "-census-shading"],
+        });
+        stateBG = state + "bg";
+        features.forEach(function (feature) {
+          bgID = feature.id;
+          map.setFeatureState(
+            { source: stateBG, sourceLayer: stateBG, id: bgID },
+            { hover: false }
+          );
+        });
+        features = [];
+        hoverFeatures.forEach(function (feature) {
+          features.push(feature);
+          bgID = feature.id;
+          map.setFeatureState(
+            { source: stateBG, sourceLayer: stateBG, id: bgID },
+            { hover: true }
+          );
+        });
+      }
+    });
+
+    // When the mouse leaves the state-fill layer, update the feature state of the
+    // previously hovered feature.
+    map.on("mouseleave", stateCensus, function () {
+      if (bgID) {
+        stateBG = state + "bg";
+        map.setFeatureState(
+          { source: stateBG, sourceLayer: stateBG, id: bgID },
+          { hover: false }
+        );
+      }
+      bgID = null;
+    });
+
     // Tracking
     mixpanel.track("Geocoder Search Successful", {
       drive_id: drive_id,
@@ -807,7 +857,7 @@ map.on("render", function (e) {
     var geoJsonFeature = wkt_obj.toJson();
     // re-display the polygon
     map.setFilter(
-      "mi-bg-highlighted",
+      state + "-bg-highlighted",
       JSON.parse(sessionStorage.getItem("bgFilter"))
     );
     updateCommunityEntry();
@@ -817,53 +867,6 @@ map.on("render", function (e) {
       zoom: 10,
     });
   }
-});
-
-// When the user moves their mouse over the census shading layer, we'll update the
-// feature state for the feature under the mouse.
-var bgID = null;
-var features = [];
-var drawRadius = 20;
-map.on("mousemove", "mi-census-shading", function (e) {
-  if (e.features.length > 0) {
-    // create a constantly updated list of the features which have been highlighted in foreach loop
-    // before highlighting, go thru that list, and deselect all
-    var bbox = [
-      [e.point.x - drawRadius, e.point.y - drawRadius],
-      [e.point.x + drawRadius, e.point.y + drawRadius],
-    ];
-    var hoverFeatures = map.queryRenderedFeatures(bbox, {
-      layers: ["mi-census-shading"],
-    });
-    features.forEach(function (feature) {
-      bgID = feature.id;
-      map.setFeatureState(
-        { source: "mibg", sourceLayer: "mibg", id: bgID },
-        { hover: false }
-      );
-    });
-    features = [];
-    hoverFeatures.forEach(function (feature) {
-      features.push(feature);
-      bgID = feature.id;
-      map.setFeatureState(
-        { source: "mibg", sourceLayer: "mibg", id: bgID },
-        { hover: true }
-      );
-    });
-  }
-});
-
-// When the mouse leaves the state-fill layer, update the feature state of the
-// previously hovered feature.
-map.on("mouseleave", "mi-census-shading", function () {
-  if (bgID) {
-    map.setFeatureState(
-      { source: "mibg", sourceLayer: "mibg", id: bgID },
-      { hover: false }
-    );
-  }
-  bgID = null;
 });
 
 /******************************************************************************/
@@ -932,7 +935,7 @@ function triggerSuccessMessage() {
   <span aria-hidden="true">&times;</span>\
   </button>\
   </div>';
-  document.getElementById("map-error-alerts").appendChild(newAlert);
+  // document.getElementById("map-error-alerts").appendChild(newAlert);
   var map_drawn_flag = sessionStorage.getItem("map_drawn_successfully");
   if (map_drawn_flag == "false") {
     mixpanel.track("Map Drawing Successful", {
