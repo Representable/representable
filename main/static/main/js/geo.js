@@ -271,7 +271,7 @@ class SelectRadiusButton {
     radius_control.id = "map-radius-control-id";
     radius_control.style.display = "block";
     radius_control.innerHTML =
-      '<form><input type="range" min="1" max="100" value="20" class="custom-range" id="radius-control"><p style="margin: 0;">Selection Size: <span id="radius-value">20</span></p></form>';
+      '<form><input type="range" min="1" max="100" value="25" class="custom-range" id="radius-control"><p style="margin: 0;">Selection Size: <span id="radius-value">20</span></p></form>';
     this._map = map;
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group draw-group";
@@ -364,7 +364,7 @@ map.addControl(new ClearMapButton(), "top-right");
 var mapClearButton = document.getElementById("map-clear-button-id");
 drawControls.appendChild(mapClearButton)
 
-
+// DEPRECATED (for now)
 function toggleInstructionBox() {
   // Show instruction box on map for edit mode.
   var instruction_box = document.getElementById("instruction-box-id");
@@ -389,21 +389,6 @@ function hideInstructionBox() {
 map.addControl(new mapboxgl.NavigationControl());
 
 var user_polygon_id = undefined;
-
-function toggleMapButtons(state) {
-  var mapContent = document.getElementById("map");
-  var mapButtons = mapContent.getElementsByTagName("button");
-  for (var i = 0; i < mapButtons.length; i++) {
-    if (state.localeCompare("off") == 0) {
-      mapButtons[i].disabled = true;
-    } else if (state.localeCompare("on") == 0) {
-      mapButtons[i].disabled = false;
-    }
-  }
-}
-
-// Disable map buttons
-// toggleMapButtons("off");
 
 // add a new source layer
 function newSourceLayer(name, mbCode) {
@@ -845,6 +830,8 @@ map.on("style.load", function () {
   });
 });
 
+// reloading the page (like when the form fails validation)
+// this is still a lil fuzzy
 var wasLoaded = false;
 map.on("render", function (e) {
   if (map.loaded() == false || wasLoaded) return;
@@ -981,6 +968,8 @@ in the form. */
 function updateCommunityEntry() {
   cleanAlerts();
   // TODO: use turf or something to determine if highlighted layer is compact & contiguous
+  // probably possible with turf.js#intersect, but may not always work if blockgroups don't line up exactly
+  // will also need to think about how to make it more efficient than calling intersect on all polygons part of the community
   // save census block groups multipolygon
   census_blocks_polygon_array = JSON.parse(sessionStorage.getItem("mpoly"));
   // check if map stores no polygon - clear map + sessionStorage if so
@@ -997,15 +986,4 @@ function updateCommunityEntry() {
   showMap();
   updateFormFields(census_blocks_polygon_array);
 }
-/******************************************************************************/
-
-function updateElementIndex(el, prefix, ndx) {
-  var id_regex = new RegExp("(" + prefix + "-\\d+)");
-  var replacement = prefix + "-" + ndx;
-  if ($(el).attr("for"))
-    $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
-  if (el.id) el.id = el.id.replace(id_regex, replacement);
-  if (el.name) el.name = el.name.replace(id_regex, replacement);
-}
-
 /******************************************************************************/
