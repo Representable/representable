@@ -297,6 +297,31 @@ slider.oninput = function () {
 };
 
 var eraseMode = false;
+class DrawButton {
+  onAdd(map) {
+    var draw_button = document.createElement("button");
+    draw_button.href = "#";
+    draw_button.type = "button";
+    draw_button.backgroundImg = "";
+    draw_button.style.backgroundColor = "#e0e0e0";
+
+    draw_button.classList.add("active");
+    draw_button.id = "map-draw-button-id";
+    draw_button.style.display = "block";
+    draw_button.innerHTML = "<i class='fas fa-pencil-alt'></i> Draw";
+    this._map = map;
+    return draw_button;
+  }
+
+  onRemove() {
+    this._container.parentNode.removeChild(this._container);
+    this._map = undefined;
+  }
+}
+map.addControl(new DrawButton(), "top-right");
+var mapDraw = document.getElementById("map-draw-button-id");
+drawControls.appendChild(mapDraw);
+
 class EraserButton {
   onAdd(map) {
     var eraser_button = document.createElement("button");
@@ -307,21 +332,8 @@ class EraserButton {
     eraser_button.classList.add("active");
     eraser_button.id = "map-eraser-button-id";
     eraser_button.style.display = "block";
-    eraser_button.innerHTML = "<i class='fas fa-eraser'></i> Toggle Eraser";
+    eraser_button.innerHTML = "<i class='fas fa-eraser'></i> Eraser";
     this._map = map;
-    var clicked = false;
-    eraser_button.addEventListener("click", function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      if (clicked) {
-        eraseMode = false;
-        eraser_button.style.backgroundColor = "transparent";
-      } else {
-        eraseMode = true;
-        eraser_button.style.backgroundColor = "#e0e0e0";
-      }
-      clicked = eraseMode;
-    });
     return eraser_button;
   }
 
@@ -333,6 +345,34 @@ class EraserButton {
 map.addControl(new EraserButton(), "top-right");
 var mapEraser = document.getElementById("map-eraser-button-id");
 drawControls.appendChild(mapEraser);
+
+// click on draw deselects erase, vice versa
+mapDraw.addEventListener("click", function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+  if (eraseMode) {
+    eraseMode = false;
+    mapDraw.style.backgroundColor = "#e0e0e0";
+    mapEraser.style.backgroundColor = "transparent";
+  } else {
+    eraseMode = true;
+    mapDraw.style.backgroundColor = "transparent";
+    mapEraser.style.backgroundColor = "#e0e0e0";
+  }
+});
+mapEraser.addEventListener("click", function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+  if (eraseMode) {
+    eraseMode = false;
+    mapDraw.style.backgroundColor = "#e0e0e0";
+    mapEraser.style.backgroundColor = "transparent";
+  } else {
+    eraseMode = true;
+    mapDraw.style.backgroundColor = "transparent";
+    mapEraser.style.backgroundColor = "#e0e0e0";
+  }
+});
 
 class ClearMapButton {
   onAdd(map) {
@@ -398,21 +438,23 @@ function newSourceLayer(name, mbCode) {
   });
 }
 // census block data - lines only, always visible
-function newCensusLines(state) {
+function newCensusLines(state, firstSymbolId) {
   map.addLayer({
     id: state + "-census-lines",
     type: "line",
     source: state + "bg",
     "source-layer": state + "bg",
     paint: {
-      "line-color": "rgba(0,0,0,0.3)",
+      "line-color": "rgba(0,0,0,0.2)",
       "line-width": 1,
     },
-  });
+  },
+  firstSymbolId
+);
 }
 
 // add a new layer of census block data (transparent layer)
-function newCensusShading(state) {
+function newCensusShading(state, firstSymbolId) {
   map.addLayer({
     id: state + "-census-shading",
     type: "fill",
@@ -428,9 +470,11 @@ function newCensusShading(state) {
         0,
       ],
     },
-  });
+  },
+  firstSymbolId
+);
 }
-function newHighlightLayer(state) {
+function newHighlightLayer(state, firstSymbolId) {
   map.addLayer({
     id: state + "-bg-highlighted",
     type: "fill",
@@ -442,7 +486,9 @@ function newHighlightLayer(state) {
       "fill-opacity": 0.4,
     },
     filter: ["in", "GEOID", ""],
-  });
+  },
+  firstSymbolId
+);
 }
 
 /******************************************************************************/
@@ -657,6 +703,17 @@ map.on("style.load", function () {
       features: [],
     },
   });
+
+  var layers = map.getStyle().layers;
+  // Find the index of the first symbol layer in the map style
+  var firstSymbolId;
+  for (var i = 0; i < layers.length; i++) {
+    if (layers[i].type === "symbol" && layers[i] !== "road") {
+      firstSymbolId = layers[i].id;
+      break;
+    }
+  }
+
   // Whenever a card section button is clicked, resize the map.
   // This ensures that the map is always shown.
   $(".card-section-button").on("click", function () {
@@ -673,8 +730,8 @@ map.on("style.load", function () {
   }
 
   for (let i = 0; i < states.length; i++) {
-    newCensusShading(states[i]);
-    newCensusLines(states[i]);
+    newCensusShading(states[i], firstSymbolId);
+    newCensusLines(states[i], firstSymbolId);
     newHighlightLayer(states[i]);
   }
 
