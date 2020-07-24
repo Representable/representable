@@ -457,7 +457,6 @@ color scheme. See readme.md*/
   white-space: normal;
 }
 
-
 .loader {
   border: 8px solid #f3f3f3; /* Light grey */
   border-top: 8px solid #2a94f4; /* Blue */
@@ -988,4 +987,8 @@ label {
   color: white;
   padding: 1px 5px;
   border-radius: 3px;
+}
+
+#rtb a h2 {
+  padding-top: 20px;
 }
