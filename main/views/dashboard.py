@@ -28,6 +28,7 @@ from django.views.generic import (
     DeleteView,
 )
 from django.views import View
+from django.core.mail import send_mail
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from allauth.account.decorators import verified_email_required
 from ..forms import (
@@ -134,6 +135,25 @@ class CreateOrg(LoginRequiredMixin, CreateView):
         # by default, make the user creating the org the admin
         admin = Membership(member=self.request.user, organization=org,)
         admin.save()
+
+        email_content = (
+            "Dear Representable Team, "
+            + self.request.user.username
+            + " signed up to create an organization called "
+            + org.name
+            + "."
+            + " You can follow up via email at : "
+            + self.request.user.email
+            + "!"
+        )
+
+        send_mail(
+            "[Action Required] New Organization Sign-up",
+            email_content,
+            "no-reply@representable.org",
+            ["team@representable.org"],
+            fail_silently=False,
+        )
 
         self.success_url = reverse_lazy(
             "main:thanks_org", kwargs=org.get_url_kwargs()
