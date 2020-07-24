@@ -275,7 +275,7 @@ class SelectRadiusButton {
     this._map = map;
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group draw-group";
-    this._container.id = "draw-group-container"
+    this._container.id = "draw-group-container";
     this._container.appendChild(radius_control);
     return this._container;
   }
@@ -402,7 +402,7 @@ class ClearMapButton {
 }
 map.addControl(new ClearMapButton(), "top-right");
 var mapClearButton = document.getElementById("map-clear-button-id");
-drawControls.appendChild(mapClearButton)
+drawControls.appendChild(mapClearButton);
 
 // DEPRECATED (for now)
 function toggleInstructionBox() {
@@ -439,56 +439,59 @@ function newSourceLayer(name, mbCode) {
 }
 // census block data - lines only, always visible
 function newCensusLines(state, firstSymbolId) {
-  map.addLayer({
-    id: state + "-census-lines",
-    type: "line",
-    source: state + "bg",
-    "source-layer": state + "bg",
-    paint: {
-      "line-color": "rgba(0,0,0,0.2)",
-      "line-width": 1,
+  map.addLayer(
+    {
+      id: state + "-census-lines",
+      type: "line",
+      source: state + "bg",
+      "source-layer": state + "bg",
+      paint: {
+        "line-color": "rgba(0,0,0,0.2)",
+        "line-width": 1,
+      },
     },
-  },
-  firstSymbolId
-);
+    firstSymbolId
+  );
 }
 
 // add a new layer of census block data (transparent layer)
 function newCensusShading(state, firstSymbolId) {
-  map.addLayer({
-    id: state + "-census-shading",
-    type: "fill",
-    source: state + "bg",
-    "source-layer": state + "bg",
-    paint: {
-      "fill-outline-color": "#000000",
-      "fill-color": "#000000",
-      "fill-opacity": [
-        "case",
-        ["boolean", ["feature-state", "hover"], false],
-        0.2,
-        0,
-      ],
+  map.addLayer(
+    {
+      id: state + "-census-shading",
+      type: "fill",
+      source: state + "bg",
+      "source-layer": state + "bg",
+      paint: {
+        "fill-outline-color": "#000000",
+        "fill-color": "#000000",
+        "fill-opacity": [
+          "case",
+          ["boolean", ["feature-state", "hover"], false],
+          0.2,
+          0,
+        ],
+      },
     },
-  },
-  firstSymbolId
-);
+    firstSymbolId
+  );
 }
 function newHighlightLayer(state, firstSymbolId) {
-  map.addLayer({
-    id: state + "-bg-highlighted",
-    type: "fill",
-    source: state + "bg",
-    "source-layer": state + "bg",
-    paint: {
-      "fill-outline-color": "#1e3799",
-      "fill-color": "#4a69bd",
-      "fill-opacity": 0.4,
+  map.addLayer(
+    {
+      id: state + "-bg-highlighted",
+      type: "fill",
+      source: state + "bg",
+      "source-layer": state + "bg",
+      paint: {
+        "fill-outline-color": "#1e3799",
+        "fill-color": "#4a69bd",
+        "fill-opacity": 0.4,
+      },
+      filter: ["in", "GEOID", ""],
     },
-    filter: ["in", "GEOID", ""],
-  },
-  firstSymbolId
-);
+    firstSymbolId
+  );
 }
 
 /******************************************************************************/
@@ -616,17 +619,17 @@ myTour.addStep({
 });
 
 myTour.addStep({
-  title: "Eraser ",
-  text: "Another click deselects eraser and returns us to the select tool.",
+  title: "Draw",
+  text: "Click the draw button to return to to adding units to the map.",
   attachTo: {
-    element: "#map-eraser-button-id",
+    element: "#map-draw-button-id",
     on: "bottom",
   },
   buttons: [
     {
       action() {
-        // Open eraser
-        document.getElementById("map-eraser-button-id").click();
+        // Reselect draw tool
+        document.getElementById("map-draw-button-id").click();
         return this.back();
       },
       classes: "shepherd-button-secondary",
