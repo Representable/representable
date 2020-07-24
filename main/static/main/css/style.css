@@ -1008,3 +1008,7 @@ label {
   padding: 1px 5px;
   border-radius: 3px;
 }
+
+#rtb a h2 {
+  padding-top: 20px;
+}
