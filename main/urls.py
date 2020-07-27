@@ -188,6 +188,11 @@ urlpatterns = [
                     views.dashboard.UpdateDrive.as_view(),
                     name="update_drive",
                 ),
+                path(
+                    "drives/<uuid:cam_pk>/delete/",
+                    views.dashboard.DeleteDrive.as_view(),
+                    name="delete_drive",
+                ),
             ]
         ),
     ),
