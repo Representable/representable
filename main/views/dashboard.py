@@ -450,3 +450,18 @@ class UpdateDrive(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
     model = Drive
     form_class = DriveForm
     pk_url_kwarg = "cam_pk"
+
+
+class DeleteDrive(LoginRequiredMixin, OrgAdminRequiredMixin, DeleteView):
+    """
+    The view for deleting drives
+    """
+
+    model = Drive
+    pk_url_kwarg = "cam_pk"
+
+    def get_success_url(self):
+        return reverse_lazy(
+            "main:home_org",
+            kwargs={"slug": self.kwargs["slug"], "pk": self.kwargs["pk"]},
+        )
