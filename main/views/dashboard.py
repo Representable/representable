@@ -195,7 +195,6 @@ class ThanksOrg(LoginRequiredMixin, TemplateView):
             user=self.request.user, verified=True
         ).exists()
 
-        print(context)
         return context
 
 
@@ -447,6 +446,26 @@ class CreateDrive(LoginRequiredMixin, OrgAdminRequiredMixin, CreateView):
     template_name = "main/dashboard/drives/create.html"
     form_class = DriveForm
     pk_url_kwarg = "cam_pk"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        if not EmailAddress.objects.filter(
+            user=self.request.user, verified=True
+        ).exists():
+            user_email_address = EmailAddress.objects.get(
+                user=self.request.user
+            )
+            user_email_confirmation = EmailConfirmationHMAC(
+                email_address=user_email_address
+            )
+            user_email_confirmation.send(self.request, False)
+
+        context["verified"] = EmailAddress.objects.filter(
+            user=self.request.user, verified=True
+        ).exists()
+
+        return context
 
     def form_valid(self, form):
         # TODO: include a check to make sure this actually the user's org

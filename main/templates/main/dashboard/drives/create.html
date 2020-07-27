@@ -8,9 +8,10 @@
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
             <div class="card card-signin my-5">
                 <div class="card-body">
+                    {% if verified %}
                     <h5 class="card-title text-center">
                         Create a Drive
-                      </h5>
+                    </h5>
                       <form role="form" id="CreateDrive" method="post">{% csrf_token %}
 
                           <div class="form-group">
@@ -28,6 +29,19 @@
                           <button id="save" form="CreateDrive" type="submit" class="btn btn-primary" value="Submit">Submit</button>
                       </div>
                       </form>
+                    {% endif %}
+                    {% if not verified %}
+                    <h5 class="card-title text-center">
+                        Create a Drive
+                    </h5>
+
+                    <p class = "text-center"> Please first verify your email. Email verification is necessary
+                        to access this feature on Representable. </p>
+                    <p class = "text-center"> We have resent an email verification link to your inbox. Please don't
+                    hesitate to reach out to us at team@representable.org with any questions.
+                    </p>
+                    {% endif %}
+
                 </div>
             </div>
         </div>
