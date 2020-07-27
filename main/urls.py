@@ -148,17 +148,6 @@ urlpatterns = [
                     "edit/", views.dashboard.EditOrg.as_view(), name="edit_org"
                 ),
                 path(
-                    "review/",
-                    views.dashboard.ReviewOrg.as_view(),
-                    {"drive": ""},
-                    name="review_org",
-                ),
-                path(
-                    "review/<slug:drive>/",
-                    views.dashboard.ReviewOrg.as_view(),
-                    name="review_org",
-                ),
-                path(
                     "members/",
                     views.dashboard.ManageOrg.as_view(),
                     name="manage_org",
