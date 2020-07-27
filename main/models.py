@@ -325,3 +325,20 @@ class State(models.Model):
 
     class Meta:
         db_table = "state"
+
+
+# ******************************************************************************#
+class Report(models.Model):
+    community = models.ForeignKey(
+        CommunityEntry, on_delete=models.CASCADE, related_name="reports"
+    )
+    email = models.CharField(max_length=128)
+
+    timestamp = models.DateTimeField(auto_now_add=True)
+    resolved = models.BooleanField(default=False)
+
+    def unapprove(self):
+        self.community.admin_approved = False
+
+
+# ******************************************************************************#
