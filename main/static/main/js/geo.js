@@ -271,7 +271,7 @@ class SelectRadiusButton {
     radius_control.id = "map-radius-control-id";
     radius_control.style.display = "block";
     radius_control.innerHTML =
-      '<form><input type="range" min="1" max="100" value="25" class="custom-range" id="radius-control"><p style="margin: 0;">Selection Size: <span id="radius-value">20</span></p></form>';
+      '<form><input type="range" min="1" max="100" value="25" class="custom-range" id="radius-control"><p style="margin: 0;">Selection Size: <span id="radius-value">25</span></p></form>';
     this._map = map;
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group draw-group";
@@ -438,7 +438,7 @@ function newSourceLayer(name, mbCode) {
   });
 }
 // census block data - lines only, always visible
-function newCensusLines(state, firstSymbolId) {
+function newCensusLines(state) {
   map.addLayer(
     {
       id: state + "-census-lines",
@@ -449,8 +449,7 @@ function newCensusLines(state, firstSymbolId) {
         "line-color": "rgba(0,0,0,0.2)",
         "line-width": 1,
       },
-    },
-    firstSymbolId
+    }
   );
 }
 
@@ -734,7 +733,7 @@ map.on("style.load", function () {
 
   for (let i = 0; i < states.length; i++) {
     newCensusShading(states[i], firstSymbolId);
-    newCensusLines(states[i], firstSymbolId);
+    newCensusLines(states[i]);
     newHighlightLayer(states[i]);
   }
 
