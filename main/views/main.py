@@ -460,7 +460,15 @@ class EntryView(LoginRequiredMixin, View):
             initial.update({"user": self.request.user})
         return initial
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, abbr=None, *args, **kwargs):
+        state = None
+        if abbr:
+            statequery = State.objects.filter(abbr=abbr.upper())
+            try:
+                state = statequery[0]
+            except Exception:
+                state = None
+
         comm_form = self.community_form_class(
             initial=self.get_initial(), label_suffix=""
         )
@@ -497,6 +505,7 @@ class EntryView(LoginRequiredMixin, View):
             "organization_name": organization_name,
             "organization_id": organization_id,
             "drive_name": drive_name,
+            "state": state,
             "drive_id": drive_id,
         }
         return render(request, self.template_name, context)
