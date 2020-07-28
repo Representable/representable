@@ -93,7 +93,7 @@ class PartnerMap(TemplateView):
         }
         org = Organization.objects.get(slug=self.kwargs["slug"])
         context["organization"] = org
-        context["state"] = org.states[0]
+        context["state"] = org.states[0].lower()
         if not self.kwargs["drive"]:
             context["multi_export_link"] = (
                 "/multiexport/org/" + self.kwargs["slug"]
