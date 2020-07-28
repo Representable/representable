@@ -694,7 +694,8 @@ myTour.addStep({
 });
 
 /******************************************************************************/
-
+// the drawing radius for select tool
+var drawRadius = 25;
 /* After the map style has loaded on the page, add a source layer and default
 styling for a single point. */
 map.on("style.load", function () {
@@ -737,7 +738,6 @@ map.on("style.load", function () {
     newHighlightLayer(states[i]);
   }
 
-  var drawRadius = 20;
   // when selecting or erasing
   map.on("click", function (e) {
     // set bbox as rectangle area around clicked point
