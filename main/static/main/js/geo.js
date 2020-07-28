@@ -696,6 +696,8 @@ myTour.addStep({
 
 /******************************************************************************/
 
+// draw radius for select / erase control
+var drawRadius = 25;
 /* After the map style has loaded on the page, add a source layer and default
 styling for a single point. */
 map.on("style.load", function () {
@@ -738,7 +740,6 @@ map.on("style.load", function () {
     newHighlightLayer(states[i]);
   }
 
-  var drawRadius = 20;
   // when selecting or erasing
   map.on("click", function (e) {
     // set bbox as rectangle area around clicked point
@@ -746,31 +747,48 @@ map.on("style.load", function () {
       [e.point.x - drawRadius, e.point.y - drawRadius],
       [e.point.x + drawRadius, e.point.y + drawRadius],
     ];
+    // polygon for testing contiguity
+    var bboxPoly = turf.bboxPolygon([bbox[0][0], bbox[0][1], bbox[1][0], bbox[1][1]]);
     var queryFeatures = map.queryRenderedFeatures(bbox, {
       layers: [state + "-census-shading"],
     });
     var features = [];
+    // mpoly : stored selection polygon (block groups)
     mpoly = JSON.parse(sessionStorage.getItem("mpoly"));
+    var selectBbox;
     for (let i = 0; i < queryFeatures.length; i++) {
       var feature = queryFeatures[i];
       // push to highlight layer for visibility
       features.push(feature.properties.GEOID);
       var wkt = new Wkt.Wkt();
       if (features.length >= 1) {
+        // polyCon : the turf polygon from coordinates
+        var polyCon;
         if (feature.geometry.type == "MultiPolygon") {
-          // polyCon : the turf polygon from coordinates
-          var polyCon;
           if (feature.geometry.coordinates[0][0].length > 2) {
             polyCon = turf.polygon([feature.geometry.coordinates[0][0]]);
           } else {
             polyCon = turf.polygon([feature.geometry.coordinates[0]]);
           }
-          mpoly = updatePoly(polyCon.geometry, mpoly, wkt);
         } else {
           polyCon = turf.polygon([feature.geometry.coordinates[0]]);
-          mpoly = updatePoly(polyCon.geometry, mpoly, wkt);
         }
+        // update selectBbox to include bounding box of all features in queryset
+        var memo = turf.bbox(polyCon);
+        var memoPoly = turf.bboxPolygon(memo);
+        if (i === 0) {
+          selectBbox = memoPoly;
+        } else {
+          selectBbox = turf.union(memoPoly, selectBbox);
+        }
+        mpoly = updatePoly(polyCon.geometry, mpoly, wkt);
       }
+    }
+    // check if selectBbox overlaps with current bboxPoly
+    console.log(selectBbox);
+    console.log(bboxPoly);
+    if (turf.booleanDisjoint(selectBbox, bboxPoly)) {
+      console.log("ERROR - disjoint comm");
     }
     sessionStorage.setItem("mpoly", JSON.stringify(mpoly));
 
@@ -1033,13 +1051,13 @@ function updateCommunityEntry() {
   // save census block groups multipolygon
   census_blocks_polygon_array = JSON.parse(sessionStorage.getItem("mpoly"));
   // check if map stores no polygon - clear map + sessionStorage if so
-  if (census_blocks_polygon_array === "[]") {
+  if (census_blocks_polygon_array === "" || census_blocks_polygon_array === null) {
     map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
     sessionStorage.setItem("bgFilter", "[]");
     sessionStorage.setItem("mpoly", "[]");
     triggerMissingPolygonError();
   }
-  if (census_blocks_polygon_array != undefined) {
+  if (census_blocks_polygon_array != null) {
     census_blocks_polygon_array = census_blocks_polygon_array.join("|");
   }
   triggerSuccessMessage();
