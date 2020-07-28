@@ -172,8 +172,8 @@ map.on("load", function () {
           visibility: "none",
         },
         paint: {
-          "line-color": "rgba(106,137,204,0.3)",
-          "line-width": 1,
+          "line-color": "rgba(106,137,204,0.7)",
+          "line-width": 2,
         },
       },
       firstSymbolId
@@ -188,8 +188,8 @@ map.on("load", function () {
           visibility: "none",
         },
         paint: {
-          "line-color": "rgba(106,137,204,0.3)",
-          "line-width": 1,
+          "line-color": "rgba(106,137,204,0.7)",
+          "line-width": 2,
         },
       },
       firstSymbolId
