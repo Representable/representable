@@ -230,7 +230,7 @@ class CommunityEntry(models.Model):
         Organization, on_delete=models.CASCADE, blank=True, null=True
     )
     drive = models.ForeignKey(
-        Drive, on_delete=models.CASCADE, blank=True, null=True
+        Drive, on_delete=models.SET_NULL, blank=True, null=True
     )
     user_polygon = models.PolygonField(
         geography=True, serialize=True, blank=False
