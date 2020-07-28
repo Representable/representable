@@ -21,6 +21,11 @@
           <h5>
             {{ object.name}}
           </h5>
+          {% if is_org_admin %}
+          <button class="btn btn-danger float-right mt-4" data-toggle="modal" data-target="#deleteOrgConfirm">
+            <i class="fas fa-trash"></i>
+          </button>
+          {% endif %}
           <hr>
           <p> States:
             {% for state in object.states %}
@@ -56,7 +61,7 @@
             Create a new one below to start collecting data.</p>
           {% endif %}
 
-        <div class="text-center"">
+        <div class="text-center">
           <a class=" btn btn-outline-primary" href="{% url 'main:create_drive' object.slug  object.pk %}" role="button">Create New</a>
           </div>
 
@@ -110,4 +115,31 @@
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteOrgConfirm" tabindex="-1" role="dialog" aria-labelledby="deleteOrgLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete this organization?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This action cannot be undone. All organization information will be permanently deleted. All drives associated with this organization
+        will be permanently deleted. Communities submitted through these drives will not be deleted, but will no longer be associated with the drive 
+        or your organization.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <form role="form" id="deleteOrgInfo" method="post" action="delete\">{% csrf_token %}
+          {% comment %} <input type="hidden" name="drive_slug" value="{{ object.slug }}"> {% endcomment %}
+          <button type="submit" class="btn btn-danger" name="Delete">Delete organization permanently</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}

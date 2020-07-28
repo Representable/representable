@@ -227,7 +227,7 @@ class CommunityEntry(models.Model):
         max_length=100, blank=False, unique=True, default=uuid.uuid4
     )
     organization = models.ForeignKey(
-        Organization, on_delete=models.CASCADE, blank=True, null=True
+        Organization, on_delete=models.SET_NULL, blank=True, null=True
     )
     drive = models.ForeignKey(
         Drive, on_delete=models.SET_NULL, blank=True, null=True

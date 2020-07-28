@@ -226,6 +226,21 @@ class ManageOrg(LoginRequiredMixin, OrgAdminRequiredMixin, TemplateView):
         return context
 
 
+# ******************************************************************************#
+
+
+class DeleteOrg(LoginRequiredMixin, OrgAdminRequiredMixin, DeleteView):
+    """
+    The view for deleting drives
+    """
+
+    model = Organization
+    pk_url_kwarg = "pk"
+
+    def get_success_url(self):
+        return reverse_lazy("main:dashboard")
+
+
 class CreateMember(LoginRequiredMixin, OrgAdminRequiredMixin, FormView):
     model = Membership
     form_class = MemberForm
