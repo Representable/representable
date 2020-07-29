@@ -390,6 +390,7 @@ class ClearMapButton {
       map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
       sessionStorage.setItem("bgFilter", "[]");
       sessionStorage.setItem("mpoly", "[]");
+      selectBbox = undefined;
       updateCommunityEntry();
     });
     return clear_button;
@@ -404,25 +405,24 @@ map.addControl(new ClearMapButton(), "top-right");
 var mapClearButton = document.getElementById("map-clear-button-id");
 drawControls.appendChild(mapClearButton);
 
-// DEPRECATED (for now)
-function toggleInstructionBox() {
+function toggleWarningBox() {
   // Show instruction box on map for edit mode.
-  var instruction_box = document.getElementById("instruction-box-id");
-  if (instruction_box.style.display == "block") {
-    hideInstructionBox();
+  var warning_box = document.getElementById("warning-box-id");
+  if (warning_box.style.display == "block") {
+    hideWarningBox();
   } else {
-    showInstructionBox();
+    showWarningBox();
   }
 }
 
-function showInstructionBox() {
-  var instruction_box = document.getElementById("instruction-box-id");
-  instruction_box.style.display = "block";
+function showWarningBox() {
+  var warning_box = document.getElementById("warning-box-id");
+  warning_box.style.display = "block";
 }
 
-function hideInstructionBox() {
-  var instruction_box = document.getElementById("instruction-box-id");
-  instruction_box.style.display = "none";
+function hideWarningBox() {
+  var warning_box = document.getElementById("warning-box-id");
+  warning_box.style.display = "none";
 }
 
 // Add nav control buttons.
@@ -700,6 +700,8 @@ myTour.addStep({
 var drawRadius = 25;
 // selected area bounding boxes
 var selectBbox;
+// current selection geometry
+var entryPoly;
 /* After the map style has loaded on the page, add a source layer and default
 styling for a single point. */
 map.on("style.load", function () {
@@ -752,6 +754,7 @@ map.on("style.load", function () {
     var queryFeatures = map.queryRenderedFeatures(bbox, {
       layers: [state + "-census-shading"],
     });
+
     var features = [];
     // mpoly : stored selection polygon (block groups)
     mpoly = JSON.parse(sessionStorage.getItem("mpoly"));
@@ -780,20 +783,22 @@ map.on("style.load", function () {
           currentSelectBbox = memoPoly;
         } else {
           currentSelectBbox = turf.union(memoPoly, currentSelectBbox);
+          // entryPoly = turf.union(polyCon, entryPoly);
         }
         mpoly = updatePoly(polyCon.geometry, mpoly, wkt);
       }
     }
     // check if previous selectBbox overlaps with current selectBbox
     if (selectBbox === undefined) {
-      console.log("first selection");
       selectBbox = currentSelectBbox;
+      hideWarningBox();
     } else {
       if (turf.booleanDisjoint(currentSelectBbox, selectBbox)) {
-        console.log("ERROR - disjoint selection");
+        showWarningBox();
+        return;
       } else {
-        console.log("SUCCESS - connected selection");
         selectBbox = turf.union(currentSelectBbox, selectBbox);
+        hideWarningBox();
       }
     }
     sessionStorage.setItem("mpoly", JSON.stringify(mpoly));

@@ -40,7 +40,7 @@ form:invalid {
   display: inline;
 }
 /* Entry page instructions. */
-.instruction-box {
+.warning-box {
   position: absolute;
   bottom: 40px;
   left: 10px;
@@ -768,6 +768,10 @@ color scheme. See readme.md*/
 }
 
 .fa-trash-alt {
+  color: #dc3545;
+}
+
+.fa-exclamation-triangle {
   color: #dc3545;
 }
 
