@@ -1,13 +1,16 @@
 from ..models import (
+    User,
     Membership,
     Organization,
     CommunityEntry,
     Drive,
     Address,
+    Report,
 )
 
 # from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import (
+    View,
     TemplateView,
     ListView,
     CreateView,
@@ -21,8 +24,9 @@ import geojson
 from django.shortcuts import get_object_or_404
 from geojson_rewind import rewind
 from django.core.serializers import serialize
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse_lazy
 
 from .main import make_geojson
 
@@ -94,6 +98,10 @@ class PartnerMap(TemplateView):
         org = Organization.objects.get(slug=self.kwargs["slug"])
         context["organization"] = org
         context["state"] = org.states[0]
+        context["email"] = {
+            "exists": self.request.user.is_authenticated,
+            "value": self.request.user.email,
+        }
         if not self.kwargs["drive"]:
             context["multi_export_link"] = (
                 "/multiexport/org/" + self.kwargs["slug"]
@@ -106,6 +114,7 @@ class PartnerMap(TemplateView):
             context["multi_export_link"] = (
                 "/multiexport/drive/" + self.kwargs["drive"]
             )
+            context["drive_slug"] = self.kwargs["drive"]
         if self.request.user.is_authenticated:
             context["is_org_admin"] = self.request.user.is_org_admin(
                 Organization.objects.get(slug=self.kwargs["slug"]).id
@@ -151,6 +160,40 @@ class MultiExportView(TemplateView):
             geojson.dumps(final), content_type="application/json"
         )
         return response
+
+
+# ******************************************************************************#
+
+
+class ReportView(View):
+    def post(self, request, **kwargs):
+        cid = request.POST["cid"]
+        email = request.POST["email"]
+
+        user_q = User.objects.filter(email=email)
+
+        org_slug = request.POST["org_slug"].replace("/", "")
+        drive_slug = request.POST["drive_slug"].replace("/", "")
+
+        community = CommunityEntry.objects.get(id=cid)
+        org = Organization.objects.get(slug=org_slug)
+
+        report = Report(community=community, email=email)
+        report.save()
+
+        if user_q:
+            user = user_q[0]
+            if user.is_org_admin(org.id):
+                print("here")
+                report.unapprove()
+
+        return HttpResponseRedirect(
+            reverse_lazy(
+                "main:partner_map",
+                kwargs={"slug": org_slug, "drive": drive_slug},
+            )
+            + "#reportSubmitted"
+        )
 
 
 # ******************************************************************************#
