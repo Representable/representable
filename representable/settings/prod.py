@@ -6,7 +6,12 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_SSL_REDIRECT = True
 
 # only allow requests from domain
-ALLOWED_HOSTS = ["www.representable.org", "representable.org"]
+ALLOWED_HOSTS = [
+    "www.representable.org",
+    "representable.org",
+    "www.representable-dev.herokuapp.com",
+    "representable-dev.herokuapp.com",
+]
 
 DEBUG = False
 
