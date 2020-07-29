@@ -103,6 +103,11 @@ urlpatterns = [
         name="partner_map",
     ),
     path(
+        "report/",
+        views.partners.ReportView.as_view(),
+        name="report_community",
+    ),
+    path(
         "drive/<slug:slug>/",
         views.drives.DriveView.as_view(),
         name="drive_page",
