@@ -75,8 +75,13 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                       {% with link_text="/submission?map_id="|addstr:c.entry_ID|slice:27 %}
                       <a href={{link_text}}>{{c.entry_name}}</a>
                       {% endwith %}
+                      {% comment %} <button type="button" class="btn btn-light float-right">
+                        <span class="fas fa-bullhorn"></span> 
+                      </button> {% endcomment %}
+                      <a tabindex="0" class="btn btn-light float-right" id="report" data-community-id={{c.id}} role="button" data-toggle="modal" data-target="#sendReport"><i class="fas fa-bullhorn" style="color:red"></i></a>
                     </span>
                     <hr class="my-1">
+                    {% comment %} <a tabindex="0" class="btn btn-light" role="button" data-toggle="popover" data-trigger="focus" data-content="And here's some amazing content. It's very engaging. Right?"><i class="fas fa-bullhorn"></i></a> {% endcomment %}
                     {% if drive is None %}
                     {% if c.drive %}
                     <span class="badge badge-pill badge-secondary">{{c.drive}}</span>
@@ -138,6 +143,71 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
         </div>
       </div>
     </div>
+    {% comment %} <div id="myForm" class="hidden">
+    <form id="popForm">
+        <div>
+            <label for="email">Email:</label>
+            <input type="text" name="email" id="email" class="form-control input-md">
+            <button type="button" class="btn btn-light float-left" data-dismiss="popover"> Cancel </button>
+            <button type="submit" class="btn btn-danger float-right" data-loading-text="Sending info.."><em class="icon-ok"></em> Submit Report</button>
+        </div>
+    </form>
+</div> {% endcomment %}
+<!-- Modal -->
+<div class="modal fade" id="sendReport" tabindex="-1" role="dialog" aria-labelledby="sendReport" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Report this community</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form role="form" id="reportForm" method="post" action="/report/"> {% csrf_token %}
+      <div class="modal-body">
+        If you feel this community is abusive, spam, low-effort, or doesn't live
+        up to our guidelines, send us a report.
+        <input type="text" class="hidden" name="org_slug" id="org_slug" value={{organization.slug}}/>
+        <input type="text" class="hidden" name="drive_slug" id="drive_slug" value={{drive_slug}}/>
+        <input type="text" class="hidden" name="cid" id="cid" value=""/>
+        <label for="email" {% if email.exists %} class="hidden" {% endif %}>Email address</label>
+        <input type="email" name="email" id="email" placeholder="Enter email" {% if email.exists %} class="hidden" value={{email.value}} {% endif %} />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-danger">Send Report</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for report submitted -->
+<div class="modal fade" id="reportSubmitted" tabindex="-1" role="dialog" aria-labelledby="reportSubmitted" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Thank you for letting us know!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Your report was successfully submitted. Thank you.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="fixURL()">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function fixURL() {
+    window.location.href = window.location.href.split('#')[0];
+  }
+</script>
+
     {% endblock %}
 
     {% block script %}
@@ -148,4 +218,51 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
     <script type="text/javascript" src="{% static 'main/js/components/keys.js' %}"></script>
     <script type="text/javascript" src="{% static 'main/js/components/states.js' %}"></script>
     <script type="text/javascript" src="{% static 'main/js/map.js' %}"></script>
+    {% comment %} <script>
+      $(function () {
+        $('[data-toggle="popover"]').popover()
+      })
+    </script> {% endcomment %}
+    {% comment %} <script>
+    $(function(){
+      $('#report').popover({
+
+          placement: 'left',
+          title: 'Report this community',
+          html:true,
+          content:  $('#myForm').html()
+      }).on('click', function(){
+        // had to put it within the on click action so it grabs the correct info on submit
+        $('.btn-primary').click(function(){
+         $('#result').after("form submitted by " + $('#email').val())
+          $.post('/report/',  {
+              email: $('#email').val(),
+              cid: 415,
+              csrfmiddlewaretoken: '{{ csrf_token }}',
+          }, function(r){
+            $('#report').popover('hide')
+            $('#result').html('resonse from server could be here' )
+          })
+        })
+      })
+    })
+    </script> {% endcomment %}
+    <script>
+    $(document).on("click", "#report", function () {
+         var cid = $(this).data('communityId');
+         $(".modal-body #cid").val( cid );
+    });
+    </script>
+
+    <script>
+      $(document).ready(function() {
+
+        if(window.location.href.indexOf('#reportSubmitted') != -1) {
+            $('#reportSubmitted').modal('show');
+        }
+
+      });
+    </script>
+
+
     {% endblock %}
