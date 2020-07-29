@@ -21,8 +21,10 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
-from main.models import CommunityEntry
+from main.models import CommunityEntry, Report
 from .models import User
+from django.urls import reverse
+from django.utils.html import format_html
 
 from django import forms
 from ckeditor.widgets import CKEditorWidget
@@ -55,6 +57,61 @@ class StateAdmin(admin.ModelAdmin):
 admin.site.register(State, StateAdmin)
 
 admin.site.register(User, UserAdmin)
+
+
+class ReportAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "email",
+        "resolved",
+        "is_admin_approved",
+        "timestamp",
+        "link_to_community",
+    )
+    list_filter = ("resolved",)
+
+    list_select_related = ("community",)
+    actions = ["unapprove_resolve"]
+
+    def is_admin_approved(self, obj):
+        return obj.community.admin_approved
+
+    def unapprove_resolve(self, request, queryset):
+        queryset.update(community__admin_approved=False, resolved=True)
+
+    unapprove_resolve.short_description = (
+        "Unapprove the community and mark as resolved"
+    )
+
+    def link_to_community(self, obj):
+        link = reverse(
+            "admin:main_communityentry_change", args=[obj.community.id]
+        )  # model name has to be lowercase
+        return format_html(
+            '<a href="{}">{}</a>', link, obj.community.entry_name
+        )
+
+    link_to_community.allow_tags = True
+
+    # def change_view(self, request, object_id, form_url='', extra_context=None):
+    #     extra_context = extra_context or {}
+    #     report = Report.objects.get(id=object_id)
+    #     extra_context['admin_approved'] = self.get_admin_approved(report)
+    #     return super().change_view(
+    #         request, object_id, form_url, extra_context=extra_context,
+    #     )
+
+    class Meta:
+        model = Report
+        fields = (
+            "email",
+            "community",
+            "resolved",
+            "timestamp",
+        )
+
+
+admin.site.register(Report, ReportAdmin)
 
 
 class CommunityResource(resources.ModelResource):
