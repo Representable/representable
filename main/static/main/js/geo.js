@@ -438,18 +438,16 @@ function newSourceLayer(name, mbCode) {
 }
 // census block data - lines only, always visible
 function newCensusLines(state) {
-  map.addLayer(
-    {
-      id: state + "-census-lines",
-      type: "line",
-      source: state + "bg",
-      "source-layer": state + "bg",
-      paint: {
-        "line-color": "rgba(0,0,0,0.2)",
-        "line-width": 1,
-      },
-    }
-  );
+  map.addLayer({
+    id: state + "-census-lines",
+    type: "line",
+    source: state + "bg",
+    "source-layer": state + "bg",
+    paint: {
+      "line-color": "rgba(0,0,0,0.2)",
+      "line-width": 1,
+    },
+  });
 }
 
 // add a new layer of census block data (transparent layer)
@@ -489,6 +487,7 @@ function newHighlightLayer(state, firstSymbolId) {
       filter: ["in", "GEOID", ""],
     },
     firstSymbolId
+  );
 }
 
 /******************************************************************************/
@@ -801,7 +800,6 @@ map.on("style.load", function () {
     updateCommunityEntry();
   });
 
-
   // Listen for the `geocoder.input` event that is triggered when a user
   // makes a selection and add a symbol that matches the result.
   geocoder.on("result", function (ev) {
@@ -826,7 +824,7 @@ map.on("style.load", function () {
       hideInstructionBox();
       draw.deleteAll();
       if (states.includes(state)) {
-        map.setLayoutProperty(state + "-census-lines", 'visibility', 'none');
+        map.setLayoutProperty(state + "-census-lines", "visibility", "none");
       }
       draw.changeMode("simple_select");
       hideMapEditButtons();
