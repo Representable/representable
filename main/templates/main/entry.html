@@ -59,11 +59,11 @@
                     <div class="row row-equal-cols">
                         <div class="col-lg  m-2">
                             <h1 class="font-weight-light">
-                                Add your community
+                                Map your community
                             </h1>
 
                             <p class="">
-                                Fill out the form below to
+                                Fill out the form below and draw a map to
                                 add your community to Representable.org
                                 and make your voice heard.
                                 <br>
@@ -264,7 +264,7 @@
                                     </div>
                                     <div class="card-body">
                                         <p>
-                                            To submit your community entry, you must provide a response to at least one of the questions below.
+                                            To submit your community entry, you must provide a response to <b>at least one</b> of the questions below.
                                             Please respond to all the questions that apply.
                                         </p>
                                         <hr>
@@ -530,7 +530,7 @@
                                             </span>
                                             <div id="geocoder" class="geocoder my-3"></div>
                                             <div class="map-bounding-box my-2 collapse">
-                                                <p>Drawing your community will start highlighting census blocks.
+                                                <p>Drawing your community will start highlighting census block groups.
                                                    Make sure that all your community is contained within the highlighted blocks.
                                                    This will help the Redistricting Commission draw fairer districts using your entry.
                                                 </p>
@@ -629,6 +629,8 @@
     <script type="text/javascript">
         mapboxgl.accessToken = "{{ mapbox_key }}";
     </script>
+    <script type="text/javascript" src="{% static 'main/js/components/keys.js' %}"></script>
+    <script type="text/javascript" src="{% static 'main/js/components/states.js' %}"></script>
     <script type="text/javascript" src="{% static 'main/js/wicket.js' %}"></script>
     <script type="text/javascript" src="{% static 'main/js/geo.js' %}"></script>
     <script type="text/javascript">
