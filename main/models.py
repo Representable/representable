@@ -339,6 +339,7 @@ class Report(models.Model):
 
     def unapprove(self):
         self.community.admin_approved = False
+        self.community.save()
 
 
 # ******************************************************************************#
