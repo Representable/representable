@@ -820,14 +820,9 @@ map.on("style.load", function () {
     }
     // if searching for a different state than what is currently loaded
     if (state != new_state) {
-      // clear the map each time you Search
-      hideInstructionBox();
-      draw.deleteAll();
       if (states.includes(state)) {
         map.setLayoutProperty(state + "-census-lines", "visibility", "none");
       }
-      draw.changeMode("simple_select");
-      hideMapEditButtons();
       if (states.includes(new_state)) {
         // add block groups, remove those of previous state
         newCensusLines(new_state);
