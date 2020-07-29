@@ -698,6 +698,8 @@ myTour.addStep({
 
 // draw radius for select / erase control
 var drawRadius = 25;
+// selected area bounding boxes
+var selectBbox;
 /* After the map style has loaded on the page, add a source layer and default
 styling for a single point. */
 map.on("style.load", function () {
@@ -747,15 +749,13 @@ map.on("style.load", function () {
       [e.point.x - drawRadius, e.point.y - drawRadius],
       [e.point.x + drawRadius, e.point.y + drawRadius],
     ];
-    // polygon for testing contiguity
-    var bboxPoly = turf.bboxPolygon([bbox[0][0], bbox[0][1], bbox[1][0], bbox[1][1]]);
     var queryFeatures = map.queryRenderedFeatures(bbox, {
       layers: [state + "-census-shading"],
     });
     var features = [];
     // mpoly : stored selection polygon (block groups)
     mpoly = JSON.parse(sessionStorage.getItem("mpoly"));
-    var selectBbox;
+    var currentSelectBbox;
     for (let i = 0; i < queryFeatures.length; i++) {
       var feature = queryFeatures[i];
       // push to highlight layer for visibility
@@ -777,18 +777,24 @@ map.on("style.load", function () {
         var memo = turf.bbox(polyCon);
         var memoPoly = turf.bboxPolygon(memo);
         if (i === 0) {
-          selectBbox = memoPoly;
+          currentSelectBbox = memoPoly;
         } else {
-          selectBbox = turf.union(memoPoly, selectBbox);
+          currentSelectBbox = turf.union(memoPoly, currentSelectBbox);
         }
         mpoly = updatePoly(polyCon.geometry, mpoly, wkt);
       }
     }
-    // check if selectBbox overlaps with current bboxPoly
-    console.log(selectBbox);
-    console.log(bboxPoly);
-    if (turf.booleanDisjoint(selectBbox, bboxPoly)) {
-      console.log("ERROR - disjoint comm");
+    // check if previous selectBbox overlaps with current selectBbox
+    if (selectBbox === undefined) {
+      console.log("first selection");
+      selectBbox = currentSelectBbox;
+    } else {
+      if (turf.booleanDisjoint(currentSelectBbox, selectBbox)) {
+        console.log("ERROR - disjoint selection");
+      } else {
+        console.log("SUCCESS - connected selection");
+        selectBbox = turf.union(currentSelectBbox, selectBbox);
+      }
     }
     sessionStorage.setItem("mpoly", JSON.stringify(mpoly));
 
