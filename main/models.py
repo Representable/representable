@@ -233,14 +233,14 @@ class CommunityEntry(models.Model):
         Drive, on_delete=models.SET_NULL, blank=True, null=True
     )
     user_polygon = models.PolygonField(
-        geography=True, serialize=True, blank=False
+        geography=True, serialize=True, blank=True, null=True
     )
     census_blocks_polygon_array = ArrayField(
         models.PolygonField(
             geography=True, blank=True, null=True, serialize=True
         ),
-        blank=True,
-        null=True,
+        blank=False,
+        null=True
     )
     census_blocks_polygon = models.MultiPolygonField(
         geography=True, serialize=True, blank=True, null=True

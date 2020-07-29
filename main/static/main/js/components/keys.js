@@ -156,12 +156,12 @@ var UPPER_KEYS = {
   "wy-upper": "7lkxtzk5",
 };
 var BG_KEYS = {
-  "ilbg": "2yul2f76",
-  "mibg": "65kwp6kr",
-  "njbg": "1ksdxf88",
-  "pabg": "c35vqnuq",
-  "txbg": "5x05l0of",
-  "vabg": "3pmrtqs2",
+  "ilbg": "4iugl58g",
+  "mibg": "6rmkafit",
+  "njbg": "9va600u8",
+  "pabg": "cpap9ug0",
+  "txbg": "9onkqc5t",
+  "vabg": "5qxcnhry",
 };
 var CHI_WARD_KEY = "179v2oeh";
 var CHI_COMM_KEY = "63nswxfc";
