@@ -270,7 +270,7 @@ class SelectRadiusButton {
     radius_control.id = "map-radius-control-id";
     radius_control.style.display = "block";
     radius_control.innerHTML =
-      '<form><input type="range" min="1" max="100" value="25" class="custom-range" id="radius-control"><p style="margin: 0;">Selection Size: <span id="radius-value">20</span></p></form>';
+      '<form><input type="range" min="1" max="50" value="25" class="custom-range" id="radius-control"><p style="margin: 0;">Selection Size: <span id="radius-value">25</span></p></form>';
     this._map = map;
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group draw-group";
@@ -437,20 +437,20 @@ function newSourceLayer(name, mbCode) {
   });
 }
 // census block data - lines only, always visible
-function newCensusLines(state, firstSymbolId) {
-  map.addLayer(
-    {
-      id: state + "-census-lines",
-      type: "line",
-      source: state + "bg",
-      "source-layer": state + "bg",
-      paint: {
-        "line-color": "rgba(0,0,0,0.2)",
-        "line-width": 1,
-      },
+function newCensusLines(state) {
+  map.addLayer({
+    id: state + "-census-lines",
+    type: "line",
+    source: state + "bg",
+    "source-layer": state + "bg",
+    layout: {
+      visibility: "none",
     },
-    firstSymbolId
-  );
+    paint: {
+      "line-color": "rgba(0,0,0,0.2)",
+      "line-width": 1,
+    },
+  });
 }
 
 // add a new layer of census block data (transparent layer)
@@ -739,7 +739,7 @@ map.on("style.load", function () {
 
   for (let i = 0; i < states.length; i++) {
     newCensusShading(states[i], firstSymbolId);
-    newCensusLines(states[i], firstSymbolId);
+    newCensusLines(states[i]);
     newHighlightLayer(states[i]);
   }
 
@@ -852,20 +852,18 @@ map.on("style.load", function () {
     }
     // if searching for a different state than what is currently loaded
     if (state != new_state) {
-      // clear the map each time you Search
-      hideInstructionBox();
-      draw.deleteAll();
       if (states.includes(state)) {
-        map.setLayoutProperty(state + "-census-lines", 'visibility', 'none');
+        map.setLayoutProperty(state + "-census-lines", "visibility", "none");
       }
-      draw.changeMode("simple_select");
-      hideMapEditButtons();
       if (states.includes(new_state)) {
         // add block groups, remove those of previous state
-        newCensusLines(new_state);
-        newHighlightLayer(new_state);
+        map.setLayoutProperty(new_state + "-census-lines", "visibility", "visible");
       }
       state = new_state;
+    } else {
+      if (states.includes(state)) {
+        map.setLayoutProperty(state + "-census-lines", "visibility", "visible");
+      }
     }
 
     // Save state to session storage
@@ -876,36 +874,39 @@ map.on("style.load", function () {
     var bgID = null;
     var features = [];
     var stateCensus = state + "-census-shading";
-    map.on("mousemove", stateCensus, function (e) {
-      if (e.features.length > 0) {
-        // create a constantly updated list of the features which have been highlighted in foreach loop
-        // before highlighting, go thru that list, and deselect all
-        var bbox = [
-          [e.point.x - drawRadius, e.point.y - drawRadius],
-          [e.point.x + drawRadius, e.point.y + drawRadius],
-        ];
-        var hoverFeatures = map.queryRenderedFeatures(bbox, {
-          layers: [state + "-census-shading"],
-        });
-        stateBG = state + "bg";
-        features.forEach(function (feature) {
-          bgID = feature.id;
-          map.setFeatureState(
-            { source: stateBG, sourceLayer: stateBG, id: bgID },
-            { hover: false }
-          );
-        });
-        features = [];
-        hoverFeatures.forEach(function (feature) {
-          features.push(feature);
-          bgID = feature.id;
-          map.setFeatureState(
-            { source: stateBG, sourceLayer: stateBG, id: bgID },
-            { hover: true }
-          );
-        });
-      }
-    });
+    // if touch screen, disable.
+    if (!is_touch_device()) {
+      map.on("mousemove", stateCensus, function (e) {
+        if (e.features.length > 0) {
+          // create a constantly updated list of the features which have been highlighted in foreach loop
+          // before highlighting, go thru that list, and deselect all
+          var bbox = [
+            [e.point.x - drawRadius, e.point.y - drawRadius],
+            [e.point.x + drawRadius, e.point.y + drawRadius],
+          ];
+          var hoverFeatures = map.queryRenderedFeatures(bbox, {
+            layers: [state + "-census-shading"],
+          });
+          stateBG = state + "bg";
+          features.forEach(function (feature) {
+            bgID = feature.id;
+            map.setFeatureState(
+              { source: stateBG, sourceLayer: stateBG, id: bgID },
+              { hover: false }
+            );
+          });
+          features = [];
+          hoverFeatures.forEach(function (feature) {
+            features.push(feature);
+            bgID = feature.id;
+            map.setFeatureState(
+              { source: stateBG, sourceLayer: stateBG, id: bgID },
+              { hover: true }
+            );
+          });
+        }
+      });
+    }
 
     // When the mouse leaves the state-fill layer, update the feature state of the
     // previously hovered feature.
@@ -1087,3 +1088,22 @@ function updateCommunityEntry() {
   updateFormFields(census_blocks_polygon_array);
 }
 /******************************************************************************/
+
+// check if device is touch screen --> https://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript/4819886#4819886
+function is_touch_device() {
+
+    var prefixes = ' -webkit- -moz- -o- -ms- '.split(' ');
+
+    var mq = function (query) {
+        return window.matchMedia(query).matches;
+    }
+
+    if (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
+        return true;
+    }
+
+    // include the 'heartz' as a way to have a non matching MQ to help terminate the join
+    // https://git.io/vznFH
+    var query = ['(', prefixes.join('touch-enabled),('), 'heartz', ')'].join('');
+    return mq(query);
+}
