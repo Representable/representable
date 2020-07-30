@@ -32,7 +32,8 @@
     sessionStorage.setItem("allChecks", "pass");
     var mapbox_user_name = "{{mapbox_user_name}}";
     var drive_id = "{{drive_id}}";
-    var state = "{{state}}";
+    var state_abbr = "{{state.abbr}}";
+    var state_name = "{{state.name}}";
     var organization_id = "{{organization_id}}";
     var drive_name = "{{drive_name}}";
     var organization_name = "{{organization_name}}";
@@ -40,7 +41,6 @@
     {
      "drive_id": drive_id,
      "drive_name": drive_name,
-     "state": state,
      "organization_id": organization_id,
      "organization_name": organization_name,
     }
@@ -98,7 +98,7 @@
                             <div class="collapse-card card-section active-section">
                                 <div class="card">
                                     <div class="card-header text-header-card">
-                                        <strong>1. Your Identifying Information from {{state.name}}</strong>
+                                        <strong>1. Your Identifying Information from {{state.name}} {{state.abbr}}</strong>
                                     </div>
                                     <div class="card-body collapse show">
                                         <div class="accordion" id="privacy_accordion">

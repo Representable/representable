@@ -65,7 +65,7 @@
           <p>{{ drive.description }}</p>
           </div>
           <div class="col-sm-3">
-            <a class="btn btn-lg btn-primary" href="{% url 'main:entry' drive=drive.slug %}">Join Drive</a>
+            <a class="btn btn-lg btn-primary" href="{% url 'main:entry' drive=drive.slug %}{{ state_obj.abbr }}">Join Drive</a>
           </div>
         </div>
         <hr>
@@ -82,7 +82,7 @@
           <h5 class="font-weight-light my-3">If you would like to create your own community independently of a partner organization, you can draw and export your community here.</h5>
         </div>
         <div class="col-sm-3">
-          <a class="btn ws-normal btn-outline-primary btn-canvas my-3 font-weight-light" href="{% url 'main:entry' %}" role="button">Draw my community</a>
+          <a class="btn ws-normal btn-outline-primary btn-canvas my-3 font-weight-light" href="/entry/{{state_obj.abbr}}" role="button">Draw my community</a>
         </div>
       </div>
     </div>

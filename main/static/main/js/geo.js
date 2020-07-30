@@ -953,6 +953,8 @@ myTour.addStep({
 /* After the map style has loaded on the page, add a source layer and default
    styling for a single point. */
 map.on("style.load", function () {
+  console.log("mapped3");
+
   map.addSource("single-point", {
     type: "geojson",
     data: {
@@ -975,17 +977,49 @@ map.on("style.load", function () {
     newSourceLayer(bg, BG_KEYS[bg]);
   }
   if (states.includes(state)) {
+    console.log(state);
+
     newCensusLines(state);
     newHighlightLayer(state);
+    console.log("mapped4");
   }
 
+  // Initialize Map for State Pages
+  if (state_abbr !== "") {
+    // Save state to session storage
+    state = state_abbr;
+    sessionStorage.setItem("state_name", state);
+
+    showMap();
+    map.flyTo({
+      center: statesLngLat[state],
+      zoom: 6,
+      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+    });
+
+    // Tracking
+    mixpanel.track("Geocoder Search Successful", {
+      drive_id: drive_id,
+      drive_name: drive_name,
+      organization_id: organization_id,
+      organization_name: organization_name,
+    });
+
+    console.log(state_abbr);
+    newCensusLines(state);
+    newHighlightLayer(state);
+    //map.setLayoutProperty(state_abbr + "-census-lines", 'visibility', 'none');
+  }
 
   // Listen for the `geocoder.input` event that is triggered when a user
   // makes a selection and add a symbol that matches the result.
   geocoder.on("result", function (ev) {
+    console.log("geocodelisten");
+
     $("#shepherd-btn").removeClass("d-none");
     map.getSource("single-point").setData(ev.result.geometry);
     var styleSpec = ev.result;
+    console.log(styleSpec);
     var styleSpecBox = document.getElementById("json-response");
     var styleSpecText = JSON.stringify(styleSpec, null, 2);
 
@@ -995,8 +1029,10 @@ map.on("style.load", function () {
       new_state = styleSpec.context[styleSpec.context.length - 2]["short_code"]
         .toLowerCase()
         .substring(3);
+      console.log(new_state + " made it here");
     } else {
       new_state = styleSpec.properties["short_code"].toLowerCase().substring(3);
+      console.log(new_state);
     }
     // if searching for a different state than what is currently loaded
     if (state != new_state) {
@@ -1004,7 +1040,8 @@ map.on("style.load", function () {
       hideInstructionBox();
       draw.deleteAll();
       if (states.includes(state)) {
-        map.setLayoutProperty(state + "-census-lines", 'visibility', 'none');
+        map.setLayoutProperty(state + "-census-lines", "visibility", "none");
+        console.log("visibiliity");
       }
       draw.changeMode("simple_select");
       hideMapEditButtons();
@@ -1012,6 +1049,7 @@ map.on("style.load", function () {
         // add block groups, remove those of previous state
         newCensusLines(new_state);
         newHighlightLayer(new_state);
+        console.log("newcensuselines");
       }
       state = new_state;
     }
@@ -1033,6 +1071,7 @@ var wasLoaded = false;
 map.on("render", function (event) {
   if (map.loaded() == false || wasLoaded) return;
   wasLoaded = true;
+  console.log("mapped");
   if (document.getElementById("id_user_polygon").value !== "") {
     // If page refreshes (or the submission fails), get the polygon
     // from the field and draw it again.
@@ -1047,6 +1086,7 @@ map.on("render", function (event) {
       essential: true, // this animation is considered essential with respect to prefers-reduced-motion
       zoom: 8,
     });
+    console.log("mapped2");
   }
 });
 
@@ -1203,12 +1243,18 @@ function highlightBlocks(drawn_polygon) {
             } else {
               polyCon = turf.polygon([feature.geometry.coordinates[0]]);
             }
-            if (turf.booleanOverlap(drawn_polygon, polyCon) || turf.booleanContains(drawn_polygon, polyCon)) {
+            if (
+              turf.booleanOverlap(drawn_polygon, polyCon) ||
+              turf.booleanContains(drawn_polygon, polyCon)
+            ) {
               memo.push(feature.properties.GEOID);
               mpoly = addPoly(polyCon.geometry, mpoly, wkt);
             }
           } else {
-            if (turf.booleanOverlap(drawn_polygon, feature.geometry) || turf.booleanContains(drawn_polygon, feature.geometry)) {
+            if (
+              turf.booleanOverlap(drawn_polygon, feature.geometry) ||
+              turf.booleanContains(drawn_polygon, feature.geometry)
+            ) {
               memo.push(feature.properties.GEOID);
               polyCon = turf.polygon([feature.geometry.coordinates[0]]);
               mpoly = addPoly(polyCon.geometry, mpoly, wkt);
@@ -1281,10 +1327,10 @@ function updateCommunityEntry(event) {
     // sets the form fields as empty
     // TODO: update for all states
     if (states.includes(state)) {
-      map.setFilter(
-        sessionStorage.getItem("state_name") + "-bg-highlighted",
-        ["in", "GEOID"]
-      );
+      map.setFilter(sessionStorage.getItem("state_name") + "-bg-highlighted", [
+        "in",
+        "GEOID",
+      ]);
     }
     triggerMissingPolygonError();
   } else {
@@ -1319,7 +1365,7 @@ function updateCommunityEntry(event) {
     wkt_obj = wkt.read(user_polygon_json);
     user_polygon_wkt = wkt_obj.write();
     // save census block groups multipolygon
-      census_blocks_polygon_array = highlightBlocks(drawn_polygon);
+    census_blocks_polygon_array = highlightBlocks(drawn_polygon);
     if (census_blocks_polygon_array != undefined) {
       census_blocks_polygon_array = census_blocks_polygon_array.join("|");
     }
