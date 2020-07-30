@@ -171,7 +171,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
         <input type="text" class="hidden" name="drive_slug" id="drive_slug" value={{drive_slug}}/>
         <input type="text" class="hidden" name="cid" id="cid" value=""/>
         <label for="email" {% if email.exists %} class="hidden" {% endif %}>Email address</label>
-        <input type="email" name="email" id="email" placeholder="Enter email" {% if email.exists %} class="hidden" value={{email.value}} {% endif %} />
+        <input type="email" name="email" id="email" placeholder="Enter email" {% if email.exists %} class="hidden" value={{email.value}} {% endif %} required/>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>

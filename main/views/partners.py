@@ -98,10 +98,17 @@ class PartnerMap(TemplateView):
         org = Organization.objects.get(slug=self.kwargs["slug"])
         context["organization"] = org
         context["state"] = org.states[0]
-        context["email"] = {
-            "exists": self.request.user.is_authenticated,
-            "value": self.request.user.email,
-        }
+        if self.request.user.is_authenticated:
+            email = {
+                "exists": True,
+                "value": self.request.user.email,
+            }
+        else:
+            email = {
+                "exists": False,
+                "value": None,
+            }
+        context["email"] = email
         if not self.kwargs["drive"]:
             context["multi_export_link"] = (
                 "/multiexport/org/" + self.kwargs["slug"]
