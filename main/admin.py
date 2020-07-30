@@ -77,7 +77,10 @@ class ReportAdmin(admin.ModelAdmin):
         return obj.community.admin_approved
 
     def unapprove_resolve(self, request, queryset):
-        queryset.update(community__admin_approved=False, resolved=True)
+        for rep in queryset:
+            rep.unapprove()
+            rep.resolved = True
+            rep.save()
 
     unapprove_resolve.short_description = (
         "Unapprove the community and mark as resolved"
