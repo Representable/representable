@@ -186,7 +186,7 @@ class ReportView(View):
         report = Report(community=community, email=email)
         report.save()
 
-        if is_org_admin:
+        if is_org_admin == "True":
             report.unapprove()
 
         return HttpResponseRedirect(
