@@ -31,6 +31,7 @@ class ReportAdminTest(TestCase):
             "org_slug": org.slug,
             "drive_slug": drive.slug,
             "email": self.user.email,
+            "is_org_admin": self.user.is_org_admin(org.id),
         }
         self.response = self.client.post("/report/", data, follow=True)
         rep = Report.objects.get(id=1)
@@ -68,6 +69,7 @@ class ReportUserTest(TestCase):
             "org_slug": org.slug,
             "drive_slug": drive.slug,
             "email": self.user.email,
+            "is_org_admin": self.user.is_org_admin(org.id),
         }
         self.response = self.client.post("/report/", data, follow=True)
         rep = Report.objects.get(community=community)
@@ -99,6 +101,7 @@ class ReportNoUserTest(TestCase):
             "org_slug": org.slug,
             "drive_slug": drive.slug,
             "email": "fakeemail@fake.com",
+            "is_org_admin": False,
         }
         self.response = self.client.post("/report/", data, follow=True)
         rep = Report.objects.get(community=community)
