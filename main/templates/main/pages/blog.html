@@ -1,0 +1,38 @@
+{% extends 'main/layouts/base-page.html' %}
+{% load static %}
+{% block title %}
+{% endblock %}
+{% block page-content %}
+<h1 style = "text-align: center"> Representable Blog </h1>
+
+<p class="lead text-center">
+</p>
+<div class="lead">
+    <div class="col-sm-6 col-md-9 col-lg-9 mx-auto">
+        <p class="p1" style="text-align: center;"> <i> Communities of Interest. Stories of Representation. </i> </p>
+        <br>
+
+        <!-- Medium embed generated scripts from
+        Documentation: https://www.retainable.io/embed-your-medium-blog
+        https://medium-widget.pixelpoint.io/
+        https://medium.com/datadriveninvestor/embed-medium-as-a-blog-on-your-site-54a1b49cbe16
+        --->
+        <!--<div id="medium-widget"></div>-->
+        <!--<script src="https://medium-widget.pixelpoint.io/widget.js"></script>-->
+        <!--<script>MediumWidget.Init({renderTo: '#medium-widget', params: {"resource":"https://medium.com/the-andela-way","postsPerLine":3,"limit":6,"picture":"big","fields":["description","author","publishAt"],"ratio":"landscape"}})</script>-->
+
+        <div id="retainable-rss-embed"
+        data-rss="https://medium.com/feed/representable"
+        data-maxcols="1"
+        data-layout="grid"
+        data-poststyle="inline"
+        data-readmore="Read the rest"
+        data-offset="-40">
+
+        <script src="https://www.retainable.io/assets/retainable/rss-embed/retainable-rss-embed.js"></script>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

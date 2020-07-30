@@ -28,7 +28,13 @@ from django.views.generic import (
 )
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from allauth.account.decorators import verified_email_required
+from allauth.account.models import (
+    EmailConfirmation,
+    EmailAddress,
+    EmailConfirmationHMAC,
+)
+from allauth.account import adapter
+from allauth.account.app_settings import ADAPTER
 from django.forms import formset_factory
 from ..forms import (
     CommunityForm,
@@ -71,6 +77,7 @@ from django.contrib.auth.models import Group
 from itertools import islice
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
+
 
 # ******************************************************************************#
 
@@ -135,6 +142,13 @@ class Michigan(TemplateView):
     # template_name = "main/michigan.html"
     def get(self, request, *args, **kwargs):
         return redirect("/state/mi/")
+
+
+# ******************************************************************************#
+
+
+class Blog(TemplateView):
+    template_name = "main/pages/blog.html"
 
 
 # ******************************************************************************#
@@ -271,6 +285,44 @@ class Submission(TemplateView):
 # ******************************************************************************#
 
 
+def make_geojson(request, entry):
+    map_geojson = serialize(
+        "geojson",
+        [entry],
+        geometry_field="census_blocks_polygon",
+        fields=(
+            "entry_name",
+            "cultural_interests",
+            "economic_interests",
+            "comm_activities",
+            "other_considerations",
+        ),
+    )
+    gj = geojson.loads(map_geojson)
+    gj = rewind(gj)
+    del gj["crs"]
+    user_map = entry
+    if user_map.organization:
+        gj["features"][0]["properties"][
+            "organization"
+        ] = user_map.organization.name
+    if user_map.drive:
+        gj["features"][0]["properties"]["drive"] = user_map.drive.name
+    if request.user.is_authenticated:
+        is_org_leader = user_map.organization and (
+            request.user.is_org_admin(user_map.organization_id)
+        )
+        if is_org_leader or request.user == user_map.user:
+            gj["features"][0]["properties"]["author_name"] = user_map.user_name
+            for a in Address.objects.filter(entry=user_map):
+                addy = (
+                    a.street + " " + a.city + ", " + a.state + " " + a.zipcode
+                )
+                gj["features"][0]["properties"]["address"] = addy
+    feature = gj["features"][0]
+    return feature
+
+
 class ExportView(TemplateView):
     template = "main/export.html"
 
@@ -283,47 +335,7 @@ class ExportView(TemplateView):
                 "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             }
             return render(request, self.template_name, context)
-        map_geojson = serialize(
-            "geojson",
-            query,
-            geometry_field="census_blocks_polygon",
-            fields=(
-                "entry_name",
-                "cultural_interests",
-                "economic_interests",
-                "comm_activities",
-                "other_considerations",
-            ),
-        )
-        gj = geojson.loads(map_geojson)
-        gj = rewind(gj)
-        del gj["crs"]
-        user_map = query[0]
-        if user_map.organization:
-            gj["features"][0]["properties"][
-                "organization"
-            ] = user_map.organization.name
-        if user_map.drive:
-            gj["features"][0]["properties"]["drive"] = user_map.drive.name
-        if self.request.user.is_authenticated:
-            is_org_leader = user_map.organization and (
-                self.request.user.is_org_admin(user_map.organization_id)
-            )
-            if is_org_leader or self.request.user == user_map.user:
-                gj["features"][0]["properties"][
-                    "author_name"
-                ] = user_map.user_name
-                for a in Address.objects.filter(entry=user_map):
-                    addy = (
-                        a.street
-                        + " "
-                        + a.city
-                        + ", "
-                        + a.state
-                        + " "
-                        + a.zipcode
-                    )
-                    gj["features"][0]["properties"]["address"] = addy
+        gj = make_geojson(request, query[0])
 
         response = HttpResponse(
             geojson.dumps(gj), content_type="application/json"
@@ -372,7 +384,7 @@ class Map(TemplateView):
 # ******************************************************************************#
 
 
-class Thanks(TemplateView):
+class Thanks(LoginRequiredMixin, TemplateView):
     template_name = "main/thanks.html"
 
     def get_context_data(self, **kwargs):
@@ -389,11 +401,33 @@ class Thanks(TemplateView):
             organization = drive.organization
             organization_name = organization.name
 
+        if EmailAddress.objects.filter(
+            user=self.request.user, verified=True
+        ).exists():
+            context["verified"] = True
+        else:
+            user_email_address = EmailAddress.objects.get(
+                user=self.request.user
+            )
+
+            user_email_confirmation = EmailConfirmationHMAC(
+                email_address=user_email_address
+            )
+
+            # default_adapter = adapter.get_adapter()
+
+            # default_adapter.send_confirmation_mail(self.request, user_email_confirmation, False)
+            # user_email_address.send_confirmation(None, False)
+
+            user_email_confirmation.send(self.request, False)
+            context["verified"] = False
+
         context["map_url"] = self.kwargs["map_id"]
         context["drive"] = self.kwargs["drive"]
         context["has_drive"] = has_drive
         context["organization_name"] = organization_name
         context["drive_name"] = drive_name
+
         return context
 
 
@@ -501,7 +535,7 @@ class EntryView(LoginRequiredMixin, View):
                     entryForm.organization = drive.organization
 
             if entryForm.organization:
-                if self.request.user.is_member(entryForm.organization.id):
+                if self.request.user.is_org_admin(entryForm.organization.id):
                     entryForm.admin_approved = True
                 else:
                     # check if user is on the allowlist

@@ -58,7 +58,6 @@ var wkt_obj;
 // (If user deletes all fields, he can add one more according to this one).
 var formsetFieldObject;
 var state;
-var neighbors = [];
 $(document).ready(function () {
   // load tooltips (bootstrap)
   $('[data-toggle="tooltip"]').tooltip();
@@ -851,12 +850,24 @@ map.on("style.load", function () {
     } else {
       new_state = styleSpec.properties["short_code"].toLowerCase().substring(3);
     }
-    // get the neighbors of the state if the state is different
+    // if searching for a different state than what is currently loaded
     if (state != new_state) {
-      new_neighbors = state_neighbors[new_state];
+      // clear the map each time you Search
+      hideInstructionBox();
+      draw.deleteAll();
+      if (states.includes(state)) {
+        map.setLayoutProperty(state + "-census-lines", 'visibility', 'none');
+      }
+      draw.changeMode("simple_select");
+      hideMapEditButtons();
+      if (states.includes(new_state)) {
+        // add block groups, remove those of previous state
+        newCensusLines(new_state);
+        newHighlightLayer(new_state);
+      }
       state = new_state;
-      neighbors = new_neighbors;
     }
+
     // Save state to session storage
     sessionStorage.setItem("state_name", state);
 
