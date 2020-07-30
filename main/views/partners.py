@@ -176,23 +176,18 @@ class ReportView(View):
     def post(self, request, **kwargs):
         cid = request.POST["cid"]
         email = request.POST["email"]
-
-        user_q = User.objects.filter(email=email)
+        is_org_admin = request.POST["is_org_admin"]
 
         org_slug = request.POST["org_slug"].replace("/", "")
         drive_slug = request.POST["drive_slug"].replace("/", "")
 
         community = CommunityEntry.objects.get(id=cid)
-        org = Organization.objects.get(slug=org_slug)
 
         report = Report(community=community, email=email)
         report.save()
 
-        if user_q:
-            user = user_q[0]
-            if user.is_org_admin(org.id):
-                print("here")
-                report.unapprove()
+        if is_org_admin:
+            report.unapprove()
 
         return HttpResponseRedirect(
             reverse_lazy(

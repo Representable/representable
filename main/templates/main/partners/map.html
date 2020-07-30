@@ -169,6 +169,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
         up to our guidelines, send us a report.
         <input type="text" class="hidden" name="org_slug" id="org_slug" value={{organization.slug}}/>
         <input type="text" class="hidden" name="drive_slug" id="drive_slug" value={{drive_slug}}/>
+        <input type="text" class="hidden" name="is_org_admin" id="is_org_admin" value={{is_org_admin}}/>
         <input type="text" class="hidden" name="cid" id="cid" value=""/>
         <label for="email" {% if email.exists %} class="hidden" {% endif %}>Email address</label>
         <input type="email" name="email" id="email" placeholder="Enter email" {% if email.exists %} class="hidden" value={{email.value}} {% endif %} required/>
