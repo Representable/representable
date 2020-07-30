@@ -153,6 +153,11 @@ urlpatterns = [
                     "edit/", views.dashboard.EditOrg.as_view(), name="edit_org"
                 ),
                 path(
+                    "delete/",
+                    views.dashboard.DeleteOrg.as_view(),
+                    name="delete_org",
+                ),
+                path(
                     "members/",
                     views.dashboard.ManageOrg.as_view(),
                     name="manage_org",
@@ -181,6 +186,11 @@ urlpatterns = [
                     "drives/<uuid:cam_pk>/edit/",
                     views.dashboard.UpdateDrive.as_view(),
                     name="update_drive",
+                ),
+                path(
+                    "drives/<uuid:cam_pk>/delete/",
+                    views.dashboard.DeleteDrive.as_view(),
+                    name="delete_drive",
                 ),
             ]
         ),

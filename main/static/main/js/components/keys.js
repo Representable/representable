@@ -163,6 +163,8 @@ var BG_KEYS = {
   "txbg": "5x05l0of",
   "vabg": "3pmrtqs2",
 };
+var CHI_WARD_KEY = "179v2oeh";
+var CHI_COMM_KEY = "63nswxfc";
 // var states = [
 //   "ak",
 //   "al",

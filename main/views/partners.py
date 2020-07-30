@@ -97,7 +97,7 @@ class PartnerMap(TemplateView):
         }
         org = Organization.objects.get(slug=self.kwargs["slug"])
         context["organization"] = org
-        context["state"] = org.states[0]
+        context["state"] = org.states[0].lower()
         if self.request.user.is_authenticated:
             email = {
                 "exists": True,

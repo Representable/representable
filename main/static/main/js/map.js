@@ -35,6 +35,8 @@ var geocoder = new MapboxGeocoder({
 });
 map.addControl(geocoder, "top-right");
 
+state = state.toLowerCase();
+
 // Add geolocate control to the map. -- this zooms in on the user's current location when pressed
 // Q: is it too confusing ? like the symbol doesn't exactly tell you what it does
 map.addControl(
@@ -60,10 +62,10 @@ function newSourceLayer(name, mbCode) {
 function newCensusLayer(state, firstSymbolId) {
   map.addLayer(
     {
-      id: state.toUpperCase() + " Census Blocks",
+      id: state.toUpperCase() + " Census Blockgroups",
       type: "line",
-      source: state + "-census",
-      "source-layer": state + "census",
+      source: state + "bg",
+      "source-layer": state + "bg",
       layout: {
         visibility: "none",
       },
@@ -125,27 +127,73 @@ map.on("load", function () {
     }
   }
   // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
-  for (let census in CENSUS_KEYS) {
-    newSourceLayer(census, CENSUS_KEYS[census]);
-  }
-  // upper layers
-  for (let upper in UPPER_KEYS) {
-    if (states[i] !== "dc") {
-      newSourceLayer(upper, UPPER_KEYS[upper]);
+  if (state === ""){
+    for (let bg in BG_KEYS) {
+      newSourceLayer(bg, BG_KEYS[bg]);
     }
-  }
-  // lower layers
-  for (let lower in LOWER_KEYS) {
-    if (states[i] !== "dc") {
-      newSourceLayer(lower, LOWER_KEYS[lower]);
+    // upper layers
+    for (let upper in UPPER_KEYS) {
+      if (states[i] !== "dc") {
+        newSourceLayer(upper, UPPER_KEYS[upper]);
+      }
     }
-  }
-  for (let i = 0; i < states.length; i++) {
-    newCensusLayer(states[i], firstSymbolId);
-    if (states[i] !== "dc") {
-      newUpperLegislatureLayer(states[i]);
-      newLowerLegislatureLayer(states[i]);
+    // lower layers
+    for (let lower in LOWER_KEYS) {
+      if (states[i] !== "dc") {
+        newSourceLayer(lower, LOWER_KEYS[lower]);
+      }
     }
+    for (let i = 0; i < states.length; i++) {
+      newCensusLayer(states[i], firstSymbolId);
+      if (states[i] !== "dc") {
+        newUpperLegislatureLayer(states[i]);
+        newLowerLegislatureLayer(states[i]);
+      }
+    }
+  } else {
+    newSourceLayer(state + "bg", BG_KEYS[state + "bg"]);
+    newSourceLayer(state + "-upper", UPPER_KEYS[state + "-upper"]);
+    newSourceLayer(state + "-lower", LOWER_KEYS[state + "-lower"]);
+    newCensusLayer(state, firstSymbolId);
+    newUpperLegislatureLayer(state);
+    newLowerLegislatureLayer(state);
+  }
+  // ward + community areas for IL
+  if (state === "il") {
+    newSourceLayer("chi_wards", CHI_WARD_KEY);
+    newSourceLayer("chi_comm", CHI_COMM_KEY);
+    map.addLayer(
+      {
+        id: "Chicago Wards",
+        type: "line",
+        source: "chi_wards",
+        "source-layer": "chi_wards",
+        layout: {
+          visibility: "none",
+        },
+        paint: {
+          "line-color": "rgba(106,137,204,0.7)",
+          "line-width": 2,
+        },
+      },
+      firstSymbolId
+    );
+    map.addLayer(
+      {
+        id: "Chicago Community Areas",
+        type: "line",
+        source: "chi_comm",
+        "source-layer": "chi_comm",
+        layout: {
+          visibility: "none",
+        },
+        paint: {
+          "line-color": "rgba(106,137,204,0.7)",
+          "line-width": 2,
+        },
+      },
+      firstSymbolId
+    );
   }
   map.addSource("counties", {
     type: "vector",
@@ -283,7 +331,7 @@ map.on("load", function () {
   // fly to state if org, otherwise stay on map
   if (state !== "") {
     map.flyTo({
-      center: statesLngLat[state],
+      center: statesLngLat[state.toUpperCase()],
       zoom: 5,
       essential: true // this animation is considered essential with respect to prefers-reduced-motion
     });
@@ -312,11 +360,16 @@ document.querySelectorAll(".comm-content").forEach(function (p) {
 
 //create a button that toggles layers based on their IDs
 var toggleableLayerIds = [
-  "Census Blocks",
+  "Census Blockgroups",
   "State Legislature - House/Assembly",
   "State Legislature - Senate",
   "counties"
 ];
+// add selector for chicago wards + community areas if illinois
+if (state === "il") {
+  toggleableLayerIds.push("Chicago Wards");
+  toggleableLayerIds.push("Chicago Community Areas");
+}
 
 for (var i = 0; i < toggleableLayerIds.length; i++) {
   var id = toggleableLayerIds[i];
@@ -335,9 +388,18 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
     if (txt === "counties") {
       clickedLayers.push("counties");
     } else {
-      for (let i = 0; i < states.length; i++) {
-        if (states[i] !== "dc" || txt === "Census Blocks") {
-          clickedLayers.push(states[i].toUpperCase() + " " + txt);
+      if (state === "") {
+        for (let i = 0; i < states.length; i++) {
+          if (states[i] !== "dc" || txt === "Census Blocks") {
+            clickedLayers.push(states[i].toUpperCase() + " " + txt);
+          }
+        }
+      }
+      else {
+        if (state === "il" && (txt === "Chicago Wards" || txt === "Chicago Community Areas")) {
+          clickedLayers.push(txt);
+        } else {
+          clickedLayers.push(state.toUpperCase() + " " + txt);
         }
       }
     }
