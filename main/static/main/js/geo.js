@@ -162,6 +162,22 @@ function formValidation() {
   return flag;
 }
 
+/****************************************************************************/
+// generates concave hull from selection
+function createCommPolygon() {
+    // flyTo selectBbox
+    // queryrenderedfeatures
+    // check features against filter
+    // union features to form a MultiPolygon
+    // call concave to get only outer points
+    map.flyTo({
+      center: [selectBbox.geometry.coordinates[0][0][0], selectBbox.geometry.coordinates[0][0][1]],
+      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+      zoom: 10,
+    });
+}
+/****************************************************************************/
+
 // Make buttons show the right skin.
 document.addEventListener(
   "DOMContentLoaded",
@@ -176,6 +192,11 @@ document.addEventListener(
       .html('<span class="" aria-hidden="true">Remove</span>');
     var entry_form_button = document.getElementById("save");
     entry_form_button.addEventListener("click", function (event) {
+      // TODO: add function that does the following
+      // - flies to selectBbox
+      // - queries rendered features to create polygon
+      // - calls turf.convex()
+      createCommPolygon();
       formValidation();
     });
     state = sessionStorage.getItem("state_name");
@@ -389,7 +410,7 @@ class ClearMapButton {
       map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
       sessionStorage.setItem("bgFilter", "[]");
       sessionStorage.setItem("mpoly", "[]");
-      updateCommunityEntry();
+      selectBbox = undefined;
     });
     return clear_button;
   }
@@ -749,29 +770,35 @@ map.on("style.load", function () {
       layers: [state + "-census-shading"],
     });
     var features = [];
-    mpoly = JSON.parse(sessionStorage.getItem("mpoly"));
+    var currentSelectBbox;
     for (let i = 0; i < queryFeatures.length; i++) {
       var feature = queryFeatures[i];
       // push to highlight layer for visibility
       features.push(feature.properties.GEOID);
-      var wkt = new Wkt.Wkt();
       if (features.length >= 1) {
-        if (feature.geometry.type == "MultiPolygon") {
-          // polyCon : the turf polygon from coordinates
-          var polyCon;
-          if (feature.geometry.coordinates[0][0].length > 2) {
-            polyCon = turf.polygon([feature.geometry.coordinates[0][0]]);
-          } else {
-            polyCon = turf.polygon([feature.geometry.coordinates[0]]);
-          }
-          mpoly = updatePoly(polyCon.geometry, mpoly, wkt);
+        // polyCon : the turf polygon from coordinates
+        var polyCon = turf.bbox(feature.geometry);
+        var memoPoly = turf.bboxPolygon(polyCon);
+        if (i === 0) {
+          currentSelectBbox = memoPoly;
         } else {
-          polyCon = turf.polygon([feature.geometry.coordinates[0]]);
-          mpoly = updatePoly(polyCon.geometry, mpoly, wkt);
+          currentSelectBbox = turf.union(memoPoly, currentSelectBbox);
         }
       }
     }
-    sessionStorage.setItem("mpoly", JSON.stringify(mpoly));
+    // check if previous selectBbox overlaps with current selectBbox
+    if (selectBbox === undefined) {
+      selectBbox = currentSelectBbox;
+      hideWarningBox();
+    } else {
+      if (turf.booleanDisjoint(currentSelectBbox, selectBbox)) {
+        showWarningBox();
+        return;
+      } else {
+        selectBbox = turf.union(currentSelectBbox, selectBbox);
+        hideWarningBox();
+      }
+    }
 
     var filter = [];
     var currentSelection = map.getFilter(state + "-bg-highlighted");
@@ -800,7 +827,6 @@ map.on("style.load", function () {
 
     map.setFilter(state + "-bg-highlighted", filter);
     sessionStorage.setItem("bgFilter", JSON.stringify(filter));
-    updateCommunityEntry();
   });
 
   // Listen for the `geocoder.input` event that is triggered when a user
@@ -909,22 +935,21 @@ map.on("render", function (e) {
   if (map.loaded() == false || wasLoaded) return;
   wasLoaded = true;
   // test if polygon has been drawn
-  var bgPoly = document.getElementById("id_census_blocks_polygon_array").value;
+  var bgPoly = JSON.parse(sessionStorage.getItem("bgFilter"));
   if (bgPoly !== "") {
-    var wkt = new Wkt.Wkt();
-    wkt_obj = wkt.read(bgPoly);
-    var geoJsonFeature = wkt_obj.toJson();
     // re-display the polygon
     map.setFilter(
       state + "-bg-highlighted",
-      JSON.parse(sessionStorage.getItem("bgFilter"))
+      bgPoly
     );
-    updateCommunityEntry();
-    map.flyTo({
-      center: geoJsonFeature.coordinates[0][0],
-      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
-      zoom: 10,
-    });
+    // error - when selectBbox is undefined...
+    if (selectBbox !== undefined) {
+      map.flyTo({
+        center: [selectBbox.geometry.coordinates[0][0][0], selectBbox.geometry.coordinates[0][0][1]],
+        essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+        zoom: 10,
+      });
+    }
   }
 });
 
@@ -1039,9 +1064,6 @@ function updateFormFields(census_blocks_polygon_array) {
 in the form. */
 function updateCommunityEntry() {
   cleanAlerts();
-  // TODO: use turf or something to determine if highlighted layer is compact & contiguous
-  // probably possible with turf.js#intersect, but may not always work if blockgroups don't line up exactly
-  // will also need to think about how to make it more efficient than calling intersect on all polygons part of the community
   // save census block groups multipolygon
   census_blocks_polygon_array = JSON.parse(sessionStorage.getItem("mpoly"));
   // check if map stores no polygon - clear map + sessionStorage if so
