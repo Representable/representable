@@ -979,6 +979,7 @@ map.on("style.load", function () {
   if (states.includes(state)) {
     console.log(state);
 
+    // These are never called
     newCensusLines(state);
     newHighlightLayer(state);
     console.log("mapped4");
@@ -997,18 +998,7 @@ map.on("style.load", function () {
       essential: true, // this animation is considered essential with respect to prefers-reduced-motion
     });
 
-    // Tracking
-    mixpanel.track("Geocoder Search Successful", {
-      drive_id: drive_id,
-      drive_name: drive_name,
-      organization_id: organization_id,
-      organization_name: organization_name,
-    });
-
-    console.log(state_abbr);
-    newCensusLines(state);
-    newHighlightLayer(state);
-    //map.setLayoutProperty(state_abbr + "-census-lines", 'visibility', 'none');
+    $("#shepherd-btn").removeClass("d-none");
   }
 
   // Listen for the `geocoder.input` event that is triggered when a user
@@ -1032,7 +1022,7 @@ map.on("style.load", function () {
       console.log(new_state + " made it here");
     } else {
       new_state = styleSpec.properties["short_code"].toLowerCase().substring(3);
-      console.log(new_state);
+      console.log(new_state + "ok here");
     }
     // if searching for a different state than what is currently loaded
     if (state != new_state) {
