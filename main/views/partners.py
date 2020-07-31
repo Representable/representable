@@ -65,11 +65,10 @@ class PartnerMap(TemplateView):
             query = CommunityEntry.objects.filter(
                 organization__slug=self.kwargs["slug"],
                 drive__slug=self.kwargs["drive"],
-                admin_approved=True,
             )
         else:
             query = CommunityEntry.objects.filter(
-                organization__slug=self.kwargs["slug"], admin_approved=True
+                organization__slug=self.kwargs["slug"]
             )
         for obj in query:
             for a in Address.objects.filter(entry=obj):
