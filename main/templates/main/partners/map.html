@@ -145,16 +145,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
         </div>
       </div>
     </div>
-    {% comment %} <div id="myForm" class="hidden">
-    <form id="popForm">
-        <div>
-            <label for="email">Email:</label>
-            <input type="text" name="email" id="email" class="form-control input-md">
-            <button type="button" class="btn btn-light float-left" data-dismiss="popover"> Cancel </button>
-            <button type="submit" class="btn btn-danger float-right" data-loading-text="Sending info.."><em class="icon-ok"></em> Submit Report</button>
-        </div>
-    </form>
-</div> {% endcomment %}
+
 <!-- Modal -->
 <div class="modal fade" id="sendReport" tabindex="-1" role="dialog" aria-labelledby="sendReport" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -169,6 +160,12 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
       <div class="modal-body">
         If you feel this community is abusive, spam, low-effort, or doesn't live
         up to our guidelines, send us a report.
+        <br>
+        {% if is_org_admin %}
+        <br>
+        As an administrator of this organization, reporting this community will automatically hide it from 
+        all non-administrators.
+        {% endif %}
         <input type="text" class="hidden" name="org_slug" id="org_slug" value={{organization.slug}}/>
         <input type="text" class="hidden" name="drive_slug" id="drive_slug" value={{drive_slug}}/>
         <input type="text" class="hidden" name="is_org_admin" id="is_org_admin" value={{is_org_admin}}/>
@@ -221,35 +218,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
     <script type="text/javascript" src="{% static 'main/js/components/keys.js' %}"></script>
     <script type="text/javascript" src="{% static 'main/js/components/states.js' %}"></script>
     <script type="text/javascript" src="{% static 'main/js/map.js' %}"></script>
-    {% comment %} <script>
-      $(function () {
-        $('[data-toggle="popover"]').popover()
-      })
-    </script> {% endcomment %}
-    {% comment %} <script>
-    $(function(){
-      $('#report').popover({
 
-          placement: 'left',
-          title: 'Report this community',
-          html:true,
-          content:  $('#myForm').html()
-      }).on('click', function(){
-        // had to put it within the on click action so it grabs the correct info on submit
-        $('.btn-primary').click(function(){
-         $('#result').after("form submitted by " + $('#email').val())
-          $.post('/report/',  {
-              email: $('#email').val(),
-              cid: 415,
-              csrfmiddlewaretoken: '{{ csrf_token }}',
-          }, function(r){
-            $('#report').popover('hide')
-            $('#result').html('resonse from server could be here' )
-          })
-        })
-      })
-    })
-    </script> {% endcomment %}
     <script>
     $(document).on("click", "#report", function () {
          var cid = $(this).data('communityId');
