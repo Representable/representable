@@ -78,5 +78,15 @@
       "created_at": "2020-06-26T00:36:52.834Z",
       "is_active": true
     }
+  },
+  {
+    "model": "account.emailaddress",
+    "pk": 1,
+    "fields": {
+      "email": "test@me.com",
+      "verified": true,
+      "primary": true,
+      "user_id": 1
+    }
   }
 ]
