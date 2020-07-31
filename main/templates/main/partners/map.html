@@ -69,24 +69,24 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
               {% if communities %}
               <table id="collapseThree" class="collapse show table table-hover">
                 {% for c in communities %}
+                {% if is_org_admin or c.admin_approved %}
                 <tr class="community-review-span" id={{c.entry_ID}}>
                   <td>
                     <span class="text-uppercase entry-name">
                       {% with link_text="/submission?map_id="|addstr:c.entry_ID|slice:27 %}
                       <a href={{link_text}}>{{c.entry_name}}</a>
                       {% endwith %}
-                      {% comment %} <button type="button" class="btn btn-light float-right">
-                        <span class="fas fa-bullhorn"></span> 
-                      </button> {% endcomment %}
-                      <a tabindex="0" class="btn btn-light float-right" id="report" data-community-id={{c.id}} role="button" data-toggle="modal" data-target="#sendReport"><i class="fas fa-bullhorn" style="color:red"></i></a>
                     </span>
                     <hr class="my-1">
-                    {% comment %} <a tabindex="0" class="btn btn-light" role="button" data-toggle="popover" data-trigger="focus" data-content="And here's some amazing content. It's very engaging. Right?"><i class="fas fa-bullhorn"></i></a> {% endcomment %}
                     {% if drive is None %}
                     {% if c.drive %}
                     <span class="badge badge-pill badge-secondary">{{c.drive}}</span>
                     <br>
                     {% endif %}
+                    {% endif %}
+                    {% if not c.admin_approved %}
+                      <span class="badge badge-pill badge-primary"> hidden </span>
+                      <br>
                     {% endif %}
                     <span class="small text-muted">
                     {% if is_org_admin %}
@@ -102,6 +102,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                       <br>
                       {% endif %}
                     {% endif %}
+                    <a tabindex="0" class="small float-right mt-2" style="color:red" id="report" data-community-id={{c.id}} role="button" data-toggle="modal" data-target="#sendReport">REPORT</a>
                     </span>
                     <span class="font-weight-light comm-content">
                       <span class="more-content">
@@ -130,6 +131,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                     </span>
                   </td>
                   <tr>
+                  {% endif %}
                     {% endfor %}
                   </table>
                   {% endif %}
