@@ -69,6 +69,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
               {% if communities %}
               <table id="collapseThree" class="collapse show table table-hover">
                 {% for c in communities %}
+                {% if is_org_admin or c.admin_approved %}
                 <tr class="community-review-span" id={{c.entry_ID}}>
                   <td>
                     <span class="text-uppercase entry-name">
@@ -82,6 +83,10 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                     <span class="badge badge-pill badge-secondary">{{c.drive}}</span>
                     <br>
                     {% endif %}
+                    {% endif %}
+                    {% if not c.admin_approved %}
+                      <span class="badge badge-pill badge-danger"> Hidden </span>
+                      <br>
                     {% endif %}
                     <span class="small text-muted">
                     {% if is_org_admin %}
@@ -97,6 +102,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                       <br>
                       {% endif %}
                     {% endif %}
+                    <a tabindex="0" class="small float-right mt-2" style="color:red" id="report" data-community-id={{c.id}} role="button" data-toggle="modal" data-target="#sendReport">REPORT</a>
                     </span>
                     <span class="font-weight-light comm-content">
                       <span class="more-content">
@@ -125,6 +131,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                     </span>
                   </td>
                   <tr>
+                  {% endif %}
                     {% endfor %}
                   </table>
                   {% endif %}
@@ -138,6 +145,69 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
         </div>
       </div>
     </div>
+
+<!-- Modal -->
+<div class="modal fade" id="sendReport" tabindex="-1" role="dialog" aria-labelledby="sendReport" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Report this community</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form role="form" id="reportForm" method="post" action="/report/"> {% csrf_token %}
+      <div class="modal-body">
+        If you feel this community is abusive, spam, low-effort, or doesn't live
+        up to our guidelines, send us a report.
+        <br>
+        {% if is_org_admin %}
+        <br>
+        As an administrator of this organization, reporting this community will automatically hide it from 
+        all non-administrators.
+        {% endif %}
+        <input type="text" class="hidden" name="org_slug" id="org_slug" value={{organization.slug}}/>
+        <input type="text" class="hidden" name="drive_slug" id="drive_slug" value={{drive_slug}}/>
+        <input type="text" class="hidden" name="is_org_admin" id="is_org_admin" value={{is_org_admin}}/>
+        <input type="text" class="hidden" name="cid" id="cid" value=""/>
+        <label for="email" {% if email.exists %} class="hidden" {% endif %}>Email address</label>
+        <input type="email" name="email" id="email" placeholder="Enter email" {% if email.exists %} class="hidden" value={{email.value}} {% endif %} required/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-danger">Send Report</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for report submitted -->
+<div class="modal fade" id="reportSubmitted" tabindex="-1" role="dialog" aria-labelledby="reportSubmitted" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Thank you for letting us know!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Your report was successfully submitted. Thank you.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="fixURL()">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function fixURL() {
+    window.location.href = window.location.href.split('#')[0];
+  }
+</script>
+
     {% endblock %}
 
     {% block script %}
@@ -148,4 +218,23 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
     <script type="text/javascript" src="{% static 'main/js/components/keys.js' %}"></script>
     <script type="text/javascript" src="{% static 'main/js/components/states.js' %}"></script>
     <script type="text/javascript" src="{% static 'main/js/map.js' %}"></script>
+
+    <script>
+    $(document).on("click", "#report", function () {
+         var cid = $(this).data('communityId');
+         $(".modal-body #cid").val( cid );
+    });
+    </script>
+
+    <script>
+      $(document).ready(function() {
+
+        if(window.location.href.indexOf('#reportSubmitted') != -1) {
+            $('#reportSubmitted').modal('show');
+        }
+
+      });
+    </script>
+
+
     {% endblock %}

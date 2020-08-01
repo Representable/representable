@@ -268,7 +268,7 @@ class CommunityEntry(models.Model):
         max_length=500, blank=True, unique=False, default=""
     )
     created_at = models.DateTimeField(auto_now_add=True)
-    admin_approved = models.BooleanField(default=False)
+    admin_approved = models.BooleanField(default=True)
 
     def __str__(self):
         return str(self.entry_ID)
@@ -325,3 +325,21 @@ class State(models.Model):
 
     class Meta:
         db_table = "state"
+
+
+# ******************************************************************************#
+class Report(models.Model):
+    community = models.ForeignKey(
+        CommunityEntry, on_delete=models.CASCADE, related_name="reports"
+    )
+    email = models.CharField(max_length=128)
+
+    timestamp = models.DateTimeField(auto_now_add=True)
+    resolved = models.BooleanField(default=False)
+
+    def unapprove(self):
+        self.community.admin_approved = False
+        self.community.save()
+
+
+# ******************************************************************************#
