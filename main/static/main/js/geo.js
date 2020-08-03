@@ -154,9 +154,8 @@ function formValidation() {
 /****************************************************************************/
 // generates polygon to be saved from the selection
 function createCommPolygon() {
-  console.log("createCommPolygon() called");
     // start by checking size -- 800 is an arbitrary number
-    // it means a community with a population between 480,000 &  2,400,000
+    // it means a community with a population between 480,000 & 2,400,000
     var polyFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
     if (polyFilter.length > 1000) {
       triggerDrawError("polygon_size", "You must select a smaller area to submit this community.");
@@ -233,7 +232,7 @@ document.addEventListener(
       var submitSuccess = true;
       setTimeout(function() {
         submitSuccess = createCommPolygon();
-        // submitSuccess = formValidation();
+        submitSuccess = formValidation();
       }, 500);
       setTimeout(function () {
         if (submitSuccess) {
@@ -1020,7 +1019,6 @@ function triggerDrawError(id, stringErrorText) {
   /*
   triggerDrawError creates a bootstrap alert placed on top of the map.
   */
-  // TODO: make zoom to the map and show it..
   // Remove success message.
   let oldSuccessAlert = document.getElementById("map-success-message");
   if (oldSuccessAlert) {
@@ -1044,6 +1042,7 @@ function triggerDrawError(id, stringErrorText) {
   </button>\
   </div>';
   document.getElementById("map-error-alerts").appendChild(newAlert);
+  newAlert.scrollIntoView();
   sessionStorage.setItem("map_drawn_successfully", false);
 }
 
