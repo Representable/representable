@@ -23,9 +23,6 @@
 /* https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ */
 // Polygon Drawn By User
 
-// selection bounding box (for querying + contiguity check)
-var selectBbox = null;
-
 // Helper print function
 function print(items) {
   console.log(items);
@@ -110,12 +107,14 @@ function checkFieldById(field_id) {
 }
 
 function formValidation() {
+  console.log("formValidation() called");
   // Check Normal Fields
   var flag = true;
   var form_elements = document.getElementById("entryForm").elements;
   for (var i = 0; i < form_elements.length; i++) {
     if (form_elements[i].required) {
       if (checkFieldById(form_elements[i].id) == false) {
+        console.log(form_elements[i]);
         flag = false;
       }
     }
@@ -145,24 +144,9 @@ function formValidation() {
     var interets_alert = document.getElementById("need_one_interest");
     interets_alert.classList.remove("d-none");
   }
-
-  var census_blocks_arr_field = document.getElementById(
-    "id_census_blocks_polygon_array"
-  );
-  if (
-    census_blocks_arr_field.value == null ||
-    census_blocks_arr_field.value == "" ||
-    census_blocks_arr_field.value == "[]"
-  ) {
-    triggerMissingPolygonError();
-    flag = false;
-  }
-  var census_blocks_poly = document.getElementById("id_census_blocks_polygon");
   if (flag == false) {
     // Add alert.
     document.getElementById("form_error").classList.remove("d-none");
-  } else {
-    sessionStorage.setItem("bgFilter", "[]");
   }
   return flag;
 }
@@ -170,57 +154,62 @@ function formValidation() {
 /****************************************************************************/
 // generates polygon to be saved from the selection
 function createCommPolygon() {
+  console.log("createCommPolygon() called");
     // start by checking size -- 800 is an arbitrary number
     // it means a community with a population between 480,000 &  2,400,000
     var polyFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
     if (polyFilter.length > 1000) {
-      console.log("ERROR -- too large of a community!");
+      triggerDrawError("polygon_size", "You must select a smaller area to submit this community.");
+      return false;
+    } else if (polyFilter.length === 0) {
+      triggerMissingPolygonError();
       return false;
     }
-    // zoom to the current selection
-    var bbox = turf.bbox(selectBbox);
-    map.fitBounds(bbox, {padding: 100, duration: 0});
-
-    // delay by one second so that there's time for the map to zoom (even tho it
-    // says duration:0 ) before querying blockgroups
-    setTimeout(function() {
-      var queryFeatures = map.queryRenderedFeatures({
-        layers: [state + "-census-shading"],
-      });
-      var multiPolySave;
-      queryFeatures.forEach(function(feature) {
-        if (polyFilter.includes(feature.properties.GEOID)) {
-          if (multiPolySave === undefined) {
-            multiPolySave = feature;
-          } else {
-            multiPolySave = turf.union(multiPolySave, feature);
-          }
+    // now query the features and build the polygon to be saved
+    var queryFeatures = map.queryRenderedFeatures({
+      layers: [state + "-census-shading"],
+    });
+    var multiPolySave;
+    queryFeatures.forEach(function(feature) {
+      if (polyFilter.includes(feature.properties.GEOID)) {
+        if (multiPolySave === undefined) {
+          multiPolySave = feature;
+        } else {
+          multiPolySave = turf.union(multiPolySave, feature);
         }
-      });
-
-      // for display purposes -- this is the final multipolygon!!
-      var wkt = new Wkt.Wkt();
-      var wkt_obj = wkt.read(JSON.stringify(multiPolySave.geometry));
-      var poly_wkt = wkt_obj.write();
-      // ok so this is kinda jank lol but let me explain
-      // if it isn't a contiguous selection area, then poly_wkt will start with "MULTIPOLYGON"
-      // otherwise it starts with "POLYGON" -- so we test the first char for contiguity 8-)
-      if (poly_wkt[0] === "M") {
-        console.log("ERROR - submitting multipolygon -> not contiguous!!");
-        return false;
-      } else {
-        console.log("SUCCESS - this is a polygon!");
-        updateFormFields(poly_wkt);
       }
+    });
+
+    // for display purposes -- this is the final multipolygon!!
+    var wkt = new Wkt.Wkt();
+    var wkt_obj = wkt.read(JSON.stringify(multiPolySave.geometry));
+    var poly_wkt = wkt_obj.write();
+    // ok so this is kinda jank lol but let me explain
+    // if it isn't a contiguous selection area, then poly_wkt will start with "MULTIPOLYGON"
+    // otherwise it starts with "POLYGON" -- so we test the first char for contiguity 8-)
+    if (poly_wkt[0] === "M") {
+      console.log("multi");
+      triggerDrawError("polygon_size", "Please ensure that your community does not contain any gaps. Your selected units must connect.");
+      return false;
+    } else {
+      triggerSuccessMessage();
+      updateFormFields(poly_wkt);
 
       // clean up polyFilter -- this is the array of GEOID to be stored
       polyFilter.splice(0, 1);
       polyFilter.splice(0, 1);
       console.log(polyFilter);
-
-      formValidation();
-    }, 1000);
+    }
+    console.log("createCommPolygon() success");
     return true;
+}
+
+// zoom to the current Selection
+function zoomToCommunity() {
+  var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
+  if (selectBbox === null) return;
+  var bbox = turf.bbox(selectBbox);
+  map.fitBounds(bbox, {padding: 100, duration: 0});
 }
 /****************************************************************************/
 
@@ -238,11 +227,16 @@ document.addEventListener(
       .html('<span class="" aria-hidden="true">Remove</span>');
     $('#save').on('click', function (e) {
       e.preventDefault();
-      console.log("form submitted");
       var form = $('#entryForm');
-      var isFormSuccess = createCommPolygon();
+      zoomToCommunity();
+      // delay so that zoom can occur
+      var submitSuccess = true;
+      setTimeout(function() {
+        submitSuccess = createCommPolygon();
+        // submitSuccess = formValidation();
+      }, 500);
       setTimeout(function () {
-        if (isFormSuccess) {
+        if (submitSuccess) {
           form.submit();
         }
       }, 2000);
@@ -459,7 +453,7 @@ class ClearMapButton {
       map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
       sessionStorage.setItem("bgFilter", "[]");
       sessionStorage.setItem("mpoly", "[]");
-      selectBbox = null;
+      sessionStorage.setItem("selectBbox", null);
     });
     return clear_button;
   }
@@ -835,6 +829,7 @@ map.on("style.load", function () {
       }
     }
     // check if previous selectBbox overlaps with current selectBbox
+    var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
     if (selectBbox === null) {
       selectBbox = currentSelectBbox;
       hideWarningBox();
@@ -875,6 +870,7 @@ map.on("style.load", function () {
 
     map.setFilter(state + "-bg-highlighted", filter);
     sessionStorage.setItem("bgFilter", JSON.stringify(filter));
+    sessionStorage.setItem("selectBbox", JSON.stringify(selectBbox));
   });
 
   // Listen for the `geocoder.input` event that is triggered when a user
@@ -990,6 +986,7 @@ map.on("render", function (e) {
       state + "-bg-highlighted",
       JSON.parse(bgPoly)
     );
+    var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
     // error - when selectBbox is undefined...
     if (selectBbox !== null) {
       map.flyTo({
@@ -1023,6 +1020,7 @@ function triggerDrawError(id, stringErrorText) {
   /*
   triggerDrawError creates a bootstrap alert placed on top of the map.
   */
+  // TODO: make zoom to the map and show it..
   // Remove success message.
   let oldSuccessAlert = document.getElementById("map-success-message");
   if (oldSuccessAlert) {
