@@ -181,7 +181,8 @@ function createCommPolygon() {
     // start by checking size -- 800 is an arbitrary number
     // it means a community with a population between 480,000 & 2,400,000
     var polyFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
-    if (polyFilter.length > 1000) {
+    if (polyFilter === null) return false;
+    if (polyFilter.length > 802) {
       triggerDrawError("polygon_size", "You must select a smaller area to submit this community.");
       return false;
     } else if (polyFilter.length === 0) {
@@ -253,6 +254,9 @@ document.addEventListener(
       zoomToCommunity();
       // delay so that zoom can occur
       var submitSuccess = true;
+      // loading icon
+      $("#loading-entry").css("display", "block");
+      $("#loading-entry").delay(2000).fadeOut(2000);
       setTimeout(function() {
         submitSuccess = createCommPolygon();
         submitSuccess = formValidation();
