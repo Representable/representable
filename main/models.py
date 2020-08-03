@@ -120,29 +120,6 @@ class Membership(models.Model):
 # ******************************************************************************#
 
 
-class AllowList(models.Model):
-    """
-    A given allowlist entry with the following
-    fields included:
-    - email: allowlisted email
-    - organization: the organization that created the link
-    - date added: when the email was added to the allowlist
-    """
-
-    email = models.CharField(max_length=128)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    date_added = models.DateField(auto_now_add=True, blank=True)
-
-    class Meta:
-        ordering = ("email",)
-
-    def __str__(self):
-        return self.email
-
-
-# ******************************************************************************#
-
-
 class Drive(models.Model):
     """
     Drive represents an organization's entry collection drive.
@@ -202,6 +179,31 @@ class DriveToken(models.Model):
         if not self.token:
             self.token = generate_unique_token(self.drive.name)
         super(DriveToken, self).save(*args, **kwargs)
+
+
+# ******************************************************************************#\
+
+
+class AllowList(models.Model):
+    """
+    A given allowlist entry with the following
+    fields included:
+    - email: allowlisted email
+    - organization: the organization that created the link
+    - drive: the drive that this allowlist is associated with
+    - date added: when the email was added to the allowlist
+    """
+
+    email = models.CharField(max_length=128)
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    drive = models.ForeignKey(Drive, on_delete=models.CASCADE, null=True)
+    date_added = models.DateField(auto_now_add=True, blank=True)
+
+    class Meta:
+        ordering = ("email",)
+
+    def __str__(self):
+        return self.email
 
 
 # ******************************************************************************#
