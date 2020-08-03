@@ -1,13 +1,16 @@
 from ..models import (
+    User,
     Membership,
     Organization,
     CommunityEntry,
     Drive,
     Address,
+    Report,
 )
 
 # from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import (
+    View,
     TemplateView,
     ListView,
     CreateView,
@@ -21,8 +24,9 @@ import geojson
 from django.shortcuts import get_object_or_404
 from geojson_rewind import rewind
 from django.core.serializers import serialize
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse_lazy
 
 from .main import make_geojson
 
@@ -61,11 +65,10 @@ class PartnerMap(TemplateView):
             query = CommunityEntry.objects.filter(
                 organization__slug=self.kwargs["slug"],
                 drive__slug=self.kwargs["drive"],
-                admin_approved=True,
             )
         else:
             query = CommunityEntry.objects.filter(
-                organization__slug=self.kwargs["slug"], admin_approved=True
+                organization__slug=self.kwargs["slug"]
             )
         for obj in query:
             for a in Address.objects.filter(entry=obj):
@@ -94,6 +97,17 @@ class PartnerMap(TemplateView):
         org = Organization.objects.get(slug=self.kwargs["slug"])
         context["organization"] = org
         context["state"] = org.states[0].lower()
+        if self.request.user.is_authenticated:
+            email = {
+                "exists": True,
+                "value": self.request.user.email,
+            }
+        else:
+            email = {
+                "exists": False,
+                "value": None,
+            }
+        context["email"] = email
         if not self.kwargs["drive"]:
             context["multi_export_link"] = (
                 "/multiexport/org/" + self.kwargs["slug"]
@@ -106,6 +120,7 @@ class PartnerMap(TemplateView):
             context["multi_export_link"] = (
                 "/multiexport/drive/" + self.kwargs["drive"]
             )
+            context["drive_slug"] = self.kwargs["drive"]
         if self.request.user.is_authenticated:
             context["is_org_admin"] = self.request.user.is_org_admin(
                 Organization.objects.get(slug=self.kwargs["slug"]).id
@@ -151,6 +166,35 @@ class MultiExportView(TemplateView):
             geojson.dumps(final), content_type="application/json"
         )
         return response
+
+
+# ******************************************************************************#
+
+
+class ReportView(View):
+    def post(self, request, **kwargs):
+        cid = request.POST["cid"]
+        email = request.POST["email"]
+        is_org_admin = request.POST["is_org_admin"]
+
+        org_slug = request.POST["org_slug"].replace("/", "")
+        drive_slug = request.POST["drive_slug"].replace("/", "")
+
+        community = CommunityEntry.objects.get(id=cid)
+
+        report = Report(community=community, email=email)
+        report.save()
+
+        if is_org_admin == "True":
+            report.unapprove()
+
+        return HttpResponseRedirect(
+            reverse_lazy(
+                "main:partner_map",
+                kwargs={"slug": org_slug, "drive": drive_slug},
+            )
+            + "#reportSubmitted"
+        )
 
 
 # ******************************************************************************#
