@@ -1,0 +1,130 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container">
+  <div class="row pt-3">
+    <div class="col">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'main:index' %}">Home</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'main:dashboard' %}">Dashboard</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'main:home_org' object.organization.slug  object.organization.pk %}">Partners / {{ object.organization.name }}</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'main:drive_home' object.organization.slug object.organization.pk object.pk %}">Drives / {{ object.name }} </a></li>
+          <li class="breadcrumb-item active" aria-current="page"> Manage Invite List</li>
+
+        </ol>
+      </nav>
+    </div>
+  </div>
+  <div class="row pt-3">
+    <div class="col-sm">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5>
+            Invite List <span class="text-muted"> for {{ object.name }} </span>
+          </h5>
+          <hr>
+          <div>
+          Invitations will automatically be sent to emails you add to this list.
+          </div>
+          <br>
+            <div class="card shadow-sm">
+            <div class="card-body">
+                <h5><span class="badge badge-secondary"><i class="fas fa-file-upload"></i></span> Upload Email List </h5>
+                <p> Upload a csv of emails to add them all to your list, or add individually below. <p>
+                <a class="btn btn-primary float-right" href="{% url 'main:manage_allowlist' object.organization.slug  object.organization.pk object.pk %}" role="button">Upload <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+            </div>
+            
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      <div class="card shadow-sm my-3">
+        <div class="card-body">
+          <h5> Invitees </h5>
+          <div>
+          <form role="form" id="EmailAllowList" method="post">{% csrf_token %}
+            <div style="display: inline-block;">
+                <input type="text" id="email" value="" name="email"/>
+                <button id="save" form="EmailAllowList" type="submit" class="btn btn-primary" value="Submit">Add</button>
+            </div>
+          </form>
+          </div>
+          <table class="table table-hover">
+            {% comment %} <thead>
+              <tr>
+                <th class="table-col-large" scope="col"> Email Address </th>
+              </tr>
+            </thead> {% endcomment %}
+          {% for l in list %}
+          <tr>
+
+          <td> {{l.email}} </td>
+
+          </tr>
+          {% endfor %}
+
+          </table>
+          {% comment %} <ul class="list-group my-3">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <h5><span class="badge badge-secondary"><i class="fas fa-share-alt"></i></span> Gather Submissions</h5>
+                <p>Gather submissions for this drive! Copy this link and share it with people you'd like to contribute to this drive: <a href="{% url 'main:drive_page' object.slug %}">representable.org{% url 'main:drive_page' object.slug %}</a></p>
+              </div>
+              <a class="btn btn-primary" href="{% url 'main:drive_page' object.slug %}" role="button">View <i class="fa fa-arrow-circle-right"></i></a>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <h5><span class="badge badge-secondary"><i class="fas fa-file-upload"></i></span> Manage Invite List </h5>
+                <p>Only users you invite can submit to or see your private drive. Manage the invite list here. <p>
+              </div>
+              <a class="btn btn-primary" href="{% url 'main:manage_allowlist' object.organization.slug  object.organization.pk object.pk %}" role="button">Upload <i class="fa fa-arrow-circle-right"></i></a>
+            </li>
+
+
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <h5><span class="badge badge-secondary"><i class="fas fa-map-marker-alt"></i></span> View/Share Your Map</h5>
+                <p>Your drive's map is live at: <a href="{% url 'main:partner_map' object.organization.slug object.slug %}">representable.org{% url 'main:partner_map' object.organization.slug object.slug %}</a></p></div>
+                <a class="btn btn-primary" href="{% url 'main:partner_map' object.organization.slug object.slug %}"  role="button">View <i class="fa fa-arrow-circle-right"></i></a>
+            </li>
+          </ul> {% endcomment %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="deleteDriveConfirm" tabindex="-1" role="dialog" aria-labelledby="deleteDriveLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete this drive?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This action cannot be undone. All drive information will be permanently deleted. Communities 
+        submitted through this drive will not be deleted, but will no longer be associated with the drive. These communities will still 
+        be associated with your organization.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <form role="form" id="deleteDriveInfo" method="post" action="delete\">{% csrf_token %}
+          {% comment %} <input type="hidden" name="drive_slug" value="{{ object.slug }}"> {% endcomment %}
+          <button type="submit" class="btn btn-danger" name="Delete">Delete drive permanently</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
