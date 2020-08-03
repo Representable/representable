@@ -163,10 +163,10 @@ class OrganizationForm(ModelForm):
 #
 class AllowlistForm(ModelForm):
     class Meta:
-        model = Organization
-        fields = ["name"]
+        model = Drive
+        fields = ["slug"]
         widgets = {
-            "name": forms.HiddenInput(),
+            "slug": forms.HiddenInput(),
         }
 
 
