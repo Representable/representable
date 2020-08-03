@@ -43,7 +43,7 @@ form:invalid {
 }
 
 .has_success {
-  border-color: red;
+  border-color: #ced4da;
 }
 
 /* TOC Checkbox*/

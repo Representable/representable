@@ -96,17 +96,37 @@ function hideMap() {
   map.resize();
 }
 
-function checkFieldById(field_id) {
-  var field = document.getElementById(field_id);
-  if (field.type === "checkbox" && field.checked === true){
-    field.classList.add("has_success");
-    return true;
-  }
-  if (field.value == null || field.value == "") {
-    field.classList.add("has_error");
-    return false;
+function toggleErrorSuccess(field) {
+  if (field.classList.contains("has_error")) {
+    field.classList.toggle("has_error");
   }
   field.classList.add("has_success");
+}
+function toggleErrorFail(field) {
+  if (field.classList.contains("has_success")) {
+    field.classList.toggle("has_success");
+  }
+  field.classList.add("has_error");
+}
+
+function checkFieldById(field_id) {
+  var field = document.getElementById(field_id);
+  if (field.type === "checkbox") {
+    if (field.checked === true) {
+      toggleErrorSuccess(field);
+      return true;
+    } else {
+      // terms-card is the entire card with checkbox -- since it doesn't behave
+      // as other form fields do
+      toggleErrorFail(document.getElementById("terms-card"));
+      return false;
+    }
+  }
+  if (field.value == null || field.value == "") {
+    toggleErrorFail(field);
+    return false;
+  }
+  toggleErrorSuccess(field);
   return true;
 }
 
@@ -150,7 +170,9 @@ function formValidation() {
   }
   if (flag == false) {
     // Add alert.
-    document.getElementById("form_error").classList.remove("d-none");
+    var alert = document.getElementById("form_error")
+    alert.classList.remove("d-none");
+    scrollIntoViewSmooth(alert.id);
   }
   return flag;
 }
@@ -191,7 +213,6 @@ function createCommPolygon() {
     // if it isn't a contiguous selection area, then poly_wkt will start with "MULTIPOLYGON"
     // otherwise it starts with "POLYGON" -- so we test the first char for contiguity 8-)
     if (poly_wkt[0] === "M") {
-      console.log("multi");
       triggerDrawError("polygon_size", "Please ensure that your community does not contain any gaps. Your selected units must connect.");
       return false;
     } else {
@@ -250,7 +271,7 @@ document.addEventListener(
     var document_alerts = document.getElementsByClassName("django-alert");
     if (document_alerts.length > 0) {
       let first_alert = document_alerts[0];
-      first_alert.scrollIntoView();
+      scrollIntoViewSmooth(first_alert.id);
       document.getElementById("form_error").classList.remove("d-none");
     }
 
@@ -1046,7 +1067,7 @@ function triggerDrawError(id, stringErrorText) {
   </button>\
   </div>';
   document.getElementById("map-error-alerts").appendChild(newAlert);
-  newAlert.scrollIntoView();
+  scrollIntoViewSmooth(id);
   sessionStorage.setItem("map_drawn_successfully", false);
 }
 
@@ -1148,4 +1169,15 @@ function is_touch_device() {
     // https://git.io/vznFH
     var query = ['(', prefixes.join('touch-enabled),('), 'heartz', ')'].join('');
     return mq(query);
+}
+
+/****************************************************************************/
+
+// scroll smoothly with a bit of offset
+function scrollIntoViewSmooth(id) {
+  var yOffset = -10;
+  var element = document.getElementById(id);
+  var y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+  window.scrollTo({top: y, behavior: 'smooth'});
 }
