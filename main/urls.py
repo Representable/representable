@@ -168,11 +168,6 @@ urlpatterns = [
                     name="create_member",
                 ),
                 path(
-                    "upload-allowlist/",
-                    views.AllowListUpdate.as_view(),
-                    name="upload_allowlist",
-                ),
-                path(
                     "drives/create/",
                     views.dashboard.CreateDrive.as_view(),
                     name="create_drive",
@@ -191,6 +186,11 @@ urlpatterns = [
                     "drives/<uuid:cam_pk>/delete/",
                     views.dashboard.DeleteDrive.as_view(),
                     name="delete_drive",
+                ),
+                path(
+                    "drives/<uuid:cam_pk>/upload-allowlist/",
+                    views.AllowListUpdate.as_view(),
+                    name="upload_allowlist",
                 ),
             ]
         ),
