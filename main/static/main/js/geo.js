@@ -131,14 +131,12 @@ function checkFieldById(field_id) {
 }
 
 function formValidation() {
-  console.log("formValidation() called");
   // Check Normal Fields
   var flag = true;
   var form_elements = document.getElementById("entryForm").elements;
   for (var i = 0; i < form_elements.length; i++) {
     if (form_elements[i].required) {
       if (checkFieldById(form_elements[i].id) == false) {
-        console.log(form_elements[i]);
         flag = false;
       }
     }
@@ -206,6 +204,7 @@ function createCommPolygon() {
     });
 
     // for display purposes -- this is the final multipolygon!!
+    // TODO: implement community entry model change -> store only outer coordinates (like code in map.js)
     var wkt = new Wkt.Wkt();
     var wkt_obj = wkt.read(JSON.stringify(multiPolySave.geometry));
     var poly_wkt = wkt_obj.write();
@@ -222,9 +221,8 @@ function createCommPolygon() {
       // clean up polyFilter -- this is the array of GEOID to be stored
       polyFilter.splice(0, 1);
       polyFilter.splice(0, 1);
-      console.log(polyFilter);
+      // TODO: implement community entry model change -> store this array of references to blockgroups!
     }
-    console.log("createCommPolygon() success");
     return true;
 }
 
