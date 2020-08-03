@@ -154,6 +154,7 @@ class Drive(models.Model):
     - organization: organization hosting the drive
     - created_at: when the drive was created
     - is_active: is the drive active
+    - private: is the drive private
     """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -166,6 +167,7 @@ class Drive(models.Model):
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
+    private = models.BooleanField(default=False)
 
     class Meta:
         ordering = ("description",)
