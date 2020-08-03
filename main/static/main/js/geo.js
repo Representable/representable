@@ -161,24 +161,32 @@ function formValidation() {
   if (flag == false) {
     // Add alert.
     document.getElementById("form_error").classList.remove("d-none");
+  } else {
+    sessionStorage.setItem("bgFilter", "[]");
   }
   return flag;
 }
 
 /****************************************************************************/
-// generates concave hull from selection
+// generates polygon to be saved from the selection
 function createCommPolygon() {
-    // TODO: check for size
-    if (selectBbox !== null) {
-      var bbox = turf.bbox(selectBbox);
-      // zoom to the current selection !
-      // TODO: put a delay on rest of function so that there's time before querying..
-      map.fitBounds(bbox, {padding: 100, duration: 0});
+    // start by checking size -- 800 is an arbitrary number
+    // it means a community with a population between 480,000 &  2,400,000
+    var polyFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
+    if (polyFilter.length > 1000) {
+      console.log("ERROR -- too large of a community!");
+      return false;
+    }
+    // zoom to the current selection
+    var bbox = turf.bbox(selectBbox);
+    map.fitBounds(bbox, {padding: 100, duration: 0});
 
+    // delay by one second so that there's time for the map to zoom (even tho it
+    // says duration:0 ) before querying blockgroups
+    setTimeout(function() {
       var queryFeatures = map.queryRenderedFeatures({
         layers: [state + "-census-shading"],
       });
-      var polyFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
       var multiPolySave;
       queryFeatures.forEach(function(feature) {
         if (polyFilter.includes(feature.properties.GEOID)) {
@@ -189,41 +197,30 @@ function createCommPolygon() {
           }
         }
       });
+
       // for display purposes -- this is the final multipolygon!!
       var wkt = new Wkt.Wkt();
       var wkt_obj = wkt.read(JSON.stringify(multiPolySave.geometry));
       var poly_wkt = wkt_obj.write();
       // ok so this is kinda jank lol but let me explain
-      // if it isn't a contiguous selection area, then poly_wkt will start with MULTIPOLYGON
-      // otherwise it starts with POLYGON -- so we test the first char for contiguity 8-)
+      // if it isn't a contiguous selection area, then poly_wkt will start with "MULTIPOLYGON"
+      // otherwise it starts with "POLYGON" -- so we test the first char for contiguity 8-)
       if (poly_wkt[0] === "M") {
         console.log("ERROR - submitting multipolygon -> not contiguous!!");
-        // testing concavity
-        // there HAS to be a better way to do This
-        // turf is literally being so annoying rn >:(
-        var concCoords = turf.getCoords(multiPolySave);
-        var polyPoints = [];
-        concCoords[0][0].forEach(function(c) {
-          polyPoints.push(turf.point(c));
-        });
-        var polyCollect = turf.featureCollection(polyPoints);
-        // now we use these points to call concave and see what we get !!
-        var options = {units: 'kilometers', maxEdge: 3};
-        var multiPolyConc = turf.concave(polyCollect, options);
-        var wkt_obj_conc = wkt.read(JSON.stringify(multiPolyConc.geometry));
-        var poly_wkt_conc = wkt_obj_conc.write();
-        console.log(poly_wkt_conc);
-        console.log("^^ concave() called");
+        return false;
       } else {
         console.log("SUCCESS - this is a polygon!");
-        console.log(poly_wkt);
+        updateFormFields(poly_wkt);
       }
 
       // clean up polyFilter -- this is the array of GEOID to be stored
       polyFilter.splice(0, 1);
       polyFilter.splice(0, 1);
-      console.log("finished createCommPolygon()");
-    }
+      console.log(polyFilter);
+
+      formValidation();
+    }, 1000);
+    return true;
 }
 /****************************************************************************/
 
@@ -239,10 +236,17 @@ document.addEventListener(
       .removeClass("add-form-row")
       .addClass("remove-form-row")
       .html('<span class="" aria-hidden="true">Remove</span>');
-    var entry_form_button = document.getElementById("save");
-    entry_form_button.addEventListener("click", function (event) {
-      formValidation();
-      createCommPolygon();
+    $('#save').on('click', function (e) {
+      e.preventDefault();
+      console.log("form submitted");
+      var form = $('#entryForm');
+      var isFormSuccess = createCommPolygon();
+      setTimeout(function () {
+        if (isFormSuccess) {
+          form.submit();
+        }
+      }, 2000);
+      return false;
     });
     state = sessionStorage.getItem("state_name");
     // If there are alerts, scroll to first one.
@@ -980,7 +984,7 @@ map.on("render", function (e) {
   wasLoaded = true;
   // test if polygon has been drawn
   var bgPoly = sessionStorage.getItem("bgFilter");
-  if (bgPoly !== "[]") {
+  if (bgPoly !== "[]" && state !== null) {
     // re-display the polygon
     map.setFilter(
       state + "-bg-highlighted",
