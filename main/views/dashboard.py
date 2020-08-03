@@ -316,9 +316,9 @@ class AllowListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
     """
 
     form_class = AllowlistForm
-    model = Organization
+    model = Drive
     template_name = "main/dashboard/partners/allowlist_upload.html"
-    pk_url_kwarg = "pk"
+    pk_url_kwarg = "cam_pk"
 
     def form_valid(self, form):
         file = self.request.FILES["file"]
@@ -328,7 +328,9 @@ class AllowListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
             matches = re.findall(b"[\w\.-]+@[\w\.-]+\.\w+", line)  # noqa: W605
             for match in matches:
                 AllowList.objects.create(
-                    email=match.decode("utf-8"), organization=self.object
+                    email=match.decode("utf-8"),
+                    organization=self.object.organization,
+                    drive=self.object,
                 )
             if line_count == max_line_count:
                 break
