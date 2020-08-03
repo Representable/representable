@@ -54,7 +54,15 @@
               <a class="btn btn-primary" href="{% url 'main:drive_page' object.slug %}" role="button">View <i class="fa fa-arrow-circle-right"></i></a>
             </li>
 
-
+            {% if object.private %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <h5><span class="badge badge-secondary"><i class="fas fa-file-upload"></i></span> Manage Invite List </h5>
+                <p>Only users you invite can submit to or see your private drive. Manage the invite list here. <p>
+              </div>
+              <a class="btn btn-primary" href="{% url 'main:manage_allowlist' object.organization.slug  object.organization.pk object.pk %}" role="button">Manage <i class="fa fa-arrow-circle-right"></i></a>
+            </li>
+            {% endif %}
 
             <li class="list-group-item d-flex justify-content-between align-items-center">
               <div>
@@ -67,23 +75,6 @@
       </div>
     </div>
   </div>
-  <!-- <div class="row pb-3">
-    <div class="col-sm">
-      <div class="card shadow-sm h-100">
-        <div class="card-body">
-          <h5>
-            Delete Drive
-          </h5>
-          <hr>
-          <p>Press 'Delete' if you're sure you want to permanently delete this drive. Warning: you won't be able to undo this.</p>
-          {% if is_org_admin %}
-            <button type="submit" class="btn btn-danger", name="Delete">Delete</button>
-          {% endif %}
-
-        </div>
-      </div>
-    </div>
-  </div> -->
 </div>
 <!-- Modal -->
 <div class="modal fade" id="deleteDriveConfirm" tabindex="-1" role="dialog" aria-labelledby="deleteDriveLabel" aria-hidden="true">
