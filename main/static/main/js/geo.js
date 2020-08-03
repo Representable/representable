@@ -23,6 +23,9 @@
 /* https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ */
 // Polygon Drawn By User
 
+// selection bounding box (for querying + contiguity check)
+var selectBbox = null;
+
 // Helper print function
 function print(items) {
   console.log(items);
@@ -165,16 +168,62 @@ function formValidation() {
 /****************************************************************************/
 // generates concave hull from selection
 function createCommPolygon() {
-    // flyTo selectBbox
-    // queryrenderedfeatures
-    // check features against filter
-    // union features to form a MultiPolygon
-    // call concave to get only outer points
-    map.flyTo({
-      center: [selectBbox.geometry.coordinates[0][0][0], selectBbox.geometry.coordinates[0][0][1]],
-      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
-      zoom: 10,
-    });
+    // TODO: check for size
+    if (selectBbox !== null) {
+      var bbox = turf.bbox(selectBbox);
+      // zoom to the current selection !
+      // TODO: put a delay on rest of function so that there's time before querying..
+      map.fitBounds(bbox, {padding: 100, duration: 0});
+
+      var queryFeatures = map.queryRenderedFeatures({
+        layers: [state + "-census-shading"],
+      });
+      var polyFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
+      var multiPolySave;
+      queryFeatures.forEach(function(feature) {
+        if (polyFilter.includes(feature.properties.GEOID)) {
+          if (multiPolySave === undefined) {
+            multiPolySave = feature;
+          } else {
+            multiPolySave = turf.union(multiPolySave, feature);
+          }
+        }
+      });
+      // for display purposes -- this is the final multipolygon!!
+      var wkt = new Wkt.Wkt();
+      var wkt_obj = wkt.read(JSON.stringify(multiPolySave.geometry));
+      var poly_wkt = wkt_obj.write();
+      // ok so this is kinda jank lol but let me explain
+      // if it isn't a contiguous selection area, then poly_wkt will start with MULTIPOLYGON
+      // otherwise it starts with POLYGON -- so we test the first char for contiguity 8-)
+      if (poly_wkt[0] === "M") {
+        console.log("ERROR - submitting multipolygon -> not contiguous!!");
+        // testing concavity
+        // there HAS to be a better way to do This
+        // turf is literally being so annoying rn >:(
+        var concCoords = turf.getCoords(multiPolySave);
+        var polyPoints = [];
+        concCoords[0][0].forEach(function(c) {
+          polyPoints.push(turf.point(c));
+        });
+        var polyCollect = turf.featureCollection(polyPoints);
+        // now we use these points to call concave and see what we get !!
+        var options = {units: 'kilometers', maxEdge: 3};
+        var multiPolyConc = turf.concave(polyCollect, options);
+        var wkt_obj_conc = wkt.read(JSON.stringify(multiPolyConc.geometry));
+        var poly_wkt_conc = wkt_obj_conc.write();
+        console.log(poly_wkt_conc);
+        console.log("^^ concave() called");
+      } else {
+        console.log("SUCCESS - this is a polygon!");
+        console.log(poly_wkt);
+      }
+
+      // clean up polyFilter -- this is the array of GEOID to be stored
+      polyFilter.splice(0, 1);
+      polyFilter.splice(0, 1);
+      console.log("finished createCommPolygon()");
+    }
 }
 /****************************************************************************/
 
@@ -192,12 +241,8 @@ document.addEventListener(
       .html('<span class="" aria-hidden="true">Remove</span>');
     var entry_form_button = document.getElementById("save");
     entry_form_button.addEventListener("click", function (event) {
-      // TODO: add function that does the following
-      // - flies to selectBbox
-      // - queries rendered features to create polygon
-      // - calls turf.convex()
-      createCommPolygon();
       formValidation();
+      createCommPolygon();
     });
     state = sessionStorage.getItem("state_name");
     // If there are alerts, scroll to first one.
@@ -410,7 +455,7 @@ class ClearMapButton {
       map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
       sessionStorage.setItem("bgFilter", "[]");
       sessionStorage.setItem("mpoly", "[]");
-      selectBbox = undefined;
+      selectBbox = null;
     });
     return clear_button;
   }
@@ -425,24 +470,23 @@ var mapClearButton = document.getElementById("map-clear-button-id");
 drawControls.appendChild(mapClearButton);
 
 // DEPRECATED (for now)
-function toggleInstructionBox() {
-  // Show instruction box on map for edit mode.
-  var instruction_box = document.getElementById("instruction-box-id");
-  if (instruction_box.style.display == "block") {
-    hideInstructionBox();
+function toggleWarningBox() {
+  var warning_box = document.getElementById("warning-box-id");
+  if (warning_box.style.display == "block") {
+    hideWarningBox();
   } else {
-    showInstructionBox();
+    showWarningBox();
   }
 }
 
-function showInstructionBox() {
-  var instruction_box = document.getElementById("instruction-box-id");
-  instruction_box.style.display = "block";
+function showWarningBox() {
+  var warning_box = document.getElementById("warning-box-id");
+  warning_box.style.display = "block";
 }
 
-function hideInstructionBox() {
-  var instruction_box = document.getElementById("instruction-box-id");
-  instruction_box.style.display = "none";
+function hideWarningBox() {
+  var warning_box = document.getElementById("warning-box-id");
+  warning_box.style.display = "none";
 }
 
 // Add nav control buttons.
@@ -787,7 +831,7 @@ map.on("style.load", function () {
       }
     }
     // check if previous selectBbox overlaps with current selectBbox
-    if (selectBbox === undefined) {
+    if (selectBbox === null) {
       selectBbox = currentSelectBbox;
       hideWarningBox();
     } else {
@@ -935,15 +979,15 @@ map.on("render", function (e) {
   if (map.loaded() == false || wasLoaded) return;
   wasLoaded = true;
   // test if polygon has been drawn
-  var bgPoly = JSON.parse(sessionStorage.getItem("bgFilter"));
-  if (bgPoly !== "") {
+  var bgPoly = sessionStorage.getItem("bgFilter");
+  if (bgPoly !== "[]") {
     // re-display the polygon
     map.setFilter(
       state + "-bg-highlighted",
-      bgPoly
+      JSON.parse(bgPoly)
     );
     // error - when selectBbox is undefined...
-    if (selectBbox !== undefined) {
+    if (selectBbox !== null) {
       map.flyTo({
         center: [selectBbox.geometry.coordinates[0][0][0], selectBbox.geometry.coordinates[0][0][1]],
         essential: true, // this animation is considered essential with respect to prefers-reduced-motion

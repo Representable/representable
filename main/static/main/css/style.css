@@ -14,7 +14,7 @@ define new CSS classes and rules, and don't change default Bootstrap classes
 and rules, since this can lead to unintended consequences.
 This means no changing anything like <a>, <li>, <p>, etc.
 
-You can change them if you want to change the entire website, but customizing 
+You can change them if you want to change the entire website, but customizing
 Bootstrap is better in that case. https://getbootstrap.com/docs/4.5/getting-started/theming/
 */
 
@@ -58,8 +58,8 @@ form:invalid {
 .toc-check-input {
   display: inline;
 }
-/* Entry page instructions. */
-.instruction-box {
+/* Entry page warning. */
+.warning-box {
   position: absolute;
   bottom: 40px;
   left: 10px;
@@ -792,6 +792,10 @@ color scheme. See readme.md*/
 
 .fa-th-large {
   color: #455bcb;
+}
+
+.fa-exclamation-triangle {
+  color: #dc3545;
 }
 
 /* code for the toggle button: https://codepen.io/thelaazyguy/pen/MvqpPr/ */
