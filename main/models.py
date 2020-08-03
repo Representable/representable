@@ -233,14 +233,14 @@ class CommunityEntry(models.Model):
         Drive, on_delete=models.SET_NULL, blank=True, null=True
     )
     user_polygon = models.PolygonField(
-        geography=True, serialize=True, blank=False
+        geography=True, serialize=True, blank=True, null=True
     )
     census_blocks_polygon_array = ArrayField(
         models.PolygonField(
             geography=True, blank=True, null=True, serialize=True
         ),
-        blank=True,
-        null=True,
+        blank=False,
+        null=True
     )
     census_blocks_polygon = models.MultiPolygonField(
         geography=True, serialize=True, blank=True, null=True
@@ -268,7 +268,7 @@ class CommunityEntry(models.Model):
         max_length=500, blank=True, unique=False, default=""
     )
     created_at = models.DateTimeField(auto_now_add=True)
-    admin_approved = models.BooleanField(default=False)
+    admin_approved = models.BooleanField(default=True)
 
     def __str__(self):
         return str(self.entry_ID)
@@ -325,3 +325,21 @@ class State(models.Model):
 
     class Meta:
         db_table = "state"
+
+
+# ******************************************************************************#
+class Report(models.Model):
+    community = models.ForeignKey(
+        CommunityEntry, on_delete=models.CASCADE, related_name="reports"
+    )
+    email = models.CharField(max_length=128)
+
+    timestamp = models.DateTimeField(auto_now_add=True)
+    resolved = models.BooleanField(default=False)
+
+    def unapprove(self):
+        self.community.admin_approved = False
+        self.community.save()
+
+
+# ******************************************************************************#
