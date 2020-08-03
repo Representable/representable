@@ -192,6 +192,11 @@ urlpatterns = [
                     views.AllowListUpdate.as_view(),
                     name="upload_allowlist",
                 ),
+                path(
+                    "drives/<uuid:cam_pk>/manage-allowlist/",
+                    views.AllowListManage.as_view(),
+                    name="manage_allowlist",
+                ),
             ]
         ),
     ),
