@@ -98,6 +98,10 @@ function hideMap() {
 
 function checkFieldById(field_id) {
   var field = document.getElementById(field_id);
+  if (field.type === "checkbox" && field.checked === true){
+    field.classList.add("has_success");
+    return true;
+  }
   if (field.value == null || field.value == "") {
     field.classList.add("has_error");
     return false;
