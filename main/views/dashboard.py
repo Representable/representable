@@ -339,6 +339,40 @@ class AllowListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
         return super().form_valid(form)
 
 
+class AllowListManage(LoginRequiredMixin, OrgAdminRequiredMixin, TemplateView):
+    """
+    Page to view and edit allowlist
+    """
+
+    template_name = "main/dashboard/partners/allowlist_manage.html"
+
+    def get(self, request, cam_pk, *args, **kwargs):
+
+        drive = Drive.objects.get(pk=cam_pk)
+        allowlist = AllowList.objects.filter(drive=drive)
+        context = {
+            "object": drive,
+            "list": allowlist,
+        }
+        return render(request, self.template_name, context,)
+
+    def post(self, request, cam_pk, *args, **kwargs):
+        drive = Drive.objects.get(pk=cam_pk)
+        email = self.request.POST["email"]
+        query = AllowList.objects.filter(email=email, drive=drive)
+        if not query:
+            AllowList.objects.create(
+                email=email, organization=drive.organization, drive=drive,
+            )
+            # TODO: send invite
+        url_kwargs = kwargs
+        url_kwargs["cam_pk"] = cam_pk
+
+        return redirect(
+            reverse_lazy("main:manage_allowlist", kwargs=url_kwargs)
+        )
+
+
 class ReviewOrg(LoginRequiredMixin, OrgAdminRequiredMixin, TemplateView):
     """
     Page for organization to review submissions
