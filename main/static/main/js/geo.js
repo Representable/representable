@@ -379,10 +379,15 @@ class ClearMapButton {
     clear_button.innerHTML = "<i class='fas fa-trash-alt'></i> Clear Selection";
     this._map = map;
     clear_button.addEventListener("click", function (event) {
-      map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
-      sessionStorage.setItem("bgFilter", "[]");
-      sessionStorage.setItem("mpoly", "[]");
-      updateCommunityEntry();
+      let isConfirmed = confirm(
+        "Are you sure you want to clear the map? This will delete the blocks you have selected."
+      );
+      if (isConfirmed) {
+        map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
+        sessionStorage.setItem("bgFilter", "[]");
+        sessionStorage.setItem("mpoly", "[]");
+        updateCommunityEntry();
+      }
     });
     return clear_button;
   }
