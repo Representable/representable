@@ -350,16 +350,20 @@ mapDraw.addEventListener("click", function (e) {
   e.preventDefault();
   e.stopPropagation();
 
-  mapDraw.style.backgroundColor = "#e0e0e0";
-  mapEraser.style.backgrundColor = "transparent";
-  eraseMode = false;
+  if (eraseMode) {
+    eraseMode = false;
+    mapDraw.style.backgroundColor = "#e0e0e0";
+    mapEraser.style.backgroundColor = "transparent";
+  }
 });
 mapEraser.addEventListener("click", function (e) {
   e.preventDefault();
   e.stopPropagation();
-  eraseMode = true;
-  mapDraw.style.backgroundColor = "transparent";
-  mapEraser.style.backgroundColor = "#e0e0e0";
+  if (!eraseMode) {
+    eraseMode = true;
+    mapDraw.style.backgroundColor = "transparent";
+    mapEraser.style.backgroundColor = "#e0e0e0";
+  }
 });
 
 class ClearMapButton {
