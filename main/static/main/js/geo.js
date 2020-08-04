@@ -1,22 +1,22 @@
 /*
- * Copyright (c) 2019- Representable Team (Theodor Marcu, Lauren Johnston, Somya Arora, Kyle Barnes, Preeti Iyer).
- *
- * This file is part of Representable
- * (see http://representable.org).
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
+* Copyright (c) 2019- Representable Team (Theodor Marcu, Lauren Johnston, Somya Arora, Kyle Barnes, Preeti Iyer).
+*
+* This file is part of Representable
+* (see http://representable.org).
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
 /******************************************************************************/
 
 // GEO Js file for handling map drawing.
@@ -168,12 +168,12 @@ document.addEventListener(
   function () {
     var conditionRow = $(".form-row:not(:last)");
     conditionRow
-      .find(".btn.add-form-row")
-      .removeClass("btn-outline-success")
-      .addClass("btn-outline-danger")
-      .removeClass("add-form-row")
-      .addClass("remove-form-row")
-      .html('<span class="" aria-hidden="true">Remove</span>');
+    .find(".btn.add-form-row")
+    .removeClass("btn-outline-success")
+    .addClass("btn-outline-danger")
+    .removeClass("add-form-row")
+    .addClass("remove-form-row")
+    .html('<span class="" aria-hidden="true">Remove</span>');
     var entry_form_button = document.getElementById("save");
     entry_form_button.addEventListener("click", function (event) {
       formValidation();
@@ -212,15 +212,15 @@ document.addEventListener(
     }
     // Shepherd JS
     document
-      .getElementById("shepherd-btn")
-      .addEventListener("click", function (event) {
-        mixpanel.track("Shepherd JS", {
-          drive_id: drive_id,
-          drive_name: drive_name,
-          organization_id: organization_id,
-          organization_name: organization_name,
-        });
+    .getElementById("shepherd-btn")
+    .addEventListener("click", function (event) {
+      mixpanel.track("Shepherd JS", {
+        drive_id: drive_id,
+        drive_name: drive_name,
+        organization_id: organization_id,
+        organization_name: organization_name,
       });
+    });
     sessionStorage.setItem("map_drawn_successfully", false);
   },
   false
@@ -270,7 +270,7 @@ class SelectRadiusButton {
     radius_control.id = "map-radius-control-id";
     radius_control.style.display = "block";
     radius_control.innerHTML =
-      '<form><input type="range" min="1" max="50" value="25" class="custom-range" id="radius-control"><p style="margin: 0;">Selection Size: <span id="radius-value">25</span></p></form>';
+    '<form><input type="range" min="1" max="50" value="25" class="custom-range" id="radius-control"><p style="margin: 0;">Selection Size: <span id="radius-value">25</span></p></form>';
     this._map = map;
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group draw-group";
@@ -509,7 +509,7 @@ let myTour = new Shepherd.Tour({
 myTour.addStep({
   title: "Draw Your Community Map",
   text:
-    "Hover over the map and certain grids will appear highlighted. Click to add the highlighted region into your community.",
+  "Hover over the map and certain grids will appear highlighted. Click to add the highlighted region into your community.",
   buttons: [
     {
       action() {
@@ -534,7 +534,7 @@ myTour.addStep({
 myTour.addStep({
   title: "Adjust Size",
   text:
-    "Use this selection size bar to adjust the size of your selection region \
+  "Use this selection size bar to adjust the size of your selection region \
   ",
   attachTo: {
     element: "#map-radius-control-id",
@@ -592,7 +592,7 @@ myTour.addStep({
 myTour.addStep({
   title: "Adjust Eraser Size",
   text:
-    "You can also adjust the size of your eraser with the select size bar \
+  "You can also adjust the size of your eraser with the select size bar \
   ",
   attachTo: {
     element: "#map-radius-control-id",
@@ -646,7 +646,7 @@ myTour.addStep({
 myTour.addStep({
   title: "Clear Selection",
   text:
-    "Delete the community you have drawn or restart the drawing process by clicking this button.",
+  "Delete the community you have drawn or restart the drawing process by clicking this button.",
   attachTo: {
     element: "#map-clear-button-id",
     on: "bottom",
@@ -822,6 +822,58 @@ map.on("style.load", function () {
     updateCommunityEntry();
   });
 
+  // When the user moves their mouse over the census shading layer, we'll update the
+  // feature state for the feature under the mouse.
+  var bgID = null;
+  var features = [];
+  var stateCensus = state + "-census-shading";
+  // if touch screen, disable.
+  if (!is_touch_device()) {
+    map.on("mousemove", stateCensus, function (e) {
+      if (e.features.length > 0) {
+        // create a constantly updated list of the features which have been highlighted in foreach loop
+        // before highlighting, go thru that list, and deselect all
+        var bbox = [
+          [e.point.x - drawRadius, e.point.y - drawRadius],
+          [e.point.x + drawRadius, e.point.y + drawRadius],
+        ];
+        var hoverFeatures = map.queryRenderedFeatures(bbox, {
+          layers: [state + "-census-shading"],
+        });
+        stateBG = state + "bg";
+        features.forEach(function (feature) {
+          bgID = feature.id;
+          map.setFeatureState(
+            { source: stateBG, sourceLayer: stateBG, id: bgID },
+            { hover: false }
+          );
+        });
+        features = [];
+        hoverFeatures.forEach(function (feature) {
+          features.push(feature);
+          bgID = feature.id;
+          map.setFeatureState(
+            { source: stateBG, sourceLayer: stateBG, id: bgID },
+            { hover: true }
+          );
+        });
+      }
+    });
+  }
+
+  // When the mouse leaves the state-fill layer, update the feature state of the
+  // previously hovered feature.
+  map.on("mouseleave", stateCensus, function () {
+    if (bgID) {
+      stateBG = state + "bg";
+      map.setFeatureState(
+        { source: stateBG, sourceLayer: stateBG, id: bgID },
+        { hover: false }
+      );
+    }
+    bgID = null;
+  });
+
   // Listen for the `geocoder.input` event that is triggered when a user
   // makes a selection and add a symbol that matches the result.
   geocoder.on("result", function (ev) {
@@ -835,8 +887,8 @@ map.on("style.load", function () {
     // get the state from the geocoder response
     if (styleSpec.context.length >= 2) {
       new_state = styleSpec.context[styleSpec.context.length - 2]["short_code"]
-        .toLowerCase()
-        .substring(3);
+      .toLowerCase()
+      .substring(3);
     } else {
       new_state = styleSpec.properties["short_code"].toLowerCase().substring(3);
     }
@@ -862,58 +914,6 @@ map.on("style.load", function () {
 
     // Save state to session storage
     sessionStorage.setItem("state_name", state);
-
-    // When the user moves their mouse over the census shading layer, we'll update the
-    // feature state for the feature under the mouse.
-    var bgID = null;
-    var features = [];
-    var stateCensus = state + "-census-shading";
-    // if touch screen, disable.
-    if (!is_touch_device()) {
-      map.on("mousemove", stateCensus, function (e) {
-        if (e.features.length > 0) {
-          // create a constantly updated list of the features which have been highlighted in foreach loop
-          // before highlighting, go thru that list, and deselect all
-          var bbox = [
-            [e.point.x - drawRadius, e.point.y - drawRadius],
-            [e.point.x + drawRadius, e.point.y + drawRadius],
-          ];
-          var hoverFeatures = map.queryRenderedFeatures(bbox, {
-            layers: [state + "-census-shading"],
-          });
-          stateBG = state + "bg";
-          features.forEach(function (feature) {
-            bgID = feature.id;
-            map.setFeatureState(
-              { source: stateBG, sourceLayer: stateBG, id: bgID },
-              { hover: false }
-            );
-          });
-          features = [];
-          hoverFeatures.forEach(function (feature) {
-            features.push(feature);
-            bgID = feature.id;
-            map.setFeatureState(
-              { source: stateBG, sourceLayer: stateBG, id: bgID },
-              { hover: true }
-            );
-          });
-        }
-      });
-    }
-
-    // When the mouse leaves the state-fill layer, update the feature state of the
-    // previously hovered feature.
-    map.on("mouseleave", stateCensus, function () {
-      if (bgID) {
-        stateBG = state + "bg";
-        map.setFeatureState(
-          { source: stateBG, sourceLayer: stateBG, id: bgID },
-          { hover: false }
-        );
-      }
-      bgID = null;
-    });
 
     // Tracking
     mixpanel.track("Geocoder Search Successful", {
@@ -985,12 +985,12 @@ function triggerDrawError(id, stringErrorText) {
   }
   let newAlert = document.createElement("div");
   newAlert.innerHTML =
-    '<div id="' +
-    id +
-    '" class="alert alert-danger alert-dismissible fade show map-alert" role="alert">\
+  '<div id="' +
+  id +
+  '" class="alert alert-danger alert-dismissible fade show map-alert" role="alert">\
   ' +
-    stringErrorText +
-    '\
+  stringErrorText +
+  '\
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">\
   <span aria-hidden="true">&times;</span>\
   </button>\
@@ -1011,7 +1011,7 @@ function triggerSuccessMessage() {
 
   let newAlert = document.createElement("div");
   newAlert.innerHTML =
-    '<div id="map-success-message" class="alert alert-success alert-dismissible fade show map-alert" role="alert">\
+  '<div id="map-success-message" class="alert alert-success alert-dismissible fade show map-alert" role="alert">\
   <strong>Congratulations!</strong> Your map looks great.\
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">\
   <span aria-hidden="true">&times;</span>\
