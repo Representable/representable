@@ -349,24 +349,17 @@ drawControls.appendChild(mapEraser);
 mapDraw.addEventListener("click", function (e) {
   e.preventDefault();
   e.stopPropagation();
+
   if (eraseMode) {
     eraseMode = false;
     mapDraw.style.backgroundColor = "#e0e0e0";
     mapEraser.style.backgroundColor = "transparent";
-  } else {
-    eraseMode = true;
-    mapDraw.style.backgroundColor = "transparent";
-    mapEraser.style.backgroundColor = "#e0e0e0";
   }
 });
 mapEraser.addEventListener("click", function (e) {
   e.preventDefault();
   e.stopPropagation();
-  if (eraseMode) {
-    eraseMode = false;
-    mapDraw.style.backgroundColor = "#e0e0e0";
-    mapEraser.style.backgroundColor = "transparent";
-  } else {
+  if (!eraseMode) {
     eraseMode = true;
     mapDraw.style.backgroundColor = "transparent";
     mapEraser.style.backgroundColor = "#e0e0e0";
@@ -828,7 +821,11 @@ map.on("style.load", function () {
       }
       if (states.includes(new_state)) {
         // add block groups, remove those of previous state
-        map.setLayoutProperty(new_state + "-census-lines", "visibility", "visible");
+        map.setLayoutProperty(
+          new_state + "-census-lines",
+          "visibility",
+          "visible"
+        );
       }
       state = new_state;
     } else {
@@ -1062,19 +1059,21 @@ function updateCommunityEntry() {
 
 // check if device is touch screen --> https://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript/4819886#4819886
 function is_touch_device() {
+  var prefixes = " -webkit- -moz- -o- -ms- ".split(" ");
 
-    var prefixes = ' -webkit- -moz- -o- -ms- '.split(' ');
+  var mq = function (query) {
+    return window.matchMedia(query).matches;
+  };
 
-    var mq = function (query) {
-        return window.matchMedia(query).matches;
-    }
+  if (
+    "ontouchstart" in window ||
+    (window.DocumentTouch && document instanceof DocumentTouch)
+  ) {
+    return true;
+  }
 
-    if (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
-        return true;
-    }
-
-    // include the 'heartz' as a way to have a non matching MQ to help terminate the join
-    // https://git.io/vznFH
-    var query = ['(', prefixes.join('touch-enabled),('), 'heartz', ')'].join('');
-    return mq(query);
+  // include the 'heartz' as a way to have a non matching MQ to help terminate the join
+  // https://git.io/vznFH
+  var query = ["(", prefixes.join("touch-enabled),("), "heartz", ")"].join("");
+  return mq(query);
 }
