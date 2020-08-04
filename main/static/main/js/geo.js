@@ -999,6 +999,8 @@ map.on("style.load", function () {
     });
 
     $("#shepherd-btn").removeClass("d-none");
+    newCensusLines(state.toLowerCase());
+    newHighlightLayer(state.toLowerCase());
   }
 
   // Listen for the `geocoder.input` event that is triggered when a user
