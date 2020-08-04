@@ -263,7 +263,6 @@ document.addEventListener(
       }, 500);
       setTimeout(function () {
         if (polySuccess && formSuccess) {
-          console.log("submitting!!!");
           form.submit();
         }
       }, 2000);
