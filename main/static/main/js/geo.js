@@ -253,16 +253,17 @@ document.addEventListener(
       var form = $('#entryForm');
       zoomToCommunity();
       // delay so that zoom can occur
-      var submitSuccess = true;
+      var polySuccess = true, formSuccess = true;
       // loading icon
       $("#loading-entry").css("display", "block");
       $("#loading-entry").delay(2000).fadeOut(2000);
       setTimeout(function() {
-        submitSuccess = createCommPolygon();
-        submitSuccess = formValidation();
+        polySuccess = createCommPolygon();
+        formSuccess = formValidation();
       }, 500);
       setTimeout(function () {
-        if (submitSuccess) {
+        if (polySuccess && formSuccess) {
+          console.log("submitting!!!");
           form.submit();
         }
       }, 2000);
