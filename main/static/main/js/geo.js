@@ -534,7 +534,7 @@ myTour.addStep({
 myTour.addStep({
   title: "Adjust Size",
   text:
-    "Use the Select Radius bar to adjust the size of your selection region \
+    "Use this selection size bar to adjust the size of your selection region \
   ",
   attachTo: {
     element: "#map-radius-control-id",
@@ -592,7 +592,7 @@ myTour.addStep({
 myTour.addStep({
   title: "Adjust Eraser Size",
   text:
-    "You can also adjust the size of your eraser with the select radius bar \
+    "You can also adjust the size of your eraser with the select size bar \
   ",
   attachTo: {
     element: "#map-radius-control-id",
@@ -619,7 +619,7 @@ myTour.addStep({
 
 myTour.addStep({
   title: "Draw",
-  text: "Click the draw button to return to to adding units to the map.",
+  text: "Click the draw button to return to adding units to the map.",
   attachTo: {
     element: "#map-draw-button-id",
     on: "bottom",
@@ -672,10 +672,6 @@ myTour.addStep({
   title: "Finish Drawing",
   text: `Once you are done fine-tuning your drawing to reflect the geographical boundaries of
   your community of interest you can continue on to save your community!`,
-  attachTo: {
-    element: "#map-finish-drawing-button-id",
-    on: "bottom",
-  },
   buttons: [
     {
       action() {
