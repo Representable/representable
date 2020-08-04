@@ -35,6 +35,12 @@ urlpatterns = [
     path(
         "entry/drive/<slug:drive>/",
         views.main.EntryView.as_view(),
+        {"token": "", "abbr": ""},
+        name="entry",
+    ),
+    path(
+        "entry/drive/<slug:drive>/<abbr>",
+        views.main.EntryView.as_view(),
         {"token": ""},
         name="entry",
     ),
@@ -48,6 +54,18 @@ urlpatterns = [
         "entry/t/<token>/",
         views.main.EntryView.as_view(),
         {"drive": ""},
+        name="entry",
+    ),
+    path(
+        "entry/t/<token>/<abbr>/",
+        views.main.EntryView.as_view(),
+        {"drive": ""},
+        name="entry",
+    ),
+    path(
+        "entry/<abbr>/",
+        views.main.EntryView.as_view(),
+        {"token": "", "state": "", "drive": ""},
         name="entry",
     ),
     path("about/", views.main.About.as_view(), name="about"),
