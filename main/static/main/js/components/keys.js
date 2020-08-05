@@ -8,13 +8,13 @@ var BOUNDARIES_ABBREV = {
 }
 
 var BOUNDARIES_LAYERS = {
-  "pos4": "5-digit Postcode Areas",
-  "loc4": "Neighborhoods",
-  "adm2": "Counties",
-  "leg4": "State House Districts",
-  "leg3": "State Senate Districts",
   "leg2": "Congressional Districts",
-  "sta5": "Census Block Group"
+  "leg3": "State Senate Districts",
+  "leg4": "State House Districts",
+  "adm2": "Counties",
+  "loc4": "Neighborhoods",
+  "pos4": "5-digit Postcode Areas",
+  "sta5": "Census Block Groups"
 }
 
 var CENSUS_KEYS = {
