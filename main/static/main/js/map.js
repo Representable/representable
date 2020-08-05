@@ -58,6 +58,27 @@ function newSourceLayer(name, mbCode) {
   });
 }
 
+// add a new mapbox boundaries source + layer
+function newBoundariesLayer(name) {
+  map.addSource(name, {
+    type: "vector",
+    url: "mapbox://mapbox.boundaries-" + name + "-v3"
+  });
+  map.addLayer(
+    {
+      id: name + "-line",
+      type: "line",
+      source: name,
+      "source-layer": "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1),
+      layout: {
+        visibility: "none"
+      },
+      paint: {
+        'line-color': '#CCCCCC',
+      }
+    });
+}
+
 // add a new layer of census block data
 function newCensusLayer(state, firstSymbolId) {
   map.addLayer(
@@ -195,26 +216,16 @@ map.on("load", function () {
       firstSymbolId
     );
   }
-  map.addSource("counties", {
-    type: "vector",
-    url: "mapbox://mapbox.hist-pres-election-county"
-  });
-  map.addLayer(
-    {
-      id: "counties",
-      type: "line",
-      source: "counties",
-      "source-layer": "historical_pres_elections_county",
-      layout: {
-        visibility: "none"
-      },
-      paint: {
-        "line-color": "rgba(106,137,204,0.7)",
-        "line-width": 2,
-      }
-    }
-  );
-
+  // leg2 : congressional district
+  // leg3 : state senate district
+  // leg4 : state house district
+  // adm2 : counties
+  // loc4 : neighborhoods
+  // pos4 : 5-digit postcode area
+  // sta5 : block groups
+  for (let i = 0; i < BOUNDARIES_LAYERS.length; i++) {
+    newBoundariesLayer(BOUNDARIES_LAYERS[i]);
+  }
   // send elements to javascript as geojson objects and make them show on the map by
   // calling the addTo
 
@@ -427,4 +438,10 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
   div.appendChild(label);
   layers.appendChild(div);
   var newline = document.createElement("br");
+}
+
+/*******************************************************************/
+// remove the last char in the string
+function removeLastChar(str) {
+  str.substring(0, str.length() - 1);
 }

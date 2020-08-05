@@ -1,3 +1,22 @@
+// used for adding the source-layer on boundaries tilesets
+var BOUNDARIES_ABBREV = {
+  "adm": "admin",
+  "pos": "postal",
+  "sta": "stats",
+  "loc": "locality",
+  "leg": "legislative"
+}
+
+var BOUNDARIES_LAYERS = {
+  "pos4": "5-digit Postcode Areas",
+  "loc4": "Neighborhoods",
+  "adm2": "Counties",
+  "leg4": "State House Districts",
+  "leg3": "State Senate Districts",
+  "leg2": "Congressional Districts",
+  "sta5": "Census Block Group"
+}
+
 var CENSUS_KEYS = {
   "ak-census": "40xiqgvl",
   "al-census": "5wnfuadx",
