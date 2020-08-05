@@ -475,7 +475,7 @@ class ClearMapButton {
       if (isConfirmed) {
         map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
         sessionStorage.setItem("bgFilter", "[]");
-        sessionStorage.setItem("mpoly", "[]");
+        sessionStorage.setItem("selectBbox", "[]");
         updateCommunityEntry();
       }
     });
@@ -854,7 +854,7 @@ map.on("style.load", function () {
     }
     // check if previous selectBbox overlaps with current selectBbox
     var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
-    if (selectBbox === null) {
+    if (selectBbox.length === 0) {
       selectBbox = currentSelectBbox;
       hideWarningBox();
     } else {
