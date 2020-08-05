@@ -58,8 +58,8 @@ form:invalid {
 .toc-check-input {
   display: inline;
 }
-/* Entry page warning. */
-.warning-box {
+/* Pop up - bottom left corner of the map. */
+.map-popup-box {
   position: absolute;
   bottom: 40px;
   left: 10px;
@@ -70,11 +70,8 @@ form:invalid {
   z-index: 10;
   display: none;
 }
-.blue-circle {
-  color: #34495e;
-}
-.orange-circle {
-  color: #e67e22;
+.warning-box {
+  border: 1px solid red;
 }
 
 /* Entry Page: Geocoder Full Width */

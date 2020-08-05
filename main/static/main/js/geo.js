@@ -230,7 +230,7 @@ function createCommPolygon() {
 // zoom to the current Selection
 function zoomToCommunity() {
   var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
-  if (selectBbox === null) return;
+  if (selectBbox.length === 0) return;
   var bbox = turf.bbox(selectBbox);
   map.fitBounds(bbox, {padding: 100, duration: 0});
 }
@@ -325,7 +325,8 @@ var map = new mapboxgl.Map({
   style: "mapbox://styles/mapbox/streets-v11", //hosted style id
   center: [-96.7026, 40.8136], // starting position - Lincoln, NE :)
   zoom: 3, // starting zoom -- higher is closer
-  maxZoom: 17, // camelCase. There's no official documentation for this smh :/
+  maxZoom: 14, // camelCase. There's no official documentation for this smh :/
+  minZoom: 7,
 });
 
 var layerList = document.getElementById("menu");
@@ -1015,8 +1016,7 @@ map.on("render", function (e) {
       JSON.parse(bgPoly)
     );
     var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
-    // error - when selectBbox is undefined...
-    if (selectBbox !== null) {
+    if (selectBbox.length !== 0) {
       map.flyTo({
         center: [selectBbox.geometry.coordinates[0][0][0], selectBbox.geometry.coordinates[0][0][1]],
         essential: true, // this animation is considered essential with respect to prefers-reduced-motion
@@ -1104,26 +1104,6 @@ function triggerSuccessMessage() {
     });
     sessionStorage.setItem("map_drawn_successfully", true);
   }
-}
-
-/*  Pushes poly in its wkt forms to the polyArray */
-function updatePoly(poly, polyArray, wkt) {
-  // get polygon into usable format
-  var poly_json = JSON.stringify(poly);
-  var wkt_obj = wkt.read(poly_json);
-  var poly_wkt = wkt_obj.write();
-  // initial selection -- polyArray is null at first
-  if (polyArray === null) {
-    polyArray = [];
-    polyArray.push(poly_wkt);
-  }
-  var isSelected = polyArray.includes(poly_wkt);
-  if (isSelected && eraseMode) {
-    polyArray = polyArray.filter((e) => e !== poly_wkt);
-  } else if (!isSelected && !eraseMode) {
-    polyArray.push(poly_wkt);
-  }
-  return polyArray;
 }
 
 function updateFormFields(census_blocks_polygon_array) {
