@@ -96,13 +96,37 @@ function hideMap() {
   map.resize();
 }
 
-function checkFieldById(field_id) {
-  var field = document.getElementById(field_id);
-  if (field.value == null || field.value == "") {
-    field.classList.add("has_error");
-    return false;
+function toggleErrorSuccess(field) {
+  if (field.classList.contains("has_error")) {
+    field.classList.toggle("has_error");
   }
   field.classList.add("has_success");
+}
+function toggleErrorFail(field) {
+  if (field.classList.contains("has_success")) {
+    field.classList.toggle("has_success");
+  }
+  field.classList.add("has_error");
+}
+
+function checkFieldById(field_id) {
+  var field = document.getElementById(field_id);
+  if (field.type === "checkbox") {
+    if (field.checked === true) {
+      toggleErrorSuccess(field);
+      return true;
+    } else {
+      // terms-card is the entire card with checkbox -- since it doesn't behave
+      // as other form fields do
+      toggleErrorFail(document.getElementById("terms-card"));
+      return false;
+    }
+  }
+  if (field.value == null || field.value == "") {
+    toggleErrorFail(field);
+    return false;
+  }
+  toggleErrorSuccess(field);
   return true;
 }
 
@@ -142,25 +166,75 @@ function formValidation() {
     var interets_alert = document.getElementById("need_one_interest");
     interets_alert.classList.remove("d-none");
   }
-
-  var census_blocks_arr_field = document.getElementById(
-    "id_census_blocks_polygon_array"
-  );
-  if (
-    census_blocks_arr_field.value == null ||
-    census_blocks_arr_field.value == "" ||
-    census_blocks_arr_field.value == "[]"
-  ) {
-    triggerMissingPolygonError();
-    flag = false;
-  }
-  var census_blocks_poly = document.getElementById("id_census_blocks_polygon");
   if (flag == false) {
     // Add alert.
-    document.getElementById("form_error").classList.remove("d-none");
+    var alert = document.getElementById("form_error")
+    alert.classList.remove("d-none");
+    scrollIntoViewSmooth(alert.id);
   }
   return flag;
 }
+
+/****************************************************************************/
+// generates polygon to be saved from the selection
+function createCommPolygon() {
+    // start by checking size -- 800 is an arbitrary number
+    // it means a community with a population between 480,000 & 2,400,000
+    var polyFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
+    if (polyFilter === null) return false;
+    if (polyFilter.length > 802) {
+      triggerDrawError("polygon_size", "You must select a smaller area to submit this community.");
+      return false;
+    } else if (polyFilter.length === 0) {
+      triggerMissingPolygonError();
+      return false;
+    }
+    // now query the features and build the polygon to be saved
+    var queryFeatures = map.queryRenderedFeatures({
+      layers: [state + "-census-shading"],
+    });
+    var multiPolySave;
+    queryFeatures.forEach(function(feature) {
+      if (polyFilter.includes(feature.properties.GEOID)) {
+        if (multiPolySave === undefined) {
+          multiPolySave = feature;
+        } else {
+          multiPolySave = turf.union(multiPolySave, feature);
+        }
+      }
+    });
+
+    // for display purposes -- this is the final multipolygon!!
+    // TODO: implement community entry model change -> store only outer coordinates (like code in map.js)
+    var wkt = new Wkt.Wkt();
+    var wkt_obj = wkt.read(JSON.stringify(multiPolySave.geometry));
+    var poly_wkt = wkt_obj.write();
+    // ok so this is kinda jank lol but let me explain
+    // if it isn't a contiguous selection area, then poly_wkt will start with "MULTIPOLYGON"
+    // otherwise it starts with "POLYGON" -- so we test the first char for contiguity 8-)
+    if (poly_wkt[0] === "M") {
+      triggerDrawError("polygon_size", "Please ensure that your community does not contain any gaps. Your selected units must connect.");
+      return false;
+    } else {
+      triggerSuccessMessage();
+      updateFormFields(poly_wkt);
+
+      // clean up polyFilter -- this is the array of GEOID to be stored
+      polyFilter.splice(0, 1);
+      polyFilter.splice(0, 1);
+      // TODO: implement community entry model change -> store this array of references to blockgroups!
+    }
+    return true;
+}
+
+// zoom to the current Selection
+function zoomToCommunity() {
+  var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
+  if (selectBbox === null) return;
+  var bbox = turf.bbox(selectBbox);
+  map.fitBounds(bbox, {padding: 100, duration: 0});
+}
+/****************************************************************************/
 
 // Make buttons show the right skin.
 document.addEventListener(
@@ -168,22 +242,38 @@ document.addEventListener(
   function () {
     var conditionRow = $(".form-row:not(:last)");
     conditionRow
-    .find(".btn.add-form-row")
-    .removeClass("btn-outline-success")
-    .addClass("btn-outline-danger")
-    .removeClass("add-form-row")
-    .addClass("remove-form-row")
-    .html('<span class="" aria-hidden="true">Remove</span>');
-    var entry_form_button = document.getElementById("save");
-    entry_form_button.addEventListener("click", function (event) {
-      formValidation();
+      .find(".btn.add-form-row")
+      .removeClass("btn-outline-success")
+      .addClass("btn-outline-danger")
+      .removeClass("add-form-row")
+      .addClass("remove-form-row")
+      .html('<span class="" aria-hidden="true">Remove</span>');
+    $('#save').on('click', function (e) {
+      e.preventDefault();
+      var form = $('#entryForm');
+      zoomToCommunity();
+      // delay so that zoom can occur
+      var polySuccess = true, formSuccess = true;
+      // loading icon
+      $("#loading-entry").css("display", "block");
+      $("#loading-entry").delay(2000).fadeOut(2000);
+      setTimeout(function() {
+        polySuccess = createCommPolygon();
+        formSuccess = formValidation();
+      }, 500);
+      setTimeout(function () {
+        if (polySuccess && formSuccess) {
+          form.submit();
+        }
+      }, 2000);
+      return false;
     });
     state = sessionStorage.getItem("state_name");
     // If there are alerts, scroll to first one.
     var document_alerts = document.getElementsByClassName("django-alert");
     if (document_alerts.length > 0) {
       let first_alert = document_alerts[0];
-      first_alert.scrollIntoView();
+      scrollIntoViewSmooth(first_alert.id);
       document.getElementById("form_error").classList.remove("d-none");
     }
 
@@ -349,24 +439,17 @@ drawControls.appendChild(mapEraser);
 mapDraw.addEventListener("click", function (e) {
   e.preventDefault();
   e.stopPropagation();
+
   if (eraseMode) {
     eraseMode = false;
     mapDraw.style.backgroundColor = "#e0e0e0";
     mapEraser.style.backgroundColor = "transparent";
-  } else {
-    eraseMode = true;
-    mapDraw.style.backgroundColor = "transparent";
-    mapEraser.style.backgroundColor = "#e0e0e0";
   }
 });
 mapEraser.addEventListener("click", function (e) {
   e.preventDefault();
   e.stopPropagation();
-  if (eraseMode) {
-    eraseMode = false;
-    mapDraw.style.backgroundColor = "#e0e0e0";
-    mapEraser.style.backgroundColor = "transparent";
-  } else {
+  if (!eraseMode) {
     eraseMode = true;
     mapDraw.style.backgroundColor = "transparent";
     mapEraser.style.backgroundColor = "#e0e0e0";
@@ -386,10 +469,15 @@ class ClearMapButton {
     clear_button.innerHTML = "<i class='fas fa-trash-alt'></i> Clear Selection";
     this._map = map;
     clear_button.addEventListener("click", function (event) {
-      map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
-      sessionStorage.setItem("bgFilter", "[]");
-      sessionStorage.setItem("mpoly", "[]");
-      updateCommunityEntry();
+      let isConfirmed = confirm(
+        "Are you sure you want to clear the map? This will delete the blocks you have selected."
+      );
+      if (isConfirmed) {
+        map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
+        sessionStorage.setItem("bgFilter", "[]");
+        sessionStorage.setItem("selectBbox", "[]");
+        updateCommunityEntry();
+      }
     });
     return clear_button;
   }
@@ -404,24 +492,23 @@ var mapClearButton = document.getElementById("map-clear-button-id");
 drawControls.appendChild(mapClearButton);
 
 // DEPRECATED (for now)
-function toggleInstructionBox() {
-  // Show instruction box on map for edit mode.
-  var instruction_box = document.getElementById("instruction-box-id");
-  if (instruction_box.style.display == "block") {
-    hideInstructionBox();
+function toggleWarningBox() {
+  var warning_box = document.getElementById("warning-box-id");
+  if (warning_box.style.display == "block") {
+    hideWarningBox();
   } else {
-    showInstructionBox();
+    showWarningBox();
   }
 }
 
-function showInstructionBox() {
-  var instruction_box = document.getElementById("instruction-box-id");
-  instruction_box.style.display = "block";
+function showWarningBox() {
+  var warning_box = document.getElementById("warning-box-id");
+  warning_box.style.display = "block";
 }
 
-function hideInstructionBox() {
-  var instruction_box = document.getElementById("instruction-box-id");
-  instruction_box.style.display = "none";
+function hideWarningBox() {
+  var warning_box = document.getElementById("warning-box-id");
+  warning_box.style.display = "none";
 }
 
 // Add nav control buttons.
@@ -768,29 +855,36 @@ map.on("style.load", function () {
       layers: [state + "-census-shading"],
     });
     var features = [];
-    mpoly = JSON.parse(sessionStorage.getItem("mpoly"));
+    var currentSelectBbox;
     for (let i = 0; i < queryFeatures.length; i++) {
       var feature = queryFeatures[i];
       // push to highlight layer for visibility
       features.push(feature.properties.GEOID);
-      var wkt = new Wkt.Wkt();
       if (features.length >= 1) {
-        if (feature.geometry.type == "MultiPolygon") {
-          // polyCon : the turf polygon from coordinates
-          var polyCon;
-          if (feature.geometry.coordinates[0][0].length > 2) {
-            polyCon = turf.polygon([feature.geometry.coordinates[0][0]]);
-          } else {
-            polyCon = turf.polygon([feature.geometry.coordinates[0]]);
-          }
-          mpoly = updatePoly(polyCon.geometry, mpoly, wkt);
+        // polyCon : the turf polygon from coordinates
+        var polyCon = turf.bbox(feature.geometry);
+        var memoPoly = turf.bboxPolygon(polyCon);
+        if (i === 0) {
+          currentSelectBbox = memoPoly;
         } else {
-          polyCon = turf.polygon([feature.geometry.coordinates[0]]);
-          mpoly = updatePoly(polyCon.geometry, mpoly, wkt);
+          currentSelectBbox = turf.union(memoPoly, currentSelectBbox);
         }
       }
     }
-    sessionStorage.setItem("mpoly", JSON.stringify(mpoly));
+    // check if previous selectBbox overlaps with current selectBbox
+    var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
+    if (selectBbox === null || selectBbox.length === 0) {
+      selectBbox = currentSelectBbox;
+      hideWarningBox();
+    } else {
+      if (turf.booleanDisjoint(currentSelectBbox, selectBbox)) {
+        showWarningBox();
+        return;
+      } else {
+        selectBbox = turf.union(currentSelectBbox, selectBbox);
+        hideWarningBox();
+      }
+    }
 
     var filter = [];
     var currentSelection = map.getFilter(state + "-bg-highlighted");
@@ -819,7 +913,7 @@ map.on("style.load", function () {
 
     map.setFilter(state + "-bg-highlighted", filter);
     sessionStorage.setItem("bgFilter", JSON.stringify(filter));
-    updateCommunityEntry();
+    sessionStorage.setItem("selectBbox", JSON.stringify(selectBbox));
   });
 
   // When the user moves their mouse over the census shading layer, we'll update the
@@ -932,22 +1026,22 @@ map.on("render", function (e) {
   if (map.loaded() == false || wasLoaded) return;
   wasLoaded = true;
   // test if polygon has been drawn
-  var bgPoly = document.getElementById("id_census_blocks_polygon_array").value;
-  if (bgPoly !== "") {
-    var wkt = new Wkt.Wkt();
-    wkt_obj = wkt.read(bgPoly);
-    var geoJsonFeature = wkt_obj.toJson();
+  var bgPoly = sessionStorage.getItem("bgFilter");
+  if (bgPoly !== "[]" && state !== null) {
     // re-display the polygon
     map.setFilter(
       state + "-bg-highlighted",
-      JSON.parse(sessionStorage.getItem("bgFilter"))
+      JSON.parse(bgPoly)
     );
-    updateCommunityEntry();
-    map.flyTo({
-      center: geoJsonFeature.coordinates[0][0],
-      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
-      zoom: 10,
-    });
+    var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
+    // error - when selectBbox is undefined...
+    if (selectBbox !== null) {
+      map.flyTo({
+        center: [selectBbox.geometry.coordinates[0][0][0], selectBbox.geometry.coordinates[0][0][1]],
+        essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+        zoom: 10,
+      });
+    }
   }
 });
 
@@ -996,6 +1090,7 @@ function triggerDrawError(id, stringErrorText) {
   </button>\
   </div>';
   document.getElementById("map-error-alerts").appendChild(newAlert);
+  scrollIntoViewSmooth(id);
   sessionStorage.setItem("map_drawn_successfully", false);
 }
 
@@ -1062,9 +1157,6 @@ function updateFormFields(census_blocks_polygon_array) {
 in the form. */
 function updateCommunityEntry() {
   cleanAlerts();
-  // TODO: use turf or something to determine if highlighted layer is compact & contiguous
-  // probably possible with turf.js#intersect, but may not always work if blockgroups don't line up exactly
-  // will also need to think about how to make it more efficient than calling intersect on all polygons part of the community
   // save census block groups multipolygon
   census_blocks_polygon_array = JSON.parse(sessionStorage.getItem("mpoly"));
   // check if map stores no polygon - clear map + sessionStorage if so
@@ -1097,9 +1189,19 @@ function is_touch_device() {
   ) {
     return true;
   }
-
   // include the 'heartz' as a way to have a non matching MQ to help terminate the join
   // https://git.io/vznFH
   var query = ["(", prefixes.join("touch-enabled),("), "heartz", ")"].join("");
   return mq(query);
+}
+
+/****************************************************************************/
+
+// scroll smoothly with a bit of offset
+function scrollIntoViewSmooth(id) {
+  var yOffset = -10;
+  var element = document.getElementById(id);
+  var y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+  window.scrollTo({top: y, behavior: 'smooth'});
 }
