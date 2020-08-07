@@ -1,6 +1,7 @@
 {% extends 'main/base.html' %}
 {% load leaflet_tags %}
 {% load static %}
+{% load i18n %}
 {% block head %}
 {% leaflet_js %}
 {% leaflet_css %}
@@ -46,7 +47,7 @@
       <!-- <h3 class="my-5 text-center">
         What is Representable.org?
       </h3> -->
-      <h2 class="text-center font-weight-light">What is Representable.org?</h2>
+      <h2 class="text-center font-weight-light">{% trans "What is Representable.org?" %}</h2>
       <p class="my-3 d-none d-sm-block text-center lead">
         Representable is a free, web-based platform designed to collect data provided by Communities to support redistricting work.
         Our tool offers a platform for Community members to provide information about the geographic boundaries of their Community,

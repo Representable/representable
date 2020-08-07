@@ -53,14 +53,20 @@ from ..models import (
 )
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
-from django.utils.translation import gettext
-from django.urls import reverse, reverse_lazy
+from django.utils.translation import gettext as _
 from django.utils.translation import (
-    LANGUAGE_SESSION_KEY,
-    check_for_language,
+    ugettext,
+    activate,
     get_language,
-    to_locale,
 )
+from django.urls import reverse, reverse_lazy
+
+# from django.utils.translation import (
+#     LANGUAGE_SESSION_KEY,
+#     check_for_language,
+#     get_language,
+#     to_locale,
+# )
 from shapely.geometry import mapping
 from geojson_rewind import rewind
 import geojson
@@ -107,10 +113,11 @@ class Index(TemplateView):
     # Add extra context variables.
     def get_context_data(self, **kwargs):
         context = super(Index, self).get_context_data(
-            **kwargs
+            **kwargs,
         )  # get the default context data
 
         context["mapbox_key"] = os.environ.get("DISTR_MAPBOX_KEY")
+        context["hello"] = _("HELLO")
         return context
 
 

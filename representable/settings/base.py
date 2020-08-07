@@ -100,6 +100,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "representable.urls"
 
+LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -176,7 +178,7 @@ LOGIN_REDIRECT_URL = "/"
 
 # Provide a lists of languages which your site supports.
 LANGUAGES = (
-    ("en", _("English")),
+    ("en-us", _("English")),
     ("es", _("Spanish")),
 )
 
