@@ -138,9 +138,9 @@ map.on("load", function () {
   for (var key in BOUNDARIES_LAYERS) {
     newBoundariesLayer(key, firstSymbolId);
   }
+
   // send elements to javascript as geojson objects and make them show on the map by
   // calling the addTo
-
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
 
@@ -313,10 +313,6 @@ for (var id in toggleableLayerIds){
     } else {
       map.setLayoutProperty(txt + "-lines", "visibility", "visible");
     }
-
-    // for (var j = 0; j < clickedLayers.length; j++) {
-    //
-    // }
   };
   // in order to create the buttons
   var div = document.createElement("div");
