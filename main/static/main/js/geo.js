@@ -855,7 +855,7 @@ map.on("style.load", function () {
     }
     // check if previous selectBbox overlaps with current selectBbox
     var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
-    if (selectBbox.length === 0) {
+    if (selectBbox === null || selectBbox.length === 0) {
       selectBbox = currentSelectBbox;
       hideWarningBox();
     } else {
