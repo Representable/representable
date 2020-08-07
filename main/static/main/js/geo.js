@@ -322,7 +322,7 @@ document.addEventListener(
 /* eslint-disable */
 var map = new mapboxgl.Map({
   container: "map", // container id
-  style: "mapbox://styles/mapbox/streets-v11", //hosted style id
+  style: "mapbox://styles/districter-team/ckdfv8riy0uf51hqu1g7qjrha", //hosted style id
   center: [-96.7026, 40.8136], // starting position - Lincoln, NE :)
   zoom: 3, // starting zoom -- higher is closer
   maxZoom: 17, // camelCase. There's no official documentation for this smh :/
