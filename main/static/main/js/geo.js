@@ -1009,7 +1009,7 @@ map.on("render", function (e) {
   wasLoaded = true;
   // test if polygon has been drawn
   var bgPoly = sessionStorage.getItem("bgFilter");
-  if (bgPoly !== "[]" && state !== null) {
+  if (bgPoly !== "[]" && state !== null && bgPoly !== "null") {
     // re-display the polygon
     map.setFilter(
       state + "-bg-highlighted",
