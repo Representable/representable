@@ -480,7 +480,7 @@ class UndoButton {
         var undoFilter = filterStack.pop();
         var undoBbox = bboxStack.pop();
         map.setFilter(state + "-bg-highlighted", undoFilter);
-        sessionStorage.setItem("bgFilter", undoFilter);
+        sessionStorage.setItem("bgFilter", JSON.stringify(undoFilter));
         sessionStorage.setItem("selectBbox", undoBbox);
         sessionStorage.setItem("filterStack", JSON.stringify(filterStack));
         sessionStorage.setItem("bboxStack", JSON.stringify(bboxStack));
