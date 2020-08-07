@@ -5,6 +5,9 @@
   mixpanel.track("State Page Loaded",
   {"state":"{{ state_obj.name }}"}
   );
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+  });
 </script>
 <div class="container">
   <div class="row row-hero my-5">
@@ -53,7 +56,7 @@
   </div>
   <div class="card card-signin my-3">
     <div class="card-body">
-      <h2 class="font-weight-light text-center">Community Mapping Drives in {{ state_obj.name }}</h2>
+      <h2 class="font-weight-light text-center">Community Mapping Drives in {{ state_obj.name }} <a href="#" data-toggle="tooltip" title="Community mapping drives are..." class="h6"><i class="far fa-question-circle"></i></a></h2>
       <p>Organizations in {{ state_obj.name }} are running community mapping drives to collect information so your community's interests can be protected. You can use Representable to submit your community's information directly to these organizations.</p>
       {% if drives %}
         <hr>
