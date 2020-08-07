@@ -713,7 +713,7 @@ myTour.addStep({
 
 myTour.addStep({
   title: "Draw",
-  text: "Click the draw button to return to adding units to the map.",
+  text: "Click the draw button to return to to adding units to the map.",
   attachTo: {
     element: "#map-draw-button-id",
     on: "bottom",
@@ -766,6 +766,10 @@ myTour.addStep({
   title: "Finish Drawing",
   text: `Once you are done fine-tuning your drawing to reflect the geographical boundaries of
   your community of interest you can continue on to save your community!`,
+  attachTo: {
+    element: "#map-finish-drawing-button-id",
+    on: "bottom",
+  },
   buttons: [
     {
       action() {
@@ -926,58 +930,6 @@ map.on("style.load", function () {
     sessionStorage.setItem("selectBbox", JSON.stringify(selectBbox));
   });
 
-  // When the user moves their mouse over the census shading layer, we'll update the
-  // feature state for the feature under the mouse.
-  var bgID = null;
-  var features = [];
-  var stateCensus = state + "-census-shading";
-  // if touch screen, disable.
-  if (!is_touch_device()) {
-    map.on("mousemove", stateCensus, function (e) {
-      if (e.features.length > 0) {
-        // create a constantly updated list of the features which have been highlighted in foreach loop
-        // before highlighting, go thru that list, and deselect all
-        var bbox = [
-          [e.point.x - drawRadius, e.point.y - drawRadius],
-          [e.point.x + drawRadius, e.point.y + drawRadius],
-        ];
-        var hoverFeatures = map.queryRenderedFeatures(bbox, {
-          layers: [state + "-census-shading"],
-        });
-        stateBG = state + "bg";
-        features.forEach(function (feature) {
-          bgID = feature.id;
-          map.setFeatureState(
-            { source: stateBG, sourceLayer: stateBG, id: bgID },
-            { hover: false }
-          );
-        });
-        features = [];
-        hoverFeatures.forEach(function (feature) {
-          features.push(feature);
-          bgID = feature.id;
-          map.setFeatureState(
-            { source: stateBG, sourceLayer: stateBG, id: bgID },
-            { hover: true }
-          );
-        });
-      }
-    });
-  }
-
-  // When the mouse leaves the state-fill layer, update the feature state of the
-  // previously hovered feature.
-  map.on("mouseleave", stateCensus, function () {
-    if (bgID) {
-      stateBG = state + "bg";
-      map.setFeatureState(
-        { source: stateBG, sourceLayer: stateBG, id: bgID },
-        { hover: false }
-      );
-    }
-    bgID = null;
-  });
-
   // Listen for the `geocoder.input` event that is triggered when a user
   // makes a selection and add a symbol that matches the result.
   geocoder.on("result", function (ev) {
@@ -1018,6 +970,58 @@ map.on("style.load", function () {
 
     // Save state to session storage
     sessionStorage.setItem("state_name", state);
+
+    // When the user moves their mouse over the census shading layer, we'll update the
+    // feature state for the feature under the mouse.
+    var bgID = null;
+    var features = [];
+    var stateCensus = state + "-census-shading";
+    // if touch screen, disable.
+    if (!is_touch_device()) {
+      map.on("mousemove", stateCensus, function (e) {
+        if (e.features.length > 0) {
+          // create a constantly updated list of the features which have been highlighted in foreach loop
+          // before highlighting, go thru that list, and deselect all
+          var bbox = [
+            [e.point.x - drawRadius, e.point.y - drawRadius],
+            [e.point.x + drawRadius, e.point.y + drawRadius],
+          ];
+          var hoverFeatures = map.queryRenderedFeatures(bbox, {
+            layers: [state + "-census-shading"],
+          });
+          stateBG = state + "bg";
+          features.forEach(function (feature) {
+            bgID = feature.id;
+            map.setFeatureState(
+              { source: stateBG, sourceLayer: stateBG, id: bgID },
+              { hover: false }
+            );
+          });
+          features = [];
+          hoverFeatures.forEach(function (feature) {
+            features.push(feature);
+            bgID = feature.id;
+            map.setFeatureState(
+              { source: stateBG, sourceLayer: stateBG, id: bgID },
+              { hover: true }
+            );
+          });
+        }
+      });
+    }
+
+    // When the mouse leaves the state-fill layer, update the feature state of the
+    // previously hovered feature.
+    map.on("mouseleave", stateCensus, function () {
+      if (bgID) {
+        stateBG = state + "bg";
+        map.setFeatureState(
+          { source: stateBG, sourceLayer: stateBG, id: bgID },
+          { hover: false }
+        );
+      }
+      bgID = null;
+    });
 
     // Tracking
     mixpanel.track("Geocoder Search Successful", {
@@ -1199,6 +1203,7 @@ function is_touch_device() {
   ) {
     return true;
   }
+
   // include the 'heartz' as a way to have a non matching MQ to help terminate the join
   // https://git.io/vznFH
   var query = ["(", prefixes.join("touch-enabled),("), "heartz", ")"].join("");
