@@ -22,6 +22,10 @@
 // GEO Js file for handling map drawing.
 /* https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ */
 // Polygon Drawn By User
+var filterStack = JSON.parse(sessionStorage.getItem("filterStack"));
+var bboxStack = JSON.parse(sessionStorage.getItem("bboxStack"));
+if (filterStack === null) filterStack = [];
+if (bboxStack === null) bboxStack = [];
 
 // Helper print function
 function print(items) {
@@ -53,7 +57,6 @@ function closePopup() {
 
 /******************************************************************************/
 
-var wkt_obj;
 // Formset field object saves a deep copy of the original formset field object.
 // (If user deletes all fields, he can add one more according to this one).
 var formsetFieldObject;
@@ -230,7 +233,7 @@ function createCommPolygon() {
 // zoom to the current Selection
 function zoomToCommunity() {
   var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
-  if (selectBbox === null) return;
+  if (selectBbox === null || selectBbox.length === 0) return;
   var bbox = turf.bbox(selectBbox);
   map.fitBounds(bbox, {padding: 100, duration: 0});
 }
@@ -456,6 +459,45 @@ mapEraser.addEventListener("click", function (e) {
   }
 });
 
+class UndoButton {
+  onAdd(map) {
+    var undo_button = document.createElement("button");
+    undo_button.href = "#";
+    undo_button.type = "button";
+    undo_button.backgroundImg = "";
+
+    undo_button.classList.add("active");
+    undo_button.id = "map-undo-button-id";
+    undo_button.style.display = "block";
+    undo_button.innerHTML = "<i class='fas fa-undo-alt'></i> Undo";
+    this._map = map;
+    undo_button.addEventListener("click", function (event) {
+      if (filterStack.length === 0) {
+        console.log("u cant do that");
+      } else {
+        console.log(filterStack);
+        console.log(undoFilter);
+        var undoFilter = filterStack.pop();
+        var undoBbox = bboxStack.pop();
+        map.setFilter(state + "-bg-highlighted", undoFilter);
+        sessionStorage.setItem("bgFilter", undoFilter);
+        sessionStorage.setItem("selectBbox", undoBbox);
+        sessionStorage.setItem("filterStack", JSON.stringify(filterStack));
+        sessionStorage.setItem("bboxStack", JSON.stringify(bboxStack));
+      }
+    });
+    return undo_button;
+  }
+
+  onRemove() {
+    this._container.parentNode.removeChild(this._container);
+    this._map = undefined;
+  }
+}
+map.addControl(new UndoButton(), "top-right");
+var mapUndoButton = document.getElementById("map-undo-button-id");
+drawControls.appendChild(mapUndoButton);
+
 class ClearMapButton {
   onAdd(map) {
     var clear_button = document.createElement("button");
@@ -474,9 +516,16 @@ class ClearMapButton {
       );
       if (isConfirmed) {
         map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
+        var undoFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
+        var undoBbox = sessionStorage.getItem("selectBbox");
+        console.log(filterStack);
+        console.log(undoFilter);
+        filterStack.push(undoFilter);
+        bboxStack.push(undoBbox);
         sessionStorage.setItem("bgFilter", "[]");
         sessionStorage.setItem("selectBbox", "[]");
-        updateCommunityEntry();
+        sessionStorage.setItem("filterStack", filterStack);
+        sessionStorage.setItem("bboxStack", bboxStack);
       }
     });
     return clear_button;
@@ -835,8 +884,9 @@ map.on("style.load", function () {
     var queryFeatures = map.queryRenderedFeatures(bbox, {
       layers: [state + "-census-shading"],
     });
-    var features = [];
-    var currentSelectBbox;
+    var isChanged = false; // store only valid moves in stack
+    var features = []; // the features in click radius
+    var currentBbox; // the currently selected area bounding box
     for (let i = 0; i < queryFeatures.length; i++) {
       var feature = queryFeatures[i];
       // push to highlight layer for visibility
@@ -846,33 +896,36 @@ map.on("style.load", function () {
         var polyCon = turf.bbox(feature.geometry);
         var memoPoly = turf.bboxPolygon(polyCon);
         if (i === 0) {
-          currentSelectBbox = memoPoly;
+          currentBbox = memoPoly;
         } else {
-          currentSelectBbox = turf.union(memoPoly, currentSelectBbox);
+          currentBbox = turf.union(memoPoly, currentBbox);
         }
       }
     }
     // check if previous selectBbox overlaps with current selectBbox
     var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
     if (selectBbox === null || selectBbox.length === 0) {
-      selectBbox = currentSelectBbox;
+      selectBbox = currentBbox;
       hideWarningBox();
     } else {
-      if (turf.booleanDisjoint(currentSelectBbox, selectBbox)) {
+      if (turf.booleanDisjoint(currentBbox, selectBbox)) {
         showWarningBox();
         return;
       } else {
-        selectBbox = turf.union(currentSelectBbox, selectBbox);
+        isChanged = true;
+        selectBbox = turf.union(currentBbox, selectBbox);
         hideWarningBox();
       }
     }
 
     var filter = [];
-    var currentSelection = map.getFilter(state + "-bg-highlighted");
+    var currentFilter = map.getFilter(state + "-bg-highlighted");
     if (eraseMode) {
-      currentSelection.forEach(function (feature) {
+      currentFilter.forEach(function (feature) {
         if (!features.includes(feature)) {
           filter.push(feature);
+        } else {
+          isChanged = true;
         }
       });
     } else {
@@ -885,7 +938,7 @@ map.on("style.load", function () {
         ["in", "GEOID"]
       );
 
-      currentSelection.forEach(function (feature) {
+      currentFilter.forEach(function (feature) {
         if (feature !== "in" && feature !== "GEOID" && feature !== "") {
           filter.push(feature);
         }
@@ -893,6 +946,10 @@ map.on("style.load", function () {
     }
 
     map.setFilter(state + "-bg-highlighted", filter);
+    filterStack.push(currentFilter);
+    bboxStack.push(JSON.stringify(currentBbox));
+    sessionStorage.setItem("filterStack", JSON.stringify(filterStack));
+    sessionStorage.setItem("bboxStack", JSON.stringify(bboxStack));
     sessionStorage.setItem("bgFilter", JSON.stringify(filter));
     sessionStorage.setItem("selectBbox", JSON.stringify(selectBbox));
   });
@@ -1134,7 +1191,7 @@ function updateFormFields(census_blocks_polygon_array) {
   // "census_blocks_polygon" gets saved in the post() function in django
 }
 
-/* Responds to the user's actions and updates the geometry fields and the arrayfield
+/* DEPRECATED : Responds to the user's actions and updates the geometry fields and the arrayfield
 in the form. */
 function updateCommunityEntry() {
   cleanAlerts();
