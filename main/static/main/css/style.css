@@ -61,7 +61,7 @@ form:invalid {
 /* Pop up - bottom left corner of the map. */
 .map-popup-box {
   position: absolute;
-  bottom: 40px;
+  top: 10px;
   left: 10px;
   background-color: rgba(255, 255, 255, 0.9);
   padding: 10px;
@@ -69,6 +69,7 @@ form:invalid {
   border-radius: 10px;
   z-index: 10;
   display: none;
+  width: 50%;
 }
 .warning-box {
   border: 1px solid red;
@@ -159,6 +160,7 @@ body {
   color: white;
 }
 
+/* for small screens (mobile) */
 @media only screen and (max-width: 768px) {
   .what-is-gerrymandering p {
     font-size: 16px;
@@ -168,6 +170,10 @@ body {
   }
   #stateSelectionDropdown {
     font-size: 1rem !important;
+  }
+  /* draw buttons on entry page */
+  .draw-group {
+    width: 70%;
   }
 }
 
