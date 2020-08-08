@@ -328,7 +328,8 @@ var map = new mapboxgl.Map({
   style: "mapbox://styles/mapbox/streets-v11", //hosted style id
   center: [-96.7026, 40.8136], // starting position - Lincoln, NE :)
   zoom: 3, // starting zoom -- higher is closer
-  maxZoom: 17, // camelCase. There's no official documentation for this smh :/
+  maxZoom: 14, // camelCase. There's no official documentation for this smh :/
+  minZoom: 7,
 });
 
 var layerList = document.getElementById("menu");
@@ -1073,8 +1074,7 @@ map.on("render", function (e) {
       JSON.parse(bgPoly)
     );
     var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
-    // error - when selectBbox is undefined...
-    if (selectBbox !== null) {
+    if (selectBbox.length !== 0) {
       map.flyTo({
         center: [selectBbox.geometry.coordinates[0][0][0], selectBbox.geometry.coordinates[0][0][1]],
         essential: true, // this animation is considered essential with respect to prefers-reduced-motion
