@@ -473,12 +473,13 @@ class UndoButton {
     this._map = map;
     undo_button.addEventListener("click", function (event) {
       if (filterStack.length === 0) {
-        console.log("u cant do that");
+        showWarningMessage("There are no actions to undo");
       } else {
-        console.log(filterStack);
-        console.log(undoFilter);
         var undoFilter = filterStack.pop();
         var undoBbox = bboxStack.pop();
+        console.log("undo button pressed");
+        console.log(undoBbox);
+        console.log(bboxStack);
         map.setFilter(state + "-bg-highlighted", undoFilter);
         sessionStorage.setItem("bgFilter", JSON.stringify(undoFilter));
         sessionStorage.setItem("selectBbox", undoBbox);
@@ -511,6 +512,11 @@ class ClearMapButton {
     clear_button.innerHTML = "<i class='fas fa-trash-alt'></i> Clear Selection";
     this._map = map;
     clear_button.addEventListener("click", function (event) {
+      var undoFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
+      if (undoFilter === null) {
+        showWarningMessage("There is no selection to clear.")
+        return;
+      }
       let isConfirmed = confirm(
         "Are you sure you want to clear the map? This will delete the blocks you have selected."
       );
@@ -518,14 +524,15 @@ class ClearMapButton {
         map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
         var undoFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
         var undoBbox = sessionStorage.getItem("selectBbox");
-        console.log(filterStack);
-        console.log(undoFilter);
         filterStack.push(undoFilter);
         bboxStack.push(undoBbox);
+        console.log("clear button pressed");
+        console.log(undoBbox);
+        console.log(bboxStack);
         sessionStorage.setItem("bgFilter", "[]");
         sessionStorage.setItem("selectBbox", "[]");
-        sessionStorage.setItem("filterStack", filterStack);
-        sessionStorage.setItem("bboxStack", bboxStack);
+        sessionStorage.setItem("filterStack", JSON.stringify(filterStack));
+        sessionStorage.setItem("bboxStack", JSON.stringify(bboxStack));
       }
     });
     return clear_button;
@@ -540,22 +547,16 @@ map.addControl(new ClearMapButton(), "top-right");
 var mapClearButton = document.getElementById("map-clear-button-id");
 drawControls.appendChild(mapClearButton);
 
-// DEPRECATED (for now)
-function toggleWarningBox() {
+function showWarningMessage(warning) {
   var warning_box = document.getElementById("warning-box-id");
-  if (warning_box.style.display == "block") {
-    hideWarningBox();
-  } else {
-    showWarningBox();
-  }
-}
-
-function showWarningBox() {
-  var warning_box = document.getElementById("warning-box-id");
+  warning_box.innerHTML = '<p class="mb-0"><i class="fa fa-exclamation-triangle"></i> ' + warning + '</p>'
   warning_box.style.display = "block";
+  setTimeout(function() {
+    warning_box.style.display = "none";
+  }, 4000)
 }
 
-function hideWarningBox() {
+function hideWarningMessage() {
   var warning_box = document.getElementById("warning-box-id");
   warning_box.style.display = "none";
 }
@@ -886,7 +887,7 @@ map.on("style.load", function () {
     });
     var isChanged = false; // store only valid moves in stack
     var features = []; // the features in click radius
-    var currentBbox; // the currently selected area bounding box
+    var currentBbox; // the current selection area bounding box
     for (let i = 0; i < queryFeatures.length; i++) {
       var feature = queryFeatures[i];
       // push to highlight layer for visibility
@@ -902,21 +903,8 @@ map.on("style.load", function () {
         }
       }
     }
-    // check if previous selectBbox overlaps with current selectBbox
+    // the previously stored selected area bounding box
     var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
-    if (selectBbox === null || selectBbox.length === 0) {
-      selectBbox = currentBbox;
-      hideWarningBox();
-    } else {
-      if (turf.booleanDisjoint(currentBbox, selectBbox)) {
-        showWarningBox();
-        return;
-      } else {
-        isChanged = true;
-        selectBbox = turf.union(currentBbox, selectBbox);
-        hideWarningBox();
-      }
-    }
 
     var filter = [];
     var currentFilter = map.getFilter(state + "-bg-highlighted");
@@ -924,11 +912,26 @@ map.on("style.load", function () {
       currentFilter.forEach(function (feature) {
         if (!features.includes(feature)) {
           filter.push(feature);
-        } else {
-          isChanged = true;
         }
       });
+      arraysEqual(filter, currentFilter) ? isChanged = false : isChanged = true;
+      // TODO - update selectBbox somehow? -- basically if isChanged, then get selectBbox - currentBbox and set selectBbox equal to that value
     } else {
+      // check if previous selectBbox overlaps with current selectBbox
+      if (selectBbox === null || selectBbox.length === 0) {
+        isChanged = true;
+        selectBbox = currentBbox;
+        hideWarningMessage();
+      } else {
+        if (turf.booleanDisjoint(currentBbox, selectBbox)) {
+          showWarningMessage("Please ensure that your community does not contain any gaps. Your selected units must connect.");
+          return;
+        } else {
+          isChanged = true;
+          selectBbox = turf.union(currentBbox, selectBbox);
+          hideWarningMessage();
+        }
+      }
       // Run through the queried features and set a filter based on GEOID
       filter = features.reduce(
         function (memo, feature) {
@@ -946,12 +949,17 @@ map.on("style.load", function () {
     }
 
     map.setFilter(state + "-bg-highlighted", filter);
-    filterStack.push(currentFilter);
-    bboxStack.push(JSON.stringify(currentBbox));
-    sessionStorage.setItem("filterStack", JSON.stringify(filterStack));
-    sessionStorage.setItem("bboxStack", JSON.stringify(bboxStack));
-    sessionStorage.setItem("bgFilter", JSON.stringify(filter));
-    sessionStorage.setItem("selectBbox", JSON.stringify(selectBbox));
+    if (isChanged) {
+      filterStack.push(currentFilter);
+      bboxStack.push(JSON.stringify(currentBbox));
+      console.log("clicked and selected");
+      console.log(selectBbox);
+      console.log(bboxStack);
+      sessionStorage.setItem("filterStack", JSON.stringify(filterStack));
+      sessionStorage.setItem("bboxStack", JSON.stringify(bboxStack));
+      sessionStorage.setItem("bgFilter", JSON.stringify(filter));
+      sessionStorage.setItem("selectBbox", JSON.stringify(selectBbox));
+    }
   });
 
   // Listen for the `geocoder.input` event that is triggered when a user
@@ -1065,7 +1073,7 @@ map.on("render", function (e) {
   wasLoaded = true;
   // test if polygon has been drawn
   var bgPoly = sessionStorage.getItem("bgFilter");
-  if (bgPoly !== "[]" && state !== null) {
+  if (bgPoly !== "[]" && state !== null && bgPoly !== null) {
     // re-display the polygon
     map.setFilter(
       state + "-bg-highlighted",
@@ -1163,26 +1171,6 @@ function triggerSuccessMessage() {
   }
 }
 
-/*  Pushes poly in its wkt forms to the polyArray */
-function updatePoly(poly, polyArray, wkt) {
-  // get polygon into usable format
-  var poly_json = JSON.stringify(poly);
-  var wkt_obj = wkt.read(poly_json);
-  var poly_wkt = wkt_obj.write();
-  // initial selection -- polyArray is null at first
-  if (polyArray === null) {
-    polyArray = [];
-    polyArray.push(poly_wkt);
-  }
-  var isSelected = polyArray.includes(poly_wkt);
-  if (isSelected && eraseMode) {
-    polyArray = polyArray.filter((e) => e !== poly_wkt);
-  } else if (!isSelected && !eraseMode) {
-    polyArray.push(poly_wkt);
-  }
-  return polyArray;
-}
-
 function updateFormFields(census_blocks_polygon_array) {
   // Update form fields
   document.getElementById(
@@ -1191,26 +1179,6 @@ function updateFormFields(census_blocks_polygon_array) {
   // "census_blocks_polygon" gets saved in the post() function in django
 }
 
-/* DEPRECATED : Responds to the user's actions and updates the geometry fields and the arrayfield
-in the form. */
-function updateCommunityEntry() {
-  cleanAlerts();
-  // save census block groups multipolygon
-  census_blocks_polygon_array = JSON.parse(sessionStorage.getItem("mpoly"));
-  // check if map stores no polygon - clear map + sessionStorage if so
-  if (census_blocks_polygon_array === "[]") {
-    map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
-    sessionStorage.setItem("bgFilter", "[]");
-    sessionStorage.setItem("mpoly", "[]");
-    triggerMissingPolygonError();
-  }
-  if (census_blocks_polygon_array != undefined) {
-    census_blocks_polygon_array = census_blocks_polygon_array.join("|");
-  }
-  triggerSuccessMessage();
-  showMap();
-  updateFormFields(census_blocks_polygon_array);
-}
 /******************************************************************************/
 
 // check if device is touch screen --> https://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript/4819886#4819886
@@ -1243,4 +1211,16 @@ function scrollIntoViewSmooth(id) {
   var y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
 
   window.scrollTo({top: y, behavior: 'smooth'});
+}
+
+// check if two arrays are equal (same elements)
+function arraysEqual(a, b) {
+  if (a === b) return true;
+  if (a == null || b == null) return false;
+  if (a.length !== b.length) return false;
+
+  for (var i = 0; i < a.length; ++i) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
 }
