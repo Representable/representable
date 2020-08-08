@@ -477,9 +477,6 @@ class UndoButton {
       } else {
         var undoFilter = filterStack.pop();
         var undoBbox = bboxStack.pop();
-        console.log("undo button pressed");
-        console.log(undoBbox);
-        console.log(bboxStack);
         map.setFilter(state + "-bg-highlighted", undoFilter);
         sessionStorage.setItem("bgFilter", JSON.stringify(undoFilter));
         sessionStorage.setItem("selectBbox", undoBbox);
@@ -512,8 +509,9 @@ class ClearMapButton {
     clear_button.innerHTML = "<i class='fas fa-trash-alt'></i> Clear Selection";
     this._map = map;
     clear_button.addEventListener("click", function (event) {
+      // check for empty map -- raise warning message if so
       var undoFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
-      if (undoFilter === null) {
+      if (undoFilter === null || undoFilter.length < 4) {
         showWarningMessage("There is no selection to clear.")
         return;
       }
@@ -522,13 +520,9 @@ class ClearMapButton {
       );
       if (isConfirmed) {
         map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
-        var undoFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
         var undoBbox = sessionStorage.getItem("selectBbox");
         filterStack.push(undoFilter);
         bboxStack.push(undoBbox);
-        console.log("clear button pressed");
-        console.log(undoBbox);
-        console.log(bboxStack);
         sessionStorage.setItem("bgFilter", "[]");
         sessionStorage.setItem("selectBbox", "[]");
         sessionStorage.setItem("filterStack", JSON.stringify(filterStack));
@@ -915,7 +909,9 @@ map.on("style.load", function () {
         }
       });
       arraysEqual(filter, currentFilter) ? isChanged = false : isChanged = true;
-      // TODO - update selectBbox somehow? -- basically if isChanged, then get selectBbox - currentBbox and set selectBbox equal to that value
+      if (isChanged) {
+        selectBbox = turf.difference(selectBbox, currentBbox);
+      }
     } else {
       // check if previous selectBbox overlaps with current selectBbox
       if (selectBbox === null || selectBbox.length === 0) {
@@ -952,9 +948,6 @@ map.on("style.load", function () {
     if (isChanged) {
       filterStack.push(currentFilter);
       bboxStack.push(JSON.stringify(currentBbox));
-      console.log("clicked and selected");
-      console.log(selectBbox);
-      console.log(bboxStack);
       sessionStorage.setItem("filterStack", JSON.stringify(filterStack));
       sessionStorage.setItem("bboxStack", JSON.stringify(bboxStack));
       sessionStorage.setItem("bgFilter", JSON.stringify(filter));
