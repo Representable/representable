@@ -58,10 +58,10 @@ form:invalid {
 .toc-check-input {
   display: inline;
 }
-/* Entry page warning. */
-.warning-box {
+/* Pop up - bottom left corner of the map. */
+.map-popup-box {
   position: absolute;
-  bottom: 40px;
+  top: 10px;
   left: 10px;
   background-color: rgba(255, 255, 255, 0.9);
   padding: 10px;
@@ -69,12 +69,10 @@ form:invalid {
   border-radius: 10px;
   z-index: 10;
   display: none;
+  width: 50%;
 }
-.blue-circle {
-  color: #34495e;
-}
-.orange-circle {
-  color: #e67e22;
+.warning-box {
+  border: 1px solid red;
 }
 
 /* Entry Page: Geocoder Full Width */
@@ -187,6 +185,10 @@ body {
   }
   #stateSelectionDropdown {
     font-size: 1rem !important;
+  }
+  /* draw buttons on entry page */
+  .draw-group {
+    width: 70%;
   }
 }
 
