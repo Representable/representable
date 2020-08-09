@@ -87,6 +87,18 @@ function parseReverseGeo(geoData) {
   return returnStr;
 }
 
+// check that there is an empty filter (no highlighted selection)
+function isEmptyFilter(filter) {
+  var isEmpty = true;
+  filter.forEach(function(feature) {
+    if (feature !== "in" && feature !== "GEOID" && feature !== "") {
+      isEmpty = false;
+      return;
+    }
+  });
+  return isEmpty;
+}
+
 /******************************************************************************/
 
 function showMap() {
@@ -184,11 +196,13 @@ function createCommPolygon() {
     // start by checking size -- 800 is an arbitrary number
     // it means a community with a population between 480,000 & 2,400,000
     var polyFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
+    console.log("polyFilter");
+    console.log(polyFilter);
     if (polyFilter === null) return false;
     if (polyFilter.length > 802) {
       triggerDrawError("polygon_size", "You must select a smaller area to submit this community.");
       return false;
-    } else if (polyFilter.length === 0) {
+    } else if (isEmptyFilter(polyFilter)) {
       triggerMissingPolygonError();
       return false;
     }
@@ -206,6 +220,8 @@ function createCommPolygon() {
         }
       }
     });
+    console.log("multiPolySave");
+    console.log(multiPolySave);
 
     // for display purposes -- this is the final multipolygon!!
     // TODO: implement community entry model change -> store only outer coordinates (like code in map.js)
@@ -478,9 +494,13 @@ class UndoButton {
       } else {
         var undoFilter = filterStack.pop();
         var undoBbox = bboxStack.pop();
+        if (isEmptyFilter(undoFilter)) {
+          sessionStorage.setItem("selectBbox", "[]");
+        } else {
+          sessionStorage.setItem("selectBbox", undoBbox);
+        }
         map.setFilter(state + "-bg-highlighted", undoFilter);
         sessionStorage.setItem("bgFilter", JSON.stringify(undoFilter));
-        sessionStorage.setItem("selectBbox", undoBbox);
         sessionStorage.setItem("filterStack", JSON.stringify(filterStack));
         sessionStorage.setItem("bboxStack", JSON.stringify(bboxStack));
       }
@@ -512,7 +532,7 @@ class ClearMapButton {
     clear_button.addEventListener("click", function (event) {
       // check for empty map -- raise warning message if so
       var undoFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
-      if (undoFilter === null || undoFilter.length < 4) {
+      if (undoFilter === null || isEmptyFilter(undoFilter)) {
         showWarningMessage("There is no selection to clear.")
         return;
       }
@@ -911,6 +931,10 @@ map.on("style.load", function () {
       });
       arraysEqual(filter, currentFilter) ? isChanged = false : isChanged = true;
       if (isChanged) {
+        if (isEmptyFilter(filter)) {
+          console.log("erase led to empty filter");
+          sessionStorage.setItem("selectBbox", "[]");
+        }
         selectBbox = turf.difference(selectBbox, currentBbox);
       }
     } else {
@@ -1067,7 +1091,7 @@ map.on("render", function (e) {
   wasLoaded = true;
   // test if polygon has been drawn
   var bgPoly = sessionStorage.getItem("bgFilter");
-  if (bgPoly !== "[]" && state !== null && bgPoly !== null) {
+  if (bgPoly !== "[]" && state !== null && bgPoly !== null && bgPoly !== "null") {
     // re-display the polygon
     map.setFilter(
       state + "-bg-highlighted",
