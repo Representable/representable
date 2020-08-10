@@ -161,7 +161,7 @@ class StatePage(TemplateView):
 
         state = State.objects.filter(abbr=abbr.upper())
         if not state:
-            return redirect("/")
+            return redirect("/entry")
         drives = state[0].get_drives()
         return render(
             request,
