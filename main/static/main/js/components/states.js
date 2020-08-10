@@ -1,3 +1,11 @@
+var states = [
+  "il",
+  "mi",
+  "nj",
+  "pa",
+  "tx",
+  "va",
+];
 let statesDatabase = {
   'AL': 'Alabama',
   'AK': 'Alaska',

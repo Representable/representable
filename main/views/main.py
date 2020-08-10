@@ -236,7 +236,7 @@ class Review(LoginRequiredMixin, TemplateView):
 class Submission(TemplateView):
     template_name = "main/submission.html"
     sha = hashlib.sha256()
-    NUM_DIGITS = 10  # TODO move to some place with constants
+    NUM_DIGITS = 10
 
     def get(self, request, *args, **kwargs):
         m_uuid = self.request.GET.get("map_id", None)

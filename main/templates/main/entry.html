@@ -294,23 +294,6 @@
                                         <!-- Sections: -->
                                         <!--  Economic -->
                                         <h5 class="card-text">Economic Interests</h5>
-                                        <!-- <div id="economic_error_alerts">
-                                            {% if comm_form.economic_interests.errors %}
-                                                <script>
-                                                    sessionStorage.setItem("allChecks", "fail");
-                                                </script>
-                                                <div id="economic_errors" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
-                                                    <ul class="m-0">
-                                                    {% for error in comm_form.economic_interests.errors %}
-                                                        <li>{{ error|escape }}</li>
-                                                    {% endfor %}
-                                                    </ul>
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                            {% endif %}
-                                        </div> -->
                                         <p class="card-text mb-0">
                                             Is there a shared economy in the geographic area of your community?
                                             How and where are residents employed?
@@ -332,23 +315,6 @@
                                         <hr>
                                         <!-- Activities -->
                                         <h5 class="card-text">Community Activities and Services</h5>
-                                        <!-- <div id="activities_error_alerts">
-                                            {% if comm_form.comm_activities.errors %}
-                                                <script>
-                                                    sessionStorage.setItem("allChecks", "fail");
-                                                </script>
-                                                <div id="activities_errors" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
-                                                    <ul>
-                                                    {% for error in comm_form.comm_activities.errors %}
-                                                        <li>{{ error|escape }}</li>
-                                                    {% endfor %}
-                                                    </ul>
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                            {% endif %}
-                                        </div> -->
                                         <p class="card-text mb-0">
                                             Where do people in your community gather or socialize?
                                             Where does your community get its services?
@@ -369,23 +335,6 @@
                                         <hr>
                                         <!-- Cultural -->
                                         <h5 class="card-text">Cultural or Historical Interests</h5>
-                                        <!-- <div id="cultural_interests_error_alerts">
-                                            {% if comm_form.cultural_interests.errors %}
-                                                <script>
-                                                    sessionStorage.setItem("allChecks", "fail");
-                                                </script>
-                                                <div id="cultural_interests_errors" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
-                                                    <ul class="m-0">
-                                                    {% for error in comm_form.cultural_interests.errors %}
-                                                        <li class="m-0">{{ error|escape }}</li>
-                                                    {% endfor %}
-                                                    </ul>
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                            {% endif %}
-                                        </div> -->
                                         <p class="card-text mb-0">
                                             What fosters a sense of belonging in your community?
                                             What common beliefs or values exist?
@@ -494,12 +443,7 @@
                                 <div class="card">
                                     <div class="card-header text-header-card">
                                         <strong>
-                                        {% if LANGUAGE_CODE == 'en' %}
                                         4. Draw Your Community
-                                        {% elif LANGUAGE_CODE == 'es' %}
-                                        <!-- Google translate  -->
-                                        4. Dibuja tu comunidad
-                                        {% endif %}
                                         </strong>
                                     </div>
                                     <div id='map-card' class="card-body">
@@ -510,12 +454,7 @@
                                                     sessionStorage.setItem("allChecks", "fail");
                                                 </script>
                                                 <div id="polygon_missing" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
-                                                    {% if LANGUAGE_CODE == 'en' %}
-                                                    You need to draw a polygon to submit the form.
-                                                    {% elif LANGUAGE_CODE == 'es' %}
-                                                    <!-- Google translate  -->
-                                                    Debe dibujar un polígono para enviar el formulario.
-                                                    {% endif %}
+                                                  You need to draw a polygon to submit the form.
                                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>

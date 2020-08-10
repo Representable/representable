@@ -19,7 +19,6 @@
  */
 
 let jQuery = window.jQuery;
-let states = ["mi", "nj", "pa", "tx", "va"];
 
 jQuery(document).ready(function () {
   setUpUSAMap();
