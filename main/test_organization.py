@@ -94,31 +94,6 @@ class OrganizationAdminTest(TestCase):
         self.assertTrue(self.response.context["user"].is_active)
         self.assertEqual(self.response.status_code, 200)
 
-    def test_dashboard_org_review(self):
-        "Tests the org review page"
-        org = Organization.objects.get(id=1)
-        review_url = reverse(
-            "main:review_org",
-            kwargs={"pk": org.id, "slug": org.slug, "drive": ""},
-        )
-
-        self.response = self.client.get(review_url)
-        self.assertTrue(self.response.context["user"].is_active)
-        self.assertEqual(self.response.status_code, 200)
-
-    def test_dashboard_drive_review(self):
-        "Tests the dashboard drive review page"
-        org = Organization.objects.get(id=1)
-        drive = Drive.objects.get(id="33345339-1fd6-4778-828d-f965192fcb28")
-        drive_url = reverse(
-            "main:review_org",
-            kwargs={"pk": org.id, "slug": org.slug, "drive": drive.slug},
-        )
-
-        self.response = self.client.get(drive_url)
-        self.assertTrue(self.response.context["user"].is_active)
-        self.assertEqual(self.response.status_code, 200)
-
 
 class OrganizationMemberTest(TestCase):
     fixtures = ["single_org.json"]
@@ -171,26 +146,3 @@ class OrganizationMemberTest(TestCase):
         self.response = self.client.get(drive_url)
         self.assertTrue(self.response.context["user"].is_active)
         self.assertEqual(self.response.status_code, 200)
-
-    def test_dashboard_org_review(self):
-        "Tests the org review page"
-        org = Organization.objects.get(id=1)
-        review_url = reverse(
-            "main:review_org",
-            kwargs={"pk": org.id, "slug": org.slug, "drive": ""},
-        )
-
-        self.response = self.client.get(review_url)
-        self.assertEqual(self.response.status_code, 403)
-
-    def test_dashboard_drive_review(self):
-        "Tests the dashboard drive review page"
-        org = Organization.objects.get(id=1)
-        drive = Drive.objects.get(id="33345339-1fd6-4778-828d-f965192fcb28")
-        drive_url = reverse(
-            "main:review_org",
-            kwargs={"pk": org.id, "slug": org.slug, "drive": drive.slug},
-        )
-
-        self.response = self.client.get(drive_url)
-        self.assertEqual(self.response.status_code, 403)

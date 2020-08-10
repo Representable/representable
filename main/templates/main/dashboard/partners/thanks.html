@@ -9,14 +9,24 @@
             <div class="card card-signin my-5">
                 <div class="card-body">
                     <h5 class="card-title text-center">
-                        {% if LANGUAGE_CODE == 'en' %}
+                        {% if verified %}
                             Thank you for creating an organization!
-                        {% elif LANGUAGE_CODE == 'es' %}
+                        {% endif %}
+
+                        {% if not verified %}
+                        <p> Please verify your email. </p>
+                        {% endif %}
+
+                        {% if LANGUAGE_CODE == 'es' %}
                               <!-- Google translate  -->
                               ¡Gracias por enviar su organización!
                         {% endif %}
                     </h5>
                     <p class="text-center">We are excited to work with you to create high-quality maps of communities of interest.</p>
+                    {% if not verified %}
+                    <p class = "text-center"> Email verification will be necessary
+                        to access certain organization features on Representable. We have resent an email verification link to your inbox.</p>
+                    {% endif %}
                     <div class="text-center"> <a class="btn btn-primary btn-canvas font-weight-light text-uppercase" href="{% url 'main:home_org' view.kwargs.slug  view.kwargs.pk %}" role="button"><small>organization dashboard</small></a>
                     </div>
                 </div>

@@ -35,6 +35,12 @@ urlpatterns = [
     path(
         "entry/drive/<slug:drive>/",
         views.main.EntryView.as_view(),
+        {"token": "", "abbr": ""},
+        name="entry",
+    ),
+    path(
+        "entry/drive/<slug:drive>/<abbr>",
+        views.main.EntryView.as_view(),
         {"token": ""},
         name="entry",
     ),
@@ -48,6 +54,18 @@ urlpatterns = [
         "entry/t/<token>/",
         views.main.EntryView.as_view(),
         {"drive": ""},
+        name="entry",
+    ),
+    path(
+        "entry/t/<token>/<abbr>/",
+        views.main.EntryView.as_view(),
+        {"drive": ""},
+        name="entry",
+    ),
+    path(
+        "entry/<abbr>/",
+        views.main.EntryView.as_view(),
+        {"token": "", "state": "", "drive": ""},
         name="entry",
     ),
     path("about/", views.main.About.as_view(), name="about"),
@@ -103,6 +121,11 @@ urlpatterns = [
         name="partner_map",
     ),
     path(
+        "report/",
+        views.partners.ReportView.as_view(),
+        name="report_community",
+    ),
+    path(
         "drive/<slug:slug>/",
         views.drives.DriveView.as_view(),
         name="drive_page",
@@ -151,17 +174,6 @@ urlpatterns = [
                     "delete/",
                     views.dashboard.DeleteOrg.as_view(),
                     name="delete_org",
-                ),
-                path(
-                    "review/",
-                    views.dashboard.ReviewOrg.as_view(),
-                    {"drive": ""},
-                    name="review_org",
-                ),
-                path(
-                    "review/<slug:drive>/",
-                    views.dashboard.ReviewOrg.as_view(),
-                    name="review_org",
                 ),
                 path(
                     "members/",

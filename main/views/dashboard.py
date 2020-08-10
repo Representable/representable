@@ -30,7 +30,11 @@ from django.views.generic import (
 from django.views import View
 from django.core.mail import send_mail
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from allauth.account.decorators import verified_email_required
+from allauth.account.models import (
+    EmailConfirmation,
+    EmailAddress,
+    EmailConfirmationHMAC,
+)
 from ..forms import (
     CommunityForm,
     DriveForm,
@@ -159,6 +163,18 @@ class CreateOrg(LoginRequiredMixin, CreateView):
             "main:thanks_org", kwargs=org.get_url_kwargs()
         )
 
+        if not EmailAddress.objects.filter(
+            user=self.request.user, verified=True
+        ).exists():
+
+            user_email_address = EmailAddress.objects.get(
+                user=self.request.user
+            )
+            user_email_confirmation = EmailConfirmationHMAC(
+                email_address=user_email_address
+            )
+            user_email_confirmation.send(self.request, False)
+
         return super().form_valid(form)
 
 
@@ -171,6 +187,15 @@ class ThanksOrg(LoginRequiredMixin, TemplateView):
     """
 
     template_name = "main/dashboard/partners/thanks.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["verified"] = EmailAddress.objects.filter(
+            user=self.request.user, verified=True
+        ).exists()
+
+        return context
 
 
 class EditOrg(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
@@ -436,6 +461,26 @@ class CreateDrive(LoginRequiredMixin, OrgAdminRequiredMixin, CreateView):
     template_name = "main/dashboard/drives/create.html"
     form_class = DriveForm
     pk_url_kwarg = "cam_pk"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        if not EmailAddress.objects.filter(
+            user=self.request.user, verified=True
+        ).exists():
+            user_email_address = EmailAddress.objects.get(
+                user=self.request.user
+            )
+            user_email_confirmation = EmailConfirmationHMAC(
+                email_address=user_email_address
+            )
+            user_email_confirmation.send(self.request, False)
+
+        context["verified"] = EmailAddress.objects.filter(
+            user=self.request.user, verified=True
+        ).exists()
+
+        return context
 
     def form_valid(self, form):
         # TODO: include a check to make sure this actually the user's org
