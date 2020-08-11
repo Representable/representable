@@ -327,7 +327,7 @@ class AllowListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
         for line in file:
             matches = re.findall(b"[\w\.-]+@[\w\.-]+\.\w+", line)  # noqa: W605
             for match in matches:
-                AllowList.objects.create(
+                AllowList.objects.get_or_create(
                     email=match.decode("utf-8"),
                     organization=self.object.organization,
                     drive=self.object,
