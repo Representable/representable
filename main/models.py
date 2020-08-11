@@ -261,7 +261,7 @@ class CommunityEntry(models.Model):
         geography=True, serialize=True, blank=True, null=True
     )
 
-    block_groups = models.ManyToManyField(BlockGroup)
+    block_groups = models.ManyToManyField(BlockGroup, blank=True)
 
     entry_name = models.CharField(
         max_length=100, blank=False, unique=False, default=""
