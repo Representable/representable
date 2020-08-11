@@ -581,6 +581,7 @@ class EntryView(LoginRequiredMixin, View):
             #             entryForm.admin_approved = True
 
             entryForm.save()
+            comm_form.save_m2m()
 
             if addr_form.is_valid():
                 addrForm = addr_form.save(commit=False)
