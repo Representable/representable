@@ -162,7 +162,7 @@ class StatePage(TemplateView):
 
         state = State.objects.filter(abbr=abbr.upper())
         if not state:
-            return redirect("/")
+            return HttpResponseRedirect(reverse_lazy("main:entry", kwargs={"abbr": abbr}))
         drives = state[0].get_drives()
         return render(
             request,
@@ -237,7 +237,7 @@ class Review(LoginRequiredMixin, TemplateView):
 class Submission(TemplateView):
     template_name = "main/submission.html"
     sha = hashlib.sha256()
-    NUM_DIGITS = 10  # TODO move to some place with constants
+    NUM_DIGITS = 10
 
     def get(self, request, *args, **kwargs):
         m_uuid = self.request.GET.get("map_id", None)
