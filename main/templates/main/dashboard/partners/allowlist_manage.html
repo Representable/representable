@@ -48,13 +48,17 @@
       <div class="card shadow-sm my-3">
         <div class="card-body">
           <h5> Invitees </h5>
-          <div>
-          <form role="form" id="EmailAllowList" method="post">{% csrf_token %}
-            <div style="display: inline-block;">
-                <input type="text" id="email" value="" name="email"/>
-                <button id="save" form="EmailAllowList" type="submit" class="btn btn-primary" value="Submit">Add</button>
+          <div class="container">
+            <div class="row">
+              <div class="col-md">
+                <form role="form" id="EmailAllowList" method="post">{% csrf_token %}
+                  <div style="display: inline-block;">
+                      <input type="text" id="email" value="" name="email" placeholder="Add a member"/>
+                      <button id="save" form="EmailAllowList" type="submit" class="btn btn-primary" value="Submit">Add</button>
+                  </div>
+                </form>
+              </div>
             </div>
-          </form>
           </div>
           <table class="table table-hover">
 
@@ -62,6 +66,17 @@
           <tr>
 
           <td> {{l.email}} </td>
+
+          <td>
+            {% comment %} {% if is_org_admin %}
+              <button class="btn btn-danger float-right" data-toggle="modal" data-target="#deleteInvitee">
+                <i class="fas fa-trash"></i>
+              </button>
+            {% endif %} {% endcomment %}
+            <button class="btn btn-danger float-right" id="remove" data-toggle="modal" data-alid={{l.id}} data-target="#deleteInvitee">
+            <i class="fas fa-trash"></i>
+            </button>
+          </td>
 
           </tr>
           {% endfor %}
@@ -73,5 +88,40 @@
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteInvitee" tabindex="-1" role="dialog" aria-labelledby="deleteInviteeLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to remove this member from your drive?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This member will no longer be able to submit communities to your drive.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <form role="form" id="deleteInviteeInfo" method="post" action="delete\">{% csrf_token %}
+          <input type="text" class="hidden" name="alid" id="alid" value=""/>
+          <button type="submit" class="btn btn-danger" name="Delete">Remove member</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+
+    <script>
+    $(document).on("click", "#remove", function () {
+         var alid = $(this).data('alid');
+         $(".modal-footer #alid").val( alid );
+    });
+    </script>
 
 {% endblock %}
