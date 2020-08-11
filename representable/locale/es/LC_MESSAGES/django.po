@@ -26,8 +26,23 @@ msgstr "Anglais"
 msgid "Spanish"
 msgstr "Espanol"
 
-#~ msgid "Please Verify Your Email"
-#~ msgstr "Verification de Email"
+#: main/templates/main/index.html:24
+msgid "Redistricting"
+msgstr ""
 
-#~ msgid "HELLO"
-#~ msgstr "OLA"
+#: main/templates/main/index.html:50
+msgid "What is Representable.org?"
+msgstr "Que est Representable!"
+
+
+#: main/templates/main/thanks.html:13
+msgid "Thank you for your submission!"
+msgstr "Merci pour votre submission"
+
+#: main/templates/main/thanks.html:16
+msgid "Please Verify Your Email"
+msgstr "Verification de Email"
+
+#: main/views/main.py:120
+msgid "HELLO"
+msgstr "OLA"
