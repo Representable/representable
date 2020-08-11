@@ -60,16 +60,43 @@ class PartnerMap(TemplateView):
         # address Information
         streets = {}
         cities = {}
+
+        # get the org to which this map belongs
+        org = Organization.objects.get(slug=self.kwargs["slug"])
+
+        # get the user
+        user = self.request.user
+
+        # is the user an admin of this map's org? default is false
+        org_admin = False
+        if user.is_authenticated:
+            org_admin = user.is_org_admin(org.id)
+
         # get the polygon from db and pass it on to html
         if self.kwargs["drive"]:
-            query = CommunityEntry.objects.filter(
-                organization__slug=self.kwargs["slug"],
-                drive__slug=self.kwargs["drive"],
-            )
+            if org_admin:
+                # if org admin get all entries, including private and unapproved
+                query = CommunityEntry.objects.filter(
+                    organization=org, drive__slug=self.kwargs["drive"],
+                )
+            else:
+                # else only get approved, not private entries
+                query = CommunityEntry.objects.filter(
+                    organization=org,
+                    drive__slug=self.kwargs["drive"],
+                    admin_approved=True,
+                    private=False,
+                )
         else:
-            query = CommunityEntry.objects.filter(
-                organization__slug=self.kwargs["slug"]
-            )
+            if org_admin:
+                # if org admin get all entries, including private and unapproved
+                query = CommunityEntry.objects.filter(organization=org,)
+            else:
+                # else only get approved, not private entries
+                query = CommunityEntry.objects.filter(
+                    organization=org, admin_approved=True, private=False,
+                )
+
         for obj in query:
             for a in Address.objects.filter(entry=obj):
                 streets[obj.entry_ID] = a.street
@@ -94,10 +121,10 @@ class PartnerMap(TemplateView):
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
-        org = Organization.objects.get(slug=self.kwargs["slug"])
+
         context["organization"] = org
         context["state"] = org.states[0].lower()
-        if self.request.user.is_authenticated:
+        if user.is_authenticated:
             email = {
                 "exists": True,
                 "value": self.request.user.email,
@@ -121,10 +148,11 @@ class PartnerMap(TemplateView):
                 "/multiexport/drive/" + self.kwargs["drive"]
             )
             context["drive_slug"] = self.kwargs["drive"]
-        if self.request.user.is_authenticated:
-            context["is_org_admin"] = self.request.user.is_org_admin(
-                Organization.objects.get(slug=self.kwargs["slug"]).id
-            )
+
+        # is this user an org_admin for this map's org?
+        if user.is_authenticated:
+            context["is_org_admin"] = org_admin
+
         return context
 
 
