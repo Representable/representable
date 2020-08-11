@@ -49,11 +49,7 @@ let populateStateSelectionDropdown = function () {
     selectElement.appendChild(newOption);
   }
   jQuery("#stateSelectionDropdown").on("change", function () {
-    if (this.value !== "mi") {
-      window.location = "/entry";
-    } else {
-      window.location = "/michigan";
-    }
+    window.location = "/state/" + this.value;
   });
 };
 

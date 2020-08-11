@@ -22,6 +22,10 @@
 // GEO Js file for handling map drawing.
 /* https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ */
 // Polygon Drawn By User
+var filterStack = JSON.parse(sessionStorage.getItem("filterStack"));
+var bboxStack = JSON.parse(sessionStorage.getItem("bboxStack"));
+if (filterStack === null) filterStack = [];
+if (bboxStack === null) bboxStack = [];
 
 // Helper print function
 function print(items) {
@@ -53,7 +57,6 @@ function closePopup() {
 
 /******************************************************************************/
 
-var wkt_obj;
 // Formset field object saves a deep copy of the original formset field object.
 // (If user deletes all fields, he can add one more according to this one).
 var formsetFieldObject;
@@ -82,6 +85,18 @@ function parseReverseGeo(geoData) {
     returnStr = geoData.place_name;
   }
   return returnStr;
+}
+
+// check that there is an empty filter (no highlighted selection)
+function isEmptyFilter(filter) {
+  var isEmpty = true;
+  filter.forEach(function (feature) {
+    if (feature !== "in" && feature !== "GEOID" && feature !== "") {
+      isEmpty = false;
+      return;
+    }
+  });
+  return isEmpty;
 }
 
 /******************************************************************************/
@@ -168,7 +183,7 @@ function formValidation() {
   }
   if (flag == false) {
     // Add alert.
-    var alert = document.getElementById("form_error")
+    var alert = document.getElementById("form_error");
     alert.classList.remove("d-none");
     scrollIntoViewSmooth(alert.id);
   }
@@ -178,61 +193,67 @@ function formValidation() {
 /****************************************************************************/
 // generates polygon to be saved from the selection
 function createCommPolygon() {
-    // start by checking size -- 800 is an arbitrary number
-    // it means a community with a population between 480,000 & 2,400,000
-    var polyFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
-    if (polyFilter === null) return false;
-    if (polyFilter.length > 802) {
-      triggerDrawError("polygon_size", "You must select a smaller area to submit this community.");
-      return false;
-    } else if (polyFilter.length === 0) {
-      triggerMissingPolygonError();
-      return false;
-    }
-    // now query the features and build the polygon to be saved
-    var queryFeatures = map.queryRenderedFeatures({
-      layers: [state + "-census-shading"],
-    });
-    var multiPolySave;
-    queryFeatures.forEach(function(feature) {
-      if (polyFilter.includes(feature.properties.GEOID)) {
-        if (multiPolySave === undefined) {
-          multiPolySave = feature;
-        } else {
-          multiPolySave = turf.union(multiPolySave, feature);
-        }
+  // start by checking size -- 800 is an arbitrary number
+  // it means a community with a population between 480,000 & 2,400,000
+  var polyFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
+  if (polyFilter === null) return false;
+  if (polyFilter.length > 802) {
+    triggerDrawError(
+      "polygon_size",
+      "You must select a smaller area to submit this community."
+    );
+    return false;
+  } else if (isEmptyFilter(polyFilter)) {
+    triggerMissingPolygonError();
+    return false;
+  }
+  // now query the features and build the polygon to be saved
+  var queryFeatures = map.queryRenderedFeatures({
+    layers: [state + "-census-shading"],
+  });
+  var multiPolySave;
+  queryFeatures.forEach(function (feature) {
+    if (polyFilter.includes(feature.properties.GEOID)) {
+      if (multiPolySave === undefined) {
+        multiPolySave = feature;
+      } else {
+        multiPolySave = turf.union(multiPolySave, feature);
       }
-    });
-
-    // for display purposes -- this is the final multipolygon!!
-    // TODO: implement community entry model change -> store only outer coordinates (like code in map.js)
-    var wkt = new Wkt.Wkt();
-    var wkt_obj = wkt.read(JSON.stringify(multiPolySave.geometry));
-    var poly_wkt = wkt_obj.write();
-    // ok so this is kinda jank lol but let me explain
-    // if it isn't a contiguous selection area, then poly_wkt will start with "MULTIPOLYGON"
-    // otherwise it starts with "POLYGON" -- so we test the first char for contiguity 8-)
-    if (poly_wkt[0] === "M") {
-      triggerDrawError("polygon_size", "Please ensure that your community does not contain any gaps. Your selected units must connect.");
-      return false;
-    } else {
-      triggerSuccessMessage();
-      updateFormFields(poly_wkt);
-
-      // clean up polyFilter -- this is the array of GEOID to be stored
-      polyFilter.splice(0, 1);
-      polyFilter.splice(0, 1);
-      // TODO: implement community entry model change -> store this array of references to blockgroups!
     }
-    return true;
+  });
+
+  // for display purposes -- this is the final multipolygon!!
+  // TODO: implement community entry model change -> store only outer coordinates (like code in map.js)
+  var wkt = new Wkt.Wkt();
+  var wkt_obj = wkt.read(JSON.stringify(multiPolySave.geometry));
+  var poly_wkt = wkt_obj.write();
+  // ok so this is kinda jank lol but let me explain
+  // if it isn't a contiguous selection area, then poly_wkt will start with "MULTIPOLYGON"
+  // otherwise it starts with "POLYGON" -- so we test the first char for contiguity 8-)
+  if (poly_wkt[0] === "M") {
+    triggerDrawError(
+      "polygon_size",
+      "Please ensure that your community does not contain any gaps. Your selected units must connect."
+    );
+    return false;
+  } else {
+    triggerSuccessMessage();
+    updateFormFields(poly_wkt);
+
+    // clean up polyFilter -- this is the array of GEOID to be stored
+    polyFilter.splice(0, 1);
+    polyFilter.splice(0, 1);
+    // TODO: implement community entry model change -> store this array of references to blockgroups!
+  }
+  return true;
 }
 
 // zoom to the current Selection
 function zoomToCommunity() {
   var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
-  if (selectBbox.length === 0) return;
+  if (selectBbox === null || selectBbox.length === 0) return;
   var bbox = turf.bbox(selectBbox);
-  map.fitBounds(bbox, {padding: 100, duration: 0});
+  map.fitBounds(bbox, { padding: 100, duration: 0 });
 }
 /****************************************************************************/
 
@@ -248,16 +269,17 @@ document.addEventListener(
       .removeClass("add-form-row")
       .addClass("remove-form-row")
       .html('<span class="" aria-hidden="true">Remove</span>');
-    $('#save').on('click', function (e) {
+    $("#save").on("click", function (e) {
       e.preventDefault();
-      var form = $('#entryForm');
+      var form = $("#entryForm");
       zoomToCommunity();
       // delay so that zoom can occur
-      var polySuccess = true, formSuccess = true;
+      var polySuccess = true,
+        formSuccess = true;
       // loading icon
       $("#loading-entry").css("display", "block");
       $("#loading-entry").delay(2000).fadeOut(2000);
-      setTimeout(function() {
+      setTimeout(function () {
         polySuccess = createCommPolygon();
         formSuccess = formValidation();
       }, 500);
@@ -457,6 +479,47 @@ mapEraser.addEventListener("click", function (e) {
   }
 });
 
+class UndoButton {
+  onAdd(map) {
+    var undo_button = document.createElement("button");
+    undo_button.href = "#";
+    undo_button.type = "button";
+    undo_button.backgroundImg = "";
+
+    undo_button.classList.add("active");
+    undo_button.id = "map-undo-button-id";
+    undo_button.style.display = "block";
+    undo_button.innerHTML = "<i class='fas fa-undo-alt'></i> Undo";
+    this._map = map;
+    undo_button.addEventListener("click", function (event) {
+      if (filterStack.length === 0) {
+        showWarningMessage("There are no actions to undo");
+      } else {
+        var undoFilter = filterStack.pop();
+        var undoBbox = bboxStack.pop();
+        if (isEmptyFilter(undoFilter)) {
+          sessionStorage.setItem("selectBbox", "[]");
+        } else {
+          sessionStorage.setItem("selectBbox", undoBbox);
+        }
+        map.setFilter(state + "-bg-highlighted", undoFilter);
+        sessionStorage.setItem("bgFilter", JSON.stringify(undoFilter));
+        sessionStorage.setItem("filterStack", JSON.stringify(filterStack));
+        sessionStorage.setItem("bboxStack", JSON.stringify(bboxStack));
+      }
+    });
+    return undo_button;
+  }
+
+  onRemove() {
+    this._container.parentNode.removeChild(this._container);
+    this._map = undefined;
+  }
+}
+map.addControl(new UndoButton(), "top-right");
+var mapUndoButton = document.getElementById("map-undo-button-id");
+drawControls.appendChild(mapUndoButton);
+
 class ClearMapButton {
   onAdd(map) {
     var clear_button = document.createElement("button");
@@ -470,14 +533,24 @@ class ClearMapButton {
     clear_button.innerHTML = "<i class='fas fa-trash-alt'></i> Clear Selection";
     this._map = map;
     clear_button.addEventListener("click", function (event) {
+      // check for empty map -- raise warning message if so
+      var undoFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
+      if (undoFilter === null || isEmptyFilter(undoFilter)) {
+        showWarningMessage("There is no selection to clear.");
+        return;
+      }
       let isConfirmed = confirm(
         "Are you sure you want to clear the map? This will delete the blocks you have selected."
       );
       if (isConfirmed) {
         map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
+        var undoBbox = sessionStorage.getItem("selectBbox");
+        filterStack.push(undoFilter);
+        bboxStack.push(undoBbox);
         sessionStorage.setItem("bgFilter", "[]");
         sessionStorage.setItem("selectBbox", "[]");
-        updateCommunityEntry();
+        sessionStorage.setItem("filterStack", JSON.stringify(filterStack));
+        sessionStorage.setItem("bboxStack", JSON.stringify(bboxStack));
       }
     });
     return clear_button;
@@ -492,22 +565,19 @@ map.addControl(new ClearMapButton(), "top-right");
 var mapClearButton = document.getElementById("map-clear-button-id");
 drawControls.appendChild(mapClearButton);
 
-// DEPRECATED (for now)
-function toggleWarningBox() {
+function showWarningMessage(warning) {
   var warning_box = document.getElementById("warning-box-id");
-  if (warning_box.style.display == "block") {
-    hideWarningBox();
-  } else {
-    showWarningBox();
-  }
-}
-
-function showWarningBox() {
-  var warning_box = document.getElementById("warning-box-id");
+  warning_box.innerHTML =
+    '<p class="mb-0"><i class="fa fa-exclamation-triangle"></i> ' +
+    warning +
+    "</p>";
   warning_box.style.display = "block";
+  setTimeout(function () {
+    warning_box.style.display = "none";
+  }, 4000);
 }
 
-function hideWarningBox() {
+function hideWarningMessage() {
   var warning_box = document.getElementById("warning-box-id");
   warning_box.style.display = "none";
 }
@@ -597,7 +667,7 @@ let myTour = new Shepherd.Tour({
 myTour.addStep({
   title: "Draw Your Community Map",
   text:
-    "Hover over the map and certain grids will appear highlighted. Click to add the highlighted region into your community.",
+    "Hover over the map and certain units will appear highlighted. Click to add the highlighted region into your community.",
   buttons: [
     {
       action() {
@@ -610,7 +680,6 @@ myTour.addStep({
       action() {
         // adjust draw size
         document.getElementById("radius-control").value = 30;
-
         document.getElementById("radius-value").textContent = "30";
         return this.next();
       },
@@ -622,7 +691,7 @@ myTour.addStep({
 myTour.addStep({
   title: "Adjust Size",
   text:
-    "Use the Select Radius bar to adjust the size of your selection region \
+    "Use the Selection Size bar to adjust the size of your selection region \
   ",
   attachTo: {
     element: "#map-radius-control-id",
@@ -631,6 +700,9 @@ myTour.addStep({
   buttons: [
     {
       action() {
+        // adjust draw size
+        document.getElementById("radius-control").value = 25;
+        document.getElementById("radius-value").textContent = "25";
         return this.back();
       },
       classes: "shepherd-button-secondary",
@@ -668,7 +740,6 @@ myTour.addStep({
       action() {
         // adjust to smaller eraser size
         document.getElementById("radius-control").value = 15;
-
         document.getElementById("radius-value").textContent = "15";
         return this.next();
       },
@@ -680,7 +751,7 @@ myTour.addStep({
 myTour.addStep({
   title: "Adjust Eraser Size",
   text:
-    "You can also adjust the size of your eraser with the select radius bar \
+    "You can also adjust the size of your eraser with the select size bar \
   ",
   attachTo: {
     element: "#map-radius-control-id",
@@ -689,6 +760,9 @@ myTour.addStep({
   buttons: [
     {
       action() {
+        // adjust to smaller eraser size
+        document.getElementById("radius-control").value = 30;
+        document.getElementById("radius-value").textContent = "30";
         return this.back();
       },
       classes: "shepherd-button-secondary",
@@ -697,7 +771,7 @@ myTour.addStep({
     {
       action() {
         // Exit eraser
-        document.getElementById("map-eraser-button-id").click();
+        document.getElementById("map-draw-button-id").click();
         return this.next();
       },
       text: "Next",
@@ -715,8 +789,33 @@ myTour.addStep({
   buttons: [
     {
       action() {
-        // Reselect draw tool
-        document.getElementById("map-draw-button-id").click();
+        // Reselect eraser tool
+        document.getElementById("map-eraser-button-id").click();
+        return this.back();
+      },
+      classes: "shepherd-button-secondary",
+      text: "Back",
+    },
+    {
+      action() {
+        document.getElementById("map-undo-button-id").click();
+        return this.next();
+      },
+      text: "Next",
+    },
+  ],
+});
+
+myTour.addStep({
+  title: "Undo",
+  text: "To undo your previous action, click on the Undo button.",
+  attachTo: {
+    element: "#map-undo-button-id",
+    on: "bottom",
+  },
+  buttons: [
+    {
+      action() {
         return this.back();
       },
       classes: "shepherd-button-secondary",
@@ -734,7 +833,7 @@ myTour.addStep({
 myTour.addStep({
   title: "Clear Selection",
   text:
-    "Delete the community you have drawn or restart the drawing process by clicking this button.",
+    "Delete the community you have drawn or restart the drawing process by clicking the Clear Selection button.",
   attachTo: {
     element: "#map-clear-button-id",
     on: "bottom",
@@ -759,7 +858,7 @@ myTour.addStep({
 myTour.addStep({
   title: "Finish Drawing",
   text: `Once you are done fine-tuning your drawing to reflect the geographical boundaries of
-  your community of interest you can continue on to save your community!`,
+  your Community of Interest continue on to the next section to save your community!`,
   attachTo: {
     element: "#map-finish-drawing-button-id",
     on: "bottom",
@@ -826,6 +925,32 @@ map.on("style.load", function () {
     newHighlightLayer(states[i]);
   }
 
+  // Initialize Map for State Pages
+  if (state_abbr !== "") {
+    showMap();
+    map.flyTo({
+      center: statesLngLat[state_abbr],
+      zoom: 6,
+      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+    });
+
+    sessionStorage.setItem("bgFilter", "[]");
+    sessionStorage.setItem("selectBbox", "[]");
+
+    state = state_abbr.toLowerCase();
+    $("#shepherd-btn").removeClass("d-none");
+    map.setLayoutProperty(state + "-census-lines", "visibility", "visible");
+
+    // Save state to session storage
+    sessionStorage.setItem("state_name", state);
+
+    // When the user moves their mouse over the census shading layer, we'll update the
+    // feature state for the feature under the mouse.
+    var bgID = null;
+    var features = [];
+    var stateCensus = state + "-census-shading";
+  }
+
   // when selecting or erasing
   map.on("click", function (e) {
     // set bbox as rectangle area around clicked point
@@ -836,8 +961,9 @@ map.on("style.load", function () {
     var queryFeatures = map.queryRenderedFeatures(bbox, {
       layers: [state + "-census-shading"],
     });
-    var features = [];
-    var currentSelectBbox;
+    var isChanged = false; // store only valid moves in stack
+    var features = []; // the features in click radius
+    var currentBbox; // the current selection area bounding box
     for (let i = 0; i < queryFeatures.length; i++) {
       var feature = queryFeatures[i];
       // push to highlight layer for visibility
@@ -847,36 +973,51 @@ map.on("style.load", function () {
         var polyCon = turf.bbox(feature.geometry);
         var memoPoly = turf.bboxPolygon(polyCon);
         if (i === 0) {
-          currentSelectBbox = memoPoly;
+          currentBbox = memoPoly;
         } else {
-          currentSelectBbox = turf.union(memoPoly, currentSelectBbox);
+          currentBbox = turf.union(memoPoly, currentBbox);
         }
       }
     }
-    // check if previous selectBbox overlaps with current selectBbox
+    // the previously stored selected area bounding box
     var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
-    if (selectBbox === null || selectBbox.length === 0) {
-      selectBbox = currentSelectBbox;
-      hideWarningBox();
-    } else {
-      if (turf.booleanDisjoint(currentSelectBbox, selectBbox)) {
-        showWarningBox();
-        return;
-      } else {
-        selectBbox = turf.union(currentSelectBbox, selectBbox);
-        hideWarningBox();
-      }
-    }
 
     var filter = [];
-    var currentSelection = map.getFilter(state + "-bg-highlighted");
+    var currentFilter = map.getFilter(state + "-bg-highlighted");
     if (eraseMode) {
-      currentSelection.forEach(function (feature) {
+      currentFilter.forEach(function (feature) {
         if (!features.includes(feature)) {
           filter.push(feature);
         }
       });
+      arraysEqual(filter, currentFilter)
+        ? (isChanged = false)
+        : (isChanged = true);
+      if (isChanged) {
+        if (isEmptyFilter(filter)) {
+          console.log("erase led to empty filter");
+          sessionStorage.setItem("selectBbox", "[]");
+        }
+        selectBbox = turf.difference(selectBbox, currentBbox);
+      }
     } else {
+      // check if previous selectBbox overlaps with current selectBbox
+      if (selectBbox === null || selectBbox.length === 0) {
+        isChanged = true;
+        selectBbox = currentBbox;
+        hideWarningMessage();
+      } else {
+        if (turf.booleanDisjoint(currentBbox, selectBbox)) {
+          showWarningMessage(
+            "Please ensure that your community does not contain any gaps. Your selected units must connect."
+          );
+          return;
+        } else {
+          isChanged = true;
+          selectBbox = turf.union(currentBbox, selectBbox);
+          hideWarningMessage();
+        }
+      }
       // Run through the queried features and set a filter based on GEOID
       filter = features.reduce(
         function (memo, feature) {
@@ -886,7 +1027,7 @@ map.on("style.load", function () {
         ["in", "GEOID"]
       );
 
-      currentSelection.forEach(function (feature) {
+      currentFilter.forEach(function (feature) {
         if (feature !== "in" && feature !== "GEOID" && feature !== "") {
           filter.push(feature);
         }
@@ -894,8 +1035,14 @@ map.on("style.load", function () {
     }
 
     map.setFilter(state + "-bg-highlighted", filter);
-    sessionStorage.setItem("bgFilter", JSON.stringify(filter));
-    sessionStorage.setItem("selectBbox", JSON.stringify(selectBbox));
+    if (isChanged) {
+      filterStack.push(currentFilter);
+      bboxStack.push(JSON.stringify(currentBbox));
+      sessionStorage.setItem("filterStack", JSON.stringify(filterStack));
+      sessionStorage.setItem("bboxStack", JSON.stringify(bboxStack));
+      sessionStorage.setItem("bgFilter", JSON.stringify(filter));
+      sessionStorage.setItem("selectBbox", JSON.stringify(selectBbox));
+    }
   });
 
   // Listen for the `geocoder.input` event that is triggered when a user
@@ -917,79 +1064,33 @@ map.on("style.load", function () {
       new_state = styleSpec.properties["short_code"].toLowerCase().substring(3);
     }
     // if searching for a different state than what is currently loaded
-    if (state != new_state) {
-      if (states.includes(state)) {
-        map.setLayoutProperty(state + "-census-lines", "visibility", "none");
-      }
-      if (states.includes(new_state)) {
-        // add block groups, remove those of previous state
-        map.setLayoutProperty(
-          new_state + "-census-lines",
-          "visibility",
-          "visible"
-        );
-      }
-      state = new_state;
-    } else {
-      if (states.includes(state)) {
-        map.setLayoutProperty(state + "-census-lines", "visibility", "visible");
+    if (state_abbr === "") {
+      if (state != new_state) {
+        if (states.includes(state)) {
+          map.setLayoutProperty(state + "-census-lines", "visibility", "none");
+        }
+        if (states.includes(new_state)) {
+          // add block groups, remove those of previous state
+          map.setLayoutProperty(
+            new_state + "-census-lines",
+            "visibility",
+            "visible"
+          );
+        }
+        state = new_state;
+      } else {
+        if (states.includes(state)) {
+          map.setLayoutProperty(
+            state + "-census-lines",
+            "visibility",
+            "visible"
+          );
+        }
       }
     }
 
     // Save state to session storage
     sessionStorage.setItem("state_name", state);
-
-    // When the user moves their mouse over the census shading layer, we'll update the
-    // feature state for the feature under the mouse.
-    var bgID = null;
-    var features = [];
-    var stateCensus = state + "-census-shading";
-    // if touch screen, disable.
-    if (!is_touch_device()) {
-      map.on("mousemove", stateCensus, function (e) {
-        if (e.features.length > 0) {
-          // create a constantly updated list of the features which have been highlighted in foreach loop
-          // before highlighting, go thru that list, and deselect all
-          var bbox = [
-            [e.point.x - drawRadius, e.point.y - drawRadius],
-            [e.point.x + drawRadius, e.point.y + drawRadius],
-          ];
-          var hoverFeatures = map.queryRenderedFeatures(bbox, {
-            layers: [state + "-census-shading"],
-          });
-          stateBG = state + "bg";
-          features.forEach(function (feature) {
-            bgID = feature.id;
-            map.setFeatureState(
-              { source: stateBG, sourceLayer: stateBG, id: bgID },
-              { hover: false }
-            );
-          });
-          features = [];
-          hoverFeatures.forEach(function (feature) {
-            features.push(feature);
-            bgID = feature.id;
-            map.setFeatureState(
-              { source: stateBG, sourceLayer: stateBG, id: bgID },
-              { hover: true }
-            );
-          });
-        }
-      });
-    }
-
-    // When the mouse leaves the state-fill layer, update the feature state of the
-    // previously hovered feature.
-    map.on("mouseleave", stateCensus, function () {
-      if (bgID) {
-        stateBG = state + "bg";
-        map.setFeatureState(
-          { source: stateBG, sourceLayer: stateBG, id: bgID },
-          { hover: false }
-        );
-      }
-      bgID = null;
-    });
 
     // Tracking
     mixpanel.track("Geocoder Search Successful", {
@@ -998,6 +1099,58 @@ map.on("style.load", function () {
       organization_id: organization_id,
       organization_name: organization_name,
     });
+  });
+
+  // When the user moves their mouse over the census shading layer, we'll update the
+  // feature state for the feature under the mouse.
+  var bgID = null;
+  var features = [];
+  var stateCensus = state + "-census-shading";
+  // if touch screen, disable.
+  if (!is_touch_device()) {
+    map.on("mousemove", stateCensus, function (e) {
+      if (e.features.length > 0) {
+        // create a constantly updated list of the features which have been highlighted in foreach loop
+        // before highlighting, go thru that list, and deselect all
+        var bbox = [
+          [e.point.x - drawRadius, e.point.y - drawRadius],
+          [e.point.x + drawRadius, e.point.y + drawRadius],
+        ];
+        var hoverFeatures = map.queryRenderedFeatures(bbox, {
+          layers: [state + "-census-shading"],
+        });
+        stateBG = state + "bg";
+        features.forEach(function (feature) {
+          bgID = feature.id;
+          map.setFeatureState(
+            { source: stateBG, sourceLayer: stateBG, id: bgID },
+            { hover: false }
+          );
+        });
+        features = [];
+        hoverFeatures.forEach(function (feature) {
+          features.push(feature);
+          bgID = feature.id;
+          map.setFeatureState(
+            { source: stateBG, sourceLayer: stateBG, id: bgID },
+            { hover: true }
+          );
+        });
+      }
+    });
+  }
+
+  // When the mouse leaves the state-fill layer, update the feature state of the
+  // previously hovered feature.
+  map.on("mouseleave", stateCensus, function () {
+    if (bgID) {
+      stateBG = state + "bg";
+      map.setFeatureState(
+        { source: stateBG, sourceLayer: stateBG, id: bgID },
+        { hover: false }
+      );
+    }
+    bgID = null;
   });
 });
 
@@ -1009,16 +1162,21 @@ map.on("render", function (e) {
   wasLoaded = true;
   // test if polygon has been drawn
   var bgPoly = sessionStorage.getItem("bgFilter");
-  if (bgPoly !== "[]" && state !== null && bgPoly !== "null") {
+  if (
+    bgPoly !== "[]" &&
+    state !== null &&
+    bgPoly !== null &&
+    bgPoly !== "null"
+  ) {
     // re-display the polygon
-    map.setFilter(
-      state + "-bg-highlighted",
-      JSON.parse(bgPoly)
-    );
+    map.setFilter(state + "-bg-highlighted", JSON.parse(bgPoly));
     var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
     if (selectBbox.length !== 0) {
       map.flyTo({
-        center: [selectBbox.geometry.coordinates[0][0][0], selectBbox.geometry.coordinates[0][0][1]],
+        center: [
+          selectBbox.geometry.coordinates[0][0][0],
+          selectBbox.geometry.coordinates[0][0][1],
+        ],
         essential: true, // this animation is considered essential with respect to prefers-reduced-motion
         zoom: 10,
       });
@@ -1114,26 +1272,6 @@ function updateFormFields(census_blocks_polygon_array) {
   // "census_blocks_polygon" gets saved in the post() function in django
 }
 
-/* Responds to the user's actions and updates the geometry fields and the arrayfield
-in the form. */
-function updateCommunityEntry() {
-  cleanAlerts();
-  // save census block groups multipolygon
-  census_blocks_polygon_array = JSON.parse(sessionStorage.getItem("mpoly"));
-  // check if map stores no polygon - clear map + sessionStorage if so
-  if (census_blocks_polygon_array === "[]") {
-    map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
-    sessionStorage.setItem("bgFilter", "[]");
-    sessionStorage.setItem("mpoly", "[]");
-    triggerMissingPolygonError();
-  }
-  if (census_blocks_polygon_array != undefined) {
-    census_blocks_polygon_array = census_blocks_polygon_array.join("|");
-  }
-  triggerSuccessMessage();
-  showMap();
-  updateFormFields(census_blocks_polygon_array);
-}
 /******************************************************************************/
 
 // check if device is touch screen --> https://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript/4819886#4819886
@@ -1165,5 +1303,17 @@ function scrollIntoViewSmooth(id) {
   var element = document.getElementById(id);
   var y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
 
-  window.scrollTo({top: y, behavior: 'smooth'});
+  window.scrollTo({ top: y, behavior: "smooth" });
+}
+
+// check if two arrays are equal (same elements)
+function arraysEqual(a, b) {
+  if (a === b) return true;
+  if (a == null || b == null) return false;
+  if (a.length !== b.length) return false;
+
+  for (var i = 0; i < a.length; ++i) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
 }

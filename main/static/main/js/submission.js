@@ -72,6 +72,15 @@ function sanitizePDF(x) {
 }
 
 map.on("load", function () {
+  var layers = map.getStyle().layers;
+  // Find the index of the first symbol layer in the map style
+  var firstSymbolId;
+  for (var i = 0; i < layers.length; i++) {
+    if (layers[i].type === "symbol" && layers[i] !== "road") {
+      firstSymbolId = layers[i].id;
+      break;
+    }
+  }
   // ward + community areas for IL
   if (state === "il") {
     newSourceLayer("chi_wards", CHI_WARD_KEY);
@@ -310,3 +319,9 @@ for (var id in toggleableLayerIds){
   layers.appendChild(div);
   var newline = document.createElement("br");
 };
+
+/*******************************************************************/
+// remove the last char in the string
+function removeLastChar(str) {
+  return str.substring(0, str.length - 1);
+}
