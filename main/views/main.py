@@ -524,8 +524,6 @@ class EntryView(LoginRequiredMixin, View):
         ]
         comm_form.data._mutable = False
 
-        print(comm_form.data["block_groups"])
-
         if comm_form.is_valid():
             entryForm = comm_form.save(commit=False)
 
@@ -568,17 +566,6 @@ class EntryView(LoginRequiredMixin, View):
                     if allowlist_entry:
                         # approve this entry
                         entryForm.admin_approved = True
-
-            # TODO: Determine role of drive tokens (one time link, etc.)
-            # if self.kwargs["token"]:
-            #     token = DriveToken.objects.get(token=self.kwargs["token"])
-            #     if token:
-            #         entryForm.drive = token.drive
-            #         entryForm.organization = token.drive.organization
-
-            #         # if user has a token and drive is active, auto approve submission
-            #         if token.drive.is_active:
-            #             entryForm.admin_approved = True
 
             entryForm.save()
             comm_form.save_m2m()
