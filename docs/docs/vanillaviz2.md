@@ -32,10 +32,10 @@ unzip {file-name}.zip
 ogr2ogr -f GeoJSON {file-name}.geojson {file-name}.shp
 ```
 
-4. Convert to mbtiles (much smaller!): `tippecanoe -zg -o {file-name}.mbtiles --drop-densest-as-needed --extend-zooms-if-still-dropping {file-name}.geojson`
+4. Convert to mbtiles (much smaller!) -ai & -aN create unique ids for use in filter on entry page: `tippecanoe -o {file-name}.mbtiles -ai -aN -ab {file-name}.geojson`
 5. Install mapbox cli: `pip install mapboxcli`
 6. Export mapbox token (ask Kyle if you need it, different from mapbox key): `export MAPBOX_ACCESS_TOKEN={TOKEN}`
-7. upload the file: `mapbox upload mapbox_user_name.{name} {file-name}.geojson`
+7. upload the file: `mapbox upload mapbox_user_name.{name} {file-name}.geojson` it's also possible to do this through mapbox studio with an easy to use GUI
 8. now you can edit the javascript
 
 ```
