@@ -373,6 +373,22 @@ class AllowListManage(LoginRequiredMixin, OrgAdminRequiredMixin, TemplateView):
         )
 
 
+class AllowListDelete(LoginRequiredMixin, OrgAdminRequiredMixin, DeleteView):
+    """
+    The view for deleting drives
+    """
+
+    model = Drive
+    pk_url_kwarg = "cam_pk"
+
+    def delete(self, request, *args, **kwargs):
+        alid = request.POST["alid"]
+        member = AllowList.objects.get(pk=alid)
+        member.delete()
+        url = reverse_lazy("main:manage_allowlist", kwargs=kwargs)
+        return HttpResponseRedirect(url)
+
+
 class ReviewOrg(LoginRequiredMixin, OrgAdminRequiredMixin, TemplateView):
     """
     Page for organization to review submissions
