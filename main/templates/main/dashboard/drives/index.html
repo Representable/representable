@@ -78,7 +78,7 @@
                 <p>Your drive's map is live at: <a href="{% url 'main:partner_map' object.organization.slug object.slug %}">representable.org{% url 'main:partner_map' object.organization.slug object.slug %}</a></p></div>
                 {% endif %}
                 {% if object.private %}
-                <p>Your drive's map is available to organization administrators and drive invitees at: <a href="{% url 'main:partner_map' object.organization.slug object.slug %}">representable.org{% url 'main:partner_map' object.organization.slug object.slug %}</a></p></div>
+                <p>Your drive's map is available to organization administrators at: <a href="{% url 'main:partner_map' object.organization.slug object.slug %}">representable.org{% url 'main:partner_map' object.organization.slug object.slug %}</a></p></div>
                 {% endif %}
                 <a class="btn btn-primary" href="{% url 'main:partner_map' object.organization.slug object.slug %}"  role="button">View <i class="fa fa-arrow-circle-right"></i></a>
             </li>
