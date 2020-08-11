@@ -273,6 +273,7 @@ class CommunityEntry(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     admin_approved = models.BooleanField(default=True)
+    private = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.entry_ID)
