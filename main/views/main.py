@@ -545,6 +545,7 @@ class EntryView(LoginRequiredMixin, View):
                 if drive:
                     entryForm.drive = drive
                     entryForm.organization = drive.organization
+                    entryForm.private = drive.private
 
             if entryForm.organization:
                 if self.request.user.is_org_admin(entryForm.organization.id):
