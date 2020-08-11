@@ -141,45 +141,27 @@
 <!--             References https://docs.djangoproject.com/en/2.2/topics/i18n/translation/#set-language-redirect-view -->
 <!--             Also https://stackoverflow.com/questions/47874530/django-language-selection-from-dropdown-links-and-images -->
             <ul class="nav navbar-nav navbar-right language menu">
-                <form action="{% url 'set_language' %}" method="post">
-                    {% csrf_token %}
-                    <input name="next" type="hidden" value="{{ redirect_to }}" />
-                    <select class="form-control" name="language" onchange="javascript:this.form.submit()">
-                        {% for lang in LANGUAGES %}
-                            <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected="selected"{% endif %}>
-                                {{ lang.0 }} {{lang.1}}
-                            </option>
-                        {% endfor %}
-                    </select>
-                </form>
+
             </ul>
         </div>
     </nav>
     <!-- language selection -->
     <div id="dropuphelp2" class="btn-floating btn-group shadow-lg dropup">
-                        <button type="button" class="btn fixed-action-btn btn-secondary shadow-lg dropdown-toggle" id="dropuphelp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-                            <span class="d-none d-sm-inline"> ES </span>
-
-                        </button>
-
-                        <div class="dropdown-menu" aria-labelledby="dropuphelp">
-                            <form action="{% url 'set_language' %}" method="post">
-                            {% csrf_token %}
-                            <input name="next" type="hidden" value="{{ redirect_to }}" />
-
-                            <select class="form-control" name="language" onchange="javascript:this.form.submit()">
-
+        <form action="{% url 'set_language' %}" method="post">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="{{ redirect_to }}" />
+                        <button type="button" class="btn fixed-action-btn dropdown-toggle" id="dropuphelp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <select class="form-control" name="language" onchange="javascript:this.form.submit()">
                             {% for lang in LANGUAGES %}
-                            <option class = "dropdown-item" value = "{{lang.0}}" {% if lang.0 == LANGUAGE_CODE %} selected = "selected" {% endif %}>
-                                {{ lang.0 }}
-                            </option>
+                                <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected="selected"{% endif %}>
+                                    {{lang.1}}
+                                </option>
                             {% endfor %}
-                            </select>
-                                <a class="dropdown-item" href="https://docs.google.com/forms/d/e/1FAIpQLSfeyoZ87pS67iTh2c3t5031XqoNFNAdwF6Pt1NUns_z_Myxaw/viewform">Report Error/Send Feedback</a>
-
-                        </div>
+                        </select>
+                        </button>
+        </form>
     </div>
+
     {% comment %}  Cookie consent banner. {% endcomment %}
     <div id="id-consent-banner" class="alert alert-secondary alert-dismissable consent-banner text-center m-0" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="setConsentFalse();">
