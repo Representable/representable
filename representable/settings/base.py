@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "phone_field",
     "ckeditor",
+    "representable",
     # 'allauth.socialaccount.providers.facebook',
     # 'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.linkedin',
@@ -99,8 +100,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "representable.urls"
-
-LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
 
 TEMPLATES = [
     {
@@ -176,10 +175,13 @@ LOGIN_REDIRECT_URL = "/"
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
+LOCALE_PATHS = (os.path.join(BASE_DIR, "<representable>" "locale"),)
+
 # Provide a lists of languages which your site supports.
 LANGUAGES = (
     ("en-us", _("English")),
     ("es", _("Spanish")),
+    ("fr", _("French")),
 )
 
 LANGUAGE_CODE = "en-us"
