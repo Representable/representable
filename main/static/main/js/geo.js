@@ -661,7 +661,7 @@ let myTour = new Shepherd.Tour({
 myTour.addStep({
   title: "Draw Your Community Map",
   text:
-    "Hover over the map and certain grids will appear highlighted. Click to add the highlighted region into your community.",
+    "Hover over the map and certain units will appear highlighted. Click to add the highlighted region into your community.",
   buttons: [
     {
       action() {
@@ -674,7 +674,6 @@ myTour.addStep({
       action() {
         // adjust draw size
         document.getElementById("radius-control").value = 30;
-
         document.getElementById("radius-value").textContent = "30";
         return this.next();
       },
@@ -686,7 +685,7 @@ myTour.addStep({
 myTour.addStep({
   title: "Adjust Size",
   text:
-    "Use the Select Radius bar to adjust the size of your selection region \
+    "Use the Selection Size bar to adjust the size of your selection region \
   ",
   attachTo: {
     element: "#map-radius-control-id",
@@ -695,6 +694,9 @@ myTour.addStep({
   buttons: [
     {
       action() {
+        // adjust draw size
+        document.getElementById("radius-control").value = 25;
+        document.getElementById("radius-value").textContent = "25";
         return this.back();
       },
       classes: "shepherd-button-secondary",
@@ -732,7 +734,6 @@ myTour.addStep({
       action() {
         // adjust to smaller eraser size
         document.getElementById("radius-control").value = 15;
-
         document.getElementById("radius-value").textContent = "15";
         return this.next();
       },
@@ -753,6 +754,9 @@ myTour.addStep({
   buttons: [
     {
       action() {
+        // adjust to smaller eraser size
+        document.getElementById("radius-control").value = 30;
+        document.getElementById("radius-value").textContent = "30";
         return this.back();
       },
       classes: "shepherd-button-secondary",
@@ -761,7 +765,7 @@ myTour.addStep({
     {
       action() {
         // Exit eraser
-        document.getElementById("map-eraser-button-id").click();
+        document.getElementById("map-draw-button-id").click();
         return this.next();
       },
       text: "Next",
@@ -779,8 +783,33 @@ myTour.addStep({
   buttons: [
     {
       action() {
-        // Reselect draw tool
-        document.getElementById("map-draw-button-id").click();
+        // Reselect eraser tool
+        document.getElementById("map-eraser-button-id").click();
+        return this.back();
+      },
+      classes: "shepherd-button-secondary",
+      text: "Back",
+    },
+    {
+      action() {
+        document.getElementById("map-undo-button-id").click();
+        return this.next();
+      },
+      text: "Next",
+    },
+  ],
+});
+
+myTour.addStep({
+  title: "Undo",
+  text: "To undo your previous action, click on the Undo button.",
+  attachTo: {
+    element: "#map-undo-button-id",
+    on: "bottom",
+  },
+  buttons: [
+    {
+      action() {
         return this.back();
       },
       classes: "shepherd-button-secondary",
@@ -798,7 +827,7 @@ myTour.addStep({
 myTour.addStep({
   title: "Clear Selection",
   text:
-    "Delete the community you have drawn or restart the drawing process by clicking this button.",
+    "Delete the community you have drawn or restart the drawing process by clicking the Clear Selection button.",
   attachTo: {
     element: "#map-clear-button-id",
     on: "bottom",
@@ -823,7 +852,7 @@ myTour.addStep({
 myTour.addStep({
   title: "Finish Drawing",
   text: `Once you are done fine-tuning your drawing to reflect the geographical boundaries of
-  your community of interest you can continue on to save your community!`,
+  your Community of Interest continue on to the next section to save your community!`,
   attachTo: {
     element: "#map-finish-drawing-button-id",
     on: "bottom",
