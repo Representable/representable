@@ -88,6 +88,10 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                       <span class="badge badge-pill badge-danger"> Hidden </span>
                       <br>
                     {% endif %}
+                    {% if c.private %}
+                      <span class="badge badge-pill badge-primary"> Private </span>
+                      <br>
+                    {% endif %}
                     <span class="small text-muted">
                     {% if is_org_admin %}
                       {% if c.user_name %}
