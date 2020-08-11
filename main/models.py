@@ -211,14 +211,10 @@ class BlockGroup(models.Model):
     Fields included:
      - census_id: the official block group id
      - year: year of census (default - 2010, though this should be changed when 2020 blocks come out)
-     - geometry: a polygon of the block group
     """
 
-    census_id = models.IntegerField()
+    census_id = models.CharField(max_length=12)
     year = models.IntegerField(default=2010)
-    geometry = models.PolygonField(
-        geography=True, serialize=True, blank=True, null=True
-    )
 
 
 # ******************************************************************************#

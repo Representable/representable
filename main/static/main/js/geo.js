@@ -243,6 +243,7 @@ function createCommPolygon() {
     polyFilter.splice(0, 1);
     polyFilter.splice(0, 1);
     // TODO: implement community entry model change -> store this array of references to blockgroups!
+    document.getElementById("id_block_groups").value = polyFilter;
   }
   return true;
 }
