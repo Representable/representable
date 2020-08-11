@@ -23,7 +23,7 @@
       <div class="card shadow-sm h-100">
         <div class="card-body">
           <h5>
-            Invite List <span class="text-muted"> for {{ object.name }} </span>
+            Invite List for {{ object.name }}
           </h5>
           <hr>
           <div>
@@ -53,8 +53,8 @@
               <div class="col-md">
                 <form role="form" id="EmailAllowList" method="post">{% csrf_token %}
                   <div style="display: inline-block;">
-                      <input type="text" id="email" value="" name="email" placeholder="Add a member"/>
-                      <button id="save" form="EmailAllowList" type="submit" class="btn btn-primary" value="Submit">Add</button>
+                      <input style="height:36px" type="text" id="email" value="" name="email" placeholder="Add a member"/>
+                      <button id="save" form="EmailAllowList" type="submit" class="btn btn-primary mb-1" value="Submit">Add</button>
                   </div>
                 </form>
               </div>
