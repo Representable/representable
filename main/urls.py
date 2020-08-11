@@ -197,6 +197,11 @@ urlpatterns = [
                     views.AllowListManage.as_view(),
                     name="manage_allowlist",
                 ),
+                path(
+                    "drives/<uuid:cam_pk>/manage-allowlist/delete/",
+                    views.AllowListDelete.as_view(),
+                    name="delete_allowlist",
+                ),
             ]
         ),
     ),
