@@ -58,60 +58,27 @@ function newSourceLayer(name, mbCode) {
   });
 }
 
-// add a new layer of census block data
-function newCensusLayer(state, firstSymbolId) {
+// add a new mapbox boundaries source + layer
+function newBoundariesLayer(name, firstSymbolId) {
+  map.addSource(name, {
+    type: "vector",
+    url: "mapbox://mapbox.boundaries-" + name + "-v3"
+  });
   map.addLayer(
     {
-      id: state.toUpperCase() + " Census Blockgroups",
+      id: name + "-lines",
       type: "line",
-      source: state + "bg",
-      "source-layer": state + "bg",
+      source: name,
+      "source-layer": "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1),
       layout: {
-        visibility: "none",
+        visibility: "none"
       },
       paint: {
-        "line-color": "rgba(106,137,204,0.3)",
-        "line-width": 1,
-      },
+        "line-color": "rgba(106,137,204,0.7)",
+      }
     },
     firstSymbolId
   );
-}
-// add a new layer of upper state legislature data
-function newUpperLegislatureLayer(state) {
-  map.addLayer({
-    id: state.toUpperCase() + " State Legislature - Senate",
-    type: "line",
-    source: state + "-upper",
-    "source-layer": state + "upper",
-    layout: {
-      visibility: "none",
-      "line-join": "round",
-      "line-cap": "round",
-    },
-    paint: {
-      "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 2,
-    },
-  });
-}
-// add a new layer of lower state legislature data
-function newLowerLegislatureLayer(state) {
-  map.addLayer({
-    id: state.toUpperCase() + " State Legislature - House/Assembly",
-    type: "line",
-    source: state + "-lower",
-    "source-layer": state + "lower",
-    layout: {
-      visibility: "none",
-      "line-join": "round",
-      "line-cap": "round",
-    },
-    paint: {
-      "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 2,
-    },
-  });
 }
 
 var community_bounds = {};
@@ -126,45 +93,13 @@ map.on("load", function () {
       break;
     }
   }
-  // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
-  if (state === ""){
-    for (let bg in BG_KEYS) {
-      newSourceLayer(bg, BG_KEYS[bg]);
-    }
-    // upper layers
-    for (let upper in UPPER_KEYS) {
-      if (states[i] !== "dc") {
-        newSourceLayer(upper, UPPER_KEYS[upper]);
-      }
-    }
-    // lower layers
-    for (let lower in LOWER_KEYS) {
-      if (states[i] !== "dc") {
-        newSourceLayer(lower, LOWER_KEYS[lower]);
-      }
-    }
-    for (let i = 0; i < states.length; i++) {
-      newCensusLayer(states[i], firstSymbolId);
-      if (states[i] !== "dc") {
-        newUpperLegislatureLayer(states[i]);
-        newLowerLegislatureLayer(states[i]);
-      }
-    }
-  } else {
-    newSourceLayer(state + "bg", BG_KEYS[state + "bg"]);
-    newSourceLayer(state + "-upper", UPPER_KEYS[state + "-upper"]);
-    newSourceLayer(state + "-lower", LOWER_KEYS[state + "-lower"]);
-    newCensusLayer(state, firstSymbolId);
-    newUpperLegislatureLayer(state);
-    newLowerLegislatureLayer(state);
-  }
   // ward + community areas for IL
   if (state === "il") {
     newSourceLayer("chi_wards", CHI_WARD_KEY);
     newSourceLayer("chi_comm", CHI_COMM_KEY);
     map.addLayer(
       {
-        id: "Chicago Wards",
+        id: "chi-ward-lines",
         type: "line",
         source: "chi_wards",
         "source-layer": "chi_wards",
@@ -173,14 +108,13 @@ map.on("load", function () {
         },
         paint: {
           "line-color": "rgba(106,137,204,0.7)",
-          "line-width": 2,
         },
       },
       firstSymbolId
     );
     map.addLayer(
       {
-        id: "Chicago Community Areas",
+        id: "chi-comm-lines",
         type: "line",
         source: "chi_comm",
         "source-layer": "chi_comm",
@@ -189,35 +123,24 @@ map.on("load", function () {
         },
         paint: {
           "line-color": "rgba(106,137,204,0.7)",
-          "line-width": 2,
         },
       },
       firstSymbolId
     );
   }
-  map.addSource("counties", {
-    type: "vector",
-    url: "mapbox://mapbox.hist-pres-election-county"
-  });
-  map.addLayer(
-    {
-      id: "counties",
-      type: "line",
-      source: "counties",
-      "source-layer": "historical_pres_elections_county",
-      layout: {
-        visibility: "none"
-      },
-      paint: {
-        "line-color": "rgba(106,137,204,0.7)",
-        "line-width": 2,
-      }
-    }
-  );
+  // leg2 : congressional district
+  // leg3 : state senate district
+  // leg4 : state house district
+  // adm2 : counties
+  // loc4 : neighborhoods
+  // pos4 : 5-digit postcode area
+  // sta5 : block groups
+  for (var key in BOUNDARIES_LAYERS) {
+    newBoundariesLayer(key, firstSymbolId);
+  }
 
   // send elements to javascript as geojson objects and make them show on the map by
   // calling the addTo
-
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
 
@@ -359,24 +282,18 @@ document.querySelectorAll(".comm-content").forEach(function (p) {
 });
 
 //create a button that toggles layers based on their IDs
-var toggleableLayerIds = [
-  "Census Blockgroups",
-  "State Legislature - House/Assembly",
-  "State Legislature - Senate",
-  "counties"
-];
+var toggleableLayerIds = JSON.parse(JSON.stringify(BOUNDARIES_LAYERS));
 // add selector for chicago wards + community areas if illinois
 if (state === "il") {
-  toggleableLayerIds.push("Chicago Wards");
-  toggleableLayerIds.push("Chicago Community Areas");
+  toggleableLayerIds["chi-ward"] = "Chicago Wards";
+  toggleableLayerIds["chi-comm"] = "Chicago Community Areas";
 }
 
-for (var i = 0; i < toggleableLayerIds.length; i++) {
-  var id = toggleableLayerIds[i];
+for (var id in toggleableLayerIds){
 
   var link = document.createElement("input");
 
-  link.value = id.replace(/\s+/g, "-").toLowerCase();
+  link.value = id;
   link.id = id;
   link.type = "checkbox";
   link.className = "switch_1";
@@ -384,47 +301,34 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
 
   link.onchange = function (e) {
     var txt = this.id;
-    var clickedLayers = [];
-    if (txt === "counties") {
-      clickedLayers.push("counties");
-    } else {
-      if (state === "") {
-        for (let i = 0; i < states.length; i++) {
-          if (states[i] !== "dc" || txt === "Census Blocks") {
-            clickedLayers.push(states[i].toUpperCase() + " " + txt);
-          }
-        }
-      }
-      else {
-        if (state === "il" && (txt === "Chicago Wards" || txt === "Chicago Community Areas")) {
-          clickedLayers.push(txt);
-        } else {
-          clickedLayers.push(state.toUpperCase() + " " + txt);
-        }
-      }
-    }
+    // var clickedLayers = [];
+    // clickedLayers.push(txt + "-lines");
     e.preventDefault();
     e.stopPropagation();
 
-    for (var j = 0; j < clickedLayers.length; j++) {
-      var visibility = map.getLayoutProperty(clickedLayers[j], "visibility");
+    var visibility = map.getLayoutProperty(txt + "-lines", "visibility");
 
-      if (visibility === "visible") {
-        map.setLayoutProperty(clickedLayers[j], "visibility", "none");
-      } else {
-        map.setLayoutProperty(clickedLayers[j], "visibility", "visible");
-      }
+    if (visibility === "visible") {
+      map.setLayoutProperty(txt + "-lines", "visibility", "none");
+    } else {
+      map.setLayoutProperty(txt + "-lines", "visibility", "visible");
     }
   };
   // in order to create the buttons
   var div = document.createElement("div");
   div.className = "switch_box box_1";
   var label = document.createElement("label");
-  label.setAttribute("for", id.replace(/\s+/g, "-").toLowerCase());
-  label.textContent = id;
+  label.setAttribute("for", id);
+  label.textContent = toggleableLayerIds[id];
   var layers = document.getElementById("outline-menu");
   div.appendChild(link);
   div.appendChild(label);
   layers.appendChild(div);
   var newline = document.createElement("br");
+};
+
+/*******************************************************************/
+// remove the last char in the string
+function removeLastChar(str) {
+  return str.substring(0, str.length - 1);
 }

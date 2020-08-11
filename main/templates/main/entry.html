@@ -35,6 +35,8 @@
     var organization_id = "{{organization_id}}";
     var drive_name = "{{drive_name}}";
     var organization_name = "{{organization_name}}";
+    var state_abbr = "{{state.abbr}}";
+    var state_name = "{{state.name}}";
     mixpanel.track("Entry Page Loaded",
     {
      "drive_id": drive_id,
@@ -55,7 +57,7 @@
             <!-- START FORM BODY -->
             <div class="row mt-3">
                 <!-- Entry Form -->
-                <form id="entryForm" method="post" onSubmit="return validate();">
+                <form id="entryForm" method="post" onSubmit="return formValidation();">
                     <div class="row row-equal-cols">
                         <div class="col-lg  m-2">
                             <h1 class="font-weight-light">
@@ -96,7 +98,7 @@
                             <div class="collapse-card card-section active-section">
                                 <div class="card">
                                     <div class="card-header text-header-card">
-                                        <strong>1. Your Identifying Information</strong>
+                                        <strong>1. Your Identifying Information </strong>
                                     </div>
                                     <div class="card-body collapse show">
                                         <div class="accordion" id="privacy_accordion">
@@ -530,17 +532,15 @@
                                             </span>
                                             <div id="geocoder" class="geocoder my-3"></div>
                                             <div class="map-bounding-box my-2 collapse">
-                                                <p>Drawing your community will start highlighting census block groups.
-                                                   Make sure that all your community is contained within the highlighted blocks.
+                                                <p>Draw your community by selecting <a href="https://www.census.gov/programs-surveys/geography/about/glossary.html#par_textimage_4">units</a> on the map.
+                                                   Make sure that all your community is contained within the highlighted units, and that your drawn community does not contain gaps.
                                                    This will help the Redistricting Commission draw fairer districts using your entry.
                                                 </p>
                                                 <div class="map-box">
                                                     <div id='menu'></div>
                                                     <div id='map' class='draw_polygon_map' onload="map.resize()">
-                                                        <div id="instruction-box-id" class="instruction-box">
-                                                            <p class="mb-0">Click on a dark blue point <i class="fas fa-circle blue-circle"></i> to move it or delete it. Drag point to move it or press "Delete Point" to delete it.</p>
-                                                            <p class="mb-0">Click on a orange midpoint  <i class="fas fa-circle orange-circle"></i> to add a new point.</p>
-                                                        </div>
+                                                      <div id="warning-box-id" class="map-popup-box warning-box">
+                                                      </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -553,7 +553,7 @@
                         <!-- Map -->
                         <div class="col-lg m-2">
                             <div class="collapse-card card-section">
-                                <div class="card">
+                                <div id="terms-card" class="card">
                                     <div class="card-header text-header-card">
                                         <strong>
                                         5. Privacy and Terms of Use
@@ -595,6 +595,11 @@
                     <div class="dropdown-menu" aria-labelledby="dropuphelp">
                     <a class="dropdown-item" href="https://docs.google.com/forms/d/e/1FAIpQLSfeyoZ87pS67iTh2c3t5031XqoNFNAdwF6Pt1NUns_z_Myxaw/viewform">Report Error/Send Feedback</a>
                     </div>
+                </div>
+                <div class="btn-floating btn-group shadow-lg">
+                    <button type="button" class="btn fixed-action-btn btn-secondary shadow-lg" id="loading-entry">
+                    <div class="loader loader-small text-center"></div><span class="d-none d-sm-inline"> Saving Community...</span>
+                    </button>
                 </div>
 
                     <div class='row row-equal-cols'>

@@ -14,7 +14,7 @@ define new CSS classes and rules, and don't change default Bootstrap classes
 and rules, since this can lead to unintended consequences.
 This means no changing anything like <a>, <li>, <p>, etc.
 
-You can change them if you want to change the entire website, but customizing 
+You can change them if you want to change the entire website, but customizing
 Bootstrap is better in that case. https://getbootstrap.com/docs/4.5/getting-started/theming/
 */
 
@@ -43,7 +43,7 @@ form:invalid {
 }
 
 .has_success {
-  border-color: red;
+  border-color: #ced4da;
 }
 
 /* TOC Checkbox*/
@@ -58,10 +58,10 @@ form:invalid {
 .toc-check-input {
   display: inline;
 }
-/* Entry page instructions. */
-.instruction-box {
+/* Pop up - bottom left corner of the map. */
+.map-popup-box {
   position: absolute;
-  bottom: 40px;
+  top: 10px;
   left: 10px;
   background-color: rgba(255, 255, 255, 0.9);
   padding: 10px;
@@ -69,12 +69,10 @@ form:invalid {
   border-radius: 10px;
   z-index: 10;
   display: none;
+  width: 50%;
 }
-.blue-circle {
-  color: #34495e;
-}
-.orange-circle {
-  color: #e67e22;
+.warning-box {
+  border: 1px solid red;
 }
 
 /* Entry Page: Geocoder Full Width */
@@ -162,6 +160,7 @@ body {
   color: white;
 }
 
+/* for small screens (mobile) */
 @media only screen and (max-width: 768px) {
   .what-is-gerrymandering p {
     font-size: 16px;
@@ -171,6 +170,10 @@ body {
   }
   #stateSelectionDropdown {
     font-size: 1rem !important;
+  }
+  /* draw buttons on entry page */
+  .draw-group {
+    width: 70%;
   }
 }
 
@@ -230,6 +233,16 @@ footer {
   bottom: 40px;
   right: 40px;
   z-index: 1010;
+}
+
+/* Loading Icon entry page */
+
+#loading-entry {
+  position: fixed;
+  bottom: 40px;
+  left: 40px;
+  z-index: 1010;
+  display: none;
 }
 
 .dropdown-menu a {
@@ -481,9 +494,16 @@ color scheme. See readme.md*/
   border: 8px solid #f3f3f3; /* Light grey */
   border-top: 8px solid #2a94f4; /* Blue */
   border-radius: 50%;
+  animation: spin 2s linear infinite;
+  margin: auto;
+}
+.loader-small {
+  width: 40px;
+  height: 40px;
+}
+.loader-large {
   width: 60px;
   height: 60px;
-  animation: spin 2s linear infinite;
 }
 .viz-dropdown {
   border-radius: 0px;
@@ -598,12 +618,9 @@ color scheme. See readme.md*/
 }
 
 .draw-group > button {
-  display: block;
   width: 100%;
-  background-image: none;
-  margin: 0 auto;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: 5px 10px 5px 10px;
+  height: 100%;
 }
 
 /* Entry Form Management */
@@ -795,6 +812,10 @@ color scheme. See readme.md*/
 
 .fa-th-large {
   color: #455bcb;
+}
+
+.fa-exclamation-triangle {
+  color: #dc3545;
 }
 
 /* code for the toggle button: https://codepen.io/thelaazyguy/pen/MvqpPr/ */

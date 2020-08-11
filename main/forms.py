@@ -98,14 +98,6 @@ class CommunityForm(ModelForm):
         Make sure that at least one of the interest fields is filled out.
         """
         errors = {}
-        # check if the user drew a polygon
-        if "user_polygon" not in self.cleaned_data:
-            errors["user_polygon"] = "Polygon doesn't exist"
-        else:
-            data = self.cleaned_data["user_polygon"]
-            # Check kinks in the polygon
-            if not data.valid:
-                errors["user_polygon"] = "Polygon contains kinks."
         cultural_interests = self.cleaned_data.get("cultural_interests")
         economic_interests = self.cleaned_data.get("economic_interests")
         comm_activities = self.cleaned_data.get("comm_activities")
