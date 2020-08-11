@@ -53,9 +53,8 @@ from ..models import (
 )
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
-from django.utils.translation import gettext as _
+from django.utils.translation import ugettext as _
 from django.utils.translation import (
-    ugettext,
     activate,
     get_language,
 )
