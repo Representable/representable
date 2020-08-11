@@ -244,7 +244,7 @@ class CommunityEntry(models.Model):
             geography=True, blank=True, null=True, serialize=True
         ),
         blank=False,
-        null=True
+        null=True,
     )
     census_blocks_polygon = models.MultiPolygonField(
         geography=True, serialize=True, blank=True, null=True
@@ -273,7 +273,7 @@ class CommunityEntry(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     admin_approved = models.BooleanField(default=True)
-    private = models.BooleanField(default=False)
+    private = models.BooleanField(default=False, null=True)
 
     def __str__(self):
         return str(self.entry_ID)
