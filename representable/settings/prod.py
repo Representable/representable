@@ -5,6 +5,9 @@ import os
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_SSL_REDIRECT = True
 
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
+
 # only allow requests from domain
 ALLOWED_HOSTS = [
     "www.representable.org",

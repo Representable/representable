@@ -81,6 +81,11 @@ INSTALLED_APPS = [
 
 ACCOUNT_SESSION_REMEMBER = True
 
+# standard django security settings
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+X_FRAME_OPTIONS = "DENY"
+
 SITE_ID = 1
 # SITE_NAME = "Represenetable.org"
 
@@ -170,17 +175,6 @@ AUTH_PASSWORD_VALIDATORS = [
 # Custom user model
 AUTH_USER_MODEL = "main.User"
 LOGIN_REDIRECT_URL = "/"
-
-# Internationalization
-# https://docs.djangoproject.com/en/2.1/topics/i18n/
-
-# Provide a lists of languages which your site supports.
-LANGUAGES = (
-    ("en", _("English")),
-    ("es", _("Spanish")),
-)
-
-LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
 

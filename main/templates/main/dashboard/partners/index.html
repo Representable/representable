@@ -97,10 +97,17 @@
               <a class="btn btn-primary" href="{% url 'main:manage_org' object.slug  object.pk %}" role="button">Manage <i class="fa fa-arrow-circle-right"></i></a>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              <div>
+              <div class="container pl-0 pr-0">
                 <h5><span class="badge badge-secondary"><i class="fas fa-map-marker-alt"></i></span> View/Share Your Map</h5>
-                <p>Your organization's map is live at: <a href="{% url 'main:partner_map' object.slug %}">representable.org{% url 'main:partner_map' object.slug %}</a></p></div>
-                <a class="btn btn-primary" href="{% url 'main:partner_map' object.slug %}" role="button">View <i class="fa fa-arrow-circle-right"></i></a>
+                <div class="row no-gutters">
+                  <div class="col-9">
+                    <p>Your organization's map is live at: <a href="{% url 'main:partner_map' object.slug %}">representable.org{% url 'main:partner_map' object.slug %}</a></p>
+                  </div>
+                  <div class="col pb-3">
+                    <a class="btn btn-primary float-right" href="{% url 'main:partner_map' object.slug %}" role="button">View <i class="fa fa-arrow-circle-right"></i></a>
+                  </div>
+                </div>
+              </div>
             </li>
           </ul>
         </div>
