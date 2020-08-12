@@ -221,6 +221,7 @@ function createCommPolygon() {
       }
     }
   });
+  debugger;
 
   // store only outer coordinates
   multiPolySave.geometry.coordinates = getPolygonOutline(
@@ -251,16 +252,20 @@ function createCommPolygon() {
 }
 function getPolygonOutline(polygon) {
   // check how deeply nested the outer ring of the unioned polygon is
-  outline = [];
-  // set the coordinates of the outer ring to final
-  if (polygon[obj][0][0].length > 2) {
-    outline = [polygon[obj][0][0]];
-  } else if (polygon[obj][0].length > 2) {
-    outline = [polygon[obj][0]];
-  } else {
-    outline = polygon[obj];
+  for (obj in polygon) {
+    outline = [];
+
+    // set the coordinates of the outer ring to final
+    if (polygon[obj][0][0].length > 2) {
+      outline = [polygon[obj][0][0]];
+    } else if (polygon[obj][0].length > 2) {
+      outline = [polygon[obj][0]];
+    } else {
+      outline = polygon[obj];
+    }
+    polygon[obj] = outline;
   }
-  return outline;
+  return polygon;
 }
 
 // zoom to the current Selection
