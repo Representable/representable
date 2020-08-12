@@ -995,7 +995,6 @@ map.on("style.load", function () {
         : (isChanged = true);
       if (isChanged) {
         if (isEmptyFilter(filter)) {
-          console.log("erase led to empty filter");
           sessionStorage.setItem("selectBbox", "[]");
         }
         selectBbox = turf.difference(selectBbox, currentBbox);
@@ -1092,6 +1091,58 @@ map.on("style.load", function () {
     // Save state to session storage
     sessionStorage.setItem("state_name", state);
 
+    // When the user moves their mouse over the census shading layer, we'll update the
+    // feature state for the feature under the mouse.
+    var bgID = null;
+    var features = [];
+    stateCensus = state + "-census-shading";
+    // if touch screen, disable.
+    if (!is_touch_device()) {
+      map.on("mousemove", stateCensus, function (e) {
+        if (e.features.length > 0) {
+          // create a constantly updated list of the features which have been highlighted in foreach loop
+          // before highlighting, go thru that list, and deselect all
+          var bbox = [
+            [e.point.x - drawRadius, e.point.y - drawRadius],
+            [e.point.x + drawRadius, e.point.y + drawRadius],
+          ];
+          var hoverFeatures = map.queryRenderedFeatures(bbox, {
+            layers: [state + "-census-shading"],
+          });
+          stateBG = state + "bg";
+          features.forEach(function (feature) {
+            bgID = feature.id;
+            map.setFeatureState(
+              { source: stateBG, sourceLayer: stateBG, id: bgID },
+              { hover: false }
+            );
+          });
+          features = [];
+          hoverFeatures.forEach(function (feature) {
+            features.push(feature);
+            bgID = feature.id;
+            map.setFeatureState(
+              { source: stateBG, sourceLayer: stateBG, id: bgID },
+              { hover: true }
+            );
+          });
+        }
+      });
+
+    // When the mouse leaves the state-fill layer, update the feature state of the
+    // previously hovered feature.
+    map.on("mouseleave", stateCensus, function () {
+      if (bgID) {
+        stateBG = state + "bg";
+        map.setFeatureState(
+          { source: stateBG, sourceLayer: stateBG, id: bgID },
+          { hover: false }
+        );
+      }
+      bgID = null;
+    });
+  }
+
     // Tracking
     mixpanel.track("Geocoder Search Successful", {
       drive_id: drive_id,
@@ -1105,7 +1156,7 @@ map.on("style.load", function () {
   // feature state for the feature under the mouse.
   var bgID = null;
   var features = [];
-  var stateCensus = state + "-census-shading";
+  stateCensus = sessionStorage.getItem("state_name") + "-census-shading";
   // if touch screen, disable.
   if (!is_touch_device()) {
     map.on("mousemove", stateCensus, function (e) {
@@ -1138,7 +1189,6 @@ map.on("style.load", function () {
         });
       }
     });
-  }
 
   // When the mouse leaves the state-fill layer, update the feature state of the
   // previously hovered feature.
@@ -1152,6 +1202,7 @@ map.on("style.load", function () {
     }
     bgID = null;
   });
+}
 });
 
 // reloading the page (like when the form fails validation)
