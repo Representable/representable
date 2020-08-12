@@ -250,6 +250,7 @@ function createCommPolygon() {
 }
 function getPolygonOutline(polygon) {
   // check how deeply nested the outer ring of the unioned polygon is
+  newPolygon = [];
   for (obj in polygon) {
     outline = [];
 
@@ -261,9 +262,9 @@ function getPolygonOutline(polygon) {
     } else {
       outline = polygon[obj];
     }
-    polygon[obj] = outline;
+    newPolygon.push(outline);
   }
-  return polygon;
+  return newPolygon;
 }
 
 // zoom to the current Selection
