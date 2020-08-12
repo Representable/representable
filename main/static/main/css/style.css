@@ -160,7 +160,22 @@ body {
   color: white;
 }
 
-/* for small screens (mobile) */
+.tooltip-inner {
+  background-color: gray !important;
+}
+.bs-tooltip-top .arrow::before, .bs-tooltip-auto[x-placement^="top"] .arrow::before {
+  border-top-color: gray !important;
+}
+.bs-tooltip-right .arrow::before, .bs-tooltip-auto[x-placement^="right"] .arrow::before {
+  border-right-color: gray !important;
+}
+.bs-tooltip-bottom .arrow::before, .bs-tooltip-auto[x-placement^="bottom"] .arrow::before {
+  border-bottom-color: gray !important;
+}
+.bs-tooltip-left .arrow::before, .bs-tooltip-auto[x-placement^="left"] .arrow::before {
+  border-left-color: gray !important;
+}
+
 @media only screen and (max-width: 768px) {
   .what-is-gerrymandering p {
     font-size: 16px;
@@ -989,6 +1004,10 @@ label {
 .btn-facebook {
   color: white;
   background-color: #3b5998;
+}
+
+#report {
+  cursor: pointer;
 }
 
 /* Fallback for Edge

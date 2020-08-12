@@ -176,17 +176,6 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = "main.User"
 LOGIN_REDIRECT_URL = "/"
 
-# Internationalization
-# https://docs.djangoproject.com/en/2.1/topics/i18n/
-
-# Provide a lists of languages which your site supports.
-LANGUAGES = (
-    ("en", _("English")),
-    ("es", _("Spanish")),
-)
-
-LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "UTC"
 
 USE_I18N = True
