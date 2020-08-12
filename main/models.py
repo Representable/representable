@@ -205,6 +205,21 @@ class DriveToken(models.Model):
 # ******************************************************************************#
 
 
+class BlockGroup(models.Model):
+    """
+    BlockGroup represents census block groups from a given year. These are the building blocks of COIs.
+    Fields included:
+     - census_id: the official block group id
+     - year: year of census (default - 2010, though this should be changed when 2020 blocks come out)
+    """
+
+    census_id = models.CharField(max_length=12)
+    year = models.IntegerField(default=2010)
+
+
+# ******************************************************************************#
+
+
 class CommunityEntry(models.Model):
     """
     Community Entry represents the entry created by the user when drawing their
@@ -240,11 +255,13 @@ class CommunityEntry(models.Model):
             geography=True, blank=True, null=True, serialize=True
         ),
         blank=False,
-        null=True
+        null=True,
     )
     census_blocks_polygon = models.MultiPolygonField(
         geography=True, serialize=True, blank=True, null=True
     )
+
+    block_groups = models.ManyToManyField(BlockGroup, blank=True)
 
     entry_name = models.CharField(
         max_length=100, blank=False, unique=False, default=""
@@ -275,9 +292,6 @@ class CommunityEntry(models.Model):
 
     class Meta:
         db_table = "community_entry"
-
-
-# ******************************************************************************#
 
 
 class Address(models.Model):

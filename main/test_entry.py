@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
-from .models import CommunityEntry, Address
+from .models import CommunityEntry, Address, BlockGroup
 
 from main.views import EntryView
 from main.forms import CommunityForm, AddressForm
@@ -147,6 +147,7 @@ class EntryTest(TestCase):
         if polygonUnion.geom_typeid == 3:
             polygonUnion = MultiPolygon(polygonUnion)
         test_census_blocks_polygon = polygonUnion
+
         data = {
             "entry_ID": test_entry_id,
             "user": self.user.id,

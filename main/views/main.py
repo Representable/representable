@@ -50,6 +50,7 @@ from ..models import (
     DriveToken,
     Drive,
     State,
+    BlockGroup,
 )
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
@@ -513,6 +514,16 @@ class EntryView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         comm_form = self.community_form_class(request.POST, label_suffix="")
         addr_form = self.address_form_class(request.POST, label_suffix="")
+
+        # parse block groups and add to field
+        comm_form.data._mutable = True
+        block_groups = comm_form.data["block_groups"].split(",")
+        comm_form.data["block_groups"] = [
+            BlockGroup.objects.get_or_create(census_id=bg)[0].id
+            for bg in block_groups
+        ]
+        comm_form.data._mutable = False
+
         if comm_form.is_valid():
             entryForm = comm_form.save(commit=False)
 
@@ -556,18 +567,9 @@ class EntryView(LoginRequiredMixin, View):
                         # approve this entry
                         entryForm.admin_approved = True
 
-            # TODO: Determine role of drive tokens (one time link, etc.)
-            # if self.kwargs["token"]:
-            #     token = DriveToken.objects.get(token=self.kwargs["token"])
-            #     if token:
-            #         entryForm.drive = token.drive
-            #         entryForm.organization = token.drive.organization
-
-            #         # if user has a token and drive is active, auto approve submission
-            #         if token.drive.is_active:
-            #             entryForm.admin_approved = True
-
             entryForm.save()
+            comm_form.save_m2m()
+
             if addr_form.is_valid():
                 addrForm = addr_form.save(commit=False)
                 addrForm.entry = entryForm
