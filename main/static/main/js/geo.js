@@ -995,7 +995,6 @@ map.on("style.load", function () {
         : (isChanged = true);
       if (isChanged) {
         if (isEmptyFilter(filter)) {
-          console.log("erase led to empty filter");
           sessionStorage.setItem("selectBbox", "[]");
         }
         selectBbox = turf.difference(selectBbox, currentBbox);
@@ -1033,8 +1032,14 @@ map.on("style.load", function () {
         }
       });
     }
-
-    map.setFilter(state + "-bg-highlighted", filter);
+    // check size of community
+    if (filter.length < 802) {
+      map.setFilter(state + "-bg-highlighted", filter);
+    } else {
+      showWarningMessage(
+        "This community is too large. Please select a smaller area to continue."
+      );
+    }
     if (isChanged) {
       filterStack.push(currentFilter);
       bboxStack.push(JSON.stringify(currentBbox));
