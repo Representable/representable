@@ -27,11 +27,6 @@ var bboxStack = JSON.parse(sessionStorage.getItem("bboxStack"));
 if (filterStack === null) filterStack = [];
 if (bboxStack === null) bboxStack = [];
 
-// Helper print function
-function print(items) {
-  console.log(items);
-}
-
 // change "Show Examples" to "Hide Examples" on click
 function changeText(element) {
   if (element.innerText == "Show Examples") {
@@ -196,6 +191,7 @@ function createCommPolygon() {
   // start by checking size -- 800 is an arbitrary number
   // it means a community with a population between 480,000 & 2,400,000
   var polyFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
+
   if (polyFilter === null) return false;
   if (polyFilter.length > 802) {
     triggerDrawError(
@@ -222,6 +218,7 @@ function createCommPolygon() {
     }
   });
 
+
   // for display purposes -- this is the final multipolygon!!
   // TODO: implement community entry model change -> store only outer coordinates (like code in map.js)
   var wkt = new Wkt.Wkt();
@@ -244,6 +241,8 @@ function createCommPolygon() {
     polyFilter.splice(0, 1);
     polyFilter.splice(0, 1);
     // TODO: implement community entry model change -> store this array of references to blockgroups!
+    document.getElementById("id_block_groups").value = polyFilter;
+
   }
   return true;
 }
