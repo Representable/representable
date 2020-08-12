@@ -222,8 +222,11 @@ function createCommPolygon() {
     }
   });
 
-  // for display purposes -- this is the final multipolygon!!
-  // TODO: implement community entry model change -> store only outer coordinates (like code in map.js)
+  // store only outer coordinates
+  multiPolySave.geometry.coordinates = getPolygonOutline(
+    multiPolySave.geometry.coordinates
+  );
+
   var wkt = new Wkt.Wkt();
   var wkt_obj = wkt.read(JSON.stringify(multiPolySave.geometry));
   var poly_wkt = wkt_obj.write();
@@ -243,9 +246,21 @@ function createCommPolygon() {
     // clean up polyFilter -- this is the array of GEOID to be stored
     polyFilter.splice(0, 1);
     polyFilter.splice(0, 1);
-    // TODO: implement community entry model change -> store this array of references to blockgroups!
   }
   return true;
+}
+function getPolygonOutline(polygon) {
+  // check how deeply nested the outer ring of the unioned polygon is
+  outline = [];
+  // set the coordinates of the outer ring to final
+  if (polygon[obj][0][0].length > 2) {
+    outline = [polygon[obj][0][0]];
+  } else if (polygon[obj][0].length > 2) {
+    outline = [polygon[obj][0]];
+  } else {
+    outline = polygon[obj];
+  }
+  return outline;
 }
 
 // zoom to the current Selection
