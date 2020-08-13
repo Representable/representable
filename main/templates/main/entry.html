@@ -2,7 +2,7 @@
 {% load leaflet_tags %}
 {% load static %}
 {% load widget_tweaks %}
-
+{% load i18n %}
 {% block head %}
 {{ form.media.css }}
 {% leaflet_js %}
@@ -61,7 +61,7 @@
                     <div class="row row-equal-cols">
                         <div class="col-lg  m-2">
                             <h1 class="font-weight-light">
-                                Map your community
+                                {% trans "Map your community" %}
                             </h1>
 
                             <p class="">
