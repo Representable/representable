@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2019- Representable Team (Theodor Marcu, Lauren Johnston, Somya Arora, Kyle Barnes, Preeti Iyer).
+# Copyright (c) 2019- Representable Team (Theodor Marcu, Lauren Johnston, Somya Arora, Kyle Barnes, Preeti Iyer, Edward Tian, Jessie Fielding).
 #
 # This file is part of Representable
 # (see http://representable.org).
@@ -81,6 +81,11 @@ INSTALLED_APPS = [
 ]
 
 ACCOUNT_SESSION_REMEMBER = True
+
+# standard django security settings
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+X_FRAME_OPTIONS = "DENY"
 
 SITE_ID = 1
 # SITE_NAME = "Represenetable.org"

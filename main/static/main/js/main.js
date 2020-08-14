@@ -19,7 +19,6 @@
  */
 
 let jQuery = window.jQuery;
-let states = ["mi", "nj", "pa", "tx", "va"];
 
 jQuery(document).ready(function () {
   setUpUSAMap();
@@ -50,11 +49,7 @@ let populateStateSelectionDropdown = function () {
     selectElement.appendChild(newOption);
   }
   jQuery("#stateSelectionDropdown").on("change", function () {
-    if (this.value !== "mi") {
-      window.location = "/entry";
-    } else {
-      window.location = "/michigan";
-    }
+    window.location = "/state/" + this.value;
   });
 };
 
