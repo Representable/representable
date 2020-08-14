@@ -1,6 +1,8 @@
 <!doctype html>
 {% load static %}
 {% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
 
 <html lang="en">
 
@@ -143,7 +145,7 @@
             </ul>
         </div>
     </nav>
-    <!-- language selection alternative -->
+<!--     language selection alternative-->
 <!--    <div id="dropuphelp2" class="btn-floating btn-group shadow-lg dropup">-->
 <!--        <form action="{% url 'set_language' %}" method="post">-->
 <!--                        {% csrf_token %}-->

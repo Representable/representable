@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-13 18:54+0000\n"
+"POT-Creation-Date: 2020-08-14 16:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2167,87 +2167,83 @@ msgstr ""
 msgid "Map your community"
 msgstr "Para los miembros de la comunidad."
 
-#: main/templates/main/index.html:26
-msgid "Redistricting"
-msgstr "Redistricting"
+#: main/templates/main/index.html:27 main/templates/main/index.html:32
+#, fuzzy
+#| msgid "For community members"
+msgid "Put your community on the map."
+msgstr "Para los miembros de la comunidad."
 
-#: main/templates/main/index.html:33 main/templates/main/index.html:36
+#: main/templates/main/index.html:35 main/templates/main/index.html:38
 msgid ""
-"We’re creating maps of communities to fight for your representation. Add "
-"your community to the map today and make your voice heard."
+"Together, we can fight for your representation. Draw your community today "
+"and make your voice heard."
 msgstr "Estamos creando mapas de comunidades para luchar por tu representación. "
 "Añade su comunidad al mapa hoy mismo y haz que tu voz sea escuchada."
 
-#: main/templates/main/index.html:41
+#: main/templates/main/index.html:43
 msgid "Get Started"
 msgstr "Empezar"
 
-#: main/templates/main/index.html:52
+#: main/templates/main/index.html:54
 msgid "What is Representable.org?"
 msgstr "¿Qué es Representable.org?"
 
-#: main/templates/main/index.html:93
+#: main/templates/main/index.html:106
 msgid "For community members"
 msgstr "Para los miembros de la comunidad."
 
-#: main/templates/main/index.html:96
+#: main/templates/main/index.html:109
 msgid "Learn how to use Representable to draw your community."
 msgstr "Aprenda a usar Representable para dibujar su comunidad."
 
-#: main/templates/main/index.html:99
+#: main/templates/main/index.html:112
 #, fuzzy
 #| msgid "For community members"
 msgid "Add your community"
 msgstr "Para los miembros de la comunidad."
 
-#: main/templates/main/index.html:110
+#: main/templates/main/index.html:123
 msgid "For organizations"
 msgstr "Para las organizaciones"
 
-#: main/templates/main/index.html:113
+#: main/templates/main/index.html:126
 msgid "Work with us to map communities across the United States."
 msgstr ""
 "Trabaja con nosotros para mapear comunidades a través de los Estados Unidos."
 
-#: main/templates/main/index.html:116 main/templates/main/index.html:163
+#: main/templates/main/index.html:129 main/templates/main/index.html:173
 msgid "Partner with us"
 msgstr "Asociarse con nosotros"
 
-#: main/templates/main/index.html:127
+#: main/templates/main/index.html:140
 msgid "For redistricters"
 msgstr "Para redistadores"
 
-#: main/templates/main/index.html:130
+#: main/templates/main/index.html:143
 msgid "Use our data to protect communities during the map drawing process."
 msgstr ""
 "Utilice nuestros datos para proteger comunidades durante el proceso de "
 "dibujo del mapa."
 
-#: main/templates/main/index.html:133
+#: main/templates/main/index.html:146
 msgid "Coming soon!"
 msgstr "¡Pronto!"
 
-#: main/templates/main/index.html:142
+#: main/templates/main/index.html:155
 msgid "Select your state to get started."
 msgstr "Seleccione su estado para comenzar."
 
-#: main/templates/main/index.html:151
-msgid ""
-"Note: Representable.org is currently in beta, and will be adding "
-"functionality for more states soon!"
-msgstr ""
-"Nota: Representable.org está actualmente en versión beta, y pronto agrega "
-"funcionalidad para más estados."
-
-#: main/templates/main/index.html:160
+#: main/templates/main/index.html:170
 msgid "Are you the leader of an organization?"
 msgstr "¿Eres la líder de una organización?"
 
-#: main/templates/main/index.html:161
+#: main/templates/main/index.html:171
 msgid ""
 "Many organizations have partnered with Representable.org to collect "
 "community-of-interest data. Get started by creating a partner profile."
-msgstr "Muchas organizaciones se han asociado con Representable.org para recopilar datos comunitarios. ¡Empiece hoy!"
+msgstr ""
+"Muchas organizaciones se han asociado con Representable.org para recopilar "
+"datos comunitarios. ¡Empiece hoy!"
 
 #: main/templates/main/thanks.html:13
 msgid "Thank you for your submission!"
@@ -2257,15 +2253,15 @@ msgstr ""
 msgid "Please Verify Your Email"
 msgstr ""
 
-#: main/views/main.py:119
+#: main/views/main.py:120
 msgid "HELLO"
 msgstr "Bonjour"
 
-#: representable/settings/base.py:182
+#: representable/settings/base.py:187
 msgid "English"
 msgstr ""
 
-#: representable/settings/base.py:183
+#: representable/settings/base.py:188
 msgid "Spanish"
 msgstr ""
 
@@ -2329,10 +2325,9 @@ msgstr "Condiciones"
 msgid "Tracking Settings"
 msgstr "Configuraciones"
 
-#: representable/templates/base.html:225
-msgid "Send Feedback"
-msgstr "Enviar comentarios"
-
-#: representable/templates/base.html:230
+#: representable/templates/base.html:235
 msgid "More questions? Reach out at"
 msgstr "¿Más preguntas? Comuníquese con"
+
+#~ msgid "Send Feedback"
+#~ msgstr "Enviar comentarios"
