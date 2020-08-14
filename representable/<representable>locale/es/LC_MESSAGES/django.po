@@ -2241,13 +2241,13 @@ msgstr ""
 
 #: main/templates/main/index.html:160
 msgid "Are you the leader of an organization?"
-msgstr ""
+msgstr "¿Eres la líder de una organización?"
 
 #: main/templates/main/index.html:161
 msgid ""
 "Many organizations have partnered with Representable.org to collect "
 "community-of-interest data. Get started by creating a partner profile."
-msgstr ""
+msgstr "Muchas organizaciones se han asociado con Representable.org para recopilar datos comunitarios. ¡Empiece hoy!"
 
 #: main/templates/main/thanks.html:13
 msgid "Thank you for your submission!"
@@ -2311,7 +2311,7 @@ msgstr "Añadir su comunidad"
 
 #: representable/templates/base.html:203
 msgid "View All Maps"
-msgstr ""
+msgstr "Ver los mapas"
 
 #: representable/templates/base.html:207
 msgid "My Communities"

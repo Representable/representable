@@ -145,22 +145,22 @@
             </ul>
         </div>
     </nav>
-    <!-- language selection -->
-    <div id="dropuphelp2" class="btn-floating btn-group shadow-lg dropup">
-        <form action="{% url 'set_language' %}" method="post">
-                        {% csrf_token %}
-                        <input name="next" type="hidden" value="{{ redirect_to }}" />
-                        <button type="button" class="btn fixed-action-btn dropdown-toggle" id="dropuphelp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <select class="form-control" name="language" onchange="javascript:this.form.submit()">
-                            {% for lang in LANGUAGES %}
-                                <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected="selected"{% endif %}>
-                                    {{lang.1}}
-                                </option>
-                            {% endfor %}
-                        </select>
-                        </button>
-        </form>
-    </div>
+    <!-- language selection alternative -->
+<!--    <div id="dropuphelp2" class="btn-floating btn-group shadow-lg dropup">-->
+<!--        <form action="{% url 'set_language' %}" method="post">-->
+<!--                        {% csrf_token %}-->
+<!--                        <input name="next" type="hidden" value="{{ redirect_to }}" />-->
+<!--                        <button type="button" class="btn fixed-action-btn dropdown-toggle" id="dropuphelp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                        <select class="form-control" name="language" onchange="javascript:this.form.submit()">-->
+<!--                            {% for lang in LANGUAGES %}-->
+<!--                                <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected="selected"{% endif %}>-->
+<!--                                    {{lang.1}}-->
+<!--                                </option>-->
+<!--                            {% endfor %}-->
+<!--                        </select>-->
+<!--                        </button>-->
+<!--        </form>-->
+<!--    </div>-->
 
     {% comment %}  Cookie consent banner. {% endcomment %}
     <div id="id-consent-banner" class="alert alert-secondary alert-dismissable consent-banner text-center m-0" role="alert">
@@ -216,12 +216,17 @@
                     <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="{% url 'main:terms' %}">
                             {% trans "Terms" %}
                     </a></li>
-                    <li><a class="text-muted" onclick="showConsentBanner(); return false;" href="#">
-                        {% trans "Tracking Settings" %}
-                    </a></li>
-                    <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="https://forms.gle/1LRVNqR31AfAtD6p7">
-                            {% trans "Send Feedback" %}
-                    </a></li>
+<!--                    <li><a class="text-muted" onclick="showConsentBanner(); return false;" href="#">-->
+<!--                        {% trans "Tracking Settings" %}-->
+<!--                    </a></li>-->
+                    <li>
+                    <form action="{% url 'set_language' %}" method="post">
+                      {% csrf_token %}
+                      <input name="next" type="hidden" value="{{ redirect_to }}" />
+                      <input name="language" type="hidden" value="{% if LANGUAGE_CODE == "es" %}en-us{% else %}es{% endif %}" />
+                      <input type="submit" value="{% if LANGUAGE_CODE == "es" %} In English {% else %} En Español {% endif %}" />
+                    </form>
+                    </li>
                 </ul>
             </div>
             <div class="col-12 col-md">
