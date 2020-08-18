@@ -81,11 +81,6 @@ INSTALLED_APPS = [
 
 ACCOUNT_SESSION_REMEMBER = True
 
-# standard django security settings
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-X_FRAME_OPTIONS = "DENY"
-
 SITE_ID = 1
 # SITE_NAME = "Represenetable.org"
 
