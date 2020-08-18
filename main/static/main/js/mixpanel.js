@@ -107,24 +107,26 @@ function setConsentFalse() {
 function showOptInSettings() {
   showTrackingSettings();
   let opt_in_settings = document.getElementById("consent-settings-opt-in");
+  let opt_out_settings = document.getElementById("consent-settings-opt-out");
   if (opt_in_settings != null) {
     opt_in_settings.style.display = "block";
-  }
-  let opt_out_settings = document.getElementById("consent-settings-opt-out");
-  if (opt_out_settings != null) {
     opt_out_settings.style.display = "none";
+  } else {
+    opt_in_settings.style.display = "none";
+    opt_out_settings.style.display = "block";
   }
 }
 
 function showOptOutSettings() {
   showTrackingSettings();
   let opt_in_settings = document.getElementById("consent-settings-opt-in");
+  let opt_out_settings = document.getElementById("consent-settings-opt-out");
   if (opt_in_settings != null) {
     opt_in_settings.style.display = "none";
-  }
-  let opt_out_settings = document.getElementById("consent-settings-opt-out");
-  if (opt_out_settings != null) {
     opt_out_settings.style.display = "block";
+  } else {
+    opt_in_settings.style.display = "block";
+    opt_out_settings.style.display = "none";
   }
 }
 
