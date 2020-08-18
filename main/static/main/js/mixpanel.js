@@ -116,6 +116,9 @@ function showConsentSettings() {
   } else if (user_consent === false) {
     opt_in_settings.style.display = "none";
     opt_out_settings.style.display = "block";
+  } else {
+    opt_in_settings.style.display = "none";
+    opt_out_settings.style.display = "none";
   }
 }
 
