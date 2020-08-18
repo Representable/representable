@@ -33,6 +33,7 @@
       <script type="text/javascript">
         let a = '{{ entries | escapejs}}';
         var mapbox_user_name = "{{mapbox_user_name}}";
+        var state = '';
       </script>
     </div>
     {% if entries is None %}
@@ -132,7 +133,7 @@
             </div>
             <div class="col-md-8 col-map col-wide">
               <div id='map' class="map-visualization">
-                <div id="pdf-loading-box" class="warning-box">
+                <div id="pdf-loading-box" class="map-popup-box">
                     <p class="mb-0">Loading PDF...</p>
                 </div>
               </div>

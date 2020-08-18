@@ -58,10 +58,10 @@ form:invalid {
 .toc-check-input {
   display: inline;
 }
-/* Entry page warning. */
-.warning-box {
+/* Pop up - bottom left corner of the map. */
+.map-popup-box {
   position: absolute;
-  bottom: 40px;
+  top: 10px;
   left: 10px;
   background-color: rgba(255, 255, 255, 0.9);
   padding: 10px;
@@ -69,12 +69,10 @@ form:invalid {
   border-radius: 10px;
   z-index: 10;
   display: none;
+  width: 50%;
 }
-.blue-circle {
-  color: #34495e;
-}
-.orange-circle {
-  color: #e67e22;
+.warning-box {
+  border: 1px solid red;
 }
 
 /* Entry Page: Geocoder Full Width */
@@ -162,6 +160,22 @@ body {
   color: white;
 }
 
+.tooltip-inner {
+  background-color: gray !important;
+}
+.bs-tooltip-top .arrow::before, .bs-tooltip-auto[x-placement^="top"] .arrow::before {
+  border-top-color: gray !important;
+}
+.bs-tooltip-right .arrow::before, .bs-tooltip-auto[x-placement^="right"] .arrow::before {
+  border-right-color: gray !important;
+}
+.bs-tooltip-bottom .arrow::before, .bs-tooltip-auto[x-placement^="bottom"] .arrow::before {
+  border-bottom-color: gray !important;
+}
+.bs-tooltip-left .arrow::before, .bs-tooltip-auto[x-placement^="left"] .arrow::before {
+  border-left-color: gray !important;
+}
+
 @media only screen and (max-width: 768px) {
   .what-is-gerrymandering p {
     font-size: 16px;
@@ -171,6 +185,10 @@ body {
   }
   #stateSelectionDropdown {
     font-size: 1rem !important;
+  }
+  /* draw buttons on entry page */
+  .draw-group {
+    width: 70%;
   }
 }
 
@@ -986,6 +1004,10 @@ label {
 .btn-facebook {
   color: white;
   background-color: #3b5998;
+}
+
+#report {
+  cursor: pointer;
 }
 
 /* Fallback for Edge
