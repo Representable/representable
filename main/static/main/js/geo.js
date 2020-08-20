@@ -926,9 +926,10 @@ map.on("style.load", function () {
 
   // Initialize Map for State Pages
   if (state_abbr !== "") {
+    state = state_abbr;
     showMap();
     map.flyTo({
-      center: statesLngLat[state_abbr],
+      center: statesLngLat[state_abbr.toUpperCase()],
       zoom: 6,
       essential: true, // this animation is considered essential with respect to prefers-reduced-motion
     });
@@ -936,7 +937,6 @@ map.on("style.load", function () {
     sessionStorage.setItem("bgFilter", "[]");
     sessionStorage.setItem("selectBbox", "[]");
 
-    state = state_abbr.toLowerCase();
     $("#shepherd-btn").removeClass("d-none");
     map.setLayoutProperty(state + "-census-lines", "visibility", "visible");
 
