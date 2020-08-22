@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-14 16:29+0000\n"
+"POT-Creation-Date: 2020-08-22 16:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2162,22 +2162,253 @@ msgid ""
 msgstr ""
 
 #: main/templates/main/entry.html:64
-#, fuzzy
-#| msgid "For community members"
 msgid "Map your community"
 msgstr "Para los miembros de la comunidad."
 
+#: main/templates/main/entry.html:68
+msgid ""
+"\n"
+"                                Fill out the form below and draw a map to\n"
+"                                add your community to Representable.org\n"
+"                                and make your voice heard.\n"
+"                                <br>\n"
+"                                Follow the instructions in each section to "
+"get started.\n"
+"                                "
+msgstr ""
+
+#: main/templates/main/entry.html:90
+msgid ""
+"There was an error in submitting your community. Please check over and\n"
+"                                ensure that you have filled out all required "
+"fields. "
+msgstr ""
+
+#: main/templates/main/entry.html:103
+msgid "1. Your Identifying Information"
+msgstr ""
+
+#: main/templates/main/entry.html:108
+msgid "Why do we need your information?"
+msgstr ""
+
+#: main/templates/main/entry.html:139
+msgid "Your Name"
+msgstr ""
+
+#: main/templates/main/entry.html:139 main/templates/main/entry.html:165
+#: main/templates/main/entry.html:424 main/templates/main/entry.html:469
+msgid "(Required)"
+msgstr ""
+
+#: main/templates/main/entry.html:165
+msgid "Your Address"
+msgstr ""
+
+#: main/templates/main/entry.html:267
+msgid "2. Your Community's Shared Interests"
+msgstr ""
+
+#: main/templates/main/entry.html:270
+msgid ""
+"\n"
+"                                        <p>\n"
+"                                             To submit your community entry, "
+"you must provide a response to <b>at least one</b> of the questions below.\n"
+"                                            Please respond to all the "
+"questions that apply.\n"
+"                                        </p>\n"
+"                                        "
+msgstr ""
+
+#: main/templates/main/entry.html:284 main/templates/main/entry.html:292
+msgid "Please fill out at least one of the interest fields."
+msgstr ""
+
+#: main/templates/main/entry.html:302
+msgid ""
+"Is there a shared economy in the geographic area of your community? How and "
+"where are residents employed? Are there shared environmental concerns such "
+"as landfills or water quality?"
+msgstr ""
+
+#: main/templates/main/entry.html:306 main/templates/main/entry.html:327
+#: main/templates/main/entry.html:347
+msgid "Show Examples"
+msgstr ""
+
+#: main/templates/main/entry.html:310
+msgid ""
+" Tech firms and their employees, tourism, agriculture such as the cherry "
+"growers,\n"
+"                                                    shipping and "
+"transportation hubs, manufacturing centers, natural resources, university "
+"towns,\n"
+"                                                    unemployment issues, "
+"waterfront communities, business associations. "
+msgstr ""
+
+#: main/templates/main/entry.html:320
+msgid ""
+"\n"
+"                                        <p class=\"card-text mb-0\">\n"
+"                                            Where do people in your "
+"community gather or socialize? Where does your community get its services?\n"
+"                                        </p>\n"
+"                                        "
+msgstr ""
+
+#: main/templates/main/entry.html:331
+msgid ""
+" Shopping areas, schools and colleges, parks and recreation areas,\n"
+"                                                    lakes and water ways, "
+"healthcare services, and other activities and services that\n"
+"                                                    help define your "
+"community.\" "
+msgstr ""
+
+#: main/templates/main/entry.html:340
+msgid "Cultural or Historical Interests"
+msgstr ""
+
+#: main/templates/main/entry.html:342
+msgid ""
+" What fosters a sense of belonging in your community?\n"
+"                                            What common beliefs or values "
+"exist? "
+msgstr ""
+
+#: main/templates/main/entry.html:351
+msgid ""
+" Age groups, religious groups, arts and cultural centers, languages, "
+"immigration status,\n"
+"                                                    ethnic groups such as "
+"Detroit’s Mexican Town or Dearborn’s Middle Eastern community,\n"
+"                                                    historic settlements "
+"such as Leland’s Fishtown. "
+msgstr ""
+
+#: main/templates/main/entry.html:360
+msgid "Other Interests and Concerns"
+msgstr ""
+
+#: main/templates/main/entry.html:379
+msgid ""
+" What other interests does your community care about? Do you have any "
+"suggestions\n"
+"                                            for how the redistricting "
+"commission in your state could help address these concerns? "
+msgstr ""
+
+#: main/templates/main/entry.html:384
+msgid "Show Example"
+msgstr "Monter Les Examples"
+
+#: main/templates/main/entry.html:388
+msgid ""
+"Our farmers extend over two counties and we hope you can put them together "
+"in a single State Senate district."
+msgstr ""
+
+#: main/templates/main/entry.html:403
+msgid "3. Your Community's Name"
+msgstr ""
+
+#: main/templates/main/entry.html:424
+msgid "What name can we use to identify your community?"
+msgstr ""
+
+#: main/templates/main/entry.html:427
+msgid "For example: Cherry Farmers Community"
+msgstr ""
+
+#: main/templates/main/entry.html:449
+msgid "4. Draw Your Community"
+msgstr ""
+
+#: main/templates/main/entry.html:460
+msgid "You need to draw a polygon to submit the form."
+msgstr ""
+
+#: main/templates/main/entry.html:468
+msgid ""
+"Search for a location, such as address, city, or zipcode to begin drawing "
+"your community."
+msgstr ""
+
+#: main/templates/main/entry.html:472
+msgid "Step-by-step guide"
+msgstr ""
+
+#: main/templates/main/entry.html:473
+msgid "Video Tutorial"
+msgstr ""
+
+#: main/templates/main/entry.html:477
+msgid ""
+" Draw your community by selecting <a href=\"https://www.census.gov/programs-"
+"surveys/geography/about/glossary.html#par_textimage_4\" target=\"_blank\" "
+"data-toggle=\"tooltip\" title=\"The units you are selecting to draw your "
+"community are census block groups. Map drawers use these units when creating "
+"districts.\">units</a> on the map.\n"
+"                                                   Make sure that all your "
+"community is contained within the highlighted units, and that your drawn "
+"community does not contain gaps.\n"
+"                                                   This will help the "
+"Redistricting Commission draw fairer districts using your entry. "
+msgstr ""
+
+#: main/templates/main/entry.html:501
+msgid "5. Privacy and Terms of Use"
+msgstr ""
+
+#: main/templates/main/entry.html:507
+msgid ""
+"Your privacy is our highest priority. We gather your Identifying information "
+"to verify\n"
+"                                            that you are a real person. We "
+"will not publicly share anyone's individual personal information,\n"
+"                                            such as name, address, or email. "
+msgstr ""
+
+#: main/templates/main/entry.html:518
+msgid "Click here to indicate that you have read and agree to the"
+msgstr ""
+
+#: main/templates/main/entry.html:525
+msgid ""
+" Any saved communities are final. In order to edit a saved community you "
+"will need\n"
+"                                        to create a new community and delete "
+"the old one. "
+msgstr ""
+
+#: main/templates/main/entry.html:535
+msgid "Help"
+msgstr ""
+
+#: main/templates/main/entry.html:538
+msgid "Report Error/Send Feedback"
+msgstr "Enviar comentarios"
+
+#: main/templates/main/entry.html:543
+msgid "Saving Community..."
+msgstr ""
+
+#: main/templates/main/entry.html:550
+msgid "Save Community"
+msgstr ""
+
 #: main/templates/main/index.html:27 main/templates/main/index.html:32
-#, fuzzy
-#| msgid "For community members"
 msgid "Put your community on the map."
-msgstr "Para los miembros de la comunidad."
+msgstr ""
 
 #: main/templates/main/index.html:35 main/templates/main/index.html:38
 msgid ""
 "Together, we can fight for your representation. Draw your community today "
 "and make your voice heard."
-msgstr "Estamos creando mapas de comunidades para luchar por tu representación. "
+msgstr ""
+"Estamos creando mapas de comunidades para luchar por tu representación. "
 "Añade su comunidad al mapa hoy mismo y haz que tu voz sea escuchada."
 
 #: main/templates/main/index.html:43
@@ -2328,6 +2559,3 @@ msgstr "Configuraciones"
 #: representable/templates/base.html:235
 msgid "More questions? Reach out at"
 msgstr "¿Más preguntas? Comuníquese con"
-
-#~ msgid "Send Feedback"
-#~ msgstr "Enviar comentarios"
