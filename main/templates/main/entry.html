@@ -109,11 +109,15 @@
                                             </button>
                                             <div id="privacy_example" class="collapse" aria-labelledby="headingOne" data-parent="#privacy_accordion">
                                                 <p class="collapse-in ml-0">
-                                                    {% trans "Your personal privacy is our highest priority. We gather personal
+                                                    {% url 'main:privacy' as url1%}
+                                                    {% url 'main:terms' as url2%}
+
+                                                    {% blocktrans %} Your personal privacy is our highest priority. We gather personal
                                                     information to verify that you are a real person. If you choose to
                                                     submit this entry to a drive, the administrators of the drive
                                                     will have access to this information. Learn more about our
-                                                    commitment to privacy on our" %} <a target="_blank" rel="noopener noreferrer" href="{% url 'main:privacy' %}">Privacy</a> and <a target="_blank" rel="noopener noreferrer" href="{% url 'main:terms' %}">Terms</a> pages.
+                                                    commitment to privacy on our <a target="_blank" rel="noopener noreferrer" href="{{url1}}">Privacy</a>
+                                                    and <a target="_blank" rel="noopener noreferrer" href="{{url2}}">Terms</a> pages. {% endblocktrans%}
                                                 </p>
                                             </div>
                                         </div>
@@ -515,10 +519,14 @@
                                         <div class="toc-check">
                                             <input class="toc-check-input" type="checkbox" value="" id="toc_check" required>
                                             <label class="toc-check-label" for="toc_check">
-                                                {% trans "Click here to indicate that you have read and agree to the" %}
-                                                <a target="_blank" rel="noopener noreferrer" href="{% url 'main:terms' %}">Terms of Use</a> and
-                                                <a target="_blank" rel="noopener noreferrer" href="{% url 'main:privacy' %}">Privacy Policy</a>.
+                                                {% url 'main:privacy' as url1%}
+                                                {% url 'main:terms' as url2%}
+
+                                                {% blocktrans %} Click here to indicate that you have read and agree to the
+                                                <a target="_blank" rel="noopener noreferrer" href={{url1}}>Terms of Use</a> and
+                                                <a target="_blank" rel="noopener noreferrer" href="{{url2}}">Privacy Policy</a>.
                                                 <small class="text-danger">(Required)</small>
+                                                {% endblocktrans %}
                                             </label>
                                         </div>
                                         <hr>
