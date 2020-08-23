@@ -882,6 +882,7 @@ map.on("style.load", function () {
 
   var layers = map.getStyle().layers;
   // Find the index of the first symbol layer in the map style
+  // this is so that added layers go under the symbols on the map
   var firstSymbolId;
   for (var i = 0; i < layers.length; i++) {
     if (layers[i].type === "symbol" && layers[i] !== "road") {
@@ -914,8 +915,6 @@ map.on("style.load", function () {
 
   sessionStorage.setItem("bgFilter", "[]");
   sessionStorage.setItem("selectBbox", "[]");
-
-  $("#shepherd-btn").removeClass("d-none");
   map.setLayoutProperty(state + "-census-lines", "visibility", "visible");
 
   // When the user moves their mouse over the census shading layer, we'll update the
