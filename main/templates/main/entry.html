@@ -35,7 +35,7 @@
     var organization_id = "{{organization_id}}";
     var drive_name = "{{drive_name}}";
     var organization_name = "{{organization_name}}";
-    var state_abbr = "{{state}}";
+    var state = "{{state}}";
     mixpanel.track("Entry Page Loaded",
     {
      "drive_id": drive_id,
@@ -465,7 +465,7 @@
                                                     <small class="text-danger">(Required)</small>
                                             </strong>
                                             <span class="float-right my-2">
-                                                <button class="btn btn-secondary btn-sm mb-2 mr-2 d-none" id="shepherd-btn" onclick="myTour.start()" type="button">Step-by-step guide</button>
+                                                <button class="btn btn-secondary btn-sm mb-2 mr-2" id="shepherd-btn" onclick="myTour.start()" type="button">Step-by-step guide</button>
                                                 <button class="btn btn-secondary btn-sm mb-2" onclick="showVideoPopup()" type="button">Video Tutorial</button>
                                             </span>
                                             <div id="geocoder" class="geocoder my-3"></div>
