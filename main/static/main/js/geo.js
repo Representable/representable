@@ -1026,7 +1026,7 @@ map.on("style.load", function () {
       );
 
       currentFilter.forEach(function (feature) {
-        if (feature !== "in" && feature !== "GEOID" && feature !== "") {
+        if (feature !== "in" && feature !== "GEOID" && feature !== "" && !filter.includes(feature)) {
           filter.push(feature);
         }
       });
@@ -1377,19 +1377,33 @@ function arraysEqual(a, b) {
 
 /***************************************************************************/
 
+var bgPopCache = {};
 // get the population for a community from filter
 function getCommPop(filter) {
+  console.log(filter);
   var pop = 0;
   var ctr = 0;
   filter.forEach(function(feature){
     ctr++;
     if (feature !== "in" && feature !== "GEOID" && feature !== "") {
-      getBGPop(feature, function(bgPop) {
-        pop += parseInt(bgPop);
+      if (feature in bgPopCache) {
+        pop += bgPopCache[feature];
         if (ctr === filter.length) {
+          console.log(pop);
           document.getElementById("comm-pop").innerHTML = pop;
+          sessionStorage.setItem("pop", pop);
         }
-      })
+      } else {
+        getBGPop(feature, function(bgPop) {
+          pop += parseInt(bgPop);
+          bgPopCache[feature] = parseInt(bgPop);
+          if (ctr === filter.length) {
+            console.log(pop);
+            document.getElementById("comm-pop").innerHTML = pop;
+            sessionStorage.setItem("pop", pop);
+          }
+        })
+      }
     }
   });
 }
