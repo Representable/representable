@@ -912,9 +912,6 @@ map.on("style.load", function () {
     zoom: 6,
     essential: true, // this animation is considered essential with respect to prefers-reduced-motion
   });
-
-  sessionStorage.setItem("bgFilter", "[]");
-  sessionStorage.setItem("selectBbox", "[]");
   map.setLayoutProperty(state + "-census-lines", "visibility", "visible");
 
   // When the user moves their mouse over the census shading layer, we'll update the
