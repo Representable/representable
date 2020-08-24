@@ -26,6 +26,9 @@ var filterStack = JSON.parse(sessionStorage.getItem("filterStack"));
 var bboxStack = JSON.parse(sessionStorage.getItem("bboxStack"));
 if (filterStack === null) filterStack = [];
 if (bboxStack === null) bboxStack = [];
+// set population
+var pop = sessionStorage.getItem("pop");
+if (pop !== null) document.getElementById("comm-pop").innerHTML = pop;
 
 // change "Show Examples" to "Hide Examples" on click
 function changeText(element) {
@@ -542,10 +545,12 @@ class ClearMapButton {
         "Are you sure you want to clear the map? This will delete the blocks you have selected."
       );
       if (isConfirmed) {
+        document.getElementById("comm-pop").innerHTML = 0;
         map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
         var undoBbox = sessionStorage.getItem("selectBbox");
         filterStack.push(undoFilter);
         bboxStack.push(undoBbox);
+        sessionStorage.setItem("pop", "0");
         sessionStorage.setItem("bgFilter", "[]");
         sessionStorage.setItem("selectBbox", "[]");
         sessionStorage.setItem("filterStack", JSON.stringify(filterStack));
@@ -996,7 +1001,8 @@ map.on("style.load", function () {
         if (isEmptyFilter(filter)) {
           sessionStorage.setItem("selectBbox", "[]");
         }
-        selectBbox = turf.difference(selectBbox, currentBbox);
+        if (selectBbox === null) selectBbox = [];
+        else selectBbox = turf.difference(selectBbox, currentBbox);
       }
     } else {
       // check if previous selectBbox overlaps with current selectBbox
@@ -1039,7 +1045,10 @@ map.on("style.load", function () {
         "This community is too large. Please select a smaller area to continue."
       );
     }
-    getCommPop(filter);
+    // set as indicator that population is loading
+    document.getElementById("comm-pop").innerHTML = "...";
+    // remove "in" and "GEOID" parts of filter, for population
+    getCommPop(cleanFilter(filter));
     if (isChanged) {
       filterStack.push(currentFilter);
       bboxStack.push(JSON.stringify(currentBbox));
@@ -1380,30 +1389,27 @@ function arraysEqual(a, b) {
 var bgPopCache = {};
 // get the population for a community from filter
 function getCommPop(filter) {
-  console.log(filter);
+  if (filter.length === 0) document.getElementById("comm-pop").innerHTML = 0;
   var pop = 0;
   var ctr = 0;
   filter.forEach(function(feature){
-    ctr++;
-    if (feature !== "in" && feature !== "GEOID" && feature !== "") {
-      if (feature in bgPopCache) {
-        pop += bgPopCache[feature];
+    if (feature in bgPopCache) {
+      ctr++;
+      pop += bgPopCache[feature];
+      if (ctr === filter.length) {
+        document.getElementById("comm-pop").innerHTML = pop;
+        sessionStorage.setItem("pop", pop);
+      }
+    } else {
+      getBGPop(feature, function(bgPop) {
+        ctr++;
+        pop += parseInt(bgPop);
+        bgPopCache[feature] = parseInt(bgPop);
         if (ctr === filter.length) {
-          console.log(pop);
           document.getElementById("comm-pop").innerHTML = pop;
           sessionStorage.setItem("pop", pop);
         }
-      } else {
-        getBGPop(feature, function(bgPop) {
-          pop += parseInt(bgPop);
-          bgPopCache[feature] = parseInt(bgPop);
-          if (ctr === filter.length) {
-            console.log(pop);
-            document.getElementById("comm-pop").innerHTML = pop;
-            sessionStorage.setItem("pop", pop);
-          }
-        })
-      }
+      })
     }
   });
 }
@@ -1420,4 +1426,10 @@ function getBGPop(geoid, callback) {
     }
   }
   req.send();
+}
+
+function cleanFilter(filter) {
+  var cleanFilter = filter.slice();
+  cleanFilter.splice(0, 2);
+  return cleanFilter;
 }
