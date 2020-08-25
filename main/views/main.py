@@ -468,13 +468,10 @@ class EntryView(LoginRequiredMixin, View):
         return initial
 
     def get(self, request, abbr=None, *args, **kwargs):
-        state = None
-        if abbr:
-            statequery = State.objects.filter(abbr=abbr.upper())
-            try:
-                state = statequery[0]
-            except Exception:
-                state = None
+        if (abbr):
+            state = abbr
+        else:
+            return redirect("/#select")
 
         comm_form = self.community_form_class(
             initial=self.get_initial(), label_suffix=""

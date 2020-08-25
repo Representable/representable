@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body text-center">
+                    <h1>Oops!</h1>
+                    <p class="lead">We couldn't find this page. Click the button below to return to our hompage.</p>
+                    <a class="btn btn-primary" href="{% url 'main:index' %}"  role="button">Return Home</a>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
