@@ -332,3 +332,13 @@ for (var id in toggleableLayerIds){
 function removeLastChar(str) {
   return str.substring(0, str.length - 1);
 }
+
+// search bar filtering Communities
+$(document).ready(function(){
+  $("#search-comm").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#collapseThree tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});

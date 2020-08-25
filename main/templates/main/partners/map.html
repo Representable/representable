@@ -50,6 +50,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
               <div class="row justify-content-center">
                 <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto" href={{multi_export_link}} role="button" download="communities.geojson">Export GeoJSON</a>
               </div>
+              <input class="m-2 p-2 rounded border border-secondary" id="search-comm" type="text" placeholder="Search communities..">
               <div id="headingOne">
                 <button class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne"
                 aria-expanded="false" aria-controls="collapseOne" style="width: 100%">
@@ -130,7 +131,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                       <u><a class="small read-more small-link">Show More</a></u>
                     </span>
                   </td>
-                  <tr>
+                  </tr>
                   {% endif %}
                     {% endfor %}
                   </table>
@@ -163,7 +164,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
         <br>
         {% if is_org_admin %}
         <br>
-        As an administrator of this organization, reporting this community will automatically hide it from 
+        As an administrator of this organization, reporting this community will automatically hide it from
         all non-administrators.
         {% endif %}
         <input type="text" class="hidden" name="org_slug" id="org_slug" value={{organization.slug}}/>
