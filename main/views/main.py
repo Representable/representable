@@ -495,6 +495,7 @@ class EntryView(LoginRequiredMixin, View):
             "addr_form": addr_form,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
+            "census_key": os.environ.get("CENSUS_API_KEY"),
             "has_token": has_token,
             "has_drive": has_drive,
             "organization_name": organization_name,

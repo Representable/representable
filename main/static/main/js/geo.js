@@ -1418,7 +1418,7 @@ function getCommPop(filter) {
 // geoid chars 0-2:state, 2-5:county, 5-11:tract, 12:block group
 function getBGPop(geoid, callback) {
   var req = new XMLHttpRequest();
-  req.open('GET', 'https://api.census.gov/data/2018/acs/acs5?get=B01003_001E&for=block%20group:' + geoid.substring(11) + '&in=state:' + geoid.substring(0,2) + '%20county:' + geoid.substring(2, 5) + '%20tract:' + geoid.substring(5, 11) + '&key=346bdf78fdaaadae5ef08aacfd18be42acd6e893', true);
+  req.open('GET', 'https://api.census.gov/data/2018/acs/acs5?get=B01003_001E&for=block%20group:' + geoid.substring(11) + '&in=state:' + geoid.substring(0,2) + '%20county:' + geoid.substring(2, 5) + '%20tract:' + geoid.substring(5, 11) + '&key=' + census_key, true);
   req.onreadystatechange = function(){
     if (req.readyState == 4 && req.status == 200) {
       var data = JSON.parse(req.response);
