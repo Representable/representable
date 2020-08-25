@@ -913,6 +913,15 @@ map.on("style.load", function () {
     essential: true, // this animation is considered essential with respect to prefers-reduced-motion
   });
   map.setLayoutProperty(state + "-census-lines", "visibility", "visible");
+  // check if someone has entered in a new state in the same session
+  var isStateChanged = false;
+  var prev_state = sessionStorage.getItem("prev_state");
+  if (prev_state !== null && state !== prev_state) {
+    isStateChanged = true;
+    sessionStorage.setItem("selectBbox", "[]");
+    sessionStorage.setItem("bgFilter", "[]");
+  }
+  sessionStorage.setItem("prev_state", state);
 
   // When the user moves their mouse over the census shading layer, we'll update the
   // feature state for the feature under the mouse.
@@ -1089,7 +1098,7 @@ map.on("render", function (e) {
     // re-display the polygon
     map.setFilter(state + "-bg-highlighted", JSON.parse(bgPoly));
     var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
-    if (selectBbox.length !== 0) {
+    if (selectBbox.length !== 0 && !isStateChanged) {
       map.flyTo({
         center: [
           selectBbox.geometry.coordinates[0][0][0],
