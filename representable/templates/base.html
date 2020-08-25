@@ -1,6 +1,8 @@
 <!doctype html>
 {% load static %}
 {% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
 
 <html lang="en">
 
@@ -69,11 +71,11 @@
             <ul class="nav navbar-nav navbar-right align-items-center">
                 <li class="nav-item mx-auto">
                     <!-- Translate this? -->
-                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/">{% trans "Home" %} <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item mx-auto">
                     <a class="nav-link" href='/about'>
-                        About
+                        {% trans "About" %}
                     </a>
                 </li>
 
@@ -85,7 +87,7 @@
                 {% if not user.is_authenticated %}
                 <li class="nav-item mx-auto">
                     <a class="nav-link" href="{% url 'main:partner_welcome' %}">
-                        Partners
+                        {% trans "Partners" %}
                     </a>
                 </li>
                 {% endif %}
@@ -104,39 +106,62 @@
                 {% if user.is_authenticated %}
                 <li class="nav-item mx-auto">
                     <a class="nav-link" href="{% url 'main:dashboard' %}">
-                        Dashboard
+                        {% trans "Dashboard" %}
                     </a>
                 </li>
                 <li class="nav-item mx-auto">
                     <a class="nav-link" href='/review'>
-                        My communities
+                        {% trans "My communities" %}
                     </a>
                 </li>
                 <li class="nav-item mx-auto">
                     <a class="btn btn-outline-primary m-2" href="/entry">
-                        Add community
+                        {% trans "Add community" %}
                     </a>
                 </li>
                 <li class="nav-item mx-auto">
                     <a class="btn btn-primary m-2" href="/accounts/logout">
-                        Log out
+                        {% trans "Log out" %}
                     </a>
                 </li>
                 {% else %}
                 <li class="nav-item mx-auto">
                     <a class="btn btn-outline-primary m-2 log-in-started" href="/accounts/login">
-                        Log in
+                        {% trans "Log in" %}
                     </a>
                 </li>
                 <li class="nav-item mx-auto">
                     <a class="btn btn-primary m-2 sign-up-started" href="/accounts/signup">
-                        Sign up
+                        {% trans "Sign up" %}
                     </a>
                 </li>
                 {% endif %}
             </ul>
+            <!-- TODO: This should not necessarily be in the navbar - on mobile/iPad, it needs to be visible on main page. -->
+<!--             References https://docs.djangoproject.com/en/2.2/topics/i18n/translation/#set-language-redirect-view -->
+<!--             Also https://stackoverflow.com/questions/47874530/django-language-selection-from-dropdown-links-and-images -->
+            <ul class="nav navbar-nav navbar-right language menu">
+
+            </ul>
         </div>
     </nav>
+<!--     language selection alternative-->
+<!--    <div id="dropuphelp2" class="btn-floating btn-group shadow-lg dropup">-->
+<!--        <form action="{% url 'set_language' %}" method="post">-->
+<!--                        {% csrf_token %}-->
+<!--                        <input name="next" type="hidden" value="{{ redirect_to }}" />-->
+<!--                        <button type="button" class="btn fixed-action-btn dropdown-toggle" id="dropuphelp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                        <select class="form-control" name="language" onchange="javascript:this.form.submit()">-->
+<!--                            {% for lang in LANGUAGES %}-->
+<!--                                <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected="selected"{% endif %}>-->
+<!--                                    {{lang.1}}-->
+<!--                                </option>-->
+<!--                            {% endfor %}-->
+<!--                        </select>-->
+<!--                        </button>-->
+<!--        </form>-->
+<!--    </div>-->
+
     {% comment %}  Cookie consent banner. {% endcomment %}
     <div id="id-consent-banner" class="alert alert-secondary alert-dismissable consent-banner text-center m-0" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="setConsentFalse();">
@@ -170,14 +195,14 @@
             <div class="col-6 col-md">
                 <ul class="list-unstyled text-small">
                     <li><a class="text-muted" href="{% url 'main:entry' %}">
-                            Add Your Community
+                            {% trans "Add Your Community" %}
                         </a></li>
                     <li><a class="text-muted" href="{% url 'main:map' %}">
-                            View All Maps
+                            {% trans "View All Maps" %}
                         </a></li>
                     {% if user.is_authenticated %}
                     <li><a class="text-muted" href="{% url 'main:review' %}">
-                            My Communities
+                            {% trans "My Communities" %}
                         </a></li>
                     {% endif %}
                 </ul>
@@ -186,21 +211,26 @@
             <div class="col-6 col-md">
                 <ul class="list-unstyled text-small">
                     <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="{% url 'main:privacy' %}">
-                            Privacy
+                            {% trans "Privacy" %}
                     </a></li>
                     <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="{% url 'main:terms' %}">
-                            Terms
+                            {% trans "Terms" %}
                     </a></li>
-                    <li><a class="text-muted" onclick="showConsentBanner(); return false;" href="#">
-                        Tracking Settings
-                    </a></li>
-                    <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="https://forms.gle/1LRVNqR31AfAtD6p7">
-                            Send Feedback
-                    </a></li>
+<!--                    <li><a class="text-muted" onclick="showConsentBanner(); return false;" href="#">-->
+<!--                        {% trans "Tracking Settings" %}-->
+<!--                    </a></li>-->
+                    <li>
+                    <form action="{% url 'set_language' %}" method="post">
+                      {% csrf_token %}
+                      <input name="next" type="hidden" value="{{ redirect_to }}" />
+                      <input name="language" type="hidden" value="{% if LANGUAGE_CODE == "es" %}en-us{% else %}es{% endif %}" />
+                      <input type="submit" value="{% if LANGUAGE_CODE == "es" %} In English {% else %} En Español {% endif %}" />
+                    </form>
+                    </li>
                 </ul>
             </div>
             <div class="col-12 col-md">
-                <p class="text-muted">More questions? Reach out at <a href="mailto:team@representable.org">team@representable.org</a></p>
+                <p class="text-muted">{% trans "More questions? Reach out at" %} <a href="mailto:team@representable.org">team@representable.org</a></p>
             </div>
         </div>
     </div>
