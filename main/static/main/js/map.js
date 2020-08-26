@@ -338,7 +338,8 @@ $(document).ready(function(){
   $("#search-comm").on("keyup", function() {
     var value = $(this).val().toLowerCase();
     $("#collapseThree tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      var innerText = $(this).text().toLowerCase().replace("show more", "").replace("show less", "").replace("report", "");
+      $(this).toggle(innerText.indexOf(value) > -1)
     });
   });
 });
