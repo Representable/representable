@@ -54,14 +54,19 @@ from ..models import (
 )
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
-from django.utils.translation import gettext
-from django.urls import reverse, reverse_lazy
+from django.utils.translation import ugettext as _
 from django.utils.translation import (
-    LANGUAGE_SESSION_KEY,
-    check_for_language,
+    activate,
     get_language,
-    to_locale,
 )
+from django.urls import reverse, reverse_lazy
+
+# from django.utils.translation import (
+#     LANGUAGE_SESSION_KEY,
+#     check_for_language,
+#     get_language,
+#     to_locale,
+# )
 from shapely.geometry import mapping
 from geojson_rewind import rewind
 import geojson
@@ -108,10 +113,11 @@ class Index(TemplateView):
     # Add extra context variables.
     def get_context_data(self, **kwargs):
         context = super(Index, self).get_context_data(
-            **kwargs
+            **kwargs,
         )  # get the default context data
 
         context["mapbox_key"] = os.environ.get("DISTR_MAPBOX_KEY")
+        context["hello"] = _("HELLO")
         return context
 
 
@@ -462,7 +468,10 @@ class EntryView(LoginRequiredMixin, View):
         return initial
 
     def get(self, request, abbr=None, *args, **kwargs):
-        state = abbr if abbr else None
+        if (abbr):
+            state = abbr
+        else:
+            return redirect("/#select")
 
         comm_form = self.community_form_class(
             initial=self.get_initial(), label_suffix=""
