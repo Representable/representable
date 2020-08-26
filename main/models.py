@@ -53,6 +53,11 @@ class User(AbstractUser):
         else:
             return False
 
+    def get_organizations(self):
+        return Organization.objects.filter(
+            membership__member=self, membership__is_org_admin=True
+        )
+
 
 # ******************************************************************************#
 
