@@ -472,9 +472,7 @@ class EntryView(LoginRequiredMixin, View):
         return initial
 
     def get(self, request, abbr=None, *args, **kwargs):
-        if abbr:
-            state = abbr
-        else:
+        if not abbr:
             return redirect("/#select")
 
         comm_form = self.community_form_class(
@@ -514,7 +512,7 @@ class EntryView(LoginRequiredMixin, View):
             "organization_id": organization_id,
             "drive_name": drive_name,
             "drive_id": drive_id,
-            "state": state,
+            "state": abbr,
         }
         return render(request, self.template_name, context)
 
