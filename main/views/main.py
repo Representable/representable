@@ -17,7 +17,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import (
+    HttpResponse,
+    HttpResponseRedirect,
+    JsonResponse,
+    Http404,
+)
 from django.shortcuts import render, redirect
 from django.views.generic import (
     TemplateView,
@@ -168,7 +173,9 @@ class StatePage(TemplateView):
 
         state = State.objects.filter(abbr=abbr.upper())
         if not state:
-            return HttpResponseRedirect(reverse_lazy("main:entry", kwargs={"abbr": abbr}))
+            return HttpResponseRedirect(
+                reverse_lazy("main:entry", kwargs={"abbr": abbr})
+            )
         drives = state[0].get_drives()
         return render(
             request,
@@ -247,17 +254,14 @@ class Submission(TemplateView):
 
     def get(self, request, *args, **kwargs):
         m_uuid = self.request.GET.get("map_id", None)
-        # TODO: Are there security risks? Probably - we should hash the UUID and make that the permalink
 
-        if m_uuid is None:
-            pass  # TODO need to fix here
+        if not m_uuid or not re.match(r"\b[A-Fa-f0-9]{8}\b", m_uuid):
+            raise Http404
         query = CommunityEntry.objects.filter(entry_ID__startswith=m_uuid)
 
-        if len(query) == 0:
-            context = {
-                "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
-            }
-            return render(request, self.template_name, context)
+        if not query:
+            raise Http404
+
         # query will have length 1 or database is invalid
         user_map = query[0]
         if (
@@ -468,7 +472,7 @@ class EntryView(LoginRequiredMixin, View):
         return initial
 
     def get(self, request, abbr=None, *args, **kwargs):
-        if (abbr):
+        if abbr:
             state = abbr
         else:
             return redirect("/#select")
