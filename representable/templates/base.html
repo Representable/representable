@@ -69,10 +69,21 @@
             <ul class="navbar-nav mr-auto">
             </ul>
             <ul class="nav navbar-nav navbar-right align-items-center">
+            {% if user.is_generic_admin %}
+            {% for org in user.get_organizations %}
                 <li class="nav-item mx-auto">
-                    <!-- Translate this? -->
-                    <a class="nav-link" href="/">{% trans "Home" %} <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{% url 'main:home_org' org.slug  org.id %}">
+                        {{org.name}}
+                    </a>
                 </li>
+            {% endfor %}
+            {% else %}
+            <li class="nav-item mx-auto">
+                    <a class="nav-link" href="{% url 'main:partner_welcome' %}">
+                        Partners
+                    </a>
+                </li>
+            {% endif %}
                 <li class="nav-item mx-auto">
                     <a class="nav-link" href='/about'>
                         {% trans "About" %}
@@ -84,44 +95,21 @@
                         Blog
                     </a>
                 </li>
-                {% if not user.is_authenticated %}
-                <li class="nav-item mx-auto">
-                    <a class="nav-link" href="{% url 'main:partner_welcome' %}">
-                        {% trans "Partners" %}
-                    </a>
-                </li>
-                {% endif %}
 
-<!--                {% if user.is_authenticated %}-->
-<!--                <li class="nav-item dropdown">-->
-<!--                <a class="nav-link dropdown-toggle" href="{% url 'main:dashboard' %}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--                  Dashboard-->
-<!--                </a>-->
-<!--                <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
-<!--                    <a class="dropdown-item" href="{% url 'main:dashboard' %}">Dashboard</a>-->
-<!--                  <a class="dropdown-item" href='/review'>My Communities</a>-->
-<!--                </div>-->
-<!--                </li>-->
-<!--                {% endif %}-->
                 {% if user.is_authenticated %}
-                <li class="nav-item mx-auto">
-                    <a class="nav-link" href="{% url 'main:dashboard' %}">
-                        {% trans "Dashboard" %}
-                    </a>
-                </li>
-                <li class="nav-item mx-auto">
-                    <a class="nav-link" href='/review'>
-                        {% trans "My communities" %}
-                    </a>
+                <!-- Profile section-->
+                <li class="dropdown mx-auto nav-item">
+                    <button class="btn btn-link dropdown-toggle nav-link" type="button" data-toggle="dropdown">{% trans "My Account" %}
+                    <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                    <li class="nav-link mx-1"><a href="{% url 'main:dashboard' %}">{% trans "Account Settings" %}</a></li>
+                    <li class="nav-link mx-1"><a href="/review">{% trans "My communities" %}</a></li>
+                    <li class="nav-link mx-1"><a href="/accounts/logout">{% trans "Logout" %}</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item mx-auto">
                     <a class="btn btn-outline-primary m-2" href="/entry">
                         {% trans "Add community" %}
-                    </a>
-                </li>
-                <li class="nav-item mx-auto">
-                    <a class="btn btn-primary m-2" href="/accounts/logout">
-                        {% trans "Log out" %}
                     </a>
                 </li>
                 {% else %}
