@@ -68,7 +68,7 @@
           <p>{{ drive.description }}</p>
           </div>
           <div class="col-sm-3">
-            <a class="btn btn-lg btn-primary" href="{% url 'main:entry' drive=drive.slug %}{{ state_obj.abbr }}">Join Drive</a>
+            <a class="btn btn-lg btn-primary" href="{% url 'main:entry' drive=drive.slug %}{{ state_obj.abbr|lower }}">Join Drive</a>
           </div>
         </div>
         <hr>
