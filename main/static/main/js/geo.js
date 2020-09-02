@@ -219,26 +219,14 @@ function createCommPolygon() {
   var wkt = new Wkt.Wkt();
   var wkt_obj = wkt.read(JSON.stringify(multiPolySave.geometry));
   var poly_wkt = wkt_obj.write();
-  // ok so this is kinda jank lol but let me explain
-  // if it isn't a contiguous selection area, then poly_wkt will start with "MULTIPOLYGON"
-  // otherwise it starts with "POLYGON" -- so we test the first char for contiguity 8-)
-  if (poly_wkt[0] === "M") {
-    triggerDrawError(
-      "polygon_size",
-      "Please ensure that your community does not contain any gaps. Your selected units must connect."
-    );
-    return false;
-  } else {
-    triggerSuccessMessage();
-    updateFormFields(poly_wkt);
+  triggerSuccessMessage();
+  updateFormFields(poly_wkt);
 
-    // clean up polyFilter -- this is the array of GEOID to be stored
-    polyFilter.splice(0, 1);
-    polyFilter.splice(0, 1);
-    // TODO: implement community entry model change -> store this array of references to blockgroups!
-    document.getElementById("id_block_groups").value = polyFilter;
-
-  }
+  // clean up polyFilter -- this is the array of GEOID to be stored
+  polyFilter.splice(0, 1);
+  polyFilter.splice(0, 1);
+  // TODO: implement community entry model change -> store this array of references to blockgroups!
+  document.getElementById("id_block_groups").value = polyFilter;
   return true;
 }
 
