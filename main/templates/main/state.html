@@ -10,43 +10,26 @@
   });
 </script>
 <div class="container">
-  <div class="row row-hero my-5">
-    <div class="col-12">
+  <div class="row my-5">
+    <div class="col">
       <h1 class="font-weight-light text-center mb-3">Welcome to {{ state_obj.name }}
       </h1>
+    <div class="text-center">
+      <a class="btn btn-primary mb-3" href="{% url 'main:entry' %}{{state_obj.abbr|lower}}" role="button">Draw my Community</a>
+      <a class="btn btn-outline-primary mb-3" href="#more" role="button">Learn More</a>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-6">
+      <a name="more"></a>
       {% autoescape off %}
       {{ state_obj.content_news }}
       {% endautoescape %}
-    </div>
-    <div class="col-6 d-none d-sm-block">
-      {% with "img/states/"|add:state_obj.abbr|add:".svg" as svg %}
-      <div class="card card-signin mx-auto h-100 py-4">
-        <object type="image/svg+xml" class="state h-100" data="{% static svg %}"></object>
-      </div>
-      {% endwith %}
-    </div>
-  </div>
-
-  <div class="row mb-4">
-    <div class="col-12">
       <h5>
-        <u><a data-toggle="collapse" href="#collapseCriteria" aria-expanded="false" aria-controls="collapseCriteria">
           {{ state_obj.name }}'s Redistricting Criteria
-        </a></u>
       </h5>
-      <div class="collapse" id="collapseCriteria">
           {% autoescape off %}
           {{ state_obj.content_criteria }}
           {% endautoescape %}
-      </div>
-    </div>
-  </div>
-  <div class="jumbotron">
+
+        <div class="jumbotron">
     <div>
       <h5>Communities of Interest</h5>
       {% autoescape off %}
@@ -54,43 +37,11 @@
       {% endautoescape %}
     </div>
   </div>
-  <div class="card card-signin my-3">
-    <div class="card-body">
-      <h2 class="font-weight-light text-center">Community Mapping Drives in {{ state_obj.name }} <a data-toggle="tooltip" title="A community mapping drive is how we organize the collection of community of interest (COI) maps into separate groups." class="h4"><i class="far fa-question-circle"></i></a></h2>
-      <p>Organizations in {{ state_obj.name }} are running community mapping drives to collect information so your community's interests can be protected. You can use Representable to submit your community's information directly to these organizations.</p>
-      {% if drives %}
-        <hr>
-        {% for drive in drives %}
-        <div class="row">
-          <div class="col-sm-9">
-          <h5>{{ drive.name }}</h5>
-          <h6 class="text-muted">{{ drive.organization }}</h6>
-          <p>{{ drive.description }}</p>
-          </div>
-          <div class="col-sm-3">
-            <a class="btn btn-lg btn-primary" href="{% url 'main:entry' drive=drive.slug %}{{ state_obj.abbr|lower }}">Join Drive</a>
-          </div>
-        </div>
-        <hr>
-        {% endfor %}
-      {% else %}
-      <p>There are currently no public drives in {{ state_obj.name }} collecting community information. In the meantime, you can still contribute to Representable by clicking Draw My Community below!</p>
-      {% endif %}
+    <div class="text-center">
+      <a class="btn btn-lg btn-primary" href="{% url 'main:entry' %}{{state_obj.abbr|lower}}" role="button">Start Drawing</a>
     </div>
-  </div>
-  <div class="card card-signin my-4">
-    <div class="card-body">
-      <div class="row">
-        <div class="col-sm-9">
-          <h5 class="font-weight-light my-3">If you would like to create your own community independently of a partner organization, you can draw and export your community here.</h5>
-        </div>
-        <div class="col-sm-3">
-          <a class="btn ws-normal btn-outline-primary btn-canvas my-3 font-weight-light" href="{% url 'main:entry' %}{{state_obj.abbr|lower}}" role="button">Draw my community</a>
-        </div>
-      </div>
     </div>
+    
   </div>
-</div>
-</div>
-</div>
+
 {% endblock %}
