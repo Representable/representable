@@ -213,7 +213,6 @@ function createCommPolygon() {
     }
   });
 
-
   // for display purposes -- this is the final multipolygon!!
   // TODO: implement community entry model change -> store only outer coordinates (like code in map.js)
   var wkt = new Wkt.Wkt();
@@ -868,7 +867,6 @@ var isStateChanged = false;
 /* After the map style has loaded on the page, add a source layer and default
 styling for a single point. */
 map.on("style.load", function () {
-
   var layers = map.getStyle().layers;
   // Find the index of the first symbol layer in the map style
   // this is so that added layers go under the symbols on the map
@@ -1054,19 +1052,19 @@ map.on("style.load", function () {
       }
     });
 
-  // When the mouse leaves the state-fill layer, update the feature state of the
-  // previously hovered feature.
-  map.on("mouseleave", stateCensus, function () {
-    if (bgID) {
-      stateBG = state + "bg";
-      map.setFeatureState(
-        { source: stateBG, sourceLayer: stateBG, id: bgID },
-        { hover: false }
-      );
-    }
-    bgID = null;
-  });
-}
+    // When the mouse leaves the state-fill layer, update the feature state of the
+    // previously hovered feature.
+    map.on("mouseleave", stateCensus, function () {
+      if (bgID) {
+        stateBG = state + "bg";
+        map.setFeatureState(
+          { source: stateBG, sourceLayer: stateBG, id: bgID },
+          { hover: false }
+        );
+      }
+      bgID = null;
+    });
+  }
 });
 
 // reloading the page (like when the form fails validation)
@@ -1182,7 +1180,7 @@ function triggerSuccessMessage() {
 function updateFormFields(census_blocks_polygon_array) {
   // Update form fields
   document.getElementById(
-    "id_census_blocks_polygon_array"
+    "id_census_blocks_polygon"
   ).value = census_blocks_polygon_array;
   // "census_blocks_polygon" gets saved in the post() function in django
 }
