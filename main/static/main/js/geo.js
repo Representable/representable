@@ -225,7 +225,6 @@ function createCommPolygon() {
   // clean up polyFilter -- this is the array of GEOID to be stored
   polyFilter.splice(0, 1);
   polyFilter.splice(0, 1);
-  // TODO: implement community entry model change -> store this array of references to blockgroups!
   document.getElementById("id_block_groups").value = polyFilter;
   return true;
 }
@@ -261,6 +260,7 @@ document.addEventListener(
       // loading icon
       $("#loading-entry").css("display", "block");
       $("#loading-entry").delay(2000).fadeOut(2000);
+      //todo: switch this to a promise ?
       setTimeout(function () {
         polySuccess = createCommPolygon();
         formSuccess = formValidation();
@@ -864,6 +864,7 @@ myTour.addStep({
 /******************************************************************************/
 // the drawing radius for select tool
 var drawRadius = 25;
+var isStateChanged = false;
 /* After the map style has loaded on the page, add a source layer and default
 styling for a single point. */
 map.on("style.load", function () {
@@ -902,7 +903,6 @@ map.on("style.load", function () {
   });
   map.setLayoutProperty(state + "-census-lines", "visibility", "visible");
   // check if someone has entered in a new state in the same session
-  var isStateChanged = false;
   var prev_state = sessionStorage.getItem("prev_state");
   if (prev_state !== null && state !== prev_state) {
     isStateChanged = true;
