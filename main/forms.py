@@ -71,7 +71,7 @@ class CommunityForm(ModelForm):
         # census_blocks_polygon_array = models.PolygonField(
         #     error_messages={"required": "Census blocks array missing."}
         # )
-        census_blocks_polygon = models.MultiPolygonField(
+        census_blocks_polygon = models.GeometryField(
             error_messages={"required": "Census blocks polygon missing."}
         )
         widgets = {
