@@ -59,7 +59,7 @@ function newSourceLayer(name, mbCode) {
 }
 
 // add a new mapbox boundaries source + layer
-function newBoundariesLayer(name, firstSymbolId) {
+function newBoundariesLayer(name) {
   map.addSource(name, {
     type: "vector",
     url: "mapbox://mapbox.boundaries-" + name + "-v3"
@@ -76,8 +76,7 @@ function newBoundariesLayer(name, firstSymbolId) {
       paint: {
         "line-color": "rgba(106,137,204,0.7)",
       }
-    },
-    firstSymbolId
+    }
   );
 }
 
@@ -86,13 +85,14 @@ var community_bounds = {};
 map.on("load", function () {
   var layers = map.getStyle().layers;
   // Find the index of the first symbol layer in the map style
-  var firstSymbolId;
-  for (var i = 0; i < layers.length; i++) {
-    if (layers[i].type === "symbol" && layers[i] !== "road") {
-      firstSymbolId = layers[i].id;
-      break;
-    }
-  }
+  // only necessary for making added layers appear "beneath" the existing layers (roads, place names, etc)
+  // var firstSymbolId;
+  // for (var i = 0; i < layers.length; i++) {
+  //   if (layers[i].type === "symbol" && layers[i] !== "road") {
+  //     firstSymbolId = layers[i].id;
+  //     break;
+  //   }
+  // }
   // ward + community areas for IL
   if (state === "il") {
     newSourceLayer("chi_wards", CHI_WARD_KEY);
@@ -109,8 +109,7 @@ map.on("load", function () {
         paint: {
           "line-color": "rgba(106,137,204,0.7)",
         },
-      },
-      firstSymbolId
+      }
     );
     map.addLayer(
       {
@@ -124,8 +123,7 @@ map.on("load", function () {
         paint: {
           "line-color": "rgba(106,137,204,0.7)",
         },
-      },
-      firstSymbolId
+      }
     );
   }
   // leg2 : congressional district
@@ -136,7 +134,7 @@ map.on("load", function () {
   // pos4 : 5-digit postcode area
   // sta5 : block groups
   for (var key in BOUNDARIES_LAYERS) {
-    newBoundariesLayer(key, firstSymbolId);
+    newBoundariesLayer(key);
   }
 
   // send elements to javascript as geojson objects and make them show on the map by
