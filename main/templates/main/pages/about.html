@@ -1,24 +1,66 @@
 {% extends 'main/layouts/base-page.html' %}
 {% load static %}
 {% block title %}
-About Us
+We want to give communities a voice in drawing districts
 {% endblock %}
 {% block page-content %}
-<p class="lead text-center">
-      We’re a team of engineers and policy researchers
-      who are excited to create technical solutions for civic issues.
-      Coming from a wide array of backgrounds, we put our technical and policy experience
-      together to make a powerful crowdsourced tool which we hope can change the current
-      polarized political landscape of how districts are made in the United States.
-      We’re committed to giving a voice to those who have been marginalized or politically
-      diluted by gerrymandering and look forward to turning Representable into a national
-      tool for political equity.
+<p class="lead">
+  Redistricting is coming. In 2021, state governments will redraw Congressional and state legislative districts. It is imperative that we fight for fairer districts which respect the concerns of communities.
 </p>
+<p class="lead">
+      Representable is a free, open-source tool for creating maps of Communities of Interest (COI) — groups of individuals who share common social and economic interests, who are likely to have similar legislative concerns. Currently, over half of states have legal requirements to respect COIs, but before Representable there were no working methods to get COIs to mapmakers in advance of drawing district maps. We work closely with organizations to gather community maps alongside the interests that bind these communities together. This data can then be used by map drawers, journalists, analysts, and activists to create and evaluate proposed district maps. Our goal is to <b>democratize public testimony, inform map drawers, and encourage map analysis.</b>
+</p>
+<p class="lead">
+  Representable is built in partnership with the <a href="http://gerrymander.princeton.edu/">Princeton Gerrymandering Project</a> and supported by <a href="https://schmidtfutures.com/">Schmidt Futures</a>.
+</p>
+<br>
+<h3 class="text-center">How does it work?</h3>
+<div class="row my-3">
+  <div class="col-sm my-3 shadow-sm mx-3">
+    <div class="card border-0">
+      <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/citizens.svg' %}"></img>
+      <div class="card-body text-center d-flex flex-column align-items-center">
+        <h5>
+          Answer Questions
+        </h5>
+        <p>
+          Thought-provoking questions built based on policy and legal definitions of COIs.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm my-3 shadow-sm mx-3">
+    <div class="card border-0">
+      <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/map.svg' %}"></img>
+      <div class="card-body text-center flex-column align-items-center">
+        <h5 class="card-title">
+          Draw a Community Map
+        </h5>
+        <p class="card-text">
+          Use landmarks, zoom, and navigation for an easy drawing experience.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm my-3 shadow-sm mx-3">
+    <div class="card border-0">
+      <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/redistricter.svg' %}"></img>
+      <div class="card-body text-center flex-column align-items-center">
+        <h5 class="card-title">
+          Visualize and Export
+        </h5>
+        <p class="card-text">
+          Export as GeoJSON or PDF file. Our data is interoperable with other mapping softwares.
+        </p>
+        </div>
+    </div>
+  </div>
+</div>
 <br>
 <h3 class="text-center">Team</h3>
 <div class="lead">
 <p class="p1" style="text-align: center;"><strong>Somya Arora</strong>, <em>Founder</em> • Engineering, Full Stack</p>
-<p class="p1" style="text-align: center;"><strong>Kyle Barnes</strong>, <em>Founder</em> • Engineering, Mapping </p>
+<p class="p1" style="text-align: center;"><strong>Kyle Barnes</strong>, <em>Founder</em> • Director </p>
 <p class="p1" style="text-align: center;"><strong>Preeti Iyer</strong>, <em>Founder</em> • Outreach, Content </p>
 <p class="p1" style="text-align: center;"><strong>Lauren Johnston</strong>, <em>Founder</em> • Engineering, Full Stack</p>
 <p class="p1" style="text-align: center;"><strong>Theodor Marcu</strong>, <em>Founder</em> • Engineering, Product</p>
