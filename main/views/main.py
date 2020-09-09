@@ -528,30 +528,28 @@ class EntryView(LoginRequiredMixin, View):
             for bg in block_groups
         ]
         comm_form.data._mutable = False
-
         if comm_form.is_valid():
             entryForm = comm_form.save(commit=False)
 
-            # This returns an array of Django GEOS Polygon types
-            polyArray = comm_form.data["census_blocks_polygon_array"]
-
-            if polyArray is not None and polyArray != "":
-                polyArray = polyArray.split("|")
-                newPolyArr = []
-                # union them one at a time- does not work
-
-                for stringPolygon in polyArray:
-                    new_poly = GEOSGeometry(stringPolygon, srid=4326)
-                    newPolyArr.append(new_poly)
-
-                mpoly = MultiPolygon(newPolyArr)
-                polygonUnion = mpoly.unary_union
-                polygonUnion.normalize()
-                # if one polygon is returned, create a multipolygon
-                if polygonUnion.geom_typeid == 3:
-                    polygonUnion = MultiPolygon(polygonUnion)
-
-                entryForm.census_blocks_polygon = polygonUnion
+            # # Returns geometry
+            # poly = comm_form.data["census_blocks_polygon"]
+            # # check if polygon - if so, create multipolygon
+            # if poly is not None and poly != "":
+            #     poly = poly.split("|")
+            #     newPolyArr = []
+            #     # union them one at a time- does not work
+            #
+            #     for stringPolygon in poly:
+            #         new_poly = GEOSGeometry(stringPolygon, srid=4326)
+            #         newPolyArr.append(new_poly)
+            #
+            #     mpoly = MultiPolygon(newPolyArr)
+            #     polygonUnion = mpoly.unary_union
+            #     polygonUnion.normalize()
+            #     # if one polygon is returned, create a multipolygon
+            #     if polygonUnion.geom_typeid == 3:
+            #         polygonUnion = MultiPolygon(polygonUnion)
+            #         entryForm.census_blocks_polygon = polygonUnion
 
             if self.kwargs["drive"]:
                 drive = Drive.objects.get(slug=self.kwargs["drive"])

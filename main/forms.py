@@ -68,10 +68,10 @@ class CommunityForm(ModelForm):
                 "required": "User polygon missing. Please draw your community."
             }
         )
-        census_blocks_polygon_array = models.PolygonField(
-            error_messages={"required": "Census blocks array missing."}
-        )
-        census_blocks_polygon = models.PolygonField(
+        # census_blocks_polygon_array = models.PolygonField(
+        #     error_messages={"required": "Census blocks array missing."}
+        # )
+        census_blocks_polygon = models.GeometryField(
             error_messages={"required": "Census blocks polygon missing."}
         )
         widgets = {
