@@ -12,7 +12,6 @@ var BOUNDARIES_LAYERS = {
   "leg3": "State Senate Districts",
   "leg4": "State House Districts",
   "adm2": "Counties",
-  "loc4": "Neighborhoods",
   "pos4": "5-digit Postcode Areas",
   "sta5": "Census Block Groups"
 }
