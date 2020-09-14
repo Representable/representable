@@ -41,8 +41,7 @@ before_script:
 # command to run tests
 script:
   - python3 manage.py collectstatic --settings=representable.settings.dev
-  - python3 manage.py test --settings=representable.settings.dev
-  - coverage run -m unittest discover
+  - coverage run manage.py test --settings=representable.settings.dev
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
