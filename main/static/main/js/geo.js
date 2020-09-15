@@ -213,32 +213,18 @@ function createCommPolygon() {
     }
   });
 
-
   // for display purposes -- this is the final multipolygon!!
   // TODO: implement community entry model change -> store only outer coordinates (like code in map.js)
   var wkt = new Wkt.Wkt();
   var wkt_obj = wkt.read(JSON.stringify(multiPolySave.geometry));
   var poly_wkt = wkt_obj.write();
-  // ok so this is kinda jank lol but let me explain
-  // if it isn't a contiguous selection area, then poly_wkt will start with "MULTIPOLYGON"
-  // otherwise it starts with "POLYGON" -- so we test the first char for contiguity 8-)
-  if (poly_wkt[0] === "M") {
-    triggerDrawError(
-      "polygon_size",
-      "Please ensure that your community does not contain any gaps. Your selected units must connect."
-    );
-    return false;
-  } else {
-    triggerSuccessMessage();
-    updateFormFields(poly_wkt);
+  triggerSuccessMessage();
+  updateFormFields(poly_wkt);
 
-    // clean up polyFilter -- this is the array of GEOID to be stored
-    polyFilter.splice(0, 1);
-    polyFilter.splice(0, 1);
-    // TODO: implement community entry model change -> store this array of references to blockgroups!
-    document.getElementById("id_block_groups").value = polyFilter;
-
-  }
+  // clean up polyFilter -- this is the array of GEOID to be stored
+  polyFilter.splice(0, 1);
+  polyFilter.splice(0, 1);
+  document.getElementById("id_block_groups").value = polyFilter;
   return true;
 }
 
@@ -273,6 +259,7 @@ document.addEventListener(
       // loading icon
       $("#loading-entry").css("display", "block");
       $("#loading-entry").delay(2000).fadeOut(2000);
+      //todo: switch this to a promise ?
       setTimeout(function () {
         polySuccess = createCommPolygon();
         formSuccess = formValidation();
@@ -876,10 +863,10 @@ myTour.addStep({
 /******************************************************************************/
 // the drawing radius for select tool
 var drawRadius = 25;
+var isStateChanged = false;
 /* After the map style has loaded on the page, add a source layer and default
 styling for a single point. */
 map.on("style.load", function () {
-
   var layers = map.getStyle().layers;
   // Find the index of the first symbol layer in the map style
   // this is so that added layers go under the symbols on the map
@@ -914,7 +901,6 @@ map.on("style.load", function () {
   });
   map.setLayoutProperty(state + "-census-lines", "visibility", "visible");
   // check if someone has entered in a new state in the same session
-  var isStateChanged = false;
   var prev_state = sessionStorage.getItem("prev_state");
   if (prev_state !== null && state !== prev_state) {
     isStateChanged = true;
@@ -1066,19 +1052,19 @@ map.on("style.load", function () {
       }
     });
 
-  // When the mouse leaves the state-fill layer, update the feature state of the
-  // previously hovered feature.
-  map.on("mouseleave", stateCensus, function () {
-    if (bgID) {
-      stateBG = state + "bg";
-      map.setFeatureState(
-        { source: stateBG, sourceLayer: stateBG, id: bgID },
-        { hover: false }
-      );
-    }
-    bgID = null;
-  });
-}
+    // When the mouse leaves the state-fill layer, update the feature state of the
+    // previously hovered feature.
+    map.on("mouseleave", stateCensus, function () {
+      if (bgID) {
+        stateBG = state + "bg";
+        map.setFeatureState(
+          { source: stateBG, sourceLayer: stateBG, id: bgID },
+          { hover: false }
+        );
+      }
+      bgID = null;
+    });
+  }
 });
 
 // reloading the page (like when the form fails validation)
@@ -1194,7 +1180,7 @@ function triggerSuccessMessage() {
 function updateFormFields(census_blocks_polygon_array) {
   // Update form fields
   document.getElementById(
-    "id_census_blocks_polygon_array"
+    "id_census_blocks_polygon"
   ).value = census_blocks_polygon_array;
   // "census_blocks_polygon" gets saved in the post() function in django
 }
