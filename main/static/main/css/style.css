@@ -664,6 +664,32 @@ color scheme. See readme.md*/
   text-transform: uppercase;
 }
 
+.line-break {
+  width: 15%;
+  border-bottom: 3px solid black;
+}
+
+.light-blue-text {
+  color: #65BFF1;
+}
+.blue-green-text {
+  color: #6DCCBB;
+}
+.light-blue-bg {
+  background-color: #DAEFFF;
+}
+.blue-green-bg {
+  background-color: #6DCCBB;
+}
+
+.how-it-works {
+  height: 200px;
+  width: 70%;
+}
+.how-it-works-title {
+  height: 3rem;
+}
+
 #all {
   font-size: 12px;
   text-align: center;

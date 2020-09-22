@@ -1,29 +1,140 @@
-{% extends 'main/layouts/base-page.html' %}
+{% extends 'main/base.html' %}
 {% load static %}
-{% block title %}
-About Us
-{% endblock %}
-{% block page-content %}
-<p class="lead text-center">
-      We’re a team of engineers and policy researchers
-      who are excited to create technical solutions for civic issues.
-      Coming from a wide array of backgrounds, we put our technical and policy experience
-      together to make a powerful crowdsourced tool which we hope can change the current
-      polarized political landscape of how districts are made in the United States.
-      We’re committed to giving a voice to those who have been marginalized or politically
-      diluted by gerrymandering and look forward to turning Representable into a national
-      tool for political equity.
-</p>
-<br>
-<h3 class="text-center">Team</h3>
-<div class="lead">
-<p class="p1" style="text-align: center;"><strong>Somya Arora</strong>, <em>Founder</em> • Engineering, Full Stack</p>
-<p class="p1" style="text-align: center;"><strong>Kyle Barnes</strong>, <em>Founder</em> • Engineering, Mapping </p>
-<p class="p1" style="text-align: center;"><strong>Preeti Iyer</strong>, <em>Founder</em> • Outreach, Content </p>
-<p class="p1" style="text-align: center;"><strong>Lauren Johnston</strong>, <em>Founder</em> • Engineering, Full Stack</p>
-<p class="p1" style="text-align: center;"><strong>Theodor Marcu</strong>, <em>Founder</em> • Engineering, Product</p>
-<p class="p1" style="text-align: center;"><strong>Jessie Fielding</strong> • Engineering </p>
-<p class="p1" style="text-align: center;"><strong>Olivia Kusio</strong> • Design, Content </p>
-<p class="p1" style="text-align: center;"><strong>Edward Tian</strong> • Engineering</p>
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col">
+    <h1 class="text-center font-weight-light mt-5">About Representable</h1>
+    <hr class="line-break">
+      <!-- Shows on medium devices and higher. -->
+      <h4 class="py-5 my-5 mx-3 text-center font-weight-medium d-none d-sm-block main-display-text-all">
+        <span class="d-block display-3">We want to give communities a <span class="light-blue-text">voice</span> in drawing districts.</span>
+      </h4>
+      <!-- Shows on small devices and lower. -->
+      <h5 class="py-5 my-2 text-center font-weight-medium d-sm-none main-display-text-sm">
+        <span class="display-4 d-block">We want to give communities a <span class="light-blue-text">voice</span> in drawing districts.</span>
+      </h5>
+    </div>
+  </div>
+</div>
+<div class="light-blue-bg mt-5">
+  <div class="container">
+    <div class="row py-5">
+      <div class="col-lg-4 col-sm-12 col-md-4 text-center py-3">
+        <img class="img-fluid align-bottom" src="{% static 'img/redistrict-1.svg' %}"> </img>
+      </div>
+      <div class="col-lg-8 col-sm-12 col-md-8 py-5">
+        <!-- Shows on medium devices and higher. -->
+        <h2 class="mb-3 font-weight-light d-none d-sm-block main-display-text-all">
+          <span class="d-block">Redistricting is coming.</span>
+        </h2>
+        <!-- Shows on small devices and lower. -->
+        <h3 class="mb-3 font-weight-light d-sm-none main-display-text-sm">
+          <span class="d-block">Redistricting is coming.</span>
+        </h3>
+        <h3 class="font-weight-light">In 2021, state governments will redraw Congressional and state legislative districts. We need to fight for fairer districts which respect the concerns of communities. </h3>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-12 pt-5">
+      <h2 class="font-weight-medium mb-4">What is Representable?</h2>
+      <p class="font-weight-light mb-4">Representable is a free, open-source tool for creating maps for Communities of Interest (COI) — groups of individuals who share common social and economic interests, who are likely to have similar political concerns. Currently, over half of states have legal requirements to respect COIs, but before Representable, no tools existed to get COIs to mapmakers. </p>
+      <p class="font-weight-light">We work closely with organizations to gather community maps along with information about the shared interests of the community. This data can then be used by map drawers, journalists, analysts, and activists to create and evaluate proposed district maps. Our goal is to democratize public testimony, inform map drawers, and encourage map analysis. Learn more about how Representable fights gerrymandering in the Official Education Guide.</p>
+      <p class="font-weight-light small mb-5 pb-5">Representable is built in partnership with the <a href="http://gerrymander.princeton.edu/">Princeton Gerrymandering Project</a> and supported by <a href="https://schmidtfutures.com/">Schmidt Futures.</a></p>
+      <h2 class="font-weight-medium my-5 pt-5">Representable will help...</h2>
+    </div>
+  </div>
+  <div class="row pb-5 mb-5">
+    <div class="col-sm-1 font-weight-bold display-3 blue-green-text">1.
+    </div>
+    <div class="col-sm-3">
+      <h4 class="font-weight-light">Democratize Public Testimony</h4>
+      <p class="font-weight-light">Enable any individual to submit maps with their community information and share them.</p>
+    </div>
+    <div class="col-sm-1 font-weight-bold display-3 blue-green-text">2.
+    </div>
+    <div class="col-sm-3">
+      <h4 class="font-weight-light">Inform Map Drawers</h4>
+      <p class="font-weight-light">Deliver COI data to map drawers, using a digital format that is easy to analyze.</p>
+    </div>
+    <div class="col-sm-1 font-weight-bold display-3 blue-green-text">3.
+    </div>
+    <div class="col-sm-3">
+      <h4 class="font-weight-light">Encourage Map Analysis</h4>
+      <p class="font-weight-light">Support journalists and analysts with data to evaluate proposed maps.</p>
+    </div>
+  </div>
+  <br>
+  <br>
+</div>
+<div class="blue-green-bg">
+  <div class="container">
+    <div class="row pt-5 pb-3">
+      <div class="col text-center">
+        <h1 class="text-white pt-4">HOW IT WORKS?</h1>
+      </div>
+    </div>
+    <div class="row my-3 text-white">
+      <div class="col-sm m-3">
+        <div class="card border-0 bg-transparent text-center">
+          <h3 class="how-it-works-title">
+            Answer Questions
+          </h3>
+          <img class="card-img-top img-fluid small-icon m-2 how-it-works mx-auto pt-4" src="{% static 'img/how-it-works-1.svg' %}"></img>
+          <div class="card-body text-center d-flex flex-column align-items-center">
+            <p>
+              Thought-provoking questions built based on policy and legal definitions of COIs.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm m-3">
+        <div class="card border-0 bg-transparent text-center">
+          <h3 class="how-it-works-title">
+            Draw a Community Map
+          </h3>
+          <img class="card-img-top img-fluid small-icon m-2 how-it-works mx-auto pt-4" src="{% static 'img/how-it-works-2.svg' %}"></img>
+          <div class="card-body text-center flex-column align-items-center">
+            <p class="card-text">
+              Use landmarks, zoom, and navigation for an easy drawing experience.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm m-3 pb-3">
+        <div class="card border-0 bg-transparent text-center">
+          <h3 class="how-it-works-title">
+            Visualize and Export
+          </h3>
+          <img class="card-img-top img-fluid small-icon m-2 how-it-works mx-auto pt-4" src="{% static 'img/how-it-works-3.svg' %}"></img>
+          <div class="card-body text-center flex-column align-items-center">
+            <p class="card-text">
+              Export as GeoJSON or PDF file. Our data is interoperable with other mapping softwares.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col text-center">
+      <h2 class="text-center font-weight-light mt-5">Our Team</h2>
+      <hr class="line-break">
+      <div class="lead py-4">
+        <p class="p1 text-center"><strong>Kyle Barnes</strong> • Executive Director </p>
+        <p class="p1 text-center"><strong>Somya Arora</strong> • Head of Engineering</p>
+        <p class="p1 text-center"><strong>Olivia Kusio</strong> • Head of Design</p>
+        <p class="p1 text-center"><strong>Jessie Fielding</strong> • Head of Software Architecture</p>
+        <p class="p1 text-center"><strong>Michaela Daniel</strong> • Strategy Coordinator</p>
+        <p class="p1 text-center"><strong>Mikala Parnell</strong> • Outreach Coordinator</p>
+        <p class="p1 text-center"><strong>Edward Tian</strong> • Software Engineer</p>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}
