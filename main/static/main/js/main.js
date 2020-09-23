@@ -77,11 +77,7 @@ let setUpUSAMap = function () {
       if (jQuery("#stateSelectionDropdown").val() !== code) {
         jQuery("#stateSelectionDropdown").val(code);
       }
-      if (code !== "mi") {
-        window.location.href = "/entry";
-      } else {
-        window.location.href = "/michigan";
-      }
+      window.location.href = "/state/" + code;
     },
     onLabelShow: function (event, label, code) {
       return ignoreUnsupportedStates(event, code);

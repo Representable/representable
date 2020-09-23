@@ -52,7 +52,7 @@
                 <h5><span class="badge badge-secondary"><i class="fas fa-share-alt"></i></span> Gather Submissions</h5>
                 <div class="row no-gutters">
                   <div class="col-9">
-                    <p>Gather submissions for this drive! Copy this link and share it with people you'd like to contribute to this drive: <a href="{% url 'main:drive_page' object.slug %}{{object.state}}">representable.org{% url 'main:drive_page' object.slug %}</a></p>
+                    <p>Gather submissions for this drive! Copy this link and share it with people you'd like to contribute to this drive: <a href="{% url 'main:drive_page' object.slug %}">representable.org{% url 'main:drive_page' object.slug %}</a></p>
                   </div>
                   <div class="col">
                     <a class="btn btn-primary float-right" href="{% url 'main:drive_page' object.slug %}" role="button">View <i class="fa fa-arrow-circle-right"></i></a>

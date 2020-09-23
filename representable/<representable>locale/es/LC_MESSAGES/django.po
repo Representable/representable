@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-22 16:15+0000\n"
+"POT-Creation-Date: 2020-08-23 19:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2177,11 +2177,13 @@ msgid ""
 "                                "
 msgstr ""
 "\n"
-"                                Rellene el siguiente formulario y dibuje un mapa para\n"
+"                                Rellene el siguiente formulario y dibuje un "
+"mapa para\n"
 "                                añadir su comunidad a Representable.org\n"
 "                                y haz que tu voz se escuche.\n"
 "                                <br>\n"
-"                                Siga las instrucciones de cada sección para comenzar."
+"                                Siga las instrucciones de cada sección para "
+"comenzar."
 
 #: main/templates/main/entry.html:90
 msgid ""
@@ -2201,24 +2203,41 @@ msgstr "1. Su información de identificación"
 msgid "Why do we need your information?"
 msgstr "¿Por qué necesitamos su información?"
 
-#: main/templates/main/entry.html:139
+#: main/templates/main/entry.html:115
+#, python-format
+msgid ""
+" Your personal privacy is our highest priority. We gather personal\n"
+"                                                    information to verify "
+"that you are a real person. If you choose to\n"
+"                                                    submit this entry to a "
+"drive, the administrators of the drive\n"
+"                                                    will have access to this "
+"information. Learn more about our\n"
+"                                                    commitment to privacy on "
+"our <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"%(url1)s"
+"\">Privacy</a>\n"
+"                                                    and <a target=\"_blank\" "
+"rel=\"noopener noreferrer\" href=\"%(url2)s\">Terms</a> pages. "
+msgstr ""
+
+#: main/templates/main/entry.html:143
 msgid "Your Name"
 msgstr "Su nombre"
 
-#: main/templates/main/entry.html:139 main/templates/main/entry.html:165
-#: main/templates/main/entry.html:424 main/templates/main/entry.html:469
+#: main/templates/main/entry.html:143 main/templates/main/entry.html:169
+#: main/templates/main/entry.html:428 main/templates/main/entry.html:473
 msgid "(Required)"
 msgstr "(obligatorio)"
 
-#: main/templates/main/entry.html:165
+#: main/templates/main/entry.html:169
 msgid "Your Address"
 msgstr "Su dirección (obligatorio)"
 
-#: main/templates/main/entry.html:267
+#: main/templates/main/entry.html:271
 msgid "2. Your Community's Shared Interests"
 msgstr "2. Los intereses compartidos de tu comunidad"
 
-#: main/templates/main/entry.html:270
+#: main/templates/main/entry.html:274
 msgid ""
 "\n"
 "                                        <p>\n"
@@ -2231,33 +2250,34 @@ msgid ""
 msgstr ""
 "\n"
 "                                        <p>\n"
-"                                             Para enviar su entrada en la comunidad, "
-"debe proporcionar una respuesta a <b>al menos una</b> de las siguientes preguntas.\n"
-"                                             Responda a todas las preguntas que se "
-"aplican, por favor.\n"
+"                                             Para enviar su entrada en la "
+"comunidad, debe proporcionar una respuesta a <b>al menos una</b> de las "
+"siguientes preguntas.\n"
+"                                             Responda a todas las preguntas "
+"que se aplican, por favor.\n"
 "                                        </p>\n"
 "                                        "
 
-#: main/templates/main/entry.html:284 main/templates/main/entry.html:292
+#: main/templates/main/entry.html:288 main/templates/main/entry.html:296
 msgid "Please fill out at least one of the interest fields."
 msgstr "Por favor, rellene al menos uno de los campos de interés."
 
-#: main/templates/main/entry.html:302
+#: main/templates/main/entry.html:306
 msgid ""
 "Is there a shared economy in the geographic area of your community? How and "
 "where are residents employed? Are there shared environmental concerns such "
 "as landfills or water quality?"
 msgstr ""
 "¿Hay una economía compartida en la zona geográfica de su comunidad? ¿Cómo y "
-"dónde están empleados los residentes? ¿Hay preocupaciones ambientales compartidas como "
-"vertederos o la calidad de agua?"
+"dónde están empleados los residentes? ¿Hay preocupaciones ambientales "
+"compartidas como vertederos o la calidad de agua?"
 
-#: main/templates/main/entry.html:306 main/templates/main/entry.html:327
-#: main/templates/main/entry.html:347
+#: main/templates/main/entry.html:310 main/templates/main/entry.html:331
+#: main/templates/main/entry.html:351
 msgid "Show Examples"
 msgstr "Mostrar ejemplos"
 
-#: main/templates/main/entry.html:310
+#: main/templates/main/entry.html:314
 msgid ""
 " Tech firms and their employees, tourism, agriculture such as the cherry "
 "growers,\n"
@@ -2267,15 +2287,24 @@ msgid ""
 "                                                    unemployment issues, "
 "waterfront communities, business associations. "
 msgstr ""
-"Empresas tecnologías y sus empleados, turismo, agricultura como los cultivadores de "
-"cerezas,\n"
+"Empresas tecnologías y sus empleados, turismo, agricultura como los "
+"cultivadores de cerezas,\n"
 "                                                    centros de envío y "
 "transporte, centros de fabricación, recursos naturales, ciudades "
 "universitarias,\n"
 "                                                    problemas de desempleo, "
 "comunidades frente al mar, asociaciones empresariales."
 
-#: main/templates/main/entry.html:320
+#: main/templates/main/entry.html:324
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                                        <p class=\"card-text mb-0\">\n"
+#| "                                            Where do people in your "
+#| "community gather or socialize? Where does your community get its "
+#| "services?\n"
+#| "                                        </"
+#| "p>                                        "
 msgid ""
 "\n"
 "                                        <p class=\"card-text mb-0\">\n"
@@ -2285,13 +2314,10 @@ msgid ""
 "                                        "
 msgstr ""
 "\n"
-"                                        <p class=\"card-text mb-0\">\n"
-"                                            ¿Dónde la gente en su 
-"comunidad se reúne o socializa? ¿Dónde obtiene su comunidad sus servicios?\n"
-"                                        </p>\n"
-"                                        "
+"                                            ¿Dónde la gente en sucomunidad "
+"se reúne o socializa? ¿Dónde obtiene su comunidad sus servicios?"
 
-#: main/templates/main/entry.html:331
+#: main/templates/main/entry.html:335
 msgid ""
 " Shopping areas, schools and colleges, parks and recreation areas,\n"
 "                                                    lakes and water ways, "
@@ -2305,11 +2331,11 @@ msgstr ""
 "                                                    ayudan a definir su "
 "comunidad.\" "
 
-#: main/templates/main/entry.html:340
+#: main/templates/main/entry.html:344
 msgid "Cultural or Historical Interests"
 msgstr "Intereses culturales o históricos"
 
-#: main/templates/main/entry.html:342
+#: main/templates/main/entry.html:346
 msgid ""
 " What fosters a sense of belonging in your community?\n"
 "                                            What common beliefs or values "
@@ -2319,7 +2345,7 @@ msgstr ""
 "                                            ¿Qué valores comunes o creencias "
 "existen? "
 
-#: main/templates/main/entry.html:351
+#: main/templates/main/entry.html:355
 msgid ""
 " Age groups, religious groups, arts and cultural centers, languages, "
 "immigration status,\n"
@@ -2328,18 +2354,18 @@ msgid ""
 "                                                    historic settlements "
 "such as Leland’s Fishtown. "
 msgstr ""
-" Grupos de edad, grupos religiosos, centros artísticos y culturales, idiomas, "
-"estatus de inmigración,\n"
+" Grupos de edad, grupos religiosos, centros artísticos y culturales, "
+"idiomas, estatus de inmigración,\n"
 "                                                    grupos étnicos como "
 "Mexicantown en Detroit o la comunidad de Oriente Medio de Dearborn,\n"
 "                                                    asentamientos históricos "
 "como Fishtown de Leland."
 
-#: main/templates/main/entry.html:360
+#: main/templates/main/entry.html:364
 msgid "Other Interests and Concerns"
 msgstr "Otros intereses y preocupados "
 
-#: main/templates/main/entry.html:379
+#: main/templates/main/entry.html:383
 msgid ""
 " What other interests does your community care about? Do you have any "
 "suggestions\n"
@@ -2348,58 +2374,59 @@ msgid ""
 msgstr ""
 " ¿Qué otros intereses le importan a su comunidad? ¿Tiene cualquier "
 "sugerencias\n"
-"                                            por como la Comisión de Redistritación "
-"en su estado pueden ayudar a abordar estas preocupaciones? "
-
-#: main/templates/main/entry.html:384
-msgid "Show Example"
-msgstr "Monstar Ejemplo"
+"                                            por como la Comisión de "
+"Redistritación en su estado pueden ayudar a abordar estas preocupaciones? "
 
 #: main/templates/main/entry.html:388
+msgid "Show Example"
+
+msgstr "Monstar Ejemplo"
+
+#: main/templates/main/entry.html:392
 msgid ""
 "Our farmers extend over two counties and we hope you can put them together "
 "in a single State Senate district."
 msgstr ""
-"Nuestros agricultores se extienden en dos países y esperamos que pueda ponerlos juntos "
-"en un distrito de un solo estado."
+"Nuestros agricultores se extienden en dos países y esperamos que pueda "
+"ponerlos juntos en un distrito de un solo estado."
 
-#: main/templates/main/entry.html:403
+#: main/templates/main/entry.html:407
 msgid "3. Your Community's Name"
 msgstr "3. Nombre de su comunidad"
 
-#: main/templates/main/entry.html:424
+#: main/templates/main/entry.html:428
 msgid "What name can we use to identify your community?"
 msgstr "¿Cual nombre podemos usar para identificar tu comunidad? (obligatorio)"
 
-#: main/templates/main/entry.html:427
+#: main/templates/main/entry.html:431
 msgid "For example: Cherry Farmers Community"
 msgstr "Por ejemplo: Cherry Farmers Community"
 
-#: main/templates/main/entry.html:449
+#: main/templates/main/entry.html:453
 msgid "4. Draw Your Community"
 msgstr "4. Dibujar su comunidad"
 
-#: main/templates/main/entry.html:460
+#: main/templates/main/entry.html:464
 msgid "You need to draw a polygon to submit the form."
 msgstr "Necesitas dibujar un polígono para enviar el formulario."
 
-#: main/templates/main/entry.html:468
+#: main/templates/main/entry.html:472
 msgid ""
 "Search for a location, such as address, city, or zipcode to begin drawing "
 "your community."
 msgstr ""
-"Buscar una ubicación, como dirección, ciudad, o código postal para comenzar a dibujar "
-"su comunidad."
+"Buscar una ubicación, como dirección, ciudad, o código postal para comenzar "
+"a dibujar su comunidad."
 
-#: main/templates/main/entry.html:472
+#: main/templates/main/entry.html:476
 msgid "Step-by-step guide"
 msgstr "Guía paso a paso "
 
-#: main/templates/main/entry.html:473
+#: main/templates/main/entry.html:477
 msgid "Video Tutorial"
 msgstr "Tutorial de vídeo"
 
-#: main/templates/main/entry.html:477
+#: main/templates/main/entry.html:481
 msgid ""
 " Draw your community by selecting <a href=\"https://www.census.gov/programs-"
 "surveys/geography/about/glossary.html#par_textimage_4\" target=\"_blank\" "
@@ -2413,11 +2440,11 @@ msgid ""
 "Redistricting Commission draw fairer districts using your entry. "
 msgstr ""
 
-#: main/templates/main/entry.html:501
+#: main/templates/main/entry.html:505
 msgid "5. Privacy and Terms of Use"
 msgstr "5. Privacidad y condiciones de uso"
 
-#: main/templates/main/entry.html:507
+#: main/templates/main/entry.html:511
 msgid ""
 "Your privacy is our highest priority. We gather your Identifying information "
 "to verify\n"
@@ -2425,41 +2452,59 @@ msgid ""
 "will not publicly share anyone's individual personal information,\n"
 "                                            such as name, address, or email. "
 msgstr ""
-"Su privacidad es nuestra máxima prioridad. Recogemos su información de identificación "
-"para verificar\n"
+"Su privacidad es nuestra máxima prioridad. Recogemos su información de "
+"identificación para verificar\n"
 "                                            que eres una persona real. No "
 "compartiremos públicamente la información personal individual de nadie,\n"
-"                                            como nombre, dirección, o correo electrónico. "
-
-#: main/templates/main/entry.html:518
-msgid "Click here to indicate that you have read and agree to the"
-msgstr "Haga clic aquí para indicar que ha leído y está de acuerdo con el"
+"                                            como nombre, dirección, o correo "
+"electrónico. "
 
 #: main/templates/main/entry.html:525
+#, python-format
+msgid ""
+" Click here to indicate that you have read and agree to the\n"
+"                                                <a target=\"_blank\" rel="
+"\"noopener noreferrer\" href=%(url1)s>Terms of Use</a> and\n"
+"                                                <a target=\"_blank\" rel="
+"\"noopener noreferrer\" href=\"%(url2)s\">Privacy Policy</a>.\n"
+"                                                <small class=\"text-danger"
+"\">(Required)</small>\n"
+"                                                "
+msgstr ""
+" Haga clic aquí para indicar que ha leído y está de acuerdo con los \n"
+"                                                <a target=\"_blank\" rel="
+"\"noopener noreferrer\" href=%(url1)s>Términos de Uso</a> y la\n"
+"                                                <a target=\"_blank\" rel="
+"\"noopener noreferrer\" href=\"%(url2)s\">política de privacidad</a>.\n"
+"                                                <small class=\"text-danger"
+"\">(Required)</small>\n"
+"                                                "
+
+#: main/templates/main/entry.html:533
 msgid ""
 " Any saved communities are final. In order to edit a saved community you "
 "will need\n"
 "                                        to create a new community and delete "
 "the old one. "
 msgstr ""
-" Las comunidades guardadas son definitivas. Para editar una comunidad guardada se "
-"necesita\n"
+" Las comunidades guardadas son definitivas. Para editar una comunidad "
+"guardada se necesita\n"
 "                                        crear una comunidad nueva y eliminar "
 "la antigua. "
 
-#: main/templates/main/entry.html:535
+#: main/templates/main/entry.html:543
 msgid "Help"
 msgstr "Ayuda"
 
-#: main/templates/main/entry.html:538
+#: main/templates/main/entry.html:546
 msgid "Report Error/Send Feedback"
 msgstr "Enviar comentarios"
 
-#: main/templates/main/entry.html:543
+#: main/templates/main/entry.html:551
 msgid "Saving Community..."
 msgstr "Guardar comunidad"
 
-#: main/templates/main/entry.html:550
+#: main/templates/main/entry.html:558
 msgid "Save Community"
 msgstr "Guarde comunidad"
 
@@ -2623,3 +2668,6 @@ msgstr "Configuraciones"
 #: representable/templates/base.html:235
 msgid "More questions? Reach out at"
 msgstr "¿Más preguntas? Comuníquese con"
+
+#~ msgid "Click here to indicate that you have read and agree to the"
+#~ msgstr "Haga clic aquí para indicar que ha leído y está de acuerdo con el"
