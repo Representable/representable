@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -2544,9 +2543,7 @@ msgid "Learn how to use Representable to draw your community."
 msgstr "Aprenda a usar Representable para dibujar su comunidad."
 
 #: main/templates/main/index.html:100
-#, fuzzy
-#| msgid "For community members"
-msgid "Add your community"
+msgid "For community members"
 msgstr "Para los miembros de la comunidad."
 
 #: main/templates/main/index.html:111
