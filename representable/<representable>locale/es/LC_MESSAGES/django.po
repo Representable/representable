@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-24 15:52+0000\n"
+"POT-Creation-Date: 2020-09-24 16:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2165,17 +2165,6 @@ msgid "Map your community"
 msgstr "Mapear su comunidad"
 
 #: main/templates/main/entry.html:67
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                                Fill out the form below and draw a map "
-#| "to\n"
-#| "                                add your community to Representable.org\n"
-#| "                                and make your voice heard.\n"
-#| "                                <br>\n"
-#| "                                Follow the instructions in each section "
-#| "to get started.\n"
-#| "                                "
 msgid ""
 "\n"
 "                                Make your voice heard! Fill out the form "
@@ -2543,8 +2532,10 @@ msgid "Learn how to use Representable to draw your community."
 msgstr "Aprenda a usar Representable para dibujar su comunidad."
 
 #: main/templates/main/index.html:100
-msgid "For community members"
-msgstr "Para los miembros de la comunidad."
+#, fuzzy
+#| msgid "Add Your Community"
+msgid "Add your community"
+msgstr "Añadir su comunidad"
 
 #: main/templates/main/index.html:111
 msgid "For organizations"
