@@ -2191,6 +2191,9 @@ msgid ""
 "                                ensure that you have filled out all required "
 "fields. "
 msgstr ""
+"Se produjo un error al enviar tu comunidad. Comprueba y\n"
+"                                asegúrate de haber rellenado todos los "
+"campos obligatorios."
 
 #: main/templates/main/entry.html:103
 msgid "1. Your Identifying Information"
@@ -2257,7 +2260,7 @@ msgstr ""
 
 #: main/templates/main/entry.html:288 main/templates/main/entry.html:296
 msgid "Please fill out at least one of the interest fields."
-msgstr ""
+msgstr "Por favor, rellene al menos uno de los campos de interés."
 
 #: main/templates/main/entry.html:306
 msgid ""
@@ -2272,7 +2275,7 @@ msgstr ""
 #: main/templates/main/entry.html:310 main/templates/main/entry.html:331
 #: main/templates/main/entry.html:351
 msgid "Show Examples"
-msgstr "Mostar ejemplos"
+msgstr "Mostrar ejemplos"
 
 #: main/templates/main/entry.html:314
 msgid ""
@@ -2376,7 +2379,8 @@ msgstr ""
 
 #: main/templates/main/entry.html:388
 msgid "Show Example"
-msgstr "Mostar ejemplos"
+
+msgstr "Monstar Ejemplo"
 
 #: main/templates/main/entry.html:392
 msgid ""
@@ -2404,7 +2408,7 @@ msgstr "4. Dibujar su comunidad"
 
 #: main/templates/main/entry.html:464
 msgid "You need to draw a polygon to submit the form."
-msgstr ""
+msgstr "Necesitas dibujar un polígono para enviar el formulario."
 
 #: main/templates/main/entry.html:472
 msgid ""
@@ -2438,7 +2442,7 @@ msgstr ""
 
 #: main/templates/main/entry.html:505
 msgid "5. Privacy and Terms of Use"
-msgstr ""
+msgstr "5. Privacidad y condiciones de uso"
 
 #: main/templates/main/entry.html:511
 msgid ""
@@ -2490,7 +2494,7 @@ msgstr ""
 
 #: main/templates/main/entry.html:543
 msgid "Help"
-msgstr ""
+msgstr "Ayuda"
 
 #: main/templates/main/entry.html:546
 msgid "Report Error/Send Feedback"
@@ -2498,7 +2502,7 @@ msgstr "Enviar comentarios"
 
 #: main/templates/main/entry.html:551
 msgid "Saving Community..."
-msgstr ""
+msgstr "Guardar comunidad"
 
 #: main/templates/main/entry.html:558
 msgid "Save Community"
@@ -2506,7 +2510,7 @@ msgstr "Guarde comunidad"
 
 #: main/templates/main/index.html:27 main/templates/main/index.html:32
 msgid "Put your community on the map."
-msgstr ""
+msgstr "Poner su comunidad en el mapa"
 
 #: main/templates/main/index.html:35 main/templates/main/index.html:38
 msgid ""
@@ -2591,7 +2595,7 @@ msgstr ""
 
 #: main/views/main.py:120
 msgid "HELLO"
-msgstr "Bonjour"
+msgstr "Hola"
 
 #: representable/settings/base.py:187
 msgid "English"
