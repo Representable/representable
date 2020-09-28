@@ -19,6 +19,7 @@ django-widget-tweaks==1.4.3
 Faker==1.0.5
 geojson==2.4.1
 geojson-rewind==0.2.0
+graphviz==0.14.1
 gunicorn==19.9.0
 idna==2.8
 isort==4.3.21
@@ -33,6 +34,8 @@ oauthlib==3.0.1
 psycopg2==2.7.6
 psycopg2-binary==2.7.7
 pycodestyle==2.5.0
+pydotplus==2.0.2
+pygraphviz==1.6
 pylibmc==1.6.0
 pylint==2.4.4
 python-binary-memcached==0.28.0
