@@ -67,3 +67,11 @@ python3 -m venv venv
 ```
 pip install -r requirements.txt
 ```
+
+For Mac users, you may need to use
+
+```
+brew install graphviz
+```
+
+if you're having trouble with your `pygraphviz` installation.
