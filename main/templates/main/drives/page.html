@@ -1,53 +1,65 @@
 {% extends "main/base.html" %}
-
+{% load static %}
+{% load i18n %}
 {% block content %}
 <script type="text/javascript">
-  var drive_id = "{{drive_id}}";
-  var organization_id = "{{organization_id}}";
-  var drive_name = "{{drive_name}}";
-  var organization_name = "{{organization_name}}";
+  var state = "{{state}}";
   mixpanel.track("Drive Page Loaded",
-    {
-     "drive_id": drive_id,
-     "drive_name": drive_name,
-     "organization_id": organization_id,
-     "organization_name": organization_name,
-    }
+  {
+    "drive_id": drive_id,
+    "drive_name": drive_name,
+    "organization_id": organization_id,
+    "organization_name": organization_name,
+  }
   );
 </script>
 <div class="container">
-  <div class="row my-5">
-    <div class="col-9 mx-auto">
-      <h2>{{object.name}}</h2>
-      <p>Organized by <a href="{% url 'main:partner_page' object.organization.slug %}">{{object.organization}}</a></p>
-      <hr>
-      <p>{{object.description}}</p>
-
-      {% if object.state == "MI" %}
-      <h5>Redistricting in Michigan</h5>
-      <p>Michigan has a new Independent Citizens Redistricting Commission voted into law in 2018 by the people of this State. Representable will help you tell the Commission about your community and draw a map of your community boundaries so the Commission can fairly consider your community when it draws new voting district lines.</p>
-      <p>In the past, voting districts were drawn by politicians and their consultants behind closed doors with little or no public input. However, the shape of voting district maps can influence election outcomes, so it is important that new district maps be drawn in a transparent and impartial manner.</p>
-      <h5 class="border-top pt-3">The Michigan Constitution now requires that voting district maps drawn by the new Commission meet seven criteria, ranked in order of priority.</h5>
-      <div class="row">
-        <div class="col-12">
-          <ol>
-            <li>Districts shall be of equal population and comply with the Voting Rights Act,</li>
-            <li>Districts shall be geographically contiguous (that is, all in one piece, not broken apart),</li>
-            <li>Districts shall reflect the state’s diverse population and <b>communities of interest,</b></li>
-            <li>Districts shall not provide a disproportionate advantage to any political party,</li>
-            <li>Districts shall not favor or disfavor an incumbent elected official or candidate,</li>
-            <li>District shall reflect consideration of county, city and township boundaries, and</li>
-            <li>Districts shall be reasonably compact.</li>
-          </ol>
-        </div>
-      </div>
-      <p class="border-top pt-2">Third on this list is the requirement for the new Commission to consider the state’s diverse populations and “communities of interest” (referred to in this program as “Communities”). A Community is defined in the Michigan Constitution as populations that share cultural or historical characteristics or economic interests. A Community does not include relationships with political parties, incumbents or political candidates.</p>
-      <p>This program is designed to help you provide information about your Community to the Commission and draw a geographic map of the boundaries of your Community. </p>
-      <p>It will provide a consistent format for Communities to use so the information will be easier for the Commission to consider in drawing the new voting district maps. </p>
-      <p>Click "Draw My Community" below to share information about your Community and give your Community the voice it deserves!</p>
-      {% endif %}
-        <a class="btn btn-primary btn-lg my-3 drive-new-entry" href="{% url 'main:entry' drive=object.slug %}{{object.state|lower}}" role="button">Draw My Community</a>
-      <!-- <a class="btn btn-outline-primary my-3" href="{% url 'main:partner_map' object.organization.slug object.slug %}" role="button">View map of communities</a> -->
+  <!-- Illustration -->
+  <div class="row row-hero row-eq-height my-5 border-bottom">
+    <div class="col-lg-7 col-sm-12 col-md-7">
+      <!-- Shows on medium devices and higher. -->
+      <h4 class="display-4 my-4 font-weight-medium d-none d-sm-block main-display-text-all">
+        <span class="d-block">Redistricting is coming.</span>
+        <span class="d-block">{% trans "Put your community on the map." %}</span>
+      </h4>
+      <!-- Shows on small devices and lower. -->
+      <h5 class="display-4 my-2 font-weight-medium d-sm-none main-display-text-sm">
+        <span class="d-block">Redistricting is coming.</span>
+        <span class="d-block">{% trans "Put your community on the map." %}</span>
+      </h5>
+      <h4 class="font-weight-light d-none d-sm-block text-muted my-4">
+        {% trans "Together, we can fight for your representation. Draw your community today and make your voice heard." %}
+      </h4>
+      <p class="d-sm-none font-weight-medium text-muted my-2">
+        {% trans "Together, we can fight for your representation. Draw your community today and make your voice heard." %}
+      </p>
+      <!-- <p class="font-weight-light text-muted my-4 main-display-text-sm">
+      We’re creating maps of communities to fight for fair representation. Add your community to the map today and make your voice heard.
+    </p> -->
+    <a id="get-started-btn" class="btn btn-primary mb-5 mt-2" href="#select" role="button">{% trans "Get Started" %} <i class="fa fa-arrow-circle-right"></i></a>
+  </div>
+  <div class="col-lg-5 col-sm-12 col-md-5">
+    <img class="img-fluid align-bottom my-3" src="{% static 'img/illustration.svg' %}"> </img>
+  </div>
+</div>
+<div class="row">
+  <div class="col mx-5">
+    <h1 class="text-center font-weight-light">{{object.name}}</h1>
+    <p class="text-center">Organized by <a href="{% url 'main:partner_page' object.organization.slug %}">{{object.organization}}</a> in {{state.name}}</p>
+    <hr class="line-break">
+    <p class="mx-5">{{object.description}}</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-7">
+    <div class="card border-0 card-signin ml-5 p-5">
+      <h2 class="text-center"> What is Representable?</h2>
+      <p>Our mission is <b>to give communities a voice in drawing districts.</b> Representable is a free tool that empowers people to create maps of communities, alongside the cultural, historic, economic, and other interests that bind them together. Maps gathered with Representable are standardized and easy to understand, supporting mapmakers, journalists, non-profits, and policy groups as they draw and evaluate district plans. Join us to fight for communities to get the representation they deserve.</p>
     </div>
-    </div>
+  </div>
+  <div class="col-5">
+    <img class="img-fluid align-bottom my-3" src="{% static 'img/leader.svg' %}"> </img>
+  </div>
+</div>
+</div>
 {% endblock %}
