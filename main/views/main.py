@@ -150,15 +150,6 @@ class Terms(TemplateView):
 # ******************************************************************************#
 
 
-class Michigan(TemplateView):
-    # template_name = "main/michigan.html"
-    def get(self, request, *args, **kwargs):
-        return redirect("/state/mi/")
-
-
-# ******************************************************************************#
-
-
 class Blog(TemplateView):
     template_name = "main/pages/blog.html"
 
