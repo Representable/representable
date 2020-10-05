@@ -274,13 +274,47 @@ class Submission(TemplateView):
         map_poly = geojson.loads(s)
         entryPolyDict = {}
         entryPolyDict[m_uuid] = map_poly.coordinates
-
         context = {
             "c": user_map,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
+        # from thanks view
+        if "thanks" in request.path:
+            print("thanks page on submission")
+            has_drive = False
+            organization_name = ""
+            drive_name = ""
+            if kwargs["drive"]:
+                has_drive = True
+                drive_slug = self.kwargs["drive"]
+                drive = Drive.objects.get(slug=drive_slug)
+                drive_name = drive.name
+                organization = drive.organization
+                organization_name = organization.name
+
+            if EmailAddress.objects.filter(
+                user=self.request.user, verified=True
+            ).exists():
+                context["verified"] = True
+            else:
+                user_email_address = EmailAddress.objects.get(
+                    user=self.request.user
+                )
+
+                user_email_confirmation = EmailConfirmationHMAC(
+                    email_address=user_email_address
+                )
+
+                user_email_confirmation.send(self.request, False)
+                context["verified"] = False
+
+            context["drive"] = self.kwargs["drive"]
+            context["has_drive"] = has_drive
+            context["organization_name"] = organization_name
+            context["drive_name"] = drive_name
+
         for a in Address.objects.filter(entry=user_map):
             context["street"] = a.street
             context["city"] = a.city + ", " + a.state + " " + a.zipcode

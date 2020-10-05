@@ -73,7 +73,23 @@ urlpatterns = [
     path("privacy/", views.main.Privacy.as_view(), name="privacy"),
     path("terms/", views.main.Terms.as_view(), name="terms"),
     path("state/<abbr>/", views.main.StatePage.as_view(), name="state"),
-    path("submission/", views.main.Submission.as_view(), name="submission"),
+    path(
+        "submission/",
+        views.main.Submission.as_view(),
+        {"slug": "", "drive": ""},
+        name="submission"
+    ),
+    path(
+        "submission/thanks/",
+        views.main.Submission.as_view(),
+        {"slug": "", "drive": ""},
+        name="submission",
+    ),
+    path(
+        "submission/thanks/drive/<slug:slug>/<slug:drive>/", 
+        views.main.Submission.as_view(),
+        name="submission",
+    ),
     path("blog/", views.main.Blog.as_view(), name="blog"),
     path(
         "thanks/id/<map_id>",
