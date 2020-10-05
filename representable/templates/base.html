@@ -104,7 +104,7 @@
                     <ul class="dropdown-menu">
                     <li class="nav-link mx-1"><a href="{% url 'main:dashboard' %}">{% trans "Account Settings" %}</a></li>
                     <li class="nav-link mx-1"><a href="{% url 'main:review' %}">{% trans "My communities" %}</a></li>
-                    <li class="nav-link mx-1"><a href="/accounts/logout">{% trans "Logout" %}</a></li>
+                    <li class="nav-link mx-1"><a href="{% url 'account_logout' %}">{% trans "Logout" %}</a></li>
                     </ul>
                 </li>
                 <li class="nav-item mx-auto">
@@ -114,12 +114,12 @@
                 </li>
                 {% else %}
                 <li class="nav-item mx-auto">
-                    <a class="btn btn-outline-primary m-2 log-in-started" href="/accounts/login">
+                    <a class="btn btn-outline-primary m-2 log-in-started" href="{% url 'account_login' %}">
                         {% trans "Log in" %}
                     </a>
                 </li>
                 <li class="nav-item mx-auto">
-                    <a class="btn btn-primary m-2 sign-up-started" href="/accounts/signup">
+                    <a class="btn btn-primary m-2 sign-up-started" href="{% url 'account_signup' %}">
                         {% trans "Sign up" %}
                     </a>
                 </li>

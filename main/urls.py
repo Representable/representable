@@ -36,7 +36,7 @@ urlpatterns = [
         "entry/drive/<slug:drive>/",
         views.main.EntryView.as_view(),
         {"token": "", "abbr": ""},
-        name="entry",
+        name="entry",  # deprecated? every drive page should redirect to incl. abbr
     ),
     path(
         "entry/drive/<slug:drive>/<abbr>",
