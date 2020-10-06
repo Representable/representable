@@ -253,7 +253,7 @@ class Submission(TemplateView):
     NUM_DIGITS = 10
 
     def get(self, request, *args, **kwargs):
-        m_uuid = self.kwargs["map_id"]
+        m_uuid = str(self.kwargs["map_id"]).split("-")[0]
 
         if not m_uuid or not re.match(r"\b[A-Fa-f0-9]{8}\b", m_uuid):
             raise Http404
