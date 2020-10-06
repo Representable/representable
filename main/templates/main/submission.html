@@ -143,20 +143,82 @@
         </div>
 
         <div class="modal fade" id="thanksModal" tabindex="-1" role="dialog" aria-labelledby="thanksModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
+          <div class="modal-dialog modal-dialog-centered" role="document" id="thanksModalDialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="thanksModalLabel">Thank you for your submission!</h5>
+                <h1 class="modal-title text-center font-weight-light" id="thanksModalLabel">Thank you for your submission!</h1>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <p>Modal body text goes here.</p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <div class="row my-3">
+                  <div class="col-sm my-3 mx-3">
+                    <div class="card border-0">
+                      <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/send.svg' %}"></img>
+                      <div class="card-body text-center d-flex flex-column align-items-center">
+                        <h5>
+                          Visualize/Export
+                        </h5>
+                        <p>
+                          View your community on our live map, and export in PDF or industry standard GeoJSON formats to share with your representatives or mapmakers.
+                        </p>
+                        <div class="text-center">
+                          <a id="card-add-community-btn" class="btn btn-outline-primary mx-2 my-1" href="/submission/{{ map_id }}" role="button">View Community</a>
+                        </div>
+                        <!-- <a class="btn btn-primary btn-canvas mt-auto" href="/entry" role="button">Get Started</a> -->
+                      </div>
+                    </div>
+                  </div>
+                  {% if has_drive %}
+                  <div class="col-sm my-3 mx-3">
+                    <div class="card border-0">
+                      <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/map.svg' %}"></img>
+                      <div class="card-body text-center flex-column align-items-center">
+                        <h5 class="card-title">
+                          {{ drive_name }} Map
+                        </h5>
+                        <p class="card-text">
+                          Your community is part of a community mapping drive, organized by {{ organization_name }}. View all communities submitted to {{drive_name}}.
+                        </p>
+                        <div class="text-center">
+                          <a id="card-partner-btn" class="btn btn-outline-primary mx-2 my-1" href="#partner" role="button">View Map</a>
+                        </div>
+                        <!-- <a class="btn btn-primary btn-canvas mt-auto" href="mailto: team@representable.org?subject=Hello!" role="button">Contact Us</a> -->
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}
+                  <div class="col-sm m-3">
+                    <div class="card border-0 card-body">
+                      <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/redistricter.svg' %}"></img>
+                      <div class="card-body text-center flex-column align-items-center">
+                        <h5 class="card-title">
+                          Provide Feedback
+                        </h5>
+                        <p class="card-text">
+                          We are interested in your feedback. If you found a bug or have any suggestions for us, please send them to us by pressing on the button below.
+                        </p>
+                        <div class="text-center">
+                          <a class="btn btn-outline-primary mx-2 my-1" href="https://docs.google.com/forms/d/e/1FAIpQLSfeyoZ87pS67iTh2c3t5031XqoNFNAdwF6Pt1NUns_z_Myxaw/viewform" role="button">Send Feedback</a>
+                        </div>
+                        <!-- <a class="btn btn-primary btn-canvas mt-auto disabled" href="#" role="button">Coming Soon</a> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% if verified %}
+                <div class="alert alert-primary mx-5" role="alert">
+                  <p class="text-center">This tool is meant for non-partisan use by communities and their members to provide information to the Redistricting Commission.</p>
+                  <p class="text-center">By adding your map to Representable.org you are not submitting a map to a redistricting commission. We will add information about submitting to the commission as soon as information becomes available in your state.</p>
+                </div>
+                {% endif %}
+                {% if not verified %}
+                <div class="alert alert-warning mx-5" role="alert">
+                  <p class="text-center"> Thank you for submitting your map. The next step is to verify your email. We resent an email verification link to your inbox.</p>
+                  <p class="text-center"> Account verification allows Representable.org and our partner organizations to submit credible maps to Redistricting Commisions ensuring that your entry has an impact in ending gerrymandering. </p>
+                </div>
+                {% endif %}
               </div>
             </div>
           </div>

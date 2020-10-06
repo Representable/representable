@@ -279,6 +279,7 @@ class Submission(TemplateView):
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
+            "map_id": m_uuid,
         }
         # from thanks view
         context["is_thanks"] = False
