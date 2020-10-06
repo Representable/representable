@@ -288,6 +288,7 @@ class Submission(TemplateView):
             has_drive = False
             organization_name = ""
             drive_name = ""
+            organization_slug = ""
             if kwargs["drive"]:
                 has_drive = True
                 drive_slug = self.kwargs["drive"]
@@ -295,6 +296,7 @@ class Submission(TemplateView):
                 drive_name = drive.name
                 organization = drive.organization
                 organization_name = organization.name
+                organization_slug = organization.slug
 
             if EmailAddress.objects.filter(
                 user=self.request.user, verified=True
@@ -315,7 +317,7 @@ class Submission(TemplateView):
             context["drive_slug"] = self.kwargs["drive"]
             context["has_drive"] = has_drive
             context["organization_name"] = organization_name
-            context["organization_slug"] = organization.slug
+            context["organization_slug"] = organization_slug
             context["drive_name"] = drive_name
 
         for a in Address.objects.filter(entry=user_map):
