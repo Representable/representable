@@ -182,7 +182,7 @@
                           Your community is part of a community mapping drive, organized by {{ organization_name }}. View all communities submitted to {{drive_name}}.
                         </p>
                         <div class="text-center">
-                          <a id="card-partner-btn" class="btn btn-outline-primary mx-2 my-1" href="#partner" role="button">View Map</a>
+                          <a id="card-partner-btn" class="btn btn-outline-primary mx-2 my-1" href="{% url 'main:partner_map' organization_slug drive_slug %}" role="button">View Map</a>
                         </div>
                         <!-- <a class="btn btn-primary btn-canvas mt-auto" href="mailto: team@representable.org?subject=Hello!" role="button">Contact Us</a> -->
                       </div>
@@ -200,7 +200,7 @@
                           We are interested in your feedback. If you found a bug or have any suggestions for us, please send them to us by pressing on the button below.
                         </p>
                         <div class="text-center">
-                          <a class="btn btn-outline-primary mx-2 my-1" href="https://docs.google.com/forms/d/e/1FAIpQLSfeyoZ87pS67iTh2c3t5031XqoNFNAdwF6Pt1NUns_z_Myxaw/viewform" role="button">Send Feedback</a>
+                          <a class="btn btn-outline-primary mx-2 my-1" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSfeyoZ87pS67iTh2c3t5031XqoNFNAdwF6Pt1NUns_z_Myxaw/viewform" role="button">Send Feedback</a>
                         </div>
                         <!-- <a class="btn btn-primary btn-canvas mt-auto disabled" href="#" role="button">Coming Soon</a> -->
                       </div>

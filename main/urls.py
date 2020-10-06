@@ -91,17 +91,6 @@ urlpatterns = [
         name="submission_thanks",
     ),
     path("blog/", views.main.Blog.as_view(), name="blog"),
-    path(
-        "thanks/id/<map_id>",
-        views.main.Thanks.as_view(),
-        {"slug": "", "drive": ""},
-        name="thanks",
-    ),
-    path(
-        "thanks/drive/<slug:slug>/<slug:drive>/<map_id>",
-        views.main.Thanks.as_view(),
-        name="thanks",
-    ),
     path("export/", views.main.ExportView.as_view(), name="export"),
     path(
         "multiexport/drive/<drive>",

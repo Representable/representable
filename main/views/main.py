@@ -312,9 +312,10 @@ class Submission(TemplateView):
                 user_email_confirmation.send(self.request, False)
                 context["verified"] = False
 
-            context["drive"] = self.kwargs["drive"]
+            context["drive_slug"] = self.kwargs["drive"]
             context["has_drive"] = has_drive
             context["organization_name"] = organization_name
+            context["organization_slug"] = organization.slug
             context["drive_name"] = drive_name
 
         for a in Address.objects.filter(entry=user_map):
@@ -430,56 +431,6 @@ class Map(TemplateView):
 
 # ******************************************************************************#
 
-
-class Thanks(LoginRequiredMixin, TemplateView):
-    template_name = "main/thanks.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        has_drive = False
-        organization_name = ""
-        drive_name = ""
-        if kwargs["drive"]:
-            has_drive = True
-            drive_slug = self.kwargs["drive"]
-            drive = Drive.objects.get(slug=drive_slug)
-            drive_name = drive.name
-            organization = drive.organization
-            organization_name = organization.name
-
-        if EmailAddress.objects.filter(
-            user=self.request.user, verified=True
-        ).exists():
-            context["verified"] = True
-        else:
-            user_email_address = EmailAddress.objects.get(
-                user=self.request.user
-            )
-
-            user_email_confirmation = EmailConfirmationHMAC(
-                email_address=user_email_address
-            )
-
-            # default_adapter = adapter.get_adapter()
-
-            # default_adapter.send_confirmation_mail(self.request, user_email_confirmation, False)
-            # user_email_address.send_confirmation(None, False)
-
-            user_email_confirmation.send(self.request, False)
-            context["verified"] = False
-
-        context["map_url"] = self.kwargs["map_id"]
-        context["drive"] = self.kwargs["drive"]
-        context["has_drive"] = has_drive
-        context["organization_name"] = organization_name
-        context["drive_name"] = drive_name
-
-        return context
-
-
-# ******************************************************************************#
-
 class EntryView(SignupRequiredMixin, View):
     """
     EntryView displays the form and map selection screen.
@@ -491,7 +442,6 @@ class EntryView(SignupRequiredMixin, View):
     initial = {
         "key": "value",
     }
-    success_url = "/thanks/"
 
     data = {
         "form-TOTAL_FORMS": "1",
