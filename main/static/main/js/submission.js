@@ -1,5 +1,11 @@
 $(document).ready(function () {});
 
+
+// if thanks page, show modal
+if (is_thanks === "True") {
+  $('#thanksModal').modal('show');
+}
+
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */

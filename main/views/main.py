@@ -253,7 +253,7 @@ class Submission(TemplateView):
     NUM_DIGITS = 10
 
     def get(self, request, *args, **kwargs):
-        m_uuid = self.request.GET.get("map_id", None)
+        m_uuid = self.kwargs["map_id"]
 
         if not m_uuid or not re.match(r"\b[A-Fa-f0-9]{8}\b", m_uuid):
             raise Http404
@@ -281,8 +281,9 @@ class Submission(TemplateView):
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
         # from thanks view
+        context["is_thanks"] = False
         if "thanks" in request.path:
-            print("thanks page on submission")
+            context["is_thanks"] = True
             has_drive = False
             organization_name = ""
             drive_name = ""
@@ -614,11 +615,11 @@ class EntryView(SignupRequiredMixin, View):
             m_uuid = str(entryForm.entry_ID).split("-")[0]
             if not entryForm.drive:
                 self.success_url = reverse_lazy(
-                    "main:thanks", kwargs={"map_id": m_uuid}
+                    "main:submission_thanks", kwargs={"map_id": m_uuid}
                 )
             else:
                 self.success_url = reverse_lazy(
-                    "main:thanks",
+                    "main:submission_thanks",
                     kwargs={
                         "map_id": m_uuid,
                         "slug": entryForm.organization.slug,

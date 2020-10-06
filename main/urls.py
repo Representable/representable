@@ -74,21 +74,21 @@ urlpatterns = [
     path("terms/", views.main.Terms.as_view(), name="terms"),
     path("state/<abbr>/", views.main.StatePage.as_view(), name="state"),
     path(
-        "submission/",
+        "submission/<map_id>",
         views.main.Submission.as_view(),
         {"slug": "", "drive": ""},
         name="submission"
     ),
     path(
-        "submission/thanks/",
+        "submission/thanks/<map_id>",
         views.main.Submission.as_view(),
         {"slug": "", "drive": ""},
-        name="submission",
+        name="submission_thanks",
     ),
     path(
-        "submission/thanks/drive/<slug:slug>/<slug:drive>/", 
+        "submission/thanks/drive/<slug:slug>/<slug:drive>/<map_id>",
         views.main.Submission.as_view(),
-        name="submission",
+        name="submission_thanks",
     ),
     path("blog/", views.main.Blog.as_view(), name="blog"),
     path(
