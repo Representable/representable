@@ -109,7 +109,7 @@ class SignupRequiredMixin(AccessMixin):
     """Verify that the current user is authenticated."""
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
-            return redirect_to_login(request.get_full_path(), '/accounts/signup', self.get_redirect_field_name())
+            return redirect_to_login(request.get_full_path(), '/accounts/signup/', self.get_redirect_field_name())
         return super().dispatch(request, *args, **kwargs)
 
 """
