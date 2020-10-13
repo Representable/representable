@@ -558,7 +558,6 @@ color scheme. See readme.md*/
 }
 input[type=range]::-webkit-slider-thumb {
   border-radius: 50%;
-  margin-bottom: 6px;
   width: 17.5px;
   height: 17.5px;
 }

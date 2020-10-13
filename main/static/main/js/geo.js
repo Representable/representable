@@ -385,7 +385,7 @@ var style = document.querySelector('[data="slider-data"]');
 slider.oninput = function () {
   var size = this.value;
   drawRadius = parseInt(size);
-  style.innerHTML = "input[type=range]::-webkit-slider-thumb { width: " + (size / 7 + 14)  + "px !important; height: " + (size / 7 + 14) + "px !important; }";
+  style.innerHTML = "input[type=range]::-webkit-slider-thumb { width: " + (size / 7 + 14)  + "px !important; height: " + (size / 7 + 14) + "px !important; margin-top: "+ (-3 - size / 16.67) + "px !important; }";
 };
 
 var eraseMode = false;
