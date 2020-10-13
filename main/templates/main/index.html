@@ -85,7 +85,7 @@
       </p>
     </div>
     <!-- How To -->
-    <div class="row my-3">
+    <div class="row my-3 d-none d-sm-flex">
       <div class="col-sm my-3 shadow-sm mx-3">
         <div class="card border-0">
           <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/citizens.svg' %}"></img>
@@ -125,10 +125,10 @@
           <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/redistricter.svg' %}"></img>
           <div class="card-body text-center flex-column align-items-center">
             <h5 class="card-title">
-              {% trans "For redistricters" %}
+              {% trans "For mapmakers" %}
             </h5>
             <p class="card-text">
-              {% trans "Use our data to protect communities during the map drawing process." %}
+              {% trans "Use Representable data to protect communities during the map drawing process." %}
             </p>
             <div class="text-center">
               <a class="btn btn-outline-secondary mx-2 my-1 disabled" href="#" role="button">{% trans "Coming soon!" %}</a>
