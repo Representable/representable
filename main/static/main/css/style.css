@@ -487,20 +487,6 @@ color scheme. See readme.md*/
   padding: 5px;
   width: 14rem;
 }
-
-.state {
-  max-width: 70%;
-  height: 50vh;
-  margin: auto;
-}
-.state-sm {
-  width: 2rem;
-}
-@media only screen and (min-width: 768px) {
-  .state-sm {
-    display: none;
-  }
-}
 .ws-normal {
   white-space: normal;
 }
