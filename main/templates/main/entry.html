@@ -57,8 +57,8 @@
             <div class="row mt-3">
                 <!-- Entry Form -->
                 <form id="entryForm" method="post" onSubmit="return formValidation();">
-                    <div class="row row-equal-cols">
-                        <div class="col-lg  m-2">
+                    <div class="row">
+                        <div class="col-sm-7 my-auto pl-5">
                             <h1 class="font-weight-light">
                                 {% trans "Map your community" %}
                             </h1>
@@ -71,26 +71,33 @@
                                 {% endblocktrans %}
                             </p>
                             {% csrf_token %}
-                            <!-- {# Include the non-field error fields #} -->
-                            {% if comm_form.non_field_errors %}
-                            <div class="non-field-errors form-error">
-                                {% for err in comm_form.non_field_errors %}
-                                <p class="form-error">{{ err }}</p>
-                                {% endfor %}
-                            </div>
-                            {% endif %}
-                            {% if comm_form.errors %}
-                            <div id="django_form_errors">
-                            </div>
-                            {% endif %}
-                            <div id="form_error" class="alert alert-danger alert-dismissible fade show form-error d-none" role="alert">
-                                {% blocktrans %}There was an error in submitting your community. Please check over and
-                                ensure that you have filled out all required fields. {% endblocktrans %}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
                         </div>
+                        <div class="col-5 d-none d-sm-block">
+                          <div id="mapping-image-div" class="m-auto py-4 w-75 h-100">
+                            <object type="image/svg+xml" class="w-75 mx-auto d-block h-100" data="{% static 'img/mapping.svg' %}" alt="image of someone drawing a community map"></object>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                      <!-- {# Include the non-field error fields #} -->
+                      {% if comm_form.non_field_errors %}
+                      <div class="non-field-errors form-error">
+                          {% for err in comm_form.non_field_errors %}
+                          <p class="form-error">{{ err }}</p>
+                          {% endfor %}
+                      </div>
+                      {% endif %}
+                      {% if comm_form.errors %}
+                      <div id="django_form_errors">
+                      </div>
+                      {% endif %}
+                      <div id="form_error" class="alert alert-danger alert-dismissible fade show form-error d-none" role="alert">
+                          {% blocktrans %}There was an error in submitting your community. Please check over and
+                          ensure that you have filled out all required fields. {% endblocktrans %}
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
                     </div>
                     <div class="row row-equal-cols">
                         <div class="col-lg  m-2">

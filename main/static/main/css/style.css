@@ -491,6 +491,12 @@ color scheme. See readme.md*/
   white-space: normal;
 }
 
+@media screen and (min-width: 1600px) {
+  #mapping-image-div {
+    width: 30% !important;
+  }
+}
+
 .loader {
   border: 8px solid #f3f3f3; /* Light grey */
   border-top: 8px solid #2a94f4; /* Blue */
