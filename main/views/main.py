@@ -17,7 +17,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import (
+    HttpResponse,
+    HttpResponseRedirect,
+    JsonResponse,
+    Http404,
+)
 from django.shortcuts import render, redirect
 from django.views.generic import (
     TemplateView,
@@ -50,17 +55,23 @@ from ..models import (
     DriveToken,
     Drive,
     State,
+    BlockGroup,
 )
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
-from django.utils.translation import gettext
-from django.urls import reverse, reverse_lazy
+from django.utils.translation import ugettext as _
 from django.utils.translation import (
-    LANGUAGE_SESSION_KEY,
-    check_for_language,
+    activate,
     get_language,
-    to_locale,
 )
+from django.urls import reverse, reverse_lazy
+
+# from django.utils.translation import (
+#     LANGUAGE_SESSION_KEY,
+#     check_for_language,
+#     get_language,
+#     to_locale,
+# )
 from shapely.geometry import mapping
 from geojson_rewind import rewind
 import geojson
@@ -107,10 +118,11 @@ class Index(TemplateView):
     # Add extra context variables.
     def get_context_data(self, **kwargs):
         context = super(Index, self).get_context_data(
-            **kwargs
+            **kwargs,
         )  # get the default context data
 
         context["mapbox_key"] = os.environ.get("DISTR_MAPBOX_KEY")
+        context["hello"] = _("HELLO")
         return context
 
 
@@ -161,7 +173,9 @@ class StatePage(TemplateView):
 
         state = State.objects.filter(abbr=abbr.upper())
         if not state:
-            return redirect("/")
+            return HttpResponseRedirect(
+                reverse_lazy("main:entry", kwargs={"abbr": abbr})
+            )
         drives = state[0].get_drives()
         return render(
             request,
@@ -236,21 +250,18 @@ class Review(LoginRequiredMixin, TemplateView):
 class Submission(TemplateView):
     template_name = "main/submission.html"
     sha = hashlib.sha256()
-    NUM_DIGITS = 10  # TODO move to some place with constants
+    NUM_DIGITS = 10
 
     def get(self, request, *args, **kwargs):
         m_uuid = self.request.GET.get("map_id", None)
-        # TODO: Are there security risks? Probably - we should hash the UUID and make that the permalink
 
-        if m_uuid is None:
-            pass  # TODO need to fix here
+        if not m_uuid or not re.match(r"\b[A-Fa-f0-9]{8}\b", m_uuid):
+            raise Http404
         query = CommunityEntry.objects.filter(entry_ID__startswith=m_uuid)
 
-        if len(query) == 0:
-            context = {
-                "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
-            }
-            return render(request, self.template_name, context)
+        if not query:
+            raise Http404
+
         # query will have length 1 or database is invalid
         user_map = query[0]
         if (
@@ -461,13 +472,8 @@ class EntryView(LoginRequiredMixin, View):
         return initial
 
     def get(self, request, abbr=None, *args, **kwargs):
-        state = None
-        if abbr:
-            statequery = State.objects.filter(abbr=abbr.upper())
-            try:
-                state = statequery[0]
-            except Exception:
-                state = None
+        if not abbr:
+            return redirect("/#select")
 
         comm_form = self.community_form_class(
             initial=self.get_initial(), label_suffix=""
@@ -506,36 +512,44 @@ class EntryView(LoginRequiredMixin, View):
             "organization_id": organization_id,
             "drive_name": drive_name,
             "drive_id": drive_id,
-            "state": state,
+            "state": abbr,
         }
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         comm_form = self.community_form_class(request.POST, label_suffix="")
         addr_form = self.address_form_class(request.POST, label_suffix="")
+
+        # parse block groups and add to field
+        comm_form.data._mutable = True
+        block_groups = comm_form.data["block_groups"].split(",")
+        comm_form.data["block_groups"] = [
+            BlockGroup.objects.get_or_create(census_id=bg)[0].id
+            for bg in block_groups
+        ]
+        comm_form.data._mutable = False
         if comm_form.is_valid():
             entryForm = comm_form.save(commit=False)
 
-            # This returns an array of Django GEOS Polygon types
-            polyArray = comm_form.data["census_blocks_polygon_array"]
-
-            if polyArray is not None and polyArray != "":
-                polyArray = polyArray.split("|")
-                newPolyArr = []
-                # union them one at a time- does not work
-
-                for stringPolygon in polyArray:
-                    new_poly = GEOSGeometry(stringPolygon, srid=4326)
-                    newPolyArr.append(new_poly)
-
-                mpoly = MultiPolygon(newPolyArr)
-                polygonUnion = mpoly.unary_union
-                polygonUnion.normalize()
-                # if one polygon is returned, create a multipolygon
-                if polygonUnion.geom_typeid == 3:
-                    polygonUnion = MultiPolygon(polygonUnion)
-
-                entryForm.census_blocks_polygon = polygonUnion
+            # # Returns geometry
+            # poly = comm_form.data["census_blocks_polygon"]
+            # # check if polygon - if so, create multipolygon
+            # if poly is not None and poly != "":
+            #     poly = poly.split("|")
+            #     newPolyArr = []
+            #     # union them one at a time- does not work
+            #
+            #     for stringPolygon in poly:
+            #         new_poly = GEOSGeometry(stringPolygon, srid=4326)
+            #         newPolyArr.append(new_poly)
+            #
+            #     mpoly = MultiPolygon(newPolyArr)
+            #     polygonUnion = mpoly.unary_union
+            #     polygonUnion.normalize()
+            #     # if one polygon is returned, create a multipolygon
+            #     if polygonUnion.geom_typeid == 3:
+            #         polygonUnion = MultiPolygon(polygonUnion)
+            #         entryForm.census_blocks_polygon = polygonUnion
 
             if self.kwargs["drive"]:
                 drive = Drive.objects.get(slug=self.kwargs["drive"])
@@ -556,18 +570,9 @@ class EntryView(LoginRequiredMixin, View):
                         # approve this entry
                         entryForm.admin_approved = True
 
-            # TODO: Determine role of drive tokens (one time link, etc.)
-            # if self.kwargs["token"]:
-            #     token = DriveToken.objects.get(token=self.kwargs["token"])
-            #     if token:
-            #         entryForm.drive = token.drive
-            #         entryForm.organization = token.drive.organization
-
-            #         # if user has a token and drive is active, auto approve submission
-            #         if token.drive.is_active:
-            #             entryForm.admin_approved = True
-
             entryForm.save()
+            comm_form.save_m2m()
+
             if addr_form.is_valid():
                 addrForm = addr_form.save(commit=False)
                 addrForm.entry = entryForm

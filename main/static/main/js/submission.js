@@ -5,7 +5,7 @@ $(document).ready(function () {});
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
 var map = new mapboxgl.Map({
   container: "map", // container id
-  style: "mapbox://styles/mapbox/streets-v11", //color of the map -- dark-v10 or light-v9
+  style: "mapbox://styles/districter-team/ckdfv8riy0uf51hqu1g7qjrha", //color of the map -- dark-v10 or light-v9
   center: [-96.7026, 40.8136], // starting position - Lincoln, Nebraska (middle of country lol)
   zoom: 3, // starting zoom -- higher is closer
   preserveDrawingBuffer: true,
@@ -39,57 +39,26 @@ function newSourceLayer(name, mbCode) {
     url: "mapbox://" + mapbox_user_name + "." + mbCode,
   });
 }
-// add a new layer of census block data
-function newCensusLayer(state) {
-  map.addLayer({
-    id: state.toUpperCase() + " Census Blocks",
-    type: "line",
-    source: state + "-census",
-    "source-layer": state + "census",
-    layout: {
-      visibility: "none",
-    },
-    paint: {
-      "line-color": "rgba(106,137,204,0.3)",
-      "line-width": 1,
-    },
+// add a new mapbox boundaries source + layer
+function newBoundariesLayer(name) {
+  map.addSource(name, {
+    type: "vector",
+    url: "mapbox://mapbox.boundaries-" + name + "-v3"
   });
-}
-// add a new layer of upper state legislature data
-function newUpperLegislatureLayer(state) {
-  map.addLayer({
-    id: state.toUpperCase() + " State Legislature - Senate",
-    type: "line",
-    source: state + "-upper",
-    "source-layer": state + "upper",
-    layout: {
-      visibility: "none",
-      "line-join": "round",
-      "line-cap": "round",
-    },
-    paint: {
-      "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 2,
-    },
-  });
-}
-// add a new layer of lower state legislature data
-function newLowerLegislatureLayer(state) {
-  map.addLayer({
-    id: state.toUpperCase() + " State Legislature - House/Assembly",
-    type: "line",
-    source: state + "-lower",
-    "source-layer": state + "lower",
-    layout: {
-      visibility: "none",
-      "line-join": "round",
-      "line-cap": "round",
-    },
-    paint: {
-      "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 2,
-    },
-  });
+  map.addLayer(
+    {
+      id: name + "-lines",
+      type: "line",
+      source: name,
+      "source-layer": "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1),
+      layout: {
+        visibility: "none"
+      },
+      paint: {
+        "line-color": "rgba(106,137,204,0.7)",
+      }
+    }
+  );
 }
 
 function sanitizePDF(x) {
@@ -102,45 +71,59 @@ function sanitizePDF(x) {
 }
 
 map.on("load", function () {
-  for (let census in CENSUS_KEYS) {
-    newSourceLayer(census, CENSUS_KEYS[census]);
+  var layers = map.getStyle().layers;
+  // Find the index of the first symbol layer in the map style
+  // only necessary for making added layers appear "beneath" the existing layers (roads, place names, etc)
+  // var firstSymbolId;
+  // for (var i = 0; i < layers.length; i++) {
+  //   if (layers[i].type === "symbol" && layers[i] !== "road") {
+  //     firstSymbolId = layers[i].id;
+  //     break;
+  //   }
+  // }
+  // ward + community areas for IL
+  if (state === "il") {
+    newSourceLayer("chi_wards", CHI_WARD_KEY);
+    newSourceLayer("chi_comm", CHI_COMM_KEY);
+    map.addLayer(
+      {
+        id: "chi-ward-lines",
+        type: "line",
+        source: "chi_wards",
+        "source-layer": "chi_wards",
+        layout: {
+          visibility: "none",
+        },
+        paint: {
+          "line-color": "rgba(106,137,204,0.7)",
+        },
+      }
+    );
+    map.addLayer(
+      {
+        id: "chi-comm-lines",
+        type: "line",
+        source: "chi_comm",
+        "source-layer": "chi_comm",
+        layout: {
+          visibility: "none",
+        },
+        paint: {
+          "line-color": "rgba(106,137,204,0.7)",
+        },
+      }
+    );
   }
-  // upper layers
-  for (let upper in UPPER_KEYS) {
-    if (states[i] !== "dc") {
-      newSourceLayer(upper, UPPER_KEYS[upper]);
-    }
+  // leg2 : congressional district
+  // leg3 : state senate district
+  // leg4 : state house district
+  // adm2 : counties
+  // loc4 : neighborhoods
+  // pos4 : 5-digit postcode area
+  // sta5 : block groups
+  for (var key in BOUNDARIES_LAYERS) {
+    newBoundariesLayer(key);
   }
-  // lower layers
-  for (let lower in LOWER_KEYS) {
-    if (states[i] !== "dc") {
-      newSourceLayer(lower, LOWER_KEYS[lower]);
-    }
-  }
-  for (let i = 0; i < states.length; i++) {
-    newCensusLayer(states[i]);
-    if (states[i] !== "dc") {
-      newUpperLegislatureLayer(states[i]);
-      newLowerLegislatureLayer(states[i]);
-    }
-  }
-  map.addSource("counties", {
-    type: "vector",
-    url: "mapbox://mapbox.hist-pres-election-county",
-  });
-  map.addLayer({
-    id: "counties",
-    type: "line",
-    source: "counties",
-    "source-layer": "historical_pres_elections_county",
-    layout: {
-      visibility: "none",
-    },
-    paint: {
-      "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 2,
-    },
-  });
 
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
@@ -290,19 +273,18 @@ map.on("load", function () {
 });
 
 //create a button that toggles layers based on their IDs
-var toggleableLayerIds = [
-  "Census Blocks",
-  "State Legislature - House/Assembly",
-  "State Legislature - Senate",
-  "counties",
-];
+var toggleableLayerIds = JSON.parse(JSON.stringify(BOUNDARIES_LAYERS));
+// add selector for chicago wards + community areas if illinois
+if (state === "il") {
+  toggleableLayerIds["chi-ward"] = "Chicago Wards";
+  toggleableLayerIds["chi-comm"] = "Chicago Community Areas";
+}
 
-for (var i = 0; i < toggleableLayerIds.length; i++) {
-  var id = toggleableLayerIds[i];
+for (var id in toggleableLayerIds){
 
   var link = document.createElement("input");
 
-  link.value = id.replace(/\s+/g, "-").toLowerCase();
+  link.value = id;
   link.id = id;
   link.type = "checkbox";
   link.className = "switch_1";
@@ -310,39 +292,34 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
 
   link.onchange = function (e) {
     var txt = this.id;
-    var clickedLayers = [];
-    if (txt === "counties") {
-      clickedLayers.push(txt);
-    } else {
-      for (let i = 0; i < states.length; i++) {
-        if (states[i] !== "dc" || txt === "Census Blocks") {
-          clickedLayers.push(states[i].toUpperCase() + " " + txt);
-        }
-      }
-    }
-    // var clickedLayers = ["NJ " + txt, "VA " + txt, "PA " + txt, "MI " + txt];
+    // var clickedLayers = [];
+    // clickedLayers.push(txt + "-lines");
     e.preventDefault();
     e.stopPropagation();
 
-    for (var j = 0; j < clickedLayers.length; j++) {
-      var visibility = map.getLayoutProperty(clickedLayers[j], "visibility");
+    var visibility = map.getLayoutProperty(txt + "-lines", "visibility");
 
-      if (visibility === "visible") {
-        map.setLayoutProperty(clickedLayers[j], "visibility", "none");
-      } else {
-        map.setLayoutProperty(clickedLayers[j], "visibility", "visible");
-      }
+    if (visibility === "visible") {
+      map.setLayoutProperty(txt + "-lines", "visibility", "none");
+    } else {
+      map.setLayoutProperty(txt + "-lines", "visibility", "visible");
     }
   };
   // in order to create the buttons
   var div = document.createElement("div");
   div.className = "switch_box box_1";
   var label = document.createElement("label");
-  label.setAttribute("for", id.replace(/\s+/g, "-").toLowerCase());
-  label.textContent = id;
+  label.setAttribute("for", id);
+  label.textContent = toggleableLayerIds[id];
   var layers = document.getElementById("outline-menu");
   div.appendChild(link);
   div.appendChild(label);
   layers.appendChild(div);
   var newline = document.createElement("br");
+};
+
+/*******************************************************************/
+// remove the last char in the string
+function removeLastChar(str) {
+  return str.substring(0, str.length - 1);
 }

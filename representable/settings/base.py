@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2019- Representable Team (Theodor Marcu, Lauren Johnston, Somya Arora, Kyle Barnes, Preeti Iyer).
+# Copyright (c) 2019- Representable Team (Theodor Marcu, Lauren Johnston, Somya Arora, Kyle Barnes, Preeti Iyer, Edward Tian, Jessie Fielding).
 #
 # This file is part of Representable
 # (see http://representable.org).
@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.sites",
     "django.contrib.staticfiles",
+    "django_extensions",
     "import_export",
     "main",
     "leaflet",
@@ -73,6 +74,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "phone_field",
     "ckeditor",
+    "representable",
     # 'allauth.socialaccount.providers.facebook',
     # 'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.linkedin',
@@ -174,9 +176,11 @@ LOGIN_REDIRECT_URL = "/"
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
+LOCALE_PATHS = (os.path.join(BASE_DIR, "<representable>" "locale"),)
+
 # Provide a lists of languages which your site supports.
 LANGUAGES = (
-    ("en", _("English")),
+    ("en-us", _("English")),
     ("es", _("Spanish")),
 )
 
