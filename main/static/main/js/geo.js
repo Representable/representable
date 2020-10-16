@@ -359,7 +359,7 @@ class DropdownButton {
     dropdown_control.classList.add("active");
     dropdown_control.id = "map-dropdown-id";
     dropdown_control.style.display = "block";
-    dropdown_control.innerHTML = '<i class="fas fa-cog"></i><i class="fas fa-caret-down"></i>'
+    dropdown_control.innerHTML = '<i class="fas fa-cog"></i>' //&emsp;<i class="fas fa-caret-down"></i>
 
     this._map = map;
     this._container = document.createElement("div");
@@ -573,7 +573,9 @@ drawControls.appendChild(mapClearButton);
 
 // show more controls after clicking on dropdown
 var dropdownButton = document.getElementById("map-dropdown-id");
+var basicMode = true;
 dropdownButton.addEventListener("click", function (e) {
+  basicMode = false;
   var children = drawControls.children;
   for (let elem of children) {
     if (elem.id !== "map-dropdown-id") {
@@ -624,7 +626,7 @@ function newCensusLines(state) {
       visibility: "none",
     },
     paint: {
-      "line-color": "rgba(0,0,0,0.2)",
+      "line-color": "rgba(0,0,0,0.6)",
       "line-width": 1,
     },
   });
@@ -987,7 +989,8 @@ map.on("style.load", function () {
 
     var filter = [];
     var currentFilter = map.getFilter(state + "-bg-highlighted");
-    if (eraseMode) {
+    var isBasicErase = basicMode && currentFilter.includes(features[0]);
+    if (eraseMode || isBasicErase) {
       currentFilter.forEach(function (feature) {
         if (!features.includes(feature)) {
           filter.push(feature);
