@@ -575,10 +575,13 @@ drawControls.appendChild(mapClearButton);
 var dropdownButton = document.getElementById("map-dropdown-id");
 var basicMode = true;
 dropdownButton.addEventListener("click", function (e) {
-  mapClearButton.style.display === "none"
-    ? dropdownButton.innerHTML = '<i class="fas fa-cog"></i>&emsp;<i class="fas fa-caret-up"></i>'
-    : dropdownButton.innerHTML = '<i class="fas fa-cog">';
-  basicMode = false;
+  if (mapClearButton.style.display === "none") {
+    dropdownButton.innerHTML = '<i class="fas fa-cog"></i>&emsp;<i class="fas fa-caret-up"></i>';
+    basicMode = false;
+  } else {
+    dropdownButton.innerHTML = '<i class="fas fa-cog">';
+    basicMode = true;
+  }
   var children = drawControls.children;
   for (let elem of children) {
     if (elem.id !== "map-dropdown-id") {
