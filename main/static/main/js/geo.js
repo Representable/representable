@@ -52,9 +52,6 @@ function closePopup() {
 
 /******************************************************************************/
 
-// Formset field object saves a deep copy of the original formset field object.
-// (If user deletes all fields, he can add one more according to this one).
-var formsetFieldObject;
 var state;
 $(document).ready(function () {
   // load tooltips (bootstrap)
@@ -352,6 +349,34 @@ var geocoder = new MapboxGeocoder({
 document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
 
 /* Creating custom draw buttons */
+class DropdownButton {
+  onAdd(map) {
+    var dropdown_control = document.createElement("button");
+    dropdown_control.href = "#";
+    dropdown_control.type = "button";
+    dropdown_control.backgroundImg = "";
+
+    dropdown_control.classList.add("active");
+    dropdown_control.id = "map-dropdown-id";
+    dropdown_control.style.display = "block";
+    dropdown_control.innerHTML = '<i class="fas fa-cog"></i><i class="fas fa-caret-down"></i>'
+
+    this._map = map;
+    this._container = document.createElement("div");
+    this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group draw-group";
+    this._container.id = "draw-group-container";
+    this._container.appendChild(dropdown_control);
+    return this._container;
+  }
+
+  onRemove() {
+    this._container.parentNode.removeChild(this._container);
+    this._map = undefined;
+  }
+}
+map.addControl(new DropdownButton(), "top-right");
+var drawControls = document.getElementById("draw-group-container");
+
 class SelectRadiusButton {
   onAdd(map) {
     var radius_control = document.createElement("button");
@@ -361,13 +386,12 @@ class SelectRadiusButton {
 
     radius_control.classList.add("active");
     radius_control.id = "map-radius-control-id";
-    radius_control.style.display = "block";
+    radius_control.style.display = "none";
     radius_control.innerHTML =
-      '<form><input type="range" min="1" max="50" value="25" class="custom-range" id="radius-control"><p style="margin: 0;">Selection Tool Size</p></form>';
+      '<form><input type="range" min="1" max="50" value="1" class="custom-range" id="radius-control"><p style="margin: 0;">Selection Tool Size</p></form>';
     this._map = map;
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group draw-group";
-    this._container.id = "draw-group-container";
     this._container.appendChild(radius_control);
     return this._container;
   }
@@ -377,8 +401,10 @@ class SelectRadiusButton {
     this._map = undefined;
   }
 }
+
 map.addControl(new SelectRadiusButton(), "top-right");
-var drawControls = document.getElementById("draw-group-container");
+var radiusSelect = document.getElementById("map-radius-control-id");
+drawControls.append(radiusSelect);
 
 var slider = document.getElementById("radius-control");
 var style = document.querySelector('[data="slider-data"]');
@@ -399,7 +425,7 @@ class DrawButton {
 
     draw_button.classList.add("active");
     draw_button.id = "map-draw-button-id";
-    draw_button.style.display = "block";
+    draw_button.style.display = "none";
     draw_button.innerHTML = "<i class='fas fa-pencil-alt'></i> Draw";
     this._map = map;
     return draw_button;
@@ -423,7 +449,7 @@ class EraserButton {
 
     eraser_button.classList.add("active");
     eraser_button.id = "map-eraser-button-id";
-    eraser_button.style.display = "block";
+    eraser_button.style.display = "none";
     eraser_button.innerHTML = "<i class='fas fa-eraser'></i> Eraser";
     this._map = map;
     return eraser_button;
@@ -468,7 +494,7 @@ class UndoButton {
 
     undo_button.classList.add("active");
     undo_button.id = "map-undo-button-id";
-    undo_button.style.display = "block";
+    undo_button.style.display = "none";
     undo_button.innerHTML = "<i class='fas fa-undo-alt'></i> Undo";
     this._map = map;
     undo_button.addEventListener("click", function (event) {
@@ -509,7 +535,7 @@ class ClearMapButton {
 
     clear_button.classList.add("active");
     clear_button.id = "map-clear-button-id";
-    clear_button.style.display = "block";
+    clear_button.style.display = "none";
     clear_button.innerHTML = "<i class='fas fa-trash-alt'></i> Clear Selection";
     this._map = map;
     clear_button.addEventListener("click", function (event) {
@@ -544,6 +570,19 @@ class ClearMapButton {
 map.addControl(new ClearMapButton(), "top-right");
 var mapClearButton = document.getElementById("map-clear-button-id");
 drawControls.appendChild(mapClearButton);
+
+// show more controls after clicking on dropdown
+var dropdownButton = document.getElementById("map-dropdown-id");
+dropdownButton.addEventListener("click", function (e) {
+  var children = drawControls.children;
+  for (let elem of children) {
+    if (elem.id !== "map-dropdown-id") {
+      elem.style.display === "block" ? elem.style.display = "none" : elem.style.display = "block";
+    }
+  }
+});
+
+/****************************************************************************/
 
 function showWarningMessage(warning) {
   var warning_box = document.getElementById("warning-box-id");
@@ -862,7 +901,7 @@ myTour.addStep({
 
 /******************************************************************************/
 // the drawing radius for select tool
-var drawRadius = 25;
+var drawRadius = 0;
 var isStateChanged = false;
 /* After the map style has loaded on the page, add a source layer and default
 styling for a single point. */
