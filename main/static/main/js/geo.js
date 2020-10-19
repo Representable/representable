@@ -999,9 +999,7 @@ map.on("style.load", function () {
     // todo: bug where you can select non-contiguous areas on basicMode
     if ((eraseMode && !basicMode) || isBasicErase) {
       currentFilter.forEach(function (feature) {
-        if (!features.includes(feature)) {
-          filter.push(feature);
-        }
+        if (!features.includes(feature)) filter.push(feature);
       });
       arraysEqual(filter, currentFilter)
         ? (isChanged = false)
@@ -1019,7 +1017,7 @@ map.on("style.load", function () {
         selectBbox = currentBbox;
         hideWarningMessage();
       } else {
-        if (turf.booleanDisjoint(currentBbox, selectBbox) && !isEmptyFilter(filter)) {
+        if (turf.booleanDisjoint(currentBbox, selectBbox) && !isEmptyFilter(currentFilter)) {
           showWarningMessage(
             "Please ensure that your community does not contain any gaps. Your selected units must connect."
           );
