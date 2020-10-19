@@ -581,6 +581,7 @@ dropdownButton.addEventListener("click", function (e) {
   } else {
     dropdownButton.innerHTML = '<i class="fas fa-cog">';
     basicMode = true;
+    drawRadius = 0;
   }
   var children = drawControls.children;
   for (let elem of children) {
@@ -1018,7 +1019,7 @@ map.on("style.load", function () {
         selectBbox = currentBbox;
         hideWarningMessage();
       } else {
-        if (turf.booleanDisjoint(currentBbox, selectBbox)) {
+        if (turf.booleanDisjoint(currentBbox, selectBbox) && !isEmptyFilter(filter)) {
           showWarningMessage(
             "Please ensure that your community does not contain any gaps. Your selected units must connect."
           );
