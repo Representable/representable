@@ -388,7 +388,7 @@ class SelectRadiusButton {
     radius_control.id = "map-radius-control-id";
     radius_control.style.display = "none";
     radius_control.innerHTML =
-      '<form><input type="range" min="1" max="50" value="1" class="custom-range" id="radius-control"><p style="margin: 0;">Selection Tool Size</p></form>';
+      '<form><input type="range" min="0" max="50" value="0" class="custom-range" id="radius-control"><p style="margin: 0;">Selection Tool Size</p></form>';
     this._map = map;
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group draw-group";
@@ -576,12 +576,11 @@ var dropdownButton = document.getElementById("map-dropdown-id");
 var basicMode = true;
 dropdownButton.addEventListener("click", function (e) {
   if (mapClearButton.style.display === "none") {
-    dropdownButton.innerHTML = '<i class="fas fa-cog"></i>&emsp;<i class="fas fa-caret-up"></i>';
+    dropdownButton.innerHTML = '<i class="fas fa-cog"></i> Settings <i class="fas fa-caret-up"></i>';
     basicMode = false;
   } else {
     dropdownButton.innerHTML = '<i class="fas fa-cog">';
-    basicMode = true;
-    drawRadius = 0;
+    if (drawRadius === 0) basicMode = true;
   }
   var children = drawControls.children;
   for (let elem of children) {
@@ -997,7 +996,8 @@ map.on("style.load", function () {
     var filter = [];
     var currentFilter = map.getFilter(state + "-bg-highlighted");
     var isBasicErase = basicMode && currentFilter.includes(features[0]);
-    if (eraseMode || isBasicErase) {
+    // todo: bug where you can select non-contiguous areas on basicMode
+    if ((eraseMode && !basicMode) || isBasicErase) {
       currentFilter.forEach(function (feature) {
         if (!features.includes(feature)) {
           filter.push(feature);

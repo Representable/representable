@@ -558,8 +558,8 @@ color scheme. See readme.md*/
 }
 input[type=range]::-webkit-slider-thumb {
   border-radius: 50%;
-  width: 17.5px;
-  height: 17.5px;
+  width: 15px;
+  height: 15px;
 }
 
 /* css for the line on the progress bar */
