@@ -1,6 +1,8 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% block content %}
+{% load i18n %}
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
@@ -8,10 +10,10 @@
                 <div class="card-body">
                     <h5 class="card-title text-center">
                         {% if verified %}
-                            Thank you for your submission!
+                            {% trans "Thank you for your submission!" %}
                         {% endif %}
                         {% if not verified %}
-                            Please Verify Your Email
+                           {% trans "Please Verify Your Email" %}
                         {% endif %}
                     </h5>
                     <div class="text-center">

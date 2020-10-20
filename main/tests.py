@@ -66,7 +66,7 @@ class UserTest(TestCase):
         self.client.login(username="johndoe", password="johndoe")
         response = self.client.get("/")
         self.assertTrue(response.context["user"].is_active)
-        response = self.client.get("/entry/")
+        response = self.client.get("/entry/mi/")
         self.assertEqual(response.status_code, 200)
 
         # Fake user logout.

@@ -16,6 +16,7 @@ django-redis==4.10.0
 django-redis-cache==2.0.0
 django-select2==6.3.1
 django-widget-tweaks==1.4.3
+django-extensions==3.0.9
 Faker==1.0.5
 geojson==2.4.1
 geojson-rewind==0.2.0

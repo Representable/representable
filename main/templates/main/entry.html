@@ -2,7 +2,7 @@
 {% load leaflet_tags %}
 {% load static %}
 {% load widget_tweaks %}
-
+{% load i18n %}
 {% block head %}
 {{ form.media.css }}
 {% leaflet_js %}
@@ -35,8 +35,7 @@
     var organization_id = "{{organization_id}}";
     var drive_name = "{{drive_name}}";
     var organization_name = "{{organization_name}}";
-    var state_abbr = "{{state.abbr}}";
-    var state_name = "{{state.name}}";
+    var state = "{{state}}";
     mixpanel.track("Entry Page Loaded",
     {
      "drive_id": drive_id,
@@ -61,15 +60,15 @@
                     <div class="row row-equal-cols">
                         <div class="col-lg  m-2">
                             <h1 class="font-weight-light">
-                                Map your community
+                                {% trans "Map your community" %}
                             </h1>
 
                             <p class="">
-                                Fill out the form below and draw a map to
-                                add your community to Representable.org
-                                and make your voice heard.
+                                {% blocktrans %}
+                                Make your voice heard! Fill out the form below and draw a map to add your community to Representable.org.
                                 <br>
                                 Follow the instructions in each section to get started.
+                                {% endblocktrans %}
                             </p>
                             {% csrf_token %}
                             <!-- {# Include the non-field error fields #} -->
@@ -85,8 +84,8 @@
                             </div>
                             {% endif %}
                             <div id="form_error" class="alert alert-danger alert-dismissible fade show form-error d-none" role="alert">
-                                There was an error in submitting your community. Please check over and
-                                ensure that you have filled out all required fields.
+                                {% blocktrans %}There was an error in submitting your community. Please check over and
+                                ensure that you have filled out all required fields. {% endblocktrans %}
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -98,20 +97,24 @@
                             <div class="collapse-card card-section active-section">
                                 <div class="card">
                                     <div class="card-header text-header-card">
-                                        <strong>1. Your Identifying Information </strong>
+                                        <strong>{% trans "1. Your Identifying Information" %} </strong>
                                     </div>
                                     <div class="card-body collapse show">
                                         <div class="accordion" id="privacy_accordion">
                                             <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" data-target="#privacy_example" aria-expanded="false" aria-controls="collapseOne">
-                                            Why do we need your information?
+                                            {% trans "Why do we need your information?" %}
                                             </button>
                                             <div id="privacy_example" class="collapse" aria-labelledby="headingOne" data-parent="#privacy_accordion">
                                                 <p class="collapse-in ml-0">
-                                                    Your personal privacy is our highest priority. We gather personal
+                                                    {% url 'main:privacy' as url1%}
+                                                    {% url 'main:terms' as url2%}
+
+                                                    {% blocktrans %} Your personal privacy is our highest priority. We gather personal
                                                     information to verify that you are a real person. If you choose to
                                                     submit this entry to a drive, the administrators of the drive
                                                     will have access to this information. Learn more about our
-                                                    commitment to privacy on our <a target="_blank" rel="noopener noreferrer" href="{% url 'main:privacy' %}">Privacy</a> and <a target="_blank" rel="noopener noreferrer" href="{% url 'main:terms' %}">Terms</a> pages.
+                                                    commitment to privacy on our <a target="_blank" rel="noopener noreferrer" href="{{url1}}">Privacy</a>
+                                                    and <a target="_blank" rel="noopener noreferrer" href="{{url2}}">Terms</a> pages. {% endblocktrans%}
                                                 </p>
                                             </div>
                                         </div>
@@ -134,7 +137,7 @@
                                         </div>
                                         <p class="card-text mb-1 mt-2">
 
-                                            Your Name <small class="text-danger">(Required)</small>
+                                            {% trans "Your Name"%} <small class="text-danger">{% trans "(Required)" %}</small>
                                         </p>
                                         <div class="row my-2">
                                             <div class="col-6">
@@ -160,7 +163,7 @@
                                             {% endif %}
                                         </div>
                                         <p class="card-text mb-1 mt-2">
-                                            Your Address <small class="text-danger">(Required)</small>
+                                            {% trans "Your Address" %} <small class="text-danger">{% trans "(Required)" %}</small>
                                         </p>
                                         <div id="street_error_alerts">
                                             {% if addr_form.street.errors %}
@@ -262,13 +265,15 @@
                             <div class="collapse-card card-section ">
                                 <div class="card">
                                     <div class="card-header text-header-card">
-                                        <strong>2. Your Community's Shared Interests</strong>
+                                        <strong>{% trans "2. Your Community's Shared Interests" %}</strong>
                                     </div>
                                     <div class="card-body">
+                                        {% blocktrans %}
                                         <p>
-                                            To submit your community entry, you must provide a response to <b>at least one</b> of the questions below.
+                                             To submit your community entry, you must provide a response to <b>at least one</b> of the questions below.
                                             Please respond to all the questions that apply.
                                         </p>
+                                        {% endblocktrans %}
                                         <hr>
                                         <!-- Form Errors -->
                                         {% if comm_form.cultural_interests.errors %}
@@ -277,7 +282,7 @@
                                                 sessionStorage.setItem("allChecks", "fail");
                                             </script>
                                             <div id="interests_missing" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
-                                                Please fill out at least one of the interest fields.
+                                                {% trans "Please fill out at least one of the interest fields." %}
                                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -285,7 +290,7 @@
                                         </div>
                                         {% endif %}
                                         <div id="need_one_interest" class="alert alert-danger alert-dismissible fade show form-error d-none" role="alert">
-                                            Please fill out at least one of the interest fields.
+                                            {% trans "Please fill out at least one of the interest fields." %}
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -293,119 +298,67 @@
                                         <!-- Form Errors END -->
                                         <!-- Sections: -->
                                         <!--  Economic -->
-                                        <h5 class="card-text">Economic Interests</h5>
-                                        <!-- <div id="economic_error_alerts">
-                                            {% if comm_form.economic_interests.errors %}
-                                                <script>
-                                                    sessionStorage.setItem("allChecks", "fail");
-                                                </script>
-                                                <div id="economic_errors" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
-                                                    <ul class="m-0">
-                                                    {% for error in comm_form.economic_interests.errors %}
-                                                        <li>{{ error|escape }}</li>
-                                                    {% endfor %}
-                                                    </ul>
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                            {% endif %}
-                                        </div> -->
+                                        <h5 class="card-text">{% trans "Economic Interests" %}</h5>
                                         <p class="card-text mb-0">
-                                            Is there a shared economy in the geographic area of your community?
-                                            How and where are residents employed?
-                                            Are there shared environmental concerns such as landfills or water quality?
+                                            {% trans "Is there a shared economy in the geographic area of your community? How and where are residents employed? Are there shared environmental concerns such as landfills or water quality?" %}
                                         </p>
                                         <div class="accordion" id="economic_interests_accordion">
                                             <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#economic_interests_example" aria-expanded="false" aria-controls="collapseOne">
-                                            Show Examples
+                                            {% trans "Show Examples" %}
                                             </button>
                                             <div id="economic_interests_example" class="collapse" aria-labelledby="headingOne" data-parent="#economic_interests_accordion">
                                                 <p class="collapse-in ml-0">
-                                                    Tech firms and their employees, tourism, agriculture such as the cherry growers,
+                                                    {% blocktrans %} Tech firms and their employees, tourism, agriculture such as the cherry growers,
                                                     shipping and transportation hubs, manufacturing centers, natural resources, university towns,
-                                                    unemployment issues, waterfront communities, business associations.
+                                                    unemployment issues, waterfront communities, business associations. {% endblocktrans %}
                                                 </p>
                                             </div>
                                         </div>
                                         {{ comm_form.economic_interests|append_attr:"class:form-control" }}
                                         <hr>
                                         <!-- Activities -->
-                                        <h5 class="card-text">Community Activities and Services</h5>
-                                        <!-- <div id="activities_error_alerts">
-                                            {% if comm_form.comm_activities.errors %}
-                                                <script>
-                                                    sessionStorage.setItem("allChecks", "fail");
-                                                </script>
-                                                <div id="activities_errors" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
-                                                    <ul>
-                                                    {% for error in comm_form.comm_activities.errors %}
-                                                        <li>{{ error|escape }}</li>
-                                                    {% endfor %}
-                                                    </ul>
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                            {% endif %}
-                                        </div> -->
+                                        <h5 class="card-text">{% trans "Community Activities and Services" %}</h5>
+                                        {% blocktrans %}
                                         <p class="card-text mb-0">
-                                            Where do people in your community gather or socialize?
-                                            Where does your community get its services?
+                                            Where do people in your community gather or socialize? Where does your community get its services?
                                         </p>
+                                        {% endblocktrans %}
                                         <div class="accordion" id="comm_activities_accordion">
                                             <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#comm_activities_example" aria-expanded="false" aria-controls="collapseOne">
-                                            Show Examples
+                                            {% trans "Show Examples" %}
                                             </button>
                                             <div id="comm_activities_example" class="collapse" aria-labelledby="headingOne" data-parent="#comm_activities_accordion">
                                                 <p class="collapse-in ml-0">
-                                                    Shopping areas, schools and colleges, parks and recreation areas,
+                                                    {% blocktrans %} Shopping areas, schools and colleges, parks and recreation areas,
                                                     lakes and water ways, healthcare services, and other activities and services that
-                                                    help define your community.
+                                                    help define your community." {% endblocktrans %}
                                                 </p>
                                             </div>
                                         </div>
                                         {{ comm_form.comm_activities|append_attr:"class:form-control" }}
                                         <hr>
                                         <!-- Cultural -->
-                                        <h5 class="card-text">Cultural or Historical Interests</h5>
-                                        <!-- <div id="cultural_interests_error_alerts">
-                                            {% if comm_form.cultural_interests.errors %}
-                                                <script>
-                                                    sessionStorage.setItem("allChecks", "fail");
-                                                </script>
-                                                <div id="cultural_interests_errors" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
-                                                    <ul class="m-0">
-                                                    {% for error in comm_form.cultural_interests.errors %}
-                                                        <li class="m-0">{{ error|escape }}</li>
-                                                    {% endfor %}
-                                                    </ul>
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                            {% endif %}
-                                        </div> -->
+                                        <h5 class="card-text">{% trans "Cultural or Historical Interests" %}</h5>
                                         <p class="card-text mb-0">
-                                            What fosters a sense of belonging in your community?
-                                            What common beliefs or values exist?
+                                            {% blocktrans %} What fosters a sense of belonging in your community?
+                                            What common beliefs or values exist? {% endblocktrans %}
                                         </p>
                                         <div class="accordion" id="cultural_interests_accordion">
                                             <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#cultural_interests_example" aria-expanded="false" aria-controls="collapseOne">
-                                            Show Examples
+                                            {% trans "Show Examples" %}
                                             </button>
                                             <div id="cultural_interests_example" class="collapse" aria-labelledby="headingOne" data-parent="#cultural_interests_accordion">
                                                 <p class="collapse-in ml-0">
-                                                    Age groups, religious groups, arts and cultural centers, languages, immigration status,
+                                                    {% blocktrans %} Age groups, religious groups, arts and cultural centers, languages, immigration status,
                                                     ethnic groups such as Detroit’s Mexican Town or Dearborn’s Middle Eastern community,
-                                                    historic settlements such as Leland’s Fishtown.
+                                                    historic settlements such as Leland’s Fishtown. {% endblocktrans %}
                                                 </p>
                                             </div>
                                         </div>
                                         {{ comm_form.cultural_interests|append_attr:"class:form-control" }}
                                         <hr>
                                         <!-- Other -->
-                                        <h5 class="card-text">Other Interests and Concerns</h5>
+                                        <h5 class="card-text">{% trans "Other Interests and Concerns" %}</h5>
                                         <!-- <div id="other_error_alerts">
                                             {% if comm_form.other_considerations.errors %}
                                                 <script>
@@ -424,16 +377,16 @@
                                             {% endif %}
                                         </div> -->
                                         <p class="card-text mb-1">
-                                            What other interests does your community care about? Do you have any suggestions
-                                            for how the redistricting commission in your state could help address these concerns?
+                                            {% blocktrans %} What other interests does your community care about? Do you have any suggestions
+                                            for how the redistricting commission in your state could help address these concerns? {% endblocktrans %}
                                         </p>
                                         <div class="accordion" id="other_interests_accordion">
                                             <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#other_interests_example" aria-expanded="false" aria-controls="collapseOne">
-                                            Show Example
+                                            {% trans "Show Example" %}
                                             </button>
                                             <div id="other_interests_example" class="collapse" aria-labelledby="headingOne" data-parent="#other_interests_accordion">
                                                 <p class="collapse-in ml-0">
-                                                    Our farmers extend over two counties and we hope you can put them together in a single State Senate district.
+                                                    {% trans "Our farmers extend over two counties and we hope you can put them together in a single State Senate district." %}
                                                 </p>
                                             </div>
                                         </div>
@@ -448,7 +401,7 @@
                             <div class="collapse-card card-section ">
                                 <div class="card">
                                     <div class="card-header text-header-card">
-                                        <strong>3. Your Community's Name</strong>
+                                        <strong>{% trans "3. Your Community's Name" %}</strong>
                                     </div>
                                     <div class="card-body">
                                         <div id="entry_name_error_alerts">
@@ -469,10 +422,10 @@
                                             {% endif %}
                                         </div>
                                         <p class="card-text">
-                                            What name can we use to identify your community? <small class="text-danger">(Required)</small>
+                                            {% trans "What name can we use to identify your community?" %} <small class="text-danger">{% trans "(Required)" %}</small>
                                             <!-- TODO we should find a better example -->
                                             <br>
-                                            <small>For example: Cherry Farmers Community</small>
+                                            <small>{% trans "For example: Cherry Farmers Community, Huron River Watershed, Chippewa Community, LAX Airport Communities, University of Texas Students, El Barrio" %}</small>
                                         </p>
                                         {{ comm_form.entry_name|append_attr:"class:form-control" }}
 
@@ -494,12 +447,7 @@
                                 <div class="card">
                                     <div class="card-header text-header-card">
                                         <strong>
-                                        {% if LANGUAGE_CODE == 'en' %}
-                                        4. Draw Your Community
-                                        {% elif LANGUAGE_CODE == 'es' %}
-                                        <!-- Google translate  -->
-                                        4. Dibuja tu comunidad
-                                        {% endif %}
+                                        {% trans "4. Draw Your Community" %}
                                         </strong>
                                     </div>
                                     <div id='map-card' class="card-body">
@@ -510,12 +458,7 @@
                                                     sessionStorage.setItem("allChecks", "fail");
                                                 </script>
                                                 <div id="polygon_missing" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
-                                                    {% if LANGUAGE_CODE == 'en' %}
-                                                    You need to draw a polygon to submit the form.
-                                                    {% elif LANGUAGE_CODE == 'es' %}
-                                                    <!-- Google translate  -->
-                                                    Debe dibujar un polígono para enviar el formulario.
-                                                    {% endif %}
+                                                  {% trans "You need to draw a polygon to submit the form." %}
                                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -523,18 +466,18 @@
                                                 {% endif %}
                                             </div>
                                             <strong>
-                                                    Search for a location, such as address, city, or zipcode to begin drawing your community.
-                                                    <small class="text-danger">(Required)</small>
+                                                    {% trans "Search for a location, such as address, city, or zipcode to begin drawing your community." %}
+                                                    <small class="text-danger">{% trans "(Required)" %}</small>
                                             </strong>
                                             <span class="float-right my-2">
-                                                <button class="btn btn-secondary btn-sm mb-2 mr-2 d-none" id="shepherd-btn" onclick="myTour.start()" type="button">Step-by-step guide</button>
-                                                <button class="btn btn-secondary btn-sm mb-2" onclick="showVideoPopup()" type="button">Video Tutorial</button>
+                                                <button class="btn btn-secondary btn-sm mb-2 mr-2 d-none" id="shepherd-btn" onclick="myTour.start()" type="button">{% trans "Step-by-step guide" %}</button>
+                                                <button class="btn btn-secondary btn-sm mb-2" onclick="showVideoPopup()" type="button">{% trans "Video Tutorial" %}</button>
                                             </span>
                                             <div id="geocoder" class="geocoder my-3"></div>
                                             <div class="map-bounding-box my-2 collapse">
-                                                <p>Draw your community by selecting <a href="https://www.census.gov/programs-surveys/geography/about/glossary.html#par_textimage_4">units</a> on the map.
+                                                <p>{% blocktrans %} Draw your community by selecting <a href="https://www.census.gov/programs-surveys/geography/about/glossary.html#par_textimage_4" target="_blank" data-toggle="tooltip" title="The units you are selecting to draw your community are census block groups. Map drawers use these units when creating districts.">units</a> on the map.
                                                    Make sure that all your community is contained within the highlighted units, and that your drawn community does not contain gaps.
-                                                   This will help the Redistricting Commission draw fairer districts using your entry.
+                                                   This will help the Redistricting Commission draw fairer districts using your entry. {% endblocktrans %}
                                                 </p>
                                                 <div class="map-box">
                                                     <div id='menu'></div>
@@ -556,32 +499,36 @@
                                 <div id="terms-card" class="card">
                                     <div class="card-header text-header-card">
                                         <strong>
-                                        5. Privacy and Terms of Use
+                                        {% trans "5. Privacy and Terms of Use" %}
                                         </strong>
                                         <input class="btn btn-secondary float-right button-edit" type="button" value="Edit Section">
                                     </div>
                                     <div class="card-body collapse show">
                                         <p class="card-text">
-                                            Your privacy is our highest priority. We gather your Identifying information to verify
+                                            {% blocktrans %}Your privacy is our highest priority. We gather your Identifying information to verify
                                             that you are a real person. We will not publicly share anyone's individual personal information,
-                                            such as name, address, or email.
+                                            such as name, address, or email. {% endblocktrans %}
                                             {% if has_drive %}
                                             <br>
-                                            We will only share your information with {{organization_name}} because you are adding the community through their page.
+                                            "We will only share your information with {{organization_name}} because you are adding the community through their page."
                                             {% endif %}
                                         </p>
                                         <div class="toc-check">
                                             <input class="toc-check-input" type="checkbox" value="" id="toc_check" required>
                                             <label class="toc-check-label" for="toc_check">
-                                                Click here to indicate that you have read and agree to the
-                                                <a target="_blank" rel="noopener noreferrer" href="{% url 'main:terms' %}">Terms of Use</a> and
-                                                <a target="_blank" rel="noopener noreferrer" href="{% url 'main:privacy' %}">Privacy Policy</a>.
+                                                {% url 'main:privacy' as url1%}
+                                                {% url 'main:terms' as url2%}
+
+                                                {% blocktrans %} Click here to indicate that you have read and agree to the
+                                                <a target="_blank" rel="noopener noreferrer" href={{url1}}>Terms of Use</a> and
+                                                <a target="_blank" rel="noopener noreferrer" href="{{url2}}">Privacy Policy</a>.
                                                 <small class="text-danger">(Required)</small>
+                                                {% endblocktrans %}
                                             </label>
                                         </div>
                                         <hr>
-                                        Any saved communities are final. In order to edit a saved community you will need
-                                        to create a new community and delete the old one.
+                                        {% blocktrans %} Any saved communities are final. In order to edit a saved community you will need
+                                        to create a new community and delete the old one. {% endblocktrans %}
                                     </div>
                                 </div>
                             </div>
@@ -590,22 +537,22 @@
                 </div>
                 <div id="dropuphelp2" class="btn-floating btn-group shadow-lg dropup">
                     <button type="button" class="btn fixed-action-btn btn-secondary shadow-lg dropdown-toggle" id="dropuphelp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-question-circle" aria-hidden="true"></i><span class="d-none d-sm-inline"> Help</span>
+                    <i class="fa fa-question-circle" aria-hidden="true"></i><span class="d-none d-sm-inline"> {% trans "Help" %}</span>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropuphelp">
-                    <a class="dropdown-item" href="https://docs.google.com/forms/d/e/1FAIpQLSfeyoZ87pS67iTh2c3t5031XqoNFNAdwF6Pt1NUns_z_Myxaw/viewform">Report Error/Send Feedback</a>
+                    <a class="dropdown-item" href="https://docs.google.com/forms/d/e/1FAIpQLSfeyoZ87pS67iTh2c3t5031XqoNFNAdwF6Pt1NUns_z_Myxaw/viewform"> {% trans "Report Error/Send Feedback" %}</a>
                     </div>
                 </div>
                 <div class="btn-floating btn-group shadow-lg">
                     <button type="button" class="btn fixed-action-btn btn-secondary shadow-lg" id="loading-entry">
-                    <div class="loader loader-small text-center"></div><span class="d-none d-sm-inline"> Saving Community...</span>
+                    <div class="loader loader-small text-center"></div><span class="d-none d-sm-inline"> {% trans "Saving Community..." %}</span>
                     </button>
                 </div>
 
                     <div class='row row-equal-cols'>
                         <div class='col-lg text-center m-2'>
                             <div style="display: inline-block;">
-                                <button id="save" form="entryForm" type="submit" class="btn btn-primary" value="Submit">Save Community</button>
+                                <button id="save" form="entryForm" type="submit" class="btn btn-primary" value="Submit">{% trans "Save Community" %}</button>
                             </div>
                         </div>
                     </div>
@@ -621,7 +568,7 @@
                         Video Tutorial <button type="button" class="close" onclick="closePopup()">&times;</button>
                     </h5>
                     <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/cVrnMXf-47Q" allowfullscreen></iframe>
+                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/aQ4PhsxYGUE" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
