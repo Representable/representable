@@ -696,6 +696,16 @@ color scheme. See readme.md*/
   height: 3rem;
 }
 
+.language-button {
+    background: #FFFFFF;
+    border:0 none;
+    cursor:pointer;
+    padding: 0;
+}
+.language-button:hover {
+  text-decoration: underline;
+}
+
 #all {
   font-size: 12px;
   text-align: center;
