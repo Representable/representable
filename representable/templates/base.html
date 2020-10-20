@@ -177,7 +177,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-md">
-                <a href="/"><img id="r-logo-svg" class="mb-2 text-muted" src="{% static 'img/representable_logo.svg' %}" alt="" width="24" height="24"></a>
+                <a href="/"><img id="r-logo-svg" class="mb-2 text-muted" src="{% static 'img/representable_logo.svg' %}" alt="Representable logo" width="24" height="24"></a>
                 <p class="d-block mb-3 text-muted">© Representable 2020</p>
             </div>
             <div class="col-6 col-md">
@@ -212,7 +212,7 @@
                       {% csrf_token %}
                       <input name="next" type="hidden" value="{{ redirect_to }}" />
                       <input name="language" type="hidden" value="{% if LANGUAGE_CODE == "es" %}en-us{% else %}es{% endif %}" />
-                      <input type="submit" value="{% if LANGUAGE_CODE == "es" %} In English {% else %} En Español {% endif %}" />
+                      <input class="text-muted language-button" type="submit" value="{% if LANGUAGE_CODE == "es" %}In English{% else %}En Español{% endif %}" />
                     </form>
                     </li>
                 </ul>
