@@ -143,7 +143,7 @@ class OrganizationForm(ModelForm):
         model = Organization
         fields = ["name", "description", "ext_link", "states"]
         labels = {
-            "ext_link": "Link to Organization",
+            "ext_link": "Link to Organization Website",
         }
         widgets = {
             "name": forms.TextInput(
@@ -158,7 +158,7 @@ class OrganizationForm(ModelForm):
             ),
             "ext_link": forms.TextInput(
                 attrs={
-                    "placeholder": "External link to your organization. Include 'http'."
+                    "placeholder": "External link to your organization's website. Include 'http'."
                 }
             ),
             "states": Select2MultipleWidget(
