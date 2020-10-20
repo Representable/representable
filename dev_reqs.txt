@@ -1,0 +1,3 @@
+graphviz==0.14.1
+pydotplus==2.0.2
+pygraphviz==1.6

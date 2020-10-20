@@ -132,6 +132,12 @@ body {
   /* font-weight: 500; */
   font-size: 16px;
 }
+.nav-link-org {
+  color: rgba(32, 118, 195, .8) !important;
+}
+.nav-link-org:hover {
+  color: rgba(32, 118, 195, 1) !important;
+}
 .container {
   border-width: 0;
 }
@@ -693,6 +699,16 @@ input[type=range]::-webkit-slider-thumb {
 }
 .how-it-works-title {
   height: 3rem;
+}
+
+.language-button {
+    background: #FFFFFF;
+    border:0 none;
+    cursor:pointer;
+    padding: 0;
+}
+.language-button:hover {
+  text-decoration: underline;
 }
 
 #all {
