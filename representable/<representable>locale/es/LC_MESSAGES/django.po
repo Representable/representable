@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-24 16:12+0000\n"
+"POT-Creation-Date: 2020-10-10 17:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2580,6 +2580,218 @@ msgstr ""
 "Muchas organizaciones se han asociado con Representable.org para recopilar "
 "datos comunitarios. ¡Empiece hoy!"
 
+#: main/templates/main/pages/about.html:8
+msgid "About Representable"
+msgstr "Sobre Representable"
+
+#: main/templates/main/pages/about.html:12
+msgid ""
+"\n"
+"        <span class=\"d-block display-3\">We want to give communities a "
+"<span class=\"light-blue-text\">voice</span> in drawing districts.</span>\n"
+"        "
+msgstr ""
+"\n"
+"        <span class=\"d-block display-3\">Nosotros queremos dar las "
+"comunidades un <span class=\"light-blue-text\">voz</span> en dibujando los "
+"distritos.</span>\n"
+"        "
+
+#: main/templates/main/pages/about.html:18
+msgid ""
+"\n"
+"        <span class=\"display-4 d-block\">We want to give communities a "
+"<span class=\"light-blue-text\">voice</span> in drawing districts.</span>\n"
+"        "
+msgstr ""
+"\n"
+"        <span class=\"d-block display-3\">Nosotros queremos dar las "
+"comunidades un <span class=\"light-blue-text\">voz</span> en dibujando los "
+"distritos.</span>\n"
+"        "
+
+#: main/templates/main/pages/about.html:34
+#: main/templates/main/pages/about.html:38
+msgid "Redistricting is coming."
+msgstr "Redistritación está llegando."
+
+#: main/templates/main/pages/about.html:40
+msgid ""
+"In 2021, state governments will redraw Congressional and state legislative "
+"districts. We need to fight for fairer districts which respect the concerns "
+"of communities."
+msgstr ""
+"En 2021, los gobiernos estatales volverán a dibujar distritos legislativos "
+"estatales y del Congreso. Necesitamos pelear por los distritos más justos "
+"que respetan las preocupaciones de las comunidades."
+
+#: main/templates/main/pages/about.html:48
+msgid "What is Representable?"
+msgstr "¿Qué es Representable.org?"
+
+#: main/templates/main/pages/about.html:49
+msgid ""
+"Representable is a free, open-source tool for creating maps for Communities "
+"of Interest (COI) — groups of individuals who share common social and "
+"economic interests, who are likely to have similar political concerns. "
+"Currently, over half of states have legal requirements to respect COIs, but "
+"before Representable, no tools existed to get COIs to mapmakers."
+msgstr ""
+"Representable es un libre, herramienta de código abierto creando los mapas "
+"por Communities of Interest (COI) -- grupos de individuos que comparten "
+"intereses sociales y económicos comunes, que es probable que tengan "
+"preocupaciones políticas similares. Actualmente, más de la mitad de los "
+"estados tienen requisitos legales para respetar COIs, pero antes del "
+"Representable, no existían herramientas para llevar los COIs a los "
+"mapeadores "
+
+#: main/templates/main/pages/about.html:51
+msgid ""
+"\n"
+"We work closely with organizations to gather community maps along with "
+"information about the shared interests of the community. This data can then "
+"be used by map drawers, journalists, analysts, and activists to create and "
+"evaluate proposed district maps. Our goal is to democratize public "
+"testimony, inform map drawers, and encourage map analysis. Learn more about "
+"how Representable fights gerrymandering in the <a href=\"https://docs.google."
+"com/document/d/1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc/edit?usp=sharing"
+"\">Official Education Guide.</a></p>\n"
+"        "
+msgstr ""
+"\n"
+"Trabajamos estrechamente con organizaciones para reunir mapas comunitarios "
+"junto con información sobre los intereses compartidos de la comunidad. Estos "
+"datos se pueden usar para dibujantes de mapa, periodistas, analistas, y "
+"activistas para crear y evaluar mapas de distrito propuestos. Nuestra meta "
+"es democratizar el testimonio público, informar a los dibujantes de mapa, y "
+"fomentar análisis de mapas. Aprende más sobre cómo Representable lucha "
+"contra gerrymandering en la <a href=\"https://docs.google.com/document/"
+"d/1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc/edit?usp=sharing\">Guía "
+"Oficial de Elecciones.</a></p>\n"
+"        "
+
+#: main/templates/main/pages/about.html:56
+msgid ""
+"\n"
+"Representable is built in partnership with the <a href=\"http://gerrymander."
+"princeton.edu/\">Princeton Gerrymandering Project</a> and supported by <a "
+"href=\"https://schmidtfutures.com/\">Schmidt Futures.</a></p>\n"
+"        "
+msgstr ""
+"\n"
+"Representable está construido con <a href=\"http://gerrymander.princeton.edu/"
+"\">Princeton Gerrymandering Project</a> y cuenta con el apoyo de <a href="
+"\"https://schmidtfutures.com/\">Schmidt Futures.</a></p>\n"
+"        "
+
+#: main/templates/main/pages/about.html:59
+msgid "Representable will help..."
+msgstr "Representable ayudará..."
+
+#: main/templates/main/pages/about.html:66
+msgid "Democratize Public Testimony"
+msgstr "Democratizar el testimonio público"
+
+#: main/templates/main/pages/about.html:67
+msgid ""
+"Enable any individual to submit maps with their community information and "
+"share them."
+msgstr ""
+"Permitir que cualquier individuo presentar mapas con información de su "
+"comunidad y compartelos"
+
+#: main/templates/main/pages/about.html:72
+msgid "Inform Map Drawers"
+msgstr "Informar dibujantes de mapas"
+
+#: main/templates/main/pages/about.html:73
+msgid ""
+"Deliver COI data to map drawers, using a digital format that is easy to "
+"analyze."
+msgstr ""
+"Entregar datos de COI a dibujantes de mapas, usando un formato digital que "
+"es fácil de analizar."
+
+#: main/templates/main/pages/about.html:78
+msgid "Encourage Map Analysis"
+msgstr "Fomentar análisis de mapas"
+
+#: main/templates/main/pages/about.html:79
+msgid "Support journalists and analysts with data to evaluate proposed maps."
+msgstr ""
+"Apoyar a los/las periodistas y analistas con datos a evaluar mapas "
+"propuestos."
+
+#: main/templates/main/pages/about.html:89
+msgid "HOW IT WORKS?"
+msgstr "Cómo funciona"
+
+#: main/templates/main/pages/about.html:96
+msgid "Answer Questions"
+msgstr "Responder a preguntas"
+
+#: main/templates/main/pages/about.html:101
+msgid ""
+"Thought-provoking questions built based on policy and legal definitions of "
+"COIs."
+msgstr ""
+"Preguntas que provocan el pensamiento basado en definiciones políticas y "
+"legales de COIs"
+
+#: main/templates/main/pages/about.html:109
+msgid "Draw a Community Map"
+msgstr "Dibujar un mapa de la comunidad"
+
+#: main/templates/main/pages/about.html:114
+msgid "Use landmarks, zoom, and navigation for an easy drawing experience."
+msgstr ""
+"Usar puntos de referencia, zoom, y navegación por una experiencia de dibujo "
+"fácil"
+
+#: main/templates/main/pages/about.html:122
+msgid "Visualize and Export"
+msgstr "Visualizar y exportar"
+
+#: main/templates/main/pages/about.html:127
+msgid ""
+"Export as GeoJSON or PDF file. Our data is interoperable with other mapping "
+"softwares."
+msgstr ""
+"Exportar como GeoJSON o archivo PDF. Nuestros datos son interoperables con "
+"otros softwares de mapeo"
+
+#: main/templates/main/pages/about.html:138
+msgid "Our Team"
+msgstr "Equipo"
+
+#: main/templates/main/pages/about.html:141
+msgid "Executive Director"
+msgstr "El director ejecutivo"
+
+#: main/templates/main/pages/about.html:142
+msgid "Head of Engineering"
+msgstr "Jefe de ingeniería"
+
+#: main/templates/main/pages/about.html:143
+msgid "Head of Design"
+msgstr "Jefe de diseño"
+
+#: main/templates/main/pages/about.html:144
+msgid "Head of Software Architecture"
+msgstr "Jefe de arquitectura de software"
+
+#: main/templates/main/pages/about.html:145
+msgid "Head of Data and Mapping"
+msgstr "Jefe de datos y mapeo"
+
+#: main/templates/main/pages/about.html:146
+msgid "Strategy Coordinator"
+msgstr "Coordinador de la estrategia"
+
+#: main/templates/main/pages/about.html:147
+msgid "Outreach Coordinator"
+msgstr "Coordinadora de divulgación"
+
 #: main/templates/main/thanks.html:13
 msgid "Thank you for your submission!"
 msgstr "¡Gracias por su envío!"
@@ -2590,7 +2802,7 @@ msgstr ""
 
 #: main/views/main.py:125
 msgid "HELLO"
-msgstr "Bonjour"
+msgstr ""
 
 #: representable/settings/base.py:182
 msgid "English"
@@ -2602,7 +2814,7 @@ msgstr ""
 
 #: representable/templates/base.html:89
 msgid "About"
-msgstr "Acerca de"
+msgstr "Sobre"
 
 #: representable/templates/base.html:102
 msgid "My Account"
@@ -2661,18 +2873,3 @@ msgstr "Configuraciones"
 #: representable/templates/base.html:223
 msgid "More questions? Reach out at"
 msgstr "¿Más preguntas? Comuníquese con"
-
-#~ msgid "For example: Cherry Farmers Community"
-#~ msgstr "Por ejemplo: Cherry Farmers Community"
-
-#~ msgid "Home"
-#~ msgstr "de Inicio"
-
-#~ msgid "Dashboard"
-#~ msgstr "Tablero"
-
-#~ msgid "Log out"
-#~ msgstr "Cerrar sesión"
-
-#~ msgid "Click here to indicate that you have read and agree to the"
-#~ msgstr "Haga clic aquí para indicar que ha leído y está de acuerdo con el"

@@ -132,6 +132,12 @@ body {
   /* font-weight: 500; */
   font-size: 16px;
 }
+.nav-link-org {
+  color: rgba(32, 118, 195, .8) !important;
+}
+.nav-link-org:hover {
+  color: rgba(32, 118, 195, 1) !important;
+}
 .container {
   border-width: 0;
 }
@@ -548,6 +554,11 @@ color scheme. See readme.md*/
   /* font-family: Inter, system-ui, sans-serif; */
   /* font-size: 12px; */
 }
+input[type=range]::-webkit-slider-thumb {
+  border-radius: 50%;
+  width: 17.5px;
+  height: 17.5px;
+}
 
 /* css for the line on the progress bar */
 .bar-step {
@@ -680,6 +691,16 @@ color scheme. See readme.md*/
 }
 .how-it-works-title {
   height: 3rem;
+}
+
+.language-button {
+    background: #FFFFFF;
+    border:0 none;
+    cursor:pointer;
+    padding: 0;
+}
+.language-button:hover {
+  text-decoration: underline;
 }
 
 #all {
