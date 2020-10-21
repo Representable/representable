@@ -30,6 +30,7 @@ before_install:
 # command to install dependencies
 install:
   - pip install -r requirements.txt
+  - pip install coverage
 
 # Run before script.
 before_script:
@@ -40,4 +41,7 @@ before_script:
 # command to run tests
 script:
   - python3 manage.py collectstatic --settings=representable.settings.dev
-  - python3 manage.py test --settings=representable.settings.dev
+  - coverage run manage.py test --settings=representable.settings.dev
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

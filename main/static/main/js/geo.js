@@ -101,11 +101,6 @@ function showMap() {
   map.resize();
 }
 
-function hideMap() {
-  $(".map-bounding-box.collapse").collapse("hide");
-  map.resize();
-}
-
 function toggleErrorSuccess(field) {
   if (field.classList.contains("has_error")) {
     field.classList.toggle("has_error");
@@ -218,32 +213,18 @@ function createCommPolygon() {
     }
   });
 
-
   // for display purposes -- this is the final multipolygon!!
   // TODO: implement community entry model change -> store only outer coordinates (like code in map.js)
   var wkt = new Wkt.Wkt();
   var wkt_obj = wkt.read(JSON.stringify(multiPolySave.geometry));
   var poly_wkt = wkt_obj.write();
-  // ok so this is kinda jank lol but let me explain
-  // if it isn't a contiguous selection area, then poly_wkt will start with "MULTIPOLYGON"
-  // otherwise it starts with "POLYGON" -- so we test the first char for contiguity 8-)
-  if (poly_wkt[0] === "M") {
-    triggerDrawError(
-      "polygon_size",
-      "Please ensure that your community does not contain any gaps. Your selected units must connect."
-    );
-    return false;
-  } else {
-    triggerSuccessMessage();
-    updateFormFields(poly_wkt);
+  triggerSuccessMessage();
+  updateFormFields(poly_wkt);
 
-    // clean up polyFilter -- this is the array of GEOID to be stored
-    polyFilter.splice(0, 1);
-    polyFilter.splice(0, 1);
-    // TODO: implement community entry model change -> store this array of references to blockgroups!
-    document.getElementById("id_block_groups").value = polyFilter;
-
-  }
+  // clean up polyFilter -- this is the array of GEOID to be stored
+  polyFilter.splice(0, 1);
+  polyFilter.splice(0, 1);
+  document.getElementById("id_block_groups").value = polyFilter;
   return true;
 }
 
@@ -278,6 +259,7 @@ document.addEventListener(
       // loading icon
       $("#loading-entry").css("display", "block");
       $("#loading-entry").delay(2000).fadeOut(2000);
+      //todo: switch this to a promise ?
       setTimeout(function () {
         polySuccess = createCommPolygon();
         formSuccess = formValidation();
@@ -289,7 +271,6 @@ document.addEventListener(
       }, 2000);
       return false;
     });
-    state = sessionStorage.getItem("state_name");
     // If there are alerts, scroll to first one.
     var document_alerts = document.getElementsByClassName("django-alert");
     if (document_alerts.length > 0) {
@@ -882,19 +863,13 @@ myTour.addStep({
 /******************************************************************************/
 // the drawing radius for select tool
 var drawRadius = 25;
+var isStateChanged = false;
 /* After the map style has loaded on the page, add a source layer and default
 styling for a single point. */
 map.on("style.load", function () {
-  map.addSource("single-point", {
-    type: "geojson",
-    data: {
-      type: "FeatureCollection",
-      features: [],
-    },
-  });
-
   var layers = map.getStyle().layers;
   // Find the index of the first symbol layer in the map style
+  // this is so that added layers go under the symbols on the map
   var firstSymbolId;
   for (var i = 0; i < layers.length; i++) {
     if (layers[i].type === "symbol" && layers[i] !== "road") {
@@ -914,41 +889,31 @@ map.on("style.load", function () {
   });
 
   // this is where the census block groups are loaded, from a url to the mbtiles file uploaded to mapbox
-  for (let bg in BG_KEYS) {
-    newSourceLayer(bg, BG_KEYS[bg]);
-  }
-
-  for (let i = 0; i < states.length; i++) {
-    newCensusShading(states[i], firstSymbolId);
-    newCensusLines(states[i]);
-    newHighlightLayer(states[i]);
-  }
-
-  // Initialize Map for State Pages
-  if (state_abbr !== "") {
-    showMap();
-    map.flyTo({
-      center: statesLngLat[state_abbr],
-      zoom: 6,
-      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
-    });
-
-    sessionStorage.setItem("bgFilter", "[]");
+  newSourceLayer(state + "bg", BG_KEYS[state + "bg"]);
+  newCensusShading(state, firstSymbolId);
+  newCensusLines(state);
+  newHighlightLayer(state);
+  showMap();
+  map.flyTo({
+    center: statesLngLat[state.toUpperCase()],
+    zoom: 6,
+    essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+  });
+  map.setLayoutProperty(state + "-census-lines", "visibility", "visible");
+  // check if someone has entered in a new state in the same session
+  var prev_state = sessionStorage.getItem("prev_state");
+  if (prev_state !== null && state !== prev_state) {
+    isStateChanged = true;
     sessionStorage.setItem("selectBbox", "[]");
-
-    state = state_abbr.toLowerCase();
-    $("#shepherd-btn").removeClass("d-none");
-    map.setLayoutProperty(state + "-census-lines", "visibility", "visible");
-
-    // Save state to session storage
-    sessionStorage.setItem("state_name", state);
-
-    // When the user moves their mouse over the census shading layer, we'll update the
-    // feature state for the feature under the mouse.
-    var bgID = null;
-    var features = [];
-    var stateCensus = state + "-census-shading";
+    sessionStorage.setItem("bgFilter", "[]");
   }
+  sessionStorage.setItem("prev_state", state);
+
+  // When the user moves their mouse over the census shading layer, we'll update the
+  // feature state for the feature under the mouse.
+  var bgID = null;
+  var features = [];
+  var stateCensus = state + "-census-shading";
 
   // when selecting or erasing
   map.on("click", function (e) {
@@ -1049,119 +1014,11 @@ map.on("style.load", function () {
     }
   });
 
-  // Listen for the `geocoder.input` event that is triggered when a user
-  // makes a selection and add a symbol that matches the result.
-  geocoder.on("result", function (ev) {
-    $("#shepherd-btn").removeClass("d-none");
-    map.getSource("single-point").setData(ev.result.geometry);
-    var styleSpec = ev.result;
-    var styleSpecBox = document.getElementById("json-response");
-    var styleSpecText = JSON.stringify(styleSpec, null, 2);
-
-    showMap();
-    // get the state from the geocoder response
-    if (styleSpec.context.length >= 2) {
-      new_state = styleSpec.context[styleSpec.context.length - 2]["short_code"]
-        .toLowerCase()
-        .substring(3);
-    } else {
-      new_state = styleSpec.properties["short_code"].toLowerCase().substring(3);
-    }
-    // if searching for a different state than what is currently loaded
-    if (state_abbr === "") {
-      if (state != new_state) {
-        if (states.includes(state)) {
-          map.setLayoutProperty(state + "-census-lines", "visibility", "none");
-        }
-        if (states.includes(new_state)) {
-          // add block groups, remove those of previous state
-          map.setLayoutProperty(
-            new_state + "-census-lines",
-            "visibility",
-            "visible"
-          );
-        }
-        state = new_state;
-      } else {
-        if (states.includes(state)) {
-          map.setLayoutProperty(
-            state + "-census-lines",
-            "visibility",
-            "visible"
-          );
-        }
-      }
-    }
-
-    // Save state to session storage
-    sessionStorage.setItem("state_name", state);
-
-    // When the user moves their mouse over the census shading layer, we'll update the
-    // feature state for the feature under the mouse.
-    var bgID = null;
-    var features = [];
-    stateCensus = state + "-census-shading";
-    // if touch screen, disable.
-    if (!is_touch_device()) {
-      map.on("mousemove", stateCensus, function (e) {
-        if (e.features.length > 0) {
-          // create a constantly updated list of the features which have been highlighted in foreach loop
-          // before highlighting, go thru that list, and deselect all
-          var bbox = [
-            [e.point.x - drawRadius, e.point.y - drawRadius],
-            [e.point.x + drawRadius, e.point.y + drawRadius],
-          ];
-          var hoverFeatures = map.queryRenderedFeatures(bbox, {
-            layers: [state + "-census-shading"],
-          });
-          stateBG = state + "bg";
-          features.forEach(function (feature) {
-            bgID = feature.id;
-            map.setFeatureState(
-              { source: stateBG, sourceLayer: stateBG, id: bgID },
-              { hover: false }
-            );
-          });
-          features = [];
-          hoverFeatures.forEach(function (feature) {
-            features.push(feature);
-            bgID = feature.id;
-            map.setFeatureState(
-              { source: stateBG, sourceLayer: stateBG, id: bgID },
-              { hover: true }
-            );
-          });
-        }
-      });
-
-    // When the mouse leaves the state-fill layer, update the feature state of the
-    // previously hovered feature.
-    map.on("mouseleave", stateCensus, function () {
-      if (bgID) {
-        stateBG = state + "bg";
-        map.setFeatureState(
-          { source: stateBG, sourceLayer: stateBG, id: bgID },
-          { hover: false }
-        );
-      }
-      bgID = null;
-    });
-  }
-
-    // Tracking
-    mixpanel.track("Geocoder Search Successful", {
-      drive_id: drive_id,
-      drive_name: drive_name,
-      organization_id: organization_id,
-      organization_name: organization_name,
-    });
-  });
-
   // When the user moves their mouse over the census shading layer, we'll update the
   // feature state for the feature under the mouse.
   var bgID = null;
   var features = [];
-  stateCensus = sessionStorage.getItem("state_name") + "-census-shading";
+  stateCensus = state + "-census-shading";
   // if touch screen, disable.
   if (!is_touch_device()) {
     map.on("mousemove", stateCensus, function (e) {
@@ -1195,19 +1052,19 @@ map.on("style.load", function () {
       }
     });
 
-  // When the mouse leaves the state-fill layer, update the feature state of the
-  // previously hovered feature.
-  map.on("mouseleave", stateCensus, function () {
-    if (bgID) {
-      stateBG = state + "bg";
-      map.setFeatureState(
-        { source: stateBG, sourceLayer: stateBG, id: bgID },
-        { hover: false }
-      );
-    }
-    bgID = null;
-  });
-}
+    // When the mouse leaves the state-fill layer, update the feature state of the
+    // previously hovered feature.
+    map.on("mouseleave", stateCensus, function () {
+      if (bgID) {
+        stateBG = state + "bg";
+        map.setFeatureState(
+          { source: stateBG, sourceLayer: stateBG, id: bgID },
+          { hover: false }
+        );
+      }
+      bgID = null;
+    });
+  }
 });
 
 // reloading the page (like when the form fails validation)
@@ -1227,7 +1084,7 @@ map.on("render", function (e) {
     // re-display the polygon
     map.setFilter(state + "-bg-highlighted", JSON.parse(bgPoly));
     var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
-    if (selectBbox.length !== 0) {
+    if (selectBbox.length !== 0 && !isStateChanged) {
       map.flyTo({
         center: [
           selectBbox.geometry.coordinates[0][0][0],
@@ -1323,7 +1180,7 @@ function triggerSuccessMessage() {
 function updateFormFields(census_blocks_polygon_array) {
   // Update form fields
   document.getElementById(
-    "id_census_blocks_polygon_array"
+    "id_census_blocks_polygon"
   ).value = census_blocks_polygon_array;
   // "census_blocks_polygon" gets saved in the post() function in django
 }

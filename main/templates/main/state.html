@@ -54,38 +54,14 @@
       {% endautoescape %}
     </div>
   </div>
-  <div class="card card-signin my-3">
-    <div class="card-body">
-      <h2 class="font-weight-light text-center">Community Mapping Drives in {{ state_obj.name }} <a data-toggle="tooltip" title="A community mapping drive is how we organize the collection of community of interest (COI) maps into separate groups." class="h4"><i class="far fa-question-circle"></i></a></h2>
-      <p>Organizations in {{ state_obj.name }} are running community mapping drives to collect information so your community's interests can be protected. You can use Representable to submit your community's information directly to these organizations.</p>
-      {% if drives %}
-        <hr>
-        {% for drive in drives %}
-        <div class="row">
-          <div class="col-sm-9">
-          <h5>{{ drive.name }}</h5>
-          <h6 class="text-muted">{{ drive.organization }}</h6>
-          <p>{{ drive.description }}</p>
-          </div>
-          <div class="col-sm-3">
-            <a class="btn btn-lg btn-primary" href="{% url 'main:entry' drive=drive.slug %}{{ state_obj.abbr }}">Join Drive</a>
-          </div>
-        </div>
-        <hr>
-        {% endfor %}
-      {% else %}
-      <p>There are currently no public drives in {{ state_obj.name }} collecting community information. In the meantime, you can still contribute to Representable by clicking Draw My Community below!</p>
-      {% endif %}
-    </div>
-  </div>
   <div class="card card-signin my-4">
     <div class="card-body">
       <div class="row">
         <div class="col-sm-9">
-          <h5 class="font-weight-light my-3">If you would like to create your own community independently of a partner organization, you can draw and export your community here.</h5>
+          <h5 class="font-weight-light my-3">Redistricting is coming. Put your community on the map by drawing your community with Representable.</h5>
         </div>
         <div class="col-sm-3">
-          <a class="btn ws-normal btn-outline-primary btn-canvas my-3 font-weight-light" href="{% url 'main:entry' %}{{state_obj.abbr}}" role="button">Draw my community</a>
+          <a class="btn btn-primary btn-canvas my-3" href="{% url 'main:entry' %}{{state_obj.abbr|lower}}" role="button">Draw my community</a>
         </div>
       </div>
     </div>

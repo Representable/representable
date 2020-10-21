@@ -53,6 +53,11 @@ class User(AbstractUser):
         else:
             return False
 
+    def get_organizations(self):
+        return Organization.objects.filter(
+            membership__member=self, membership__is_org_admin=True
+        )
+
 
 # ******************************************************************************#
 
@@ -254,10 +259,10 @@ class CommunityEntry(models.Model):
         models.PolygonField(
             geography=True, blank=True, null=True, serialize=True
         ),
-        blank=False,
+        blank=True,
         null=True,
     )
-    census_blocks_polygon = models.MultiPolygonField(
+    census_blocks_polygon = models.GeometryField(
         geography=True, serialize=True, blank=True, null=True
     )
 

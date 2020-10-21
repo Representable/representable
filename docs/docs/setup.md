@@ -5,7 +5,7 @@ title: First Steps
 
 Hello and welcome to the Representable.org Docs! This guide will lead you through setting up your local development environment and explain different parts of the website.
 
-The first page of the guide, below, will take you through the recommended setup (i.e. all the packages and programs needed to set up locally) and also demostrate how to clone/download the codebase so you can start contributing.
+The first page of the guide, below, will take you through the recommended setup (i.e. all the packages and programs needed to set up locally) and also demonstrate how to clone/download the codebase so you can start contributing.
 
 ## 1. Recommended Setup
 

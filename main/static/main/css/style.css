@@ -652,27 +652,6 @@ color scheme. See readme.md*/
   pointer-events: none;
 }
 
-.map-demo {
-  /*  position: absolute; */
-  top: 100px;
-  bottom: 0;
-  width: 50%;
-  /*  Must Set Absolute Height */
-  height: 800px;
-}
-.race-field-wrap {
-  visibility: hidden;
-  height: 0px;
-}
-.religion-field-wrap {
-  visibility: hidden;
-  height: 0px;
-}
-.industry-field-wrap {
-  visibility: hidden;
-  height: 0px;
-}
-
 .heading-title h3 {
   margin-bottom: 0;
   letter-spacing: 2px;
@@ -681,134 +660,34 @@ color scheme. See readme.md*/
 .p-top-30 {
   padding-top: 30px;
 }
-
-.half-txt2 {
-  width: 60%;
-  margin: 0 auto;
-  display: inline-block;
-  line-height: 25px;
-  /* color: #FFFFFF; */
-  font-size: 22px;
-}
-
-.half-txt {
-  width: 60%;
-  margin: 0 auto;
-  display: inline-block;
-  line-height: 25px;
-  color: #7e7e7e;
-}
 .text-uppercase {
   text-transform: uppercase;
 }
 
-.team-member,
-.team-member .team-img {
-  position: relative;
-}
-.team-member {
-  overflow: hidden;
-}
-.team-member,
-.team-member .team-img {
-  position: relative;
+.line-break {
+  width: 15%;
+  border-bottom: 3px solid black;
 }
 
-.team-hover {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  margin: 0;
-  border: 20px solid rgba(0, 0, 0, 0.1);
-  background-color: rgba(255, 255, 255, 0.9);
-  opacity: 0;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
+.light-blue-text {
+  color: #65BFF1;
 }
-.team-member:hover .team-hover .desk {
-  top: 35%;
+.blue-green-text {
+  color: #6DCCBB;
 }
-.team-member:hover .team-hover,
-.team-member:hover .team-hover .desk,
-.team-member:hover .team-hover .s-link {
-  opacity: 1;
+.light-blue-bg {
+  background-color: #DAEFFF;
+}
+.blue-green-bg {
+  background-color: #6DCCBB;
 }
 
-.desk {
-  position: absolute;
-  top: 0%;
-  width: 100%;
-  opacity: 0;
-  -webkit-transform: translateY(-40%);
-  -ms-transform: translateY(-40%);
-  transform: translateY(-40%);
-  -webkit-transition: all 0.3s 0.2s;
-  transition: all 0.3s 0.2s;
+.how-it-works {
+  height: 200px;
+  width: 70%;
 }
-.desk,
-.desk h4,
-.team-hover .s-link a {
-  text-align: center;
-  color: #222;
-}
-
-@media screen and (max-width: 991px) {
-  .desk p {
-    font-size: 14px;
-  }
-}
-
-.team-member:hover .team-hover .s-link {
-  bottom: 10%;
-}
-.team-member:hover .team-hover,
-.team-member:hover .team-hover .desk,
-.team-member:hover .team-hover .s-link {
-  opacity: 1;
-}
-.team-hover .s-link {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  opacity: 0;
-  text-align: center;
-  -webkit-transform: translateY(45%);
-  -ms-transform: translateY(45%);
-  transform: translateY(45%);
-  -webkit-transition: all 0.3s 0.2s;
-  transition: all 0.3s 0.2s;
-  font-size: 35px;
-}
-.desk,
-.desk h4,
-.team-hover .s-link a {
-  text-align: center;
-  color: #222;
-}
-.team-member .s-link a {
-  margin: 0 10px;
-  color: #333;
-  font-size: 16px;
-}
-.team-title {
-  position: static;
-  padding: 20px 0;
-  display: inline-block;
-  letter-spacing: 2px;
-  width: 100%;
-}
-.team-title h5 {
-  margin-bottom: 0px;
-  display: block;
-  text-transform: uppercase;
-}
-.team-title span {
-  font-size: 12px;
-  text-transform: uppercase;
-  color: #a5a5a5;
-  letter-spacing: 1px;
+.how-it-works-title {
+  height: 3rem;
 }
 
 #all {
