@@ -556,6 +556,11 @@ color scheme. See readme.md*/
   /* font-family: Inter, system-ui, sans-serif; */
   /* font-size: 12px; */
 }
+input[type=range]::-webkit-slider-thumb {
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+}
 
 /* css for the line on the progress bar */
 .bar-step {
