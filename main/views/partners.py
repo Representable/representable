@@ -114,9 +114,9 @@ class PartnerMap(TemplateView):
             )
 
         if self.kwargs["drive"]:
-            context["drive"] = get_object_or_404(
-                Drive, slug=self.kwargs["drive"]
-            ).name
+            map_drive = get_object_or_404(Drive, slug=self.kwargs["drive"])
+            context["drive"] = map_drive.name
+            context["state"] = map_drive.state.lower()
             context["multi_export_link"] = (
                 "/multiexport/drive/" + self.kwargs["drive"]
             )
