@@ -363,7 +363,7 @@ class SelectRadiusButton {
     radius_control.id = "map-radius-control-id";
     radius_control.style.display = "block";
     radius_control.innerHTML =
-      '<form><input type="range" min="1" max="50" value="25" class="custom-range" id="radius-control"><p style="margin: 0;">Selection Size: <span id="radius-value">25</span></p></form>';
+      '<form><label for="radius-control" class="sr-only">Choose a selection size: </label><input type="range" min="1" max="50" value="25" class="custom-range" id="radius-control"><p style="margin: 0;">Selection Tool Size</p></form>';
     this._map = map;
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group draw-group";
@@ -381,11 +381,11 @@ map.addControl(new SelectRadiusButton(), "top-right");
 var drawControls = document.getElementById("draw-group-container");
 
 var slider = document.getElementById("radius-control");
-var rangeVal = document.getElementById("radius-value");
+var style = document.querySelector('[data="slider-data"]');
 slider.oninput = function () {
   var size = this.value;
   drawRadius = parseInt(size);
-  rangeVal.innerHTML = size;
+  style.innerHTML = "input[type=range]::-webkit-slider-thumb { width: " + (size / 7 + 14)  + "px !important; height: " + (size / 7 + 14) + "px !important; margin-top: "+ (-3 - size / 16.67) + "px !important; }";
 };
 
 var eraseMode = false;

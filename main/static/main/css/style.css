@@ -132,6 +132,12 @@ body {
   /* font-weight: 500; */
   font-size: 16px;
 }
+.nav-link-org {
+  color: rgba(32, 118, 195, .8) !important;
+}
+.nav-link-org:hover {
+  color: rgba(32, 118, 195, 1) !important;
+}
 .container {
   border-width: 0;
 }
@@ -487,22 +493,14 @@ color scheme. See readme.md*/
   padding: 5px;
   width: 14rem;
 }
-
-.state {
-  max-width: 70%;
-  height: 50vh;
-  margin: auto;
-}
-.state-sm {
-  width: 2rem;
-}
-@media only screen and (min-width: 768px) {
-  .state-sm {
-    display: none;
-  }
-}
 .ws-normal {
   white-space: normal;
+}
+
+@media screen and (min-width: 1600px) {
+  #mapping-image-div {
+    width: 30% !important;
+  }
 }
 
 .loader {
@@ -555,6 +553,11 @@ color scheme. See readme.md*/
   max-width: 400px;
   /* font-family: Inter, system-ui, sans-serif; */
   /* font-size: 12px; */
+}
+input[type=range]::-webkit-slider-thumb {
+  border-radius: 50%;
+  width: 17.5px;
+  height: 17.5px;
 }
 
 /* css for the line on the progress bar */
@@ -688,6 +691,16 @@ color scheme. See readme.md*/
 }
 .how-it-works-title {
   height: 3rem;
+}
+
+.language-button {
+    background: #FFFFFF;
+    border:0 none;
+    cursor:pointer;
+    padding: 0;
+}
+.language-button:hover {
+  text-decoration: underline;
 }
 
 #all {

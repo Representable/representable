@@ -32,7 +32,8 @@ from django.views.generic import (
     DetailView,
 )
 from django.views import View
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, AccessMixin
+from django.contrib.auth.views import redirect_to_login
 from allauth.account.models import (
     EmailConfirmation,
     EmailAddress,
@@ -103,6 +104,14 @@ from django.contrib.gis.geos import GEOSGeometry
 
 # ******************************************************************************#
 
+# custom mixin redirects to signup page/tab rather than login
+class SignupRequiredMixin(AccessMixin):
+    """Verify that the current user is authenticated."""
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect_to_login(request.get_full_path(), '/accounts/signup/', self.get_redirect_field_name())
+        return super().dispatch(request, *args, **kwargs)
+
 """
 Documentation: https://docs.djangoproject.com/en/2.1/topics/class-based-views/
 """
@@ -145,15 +154,6 @@ class Privacy(TemplateView):
 
 class Terms(TemplateView):
     template_name = "main/pages/terms.html"
-
-
-# ******************************************************************************#
-
-
-class Michigan(TemplateView):
-    # template_name = "main/michigan.html"
-    def get(self, request, *args, **kwargs):
-        return redirect("/state/mi/")
 
 
 # ******************************************************************************#
@@ -444,8 +444,7 @@ class Thanks(LoginRequiredMixin, TemplateView):
 
 # ******************************************************************************#
 
-
-class EntryView(LoginRequiredMixin, View):
+class EntryView(SignupRequiredMixin, View):
     """
     EntryView displays the form and map selection screen.
     """

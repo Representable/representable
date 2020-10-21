@@ -24,11 +24,9 @@
       {% endautoescape %}
     </div>
     <div class="col-6 d-none d-sm-block">
-      {% with "img/states/"|add:state_obj.abbr|add:".svg" as svg %}
-      <div class="card card-signin mx-auto h-100 py-4">
-        <object type="image/svg+xml" class="state h-100" data="{% static svg %}"></object>
+      <div class="m-auto py-4 h-100">
+        <object type="image/svg+xml" class="w-75 mx-auto d-block h-100" data="{% static 'img/map-info.svg' %}" alt="image of map with information icon"></object>
       </div>
-      {% endwith %}
     </div>
   </div>
 
@@ -58,10 +56,10 @@
     <div class="card-body">
       <div class="row">
         <div class="col-sm-9">
-          <h5 class="font-weight-light my-3">Redistricting is coming. Put your community on the map by drawing your community with Representable.</h5>
+          <h5 class="font-weight-light my-3">Redistricting is coming. Put your community on the map with Representable.</h5>
         </div>
         <div class="col-sm-3">
-          <a class="btn btn-primary btn-canvas my-3" href="{% url 'main:entry' %}{{state_obj.abbr|lower}}" role="button">Draw my community</a>
+          <a class="btn btn-primary btn-lg btn-canvas my-3" href="{% url 'main:entry' %}{{state_obj.abbr|lower}}" role="button">Draw my community</a>
         </div>
       </div>
     </div>

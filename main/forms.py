@@ -53,6 +53,12 @@ class AddressForm(ModelForm):
             "state": forms.TextInput(attrs={"placeholder": "State"}),
             "zipcode": forms.TextInput(attrs={"placeholder": "Zipcode"}),
         }
+        labels = {
+            "street": "Street: ",
+            "city": "City: ",
+            "state": "State: ",
+            "zipcode": "Zipcode: "
+        }
 
 
 class CommunityForm(ModelForm):
@@ -90,6 +96,14 @@ class CommunityForm(ModelForm):
             "other_considerations": forms.Textarea(attrs={"rows": 3}),
             "user_name": forms.TextInput(attrs={"placeholder": "Full Name"}),
             "user_polygon": forms.HiddenInput(),
+        }
+        label = {
+            "user_name": "Input your full name: ",
+            "economic_interests": "Input your community's economic interests: ",
+            "cultural_interests": "Input your community's cultural or historical interests: ",
+            "comm_activities": "Input your community's activities and services: ",
+            "other_considerations": "Input your community's other interests and concerns: ",
+            "entry_name": "Input your community's name: "
         }
 
     def clean(self):
@@ -129,7 +143,7 @@ class OrganizationForm(ModelForm):
         model = Organization
         fields = ["name", "description", "ext_link", "states"]
         labels = {
-            "ext_link": "Link to Organization",
+            "ext_link": "Link to Organization Website",
         }
         widgets = {
             "name": forms.TextInput(
@@ -144,7 +158,7 @@ class OrganizationForm(ModelForm):
             ),
             "ext_link": forms.TextInput(
                 attrs={
-                    "placeholder": "External link to your organization. Include 'http'."
+                    "placeholder": "External link to your organization's website. Include 'http'."
                 }
             ),
             "states": Select2MultipleWidget(

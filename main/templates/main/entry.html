@@ -21,7 +21,7 @@
 <!--  Turf JS for calculating the area. -->
 <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script>
 <!-- Shepherd.js -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@latest/dist/css/shepherd.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@lHOatest/dist/css/shepherd.css"/>
 <script src="https://cdn.jsdelivr.net/npm/shepherd.js@latest/dist/js/shepherd.min.js"></script>
 
 <!--  Mapbox Draw -->
@@ -45,6 +45,7 @@
     }
     );
 </script>
+<style data="slider-data" type="text/css"></style>
 {% endblock %}
 
 {% block content %}
@@ -57,8 +58,8 @@
             <div class="row mt-3">
                 <!-- Entry Form -->
                 <form id="entryForm" method="post" onSubmit="return formValidation();">
-                    <div class="row row-equal-cols">
-                        <div class="col-lg  m-2">
+                    <div class="row">
+                        <div class="col-sm-7 my-auto pl-5">
                             <h1 class="font-weight-light">
                                 {% trans "Map your community" %}
                             </h1>
@@ -71,26 +72,33 @@
                                 {% endblocktrans %}
                             </p>
                             {% csrf_token %}
-                            <!-- {# Include the non-field error fields #} -->
-                            {% if comm_form.non_field_errors %}
-                            <div class="non-field-errors form-error">
-                                {% for err in comm_form.non_field_errors %}
-                                <p class="form-error">{{ err }}</p>
-                                {% endfor %}
-                            </div>
-                            {% endif %}
-                            {% if comm_form.errors %}
-                            <div id="django_form_errors">
-                            </div>
-                            {% endif %}
-                            <div id="form_error" class="alert alert-danger alert-dismissible fade show form-error d-none" role="alert">
-                                {% blocktrans %}There was an error in submitting your community. Please check over and
-                                ensure that you have filled out all required fields. {% endblocktrans %}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
                         </div>
+                        <div class="col-5 d-none d-sm-block">
+                          <div id="mapping-image-div" class="m-auto py-4 w-75 h-100">
+                            <object type="image/svg+xml" class="w-75 mx-auto d-block h-100" data="{% static 'img/mapping.svg' %}" alt="image of someone drawing a community map"></object>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                      <!-- {# Include the non-field error fields #} -->
+                      {% if comm_form.non_field_errors %}
+                      <div class="non-field-errors form-error">
+                          {% for err in comm_form.non_field_errors %}
+                          <p class="form-error">{{ err }}</p>
+                          {% endfor %}
+                      </div>
+                      {% endif %}
+                      {% if comm_form.errors %}
+                      <div id="django_form_errors">
+                      </div>
+                      {% endif %}
+                      <div id="form_error" class="alert alert-danger alert-dismissible fade show form-error d-none" role="alert">
+                          {% blocktrans %}There was an error in submitting your community. Please check over and
+                          ensure that you have filled out all required fields. {% endblocktrans %}
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
                     </div>
                     <div class="row row-equal-cols">
                         <div class="col-lg  m-2">
@@ -104,7 +112,7 @@
                                             <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" data-target="#privacy_example" aria-expanded="false" aria-controls="collapseOne">
                                             {% trans "Why do we need your information?" %}
                                             </button>
-                                            <div id="privacy_example" class="collapse" aria-labelledby="headingOne" data-parent="#privacy_accordion">
+                                            <div id="privacy_example" class="collapse" aria-labelledby="privacy_accordion" data-parent="#privacy_accordion">
                                                 <p class="collapse-in ml-0">
                                                     {% url 'main:privacy' as url1%}
                                                     {% url 'main:terms' as url2%}
@@ -141,6 +149,7 @@
                                         </p>
                                         <div class="row my-2">
                                             <div class="col-6">
+                                              <div class="sr-only">{{ comm_form.user_name.label_tag }}</div>
                                                 {{ comm_form.user_name|append_attr:"class:form-control" }}
                                             </div>
                                         </div>
@@ -185,6 +194,7 @@
                                         <div class="form-row my-1">
                                             <div class="col-xs-2 col-md-6">
                                                 <small class="m-2">Street</small>
+                                                <div class="sr-only">{{ addr_form.street.label_tag }}</div>
                                                 {{ addr_form.street|append_attr:"class:form-control" }}
                                             </div>
                                         </div>
@@ -225,10 +235,12 @@
                                         <div class="form-row my-1">
                                             <div class="col-xs-2 col-md-2">
                                                 <small class="m-2">City</small>
+                                                <div class="sr-only">{{ addr_form.city.label_tag }}</div>
                                                 {{ addr_form.city|append_attr:"class:form-control" }}
                                             </div>
                                             <div class="col-xs-2 col-md-2">
                                                 <small class="m-2">State</small>
+                                                <div class="sr-only">{{ addr_form.state.label_tag }}</div>
                                                 {{ addr_form.state|append_attr:"class:form-control" }}
                                             </div>
                                         </div>
@@ -252,6 +264,7 @@
                                         <div class="form-row my-1">
                                             <div class="col-xs-2 col-md-4">
                                                 <small class="m-2">Zipcode</small>
+                                                <div class="sr-only">{{ addr_form.zipcode.label_tag }}</div>
                                                 {{ addr_form.zipcode|append_attr:"class:form-control" }}
                                             </div>
                                         </div>
@@ -306,7 +319,7 @@
                                             <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#economic_interests_example" aria-expanded="false" aria-controls="collapseOne">
                                             {% trans "Show Examples" %}
                                             </button>
-                                            <div id="economic_interests_example" class="collapse" aria-labelledby="headingOne" data-parent="#economic_interests_accordion">
+                                            <div id="economic_interests_example" class="collapse" aria-labelledby="economic_interests_accordion" data-parent="#economic_interests_accordion">
                                                 <p class="collapse-in ml-0">
                                                     {% blocktrans %} Tech firms and their employees, tourism, agriculture such as the cherry growers,
                                                     shipping and transportation hubs, manufacturing centers, natural resources, university towns,
@@ -314,6 +327,7 @@
                                                 </p>
                                             </div>
                                         </div>
+                                        <div class="sr-only">{{ comm_form.economic_interests.label_tag }}</div>
                                         {{ comm_form.economic_interests|append_attr:"class:form-control" }}
                                         <hr>
                                         <!-- Activities -->
@@ -327,7 +341,7 @@
                                             <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#comm_activities_example" aria-expanded="false" aria-controls="collapseOne">
                                             {% trans "Show Examples" %}
                                             </button>
-                                            <div id="comm_activities_example" class="collapse" aria-labelledby="headingOne" data-parent="#comm_activities_accordion">
+                                            <div id="comm_activities_example" class="collapse" aria-labelledby="comm_activities_accordion" data-parent="#comm_activities_accordion">
                                                 <p class="collapse-in ml-0">
                                                     {% blocktrans %} Shopping areas, schools and colleges, parks and recreation areas,
                                                     lakes and water ways, healthcare services, and other activities and services that
@@ -335,6 +349,7 @@
                                                 </p>
                                             </div>
                                         </div>
+                                        <div class="sr-only">{{ comm_form.comm_activities.label_tag }}</div>
                                         {{ comm_form.comm_activities|append_attr:"class:form-control" }}
                                         <hr>
                                         <!-- Cultural -->
@@ -347,7 +362,7 @@
                                             <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#cultural_interests_example" aria-expanded="false" aria-controls="collapseOne">
                                             {% trans "Show Examples" %}
                                             </button>
-                                            <div id="cultural_interests_example" class="collapse" aria-labelledby="headingOne" data-parent="#cultural_interests_accordion">
+                                            <div id="cultural_interests_example" class="collapse" aria-labelledby="cultural_interests_accordion" data-parent="#cultural_interests_accordion">
                                                 <p class="collapse-in ml-0">
                                                     {% blocktrans %} Age groups, religious groups, arts and cultural centers, languages, immigration status,
                                                     ethnic groups such as Detroit’s Mexican Town or Dearborn’s Middle Eastern community,
@@ -355,6 +370,7 @@
                                                 </p>
                                             </div>
                                         </div>
+                                        <div class="sr-only">{{ comm_form.cultural_interests.label_tag }}</div>
                                         {{ comm_form.cultural_interests|append_attr:"class:form-control" }}
                                         <hr>
                                         <!-- Other -->
@@ -384,12 +400,13 @@
                                             <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#other_interests_example" aria-expanded="false" aria-controls="collapseOne">
                                             {% trans "Show Example" %}
                                             </button>
-                                            <div id="other_interests_example" class="collapse" aria-labelledby="headingOne" data-parent="#other_interests_accordion">
+                                            <div id="other_interests_example" class="collapse" aria-labelledby="other_interests_accordion" data-parent="#other_interests_accordion">
                                                 <p class="collapse-in ml-0">
                                                     {% trans "Our farmers extend over two counties and we hope you can put them together in a single State Senate district." %}
                                                 </p>
                                             </div>
                                         </div>
+                                        <div class="sr-only">{{ comm_form.other_considerations.label_tag }}</div>
                                         {{ comm_form.other_considerations|append_attr:"class:form-control" }}
                                     </div>
                                 </div>
@@ -427,6 +444,7 @@
                                             <br>
                                             <small>{% trans "For example: Cherry Farmers Community, Huron River Watershed, Chippewa Community, LAX Airport Communities, University of Texas Students, El Barrio" %}</small>
                                         </p>
+                                        <div class="sr-only">{{ comm_form.entry_name.label_tag }}</div>
                                         {{ comm_form.entry_name|append_attr:"class:form-control" }}
 
                                         <div id="main_community_form" class="form-group">
@@ -458,7 +476,7 @@
                                                     sessionStorage.setItem("allChecks", "fail");
                                                 </script>
                                                 <div id="polygon_missing" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
-                                                  {% trans "You need to draw a polygon to submit the form." %}
+                                                  {% trans "You need to draw a community to submit the form." %}
                                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -520,8 +538,8 @@
                                                 {% url 'main:terms' as url2%}
 
                                                 {% blocktrans %} Click here to indicate that you have read and agree to the
-                                                <a target="_blank" rel="noopener noreferrer" href={{url1}}>Terms of Use</a> and
-                                                <a target="_blank" rel="noopener noreferrer" href="{{url2}}">Privacy Policy</a>.
+                                                <a target="_blank" rel="noopener noreferrer" href={{url2}}>Terms of Use</a> and
+                                                <a target="_blank" rel="noopener noreferrer" href="{{url1}}">Privacy Policy</a>.
                                                 <small class="text-danger">(Required)</small>
                                                 {% endblocktrans %}
                                             </label>
@@ -552,7 +570,7 @@
                     <div class='row row-equal-cols'>
                         <div class='col-lg text-center m-2'>
                             <div style="display: inline-block;">
-                                <button id="save" form="entryForm" type="submit" class="btn btn-primary" value="Submit">{% trans "Save Community" %}</button>
+                                <button id="save" form="entryForm" type="submit" class="btn btn-lg btn-primary" value="Submit">{% trans "Save Community" %}</button>
                             </div>
                         </div>
                     </div>
