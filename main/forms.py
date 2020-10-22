@@ -180,7 +180,7 @@ class AllowlistForm(ModelForm):
 class DriveForm(ModelForm):
     class Meta:
         model = Drive
-        fields = ["name", "description", "state"]
+        fields = ["name", "description", "state", "is_address_required"]
         widgets = {
             "name": forms.TextInput(
                 attrs={
@@ -197,6 +197,11 @@ class DriveForm(ModelForm):
             "state": forms.Select(
                 choices=STATES, attrs={"class": "form-control"}
             ),
+            "is_address_required": forms.CheckboxInput(
+                attrs={
+                    "class": "form-control",
+                }
+            )
         }
 
 

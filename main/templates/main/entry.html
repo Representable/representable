@@ -172,7 +172,7 @@
                                             {% endif %}
                                         </div>
                                         <p class="card-text mb-1 mt-2">
-                                            {% trans "Your Address" %} <small class="text-danger">{% trans "(Required)" %}</small>
+                                            {% trans "Your Address" %} {% if address_required %}<small class="text-danger">{% trans "(Required)" %}</small> {% endif %}
                                         </p>
                                         <div id="street_error_alerts">
                                             {% if addr_form.street.errors %}

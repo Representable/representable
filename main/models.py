@@ -159,6 +159,7 @@ class Drive(models.Model):
     - organization: organization hosting the drive
     - created_at: when the drive was created
     - is_active: is the drive active
+    - is_address_required: does the drive require users to include an address
     """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -171,6 +172,7 @@ class Drive(models.Model):
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
+    is_address_required = models.BooleanField(default=True)
 
     class Meta:
         ordering = ("description",)
@@ -304,16 +306,16 @@ class Address(models.Model):
         CommunityEntry, on_delete=models.CASCADE, default=""
     )
     street = models.CharField(
-        max_length=500, blank=False, unique=False, default=""
+        max_length=500, blank=True, unique=False, default=""
     )
     city = models.CharField(
-        max_length=100, blank=False, unique=False, default=""
+        max_length=100, blank=True, unique=False, default=""
     )
     state = models.CharField(
-        max_length=100, blank=False, unique=False, default=""
+        max_length=100, blank=True, unique=False, default=""
     )
     zipcode = models.CharField(
-        max_length=12, blank=False, unique=False, default=""
+        max_length=12, blank=True, unique=False, default=""
     )
 
     def __str__(self):
