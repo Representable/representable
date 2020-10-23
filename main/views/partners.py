@@ -60,24 +60,32 @@ class PartnerMap(TemplateView):
         # address Information
         streets = {}
         cities = {}
+        org = Organization.objects.get(slug=self.kwargs["slug"])
         # get the polygon from db and pass it on to html
         if self.kwargs["drive"]:
-            query = CommunityEntry.objects.filter(
-                organization__slug=self.kwargs["slug"],
-                drive__slug=self.kwargs["drive"],
-            ).defer(
-                "census_blocks_polygon_array",
-                "user_polygon",
-                "census_blocks_polygon",
+            drive = Drive.objects.get(slug=self.kwargs["drive"])
+            query = drive.submissions.all().defer(
+                "census_blocks_polygon_array", "user_polygon"
             )
+            # query = CommunityEntry.objects.filter(
+            #     organization__slug=self.kwargs["slug"],
+            #     drive__slug=self.kwargs["drive"],
+            # ).defer(
+            #     "census_blocks_polygon_array",
+            #     "user_polygon",
+            #     "census_blocks_polygon",
+            # )
         else:
-            query = CommunityEntry.objects.filter(
-                organization__slug=self.kwargs["slug"]
-            ).defer(
-                "census_blocks_polygon_array",
-                "user_polygon",
-                "census_blocks_polygon",
+            query = org.submissions.all().defer(
+                "census_blocks_polygon_array", "user_polygon"
             )
+            # query = CommunityEntry.objects.filter(
+            #     organization__slug=self.kwargs["slug"]
+            # ).defer(
+            #     "census_blocks_polygon_array",
+            #     "user_polygon",
+            #     "census_blocks_polygon",
+            # )
         for obj in query:
             for a in Address.objects.filter(entry=obj):
                 streets[obj.entry_ID] = a.street
@@ -87,7 +95,9 @@ class PartnerMap(TemplateView):
             # if not obj.census_blocks_polygon:
             #     s = "".join(obj.user_polygon.geojson)
             # else:
-            #     s = "".join(obj.census_blocks_polygon.geojson)
+
+            #   s = "".join(obj.census_blocks_polygon.geojson)
+            s = "".join(obj.census_blocks_polygon.geojson)
 
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
@@ -102,7 +112,7 @@ class PartnerMap(TemplateView):
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
-        org = Organization.objects.get(slug=self.kwargs["slug"])
+        # org = Organization.objects.get(slug=self.kwargs["slug"])
         context["organization"] = org
         context["state"] = org.states[0].lower()
         if self.request.user.is_authenticated:
@@ -130,9 +140,7 @@ class PartnerMap(TemplateView):
             )
             context["drive_slug"] = self.kwargs["drive"]
         if self.request.user.is_authenticated:
-            context["is_org_admin"] = self.request.user.is_org_admin(
-                Organization.objects.get(slug=self.kwargs["slug"]).id
-            )
+            context["is_org_admin"] = self.request.user.is_org_admin(org.id)
         return context
 
 
