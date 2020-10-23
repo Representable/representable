@@ -84,15 +84,15 @@ class PartnerMap(TemplateView):
                 cities[obj.entry_ID] = (
                     a.city + ", " + a.state + " " + a.zipcode
                 )
-            if not obj.census_blocks_polygon:
-                s = "".join(obj.user_polygon.geojson)
-            else:
-                s = "".join(obj.census_blocks_polygon.geojson)
+            # if not obj.census_blocks_polygon:
+            #     s = "".join(obj.user_polygon.geojson)
+            # else:
+            #     s = "".join(obj.census_blocks_polygon.geojson)
 
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
-            struct = geojson.loads(s)
-            entryPolyDict[obj.entry_ID] = struct.coordinates
+            # struct = geojson.loads(s)
+            # entryPolyDict[obj.entry_ID] = struct.coordinates
 
         context = {
             "streets": streets,
