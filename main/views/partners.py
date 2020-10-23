@@ -65,10 +65,18 @@ class PartnerMap(TemplateView):
             query = CommunityEntry.objects.filter(
                 organization__slug=self.kwargs["slug"],
                 drive__slug=self.kwargs["drive"],
+            ).defer(
+                "census_blocks_polygon_array",
+                "user_polygon",
+                "census_blocks_polygon",
             )
         else:
             query = CommunityEntry.objects.filter(
                 organization__slug=self.kwargs["slug"]
+            ).defer(
+                "census_blocks_polygon_array",
+                "user_polygon",
+                "census_blocks_polygon",
             )
         for obj in query:
             for a in Address.objects.filter(entry=obj):
