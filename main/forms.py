@@ -59,13 +59,6 @@ class AddressForm(ModelForm):
             "state": "State: ",
             "zipcode": "Zipcode: "
         }
-    # def clean(self):
-    #     """
-    #     Check that the address is included with a submission, if the drive requires it
-    #     """
-    #
-    #     if errors:
-    #         raise forms.ValidationError(errors)
 
 
 class CommunityForm(ModelForm):

@@ -138,7 +138,8 @@ function checkFieldById(field_id) {
 function formValidation() {
   // Check Normal Fields
   var flag = true;
-  var form_elements = document.getElementById("entryForm").elements;
+  var entryForm = document.getElementById("entryForm");
+  var form_elements = entryForm.elements;
   for (var i = 0; i < form_elements.length; i++) {
     if (form_elements[i].required) {
       if (checkFieldById(form_elements[i].id) == false) {
@@ -168,9 +169,18 @@ function formValidation() {
     economic_intetersts_field.classList.add("has_error");
     comm_activities_field.classList.add("has_error");
     other_considerations_field.classList.add("has_error");
-    var interets_alert = document.getElementById("need_one_interest");
-    interets_alert.classList.remove("d-none");
+    var interests_alert = document.getElementById("need_one_interest");
+    interests_alert.classList.remove("d-none");
   }
+  var is_address_required = (address_required == "True");
+  if (is_address_required && (entryForm.street.value == "" || entryForm.city.value == "" || entryForm.state.value == "" || entryForm.zipcode.value == "")) {
+    entryForm.street.classList.add("has_error");
+    entryForm.city.classList.add("has_error");
+    entryForm.state.classList.add("has_error");
+    entryForm.zipcode.classList.add("has_error");
+    document.getElementById("need_address").classList.remove("d-none");
+  }
+
   if (flag == false) {
     // Add alert.
     var alert = document.getElementById("form_error");
