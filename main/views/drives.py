@@ -28,5 +28,6 @@ class DriveView(DetailView):
         # Get Drive State object
         drive_slug = self.kwargs["slug"]
         drive = Drive.objects.get(slug=drive_slug)
-        context["state"] = State.objects.filter(abbr=drive.state)[0]
+        if (State.objects.filter(abbr=drive.state)):
+            context["state"] = State.objects.filter(abbr=drive.state)[0]
         return context

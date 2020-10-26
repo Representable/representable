@@ -42,7 +42,7 @@
 <div class="row">
   <div class="col mx-5">
     <h1 class="text-center font-weight-light">{{object.name}}</h1>
-    <p class="text-center">Organized by <a href="{% url 'main:partner_page' object.organization.slug %}">{{object.organization}}</a> in {{state.name}}</p>
+    <p class="text-center">Organized by <a href="{% url 'main:partner_page' object.organization.slug %}">{{object.organization}}</a> in {{drive.state}}</p>
     <hr class="line-break">
     <p class="mx-3">{{object.description}}</p>
   </div>
@@ -58,6 +58,7 @@
     <img class="img-fluid" src="{% static 'img/leader.svg' %}"> </img>
   </div>
 </div>
+{% if state %}
 <div class="row">
   <div class="col m-5">
     <h1 class="text-center font-weight-light">Redistricting in {{state.name}}</h1>
@@ -101,6 +102,7 @@
     {% endautoescape %}
   </div>
 </div>
+{% endif %}
 <div class="row">
   <div class="col text-center mb-4">
     <a class="btn btn-primary btn-lg my-3 drive-new-entry" href="{% url 'main:entry' drive=object.slug %}{{object.state|lower}}" role="button">Draw My Community</a>
