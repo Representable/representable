@@ -500,7 +500,7 @@ class EntryView(SignupRequiredMixin, View):
             organization = drive.organization
             organization_name = organization.name
             organization_id = organization.id
-            address_required = drive.is_address_required
+            address_required = drive.require_user_addresses
 
         context = {
             "comm_form": comm_form,

@@ -59,6 +59,13 @@ class AddressForm(ModelForm):
             "state": "State: ",
             "zipcode": "Zipcode: "
         }
+    # def clean(self):
+    #     """
+    #     Check that the address is included with a submission, if the drive requires it
+    #     """
+    #
+    #     if errors:
+    #         raise forms.ValidationError(errors)
 
 
 class CommunityForm(ModelForm):
@@ -180,7 +187,7 @@ class AllowlistForm(ModelForm):
 class DriveForm(ModelForm):
     class Meta:
         model = Drive
-        fields = ["name", "description", "state", "is_address_required"]
+        fields = ["name", "description", "state", "require_user_addresses"]
         widgets = {
             "name": forms.TextInput(
                 attrs={
@@ -197,7 +204,7 @@ class DriveForm(ModelForm):
             "state": forms.Select(
                 choices=STATES, attrs={"class": "form-control"}
             ),
-            "is_address_required": forms.CheckboxInput(
+            "require_user_addresses": forms.CheckboxInput(
                 attrs={
                     "class": "form-control",
                 }
