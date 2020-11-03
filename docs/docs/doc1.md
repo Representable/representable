@@ -10,7 +10,13 @@ From the Terminal, add the following settings to your `.bash_profile`. Everythin
 First, type:
 
 ```
-nano ~/.bash_profile
+nano ~/.bash_profile 
+```
+
+For macOS 10.15 and higher type: 
+
+```
+nano ~/.zprofile 
 ```
 
 Then paste the following lines into the file, replacing the "..."'s with your own settings (new contributors, Lauren is sending these credentials to you directly).
