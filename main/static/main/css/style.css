@@ -142,8 +142,8 @@ body {
   border-width: 0;
 }
 
-.w-20 {
-  width: 20%;
+.w-10 {
+  width: 10%;
 }
 
 .container-full-width {
@@ -199,6 +199,9 @@ body {
   /* draw buttons on entry page */
   .draw-group {
     width: 70%;
+  }
+  .sidenav {
+    height: 100%;
   }
 }
 
@@ -419,12 +422,6 @@ color scheme. See readme.md*/
   overflow-y: auto;
 }
 
-@media only screen and (max-width: 768px) {
-  .sidenav {
-    height: 100%;
-  }
-}
-
 /* override what the popup looks like on small devices */
 @media (max-width: 600px) {
   #video_popup {
@@ -437,6 +434,9 @@ color scheme. See readme.md*/
   #video_popup_body {
     padding-right: 0.05rem;
     padding-left: 0.05rem;
+  }
+  .w-10 {
+    width: 30%;
   }
 }
 
