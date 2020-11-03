@@ -186,7 +186,6 @@ class StatePage(TemplateView):
 
 # ******************************************************************************#
 class Review(LoginRequiredMixin, TemplateView):
-    # TODO: check that this is deprecated and if so delete this and all related code and tests
     template_name = "main/review.html"
     form_class = DeletionForm
     initial = {"key": "value"}
@@ -524,10 +523,9 @@ class EntryView(LoginRequiredMixin, View):
         # parse block groups and add to field
         comm_form.data._mutable = True
         block_groups = comm_form.data["block_groups"].split(",")
-        comm_form.data["block_groups"] = block_groups
         comm_form.data["block_groups"] = [
-            # BlockGroup.objects.get_or_create(census_id=bg)[0].id
-            # for bg in block_groups
+            BlockGroup.objects.get_or_create(census_id=bg)[0].id
+            for bg in block_groups
         ]
         comm_form.data._mutable = False
         if comm_form.is_valid():
