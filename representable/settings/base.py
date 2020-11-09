@@ -147,7 +147,7 @@ else:
             "NAME": os.environ.get("DISTR_DB_NAME", ""),
             "USER": os.environ.get("DISTR_DB_USER", ""),
             "PASS": os.environ.get("DISTR_DB_PASS", ""),
-            "CONN_MAX_AGE": 300,
+            "CONN_MAX_AGE": 100,
         }
     }
 
