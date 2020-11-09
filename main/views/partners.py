@@ -56,91 +56,114 @@ class PartnerMap(TemplateView):
         context = super().get_context_data(**kwargs)
 
         # the polygon coordinates
-        entryPolyDict = dict()
-        # address Information
-        streets = {}
-        cities = {}
-        org = Organization.objects.get(slug=self.kwargs["slug"])
-        # get the polygon from db and pass it on to html
-        if self.kwargs["drive"]:
-            drive = Drive.objects.get(slug=self.kwargs["drive"])
-            query = drive.submissions.all().defer(
-                "census_blocks_polygon_array", "user_polygon"
-            )
-            # query = CommunityEntry.objects.filter(
-            #     organization__slug=self.kwargs["slug"],
-            #     drive__slug=self.kwargs["drive"],
-            # ).defer(
-            #     "census_blocks_polygon_array",
-            #     "user_polygon",
-            #     "census_blocks_polygon",
-            # )
-        else:
-            query = org.submissions.all().defer(
-                "census_blocks_polygon_array", "user_polygon"
-            )
-            # query = CommunityEntry.objects.filter(
-            #     organization__slug=self.kwargs["slug"]
-            # ).defer(
-            #     "census_blocks_polygon_array",
-            #     "user_polygon",
-            #     "census_blocks_polygon",
-            # )
-        for obj in query:
-            for a in Address.objects.filter(entry=obj):
-                streets[obj.entry_ID] = a.street
-                cities[obj.entry_ID] = (
-                    a.city + ", " + a.state + " " + a.zipcode
-                )
-            # if not obj.census_blocks_polygon:
-            #     s = "".join(obj.user_polygon.geojson)
-            # else:
+        # entryPolyDict = dict()
+        # # address Information
+        # streets = {}
+        # cities = {}
+        # org = Organization.objects.get(slug=self.kwargs["slug"])
+        # # get the polygon from db and pass it on to html
+        # if self.kwargs["drive"]:
+        #     drive = Drive.objects.get(slug=self.kwargs["drive"])
+        #     query = drive.submissions.all().defer(
+        #         "census_blocks_polygon_array", "user_polygon"
+        #     )
+        #     # query = CommunityEntry.objects.filter(
+        #     #     organization__slug=self.kwargs["slug"],
+        #     #     drive__slug=self.kwargs["drive"],
+        #     # ).defer(
+        #     #     "census_blocks_polygon_array",
+        #     #     "user_polygon",
+        #     #     "census_blocks_polygon",
+        #     # )
+        # else:
+        #     query = org.submissions.all().defer(
+        #         "census_blocks_polygon_array", "user_polygon"
+        #     )
+        # query = CommunityEntry.objects.filter(
+        #     organization__slug=self.kwargs["slug"]
+        # ).defer(
+        #     "census_blocks_polygon_array",
+        #     "user_polygon",
+        #     "census_blocks_polygon",
+        # )
+        # for obj in query:
+        #     for a in Address.objects.filter(entry=obj):
+        #         streets[obj.entry_ID] = a.street
+        #         cities[obj.entry_ID] = (
+        #             a.city + ", " + a.state + " " + a.zipcode
+        #         )
+        # if not obj.census_blocks_polygon:
+        #     s = "".join(obj.user_polygon.geojson)
+        # else:
 
-            #   s = "".join(obj.census_blocks_polygon.geojson)
-            s = "".join(obj.census_blocks_polygon.geojson)
+        #   s = "".join(obj.census_blocks_polygon.geojson)
+        # s = "".join(obj.census_blocks_polygon.geojson)
 
-            # add all the coordinates in the array
-            # at this point all the elements of the array are coordinates of the polygons
-            # struct = geojson.loads(s)
-            # entryPolyDict[obj.entry_ID] = struct.coordinates
+        # add all the coordinates in the array
+        # at this point all the elements of the array are coordinates of the polygons
+        # struct = geojson.loads(s)
+        # entryPolyDict[obj.entry_ID] = struct.coordinates
+
+        # context = {
+        #     "streets": streets,
+        #     "cities": cities,
+        #     "communities": query,
+        #     "entries": json.dumps(entryPolyDict),
+        #     "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+        #     "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
+        # }
+        # # org = Organization.objects.get(slug=self.kwargs["slug"])
+        # context["organization"] = org
+        # context["state"] = org.states[0].lower()
+        # if self.request.user.is_authenticated:
+        #     email = {
+        #         "exists": True,
+        #         "value": self.request.user.email,
+        #     }
+        # else:
+        #     email = {
+        #         "exists": False,
+        #         "value": None,
+        #     }
+        # context["email"] = email
+        # if not self.kwargs["drive"]:
+        #     context["multi_export_link"] = (
+        #         "/multiexport/org/" + self.kwargs["slug"]
+        #     )
+
+        # if self.kwargs["drive"]:
+        #     context["drive"] = get_object_or_404(
+        #         Drive, slug=self.kwargs["drive"]
+        #     ).name
+        #     context["multi_export_link"] = (
+        #         "/multiexport/drive/" + self.kwargs["drive"]
+        #     )
+        #     context["drive_slug"] = self.kwargs["drive"]
+        # if self.request.user.is_authenticated:
+        #     context["is_org_admin"] = self.request.user.is_org_admin(org.id)
+        email = {
+            "exists": False,
+            "value": None,
+        }
+        from ..db_replacement import query, org
 
         context = {
-            "streets": streets,
-            "cities": cities,
+            "streets": {},
+            "cities": {},
             "communities": query,
-            "entries": json.dumps(entryPolyDict),
+            "entries": dict(),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
+            "organization": org,
+            "state": "mi",
+            "email": email,
+            "is_org_admin": False,
         }
-        # org = Organization.objects.get(slug=self.kwargs["slug"])
-        context["organization"] = org
-        context["state"] = org.states[0].lower()
-        if self.request.user.is_authenticated:
-            email = {
-                "exists": True,
-                "value": self.request.user.email,
-            }
-        else:
-            email = {
-                "exists": False,
-                "value": None,
-            }
-        context["email"] = email
-        if not self.kwargs["drive"]:
-            context["multi_export_link"] = (
-                "/multiexport/org/" + self.kwargs["slug"]
-            )
 
-        if self.kwargs["drive"]:
-            context["drive"] = get_object_or_404(
-                Drive, slug=self.kwargs["drive"]
-            ).name
-            context["multi_export_link"] = (
-                "/multiexport/drive/" + self.kwargs["drive"]
-            )
-            context["drive_slug"] = self.kwargs["drive"]
-        if self.request.user.is_authenticated:
-            context["is_org_admin"] = self.request.user.is_org_admin(org.id)
+        context["multi_export_link"] = (
+            "/multiexport/org/" + self.kwargs["slug"]
+        )
+
         return context
 
 
