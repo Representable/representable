@@ -18,6 +18,7 @@ from django.views.generic import (
     DetailView,
 )
 
+import time
 import json
 import os
 import geojson
@@ -53,6 +54,7 @@ class PartnerMap(TemplateView):
     template_name = "main/partners/map.html"
 
     def get_context_data(self, **kwargs):
+        start_time = time.time()
         context = super().get_context_data(**kwargs)
 
         # the polygon coordinates
@@ -141,6 +143,7 @@ class PartnerMap(TemplateView):
             context["drive_slug"] = self.kwargs["drive"]
         if self.request.user.is_authenticated:
             context["is_org_admin"] = self.request.user.is_org_admin(org.id)
+        print("--- %s seconds TIME---" % (time.time() - start_time))
         return context
 
 
