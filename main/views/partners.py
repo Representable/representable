@@ -143,7 +143,7 @@ class PartnerMap(TemplateView):
             context["drive_slug"] = self.kwargs["drive"]
         if self.request.user.is_authenticated:
             context["is_org_admin"] = self.request.user.is_org_admin(org.id)
-        print("--- %s seconds TIME---" % (time.time() - start_time))
+        print("--- %s seconds MAP TIME---" % (time.time() - start_time))
         return context
 
 

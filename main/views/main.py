@@ -17,6 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
+import time
 from django.http import (
     HttpResponse,
     HttpResponseRedirect,
@@ -474,7 +475,7 @@ class EntryView(LoginRequiredMixin, View):
     def get(self, request, abbr=None, *args, **kwargs):
         if not abbr:
             return redirect("/#select")
-
+        start_time = time.time()
         comm_form = self.community_form_class(
             initial=self.get_initial(), label_suffix=""
         )
@@ -514,6 +515,7 @@ class EntryView(LoginRequiredMixin, View):
             "drive_id": drive_id,
             "state": abbr,
         }
+        print("--- %s seconds entry TIME---" % (time.time() - start_time))
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
