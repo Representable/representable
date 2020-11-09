@@ -171,14 +171,12 @@ class StatePage(TemplateView):
 
     def get(self, request, abbr, *args, **kwargs):
 
-        # state = State.objects.filter(abbr=abbr.upper())
-        state = [State(name="Fake name", abbr=abbr)]
+        state = State.objects.filter(abbr=abbr.upper())
         if not state:
             return HttpResponseRedirect(
                 reverse_lazy("main:entry", kwargs={"abbr": abbr})
             )
-        # drives = state[0].get_drives()
-        drives = None
+        drives = state[0].get_drives()
         return render(
             request,
             self.template_name,
@@ -259,8 +257,7 @@ class Submission(TemplateView):
 
         if not m_uuid or not re.match(r"\b[A-Fa-f0-9]{8}\b", m_uuid):
             raise Http404
-        # query = CommunityEntry.objects.filter(entry_ID__startswith=m_uuid)
-        query = [CommunityEntry(user=self.request.user, entry_ID=m_uuid)]
+        query = CommunityEntry.objects.filter(entry_ID__startswith=m_uuid)
 
         if not query:
             raise Http404
@@ -284,14 +281,14 @@ class Submission(TemplateView):
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
-        # for a in Address.objects.filter(entry=user_map):
-        #     context["street"] = a.street
-        #     context["city"] = a.city + ", " + a.state + " " + a.zipcode
+        for a in Address.objects.filter(entry=user_map):
+            context["street"] = a.street
+            context["city"] = a.city + ", " + a.state + " " + a.zipcode
         if self.request.user.is_authenticated:
-            # if user_map.organization:
-            #     context["is_org_admin"] = self.request.user.is_org_admin(
-            #         user_map.organization_id
-            #     )
+            if user_map.organization:
+                context["is_org_admin"] = self.request.user.is_org_admin(
+                    user_map.organization_id
+                )
             context["is_community_author"] = self.request.user == user_map.user
         return render(request, self.template_name, context)
 
@@ -407,36 +404,34 @@ class Thanks(LoginRequiredMixin, TemplateView):
         has_drive = False
         organization_name = ""
         drive_name = ""
-        # if kwargs["drive"]:
-        #     has_drive = True
-        #     drive_slug = self.kwargs["drive"]
-        #     drive = Drive.objects.get(slug=drive_slug)
-        #     drive_name = drive.name
-        #     organization = drive.organization
-        #     organization_name = organization.name
+        if kwargs["drive"]:
+            has_drive = True
+            drive_slug = self.kwargs["drive"]
+            drive = Drive.objects.get(slug=drive_slug)
+            drive_name = drive.name
+            organization = drive.organization
+            organization_name = organization.name
 
-        # if EmailAddress.objects.filter(
-        #     user=self.request.user, verified=True
-        # ).exists():
-        #     context["verified"] = True
-        # else:
-        #     user_email_address = EmailAddress.objects.get(
-        #         user=self.request.user
-        #     )
+        if EmailAddress.objects.filter(
+            user=self.request.user, verified=True
+        ).exists():
+            context["verified"] = True
+        else:
+            user_email_address = EmailAddress.objects.get(
+                user=self.request.user
+            )
 
-        #     user_email_confirmation = EmailConfirmationHMAC(
-        #         email_address=user_email_address
-        #     )
+            user_email_confirmation = EmailConfirmationHMAC(
+                email_address=user_email_address
+            )
 
-        #     # default_adapter = adapter.get_adapter()
+            # default_adapter = adapter.get_adapter()
 
-        #     # default_adapter.send_confirmation_mail(self.request, user_email_confirmation, False)
-        #     # user_email_address.send_confirmation(None, False)
+            # default_adapter.send_confirmation_mail(self.request, user_email_confirmation, False)
+            # user_email_address.send_confirmation(None, False)
 
-        #     user_email_confirmation.send(self.request, False)
-        #     context["verified"] = False
-
-        context["verified"] = True
+            user_email_confirmation.send(self.request, False)
+            context["verified"] = False
 
         context["map_url"] = self.kwargs["map_id"]
         context["drive"] = self.kwargs["drive"]
@@ -496,15 +491,15 @@ class EntryView(LoginRequiredMixin, View):
         organization_id = None
         drive_name = ""
         drive_id = None
-        # if kwargs["drive"]:
-        #     has_drive = True
-        #     drive_slug = self.kwargs["drive"]
-        #     drive = Drive.objects.get(slug=drive_slug)
-        #     drive_name = drive.name
-        #     drive_id = drive.id
-        #     organization = drive.organization
-        #     organization_name = organization.name
-        #     organization_id = organization.id
+        if kwargs["drive"]:
+            has_drive = True
+            drive_slug = self.kwargs["drive"]
+            drive = Drive.objects.get(slug=drive_slug)
+            drive_name = drive.name
+            drive_id = drive.id
+            organization = drive.organization
+            organization_name = organization.name
+            organization_id = organization.id
 
         context = {
             "comm_form": comm_form,
@@ -527,14 +522,14 @@ class EntryView(LoginRequiredMixin, View):
 
         # parse block groups and add to field
         comm_form.data._mutable = True
-        # block_groups = comm_form.data["block_groups"].split(",")
-        # comm_form.data["block_groups"] = [
-        #     BlockGroup.objects.get_or_create(census_id=bg)[0].id
-        #     for bg in block_groups
-        # ]
+        block_groups = comm_form.data["block_groups"].split(",")
+        comm_form.data["block_groups"] = [
+            BlockGroup.objects.get_or_create(census_id=bg)[0].id
+            for bg in block_groups
+        ]
         comm_form.data._mutable = False
         if comm_form.is_valid():
-            # entryForm = comm_form.save(commit=False)
+            entryForm = comm_form.save(commit=False)
 
             # # Returns geometry
             # poly = comm_form.data["census_blocks_polygon"]
@@ -556,47 +551,47 @@ class EntryView(LoginRequiredMixin, View):
             #         polygonUnion = MultiPolygon(polygonUnion)
             #         entryForm.census_blocks_polygon = polygonUnion
 
-            # if self.kwargs["drive"]:
-            # drive = Drive.objects.get(slug=self.kwargs["drive"])
-            # if drive:
-            #     entryForm.drive = drive
-            #     entryForm.organization = drive.organization
+            if self.kwargs["drive"]:
+                drive = Drive.objects.get(slug=self.kwargs["drive"])
+                if drive:
+                    entryForm.drive = drive
+                    entryForm.organization = drive.organization
 
-            # if entryForm.organization:
-            #     if self.request.user.is_org_admin(entryForm.organization.id):
-            #         entryForm.admin_approved = True
-            #     else:
-            #         # check if user is on the allowlist
-            #         allowlist_entry = AllowList.objects.filter(
-            #             organization=entryForm.organization.id,
-            #             email=self.request.user.email,
-            #         )
-            #         if allowlist_entry:
-            #             # approve this entry
-            #             entryForm.admin_approved = True
+            if entryForm.organization:
+                if self.request.user.is_org_admin(entryForm.organization.id):
+                    entryForm.admin_approved = True
+                else:
+                    # check if user is on the allowlist
+                    allowlist_entry = AllowList.objects.filter(
+                        organization=entryForm.organization.id,
+                        email=self.request.user.email,
+                    )
+                    if allowlist_entry:
+                        # approve this entry
+                        entryForm.admin_approved = True
 
-            # entryForm.save()
-            # comm_form.save_m2m()
+            entryForm.save()
+            comm_form.save_m2m()
 
-            # if addr_form.is_valid():
-            #     addrForm = addr_form.save(commit=False)
-            #     addrForm.entry = entryForm
-            #     addrForm.save()
+            if addr_form.is_valid():
+                addrForm = addr_form.save(commit=False)
+                addrForm.entry = entryForm
+                addrForm.save()
 
-            # m_uuid = str(entryForm.entry_ID).split("-")[0]
-            # if not entryForm.drive:
-            #     self.success_url = reverse_lazy(
-            #         "main:thanks", kwargs={"map_id": m_uuid}
-            #     )
-            # else:
-            #     self.success_url = reverse_lazy(
-            #         "main:thanks",
-            #         kwargs={
-            #             "map_id": m_uuid,
-            #             "slug": entryForm.organization.slug,
-            #             "drive": entryForm.drive.slug,
-            #         },
-            #     )
+            m_uuid = str(entryForm.entry_ID).split("-")[0]
+            if not entryForm.drive:
+                self.success_url = reverse_lazy(
+                    "main:thanks", kwargs={"map_id": m_uuid}
+                )
+            else:
+                self.success_url = reverse_lazy(
+                    "main:thanks",
+                    kwargs={
+                        "map_id": m_uuid,
+                        "slug": entryForm.organization.slug,
+                        "drive": entryForm.drive.slug,
+                    },
+                )
             return HttpResponseRedirect(self.success_url)
         context = {
             "comm_form": comm_form,
