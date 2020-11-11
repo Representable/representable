@@ -117,15 +117,17 @@ body {
 
 /* Bootstrap elements for navbar. */
 .navbar {
-  border-bottom: 1px solid #f5f5f5;
-  box-shadow: 0 0 5px -3px #bebebe;
   z-index: 999;
 }
 .navbar-brand {
-  font-weight: 500;
+  font-weight: 600;
   background: -webkit-linear-gradient(-45deg, #2a94f4, #00c6a7);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  letter-spacing: 2.5px;
+}
+.navbar-logo {
+  width: 40px;
 }
 
 .nav-link {
