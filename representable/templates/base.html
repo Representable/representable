@@ -70,19 +70,35 @@
             </ul>
             <ul class="nav navbar-nav navbar-right align-items-center">
             {% if user.is_generic_admin %}
-            {% for org in user.get_organizations %}
-                <li class="nav-item mx-auto">
-                    <a class="nav-link nav-link-org" href="{% url 'main:home_org' org.slug  org.id %}">
-                        {{org.name}}
-                    </a>
-                </li>
-            {% endfor %}
+              {% if user.get_organizations|length > 2 %}
+              <li class="dropdown mx-auto nav-item">
+                  <button class="btn btn-link dropdown-toggle nav-link" type="button" data-toggle="dropdown">My Organizations
+                  <span class="caret"></span></button>
+                  <ul class="dropdown-menu">
+                    {% for org in user.get_organizations %}
+                        <li class="nav-link mx-1">
+                            <a class="nav-link nav-link-org" href="{% url 'main:home_org' org.slug  org.id %}">
+                                {{org.name}}
+                            </a>
+                        </li>
+                    {% endfor %}
+                  </ul>
+              </li>
+              {% else %}
+                {% for org in user.get_organizations %}
+                    <li class="nav-item mx-auto">
+                        <a class="nav-link nav-link-org" href="{% url 'main:home_org' org.slug  org.id %}">
+                            {{org.name}}
+                        </a>
+                    </li>
+                {% endfor %}
+              {% endif %}
             {% else %}
-            <li class="nav-item mx-auto">
-                    <a class="nav-link" href="{% url 'main:partner_welcome' %}">
-                        Partners
-                    </a>
-                </li>
+              <li class="nav-item mx-auto">
+                  <a class="nav-link" href="{% url 'main:partner_welcome' %}">
+                      Partners
+                  </a>
+              </li>
             {% endif %}
                 <li class="nav-item mx-auto">
                     <a class="nav-link" href="{% url 'main:about' %}">
