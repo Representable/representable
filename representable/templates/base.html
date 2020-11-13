@@ -60,7 +60,10 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="{% url 'main:index' %}">Representable</a>
+        <a class="navbar-brand" href="{% url 'main:index' %}">
+          <img class="img-fluid pr-2 navbar-logo" src="{% static 'img/logo-lowres.svg' %}" alt="representable logo - low resolution version"> </img>
+          representable
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -70,19 +73,35 @@
             </ul>
             <ul class="nav navbar-nav navbar-right align-items-center">
             {% if user.is_generic_admin %}
-            {% for org in user.get_organizations %}
-                <li class="nav-item mx-auto">
-                    <a class="nav-link nav-link-org" href="{% url 'main:home_org' org.slug  org.id %}">
-                        {{org.name}}
-                    </a>
-                </li>
-            {% endfor %}
+              {% if user.get_organizations|length > 2 %}
+              <li class="dropdown mx-auto nav-item">
+                  <button class="btn btn-link dropdown-toggle nav-link" type="button" data-toggle="dropdown">My Organizations
+                  <span class="caret"></span></button>
+                  <ul class="dropdown-menu">
+                    {% for org in user.get_organizations %}
+                        <li class="nav-link mx-1">
+                            <a class="nav-link nav-link-org" href="{% url 'main:home_org' org.slug  org.id %}">
+                                {{org.name}}
+                            </a>
+                        </li>
+                    {% endfor %}
+                  </ul>
+              </li>
+              {% else %}
+                {% for org in user.get_organizations %}
+                    <li class="nav-item mx-auto">
+                        <a class="nav-link nav-link-org" href="{% url 'main:home_org' org.slug  org.id %}">
+                            {{org.name}}
+                        </a>
+                    </li>
+                {% endfor %}
+              {% endif %}
             {% else %}
-            <li class="nav-item mx-auto">
-                    <a class="nav-link" href="{% url 'main:partner_welcome' %}">
-                        Partners
-                    </a>
-                </li>
+              <li class="nav-item mx-auto">
+                  <a class="nav-link" href="{% url 'main:partner_welcome' %}">
+                      Partners
+                  </a>
+              </li>
             {% endif %}
                 <li class="nav-item mx-auto">
                     <a class="nav-link" href="{% url 'main:about' %}">
@@ -124,10 +143,23 @@
                     </a>
                 </li>
                 {% endif %}
+                <span class="d-none d-lg-block">|</span>
+                <li class="dropdown mx-auto nav-item">
+                    <button class="btn btn-link dropdown-toggle nav-link" type="button" data-toggle="dropdown">{% if LANGUAGE_CODE == "es" %}ES{% else %}EN{% endif %}
+                    <span class="caret"></span></button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                      <li class="nav-link mx-1">
+                      <form action="{% url 'set_language' %}" method="post">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="{{ redirect_to }}" />
+                        <input name="language" type="hidden" value="{% if LANGUAGE_CODE == "es" %}en-us{% else %}es{% endif %}" />
+                        <input class="language-button" type="submit" value="{% if LANGUAGE_CODE == "es" %}In English{% else %}En Español{% endif %}" />
+                      </form>
+                    </li>
+                    </ul>
+                </li>
             </ul>
-            <!-- TODO: This should not necessarily be in the navbar - on mobile/iPad, it needs to be visible on main page. -->
-<!--             References https://docs.djangoproject.com/en/2.2/topics/i18n/translation/#set-language-redirect-view -->
-<!--             Also https://stackoverflow.com/questions/47874530/django-language-selection-from-dropdown-links-and-images -->
+            <!-- TODO: update for language dropdown -->
             <ul class="nav navbar-nav navbar-right language menu">
 
             </ul>
@@ -177,7 +209,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-md">
-                <a href="/"><img id="r-logo-svg" class="mb-2 text-muted" src="{% static 'img/representable_logo.svg' %}" alt="Representable logo" width="24" height="24"></a>
+                <a href="/"><img id="r-logo-svg" class="mb-2 text-muted" src="{% static 'img/logo-lowres.svg' %}" alt="Representable logo" width="24" height="24"></a>
                 <p class="d-block mb-3 text-muted">© Representable 2020</p>
             </div>
             <div class="col-6 col-md">
@@ -185,8 +217,8 @@
                     <li><a class="text-muted" href="{% url 'main:entry' %}">
                             {% trans "Add Your Community" %}
                         </a></li>
-                    <li><a class="text-muted" href="{% url 'main:map' %}">
-                            {% trans "View All Maps" %}
+                    <li><a class="text-muted" href="{% url 'main:partner_welcome' %}">
+                            Create a Partner Profile
                         </a></li>
                     {% if user.is_authenticated %}
                     <li><a class="text-muted" href="{% url 'main:review' %}">
@@ -204,17 +236,7 @@
                     <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="{% url 'main:terms' %}">
                             {% trans "Terms" %}
                     </a></li>
-<!--                    <li><a class="text-muted" onclick="showConsentBanner(); return false;" href="#">-->
-<!--                        {% trans "Tracking Settings" %}-->
-<!--                    </a></li>-->
-                    <li>
-                    <form action="{% url 'set_language' %}" method="post">
-                      {% csrf_token %}
-                      <input name="next" type="hidden" value="{{ redirect_to }}" />
-                      <input name="language" type="hidden" value="{% if LANGUAGE_CODE == "es" %}en-us{% else %}es{% endif %}" />
-                      <input class="text-muted language-button" type="submit" value="{% if LANGUAGE_CODE == "es" %}In English{% else %}En Español{% endif %}" />
-                    </form>
-                    </li>
+
                 </ul>
             </div>
             <div class="col-12 col-md">

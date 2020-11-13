@@ -117,15 +117,17 @@ body {
 
 /* Bootstrap elements for navbar. */
 .navbar {
-  border-bottom: 1px solid #f5f5f5;
-  box-shadow: 0 0 5px -3px #bebebe;
   z-index: 999;
 }
 .navbar-brand {
-  font-weight: 500;
+  font-weight: 600;
   background: -webkit-linear-gradient(-45deg, #2a94f4, #00c6a7);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  letter-spacing: 2.5px;
+}
+.navbar-logo {
+  width: 40px;
 }
 
 .nav-link {
@@ -142,6 +144,10 @@ body {
   border-width: 0;
 }
 
+.w-10 {
+  width: 10%;
+}
+
 .container-full-width {
   width: 100%;
 }
@@ -153,11 +159,11 @@ body {
 /* Class for the text that greets the user on the website on the front page. */
 /* Alters display-4 max size from 3.5rem to 2.9rem. */
 .main-display-text-sm {
-  font-size: 2.3rem;
+  font-size: 2.1rem;
 }
 
 .main-display-text-all {
-  font-size: 3.1rem;
+  font-size: 2.9rem;
 }
 
 /* Class for what is gerrymandering section styling. */
@@ -195,6 +201,9 @@ body {
   /* draw buttons on entry page */
   .draw-group {
     width: 70%;
+  }
+  .sidenav {
+    height: 100%;
   }
 }
 
@@ -286,7 +295,7 @@ footer {
 color scheme. See readme.md*/
 
 .btn {
-  border-radius: 0.25rem;
+  border-radius: 1.5rem;
 }
 
 .text-primary {
@@ -328,14 +337,15 @@ color scheme. See readme.md*/
 .btn-outline-primary:visited,
 .btn-outline-primary:link {
   background-color: transparent;
-  border-color: #2176c2;
-  color: #2176c2;
+  border-color: #2A94F4;
+  border-width: 2px;
+  color: #2A94F4;
 }
 
 .btn-outline-primary:hover,
 .btn-outline-primary:active {
-  background-color: #2176c2;
-  border-color: #2176c2;
+  background-color: #2A94F4;
+  border-color: #2A94F4;
   color: white;
 }
 
@@ -353,6 +363,9 @@ color scheme. See readme.md*/
     padding-left: 40px;
     padding-right: 40px;
     padding-bottom: 40px;
+  }
+  .container {
+    max-width: 1300px;
   }
 }
 
@@ -411,12 +424,6 @@ color scheme. See readme.md*/
   overflow-y: auto;
 }
 
-@media only screen and (max-width: 768px) {
-  .sidenav {
-    height: 100%;
-  }
-}
-
 /* override what the popup looks like on small devices */
 @media (max-width: 600px) {
   #video_popup {
@@ -429,6 +436,9 @@ color scheme. See readme.md*/
   #video_popup_body {
     padding-right: 0.05rem;
     padding-left: 0.05rem;
+  }
+  .w-10 {
+    width: 30%;
   }
 }
 
@@ -468,6 +478,14 @@ color scheme. See readme.md*/
 }
 .small-link {
   cursor: pointer;
+}
+.link-custom {
+  cursor: pointer;
+  color: #5B5B5B;
+  text-decoration: underline;
+}
+.link-custom:hover {
+  color: black;
 }
 
 /* landing page map */
@@ -900,6 +918,11 @@ label {
 
 #report {
   cursor: pointer;
+}
+
+.alert-custom {
+  background: #DEF8F4;
+  color: #5B5B5B;
 }
 
 /* Fallback for Edge
