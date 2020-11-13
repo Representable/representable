@@ -32,11 +32,9 @@
 
   <div class="row mb-4">
     <div class="col-12">
-      <h5>
         <u><a data-toggle="collapse" href="#collapseCriteria" aria-expanded="false" aria-controls="collapseCriteria">
-          {{ state_obj.name }}'s Redistricting Criteria <span class="caret"></span>
+          <h5 style="width: fit-content;">{{ state_obj.name }}'s Redistricting Criteria &#32;<i class="fas fa-caret-down"></i></h5>
         </a></u>
-      </h5>
       <div class="collapse" id="collapseCriteria">
           {% autoescape off %}
           {{ state_obj.content_criteria }}
@@ -55,11 +53,12 @@
   <div class="card card-signin my-4">
     <div class="card-body">
       <div class="row">
-        <div class="col-sm-9">
+        <div class="col-sm-8">
           <h5 class="font-weight-light my-3">Redistricting is coming. Put your community on the map with Representable.</h5>
         </div>
-        <div class="col-sm-3">
-          <a class="btn btn-primary btn-lg btn-canvas my-3" href="{% url 'main:entry' %}{{state_obj.abbr|lower}}" role="button">Draw my community</a>
+        <div class="col-sm-4">
+          <a class="btn btn-primary btn-lg btn-canvas my-3 d-none d-lg-block" href="{% url 'main:entry' %}{{state_obj.abbr|lower}}" role="button">Draw my community</a>
+          <a class="btn btn-primary btn-canvas my-3 d-lg-none" href="{% url 'main:entry' %}{{state_obj.abbr|lower}}" role="button">Draw my community</a>
         </div>
       </div>
     </div>
