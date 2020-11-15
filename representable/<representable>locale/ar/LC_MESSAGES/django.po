@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-15 19:23+0000\n"
+"POT-Creation-Date: 2020-11-15 20:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2461,6 +2461,10 @@ msgid ""
 "community-of-interest data."
 msgstr ""
 
+#: main/templates/main/index.html:32 main/templates/main/index.html:42
+msgid "PARTNER WITH US"
+msgstr "شريك معنا"
+
 #: main/templates/main/index.html:49 main/templates/main/pages/about.html:48
 msgid "What is Representable?"
 msgstr "ما هو قابل للتمثيل"
@@ -2753,22 +2757,22 @@ msgstr ""
 msgid "Sign up"
 msgstr ""
 
-#: representable/templates/base.html:220
+#: representable/templates/base.html:243
 msgid "Add Your Community"
 msgstr "أضف مجتمعك"
 
-#: representable/templates/base.html:227
+#: representable/templates/base.html:250
 msgid "My Communities"
 msgstr ""
 
-#: representable/templates/base.html:236
+#: representable/templates/base.html:259
 msgid "Privacy"
 msgstr ""
 
-#: representable/templates/base.html:239
+#: representable/templates/base.html:262
 msgid "Terms"
 msgstr ""
 
-#: representable/templates/base.html:245
+#: representable/templates/base.html:268
 msgid "More questions? Reach out at"
 msgstr ""
