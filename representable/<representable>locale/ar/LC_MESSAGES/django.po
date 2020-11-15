@@ -2176,7 +2176,7 @@ msgstr ""
 
 #: main/templates/main/drives/page.html:36 main/templates/main/index.html:28
 msgid "Get Started"
-msgstr ""
+msgstr "البدء"
 
 #: main/templates/main/entry.html:64
 msgid "Map your community"
@@ -2463,11 +2463,11 @@ msgstr ""
 
 #: main/templates/main/index.html:49 main/templates/main/pages/about.html:48
 msgid "What is Representable?"
-msgstr ""
+msgstr "ما هو قابل للتمثيل"
 
 #: main/templates/main/index.html:89
 msgid "For community members"
-msgstr ""
+msgstr "لأفراد المجتمع"
 
 #: main/templates/main/index.html:92
 msgid "Learn how to use Representable to draw your community."
@@ -2475,11 +2475,11 @@ msgstr ""
 
 #: main/templates/main/index.html:95
 msgid "Add your community"
-msgstr ""
+msgstr "أضف مجتمعك"
 
 #: main/templates/main/index.html:106
 msgid "For organizations"
-msgstr ""
+msgstr "للمنظمات"
 
 #: main/templates/main/index.html:109
 msgid "Work with us to map communities across the United States."
@@ -2487,11 +2487,11 @@ msgstr ""
 
 #: main/templates/main/index.html:112
 msgid "Partner with us"
-msgstr ""
+msgstr "شريك معنا"
 
 #: main/templates/main/index.html:123
 msgid "For mapmakers"
-msgstr ""
+msgstr "لصانعي الخرائط"
 
 #: main/templates/main/index.html:126
 msgid ""
@@ -2500,11 +2500,11 @@ msgstr ""
 
 #: main/templates/main/index.html:129
 msgid "Coming soon!"
-msgstr ""
+msgstr "قريبا"
 
 #: main/templates/main/index.html:138 main/templates/main/index.html:139
 msgid "Select your state to get started."
-msgstr ""
+msgstr "حدد ولايتك للبدء."
 
 #: main/templates/main/pages/about.html:8
 msgid "About Representable"
@@ -2755,7 +2755,7 @@ msgstr ""
 
 #: representable/templates/base.html:220
 msgid "Add Your Community"
-msgstr ""
+msgstr "أضف مجتمعك"
 
 #: representable/templates/base.html:227
 msgid "My Communities"
