@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-10 17:56+0000\n"
+"POT-Creation-Date: 2020-11-15 19:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2141,7 +2141,7 @@ msgstr ""
 msgid "Set Password"
 msgstr ""
 
-#: main/templates/account/signup.html:34
+#: main/templates/account/signup.html:31
 msgid "Sign Up"
 msgstr ""
 
@@ -2160,11 +2160,29 @@ msgid ""
 "within a few minutes."
 msgstr ""
 
-#: main/templates/main/entry.html:63
+#: main/templates/main/drives/page.html:23
+#: main/templates/main/drives/page.html:28
+msgid "Put your community on the map."
+msgstr ""
+
+#: main/templates/main/drives/page.html:31
+#: main/templates/main/drives/page.html:34
+msgid ""
+"Together, we can fight for your representation. Draw your community today "
+"and make your voice heard."
+msgstr ""
+"Estamos creando mapas de comunidades para luchar por tu representación. "
+"Añade su comunidad al mapa hoy mismo y haz que tu voz sea escuchada."
+
+#: main/templates/main/drives/page.html:36 main/templates/main/index.html:28
+msgid "Get Started"
+msgstr "Empezar"
+
+#: main/templates/main/entry.html:64
 msgid "Map your community"
 msgstr "Mapear su comunidad"
 
-#: main/templates/main/entry.html:67
+#: main/templates/main/entry.html:68
 msgid ""
 "\n"
 "                                Make your voice heard! Fill out the form "
@@ -2183,22 +2201,22 @@ msgstr ""
 "                                Siga las instrucciones de cada sección para "
 "comenzar."
 
-#: main/templates/main/entry.html:87
+#: main/templates/main/entry.html:96
 msgid ""
 "There was an error in submitting your community. Please check over and\n"
-"                                ensure that you have filled out all required "
+"                          ensure that you have filled out all required "
 "fields. "
 msgstr ""
 
-#: main/templates/main/entry.html:100
+#: main/templates/main/entry.html:108
 msgid "1. Your Identifying Information"
 msgstr "1. Su información de identificación"
 
-#: main/templates/main/entry.html:105
+#: main/templates/main/entry.html:113
 msgid "Why do we need your information?"
 msgstr "¿Por qué necesitamos su información?"
 
-#: main/templates/main/entry.html:112
+#: main/templates/main/entry.html:120
 #, python-format
 msgid ""
 " Your personal privacy is our highest priority. We gather personal\n"
@@ -2215,24 +2233,24 @@ msgid ""
 "rel=\"noopener noreferrer\" href=\"%(url2)s\">Terms</a> pages. "
 msgstr ""
 
-#: main/templates/main/entry.html:140
+#: main/templates/main/entry.html:148
 msgid "Your Name"
 msgstr "Su nombre"
 
-#: main/templates/main/entry.html:140 main/templates/main/entry.html:166
-#: main/templates/main/entry.html:425 main/templates/main/entry.html:470
+#: main/templates/main/entry.html:148 main/templates/main/entry.html:175
+#: main/templates/main/entry.html:442 main/templates/main/entry.html:488
 msgid "(Required)"
 msgstr "(obligatorio)"
 
-#: main/templates/main/entry.html:166
+#: main/templates/main/entry.html:175
 msgid "Your Address"
 msgstr "Su dirección (obligatorio)"
 
-#: main/templates/main/entry.html:268
+#: main/templates/main/entry.html:281
 msgid "2. Your Community's Shared Interests"
 msgstr "2. Los intereses compartidos de tu comunidad"
 
-#: main/templates/main/entry.html:271
+#: main/templates/main/entry.html:284
 msgid ""
 "\n"
 "                                        <p>\n"
@@ -2253,15 +2271,15 @@ msgstr ""
 "                                        </p>\n"
 "                                        "
 
-#: main/templates/main/entry.html:285 main/templates/main/entry.html:293
+#: main/templates/main/entry.html:298 main/templates/main/entry.html:306
 msgid "Please fill out at least one of the interest fields."
 msgstr ""
 
-#: main/templates/main/entry.html:301
+#: main/templates/main/entry.html:314
 msgid "Economic Interests"
 msgstr "Intereses Económicos"
 
-#: main/templates/main/entry.html:303
+#: main/templates/main/entry.html:316
 msgid ""
 "Is there a shared economy in the geographic area of your community? How and "
 "where are residents employed? Are there shared environmental concerns such "
@@ -2271,12 +2289,12 @@ msgstr ""
 "dónde están empleados los residentes? ¿Hay preocupaciones ambientales "
 "compartidas como vertederos o la calidad de agua?"
 
-#: main/templates/main/entry.html:307 main/templates/main/entry.html:328
-#: main/templates/main/entry.html:348
+#: main/templates/main/entry.html:320 main/templates/main/entry.html:342
+#: main/templates/main/entry.html:363
 msgid "Show Examples"
 msgstr "Mostar ejemplos"
 
-#: main/templates/main/entry.html:311
+#: main/templates/main/entry.html:324
 msgid ""
 " Tech firms and their employees, tourism, agriculture such as the cherry "
 "growers,\n"
@@ -2294,11 +2312,11 @@ msgstr ""
 "                                                    problemas de desempleo, "
 "comunidades frente al mar, asociaciones empresariales."
 
-#: main/templates/main/entry.html:320
+#: main/templates/main/entry.html:334
 msgid "Community Activities and Services"
 msgstr "Actividades y servicios comunitarios"
 
-#: main/templates/main/entry.html:321
+#: main/templates/main/entry.html:335
 msgid ""
 "\n"
 "                                        <p class=\"card-text mb-0\">\n"
@@ -2311,7 +2329,7 @@ msgstr ""
 "                                            ¿Dónde la gente en sucomunidad "
 "se reúne o socializa? ¿Dónde obtiene su comunidad sus servicios?"
 
-#: main/templates/main/entry.html:332
+#: main/templates/main/entry.html:346
 msgid ""
 " Shopping areas, schools and colleges, parks and recreation areas,\n"
 "                                                    lakes and water ways, "
@@ -2325,11 +2343,11 @@ msgstr ""
 "                                                    ayudan a definir su "
 "comunidad.\" "
 
-#: main/templates/main/entry.html:341
+#: main/templates/main/entry.html:356
 msgid "Cultural or Historical Interests"
 msgstr "Intereses culturales o históricos"
 
-#: main/templates/main/entry.html:343
+#: main/templates/main/entry.html:358
 msgid ""
 " What fosters a sense of belonging in your community?\n"
 "                                            What common beliefs or values "
@@ -2339,7 +2357,7 @@ msgstr ""
 "                                            ¿Qué valores comunes o creencias "
 "existen? "
 
-#: main/templates/main/entry.html:352
+#: main/templates/main/entry.html:367
 msgid ""
 " Age groups, religious groups, arts and cultural centers, languages, "
 "immigration status,\n"
@@ -2355,11 +2373,11 @@ msgstr ""
 "                                                    asentamientos históricos "
 "como Fishtown de Leland."
 
-#: main/templates/main/entry.html:361
+#: main/templates/main/entry.html:377
 msgid "Other Interests and Concerns"
 msgstr "Otros intereses y preocupados "
 
-#: main/templates/main/entry.html:380
+#: main/templates/main/entry.html:396
 msgid ""
 " What other interests does your community care about? Do you have any "
 "suggestions\n"
@@ -2371,11 +2389,11 @@ msgstr ""
 "                                            por como la Comisión de "
 "Redistritación en su estado pueden ayudar a abordar estas preocupaciones? "
 
-#: main/templates/main/entry.html:385
+#: main/templates/main/entry.html:401
 msgid "Show Example"
 msgstr "Mostar ejemplos"
 
-#: main/templates/main/entry.html:389
+#: main/templates/main/entry.html:405
 msgid ""
 "Our farmers extend over two counties and we hope you can put them together "
 "in a single State Senate district."
@@ -2383,29 +2401,29 @@ msgstr ""
 "Nuestros agricultores se extienden en dos países y esperamos que pueda "
 "ponerlos juntos en un distrito de un solo estado."
 
-#: main/templates/main/entry.html:404
+#: main/templates/main/entry.html:421
 msgid "3. Your Community's Name"
 msgstr "3. Nombre de su comunidad"
 
-#: main/templates/main/entry.html:425
+#: main/templates/main/entry.html:442
 msgid "What name can we use to identify your community?"
 msgstr "¿Cual nombre podemos usar para identificar tu comunidad? (obligatorio)"
 
-#: main/templates/main/entry.html:428
+#: main/templates/main/entry.html:445
 msgid ""
 "For example: Cherry Farmers Community, Huron River Watershed, Chippewa "
 "Community, LAX Airport Communities, University of Texas Students, El Barrio"
 msgstr ""
 
-#: main/templates/main/entry.html:450
+#: main/templates/main/entry.html:468
 msgid "4. Draw Your Community"
 msgstr "4. Dibujar su comunidad"
 
-#: main/templates/main/entry.html:461
-msgid "You need to draw a polygon to submit the form."
+#: main/templates/main/entry.html:479
+msgid "You need to draw a community to submit the form."
 msgstr ""
 
-#: main/templates/main/entry.html:469
+#: main/templates/main/entry.html:487
 msgid ""
 "Search for a location, such as address, city, or zipcode to begin drawing "
 "your community."
@@ -2413,15 +2431,15 @@ msgstr ""
 "Buscar una ubicación, como dirección, ciudad, o código postal para comenzar "
 "a dibujar su comunidad."
 
-#: main/templates/main/entry.html:473
+#: main/templates/main/entry.html:491
 msgid "Step-by-step guide"
 msgstr "Guía paso a paso "
 
-#: main/templates/main/entry.html:474
+#: main/templates/main/entry.html:492
 msgid "Video Tutorial"
 msgstr "Tutorial de vídeo"
 
-#: main/templates/main/entry.html:478
+#: main/templates/main/entry.html:496
 msgid ""
 " Draw your community by selecting <a href=\"https://www.census.gov/programs-"
 "surveys/geography/about/glossary.html#par_textimage_4\" target=\"_blank\" "
@@ -2435,11 +2453,11 @@ msgid ""
 "Redistricting Commission draw fairer districts using your entry. "
 msgstr ""
 
-#: main/templates/main/entry.html:502
+#: main/templates/main/entry.html:520
 msgid "5. Privacy and Terms of Use"
 msgstr "Privacidad y Condiciones de Uso"
 
-#: main/templates/main/entry.html:508
+#: main/templates/main/entry.html:526
 msgid ""
 "Your privacy is our highest priority. We gather your Identifying information "
 "to verify\n"
@@ -2454,14 +2472,23 @@ msgstr ""
 "                                            como nombre, dirección, o correo "
 "electrónico. "
 
-#: main/templates/main/entry.html:522
-#, python-format
+#: main/templates/main/entry.html:540
+#, fuzzy, python-format
+#| msgid ""
+#| " Click here to indicate that you have read and agree to the\n"
+#| "                                                <a target=\"_blank\" rel="
+#| "\"noopener noreferrer\" href=%(url1)s>Terms of Use</a> and\n"
+#| "                                                <a target=\"_blank\" rel="
+#| "\"noopener noreferrer\" href=\"%(url2)s\">Privacy Policy</a>.\n"
+#| "                                                <small class=\"text-danger"
+#| "\">(Required)</small>\n"
+#| "                                                "
 msgid ""
 " Click here to indicate that you have read and agree to the\n"
 "                                                <a target=\"_blank\" rel="
-"\"noopener noreferrer\" href=%(url1)s>Terms of Use</a> and\n"
+"\"noopener noreferrer\" href=%(url2)s>Terms of Use</a> and\n"
 "                                                <a target=\"_blank\" rel="
-"\"noopener noreferrer\" href=\"%(url2)s\">Privacy Policy</a>.\n"
+"\"noopener noreferrer\" href=\"%(url1)s\">Privacy Policy</a>.\n"
 "                                                <small class=\"text-danger"
 "\">(Required)</small>\n"
 "                                                "
@@ -2475,7 +2502,7 @@ msgstr ""
 "\">(Required)</small>\n"
 "                                                "
 
-#: main/templates/main/entry.html:530
+#: main/templates/main/entry.html:548
 msgid ""
 " Any saved communities are final. In order to edit a saved community you "
 "will need\n"
@@ -2487,98 +2514,89 @@ msgstr ""
 "                                        crear una comunidad nueva y eliminar "
 "la antigua. "
 
-#: main/templates/main/entry.html:540
+#: main/templates/main/entry.html:558
 msgid "Help"
 msgstr ""
 
-#: main/templates/main/entry.html:543
+#: main/templates/main/entry.html:561
 msgid "Report Error/Send Feedback"
 msgstr "Enviar comentarios"
 
-#: main/templates/main/entry.html:548
+#: main/templates/main/entry.html:566
 msgid "Saving Community..."
 msgstr ""
 
-#: main/templates/main/entry.html:555
+#: main/templates/main/entry.html:573
 msgid "Save Community"
 msgstr "Guarde comunidad"
 
-#: main/templates/main/index.html:27 main/templates/main/index.html:32
-msgid "Put your community on the map."
-msgstr ""
+#: main/templates/main/index.html:30 main/templates/main/index.html:40
+msgid "Are you the leader of an organization?"
+msgstr "¿Eres la líder de una organización?"
 
-#: main/templates/main/index.html:35 main/templates/main/index.html:38
+#: main/templates/main/index.html:31 main/templates/main/index.html:41
+#, fuzzy
+#| msgid ""
+#| "Many organizations have partnered with Representable.org to collect "
+#| "community-of-interest data. Get started by creating a partner profile."
 msgid ""
-"Together, we can fight for your representation. Draw your community today "
-"and make your voice heard."
+"Many organizations have partnered with Representable.org to collect "
+"community-of-interest data."
 msgstr ""
-"Estamos creando mapas de comunidades para luchar por tu representación. "
-"Añade su comunidad al mapa hoy mismo y haz que tu voz sea escuchada."
+"Muchas organizaciones se han asociado con Representable.org para recopilar "
+"datos comunitarios. ¡Empiece hoy!"
 
-#: main/templates/main/index.html:43
-msgid "Get Started"
-msgstr "Empezar"
-
-#: main/templates/main/index.html:54
-msgid "What is Representable.org?"
+#: main/templates/main/index.html:49 main/templates/main/pages/about.html:48
+msgid "What is Representable?"
 msgstr "¿Qué es Representable.org?"
 
-#: main/templates/main/index.html:94
+#: main/templates/main/index.html:89
 msgid "For community members"
 msgstr "Para los miembros de la comunidad."
 
-#: main/templates/main/index.html:97
+#: main/templates/main/index.html:92
 msgid "Learn how to use Representable to draw your community."
 msgstr "Aprenda a usar Representable para dibujar su comunidad."
 
-#: main/templates/main/index.html:100
+#: main/templates/main/index.html:95
 #, fuzzy
 #| msgid "Add Your Community"
 msgid "Add your community"
 msgstr "Añadir su comunidad"
 
-#: main/templates/main/index.html:111
+#: main/templates/main/index.html:106
 msgid "For organizations"
 msgstr "Para las organizaciones"
 
-#: main/templates/main/index.html:114
+#: main/templates/main/index.html:109
 msgid "Work with us to map communities across the United States."
 msgstr ""
 "Trabaja con nosotros para mapear comunidades a través de los Estados Unidos."
 
-#: main/templates/main/index.html:117 main/templates/main/index.html:161
+#: main/templates/main/index.html:112
 msgid "Partner with us"
 msgstr "Asociarse con nosotros"
 
-#: main/templates/main/index.html:128
-msgid "For redistricters"
-msgstr "Para redistadores"
+#: main/templates/main/index.html:123
+msgid "For mapmakers"
+msgstr ""
 
-#: main/templates/main/index.html:131
-msgid "Use our data to protect communities during the map drawing process."
+#: main/templates/main/index.html:126
+#, fuzzy
+#| msgid "Use our data to protect communities during the map drawing process."
+msgid ""
+"Use Representable data to protect communities during the map drawing process."
 msgstr ""
 "Utilice nuestros datos para proteger comunidades durante el proceso de "
 "dibujo del mapa."
 
-#: main/templates/main/index.html:134
+#: main/templates/main/index.html:129
 msgid "Coming soon!"
 msgstr "¡Pronto!"
 
-#: main/templates/main/index.html:143
+#: main/templates/main/index.html:138 main/templates/main/index.html:139
 msgid "Select your state to get started."
 msgstr "Seleccione su estado para comenzar."
-
-#: main/templates/main/index.html:158
-msgid "Are you the leader of an organization?"
-msgstr "¿Eres la líder de una organización?"
-
-#: main/templates/main/index.html:159
-msgid ""
-"Many organizations have partnered with Representable.org to collect "
-"community-of-interest data. Get started by creating a partner profile."
-msgstr ""
-"Muchas organizaciones se han asociado con Representable.org para recopilar "
-"datos comunitarios. ¡Empiece hoy!"
 
 #: main/templates/main/pages/about.html:8
 msgid "About Representable"
@@ -2624,10 +2642,6 @@ msgstr ""
 "En 2021, los gobiernos estatales volverán a dibujar distritos legislativos "
 "estatales y del Congreso. Necesitamos pelear por los distritos más justos "
 "que respetan las preocupaciones de las comunidades."
-
-#: main/templates/main/pages/about.html:48
-msgid "What is Representable?"
-msgstr "¿Qué es Representable.org?"
 
 #: main/templates/main/pages/about.html:49
 msgid ""
@@ -2792,6 +2806,35 @@ msgstr "Coordinador de la estrategia"
 msgid "Outreach Coordinator"
 msgstr "Coordinadora de divulgación"
 
+#: main/templates/main/pages/about.html:149
+msgid "Our Founding Team"
+msgstr "Nuestro Equipo Fundador"
+
+#: main/templates/main/pages/about.html:152
+msgid ""
+"Representable began in February 2019 as a final project for the Princeton "
+"course COS333: Advanced Programming Techniques."
+msgstr ""
+"Representable comenzó en febrero de 2019 como un proyecto final para "
+"Princeton"
+
+#: main/templates/main/pages/about.html:153
+#: main/templates/main/pages/about.html:156
+msgid "Engineering, Full-Stack"
+msgstr "Ingeniería, Full-Stack"
+
+#: main/templates/main/pages/about.html:154
+msgid "Engineering, Mapping"
+msgstr "Ingeniería, Mapeo"
+
+#: main/templates/main/pages/about.html:155
+msgid "Outreach, Content"
+msgstr "Divulgación, Contenido"
+
+#: main/templates/main/pages/about.html:157
+msgid "Engineering, Product"
+msgstr "Ingeniería, Producto"
+
 #: main/templates/main/thanks.html:13
 msgid "Thank you for your submission!"
 msgstr "¡Gracias por su envío!"
@@ -2800,76 +2843,80 @@ msgstr "¡Gracias por su envío!"
 msgid "Please Verify Your Email"
 msgstr ""
 
-#: main/views/main.py:125
+#: main/views/main.py:134
 msgid "HELLO"
 msgstr ""
 
-#: representable/settings/base.py:182
+#: representable/settings/base.py:183
 msgid "English"
 msgstr ""
 
-#: representable/settings/base.py:183
+#: representable/settings/base.py:184
 msgid "Spanish"
 msgstr ""
 
-#: representable/templates/base.html:89
+#: representable/templates/base.html:108
 msgid "About"
 msgstr "Sobre"
 
-#: representable/templates/base.html:102
+#: representable/templates/base.html:121
 msgid "My Account"
 msgstr ""
 
-#: representable/templates/base.html:105
+#: representable/templates/base.html:124
 #, fuzzy
 #| msgid "Tracking Settings"
 msgid "Account Settings"
 msgstr "Configuraciones"
 
-#: representable/templates/base.html:106
+#: representable/templates/base.html:125
 msgid "My communities"
 msgstr "Mis Comunidades"
 
-#: representable/templates/base.html:107
+#: representable/templates/base.html:126
 msgid "Logout"
 msgstr ""
 
-#: representable/templates/base.html:112
+#: representable/templates/base.html:131
 msgid "Add community"
 msgstr "Agregar comunidad"
 
-#: representable/templates/base.html:118
+#: representable/templates/base.html:137
 msgid "Log in"
 msgstr "Iniciar sesión"
 
-#: representable/templates/base.html:123
+#: representable/templates/base.html:142
 msgid "Sign up"
 msgstr "Regístrate"
 
-#: representable/templates/base.html:188
+#: representable/templates/base.html:220
 msgid "Add Your Community"
 msgstr "Añadir su comunidad"
 
-#: representable/templates/base.html:191
-msgid "View All Maps"
-msgstr "Ver los mapas"
-
-#: representable/templates/base.html:195
+#: representable/templates/base.html:227
 msgid "My Communities"
 msgstr "Mis Comunidades"
 
-#: representable/templates/base.html:204
+#: representable/templates/base.html:236
 msgid "Privacy"
 msgstr "Privacidad"
 
-#: representable/templates/base.html:207
+#: representable/templates/base.html:239
 msgid "Terms"
 msgstr "Condiciones"
 
-#: representable/templates/base.html:210
-msgid "Tracking Settings"
-msgstr "Configuraciones"
-
-#: representable/templates/base.html:223
+#: representable/templates/base.html:245
 msgid "More questions? Reach out at"
 msgstr "¿Más preguntas? Comuníquese con"
+
+#~ msgid "What is Representable.org?"
+#~ msgstr "¿Qué es Representable.org?"
+
+#~ msgid "For redistricters"
+#~ msgstr "Para redistadores"
+
+#~ msgid "View All Maps"
+#~ msgstr "Ver los mapas"
+
+#~ msgid "Tracking Settings"
+#~ msgstr "Configuraciones"
