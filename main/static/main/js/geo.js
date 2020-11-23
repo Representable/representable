@@ -174,6 +174,7 @@ function formValidation() {
     alert.classList.remove("d-none");
     scrollIntoViewSmooth(alert.id);
   }
+  // could perhaps make the call here?
   return flag;
 }
 
@@ -239,6 +240,7 @@ document.addEventListener(
   "DOMContentLoaded",
   function () {
     var conditionRow = $(".form-row:not(:last)");
+    console.log("when is this exactly called?")
     conditionRow
       .find(".btn.add-form-row")
       .removeClass("btn-outline-success")
@@ -260,9 +262,12 @@ document.addEventListener(
       setTimeout(function () {
         polySuccess = createCommPolygon();
         formSuccess = formValidation();
+        console.log("when is this called inside the timeout")
       }, 500);
       setTimeout(function () {
         if (polySuccess && formSuccess) {
+          console.log("what timeout function?!")
+          // can call aws stuff
           form.submit();
         }
       }, 2000);

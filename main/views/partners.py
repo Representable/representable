@@ -19,6 +19,12 @@ from django.views.generic import (
 )
 
 import time
+import boto3
+import botocore
+from django.contrib.gis import geos
+from django.contrib.gis.geos import  GEOSGeometry, MultiPolygon, Polygon
+
+# from django.contrib.gis.geos import GEOSGeometry
 import json
 import os
 import geojson
@@ -69,6 +75,33 @@ class PartnerMap(TemplateView):
             query = drive.submissions.all().defer(
                 "census_blocks_polygon_array", "user_polygon"
             )
+            
+            client = boto3.client('s3', aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"), aws_secret_access_key= os.environ.get("AWS_SECRET_ACCESS_KEY"))
+            response = client.get_object(
+                Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
+                Key=self.kwargs["drive"]+"/test2str.geojson"
+            )
+            strobject = response['Body'].read().decode('utf-8')
+            mapentry = geojson.loads(strobject)
+            print(type(query))
+            mapentry['geometry']['type'] = "MultiPolygon"
+            # print(mapentry)
+            # mapentry.pop('type', None)
+            # geom = GEOSGeometry(mapentry['geometry'])
+            # geom['type'] = 'MultiPolygon'
+            print(f"LEnght of the coorindates: {mapentry['geometry']['coordinates']}")
+            poly = Polygon(mapentry['geometry']['coordinates'][0])
+            
+            # mpoly.mygeom = geos.MultiPolygon(mpoly.mygeom)
+            mpoly = MultiPolygon(poly)
+            # print(CommunityEntry.objects.create(**mapentry))
+            
+            comm= CommunityEntry(user_id="4", entry_ID="912478236462", user_name="somya", census_blocks_polygon=mpoly, comm_activities=mapentry["properties"]["comm_activities"],entry_name=mapentry["properties"]["entry_name"], economic_interests=mapentry["properties"]["economic_interests"], other_considerations=mapentry["properties"]["other_considerations"], cultural_interests=mapentry["properties"]["cultural_interests"])
+            # query |= CommunityEntry.objects.filter(id=comm.id)
+            # print(type(mapentry))
+
+            
+            
             # query = CommunityEntry.objects.filter(
             #     organization__slug=self.kwargs["slug"],
             #     drive__slug=self.kwargs["drive"],
@@ -109,7 +142,7 @@ class PartnerMap(TemplateView):
         context = {
             "streets": streets,
             "cities": cities,
-            "communities": query,
+            "communities": [comm],
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),

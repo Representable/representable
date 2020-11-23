@@ -18,6 +18,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 import time
+import boto3
 from django.http import (
     HttpResponse,
     HttpResponseRedirect,
@@ -445,6 +446,32 @@ class Thanks(LoginRequiredMixin, TemplateView):
 
 # ******************************************************************************#
 
+def make_geojson_for_s3(entry):
+    map_geojson = serialize(
+        "geojson",
+        [entry],
+        geometry_field="census_blocks_polygon",
+        fields=(
+            "entry_name",
+            "cultural_interests",
+            "economic_interests",
+            "comm_activities",
+            "other_considerations",
+        ),
+    )
+    gj = geojson.loads(map_geojson)
+    gj = rewind(gj)
+    del gj["crs"]
+    user_map = entry
+    if user_map.organization:
+        gj["features"][0]["properties"][
+            "organization"
+        ] = user_map.organization.name
+    if user_map.drive:
+        gj["features"][0]["properties"]["drive"] = user_map.drive.name
+    feature = gj["features"][0]
+    print(f"this is the type of feature after calling make_geojson_for_s3: {type(feature)}")
+    return feature
 
 class EntryView(LoginRequiredMixin, View):
     """
@@ -532,6 +559,20 @@ class EntryView(LoginRequiredMixin, View):
         comm_form.data._mutable = False
         if comm_form.is_valid():
             entryForm = comm_form.save(commit=False)
+            ## CHNAGE THIS BEFORE COMMITTTING 
+            s3 = boto3.resource("s3", aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"), aws_secret_access_key= os.environ.get("AWS_SECRET_ACCESS_KEY"))
+            gj = make_geojson_for_s3(entryForm)
+            print(gj)
+            # print(entryForm.census_blocks_polygon)
+            # print(client)
+            response = s3.Bucket(os.environ.get("AWS_STORAGE_BUCKET_NAME")).put_object(
+                Body=str(gj),
+                Key=f'{self.kwargs["drive"]}/test3str.geojson',
+                ServerSideEncryption='AES256',
+                StorageClass='STANDARD_IA',
+            )
+            print("this is the response from the s3")
+            print(response)
 
             # # Returns geometry
             # poly = comm_form.data["census_blocks_polygon"]

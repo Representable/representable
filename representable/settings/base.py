@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     "phone_field",
     "ckeditor",
     "representable",
+    "storages",
     # 'allauth.socialaccount.providers.facebook',
     # 'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.linkedin',
@@ -213,6 +214,10 @@ GDAL_LIBRARY_PATH = os.environ.get("GDAL_LIBRARY_PATH")
 GEOS_LIBRARY_PATH = os.environ.get("GEOS_LIBRARY_PATH")
 django_heroku.settings(locals())
 
+# # aws s3 crdentials
+
+# AWS_S3_FILE_OVERWRITE = False
+# AWS_DEFAULT_ACL = None
 
 if "REDIS_URL" in os.environ:
     CACHES = {
