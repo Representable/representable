@@ -67,7 +67,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                 aria-expanded="true" aria-controls="collapseThree" style="width: 100%">
                 Communities <i class="fas fa-caret-down"></i></button>
               </div>
-              {% if communities %}
+              {% comment %} {% if communities %}
               <table id="collapseThree" class="collapse show table table-hover">
                 {% for c in communities %}
                 {% if is_org_admin or c.admin_approved %}
@@ -135,7 +135,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                   {% endif %}
                     {% endfor %}
                   </table>
-                  {% endif %}
+                  {% endif %} {% endcomment %}
                 </div>
               </div>
             </div>
