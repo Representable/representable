@@ -41,6 +41,7 @@ from allauth.account.models import (
 )
 from allauth.account import adapter
 from allauth.account.app_settings import ADAPTER
+from allauth.account.views import LoginView
 from django.forms import formset_factory
 from ..forms import (
     CommunityForm,
@@ -115,6 +116,17 @@ class SignupRequiredMixin(AccessMixin):
 """
 Documentation: https://docs.djangoproject.com/en/2.1/topics/class-based-views/
 """
+
+class RepresentableLoginView(LoginView):
+    request = None
+    def dispatch(self, request, *args, **kwargs):
+        self.request = request
+        return super().dispatch(request, *args, **kwargs)
+    
+    def form_invalid(self, form):
+        context = self.get_context_data()
+        context['login_error'] = form.error_messages['email_password_mismatch']
+        return render(self.request, super().template_name, context)
 
 
 class Index(TemplateView):
