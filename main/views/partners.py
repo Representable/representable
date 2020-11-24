@@ -28,8 +28,6 @@ from django.core.serializers import serialize
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
-import psycopg2
-from django.conf import settings
 
 from .main import make_geojson
 
@@ -67,31 +65,10 @@ class PartnerMap(TemplateView):
         org = Organization.objects.get(slug=self.kwargs["slug"])
         # get the polygon from db and pass it on to html
         if self.kwargs["drive"]:
-            # drive = Drive.objects.get(slug=self.kwargs["drive"])
-            # query = drive.submissions.all().defer(
-            #     "census_blocks_polygon_array", "user_polygon"
-            # )
-            query = []
-            conn = None
-            try:
-                db = settings.DATABASES["default"]
-                conn = psycopg2.connect(
-                    host=db["HOST"],
-                    database=db["NAME"],
-                    user=db["USER"],
-                    password=db["PASSWORD"],
-                    port=db["PORT"],
-                )
-                cur = conn.cursor()
-                cur.execute("SELECT * FROM community_entry")
-                query = cur.fetchall()
-
-                cur.close()
-            except (Exception, psycopg2.DatabaseError) as error:
-                print(error)
-            finally:
-                if conn is not None:
-                    conn.close()
+            drive = Drive.objects.get(slug=self.kwargs["drive"])
+            query = drive.submissions.all().defer(
+                "census_blocks_polygon_array", "user_polygon"
+            )
             # query = CommunityEntry.objects.filter(
             #     organization__slug=self.kwargs["slug"],
             #     drive__slug=self.kwargs["drive"],
@@ -111,23 +88,24 @@ class PartnerMap(TemplateView):
             #     "user_polygon",
             #     "census_blocks_polygon",
             # )
-        # for obj in query:
-        #     for a in Address.objects.filter(entry=obj):
-        #         streets[obj.entry_ID] = a.street
-        #         cities[obj.entry_ID] = (
-        #             a.city + ", " + a.state + " " + a.zipcode
-        #         )
-        # if not obj.census_blocks_polygon:
-        #     s = "".join(obj.user_polygon.geojson)
-        # else:
+        for obj in query:
+            for a in Address.objects.filter(entry=obj):
+                streets[obj.entry_ID] = a.street
+                cities[obj.entry_ID] = (
+                    a.city + ", " + a.state + " " + a.zipcode
+                )
+            # if not obj.census_blocks_polygon:
+            #     s = "".join(obj.user_polygon.geojson)
+            # else:
 
-        #   s = "".join(obj.census_blocks_polygon.geojson)
-        # s = "".join(obj.census_blocks_polygon.geojson)
+            #   s = "".join(obj.census_blocks_polygon.geojson)
+            s = "".join(obj.census_blocks_polygon.geojson)
 
-        # add all the coordinates in the array
-        # at this point all the elements of the array are coordinates of the polygons
-        # struct = geojson.loads(s)
-        # entryPolyDict[obj.entry_ID] = struct.coordinates
+            # add all the coordinates in the array
+            # at this point all the elements of the array are coordinates of the polygons
+            # struct = geojson.loads(s)
+            # entryPolyDict[obj.entry_ID] = struct.coordinates
+
         context = {
             "streets": streets,
             "cities": cities,
