@@ -143,25 +143,48 @@
                     </a>
                 </li>
                 {% endif %}
+
+            <!-- TODO: update for language dropdown -->
                 <span class="d-none d-lg-block">|</span>
                 <li class="dropdown mx-auto nav-item">
-                    <button class="btn btn-link dropdown-toggle nav-link" type="button" data-toggle="dropdown">{% if LANGUAGE_CODE == "es" %}ES{% else %}EN{% endif %}
+                    <button class="btn btn-link dropdown-toggle nav-link" type="button" data-toggle="dropdown">
+                        {% if LANGUAGE_CODE == "es" %}ES{% elif LANGUAGE_CODE == "en-us" %}EN{% else %}AR{% endif %}
                     <span class="caret"></span></button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                      <li class="nav-link mx-1">
-                      <form action="{% url 'set_language' %}" method="post">
+                        <div {% if LANGUAGE_CODE == "en-us" %} class = "hidden" {% endif %}>
+                          <li class="nav-link mx-1">
+                          <form action="{% url 'set_language' %}" method="post">
+                            {% csrf_token %}
+                            <input name="next" type="hidden" value="{{ redirect_to }}" />
+                            <input name="language" type="hidden" value="en-us" />
+                            <input class="language-button" type="submit" value="In English" />
+                          </form>
+                          </li>
+                        </div>
+
+                        <div {% if LANGUAGE_CODE == "es" %} class = "hidden" {% endif %}>
+                        <li class="nav-link mx-1">
+                          <form action="{% url 'set_language' %}" method="post">
+                            {% csrf_token %}
+                            <input name="next" type="hidden" value="{{ redirect_to }}" />
+                            <input name="language" type="hidden" value="es" />
+                            <input class="language-button" type="submit" value="En Español" />
+                          </form>
+                        </li>
+                        </div>
+
+                        <div {% if LANGUAGE_CODE == "ar" %} class = "hidden" {% endif %}>
+                        <li class="nav-link mx-1">
+                            <form action="{% url 'set_language' %}" method="post">
                         {% csrf_token %}
                         <input name="next" type="hidden" value="{{ redirect_to }}" />
-                        <input name="language" type="hidden" value="{% if LANGUAGE_CODE == "es" %}en-us{% else %}es{% endif %}" />
-                        <input class="language-button" type="submit" value="{% if LANGUAGE_CODE == "es" %}In English{% else %}En Español{% endif %}" />
-                      </form>
-                    </li>
+                        <input name="language" type="hidden" value="ar" />
+                        <input class="language-button" type="submit" value="بالعربية" />
+                            </form>
+                        </li>
+                        </div>
                     </ul>
                 </li>
-            </ul>
-            <!-- TODO: update for language dropdown -->
-            <ul class="nav navbar-nav navbar-right language menu">
-
             </ul>
         </div>
     </nav>
