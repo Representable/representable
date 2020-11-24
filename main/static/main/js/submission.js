@@ -30,7 +30,10 @@ map.addControl(
   })
 );
 
-map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
+// Only add zoom buttons to medium and large screen devices (non-mobile)
+if (!window.matchMedia("only screen and (max-width: 760px)").matches) {
+  map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
+}
 
 // add a new source layer
 function newSourceLayer(name, mbCode) {
@@ -56,6 +59,7 @@ function newBoundariesLayer(name) {
       },
       paint: {
         "line-color": "rgba(106,137,204,0.7)",
+        "line-width": 3,
       }
     }
   );
@@ -96,6 +100,7 @@ map.on("load", function () {
         },
         paint: {
           "line-color": "rgba(106,137,204,0.7)",
+          "line-width": 2,
         },
       }
     );
@@ -110,6 +115,7 @@ map.on("load", function () {
         },
         paint: {
           "line-color": "rgba(106,137,204,0.7)",
+          "line-width": 2,
         },
       }
     );
