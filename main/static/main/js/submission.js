@@ -51,20 +51,65 @@ function newBoundariesLayer(name) {
   map.addLayer(
     {
       id: name + "-lines",
-      type: "line",
+      type: "fill",
       source: name,
       "source-layer": "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1),
       layout: {
         visibility: "none"
       },
       paint: {
-        "line-color": "rgba(106,137,204,0.7)",
-        "line-width": 3,
+        "fill-outline-color": "rgba(0,0,0,0.7)",
+        "fill-color": "rgba(0,0,0,0)",
       }
     }
   );
+  // Set polygon fill color using the feature id
+  // from mapbox - thanks folks!!
+  map.setPaintProperty(name + "-lines", "fill-color", [
+      "case",
+      ["==", ["feature-state", "select"], 1],
+      [
+          "to-color",
+          [
+              "concat",
+              "hsla(",
+              [
+                  "*",
+                  ["%", ["id"], 52],
+                  5
+              ],
+              ", 90%, 80%,0.9)"
+          ]
+      ],
+      ["==", ["feature-state", "hover"], 1],
+      [
+          "to-color",
+          [
+              "concat",
+              "hsla(",
+              [
+                  "*",
+                  ["%", ["id"], 52],
+                  5
+              ],
+              ", 100%, 80%,0.3)"
+          ]
+      ],
+      [
+          "to-color",
+          [
+              "concat",
+              "hsla(",
+              [
+                  "*",
+                  ["%", ["id"], 52],
+                  5
+              ],
+              ", 40%, 80%,0.5)"
+          ]
+      ]
+  ]);
 }
-
 function sanitizePDF(x) {
   x = x.replace(/ /g, "_");
   x = x.replace("____________________________", "");
