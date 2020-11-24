@@ -178,6 +178,12 @@ class AllowlistForm(ModelForm):
 
 
 class DriveForm(ModelForm):
+    def __init__(self, org_states, *args, **kwargs):
+        super(DriveForm, self).__init__(*args, **kwargs)
+        choices = [state for state in STATES if state[0] in org_states]
+        self.fields["state"].widget = forms.Select(
+                choices=choices, attrs={"class": "form-control"}
+        )
     class Meta:
         model = Drive
         fields = ["name", "description", "state"]
@@ -193,9 +199,6 @@ class DriveForm(ModelForm):
                     "placeholder": "Short Description",
                     "class": "form-control",
                 }
-            ),
-            "state": forms.Select(
-                choices=STATES, attrs={"class": "form-control"}
             ),
         }
 

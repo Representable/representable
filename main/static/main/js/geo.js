@@ -562,8 +562,10 @@ function hideWarningMessage() {
   warning_box.style.display = "none";
 }
 
-// Add nav control buttons.
-map.addControl(new mapboxgl.NavigationControl());
+// Only add zoom buttons to medium and large screen devices (non-mobile)
+if (!window.matchMedia("only screen and (max-width: 760px)").matches) {
+  map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
+}
 
 var user_polygon_id = undefined;
 
