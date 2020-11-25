@@ -634,14 +634,13 @@
               "captcha_submit" +
               '" class="alert alert-danger alert-dismissible fade show map-alert" role="alert">\
             ' +
-              "Please capture this captcha to submit." +
+              "You must complete the captcha to submit this map" +
               '\
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">\
             <span aria-hidden="true">&times;</span>\
             </button>\
             </div>';
             document.getElementById("captcha").appendChild(newAlert);
-            {% comment %} document.getElementById('captcha').innerHTML="You must complete the captcha to submit this map"; {% endcomment %}
             return false;
         } else {
             return formValidation();
