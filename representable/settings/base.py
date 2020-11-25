@@ -248,3 +248,10 @@ DEFAULT_FROM_EMAIL = "no-reply@representable.org"
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
+
+
+# Recaptcha form submit check (not the same as verification)
+if "TRAVIS" in os.environ:
+    CHECK_CAPTCHA_SUBMIT = False
+else:
+    CHECK_CAPTCHA_SUBMIT = True
