@@ -177,6 +177,15 @@ class Blog(TemplateView):
 
 # ******************************************************************************#
 
+class EntryPreview(TemplateView):
+    template_name = "main/entry_preview.html"
+
+class EntryStateSelection(TemplateView):
+    template_name = "main/entry_state_selection.html"
+
+
+# ******************************************************************************#
+
 
 class StatePage(TemplateView):
     template_name = "main/state.html"
