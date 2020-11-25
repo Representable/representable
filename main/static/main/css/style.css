@@ -81,7 +81,7 @@ Entry Preview Page
 
 **/
 #entry_preview_intro {
-  padding-top: 15px;
+  padding: 15px 15px 15px 20px;
   line-height: 2;
 }
 
@@ -119,7 +119,11 @@ Entry Preview Page
 
 @media only screen and (max-width: 540px) {
   #entry_preview_info {
-    padding: 10px 30px;
+    padding: 30px 30px;
+  }
+
+  #entry_preview_button {
+    padding-top: 20px;
   }
 }
 
