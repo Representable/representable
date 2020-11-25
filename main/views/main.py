@@ -251,47 +251,57 @@ class Review(LoginRequiredMixin, TemplateView):
 
 class Submission(TemplateView):
     template_name = "main/submission.html"
-    sha = hashlib.sha256()
     NUM_DIGITS = 10
 
     def get(self, request, *args, **kwargs):
         m_uuid = self.request.GET.get("map_id", None)
-
-        if not m_uuid or not re.match(r"\b[A-Fa-f0-9]{8}\b", m_uuid):
+        if not m_uuid:
             raise Http404
         query = CommunityEntry.objects.filter(entry_ID__startswith=m_uuid)
-
         if not query:
             raise Http404
-
+            
         # query will have length 1 or database is invalid
         user_map = query[0]
-        if (
-            user_map.census_blocks_polygon == ""
-            or user_map.census_blocks_polygon is None
-        ):
-            s = "".join(user_map.user_polygon.geojson)
-        else:
-            s = "".join(user_map.census_blocks_polygon.geojson)
-        map_poly = geojson.loads(s)
+        drive_name = query[0].drive.slug
+
+        client = boto3.client("s3", aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"), aws_secret_access_key= os.environ.get("AWS_SECRET_ACCESS_KEY"))
+        try:
+            s3response = client.get_object(
+                Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
+                Key=drive_name+ "/"+ m_uuid + ".geojson"
+            )
+        except:
+            print("nothing returned for that key")
+            raise Http404
+        # mapentry = geojson.loads(strobject)
+        # gj = make_geojson_for_s3(s3response)
+        strobject = s3response["Body"].read().decode("utf-8")
+        mapentry = geojson.loads(strobject)
+        poly = Polygon(mapentry['geometry']['coordinates'][0])
+        comm = CommunityEntry(entry_ID=m_uuid, census_blocks_polygon=poly, entry_name=mapentry["properties"]["entry_name"], comm_activities=mapentry["properties"]["comm_activities"], economic_interests=mapentry["properties"]["economic_interests"], other_considerations=mapentry["properties"]["other_considerations"], cultural_interests=mapentry["properties"]["cultural_interests"])
         entryPolyDict = {}
-        entryPolyDict[m_uuid] = map_poly.coordinates
+        entryPolyDict[m_uuid] = mapentry['geometry']['coordinates']
 
         context = {
-            "c": user_map,
+            "c": comm,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
-        for a in Address.objects.filter(entry=user_map):
-            context["street"] = a.street
-            context["city"] = a.city + ", " + a.state + " " + a.zipcode
+        
         if self.request.user.is_authenticated:
             if user_map.organization:
                 context["is_org_admin"] = self.request.user.is_org_admin(
                     user_map.organization_id
                 )
-            context["is_community_author"] = self.request.user == user_map.user
+            if self.request.user == user_map.user:
+                for a in Address.objects.filter(entry=user_map):
+                    context["street"] = a.street
+                    context["city"] = a.city + ", " + a.state + " " + a.zipcode
+                    context["is_community_author"] = self.request.user == user_map.user
+                    comm.user_name = user_map.user_name
+                
         return render(request, self.template_name, context)
 
 
@@ -342,17 +352,34 @@ class ExportView(TemplateView):
     def get(self, request, *args, **kwargs):
         m_uuid = self.request.GET.get("map_id", None)
         if m_uuid:
-            query = CommunityEntry.objects.filter(entry_ID__startswith=m_uuid)
+            print("goes into the if")
+            client = boto3.client('s3', aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"), aws_secret_access_key= os.environ.get("AWS_SECRET_ACCESS_KEY"))
+            s3response = client.get_object(
+                Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
+                Key=self.kwargs["drive"]+ m_uuid + ".geojson"
+            )
+            print("this is the response")
+            print(s3response)
+            # query = CommunityEntry.objects.filter(entry_ID__startswith=m_uuid)
         if not query:
             context = {
                 "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             }
             return render(request, self.template_name, context)
-        gj = make_geojson(request, query[0])
-
+        gj = make_geojson_for_s3(s3response)
+        strobject = s3response['Body'].read().decode('utf-8')
+        mapentry = geojson.loads(strobject)
+        mapentry['geometry']['type'] = "MultiPolygon"
+        poly = Polygon(mapentry['geometry']['coordinates'][0])
+        comm= CommunityEntry(user_id="4", entry_ID=m_uuid, user_name="somya", census_blocks_polygon=mpoly, comm_activities=mapentry["properties"]["comm_activities"],entry_name=mapentry["properties"]["entry_name"], economic_interests=mapentry["properties"]["economic_interests"], other_considerations=mapentry["properties"]["other_considerations"], cultural_interests=mapentry["properties"]["cultural_interests"])
+        # gj = make_geojson(request, query[0])
         response = HttpResponse(
-            geojson.dumps(gj), content_type="application/json"
+            comm, content_type="application/json"
         )
+
+        # response = HttpResponse(
+        #     geojson.dumps(gj), content_type="application/json"
+        # )
         return response
 
 
@@ -470,7 +497,6 @@ def make_geojson_for_s3(entry):
     if user_map.drive:
         gj["features"][0]["properties"]["drive"] = user_map.drive.name
     feature = gj["features"][0]
-    print(f"this is the type of feature after calling make_geojson_for_s3: {type(feature)}")
     return feature
 
 class EntryView(LoginRequiredMixin, View):
@@ -562,12 +588,12 @@ class EntryView(LoginRequiredMixin, View):
             ## CHNAGE THIS BEFORE COMMITTTING 
             s3 = boto3.resource("s3", aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"), aws_secret_access_key= os.environ.get("AWS_SECRET_ACCESS_KEY"))
             gj = make_geojson_for_s3(entryForm)
-            print(gj)
             # print(entryForm.census_blocks_polygon)
             # print(client)
+            print(f"this is the entry id: {comm_form.data['entry_ID']}")
             response = s3.Bucket(os.environ.get("AWS_STORAGE_BUCKET_NAME")).put_object(
                 Body=str(gj),
-                Key=f'{self.kwargs["drive"]}/test3str.geojson',
+                Key=f'{self.kwargs["drive"]}/{comm_form.data["entry_ID"]}.geojson',
                 ServerSideEncryption='AES256',
                 StorageClass='STANDARD_IA',
             )
@@ -621,7 +647,7 @@ class EntryView(LoginRequiredMixin, View):
                 addrForm.entry = entryForm
                 addrForm.save()
 
-            m_uuid = str(entryForm.entry_ID).split("-")[0]
+            m_uuid = str(entryForm.entry_ID)
             if not entryForm.drive:
                 self.success_url = reverse_lazy(
                     "main:thanks", kwargs={"map_id": m_uuid}
