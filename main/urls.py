@@ -24,7 +24,8 @@ from representable.settings.base import MAPBOX_KEY
 
 app_name = "main"
 urlpatterns = [
-    path("accounts/login/", views.main.RepresentableLoginView.as_view(), name="account_login"),
+    path("accounts/login/", views.main.RepresentableAuthenticationView.as_view(), name="account_login"),
+    path("accounts/signup/", views.main.RepresentableAuthenticationView.as_view(), name="account_signup"),
     path("", views.main.Index.as_view(), name="index"),
     path("map/", views.main.Map.as_view(), name="map"),
     path("entry_preview/", views.main.EntryPreview.as_view(), name="entry_preview"),

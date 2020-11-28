@@ -41,12 +41,15 @@ from allauth.account.models import (
 )
 from allauth.account import adapter
 from allauth.account.app_settings import ADAPTER
-from allauth.account.views import LoginView
+from allauth.account.forms import LoginForm, SignupForm
+from allauth.account.views import LoginView, SignupView
 from django.forms import formset_factory
 from ..forms import (
     CommunityForm,
     DeletionForm,
     AddressForm,
+    RepresentableSignupForm,
+    RepresentableLoginForm
 )
 from ..models import (
     CommunityEntry,
@@ -117,17 +120,29 @@ class SignupRequiredMixin(AccessMixin):
 Documentation: https://docs.djangoproject.com/en/2.1/topics/class-based-views/
 """
 
-class RepresentableLoginView(LoginView):
+# View template for both the signing up and signing in
+class RepresentableAuthenticationView(LoginView, SignupView):
+    template_name = 'account/signup_login.html'
+    login_form = RepresentableLoginForm()
+    signup_form = RepresentableSignupForm()
     request = None
+
     def dispatch(self, request, *args, **kwargs):
         self.request = request
         return super().dispatch(request, *args, **kwargs)
     
     def form_invalid(self, form):
-        context = self.get_context_data()
-        context['login_error'] = form.error_messages['email_password_mismatch']
-        return render(self.request, super().template_name, context)
+        if isinstance(form, LoginForm):
+            context = self.get_context_data()
+            context['login_error'] = form.error_messages['email_password_mismatch']
+        return render(self.request, self.template_name, context)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["signup_form"] = self.signup_form
+        context["login_form"] = self.login_form
+        return context
+    
 
 class Index(TemplateView):
     """

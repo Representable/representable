@@ -17,6 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
+from allauth.account.forms import LoginForm, SignupForm
 from django import forms
 from django.forms import ModelForm
 from django_select2.forms import (
@@ -213,3 +214,19 @@ class MemberForm(ModelForm):
         fields = [
             "member",
         ]
+
+class RepresentableSignupForm(SignupForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields.pop('username')
+        for _, field in self.fields.items():
+            del field.widget.attrs['placeholder']
+
+
+class RepresentableLoginForm(LoginForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for _, field in self.fields.items():
+            del field.widget.attrs['placeholder']
+        self.fields['login'].label = "E-mail"
+        del self.fields['login'].widget.attrs['autofocus']
