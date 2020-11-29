@@ -91,11 +91,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                     {% endif %}
                     <span class="small text-muted">
                     {% if is_org_admin %}
-                      {% if c.user_name %}
                       {{ c.user_name }}
-                      {% else %}
-                      {{ c.user.username }}
-                      {% endif %}
                       {% if c.entry_ID in streets %}
                       | {{streets|get_item:c.entry_ID}},
                       {{cities|get_item:c.entry_ID}} <br>
