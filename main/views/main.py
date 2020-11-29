@@ -485,6 +485,7 @@ class EntryView(SignupRequiredMixin, View):
         if kwargs["token"]:
             has_token = True
 
+        address_required = True
         has_drive = False
         organization_name = ""
         organization_id = None
@@ -499,6 +500,7 @@ class EntryView(SignupRequiredMixin, View):
             organization = drive.organization
             organization_name = organization.name
             organization_id = organization.id
+            address_required = drive.require_user_addresses
 
         context = {
             "comm_form": comm_form,
@@ -512,6 +514,7 @@ class EntryView(SignupRequiredMixin, View):
             "drive_name": drive_name,
             "drive_id": drive_id,
             "state": abbr,
+            "address_required": address_required,
         }
         return render(request, self.template_name, context)
 

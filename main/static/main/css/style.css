@@ -915,6 +915,10 @@ label {
   color: #777;
 }
 
+input.form-control[type=checkbox] {
+  width: 15%;
+}
+
 .btn-google {
   color: white;
   background-color: #ea4335;
