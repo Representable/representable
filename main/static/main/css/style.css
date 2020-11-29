@@ -172,12 +172,6 @@ body {
   font-size: 2.9rem;
 }
 
-/* Class for what is gerrymandering section styling. */
-.what-is-gerrymandering {
-  background: -webkit-linear-gradient(-45deg, #2a94f4, #00c6a7);
-  color: white;
-}
-
 .tooltip-inner {
   background-color: gray !important;
 }
@@ -355,9 +349,18 @@ color scheme. See readme.md*/
   color: white;
 }
 
-/* NEEDS EXPLANATION */
-
 @media only screen and (min-width: 768px) {
+  /* for the modal on submission page (thanks) */
+  .modal-header .close {
+    margin: -1rem;
+  }
+  #thanksModalDialog {
+    width: 85%;
+    max-width: 1000px;
+  }
+  #thanksModalLabel {
+    margin: auto;
+  }
   .gap-90 {
     width: 100%;
     height: 90px;
