@@ -60,31 +60,38 @@ class PartnerMap(TemplateView):
         # address Information
         streets = {}
         cities = {}
+        org = Organization.objects.get(slug=self.kwargs["slug"])
+        is_admin = False
+        if self.request.user.is_authenticated:
+            if self.request.user.is_org_admin(org.id):
+                is_admin = True
+
         # get the polygon from db and pass it on to html
         if self.kwargs["drive"]:
-            query = CommunityEntry.objects.filter(
-                organization__slug=self.kwargs["slug"],
-                drive__slug=self.kwargs["drive"],
+            drive = Drive.objects.get(slug=self.kwargs["drive"])
+            query = drive.submissions.all().defer(
+                "census_blocks_polygon_array", "user_polygon"
             )
         else:
-            query = CommunityEntry.objects.filter(
-                organization__slug=self.kwargs["slug"]
+            query = org.submissions.all().defer(
+                "census_blocks_polygon_array", "user_polygon"
             )
-        for obj in query:
-            for a in Address.objects.filter(entry=obj):
-                streets[obj.entry_ID] = a.street
-                cities[obj.entry_ID] = (
-                    a.city + ", " + a.state + " " + a.zipcode
-                )
-            if not obj.census_blocks_polygon:
-                s = "".join(obj.user_polygon.geojson)
-            else:
-                s = "".join(obj.census_blocks_polygon.geojson)
+        if is_admin:
+            for obj in query:
+                for a in Address.objects.filter(entry=obj):
+                    streets[obj.entry_ID] = a.street
+                    cities[obj.entry_ID] = (
+                        a.city + ", " + a.state + " " + a.zipcode
+                    )
+                if not obj.census_blocks_polygon:
+                    s = "".join(obj.user_polygon.geojson)
+                else:
+                    s = "".join(obj.census_blocks_polygon.geojson)
 
-            # add all the coordinates in the array
-            # at this point all the elements of the array are coordinates of the polygons
-            struct = geojson.loads(s)
-            entryPolyDict[obj.entry_ID] = struct.coordinates
+                # add all the coordinates in the array
+                # at this point all the elements of the array are coordinates of the polygons
+                struct = geojson.loads(s)
+                entryPolyDict[obj.entry_ID] = struct.coordinates
 
         context = {
             "streets": streets,
@@ -94,7 +101,6 @@ class PartnerMap(TemplateView):
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
-        org = Organization.objects.get(slug=self.kwargs["slug"])
         context["organization"] = org
         context["state"] = org.states[0].lower()
         if self.request.user.is_authenticated:

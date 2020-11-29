@@ -48,10 +48,10 @@ class AddressForm(ModelForm):
         fields = ["city", "state", "zipcode", "street"]
 
         widgets = {
-            "street": forms.TextInput(attrs={"placeholder": "Street"}),
-            "city": forms.TextInput(attrs={"placeholder": "City"}),
-            "state": forms.TextInput(attrs={"placeholder": "State"}),
-            "zipcode": forms.TextInput(attrs={"placeholder": "Zipcode"}),
+            "street": forms.TextInput(attrs={"placeholder": "Street", "maxlength": 500}),
+            "city": forms.TextInput(attrs={"placeholder": "City", "maxlength": 100}),
+            "state": forms.TextInput(attrs={"placeholder": "State", "maxlength": 100}),
+            "zipcode": forms.TextInput(attrs={"placeholder": "Zipcode", "maxlength": 12}),
         }
         labels = {
             "street": "Street: ",
@@ -87,14 +87,14 @@ class CommunityForm(ModelForm):
             "census_blocks_polygon": forms.HiddenInput(),
             "block_groups": forms.HiddenInput(),
             "entry_name": forms.TextInput(
-                attrs={"placeholder": "Community Name"}
+                attrs={"placeholder": "Community Name","maxlength": 100}
             ),
-            "entry_reason": forms.Textarea(attrs={"rows": 3}),
-            "cultural_interests": forms.Textarea(attrs={"rows": 3}),
-            "economic_interests": forms.Textarea(attrs={"rows": 3}),
-            "comm_activities": forms.Textarea(attrs={"rows": 3}),
-            "other_considerations": forms.Textarea(attrs={"rows": 3}),
-            "user_name": forms.TextInput(attrs={"placeholder": "Full Name"}),
+            "entry_reason": forms.Textarea(attrs={"rows": 3, "maxlength": 500}),
+            "cultural_interests": forms.Textarea(attrs={"rows": 3, "maxlength": 500}),
+            "economic_interests": forms.Textarea(attrs={"rows": 3, "maxlength": 500}),
+            "comm_activities": forms.Textarea(attrs={"rows": 3, "maxlength": 500}),
+            "other_considerations": forms.Textarea(attrs={"rows": 3, "maxlength": 500}),
+            "user_name": forms.TextInput(attrs={"placeholder": "Full Name", "maxlength": 500}),
             "user_polygon": forms.HiddenInput(),
         }
         label = {
@@ -178,6 +178,12 @@ class AllowlistForm(ModelForm):
 
 
 class DriveForm(ModelForm):
+    def __init__(self, org_states, *args, **kwargs):
+        super(DriveForm, self).__init__(*args, **kwargs)
+        choices = [state for state in STATES if state[0] in org_states]
+        self.fields["state"].widget = forms.Select(
+                choices=choices, attrs={"class": "form-control"}
+        )
     class Meta:
         model = Drive
         fields = ["name", "description", "state", "require_user_addresses"]

@@ -65,7 +65,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                 <tr class="community-review-span hidden" id={{c.entry_ID}}>
                   <td>
                     <span class="text-uppercase entry-name">
-                      {% with link_text="/submission?map_id="|addstr:c.entry_ID|slice:27 %}
+                      {% with link_text="/submission/"|addstr:c.entry_ID|slice:20 %}
                       <a href={{link_text}}>{{c.entry_name}}</a>
                       {% endwith %}
                     </span>
