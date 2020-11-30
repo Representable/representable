@@ -75,6 +75,59 @@ form:invalid {
   border: 1px solid red;
 }
 
+/** 
+
+Entry Preview Page 
+
+**/
+#entry_preview_intro {
+  padding: 15px 15px 15px 20px;
+  line-height: 2;
+}
+
+#entry_preview_intro h3 {
+  padding-bottom: 10px;
+}
+
+#entry_preview_info {
+  background: rgba(218, 239, 255, 0.63);
+  border-color: rgba(218, 239, 255, 0.63);
+  margin: 15px;
+  padding: 50px 110px;
+  color: black;
+}
+
+#entry_preview_button {
+  text-align: center;
+}
+
+@media only screen and (max-width: 768px) {
+  #entry_preview_image {
+    text-align: center;
+    margin: 0px;
+    padding: 10px 0px 20px 0px;
+  }
+
+  #entry_preview_intro {
+    text-align: center;
+  }
+
+  #entry_preview_info {
+    padding: 30px 50px;
+  }
+}
+
+@media only screen and (max-width: 540px) {
+  #entry_preview_info {
+    padding: 30px 30px;
+  }
+
+  #entry_preview_button {
+    padding-top: 20px;
+  }
+}
+
+
 /* Entry Page: Geocoder Full Width */
 .mapboxgl-ctrl-geocoder {
   width: 100%;

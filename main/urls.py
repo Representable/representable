@@ -27,6 +27,8 @@ urlpatterns = [
     path("accounts/login/", views.main.RepresentableLoginView.as_view(), name="account_login"),
     path("", views.main.Index.as_view(), name="index"),
     path("map/", views.main.Map.as_view(), name="map"),
+    path("entry_preview/", views.main.EntryPreview.as_view(), name="entry_preview"),
+    path("entry_state_selection/", views.main.EntryStateSelection.as_view(), name="entry_state_selection"),
     path(
         "entry/",
         views.main.EntryView.as_view(),
