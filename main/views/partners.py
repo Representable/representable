@@ -136,7 +136,7 @@ async def getcomms(query, client, is_admin, drive):
         try:
             await getfroms3(client, obj, drive, comms, entryPolyDict, is_admin)
 
-        except:
+        except Exception as e:
             if not obj.census_blocks_polygon:
                 s = "".join(obj.user_polygon.geojson)
             else:
@@ -170,7 +170,8 @@ async def getfroms3(client, obj, drive, comms, entryPolyDict, is_admin):
     strobject = response['Body'].read().decode('utf-8')
     mapentry = geojson.loads(strobject)
     comm = CommunityEntry(entry_ID=obj.entry_ID, comm_activities=mapentry["properties"]["comm_activities"],entry_name=mapentry["properties"]["entry_name"], economic_interests=mapentry["properties"]["economic_interests"], other_considerations=mapentry["properties"]["other_considerations"], cultural_interests=mapentry["properties"]["cultural_interests"])
-    comm.drive = Drive(name=obj.drive.name)
+    comm.drive = Drive(name=mapentry["properties"]["drive"])
+    comm.organization = Organization(name=mapentry["properties"]["organization"])
     if is_admin:
         if obj.user_name:
             comm.user_name = obj.user_name
@@ -229,10 +230,6 @@ def s3_geojson_export(s3response, query, request):
     strobject = s3response['Body'].read().decode('utf-8')
     mapentry = geojson.loads(strobject)
     gj = rewind(mapentry)
-    if query.organization:
-        gj["properties"]["organization"] = query.organization.name
-    if query.drive:
-        gj["properties"]["drive"] = query.drive.name
     if request.user.is_authenticated:
         is_org_leader = query.organization and (
             request.user.is_org_admin(query.organization_id)
