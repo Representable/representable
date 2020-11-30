@@ -64,9 +64,6 @@ class PartnerMap(TemplateView):
 
         # the polygon coordinates
         entryPolyDict = dict()
-        # address Information
-        # streets = {}
-        # cities = {}
         org = Organization.objects.get(slug=self.kwargs["slug"])
         is_admin = False
         if self.request.user.is_authenticated:
