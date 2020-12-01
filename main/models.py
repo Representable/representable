@@ -299,6 +299,9 @@ class CommunityEntry(models.Model):
     other_considerations = models.TextField(
         max_length=500, blank=True, unique=False, default=""
     )
+    state = models.CharField(
+        max_length=10, blank=True, unique=False, default=""
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     admin_approved = models.BooleanField(default=True)
 

@@ -82,7 +82,7 @@
                               {% if c.user_name %}
                               <span id="user-name">{{c.user_name}}</span>
                               {% else %}
-                              {{ c.user.username }}
+                              {{ c.user_name }}
                               {% endif %}
                               {% if street %}
                               | <span id="address-street">{{street}}</span>
@@ -119,10 +119,17 @@
                         <tr>
                         </table>
                         <div class="text-center">
-                          {% with link_text="/export?map_id="|addstr:c.entry_ID|slice:27 %}
-                          <a class="btn btn-outline-primary mx-4 d-none d-sm-inline" href={{link_text}} role="button" download="community_{{c.entry_ID|slice:8}}.geojson">Export GeoJSON</a>
-                          <span class="btn btn-outline-primary btn-canvas mx-4 my-2 d-none d-sm-inline" role="button" id="pdf-button">Export PDF</span>
+                          {% if has_state %}
+                          {% with link_text="/export/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
+                          <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.geojson">Export GeoJSON</a>
+                          <span class="btn btn-outline-primary btn-canvas mx-4 my-2" role="button" id="pdf-button">Export PDF</span>
                           {% endwith %}
+                          {% else %}
+                          {% with link_text="/export?map_id="|addstr:c.entry_ID %}
+                          <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.geojson">Export GeoJSON</a>
+                          <span class="btn btn-outline-primary btn-canvas mx-4 my-2" role="button" id="pdf-button">Export PDF</span>
+                          {% endwith %}
+                          {% endif %}
                         </div>
                       </div>
                     </div>

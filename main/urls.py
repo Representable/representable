@@ -83,7 +83,13 @@ urlpatterns = [
         name="submission"
     ),
     path(
-        "submission/thanks/<map_id>",
+        "submission/<map_id>/<abbr>",
+        views.main.Submission.as_view(),
+        {"slug": "", "drive": ""},
+        name="submission"
+    ),
+    path(
+        "submission/thanks/<map_id>/<abbr>",
         views.main.Submission.as_view(),
         {"slug": "", "drive": ""},
         name="submission_thanks",
@@ -95,6 +101,7 @@ urlpatterns = [
     ),
     path("blog/", views.main.Blog.as_view(), name="blog"),
     path("export/", views.main.ExportView.as_view(), name="export"),
+    path("export/<abbr>/", views.main.ExportView.as_view(), name="export"),
     path(
         "multiexport/drive/<drive>",
         views.partners.MultiExportView.as_view(),

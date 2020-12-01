@@ -147,7 +147,7 @@ else:
             "NAME": os.environ.get("DISTR_DB_NAME", ""),
             "USER": os.environ.get("DISTR_DB_USER", ""),
             "PASS": os.environ.get("DISTR_DB_PASS", ""),
-            "CONN_MAX_AGE": 0,
+            "CONN_MAX_AGE": 100,
         }
     }
 
@@ -214,7 +214,6 @@ MAPBOX_KEY = os.environ.get("DISTR_MAPBOX_KEY")
 GDAL_LIBRARY_PATH = os.environ.get("GDAL_LIBRARY_PATH")
 GEOS_LIBRARY_PATH = os.environ.get("GEOS_LIBRARY_PATH")
 django_heroku.settings(locals())
-
 
 if "REDIS_URL" in os.environ:
     CACHES = {
