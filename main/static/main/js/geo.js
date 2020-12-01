@@ -135,8 +135,7 @@ function checkFieldById(field_id) {
 function formValidation() {
   // Check Normal Fields
   var flag = true;
-  var entryForm = document.getElementById("entryForm");
-  var form_elements = entryForm.elements;
+  var form_elements = document.getElementById("entryForm").elements;
   for (var i = 0; i < form_elements.length; i++) {
     if (form_elements[i].required) {
       if (checkFieldById(form_elements[i].id) == false) {
@@ -166,8 +165,8 @@ function formValidation() {
     economic_intetersts_field.classList.add("has_error");
     comm_activities_field.classList.add("has_error");
     other_considerations_field.classList.add("has_error");
-    var interests_alert = document.getElementById("need_one_interest");
-    interests_alert.classList.remove("d-none");
+    var interets_alert = document.getElementById("need_one_interest");
+    interets_alert.classList.remove("d-none");
   }
   var is_address_required = address_required == "True";
   if (
@@ -404,7 +403,7 @@ class SelectRadiusButton {
     radius_control.id = "map-radius-control-id";
     radius_control.style.display = "none";
     radius_control.innerHTML =
-      '<form><label for="radius-control" class="sr-only">Choose a selection size: </label><input type="range" min="0" max="50" value="0" class="custom-range" id="radius-control"><p style="margin: 0;">Selection Tool Size</p></form>';
+      '<form><label for="radius-control" class="sr-only">Choose a selection size: </label><input type="range" min="1" max="50" value="25" class="custom-range" id="radius-control"><p style="margin: 0;">Selection Tool Size</p></form>';
     this._map = map;
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group draw-group";
@@ -937,7 +936,7 @@ myTour.addStep({
 
 /******************************************************************************/
 // the drawing radius for select tool
-var drawRadius = 0;
+var drawRadius = 25;
 var isStateChanged = false;
 /* After the map style has loaded on the page, add a source layer and default
 styling for a single point. */

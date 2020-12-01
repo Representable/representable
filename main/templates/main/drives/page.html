@@ -14,72 +14,81 @@
   );
 </script>
 <div class="container">
-  <div class="row row-hero row-eq-height m-sm-5">
-    <div class="col-lg-6 col-sm-12 col-md-6 pl-sm-5">
-      <div class="my-4 main-display-text-all">
-        <span class="d-block mb-3">Redistricting is coming.</span>
-        <span class="d-block h3 font-weight-light">Put your community on the map.</span>
-      </div>
-        <div class="alert alert-custom p-5 d-none d-xl-block mt-5">
-          <h2 class="text-center"> What is Representable?</h2>
-          <p>Our mission is <b>to give communities a voice in drawing districts.</b> Representable is a free tool that empowers people to create maps of communities, alongside the cultural, historic, economic, and other interests that bind them together. Maps gathered with Representable are standardized and easy to understand, supporting mapmakers, journalists, non-profits, and policy groups as they draw and evaluate district plans. Join us to fight for communities to get the representation they deserve.</p>
-        </div>
-      </div>
-      <div class="col-lg-6 col-sm-12 col-md-6">
-        <img class="img-fluid align-bottom my-3 pl-sm-5" src="{% static 'img/illustration.svg' %}" alt="people drawing a map"> </img>
-      </div>
-      <div class="col d-xl-none">
-        <div class="alert alert-custom p-5">
-          <h2 class="text-center"> What is Representable?</h2>
-          <p>Our mission is <b>to give communities a voice in drawing districts.</b> Representable is a free tool that empowers people to create maps of communities, alongside the cultural, historic, economic, and other interests that bind them together. Maps gathered with Representable are standardized and easy to understand, supporting mapmakers, journalists, non-profits, and policy groups as they draw and evaluate district plans. Join us to fight for communities to get the representation they deserve.</p>
-        </div>
-      </div>
-    </div>
+  <!-- Illustration -->
+  <div class="row row-hero row-eq-height my-5 border-bottom">
+    <div class="col-lg-7 col-sm-12 col-md-7">
+      <!-- Shows on medium devices and higher. -->
+      <h4 class="display-4 my-4 font-weight-medium d-none d-sm-block main-display-text-all">
+        <span class="d-block">Redistricting is coming.</span>
+        <span class="d-block">{% trans "Put your community on the map." %}</span>
+      </h4>
+      <!-- Shows on small devices and lower. -->
+      <h5 class="display-4 my-2 font-weight-medium d-sm-none main-display-text-sm">
+        <span class="d-block">Redistricting is coming.</span>
+        <span class="d-block">{% trans "Put your community on the map." %}</span>
+      </h5>
+      <h4 class="font-weight-light d-none d-sm-block text-muted my-4">
+        {% trans "Together, we can fight for your representation. Draw your community today and make your voice heard." %}
+      </h4>
+      <p class="d-sm-none font-weight-medium text-muted my-2">
+        {% trans "Together, we can fight for your representation. Draw your community today and make your voice heard." %}
+      </p>
+    <!-- <a id="get-started-btn" class="btn btn-primary mb-5 mt-2" href="#select" role="button">{% trans "Get Started" %} <i class="fa fa-arrow-circle-right"></i></a> -->
+  </div>
+  <div class="col-lg-5 col-sm-12 col-md-5">
+    <img class="img-fluid align-bottom my-3" src="{% static 'img/illustration.svg' %}"> </img>
+  </div>
+</div>
 <div class="row">
   <div class="col mx-5">
     <h1 class="text-center font-weight-light">{{object.name}}</h1>
-    <p class="text-center">Organized by <a href="{% url 'main:partner_page' object.organization.slug %}">{{object.organization}}</a> in {{drive.state}}</p>
+    <p class="text-center">Organized by <a href="{% url 'main:partner_page' object.organization.slug %}">{{object.organization}}</a> in {{state.name}}</p>
     <hr class="line-break">
-    <p class="mx-lg-5">{{object.description}}</p>
+    <p class="mx-3">{{object.description}}</p>
   </div>
 </div>
-{% if state %}
+<div class="row border-bottom pb-4">
+  <div class="col-md-7 py-4">
+    <div class="card border-0 card-signin ml-5 p-5">
+      <h2 class="text-center"> What is Representable?</h2>
+      <p>Our mission is <b>to give communities a voice in drawing districts.</b> Representable is a free tool that empowers people to create maps of communities, alongside the cultural, historic, economic, and other interests that bind them together. Maps gathered with Representable are standardized and easy to understand, supporting mapmakers, journalists, non-profits, and policy groups as they draw and evaluate district plans. Join us to fight for communities to get the representation they deserve.</p>
+    </div>
+  </div>
+  <div class="col-md-5 py-4 my-auto">
+    <img class="img-fluid" src="{% static 'img/leader.svg' %}"> </img>
+  </div>
+</div>
 <div class="row">
   <div class="col m-5">
     <h1 class="text-center font-weight-light">Redistricting in {{state.name}}</h1>
     <hr class="line-break">
   </div>
 </div>
-  <div class="row mx-lg-5">
-    <div class="col-sm-6">
-      {% autoescape off %}
-      {{ state.content_news }}
-      {% endautoescape %}
-    </div>
-    <div class="col-6 d-none d-sm-block">
-      <div class="m-auto py-4 h-100">
-        <object type="image/svg+xml" class="w-75 mx-auto d-block h-100" data="{% static 'img/map-info.svg' %}" alt="image of map with information icon"></object>
-      </div>
-    </div>
+<div class="row">
+  <div class="col-sm-6">
+    {% autoescape off %}
+    {{ state.content_news }}
+    {% endautoescape %}
   </div>
+  <div class="col-6 d-none d-sm-block">
+    {% with "img/states/"|add:state.abbr|add:".svg" as svg %}
+    <div class="card card-signin mx-auto h-100 py-4">
+      <object type="image/svg+xml" class="state h-100" data="{% static svg %}"></object>
+    </div>
+    {% endwith %}
+  </div>
+</div>
 
-  <div class="row mb-4 mx-lg-5">
-    <div class="col-12">
-        <u><a data-toggle="collapse" href="#collapseCriteria" aria-expanded="false" aria-controls="collapseCriteria">
-          <h5 style="width: fit-content;">{{ state.name }}'s Redistricting Criteria &#32; &or;</h5>
-        </a></u>
-      <div class="collapse" id="collapseCriteria">
-          {% autoescape off %}
-          {{ state.content_criteria }}
-          {% endautoescape %}
-      </div>
-    </div>
-  </div>
-  <div class="jumbotron mx-lg-5">
-    <div>
-      <h5>Communities of Interest</h5>
+<div class="row mb-4">
+  <div class="col-12">
+    <h5>
+      <u><a data-toggle="collapse" href="#collapseCriteria" aria-expanded="false" aria-controls="collapseCriteria">
+        {{ state.name }}'s Redistricting Criteria
+      </a></u>
+    </h5>
+    <div class="collapse" id="collapseCriteria">
       {% autoescape off %}
-      {{ state.content_coi }}
+      {{ state.content_criteria }}
       {% endautoescape %}
     </div>
   </div>
@@ -92,7 +101,6 @@
     {% endautoescape %}
   </div>
 </div>
-{% endif %}
 <div class="row">
   <div class="col text-center mb-4">
     <a class="btn btn-primary btn-lg my-3 drive-new-entry" href="{% url 'main:entry' drive=object.slug %}{{object.state|lower}}" role="button">Draw My Community</a>
