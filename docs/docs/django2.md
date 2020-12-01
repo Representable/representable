@@ -47,7 +47,6 @@ class EntryView(LoginRequiredMixin, View):
     initial = {
         "key": "value",
     }
-    success_url = "/thanks/"
 ```
 
 - `EntryView` subclasses `LoginRequiredMixin`, which is a mixin (learn more about mixins [here](https://docs.djangoproject.com/en/3.0/topics/class-based-views/mixins/)) that prevents non-authenticated users from accessing the page. `EntryView` also subclasses `View`, which is the generic Django view that handles linking the view into the URLs, HTTP method dispatching and other common features.
@@ -55,7 +54,6 @@ class EntryView(LoginRequiredMixin, View):
 - `community_form_class = CommunityForm` declares the custom **Model Form** used by the entry page. This form handles linking the database model to the form elements you see on the page. This is further explained below.
 - `address_form_class` refers to the part of the form that handles addresses. This gets its own **Model Form** because it is customary to store addresses in a separate DB table from the rest of the information.
 - `initial` stores information that pre-populates the form.
-- `success_url` stores the URL of the page that the user is redirected to after the form is submitted successfully.
 
 #### 2. `get_initial(self)`
 

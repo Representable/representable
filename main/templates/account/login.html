@@ -1,42 +1,51 @@
+{% extends "account/base.html" %}
 <!--Modify the existing login template https://github.com/pennersr/django-allauth/blob/master/allauth/templates/account/login.html-->
 <!-- allows bootstrap in form-->
+
 {% load i18n %}
 {% load account socialaccount %}
 {% load widget_tweaks %}
 
-<!-- Login component -->
-<div class="auth-wrap col-sm-9 col-md-7 col-lg-5 mx-auto">
-    <form id="login-form" class="login auth-form" method="POST" action="{% url 'account_login' %}">
-        {% if redirect_field_value %}
-            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-        {% endif %}
-        <div id="acc_already" class="text-left">{% trans "Already have an account?" %}</div>
-        <h4 class="auth-title">{% trans "Log In" %}</h4>
-        {% if login_error %}
-            <div class="alert alert-danger text-left" role="alert">
-                {{login_error}}
-            </div>
-        {% endif %}
-        {% csrf_token %}
-        <div class="form-group">
-            {% for field in login_form %}
-                {{ field.errors }}
-                <div class="auth-form-label">{{ field.label }}</div>
-                <div class="field-wrap">
-                    {{ field|append_attr:"class:form-control my-2 auth-field login-field" }}
-                </div>
-                {% if field.help_text %}
-                <p class="help">{{ field.help_text|safe }}</p>
+
+{% block content %}
+<div class="container>"
+<div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+            <div class="card-body">
+                <h4 class="card-title text-center">Welcome back! Sign in below.</h4>
+                {% if login_error %}
+                    <div class="alert alert-danger" role="alert">
+                        {{login_error}}
+                    </div>
                 {% endif %}
-            {% endfor %}
+                <form id="log-in-form" class="form-signin login" method="POST" action="{% url 'account_login' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {% for field in form %}
+                        <div class="field-wrap">
+                            {{ field|append_attr:"class:form-control my-2" }}
+                            {% if field.help_text %}
+                            <p class="help">{{ field.help_text|safe }}</p>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                    {% endif %}
+                    <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">{% trans "Sign In" %}</button>
+                    <a class="btn btn-lg btn-primary-outline btn-block text-uppercase" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+                </form>
+                <p class="card-text text-center my-3 align-text-bottom"><i class="fas fa-lock m-1 text-primary"></i>Accounts help us protect legitimate submissions.</p>
+                <hr>
+                <p class="card-text text-center my-3 align-text-bottom">Don't have an account yet?
+                    <a class="sign-up-started btn btn-outline-primary" href="/accounts/signup/?next={{ request.GET.next }}">Sign Up</a>
+                </p>
+                </div>
         </div>
-
-        <div class="text-left"><a class="auth-link" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a></div>
-        <div class="auth-btn-wrap">
-            <button id="login-button" class="btn btn-lg btn-primary text-uppercase auth-btn" type="submit">{% trans "log in" %}</button>
-        </div>
-
-        <a class="auth-link to-auth-link" href="#signup-form">{% trans "No Account? Sign up."%}</a>
-
-    </form>
+    </div>
 </div>
+</div>
+{% endblock %}

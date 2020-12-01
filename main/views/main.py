@@ -47,15 +47,12 @@ from allauth.account.models import (
 )
 from allauth.account import adapter
 from allauth.account.app_settings import ADAPTER
-from allauth.account.forms import LoginForm, SignupForm
-from allauth.account.views import LoginView, SignupView
+from allauth.account.views import LoginView
 from django.forms import formset_factory
 from ..forms import (
     CommunityForm,
     DeletionForm,
     AddressForm,
-    RepresentableSignupForm,
-    RepresentableLoginForm,
 )
 from ..models import (
     CommunityEntry,
@@ -100,6 +97,8 @@ from itertools import islice
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 
+from django.conf import settings
+
 
 # ******************************************************************************#
 
@@ -133,12 +132,7 @@ Documentation: https://docs.djangoproject.com/en/2.1/topics/class-based-views/
 """
 
 
-# View template for both the signing up and signing in
 class RepresentableLoginView(LoginView):
-
-    template_name = "account/signup_login.html"
-    login_form = RepresentableLoginForm()
-    signup_form = RepresentableSignupForm()
     request = None
 
     def dispatch(self, request, *args, **kwargs):
@@ -146,71 +140,9 @@ class RepresentableLoginView(LoginView):
         return super().dispatch(request, *args, **kwargs)
 
     def form_invalid(self, form):
-        self.request.session["invalid_login"] = True
-
-        # if the login prompt is from a redirect
-        if "next" in self.request.POST:
-            return redirect_to_login(
-                self.request.POST["next"], "/accounts/login/", "next"
-            )
-        else:
-            return redirect(self.request.get_full_path())
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["signup_form"] = self.signup_form
-        context["login_form"] = self.login_form
-        if "invalid_login" in self.request.session:
-            context["login_error"] = self.login_form.error_messages[
-                "email_password_mismatch"
-            ]
-            del self.request.session["invalid_login"]
-
-        if "invalid_signup" in self.request.session:
-            context["signup_errors"] = self.request.session["invalid_signup"]
-            del self.request.session["invalid_signup"]
-        return context
-
-
-class RepresentableSignupView(SignupView):
-    template_name = "account/signup_login.html"
-    login_form = RepresentableLoginForm()
-    signup_form = RepresentableSignupForm()
-    request = None
-
-    def dispatch(self, request, *args, **kwargs):
-        self.request = request
-        return super().dispatch(request, *args, **kwargs)
-
-    def form_invalid(self, form):
-        errors = {}
-        for error in form.errors:
-            errors[error] = form.errors[error]
-        self.request.session["invalid_signup"] = errors
-
-        # if the signup is from a redirect
-        if "next" in self.request.POST:
-            return redirect_to_login(
-                self.request.POST["next"], "/accounts/signup/", "next"
-            )
-        else:
-            return redirect(self.request.get_full_path())
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["signup_form"] = self.signup_form
-        context["login_form"] = self.login_form
-        if "invalid_login" in self.request.session:
-            context["login_error"] = self.login_form.error_messages[
-                "email_password_mismatch"
-            ]
-            del self.request.session["invalid_login"]
-
-        if "invalid_signup" in self.request.session:
-            context["signup_errors"] = self.request.session["invalid_signup"]
-            del self.request.session["invalid_signup"]
-
-        return context
+        context = self.get_context_data()
+        context["login_error"] = form.error_messages["email_password_mismatch"]
+        return render(self.request, super().template_name, context)
 
 
 class Index(TemplateView):
@@ -485,6 +417,7 @@ class Submission(TemplateView):
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
+            "map_id": m_uuid,
         }
         # from thanks view
         context["is_thanks"] = False
@@ -729,7 +662,6 @@ class EntryView(LoginRequiredMixin, View):
     initial = {
         "key": "value",
     }
-    success_url = "/thanks/"
 
     data = {
         "form-TOTAL_FORMS": "1",
@@ -758,6 +690,7 @@ class EntryView(LoginRequiredMixin, View):
         if kwargs["token"]:
             has_token = True
 
+        address_required = True
         has_drive = False
         organization_name = ""
         organization_id = None
@@ -772,12 +705,15 @@ class EntryView(LoginRequiredMixin, View):
             organization = drive.organization
             organization_name = organization.name
             organization_id = organization.id
+            address_required = drive.require_user_addresses
 
         context = {
             "comm_form": comm_form,
             "addr_form": addr_form,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
+            "recaptcha_public": settings.RECAPTCHA_PUBLIC,
+            "check_captcha": settings.CHECK_CAPTCHA_SUBMIT,
             "has_token": has_token,
             "has_drive": has_drive,
             "organization_name": organization_name,
@@ -785,6 +721,7 @@ class EntryView(LoginRequiredMixin, View):
             "drive_name": drive_name,
             "drive_id": drive_id,
             "state": abbr,
+            "address_required": address_required,
         }
         return render(request, self.template_name, context)
 
@@ -852,7 +789,7 @@ class EntryView(LoginRequiredMixin, View):
                 )
             else:
                 self.success_url = reverse_lazy(
-                    "main:thanks",
+                    "main:submission_thanks",
                     kwargs={
                         "map_id": m_uuid,
                         "slug": entryForm.organization.slug,
