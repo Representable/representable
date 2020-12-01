@@ -218,7 +218,6 @@ class MemberForm(ModelForm):
 class RepresentableSignupForm(SignupForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields.pop('username')
         for _, field in self.fields.items():
             del field.widget.attrs['placeholder']
 
