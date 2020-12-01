@@ -23,7 +23,7 @@
         <span class="d-block mb-3">Redistricting is coming.</span>
         <span class="d-block h3 font-weight-light">Put your community on the map.</span>
       </div>
-      <a id="get-started-btn" class="btn btn-outline-primary btn-lg mb-5 mt-2" href="#select" role="button">{% trans "Get Started" %} <i class="fa fa-arrow-circle-right"></i></a>
+      <a id="get-started-btn" class="btn btn-outline-primary btn-lg mb-5 mt-2" href="{% url 'main:entry_preview' %}" role="button">{% trans "Get Started" %} <i class="fa fa-arrow-circle-right"></i></a>
       <div class="alert alert-custom px-5 d-none d-lg-block" role="alert">
         <p class="my-3 h5 font-weight-bold">{% trans "Are you the leader of an organization?" %}</p>
         <p class="my-3 font-weight-light">{% trans "Many organizations have partnered with Representable.org to collect community-of-interest data." %}</p>

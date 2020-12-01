@@ -12,11 +12,13 @@
         {% endif %}
         <div id="acc_already" class="text-left">{% trans "Already have an account?" %}</div>
         <h4 class="auth-title">{% trans "Log In" %}</h4>
+        
         {% if login_error %}
             <div class="alert alert-danger text-left" role="alert">
                 {{login_error}}
             </div>
         {% endif %}
+
         {% csrf_token %}
         <div class="form-group">
             {% for field in login_form %}
