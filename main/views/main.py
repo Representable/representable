@@ -32,7 +32,11 @@ from django.views.generic import (
     DetailView,
 )
 from django.views import View
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, AccessMixin
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin,
+    UserPassesTestMixin,
+    AccessMixin,
+)
 from django.contrib.auth.views import redirect_to_login
 from allauth.account.models import (
     EmailConfirmation,
@@ -49,7 +53,7 @@ from ..forms import (
     DeletionForm,
     AddressForm,
     RepresentableSignupForm,
-    RepresentableLoginForm
+    RepresentableLoginForm,
 )
 from ..models import (
     CommunityEntry,
@@ -111,18 +115,26 @@ from django.contrib.gis.geos import GEOSGeometry
 # custom mixin redirects to signup page/tab rather than login
 class SignupRequiredMixin(AccessMixin):
     """Verify that the current user is authenticated."""
+
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
-            return redirect_to_login(request.get_full_path(), '/accounts/signup/', self.get_redirect_field_name())
+            return redirect_to_login(
+                request.get_full_path(),
+                "/accounts/signup/",
+                self.get_redirect_field_name(),
+            )
         return super().dispatch(request, *args, **kwargs)
+
 
 """
 Documentation: https://docs.djangoproject.com/en/2.1/topics/class-based-views/
 """
 
+
 # View template for both the signing up and signing in
 class RepresentableLoginView(LoginView):
-    template_name = 'account/signup_login.html'
+
+    template_name = "account/signup_login.html"
     login_form = RepresentableLoginForm()
     signup_form = RepresentableSignupForm()
     request = None
@@ -130,31 +142,36 @@ class RepresentableLoginView(LoginView):
     def dispatch(self, request, *args, **kwargs):
         self.request = request
         return super().dispatch(request, *args, **kwargs)
-    
+
     def form_invalid(self, form):
-        self.request.session['invalid_login'] = True
+        self.request.session["invalid_login"] = True
 
         # if the login prompt is from a redirect
-        if 'next' in self.request.POST:
-            return redirect_to_login(self.request.POST['next'], '/accounts/login/', 'next')
+        if "next" in self.request.POST:
+            return redirect_to_login(
+                self.request.POST["next"], "/accounts/login/", "next"
+            )
         else:
             return redirect(self.request.get_full_path())
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["signup_form"] = self.signup_form
         context["login_form"] = self.login_form
-        if 'invalid_login' in self.request.session:
-            context['login_error'] = self.login_form.error_messages['email_password_mismatch']
-            del self.request.session['invalid_login']
+        if "invalid_login" in self.request.session:
+            context["login_error"] = self.login_form.error_messages[
+                "email_password_mismatch"
+            ]
+            del self.request.session["invalid_login"]
 
-        if 'invalid_signup' in self.request.session:
-            context['signup_errors'] = self.request.session['invalid_signup']
-            del self.request.session['invalid_signup']
+        if "invalid_signup" in self.request.session:
+            context["signup_errors"] = self.request.session["invalid_signup"]
+            del self.request.session["invalid_signup"]
         return context
 
+
 class RepresentableSignupView(SignupView):
-    template_name = 'account/signup_login.html'
+    template_name = "account/signup_login.html"
     login_form = RepresentableLoginForm()
     signup_form = RepresentableSignupForm()
     request = None
@@ -162,31 +179,35 @@ class RepresentableSignupView(SignupView):
     def dispatch(self, request, *args, **kwargs):
         self.request = request
         return super().dispatch(request, *args, **kwargs)
-    
+
     def form_invalid(self, form):
         errors = {}
         for error in form.errors:
             errors[error] = form.errors[error]
-        self.request.session['invalid_signup'] = errors
+        self.request.session["invalid_signup"] = errors
 
         # if the signup is from a redirect
-        if 'next' in self.request.POST:
-            return redirect_to_login(self.request.POST['next'], '/accounts/signup/', 'next')
+        if "next" in self.request.POST:
+            return redirect_to_login(
+                self.request.POST["next"], "/accounts/signup/", "next"
+            )
         else:
             return redirect(self.request.get_full_path())
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["signup_form"] = self.signup_form
         context["login_form"] = self.login_form
-        if 'invalid_login' in self.request.session:
-            context['login_error'] = self.login_form.error_messages['email_password_mismatch']
-            del self.request.session['invalid_login']
+        if "invalid_login" in self.request.session:
+            context["login_error"] = self.login_form.error_messages[
+                "email_password_mismatch"
+            ]
+            del self.request.session["invalid_login"]
 
-        if 'invalid_signup' in self.request.session:
-            context['signup_errors'] = self.request.session['invalid_signup']
-            del self.request.session['invalid_signup']
-    
+        if "invalid_signup" in self.request.session:
+            context["signup_errors"] = self.request.session["invalid_signup"]
+            del self.request.session["invalid_signup"]
+
         return context
 
 
@@ -238,8 +259,10 @@ class Blog(TemplateView):
 
 # ******************************************************************************#
 
+
 class EntryPreview(TemplateView):
     template_name = "main/entry_preview.html"
+
 
 class EntryStateSelection(TemplateView):
     template_name = "main/entry_state_selection.html"
@@ -525,6 +548,7 @@ class Thanks(LoginRequiredMixin, TemplateView):
 
 
 # ******************************************************************************#
+
 
 class EntryView(SignupRequiredMixin, View):
     """
