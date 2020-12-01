@@ -77,7 +77,7 @@ class PartnerMap(TemplateView):
                 "census_blocks_polygon_array", "user_polygon",
             )
         else:
-            drive = ""
+            drive = None
             query = org.submissions.all().defer(
                 "census_blocks_polygon_array", "user_polygon"
             )
@@ -131,8 +131,7 @@ async def getcomms(query, client, is_admin, drive):
     cities = {}
     for obj in query:
         try:
-            await getfroms3(client, obj, drive, comms, entryPolyDict, is_admin)
-
+            await getfroms3(client, obj, drive, obj.state, comms, entryPolyDict, is_admin)
         except Exception as e:
             if not obj.census_blocks_polygon:
                 s = "".join(obj.user_polygon.geojson)
@@ -157,12 +156,16 @@ async def getcomms(query, client, is_admin, drive):
                 )
     return entryPolyDict, comms, streets, cities
 
-async def getfroms3(client, obj, drive, comms, entryPolyDict, is_admin):
-    if not drive:
-        drive = obj.drive.slug
+async def getfroms3(client, obj, drive, state, comms, entryPolyDict, is_admin):
+    if drive:
+        folder_name = drive.slug
+    elif not drive and state=="":
+        folder_name = obj.drive.slug
+    else:
+        folder_name = state
     response = client.get_object(
         Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
-        Key=str(drive)+"/" + obj.entry_ID + ".geojson"
+        Key=str(folder_name)+"/" + obj.entry_ID + ".geojson"
     )
     strobject = response['Body'].read().decode('utf-8')
     mapentry = geojson.loads(strobject)

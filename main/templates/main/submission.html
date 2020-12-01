@@ -119,13 +119,13 @@
                         </table>
                         <div class="text-center">
                           {% if has_state %}
-                          {% with link_text="/export/"|add:state|add:"/?map_id="|addstr:c.entry_ID|slice:27 %}
-                          <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID|slice:8}}.geojson">Export GeoJSON</a>
+                          {% with link_text="/export/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
+                          <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.geojson">Export GeoJSON</a>
                           <span class="btn btn-outline-primary btn-canvas mx-4 my-2" role="button" id="pdf-button">Export PDF</span>
                           {% endwith %}
                           {% else %}
-                          {% with link_text="/export?map_id="|addstr:c.entry_ID|slice:27 %}
-                          <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID|slice:8}}.geojson">Export GeoJSON</a>
+                          {% with link_text="/export?map_id="|addstr:c.entry_ID %}
+                          <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.geojson">Export GeoJSON</a>
                           <span class="btn btn-outline-primary btn-canvas mx-4 my-2" role="button" id="pdf-button">Export PDF</span>
                           {% endwith %}
                           {% endif %}

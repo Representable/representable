@@ -17,6 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
+import asyncio
 import boto3
 from django.http import (
     HttpResponse,
@@ -201,24 +202,13 @@ class Review(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         form = self.form_class(initial=self.get_initial(), label_suffix="")
         # the polygon coordinates
-        entryPolyDict = dict()
 
         user = self.request.user
         approvedList = list()
         # in this case, just get the ones we made
         query = CommunityEntry.objects.filter(user=user)
-        for obj in query:
-            if (
-                obj.census_blocks_polygon == ""
-                or obj.census_blocks_polygon is None
-            ):
-                s = "".join(obj.user_polygon.geojson)
-            else:
-                s = "".join(obj.census_blocks_polygon.geojson)
-            # add all the coordinates in the array
-            # at this point all the elements of the array are coordinates of the polygons
-            struct = geojson.loads(s)
-            entryPolyDict[obj.entry_ID] = struct.coordinates
+        client = boto3.client('s3', aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"), aws_secret_access_key= os.environ.get("AWS_SECRET_ACCESS_KEY"))
+        entryPolyDict, comms = asyncio.run(getcommsforreview(query, client))
         context = {
             "form": form,
             "entry_poly_dict": json.dumps(entryPolyDict),
@@ -245,6 +235,45 @@ class Review(LoginRequiredMixin, TemplateView):
         return render(request, self.template_name, context)
 
 
+async def getcommsforreview(query, client):
+    comms = []
+    entryPolyDict = dict()
+    for obj in query:
+        try:
+            await getfroms3(client, obj, obj.drive, obj.state, comms, entryPolyDict)
+        except:
+            if (
+                obj.census_blocks_polygon == ""
+                or obj.census_blocks_polygon is None
+            ):
+                s = "".join(obj.user_polygon.geojson)
+            else:
+                s = "".join(obj.census_blocks_polygon.geojson)
+            comms.append(obj)
+        # add all the coordinates in the array
+        # at this point all the elements of the array are coordinates of the polygons
+            struct = geojson.loads(s)
+            entryPolyDict[obj.entry_ID] = struct.coordinates
+    return entryPolyDict, comms
+
+async def getfroms3(client, obj, drive, state, comms, entryPolyDict):
+    if drive:
+        folder_name = drive
+    elif not drive and state=="" and obj.drive:
+        folder_name = obj.drive.slug
+    else:
+        folder_name = state
+    response = client.get_object(
+        Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
+        Key=str(folder_name)+"/" + obj.entry_ID + ".geojson"
+    )
+    strobject = response['Body'].read().decode('utf-8')
+    mapentry = geojson.loads(strobject)
+    comm = CommunityEntry(entry_ID=obj.entry_ID, comm_activities=mapentry["properties"]["comm_activities"],entry_name=mapentry["properties"]["entry_name"], economic_interests=mapentry["properties"]["economic_interests"], other_considerations=mapentry["properties"]["other_considerations"], cultural_interests=mapentry["properties"]["cultural_interests"])
+    comm.drive = Drive(name=mapentry["properties"]["drive"])
+    comm.organization = Organization(name=mapentry["properties"]["organization"])
+    comms.append(comm)
+    entryPolyDict[obj.entry_ID] = mapentry['geometry']['coordinates']
 # ******************************************************************************#
 
 
@@ -266,9 +295,16 @@ class Submission(TemplateView):
             has_state = False
             state = ""
         else:
-            folder_name = self.kwargs["abbr"]
-            has_state = True
-            state = folder_name
+            if "abbr" in self.kwargs:
+                folder_name = self.kwargs["abbr"]
+                has_state = True
+                state = folder_name
+            else:
+                has_state = user_map.state != ""
+                state = user_map.state
+                folder_name = state
+            
+            
         entryPolyDict = {}
 
         client = boto3.client("s3", aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"), aws_secret_access_key= os.environ.get("AWS_SECRET_ACCESS_KEY"))
@@ -375,10 +411,13 @@ class ExportView(TemplateView):
             }
             return render(request, self.template_name, context)
 
-        if self.kwargs["abbr"]:
+        if "abbr" in self.kwargs:
             folder_name = self.kwargs["abbr"]
         else:
-            folder_name = query.drive.slug
+            if query.drive:
+                folder_name = query.drive.slug
+            else:
+                folder_name = ""
 
         client = boto3.client('s3', aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"), aws_secret_access_key= os.environ.get("AWS_SECRET_ACCESS_KEY"))
         try:
@@ -539,6 +578,10 @@ def make_geojson_for_s3(entry):
         gj["features"][0]["properties"]["drive"] = user_map.drive.name
     else:
         gj["features"][0]["properties"]["drive"] = ""
+    if user_map.state:
+        gj["features"][0]["properties"]["state"] = user_map.state
+    else:
+        gj["features"][0]["properties"]["state"] = ""
     feature = gj["features"][0]
     return feature
 
@@ -634,6 +677,7 @@ class EntryView(LoginRequiredMixin, View):
                     entryForm.organization = drive.organization
             else:
                 folder_name = self.kwargs["abbr"]
+                entryForm.state  = self.kwargs["abbr"]
             if entryForm.organization:
                 if self.request.user.is_org_admin(entryForm.organization.id):
                     entryForm.admin_approved = True
