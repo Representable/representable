@@ -172,7 +172,7 @@ class Drive(models.Model):
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
-    require_user_addresses = models.BooleanField(default=True)
+    require_user_addresses = models.BooleanField(default=True, blank=True, null=True)
 
     class Meta:
         ordering = ("description",)
