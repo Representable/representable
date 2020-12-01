@@ -242,7 +242,11 @@ class Review(LoginRequiredMixin, TemplateView):
         approvedList = list()
         # in this case, just get the ones we made
         query = CommunityEntry.objects.filter(user=user)
-        client = boto3.client('s3', aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"), aws_secret_access_key= os.environ.get("AWS_SECRET_ACCESS_KEY"))
+        client = boto3.client(
+            "s3",
+            aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
+        )
         entryPolyDict, comms = asyncio.run(getcommsforreview(query, client))
         context = {
             "form": form,
@@ -275,8 +279,10 @@ async def getcommsforreview(query, client):
     entryPolyDict = dict()
     for obj in query:
         try:
-            await getfroms3(client, obj, obj.drive, obj.state, comms, entryPolyDict)
-        except:
+            await getfroms3(
+                client, obj, obj.drive, obj.state, comms, entryPolyDict
+            )
+        except Exception:
             if (
                 obj.census_blocks_polygon == ""
                 or obj.census_blocks_polygon is None
@@ -285,11 +291,12 @@ async def getcommsforreview(query, client):
             else:
                 s = "".join(obj.census_blocks_polygon.geojson)
             comms.append(obj)
-        # add all the coordinates in the array
-        # at this point all the elements of the array are coordinates of the polygons
+            # add all the coordinates in the array
+            # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
             entryPolyDict[obj.entry_ID] = struct.coordinates
     return entryPolyDict, comms
+
 
 async def getfroms3(client, obj, drive, state, comms, entryPolyDict):
     if drive:
@@ -300,15 +307,26 @@ async def getfroms3(client, obj, drive, state, comms, entryPolyDict):
         folder_name = state
     response = client.get_object(
         Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
-        Key=str(folder_name)+"/" + obj.entry_ID + ".geojson"
+        Key=str(folder_name) + "/" + obj.entry_ID + ".geojson",
     )
-    strobject = response['Body'].read().decode('utf-8')
+    strobject = response["Body"].read().decode("utf-8")
     mapentry = geojson.loads(strobject)
-    comm = CommunityEntry(entry_ID=obj.entry_ID, comm_activities=mapentry["properties"]["comm_activities"],entry_name=mapentry["properties"]["entry_name"], economic_interests=mapentry["properties"]["economic_interests"], other_considerations=mapentry["properties"]["other_considerations"], cultural_interests=mapentry["properties"]["cultural_interests"])
+    comm = CommunityEntry(
+        entry_ID=obj.entry_ID,
+        comm_activities=mapentry["properties"]["comm_activities"],
+        entry_name=mapentry["properties"]["entry_name"],
+        economic_interests=mapentry["properties"]["economic_interests"],
+        other_considerations=mapentry["properties"]["other_considerations"],
+        cultural_interests=mapentry["properties"]["cultural_interests"],
+    )
     comm.drive = Drive(name=mapentry["properties"]["drive"])
-    comm.organization = Organization(name=mapentry["properties"]["organization"])
+    comm.organization = Organization(
+        name=mapentry["properties"]["organization"]
+    )
     comms.append(comm)
-    entryPolyDict[obj.entry_ID] = mapentry['geometry']['coordinates']
+    entryPolyDict[obj.entry_ID] = mapentry["geometry"]["coordinates"]
+
+
 # ******************************************************************************#
 
 
@@ -322,7 +340,7 @@ class Submission(TemplateView):
         query = CommunityEntry.objects.filter(entry_ID__startswith=m_uuid)
         if not query:
             raise Http404
-            
+
         # query will have length 1 or database is invalid
         user_map = query[0]
         if user_map.drive:
@@ -338,27 +356,51 @@ class Submission(TemplateView):
                 has_state = user_map.state != ""
                 state = user_map.state
                 folder_name = state
-            
-            
+
         entryPolyDict = {}
 
-        client = boto3.client("s3", aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"), aws_secret_access_key= os.environ.get("AWS_SECRET_ACCESS_KEY"))
+        client = boto3.client(
+            "s3",
+            aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
+        )
         try:
             s3response = client.get_object(
                 Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
-                Key=folder_name+ "/" + user_map.entry_ID + ".geojson"
+                Key=folder_name + "/" + user_map.entry_ID + ".geojson",
             )
             strobject = s3response["Body"].read().decode("utf-8")
             mapentry = geojson.loads(strobject)
-            poly = Polygon(mapentry['geometry']['coordinates'][0])
-            comm = CommunityEntry(entry_ID=m_uuid, census_blocks_polygon=poly, entry_name=mapentry["properties"]["entry_name"], comm_activities=mapentry["properties"]["comm_activities"], economic_interests=mapentry["properties"]["economic_interests"], other_considerations=mapentry["properties"]["other_considerations"], cultural_interests=mapentry["properties"]["cultural_interests"])
+            poly = Polygon(mapentry["geometry"]["coordinates"][0])
+            comm = CommunityEntry(
+                entry_ID=m_uuid,
+                census_blocks_polygon=poly,
+                entry_name=mapentry["properties"]["entry_name"],
+                comm_activities=mapentry["properties"]["comm_activities"],
+                economic_interests=mapentry["properties"][
+                    "economic_interests"
+                ],
+                other_considerations=mapentry["properties"][
+                    "other_considerations"
+                ],
+                cultural_interests=mapentry["properties"][
+                    "cultural_interests"
+                ],
+            )
             if mapentry["properties"]["drive"]:
                 comm.drive = Drive(name=mapentry["properties"]["drive"])
             if mapentry["properties"]["organization"]:
-                comm.organization = Organization(name=mapentry["properties"]["organization"])
-            entryPolyDict[user_map.entry_ID] = mapentry['geometry']['coordinates']
-        except Exception as e:
-            if (user_map.census_blocks_polygon == "" or user_map.census_blocks_polygon is None):
+                comm.organization = Organization(
+                    name=mapentry["properties"]["organization"]
+                )
+            entryPolyDict[user_map.entry_ID] = mapentry["geometry"][
+                "coordinates"
+            ]
+        except Exception:
+            if (
+                user_map.census_blocks_polygon == ""
+                or user_map.census_blocks_polygon is None
+            ):
                 s = "".join(user_map.user_polygon.geojson)
             else:
                 s = "".join(user_map.census_blocks_polygon.geojson)
@@ -423,9 +465,11 @@ class Submission(TemplateView):
                 for a in Address.objects.filter(entry=user_map):
                     context["street"] = a.street
                     context["city"] = a.city + ", " + a.state + " " + a.zipcode
-                    context["is_community_author"] = self.request.user == user_map.user
+                    context["is_community_author"] = (
+                        self.request.user == user_map.user
+                    )
                     comm.user_name = user_map.user_name
-                
+
         return render(request, self.template_name, context)
 
 
@@ -478,7 +522,7 @@ class ExportView(TemplateView):
         if m_uuid:
             query = CommunityEntry.objects.filter(entry_ID__startswith=m_uuid)
             query = query[0]
-           
+
         if not query:
             context = {
                 "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
@@ -493,19 +537,21 @@ class ExportView(TemplateView):
             else:
                 folder_name = query.state
 
-        client = boto3.client('s3', aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"), aws_secret_access_key= os.environ.get("AWS_SECRET_ACCESS_KEY"))
+        client = boto3.client(
+            "s3",
+            aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
+        )
         try:
             s3response = client.get_object(
                 Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
-                Key=folder_name + "/" + query.entry_ID + ".geojson"
+                Key=folder_name + "/" + query.entry_ID + ".geojson",
             )
             gj = s3_geojson_export(s3response, query, request)
-        except:
+        except Exception:
             gj = make_geojson(request, query)
         gs = geojson.dumps(gj)
-        response = HttpResponse(
-            gs, content_type="application/json"
-        )
+        response = HttpResponse(gs, content_type="application/json")
         return response
 
 
@@ -549,8 +595,9 @@ class Map(TemplateView):
 
 # ******************************************************************************#
 
+
 def s3_geojson_export(s3response, query, request):
-    strobject = s3response['Body'].read().decode('utf-8')
+    strobject = s3response["Body"].read().decode("utf-8")
     mapentry = geojson.loads(strobject)
     gj = rewind(mapentry)
     if request.user.is_authenticated:
@@ -565,6 +612,7 @@ def s3_geojson_export(s3response, query, request):
                 )
                 gj["properties"]["address"] = addy
     return gj
+
 
 def make_geojson_for_s3(entry):
     map_geojson = serialize(
@@ -588,9 +636,7 @@ def make_geojson_for_s3(entry):
             "organization"
         ] = user_map.organization.name
     else:
-        gj["features"][0]["properties"][
-            "organization"
-        ] = ""
+        gj["features"][0]["properties"]["organization"] = ""
     if user_map.drive:
         gj["features"][0]["properties"]["drive"] = user_map.drive.name
     else:
@@ -601,6 +647,7 @@ def make_geojson_for_s3(entry):
         gj["features"][0]["properties"]["state"] = ""
     feature = gj["features"][0]
     return feature
+
 
 class EntryView(LoginRequiredMixin, View):
     """
@@ -687,7 +734,11 @@ class EntryView(LoginRequiredMixin, View):
         comm_form.data._mutable = False
         if comm_form.is_valid():
             entryForm = comm_form.save(commit=False)
-            s3 = boto3.resource("s3", aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"), aws_secret_access_key= os.environ.get("AWS_SECRET_ACCESS_KEY"))
+            s3 = boto3.resource(
+                "s3",
+                aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
+                aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
+            )
             if self.kwargs["drive"]:
                 drive = Drive.objects.get(slug=self.kwargs["drive"])
                 folder_name = self.kwargs["drive"]
@@ -696,7 +747,7 @@ class EntryView(LoginRequiredMixin, View):
                     entryForm.organization = drive.organization
             else:
                 folder_name = self.kwargs["abbr"]
-                entryForm.state  = self.kwargs["abbr"]
+                entryForm.state = self.kwargs["abbr"]
             if entryForm.organization:
                 if self.request.user.is_org_admin(entryForm.organization.id):
                     entryForm.admin_approved = True
@@ -710,11 +761,11 @@ class EntryView(LoginRequiredMixin, View):
                         # approve this entry
                         entryForm.admin_approved = True
             gj = make_geojson_for_s3(entryForm)
-            response = s3.Bucket(os.environ.get("AWS_STORAGE_BUCKET_NAME")).put_object(
+            s3.Bucket(os.environ.get("AWS_STORAGE_BUCKET_NAME")).put_object(
                 Body=str(gj),
                 Key=f'{folder_name}/{comm_form.data["entry_ID"]}.geojson',
-                ServerSideEncryption='AES256',
-                StorageClass='STANDARD_IA',
+                ServerSideEncryption="AES256",
+                StorageClass="STANDARD_IA",
             )
             entryForm.census_blocks_polygon = ""
 
@@ -729,10 +780,8 @@ class EntryView(LoginRequiredMixin, View):
             m_uuid = str(entryForm.entry_ID)
             if not entryForm.drive:
                 self.success_url = reverse_lazy(
-                    "main:submission_thanks", kwargs={
-                        "map_id": m_uuid,
-                        "abbr": folder_name
-                        }
+                    "main:submission_thanks",
+                    kwargs={"map_id": m_uuid, "abbr": folder_name},
                 )
             else:
                 self.success_url = reverse_lazy(

@@ -22,7 +22,7 @@ import asyncio
 import boto3
 import botocore
 from django.contrib.gis import geos
-from django.contrib.gis.geos import  GEOSGeometry, MultiPolygon, Polygon
+from django.contrib.gis.geos import GEOSGeometry, MultiPolygon, Polygon
 
 # from django.contrib.gis.geos import GEOSGeometry
 import json
@@ -80,9 +80,15 @@ class PartnerMap(TemplateView):
             query = org.submissions.all().defer(
                 "census_blocks_polygon_array", "user_polygon"
             )
-        
-        client = boto3.client('s3', aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"), aws_secret_access_key= os.environ.get("AWS_SECRET_ACCESS_KEY"))
-        entryPolyDict, comms, streets, cities = asyncio.run(getcomms(query, client, is_admin, drive))
+
+        client = boto3.client(
+            "s3",
+            aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
+        )
+        entryPolyDict, comms, streets, cities = asyncio.run(
+            getcomms(query, client, is_admin, drive)
+        )
         context = {
             "streets": streets,
             "cities": cities,
@@ -129,8 +135,10 @@ async def getcomms(query, client, is_admin, drive):
     cities = {}
     for obj in query:
         try:
-            await getfroms3(client, obj, drive, obj.state, comms, entryPolyDict, is_admin)
-        except Exception as e:
+            await getfroms3(
+                client, obj, drive, obj.state, comms, entryPolyDict, is_admin
+            )
+        except Exception:
             if not obj.census_blocks_polygon:
                 s = "".join(obj.user_polygon.geojson)
             else:
@@ -145,7 +153,7 @@ async def getcomms(query, client, is_admin, drive):
             comms.append(obj)
             struct = geojson.loads(s)
             entryPolyDict[obj.entry_ID] = struct.coordinates
-                    
+
         if is_admin:
             for a in Address.objects.filter(entry=obj):
                 streets[obj.entry_ID] = a.street
@@ -153,6 +161,7 @@ async def getcomms(query, client, is_admin, drive):
                     a.city + ", " + a.state + " " + a.zipcode
                 )
     return entryPolyDict, comms, streets, cities
+
 
 async def getfroms3(client, obj, drive, state, comms, entryPolyDict, is_admin):
     if drive:
@@ -163,20 +172,30 @@ async def getfroms3(client, obj, drive, state, comms, entryPolyDict, is_admin):
         folder_name = state
     response = client.get_object(
         Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
-        Key=str(folder_name)+"/" + obj.entry_ID + ".geojson"
+        Key=str(folder_name) + "/" + obj.entry_ID + ".geojson",
     )
-    strobject = response['Body'].read().decode('utf-8')
+    strobject = response["Body"].read().decode("utf-8")
     mapentry = geojson.loads(strobject)
-    comm = CommunityEntry(entry_ID=obj.entry_ID, comm_activities=mapentry["properties"]["comm_activities"],entry_name=mapentry["properties"]["entry_name"], economic_interests=mapentry["properties"]["economic_interests"], other_considerations=mapentry["properties"]["other_considerations"], cultural_interests=mapentry["properties"]["cultural_interests"])
+    comm = CommunityEntry(
+        entry_ID=obj.entry_ID,
+        comm_activities=mapentry["properties"]["comm_activities"],
+        entry_name=mapentry["properties"]["entry_name"],
+        economic_interests=mapentry["properties"]["economic_interests"],
+        other_considerations=mapentry["properties"]["other_considerations"],
+        cultural_interests=mapentry["properties"]["cultural_interests"],
+    )
     comm.drive = Drive(name=mapentry["properties"]["drive"])
-    comm.organization = Organization(name=mapentry["properties"]["organization"])
+    comm.organization = Organization(
+        name=mapentry["properties"]["organization"]
+    )
     if is_admin:
         if obj.user_name:
             comm.user_name = obj.user_name
         else:
             obj.user.username
     comms.append(comm)
-    entryPolyDict[obj.entry_ID] = mapentry['geometry']['coordinates']
+    entryPolyDict[obj.entry_ID] = mapentry["geometry"]["coordinates"]
+
 
 # ******************************************************************************#
 
@@ -204,15 +223,22 @@ class MultiExportView(TemplateView):
                 geojson.dumps({}), content_type="application/json"
             )
 
-        client = boto3.client('s3', aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"), aws_secret_access_key= os.environ.get("AWS_SECRET_ACCESS_KEY"))
+        client = boto3.client(
+            "s3",
+            aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
+        )
         all_gj = []
         for entry in query:
             if not entry.organization:
                 continue
             try:
-                s3response = client.get_object(Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),Key=entry.drive.slug + "/" + entry.entry_ID + ".geojson")
+                s3response = client.get_object(
+                    Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
+                    Key=entry.drive.slug + "/" + entry.entry_ID + ".geojson",
+                )
                 gj = s3_geojson_export(s3response, entry, request)
-            except:
+            except Exception:
                 gj = make_geojson(request, entry)
             all_gj.append(gj)
 
@@ -225,7 +251,7 @@ class MultiExportView(TemplateView):
 
 
 def s3_geojson_export(s3response, query, request):
-    strobject = s3response['Body'].read().decode('utf-8')
+    strobject = s3response["Body"].read().decode("utf-8")
     mapentry = geojson.loads(strobject)
     gj = rewind(mapentry)
     if request.user.is_authenticated:
@@ -240,6 +266,7 @@ def s3_geojson_export(s3response, query, request):
                 )
                 gj["properties"]["address"] = addy
     return gj
+
 
 # ******************************************************************************#
 
