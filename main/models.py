@@ -159,6 +159,7 @@ class Drive(models.Model):
     - organization: organization hosting the drive
     - created_at: when the drive was created
     - is_active: is the drive active
+    - require_user_addresses: does the drive require users to include an address
     """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -171,6 +172,7 @@ class Drive(models.Model):
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
+    require_user_addresses = models.BooleanField(default=True)
 
     class Meta:
         ordering = ("description",)
@@ -247,10 +249,18 @@ class CommunityEntry(models.Model):
         max_length=100, blank=False, unique=True, default=uuid.uuid4
     )
     organization = models.ForeignKey(
-        Organization, on_delete=models.SET_NULL, blank=True, null=True
+        Organization,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="submissions",
     )
     drive = models.ForeignKey(
-        Drive, on_delete=models.SET_NULL, blank=True, null=True
+        Drive,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="submissions",
     )
     user_polygon = models.PolygonField(
         geography=True, serialize=True, blank=True, null=True
@@ -304,16 +314,16 @@ class Address(models.Model):
         CommunityEntry, on_delete=models.CASCADE, default=""
     )
     street = models.CharField(
-        max_length=500, blank=False, unique=False, default=""
+        max_length=500, blank=True, unique=False, default=""
     )
     city = models.CharField(
-        max_length=100, blank=False, unique=False, default=""
+        max_length=100, blank=True, unique=False, default=""
     )
     state = models.CharField(
-        max_length=100, blank=False, unique=False, default=""
+        max_length=100, blank=True, unique=False, default=""
     )
     zipcode = models.CharField(
-        max_length=12, blank=False, unique=False, default=""
+        max_length=12, blank=True, unique=False, default=""
     )
 
     def __str__(self):

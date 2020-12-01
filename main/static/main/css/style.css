@@ -75,11 +75,11 @@ form:invalid {
   border: 1px solid red;
 }
 
-/***************************************** 
+/** 
 
 Entry Preview Page 
 
-******************************************/
+**/
 #entry_preview_intro {
   padding: 15px 15px 15px 20px;
   line-height: 2;
@@ -132,6 +132,12 @@ Entry Preview Page
 .mapboxgl-ctrl-geocoder {
   width: 100%;
   max-width: none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
 }
 
 /* Disable button hover when button is disabled. */
@@ -217,12 +223,6 @@ body {
 
 .main-display-text-all {
   font-size: 2.9rem;
-}
-
-/* Class for what is gerrymandering section styling. */
-.what-is-gerrymandering {
-  background: -webkit-linear-gradient(-45deg, #2a94f4, #00c6a7);
-  color: white;
 }
 
 .tooltip-inner {
@@ -402,9 +402,18 @@ color scheme. See readme.md*/
   color: white;
 }
 
-/* NEEDS EXPLANATION */
-
 @media only screen and (min-width: 768px) {
+  /* for the modal on submission page (thanks) */
+  .modal-header .close {
+    margin: -1rem;
+  }
+  #thanksModalDialog {
+    width: 85%;
+    max-width: 1000px;
+  }
+  #thanksModalLabel {
+    margin: auto;
+  }
   .gap-90 {
     width: 100%;
     height: 90px;
@@ -541,11 +550,7 @@ color scheme. See readme.md*/
   color: black;
 }
 
-/****************************************
-
-landing page map *
-
-*****************************************/
+/* landing page map */
 #usa-map {
   width: 100%;
   height: 100%;
@@ -866,146 +871,7 @@ label {
   margin-bottom: 0rem;
 }
 
-/******************************************
-
-Signup and Login Page
-
-******************************************/
-#acc_already {
-  height: 50px;
-  color: rgba(101, 101, 101, 0.81);
-}
-
-.auth-form {
-  display: inline-block;
-  width: 70%;
-}
-
-.auth-form .btn {
-  font-size: 80%;
-  /* border-radius: 5rem; */
-  letter-spacing: 0.1rem;
-  font-weight: bold;
-  padding: 1rem;
-  transition: all 0.2s;
-}
-
-.auth-btn-wrap {
-  text-align: center;
-  padding-top: 20px;
-}
-
-.auth-btn {
-  width: 50%;
-}
-
-.auth-form-label {
-  text-align: left;
-  color: rgba(101, 101, 101, 0.61);
-}
-
-.auth-title {
-  color: #5B5B5B;
-}
-
-.auth-wrap {
-  margin: 25px 0px;
-  text-align: center;
-}
-
-.auth-field {
-  display: inline-block;
-  width: 100%;
-  height: 60px;
-  background-color: #CCE9FF;
-  border: none;
-}
-
-.auth-divider-wrap {
-  position: relative;
-}
-
-.auth-divider {
-  position: absolute;
-  width: 0px;
-  height: 259.01px;
-  border-left: 5px solid rgba(0, 0, 0, 0.07);
-  transform: rotate(0.43deg);
-  left: 50%;
-  top: 30%;
-}
-
-.auth-link {
-  color: rgba(101, 101, 101, 0.81);
-  text-decoration: underline;
-}
-
-.auth-link:hover {
-  color: rgba(101, 101, 101, 1);
-}
-.login-field {
-  background-color: #D6F6F1;
-}
-
-.login-field:focus {
-  outline-color: #D6F6F1 !important;
-}
-
-#login-button {
-  background-color: #7ADBCB;
-  border-color: #7ADBCB;
-}
-
-.to-auth-link {
-  display: none;
-}
-
-.redirect-banner {
-  padding: 0px 30%;
-  text-align: center;
-}
-
-@media only screen and (min-width: 769px) {
-  #signup-form {
-    padding-top: 50px;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  .auth-divider-wrap {
-    text-align: center;
-    padding: 2.5rem 0rem;
-  }
-  .auth-divider {
-    position: initial;
-    display: inline-block;
-    width: 50%;
-    height: 0px;
-    border-bottom: 5px solid rgba(0, 0, 0, 0.07);
-    transform: rotate(0.43deg);
-  }
-
-  .auth-wrapper {
-    text-align: center;
-  }
-
-  .field-wrap {
-    text-align: center;
-  }
-
-  .to-auth-link {
-    display: inline-block;
-    padding-top: 30px;
-  }
-
-  .redirect-banner {
-    padding: 0px 15%;
-  }
-}
-
-.privacy-note {
-  color: rgba(101, 101, 101, 0.81);
-}
+/* LOGIN */
 
 :root {
   --input-padding-x: 1.5rem;
@@ -1028,14 +894,27 @@ Signup and Login Page
   padding: 2rem;
 }
 
+.form-signin {
+  width: 100%;
+}
+
+.form-signin .btn {
+  font-size: 80%;
+  /* border-radius: 5rem; */
+  letter-spacing: 0.1rem;
+  font-weight: bold;
+  padding: 1rem;
+  transition: all 0.2s;
+}
+
 .form-label-group {
   position: relative;
   margin-bottom: 1rem;
 }
 
 .form-group input {
-  /* height: auto; */
-  border-radius: 2rem;
+  height: auto;
+  /* border-radius: 2rem; */
 }
 
 .form-label-group input,
@@ -1087,6 +966,10 @@ Signup and Login Page
   padding-bottom: calc(var(--input-padding-y) / 3);
   font-size: 12px;
   color: #777;
+}
+
+input.form-control[type=checkbox] {
+  width: 15%;
 }
 
 .btn-google {
