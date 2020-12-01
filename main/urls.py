@@ -100,7 +100,13 @@ urlpatterns = [
         name="submission",
     ),
     path(
-        "submission/thanks/<map_id>",
+        "submission/<map_id>/<abbr>",
+        views.main.Submission.as_view(),
+        {"slug": "", "drive": ""},
+        name="submission",
+    ),
+    path(
+        "submission/thanks/<map_id>/<abbr>",
         views.main.Submission.as_view(),
         {"slug": "", "drive": ""},
         name="submission_thanks",
