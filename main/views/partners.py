@@ -92,7 +92,6 @@ class PartnerMap(TemplateView):
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
-
         context["organization"] = org
         context["state"] = org.states[0].lower()
         if self.request.user.is_authenticated:
@@ -112,9 +111,9 @@ class PartnerMap(TemplateView):
             )
 
         if self.kwargs["drive"]:
-            context["drive"] = get_object_or_404(
-                Drive, slug=self.kwargs["drive"]
-            ).name
+            map_drive = get_object_or_404(Drive, slug=self.kwargs["drive"])
+            context["drive"] = map_drive.name
+            context["state"] = map_drive.state.lower()
             context["multi_export_link"] = (
                 "/multiexport/drive/" + self.kwargs["drive"]
             )
@@ -159,7 +158,7 @@ async def getcomms(query, client, is_admin, drive):
 async def getfroms3(client, obj, drive, state, comms, entryPolyDict, is_admin):
     if drive:
         folder_name = drive.slug
-    elif not drive and state=="":
+    elif not drive and obj.drive:
         folder_name = obj.drive.slug
     else:
         folder_name = state

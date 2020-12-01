@@ -34,7 +34,8 @@ from django.views.generic import (
     DetailView,
 )
 from django.views import View
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, AccessMixin
+from django.contrib.auth.views import redirect_to_login
 from allauth.account.models import (
     EmailConfirmation,
     EmailAddress,
@@ -42,6 +43,7 @@ from allauth.account.models import (
 )
 from allauth.account import adapter
 from allauth.account.app_settings import ADAPTER
+from allauth.account.views import LoginView
 from django.forms import formset_factory
 from ..forms import (
     CommunityForm,
@@ -105,9 +107,28 @@ from django.contrib.gis.geos import GEOSGeometry
 
 # ******************************************************************************#
 
+# custom mixin redirects to signup page/tab rather than login
+class SignupRequiredMixin(AccessMixin):
+    """Verify that the current user is authenticated."""
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect_to_login(request.get_full_path(), '/accounts/signup/', self.get_redirect_field_name())
+        return super().dispatch(request, *args, **kwargs)
+
 """
 Documentation: https://docs.djangoproject.com/en/2.1/topics/class-based-views/
 """
+
+class RepresentableLoginView(LoginView):
+    request = None
+    def dispatch(self, request, *args, **kwargs):
+        self.request = request
+        return super().dispatch(request, *args, **kwargs)
+    
+    def form_invalid(self, form):
+        context = self.get_context_data()
+        context['login_error'] = form.error_messages['email_password_mismatch']
+        return render(self.request, super().template_name, context)
 
 
 class Index(TemplateView):
@@ -152,17 +173,17 @@ class Terms(TemplateView):
 # ******************************************************************************#
 
 
-class Michigan(TemplateView):
-    # template_name = "main/michigan.html"
-    def get(self, request, *args, **kwargs):
-        return redirect("/state/mi/")
+class Blog(TemplateView):
+    template_name = "main/pages/blog.html"
 
 
 # ******************************************************************************#
 
+class EntryPreview(TemplateView):
+    template_name = "main/entry_preview.html"
 
-class Blog(TemplateView):
-    template_name = "main/pages/blog.html"
+class EntryStateSelection(TemplateView):
+    template_name = "main/entry_state_selection.html"
 
 
 # ******************************************************************************#
@@ -259,7 +280,7 @@ async def getcommsforreview(query, client):
 async def getfroms3(client, obj, drive, state, comms, entryPolyDict):
     if drive:
         folder_name = drive
-    elif not drive and state=="" and obj.drive:
+    elif not drive and obj.drive:
         folder_name = obj.drive.slug
     else:
         folder_name = state
@@ -281,7 +302,7 @@ class Submission(TemplateView):
     template_name = "main/submission.html"
 
     def get(self, request, *args, **kwargs):
-        m_uuid = self.request.GET.get("map_id", None)
+        m_uuid = str(self.kwargs["map_id"])
         if not m_uuid:
             raise Http404
         query = CommunityEntry.objects.filter(entry_ID__startswith=m_uuid)
@@ -338,8 +359,47 @@ class Submission(TemplateView):
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
+            "map_id": m_uuid,
         }
-        
+        # from thanks view
+        context["is_thanks"] = False
+        if "thanks" in request.path:
+            context["is_thanks"] = True
+            has_drive = False
+            organization_name = ""
+            drive_name = ""
+            organization_slug = ""
+            if kwargs["drive"]:
+                has_drive = True
+                drive_slug = self.kwargs["drive"]
+                drive = Drive.objects.get(slug=drive_slug)
+                drive_name = drive.name
+                organization = drive.organization
+                organization_name = organization.name
+                organization_slug = organization.slug
+
+            if EmailAddress.objects.filter(
+                user=self.request.user, verified=True
+            ).exists():
+                context["verified"] = True
+            else:
+                user_email_address = EmailAddress.objects.get(
+                    user=self.request.user
+                )
+
+                user_email_confirmation = EmailConfirmationHMAC(
+                    email_address=user_email_address
+                )
+
+                user_email_confirmation.send(self.request, False)
+                context["verified"] = False
+
+            context["drive_slug"] = self.kwargs["drive"]
+            context["has_drive"] = has_drive
+            context["organization_name"] = organization_name
+            context["organization_slug"] = organization_slug
+            context["drive_name"] = drive_name
+
         if self.request.user.is_authenticated:
             if user_map.organization:
                 context["is_org_admin"] = self.request.user.is_org_admin(
@@ -417,7 +477,7 @@ class ExportView(TemplateView):
             if query.drive:
                 folder_name = query.drive.slug
             else:
-                folder_name = ""
+                folder_name = query.state
 
         client = boto3.client('s3', aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"), aws_secret_access_key= os.environ.get("AWS_SECRET_ACCESS_KEY"))
         try:
@@ -470,63 +530,6 @@ class Map(TemplateView):
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
-        return context
-
-
-# ******************************************************************************#
-
-
-class Thanks(LoginRequiredMixin, TemplateView):
-    template_name = "main/thanks.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        has_drive = False
-        organization_name = ""
-        drive_name = ""
-        if kwargs["drive"]:
-            has_drive = True
-            drive_slug = self.kwargs["drive"]
-            drive = Drive.objects.get(slug=drive_slug)
-            drive_name = drive.name
-            organization = drive.organization
-            organization_name = organization.name
-            state = ""
-            context["has_state"] = False
-        else:
-            context["has_state"] = True
-            state = self.kwargs["abbr"] + "/"
-
-        if EmailAddress.objects.filter(
-            user=self.request.user, verified=True
-        ).exists():
-            context["verified"] = True
-        else:
-            user_email_address = EmailAddress.objects.get(
-                user=self.request.user
-            )
-
-            user_email_confirmation = EmailConfirmationHMAC(
-                email_address=user_email_address
-            )
-
-            # default_adapter = adapter.get_adapter()
-
-            # default_adapter.send_confirmation_mail(self.request, user_email_confirmation, False)
-            # user_email_address.send_confirmation(None, False)
-
-            user_email_confirmation.send(self.request, False)
-            context["verified"] = False
-
-        
-        context["state"] = state
-        context["map_url"] = self.kwargs["map_id"]
-        context["drive"] = self.kwargs["drive"]
-        context["has_drive"] = has_drive
-        context["organization_name"] = organization_name
-        context["drive_name"] = drive_name
-
         return context
 
 
@@ -596,7 +599,6 @@ class EntryView(LoginRequiredMixin, View):
     initial = {
         "key": "value",
     }
-    success_url = "/thanks/"
 
     data = {
         "form-TOTAL_FORMS": "1",
@@ -625,6 +627,7 @@ class EntryView(LoginRequiredMixin, View):
         if kwargs["token"]:
             has_token = True
 
+        address_required = True
         has_drive = False
         organization_name = ""
         organization_id = None
@@ -639,6 +642,7 @@ class EntryView(LoginRequiredMixin, View):
             organization = drive.organization
             organization_name = organization.name
             organization_id = organization.id
+            address_required = drive.require_user_addresses
 
         context = {
             "comm_form": comm_form,
@@ -652,6 +656,7 @@ class EntryView(LoginRequiredMixin, View):
             "drive_name": drive_name,
             "drive_id": drive_id,
             "state": abbr,
+            "address_required": address_required,
         }
         return render(request, self.template_name, context)
 
@@ -710,14 +715,14 @@ class EntryView(LoginRequiredMixin, View):
             m_uuid = str(entryForm.entry_ID)
             if not entryForm.drive:
                 self.success_url = reverse_lazy(
-                    "main:thanks", kwargs={
+                    "main:submission_thanks", kwargs={
                         "map_id": m_uuid,
                         "abbr": folder_name
                         }
                 )
             else:
                 self.success_url = reverse_lazy(
-                    "main:thanks",
+                    "main:submission_thanks",
                     kwargs={
                         "map_id": m_uuid,
                         "slug": entryForm.organization.slug,

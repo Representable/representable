@@ -183,6 +183,8 @@ LOCALE_PATHS = (os.path.join(BASE_DIR, "<representable>" "locale"),)
 LANGUAGES = (
     ("en-us", _("English")),
     ("es", _("Spanish")),
+    ("ar", _("Arabic")),
+    ("fr", _("French")),
 )
 
 LANGUAGE_CODE = "en-us"

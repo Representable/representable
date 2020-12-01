@@ -65,7 +65,7 @@
             <tr class="community-review-span" id={{c.entry_ID}}>
               <td>
                 <span class="text-uppercase entry-name">
-                  {% with link_text="/submission?map_id="|addstr:c.entry_ID|slice:27 %}
+                  {% with link_text="/submission/="|addstr:c.entry_ID|slice:27 %}
                   <a href={{link_text}}>{{c.entry_name}}</a>
                   {% endwith %}
                 </span>

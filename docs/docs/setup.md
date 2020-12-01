@@ -35,7 +35,7 @@ The following tools will be helpful for setting up your development environment.
 | Markdown All in One  |  VS Code Extension for Markdown  | [Link](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)    |
 | Postico (Mac Only) | A modern PostgreSQL client that lets you inspect your database | [Link](https://eggerapps.at/postico/)  |
 
-## 2. Cloning the Repo
+## 2. Cloning the Repo 
 
 The easiest way to clone the repo to begin editing locally is to visit the [Github repository](https://github.com/Representable/representable) and click `Clone or download` then `Open in Desktop`.
 
