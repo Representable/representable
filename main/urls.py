@@ -29,6 +29,11 @@ urlpatterns = [
         views.main.RepresentableLoginView.as_view(),
         name="account_login",
     ),
+    path(
+        "accounts/signup/",
+        views.main.RepresentableSignupView.as_view(),
+        name="account_signup",
+    ),
     path("", views.main.Index.as_view(), name="index"),
     path("map/", views.main.Map.as_view(), name="map"),
     path(
