@@ -34,6 +34,7 @@
         let a = '{{ entries | escapejs}}';
         var mapbox_user_name = "{{mapbox_user_name}}";
         var state = '';
+        var is_thanks = '{{ is_thanks }}'
       </script>
     </div>
     {% if entries is None %}
@@ -77,7 +78,7 @@
                             <br>
                             {% endif %}
                             <span class="small text-muted">
-                            {% if is_org_admin or is_community_author %}
+                              {% if is_org_admin or is_community_author %}
                               {% if c.user_name %}
                               <span id="user-name">{{c.user_name}}</span>
                               {% else %}
@@ -90,7 +91,7 @@
                               {% else %}
                               <br>
                               {% endif %}
-                            {% endif %}
+                              {% endif %}
                             </span>
                           </span>
                           {% if c.cultural_interests %}
@@ -119,8 +120,8 @@
                         </table>
                         <div class="text-center">
                           {% with link_text="/export?map_id="|addstr:c.entry_ID|slice:27 %}
-                          <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID|slice:8}}.geojson">Export GeoJSON</a>
-                          <span class="btn btn-outline-primary btn-canvas mx-4 my-2" role="button" id="pdf-button">Export PDF</span>
+                          <a class="btn btn-outline-primary mx-4 d-none d-sm-inline" href={{link_text}} role="button" download="community_{{c.entry_ID|slice:8}}.geojson">Export GeoJSON</a>
+                          <span class="btn btn-outline-primary btn-canvas mx-4 my-2 d-none d-sm-inline" role="button" id="pdf-button">Export PDF</span>
                           {% endwith %}
                         </div>
                       </div>
@@ -134,19 +135,100 @@
             <div class="col-md-8 col-map col-wide">
               <div id='map' class="map-visualization">
                 <div id="pdf-loading-box" class="map-popup-box">
-                    <p class="mb-0">Loading PDF...</p>
+                  <p class="mb-0">Loading PDF...</p>
                 </div>
               </div>
             </div>
           </div>
-          <div>
-            {% endblock %}
+        </div>
 
-            {% block script %}
-            <!--  Has to be at the end after the HTML loads.-->
-            <script type="text/javascript">
-              mapboxgl.accessToken = "{{ mapbox_key }}";
-            </script>
-            <script type="text/javascript" src="{% static 'main/js/components/keys.js' %}"></script>
-            <script type="text/javascript" src="{% static 'main/js/submission.js' %}"></script>
-            {% endblock %}
+        <div class="modal fade" id="thanksModal" tabindex="-1" role="dialog" aria-labelledby="thanksModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document" id="thanksModalDialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title text-center font-weight-light" id="thanksModalLabel">Thank you for your submission!</h1>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="row my-3">
+                  <div class="col-sm my-3 mx-3">
+                    <div class="card border-0">
+                      <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/send.svg' %}"></img>
+                      <div class="card-body text-center d-flex flex-column align-items-center">
+                        <h5>
+                          Visualize/Export
+                        </h5>
+                        <p>
+                          View your community on our live map, and export in PDF or industry standard GeoJSON formats to share with your representatives or mapmakers.
+                        </p>
+                        <div class="text-center">
+                          <button id="card-add-community-btn" class="btn btn-outline-primary mx-2 my-1" data-dismiss="modal" aria-label="Close" type="button">View Community</button>
+                        </div>
+                        <!-- <a class="btn btn-primary btn-canvas mt-auto" href="/entry" role="button">Get Started</a> -->
+                      </div>
+                    </div>
+                  </div>
+                  {% if has_drive %}
+                  <div class="col-sm my-3 mx-3">
+                    <div class="card border-0">
+                      <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/map.svg' %}"></img>
+                      <div class="card-body text-center flex-column align-items-center">
+                        <h5 class="card-title">
+                          {{ drive_name }} Map
+                        </h5>
+                        <p class="card-text">
+                          Your community is part of a community mapping drive, organized by {{ organization_name }}. View all communities submitted to {{drive_name}}.
+                        </p>
+                        <div class="text-center">
+                          <a id="card-partner-btn" class="btn btn-outline-primary mx-2 my-1" href="{% url 'main:partner_map' organization_slug drive_slug %}" role="button">View Map</a>
+                        </div>
+                        <!-- <a class="btn btn-primary btn-canvas mt-auto" href="mailto: team@representable.org?subject=Hello!" role="button">Contact Us</a> -->
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}
+                  <div class="col-sm m-3">
+                    <div class="card border-0 card-body">
+                      <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/redistricter.svg' %}"></img>
+                      <div class="card-body text-center flex-column align-items-center">
+                        <h5 class="card-title">
+                          Provide Feedback
+                        </h5>
+                        <p class="card-text">
+                          We are interested in your feedback. If you found a bug or have any suggestions for us, please send them to us by pressing on the button below.
+                        </p>
+                        <div class="text-center">
+                          <a class="btn btn-outline-primary mx-2 my-1" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSfeyoZ87pS67iTh2c3t5031XqoNFNAdwF6Pt1NUns_z_Myxaw/viewform" role="button">Send Feedback</a>
+                        </div>
+                        <!-- <a class="btn btn-primary btn-canvas mt-auto disabled" href="#" role="button">Coming Soon</a> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% if verified %}
+                <div class="alert alert-primary mx-5" role="alert">
+                  <p class="text-center">By adding your community to Representable you are not submitting a map to a redistricting commission or representative. We will add information about submitting to the commission as soon as it becomes available in your state.</p>
+                </div>
+                {% endif %}
+                {% if not verified %}
+                <div class="alert alert-warning mx-5" role="alert">
+                  <p class="text-center"> Thank you for submitting your map. The next step is to verify your email. We resent an email verification link to your inbox.</p>
+                  <p class="text-center"> Account verification allows Representable.org and our partner organizations to submit credible maps to Redistricting Commissions ensuring that your entry has an impact in ending gerrymandering. </p>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endblock %}
+
+        {% block script %}
+        <!--  Has to be at the end after the HTML loads.-->
+        <script type="text/javascript">
+          mapboxgl.accessToken = "{{ mapbox_key }}";
+        </script>
+        <script type="text/javascript" src="{% static 'main/js/components/keys.js' %}"></script>
+        <script type="text/javascript" src="{% static 'main/js/submission.js' %}"></script>
+        {% endblock %}

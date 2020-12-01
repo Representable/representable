@@ -48,7 +48,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                 {% endif %}
               </div>
               <div class="row justify-content-center">
-                <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto" href={{multi_export_link}} role="button" download="communities.geojson">Export GeoJSON</a>
+                <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}} role="button" download="communities.geojson">Export All Maps as GeoJSON</a>
               </div>
               <input class="m-2 p-2 rounded border border-secondary" id="search-comm" type="text" placeholder="Search communities...">
               <div id="headingOne">
@@ -74,7 +74,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                 <tr class="community-review-span" id={{c.entry_ID}}>
                   <td>
                     <span class="text-uppercase entry-name">
-                      {% with link_text="/submission?map_id="|addstr:c.entry_ID|slice:27 %}
+                      {% with link_text="/submission/"|addstr:c.entry_ID|slice:20 %}
                       <a href={{link_text}}>{{c.entry_name}}</a>
                       {% endwith %}
                     </span>
@@ -103,7 +103,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                       <br>
                       {% endif %}
                     {% endif %}
-                    <a tabindex="0" class="small float-right mt-2" style="color:red" id="report" data-community-id={{c.id}} role="button" data-toggle="modal" data-target="#sendReport">REPORT</a>
+                    <a tabindex="0" class="small float-right mt-2" style="color:red" id="report" data-community-id={{c.id}} role="button" data-toggle="modal" data-target="#sendReport"> <span class="sr-only">Danger: </span>REPORT</a>
                     </span>
                     <span class="font-weight-light comm-content">
                       <span class="more-content">
@@ -128,7 +128,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                         <br>
                         {% endif %}
                       </span>
-                      <u><a class="small read-more small-link">Show More</a></u>
+                      <u><a class="small read-more small-link" role="button">Show More</a></u>
                     </span>
                   </td>
                   </tr>
@@ -176,7 +176,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-danger">Send Report</button>
+        <button type="submit" class="btn btn-danger"> <span class="sr-only">Danger: </span>Send Report</button>
       </div>
       </form>
     </div>

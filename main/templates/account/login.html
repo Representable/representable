@@ -14,12 +14,16 @@
         <div class="card card-signin my-5">
             <div class="card-body">
                 <h4 class="card-title text-center">Welcome back! Sign in below.</h4>
-                <form id="log-in-form" class="form-signin login" method="POST" action="{% url 'account_login' %}">{% csrf_token %}
+                {% if login_error %}
+                    <div class="alert alert-danger" role="alert">
+                        {{login_error}}
+                    </div>
+                {% endif %}
+                <form id="log-in-form" class="form-signin login" method="POST" action="{% url 'account_login' %}">
                     {% csrf_token %}
                     <div class="form-group">
                         {% for field in form %}
                         <div class="field-wrap">
-                            {{ field.errors }}
                             {{ field|append_attr:"class:form-control my-2" }}
                             {% if field.help_text %}
                             <p class="help">{{ field.help_text|safe }}</p>
@@ -34,13 +38,12 @@
                     <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">{% trans "Sign In" %}</button>
                     <a class="btn btn-lg btn-primary-outline btn-block text-uppercase" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
                 </form>
-                <p class="card-text text-center my-3 align-text-bottom">Don't have an account yet?
-                    <a class="sign-up-started" href="/accounts/signup?next={{ request.GET.next }}">Sign Up</a>
-                    </button>
-                </p>
-
                 <p class="card-text text-center my-3 align-text-bottom"><i class="fas fa-lock m-1 text-primary"></i>Accounts help us protect legitimate submissions.</p>
-            </div>
+                <hr>
+                <p class="card-text text-center my-3 align-text-bottom">Don't have an account yet?
+                    <a class="sign-up-started btn btn-outline-primary" href="/accounts/signup/?next={{ request.GET.next }}">Sign Up</a>
+                </p>
+                </div>
         </div>
     </div>
 </div>

@@ -1,5 +1,11 @@
 $(document).ready(function () {});
 
+
+// if thanks page, show modal
+if (is_thanks === "True") {
+  $('#thanksModal').modal('show');
+}
+
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
@@ -30,7 +36,10 @@ map.addControl(
   })
 );
 
-map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
+// Only add zoom buttons to medium and large screen devices (non-mobile)
+if (!window.matchMedia("only screen and (max-width: 760px)").matches) {
+  map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
+}
 
 // add a new source layer
 function newSourceLayer(name, mbCode) {

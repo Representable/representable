@@ -135,7 +135,8 @@ function checkFieldById(field_id) {
 function formValidation() {
   // Check Normal Fields
   var flag = true;
-  var form_elements = document.getElementById("entryForm").elements;
+  var entryForm = document.getElementById("entryForm");
+  var form_elements = entryForm.elements;
   for (var i = 0; i < form_elements.length; i++) {
     if (form_elements[i].required) {
       if (checkFieldById(form_elements[i].id) == false) {
@@ -165,9 +166,24 @@ function formValidation() {
     economic_intetersts_field.classList.add("has_error");
     comm_activities_field.classList.add("has_error");
     other_considerations_field.classList.add("has_error");
-    var interets_alert = document.getElementById("need_one_interest");
-    interets_alert.classList.remove("d-none");
+    var interests_alert = document.getElementById("need_one_interest");
+    interests_alert.classList.remove("d-none");
   }
+  var is_address_required = address_required == "True";
+  if (
+    is_address_required &&
+    (entryForm.street.value == "" ||
+      entryForm.city.value == "" ||
+      entryForm.state.value == "" ||
+      entryForm.zipcode.value == "")
+  ) {
+    entryForm.street.classList.add("has_error");
+    entryForm.city.classList.add("has_error");
+    entryForm.state.classList.add("has_error");
+    entryForm.zipcode.classList.add("has_error");
+    document.getElementById("need_address").classList.remove("d-none");
+  }
+
   if (flag == false) {
     // Add alert.
     var alert = document.getElementById("form_error");
@@ -388,7 +404,7 @@ class SelectRadiusButton {
     radius_control.id = "map-radius-control-id";
     radius_control.style.display = "none";
     radius_control.innerHTML =
-      '<form><input type="range" min="0" max="50" value="0" class="custom-range" id="radius-control"><p style="margin: 0;">Selection Tool Size</p></form>';
+      '<form><label for="radius-control" class="sr-only">Choose a selection size: </label><input type="range" min="0" max="50" value="0" class="custom-range" id="radius-control"><p style="margin: 0;">Selection Tool Size</p></form>';
     this._map = map;
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group draw-group";
@@ -411,7 +427,14 @@ var style = document.querySelector('[data="slider-data"]');
 slider.oninput = function () {
   var size = this.value;
   drawRadius = parseInt(size);
-  style.innerHTML = "input[type=range]::-webkit-slider-thumb { width: " + (size / 7 + 14)  + "px !important; height: " + (size / 7 + 14) + "px !important; margin-top: "+ (-3 - size / 16.67) + "px !important; }";
+  style.innerHTML =
+    "input[type=range]::-webkit-slider-thumb { width: " +
+    (size / 7 + 14) +
+    "px !important; height: " +
+    (size / 7 + 14) +
+    "px !important; margin-top: " +
+    (-3 - size / 16.67) +
+    "px !important; }";
 };
 
 var eraseMode = false;
@@ -576,7 +599,8 @@ var dropdownButton = document.getElementById("map-dropdown-id");
 var basicMode = true;
 dropdownButton.addEventListener("click", function (e) {
   if (mapClearButton.style.display === "none") {
-    dropdownButton.innerHTML = '<i class="fas fa-cog"></i> Settings <i class="fas fa-caret-up"></i>';
+    dropdownButton.innerHTML =
+      '<i class="fas fa-cog"></i> Settings <i class="fas fa-caret-up"></i>';
     basicMode = false;
   } else {
     dropdownButton.innerHTML = '<i class="fas fa-cog">';
@@ -585,7 +609,9 @@ dropdownButton.addEventListener("click", function (e) {
   var children = drawControls.children;
   for (let elem of children) {
     if (elem.id !== "map-dropdown-id") {
-      elem.style.display === "block" ? elem.style.display = "none" : elem.style.display = "block";
+      elem.style.display === "block"
+        ? (elem.style.display = "none")
+        : (elem.style.display = "block");
     }
   }
 });
@@ -609,8 +635,10 @@ function hideWarningMessage() {
   warning_box.style.display = "none";
 }
 
-// Add nav control buttons.
-map.addControl(new mapboxgl.NavigationControl());
+// Only add zoom buttons to medium and large screen devices (non-mobile)
+if (!window.matchMedia("only screen and (max-width: 760px)").matches) {
+  map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
+}
 
 var user_polygon_id = undefined;
 
@@ -1017,7 +1045,10 @@ map.on("style.load", function () {
         selectBbox = currentBbox;
         hideWarningMessage();
       } else {
-        if (turf.booleanDisjoint(currentBbox, selectBbox) && !isEmptyFilter(currentFilter)) {
+        if (
+          turf.booleanDisjoint(currentBbox, selectBbox) &&
+          !isEmptyFilter(currentFilter)
+        ) {
           showWarningMessage(
             "Please ensure that your community does not contain any gaps. Your selected units must connect."
           );

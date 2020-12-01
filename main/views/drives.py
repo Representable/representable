@@ -1,4 +1,7 @@
-from ..models import Drive
+from ..models import (
+    Drive,
+    State
+)
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
@@ -22,16 +25,9 @@ class DriveView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Get Drive Slug and Organization Name
+        # Get Drive State object
         drive_slug = self.kwargs["slug"]
         drive = Drive.objects.get(slug=drive_slug)
-        drive_id = drive.id
-        drive_name = drive.name
-        organization = drive.organization
-        organization_id = organization.id
-        organization_name = organization.name
-        context["drive_id"] = drive_id
-        context["drive_name"] = drive_name
-        context["organization_id"] = organization_id
-        context["organization_name"] = organization_name
+        if (State.objects.filter(abbr=drive.state)):
+            context["state"] = State.objects.filter(abbr=drive.state)[0]
         return context
