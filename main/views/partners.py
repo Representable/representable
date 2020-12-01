@@ -69,7 +69,6 @@ class PartnerMap(TemplateView):
         if self.request.user.is_authenticated:
             if self.request.user.is_org_admin(org.id):
                 is_admin = True
-        
         # get the polygon from db and pass it on to html
         if self.kwargs["drive"]:
             drive = Drive.objects.get(slug=self.kwargs["drive"])

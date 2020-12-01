@@ -169,8 +169,14 @@ function formValidation() {
     var interests_alert = document.getElementById("need_one_interest");
     interests_alert.classList.remove("d-none");
   }
-  var is_address_required = (address_required == "True");
-  if (is_address_required && (entryForm.street.value == "" || entryForm.city.value == "" || entryForm.state.value == "" || entryForm.zipcode.value == "")) {
+  var is_address_required = address_required == "True";
+  if (
+    is_address_required &&
+    (entryForm.street.value == "" ||
+      entryForm.city.value == "" ||
+      entryForm.state.value == "" ||
+      entryForm.zipcode.value == "")
+  ) {
     entryForm.street.classList.add("has_error");
     entryForm.city.classList.add("has_error");
     entryForm.state.classList.add("has_error");
@@ -421,7 +427,14 @@ var style = document.querySelector('[data="slider-data"]');
 slider.oninput = function () {
   var size = this.value;
   drawRadius = parseInt(size);
-  style.innerHTML = "input[type=range]::-webkit-slider-thumb { width: " + (size / 7 + 14)  + "px !important; height: " + (size / 7 + 14) + "px !important; margin-top: "+ (-3 - size / 16.67) + "px !important; }";
+  style.innerHTML =
+    "input[type=range]::-webkit-slider-thumb { width: " +
+    (size / 7 + 14) +
+    "px !important; height: " +
+    (size / 7 + 14) +
+    "px !important; margin-top: " +
+    (-3 - size / 16.67) +
+    "px !important; }";
 };
 
 var eraseMode = false;
@@ -586,7 +599,8 @@ var dropdownButton = document.getElementById("map-dropdown-id");
 var basicMode = true;
 dropdownButton.addEventListener("click", function (e) {
   if (mapClearButton.style.display === "none") {
-    dropdownButton.innerHTML = '<i class="fas fa-cog"></i> Settings <i class="fas fa-caret-up"></i>';
+    dropdownButton.innerHTML =
+      '<i class="fas fa-cog"></i> Settings <i class="fas fa-caret-up"></i>';
     basicMode = false;
   } else {
     dropdownButton.innerHTML = '<i class="fas fa-cog">';
@@ -595,7 +609,9 @@ dropdownButton.addEventListener("click", function (e) {
   var children = drawControls.children;
   for (let elem of children) {
     if (elem.id !== "map-dropdown-id") {
-      elem.style.display === "block" ? elem.style.display = "none" : elem.style.display = "block";
+      elem.style.display === "block"
+        ? (elem.style.display = "none")
+        : (elem.style.display = "block");
     }
   }
 });
@@ -1029,7 +1045,10 @@ map.on("style.load", function () {
         selectBbox = currentBbox;
         hideWarningMessage();
       } else {
-        if (turf.booleanDisjoint(currentBbox, selectBbox) && !isEmptyFilter(currentFilter)) {
+        if (
+          turf.booleanDisjoint(currentBbox, selectBbox) &&
+          !isEmptyFilter(currentFilter)
+        ) {
           showWarningMessage(
             "Please ensure that your community does not contain any gaps. Your selected units must connect."
           );

@@ -127,14 +127,13 @@ Entry Preview Page
   }
 }
 
-
 /* Entry Page: Geocoder Full Width */
 .mapboxgl-ctrl-geocoder {
   width: 100%;
   max-width: none;
 }
 
-input[type=range]::-webkit-slider-thumb {
+input[type="range"]::-webkit-slider-thumb {
   border-radius: 50%;
   width: 8px;
   height: 8px;
@@ -194,7 +193,7 @@ body {
   font-size: 16px;
 }
 .nav-link-org {
-  color: rgba(32, 118, 195, .8) !important;
+  color: rgba(32, 118, 195, 0.8) !important;
 }
 .nav-link-org:hover {
   color: rgba(32, 118, 195, 1) !important;
@@ -228,16 +227,20 @@ body {
 .tooltip-inner {
   background-color: gray !important;
 }
-.bs-tooltip-top .arrow::before, .bs-tooltip-auto[x-placement^="top"] .arrow::before {
+.bs-tooltip-top .arrow::before,
+.bs-tooltip-auto[x-placement^="top"] .arrow::before {
   border-top-color: gray !important;
 }
-.bs-tooltip-right .arrow::before, .bs-tooltip-auto[x-placement^="right"] .arrow::before {
+.bs-tooltip-right .arrow::before,
+.bs-tooltip-auto[x-placement^="right"] .arrow::before {
   border-right-color: gray !important;
 }
-.bs-tooltip-bottom .arrow::before, .bs-tooltip-auto[x-placement^="bottom"] .arrow::before {
+.bs-tooltip-bottom .arrow::before,
+.bs-tooltip-auto[x-placement^="bottom"] .arrow::before {
   border-bottom-color: gray !important;
 }
-.bs-tooltip-left .arrow::before, .bs-tooltip-auto[x-placement^="left"] .arrow::before {
+.bs-tooltip-left .arrow::before,
+.bs-tooltip-auto[x-placement^="left"] .arrow::before {
   border-left-color: gray !important;
 }
 
@@ -390,15 +393,15 @@ color scheme. See readme.md*/
 .btn-outline-primary:visited,
 .btn-outline-primary:link {
   background-color: transparent;
-  border-color: #2A94F4;
+  border-color: #2a94f4;
   border-width: 2px;
-  color: #2A94F4;
+  color: #2a94f4;
 }
 
 .btn-outline-primary:hover,
 .btn-outline-primary:active {
-  background-color: #2A94F4;
-  border-color: #2A94F4;
+  background-color: #2a94f4;
+  border-color: #2a94f4;
   color: white;
 }
 
@@ -543,7 +546,7 @@ color scheme. See readme.md*/
 }
 .link-custom {
   cursor: pointer;
-  color: #5B5B5B;
+  color: #5b5b5b;
   text-decoration: underline;
 }
 .link-custom:hover {
@@ -634,7 +637,7 @@ color scheme. See readme.md*/
   /* font-family: Inter, system-ui, sans-serif; */
   /* font-size: 12px; */
 }
-input[type=range]::-webkit-slider-thumb {
+input[type="range"]::-webkit-slider-thumb {
   border-radius: 50%;
   width: 15px;
   height: 15px;
@@ -753,16 +756,16 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .light-blue-text {
-  color: #65BFF1;
+  color: #65bff1;
 }
 .blue-green-text {
-  color: #6DCCBB;
+  color: #6dccbb;
 }
 .light-blue-bg {
-  background-color: #DAEFFF;
+  background-color: #daefff;
 }
 .blue-green-bg {
-  background-color: #6DCCBB;
+  background-color: #6dccbb;
 }
 
 .how-it-works {
@@ -774,10 +777,10 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .language-button {
-    background: #FFFFFF;
-    border:0 none;
-    cursor:pointer;
-    padding: 0;
+  background: #ffffff;
+  border: 0 none;
+  cursor: pointer;
+  padding: 0;
 }
 .language-button:hover {
   text-decoration: underline;
@@ -968,7 +971,7 @@ label {
   color: #777;
 }
 
-input.form-control[type=checkbox] {
+input.form-control[type="checkbox"] {
   width: 15%;
 }
 
@@ -987,8 +990,8 @@ input.form-control[type=checkbox] {
 }
 
 .alert-custom {
-  background: #DEF8F4;
-  color: #5B5B5B;
+  background: #def8f4;
+  color: #5b5b5b;
 }
 
 /* Fallback for Edge

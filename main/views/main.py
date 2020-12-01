@@ -34,7 +34,11 @@ from django.views.generic import (
     DetailView,
 )
 from django.views import View
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, AccessMixin
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin,
+    UserPassesTestMixin,
+    AccessMixin,
+)
 from django.contrib.auth.views import redirect_to_login
 from allauth.account.models import (
     EmailConfirmation,
@@ -110,24 +114,32 @@ from django.contrib.gis.geos import GEOSGeometry
 # custom mixin redirects to signup page/tab rather than login
 class SignupRequiredMixin(AccessMixin):
     """Verify that the current user is authenticated."""
+
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
-            return redirect_to_login(request.get_full_path(), '/accounts/signup/', self.get_redirect_field_name())
+            return redirect_to_login(
+                request.get_full_path(),
+                "/accounts/signup/",
+                self.get_redirect_field_name(),
+            )
         return super().dispatch(request, *args, **kwargs)
+
 
 """
 Documentation: https://docs.djangoproject.com/en/2.1/topics/class-based-views/
 """
 
+
 class RepresentableLoginView(LoginView):
     request = None
+
     def dispatch(self, request, *args, **kwargs):
         self.request = request
         return super().dispatch(request, *args, **kwargs)
-    
+
     def form_invalid(self, form):
         context = self.get_context_data()
-        context['login_error'] = form.error_messages['email_password_mismatch']
+        context["login_error"] = form.error_messages["email_password_mismatch"]
         return render(self.request, super().template_name, context)
 
 
@@ -179,8 +191,10 @@ class Blog(TemplateView):
 
 # ******************************************************************************#
 
+
 class EntryPreview(TemplateView):
     template_name = "main/entry_preview.html"
+
 
 class EntryStateSelection(TemplateView):
     template_name = "main/entry_state_selection.html"
