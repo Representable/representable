@@ -113,11 +113,11 @@ urlpatterns = [
         {"slug": "", "drive": ""},
         name="thanks",
     ),
-    path(
-        "thanks/drive/<slug:slug>/<slug:drive>/<map_id>",
-        views.main.Thanks.as_view(),
-        name="thanks",
-    ),
+    # path(
+    #     "thanks/drive/<slug:slug>/<slug:drive>/<map_id>",
+    #     views.main.Thanks.as_view(),
+    #     name="thanks",
+    # ),
     path("export/", views.main.ExportView.as_view(), name="export"),
     path("export/<abbr>/", views.main.ExportView.as_view(), name="export"),
     path(
