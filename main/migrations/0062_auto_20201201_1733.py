@@ -11,9 +11,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name="drive", name="require_user_addresses",
-        ),
         migrations.AlterField(
             model_name="address",
             name="city",
