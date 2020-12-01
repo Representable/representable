@@ -1,0 +1,41 @@
+<!-- This template is for the state selection page, that takes user to community mapping survey. -->
+{% extends 'main/base.html' %}
+{% load leaflet_tags %}
+{% load static %}
+{% load i18n %}
+
+{% block head %}
+{% leaflet_js %}
+{% leaflet_css %}
+<!--  Mapbox GL JS-->
+<meta charset='utf-8' />
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.css' rel='stylesheet' />
+{% endblock %}
+
+{% block content %}
+<div class="my-5">
+  <div class="text-center">
+    <h2 id="select" class="my-3 font-weight-light d-none d-sm-block">{% trans "Select your state to get started." %} </h2>
+    <h4 id="select" class="my-3 font-weight-light d-sm-none">{% trans "Select your state to get started." %} </h4>
+    <label for="stateSelectionDropdown" class="sr-only">Select a state:</label>
+      <select id="stateSelectionDropdown">
+        <option label="" value="select-a-state"></option>
+      </select>
+  </div>
+  <div>
+    <div id="usa-map" alt="map of the United States with clickable states"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+  mapboxgl.accessToken = "{{ mapbox_key }}";
+</script>
+<script type="text/javascript" src="{% static 'main/js/components/jquery.vmap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'main/js/components/jquery.vmap.usa.js' %}"></script>
+<script type="text/javascript" src="{% static 'main/js/main.js' %}"></script>
+<script type="text/javascript" src="{% static 'main/js/components/states.js' %}"></script>
+{% endblock %}

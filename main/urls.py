@@ -27,6 +27,8 @@ urlpatterns = [
     path("accounts/login/", views.main.RepresentableLoginView.as_view(), name="account_login"),
     path("", views.main.Index.as_view(), name="index"),
     path("map/", views.main.Map.as_view(), name="map"),
+    path("entry_preview/", views.main.EntryPreview.as_view(), name="entry_preview"),
+    path("entry_state_selection/", views.main.EntryStateSelection.as_view(), name="entry_state_selection"),
     path(
         "entry/",
         views.main.EntryView.as_view(),
@@ -74,19 +76,24 @@ urlpatterns = [
     path("privacy/", views.main.Privacy.as_view(), name="privacy"),
     path("terms/", views.main.Terms.as_view(), name="terms"),
     path("state/<abbr>/", views.main.StatePage.as_view(), name="state"),
-    path("submission/", views.main.Submission.as_view(), name="submission"),
-    path("blog/", views.main.Blog.as_view(), name="blog"),
     path(
-        "thanks/id/<map_id>",
-        views.main.Thanks.as_view(),
+        "submission/<map_id>",
+        views.main.Submission.as_view(),
         {"slug": "", "drive": ""},
-        name="thanks",
+        name="submission"
     ),
     path(
-        "thanks/drive/<slug:slug>/<slug:drive>/<map_id>",
-        views.main.Thanks.as_view(),
-        name="thanks",
+        "submission/thanks/<map_id>",
+        views.main.Submission.as_view(),
+        {"slug": "", "drive": ""},
+        name="submission_thanks",
     ),
+    path(
+        "submission/thanks/drive/<slug:slug>/<slug:drive>/<map_id>",
+        views.main.Submission.as_view(),
+        name="submission_thanks",
+    ),
+    path("blog/", views.main.Blog.as_view(), name="blog"),
     path("export/", views.main.ExportView.as_view(), name="export"),
     path(
         "multiexport/drive/<drive>",
