@@ -929,9 +929,10 @@ Signup and Login Page
 .auth-field {
   display: inline-block;
   width: 100%;
-  height: 60px;
+  height: 60px !important; /* necessary use of !important */
   background-color: #cce9ff;
   border: none;
+  border-radius: 2rem;
 }
 
 .auth-divider-wrap {
