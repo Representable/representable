@@ -47,12 +47,15 @@ from allauth.account.models import (
 )
 from allauth.account import adapter
 from allauth.account.app_settings import ADAPTER
-from allauth.account.views import LoginView
+from allauth.account.forms import LoginForm, SignupForm
+from allauth.account.views import LoginView, SignupView
 from django.forms import formset_factory
 from ..forms import (
     CommunityForm,
     DeletionForm,
     AddressForm,
+    RepresentableSignupForm,
+    RepresentableLoginForm,
 )
 from ..models import (
     CommunityEntry,
@@ -132,7 +135,11 @@ Documentation: https://docs.djangoproject.com/en/2.1/topics/class-based-views/
 """
 
 
+# View template for both the signing up and signing in
 class RepresentableLoginView(LoginView):
+    template_name = "account/signup_login.html"
+    login_form = RepresentableLoginForm()
+    signup_form = RepresentableSignupForm()
     request = None
 
     def dispatch(self, request, *args, **kwargs):
@@ -140,9 +147,70 @@ class RepresentableLoginView(LoginView):
         return super().dispatch(request, *args, **kwargs)
 
     def form_invalid(self, form):
-        context = self.get_context_data()
-        context["login_error"] = form.error_messages["email_password_mismatch"]
-        return render(self.request, super().template_name, context)
+        self.request.session["invalid_login"] = True
+        # if the login prompt is from a redirect
+        if "next" in self.request.POST:
+            return redirect_to_login(
+                self.request.POST["next"], "/accounts/login/", "next"
+            )
+        else:
+            return redirect(self.request.get_full_path())
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["signup_form"] = self.signup_form
+        context["login_form"] = self.login_form
+        if "invalid_login" in self.request.session:
+            context["login_error"] = self.login_form.error_messages[
+                "email_password_mismatch"
+            ]
+            del self.request.session["invalid_login"]
+
+        if "invalid_signup" in self.request.session:
+            context["signup_errors"] = self.request.session["invalid_signup"]
+            del self.request.session["invalid_signup"]
+        return context
+
+
+class RepresentableSignupView(SignupView):
+    template_name = "account/signup_login.html"
+    login_form = RepresentableLoginForm()
+    signup_form = RepresentableSignupForm()
+    request = None
+
+    def dispatch(self, request, *args, **kwargs):
+        self.request = request
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_invalid(self, form):
+        errors = {}
+        for error in form.errors:
+            errors[error] = form.errors[error]
+        self.request.session["invalid_signup"] = errors
+
+        # if the signup is from a redirect
+        if "next" in self.request.POST:
+            return redirect_to_login(
+                self.request.POST["next"], "/accounts/signup/", "next"
+            )
+        else:
+            return redirect(self.request.get_full_path())
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["signup_form"] = self.signup_form
+        context["login_form"] = self.login_form
+        if "invalid_login" in self.request.session:
+            context["login_error"] = self.login_form.error_messages[
+                "email_password_mismatch"
+            ]
+            del self.request.session["invalid_login"]
+
+        if "invalid_signup" in self.request.session:
+            context["signup_errors"] = self.request.session["invalid_signup"]
+            del self.request.session["invalid_signup"]
+
+        return context
 
 
 class Index(TemplateView):
