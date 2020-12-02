@@ -332,3 +332,18 @@ for (var id in toggleableLayerIds){
 function removeLastChar(str) {
   return str.substring(0, str.length - 1);
 }
+
+// Links "What GeoJSON is?" Modal and download for GeoJSON into one event
+$('[data-toggle=modal]').on('click', function(e) {
+  var $target = $($(this).data('target'));
+  $target.data('triggered', true);
+  setTimeout(function() {
+    if ($target.data('triggered')) {
+      $target.modal('show').data('triggered', false);
+    };
+  }, 200); // ms delay
+  return false;
+});
+$('#geojson-explain-modal').on('show.bs.modal', function () {
+  $('#hidden-download-geojson')[0].click();
+});
