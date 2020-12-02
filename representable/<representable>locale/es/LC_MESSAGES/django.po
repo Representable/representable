@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-15 20:25+0000\n"
+"POT-Creation-Date: 2020-12-01 18:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2867,9 +2867,19 @@ msgstr ""
 msgid "French"
 msgstr ""
 
+#: representable/templates/base.html:102
+#, fuzzy
+#| msgid "Partner with us"
+msgid "Partners"
+msgstr "Asociarse con nosotros"
+
 #: representable/templates/base.html:108
 msgid "About"
 msgstr "Sobre"
+
+#: representable/templates/base.html:114
+msgid "Blog"
+msgstr ""
 
 #: representable/templates/base.html:121
 msgid "My Account"
@@ -2902,6 +2912,10 @@ msgstr "Regístrate"
 #: representable/templates/base.html:243
 msgid "Add Your Community"
 msgstr "Añadir su comunidad"
+
+#: representable/templates/base.html:246
+msgid "Create a Partner Profile"
+msgstr ""
 
 #: representable/templates/base.html:250
 msgid "My Communities"
