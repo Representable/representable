@@ -555,6 +555,10 @@
                                         <hr>
                                         {% blocktrans %} Any saved communities are final. In order to edit a saved community you will need
                                         to create a new community and delete the old one. {% endblocktrans %}
+
+                                        <div class="row">
+                                            <div class="col text-center"><div class="g-recaptcha" data-sitekey="{{recaptcha_public}}"></div></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -574,8 +578,6 @@
                     <div class="loader loader-small text-center"></div><span class="d-none d-sm-inline"> {% trans "Saving Community..." %}</span>
                     </button>
                 </div>
-                <p id="captcha" style="color:red"> </p>
-                <div class="g-recaptcha" data-sitekey="{{recaptcha_public}}"></div>
                     <div class='row row-equal-cols'>
                         <div class='col-lg text-center m-2'>
                             <div style="display: inline-block;">

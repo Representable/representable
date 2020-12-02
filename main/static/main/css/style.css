@@ -732,6 +732,12 @@ input[type="range"]::-webkit-slider-thumb {
 
 /* Entry Form Management */
 
+.g-recaptcha {
+  display: inline-block;
+  padding: 40px 0px 10px 0px;
+  max-width: 80%;
+}
+
 .button-edit {
   display: none;
 }
