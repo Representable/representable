@@ -321,7 +321,7 @@
                                         <!--  Economic -->
                                         <h5 class="card-text">{% trans "Economic Interests" %}</h5>
                                         <p class="card-text mb-0">
-                                            {% trans "Is there a shared economy in the geographic area of your community? How and where are residents employed? Are there shared environmental concerns such as landfills or water quality?" %}
+                                            {% trans "How and where are residents employed? What are the shared environmental concerns of your community?" %}
                                         </p>
                                         <div class="accordion" id="economic_interests_accordion">
                                             <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#economic_interests_example" aria-expanded="false" aria-controls="collapseOne">
@@ -329,9 +329,7 @@
                                             </button>
                                             <div id="economic_interests_example" class="collapse" aria-labelledby="economic_interests_accordion" data-parent="#economic_interests_accordion">
                                                 <p class="collapse-in ml-0">
-                                                    {% blocktrans %} Tech firms and their employees, tourism, agriculture such as the cherry growers,
-                                                    shipping and transportation hubs, manufacturing centers, natural resources, university towns,
-                                                    unemployment issues, waterfront communities, business associations. {% endblocktrans %}
+                                                    {% blocktrans %} Tourism industries, agricultural industries, mining communities, manufacturing centers, polluted natural resources, unemployment problems {% endblocktrans %}
                                                 </p>
                                             </div>
                                         </div>
@@ -342,7 +340,7 @@
                                         <h5 class="card-text">{% trans "Community Activities and Services" %}</h5>
                                         {% blocktrans %}
                                         <p class="card-text mb-0">
-                                            Where do people in your community gather or socialize? Where does your community get its services?
+                                            Where do people in your community gather or socialize? Where does your community access services?
                                         </p>
                                         {% endblocktrans %}
                                         <div class="accordion" id="comm_activities_accordion">
@@ -351,9 +349,7 @@
                                             </button>
                                             <div id="comm_activities_example" class="collapse" aria-labelledby="comm_activities_accordion" data-parent="#comm_activities_accordion">
                                                 <p class="collapse-in ml-0">
-                                                    {% blocktrans %} Shopping areas, schools and colleges, parks and recreation areas,
-                                                    lakes and water ways, healthcare services, and other activities and services that
-                                                    help define your community." {% endblocktrans %}
+                                                    {% blocktrans %} Shopping areas, schools and universities, libraries, parks, lakes, rivers, places of worship, healthcare services, shared public transport, shared newspaper or news channel {% endblocktrans %}
                                                 </p>
                                             </div>
                                         </div>
@@ -363,8 +359,7 @@
                                         <!-- Cultural -->
                                         <h5 class="card-text">{% trans "Cultural or Historical Interests" %}</h5>
                                         <p class="card-text mb-0">
-                                            {% blocktrans %} What fosters a sense of belonging in your community?
-                                            What common beliefs or values exist? {% endblocktrans %}
+                                            {% blocktrans %} What are the cultural bonds of your community? What is the shared history of your community? {% endblocktrans %}
                                         </p>
                                         <div class="accordion" id="cultural_interests_accordion">
                                             <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#cultural_interests_example" aria-expanded="false" aria-controls="collapseOne">
@@ -372,9 +367,7 @@
                                             </button>
                                             <div id="cultural_interests_example" class="collapse" aria-labelledby="cultural_interests_accordion" data-parent="#cultural_interests_accordion">
                                                 <p class="collapse-in ml-0">
-                                                    {% blocktrans %} Age groups, religious groups, arts and cultural centers, languages, immigration status,
-                                                    ethnic groups such as Detroit’s Mexican Town or Dearborn’s Middle Eastern community,
-                                                    historic settlements such as Leland’s Fishtown. {% endblocktrans %}
+                                                    {% blocktrans %} Religious groups, ethnic groups, shared languages, age groups, immigration status, historic or arts districts, civic organizations (NAACP, ACLU, etc.) {% endblocktrans %}
                                                 </p>
                                             </div>
                                         </div>
@@ -382,7 +375,7 @@
                                         {{ comm_form.cultural_interests|append_attr:"class:form-control" }}
                                         <hr>
                                         <!-- Other -->
-                                        <h5 class="card-text">{% trans "Other Interests and Concerns" %}</h5>
+                                        <h5 class="card-text">{% trans "Community Needs and Concerns" %}</h5>
                                         <!-- <div id="other_error_alerts">
                                             {% if comm_form.other_considerations.errors %}
                                                 <script>
@@ -401,8 +394,7 @@
                                             {% endif %}
                                         </div> -->
                                         <p class="card-text mb-1">
-                                            {% blocktrans %} What other interests does your community care about? Do you have any suggestions
-                                            for how the redistricting commission in your state could help address these concerns? {% endblocktrans %}
+                                            {% blocktrans %} Why is it important that politicians and/or map drawers know about your community? What are the needs of your community? {% endblocktrans %}
                                         </p>
                                         <div class="accordion" id="other_interests_accordion">
                                             <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#other_interests_example" aria-expanded="false" aria-controls="collapseOne">
@@ -410,7 +402,7 @@
                                             </button>
                                             <div id="other_interests_example" class="collapse" aria-labelledby="other_interests_accordion" data-parent="#other_interests_accordion">
                                                 <p class="collapse-in ml-0">
-                                                    {% trans "Our farmers extend over two counties and we hope you can put them together in a single State Senate district." %}
+                                                    {% trans "Keep community in the same district or separate into multiple districts, shared policy concerns, need for a social service, relationship to other nearby communities, issues with current district lines" %}
                                                 </p>
                                             </div>
                                         </div>
