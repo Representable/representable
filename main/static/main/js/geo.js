@@ -168,6 +168,7 @@ function formValidation() {
     other_considerations_field.classList.add("has_error");
     var interests_alert = document.getElementById("need_one_interest");
     interests_alert.classList.remove("d-none");
+    flag = false;
   }
   var is_address_required = address_required == "True";
   if (
@@ -182,6 +183,7 @@ function formValidation() {
     entryForm.state.classList.add("has_error");
     entryForm.zipcode.classList.add("has_error");
     document.getElementById("need_address").classList.remove("d-none");
+    flag = false;
   }
 
   if (flag == false) {
