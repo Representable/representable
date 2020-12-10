@@ -21,6 +21,7 @@ import asyncio
 import boto3
 from django.http import (
     HttpResponse,
+    HttpResponseNotFound,
     HttpResponseRedirect,
     JsonResponse,
     Http404,
@@ -322,7 +323,7 @@ class Review(LoginRequiredMixin, TemplateView):
             "form": form,
             "entry_poly_dict": json.dumps(entryPolyDict),
             "approved": json.dumps(approvedList),
-            "communities": query,
+            "communities": comms,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
@@ -356,10 +357,13 @@ async def getcommsforreview(query, client):
             if (
                 obj.census_blocks_polygon == ""
                 or obj.census_blocks_polygon is None
+                and obj.user_polygon
             ):
                 s = "".join(obj.user_polygon.geojson)
-            else:
+            elif (obj.census_blocks_polygon):
                 s = "".join(obj.census_blocks_polygon.geojson)
+            else:
+                continue
             comms.append(obj)
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
@@ -470,10 +474,13 @@ class Submission(TemplateView):
             if (
                 user_map.census_blocks_polygon == ""
                 or user_map.census_blocks_polygon is None
+                and user_map.user_polygon
             ):
                 s = "".join(user_map.user_polygon.geojson)
-            else:
+            elif user_map.census_blocks_polygon:
                 s = "".join(user_map.census_blocks_polygon.geojson)
+            else:
+                raise Http404
             map_poly = geojson.loads(s)
             entryPolyDict[m_uuid] = map_poly.coordinates
             comm = user_map
@@ -613,13 +620,18 @@ class ExportView(TemplateView):
             aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
         )
         try:
-            s3response = client.get_object(
-                Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
-                Key=folder_name + "/" + query.entry_ID + ".geojson",
-            )
-            gj = s3_geojson_export(s3response, query, request)
+            try:
+                s3response = client.get_object(
+                    Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
+                    Key=folder_name + "/" + query.entry_ID + ".geojson",
+                )
+                gj = s3_geojson_export(s3response, query, request)
+            except Exception:
+                gj = make_geojson(request, query)
         except Exception:
-            gj = make_geojson(request, query)
+            msg = "Unable to export the community geojson. Please check again"
+            response = HttpResponseNotFound(msg, content_type="application/json")
+
         gs = geojson.dumps(gj)
         response = HttpResponse(gs, content_type="application/json")
         return response
