@@ -127,14 +127,13 @@ Entry Preview Page
   }
 }
 
-
 /* Entry Page: Geocoder Full Width */
 .mapboxgl-ctrl-geocoder {
   width: 100%;
   max-width: none;
 }
 
-input[type=range]::-webkit-slider-thumb {
+input[type="range"]::-webkit-slider-thumb {
   border-radius: 50%;
   width: 8px;
   height: 8px;
@@ -194,7 +193,7 @@ body {
   font-size: 16px;
 }
 .nav-link-org {
-  color: rgba(32, 118, 195, .8) !important;
+  color: rgba(32, 118, 195, 0.8) !important;
 }
 .nav-link-org:hover {
   color: rgba(32, 118, 195, 1) !important;
@@ -225,19 +224,29 @@ body {
   font-size: 2.9rem;
 }
 
+/* Class for what is gerrymandering section styling. */
+.what-is-gerrymandering {
+  background: -webkit-linear-gradient(-45deg, #2a94f4, #00c6a7);
+  color: white;
+}
+
 .tooltip-inner {
   background-color: gray !important;
 }
-.bs-tooltip-top .arrow::before, .bs-tooltip-auto[x-placement^="top"] .arrow::before {
+.bs-tooltip-top .arrow::before,
+.bs-tooltip-auto[x-placement^="top"] .arrow::before {
   border-top-color: gray !important;
 }
-.bs-tooltip-right .arrow::before, .bs-tooltip-auto[x-placement^="right"] .arrow::before {
+.bs-tooltip-right .arrow::before,
+.bs-tooltip-auto[x-placement^="right"] .arrow::before {
   border-right-color: gray !important;
 }
-.bs-tooltip-bottom .arrow::before, .bs-tooltip-auto[x-placement^="bottom"] .arrow::before {
+.bs-tooltip-bottom .arrow::before,
+.bs-tooltip-auto[x-placement^="bottom"] .arrow::before {
   border-bottom-color: gray !important;
 }
-.bs-tooltip-left .arrow::before, .bs-tooltip-auto[x-placement^="left"] .arrow::before {
+.bs-tooltip-left .arrow::before,
+.bs-tooltip-auto[x-placement^="left"] .arrow::before {
   border-left-color: gray !important;
 }
 
@@ -390,15 +399,15 @@ color scheme. See readme.md*/
 .btn-outline-primary:visited,
 .btn-outline-primary:link {
   background-color: transparent;
-  border-color: #2A94F4;
+  border-color: #2a94f4;
   border-width: 2px;
-  color: #2A94F4;
+  color: #2a94f4;
 }
 
 .btn-outline-primary:hover,
 .btn-outline-primary:active {
-  background-color: #2A94F4;
-  border-color: #2A94F4;
+  background-color: #2a94f4;
+  border-color: #2a94f4;
   color: white;
 }
 
@@ -543,7 +552,7 @@ color scheme. See readme.md*/
 }
 .link-custom {
   cursor: pointer;
-  color: #5B5B5B;
+  color: #5b5b5b;
   text-decoration: underline;
 }
 .link-custom:hover {
@@ -634,10 +643,10 @@ color scheme. See readme.md*/
   /* font-family: Inter, system-ui, sans-serif; */
   /* font-size: 12px; */
 }
-input[type=range]::-webkit-slider-thumb {
+input[type="range"]::-webkit-slider-thumb {
   border-radius: 50%;
-  width: 17.5px;
-  height: 17.5px;
+  width: 15px;
+  height: 15px;
 }
 
 /* css for the line on the progress bar */
@@ -723,6 +732,12 @@ input[type=range]::-webkit-slider-thumb {
 
 /* Entry Form Management */
 
+.g-recaptcha {
+  display: inline-block;
+  padding: 40px 0px 10px 0px;
+  max-width: 80%;
+}
+
 .button-edit {
   display: none;
 }
@@ -753,16 +768,16 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .light-blue-text {
-  color: #65BFF1;
+  color: #65bff1;
 }
 .blue-green-text {
-  color: #6DCCBB;
+  color: #6dccbb;
 }
 .light-blue-bg {
-  background-color: #DAEFFF;
+  background-color: #daefff;
 }
 .blue-green-bg {
-  background-color: #6DCCBB;
+  background-color: #6dccbb;
 }
 
 .how-it-works {
@@ -774,10 +789,10 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .language-button {
-    background: #FFFFFF;
-    border:0 none;
-    cursor:pointer;
-    padding: 0;
+  background: #ffffff;
+  border: 0 none;
+  cursor: pointer;
+  padding: 0;
 }
 .language-button:hover {
   text-decoration: underline;
@@ -872,6 +887,145 @@ label {
 }
 
 /* LOGIN */
+/******************************************
+Signup and Login Page
+******************************************/
+#acc_already {
+  height: 50px;
+  color: rgba(101, 101, 101, 0.81);
+}
+
+.auth-form {
+  display: inline-block;
+  width: 70%;
+}
+
+.auth-form .btn {
+  font-size: 80%;
+  /* border-radius: 5rem; */
+  letter-spacing: 0.1rem;
+  font-weight: bold;
+  padding: 1rem;
+  transition: all 0.2s;
+}
+
+.auth-btn-wrap {
+  text-align: center;
+  padding-top: 20px;
+}
+
+.auth-btn {
+  width: 50%;
+}
+
+.auth-form-label {
+  text-align: left;
+  color: rgba(101, 101, 101, 0.61);
+}
+
+.auth-title {
+  color: #5b5b5b;
+}
+
+.auth-wrap {
+  margin: 25px 0px;
+  text-align: center;
+}
+
+.auth-field {
+  display: inline-block;
+  width: 100%;
+  height: 60px !important; /* necessary use of !important */
+  background-color: #cce9ff;
+  border: none;
+  border-radius: 2rem;
+}
+
+.auth-divider-wrap {
+  position: relative;
+}
+
+.auth-divider {
+  position: absolute;
+  width: 0px;
+  height: 259.01px;
+  border-left: 5px solid rgba(0, 0, 0, 0.07);
+  transform: rotate(0.43deg);
+  left: 50%;
+  top: 30%;
+}
+
+.auth-link {
+  color: rgba(101, 101, 101, 0.81);
+  text-decoration: underline;
+}
+
+.auth-link:hover {
+  color: rgba(101, 101, 101, 1);
+}
+.login-field {
+  background-color: #d6f6f1;
+}
+
+.login-field:focus {
+  outline-color: #d6f6f1 !important;
+}
+
+#login-button {
+  background-color: #7adbcb;
+  border-color: #7adbcb;
+}
+
+.to-auth-link {
+  display: none;
+}
+
+.redirect-banner {
+  padding: 0px 30%;
+  text-align: center;
+}
+
+@media only screen and (min-width: 769px) {
+  #signup-form {
+    padding-top: 50px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .auth-divider-wrap {
+    text-align: center;
+    padding: 2.5rem 0rem;
+  }
+  .auth-divider {
+    position: initial;
+    display: inline-block;
+    width: 50%;
+    height: 0px;
+    border-bottom: 5px solid rgba(0, 0, 0, 0.07);
+    transform: rotate(0.43deg);
+  }
+
+  .auth-wrapper {
+    text-align: center;
+  }
+
+  .field-wrap {
+    text-align: center;
+  }
+
+  .to-auth-link {
+    display: inline-block;
+    padding-top: 30px;
+  }
+
+  .redirect-banner {
+    padding: 0px 15%;
+  }
+}
+
+.privacy-note {
+  color: rgba(101, 101, 101, 0.81);
+}
 
 :root {
   --input-padding-x: 1.5rem;
@@ -892,19 +1046,6 @@ label {
 
 .card-signin .card-body {
   padding: 2rem;
-}
-
-.form-signin {
-  width: 100%;
-}
-
-.form-signin .btn {
-  font-size: 80%;
-  /* border-radius: 5rem; */
-  letter-spacing: 0.1rem;
-  font-weight: bold;
-  padding: 1rem;
-  transition: all 0.2s;
 }
 
 .form-label-group {
@@ -968,10 +1109,6 @@ label {
   color: #777;
 }
 
-input.form-control[type=checkbox] {
-  width: 15%;
-}
-
 .btn-google {
   color: white;
   background-color: #ea4335;
@@ -987,8 +1124,8 @@ input.form-control[type=checkbox] {
 }
 
 .alert-custom {
-  background: #DEF8F4;
-  color: #5B5B5B;
+  background: #def8f4;
+  color: #5b5b5b;
 }
 
 /* Fallback for Edge

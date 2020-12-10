@@ -24,11 +24,28 @@ from representable.settings.base import MAPBOX_KEY
 
 app_name = "main"
 urlpatterns = [
-    path("accounts/login/", views.main.RepresentableLoginView.as_view(), name="account_login"),
+    path(
+        "accounts/login/",
+        views.main.RepresentableLoginView.as_view(),
+        name="account_login",
+    ),
+    path(
+        "accounts/signup/",
+        views.main.RepresentableSignupView.as_view(),
+        name="account_signup",
+    ),
     path("", views.main.Index.as_view(), name="index"),
     path("map/", views.main.Map.as_view(), name="map"),
-    path("entry_preview/", views.main.EntryPreview.as_view(), name="entry_preview"),
-    path("entry_state_selection/", views.main.EntryStateSelection.as_view(), name="entry_state_selection"),
+    path(
+        "entry_preview/",
+        views.main.EntryPreview.as_view(),
+        name="entry_preview",
+    ),
+    path(
+        "entry_state_selection/",
+        views.main.EntryStateSelection.as_view(),
+        name="entry_state_selection",
+    ),
     path(
         "entry/",
         views.main.EntryView.as_view(),
@@ -80,10 +97,16 @@ urlpatterns = [
         "submission/<map_id>",
         views.main.Submission.as_view(),
         {"slug": "", "drive": ""},
-        name="submission"
+        name="submission",
     ),
     path(
-        "submission/thanks/<map_id>",
+        "submission/<map_id>/<abbr>",
+        views.main.Submission.as_view(),
+        {"slug": "", "drive": ""},
+        name="submission",
+    ),
+    path(
+        "submission/thanks/<map_id>/<abbr>",
         views.main.Submission.as_view(),
         {"slug": "", "drive": ""},
         name="submission_thanks",
@@ -95,6 +118,7 @@ urlpatterns = [
     ),
     path("blog/", views.main.Blog.as_view(), name="blog"),
     path("export/", views.main.ExportView.as_view(), name="export"),
+    path("export/<abbr>/", views.main.ExportView.as_view(), name="export"),
     path(
         "multiexport/drive/<drive>",
         views.partners.MultiExportView.as_view(),
