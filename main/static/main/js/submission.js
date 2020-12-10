@@ -65,6 +65,7 @@ function newBoundariesLayer(name) {
       },
       paint: {
         "line-color": "rgba(106,137,204,0.7)",
+        "line-width": 3,
       }
     }
   );
@@ -105,6 +106,7 @@ map.on("load", function () {
         },
         paint: {
           "line-color": "rgba(106,137,204,0.7)",
+          "line-width": 2,
         },
       }
     );
@@ -119,6 +121,7 @@ map.on("load", function () {
         },
         paint: {
           "line-color": "rgba(106,137,204,0.7)",
+          "line-width": 2,
         },
       }
     );
