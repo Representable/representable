@@ -75,9 +75,9 @@ form:invalid {
   border: 1px solid red;
 }
 
-/** 
+/**
 
-Entry Preview Page 
+Entry Preview Page
 
 **/
 #entry_preview_intro {
@@ -1046,6 +1046,10 @@ Signup and Login Page
 
 .card-signin .card-body {
   padding: 2rem;
+}
+
+#id_require_user_addresses {
+  width: 45px;
 }
 
 .form-label-group {

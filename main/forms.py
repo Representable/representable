@@ -164,6 +164,7 @@ class OrganizationForm(ModelForm):
         model = Organization
         fields = ["name", "description", "ext_link", "states"]
         labels = {
+            "name": "Organization Name",
             "ext_link": "Link to Organization Website",
         }
         widgets = {
@@ -209,6 +210,10 @@ class DriveForm(ModelForm):
     class Meta:
         model = Drive
         fields = ["name", "description", "state", "require_user_addresses"]
+        labels = {
+            "name": "Drive Title",
+            "ext_link": "Link to Organization Website",
+        }
         widgets = {
             "name": forms.TextInput(
                 attrs={
