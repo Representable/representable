@@ -99,7 +99,7 @@
             {% else %}
               <li class="nav-item mx-auto">
                   <a class="nav-link" href="{% url 'main:partner_welcome' %}">
-                      Partners
+                      {% trans "Partners" %}
                   </a>
               </li>
             {% endif %}
@@ -111,7 +111,7 @@
 
                 <li class="nav-item mx-auto">
                     <a class="nav-link" href="{% url 'main:blog' %}">
-                        Blog
+                        {% trans "Blog" %}
                     </a>
                 </li>
 
@@ -241,7 +241,7 @@
                             {% trans "Add Your Community" %}
                         </a></li>
                     <li><a class="text-muted" href="{% url 'main:partner_welcome' %}">
-                            Create a Partner Profile
+                            {% trans "Create a Partner Profile" %}
                         </a></li>
                     {% if user.is_authenticated %}
                     <li><a class="text-muted" href="{% url 'main:review' %}">
