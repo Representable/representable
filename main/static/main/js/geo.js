@@ -36,6 +36,12 @@ function changeText(element) {
   }
 }
 
+// changes page entry page from the survey start page to the first part of the survey
+function startSurvey() {
+  $("#entry-survey-start").addClass("d-none");
+  $("#survey-qs-p1").removeClass("d-none");
+}
+
 function showVideoPopup() {
   $("#video_popup").removeClass("d-none");
   mixpanel.track("Video Popup", {

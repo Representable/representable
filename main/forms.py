@@ -50,16 +50,16 @@ class AddressForm(ModelForm):
 
         widgets = {
             "street": forms.TextInput(
-                attrs={"placeholder": "Street", "maxlength": 500}
+                attrs={"placeholder": "", "maxlength": 500}
             ),
             "city": forms.TextInput(
-                attrs={"placeholder": "City", "maxlength": 100}
+                attrs={"placeholder": "", "maxlength": 100}
             ),
             "state": forms.TextInput(
-                attrs={"placeholder": "State", "maxlength": 100}
+                attrs={"placeholder": "", "maxlength": 100}
             ),
             "zipcode": forms.TextInput(
-                attrs={"placeholder": "Zipcode", "maxlength": 12}
+                attrs={"placeholder": "", "maxlength": 12}
             ),
         }
         labels = {
@@ -96,25 +96,25 @@ class CommunityForm(ModelForm):
             "census_blocks_polygon": forms.HiddenInput(),
             "block_groups": forms.HiddenInput(),
             "entry_name": forms.TextInput(
-                attrs={"placeholder": "Community Name", "maxlength": 100}
+                attrs={"placeholder": "ex. University of Texas Students", "maxlength": 100}
             ),
             "entry_reason": forms.Textarea(
                 attrs={"rows": 3, "maxlength": 500}
             ),
             "cultural_interests": forms.Textarea(
-                attrs={"rows": 3, "maxlength": 500}
+                attrs={"rows": 3, "maxlength": 500, "placeholder":"ex. My community is made of the Latinx community in east Brooklyn. The community has been in the neighborhood for 20 years and is affected by gentrification."}
             ),
             "economic_interests": forms.Textarea(
-                attrs={"rows": 3, "maxlength": 500}
+                attrs={"rows": 3, "maxlength": 500, "placeholder": "ex. My community is located near a river. Fishing is the main industry. We experience seasonal unemployment. Water pollution of the river is a common concern of ours."}
             ),
             "comm_activities": forms.Textarea(
-                attrs={"rows": 3, "maxlength": 500}
+                attrs={"rows": 3, "maxlength": 500, "placeholder": "ex. My community is made of the people who go to St. Peters Catholic Church. The church provides child care and charity services for the less fortunate in our community. "}
             ),
             "other_considerations": forms.Textarea(
-                attrs={"rows": 3, "maxlength": 500}
+                attrs={"rows": 3, "maxlength": 500, "placeholder": "ex. My farming community extends over two counties and we hope you can put the community together in a single State Senate district."}
             ),
             "user_name": forms.TextInput(
-                attrs={"placeholder": "Full Name", "maxlength": 500}
+                attrs={"maxlength": 500}
             ),
             "user_polygon": forms.HiddenInput(),
         }
