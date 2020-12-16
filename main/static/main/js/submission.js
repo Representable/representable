@@ -241,7 +241,7 @@ map.on("load", function () {
       doc.setFontSize(12);
       doc.setTextColor(0);
       // link to view on rep
-      var rLink = "View this community at: " + window.location.href;
+      var rLink = doc.splitTextToSize("View this community at: " + window.location.href, 180);
       doc.text(20, 53, rLink);
 
       var org = window.document.getElementById("org-text");
@@ -344,7 +344,7 @@ $('[data-toggle=modal]').on('click', function(e) {
     if ($target.data('triggered')) {
       $target.modal('show').data('triggered', false);
     };
-  }, 200); // ms delay
+  }, 100); // ms delay
   return false;
 });
 $('#geojson-explain-modal').on('show.bs.modal', function () {
