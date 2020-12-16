@@ -26,7 +26,7 @@ from django.http import (
     JsonResponse,
     Http404,
 )
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import (
     TemplateView,
     ListView,
@@ -106,6 +106,10 @@ from django.contrib.contenttypes.models import ContentType
 
 from django.conf import settings
 
+# For PDF Sending
+from io import BytesIO
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 
 # ******************************************************************************#
 
@@ -407,6 +411,17 @@ async def getfroms3(client, obj, drive, state, comms, entryPolyDict):
 # ******************************************************************************#
 
 
+def render_to_pdf(template_src, context_dict={}):
+    template = get_template(template_src)
+    html = template.render(context_dict)
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+
+    if not pdf.err:
+        return result.getvalue()
+    return None
+
+
 class Submission(TemplateView):
     template_name = "main/submission.html"
 
@@ -527,15 +542,17 @@ class Submission(TemplateView):
                 subject, from_email, to = (
                     "Representable Map",
                     "no-reply@representable.org",
-                    "user_email_address",
+                    user_email_address,
                 )
+
                 text_content = "We are delighted to have received your community map. A copy is attached for email records."
                 html_content = "<p>We are delighted to have received <strong> your community map. </strong> A copy is attached for email records.</p>"
+                pdf = render_to_pdf("account/pdfmap.html", {"c": user_map})
                 msg = EmailMultiAlternatives(
                     subject, text_content, from_email, [to]
                 )
                 msg.attach_alternative(html_content, "text/html")
-                msg.attach("Name", "./dev_reqs.txt", "./dev_reqs.txt")
+                msg.attach("Name", pdf, "./dev_reqs.txt")
                 msg.send()
 
             else:
