@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-15 20:25+0000\n"
+"POT-Creation-Date: 2020-12-01 18:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2441,7 +2441,7 @@ msgstr ""
 
 #: main/templates/main/entry.html:561
 msgid "Report Error/Send Feedback"
-msgstr ""
+msgstr "أرسل تعليقاتك"
 
 #: main/templates/main/entry.html:566
 msgid "Saving Community..."
@@ -2467,7 +2467,7 @@ msgstr "شريك معنا"
 
 #: main/templates/main/index.html:49 main/templates/main/pages/about.html:48
 msgid "What is Representable?"
-msgstr "ما هو قابل للتمثيل"
+msgstr "ما هو ربريسنتبل؟"
 
 #: main/templates/main/index.html:89
 msgid "For community members"
@@ -2508,11 +2508,11 @@ msgstr "قريبا"
 
 #: main/templates/main/index.html:138 main/templates/main/index.html:139
 msgid "Select your state to get started."
-msgstr "حدد ولايتك للبدء."
+msgstr "إختر ولايتك لبدء."
 
 #: main/templates/main/pages/about.html:8
 msgid "About Representable"
-msgstr ""
+msgstr "معلومات عن ربريسنتبل"
 
 #: main/templates/main/pages/about.html:12
 msgid ""
@@ -2640,7 +2640,7 @@ msgstr ""
 
 #: main/templates/main/pages/about.html:138
 msgid "Our Team"
-msgstr ""
+msgstr "فريقنا"
 
 #: main/templates/main/pages/about.html:141
 msgid "Executive Director"
@@ -2725,54 +2725,66 @@ msgstr ""
 msgid "French"
 msgstr ""
 
+#: representable/templates/base.html:102
+msgid "Partners"
+msgstr "شريك معنا"
+
 #: representable/templates/base.html:108
 msgid "About"
-msgstr ""
+msgstr "معلومات عنا"
+
+#: representable/templates/base.html:114
+msgid "Blog"
+msgstr "مدونة"
 
 #: representable/templates/base.html:121
 msgid "My Account"
-msgstr ""
+msgstr "حسابي"
 
 #: representable/templates/base.html:124
 msgid "Account Settings"
-msgstr ""
+msgstr "إعدادات التتبع"
 
 #: representable/templates/base.html:125
 msgid "My communities"
-msgstr ""
+msgstr "مجتمعاتي"
 
 #: representable/templates/base.html:126
 msgid "Logout"
-msgstr ""
+msgstr "تسجيل خروج"
 
 #: representable/templates/base.html:131
 msgid "Add community"
-msgstr ""
+msgstr "أضف مجتمع"
 
 #: representable/templates/base.html:137
 msgid "Log in"
-msgstr ""
+msgstr "تسجيل دخول"
 
 #: representable/templates/base.html:142
 msgid "Sign up"
-msgstr ""
+msgstr "سجل"
 
 #: representable/templates/base.html:243
 msgid "Add Your Community"
 msgstr "أضف مجتمعك"
 
+#: representable/templates/base.html:246
+msgid "Create a Partner Profile"
+msgstr "أخلق ملف تعريف الشريك"
+
 #: representable/templates/base.html:250
 msgid "My Communities"
-msgstr ""
+msgstr "مجتمعاتي"
 
 #: representable/templates/base.html:259
 msgid "Privacy"
-msgstr ""
+msgstr "خصوصية"
 
 #: representable/templates/base.html:262
 msgid "Terms"
-msgstr ""
+msgstr "شروط الإستخدام"
 
 #: representable/templates/base.html:268
 msgid "More questions? Reach out at"
-msgstr ""
+msgstr "مزيد الأسئلة؟ تواصلوا بنا على"

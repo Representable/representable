@@ -172,7 +172,7 @@ class Drive(models.Model):
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
-    require_user_addresses = models.BooleanField(default=True)
+    require_user_addresses = models.BooleanField(default=True, blank=True, null=True)
 
     class Meta:
         ordering = ("description",)
@@ -298,6 +298,9 @@ class CommunityEntry(models.Model):
     )
     other_considerations = models.TextField(
         max_length=500, blank=True, unique=False, default=""
+    )
+    state = models.CharField(
+        max_length=10, blank=True, unique=False, default=""
     )
     created_at = models.DateTimeField(auto_now_add=True)
     admin_approved = models.BooleanField(default=True)

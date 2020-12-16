@@ -69,11 +69,11 @@
                           </span>
                           <hr class="my-1">
                           <span id="ignorePDF">
-                            {% if c.organization %}
+                            {% if c.organization and c.organization.name%}
                             <span id="org-text" class="badge badge-pill badge-primary">{{c.organization}}</span>
                             <br>
                             {% endif %}
-                            {% if c.drive %}
+                            {% if c.drive and c.drive.name %}
                             <span id="drive-text" class="badge badge-pill badge-secondary">{{c.drive}}</span>
                             <br>
                             {% endif %}
@@ -82,7 +82,7 @@
                               {% if c.user_name %}
                               <span id="user-name">{{c.user_name}}</span>
                               {% else %}
-                              {{ c.user.username }}
+                              {{ c.user_name }}
                               {% endif %}
                               {% if street %}
                               | <span id="address-street">{{street}}</span>
@@ -119,13 +119,8 @@
                         <tr>
                         </table>
                         <div class="text-center">
-                          <!-- Button to download GeoJSON and explains what GeoJSON is -->
-                          {% with link_text="/export?map_id="|addstr:c.entry_ID|slice:27 %}
-                          <!-- Activates Modal, links to download -->
-                          <a class="btn btn-outline-primary mx-4 d-none d-sm-inline" href="#" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>Export GeoJSON</a>
-                          <!-- Actually downloads, hidden bc called after Modal is open -->
-                          <a href={{link_text}} download="community_{{c.entry_ID|slice:8}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
-                          <!-- Modal -->
+                          <!-- ********************* -->
+                          <!-- GeoJSON Explainer Modal -->
                           <div class="modal fade" id="geojson-explain-modal" tabindex="-1" role="dialog" aria-labelledby="geojson-explain-modalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                               <div class="modal-content">
@@ -141,9 +136,24 @@
                               </div>
                             </div>
                           </div>
-                          <!-- PDF Export Button -->
-                          <span class="btn btn-outline-primary btn-canvas mx-4 my-2 d-none d-sm-inline" role="button" id="pdf-button">Export PDF</span>
+                          <!-- ********************* -->
+                          {% if has_state %}
+                          {% with link_text="/export/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
+                          <!-- <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.geojson">Export GeoJSON</a> -->
+                          <a class="btn btn-outline-primary mx-4 d-none d-sm-inline" href="#" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>Export GeoJSON</a>
+                          <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
+                          <!-- ********************* -->
+                          <span class="btn btn-outline-primary btn-canvas mx-4 my-2" role="button" id="pdf-button">Export PDF</span>
                           {% endwith %}
+                          {% else %}
+                          {% with link_text="/export?map_id="|addstr:c.entry_ID %}
+                          <!-- <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.geojson">Export GeoJSON</a> -->
+                          <a class="btn btn-outline-primary mx-4 d-none d-sm-inline" href="#" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>Export GeoJSON</a>
+                          <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
+                          <!-- ********************* -->
+                          <span class="btn btn-outline-primary btn-canvas mx-4 my-2" role="button" id="pdf-button">Export PDF</span>
+                          {% endwith %}
+                          {% endif %}
                         </div>
                       </div>
                     </div>
