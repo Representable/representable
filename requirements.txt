@@ -62,3 +62,4 @@ wrapt==1.11.2
 django-phone-field==1.8.0
 django-import-export==2.2.0
 django-ckeditor==5.9.0
+xhtml2pdf==0.2.5
