@@ -644,6 +644,7 @@ class Map(TemplateView):
     template_name = "main/map.html"
 
     def get_context_data(self, **kwargs):
+        state = self.kwargs["state"]
 
         # the polygon coordinates
         entryPolyDict = dict()
