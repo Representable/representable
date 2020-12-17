@@ -641,14 +641,9 @@ class ExportView(TemplateView):
         gs = geojson.dumps(gj)
         if csv_export:
             # this is the new code -- turns geojson into csv for export
-            print("----------------------")
-            print("----------------------")
-            df = pd.read_json(gs)
-            print(df)
-            print("----------------------")
+            df = pd.json_normalize(gj)
             comm_csv = df.to_csv()
-            print(comm_csv)
-            response = HttpResponse(gs, content_type="text/csv")
+            response = HttpResponse(comm_csv, content_type="text/csv")
         else:
             response = HttpResponse(gs, content_type="application/json")
         return response
