@@ -46,9 +46,6 @@ from allauth.account.models import (
     EmailAddress,
     EmailConfirmationHMAC,
 )
-from django.core.mail import send_mail
-from django.core.mail import EmailMultiAlternatives
-
 from allauth.account import adapter
 from allauth.account.app_settings import ADAPTER
 from allauth.account.forms import LoginForm, SignupForm
@@ -533,28 +530,6 @@ class Submission(TemplateView):
                 user=self.request.user, verified=True
             ).exists():
                 context["verified"] = True
-
-                # send a copy of the map
-                user_email_address = EmailAddress.objects.get(
-                    user=self.request.user
-                )
-
-                subject, from_email, to = (
-                    "Representable Map",
-                    "no-reply@representable.org",
-                    user_email_address,
-                )
-
-                text_content = "We are delighted to have received your community map. A copy is attached for email records."
-                html_content = "<p>We are delighted to have received <strong> your community map. </strong> A copy is attached for email records.</p>"
-                pdf = render_to_pdf("account/pdfmap.html", {"c": user_map})
-                msg = EmailMultiAlternatives(
-                    subject, text_content, from_email, [to]
-                )
-                msg.attach_alternative(html_content, "text/html")
-                msg.attach("Name", pdf, "./dev_reqs.txt")
-                msg.send()
-
             else:
                 user_email_address = EmailAddress.objects.get(
                     user=self.request.user
