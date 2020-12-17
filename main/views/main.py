@@ -69,6 +69,7 @@ from ..models import (
     State,
     BlockGroup,
 )
+from ..choices import STATES
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
 from django.utils.translation import ugettext as _
@@ -759,6 +760,9 @@ class EntryView(LoginRequiredMixin, View):
     def get(self, request, abbr=None, *args, **kwargs):
         if not abbr:
             return redirect("/#select")
+        else:
+            if abbr not in STATES:
+                return redirect("/entry_state_selection")
         comm_form = self.community_form_class(
             initial=self.get_initial(), label_suffix=""
         )
