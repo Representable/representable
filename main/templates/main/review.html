@@ -65,11 +65,11 @@
                   {% endwith %}
                 </span>
                 <hr class="my-1">
-                {% if c.organization %}
+                {% if c.organization and c.organization.name%}
                 <span class="badge badge-pill badge-primary">{{c.organization}}</span>
                 <br>
                 {% endif %}
-                {% if c.drive %}
+                {% if c.drive and c.drive.name %}
                 <span class="badge badge-pill badge-secondary">{{c.drive}}</span>
                 <br>
                 {% endif %}
