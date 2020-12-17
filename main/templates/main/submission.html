@@ -124,10 +124,16 @@
                           <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.geojson">Export GeoJSON</a>
                           <span class="btn btn-outline-primary btn-canvas mx-4 my-2" role="button" id="pdf-button">Export PDF</span>
                           {% endwith %}
+                          {% with link_text="/export/"|add:"csv"|add:"/?map_id="|addstr:c.entry_ID %}
+                          <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.csv">Export CSV</a>
+                          {% endwith %}
                           {% else %}
                           {% with link_text="/export?map_id="|addstr:c.entry_ID %}
                           <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.geojson">Export GeoJSON</a>
                           <span class="btn btn-outline-primary btn-canvas mx-4 my-2" role="button" id="pdf-button">Export PDF</span>
+                          {% endwith %}
+                          {% with link_text="/export/"|add:"csv"|add:"/?map_id="|addstr:c.entry_ID %}
+                          <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.csv">Export CSV</a>
                           {% endwith %}
                           {% endif %}
                         </div>

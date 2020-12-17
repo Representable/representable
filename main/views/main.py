@@ -100,6 +100,7 @@ from django.contrib.auth.models import Group
 from itertools import islice
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
+import pandas as pd
 
 from django.conf import settings
 
@@ -606,8 +607,13 @@ class ExportView(TemplateView):
             }
             return render(request, self.template_name, context)
 
+        csv_export = False
         if "abbr" in self.kwargs:
-            folder_name = self.kwargs["abbr"]
+            abbr = self.kwargs["abbr"]
+            if abbr == "csv":
+                csv_export = True
+            else:
+                folder_name = abbr
         else:
             if query.drive:
                 folder_name = query.drive.slug
@@ -633,7 +639,18 @@ class ExportView(TemplateView):
             response = HttpResponseNotFound(msg, content_type="application/json")
 
         gs = geojson.dumps(gj)
-        response = HttpResponse(gs, content_type="application/json")
+        if csv_export:
+            # this is the new code -- turns geojson into csv for export
+            print("----------------------")
+            print("----------------------")
+            df = pd.read_json(gs)
+            print(df)
+            print("----------------------")
+            comm_csv = df.to_csv()
+            print(comm_csv)
+            response = HttpResponse(gs, content_type="text/csv")
+        else:
+            response = HttpResponse(gs, content_type="application/json")
         return response
 
 
