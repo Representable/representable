@@ -139,12 +139,10 @@ async def getcomms(query, client, is_admin, drive):
                 client, obj, drive, obj.state, comms, entryPolyDict, is_admin
             )
         except Exception:
-            if not obj.census_blocks_polygon and obj.user_polygon:
+            if not obj.census_blocks_polygon:
                 s = "".join(obj.user_polygon.geojson)
-            elif obj.census_blocks_polygon:
-                s = "".join(obj.census_blocks_polygon.geojson)
             else:
-                continue
+                s = "".join(obj.census_blocks_polygon.geojson)
             if is_admin:
                 if not obj.user_name:
                     obj.user_name = obj.user.username
@@ -235,16 +233,13 @@ class MultiExportView(TemplateView):
             if not entry.organization:
                 continue
             try:
-                try:
-                    s3response = client.get_object(
-                        Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
-                        Key=entry.drive.slug + "/" + entry.entry_ID + ".geojson",
-                    )
-                    gj = s3_geojson_export(s3response, entry, request)
-                except Exception:
-                    gj = make_geojson(request, entry)
-            except:
-                continue
+                s3response = client.get_object(
+                    Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
+                    Key=entry.drive.slug + "/" + entry.entry_ID + ".geojson",
+                )
+                gj = s3_geojson_export(s3response, entry, request)
+            except Exception:
+                gj = make_geojson(request, entry)
             all_gj.append(gj)
 
         final = geojson.FeatureCollection(all_gj)

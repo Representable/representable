@@ -69,11 +69,11 @@
                           </span>
                           <hr class="my-1">
                           <span id="ignorePDF">
-                            {% if c.organization and c.organization.name%}
+                            {% if c.organization %}
                             <span id="org-text" class="badge badge-pill badge-primary">{{c.organization}}</span>
                             <br>
                             {% endif %}
-                            {% if c.drive and c.drive.name %}
+                            {% if c.drive %}
                             <span id="drive-text" class="badge badge-pill badge-secondary">{{c.drive}}</span>
                             <br>
                             {% endif %}
