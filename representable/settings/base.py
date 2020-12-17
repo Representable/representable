@@ -254,7 +254,8 @@ ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
 
 
 # Recaptcha form submit check (not the same as verification)
-if "TRAVIS" in os.environ:
-    CHECK_CAPTCHA_SUBMIT = False
-else:
-    CHECK_CAPTCHA_SUBMIT = True
+CHECK_CAPTCHA_SUBMIT = True
+# if "TRAVIS" in os.environ:
+#     CHECK_CAPTCHA_SUBMIT = False
+# else:
+#     CHECK_CAPTCHA_SUBMIT = True
