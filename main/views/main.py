@@ -401,10 +401,6 @@ async def getfroms3(client, obj, drive, state, comms, entryPolyDict):
     comms.append(comm)
     entryPolyDict[obj.entry_ID] = mapentry["geometry"]["coordinates"]
 
-
-# ******************************************************************************#
-
-
 class Submission(TemplateView):
     template_name = "main/submission.html"
 
@@ -516,6 +512,7 @@ class Submission(TemplateView):
                 user=self.request.user, verified=True
             ).exists():
                 context["verified"] = True
+
             else:
                 user_email_address = EmailAddress.objects.get(
                     user=self.request.user
