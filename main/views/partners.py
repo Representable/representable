@@ -28,6 +28,7 @@ from django.contrib.gis.geos import GEOSGeometry, MultiPolygon, Polygon
 import json
 import os
 import geojson
+import time
 from django.shortcuts import get_object_or_404
 from geojson_rewind import rewind
 from django.core.serializers import serialize
@@ -86,6 +87,7 @@ class PartnerMap(TemplateView):
             aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
             aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
         )
+        start_time = time.time()
         entryPolyDict, comms, streets, cities = asyncio.run(
             getcomms(query, client, is_admin, drive)
         )
@@ -125,6 +127,7 @@ class PartnerMap(TemplateView):
             context["drive_slug"] = self.kwargs["drive"]
         if self.request.user.is_authenticated:
             context["is_org_admin"] = self.request.user.is_org_admin(org.id)
+        print("--- %s seconds for AWS---" % (time.time() - start_time))
         return context
 
 
