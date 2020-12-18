@@ -62,6 +62,7 @@ class PartnerMap(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        actual_start = time.time()
 
         # the polygon coordinates
         entryPolyDict = dict()
@@ -87,7 +88,7 @@ class PartnerMap(TemplateView):
             aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
             aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
         )
-        start_time = time.time()
+        start_time_aws = time.time()
         entryPolyDict, comms, streets, cities = asyncio.run(
             getcomms(query, client, is_admin, drive)
         )
@@ -127,7 +128,8 @@ class PartnerMap(TemplateView):
             context["drive_slug"] = self.kwargs["drive"]
         if self.request.user.is_authenticated:
             context["is_org_admin"] = self.request.user.is_org_admin(org.id)
-        print("--- %s seconds for AWS---" % (time.time() - start_time))
+        print("--- %s seconds for AWS---" % (time.time() - start_time_aws))
+        print("--- %s seconds including query---" % (time.time() - actual_start))
         return context
 
 
