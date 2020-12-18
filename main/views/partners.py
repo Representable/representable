@@ -171,6 +171,7 @@ async def getcomms(query, client, is_admin, drive):
 
 
 async def getfroms3(client, obj, drive, state, comms, entryPolyDict, is_admin):
+    print("request made at time %s" % time.time())
     if drive:
         folder_name = drive.slug
     elif not drive and obj.drive:
@@ -181,6 +182,7 @@ async def getfroms3(client, obj, drive, state, comms, entryPolyDict, is_admin):
         Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
         Key=str(folder_name) + "/" + obj.entry_ID + ".geojson",
     )
+    print("request response gotten at time %s" % time.time())
     strobject = response["Body"].read().decode("utf-8")
     mapentry = geojson.loads(strobject)
     comm = CommunityEntry(
