@@ -147,9 +147,9 @@ async def getcomms(query, client, is_admin, drive):
 
 async def insideloop(obj, client, is_admin, drive, entryPolyDict, streets, cities, comms):
     try:
-        asyncio.gather(getfroms3(
+        getfroms3(
             client, obj, drive, obj.state, comms, entryPolyDict, is_admin
-        ))
+        )
         comms.append(comm)
     except Exception:
         if not obj.census_blocks_polygon and obj.user_polygon:
@@ -177,7 +177,7 @@ async def insideloop(obj, client, is_admin, drive, entryPolyDict, streets, citie
             )
 
 
-async def getfroms3(client, obj, drive, state, comms, entryPolyDict, is_admin):
+def getfroms3(client, obj, drive, state, comms, entryPolyDict, is_admin):
     print("request made at time %s" % time.time())
     if drive:
         folder_name = drive.slug
