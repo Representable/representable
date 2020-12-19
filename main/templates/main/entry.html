@@ -60,6 +60,7 @@
             <div class="row">
                 <!-- Entry Form -->
                 <form id="entryForm" method="post" onSubmit="return validateRecaptcha();">
+                    {% csrf_token %}
                     {% comment %} <div class="row">
                         <div class="col-sm-7 my-auto pl-5">
                             <h1 class="font-weight-light">
@@ -103,13 +104,15 @@
                       </div>
                     </div> {% endcomment %}
                     
-                    {% include './entry_address.html' %}
+                    <div id="entry_address" class="">
+                        {% include './entry_address.html' %}
+                    </div>
 
-                    {% comment %} {% include './entry_survey.html' %} {% endcomment %}
+                    <div id="entry_survey" class="d-none">{% include './entry_survey.html' %}</div>
 
-                    {% comment %} {% include './entry_map.html' %} {% endcomment %}
+                    <div id="entry_map" class="d-none">{% include './entry_map.html' %}</div>
 
-                    {% comment %} {% include './entry_privacy.html' %} {% endcomment %}
+                    <div id="entry_privacy" class="d-none">{% include './entry_privacy.html' %}</div>
 
                     {% comment %} <div id="dropuphelp2" class="btn-floating btn-group shadow-lg dropup">
                         <button type="button" class="btn fixed-action-btn btn-secondary shadow-lg dropdown-toggle" id="dropuphelp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

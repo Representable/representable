@@ -39,12 +39,22 @@ form:invalid {
 }
 
 .has_error {
-  border-color: red;
+  border: 1px solid red !important;
 }
 
 .has_success {
-  border-color: #ced4da;
+  border-color: 1px solid #ced4da;
 }
+
+.no-underline-link:hover {
+  text-decoration: none;
+}
+
+.no-underline-link:focus {
+  text-decoration: none;
+}
+
+
 
 /* TOC Checkbox*/
 .toc-check {
