@@ -28,6 +28,7 @@ from django.contrib.gis.geos import GEOSGeometry, MultiPolygon, Polygon
 import json
 import os
 import geojson
+import time
 from django.shortcuts import get_object_or_404
 from geojson_rewind import rewind
 from django.core.serializers import serialize
@@ -61,6 +62,7 @@ class PartnerMap(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        actual_start = time.time()
 
         # the polygon coordinates
         entryPolyDict = dict()
@@ -86,6 +88,7 @@ class PartnerMap(TemplateView):
             aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
             aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
         )
+        start_time_aws = time.time()
         entryPolyDict, comms, streets, cities = asyncio.run(
             getcomms(query, client, is_admin, drive)
         )
@@ -125,6 +128,8 @@ class PartnerMap(TemplateView):
             context["drive_slug"] = self.kwargs["drive"]
         if self.request.user.is_authenticated:
             context["is_org_admin"] = self.request.user.is_org_admin(org.id)
+        print("--- %s seconds for AWS---" % (time.time() - start_time_aws))
+        print("--- %s seconds including query---" % (time.time() - actual_start))
         return context
 
 
@@ -166,6 +171,7 @@ async def getcomms(query, client, is_admin, drive):
 
 
 async def getfroms3(client, obj, drive, state, comms, entryPolyDict, is_admin):
+    print("request made at time %s" % time.time())
     if drive:
         folder_name = drive.slug
     elif not drive and obj.drive:
@@ -176,6 +182,7 @@ async def getfroms3(client, obj, drive, state, comms, entryPolyDict, is_admin):
         Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
         Key=str(folder_name) + "/" + obj.entry_ID + ".geojson",
     )
+    print("request response gotten at time %s" % time.time())
     strobject = response["Body"].read().decode("utf-8")
     mapentry = geojson.loads(strobject)
     comm = CommunityEntry(
