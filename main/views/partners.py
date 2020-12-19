@@ -259,6 +259,11 @@ class MultiExportView(TemplateView):
         response = HttpResponse(
             geojson.dumps(final), content_type="application/json"
         )
+
+        if(kwargs['type'] == 'geo'):
+            print('geo')
+        else:
+            print('csv + NEED TO CONVERT STUFF')
         return response
 
 
