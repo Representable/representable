@@ -138,36 +138,43 @@ async def getcomms(query, client, is_admin, drive):
     entryPolyDict = dict()
     streets = {}
     cities = {}
+    tasks = []
     for obj in query:
-        try:
-            await getfroms3(
-                client, obj, drive, obj.state, comms, entryPolyDict, is_admin
-            )
-        except Exception:
-            if not obj.census_blocks_polygon and obj.user_polygon:
-                s = "".join(obj.user_polygon.geojson)
-            elif obj.census_blocks_polygon:
-                s = "".join(obj.census_blocks_polygon.geojson)
-            else:
-                continue
-            if is_admin:
-                if not obj.user_name:
-                    obj.user_name = obj.user.username
-            else:
-                if obj.user_name:
-                    obj.user_name = ""
+        tasks.append(insideloop(obj, client, is_admin, drive, entryPolyDict, streets, cities, comms))
 
-            comms.append(obj)
-            struct = geojson.loads(s)
-            entryPolyDict[obj.entry_ID] = struct.coordinates
-
-        if is_admin:
-            for a in Address.objects.filter(entry=obj):
-                streets[obj.entry_ID] = a.street
-                cities[obj.entry_ID] = (
-                    a.city + ", " + a.state + " " + a.zipcode
-                )
+    await asyncio.gather(*tasks)
     return entryPolyDict, comms, streets, cities
+
+async def insideloop(obj, client, is_admin, drive, entryPolyDict, streets, cities, comms):
+    try:
+        asyncio.gather(getfroms3(
+            client, obj, drive, obj.state, comms, entryPolyDict, is_admin
+        ))
+        comms.append(comm)
+    except Exception:
+        if not obj.census_blocks_polygon and obj.user_polygon:
+            s = "".join(obj.user_polygon.geojson)
+        elif obj.census_blocks_polygon:
+            s = "".join(obj.census_blocks_polygon.geojson)
+        else:
+            return
+        if is_admin:
+            if not obj.user_name:
+                obj.user_name = obj.user.username
+        else:
+            if obj.user_name:
+                obj.user_name = ""
+
+        comms.append(obj)
+        struct = geojson.loads(s)
+        entryPolyDict[obj.entry_ID] = struct.coordinates
+
+    if is_admin:
+        for a in Address.objects.filter(entry=obj):
+            streets[obj.entry_ID] = a.street
+            cities[obj.entry_ID] = (
+                a.city + ", " + a.state + " " + a.zipcode
+            )
 
 
 async def getfroms3(client, obj, drive, state, comms, entryPolyDict, is_admin):
@@ -204,6 +211,7 @@ async def getfroms3(client, obj, drive, state, comms, entryPolyDict, is_admin):
             obj.user.username
     comms.append(comm)
     entryPolyDict[obj.entry_ID] = mapentry["geometry"]["coordinates"]
+    return comm
 
 
 # ******************************************************************************#
