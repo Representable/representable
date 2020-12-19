@@ -780,7 +780,10 @@ class EntryView(LoginRequiredMixin, View):
         if kwargs["drive"]:
             has_drive = True
             drive_slug = self.kwargs["drive"]
-            drive = Drive.objects.get(slug=drive_slug)
+            try:
+                drive = Drive.objects.get(slug=drive_slug)
+            except:
+                return redirect("/entry_state_selection")
             drive_name = drive.name
             drive_id = drive.id
             organization = drive.organization
