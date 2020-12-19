@@ -761,7 +761,7 @@ class EntryView(LoginRequiredMixin, View):
         if not abbr:
             return redirect("/#select")
         else:
-            if abbr not in STATES:
+            if not any(abbr.upper() in i for i in STATES):
                 return redirect("/entry_state_selection")
         comm_form = self.community_form_class(
             initial=self.get_initial(), label_suffix=""
