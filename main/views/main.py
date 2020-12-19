@@ -604,13 +604,8 @@ class ExportView(TemplateView):
             }
             return render(request, self.template_name, context)
 
-        csv_export = False
         if "abbr" in self.kwargs:
-            abbr = self.kwargs["abbr"]
-            if abbr == "csv":
-                csv_export = True
-            else:
-                folder_name = abbr
+            folder_name = self.kwargs["abbr"]
         else:
             if query.drive:
                 folder_name = query.drive.slug
@@ -636,7 +631,7 @@ class ExportView(TemplateView):
             response = HttpResponseNotFound(msg, content_type="application/json")
 
         gs = geojson.dumps(gj)
-        if csv_export:
+        if "csv" in request.path:
             # this is the new code -- turns geojson into csv for export
             df = pd.json_normalize(gj)
             comm_csv = df.to_csv()

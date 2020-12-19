@@ -117,8 +117,10 @@ urlpatterns = [
         name="submission_thanks",
     ),
     path("blog/", views.main.Blog.as_view(), name="blog"),
-    path("export/", views.main.ExportView.as_view(), name="export"),
-    path("export/<abbr>/", views.main.ExportView.as_view(), name="export"),
+    path("export/geojson/", views.main.ExportView.as_view(), name="export"),
+    path("export/csv/", views.main.ExportView.as_view(), name="export"),
+    path("export/geojson/<abbr>/", views.main.ExportView.as_view(), name="export"),
+    path("export/csv/<abbr>/", views.main.ExportView.as_view(), name="export"),
     path(
         "multiexport/drive/<drive>",
         views.partners.MultiExportView.as_view(),

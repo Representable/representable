@@ -138,25 +138,25 @@
                           </div>
                           <!-- ********************* -->
                           {% if has_state %}
-                          {% with link_text="/export/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
+                          {% with link_text="/export/geojson/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
                           <!-- <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.geojson">Export GeoJSON</a> -->
                           <a class="btn btn-outline-primary mx-4 d-none d-sm-inline" href="#" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>Export GeoJSON</a>
                           <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
                           <!-- ********************* -->
                           <span class="btn btn-outline-primary btn-canvas mx-4 my-2" role="button" id="pdf-button">Export PDF</span>
                           {% endwith %}
-                          {% with link_text="/export/"|add:"csv"|add:"/?map_id="|addstr:c.entry_ID %}
+                          {% with link_text="/export/csv/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
                           <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.csv">Export CSV</a>
                           {% endwith %}
                           {% else %}
-                          {% with link_text="/export?map_id="|addstr:c.entry_ID %}
+                          {% with link_text="/export/geojson/?map_id="|addstr:c.entry_ID %}
                           <!-- <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.geojson">Export GeoJSON</a> -->
                           <a class="btn btn-outline-primary mx-4 d-none d-sm-inline" href="#" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>Export GeoJSON</a>
                           <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
                           <!-- ********************* -->
                           <span class="btn btn-outline-primary btn-canvas mx-4 my-2" role="button" id="pdf-button">Export PDF</span>
                           {% endwith %}
-                          {% with link_text="/export/"|add:"csv"|add:"/?map_id="|addstr:c.entry_ID %}
+                          {% with link_text="/export/csv"|add:"/?map_id="|addstr:c.entry_ID %}
                           <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.csv">Export CSV</a>
                           {% endwith %}
                           {% endif %}
