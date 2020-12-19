@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %}
+{% load leaflet_tags %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="container">
+    <div class="row m-sm-5">
+        <div id="entry_preview_image" class="col-lg-4 col-md-12">
+            <img src="{% static 'img/entry_preview_map.svg' %}" alt="Map with community selected"/>
+        </div>
+        <div id="entry_preview_intro" class="col-lg-8">
+            <h3>{% trans "Add your community to the map."%}</h3>
+            <p>{% trans "Mapping your community and identifying its shared interests allows public officials to take your community’s concerns into account."%}</p>
+        </div>
+    </div>
+    <div class="row m-sm-5">
+        <div id="entry_preview_info" class="col alert alert-info" role="alert">
+              <p><strong>{% trans "Gerrymandering" %}</strong> {% trans "is silencing communities across the country." %}</p>
+              <span>{% trans "Politicians have been splitting up or packing together communities into districts that silence their voices. Gathering communities of interest helps fight gerrymandering."%}</span>
+        </div>
+    </div>
+    <div class="row m-sm-5">
+        <div id="entry_preview_button" class="col">
+            <a class="btn btn-outline-primary m-2 btn-lg" href="{% url 'main:entry_state_selection' %}">
+                Add your community
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

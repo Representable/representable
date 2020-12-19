@@ -26,7 +26,7 @@ class EntryTest(TestCase):
         )
         c = self.client
         c.login(email="john@doe.com", password="johndoe")
-        self.response = c.get("/entry/")
+        self.response = c.get("/entry/mi/")
 
     def tearDown(self):
         self.client.logout()

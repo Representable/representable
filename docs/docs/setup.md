@@ -5,7 +5,7 @@ title: First Steps
 
 Hello and welcome to the Representable.org Docs! This guide will lead you through setting up your local development environment and explain different parts of the website.
 
-The first page of the guide, below, will take you through the recommended setup (i.e. all the packages and programs needed to set up locally) and also demostrate how to clone/download the codebase so you can start contributing.
+The first page of the guide, below, will take you through the recommended setup (i.e. all the packages and programs needed to set up locally) and also demonstrate how to clone/download the codebase so you can start contributing.
 
 ## 1. Recommended Setup
 
@@ -35,7 +35,7 @@ The following tools will be helpful for setting up your development environment.
 | Markdown All in One  |  VS Code Extension for Markdown  | [Link](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)    |
 | Postico (Mac Only) | A modern PostgreSQL client that lets you inspect your database | [Link](https://eggerapps.at/postico/)  |
 
-## 2. Cloning the Repo
+## 2. Cloning the Repo 
 
 The easiest way to clone the repo to begin editing locally is to visit the [Github repository](https://github.com/Representable/representable) and click `Clone or download` then `Open in Desktop`.
 

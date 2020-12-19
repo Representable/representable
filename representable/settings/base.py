@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2019- Representable Team (Theodor Marcu, Lauren Johnston, Somya Arora, Kyle Barnes, Preeti Iyer).
+# Copyright (c) 2019- Representable Team (Theodor Marcu, Lauren Johnston, Somya Arora, Kyle Barnes, Preeti Iyer, Edward Tian, Jessie Fielding).
 #
 # This file is part of Representable
 # (see http://representable.org).
@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.sites",
     "django.contrib.staticfiles",
+    "django_extensions",
     "import_export",
     "main",
     "leaflet",
@@ -73,6 +74,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "phone_field",
     "ckeditor",
+    "representable",
     # 'allauth.socialaccount.providers.facebook',
     # 'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.linkedin',
@@ -145,6 +147,7 @@ else:
             "NAME": os.environ.get("DISTR_DB_NAME", ""),
             "USER": os.environ.get("DISTR_DB_USER", ""),
             "PASS": os.environ.get("DISTR_DB_PASS", ""),
+            "CONN_MAX_AGE": 100,
         }
     }
 
@@ -171,6 +174,21 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = "main.User"
 LOGIN_REDIRECT_URL = "/"
 
+# Internationalization
+# https://docs.djangoproject.com/en/2.1/topics/i18n/
+
+LOCALE_PATHS = (os.path.join(BASE_DIR, "<representable>" "locale"),)
+
+# Provide a lists of languages which your site supports.
+LANGUAGES = (
+    ("en-us", _("English")),
+    ("es", _("Spanish")),
+    ("ar", _("Arabic")),
+    ("fr", _("French")),
+)
+
+LANGUAGE_CODE = "en-us"
+
 TIME_ZONE = "UTC"
 
 USE_I18N = True
@@ -196,7 +214,6 @@ MAPBOX_KEY = os.environ.get("DISTR_MAPBOX_KEY")
 GDAL_LIBRARY_PATH = os.environ.get("GDAL_LIBRARY_PATH")
 GEOS_LIBRARY_PATH = os.environ.get("GEOS_LIBRARY_PATH")
 django_heroku.settings(locals())
-
 
 if "REDIS_URL" in os.environ:
     CACHES = {
@@ -225,11 +242,19 @@ elif DATABASES["default"]["ENGINE"] == "django.db.backends.sqlite3":
     ] = "django.contrib.gis.db.backends.spatialite"
 
 # Can Log In With Either Email or Username
-ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_AUTHENTICATION_METHOD = "email"
 
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
 DEFAULT_FROM_EMAIL = "no-reply@representable.org"
 
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
+
+
+# Recaptcha form submit check (not the same as verification)
+if "TRAVIS" in os.environ:
+    CHECK_CAPTCHA_SUBMIT = False
+else:
+    CHECK_CAPTCHA_SUBMIT = True

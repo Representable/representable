@@ -1,6 +1,8 @@
 <!doctype html>
 {% load static %}
 {% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
 
 <html lang="en">
 
@@ -53,12 +55,15 @@
         var is_auth = false;
         {% endif %}
 
-      </script>
+    </script>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="/">Representable</a>
+        <a class="navbar-brand" href="{% url 'main:index' %}">
+          <img class="img-fluid pr-2 navbar-logo" src="{% static 'img/logo-lowres.svg' %}" alt="representable logo - low resolution version"> </img>
+          <img class="img-fluid pr-2" src="{% static 'img/representable-text.svg' %}" alt="representable text logo"> </img>
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -67,76 +72,139 @@
             <ul class="navbar-nav mr-auto">
             </ul>
             <ul class="nav navbar-nav navbar-right align-items-center">
+            {% if user.is_generic_admin %}
+              {% if user.get_organizations|length > 2 %}
+              <li class="dropdown mx-auto nav-item">
+                  <button class="btn btn-link dropdown-toggle nav-link" type="button" data-toggle="dropdown">My Organizations
+                  <span class="caret"></span></button>
+                  <ul class="dropdown-menu">
+                    {% for org in user.get_organizations %}
+                        <li class="nav-link mx-1">
+                            <a class="nav-link nav-link-org" href="{% url 'main:home_org' org.slug  org.id %}">
+                                {{org.name}}
+                            </a>
+                        </li>
+                    {% endfor %}
+                  </ul>
+              </li>
+              {% else %}
+                {% for org in user.get_organizations %}
+                    <li class="nav-item mx-auto">
+                        <a class="nav-link nav-link-org" href="{% url 'main:home_org' org.slug  org.id %}">
+                            {{org.name}}
+                        </a>
+                    </li>
+                {% endfor %}
+              {% endif %}
+            {% else %}
+              <li class="nav-item mx-auto">
+                  <a class="nav-link" href="{% url 'main:partner_welcome' %}">
+                      {% trans "Partners" %}
+                  </a>
+              </li>
+            {% endif %}
                 <li class="nav-item mx-auto">
-                    <!-- Translate this? -->
-                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item mx-auto">
-                    <a class="nav-link" href='/about'>
-                        About
+                    <a class="nav-link" href="{% url 'main:about' %}">
+                        {% trans "About" %}
                     </a>
                 </li>
 
                 <li class="nav-item mx-auto">
-                    <a class="nav-link" href='/blog'>
-                        Blog
+                    <a class="nav-link" href="{% url 'main:blog' %}">
+                        {% trans "Blog" %}
                     </a>
                 </li>
-                {% if not user.is_authenticated %}
-                <li class="nav-item mx-auto">
-                    <a class="nav-link" href="{% url 'main:partner_welcome' %}">
-                        Partners
-                    </a>
-                </li>
-                {% endif %}
 
-<!--                {% if user.is_authenticated %}-->
-<!--                <li class="nav-item dropdown">-->
-<!--                <a class="nav-link dropdown-toggle" href="{% url 'main:dashboard' %}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--                  Dashboard-->
-<!--                </a>-->
-<!--                <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
-<!--                    <a class="dropdown-item" href="{% url 'main:dashboard' %}">Dashboard</a>-->
-<!--                  <a class="dropdown-item" href='/review'>My Communities</a>-->
-<!--                </div>-->
-<!--                </li>-->
-<!--                {% endif %}-->
                 {% if user.is_authenticated %}
-                <li class="nav-item mx-auto">
-                    <a class="nav-link" href="{% url 'main:dashboard' %}">
-                        Dashboard
-                    </a>
+                <!-- Profile section-->
+                <li class="dropdown mx-auto nav-item">
+                    <button class="btn btn-link dropdown-toggle nav-link" type="button" data-toggle="dropdown">{% trans "My Account" %}
+                    <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                    <li class="nav-link mx-1"><a href="{% url 'main:dashboard' %}">{% trans "Account Settings" %}</a></li>
+                    <li class="nav-link mx-1"><a href="{% url 'main:review' %}">{% trans "My communities" %}</a></li>
+                    <li class="nav-link mx-1"><a href="{% url 'account_logout' %}">{% trans "Logout" %}</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item mx-auto">
-                    <a class="nav-link" href='/review'>
-                        My communities
-                    </a>
-                </li>
-                <li class="nav-item mx-auto">
-                    <a class="btn btn-outline-primary m-2" href="/entry">
-                        Add community
-                    </a>
-                </li>
-                <li class="nav-item mx-auto">
-                    <a class="btn btn-primary m-2" href="/accounts/logout">
-                        Log out
+                    <a class="btn btn-outline-primary m-2" href="{% url 'main:entry_preview' %}">
+                        {% trans "Add community" %}
                     </a>
                 </li>
                 {% else %}
                 <li class="nav-item mx-auto">
-                    <a class="btn btn-outline-primary m-2 log-in-started" href="/accounts/login">
-                        Log in
+                    <a class="btn btn-outline-primary m-2 log-in-started" href="{% url 'account_login' %}">
+                        {% trans "Log in" %}
                     </a>
                 </li>
                 <li class="nav-item mx-auto">
-                    <a class="btn btn-primary m-2 sign-up-started" href="/accounts/signup">
-                        Sign up
+                    <a class="btn btn-primary m-2 sign-up-started" href="{% url 'account_signup' %}">
+                        {% trans "Sign up" %}
                     </a>
                 </li>
                 {% endif %}
+
+            <!-- TODO: update for language dropdown -->
+                <span class="d-none d-lg-block">|</span>
+                <li class="dropdown mx-auto nav-item">
+                    <button class="btn btn-link dropdown-toggle nav-link" type="button" data-toggle="dropdown">
+                        {% if LANGUAGE_CODE == "es" %}ES{% elif LANGUAGE_CODE == "en-us" %}EN{% else %}AR{% endif %}
+                    <span class="caret"></span></button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <div {% if LANGUAGE_CODE == "en-us" %} class = "hidden" {% endif %}>
+                          <li class="nav-link mx-1">
+                          <form action="{% url 'set_language' %}" method="post">
+                            {% csrf_token %}
+                            <input name="next" type="hidden" value="{{ redirect_to }}" />
+                            <input name="language" type="hidden" value="en-us" />
+                            <input class="language-button" type="submit" value="In English" />
+                          </form>
+                          </li>
+                        </div>
+
+                        <div {% if LANGUAGE_CODE == "es" %} class = "hidden" {% endif %}>
+                        <li class="nav-link mx-1">
+                          <form action="{% url 'set_language' %}" method="post">
+                            {% csrf_token %}
+                            <input name="next" type="hidden" value="{{ redirect_to }}" />
+                            <input name="language" type="hidden" value="es" />
+                            <input class="language-button" type="submit" value="En Español" />
+                          </form>
+                        </li>
+                        </div>
+
+                        <div {% if LANGUAGE_CODE == "ar" %} class = "hidden" {% endif %}>
+                        <li class="nav-link mx-1">
+                            <form action="{% url 'set_language' %}" method="post">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="{{ redirect_to }}" />
+                        <input name="language" type="hidden" value="ar" />
+                        <input class="language-button" type="submit" value="بالعربية" />
+                            </form>
+                        </li>
+                        </div>
+                    </ul>
+                </li>
             </ul>
         </div>
     </nav>
+<!--     language selection alternative-->
+<!--    <div id="dropuphelp2" class="btn-floating btn-group shadow-lg dropup">-->
+<!--        <form action="{% url 'set_language' %}" method="post">-->
+<!--                        {% csrf_token %}-->
+<!--                        <input name="next" type="hidden" value="{{ redirect_to }}" />-->
+<!--                        <button type="button" class="btn fixed-action-btn dropdown-toggle" id="dropuphelp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                        <select class="form-control" name="language" onchange="javascript:this.form.submit()">-->
+<!--                            {% for lang in LANGUAGES %}-->
+<!--                                <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected="selected"{% endif %}>-->
+<!--                                    {{lang.1}}-->
+<!--                                </option>-->
+<!--                            {% endfor %}-->
+<!--                        </select>-->
+<!--                        </button>-->
+<!--        </form>-->
+<!--    </div>-->
+
     {% comment %}  Cookie consent banner. {% endcomment %}
     <div id="id-consent-banner" class="alert alert-secondary alert-dismissable consent-banner text-center m-0" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="setConsentFalse();">
@@ -164,20 +232,20 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-md">
-                <a href="/"><img id="r-logo-svg" class="mb-2 text-muted" src="{% static 'img/representable_logo.svg' %}" alt="" width="24" height="24"></a>
+                <a href="/"><img id="r-logo-svg" class="mb-2 text-muted" src="{% static 'img/logo-lowres.svg' %}" alt="Representable logo" width="24" height="24"></a>
                 <p class="d-block mb-3 text-muted">© Representable 2020</p>
             </div>
             <div class="col-6 col-md">
                 <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="{% url 'main:entry' %}">
-                            Add Your Community
+                    <li><a class="text-muted" href="{% url 'main:entry_preview' %}">
+                            {% trans "Add Your Community" %}
                         </a></li>
-                    <li><a class="text-muted" href="{% url 'main:map' %}">
-                            View All Maps
+                    <li><a class="text-muted" href="{% url 'main:partner_welcome' %}">
+                            {% trans "Create a Partner Profile" %}
                         </a></li>
                     {% if user.is_authenticated %}
                     <li><a class="text-muted" href="{% url 'main:review' %}">
-                            My Communities
+                            {% trans "My Communities" %}
                         </a></li>
                     {% endif %}
                 </ul>
@@ -186,21 +254,16 @@
             <div class="col-6 col-md">
                 <ul class="list-unstyled text-small">
                     <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="{% url 'main:privacy' %}">
-                            Privacy
+                            {% trans "Privacy" %}
                     </a></li>
                     <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="{% url 'main:terms' %}">
-                            Terms
+                            {% trans "Terms" %}
                     </a></li>
-                    <li><a class="text-muted" onclick="showConsentBanner(); return false;" href="#">
-                        Tracking Settings
-                    </a></li>
-                    <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="https://forms.gle/1LRVNqR31AfAtD6p7">
-                            Send Feedback
-                    </a></li>
+
                 </ul>
             </div>
             <div class="col-12 col-md">
-                <p class="text-muted">More questions? Reach out at <a href="mailto:team@representable.org">team@representable.org</a></p>
+                <p class="text-muted">{% trans "More questions? Reach out at" %} <a href="mailto:team@representable.org">team@representable.org</a></p>
             </div>
         </div>
     </div>

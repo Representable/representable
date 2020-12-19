@@ -75,10 +75,68 @@ form:invalid {
   border: 1px solid red;
 }
 
+/**
+
+Entry Preview Page
+
+**/
+#entry_preview_intro {
+  padding: 15px 15px 15px 20px;
+  line-height: 2;
+}
+
+#entry_preview_intro h3 {
+  padding-bottom: 10px;
+}
+
+#entry_preview_info {
+  background: rgba(218, 239, 255, 0.63);
+  border-color: rgba(218, 239, 255, 0.63);
+  margin: 15px;
+  padding: 50px 110px;
+  color: black;
+}
+
+#entry_preview_button {
+  text-align: center;
+}
+
+@media only screen and (max-width: 768px) {
+  #entry_preview_image {
+    text-align: center;
+    margin: 0px;
+    padding: 10px 0px 20px 0px;
+  }
+
+  #entry_preview_intro {
+    text-align: center;
+  }
+
+  #entry_preview_info {
+    padding: 30px 50px;
+  }
+}
+
+@media only screen and (max-width: 540px) {
+  #entry_preview_info {
+    padding: 30px 30px;
+  }
+
+  #entry_preview_button {
+    padding-top: 20px;
+  }
+}
+
 /* Entry Page: Geocoder Full Width */
 .mapboxgl-ctrl-geocoder {
   width: 100%;
   max-width: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
 }
 
 /* Disable button hover when button is disabled. */
@@ -117,23 +175,35 @@ body {
 
 /* Bootstrap elements for navbar. */
 .navbar {
-  border-bottom: 1px solid #f5f5f5;
-  box-shadow: 0 0 5px -3px #bebebe;
   z-index: 999;
 }
 .navbar-brand {
-  font-weight: 500;
+  font-weight: 600;
   background: -webkit-linear-gradient(-45deg, #2a94f4, #00c6a7);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  letter-spacing: 2.5px;
+}
+.navbar-logo {
+  width: 40px;
 }
 
 .nav-link {
   /* font-weight: 500; */
   font-size: 16px;
 }
+.nav-link-org {
+  color: rgba(32, 118, 195, 0.8) !important;
+}
+.nav-link-org:hover {
+  color: rgba(32, 118, 195, 1) !important;
+}
 .container {
   border-width: 0;
+}
+
+.w-10 {
+  width: 10%;
 }
 
 .container-full-width {
@@ -147,11 +217,11 @@ body {
 /* Class for the text that greets the user on the website on the front page. */
 /* Alters display-4 max size from 3.5rem to 2.9rem. */
 .main-display-text-sm {
-  font-size: 2.3rem;
+  font-size: 2.1rem;
 }
 
 .main-display-text-all {
-  font-size: 3.1rem;
+  font-size: 2.9rem;
 }
 
 /* Class for what is gerrymandering section styling. */
@@ -163,16 +233,20 @@ body {
 .tooltip-inner {
   background-color: gray !important;
 }
-.bs-tooltip-top .arrow::before, .bs-tooltip-auto[x-placement^="top"] .arrow::before {
+.bs-tooltip-top .arrow::before,
+.bs-tooltip-auto[x-placement^="top"] .arrow::before {
   border-top-color: gray !important;
 }
-.bs-tooltip-right .arrow::before, .bs-tooltip-auto[x-placement^="right"] .arrow::before {
+.bs-tooltip-right .arrow::before,
+.bs-tooltip-auto[x-placement^="right"] .arrow::before {
   border-right-color: gray !important;
 }
-.bs-tooltip-bottom .arrow::before, .bs-tooltip-auto[x-placement^="bottom"] .arrow::before {
+.bs-tooltip-bottom .arrow::before,
+.bs-tooltip-auto[x-placement^="bottom"] .arrow::before {
   border-bottom-color: gray !important;
 }
-.bs-tooltip-left .arrow::before, .bs-tooltip-auto[x-placement^="left"] .arrow::before {
+.bs-tooltip-left .arrow::before,
+.bs-tooltip-auto[x-placement^="left"] .arrow::before {
   border-left-color: gray !important;
 }
 
@@ -189,6 +263,9 @@ body {
   /* draw buttons on entry page */
   .draw-group {
     width: 70%;
+  }
+  .sidenav {
+    height: 100%;
   }
 }
 
@@ -280,7 +357,7 @@ footer {
 color scheme. See readme.md*/
 
 .btn {
-  border-radius: 0.25rem;
+  border-radius: 1.5rem;
 }
 
 .text-primary {
@@ -322,20 +399,30 @@ color scheme. See readme.md*/
 .btn-outline-primary:visited,
 .btn-outline-primary:link {
   background-color: transparent;
-  border-color: #2176c2;
-  color: #2176c2;
+  border-color: #2a94f4;
+  border-width: 2px;
+  color: #2a94f4;
 }
 
 .btn-outline-primary:hover,
 .btn-outline-primary:active {
-  background-color: #2176c2;
-  border-color: #2176c2;
+  background-color: #2a94f4;
+  border-color: #2a94f4;
   color: white;
 }
 
-/* NEEDS EXPLANATION */
-
 @media only screen and (min-width: 768px) {
+  /* for the modal on submission page (thanks) */
+  .modal-header .close {
+    margin: -1rem;
+  }
+  #thanksModalDialog {
+    width: 85%;
+    max-width: 1000px;
+  }
+  #thanksModalLabel {
+    margin: auto;
+  }
   .gap-90 {
     width: 100%;
     height: 90px;
@@ -347,6 +434,9 @@ color scheme. See readme.md*/
     padding-left: 40px;
     padding-right: 40px;
     padding-bottom: 40px;
+  }
+  .container {
+    max-width: 1300px;
   }
 }
 
@@ -405,12 +495,6 @@ color scheme. See readme.md*/
   overflow-y: auto;
 }
 
-@media only screen and (max-width: 768px) {
-  .sidenav {
-    height: 100%;
-  }
-}
-
 /* override what the popup looks like on small devices */
 @media (max-width: 600px) {
   #video_popup {
@@ -423,6 +507,9 @@ color scheme. See readme.md*/
   #video_popup_body {
     padding-right: 0.05rem;
     padding-left: 0.05rem;
+  }
+  .w-10 {
+    width: 30%;
   }
 }
 
@@ -463,6 +550,14 @@ color scheme. See readme.md*/
 .small-link {
   cursor: pointer;
 }
+.link-custom {
+  cursor: pointer;
+  color: #5b5b5b;
+  text-decoration: underline;
+}
+.link-custom:hover {
+  color: black;
+}
 
 /* landing page map */
 #usa-map {
@@ -487,22 +582,14 @@ color scheme. See readme.md*/
   padding: 5px;
   width: 14rem;
 }
-
-.state {
-  max-width: 70%;
-  height: 50vh;
-  margin: auto;
-}
-.state-sm {
-  width: 2rem;
-}
-@media only screen and (min-width: 768px) {
-  .state-sm {
-    display: none;
-  }
-}
 .ws-normal {
   white-space: normal;
+}
+
+@media screen and (min-width: 1600px) {
+  #mapping-image-div {
+    width: 30% !important;
+  }
 }
 
 .loader {
@@ -555,6 +642,11 @@ color scheme. See readme.md*/
   max-width: 400px;
   /* font-family: Inter, system-ui, sans-serif; */
   /* font-size: 12px; */
+}
+input[type="range"]::-webkit-slider-thumb {
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
 }
 
 /* css for the line on the progress bar */
@@ -640,6 +732,12 @@ color scheme. See readme.md*/
 
 /* Entry Form Management */
 
+.g-recaptcha {
+  display: inline-block;
+  padding: 40px 0px 10px 0px;
+  max-width: 80%;
+}
+
 .button-edit {
   display: none;
 }
@@ -652,27 +750,6 @@ color scheme. See readme.md*/
   pointer-events: none;
 }
 
-.map-demo {
-  /*  position: absolute; */
-  top: 100px;
-  bottom: 0;
-  width: 50%;
-  /*  Must Set Absolute Height */
-  height: 800px;
-}
-.race-field-wrap {
-  visibility: hidden;
-  height: 0px;
-}
-.religion-field-wrap {
-  visibility: hidden;
-  height: 0px;
-}
-.industry-field-wrap {
-  visibility: hidden;
-  height: 0px;
-}
-
 .heading-title h3 {
   margin-bottom: 0;
   letter-spacing: 2px;
@@ -681,134 +758,44 @@ color scheme. See readme.md*/
 .p-top-30 {
   padding-top: 30px;
 }
-
-.half-txt2 {
-  width: 60%;
-  margin: 0 auto;
-  display: inline-block;
-  line-height: 25px;
-  /* color: #FFFFFF; */
-  font-size: 22px;
-}
-
-.half-txt {
-  width: 60%;
-  margin: 0 auto;
-  display: inline-block;
-  line-height: 25px;
-  color: #7e7e7e;
-}
 .text-uppercase {
   text-transform: uppercase;
 }
 
-.team-member,
-.team-member .team-img {
-  position: relative;
-}
-.team-member {
-  overflow: hidden;
-}
-.team-member,
-.team-member .team-img {
-  position: relative;
+.line-break {
+  width: 15%;
+  border-bottom: 3px solid black;
 }
 
-.team-hover {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  margin: 0;
-  border: 20px solid rgba(0, 0, 0, 0.1);
-  background-color: rgba(255, 255, 255, 0.9);
-  opacity: 0;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
+.light-blue-text {
+  color: #65bff1;
 }
-.team-member:hover .team-hover .desk {
-  top: 35%;
+.blue-green-text {
+  color: #6dccbb;
 }
-.team-member:hover .team-hover,
-.team-member:hover .team-hover .desk,
-.team-member:hover .team-hover .s-link {
-  opacity: 1;
+.light-blue-bg {
+  background-color: #daefff;
+}
+.blue-green-bg {
+  background-color: #6dccbb;
 }
 
-.desk {
-  position: absolute;
-  top: 0%;
-  width: 100%;
-  opacity: 0;
-  -webkit-transform: translateY(-40%);
-  -ms-transform: translateY(-40%);
-  transform: translateY(-40%);
-  -webkit-transition: all 0.3s 0.2s;
-  transition: all 0.3s 0.2s;
+.how-it-works {
+  height: 200px;
+  width: 70%;
 }
-.desk,
-.desk h4,
-.team-hover .s-link a {
-  text-align: center;
-  color: #222;
+.how-it-works-title {
+  height: 3rem;
 }
 
-@media screen and (max-width: 991px) {
-  .desk p {
-    font-size: 14px;
-  }
+.language-button {
+  background: #ffffff;
+  border: 0 none;
+  cursor: pointer;
+  padding: 0;
 }
-
-.team-member:hover .team-hover .s-link {
-  bottom: 10%;
-}
-.team-member:hover .team-hover,
-.team-member:hover .team-hover .desk,
-.team-member:hover .team-hover .s-link {
-  opacity: 1;
-}
-.team-hover .s-link {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  opacity: 0;
-  text-align: center;
-  -webkit-transform: translateY(45%);
-  -ms-transform: translateY(45%);
-  transform: translateY(45%);
-  -webkit-transition: all 0.3s 0.2s;
-  transition: all 0.3s 0.2s;
-  font-size: 35px;
-}
-.desk,
-.desk h4,
-.team-hover .s-link a {
-  text-align: center;
-  color: #222;
-}
-.team-member .s-link a {
-  margin: 0 10px;
-  color: #333;
-  font-size: 16px;
-}
-.team-title {
-  position: static;
-  padding: 20px 0;
-  display: inline-block;
-  letter-spacing: 2px;
-  width: 100%;
-}
-.team-title h5 {
-  margin-bottom: 0px;
-  display: block;
-  text-transform: uppercase;
-}
-.team-title span {
-  font-size: 12px;
-  text-transform: uppercase;
-  color: #a5a5a5;
-  letter-spacing: 1px;
+.language-button:hover {
+  text-decoration: underline;
 }
 
 #all {
@@ -900,6 +887,145 @@ label {
 }
 
 /* LOGIN */
+/******************************************
+Signup and Login Page
+******************************************/
+#acc_already {
+  height: 50px;
+  color: rgba(101, 101, 101, 0.81);
+}
+
+.auth-form {
+  display: inline-block;
+  width: 70%;
+}
+
+.auth-form .btn {
+  font-size: 80%;
+  /* border-radius: 5rem; */
+  letter-spacing: 0.1rem;
+  font-weight: bold;
+  padding: 1rem;
+  transition: all 0.2s;
+}
+
+.auth-btn-wrap {
+  text-align: center;
+  padding-top: 20px;
+}
+
+.auth-btn {
+  width: 50%;
+}
+
+.auth-form-label {
+  text-align: left;
+  color: rgba(101, 101, 101, 0.61);
+}
+
+.auth-title {
+  color: #5b5b5b;
+}
+
+.auth-wrap {
+  margin: 25px 0px;
+  text-align: center;
+}
+
+.auth-field {
+  display: inline-block;
+  width: 100%;
+  height: 60px !important; /* necessary use of !important */
+  background-color: #cce9ff;
+  border: none;
+  border-radius: 2rem;
+}
+
+.auth-divider-wrap {
+  position: relative;
+}
+
+.auth-divider {
+  position: absolute;
+  width: 0px;
+  height: 259.01px;
+  border-left: 5px solid rgba(0, 0, 0, 0.07);
+  transform: rotate(0.43deg);
+  left: 50%;
+  top: 30%;
+}
+
+.auth-link {
+  color: rgba(101, 101, 101, 0.81);
+  text-decoration: underline;
+}
+
+.auth-link:hover {
+  color: rgba(101, 101, 101, 1);
+}
+.login-field {
+  background-color: #d6f6f1;
+}
+
+.login-field:focus {
+  outline-color: #d6f6f1 !important;
+}
+
+#login-button {
+  background-color: #7adbcb;
+  border-color: #7adbcb;
+}
+
+.to-auth-link {
+  display: none;
+}
+
+.redirect-banner {
+  padding: 0px 30%;
+  text-align: center;
+}
+
+@media only screen and (min-width: 769px) {
+  #signup-form {
+    padding-top: 50px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .auth-divider-wrap {
+    text-align: center;
+    padding: 2.5rem 0rem;
+  }
+  .auth-divider {
+    position: initial;
+    display: inline-block;
+    width: 50%;
+    height: 0px;
+    border-bottom: 5px solid rgba(0, 0, 0, 0.07);
+    transform: rotate(0.43deg);
+  }
+
+  .auth-wrapper {
+    text-align: center;
+  }
+
+  .field-wrap {
+    text-align: center;
+  }
+
+  .to-auth-link {
+    display: inline-block;
+    padding-top: 30px;
+  }
+
+  .redirect-banner {
+    padding: 0px 15%;
+  }
+}
+
+.privacy-note {
+  color: rgba(101, 101, 101, 0.81);
+}
 
 :root {
   --input-padding-x: 1.5rem;
@@ -922,17 +1048,8 @@ label {
   padding: 2rem;
 }
 
-.form-signin {
-  width: 100%;
-}
-
-.form-signin .btn {
-  font-size: 80%;
-  /* border-radius: 5rem; */
-  letter-spacing: 0.1rem;
-  font-weight: bold;
-  padding: 1rem;
-  transition: all 0.2s;
+#id_require_user_addresses {
+  width: 45px;
 }
 
 .form-label-group {
@@ -1008,6 +1125,11 @@ label {
 
 #report {
   cursor: pointer;
+}
+
+.alert-custom {
+  background: #def8f4;
+  color: #5b5b5b;
 }
 
 /* Fallback for Edge
