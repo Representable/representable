@@ -70,3 +70,4 @@ var BG_KEYS = {
 };
 var CHI_WARD_KEY = "179v2oeh";
 var CHI_COMM_KEY = "63nswxfc";
+var SCHOOL_DIST_KEY = "1ezqvmlm";
