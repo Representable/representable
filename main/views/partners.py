@@ -89,9 +89,8 @@ class PartnerMap(TemplateView):
             aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
         )
         start_time_aws = time.time()
-        entryPolyDict, comms, streets, cities = asyncio.run(
-            getcomms(query, client, is_admin, drive)
-        )
+        entryPolyDict, comms, streets, cities = asyncio.run(getcomms(query, client, is_admin, drive))
+        print("it went in the right")
         context = {
             "streets": streets,
             "cities": cities,
@@ -140,24 +139,33 @@ async def getcomms(query, client, is_admin, drive):
     cities = {}
     tasks = []
     for obj in query:
-        tasks.append(insideloop(obj, client, is_admin, drive, entryPolyDict, streets, cities, comms))
+        tasks.append(insideloop(obj, client, is_admin, drive))
 
-    await asyncio.gather(*tasks)
+    results = await asyncio.gather(*tasks)
+    for item in results:
+        comms.append(item[0])
+        entryPolyDict[item[0].entry_ID] = item[1]
+        if item[2] and item[3]:
+            streets[item[0].entry_ID] = item[2]
+            cities[item[0].entry_ID] = item[3]
+
+    # print(type(results))
+    # print(type(results[0]))
+    # print(results[0])
     return entryPolyDict, comms, streets, cities
 
-async def insideloop(obj, client, is_admin, drive, entryPolyDict, streets, cities, comms):
+async def insideloop(obj, client, is_admin, drive):
     try:
-        getfroms3(
-            client, obj, drive, obj.state, comms, entryPolyDict, is_admin
+        comm, coords = getfroms3(
+            client, obj, drive, obj.state, is_admin
         )
-        comms.append(comm)
     except Exception:
         if not obj.census_blocks_polygon and obj.user_polygon:
             s = "".join(obj.user_polygon.geojson)
         elif obj.census_blocks_polygon:
             s = "".join(obj.census_blocks_polygon.geojson)
         else:
-            return
+            return None
         if is_admin:
             if not obj.user_name:
                 obj.user_name = obj.user.username
@@ -165,19 +173,26 @@ async def insideloop(obj, client, is_admin, drive, entryPolyDict, streets, citie
             if obj.user_name:
                 obj.user_name = ""
 
-        comms.append(obj)
+        # comms.append(obj)
         struct = geojson.loads(s)
-        entryPolyDict[obj.entry_ID] = struct.coordinates
+        coords = struct.coordinates
+        # entryPolyDict[obj.entry_ID] = struct.coordinates
 
+    print("requests finished at time %s" % time.time())
+    street = None
+    city = None
     if is_admin:
         for a in Address.objects.filter(entry=obj):
-            streets[obj.entry_ID] = a.street
-            cities[obj.entry_ID] = (
-                a.city + ", " + a.state + " " + a.zipcode
-            )
+            # streets[obj.entry_ID] = a.street
+            # cities[obj.entry_ID] = (
+            #     a.city + ", " + a.state + " " + a.zipcode
+            # )
+            street = a.street
+            city = a.city + ", " + a.state + " " + a.zipcode
+    return obj, coords, street, city
 
 
-def getfroms3(client, obj, drive, state, comms, entryPolyDict, is_admin):
+def getfroms3(client, obj, drive, state, is_admin):
     print("request made at time %s" % time.time())
     if drive:
         folder_name = drive.slug
@@ -189,7 +204,6 @@ def getfroms3(client, obj, drive, state, comms, entryPolyDict, is_admin):
         Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
         Key=str(folder_name) + "/" + obj.entry_ID + ".geojson",
     )
-    print("request response gotten at time %s" % time.time())
     strobject = response["Body"].read().decode("utf-8")
     mapentry = geojson.loads(strobject)
     comm = CommunityEntry(
@@ -209,9 +223,9 @@ def getfroms3(client, obj, drive, state, comms, entryPolyDict, is_admin):
             comm.user_name = obj.user_name
         else:
             obj.user.username
-    comms.append(comm)
-    entryPolyDict[obj.entry_ID] = mapentry["geometry"]["coordinates"]
-    return comm
+    # comms.append(comm)
+    # entryPolyDict[obj.entry_ID] = mapentry["geometry"]["coordinates"]
+    return comm, mapentry["geometry"]["coordinates"]
 
 
 # ******************************************************************************#
