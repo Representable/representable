@@ -89,9 +89,7 @@ class PartnerMap(TemplateView):
             aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
         )
         start_time_aws = time.time()
-        entryPolyDict, comms, streets, cities = asyncio.run(
-            getcomms(query, client, is_admin, drive)
-        )
+        entryPolyDict, comms, streets, cities = getcomms(query, client, is_admin, drive)
         context = {
             "streets": streets,
             "cities": cities,
@@ -133,16 +131,31 @@ class PartnerMap(TemplateView):
         return context
 
 
-async def getcomms(query, client, is_admin, drive):
+def getcomms(query, client, is_admin, drive):
     comms = []
     entryPolyDict = dict()
     streets = {}
     cities = {}
     tasks = []
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
     for obj in query:
-        tasks.append(insideloop(obj, client, is_admin, drive, entryPolyDict, streets, cities, comms))
+        tasks.append(asyncio.ensure_future(insideloop(obj, client, is_admin, drive)))
 
-    await asyncio.gather(*tasks)
+    # loop.run_until_complete
+    # all_groups = asyncio.gather(*tasks)
+    results = loop.run_until_complete(asyncio.gather(*tasks))
+    loop.close()
+    for item in results:
+        comms.append(item[0])
+        entryPolyDict[item[0].entry_ID] = item[1]
+        if item[2] and item[3]:
+            streets[item[0].entry_ID] = item[2]
+            cities[item[0].entry_ID] = item[3]
+
+    # print(type(results))
+    # print(type(results[0]))
+    # print(results[0])
     return entryPolyDict, comms, streets, cities
 
 async def insideloop(obj, client, is_admin, drive, entryPolyDict, streets, cities, comms):
