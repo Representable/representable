@@ -209,15 +209,37 @@
                 </div>
                 {% if verified %}
                 <div class="alert alert-primary mx-5" role="alert">
-                  <p class="text-center">By adding your community to Representable you are not submitting a map to a redistricting commission or representative. We will add information about submitting to the commission as soon as it becomes available in your state.</p>
+                  <p class="text-center">We have emailed a PDF of your map for your records. By adding your community to Representable you are not submitting a map to a redistricting commission or representative. We will add information about submitting to the commission as soon as it becomes available in your state.</p>
                 </div>
                 {% endif %}
                 {% if not verified %}
                 <div class="alert alert-warning mx-5" role="alert">
-                  <p class="text-center"> Thank you for submitting your map. The next step is to verify your email. We resent an email verification link to your inbox. We've also emailed a PDF of your map for confirmation purposes.</p>
+                  <p class="text-center"> Thank you for submitting your map. The next step is to verify your email. We resent an email verification link to your inbox.</p>
                   <p class="text-center"> Account verification allows Representable.org and our partner organizations to submit credible maps to Redistricting Commissions ensuring that your entry has an impact in ending gerrymandering. </p>
                 </div>
                 {% endif %}
+
+                <div class = "row">
+                  <form name="pdfForm" id="pdfForm" action="/send_mail_plain" method = "post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class = "form-group">
+                      <label>
+                        Message:
+                      </label>
+                      <input name="message" value="THIS IS MY FORM AYY"/>
+<!--                      <textarea name = "message" class = "form-control" rows = "5"> </textarea>-->
+                    </div>
+                    <div class = "form-group">
+                      <label>
+                        Input:
+                      </label>
+                      <input type = "file" name = "file" class = "form-control">
+                    </div>
+                    <div class = "form-group">
+                      <button type = "submit" class = "btn btn-success"> SEND MAIL</button>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
