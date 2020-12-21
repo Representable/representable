@@ -400,10 +400,6 @@ async def getfroms3(client, obj, drive, state, comms, entryPolyDict):
     comms.append(comm)
     entryPolyDict[obj.entry_ID] = mapentry["geometry"]["coordinates"]
 
-
-# ******************************************************************************#
-
-
 class Submission(TemplateView):
     template_name = "main/submission.html"
 
@@ -515,6 +511,7 @@ class Submission(TemplateView):
                 user=self.request.user, verified=True
             ).exists():
                 context["verified"] = True
+
             else:
                 user_email_address = EmailAddress.objects.get(
                     user=self.request.user
@@ -649,9 +646,15 @@ class Map(TemplateView):
         # the polygon coordinates
         entryPolyDict = dict()
         # all communities for display TODO: might need to limit this? or go by state
-        query = CommunityEntry.objects.all()
+        query = CommunityEntry.objects.filter(state=state)
+
+        client = boto3.client(
+            "s3",
+            aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
+        )
         # get the polygon from db and pass it on to html
-        for obj in CommunityEntry.objects.all():
+        for obj in query:
             if not obj.admin_approved:
                 continue
             if (
