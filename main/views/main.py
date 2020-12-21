@@ -641,12 +641,13 @@ class Map(TemplateView):
     template_name = "main/map.html"
 
     def get_context_data(self, **kwargs):
-        state = self.kwargs["state"]
+        state = self.kwargs["state"].lower()
 
         # the polygon coordinates
         entryPolyDict = dict()
+        comms = []
         # all communities for display TODO: might need to limit this? or go by state
-        query = CommunityEntry.objects.filter(state=state)
+        query = CommunityEntry.objects.filter(state=state, drive__isnull=True)
 
         client = boto3.client(
             "s3",
@@ -655,23 +656,43 @@ class Map(TemplateView):
         )
         # get the polygon from db and pass it on to html
         for obj in query:
-            if not obj.admin_approved:
-                continue
-            if (
-                obj.census_blocks_polygon == ""
-                or obj.census_blocks_polygon is None
-            ):
-                s = "".join(obj.user_polygon.geojson)
-            else:
-                s = "".join(obj.census_blocks_polygon.geojson)
-
-            # add all the coordinates in the array
-            # at this point all the elements of the array are coordinates of the polygons
-            struct = geojson.loads(s)
-            entryPolyDict[obj.entry_ID] = struct.coordinates
+            try:
+                response = client.get_object(
+                    Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
+                    Key=str(state) + "/" + obj.entry_ID + ".geojson",
+                )
+                strobject = response["Body"].read().decode("utf-8")
+                mapentry = geojson.loads(strobject)
+                comm = CommunityEntry(
+                    entry_ID=obj.entry_ID,
+                    comm_activities=mapentry["properties"]["comm_activities"],
+                    entry_name=mapentry["properties"]["entry_name"],
+                    economic_interests=mapentry["properties"]["economic_interests"],
+                    other_considerations=mapentry["properties"]["other_considerations"],
+                    cultural_interests=mapentry["properties"]["cultural_interests"],
+                )
+                comms.append(comm)
+                entryPolyDict[obj.entry_ID] = mapentry["geometry"]["coordinates"]
+            except:
+                if (
+                    obj.census_blocks_polygon == ""
+                    or obj.census_blocks_polygon is None
+                    and obj.user_polygon
+                ):
+                    s = "".join(obj.user_polygon.geojson)
+                elif (obj.census_blocks_polygon):
+                    s = "".join(obj.census_blocks_polygon.geojson)
+                else:
+                    continue
+                comms.append(obj)
+                # add all the coordinates in the array
+                # at this point all the elements of the array are coordinates of the polygons
+                struct = geojson.loads(s)
+                entryPolyDict[obj.entry_ID] = struct.coordinates
 
         context = {
-            "communities": query,
+            "state": state,
+            "communities": comms,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
@@ -835,7 +856,7 @@ class EntryView(LoginRequiredMixin, View):
                     entryForm.organization = drive.organization
             else:
                 folder_name = self.kwargs["abbr"]
-                entryForm.state = self.kwargs["abbr"]
+                entryForm.state = self.kwargs["abbr"].lower()
             if entryForm.organization:
                 if self.request.user.is_org_admin(entryForm.organization.id):
                     entryForm.admin_approved = True
