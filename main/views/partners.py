@@ -21,6 +21,7 @@ from django.views.generic import (
 import asyncio
 import boto3
 import botocore
+import pandas
 from django.contrib.gis import geos
 from django.contrib.gis.geos import GEOSGeometry, MultiPolygon, Polygon
 
@@ -278,9 +279,19 @@ class MultiExportView(TemplateView):
 
         final = geojson.FeatureCollection(all_gj)
 
-        response = HttpResponse(
-            geojson.dumps(final), content_type="application/json"
-        )
+        if(kwargs['type'] == 'geo'):
+            print('********', 'geo', '********')
+            response = HttpResponse(geojson.dumps(final), content_type="application/json")
+        else:
+            print('********', 'csv', '********')
+            dictform = json.loads(geojson.dumps(final))
+            df = pandas.DataFrame()
+            for entry in dictform['features']:
+                row_dict = entry['properties'].copy()
+                row_dict['geometry'] = str(entry['geometry'])
+                df = df.append(row_dict, ignore_index=True)
+            response = HttpResponse(df.to_csv(), content_type="text/csv")
+
         return response
 
 

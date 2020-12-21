@@ -120,12 +120,12 @@ urlpatterns = [
     path("export/", views.main.ExportView.as_view(), name="export"),
     path("export/<abbr>/", views.main.ExportView.as_view(), name="export"),
     path(
-        "multiexport/drive/<drive>",
+        "multiexport/drive/<drive>/<type>/",
         views.partners.MultiExportView.as_view(),
         name="multi_export",
     ),
     path(
-        "multiexport/org/<org>",
+        "multiexport/org/<org>/<type>/",
         views.partners.MultiExportView.as_view(),
         name="multi_export",
     ),
