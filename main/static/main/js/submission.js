@@ -241,7 +241,7 @@ map.on("load", function () {
       doc.setFontSize(12);
       doc.setTextColor(0);
       // link to view on rep
-      var rLink = "View this community at: " + window.location.href;
+      var rLink = doc.splitTextToSize("View this community at: " + window.location.href, 180);
       doc.text(20, 53, rLink);
 
       var org = window.document.getElementById("org-text");
@@ -335,3 +335,18 @@ for (var id in toggleableLayerIds){
 function removeLastChar(str) {
   return str.substring(0, str.length - 1);
 }
+
+// Links "What GeoJSON is?" Modal and download for GeoJSON into one event
+$('[data-toggle=modal]').on('click', function(e) {
+  var $target = $($(this).data('target'));
+  $target.data('triggered', true);
+  setTimeout(function() {
+    if ($target.data('triggered')) {
+      $target.modal('show').data('triggered', false);
+    };
+  }, 100); // ms delay
+  return false;
+});
+$('#geojson-explain-modal').on('show.bs.modal', function () {
+  $('#hidden-download-geojson')[0].click();
+});

@@ -281,6 +281,7 @@ document.addEventListener(
       }, 500);
       setTimeout(function () {
         if (polySuccess && formSuccess) {
+          sessionStorage.clear();
           form.submit();
         }
       }, 2000);
