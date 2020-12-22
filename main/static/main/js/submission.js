@@ -340,22 +340,33 @@ map.on("load", function () {
       elementHandlers: elementHandler,
     });
 
-    //    https://stackoverflow.com/questions/55324087/how-to-make-my-http-request-behave-the-same-as-a-form
-
-    var url = "http://localhost:8080/";
-
+    //    https://stackoverflow.com/questions/29826687/storing-generated-pdf-files-on-the-server
+    var pdf = doc.output();
+    var data = new FormData();
+    data.append("data", pdf);
+    console.log(data);
+    debugger;
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", url, true);
-    var formData = new FormData();
+    var url = "http://localhost:8000/";
+    xhr.open("post", url, true);
+    alert(data);
+    xhr.send(data);
 
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState == 4 && xhr.status == 200) {
-        alert(xhr.responseText);
-      }
-    };
-    formData.append("pdfMAP", doc);
-    xhr.send(formData);
-    alert("Alert test");
+    // https://stackoverflow.com/questions/55324087/how-to-make-my-http-request-behave-the-same-as-a-form
+
+    //    var url = "http://localhost:8000/";
+    //
+    //    var xhr = new XMLHttpRequest();
+    //    xhr.open("POST", url, true);
+    //    var formData = new FormData();
+    //
+    //    xhr.onreadystatechange = function () {
+    //      if (xhr.readyState == 4 && xhr.status == 200) {
+    //        alert(xhr.responseText);
+    //      }
+    //    };
+    //    formData.append("pdfMAP", doc);
+    //    xhr.send(formData);
   });
 });
 

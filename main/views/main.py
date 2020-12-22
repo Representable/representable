@@ -308,9 +308,12 @@ def SendPlainEmail(request):
     email.content_subtype = "html"
     # file = open("README.md", "r")
     # email.attach("README.md", file.read(), 'text/plain')
-    print(request)
-    file = request.FILES["pdfMAP"]
+    print("TESTING")
+    # print(request)
+    # print(request.FILES)
+    file = request.FILES["data"]
     email.attach(file.name, file.read(), file.content_type)
+
     email.send()
     return HttpResponse("Sent")
 
