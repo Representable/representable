@@ -117,6 +117,13 @@ from django.contrib.gis.geos import GEOSGeometry
 
 # ******************************************************************************#
 
+def SendPlainEmail(request):
+    print("****************************** EMAIL BACKEND **************************")
+    asdasd = "Sent" + "\n message : " + "\n request.Files : " + str(request.FILES) +  "\n request.Post : " + str(request.POST)
+    print(asdasd)
+
+    return HttpResponse(asdasd, content_type="text/plain")
+
 # custom mixin redirects to signup page/tab rather than login
 class SignupRequiredMixin(AccessMixin):
     """Verify that the current user is authenticated."""
