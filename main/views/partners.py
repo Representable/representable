@@ -186,6 +186,8 @@ async def getfroms3(client, obj, drive, state, comms, entryPolyDict, is_admin):
         other_considerations=mapentry["properties"]["other_considerations"],
         cultural_interests=mapentry["properties"]["cultural_interests"],
     )
+    if "population" in mapentry["properties"]:
+        comm.population = mapentry["properties"]["population"]
     comm.drive = Drive(name=mapentry["properties"]["drive"])
     comm.organization = Organization(
         name=mapentry["properties"]["organization"]
