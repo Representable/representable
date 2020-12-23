@@ -362,7 +362,7 @@ async def getcommsforreview(query, client):
                 and obj.user_polygon
             ):
                 s = "".join(obj.user_polygon.geojson)
-            elif (obj.census_blocks_polygon):
+            elif obj.census_blocks_polygon:
                 s = "".join(obj.census_blocks_polygon.geojson)
             else:
                 continue
@@ -401,6 +401,7 @@ async def getfroms3(client, obj, drive, state, comms, entryPolyDict):
     )
     comms.append(comm)
     entryPolyDict[obj.entry_ID] = mapentry["geometry"]["coordinates"]
+
 
 class Submission(TemplateView):
     template_name = "main/submission.html"
@@ -629,7 +630,9 @@ class ExportView(TemplateView):
                 gj = make_geojson(request, query)
         except Exception:
             msg = "Unable to export the community geojson. Please check again"
-            response = HttpResponseNotFound(msg, content_type="application/json")
+            response = HttpResponseNotFound(
+                msg, content_type="application/json"
+            )
 
         gs = geojson.dumps(gj)
         if "csv" in request.path:
@@ -653,9 +656,13 @@ class Map(TemplateView):
         # the polygon coordinates
         entryPolyDict = dict()
         # all communities for display TODO: might need to limit this? or go by state
-        query = CommunityEntry.objects.all()
+        query = (
+            CommunityEntry.objects.all()
+            .prefetch_related("drive", "organization")
+            .filter(organization__id=0)
+        )
         # get the polygon from db and pass it on to html
-        for obj in CommunityEntry.objects.all():
+        for obj in query:
             if not obj.admin_approved:
                 continue
             if (
