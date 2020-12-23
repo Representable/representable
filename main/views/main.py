@@ -46,6 +46,10 @@ from allauth.account.models import (
     EmailAddress,
     EmailConfirmationHMAC,
 )
+from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.core.mail import EmailMessage
+
 from allauth.account import adapter
 from allauth.account.app_settings import ADAPTER
 from allauth.account.forms import LoginForm, SignupForm
@@ -360,7 +364,7 @@ async def getcommsforreview(query, client):
                 and obj.user_polygon
             ):
                 s = "".join(obj.user_polygon.geojson)
-            elif (obj.census_blocks_polygon):
+            elif obj.census_blocks_polygon:
                 s = "".join(obj.census_blocks_polygon.geojson)
             else:
                 continue
@@ -402,6 +406,30 @@ async def getfroms3(client, obj, drive, state, comms, entryPolyDict):
 
 
 # ******************************************************************************#
+def SendPlainEmail(request):
+    # user_email_address = EmailAddress.objects.get(
+    #     user=self.request.user
+    # )
+    # message = request.POST.get('message')
+    user_email_address = "edwardtian2000@gmail.com"
+
+    email = EmailMessage(
+        "Hello",
+        "message temporary",
+        "no-reply@representable.org",
+        [user_email_address],
+    )
+    email.content_subtype = "html"
+    # file = open("README.md", "r")
+    # email.attach("README.md", file.read(), 'text/plain')
+    print("TESTING")
+    # print(request)
+    # print(request.FILES)
+    file = request.FILES["generatedpdf"]
+    email.attach(file.name, file.read(), file.content_type)
+
+    email.send()
+    return HttpResponse("Sent")
 
 
 class Submission(TemplateView):
@@ -630,7 +658,9 @@ class ExportView(TemplateView):
                 gj = make_geojson(request, query)
         except Exception:
             msg = "Unable to export the community geojson. Please check again"
-            response = HttpResponseNotFound(msg, content_type="application/json")
+            response = HttpResponseNotFound(
+                msg, content_type="application/json"
+            )
 
         gs = geojson.dumps(gj)
         response = HttpResponse(gs, content_type="application/json")

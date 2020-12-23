@@ -225,6 +225,49 @@
                   <p class="text-center"> Account verification allows Representable.org and our partner organizations to submit credible maps to Redistricting Commissions ensuring that your entry has an impact in ending gerrymandering. </p>
                 </div>
                 {% endif %}
+
+                <div class = "row">
+                  <form name="pdfForm" id="pdfForm">
+                    {% csrf_token %}
+                    <div class = "form-group">
+                      <label>
+                        Message:
+                      </label>
+                      <input name="message" value="THIS IS MY FORM AYY"/>
+                    </div>
+                    <div class = "form-group">
+                      <label>
+                        Input:
+                      </label>
+                      <input type = "file" name = "file" class = "form-control">
+                    </div>
+                    <div class = "form-group">
+                      <button type = "submit" class = "btn btn-success"> SEND MAIL</button>
+                    </div>
+                  </form>
+
+                  <script>
+                    var testForm = document.getElementById('pdfForm');
+                    testForm.onsubmit = function(event) {
+                      alert("submit!!");
+                      event.preventDefault();
+                      var request = new XMLHttpRequest();
+                      request.open('POST', '/send_mail_plain', false);
+                      var formData = new FormData(document.getElementById('pdfForm'));
+
+                      let pdfDoc = new jsPDF();
+                      pdfDoc.text("Hello world!", 10, 10);
+                      var blob = new Blob([pdfDoc], { type: "text/pdf"});
+                      var pdf = pdfDoc.output('blob');
+
+                      formData.append('generatedpdf', pdf);
+                      // formData.append('appendedFile2', new Blob(['bar some text']), 'bar.txt');
+
+                      request.send(formData);
+                      console.log(request.response);
+                    }
+                  </script>
+                </div>
               </div>
             </div>
           </div>
