@@ -656,11 +656,14 @@ class Map(TemplateView):
         # the polygon coordinates
         entryPolyDict = dict()
         # all communities for display TODO: might need to limit this? or go by state
-        query = (
-            CommunityEntry.objects.all()
-            .prefetch_related("drive", "organization")
-            .filter(organization__id=0)
-        )
+        org = Organization.objects.get(id=0)
+        query = org.submissions.all().prefetch_related("drive")
+        drives = []
+        # query = (
+        #     CommunityEntry.objects.all()
+        #     .prefetch_related("drive", "organization")
+        #     .filter(organization__id=0)
+        # )
         # get the polygon from db and pass it on to html
         for obj in query:
             if not obj.admin_approved:
@@ -672,6 +675,7 @@ class Map(TemplateView):
                 s = "".join(obj.user_polygon.geojson)
             else:
                 s = "".join(obj.census_blocks_polygon.geojson)
+            drives.append(obj.drive)
 
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
@@ -680,6 +684,7 @@ class Map(TemplateView):
 
         context = {
             "communities": query,
+            "drives": drives,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
