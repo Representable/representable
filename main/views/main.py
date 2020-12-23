@@ -417,6 +417,7 @@ class Submission(TemplateView):
 
         # query will have length 1 or database is invalid
         user_map = query[0]
+
         if user_map.drive:
             folder_name = query[0].drive.slug
             has_state = False
@@ -461,6 +462,8 @@ class Submission(TemplateView):
                     "cultural_interests"
                 ],
             )
+            if "population" in mapentry["properties"]:
+                comm.population = mapentry["properties"]["population"]
             if mapentry["properties"]["drive"]:
                 comm.drive = Drive(name=mapentry["properties"]["drive"])
             if mapentry["properties"]["organization"]:
@@ -707,6 +710,7 @@ def make_geojson_for_s3(entry):
             "economic_interests",
             "comm_activities",
             "other_considerations",
+            "population",
         ),
     )
     gj = geojson.loads(map_geojson)
