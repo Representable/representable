@@ -30,15 +30,21 @@ if (bboxStack === null) bboxStack = [];
 // change "Show Examples" to "Hide Examples" on click
 // TODO: change this to be updated for languages automatically, rather than manually
 function changeText(element) {
+  var target_id = element.getAttribute("data-target").replace("#","");
+  var targetVis = document.getElementById(target_id).classList.contains("show");
   var txt = element.innerText;
-  if (txt == "Show Examples") {
-    element.innerText = "Hide Examples";
-  } else if (txt == "Hide Examples") {
-    element.innerText = "Show Examples";
-  } else if (txt == "Mostar ejemplos") {
-    element.innerText = "Ocultar ejemplos";
-  } else if (txt == "Ocultar ejemplos") {
-    element.innerText = "Mostar ejemplos";
+  if (!targetVis) {
+    if (txt == "Show Examples") {
+      element.innerText = "Hide Examples";
+    } else if (txt == "Mostar ejemplos") {
+      element.innerText = "Ocultar ejemplos";
+    }
+  } else {
+    if (txt == "Hide Examples") {
+      element.innerText = "Show Examples";
+    } else if (txt == "Ocultar ejemplos"){
+      element.innerText = "Mostar ejemplos";
+    }
   }
 }
 
