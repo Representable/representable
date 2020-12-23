@@ -1018,6 +1018,8 @@ map.on("style.load", function () {
     var queryFeatures = map.queryRenderedFeatures(bbox, {
       layers: [state + "-census-shading"],
     });
+    // if no features are found - probably selected an invalid area (outside state) or some other error occurred
+    if (queryFeatures.length == 0) return;
     var isChanged = false; // store only valid moves in stack
     var features = []; // the features in click radius
     var currentBbox; // the current selection area bounding box
