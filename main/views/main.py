@@ -100,6 +100,7 @@ from django.contrib.auth.models import Group
 from itertools import islice
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
+import pandas as pd
 
 from django.conf import settings
 
@@ -630,7 +631,13 @@ class ExportView(TemplateView):
             response = HttpResponseNotFound(msg, content_type="application/json")
 
         gs = geojson.dumps(gj)
-        response = HttpResponse(gs, content_type="application/json")
+        if "csv" in request.path:
+            # this is the new code -- turns geojson into csv for export
+            df = pd.json_normalize(gj)
+            comm_csv = df.to_csv()
+            response = HttpResponse(comm_csv, content_type="text/csv")
+        else:
+            response = HttpResponse(gs, content_type="application/json")
         return response
 
 
