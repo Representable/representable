@@ -163,7 +163,7 @@ class Drive(models.Model):
     """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    slug = models.SlugField(null=True, unique=True)
+    slug = models.SlugField(max_length=255, null=True, unique=True)
     name = models.CharField(max_length=128)
     description = models.CharField(max_length=700, blank=True, null=True)
     state = models.CharField(

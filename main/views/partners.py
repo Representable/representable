@@ -21,6 +21,7 @@ from django.views.generic import (
 import asyncio
 import boto3
 import botocore
+import pandas
 from django.contrib.gis import geos
 from django.contrib.gis.geos import GEOSGeometry, MultiPolygon, Polygon
 
@@ -28,6 +29,7 @@ from django.contrib.gis.geos import GEOSGeometry, MultiPolygon, Polygon
 import json
 import os
 import geojson
+import time
 from django.shortcuts import get_object_or_404
 from geojson_rewind import rewind
 from django.core.serializers import serialize
@@ -61,6 +63,7 @@ class PartnerMap(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        actual_start = time.time()
 
         # the polygon coordinates
         entryPolyDict = dict()
@@ -86,9 +89,9 @@ class PartnerMap(TemplateView):
             aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
             aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
         )
-        entryPolyDict, comms, streets, cities = asyncio.run(
-            getcomms(query, client, is_admin, drive)
-        )
+        start_time_aws = time.time()
+        entryPolyDict, comms, streets, cities = asyncio.run(getcomms(query, client, is_admin, drive))
+        print("it went in the right")
         context = {
             "streets": streets,
             "cities": cities,
@@ -125,6 +128,8 @@ class PartnerMap(TemplateView):
             context["drive_slug"] = self.kwargs["drive"]
         if self.request.user.is_authenticated:
             context["is_org_admin"] = self.request.user.is_org_admin(org.id)
+        print("--- %s seconds for AWS---" % (time.time() - start_time_aws))
+        print("--- %s seconds including query---" % (time.time() - actual_start))
         return context
 
 
@@ -133,39 +138,63 @@ async def getcomms(query, client, is_admin, drive):
     entryPolyDict = dict()
     streets = {}
     cities = {}
+    tasks = []
     for obj in query:
-        try:
-            await getfroms3(
-                client, obj, drive, obj.state, comms, entryPolyDict, is_admin
-            )
-        except Exception:
-            if not obj.census_blocks_polygon and obj.user_polygon:
-                s = "".join(obj.user_polygon.geojson)
-            elif obj.census_blocks_polygon:
-                s = "".join(obj.census_blocks_polygon.geojson)
-            else:
-                continue
-            if is_admin:
-                if not obj.user_name:
-                    obj.user_name = obj.user.username
-            else:
-                if obj.user_name:
-                    obj.user_name = ""
+        tasks.append(insideloop(obj, client, is_admin, drive))
 
-            comms.append(obj)
-            struct = geojson.loads(s)
-            entryPolyDict[obj.entry_ID] = struct.coordinates
+    results = await asyncio.gather(*tasks)
+    for item in results:
+        comms.append(item[0])
+        entryPolyDict[item[0].entry_ID] = item[1]
+        if item[2] and item[3]:
+            streets[item[0].entry_ID] = item[2]
+            cities[item[0].entry_ID] = item[3]
 
-        if is_admin:
-            for a in Address.objects.filter(entry=obj):
-                streets[obj.entry_ID] = a.street
-                cities[obj.entry_ID] = (
-                    a.city + ", " + a.state + " " + a.zipcode
-                )
+    # print(type(results))
+    # print(type(results[0]))
+    # print(results[0])
     return entryPolyDict, comms, streets, cities
 
+async def insideloop(obj, client, is_admin, drive):
+    try:
+        comm, coords = getfroms3(
+            client, obj, drive, obj.state, is_admin
+        )
+    except Exception:
+        if not obj.census_blocks_polygon and obj.user_polygon:
+            s = "".join(obj.user_polygon.geojson)
+        elif obj.census_blocks_polygon:
+            s = "".join(obj.census_blocks_polygon.geojson)
+        else:
+            return None
+        if is_admin:
+            if not obj.user_name:
+                obj.user_name = obj.user.username
+        else:
+            if obj.user_name:
+                obj.user_name = ""
 
-async def getfroms3(client, obj, drive, state, comms, entryPolyDict, is_admin):
+        # comms.append(obj)
+        struct = geojson.loads(s)
+        coords = struct.coordinates
+        # entryPolyDict[obj.entry_ID] = struct.coordinates
+
+    print("requests finished at time %s" % time.time())
+    street = None
+    city = None
+    if is_admin:
+        for a in Address.objects.filter(entry=obj):
+            # streets[obj.entry_ID] = a.street
+            # cities[obj.entry_ID] = (
+            #     a.city + ", " + a.state + " " + a.zipcode
+            # )
+            street = a.street
+            city = a.city + ", " + a.state + " " + a.zipcode
+    return obj, coords, street, city
+
+
+def getfroms3(client, obj, drive, state, is_admin):
+    print("request made at time %s" % time.time())
     if drive:
         folder_name = drive.slug
     elif not drive and obj.drive:
@@ -197,8 +226,9 @@ async def getfroms3(client, obj, drive, state, comms, entryPolyDict, is_admin):
             comm.user_name = obj.user_name
         else:
             obj.user.username
-    comms.append(comm)
-    entryPolyDict[obj.entry_ID] = mapentry["geometry"]["coordinates"]
+    # comms.append(comm)
+    # entryPolyDict[obj.entry_ID] = mapentry["geometry"]["coordinates"]
+    return comm, mapentry["geometry"]["coordinates"]
 
 
 # ******************************************************************************#
@@ -251,9 +281,19 @@ class MultiExportView(TemplateView):
 
         final = geojson.FeatureCollection(all_gj)
 
-        response = HttpResponse(
-            geojson.dumps(final), content_type="application/json"
-        )
+        if(kwargs['type'] == 'geo'):
+            print('********', 'geo', '********')
+            response = HttpResponse(geojson.dumps(final), content_type="application/json")
+        else:
+            print('********', 'csv', '********')
+            dictform = json.loads(geojson.dumps(final))
+            df = pandas.DataFrame()
+            for entry in dictform['features']:
+                row_dict = entry['properties'].copy()
+                row_dict['geometry'] = str(entry['geometry'])
+                df = df.append(row_dict, ignore_index=True)
+            response = HttpResponse(df.to_csv(), content_type="text/csv")
+
         return response
 
 

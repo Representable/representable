@@ -31,11 +31,23 @@ var pop = sessionStorage.getItem("pop");
 if (pop !== null) document.getElementById("comm-pop").innerHTML = pop;
 
 // change "Show Examples" to "Hide Examples" on click
+// TODO: change this to be updated for languages automatically, rather than manually
 function changeText(element) {
-  if (element.innerText == "Show Examples") {
-    element.innerText = "Hide Examples";
+  var target_id = element.getAttribute("data-target").replace("#","");
+  var targetVis = document.getElementById(target_id).classList.contains("show");
+  var txt = element.innerText;
+  if (!targetVis) {
+    if (txt == "Show Examples") {
+      element.innerText = "Hide Examples";
+    } else if (txt == "Mostar ejemplos") {
+      element.innerText = "Ocultar ejemplos";
+    }
   } else {
-    element.innerText = "Show Examples";
+    if (txt == "Hide Examples") {
+      element.innerText = "Show Examples";
+    } else if (txt == "Ocultar ejemplos"){
+      element.innerText = "Mostar ejemplos";
+    }
   }
 }
 
@@ -205,7 +217,10 @@ function createCommPolygon() {
   // it means a community with a population between 480,000 & 2,400,000
   var polyFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
 
-  if (polyFilter === null) return false;
+  if (polyFilter === null) {
+    triggerMissingPolygonError();
+    return false;
+  }
   if (polyFilter.length > 802) {
     triggerDrawError(
       "polygon_size",
@@ -287,6 +302,7 @@ document.addEventListener(
       }, 500);
       setTimeout(function () {
         if (polySuccess && formSuccess) {
+          sessionStorage.clear();
           form.submit();
         }
       }, 2000);
@@ -1010,6 +1026,8 @@ map.on("style.load", function () {
     var queryFeatures = map.queryRenderedFeatures(bbox, {
       layers: [state + "-census-shading"],
     });
+    // if no features are found - probably selected an invalid area (outside state) or some other error occurred
+    if (queryFeatures.length == 0) return;
     var isChanged = false; // store only valid moves in stack
     var features = []; // the features in click radius
     var currentBbox; // the current selection area bounding box

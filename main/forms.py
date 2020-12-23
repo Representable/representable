@@ -232,7 +232,7 @@ class DriveForm(ModelForm):
                 choices=STATES, attrs={"class": "form-control"}
             ),
             "require_user_addresses": forms.CheckboxInput(
-                attrs={"class": "form-control"}
+                attrs={"class": "form-check-input"}
             ),
         }
 
