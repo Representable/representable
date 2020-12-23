@@ -243,6 +243,9 @@ function createCommPolygon() {
   polyFilter.splice(0, 1);
   polyFilter.splice(0, 1);
   document.getElementById("id_block_groups").value = polyFilter;
+  // load in the Population
+  var pop = sessionStorage.getItem("pop");
+  document.getElementById("id_population").value = pop;
   return true;
 }
 
@@ -1325,6 +1328,7 @@ function arraysEqual(a, b) {
 
 var bgPopCache = {};
 // get the population for a community from filter
+// TODO: load this in automatically as part of the tilesets for immediate lookup?
 function getCommPop(filter) {
   if (filter.length === 0) document.getElementById("comm-pop").innerHTML = 0;
   var pop = 0;

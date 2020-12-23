@@ -95,6 +95,7 @@ class CommunityForm(ModelForm):
             "census_blocks_polygon_array": forms.HiddenInput(),
             "census_blocks_polygon": forms.HiddenInput(),
             "block_groups": forms.HiddenInput(),
+            "population": forms.HiddenInput(),
             "entry_name": forms.TextInput(
                 attrs={"placeholder": "Community Name", "maxlength": 100}
             ),

@@ -239,6 +239,7 @@ class CommunityEntry(models.Model):
      - user_polygon:  User polygon contains the polygon drawn by the user.
      - census_blocks_polygon_array: Array containing multiple polygons.
      - census_blocks_polygon: The union of the census block polygons.
+     - population: The population of the community entry, based on ACS data.
 
     """
 
@@ -304,6 +305,7 @@ class CommunityEntry(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     admin_approved = models.BooleanField(default=True)
+    population = models.IntegerField(blank=True, default=0)
 
     def __str__(self):
         return str(self.entry_ID)
