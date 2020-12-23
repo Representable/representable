@@ -28,11 +28,17 @@ if (filterStack === null) filterStack = [];
 if (bboxStack === null) bboxStack = [];
 
 // change "Show Examples" to "Hide Examples" on click
+// TODO: change this to be updated for languages automatically, rather than manually
 function changeText(element) {
-  if (element.innerText == "Show Examples") {
+  var txt = element.innerText;
+  if (txt == "Show Examples") {
     element.innerText = "Hide Examples";
-  } else {
+  } else if (txt == "Hide Examples") {
     element.innerText = "Show Examples";
+  } else if (txt == "Mostar ejemplos") {
+    element.innerText = "Ocultar ejemplos";
+  } else if (txt == "Ocultar ejemplos") {
+    element.innerText = "Mostar ejemplos";
   }
 }
 
