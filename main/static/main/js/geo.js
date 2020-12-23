@@ -202,7 +202,10 @@ function createCommPolygon() {
   // it means a community with a population between 480,000 & 2,400,000
   var polyFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
 
-  if (polyFilter === null) return false;
+  if (polyFilter === null) {
+    triggerMissingPolygonError();
+    return false;
+  }
   if (polyFilter.length > 802) {
     triggerDrawError(
       "polygon_size",
