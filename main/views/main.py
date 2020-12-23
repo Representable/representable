@@ -414,8 +414,8 @@ def SendPlainEmail(request):
     user_email_address = "edwardtian2000@gmail.com"
 
     email = EmailMessage(
-        "Hello",
-        "message temporary",
+        "Your Representable Map",
+        "Thank you for submitting to Representable. <br> We have attached a PDF of your map below. <br> (Ok some progress! - Edward)",
         "no-reply@representable.org",
         [user_email_address],
     )
