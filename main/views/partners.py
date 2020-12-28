@@ -20,6 +20,7 @@ from django.views.generic import (
 
 import asyncio
 import boto3
+import aioboto3
 import botocore
 import pandas
 from django.contrib.gis import geos
@@ -84,11 +85,7 @@ class PartnerMap(TemplateView):
                 "census_blocks_polygon_array", "user_polygon"
             )
 
-        client = boto3.client(
-            "s3",
-            aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
-            aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
-        )
+        client = None
         start_time_aws = time.time()
         entryPolyDict, comms, streets, cities = asyncio.run(getcomms(query, client, is_admin, drive))
         print("it went in the right")
@@ -139,16 +136,20 @@ async def getcomms(query, client, is_admin, drive):
     streets = {}
     cities = {}
     tasks = []
-    for obj in query:
-        tasks.append(insideloop(obj, client, is_admin, drive))
+    async with aioboto3.client(
+            "s3",
+            aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),) as client:
+        for obj in query:
+            tasks.append(insideloop(obj, client, is_admin, drive))
 
-    results = await asyncio.gather(*tasks)
-    for item in results:
-        comms.append(item[0])
-        entryPolyDict[item[0].entry_ID] = item[1]
-        if item[2] and item[3]:
-            streets[item[0].entry_ID] = item[2]
-            cities[item[0].entry_ID] = item[3]
+        results = await asyncio.gather(*tasks)
+        for item in results:
+            comms.append(item[0])
+            entryPolyDict[item[0].entry_ID] = item[1]
+            if item[2] and item[3]:
+                streets[item[0].entry_ID] = item[2]
+                cities[item[0].entry_ID] = item[3]
 
     # print(type(results))
     # print(type(results[0]))
