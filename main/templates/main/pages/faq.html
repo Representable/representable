@@ -4,19 +4,20 @@
 <div class="row mx-lg-5 px-lg-5">
   <div class="col-12">
     <h1>FAQ</h1>
-    <p>Need help? Check out our most frequently asked questions.</p>
+    <p class="text-muted">Need help? Check out our most frequently asked questions.</p>
   </div>
-  <!-- REPEAT THIS PART -->
-  <div class="col-12 light-blue-bg">
-    <button class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#economic_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
-        <h5 class="mt-2">Example dropdown question<i class="fas fa-angle-down pl-3"></i></h5>
+  {% for q in faqs %}
+  <div class="col-12 my-2 light-blue-bg">
+    <button class="btn btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" type="button" data-target="#faq-question-{{q.id}}" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+        <h5 class="mt-2">{{ q.question }}<i class="fas fa-angle-down pl-3"></i></h5>
     </button>
-    <div class="accordion" id="economic_interests_accordion">
-        <div id="economic_interests_example" class="collapse" aria-labelledby="economic_interests_accordion" data-parent="#economic_interests_accordion">
-            <p class="collapse-in ml-4">Example dropdown answer</p>
+    <div class="accordion" id="faq-question-{{q.id}}-accordion">
+        <div id="faq-question-{{q.id}}" class="collapse" aria-labelledby="faq question accordion" data-parent="#faq-question-{{q.id}}-accordion">
+            <p class="collapse-in ml-4">{{ q.answer }}</p>
         </div>
     </div>
   </div>
+  {% endfor %}
   <div class="col-12 small px-5 py-4">Have more questions? Email us at <a href="mailto:team@representable.org">team@representable.org</a>.</div>
 </div>
 {% endblock %}

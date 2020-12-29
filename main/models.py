@@ -360,6 +360,34 @@ class State(models.Model):
 
 
 # ******************************************************************************#
+
+
+class FrequentlyAskedQuestion(models.Model):
+
+    question = models.CharField(
+        max_length=500, blank=False, unique=True, default=""
+    )
+    answer = models.CharField(max_length=1000, blank=False, unique=True, default="")
+
+    class Meta:
+        db_table = "faq"
+
+
+# ******************************************************************************#
+
+
+class GlossaryDefinition(models.Model):
+
+    term = models.CharField(
+        max_length=100, blank=False, unique=True, default=""
+    )
+    definition = models.CharField(max_length=1000, blank=False, unique=True, default="")
+
+    class Meta:
+        db_table = "glossary"
+
+
+# ******************************************************************************#
 class Report(models.Model):
     community = models.ForeignKey(
         CommunityEntry, on_delete=models.CASCADE, related_name="reports"

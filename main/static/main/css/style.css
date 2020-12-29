@@ -360,6 +360,11 @@ color scheme. See readme.md*/
   border-radius: 1.5rem;
 }
 
+.btn-no-focus-outline:focus, .btn-no-focus-outline:active {
+  outline: none;
+  box-shadow: none;
+}
+
 .text-primary {
   color: #2a94f4 !important;
 }
