@@ -75,8 +75,8 @@
             {% if user.is_generic_admin %}
               {% if user.get_organizations|length > 2 %}
               <li class="dropdown mx-auto nav-item">
-                  <button class="btn btn-link dropdown-toggle nav-link" type="button" data-toggle="dropdown">My Organizations
-                  <span class="caret"></span></button>
+                  <button class="btn btn-link nav-link" type="button" data-toggle="dropdown">My Organizations
+                  <i class="fas fa-angle-down pl-1"></i></button>
                   <ul class="dropdown-menu">
                     {% for org in user.get_organizations %}
                         <li class="nav-link mx-1">
@@ -103,6 +103,14 @@
                   </a>
               </li>
             {% endif %}
+            <li class="dropdown mx-auto nav-item">
+                <button class="btn btn-link nav-link" type="button" data-toggle="dropdown">Learn More
+                <i class="fas fa-angle-down"></i></button>
+                <ul class="dropdown-menu">
+                  <li class="nav-link mx-1"><a href="{% url 'main:faq' %}">FAQ</a></li>
+                  <li class="nav-link mx-1"><a href="{% url 'main:glossary' %}">Redistricting Glossary</a></li>
+                </ul>
+            </li>
                 <li class="nav-item mx-auto">
                     <a class="nav-link" href="{% url 'main:about' %}">
                         {% trans "About" %}
@@ -118,8 +126,8 @@
                 {% if user.is_authenticated %}
                 <!-- Profile section-->
                 <li class="dropdown mx-auto nav-item">
-                    <button class="btn btn-link dropdown-toggle nav-link" type="button" data-toggle="dropdown">{% trans "My Account" %}
-                    <span class="caret"></span></button>
+                    <button class="btn btn-link nav-link" type="button" data-toggle="dropdown">{% trans "My Account" %}
+                    <i class="fas fa-angle-down pl-1"></i></button>
                     <ul class="dropdown-menu">
                     <li class="nav-link mx-1"><a href="{% url 'main:dashboard' %}">{% trans "Account Settings" %}</a></li>
                     <li class="nav-link mx-1"><a href="{% url 'main:review' %}">{% trans "My communities" %}</a></li>
@@ -147,9 +155,9 @@
             <!-- TODO: update for language dropdown -->
                 <span class="d-none d-lg-block">|</span>
                 <li class="dropdown mx-auto nav-item">
-                    <button class="btn btn-link dropdown-toggle nav-link" type="button" data-toggle="dropdown">
+                    <button class="btn btn-link nav-link" type="button" data-toggle="dropdown">
                         {% if LANGUAGE_CODE == "es" %}ES{% elif LANGUAGE_CODE == "en-us" %}EN{% else %}AR{% endif %}
-                    <span class="caret"></span></button>
+                    <i class="fas fa-angle-down pl-1"></i></button>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <div {% if LANGUAGE_CODE == "en-us" %} class = "hidden" {% endif %}>
                           <li class="nav-link mx-1">
