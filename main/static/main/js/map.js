@@ -253,7 +253,12 @@ map.on("load", function () {
           'fill-color': '#888888',
           'fill-opacity': 0.4
       },
+      'minzoom': 5.5// hide if...
   });
+
+  // add state layer...
+
+  // draw line only if nessecary...
 
   alert("done painting");
 
