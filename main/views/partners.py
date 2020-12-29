@@ -144,8 +144,9 @@ async def getcomms(query, client, is_admin, drive):
             tasks.append(insideloop(obj, client, is_admin, drive))
 
         results = await asyncio.gather(*tasks)
-        for item in results:
-            print(item)
+        # print(results)
+        # for item in results:
+        #     print(item)
             # comms.append(item[0])
             # entryPolyDict[item[0].entry_ID] = item[1]
             # if item[2] and item[3]:
@@ -207,8 +208,9 @@ async def getfroms3(client, obj, drive, state, is_admin):
         Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
         Key=str(folder_name) + "/" + obj.entry_ID + ".geojson",
     )
-    print(response)
-    strobject = response["Body"].read().decode("utf-8")
+    # print(response)
+    strobj = await response["Body"].read()
+    strobject = strobj.decode("utf-8")
     mapentry = geojson.loads(strobject)
     comm = CommunityEntry(
         entry_ID=obj.entry_ID,
