@@ -79,6 +79,8 @@ class PartnerMap(TemplateView):
             query = drive.submissions.all().defer(
                 "census_blocks_polygon_array", "user_polygon",
             )
+            folder = self.kwargs["drive"]
+            print("this is the folder: %s" % folder)
         else:
             drive = None
             query = org.submissions.all().defer(
@@ -87,8 +89,24 @@ class PartnerMap(TemplateView):
 
         client = None
         start_time_aws = time.time()
+        entryPolyDict = dict()
         entryPolyDict, comms, streets, cities = asyncio.run(getcomms(query, client, is_admin, drive))
-        print("it went in the right")
+
+
+
+        # asyncio.run(getlist(folder))
+        # print("it went in the right")
+        # context = {
+        #     "streets": [],
+        #     "cities": [],
+        #     "communities": [],
+        #     "entries": json.dumps(entryPolyDict),
+        #     "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+        #     "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
+        # }
+
+
+
         context = {
             "streets": streets,
             "cities": cities,
@@ -130,6 +148,26 @@ class PartnerMap(TemplateView):
         return context
 
 
+async def getlist(folder):
+    async with aioboto3.resource("s3", aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),) as client:
+        bucket = await client.Bucket(os.environ.get("AWS_STORAGE_BUCKET_NAME"))
+        comms = []
+        async for s3_obj in bucket.objects.filter(Prefix=folder+'/'):
+            print(time.time())
+            print(type(s3_obj))
+            strobject = s3_obj["Body"].read().decode("utf-8")
+            mapentry = geojson.loads(strobject)
+            comm = CommunityEntry(
+                entry_ID=obj.entry_ID,
+                comm_activities=mapentry["properties"]["comm_activities"],
+                entry_name=mapentry["properties"]["entry_name"],
+                economic_interests=mapentry["properties"]["economic_interests"],
+                other_considerations=mapentry["properties"]["other_considerations"],
+                cultural_interests=mapentry["properties"]["cultural_interests"],
+            )
+            comms.append(s3_obj)
+        return comms
+
 async def getcomms(query, client, is_admin, drive):
     comms = []
     entryPolyDict = dict()
@@ -144,12 +182,13 @@ async def getcomms(query, client, is_admin, drive):
             tasks.append(insideloop(obj, client, is_admin, drive))
 
         results = await asyncio.gather(*tasks)
-        for item in results:
-            comms.append(item[0])
-            entryPolyDict[item[0].entry_ID] = item[1]
-            if item[2] and item[3]:
-                streets[item[0].entry_ID] = item[2]
-                cities[item[0].entry_ID] = item[3]
+        print(results)
+        # for item in results:
+        #     comms.append(item[0])
+        #     entryPolyDict[item[0].entry_ID] = item[1]
+        #     if item[2] and item[3]:
+        #         streets[item[0].entry_ID] = item[2]
+        #         cities[item[0].entry_ID] = item[3]
 
     # print(type(results))
     # print(type(results[0]))
@@ -194,7 +233,7 @@ async def insideloop(obj, client, is_admin, drive):
     return obj, coords, street, city
 
 
-def getfroms3(client, obj, drive, state, is_admin):
+async def getfroms3(client, obj, drive, state, is_admin):
     print("request made at time %s" % time.time())
     if drive:
         folder_name = drive.slug
@@ -202,7 +241,7 @@ def getfroms3(client, obj, drive, state, is_admin):
         folder_name = obj.drive.slug
     else:
         folder_name = state
-    response = client.get_object(
+    response = await client.get_object(
         Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
         Key=str(folder_name) + "/" + obj.entry_ID + ".geojson",
     )
