@@ -652,18 +652,20 @@ class Map(TemplateView):
     template_name = "main/map.html"
 
     def get_context_data(self, **kwargs):
-
         # the polygon coordinates
         entryPolyDict = dict()
-        # all communities for display TODO: might need to limit this? or go by state
-        org = Organization.objects.get(id=0)
-        query = org.submissions.all().prefetch_related("drive")
+    #     # all communities for display TODO: might need to limit this? or go by state
+    #     org = Organization.objects.get(id=0)
+    #     query = org.submissions.all().prefetch_related("drive")
         drives = []
-        # query = (
-        #     CommunityEntry.objects.all()
-        #     .prefetch_related("drive", "organization")
-        #     .filter(organization__id=0)
-        # )
+    #     # query = (
+    #     #     CommunityEntry.objects.all()
+    #     #     .prefetch_related("drive", "organization")
+    #     #     .filter(organization__id=0)
+    #     # )
+        query = CommunityEntry.objects.filter(
+            organization__slug="somasom", admin_approved=True
+        )
         # get the polygon from db and pass it on to html
         for obj in query:
             if not obj.admin_approved:

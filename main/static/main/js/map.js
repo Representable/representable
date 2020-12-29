@@ -157,9 +157,57 @@ map.on("load", function () {
     newBoundariesLayer(key);
   }
 
+  function makepoint(x, y, r, t) {
+    let xx = x + r * Math.cos(t / 180 * Math.PI);
+    let yy = y + r * Math.sin(t / 180 * Math.PI);
+    return "[" + xx + "," + yy + "]";
+  }
+
+  function getrdouble(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  function getrint(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max+1);
+    return Math.floor(Math.random() * (max - min) + min);
+  }
+
+  function makepoly(xlo, xhi, ylo, yhi, rlo, rhi, plo, phi) {
+    let x = getrdouble(xlo, xhi);
+    let y = getrdouble(ylo, yhi);
+    let p = getrint(plo, phi);
+    var startp;
+    var ret = "[[";
+
+    for (var i = 0; i < p; i++) {
+      let pstr = makepoint(x,y,getrdouble(rlo,rhi),i*360/p);
+      if (i === 0) startp = pstr;
+      ret += pstr + ",";
+    }
+    ret += startp;
+    ret += "]]"
+    return ret;
+  }
+
+  function makejson(xlo, xhi, ylo, yhi, rlo, rhi, plo, phi, n) {
+    var str = "{";
+    for (var i = 0; i < n; i++) {
+      str = str.concat("\"");
+      str = str.concat(i);
+      str = str.concat("\":");
+      str = str.concat(makepoly(xlo, xhi, ylo, yhi, rlo, rhi, plo, phi));
+      if(i === n-1) str = str.concat("}");
+      else str = str.concat(",");
+    }
+    return str;
+  }
+
   // send elements to javascript as geojson objects and make them show on the map by
   // calling the addTo
   var outputstr = a.replace(/'/g, '"');
+  outputstr = makejson(-105,-95,30,40,0.1,1.5,200,300,1000);
+  console.log(outputstr)
   a = JSON.parse(outputstr);
 
   for (obj in a) {
