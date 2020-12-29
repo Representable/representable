@@ -1,0 +1,25 @@
+{% extends 'main/layouts/base-page.html' %}
+{% load static %}
+{% block page-content %}
+<div class="row mx-lg-5 px-lg-5">
+  <div class="col-12">
+    <h1>FAQ</h1>
+    <p>Need help? Check out our most frequently asked questions.</p>
+  </div>
+  <!-- REPEAT THIS PART -->
+  <div class="col-12 light-blue-bg">
+    <button class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#economic_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+        <h5 class="mt-2">Example dropdown question<i class="fas fa-angle-down pl-3"></i></h5>
+    </button>
+    <div class="accordion" id="economic_interests_accordion">
+        <div id="economic_interests_example" class="collapse" aria-labelledby="economic_interests_accordion" data-parent="#economic_interests_accordion">
+            <p class="collapse-in ml-4">Example dropdown answer</p>
+        </div>
+    </div>
+  </div>
+  <div class="col-12 small px-5 py-4">Have more questions? Email us at <a href="mailto:team@representable.org">team@representable.org</a>.</div>
+</div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="{% static 'main/js/components/dropdown.js' %}"></script>
+{% endblock %}

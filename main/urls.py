@@ -89,6 +89,8 @@ urlpatterns = [
         name="entry",
     ),
     path("about/", views.main.About.as_view(), name="about"),
+    path("faq/", views.main.FAQ.as_view(), name="faq"),
+    path("glossary/", views.main.Glossary.as_view(), name="glossary"),
     path("review/", views.main.Review.as_view(), name="review"),
     path("privacy/", views.main.Privacy.as_view(), name="privacy"),
     path("terms/", views.main.Terms.as_view(), name="terms"),

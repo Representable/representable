@@ -773,6 +773,9 @@ input[type="range"]::-webkit-slider-thumb {
 .blue-green-text {
   color: #6dccbb;
 }
+.blue-text {
+  color: #5996D2;
+}
 .light-blue-bg {
   background-color: #daefff;
 }

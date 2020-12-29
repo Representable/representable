@@ -240,6 +240,20 @@ class Index(TemplateView):
 class About(TemplateView):
     template_name = "main/pages/about.html"
 
+# ******************************************************************************#
+
+
+class FAQ(TemplateView):
+    template_name = "main/pages/faq.html"
+
+
+# ******************************************************************************#
+
+
+class Glossary(TemplateView):
+    template_name = "main/pages/glossary.html"
+
+
 
 # ******************************************************************************#
 
