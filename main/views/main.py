@@ -250,11 +250,15 @@ class FAQ(TemplateView):
 
     def get(self, request, *args, **kwargs):
 
-        faqs = FrequentlyAskedQuestion.objects.all()
+        faqs_users = FrequentlyAskedQuestion.objects.filter(type='USER')
+        faqs_orgs = FrequentlyAskedQuestion.objects.filter(type='ORGANIZATION')
+        print(faqs_users)
+        print("--------------")
+        print(faqs_orgs)
         return render(
             request,
             self.template_name,
-            {"faqs": faqs},
+            {"faqs_users": faqs_users, "faqs_orgs": faqs_orgs},
         )
 
 

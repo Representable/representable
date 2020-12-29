@@ -364,6 +364,17 @@ class State(models.Model):
 
 class FrequentlyAskedQuestion(models.Model):
 
+    FAQ_TYPE_CHOICES = [
+        ('USER', 'User'),
+        ('ORGANIZATION', 'Organization'),
+    ]
+
+    type = models.CharField(
+        max_length=12,
+        choices=FAQ_TYPE_CHOICES,
+        default='USER',
+    )
+
     question = models.CharField(
         max_length=500, blank=False, unique=True, default=""
     )

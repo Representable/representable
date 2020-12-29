@@ -3,10 +3,24 @@
 {% block page-content %}
 <div class="row mx-lg-5 px-lg-5">
   <div class="col-12">
-    <h1>FAQ</h1>
-    <p class="text-muted">Need help? Check out our most frequently asked questions.</p>
+    <h1>FAQs</h1>
+    <p class="text-muted">Check out our most frequently asked questions below. </p>
   </div>
-  {% for q in faqs %}
+  <h3 class="blue-text ml-3 mt-3">For Community Members</h3>
+  {% for q in faqs_users %}
+  <div class="col-12 my-2 light-blue-bg">
+    <button class="btn btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" type="button" data-target="#faq-question-{{q.id}}" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+        <h5 class="mt-2">{{ q.question }}<i class="fas fa-angle-down pl-3"></i></h5>
+    </button>
+    <div class="accordion" id="faq-question-{{q.id}}-accordion">
+        <div id="faq-question-{{q.id}}" class="collapse" aria-labelledby="faq question accordion" data-parent="#faq-question-{{q.id}}-accordion">
+            <p class="collapse-in ml-4">{{ q.answer }}</p>
+        </div>
+    </div>
+  </div>
+  {% endfor %}
+  <h3 class="blue-text ml-3 mt-3">For Organizations</h3>
+  {% for q in faqs_orgs %}
   <div class="col-12 my-2 light-blue-bg">
     <button class="btn btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" type="button" data-target="#faq-question-{{q.id}}" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
         <h5 class="mt-2">{{ q.question }}<i class="fas fa-angle-down pl-3"></i></h5>
