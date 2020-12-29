@@ -145,13 +145,13 @@ async def getcomms(query, client, is_admin, drive):
 
         results = await asyncio.gather(*tasks)
         # print(results)
-        # for item in results:
-        #     print(item)
-            # comms.append(item[0])
-            # entryPolyDict[item[0].entry_ID] = item[1]
-            # if item[2] and item[3]:
-            #     streets[item[0].entry_ID] = item[2]
-            #     cities[item[0].entry_ID] = item[3]
+        for item in results:
+            # print(item)
+            comms.append(item[0])
+            entryPolyDict[item[0].entry_ID] = item[1]
+            if item[2] and item[3]:
+                streets[item[0].entry_ID] = item[2]
+                cities[item[0].entry_ID] = item[3]
 
     # print(type(results))
     # print(type(results[0]))
