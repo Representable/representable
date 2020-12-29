@@ -48,7 +48,23 @@ class StateAdminForm(forms.ModelForm):
             "content_coi",
         )
 
-admin.site.register(FrequentlyAskedQuestion)
+class FAQForm(forms.ModelForm):
+    question = forms.CharField(widget=CKEditorWidget())
+    answer = forms.CharField(widget=CKEditorWidget())
+
+    class Meta:
+        model = FrequentlyAskedQuestion
+        fields = (
+            "type",
+            "question",
+            "answer",
+        )
+
+class FAQAdmin(admin.ModelAdmin):
+    form = FAQForm
+    list_display = ("question", "answer", "type")
+
+admin.site.register(FrequentlyAskedQuestion, FAQAdmin)
 
 admin.site.register(GlossaryDefinition)
 

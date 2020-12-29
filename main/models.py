@@ -375,10 +375,8 @@ class FrequentlyAskedQuestion(models.Model):
         default='USER',
     )
 
-    question = models.CharField(
-        max_length=500, blank=False, unique=True, default=""
-    )
-    answer = models.CharField(max_length=1000, blank=False, unique=True, default="")
+    question = RichTextField()
+    answer = RichTextField()
 
     class Meta:
         db_table = "faq"
