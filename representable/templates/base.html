@@ -73,7 +73,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right align-items-center">
             {% if user.is_generic_admin %}
-              {% if user.get_organizations|length > 2 %}
+              {% if user.get_organizations|length > 1 %}
               <li class="dropdown mx-auto nav-item">
                   <button class="btn btn-link nav-link" type="button" data-toggle="dropdown">My Organizations
                   <i class="fas fa-angle-down pl-1"></i></button>
