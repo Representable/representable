@@ -658,6 +658,7 @@ class Map(TemplateView):
         # all communities for display TODO: might need to limit this? or go by state
         org = Organization.objects.get(id=0)
         query = org.submissions.all().prefetch_related("drive")
+        # state map page --> drives in the state, entries without a drive but with a state
         drives = []
         # query = (
         #     CommunityEntry.objects.all()
@@ -871,7 +872,6 @@ class EntryView(LoginRequiredMixin, View):
                 ServerSideEncryption="AES256",
                 StorageClass="STANDARD_IA",
             )
-            entryForm.census_blocks_polygon = ""
 
             entryForm.save()
             comm_form.save_m2m()
