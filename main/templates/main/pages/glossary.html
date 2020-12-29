@@ -5,20 +5,23 @@
   <div class="col-12 light-blue-bg mb-3">
     <div class="h1 my-4 ml-3">Redistricting Glossary</div>
   </div>
-  <br>
-  {% for t in glossaryterms %}
-  <div class="col-1"></div>
-  <div class="col-10 mt-2">
-    <h6><b>{{ t.term }}</b></h6>
-    <p>{{ t.definition }}</p>
+<div>
+{% for t in glossaryterms %}
+  <div class="row mx-lg-5 px-lg-5">
+    <div class="col-1"></div>
+    <div class="col-10 mt-2">
+      <h6><b>{{ t.term }}</b></h6>
+      <p>{{ t.definition }}</p>
+    </div>
+    <div class="col-1"></div>
   </div>
-  <div class="col-1"></div>
-  {% endfor %}
+{% endfor %}
+<div class="row mx-lg-5 px-lg-5 mb-5">
   <div class="col-1"></div>
   <div class="col-10 light-blue-bg small">
     <div class="mx-3 blue-text">
       <p class="my-3"><b>More Information</b></p>
-      <p>https://www.ncsl.org/research/redistricting/the-redistricting-lexicon-glossary.aspx <br>“What is the 2020 Census?”, US Department of Commerce, <br>https://2020census.gov/en/what-is-2020-census.html<br>https://www.ncsl.org/research/redistricting/the-redistricting-lexicon-glossary.aspx</p>
+      <p class="text-break" style="overflow-wrap: break-word">https://www.ncsl.org/research/redistricting/the-redistricting-lexicon-glossary.aspx <br>“What is the 2020 Census?”, US Department of Commerce, <br>https://2020census.gov/en/what-is-2020-census.html<br>https://www.ncsl.org/research/redistricting/the-redistricting-lexicon-glossary.aspx</p>
     </div>
   </div>
   <div class="col-1"></div>
