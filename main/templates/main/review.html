@@ -60,16 +60,16 @@
             <tr class="community-review-span" id={{c.entry_ID}}>
               <td>
                 <span class=" text-uppercase entry-name">
-                  {% with link_text="/submission/"|addstr:c.entry_ID %}
+                  {% with link_text="/submission?map_id="|addstr:c.entry_ID|slice:27 %}
                   <a href={{link_text}}>{{c.entry_name}}</a>
                   {% endwith %}
                 </span>
                 <hr class="my-1">
-                {% if c.organization and c.organization.name%}
+                {% if c.organization %}
                 <span class="badge badge-pill badge-primary">{{c.organization}}</span>
                 <br>
                 {% endif %}
-                {% if c.drive and c.drive.name %}
+                {% if c.drive %}
                 <span class="badge badge-pill badge-secondary">{{c.drive}}</span>
                 <br>
                 {% endif %}

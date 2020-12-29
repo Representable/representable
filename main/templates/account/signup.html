@@ -1,48 +1,44 @@
 <!-- adaptation of official allauth code https://github.com/pennersr/django-allauth/blob/master/allauth/templates/account/signup.html-->
 <!-- allows bootstrap in form-->
+{% extends "account/base.html" %}
 {% load widget_tweaks %}
 
 {% load i18n %}
 
-<div class="auth-wrap col-sm-9 col-md-7 col-lg-5 mx-auto">
-    <form id="signup-form" class="signup auth-form" method="post" action="{% url 'account_signup' %}">
-        {% if redirect_field_value %}
-            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-        {% endif %}
-        <h4 class="auth-title">{% trans "Sign Up" %}</h4>
-        {% if signup_errors %}
-            <div class="alert alert-danger text-left">
-                {% for error in signup_errors.values%}
-                    <p>{{ error.0|escape }}</p>
-                {% endfor %}
+{% block content %}
+<div class="container">
+<div class="row">
+  <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+    <div class="card card-signin my-5">
+      <div class="card-body">
+        <h4 class="card-title text-center">Sign Up</h4>
+        <form id="sign-up-form" class="form-signin signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+          {% csrf_token %}
+          <div class="form-group">
+            {% for field in form %}
+            <div class="field-wrap">
+              {{ field.errors }}
+              {{ field|append_attr:"class:form-control my-2" }}
+              {% if field.help_text %}
+              <p class="help">{{ field.help_text|safe }}</p>
+              {% endif %}
             </div>
-        {% endif %}
-        {% csrf_token %}
-
-        <div class="form-group">
-            {% for field in signup_form %}
-                <div class="auth-form-label">{{ field.label }}</div>
-                <div class="field-wrap">
-                    {{ field|append_attr:"class:form-control my-2 auth-field" }}
-                </div>
-                {% if field.help_text %}
-                    <p class="help">{{ field.help_text|safe }}</p>
-                {% endif %}
             {% endfor %}
-        </div>
+          </div>
+          {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+          {% endif %}
+          <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">{% trans "Sign Up" %}</button>
+          </form>
+          <p class="card-text text-center my-3 align-text-bottom"><i class="fas fa-lock m-1 text-primary"></i>Making an account helps us protect legitimate submissions.</p>
+          <hr>
+          <p class="card-text text-center my-3 align-text-bottom">Already have an account?
+             <a class="log-in-started btn btn-outline-primary" href="/accounts/login/?next={{ request.GET.next }}">Log In</a>
+          </p>
 
-        <div class="row equal">
-            <div class="col-lg-1 col-md-1 col-xs-12 text-center">
-                <i class="fas fa-lock m-1 text-primary"></i>
-            </div>
-            <div class="col-lg-10 col-md-9">
-                <p class="text-left align-text-bottom privacy-note">Making an account helps us protect legitimate submissions.</p>
-            </div>
-        </div>
-        <div class="auth-btn-wrap">
-            <button class="btn btn-lg btn-primary text-uppercase auth-btn" type="submit">{% trans "Sign Up" %}</button>
-        </div>
-
-        <a class="auth-link to-auth-link" href="#login-form">{% trans "Already have an account? Log in."%}</a>
-    </form>
+      </div>
+    </div>
+  </div>
 </div>
+</div>
+{% endblock %}

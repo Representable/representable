@@ -17,7 +17,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-from allauth.account.forms import LoginForm, SignupForm
 from django import forms
 from django.forms import ModelForm
 from django_select2.forms import (
@@ -49,24 +48,16 @@ class AddressForm(ModelForm):
         fields = ["city", "state", "zipcode", "street"]
 
         widgets = {
-            "street": forms.TextInput(
-                attrs={"placeholder": "Street", "maxlength": 500}
-            ),
-            "city": forms.TextInput(
-                attrs={"placeholder": "City", "maxlength": 100}
-            ),
-            "state": forms.TextInput(
-                attrs={"placeholder": "State", "maxlength": 100}
-            ),
-            "zipcode": forms.TextInput(
-                attrs={"placeholder": "Zipcode", "maxlength": 12}
-            ),
+            "street": forms.TextInput(attrs={"placeholder": "Street", "maxlength": 500}),
+            "city": forms.TextInput(attrs={"placeholder": "City", "maxlength": 100}),
+            "state": forms.TextInput(attrs={"placeholder": "State", "maxlength": 100}),
+            "zipcode": forms.TextInput(attrs={"placeholder": "Zipcode", "maxlength": 12}),
         }
         labels = {
             "street": "Street: ",
             "city": "City: ",
             "state": "State: ",
-            "zipcode": "Zipcode: ",
+            "zipcode": "Zipcode: "
         }
 
 
@@ -96,26 +87,14 @@ class CommunityForm(ModelForm):
             "census_blocks_polygon": forms.HiddenInput(),
             "block_groups": forms.HiddenInput(),
             "entry_name": forms.TextInput(
-                attrs={"placeholder": "Community Name", "maxlength": 100}
+                attrs={"placeholder": "Community Name","maxlength": 100}
             ),
-            "entry_reason": forms.Textarea(
-                attrs={"rows": 3, "maxlength": 500}
-            ),
-            "cultural_interests": forms.Textarea(
-                attrs={"rows": 3, "maxlength": 500}
-            ),
-            "economic_interests": forms.Textarea(
-                attrs={"rows": 3, "maxlength": 500}
-            ),
-            "comm_activities": forms.Textarea(
-                attrs={"rows": 3, "maxlength": 500}
-            ),
-            "other_considerations": forms.Textarea(
-                attrs={"rows": 3, "maxlength": 500}
-            ),
-            "user_name": forms.TextInput(
-                attrs={"placeholder": "Full Name", "maxlength": 500}
-            ),
+            "entry_reason": forms.Textarea(attrs={"rows": 3, "maxlength": 500}),
+            "cultural_interests": forms.Textarea(attrs={"rows": 3, "maxlength": 500}),
+            "economic_interests": forms.Textarea(attrs={"rows": 3, "maxlength": 500}),
+            "comm_activities": forms.Textarea(attrs={"rows": 3, "maxlength": 500}),
+            "other_considerations": forms.Textarea(attrs={"rows": 3, "maxlength": 500}),
+            "user_name": forms.TextInput(attrs={"placeholder": "Full Name", "maxlength": 500}),
             "user_polygon": forms.HiddenInput(),
         }
         label = {
@@ -124,7 +103,7 @@ class CommunityForm(ModelForm):
             "cultural_interests": "Input your community's cultural or historical interests: ",
             "comm_activities": "Input your community's activities and services: ",
             "other_considerations": "Input your community's other interests and concerns: ",
-            "entry_name": "Input your community's name: ",
+            "entry_name": "Input your community's name: "
         }
 
     def clean(self):
@@ -164,7 +143,6 @@ class OrganizationForm(ModelForm):
         model = Organization
         fields = ["name", "description", "ext_link", "states"]
         labels = {
-            "name": "Organization Name",
             "ext_link": "Link to Organization Website",
         }
         widgets = {
@@ -200,20 +178,9 @@ class AllowlistForm(ModelForm):
 
 
 class DriveForm(ModelForm):
-    def __init__(self, org_states, *args, **kwargs):
-        super(DriveForm, self).__init__(*args, **kwargs)
-        choices = [state for state in STATES if state[0] in org_states]
-        self.fields["state"].widget = forms.Select(
-            choices=choices, attrs={"class": "form-control"}
-        )
-
     class Meta:
         model = Drive
-        fields = ["name", "description", "state", "require_user_addresses"]
-        labels = {
-            "name": "Drive Title",
-            "ext_link": "Link to Organization Website",
-        }
+        fields = ["name", "description", "state"]
         widgets = {
             "name": forms.TextInput(
                 attrs={
@@ -230,9 +197,6 @@ class DriveForm(ModelForm):
             "state": forms.Select(
                 choices=STATES, attrs={"class": "form-control"}
             ),
-            "require_user_addresses": forms.CheckboxInput(
-                attrs={"class": "form-control"}
-            ),
         }
 
 
@@ -246,19 +210,3 @@ class MemberForm(ModelForm):
         fields = [
             "member",
         ]
-
-
-class RepresentableSignupForm(SignupForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for _, field in self.fields.items():
-            del field.widget.attrs["placeholder"]
-
-
-class RepresentableLoginForm(LoginForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for _, field in self.fields.items():
-            del field.widget.attrs["placeholder"]
-        self.fields["login"].label = "E-mail"
-        del self.fields["login"].widget.attrs["autofocus"]

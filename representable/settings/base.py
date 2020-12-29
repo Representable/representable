@@ -147,7 +147,6 @@ else:
             "NAME": os.environ.get("DISTR_DB_NAME", ""),
             "USER": os.environ.get("DISTR_DB_USER", ""),
             "PASS": os.environ.get("DISTR_DB_PASS", ""),
-            "CONN_MAX_AGE": 100,
         }
     }
 
@@ -183,8 +182,6 @@ LOCALE_PATHS = (os.path.join(BASE_DIR, "<representable>" "locale"),)
 LANGUAGES = (
     ("en-us", _("English")),
     ("es", _("Spanish")),
-    ("ar", _("Arabic")),
-    ("fr", _("French")),
 )
 
 LANGUAGE_CODE = "en-us"
@@ -215,6 +212,7 @@ GDAL_LIBRARY_PATH = os.environ.get("GDAL_LIBRARY_PATH")
 GEOS_LIBRARY_PATH = os.environ.get("GEOS_LIBRARY_PATH")
 django_heroku.settings(locals())
 
+
 if "REDIS_URL" in os.environ:
     CACHES = {
         "default": {
@@ -242,19 +240,11 @@ elif DATABASES["default"]["ENGINE"] == "django.db.backends.sqlite3":
     ] = "django.contrib.gis.db.backends.spatialite"
 
 # Can Log In With Either Email or Username
-ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
 DEFAULT_FROM_EMAIL = "no-reply@representable.org"
 
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
-
-
-# Recaptcha form submit check (not the same as verification)
-if "TRAVIS" in os.environ:
-    CHECK_CAPTCHA_SUBMIT = False
-else:
-    CHECK_CAPTCHA_SUBMIT = True

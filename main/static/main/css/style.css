@@ -75,68 +75,10 @@ form:invalid {
   border: 1px solid red;
 }
 
-/**
-
-Entry Preview Page
-
-**/
-#entry_preview_intro {
-  padding: 15px 15px 15px 20px;
-  line-height: 2;
-}
-
-#entry_preview_intro h3 {
-  padding-bottom: 10px;
-}
-
-#entry_preview_info {
-  background: rgba(218, 239, 255, 0.63);
-  border-color: rgba(218, 239, 255, 0.63);
-  margin: 15px;
-  padding: 50px 110px;
-  color: black;
-}
-
-#entry_preview_button {
-  text-align: center;
-}
-
-@media only screen and (max-width: 768px) {
-  #entry_preview_image {
-    text-align: center;
-    margin: 0px;
-    padding: 10px 0px 20px 0px;
-  }
-
-  #entry_preview_intro {
-    text-align: center;
-  }
-
-  #entry_preview_info {
-    padding: 30px 50px;
-  }
-}
-
-@media only screen and (max-width: 540px) {
-  #entry_preview_info {
-    padding: 30px 30px;
-  }
-
-  #entry_preview_button {
-    padding-top: 20px;
-  }
-}
-
 /* Entry Page: Geocoder Full Width */
 .mapboxgl-ctrl-geocoder {
   width: 100%;
   max-width: none;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  border-radius: 50%;
-  width: 8px;
-  height: 8px;
 }
 
 /* Disable button hover when button is disabled. */
@@ -193,7 +135,7 @@ body {
   font-size: 16px;
 }
 .nav-link-org {
-  color: rgba(32, 118, 195, 0.8) !important;
+  color: rgba(32, 118, 195, .8) !important;
 }
 .nav-link-org:hover {
   color: rgba(32, 118, 195, 1) !important;
@@ -233,20 +175,16 @@ body {
 .tooltip-inner {
   background-color: gray !important;
 }
-.bs-tooltip-top .arrow::before,
-.bs-tooltip-auto[x-placement^="top"] .arrow::before {
+.bs-tooltip-top .arrow::before, .bs-tooltip-auto[x-placement^="top"] .arrow::before {
   border-top-color: gray !important;
 }
-.bs-tooltip-right .arrow::before,
-.bs-tooltip-auto[x-placement^="right"] .arrow::before {
+.bs-tooltip-right .arrow::before, .bs-tooltip-auto[x-placement^="right"] .arrow::before {
   border-right-color: gray !important;
 }
-.bs-tooltip-bottom .arrow::before,
-.bs-tooltip-auto[x-placement^="bottom"] .arrow::before {
+.bs-tooltip-bottom .arrow::before, .bs-tooltip-auto[x-placement^="bottom"] .arrow::before {
   border-bottom-color: gray !important;
 }
-.bs-tooltip-left .arrow::before,
-.bs-tooltip-auto[x-placement^="left"] .arrow::before {
+.bs-tooltip-left .arrow::before, .bs-tooltip-auto[x-placement^="left"] .arrow::before {
   border-left-color: gray !important;
 }
 
@@ -399,30 +337,21 @@ color scheme. See readme.md*/
 .btn-outline-primary:visited,
 .btn-outline-primary:link {
   background-color: transparent;
-  border-color: #2a94f4;
+  border-color: #2A94F4;
   border-width: 2px;
-  color: #2a94f4;
+  color: #2A94F4;
 }
 
 .btn-outline-primary:hover,
 .btn-outline-primary:active {
-  background-color: #2a94f4;
-  border-color: #2a94f4;
+  background-color: #2A94F4;
+  border-color: #2A94F4;
   color: white;
 }
 
+/* NEEDS EXPLANATION */
+
 @media only screen and (min-width: 768px) {
-  /* for the modal on submission page (thanks) */
-  .modal-header .close {
-    margin: -1rem;
-  }
-  #thanksModalDialog {
-    width: 85%;
-    max-width: 1000px;
-  }
-  #thanksModalLabel {
-    margin: auto;
-  }
   .gap-90 {
     width: 100%;
     height: 90px;
@@ -552,7 +481,7 @@ color scheme. See readme.md*/
 }
 .link-custom {
   cursor: pointer;
-  color: #5b5b5b;
+  color: #5B5B5B;
   text-decoration: underline;
 }
 .link-custom:hover {
@@ -643,10 +572,10 @@ color scheme. See readme.md*/
   /* font-family: Inter, system-ui, sans-serif; */
   /* font-size: 12px; */
 }
-input[type="range"]::-webkit-slider-thumb {
+input[type=range]::-webkit-slider-thumb {
   border-radius: 50%;
-  width: 15px;
-  height: 15px;
+  width: 17.5px;
+  height: 17.5px;
 }
 
 /* css for the line on the progress bar */
@@ -732,12 +661,6 @@ input[type="range"]::-webkit-slider-thumb {
 
 /* Entry Form Management */
 
-.g-recaptcha {
-  display: inline-block;
-  padding: 40px 0px 10px 0px;
-  max-width: 80%;
-}
-
 .button-edit {
   display: none;
 }
@@ -768,16 +691,16 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .light-blue-text {
-  color: #65bff1;
+  color: #65BFF1;
 }
 .blue-green-text {
-  color: #6dccbb;
+  color: #6DCCBB;
 }
 .light-blue-bg {
-  background-color: #daefff;
+  background-color: #DAEFFF;
 }
 .blue-green-bg {
-  background-color: #6dccbb;
+  background-color: #6DCCBB;
 }
 
 .how-it-works {
@@ -789,10 +712,10 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .language-button {
-  background: #ffffff;
-  border: 0 none;
-  cursor: pointer;
-  padding: 0;
+    background: #FFFFFF;
+    border:0 none;
+    cursor:pointer;
+    padding: 0;
 }
 .language-button:hover {
   text-decoration: underline;
@@ -887,145 +810,6 @@ label {
 }
 
 /* LOGIN */
-/******************************************
-Signup and Login Page
-******************************************/
-#acc_already {
-  height: 50px;
-  color: rgba(101, 101, 101, 0.81);
-}
-
-.auth-form {
-  display: inline-block;
-  width: 70%;
-}
-
-.auth-form .btn {
-  font-size: 80%;
-  /* border-radius: 5rem; */
-  letter-spacing: 0.1rem;
-  font-weight: bold;
-  padding: 1rem;
-  transition: all 0.2s;
-}
-
-.auth-btn-wrap {
-  text-align: center;
-  padding-top: 20px;
-}
-
-.auth-btn {
-  width: 50%;
-}
-
-.auth-form-label {
-  text-align: left;
-  color: rgba(101, 101, 101, 0.61);
-}
-
-.auth-title {
-  color: #5b5b5b;
-}
-
-.auth-wrap {
-  margin: 25px 0px;
-  text-align: center;
-}
-
-.auth-field {
-  display: inline-block;
-  width: 100%;
-  height: 60px !important; /* necessary use of !important */
-  background-color: #cce9ff;
-  border: none;
-  border-radius: 2rem;
-}
-
-.auth-divider-wrap {
-  position: relative;
-}
-
-.auth-divider {
-  position: absolute;
-  width: 0px;
-  height: 259.01px;
-  border-left: 5px solid rgba(0, 0, 0, 0.07);
-  transform: rotate(0.43deg);
-  left: 50%;
-  top: 30%;
-}
-
-.auth-link {
-  color: rgba(101, 101, 101, 0.81);
-  text-decoration: underline;
-}
-
-.auth-link:hover {
-  color: rgba(101, 101, 101, 1);
-}
-.login-field {
-  background-color: #d6f6f1;
-}
-
-.login-field:focus {
-  outline-color: #d6f6f1 !important;
-}
-
-#login-button {
-  background-color: #7adbcb;
-  border-color: #7adbcb;
-}
-
-.to-auth-link {
-  display: none;
-}
-
-.redirect-banner {
-  padding: 0px 30%;
-  text-align: center;
-}
-
-@media only screen and (min-width: 769px) {
-  #signup-form {
-    padding-top: 50px;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  .auth-divider-wrap {
-    text-align: center;
-    padding: 2.5rem 0rem;
-  }
-  .auth-divider {
-    position: initial;
-    display: inline-block;
-    width: 50%;
-    height: 0px;
-    border-bottom: 5px solid rgba(0, 0, 0, 0.07);
-    transform: rotate(0.43deg);
-  }
-
-  .auth-wrapper {
-    text-align: center;
-  }
-
-  .field-wrap {
-    text-align: center;
-  }
-
-  .to-auth-link {
-    display: inline-block;
-    padding-top: 30px;
-  }
-
-  .redirect-banner {
-    padding: 0px 15%;
-  }
-}
-
-.privacy-note {
-  color: rgba(101, 101, 101, 0.81);
-}
 
 :root {
   --input-padding-x: 1.5rem;
@@ -1048,8 +832,17 @@ Signup and Login Page
   padding: 2rem;
 }
 
-#id_require_user_addresses {
-  width: 45px;
+.form-signin {
+  width: 100%;
+}
+
+.form-signin .btn {
+  font-size: 80%;
+  /* border-radius: 5rem; */
+  letter-spacing: 0.1rem;
+  font-weight: bold;
+  padding: 1rem;
+  transition: all 0.2s;
 }
 
 .form-label-group {
@@ -1128,8 +921,8 @@ Signup and Login Page
 }
 
 .alert-custom {
-  background: #def8f4;
-  color: #5b5b5b;
+  background: #DEF8F4;
+  color: #5B5B5B;
 }
 
 /* Fallback for Edge

@@ -31,14 +31,8 @@
                         <ul class="list-group my-3">
                             <li class="list-group-item justify-content-between align-items-center">
                                 <h5>View/Export Your Community</h5>
-                                {% if has_state %}
-                                <p>Your community map is now live here: <br><a href="/submission/{{ state }}?map_id={{ map_url }}">Representable.org/submission/{{ state }}?map_id={{ map_url }}</a><br>Feel free to tweet and share.</p>
-                              <a class="btn btn-outline-primary thanks-submission-link" href="/submission/{{ state }}?map_id={{ map_url }}" role="button">View Community</a>
-                                {% else %}
                                 <p>Your community map is now live here: <br><a href="/submission?map_id={{ map_url }}">Representable.org/submission?map_id={{ map_url }}</a><br>Feel free to tweet and share.</p>
                               <a class="btn btn-outline-primary thanks-submission-link" href="/submission?map_id={{ map_url }}" role="button">View Community</a>
-                                {% endif %}
-                                
                             </li>
                             {% if has_drive %}
                             <li class="list-group-item justify-content-between align-items-center">

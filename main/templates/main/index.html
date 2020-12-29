@@ -10,7 +10,9 @@
 <!--  Mapbox GL JS-->
 <meta charset='utf-8' />
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.js'></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.css' rel='stylesheet' />
 {% endblock %}
 
 <!-- Main Content -->
@@ -23,11 +25,11 @@
         <span class="d-block mb-3">Redistricting is coming.</span>
         <span class="d-block h3 font-weight-light">Put your community on the map.</span>
       </div>
-      <a id="get-started-btn" class="btn btn-outline-primary btn-lg mb-5 mt-2" href="{% url 'main:entry_preview' %}"  role="button">{% trans "Get Started" %} <i class="fa fa-arrow-circle-right"></i></a>
+      <a id="get-started-btn" class="btn btn-outline-primary btn-lg mb-5 mt-2" href="#select" role="button">{% trans "Get Started" %} <i class="fa fa-arrow-circle-right"></i></a>
       <div class="alert alert-custom px-5 d-none d-lg-block" role="alert">
         <p class="my-3 h5 font-weight-bold">{% trans "Are you the leader of an organization?" %}</p>
         <p class="my-3 font-weight-light">{% trans "Many organizations have partnered with Representable.org to collect community-of-interest data." %}</p>
-        <p class="my-3"><a class="link-custom" href='/partners/welcome'>{% trans "PARTNER WITH US" %}</a></p>
+        <p class="my-3"><a class="link-custom" href='/partners/welcome'>PARTNER WITH US</a></p>
       </div>
       </div>
       <div class="col-lg-6 col-sm-12 col-md-6">
@@ -37,7 +39,7 @@
         <div class="alert alert-custom px-5" role="alert">
           <p class="my-3 h5 font-weight-bold">{% trans "Are you the leader of an organization?" %}</p>
           <p class="my-3 font-weight-light">{% trans "Many organizations have partnered with Representable.org to collect community-of-interest data." %}</p>
-          <p class="my-3"><a class="link-custom" href='/partners/welcome'>{% trans "PARTNER WITH US" %}</a></p>
+          <p class="my-3"><a class="link-custom" href='/partners/welcome'>PARTNER WITH US</a></p>
         </div>
       </div>
     </div>
@@ -90,7 +92,7 @@
               {% trans "Learn how to use Representable to draw your community." %}
             </p>
             <div class="text-center">
-              <a id="card-add-community-btn" class="btn btn-outline-primary mx-2 my-1" href="{% url 'main:entry_preview' %}" role="button">{% trans "Add your community" %}</a>
+              <a id="card-add-community-btn" class="btn btn-outline-primary mx-2 my-1" href="#select" role="button">{% trans "Add your community" %}</a>
             </div>
             <!-- <a class="btn btn-primary btn-canvas mt-auto" href="/entry" role="button">Get Started</a> -->
           </div>
@@ -131,10 +133,30 @@
         </div>
       </div>
     </div>
+    <div class="my-5">
+      <div class="text-center">
+        <h2 id="select" class="my-3 font-weight-light d-none d-sm-block">{% trans "Select your state to get started." %} </h2>
+        <h4 id="select" class="my-3 font-weight-light d-sm-none">{% trans "Select your state to get started." %} </h4>
+        <label for="stateSelectionDropdown" class="sr-only">Select a state:</label>
+          <select id="stateSelectionDropdown">
+            <option label="" value="select-a-state"></option>
+          </select>
+      </div>
+      <div>
+        <div id="usa-map" alt="map of the United States with clickable states"></div>
+      </div>
+    </div>
 </div>
 {% endblock %}
 
 {% block script %}
+<script type="text/javascript">
+  mapboxgl.accessToken = "{{ mapbox_key }}";
+</script>
+<script type="text/javascript" src="{% static 'main/js/components/jquery.vmap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'main/js/components/jquery.vmap.usa.js' %}"></script>
+<script type="text/javascript" src="{% static 'main/js/main.js' %}"></script>
+<script type="text/javascript" src="{% static 'main/js/components/states.js' %}"></script>
 <script type="text/javascript">
   // Track Front Page Buttons
   document.getElementById("get-started-btn").addEventListener("click", function() {

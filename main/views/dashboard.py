@@ -27,7 +27,6 @@ from django.views.generic import (
     DetailView,
     DeleteView,
 )
-from django import forms
 from django.views import View
 from django.core.mail import send_mail
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -500,12 +499,6 @@ class CreateDrive(LoginRequiredMixin, OrgAdminRequiredMixin, CreateView):
         )
 
         return super().form_valid(form)
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        org = Organization.objects.get(pk=self.kwargs["pk"])
-        kwargs['org_states'] = org.states
-        return kwargs
 
 
 class UpdateDrive(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):

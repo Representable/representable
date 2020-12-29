@@ -44,10 +44,7 @@ map.addControl(
   })
 );
 
-// Only add zoom buttons to medium and large screen devices (non-mobile)
-if (!window.matchMedia("only screen and (max-width: 760px)").matches) {
-  map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
-}
+map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
 
 // add a new source layer
 function newSourceLayer(name, mbCode) {

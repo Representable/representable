@@ -36,7 +36,6 @@
     var drive_name = "{{drive_name}}";
     var organization_name = "{{organization_name}}";
     var state = "{{state}}";
-    var address_required = "{{address_required}}";
     mixpanel.track("Entry Page Loaded",
     {
      "drive_id": drive_id,
@@ -46,7 +45,6 @@
     }
     );
 </script>
-<script src='https://www.google.com/recaptcha/api.js' async defer></script>
 <style data="slider-data" type="text/css"></style>
 {% endblock %}
 
@@ -59,7 +57,7 @@
             <!-- START FORM BODY -->
             <div class="row mt-3">
                 <!-- Entry Form -->
-                <form id="entryForm" method="post" onSubmit="return validateRecaptcha();">
+                <form id="entryForm" method="post" onSubmit="return formValidation();">
                     <div class="row">
                         <div class="col-sm-7 my-auto pl-5">
                             <h1 class="font-weight-light">
@@ -110,12 +108,6 @@
                                         <strong>{% trans "1. Your Identifying Information" %} </strong>
                                     </div>
                                     <div class="card-body collapse show">
-                                      <div id="need_address" class="alert alert-danger alert-dismissible fade show form-error d-none" role="alert">
-                                          Please include your address.
-                                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                              <span aria-hidden="true">&times;</span>
-                                          </button>
-                                      </div>
                                         <div class="accordion" id="privacy_accordion">
                                             <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" data-target="#privacy_example" aria-expanded="false" aria-controls="collapseOne">
                                             {% trans "Why do we need your information?" %}
@@ -180,7 +172,7 @@
                                             {% endif %}
                                         </div>
                                         <p class="card-text mb-1 mt-2">
-                                            {% trans "Your Address" %} {% if address_required %}<small class="text-danger">{% trans "(Required)" %}</small> {% endif %}
+                                            {% trans "Your Address" %} <small class="text-danger">{% trans "(Required)" %}</small>
                                         </p>
                                         <div id="street_error_alerts">
                                             {% if addr_form.street.errors %}
@@ -503,7 +495,7 @@
                                             <div class="map-bounding-box my-2 collapse">
                                                 <p>{% blocktrans %} Draw your community by selecting <a href="https://www.census.gov/programs-surveys/geography/about/glossary.html#par_textimage_4" target="_blank" data-toggle="tooltip" title="The units you are selecting to draw your community are census block groups. Map drawers use these units when creating districts.">units</a> on the map.
                                                    Make sure that all your community is contained within the highlighted units, and that your drawn community does not contain gaps.
-                                                   {% endblocktrans %}
+                                                   This will help the Redistricting Commission draw fairer districts using your entry. {% endblocktrans %}
                                                 </p>
                                                 <div class="map-box">
                                                     <div id='menu'></div>
@@ -531,12 +523,12 @@
                                     </div>
                                     <div class="card-body collapse show">
                                         <p class="card-text">
-                                            {% blocktrans %}Your privacy is our highest priority. We gather your identifying information to verify
+                                            {% blocktrans %}Your privacy is our highest priority. We gather your Identifying information to verify
                                             that you are a real person. We will not publicly share anyone's individual personal information,
                                             such as name, address, or email. {% endblocktrans %}
                                             {% if has_drive %}
                                             <br>
-                                            We will only share your information with the organizers of {{organization_name}} because you are adding the community through their community mapping drive.
+                                            "We will only share your information with {{organization_name}} because you are adding the community through their page."
                                             {% endif %}
                                         </p>
                                         <div class="toc-check">
@@ -555,10 +547,6 @@
                                         <hr>
                                         {% blocktrans %} Any saved communities are final. In order to edit a saved community you will need
                                         to create a new community and delete the old one. {% endblocktrans %}
-
-                                        <div class="row">
-                                            <div class="col text-center"><div class="g-recaptcha" data-sitekey="{{recaptcha_public}}"></div></div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -578,6 +566,7 @@
                     <div class="loader loader-small text-center"></div><span class="d-none d-sm-inline"> {% trans "Saving Community..." %}</span>
                     </button>
                 </div>
+
                     <div class='row row-equal-cols'>
                         <div class='col-lg text-center m-2'>
                             <div style="display: inline-block;">
@@ -632,29 +621,6 @@
             "organization_name": organization_name,
         });
 
-    </script>
-    <script type="text/javascript">
-    function validateRecaptcha() {
-        var response = grecaptcha.getResponse();
-        if (response.length === 0 && "{{ check_captcha }}" === "True") {
-            let newAlert = document.createElement("div");
-            newAlert.innerHTML =
-              '<div id="' +
-              "captcha_submit" +
-              '" class="alert alert-danger alert-dismissible fade show map-alert" role="alert">\
-            ' +
-              "You must complete the captcha to submit this map" +
-              '\
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">\
-            <span aria-hidden="true">&times;</span>\
-            </button>\
-            </div>';
-            document.getElementById("captcha").appendChild(newAlert);
-            return false;
-        } else {
-            return formValidation();
-        }
-    }
     </script>
     <!-- Turf to get the bounding box. -->
     <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
