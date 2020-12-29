@@ -3,18 +3,7 @@
 
 {% block content %}
 <div class="container">
-  <div class="row pt-3">
-    <div class="col">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{% url 'main:index' %}">Home</a></li>
-          <li class="breadcrumb-item"><a href="{% url 'main:dashboard' %}">Dashboard</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Partners / {{ object.name }}</li>
-        </ol>
-      </nav>
-    </div>
-  </div>
-  <div class="row">
+  <div class="row mt-5">
     <div class="col-sm">
       <div class="card shadow-sm h-100">
         <div class="card-body">
@@ -75,23 +64,23 @@
         <div class="card-body">
           <h5>Getting Started</h5>
           <ul class="list-group my-3">
-            <li class="list-group-item d-flex justify-content-between align-items-center">
+            <li class="list-group-item d-flex justify-content-between align-items-center pt-3">
               <div>
                 <h5><span class="badge badge-secondary"><i class="fas fa-plus-square"></i></span> Create a Community Mapping Drive</h5>
                 <p>Create a community mapping drive to start collecting submissions.<p>
               </div>
               <a class="btn btn-primary" href="{% url 'main:create_drive' object.slug  object.pk %}" role="button">Create <i class="fa fa-arrow-circle-right"></i></a>
             </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
+            <li class="list-group-item d-flex justify-content-between align-items-center pt-3">
               <div>
                 <h5><span class="badge badge-secondary"><i class="fas fa-user-friends"></i></span> Manage Membership</h5>
                 <p>Designate users as admins on your organization dashboard.</p>
               </div>
               <a class="btn btn-primary" href="{% url 'main:manage_org' object.slug  object.pk %}" role="button">Manage <i class="fa fa-arrow-circle-right"></i></a>
             </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
+            <li class="list-group-item d-flex justify-content-between align-items-center pt-3">
               <div class="container pl-0 pr-0">
-                <h5><span class="badge badge-secondary"><i class="fas fa-map-marker-alt"></i></span> View/Share Your Map</h5>
+                <h5><span class="badge badge-secondary"><i class="fas fa-map-marker-alt"></i></span> View/Share Your Organization's Map</h5>
                 <div class="row no-gutters">
                   <div class="col-9">
                     <p>Your organization's map is live at: <a href="{% url 'main:partner_map' object.slug %}">representable.org{% url 'main:partner_map' object.slug %}</a></p>
@@ -121,7 +110,7 @@
       </div>
       <div class="modal-body">
         This action cannot be undone. All organization information will be permanently deleted. All drives associated with this organization
-        will be permanently deleted. Communities submitted through these drives will not be deleted, but will no longer be associated with the drive 
+        will be permanently deleted. Communities submitted through these drives will not be deleted, but will no longer be associated with the drive
         or your organization.
       </div>
       <div class="modal-footer">

@@ -7,11 +7,7 @@
     <div class="col">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{% url 'main:index' %}">Home</a></li>
-          <li class="breadcrumb-item"><a href="{% url 'main:dashboard' %}">Dashboard</a></li>
-          <li class="breadcrumb-item"><a href="{% url 'main:home_org' object.organization.slug  object.organization.pk %}">Partners / {{ object.organization.name }}</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Drives / {{ object.name }}</li>
-
+          <li class="breadcrumb-item"><a href="{% url 'main:home_org' object.organization.slug  object.organization.pk %}"><i class="fa fa-arrow-circle-left"></i> Return to {{ object.organization.name }}</a></li>
         </ol>
       </nav>
     </div>
@@ -115,8 +111,8 @@
         </button>
       </div>
       <div class="modal-body">
-        This action cannot be undone. All drive information will be permanently deleted. Communities 
-        submitted through this drive will not be deleted, but will no longer be associated with the drive. These communities will still 
+        This action cannot be undone. All drive information will be permanently deleted. Communities
+        submitted through this drive will not be deleted, but will no longer be associated with the drive. These communities will still
         be associated with your organization.
       </div>
       <div class="modal-footer">

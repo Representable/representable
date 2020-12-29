@@ -3,17 +3,7 @@
 
 {% block content %}
 <div class="container">
-  <div class="row pt-3">
-    <div class="col">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{% url 'main:index' %}">Home</a></li>
-          <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'main:dashboard' %}">Dashboard</a></li>
-        </ol>
-      </nav>
-    </div>
-  </div>
-    <div class="row">
+    <div class="row mt-5">
       <div class="col">
         <h4>
           Dashboard
@@ -41,8 +31,8 @@
                 Ask someone to add you to their organization or create a new one below.</p>
               {% endif %}
             </ul>
-            <div class="text-center"">
-            <a class=" btn btn-outline-primary" href="{% url 'main:create_org' %}" role="button">Create New</a>
+            <div class="text-center">
+            <a class="btn btn-outline-primary" href="{% url 'main:create_org' %}" role="button">Create New</a>
             </div>
           </div>
         </div>
@@ -57,7 +47,7 @@
             <div class="text-center"">
           <a class=" btn btn-block btn-outline-primary" href="{% url 'main:create_org' %}" role="button">Create Organization</a>
               <a class="btn btn-block btn-outline-primary" href="{% url 'main:entry' %}" role="button">Create Entry</a>
-              <a class="btn btn-block btn-outline-primary" href="{% url 'main:review' %}" role="button">My Submissions</a>
+              <a class="btn btn-block btn-outline-primary" href="{% url 'main:review' %}" role="button">My Communities</a>
             </div>
           </div>
         </div>
