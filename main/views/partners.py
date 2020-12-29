@@ -145,11 +145,12 @@ async def getcomms(query, client, is_admin, drive):
 
         results = await asyncio.gather(*tasks)
         for item in results:
-            comms.append(item[0])
-            entryPolyDict[item[0].entry_ID] = item[1]
-            if item[2] and item[3]:
-                streets[item[0].entry_ID] = item[2]
-                cities[item[0].entry_ID] = item[3]
+            print(item)
+            # comms.append(item[0])
+            # entryPolyDict[item[0].entry_ID] = item[1]
+            # if item[2] and item[3]:
+            #     streets[item[0].entry_ID] = item[2]
+            #     cities[item[0].entry_ID] = item[3]
 
     # print(type(results))
     # print(type(results[0]))
@@ -158,7 +159,7 @@ async def getcomms(query, client, is_admin, drive):
 
 async def insideloop(obj, client, is_admin, drive):
     try:
-        comm, coords = getfroms3(
+        comm, coords = await getfroms3(
             client, obj, drive, obj.state, is_admin
         )
     except Exception:
@@ -194,7 +195,7 @@ async def insideloop(obj, client, is_admin, drive):
     return obj, coords, street, city
 
 
-def getfroms3(client, obj, drive, state, is_admin):
+async def getfroms3(client, obj, drive, state, is_admin):
     print("request made at time %s" % time.time())
     if drive:
         folder_name = drive.slug
@@ -202,10 +203,11 @@ def getfroms3(client, obj, drive, state, is_admin):
         folder_name = obj.drive.slug
     else:
         folder_name = state
-    response = client.get_object(
+    response = await client.get_object(
         Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
         Key=str(folder_name) + "/" + obj.entry_ID + ".geojson",
     )
+    print(response)
     strobject = response["Body"].read().decode("utf-8")
     mapentry = geojson.loads(strobject)
     comm = CommunityEntry(
