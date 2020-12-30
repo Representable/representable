@@ -54,7 +54,9 @@ form:invalid {
   text-decoration: none;
 }
 
-
+.align-middle {
+  margin: auto;
+}
 
 /* TOC Checkbox*/
 .toc-check {
@@ -69,6 +71,7 @@ form:invalid {
   display: inline;
 }
 /* Pop up - bottom left corner of the map. */
+
 .map-popup-box {
   position: absolute;
   top: 10px;
@@ -85,11 +88,11 @@ form:invalid {
   border: 1px solid red;
 }
 
-/**
+/*********************************************************************
 
 Entry Preview Page
 
-**/
+**********************************************************************/
 #entry_preview_intro {
   padding: 15px 15px 15px 20px;
   line-height: 2;
@@ -135,12 +138,6 @@ Entry Preview Page
   #entry_preview_button {
     padding-top: 20px;
   }
-}
-
-/* Entry Page: Geocoder Full Width */
-.mapboxgl-ctrl-geocoder {
-  width: 100%;
-  max-width: none;
 }
 
 input[type="range"]::-webkit-slider-thumb {
@@ -356,6 +353,32 @@ footer {
 }
 /* Bootstrap Buttons. */
 
+.btn-circle.btn-sm { 
+  width: 30px; 
+  height: 30px; 
+  padding: 6px 0px; 
+  border-radius: 15px; 
+  font-size: 8px; 
+  text-align: center; 
+} 
+
+.btn-circle.btn-md { 
+  width: 45px; 
+  height: 45px; 
+  border-radius: 25px; 
+  font-size: 1rem; 
+  text-align: center; 
+}
+
+.btn-circle.btn-xl { 
+  width: 70px; 
+  height: 70px; 
+  padding: 10px 16px; 
+  border-radius: 35px; 
+  font-size: 12px; 
+  text-align: center; 
+}
+
 #video_popup {
   position: fixed;
   bottom: 90px;
@@ -459,7 +482,164 @@ color scheme. See readme.md*/
   width: 50%;
 }
 
+/******************************************
+
+Entry Mapping Page
+
+*******************************************/
+.mapping-icon {
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
+}
+
 /* Hero block and particles.js animation */
+#map-card {
+  position: relative;
+  height: 100vh;
+}
+
+.map-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* Entry Page: Geocoder Full Width */
+.mapboxgl-ctrl-geocoder {
+  width: 60%;
+  max-width: none;
+  border-radius: 1.5rem;
+}
+
+.mapboxgl-ctrl-top-right .mapboxgl-ctrl {
+  margin: 1rem 1rem 0 0;
+}
+
+.mapboxgl-ctrl-geocoder .geocoder-icon-search {
+  top: 15px;
+}
+
+.mapboxgl-ctrl-geocoder input[type='text'] {
+  font-size: 1rem;
+  height: 50px;
+}
+
+#modal-geocoder .mapboxgl-ctrl-geocoder {
+  display: inline-block;
+  width: 80%;
+}
+
+#entry-map-modal .modal-content {
+  background-color: rgba(216, 241, 237, 0.9);
+  border-radius: 20px;
+  border: none;
+  backdrop-filter: blur(4px); /* Note: backdrop-filter has minimal browser support */
+}
+
+#map-comm-info {
+  vertical-align: middle;
+  margin: auto;
+}
+
+#map-top-row {
+  position: absolute;
+  z-index: 1;
+  top: -.5rem;
+  width: 100%;
+  left: 0;
+}
+
+#map-bottom-row {
+  position: absolute;
+  z-index: 1;
+  bottom: 10%;
+  width:100%;
+  left: 0;
+}
+
+#mobile-map-help-btn:not(.opened),
+#map-help-btn:not(.opened) {
+  background-color:#fff;
+}
+
+.mapping-btn:hover,
+.mapping-btn.opened {
+  background-color: #2176c2 !important;
+  border-color: #2176c2 !important;
+  cursor: pointer !important;
+  color: #fff !important;
+}
+
+#map-help-menu {
+  height: fit-content;
+  max-height: 800px;
+}
+
+.comm-info-text {
+  color:#2A94F4;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.comm-item-text {
+  color:#2A94F4;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.map-survey-response {
+  color: #1b7a9f;
+  font-weight: normal;
+  max-height: 200px;
+  overflow: scroll;
+}
+
+.map-survey-response:hover {
+  color: #1b7a9f;
+  cursor: text;
+}
+
+@media only screen and (max-width: 568px) {
+  .comm-info-text {
+    color:#2A94F4;
+    font-weight: bold;
+    font-size: 1rem;
+    overflow: hidden;
+  }
+  
+  .comm-item-text {
+    color:#2A94F4;
+    font-weight: bold;
+    font-size: .8rem;
+  }
+
+  .map-survey-response {
+    font-size: .7rem;
+    max-height: 100px;
+  }
+}
+
+.map-info-item {
+  background-color: #DAEFFF;
+  opacity: 0.9;
+  width: auto;
+  white-space: unset;
+}
+
+.map-info-item:hover {
+  background-color: #DAEFFF;
+  color:#2A94F4;
+  font-weight: bold;
+  cursor: default;
+}
+
+#map-comm-btn {
+  position: relative;
+  /* transition: 2s; */
+  transform-origin: left center;
+  z-index: 1000;
+}
 
 .map-visualization {
   width: 100%;
@@ -471,6 +651,7 @@ color scheme. See readme.md*/
   bottom: 0;
   /*  Required by Mapbox: Must Set Absolute Height in px */
   min-height: 500px;
+  height: 100%;
 }
 
 .col-map {
@@ -1275,6 +1456,32 @@ Signup and Login Page
 
 /** Height and Width Adjustments **/
 
+.vw-100 {
+  width:100vw!important;
+}
+.vw-75 {
+width:75vw!important;
+}
+.vw-50 {
+width:50vw!important;
+}
+.vw-25 {
+width:25vw!important;
+}
+.vh-100 {
+height:100vh!important;
+}
+.vh-75 {
+height:75vh!important;
+}
+.vh-50 {
+height:50vh!important;
+}
+.vh-25 {
+height:25vh!important;
+}
+
+
 /* Small devices (landscape phones, 576px and up)*/
 @media (min-width: 576px) {
     .w-sm-100 {
@@ -1301,6 +1508,32 @@ Signup and Login Page
     .h-sm-25 {
     height:25%!important;
     }
+
+    .vw-sm-100 {
+      width:100vw!important;
+    }
+    .vw-sm-75 {
+    width:75vw!important;
+    }
+    .vw-sm-50 {
+    width:50vw!important;
+    }
+    .vw-sm-25 {
+    width:25vw!important;
+    }
+    .vh-sm-100 {
+    height:100vh!important;
+    }
+    .vh-sm-75 {
+    height:75vh!important;
+    }
+    .vh-sm-50 {
+    height:50vh!important;
+    }
+    .vh-sm-25 {
+    height:25vh!important;
+    }
+
   }
   
   /* Medium devices (tablets, 768px and up)*/
@@ -1328,6 +1561,31 @@ Signup and Login Page
     }
     .h-md-25 {
     height:25%!important;
+    }
+
+    .vw-md-100 {
+    width:100vw!important;
+    }
+    .vw-md-75 {
+    width:75vw!important;
+    }
+    .vw-md-50 {
+    width:50vw!important;
+    }
+    .vw-md-25 {
+    width:25vw!important;
+    }
+    .vh-md-100 {
+    height:100vh!important;
+    }
+    .vh-md-75 {
+    height:75vh!important;
+    }
+    .vh-md-50 {
+    height:50vh!important;
+    }
+    .vh-md-25 {
+    height:25vh!important;
     }
   }
   
@@ -1357,6 +1615,31 @@ Signup and Login Page
     .h-lg-25 {
     height:25%!important;
     }
+
+    .vw-lg-100 {
+      width:100vw!important;
+    }
+    .vw-lg-75 {
+    width:75vw!important;
+    }
+    .vw-lg-50 {
+    width:50vw!important;
+    }
+    .vw-lg-25 {
+    width:25vw!important;
+    }
+    .vh-lg-100 {
+    height:100vh!important;
+    }
+    .vh-lg-75 {
+    height:75vh!important;
+    }
+    .vh-lg-50 {
+    height:50vh!important;
+    }
+    .vh-lg-25 {
+    height:25vh!important;
+    }
   }
   
   /* Extra large devices (large desktops, 1200px and up)*/
@@ -1384,6 +1667,31 @@ Signup and Login Page
     }
     .h-xl-25 {
     height:25%!important;
+    }
+  
+    .vw-xl-100 {
+      width:100vw!important;
+    }
+    .vw-xl-75 {
+    width:75vw!important;
+    }
+    .vw-xl-50 {
+    width:50vw!important;
+    }
+    .vw-xl-25 {
+    width:25vw!important;
+    }
+    .vh-xl-100 {
+    height:100vh!important;
+    }
+    .vh-xl-75 {
+    height:75vh!important;
+    }
+    .vh-xl-50 {
+    height:50vh!important;
+    }
+    .vh-xl-25 {
+    height:25vh!important;
     }
   }
 
