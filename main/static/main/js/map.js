@@ -233,7 +233,7 @@ map.on("load", function () {
   // console.log(outputstr)
   // a = JSON.parse(outputstr);
   alert("done generating");
-  let aa = makegeo(-105,-95,30,35,0.05,0.15,200,300,2000);
+  let aa = makegeo(-105,-95,30,35,0.05,0.15,300,400,5000);
 
   map.addSource('national-park', {
       'type': 'geojson',
