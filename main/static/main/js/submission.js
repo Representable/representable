@@ -284,7 +284,6 @@ map.on("load", function () {
   var testForm = document.getElementById("pdfForm");
 
   testForm.onsubmit = function (event) {
-    alert("submit!!");
     event.preventDefault();
     var request = new XMLHttpRequest();
     request.open("POST", "/send_mail_plain", false);

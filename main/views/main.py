@@ -410,21 +410,17 @@ def SendPlainEmail(request):
     # user_email_address = EmailAddress.objects.get(
     #     user=self.request.user
     # )
-    # message = request.POST.get('message')
-    user_email_address = "edwardtian2000@gmail.com"
+    post_email = request.POST.get("message")
+    # user_email_address = "edwardtian2000@gmail.com"
 
     email = EmailMessage(
         "Your Representable Map",
-        "Thank you for submitting to Representable. <br> We have attached a PDF of your map below. <br> (Ok some progress! - Edward)",
+        "Congratulations! <br> You have mapped your community with Representable. <br> We have attached a copy of your map below.",
         "no-reply@representable.org",
-        [user_email_address],
+        [post_email],
     )
     email.content_subtype = "html"
-    # file = open("README.md", "r")
-    # email.attach("README.md", file.read(), 'text/plain')
-    print("TESTING")
-    # print(request)
-    # print(request.FILES)
+
     file = request.FILES["generatedpdf"]
     email.attach(file.name, file.read(), file.content_type)
 
@@ -513,6 +509,9 @@ class Submission(TemplateView):
             entryPolyDict[m_uuid] = map_poly.coordinates
             comm = user_map
 
+        # get user email address
+        user_email_address = EmailAddress.objects.get(user=self.request.user)
+
         context = {
             "has_state": has_state,
             "state": state,
@@ -521,7 +520,9 @@ class Submission(TemplateView):
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
             "map_id": m_uuid,
+            "email": user_email_address,
         }
+
         # from thanks view
         context["is_thanks"] = False
         if "thanks" in request.path:
@@ -544,9 +545,6 @@ class Submission(TemplateView):
             ).exists():
                 context["verified"] = True
             else:
-                user_email_address = EmailAddress.objects.get(
-                    user=self.request.user
-                )
 
                 user_email_confirmation = EmailConfirmationHMAC(
                     email_address=user_email_address
