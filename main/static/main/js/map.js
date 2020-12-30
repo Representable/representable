@@ -203,47 +203,103 @@ map.on("load", function () {
     return str;
   }
 
-  function makegeo(xlo, xhi, ylo, yhi, rlo, rhi, plo, phi, n) {
-    var gg = {
-            'type': 'FeatureCollection',
-            'features': []
-        };
-
-    for (var i = 0; i < n; i++) {
-      gg.features.push({
-        'type': 'Feature',
-        'geometry': {
-            'type': 'Polygon',
-            'coordinates': JSON.parse(makepoly(xlo, xhi, ylo, yhi, rlo, rhi, plo, phi))
-        }
-      });
-
-    }
-    return gg;
-  }
-
-
   // send elements to javascript as geojson objects and make them show on the map by
   // calling the addTo
-  // var outputstr = a.replace(/'/g, '"');
-  // outputstr = makejson(-100,-100.1,32,32.1,0.1,0.2,3,5,5)
+  var outputstr = a.replace(/'/g, '"');
+  outputstr = makejson(-100,-100.1,32,32.1,0.1,0.2,3,5,5)
   // 250 * 200 = 50,000 max points it can render;
   // is it points or polygons ? polygons matter as well --> 10 * 250 = 5000 (pretty slow)
   // looks like compressing data (ie reducing point count) will not be enough
-  // console.log(outputstr)
-  // a = JSON.parse(outputstr);
-  alert("done generating");
-  let aa = makegeo(-105,-95,30,35,0.05,0.15,200,300,2000);
+  console.log(outputstr)
+  a = JSON.parse(outputstr);
+  alert("done generating")
+
+
+
 
   map.addSource('national-park', {
       'type': 'geojson',
-      'data': aa,
-      'maxzoom': 10, // def 18 higher = more detail
-      'tolerance': 2 // def .375 higher = simpler geometry
+      'data': {
+          'type': 'FeatureCollection',
+          'features': [
+              {
+                  'type': 'Feature',
+                  'geometry': {
+                      'type': 'Polygon',
+                      'coordinates': [
+                          [
+                            [-99.90403039823329, 32.0133634109447],
+                            [-100.04274797668734, 32.14071747878828],
+                            [-100.17317565205528, 32.0133634109447],
+                            [-100.04274797668734, 31.86818488466349],
+                            [-99.90403039823329, 32.0133634109447]
+                          ]
+                      ]
+                  }
+              },
+              {
+                  'type': 'Feature',
+                  'geometry': {
+                      'type': 'Polygon',
+                      'coordinates': [
+                          [
+                            [-99.96534226354085, 32.0568468477796],
+                            [-100.1637939114901, 32.19282084729341],
+                            [-100.17388828507299, 31.90338888034966],
+                            [-99.96534226354085, 32.0568468477796]
+                          ]
+                      ]
+                  }
+              },
+              {
+                  'type': 'Feature',
+                  'geometry': {
+                      'type': 'Polygon',
+                      'coordinates': [
+                          [
+                            [-99.88856486480624, 32.02025432411113],
+                            [-100.01726904476031, 32.1446806197019],
+                            [-100.11800366558447, 32.02025432411113],
+                            [-100.01726904476031, 31.839476727352594],
+                            [-99.88856486480624, 32.02025432411113]
+                          ]
+                      ]
+                  }
+              },
+              {
+                  'type': 'Feature',
+                  'geometry': {
+                      'type': 'Polygon',
+                      'coordinates': [
+                          [
+                            [-99.87231104843585, 32.027441593363896],
+                            [-100.02293629597933, 32.1478628704797],
+                            [-100.15733350382312, 32.027441593363896],
+                            [-100.02293629597933, 31.90469420383656],
+                            [-99.87231104843585, 32.027441593363896]
+                          ]
+                      ]
+                  }
+              },
+              {
+                  'type': 'Feature',
+                  'geometry': {
+                      'type': 'Polygon',
+                      'coordinates': [
+                          [
+                            [-99.90430910006005, 32.00186396839228],
+                            [-99.96785312623307, 32.176033320093616],
+                            [-100.13539945033317, 32.08247769166339],
+                            [-100.1478797868672, 31.912182749865377],
+                            [-99.97282114486715, 31.842984605853456],
+                            [-99.90430910006005, 32.00186396839228]
+                          ]
+                      ]
+                  }
+              }
+          ]
+      }
   });
-
-  alert("done sourceing");
-
 
   map.addLayer({
       'id': 'park-boundary',
@@ -253,30 +309,30 @@ map.on("load", function () {
           'fill-color': '#888888',
           'fill-opacity': 0.4
       },
+      'filter': ['==', '$type', 'Polygon']
   });
 
-  alert("done painting");
 
 
-  // for (obj in a) {
-  //   console.time()
+  for (obj in a) {
+    console.time()
     // check how deeply nested the outer ring of the unioned polygon is
-    // final = [];
-    // // set the coordinates of the outer ring to final
-    // if (a[obj][0][0].length > 2) {
-    //   final = [a[obj][0][0]];
-    // } else if (a[obj][0].length > 2) {
-    //   final = [a[obj][0]];
-    // } else {
-    //   final = a[obj];
-    // }
+    final = [];
+    // set the coordinates of the outer ring to final
+    if (a[obj][0][0].length > 2) {
+      final = [a[obj][0][0]];
+    } else if (a[obj][0].length > 2) {
+      final = [a[obj][0]];
+    } else {
+      final = a[obj];
+    }
 
     // add info to bounds list for zooming
     // ok zoomer
-    // var fit = new L.Polygon(final).getBounds();
-    // var southWest = new mapboxgl.LngLat(fit['_southWest']['lat'], fit['_southWest']['lng']);
-    // var northEast = new mapboxgl.LngLat(fit['_northEast']['lat'], fit['_northEast']['lng']);
-    // community_bounds[obj] = new mapboxgl.LngLatBounds(southWest, northEast)
+    var fit = new L.Polygon(final).getBounds();
+    var southWest = new mapboxgl.LngLat(fit['_southWest']['lat'], fit['_southWest']['lng']);
+    var northEast = new mapboxgl.LngLat(fit['_northEast']['lat'], fit['_northEast']['lng']);
+    community_bounds[obj] = new mapboxgl.LngLatBounds(southWest, northEast)
     // draw the polygon
     // map.addLayer({
     //   id: obj,
@@ -324,7 +380,7 @@ map.on("load", function () {
     //     "line-width": 2,
     //   },
     // });
-  // }
+  }
   // find what features are currently on view
   // multiple features are gathered that have the same source (or have the same source with 'line' added on)
   if (state === "") {
