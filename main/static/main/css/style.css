@@ -274,6 +274,37 @@ body {
   .sidenav {
     height: 100%;
   }
+  .mobile-padding-x {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+  .mobile-padding-top {
+    padding-top: 5rem;
+  }
+  .font-large-mobile {
+    font-size: 1.5rem;
+  }
+  .font-medium-mobile {
+    font-size: 1.2rem;
+  }
+  .font-small-mobile {
+    font-size: 0.9rem;
+  }
+  .font-xs-mobile {
+    font-size: 0.5rem;
+  }
+  .text-center-mobile {
+    text-align: center;
+  }
+  .w-50-mobile {
+    width: 50%;
+  }
+  .w-35-mobile {
+    width: 35% !important;
+  }
+  .px-10 {
+    padding: 5px;
+  }
 }
 
 .quote-footer {
