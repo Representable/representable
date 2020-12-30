@@ -297,8 +297,8 @@ body {
   .text-center-mobile {
     text-align: center;
   }
-  .w-50-mobile {
-    width: 50%;
+  .w-35-mobile {
+    width: 35% !important;
   }
 }
 /* TABLETS + MOBILE */
