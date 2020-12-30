@@ -267,7 +267,7 @@ class MultiExportView(TemplateView):
             if not entry.organization:
                 continue
             gj = make_geojson(request, entry)
-        all_gj.append(gj)
+            all_gj.append(gj)
 
         final = geojson.FeatureCollection(all_gj)
 
