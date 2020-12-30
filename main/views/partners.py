@@ -78,21 +78,44 @@ class PartnerMap(TemplateView):
             drive = Drive.objects.get(slug=self.kwargs["drive"])
             query = drive.submissions.all().defer(
                 "census_blocks_polygon_array", "user_polygon",
-            )
+            ).prefetch_related("organization")
         else:
             drive = None
             query = org.submissions.all().defer(
                 "census_blocks_polygon_array", "user_polygon"
-            )
+            ).prefetch_related("drive")
 
-        client = None
+        # address information if admin/user drew the comms
+        streets = {}
+        cities = {}
         start_time_aws = time.time()
-        entryPolyDict, comms, streets, cities = asyncio.run(getcomms(query, client, is_admin, drive))
-        print("it went in the right")
+        for obj in query:
+            if not obj.census_blocks_polygon and obj.user_polygon:
+                s = "".join(obj.user_polygon.geojson)
+            elif obj.census_blocks_polygon:
+                s = "".join(obj.census_blocks_polygon.geojson)
+            else:
+                continue
+            if is_admin:
+                if not obj.user_name:
+                    obj.user_name = obj.user.username
+            else:
+                if obj.user_name:
+                    obj.user_name = ""
+
+            struct = geojson.loads(s)
+            entryPolyDict[obj.entry_ID] = struct.coordinates
+            if is_admin:
+                for a in Address.objects.filter(entry=obj):
+                    streets[obj.entry_ID] = a.street
+                    cities[obj.entry_ID] = (
+                        a.city + ", " + a.state + " " + a.zipcode
+                    )
+        
         context = {
             "streets": streets,
             "cities": cities,
-            "communities": comms,
+            "communities": query,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
@@ -269,18 +292,8 @@ class MultiExportView(TemplateView):
         for entry in query:
             if not entry.organization:
                 continue
-            try:
-                try:
-                    s3response = client.get_object(
-                        Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
-                        Key=entry.drive.slug + "/" + entry.entry_ID + ".geojson",
-                    )
-                    gj = s3_geojson_export(s3response, entry, request)
-                except Exception:
-                    gj = make_geojson(request, entry)
-            except:
-                continue
-            all_gj.append(gj)
+            gj = make_geojson(request, entry)
+        all_gj.append(gj)
 
         final = geojson.FeatureCollection(all_gj)
 
