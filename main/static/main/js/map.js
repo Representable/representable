@@ -160,6 +160,7 @@ map.on("load", function () {
   // draw all coi's in one layer
   console.log('starting data preprocess');
   coidata = JSON.parse(coidata.replace(/'/g, '"'));
+  console.log(coidata);
 
   var coidata_geojson_format = {
     'type': 'FeatureCollection',
