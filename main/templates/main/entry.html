@@ -37,6 +37,7 @@
     var organization_name = "{{organization_name}}";
     var state = "{{state}}";
     var address_required = "{{address_required}}";
+    var language = "{{LANGUAGE_CODE}}"
     mixpanel.track("Entry Page Loaded",
     {
      "drive_id": drive_id,
@@ -398,7 +399,7 @@
                                         </p>
                                         <div class="accordion" id="other_interests_accordion">
                                             <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#other_interests_example" aria-expanded="false" aria-controls="collapseOne">
-                                            {% trans "Show Example" %}
+                                            {% trans "Show Examples" %}
                                             </button>
                                             <div id="other_interests_example" class="collapse" aria-labelledby="other_interests_accordion" data-parent="#other_interests_accordion">
                                                 <p class="collapse-in ml-0">

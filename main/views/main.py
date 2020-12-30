@@ -69,6 +69,7 @@ from ..models import (
     State,
     BlockGroup,
 )
+from ..choices import STATES
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
 from django.utils.translation import ugettext as _
@@ -100,6 +101,7 @@ from django.contrib.auth.models import Group
 from itertools import islice
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
+import pandas as pd
 
 from django.conf import settings
 
@@ -313,12 +315,23 @@ class Review(LoginRequiredMixin, TemplateView):
         approvedList = list()
         # in this case, just get the ones we made
         query = CommunityEntry.objects.filter(user=user)
-        client = boto3.client(
-            "s3",
-            aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
-            aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
-        )
-        entryPolyDict, comms = asyncio.run(getcommsforreview(query, client))
+        comms = []
+        # the polygon coordinates
+        entryPolyDict = dict()
+        for obj in query:
+            if (
+                obj.census_blocks_polygon == ""
+                or obj.census_blocks_polygon is None
+                and obj.user_polygon
+                ):
+                s = "".join(obj.user_polygon.geojson)
+            elif obj.census_blocks_polygon:
+                s = "".join(obj.census_blocks_polygon.geojson)
+            else:
+                continue
+            comms.append(obj)
+            struct = geojson.loads(s)
+            entryPolyDict[obj.entry_ID] = struct.coordinates
         context = {
             "form": form,
             "entry_poly_dict": json.dumps(entryPolyDict),
@@ -360,7 +373,7 @@ async def getcommsforreview(query, client):
                 and obj.user_polygon
             ):
                 s = "".join(obj.user_polygon.geojson)
-            elif (obj.census_blocks_polygon):
+            elif obj.census_blocks_polygon:
                 s = "".join(obj.census_blocks_polygon.geojson)
             else:
                 continue
@@ -400,6 +413,7 @@ async def getfroms3(client, obj, drive, state, comms, entryPolyDict):
     comms.append(comm)
     entryPolyDict[obj.entry_ID] = mapentry["geometry"]["coordinates"]
 
+
 class Submission(TemplateView):
     template_name = "main/submission.html"
 
@@ -428,58 +442,20 @@ class Submission(TemplateView):
                 folder_name = state
 
         entryPolyDict = {}
-
-        client = boto3.client(
-            "s3",
-            aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
-            aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
-        )
-        try:
-            s3response = client.get_object(
-                Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
-                Key=folder_name + "/" + user_map.entry_ID + ".geojson",
-            )
-            strobject = s3response["Body"].read().decode("utf-8")
-            mapentry = geojson.loads(strobject)
-            poly = Polygon(mapentry["geometry"]["coordinates"][0])
-            comm = CommunityEntry(
-                entry_ID=m_uuid,
-                census_blocks_polygon=poly,
-                entry_name=mapentry["properties"]["entry_name"],
-                comm_activities=mapentry["properties"]["comm_activities"],
-                economic_interests=mapentry["properties"][
-                    "economic_interests"
-                ],
-                other_considerations=mapentry["properties"][
-                    "other_considerations"
-                ],
-                cultural_interests=mapentry["properties"][
-                    "cultural_interests"
-                ],
-            )
-            if mapentry["properties"]["drive"]:
-                comm.drive = Drive(name=mapentry["properties"]["drive"])
-            if mapentry["properties"]["organization"]:
-                comm.organization = Organization(
-                    name=mapentry["properties"]["organization"]
-                )
-            entryPolyDict[user_map.entry_ID] = mapentry["geometry"][
-                "coordinates"
-            ]
-        except Exception:
-            if (
-                user_map.census_blocks_polygon == ""
-                or user_map.census_blocks_polygon is None
-                and user_map.user_polygon
-            ):
-                s = "".join(user_map.user_polygon.geojson)
-            elif user_map.census_blocks_polygon:
-                s = "".join(user_map.census_blocks_polygon.geojson)
-            else:
-                raise Http404
-            map_poly = geojson.loads(s)
-            entryPolyDict[m_uuid] = map_poly.coordinates
-            comm = user_map
+        
+        if (
+            user_map.census_blocks_polygon == ""
+            or user_map.census_blocks_polygon is None
+            and user_map.user_polygon
+        ):
+            s = "".join(user_map.user_polygon.geojson)
+        elif user_map.census_blocks_polygon:
+            s = "".join(user_map.census_blocks_polygon.geojson)
+        else:
+            raise Http404
+        map_poly = geojson.loads(s)
+        entryPolyDict[m_uuid] = map_poly.coordinates
+        comm = user_map
 
         context = {
             "has_state": has_state,
@@ -610,27 +586,17 @@ class ExportView(TemplateView):
                 folder_name = query.drive.slug
             else:
                 folder_name = query.state
-
-        client = boto3.client(
-            "s3",
-            aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
-            aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
-        )
-        try:
-            try:
-                s3response = client.get_object(
-                    Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
-                    Key=folder_name + "/" + query.entry_ID + ".geojson",
-                )
-                gj = s3_geojson_export(s3response, query, request)
-            except Exception:
-                gj = make_geojson(request, query)
-        except Exception:
-            msg = "Unable to export the community geojson. Please check again"
-            response = HttpResponseNotFound(msg, content_type="application/json")
+        
+        gj = make_geojson(request, query)
 
         gs = geojson.dumps(gj)
-        response = HttpResponse(gs, content_type="application/json")
+        if "csv" in request.path:
+            # this is the new code -- turns geojson into csv for export
+            df = pd.json_normalize(gj)
+            comm_csv = df.to_csv()
+            response = HttpResponse(comm_csv, content_type="text/csv")
+        else:
+            response = HttpResponse(gs, content_type="application/json")
         return response
 
 
@@ -645,11 +611,16 @@ class Map(TemplateView):
 
         # the polygon coordinates
         entryPolyDict = dict()
-        # all communities for display TODO: might need to limit this? or go by state
         query = CommunityEntry.objects.filter(state=state)
-
+        # state map page --> drives in the state, entries without a drive but with a state
+        drives = []
+        streets = {}
+        cities = {}
+        authenticated = self.request.user.is_authenticated
         # get the polygon from db and pass it on to html
         for obj in query:
+            if not obj.admin_approved:
+                continue
             if (
                 obj.census_blocks_polygon == ""
                 or obj.census_blocks_polygon is None
@@ -660,14 +631,29 @@ class Map(TemplateView):
                 s = "".join(obj.census_blocks_polygon.geojson)
             else:
                 continue
+            drives.append(obj.drive)
+
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
             entryPolyDict[obj.entry_ID] = struct.coordinates
 
+            # Addresses only if user created comm, user is admin of the org
+            if authenticated:
+                if obj.user is self.request.user or self.request.user.is_org_admin(obj.organization_id):
+                # get the addresses:
+                    for a in Address.objects.filter(entry=obj):
+                        streets[obj.entry_ID] = a.street
+                        cities[obj.entry_ID] = (
+                            a.city + ", " + a.state + " " + a.zipcode
+                        )
+
         context = {
+            "streets": streets,
+            "cities": cities,
             "state": state,
             "communities": query,
+            "drives": drives,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
@@ -759,6 +745,9 @@ class EntryView(LoginRequiredMixin, View):
     def get(self, request, abbr=None, *args, **kwargs):
         if not abbr:
             return redirect("/#select")
+        else:
+            if not any(abbr.upper() in i for i in STATES):
+                return redirect("/entry_state_selection")
         comm_form = self.community_form_class(
             initial=self.get_initial(), label_suffix=""
         )
@@ -851,7 +840,6 @@ class EntryView(LoginRequiredMixin, View):
                 ServerSideEncryption="AES256",
                 StorageClass="STANDARD_IA",
             )
-            entryForm.census_blocks_polygon = ""
 
             entryForm.save()
             comm_form.save_m2m()

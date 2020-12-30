@@ -91,6 +91,24 @@ map.on("load", function () {
   //     break;
   //   }
   // }
+  /****************************************************************************/
+  // school districts as a data layer
+  newSourceLayer("school-districts", SCHOOL_DISTR_KEY);
+  map.addLayer(
+    {
+      id: "school-districts-lines",
+      type: "line",
+      source: "school-districts",
+      "source-layer": "us_school_districts",
+      layout: {
+        visibility: "none",
+      },
+      paint: {
+        "line-color": "rgba(106,137,204,0.7)",
+        "line-width": 2,
+      },
+    }
+  );
   // ward + community areas for IL
   if (state === "il") {
     newSourceLayer("chi_wards", CHI_WARD_KEY);
@@ -286,6 +304,7 @@ map.on("load", function () {
 
 //create a button that toggles layers based on their IDs
 var toggleableLayerIds = JSON.parse(JSON.stringify(BOUNDARIES_LAYERS));
+toggleableLayerIds["school-districts"] = "School Districts";
 // add selector for chicago wards + community areas if illinois
 if (state === "il") {
   toggleableLayerIds["chi-ward"] = "Chicago Wards";
