@@ -16,8 +16,8 @@
               <h6 class="mt-2 dropdown-toggle-angle word-break">{{ q.question|striptags }}<i class="fas fa-angle-down pl-3"></i></h6>
           </button>
           <div class="accordion" id="faq-question-{{q.id}}-accordion">
-              <div id="faq-question-{{q.id}}" class="collapse" aria-labelledby="faq question accordion" data-parent="#faq-question-{{q.id}}-accordion">
-                  <p class="collapse-in ml-4">{{ q.answer|safe }}</p>
+              <div id="faq-question-{{q.id}}" class="collapse ml-lg-5" aria-labelledby="faq question accordion" data-parent="#faq-question-{{q.id}}-accordion">
+                  <p class="collapse-in mb-lg-4 mt-lg-2">{{ q.answer|safe }}</p>
               </div>
           </div>
         </div>
