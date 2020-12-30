@@ -83,6 +83,47 @@ function newBoundariesLayer(name) {
   );
 }
 
+function makepoint(x, y, r, t) {
+  let xx = x + r * Math.cos(t / 180 * Math.PI);
+  let yy = y + r * Math.sin(t / 180 * Math.PI);
+  return "[" + xx + "," + yy + "]";
+}
+function getrdouble(min, max) {
+  return Math.random() * (max - min) + min;
+}
+function getrint(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max+1);
+  return Math.floor(Math.random() * (max - min) + min);
+}
+function makepoly(xlo, xhi, ylo, yhi, rlo, rhi, plo, phi) {
+  let x = getrdouble(xlo, xhi);
+  let y = getrdouble(ylo, yhi);
+  let p = getrint(plo, phi);
+  var startp;
+  var ret = "[[";
+  for (var i = 0; i < p; i++) {
+    let pstr = makepoint(x,y,getrdouble(rlo,rhi),i*360/p);
+    if (i === 0) startp = pstr;
+    ret += pstr + ",";
+  }
+  ret += startp;
+  ret += "]]"
+  return ret;
+}
+function makejson(xlo, xhi, ylo, yhi, rlo, rhi, plo, phi, n) {
+  var str = "{";
+  for (var i = 0; i < n; i++) {
+    str = str.concat("\"");
+    str = str.concat(i);
+    str = str.concat("\":");
+    str = str.concat(makepoly(xlo, xhi, ylo, yhi, rlo, rhi, plo, phi));
+    if(i === n-1) str = str.concat("}");
+    else str = str.concat(",");
+  }
+  return str;
+}
+
 var community_bounds = {};
 
 map.on("load", function () {
@@ -157,82 +198,105 @@ map.on("load", function () {
     newBoundariesLayer(key);
   }
 
+  // draw all coi's in one layer
+  coidata = JSON.parse(coidata.replace(/'/g, '"'));
 
-  /*******************************/
-  
-  /*********************************/
-  // send elements to javascript as geojson objects and make them show on the map by
-  // calling the addTo
-  var outputstr = coidata.replace(/'/g, '"');
-  coidata = JSON.parse(outputstr);
+  // perf testing 
+  // coidata = JSON.parse(makejson(-100, -96, 29, 33, 0.20, 0.25, 200, 400, 5000));
+  // alert("generated");
+  // alert("generated");
 
-  var 
+  var coidata_geojson_format = {
+    'type': 'FeatureCollection',
+    'features': []
+  };
 
-  for (obj in coidata) {
-    // check how deeply nested the outer ring of the unioned polygon is
-    final = [];
+  for (coi_id in coidata) {
     // set the coordinates of the outer ring to final
-    if (coidata[obj][0][0].length > 2) {
-      final = [coidata[obj][0][0]];
-    } else if (coidata[obj][0].length > 2) {
-      final = [coidata[obj][0]];
+    final = [];
+    if (coidata[coi_id][0][0].length > 2) {
+      final = [coidata[coi_id][0][0]];
+    } else if (coidata[coi_id][0].length > 2) {
+      final = [coidata[coi_id][0]];
     } else {
-      final = coidata[obj];
+      final = coidata[coi_id];
     }
+    coidata[coi_id] = final
+
     // add info to bounds list for zooming
-    // ok zoomer
     var fit = new L.Polygon(final).getBounds();
     var southWest = new mapboxgl.LngLat(fit['_southWest']['lat'], fit['_southWest']['lng']);
     var northEast = new mapboxgl.LngLat(fit['_northEast']['lat'], fit['_northEast']['lng']);
-    community_bounds[obj] = new mapboxgl.LngLatBounds(southWest, northEast)
-    // draw the polygon
-    map.addLayer({
-      id: obj,
-      type: "fill",
-      source: {
-        type: "geojson",
-        data: {
-          type: "Feature",
-          geometry: {
-            type: "Polygon",
-            coordinates: final,
-          },
-        },
-      },
-      layout: {
-        visibility: "visible",
-      },
-      paint: {
-        "fill-color": "rgb(110, 178, 181)",
-        "fill-opacity": 0.15
-      },
-    });
+    community_bounds[coi_id] = new mapboxgl.LngLatBounds(southWest, northEast)
 
-    // this has to be a separate layer bc mapbox doesn't allow flexibility with thickness of outline of polygons
-    map.addLayer({
-      id: obj + "line",
-      type: "line",
-      source: {
-        type: "geojson",
-        data: {
-          type: "Feature",
-          geometry: {
-            type: "Polygon",
-            coordinates: final,
-          },
-        },
-      },
-      layout: {
-        visibility: "visible",
-        "line-join": "round",
-        "line-cap": "round",
-      },
-      paint: {
-        "line-color": "rgba(0, 0, 0,0.2)",
-        "line-width": 2,
-      },
+    coidata_geojson_format.features.push({
+      'type': 'Feature',
+      'geometry': {
+          'type': 'Polygon',
+          'coordinates': final
+      }
     });
   }
+
+  // mxzoom(def 18 higher = more detail)
+  // tol(def .375 higher = simpler geometry)
+  const mxzoom = 10, tol = 3.5;
+
+  map.addSource('coi_all', {
+      'type': 'geojson',
+      'data': coidata_geojson_format,
+      'maxzoom': mxzoom, 
+      'tolerance': tol
+  });
+
+  map.addLayer({
+      'id': 'coi_layer_fill',
+      'type': 'fill',
+      'source': 'coi_all',
+      'paint': {
+          'fill-color': 'rgb(110, 178, 181)',
+          'fill-opacity': 0.15
+      },
+  });
+  map.addLayer({
+      'id': 'coi_layer_line',
+      'type': 'line',
+      'source': 'coi_all',
+      'paint': {
+          'line-color': '#808080',
+          'line-width': 2
+      },
+  });
+
+  // hover to highlight
+  $(".community-review-span").hover(function() {
+    let highlight_id = this.id + "_boldline";
+    map.addSource(highlight_id, {
+        'type': 'geojson',
+        'data': {
+          type: "Feature",
+          geometry: {
+            type: "Polygon",
+            coordinates: coidata[this.id],
+          },
+        },
+        'maxzoom': mxzoom, // def 18 higher = more detail
+        'tolerance': tol // def .375 higher = simpler geometry
+    });
+    map.addLayer({
+        'id': highlight_id,
+        'type': 'line',
+        'source': highlight_id,
+        'paint': {
+            'line-color': '#000000',
+            'line-width': 4
+        },
+    });
+  }, function () {
+    map.removeLayer(this.id+"_boldline");
+    map.removeSource(this.id+"_boldline");
+  });
+
   // find what features are currently on view
   // multiple features are gathered that have the same source (or have the same source with 'line' added on)
   if (state === "") {
@@ -263,16 +327,6 @@ map.on("load", function () {
       });
     });
   }
-  // hover to highlight
-  $(".community-review-span").hover(function() {
-    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
-    map.setPaintProperty(this.id + "line", "line-width", 4);
-    map.setPaintProperty(this.id, "fill-opacity", 0.5);
-  }, function () {
-    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.2)");
-    map.setPaintProperty(this.id + "line", "line-width", 2);
-    map.setPaintProperty(this.id, "fill-opacity", 0.15);
-  });
   // loading icon
   $(".loader").delay(500).fadeOut(500);
   // fly to state if org, otherwise stay on map
