@@ -157,21 +157,27 @@ map.on("load", function () {
     newBoundariesLayer(key);
   }
 
+
+  /*******************************/
+  
+  /*********************************/
   // send elements to javascript as geojson objects and make them show on the map by
   // calling the addTo
-  var outputstr = a.replace(/'/g, '"');
-  a = JSON.parse(outputstr);
+  var outputstr = coidata.replace(/'/g, '"');
+  coidata = JSON.parse(outputstr);
 
-  for (obj in a) {
+  var 
+
+  for (obj in coidata) {
     // check how deeply nested the outer ring of the unioned polygon is
     final = [];
     // set the coordinates of the outer ring to final
-    if (a[obj][0][0].length > 2) {
-      final = [a[obj][0][0]];
-    } else if (a[obj][0].length > 2) {
-      final = [a[obj][0]];
+    if (coidata[obj][0][0].length > 2) {
+      final = [coidata[obj][0][0]];
+    } else if (coidata[obj][0].length > 2) {
+      final = [coidata[obj][0]];
     } else {
-      final = a[obj];
+      final = coidata[obj];
     }
     // add info to bounds list for zooming
     // ok zoomer
