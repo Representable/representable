@@ -851,7 +851,6 @@ class EntryView(LoginRequiredMixin, View):
                 ServerSideEncryption="AES256",
                 StorageClass="STANDARD_IA",
             )
-            entryForm.census_blocks_polygon = ""
 
             entryForm.save()
             comm_form.save_m2m()
