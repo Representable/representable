@@ -18,23 +18,26 @@
 <div class="container">
   <!-- Illustration -->
   <div class="row row-hero row-eq-height my-sm-5 ml-sm-5">
-    <div class="col-lg-6 col-sm-12 col-md-6 mobile-padding-x mobile-padding-top">
+    <div id="home-page-rect"></div>
+    <div class="col-lg-6 col-sm-12 col-md-6 mobile-padding-x mobile-padding-top pl-md-5">
       <div class="my-4 main-display-text-all">
-        <span class="d-block mb-3 font-large-mobile">Gerrymandering is silencing communities.</span>
+        <span class="d-block mb-3 font-large-mobile blue-text">Gerrymandering is silencing communities.</span>
         <span class="d-block h4 font-weight-light gray-text font-medium-mobile">Make your voice heard and put your community on the map.</span>
       </div>
       <div class="text-center-mobile">
       <a id="get-started-btn" class="text-center btn btn-primary btn-lg py-3 px-lg-5 mb-lg-5 mt-2" href="{% url 'main:entry_preview' %}"  role="button">{% trans "GET STARTED" %}</a>
       </div>
       <div class="row d-none d-lg-block mt-5">
-        <div class="col-9">
-          <div class="alert alert-custom px-5" role="alert">
-            <p class="my-2 h6 font-weight-bold">{% trans "Are you the leader of an organization?" %}</p>
-            <p class="small my-2 font-weight-light">{% trans "Many organizations have partnered with Representable.org to collect community-of-interest data." %}</p>
-            <p class="small my-2"><a class="link-custom" href='/partners/welcome'>{% trans "PARTNER WITH US" %}</a></p>
+        <div class="col-lg-1">
+        </div>
+        <div class="col-lg-10">
+          <div class="alert" role="alert">
+            <p class="my-2 px-4 h6 font-weight-bold">{% trans "Are you the leader of an organization?" %}</p>
+            <p class="small border-left border-dark border-3 px-4 my-2 font-weight-light">{% trans "Many organizations have partnered with Representable.org to collect community-of-interest data." %}</p>
+            <p class="small px-4 my-2"><a class="link-custom" href='/partners/welcome'>{% trans "PARTNER WITH US" %}</a></p>
           </div>
         </div>
-        <div class="col-3"></div>
+        <div class="col-lg-1"></div>
       </div>
       </div>
       <div class="col-lg-6 col-sm-12 col-md-6">
@@ -52,7 +55,7 @@
         </div>
         <div class="col-md-2"></div>
       </div>
-      <div class="row mx-md-5 light-blue-bg px-10 gray-text pb-5">
+      <div class="row mx-md-5 mx-2 light-blue-bg px-10 gray-text pb-5">
         <div class="col-12 pt-3">
           <h4 class="pt-5 font-medium-mobile"><b>Gerrymandering</b> is threatening democracy.</h4>
           <h5 class="py-3 font-weight-light font-small-mobile">Politicians have been splitting up and packing together communities into districts that silence the voices of community members. This prevents communities from electing representatives that listen to their needs. Gathering communities of interest maps helps fight gerrymandering. We can provide map drawers with the information they need to draw districts that empower communities.</h5>
