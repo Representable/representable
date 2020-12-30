@@ -1,29 +1,37 @@
-{% extends 'main/layouts/base-page.html' %}
+{% extends 'main/base.html' %}
 {% load static %}
-{% block page-content %}
-<div class="row mx-lg-5 px-lg-5">
-  <div class="col-12 light-blue-bg mb-3">
-    <div class="h1 my-4 ml-3">Redistricting Glossary</div>
-  </div>
-</div>
-{% for t in glossaryterms %}
-  <div class="row mx-lg-5">
-    <div class="col-1"></div>
-    <div class="col-10 mt-2">
-      <h6><b>{{ t.term }}</b></h6>
-      <p>{{ t.definition }}</p>
+{% block content %}
+<div class="container-fluid content-blue-bg">
+  <div class="row row-content">
+    <div class="col">
+      <div class="row mx-lg-5 px-lg-5">
+        <div class="col-12 light-blue-bg mb-3">
+          <div class="h1 my-4 ml-3">Redistricting Glossary</div>
+        </div>
+      </div>
+      <div class="mb-3 white-bg">
+        {% for t in glossaryterms %}
+          <div class="row mx-lg-5">
+            <div class="col-1"></div>
+            <div class="col-10 mt-2 white-bg">
+              <h6><b>{{ t.term }}</b></h6>
+              <p>{{ t.definition }}</p>
+            </div>
+            <div class="col-1"></div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="row mx-lg-5 mb-5">
+        <div class="col-1"></div>
+        <div class="col-10 light-blue-bg small">
+          <div class="mx-3 blue-text">
+            <p class="my-3"><b>More Information</b></p>
+            <p class="text-break" style="overflow-wrap: break-word">https://www.ncsl.org/research/redistricting/the-redistricting-lexicon-glossary.aspx <br>“What is the 2020 Census?”, US Department of Commerce, <br>https://2020census.gov/en/what-is-2020-census.html<br>https://www.ncsl.org/research/redistricting/the-redistricting-lexicon-glossary.aspx</p>
+          </div>
+        </div>
+        <div class="col-1"></div>
+      </div>
     </div>
-    <div class="col-1"></div>
   </div>
-{% endfor %}
-<div class="row mx-lg-5 mb-5">
-  <div class="col-1"></div>
-  <div class="col-10 light-blue-bg small">
-    <div class="mx-3 blue-text">
-      <p class="my-3"><b>More Information</b></p>
-      <p class="text-break" style="overflow-wrap: break-word">https://www.ncsl.org/research/redistricting/the-redistricting-lexicon-glossary.aspx <br>“What is the 2020 Census?”, US Department of Commerce, <br>https://2020census.gov/en/what-is-2020-census.html<br>https://www.ncsl.org/research/redistricting/the-redistricting-lexicon-glossary.aspx</p>
-    </div>
-  </div>
-  <div class="col-1"></div>
 </div>
 {% endblock %}
