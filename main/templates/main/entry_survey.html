@@ -7,7 +7,7 @@
             Step 2
         </div>
     </div>
-    <div id="entry-survey-start" class="d-none">
+    <div id="entry-survey-start" class="">
         <div class="row">
             <div class="col-3">
                 <object type="image/svg+xml" class="w-100 w-md-75" data="{% static 'img/mapping.svg' %}" alt="image of someone drawing a community map"></object>
@@ -339,12 +339,8 @@
         </div>
     </div>
 
-
-
-
-
     <!-- Community Name Part -->
-    <div id="survey-qs-p2" class="">
+    <div id="survey-qs-p2" class="d-none">
         <div class="col-lg mt-2 ml-lg-3 mt-lg-5">
             <div id="entry_name_error_alerts">
                 {% if comm_form.entry_name.errors %}

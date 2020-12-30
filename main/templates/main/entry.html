@@ -55,85 +55,22 @@
 <!-- Entry Form -->
 <form id="entryForm" method="post" onSubmit="return validateRecaptcha();">
     {% csrf_token %}
-    <div class="container-fluid d-none">
+    <div class="container-fluid">
         <div class="row row-content">
             <div class="col-sm-2">
             </div>
             <div class="col-sm-8">
                 <!-- START FORM BODY -->
                 <div class="row">
-                    {% comment %} <div class="row">
-                        <div class="col-sm-7 my-auto pl-5">
-                            <h1 class="font-weight-light">
-                                {% trans "Map your community" %}
-                            </h1>
-
-                            <p class="">
-                                {% blocktrans %}
-                                Make your voice heard! Fill out the form below and draw a map to add your community to Representable.org.
-                                <br>
-                                Follow the instructions in each section to get started.
-                                {% endblocktrans %}
-                            </p>
-                            {% csrf_token %}
-                        </div>
-                        <div class="col-5 d-none d-sm-block">
-                        <div id="mapping-image-div" class="m-auto py-4 w-75 h-100">
-                            <object type="image/svg+xml" class="w-75 mx-auto d-block h-100" data="{% static 'img/mapping.svg' %}" alt="image of someone drawing a community map"></object>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                    <!-- {# Include the non-field error fields #} -->
-                    {% if comm_form.non_field_errors %}
-                    <div class="non-field-errors form-error">
-                        {% for err in comm_form.non_field_errors %}
-                        <p class="form-error">{{ err }}</p>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-                    {% if comm_form.errors %}
-                    <div id="django_form_errors">
-                    </div>
-                    {% endif %}
-                    <div id="form_error" class="alert alert-danger alert-dismissible fade show form-error d-none" role="alert">
-                        {% blocktrans %}There was an error in submitting your community. Please check over and
-                        ensure that you have filled out all required fields. {% endblocktrans %}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    </div> {% endcomment %}
                     <div class="col">
-                        <div id="entry_address" class="d-none">
+                        <div id="entry_address" class="">
                             {% include './entry_address.html' %}
                         </div>
 
-                        <div id="entry_survey" class="">{% include './entry_survey.html' %}</div>
+                        <div id="entry_survey" class="d-none">{% include './entry_survey.html' %}</div>
 
                         <div id="entry_privacy" class="d-none">{% include './entry_privacy.html' %}</div>
                     </div>
-
-                    {% comment %} <div id="dropuphelp2" class="btn-floating btn-group shadow-lg dropup">
-                        <button type="button" class="btn fixed-action-btn btn-secondary shadow-lg dropdown-toggle" id="dropuphelp" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-question-circle" aria-hidden="true"></i><span class="d-none d-sm-inline"> {% trans "Help" %}</span>
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropuphelp">
-                        <a class="dropdown-item" href="https://docs.google.com/forms/d/e/1FAIpQLSfeyoZ87pS67iTh2c3t5031XqoNFNAdwF6Pt1NUns_z_Myxaw/viewform"> {% trans "Report Error/Send Feedback" %}</a>
-                        </div>
-                    </div>
-                    <div class="btn-floating btn-group shadow-lg">
-                        <button type="button" class="btn fixed-action-btn btn-secondary shadow-lg" id="loading-entry">
-                        <div class="loader loader-small text-center"></div><span class="d-none d-sm-inline"> {% trans "Saving Community..." %}</span>
-                        </button>
-                    </div>
-                    <div class='row row-equal-cols'>
-                        <div class='col-lg text-center m-2'>
-                            <div style="display: inline-block;">
-                                <button id="save" form="entryForm" type="submit" class="btn btn-lg btn-primary" value="Submit">{% trans "Save Community" %}</button>
-                            </div>
-                        </div>
-                    </div> {% endcomment %}
                 </div>
             </div>
             <div class="col-sm-2">
@@ -152,7 +89,7 @@
             </div>
         </div>
     </div>
-    <div id="entry_map" class="">{% include './entry_map.html' %}</div>
+    <div id="entry_map" class="d-none">{% include './entry_map.html' %}</div>
 
 </form>
     {% endblock %}
