@@ -32,7 +32,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
   <div class="row row-wide">
     <div>
       <script type="text/javascript">
-        var a = '{{ entries | escapejs }}';
+        var coidata = '{{ entries | escapejs }}';
         var mapbox_user_name = "{{mapbox_user_name}}";
         var state = '';
       </script>
@@ -62,7 +62,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
               {% if communities %}
               <table id="collapseThree" class="collapse show table table-hover">
                 {% for c in communities %}
-                <tr class="community-review-span hidden" id={{c.entry_ID}}>
+                <tr class="community-review-span" id={{c.entry_ID}}>
                   <td>
                     <span class="text-uppercase entry-name">
                       {% with link_text="/submission/"|addstr:c.entry_ID %}

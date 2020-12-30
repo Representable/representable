@@ -69,6 +69,7 @@ from ..models import (
     State,
     BlockGroup,
 )
+from ..choices import STATES
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
 from django.utils.translation import ugettext as _
@@ -100,6 +101,7 @@ from django.contrib.auth.models import Group
 from itertools import islice
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
+import pandas as pd
 
 from django.conf import settings
 
@@ -360,7 +362,7 @@ async def getcommsforreview(query, client):
                 and obj.user_polygon
             ):
                 s = "".join(obj.user_polygon.geojson)
-            elif (obj.census_blocks_polygon):
+            elif obj.census_blocks_polygon:
                 s = "".join(obj.census_blocks_polygon.geojson)
             else:
                 continue
@@ -399,9 +401,6 @@ async def getfroms3(client, obj, drive, state, comms, entryPolyDict):
     )
     comms.append(comm)
     entryPolyDict[obj.entry_ID] = mapentry["geometry"]["coordinates"]
-
-
-# ******************************************************************************#
 
 
 class Submission(TemplateView):
@@ -515,6 +514,7 @@ class Submission(TemplateView):
                 user=self.request.user, verified=True
             ).exists():
                 context["verified"] = True
+
             else:
                 user_email_address = EmailAddress.objects.get(
                     user=self.request.user
@@ -630,10 +630,18 @@ class ExportView(TemplateView):
                 gj = make_geojson(request, query)
         except Exception:
             msg = "Unable to export the community geojson. Please check again"
-            response = HttpResponseNotFound(msg, content_type="application/json")
+            response = HttpResponseNotFound(
+                msg, content_type="application/json"
+            )
 
         gs = geojson.dumps(gj)
-        response = HttpResponse(gs, content_type="application/json")
+        if "csv" in request.path:
+            # this is the new code -- turns geojson into csv for export
+            df = pd.json_normalize(gj)
+            comm_csv = df.to_csv()
+            response = HttpResponse(comm_csv, content_type="text/csv")
+        else:
+            response = HttpResponse(gs, content_type="application/json")
         return response
 
 
@@ -648,9 +656,16 @@ class Map(TemplateView):
         # the polygon coordinates
         entryPolyDict = dict()
         # all communities for display TODO: might need to limit this? or go by state
-        query = CommunityEntry.objects.all()
+        org = Organization.objects.get(id=0)
+        query = org.submissions.all().prefetch_related("drive")
+        drives = []
+        # query = (
+        #     CommunityEntry.objects.all()
+        #     .prefetch_related("drive", "organization")
+        #     .filter(organization__id=0)
+        # )
         # get the polygon from db and pass it on to html
-        for obj in CommunityEntry.objects.all():
+        for obj in query:
             if not obj.admin_approved:
                 continue
             if (
@@ -660,6 +675,7 @@ class Map(TemplateView):
                 s = "".join(obj.user_polygon.geojson)
             else:
                 s = "".join(obj.census_blocks_polygon.geojson)
+            drives.append(obj.drive)
 
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
@@ -668,6 +684,7 @@ class Map(TemplateView):
 
         context = {
             "communities": query,
+            "drives": drives,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
@@ -759,6 +776,9 @@ class EntryView(LoginRequiredMixin, View):
     def get(self, request, abbr=None, *args, **kwargs):
         if not abbr:
             return redirect("/#select")
+        else:
+            if not any(abbr.upper() in i for i in STATES):
+                return redirect("/entry_state_selection")
         comm_form = self.community_form_class(
             initial=self.get_initial(), label_suffix=""
         )
