@@ -10,7 +10,7 @@
   {% for q in faqs_users %}
   <div class="col-12 my-2 light-blue-bg">
     <button class="btn btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" type="button" data-target="#faq-question-{{q.id}}" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
-        <h5 class="mt-2">{{ q.question|striptags }}<i class="fas fa-angle-down pl-3"></i></h5>
+        <h6 class="mt-2 dropdown-toggle-angle">{{ q.question|striptags }}<i class="fas fa-angle-down pl-3"></i></h6>
     </button>
     <div class="accordion" id="faq-question-{{q.id}}-accordion">
         <div id="faq-question-{{q.id}}" class="collapse" aria-labelledby="faq question accordion" data-parent="#faq-question-{{q.id}}-accordion">
@@ -23,7 +23,7 @@
   {% for q in faqs_orgs %}
   <div class="col-12 my-2 light-blue-bg">
     <button class="btn btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" type="button" data-target="#faq-question-{{q.id}}" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
-        <h5 class="mt-2">{{ q.question|striptags }}<i class="fas fa-angle-down pl-3"></i></h5>
+        <h6 class="mt-2 dropdown-toggle-angle">{{ q.question|striptags }}<i class="fas fa-angle-down pl-3"></i></h6>
     </button>
     <div class="accordion" id="faq-question-{{q.id}}-accordion">
         <div id="faq-question-{{q.id}}" class="collapse" aria-labelledby="faq question accordion" data-parent="#faq-question-{{q.id}}-accordion">
