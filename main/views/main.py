@@ -252,9 +252,6 @@ class FAQ(TemplateView):
 
         faqs_users = FrequentlyAskedQuestion.objects.filter(type='USER')
         faqs_orgs = FrequentlyAskedQuestion.objects.filter(type='ORGANIZATION')
-        print(faqs_users)
-        print("--------------")
-        print(faqs_orgs)
         return render(
             request,
             self.template_name,
