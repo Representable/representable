@@ -20,6 +20,7 @@ from django.views.generic import (
 
 import asyncio
 import boto3
+import aioboto3
 import botocore
 import pandas
 from django.contrib.gis import geos
@@ -84,11 +85,7 @@ class PartnerMap(TemplateView):
                 "census_blocks_polygon_array", "user_polygon"
             )
 
-        client = boto3.client(
-            "s3",
-            aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
-            aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
-        )
+        client = None
         start_time_aws = time.time()
         entryPolyDict, comms, streets, cities = asyncio.run(getcomms(query, client, is_admin, drive))
         print("it went in the right")
@@ -139,16 +136,22 @@ async def getcomms(query, client, is_admin, drive):
     streets = {}
     cities = {}
     tasks = []
-    for obj in query:
-        tasks.append(insideloop(obj, client, is_admin, drive))
+    async with aioboto3.client(
+            "s3",
+            aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),) as client:
+        for obj in query:
+            tasks.append(insideloop(obj, client, is_admin, drive))
 
-    results = await asyncio.gather(*tasks)
-    for item in results:
-        comms.append(item[0])
-        entryPolyDict[item[0].entry_ID] = item[1]
-        if item[2] and item[3]:
-            streets[item[0].entry_ID] = item[2]
-            cities[item[0].entry_ID] = item[3]
+        results = await asyncio.gather(*tasks)
+        # print(results)
+        for item in results:
+            # print(item)
+            comms.append(item[0])
+            entryPolyDict[item[0].entry_ID] = item[1]
+            if item[2] and item[3]:
+                streets[item[0].entry_ID] = item[2]
+                cities[item[0].entry_ID] = item[3]
 
     # print(type(results))
     # print(type(results[0]))
@@ -157,7 +160,7 @@ async def getcomms(query, client, is_admin, drive):
 
 async def insideloop(obj, client, is_admin, drive):
     try:
-        comm, coords = getfroms3(
+        comm, coords = await getfroms3(
             client, obj, drive, obj.state, is_admin
         )
     except Exception:
@@ -193,7 +196,7 @@ async def insideloop(obj, client, is_admin, drive):
     return obj, coords, street, city
 
 
-def getfroms3(client, obj, drive, state, is_admin):
+async def getfroms3(client, obj, drive, state, is_admin):
     print("request made at time %s" % time.time())
     if drive:
         folder_name = drive.slug
@@ -201,11 +204,13 @@ def getfroms3(client, obj, drive, state, is_admin):
         folder_name = obj.drive.slug
     else:
         folder_name = state
-    response = client.get_object(
+    response = await client.get_object(
         Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
         Key=str(folder_name) + "/" + obj.entry_ID + ".geojson",
     )
-    strobject = response["Body"].read().decode("utf-8")
+    # print(response)
+    strobj = await response["Body"].read()
+    strobject = strobj.decode("utf-8")
     mapentry = geojson.loads(strobject)
     comm = CommunityEntry(
         entry_ID=obj.entry_ID,
