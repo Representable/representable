@@ -4,16 +4,16 @@
 <div class="container-fluid content-blue-bg">
   <div class="row row-content mx-lg-5 px-lg-5">
     <div class="col mx-lg-5 px-lg-5">
-      <div class="row mx-lg-5 px-lg-5">
-        <div class="col-12 light-blue-bg mb-3">
+      <div class="row light-blue-bg mx-lg-4 px-lg-5">
+        <div class="col-12">
           <div class="h1 my-4 ml-3">Redistricting Glossary</div>
         </div>
       </div>
-      <div class="mb-3 white-bg">
+      <div class="mb-3 white-bg mx-lg-5">
         {% for t in glossaryterms %}
-          <div class="row mx-lg-5">
+          <div class="row">
             <div class="col-1"></div>
-            <div class="col-10 mt-2 white-bg">
+            <div class="col-10 mt-3 white-bg">
               <h6><b>{{ t.term }}</b></h6>
               <p>{{ t.definition }}</p>
             </div>
