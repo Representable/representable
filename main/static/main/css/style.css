@@ -590,6 +590,9 @@ color scheme. See readme.md*/
 .ws-normal {
   white-space: normal;
 }
+.word-break {
+  word-break: break-word;
+}
 
 @media screen and (min-width: 1600px) {
   #mapping-image-div {
