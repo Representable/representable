@@ -35,7 +35,6 @@ urlpatterns = [
         name="account_signup",
     ),
     path("", views.main.Index.as_view(), name="index"),
-    path("map/", views.main.Map.as_view(), name="map"),
     path(
         "entry_preview/",
         views.main.EntryPreview.as_view(),
@@ -142,6 +141,7 @@ urlpatterns = [
         views.partners.PartnerView.as_view(),
         name="partner_page",
     ),
+    path("map/<state>/", views.main.Map.as_view(), name="map"),
     path(
         "map/p/<slug:slug>/",
         views.partners.PartnerMap.as_view(),

@@ -300,6 +300,13 @@ class CommunityEntry(models.Model):
         max_length=500, blank=True, unique=False, default=""
     )
     # make this foreign key relation
+    # state = models.ForeignKey(
+    #     State, 
+    #     on_delete=models.SET_NULL, 
+    #     blank=True, 
+    #     null=True, 
+    #     related_name="submissions"
+    # )
     state = models.CharField(
         max_length=10, blank=True, unique=False, default=""
     )
