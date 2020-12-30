@@ -157,78 +157,116 @@ map.on("load", function () {
     newBoundariesLayer(key);
   }
 
-  // send elements to javascript as geojson objects and make them show on the map by
-  // calling the addTo
-  var outputstr = a.replace(/'/g, '"');
-  a = JSON.parse(outputstr);
+  // draw all coi's in one layer
+  console.log('starting data preprocess');
+  coidata = JSON.parse(coidata.replace(/'/g, '"'));
 
-  for (obj in a) {
-    // check how deeply nested the outer ring of the unioned polygon is
-    final = [];
+  var coidata_geojson_format = {
+    'type': 'FeatureCollection',
+    'features': []
+  };
+
+  for (coi_id in coidata) {
     // set the coordinates of the outer ring to final
-    if (a[obj][0][0].length > 2) {
-      final = [a[obj][0][0]];
-    } else if (a[obj][0].length > 2) {
-      final = [a[obj][0]];
+    final = [];
+    if (coidata[coi_id][0][0].length > 2) {
+      final = [coidata[coi_id][0][0]];
+    } else if (coidata[coi_id][0].length > 2) {
+      final = [coidata[coi_id][0]];
     } else {
-      final = a[obj];
+      final = coidata[coi_id];
     }
+    coidata[coi_id] = final
+
     // add info to bounds list for zooming
-    // ok zoomer
     var fit = new L.Polygon(final).getBounds();
     var southWest = new mapboxgl.LngLat(fit['_southWest']['lat'], fit['_southWest']['lng']);
     var northEast = new mapboxgl.LngLat(fit['_northEast']['lat'], fit['_northEast']['lng']);
-    community_bounds[obj] = new mapboxgl.LngLatBounds(southWest, northEast)
-    // draw the polygon
-    map.addLayer({
-      id: obj,
-      type: "fill",
-      source: {
-        type: "geojson",
-        data: {
-          type: "Feature",
-          geometry: {
-            type: "Polygon",
-            coordinates: final,
-          },
-        },
-      },
-      layout: {
-        visibility: "visible",
-      },
-      paint: {
-        "fill-color": "rgb(110, 178, 181)",
-        "fill-opacity": 0.15
-      },
-    });
+    community_bounds[coi_id] = new mapboxgl.LngLatBounds(southWest, northEast)
 
-    // this has to be a separate layer bc mapbox doesn't allow flexibility with thickness of outline of polygons
-    map.addLayer({
-      id: obj + "line",
-      type: "line",
-      source: {
-        type: "geojson",
-        data: {
-          type: "Feature",
-          geometry: {
-            type: "Polygon",
-            coordinates: final,
-          },
-        },
-      },
-      layout: {
-        visibility: "visible",
-        "line-join": "round",
-        "line-cap": "round",
-      },
-      paint: {
-        "line-color": "rgba(0, 0, 0,0.2)",
-        "line-width": 2,
-      },
+    coidata_geojson_format.features.push({
+      'type': 'Feature',
+      'geometry': {
+          'type': 'Polygon',
+          'coordinates': final
+      }
     });
   }
+
+  console.log('finished data preprocess');
+
+  // mxzoom(def 18 higher = more detail)
+  // tol(def .375 higher = simpler geometry)
+  const mxzoom = 10, tol = 3.5;
+
+  console.log('adding source');
+
+  map.addSource('coi_all', {
+      'type': 'geojson',
+      'data': coidata_geojson_format,
+      'maxzoom': mxzoom, 
+      'tolerance': tol
+  });
+
+  console.log('finished source; adding layers');
+
+  map.addLayer({
+      'id': 'coi_layer_fill',
+      'type': 'fill',
+      'source': 'coi_all',
+      'paint': {
+          'fill-color': 'rgb(110, 178, 181)',
+          'fill-opacity': 0.15
+      },
+  });
+  map.addLayer({
+      'id': 'coi_layer_line',
+      'type': 'line',
+      'source': 'coi_all',
+      'paint': {
+          'line-color': '#808080',
+          'line-width': 2
+      },
+  });
+
+  console.log('finsihed layers');
+
+  // hover to highlight
+  $(".community-review-span").hover(function() {
+    console.log('adding highlight layer');
+    let highlight_id = this.id + "_boldline";
+    map.addSource(highlight_id, {
+        'type': 'geojson',
+        'data': {
+          type: "Feature",
+          geometry: {
+            type: "Polygon",
+            coordinates: coidata[this.id],
+          },
+        },
+        'maxzoom': mxzoom, // def 18 higher = more detail
+        'tolerance': tol // def .375 higher = simpler geometry
+    });
+    map.addLayer({
+        'id': highlight_id,
+        'type': 'line',
+        'source': highlight_id,
+        'paint': {
+            'line-color': '#000000',
+            'line-width': 4
+        },
+    });
+    console.log('finished highlight layers');
+  }, function () {
+    console.log('removing highlight layers');
+    map.removeLayer(this.id+"_boldline");
+    map.removeSource(this.id+"_boldline");
+    console.log('finished removing highlight layers');
+  });
+
   // find what features are currently on view
   // multiple features are gathered that have the same source (or have the same source with 'line' added on)
+  
   // if (state === "") {
   //   map.on("moveend", function () {
   //     var sources = [];
@@ -258,16 +296,8 @@ map.on("load", function () {
   //     });
   //   });
   // }
-  // hover to highlight
-  $(".community-review-span").hover(function() {
-    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
-    map.setPaintProperty(this.id + "line", "line-width", 4);
-    map.setPaintProperty(this.id, "fill-opacity", 0.5);
-  }, function () {
-    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.2)");
-    map.setPaintProperty(this.id + "line", "line-width", 2);
-    map.setPaintProperty(this.id, "fill-opacity", 0.15);
-  });
+
+  
   // loading icon
   $(".loader").delay(500).fadeOut(500);
   // fly to state if org, otherwise stay on map
