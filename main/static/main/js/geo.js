@@ -229,12 +229,15 @@ function mapToPrivacy() {
   $("#entry_map").addClass("d-none");
   $("#entryForm").children(".container-fluid").removeClass("d-none");
   $("#entry_privacy").removeClass("d-none");
+  $("#entry_survey").addClass("d-none");
 }
 
 function privacyToMap() {
   $("#entry_privacy").addClass("d-none");
   $("#entryForm").children(".container-fluid").addClass("d-none");
   $("#entry_map").removeClass("d-none");
+  $("#entry_survey").removeClass("d-none");
+  map.resize();
 }
 
 function clearFieldsError(fields) {
@@ -415,6 +418,11 @@ $("#mapToPrivacy").on("click", function(e) {
   mapToPrivacy();
 })
 
+$("#mapToPrivacyMobile").on("click", function(e) {
+  e.preventDefault();
+  mapToPrivacy();
+})
+
 function formValidation() {
   // Check Normal Fields
   var flag = true;
@@ -550,7 +558,7 @@ document.addEventListener(
       .removeClass("add-form-row")
       .addClass("remove-form-row")
       .html('<span class="" aria-hidden="true">Remove</span>');
-    $("#save").on("click", function (e) {
+    $("#entrySubmissionButton").on("click", function (e) {
       e.preventDefault();
       var form = $("#entryForm");
       zoomToCommunity();
