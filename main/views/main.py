@@ -624,6 +624,35 @@ def make_geojson(request, entry):
     feature = gj["features"][0]
     return feature
 
+# make geojson for state map pages
+def make_geojson_for_state_map_page(request, entry):
+    map_geojson = serialize(
+        "geojson",
+        [entry],
+        geometry_field="census_blocks_polygon",
+        fields=(
+            "entry_name",
+            "cultural_interests",
+            "economic_interests",
+            "comm_activities",
+            "other_considerations",
+        ),
+    )
+    gj = geojson.loads(map_geojson)
+    gj = rewind(gj)
+    del gj["crs"]
+    user_map = entry
+    if user_map.organization:
+        gj["features"][0]["properties"][
+            "organization"
+        ] = user_map.organization.name
+    if user_map.drive:
+        gj["features"][0]["properties"]["drive"] = user_map.drive.name
+    
+    feature = gj["features"][0]
+    return feature
+
+# ******************************************************************************#
 
 class ExportView(TemplateView):
     template = "main/export.html"
@@ -702,12 +731,14 @@ class Map(TemplateView):
 
         context = {
             "state": state,
+            "state_name": state_obj.name,
             "communities": query,
             "drives": drives,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
+        context["multi_export_link"] = (f"/multiexport/{state}")
         return context
 
 
@@ -927,3 +958,46 @@ class EntryView(LoginRequiredMixin, View):
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
         return render(request, self.template_name, context)
+
+# ******************************************************************************#
+
+class MultiExportView(TemplateView):
+    template = "main/export.html"
+
+    def get(self, request, **kwargs):
+        state = self.kwargs["abbr"]
+        state_obj = State.objects.get(abbr=state.upper())
+        query = state_obj.submissions.all().defer(
+            "census_blocks_polygon_array", "user_polygon"
+        ).prefetch_related("organization", "drive")
+
+        if not query:
+            # TODO: if the query is empty, return something more appropriate
+            # than an empty geojson? - jf
+
+            return HttpResponse(
+                geojson.dumps({}), content_type="application/json"
+            )
+
+        all_gj = []
+        for entry in query:
+            gj = make_geojson_for_state_map_page(request, entry)
+            all_gj.append(gj)
+
+        final = geojson.FeatureCollection(all_gj)
+
+        if(kwargs['type'] == 'geo'):
+            print('********', 'geo', '********')
+            response = HttpResponse(geojson.dumps(final), content_type="application/json")
+        else:
+            print('********', 'csv', '********')
+            dictform = json.loads(geojson.dumps(final))
+            df = pd.DataFrame()
+            for entry in dictform['features']:
+                row_dict = entry['properties'].copy()
+                row_dict['geometry'] = str(entry['geometry'])
+                df = df.append(row_dict, ignore_index=True)
+            response = HttpResponse(df.to_csv(), content_type="text/csv")
+
+        return response
+

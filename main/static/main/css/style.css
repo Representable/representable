@@ -158,7 +158,8 @@ button:disabled:hover {
 /* Body and headings */
 /* Change the website default font. */
 body {
-  font-family: Inter, system-ui, sans-serif;
+  /* font-family: Inter, system-ui, sans-serif; */
+  font-family: europa, sans-serif;
 }
 
 html,
@@ -228,6 +229,7 @@ body {
 }
 .border-3 {
   border-width: 3px !important;
+  border-color: #5b5b5b;
 }
 
 .container-full-width {
@@ -293,14 +295,14 @@ body {
     height: 100%;
   }
   .mobile-padding-x {
-    padding-left: 5rem;
-    padding-right: 5rem;
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
   }
   .mobile-padding-top {
-    padding-top: 5rem;
+    padding-top: 3.5rem;
   }
   .font-large-mobile {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
   }
   .font-medium-mobile {
     font-size: 1rem;
@@ -311,11 +313,18 @@ body {
   .font-xs-mobile {
     font-size: 0.5rem;
   }
-  .text-center-mobile {
-    text-align: center;
-  }
   .w-35-mobile {
     width: 35% !important;
+  }
+  #home-page-rect-mobile {
+    position: absolute;
+    width: 80%;
+    height: 130%;
+    left: 10%;
+    bottom: -40%;
+
+    background: rgba(204, 233, 255, 0.2);
+    z-index: -999;
   }
 }
 /* TABLETS + MOBILE */
@@ -323,31 +332,26 @@ body {
   .px-10 {
     padding: 10px;
   }
-  #home-page-rect {
-    top: 8vh !important;
-    height: 48vh !important;
-  }
 }
 /* EXCLUSIVELY FOR HOME PAGE rect */
-@media screen and (min-width:992px) and (max-width:1076px){
+@media screen and (min-width:992px) and (max-width:1169px){
   #home-page-rect {
-    height: 70vh !important;
-  }
-}
-@media screen and (min-width:2560px){
-  #home-page-rect {
-    top: 8vh !important;
+    height: 275% !important;
   }
 }
 
 #home-page-rect {
   position: absolute;
-  width: 84vw;
-  height: 52vh;
-  left: 8vw;
-  top: 15vh;
+  width: 250%;
+  height: 300%;
+  left: -10%;
+  bottom: 110%;
 
   background: rgba(204, 233, 255, 0.2);
+  z-index: -999;
+}
+.line-space-less {
+  line-height: 97%;
 }
 #thanks-confetti {
   position: absolute;
@@ -634,6 +638,9 @@ Entry Mapping Page
 #modal-geocoder .mapboxgl-ctrl-geocoder {
   display: inline-block;
   width: 80%;
+}
+#modal-geocoder ul {
+  text-align: left;
 }
 
 #entry-map-modal .modal-content {
@@ -1203,7 +1210,7 @@ textarea.survey-field:focus {
 .light-blue-text {
   color: #65bff1;
 }
-.blue-text {
+.dark-blue-text {
   color: #2583D8;
 }
 .blue-green-text {
