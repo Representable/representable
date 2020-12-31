@@ -309,6 +309,7 @@ body {
     bottom: -40%;
 
     background: rgba(204, 233, 255, 0.2);
+    z-index: -999;
   }
 }
 /* TABLETS + MOBILE */
@@ -332,6 +333,7 @@ body {
   bottom: 110%;
 
   background: rgba(204, 233, 255, 0.2);
+  z-index: -999;
 }
 .quote-footer {
   color: white;
