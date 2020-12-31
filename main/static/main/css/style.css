@@ -223,6 +223,9 @@ body {
   padding-left: 10rem;
   padding-right: 10rem;
 }
+.w-125 {
+  width: 125%;
+}
 .border-3 {
   border-width: 3px !important;
 }
@@ -346,6 +349,25 @@ body {
 
   background: rgba(204, 233, 255, 0.2);
 }
+#thanks-confetti {
+  position: absolute;
+  width: 100%;
+  height: 30%;
+  left: 0;
+  top: -15%;
+}
+.thanks-circle {
+  background: rgb(30, 87, 87);
+  width: 150%;
+  height: 0;
+  padding-top: 150%;
+  border-radius: 50%;
+
+  position: absolute;
+  z-index: -999;
+  left: 50%;
+  bottom: 10%;
+}
 .quote-footer {
   color: white;
 }
@@ -432,30 +454,30 @@ footer {
 }
 /* Bootstrap Buttons. */
 
-.btn-circle.btn-sm { 
-  width: 30px; 
-  height: 30px; 
-  padding: 6px 0px; 
-  border-radius: 15px; 
-  font-size: 8px; 
-  text-align: center; 
-} 
-
-.btn-circle.btn-md { 
-  width: 45px; 
-  height: 45px; 
-  border-radius: 25px; 
-  font-size: 1rem; 
-  text-align: center; 
+.btn-circle.btn-sm {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0px;
+  border-radius: 15px;
+  font-size: 8px;
+  text-align: center;
 }
 
-.btn-circle.btn-xl { 
-  width: 70px; 
-  height: 70px; 
-  padding: 10px 16px; 
-  border-radius: 35px; 
-  font-size: 12px; 
-  text-align: center; 
+.btn-circle.btn-md {
+  width: 45px;
+  height: 45px;
+  border-radius: 25px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  border-radius: 35px;
+  font-size: 12px;
+  text-align: center;
 }
 
 #video_popup {
@@ -691,7 +713,7 @@ Entry Mapping Page
     font-size: 1rem;
     overflow: hidden;
   }
-  
+
   .comm-item-text {
     color:#2A94F4;
     font-weight: bold;
@@ -1014,7 +1036,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 /*******************
 
-Entry Form Management 
+Entry Form Management
 
 ********************/
 
@@ -1196,11 +1218,24 @@ textarea.survey-field:focus {
 .blue-green-bg {
   background-color: #6dccbb;
 }
+.green-bg {
+  background-color: rgba(214, 242, 242, 0.82);
+}
 .white-bg {
   background-color: #FFFFFF;
 }
 .content-blue-bg {
   background: rgba(242, 250, 255, 0.5);
+}
+.btn-outline-gray {
+  background-color: transparent;
+  border-color: #5B5B5B;
+  border-width: 2px;
+  color: #5B5B5B;
+}
+.btn-outline-gray:hover {
+  background: #5B5B5B;
+  color: white !important;
 }
 
 .how-it-works {
@@ -1645,7 +1680,7 @@ height:25vh!important;
     }
 
   }
-  
+
   /* Medium devices (tablets, 768px and up)*/
   @media (min-width: 768px) {
     .w-md-100 {
@@ -1698,7 +1733,7 @@ height:25vh!important;
     height:25vh!important;
     }
   }
-  
+
   /* Large devices (desktops, 992px and up)*/
   @media (min-width: 992px) {
     .w-lg-100 {
@@ -1751,7 +1786,7 @@ height:25vh!important;
     height:25vh!important;
     }
   }
-  
+
   /* Extra large devices (large desktops, 1200px and up)*/
   @media (min-width: 1200px) {
     .w-xl-100 {
@@ -1778,7 +1813,7 @@ height:25vh!important;
     .h-xl-25 {
     height:25%!important;
     }
-  
+
     .vw-xl-100 {
       width:100vw!important;
     }

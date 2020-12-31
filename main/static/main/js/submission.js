@@ -223,9 +223,12 @@ map.on("load", function () {
       },
     });
   }
+  //geojson export button - close thanks modal
+  $(".geojson-button").on("click", function () {
+    $("#thanksModal").modal("hide");
+  });
   // pdf export button
-  // TODO: if creator of community -> include identifying info
-  $("#pdf-button").on("click", function () {
+  $(".pdf-button").on("click", function () {
     // make the map look good for the PDF ! TODO: un-select other layers like census blocks (turn into functions)
     map.fitBounds(commBounds, { padding: 100 });
     // display loading popup
