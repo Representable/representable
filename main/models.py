@@ -299,6 +299,14 @@ class CommunityEntry(models.Model):
     other_considerations = models.TextField(
         max_length=500, blank=True, unique=False, default=""
     )
+    # make this foreign key relation
+    # state = models.ForeignKey(
+    #     State, 
+    #     on_delete=models.SET_NULL, 
+    #     blank=True, 
+    #     null=True, 
+    #     related_name="submissions"
+    # )
     state = models.CharField(
         max_length=10, blank=True, unique=False, default=""
     )
@@ -357,6 +365,43 @@ class State(models.Model):
 
     class Meta:
         db_table = "state"
+
+
+# ******************************************************************************#
+
+
+class FrequentlyAskedQuestion(models.Model):
+
+    FAQ_TYPE_CHOICES = [
+        ('USER', 'User'),
+        ('ORGANIZATION', 'Organization'),
+    ]
+
+    type = models.CharField(
+        max_length=12,
+        choices=FAQ_TYPE_CHOICES,
+        default='USER',
+    )
+
+    question = RichTextField()
+    answer = RichTextField()
+
+    class Meta:
+        db_table = "faq"
+
+
+# ******************************************************************************#
+
+
+class GlossaryDefinition(models.Model):
+
+    term = models.CharField(
+        max_length=100, blank=False, unique=True, default=""
+    )
+    definition = models.CharField(max_length=1000, blank=False, unique=True, default="")
+
+    class Meta:
+        db_table = "glossary"
 
 
 # ******************************************************************************#

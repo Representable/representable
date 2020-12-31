@@ -266,34 +266,38 @@ map.on("load", function () {
 
   // find what features are currently on view
   // multiple features are gathered that have the same source (or have the same source with 'line' added on)
-  if (state === "") {
-    map.on("moveend", function () {
-      var sources = [];
-      var features = map.queryRenderedFeatures();
-      for (var i = 0; i < features.length; i++) {
-        var source = features[i].source;
-        if (
-          source !== "composite" &&
-          !source.includes("line") &&
-          !source.includes("census") &&
-          !source.includes("lower") &&
-          !source.includes("upper")
-        ) {
-          if (!sources.includes(source)) {
-            sources.push(source);
-          }
-        }
-      }
-      // only display those on the map
-      $(".community-review-span").each(function(i, obj) {
-        if ($.inArray(obj.id, sources) !== -1) {
-          $(obj).show();
-        } else {
-          $(obj).hide();
-        }
-      });
-    });
-  }
+  
+  // if (state === "") {
+  //   map.on("moveend", function () {
+  //     var sources = [];
+  //     var features = map.queryRenderedFeatures();
+  //     console.log("print inside the function")
+  //     for (var i = 0; i < features.length; i++) {
+  //       var source = features[i].source;
+  //       if (
+  //         source !== "composite" &&
+  //         !source.includes("line") &&
+  //         !source.includes("census") &&
+  //         !source.includes("lower") &&
+  //         !source.includes("upper")
+  //       ) {
+  //         if (!sources.includes(source)) {
+  //           sources.push(source);
+  //         }
+  //       }
+  //     }
+  //     // only display those on the map
+  //     $(".community-review-span").each(function(i, obj) {
+  //       if ($.inArray(obj.id, sources) !== -1) {
+  //         $(obj).show();
+  //       } else {
+  //         $(obj).hide();
+  //       }
+  //     });
+  //   });
+  // }
+
+  
   // loading icon
   $(".loader").delay(500).fadeOut(500);
   // fly to state if org, otherwise stay on map

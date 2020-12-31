@@ -34,6 +34,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from main.views import main
 
 urlpatterns = [
     path("", include("main.urls")),
@@ -42,4 +43,5 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     path("select2/", include("django_select2.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
+    path("send_mail_plain", main.SendPlainEmail, name="plain_email"),
 ]
