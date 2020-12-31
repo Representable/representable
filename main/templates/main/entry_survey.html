@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load widget_tweaks %}
 {% load static %}
-<div id="entry-survey" class="pl-xl-4 pr-xl-4 pb-5">
+<div class="pl-xl-4 pr-xl-4 pb-5">
     <div class="entry-step row mb-2">
         <div class="col">
             Step 2
@@ -300,23 +300,6 @@
                 <div class="sr-only">{{ comm_form.cultural_interests.label_tag }}</div>
                 {{ comm_form.cultural_interests|append_attr:"class:form-control survey-field" }}
                 <!-- Other -->
-                {% comment %} <div id="other_error_alerts">
-                    {% if comm_form.other_considerations.errors %}
-                        <script>
-                            sessionStorage.setItem("allChecks", "fail");
-                        </script>
-                        <div id="economic_errors" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
-                            <ul class="m-0">
-                            {% for error in comm_form.other_consideration.errors %}
-                                <li>{{ error|escape }}</li>
-                            {% endfor %}
-                            </ul>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    {% endif %}
-                </div> {% endcomment %}
                 <div class="accordion" id="other_interests_accordion">
                     <button class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#other_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                         <h5 class="survey-sect-title">{% trans "Community Needs and Concerns" %}<i class="fas fa-angle-down pl-3"></i></h5>
@@ -338,10 +321,6 @@
             </div>   
         </div>
     </div>
-
-
-
-
 
     <!-- Community Name Part -->
     <div id="survey-qs-p2" class="d-none">
@@ -382,6 +361,14 @@
                         {% blocktrans %}
                             <p>
                                 Give your community of interest a name. This does not have to be the official name of your community. 
+                            </p>
+                        {% endblocktrans %}
+                    </div>
+
+                    <div class="row m-0 pt-3 info-text">
+                        {% blocktrans %}
+                            <p class="small" style="color: #5996D2">
+                                <strong>Examples:</strong> Cherry Farmers Community, St. Peters Church Community, Riverside Fishing Community
                             </p>
                         {% endblocktrans %}
                     </div>

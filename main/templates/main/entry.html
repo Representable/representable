@@ -52,94 +52,52 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="row row-content">
-        <div class="col-sm-2">
-        </div>
-        <div class="col-sm-8">
-            <!-- START FORM BODY -->
-            <div class="row">
-                <!-- Entry Form -->
-                <form id="entryForm" method="post" onSubmit="return validateRecaptcha();">
-                    {% csrf_token %}
-                    {% comment %} <div class="row">
-                        <div class="col-sm-7 my-auto pl-5">
-                            <h1 class="font-weight-light">
-                                {% trans "Map your community" %}
-                            </h1>
-
-                            <p class="">
-                                {% blocktrans %}
-                                Make your voice heard! Fill out the form below and draw a map to add your community to Representable.org.
-                                <br>
-                                Follow the instructions in each section to get started.
-                                {% endblocktrans %}
-                            </p>
-                            {% csrf_token %}
-                        </div>
-                        <div class="col-5 d-none d-sm-block">
-                          <div id="mapping-image-div" class="m-auto py-4 w-75 h-100">
-                            <object type="image/svg+xml" class="w-75 mx-auto d-block h-100" data="{% static 'img/mapping.svg' %}" alt="image of someone drawing a community map"></object>
-                          </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                      <!-- {# Include the non-field error fields #} -->
-                      {% if comm_form.non_field_errors %}
-                      <div class="non-field-errors form-error">
-                          {% for err in comm_form.non_field_errors %}
-                          <p class="form-error">{{ err }}</p>
-                          {% endfor %}
-                      </div>
-                      {% endif %}
-                      {% if comm_form.errors %}
-                      <div id="django_form_errors">
-                      </div>
-                      {% endif %}
-                      <div id="form_error" class="alert alert-danger alert-dismissible fade show form-error d-none" role="alert">
-                          {% blocktrans %}There was an error in submitting your community. Please check over and
-                          ensure that you have filled out all required fields. {% endblocktrans %}
-                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                          </button>
-                      </div>
-                    </div> {% endcomment %}
-                    
-                    <div id="entry_address" class="">
-                        {% include './entry_address.html' %}
-                    </div>
-
-                    <div id="entry_survey" class="d-none">{% include './entry_survey.html' %}</div>
-
-                    <div id="entry_map" class="d-none">{% include './entry_map.html' %}</div>
-
-                    <div id="entry_privacy" class="d-none">{% include './entry_privacy.html' %}</div>
-
-                    </div>
-                    <div class="btn-floating btn-group shadow-lg">
-                        <button type="button" class="btn fixed-action-btn btn-secondary shadow-lg" id="loading-entry">
-                        <div class="loader loader-small text-center"></div><span class="d-none d-sm-inline"> {% trans "Saving Community..." %}</span>
-                        </button>
-                    </div>
-                </form>
+<!-- Entry Form -->
+<form id="entryForm" method="post" onSubmit="return validateRecaptcha();">
+    {% csrf_token %}
+    <div id="main_community_form" class="form-group">
+        <!-- {# Include the hidden fields #} -->
+        {% for hidden in comm_form.hidden_fields %}
+        {{ hidden }}
+        {% endfor %}
+    </div>
+    <div class="container-fluid">
+        <div class="row row-content">
+            <div class="col-sm-2">
             </div>
-        </div>
-        <div class="col-sm-2">
-        </div>
-        <div class="row">
-            <div id="video_popup" class="card shadow col-sm-4 col-md-4 col-lg-4 d-none">
-                <div id="video_popup_body" class="card-body">
-                    <h5 class="card-title">
-                        Video Tutorial <button type="button" class="close" onclick="closePopup()">&times;</button>
-                    </h5>
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/aQ4PhsxYGUE" allowfullscreen></iframe>
+            <div class="col-sm-8">
+                <!-- START FORM BODY -->
+                <div class="row">
+                    <div class="col">
+                        <div id="entry_address" class="">
+                            {% include './entry_address.html' %}
+                        </div>
+
+                        <div id="entry_survey" class="d-none">{% include './entry_survey.html' %}</div>
+
+                        <div id="entry_privacy" class="d-none">{% include './entry_privacy.html' %}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+            </div>
+            <div class="row">
+                <div id="video_popup" class="card shadow col-sm-4 col-md-4 col-lg-4 d-none">
+                    <div id="video_popup_body" class="card-body">
+                        <h5 class="card-title">
+                            Video Tutorial <button type="button" class="close" onclick="closePopup()">&times;</button>
+                        </h5>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/aQ4PhsxYGUE" allowfullscreen></iframe>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div id="entry_map" class="d-none">{% include './entry_map.html' %}</div>
 
+</form>
     {% endblock %}
     {% block script %}
     {{ form.media.js }}
@@ -187,9 +145,10 @@
             </div>';
             document.getElementById("captcha").appendChild(newAlert);
             return false;
-        } else {
-            return formValidation();
         }
+
+        // return formValidation();
+        return privacyCheckValidation;
     }
     </script>
     <!-- Turf to get the bounding box. -->
