@@ -147,7 +147,8 @@ button:disabled:hover {
 /* Body and headings */
 /* Change the website default font. */
 body {
-  font-family: Inter, system-ui, sans-serif;
+  /* font-family: Inter, system-ui, sans-serif; */
+  font-family: europa, sans-serif;
 }
 
 html,
@@ -279,14 +280,14 @@ body {
     height: 100%;
   }
   .mobile-padding-x {
-    padding-left: 5rem;
-    padding-right: 5rem;
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
   }
   .mobile-padding-top {
-    padding-top: 5rem;
+    padding-top: 3.5rem;
   }
   .font-large-mobile {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
   }
   .font-medium-mobile {
     font-size: 1rem;
@@ -310,7 +311,6 @@ body {
     padding: 10px;
   }
   #home-page-rect {
-    top: 8vh !important;
     height: 48vh !important;
   }
 }
@@ -320,18 +320,13 @@ body {
     height: 70vh !important;
   }
 }
-@media screen and (min-width:2560px){
-  #home-page-rect {
-    top: 8vh !important;
-  }
-}
 
 #home-page-rect {
   position: absolute;
-  width: 84vw;
-  height: 52vh;
-  left: 8vw;
-  top: 15vh;
+  width: 250%;
+  height: 320%;
+  left: -10%;
+  bottom: 110%;
 
   background: rgba(204, 233, 255, 0.2);
 }
@@ -856,7 +851,7 @@ input[type="range"]::-webkit-slider-thumb {
 .light-blue-text {
   color: #65bff1;
 }
-.blue-text {
+.dark-blue-text {
   color: #2583D8;
 }
 .blue-green-text {
