@@ -944,6 +944,7 @@ class EntryView(LoginRequiredMixin, View):
             if entryForm.drive:
                 finalres["drive"] = entryForm.drive.name
             finalres["state_obj"] = finalres["state"]
+            del finalres["admin_approved"]
 
             string_to_hash = str(finalres)
 
