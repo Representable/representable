@@ -123,6 +123,11 @@ urlpatterns = [
     path("export/geojson/<abbr>/", views.main.ExportView.as_view(), name="export"),
     path("export/csv/<abbr>/", views.main.ExportView.as_view(), name="export"),
     path(
+        "multiexport/<abbr>/<type>/",
+        views.main.MultiExportView.as_view(),
+        name="multi_export",
+    ),
+    path(
         "multiexport/drive/<drive>/<type>/",
         views.partners.MultiExportView.as_view(),
         name="multi_export",
