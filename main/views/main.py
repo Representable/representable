@@ -672,11 +672,12 @@ class Map(TemplateView):
 
         # the polygon coordinates
         entryPolyDict = dict()
-        query = CommunityEntry.objects.filter(state=state)
+        state_obj = State.objects.get(abbr=state.upper())
+        query = state_obj.submissions.all().defer(
+            "census_blocks_polygon_array", "user_polygon"
+        ).prefetch_related("organization", "drive")
         # state map page --> drives in the state, entries without a drive but with a state
         drives = []
-        streets = {}
-        cities = {}
         authenticated = self.request.user.is_authenticated
         # get the polygon from db and pass it on to html
         for obj in query:
@@ -699,19 +700,7 @@ class Map(TemplateView):
             struct = geojson.loads(s)
             entryPolyDict[obj.entry_ID] = struct.coordinates
 
-            # Addresses only if user created comm, user is admin of the org
-            if authenticated:
-                if obj.user is self.request.user or self.request.user.is_org_admin(obj.organization_id):
-                # get the addresses:
-                    for a in Address.objects.filter(entry=obj):
-                        streets[obj.entry_ID] = a.street
-                        cities[obj.entry_ID] = (
-                            a.city + ", " + a.state + " " + a.zipcode
-                        )
-
         context = {
-            "streets": streets,
-            "cities": cities,
             "state": state,
             "communities": query,
             "drives": drives,
