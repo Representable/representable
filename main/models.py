@@ -299,6 +299,7 @@ class CommunityEntry(models.Model):
     other_considerations = models.TextField(
         max_length=500, blank=True, unique=False, default=""
     )
+    # make this foreign key relation
     state = models.CharField(
         max_length=10, blank=True, unique=False, default=""
     )
