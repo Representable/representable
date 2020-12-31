@@ -298,11 +298,17 @@ body {
   .font-xs-mobile {
     font-size: 0.5rem;
   }
-  .text-center-mobile {
-    text-align: center;
-  }
   .w-35-mobile {
     width: 35% !important;
+  }
+  #home-page-rect-mobile {
+    position: absolute;
+    width: 80%;
+    height: 130%;
+    left: 10%;
+    bottom: -40%;
+
+    background: rgba(204, 233, 255, 0.2);
   }
 }
 /* TABLETS + MOBILE */
@@ -310,14 +316,11 @@ body {
   .px-10 {
     padding: 10px;
   }
-  #home-page-rect {
-    height: 48vh !important;
-  }
 }
 /* EXCLUSIVELY FOR HOME PAGE rect */
-@media screen and (min-width:992px) and (max-width:1076px){
+@media screen and (min-width:1062px) and (max-width:1169px){
   #home-page-rect {
-    height: 70vh !important;
+    height: 275% !important;
   }
 }
 
