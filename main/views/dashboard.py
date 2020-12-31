@@ -36,6 +36,7 @@ from allauth.account.models import (
     EmailAddress,
     EmailConfirmationHMAC,
 )
+from django.core.mail import EmailMessage
 from ..forms import (
     CommunityForm,
     DriveForm,
@@ -360,12 +361,29 @@ class AllowListManage(LoginRequiredMixin, OrgAdminRequiredMixin, TemplateView):
     def post(self, request, cam_pk, *args, **kwargs):
         drive = Drive.objects.get(pk=cam_pk)
         email = self.request.POST["email"]
+        link = (
+            "<a href=representable.org/entry/"
+            + drive.slug
+            + " > this link </a>"
+        )
         query = AllowList.objects.filter(email=email, drive=drive)
         if not query:
             AllowList.objects.create(
                 email=email, organization=drive.organization, drive=drive,
             )
-            # TODO: send invite
+
+            email = EmailMessage(
+                "You've been invited to a drive",  # subject line
+                "Hello from Representable. <br> You've been invited to "
+                + drive.name
+                + ". <br> Access the submission form at "
+                + link
+                + ". <br> Remember to sign in or sign up with this email address.",  # html content
+                "no-reply@representable.org",  # from email
+                [email],  # list of recipients
+            )
+            email.content_subtype = "html"
+            email.send()
         url_kwargs = kwargs
         url_kwargs["cam_pk"] = cam_pk
 
