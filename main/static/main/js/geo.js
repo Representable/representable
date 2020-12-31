@@ -109,7 +109,67 @@ function isEmptyFilter(filter) {
   return isEmpty;
 }
 
-/******************************************************************************/
+/******************************************************************************
+
+Entry Page functions
+
+*******************************************************************************/
+function toggleAngle(e) {
+  var collapsible = e.parentNode.getElementsByClassName('collapse')[0].id;
+  $('#' + collapsible).collapse('toggle');
+  if (e.innerHTML.includes("fa-angle-down")) {
+    e.getElementsByTagName("h5")[0].innerHTML = e.getElementsByTagName("h5")[0].innerHTML.replace("fa-angle-down", "fa-angle-up");
+  } else {
+    e.getElementsByTagName("h5")[0].innerHTML = e.getElementsByTagName("h5")[0].innerHTML.replace("fa-angle-up", "fa-angle-down");
+  }
+}
+
+function addressToSurveyStart() {
+  $("#entry_address").addClass("d-none");
+  $("#entry_survey").removeClass("d-none");
+}
+
+function surveyStartToAddress() {
+  $("#entry_survey").addClass("d-none");
+  $("#entry_address").removeClass("d-none");
+}
+
+// changes page entry page from the survey start page to the first part of the survey
+function startSurvey() {
+  $("#entry-survey-start").addClass("d-none");
+  $("#survey-qs-p1").removeClass("d-none");
+}
+
+function surveyP1ToSurveyStart() {
+  $("#survey-qs-p1").addClass("d-none");
+  $("#entry-survey-start").removeClass("d-none"); 
+}
+
+function surveyP1ToP2() {
+  $("#survey-qs-p1").addClass("d-none");
+  $("#survey-qs-p2").removeClass("d-none");
+}
+
+function surveyP2ToP1() {
+  $("#survey-qs-p2").addClass("d-none");
+  $("#survey-qs-p1").removeClass("d-none");
+}
+
+function surveyP2ToMap() {
+  $("#entry_survey").addClass("d-none");
+  $("#entry_map").removeClass("d-none");
+}
+
+function mapToSurveyP2() {
+  $("#entry_map").addClass("d-none");
+  $("#entry_survey").removeClass("d-none");
+}
+
+function clearFieldsError(fields) {
+  for (var i = 0; i < fields.length; i++) {
+    fields[i].classList.remove("has_error");
+  }
+}
 
 function showMap() {
   $(".map-bounding-box.collapse").collapse("show");
@@ -129,6 +189,7 @@ function toggleErrorFail(field) {
   field.classList.add("has_error");
 }
 
+// Checks each of the non-interest form fields
 function checkFieldById(field_id) {
   var field = document.getElementById(field_id);
   if (field.type === "checkbox") {
@@ -149,6 +210,134 @@ function checkFieldById(field_id) {
   toggleErrorSuccess(field);
   return true;
 }
+
+function trim(x) {
+  return x.replace(/^\s+|\s+$/gm,'');
+}
+
+function addressValidated() {
+  var flag = true;
+  var name_field = document.getElementById("id_user_name");
+  var entryForm = document.getElementById("entryForm");
+  
+
+  var is_address_required = address_required == "True";
+  if (is_address_required) {
+    entryForm.street.value = trim(entryForm.street.value);
+    entryForm.city.value = trim(entryForm.city.value);
+    entryForm.state.value = trim(entryForm.state.value);
+    entryForm.zipcode.value = trim(entryForm.zipcode.value);
+
+    if (entryForm.street.value == "") {
+      entryForm.street.classList.add("has_error");
+      flag = false
+    }
+    if (entryForm.city.value == "") {
+      entryForm.city.classList.add("has_error");
+      flag = false
+    }
+    if (entryForm.state.value == "") {
+      entryForm.state.classList.add("has_error");
+      flag = false
+    }
+
+    if (entryForm.zipcode.value == "") {
+      entryForm.zipcode.classList.add("has_error");
+      flag = false
+    }
+
+
+    if (!flag) {
+      document.getElementById("need_address").classList.remove("d-none");
+    }
+  }
+
+  name_field.value = trim(name_field.value)
+  if (name_field.value == "") {
+    name_field.classList.add("has_error");
+    document.getElementById("need_name").classList.remove("d-none");
+    flag = false;
+  }
+
+  return flag;
+}
+
+$("#entry_address_button").on("click", function(e) {
+  e.preventDefault();
+  if (addressValidated()) {
+     addressToSurveyStart();
+     var entryForm = document.getElementById("entryForm");
+     clearFieldsError(entryForm.getElementsByClassName("addr-field"));
+     document.getElementById("need_name").classList.add("d-none");
+     document.getElementById("need_address").classList.add("d-none");
+  }
+});
+
+function interestsValidated() {
+  var flag = true;
+  var cultural_interests_field = document.getElementById(
+    "id_cultural_interests"
+  );
+  var economic_interests_field = document.getElementById(
+    "id_economic_interests"
+  );
+  var comm_activities_field = document.getElementById("id_comm_activities");
+  var other_considerations_field = document.getElementById(
+    "id_other_considerations"
+  );
+
+  cultural_interests_field.value = trim(cultural_interests_field.value);
+  economic_interests_field.value = trim(economic_interests_field.value);
+  comm_activities_field.value = trim(comm_activities_field.value);
+  other_considerations_field.value = trim(other_considerations_field.value);
+
+  if (
+    cultural_interests_field.value == "" &&
+    economic_interests_field.value == "" &&
+    comm_activities_field.value == "" &&
+    other_considerations_field.value == ""
+  ) {
+    cultural_interests_field.classList.add("has_error");
+    economic_interests_field.classList.add("has_error");
+    comm_activities_field.classList.add("has_error");
+    other_considerations_field.classList.add("has_error");
+    var interests_alert = document.getElementById("need_one_interest");
+    interests_alert.classList.remove("d-none");
+    flag = false;
+  }
+
+  return flag
+}
+
+$("#surveyP1ToP2_button").on("click", function(e) {
+  e.preventDefault();
+  if (interestsValidated()) {
+    surveyP1ToP2();
+    clearFieldsError(document.getElementById("entryForm").getElementsByClassName("survey-field"));
+    document.getElementById("need_one_interest").classList.add("d-none");
+  }
+});
+
+function commNameValidated() {
+  var commName = document.getElementById("id_entry_name");
+  commName.value = trim(commName.value);
+  if (commName.value == "") {
+    commName.classList.add("has_error");
+    document.getElementById("need_comm_name").classList.remove("d-none");
+    return false;
+  }
+  return true;
+}
+
+$("#surveyP2ToMap_button").on("click", function(e) {
+  e.preventDefault();
+  if (commNameValidated()) {
+    surveyP2ToMap();
+    document.getElementById("id_entry_name").classList.remove("has_error");
+    document.getElementById("need_come_name").classList.add("d-none");
+  }
+})
+
 
 function formValidation() {
   // Check Normal Fields
@@ -308,6 +497,7 @@ document.addEventListener(
       }, 2000);
       return false;
     });
+
     // If there are alerts, scroll to first one.
     var document_alerts = document.getElementsByClassName("django-alert");
     if (document_alerts.length > 0) {
