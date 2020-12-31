@@ -396,60 +396,60 @@ class Review(LoginRequiredMixin, TemplateView):
         return render(request, self.template_name, context)
 
 
-async def getcommsforreview(query, client):
-    comms = []
-    entryPolyDict = dict()
-    for obj in query:
-        try:
-            await getfroms3(
-                client, obj, obj.drive, obj.state, comms, entryPolyDict
-            )
-        except Exception:
-            if (
-                obj.census_blocks_polygon == ""
-                or obj.census_blocks_polygon is None
-                and obj.user_polygon
-            ):
-                s = "".join(obj.user_polygon.geojson)
-            elif obj.census_blocks_polygon:
-                s = "".join(obj.census_blocks_polygon.geojson)
-            else:
-                continue
-            comms.append(obj)
-            # add all the coordinates in the array
-            # at this point all the elements of the array are coordinates of the polygons
-            struct = geojson.loads(s)
-            entryPolyDict[obj.entry_ID] = struct.coordinates
-    return entryPolyDict, comms
+# async def getcommsforreview(query, client):
+#     comms = []
+#     entryPolyDict = dict()
+#     for obj in query:
+#         try:
+#             await getfroms3(
+#                 client, obj, obj.drive, obj.state, comms, entryPolyDict
+#             )
+#         except Exception:
+#             if (
+#                 obj.census_blocks_polygon == ""
+#                 or obj.census_blocks_polygon is None
+#                 and obj.user_polygon
+#             ):
+#                 s = "".join(obj.user_polygon.geojson)
+#             elif obj.census_blocks_polygon:
+#                 s = "".join(obj.census_blocks_polygon.geojson)
+#             else:
+#                 continue
+#             comms.append(obj)
+#             # add all the coordinates in the array
+#             # at this point all the elements of the array are coordinates of the polygons
+#             struct = geojson.loads(s)
+#             entryPolyDict[obj.entry_ID] = struct.coordinates
+#     return entryPolyDict, comms
 
 
-async def getfroms3(client, obj, drive, state, comms, entryPolyDict):
-    if drive:
-        folder_name = drive
-    elif not drive and obj.drive:
-        folder_name = obj.drive.slug
-    else:
-        folder_name = state
-    response = client.get_object(
-        Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
-        Key=str(folder_name) + "/" + obj.entry_ID + ".geojson",
-    )
-    strobject = response["Body"].read().decode("utf-8")
-    mapentry = geojson.loads(strobject)
-    comm = CommunityEntry(
-        entry_ID=obj.entry_ID,
-        comm_activities=mapentry["properties"]["comm_activities"],
-        entry_name=mapentry["properties"]["entry_name"],
-        economic_interests=mapentry["properties"]["economic_interests"],
-        other_considerations=mapentry["properties"]["other_considerations"],
-        cultural_interests=mapentry["properties"]["cultural_interests"],
-    )
-    comm.drive = Drive(name=mapentry["properties"]["drive"])
-    comm.organization = Organization(
-        name=mapentry["properties"]["organization"]
-    )
-    comms.append(comm)
-    entryPolyDict[obj.entry_ID] = mapentry["geometry"]["coordinates"]
+# async def getfroms3(client, obj, drive, state, comms, entryPolyDict):
+#     if drive:
+#         folder_name = drive
+#     elif not drive and obj.drive:
+#         folder_name = obj.drive.slug
+#     else:
+#         folder_name = state
+#     response = client.get_object(
+#         Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
+#         Key=str(folder_name) + "/" + obj.entry_ID + ".geojson",
+#     )
+#     strobject = response["Body"].read().decode("utf-8")
+#     mapentry = geojson.loads(strobject)
+#     comm = CommunityEntry(
+#         entry_ID=obj.entry_ID,
+#         comm_activities=mapentry["properties"]["comm_activities"],
+#         entry_name=mapentry["properties"]["entry_name"],
+#         economic_interests=mapentry["properties"]["economic_interests"],
+#         other_considerations=mapentry["properties"]["other_considerations"],
+#         cultural_interests=mapentry["properties"]["cultural_interests"],
+#     )
+#     comm.drive = Drive(name=mapentry["properties"]["drive"])
+#     comm.organization = Organization(
+#         name=mapentry["properties"]["organization"]
+#     )
+#     comms.append(comm)
+#     entryPolyDict[obj.entry_ID] = mapentry["geometry"]["coordinates"]
 
 
 def SendPlainEmail(request):
@@ -895,9 +895,10 @@ class EntryView(LoginRequiredMixin, View):
                         # approve this entry
                         entryForm.admin_approved = True
             gj = make_geojson_for_s3(entryForm)
+
             s3.Bucket(os.environ.get("AWS_STORAGE_BUCKET_NAME")).put_object(
                 Body=str(gj),
-                Key=f'{folder_name}/{comm_form.data["entry_ID"]}.geojson',
+                Key=f"{folder_name}/{comm_form.data['entry_ID']}.geojson",
                 ServerSideEncryption="AES256",
                 StorageClass="STANDARD_IA",
             )

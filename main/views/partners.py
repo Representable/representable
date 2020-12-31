@@ -18,8 +18,8 @@ from django.views.generic import (
     DetailView,
 )
 
-import boto3
-import botocore
+# import boto3
+# import botocore
 import pandas
 from django.contrib.gis import geos
 from django.contrib.gis.geos import GEOSGeometry, MultiPolygon, Polygon
