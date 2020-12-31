@@ -31,7 +31,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
   <div class="row row-wide">
     <div>
       <script type="text/javascript">
-        var a = '{{ entries | escapejs }}';
+        var coidata = '{{ entries | escapejs }}';
         var state = '{{ state }}'
         var mapbox_user_name = "{{mapbox_user_name}}";
       </script>
@@ -48,7 +48,8 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                 {% endif %}
               </div>
               <div class="row justify-content-center">
-                <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}} role="button" download="communities.geojson">Export All Maps as GeoJSON</a>
+                <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/geo/ role="button" download="communities.geojson">Export All as GeoJSON</a>
+                <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/csv/ role="button" download="communities.csv">Export All as CSV</a>
               </div>
               <input class="m-2 p-2 rounded border border-secondary" id="search-comm" type="text" placeholder="Search communities...">
               <div id="headingOne">
@@ -74,7 +75,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                 <tr class="community-review-span" id={{c.entry_ID}}>
                   <td>
                     <span class="text-uppercase entry-name">
-                      {% with link_text="/submission/"|addstr:c.entry_ID|slice:20 %}
+                      {% with link_text="/submission/"|addstr:c.entry_ID%}
                       <a href={{link_text}}>{{c.entry_name}}</a>
                       {% endwith %}
                     </span>
@@ -91,11 +92,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                     {% endif %}
                     <span class="small text-muted">
                     {% if is_org_admin %}
-                      {% if c.user_name %}
                       {{ c.user_name }}
-                      {% else %}
-                      {{ c.user.username }}
-                      {% endif %}
                       {% if c.entry_ID in streets %}
                       | {{streets|get_item:c.entry_ID}},
                       {{cities|get_item:c.entry_ID}} <br>

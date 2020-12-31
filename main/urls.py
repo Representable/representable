@@ -24,11 +24,27 @@ from representable.settings.base import MAPBOX_KEY
 
 app_name = "main"
 urlpatterns = [
-    path("accounts/login/", views.main.RepresentableLoginView.as_view(), name="account_login"),
+    path(
+        "accounts/login/",
+        views.main.RepresentableLoginView.as_view(),
+        name="account_login",
+    ),
+    path(
+        "accounts/signup/",
+        views.main.RepresentableSignupView.as_view(),
+        name="account_signup",
+    ),
     path("", views.main.Index.as_view(), name="index"),
-    path("map/", views.main.Map.as_view(), name="map"),
-    path("entry_preview/", views.main.EntryPreview.as_view(), name="entry_preview"),
-    path("entry_state_selection/", views.main.EntryStateSelection.as_view(), name="entry_state_selection"),
+    path(
+        "entry_preview/",
+        views.main.EntryPreview.as_view(),
+        name="entry_preview",
+    ),
+    path(
+        "entry_state_selection/",
+        views.main.EntryStateSelection.as_view(),
+        name="entry_state_selection",
+    ),
     path(
         "entry/",
         views.main.EntryView.as_view(),
@@ -72,6 +88,8 @@ urlpatterns = [
         name="entry",
     ),
     path("about/", views.main.About.as_view(), name="about"),
+    path("faq/", views.main.FAQ.as_view(), name="faq"),
+    path("glossary/", views.main.Glossary.as_view(), name="glossary"),
     path("review/", views.main.Review.as_view(), name="review"),
     path("privacy/", views.main.Privacy.as_view(), name="privacy"),
     path("terms/", views.main.Terms.as_view(), name="terms"),
@@ -80,10 +98,16 @@ urlpatterns = [
         "submission/<map_id>",
         views.main.Submission.as_view(),
         {"slug": "", "drive": ""},
-        name="submission"
+        name="submission",
     ),
     path(
-        "submission/thanks/<map_id>",
+        "submission/<map_id>/<abbr>",
+        views.main.Submission.as_view(),
+        {"slug": "", "drive": ""},
+        name="submission",
+    ),
+    path(
+        "submission/thanks/<map_id>/<abbr>",
         views.main.Submission.as_view(),
         {"slug": "", "drive": ""},
         name="submission_thanks",
@@ -94,14 +118,17 @@ urlpatterns = [
         name="submission_thanks",
     ),
     path("blog/", views.main.Blog.as_view(), name="blog"),
-    path("export/", views.main.ExportView.as_view(), name="export"),
+    path("export/geojson/", views.main.ExportView.as_view(), name="export"),
+    path("export/csv/", views.main.ExportView.as_view(), name="export"),
+    path("export/geojson/<abbr>/", views.main.ExportView.as_view(), name="export"),
+    path("export/csv/<abbr>/", views.main.ExportView.as_view(), name="export"),
     path(
-        "multiexport/drive/<drive>",
+        "multiexport/drive/<drive>/<type>/",
         views.partners.MultiExportView.as_view(),
         name="multi_export",
     ),
     path(
-        "multiexport/org/<org>",
+        "multiexport/org/<org>/<type>/",
         views.partners.MultiExportView.as_view(),
         name="multi_export",
     ),
@@ -116,6 +143,7 @@ urlpatterns = [
         views.partners.PartnerView.as_view(),
         name="partner_page",
     ),
+    path("map/<state>/", views.main.Map.as_view(), name="map"),
     path(
         "map/p/<slug:slug>/",
         views.partners.PartnerMap.as_view(),

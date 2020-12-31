@@ -32,9 +32,9 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
   <div class="row row-wide">
     <div>
       <script type="text/javascript">
-        var a = '{{ entries | escapejs }}';
+        var coidata = '{{ entries | escapejs }}';
         var mapbox_user_name = "{{mapbox_user_name}}";
-        var state = '';
+        var state = "{{state}}";
       </script>
     </div>
     <div class="col-md-4 col-wide">
@@ -42,7 +42,6 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
         <div class="sidenav">
           <div class="accordion" id="accordionExample">
             <div class="card">
-              <small class="font-weight-light mx-1 my-1">Please note: Representable.org is in beta. This page may not be updated as frequently as other aspects of the website.</small>
               <div id="headingOne">
                 <button class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne"
                 aria-expanded="false" aria-controls="collapseOne" style="width: 100%">
@@ -62,19 +61,19 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
               {% if communities %}
               <table id="collapseThree" class="collapse show table table-hover">
                 {% for c in communities %}
-                <tr class="community-review-span hidden" id={{c.entry_ID}}>
+                <tr class="community-review-span" id={{c.entry_ID}}>
                   <td>
                     <span class="text-uppercase entry-name">
-                      {% with link_text="/submission/"|addstr:c.entry_ID|slice:20 %}
+                      {% with link_text="/submission/"|addstr:c.entry_ID %}
                       <a href={{link_text}}>{{c.entry_name}}</a>
                       {% endwith %}
                     </span>
                     <hr class="my-1">
-                    {% if c.organization %}
+                    {% if c.organization and c.organization.name %}
                     <span class="badge badge-pill badge-primary">{{c.organization}}</span>
                     <br>
                     {% endif %}
-                    {% if c.drive %}
+                    {% if c.drive and c.drive.name %}
                     <span class="badge badge-pill badge-secondary">{{c.drive}}</span>
                     <br>
                     {% endif %}
@@ -108,9 +107,6 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                     {% endfor %}
                   </table>
                   {% endif %}
-                  <div class="d-flex justify-content-center">
-                    <div class="loader loader-large my-5"></div>
-                  </div>
                 </div>
               </div>
             </div>

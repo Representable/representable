@@ -163,7 +163,7 @@ class Drive(models.Model):
     """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    slug = models.SlugField(null=True, unique=True)
+    slug = models.SlugField(max_length=255, null=True, unique=True)
     name = models.CharField(max_length=128)
     description = models.CharField(max_length=700, blank=True, null=True)
     state = models.CharField(
@@ -172,7 +172,7 @@ class Drive(models.Model):
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
-    require_user_addresses = models.BooleanField(default=True)
+    require_user_addresses = models.BooleanField(default=True, blank=True, null=True)
 
     class Meta:
         ordering = ("description",)
@@ -299,6 +299,17 @@ class CommunityEntry(models.Model):
     other_considerations = models.TextField(
         max_length=500, blank=True, unique=False, default=""
     )
+    # make this foreign key relation
+    # state = models.ForeignKey(
+    #     State, 
+    #     on_delete=models.SET_NULL, 
+    #     blank=True, 
+    #     null=True, 
+    #     related_name="submissions"
+    # )
+    state = models.CharField(
+        max_length=10, blank=True, unique=False, default=""
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     admin_approved = models.BooleanField(default=True)
 
@@ -354,6 +365,43 @@ class State(models.Model):
 
     class Meta:
         db_table = "state"
+
+
+# ******************************************************************************#
+
+
+class FrequentlyAskedQuestion(models.Model):
+
+    FAQ_TYPE_CHOICES = [
+        ('USER', 'User'),
+        ('ORGANIZATION', 'Organization'),
+    ]
+
+    type = models.CharField(
+        max_length=12,
+        choices=FAQ_TYPE_CHOICES,
+        default='USER',
+    )
+
+    question = RichTextField()
+    answer = RichTextField()
+
+    class Meta:
+        db_table = "faq"
+
+
+# ******************************************************************************#
+
+
+class GlossaryDefinition(models.Model):
+
+    term = models.CharField(
+        max_length=100, blank=False, unique=True, default=""
+    )
+    definition = models.CharField(max_length=1000, blank=False, unique=True, default="")
+
+    class Meta:
+        db_table = "glossary"
 
 
 # ******************************************************************************#
