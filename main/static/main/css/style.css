@@ -576,7 +576,7 @@ Entry Mapping Page
 
 *******************************************/
 .mapping-icon {
-  box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
+  box-shadow: 2px 2px rgba(0,0,0,0.2);
 }
 
 /* Hero block and particles.js animation */
@@ -644,7 +644,7 @@ Entry Mapping Page
 #map-bottom-row {
   position: absolute;
   z-index: 1;
-  bottom: 10%;
+  bottom: 20%;
   width:100%;
   left: 0;
 }
