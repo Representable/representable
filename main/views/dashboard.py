@@ -373,8 +373,8 @@ class AllowListManage(LoginRequiredMixin, OrgAdminRequiredMixin, TemplateView):
             )
 
             email = EmailMessage(
-                "You've been invited to a drive",  # subject line
-                "Hello from Representable. <br> You've been invited to "
+                "You've Been Invited to a Representable Mapping Drive",  # subject line
+                "Hello! <br> You've been invited to a Representable drive called"
                 + drive.name
                 + ". <br> Access the submission form at "
                 + link
