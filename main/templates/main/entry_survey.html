@@ -22,11 +22,11 @@
                 <br>
 
                 <div id="survey-start-infographic" class="d-none d-xl-inline-block mb-3">
-                    <div class="row m-0 header-text">
+                    <div class="row m-0 header-text mb-2">
                         <strong>{% trans "What is a Community of Interest?" %}</strong>
                     </div>
                     
-                    <div id="entry-coi-def" class="row m-0 info-text">
+                    <div id="entry-coi-def" class="row m-0 info-text mb-2">
                         {% blocktrans %}
                             <p>
                                 A Community of Interest is a <strong>geographic area</strong> that shares <strong>cultural</strong>, <strong>historical</strong>, or <strong>economic</strong> interests. 
@@ -114,13 +114,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-row text-center d-none d-xl-block">
-                    <div class="col mt-4">
-                        <div style="display: inline-block;">
-                            <button class="btn btn-outline-primary btn-lg" onclick="startSurvey()">{% trans "Start Survey" %}</button>
-                        </div>
+                <div class="row d-none d-xl-flex pt-4">
+                    <div class="col text-center">
+                        <button class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4" onclick="surveyStartToAddress()"><i class="fas fa-angle-left pr-2"></i>{% trans "Back" %}</button>
+                        <button class="btn btn-primary no-underline-link entry-nav-btn ml-4" onclick="startSurvey()">{% trans "Start" %}<i class="fas fa-angle-right pl-2"></i></button>
                     </div>
-                </div>
+                </div> 
             </div>
         </div>
 
@@ -128,11 +127,11 @@
         <div class="row d-xl-none">
             <div class="col-12">          
                 <div id="survey-start-infographic" class="mt-3 mb-5">
-                    <div class="row m-0 header-text">
+                    <div class="row m-0 header-text mb-2">
                         <strong>{% trans "What is a Community of Interest?" %}</strong>
                     </div>
                     
-                    <div id="entry-coi-def" class="row m-0 info-text">
+                    <div id="entry-coi-def" class="row m-0 info-text mb-2">
                         {% blocktrans %}
                             <p>
                                 A Community of Interest is a geographic area that shares <strong>cultural</strong>, <strong>historical</strong>, or <strong>economic</strong> interests. 
@@ -209,17 +208,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-row text-center">
-                    <div class="col mt-4">
-                        <div style="display: inline-block;">
-                            <button class="btn btn-outline-primary btn-lg" onclick="startSurvey()">{% trans "Start Survey" %}</button>
-                        </div>
-                    </div>
+                <div class="row">
+                    <div class="col text-center">
+                        <button class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4" onclick="surveyStartToAddress()"><i class="fas fa-angle-left pr-2"></i>{% trans "Back" %}</button>
+                        <button class="btn btn-primary no-underline-link entry-nav-btn ml-4" onclick="startSurvey()">{% trans "Start" %}<i class="fas fa-angle-right pl-2"></i></button>
+                    </div>    
                 </div>
             </div>
         </div>
-            {% comment %} </div> {% endcomment %}
-        {% comment %} </div> {% endcomment %}
     </div>
 
 
@@ -263,8 +259,8 @@
                 <!-- Form Errors END -->
                 <!-- Sections: -->
                 <!--  Economic -->
-                <button class="btn btn-link text-left pl-0 survey-sect-title-link" type="button" data-toggle="collapse" data-target="#economic_interests_example" aria-expanded="false" aria-controls="collapseOne">
-                    <h5 class="survey-sect-title">{% trans "Economic and Environmental Interests" %}<i class="fas fa-angle-down survey-angle-down"></i></h5>
+                <button class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#economic_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                    <h5 class="survey-sect-title">{% trans "Economic and Environmental Interests" %}<i class="fas fa-angle-down pl-3"></i></h5>
                 </button>
                 <div class="accordion" id="economic_interests_accordion">
                     <div id="economic_interests_example" class="collapse" aria-labelledby="economic_interests_accordion" data-parent="#economic_interests_accordion">
@@ -276,18 +272,10 @@
                 <div class="sr-only">{{ comm_form.economic_interests.label_tag }}</div>
                 {{ comm_form.economic_interests|append_attr:"class:form-control survey-field" }}
                 <!-- Activities -->
-                <button class="btn btn-link text-left pl-0 survey-sect-title-link" type="button" data-toggle="collapse" data-target="#comm_activities_example" aria-expanded="false" aria-controls="collapseOne">
-                    <h5 class="survey-sect-title">{% trans "Communities Activities and Services" %}<i class="fas fa-angle-down survey-angle-down"></i></h5>
-                </button>
-                {% comment %} {% blocktrans %}
-                <p class="card-text mb-0">
-                    Where do people in your community gather or socialize? Where does your community get its services?
-                </p>
-                {% endblocktrans %} {% endcomment %}
                 <div class="accordion" id="comm_activities_accordion">
-                    {% comment %} <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" onclick="changeText(this)" data-target="#comm_activities_example" aria-expanded="false" aria-controls="collapseOne">
-                    {% trans "Show Examples" %}
-                    </button> {% endcomment %}
+                    <button class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#comm_activities_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                        <h5 class="survey-sect-title">{% trans "Communities Activities and Services" %}<i class="fas fa-angle-down pl-3"></i></h5>
+                    </button>
                     <div id="comm_activities_example" class="collapse" aria-labelledby="comm_activities_accordion" data-parent="#comm_activities_accordion">
                         <p class="collapse-in ml-4">
                             {% blocktrans %} Where do people in your community gather or socialize? <br>Where does your community get its services? {% endblocktrans %}
@@ -296,13 +284,12 @@
                 </div>
                 <div class="sr-only">{{ comm_form.comm_activities.label_tag }}</div>
                 {{ comm_form.comm_activities|append_attr:"class:form-control survey-field" }}
+                
                 <!-- Cultural -->
-                <button class="btn btn-link text-left pl-0 survey-sect-title-link" type="button" data-toggle="collapse" data-target="#cultural_interests_example" aria-expanded="false" aria-controls="collapseOne">
-                    <h5 class="survey-sect-title">{% trans "Cultural or Historical Interests" %}<i class="fas fa-angle-down survey-angle-down"></i></h5>
-                </button>
-                {% comment %} <a href="" class="card-text survey-sect-title-link"><h5 class="survey-sect-title">{% trans "Cultural or Historical Interests" %}<i class="fas fa-angle-down survey-angle-down"></i></h5></a> {% endcomment %}
-
                 <div class="accordion" id="cultural_interests_accordion">
+                    <button class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#cultural_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                        <h5 class="survey-sect-title">{% trans "Cultural or Historical Interests" %}<i class="fas fa-angle-down pl-3"></i></h5>
+                    </button>
                     <div id="cultural_interests_example" class="collapse" aria-labelledby="cultural_interests_accordion" data-parent="#cultural_interests_accordion">
                         <p class="collapse-in ml-4">
                             {% blocktrans %} What fosters a sense of belonging in your community?
@@ -313,11 +300,7 @@
                 <div class="sr-only">{{ comm_form.cultural_interests.label_tag }}</div>
                 {{ comm_form.cultural_interests|append_attr:"class:form-control survey-field" }}
                 <!-- Other -->
-                <button class="btn btn-link text-left pl-0 survey-sect-title-link" type="button" data-toggle="collapse" data-target="#other_interests_example" aria-expanded="false" aria-controls="collapseOne">
-                    <h5 class="survey-sect-title">{% trans "Community Needs and Concerns" %}<i class="fas fa-angle-down survey-angle-down"></i></h5>
-                </button>
-                {% comment %} <a href="" class="card-text survey-sect-title-link"><h5 class="survey-sect-title">{% trans "Community Needs and Concerns" %}<i class="fas fa-angle-down survey-angle-down"></i></h5></a> {% endcomment %}
-                <!-- <div id="other_error_alerts">
+                {% comment %} <div id="other_error_alerts">
                     {% if comm_form.other_considerations.errors %}
                         <script>
                             sessionStorage.setItem("allChecks", "fail");
@@ -333,8 +316,11 @@
                             </button>
                         </div>
                     {% endif %}
-                </div> -->
+                </div> {% endcomment %}
                 <div class="accordion" id="other_interests_accordion">
+                    <button class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#other_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                        <h5 class="survey-sect-title">{% trans "Community Needs and Concerns" %}<i class="fas fa-angle-down pl-3"></i></h5>
+                    </button>
                     <div id="other_interests_example" class="collapse" aria-labelledby="other_interests_accordion" data-parent="#other_interests_accordion">
                         <p class="collapse-in ml-4">
                             {% trans "What other interests does your community care about? <br>Do you have any suggestions for how the redistricting commission in your state could help address these concerns?" %}
@@ -344,13 +330,12 @@
                 <div class="sr-only">{{ comm_form.other_considerations.label_tag }}</div>
                 {{ comm_form.other_considerations|append_attr:"class:form-control survey-field" }}
             </div>
-            <div class="form-row text-center">
-                <div class="col mt-4">
-                    <div style="display: inline-block;">
-                        <button id="save" form="entryForm" type="submit" class="btn btn-lg btn-outline-primary" value="Submit">{% trans "Next" %}</button>
-                    </div>
+            <div class="row pt-5">
+                <div class="col text-center">
+                    <button class="btn btn-outline-primary entry-nav-btn mr-4" onclick="surveyP1ToSurveyStart()"><i class="fas fa-angle-left pr-2"></i>{% trans "Back" %}</button>
+                    <button id="surveyP1ToP2_button" class="btn btn-primary entry-nav-btn ml-4">{% trans "Next" %}<i class="fas fa-angle-right pl-2"></i></button>
                 </div>
-            </div>
+            </div>   
         </div>
     </div>
 
@@ -361,7 +346,7 @@
     <!-- Community Name Part -->
     <div id="survey-qs-p2" class="d-none">
         <div class="col-lg mt-2 ml-lg-3 mt-lg-5">
-        <div id="entry_name_error_alerts">
+            <div id="entry_name_error_alerts">
                 {% if comm_form.entry_name.errors %}
                     <script>
                         sessionStorage.setItem("allChecks", "fail");
@@ -377,6 +362,12 @@
                         </button>
                     </div>
                 {% endif %}
+                <div id="need_comm_name" class="alert alert-danger alert-dismissible fade show form-error d-none" role="alert">
+                    {% trans "Please include a community name." %}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
             </div>
             <div class="row">
                 <div id="survey-comm-name-pic" class="col-lg-3">
@@ -406,22 +397,10 @@
                 </div>
             </div>
 
-                    {% comment %} <div class="card-body">
-                        <p class="card-text">
-                            {% trans "What name can we use to identify your community?" %} <small class="text-danger">{% trans "(Required)" %}</small>
-                            <!-- TODO we should find a better example -->
-                            <br>
-                            <small>{% trans "For example: Cherry Farmers Community, Huron River Watershed, Chippewa Community, LAX Airport Communities, University of Texas Students, El Barrio" %}</small>
-                        </p>
-                        <div class="sr-only">{{ comm_form.entry_name.label_tag }}</div>
-                        {{ comm_form.entry_name|append_attr:"class:form-control survey-field" }}
-
-                    </div> {% endcomment %}
-            <div class="form-row text-center">
-                <div class="col mt-4">
-                    <div style="display: inline-block;">
-                        <button id="save" form="entryForm" type="submit" class="btn btn-lg btn-outline-primary" value="Submit">{% trans "Next" %}</button>
-                    </div>
+            <div class="row pt-5">
+                <div class="col text-center">
+                    <button class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4" onclick="surveyP2ToP1()"><i class="fas fa-angle-left pr-2"></i>{% trans "Back" %}</button>
+                    <button id="surveyP2ToMap_button" class="btn btn-primary no-underline-link entry-nav-btn ml-4">{% trans "Next" %}<i class="fas fa-angle-right pl-2"></i></button>
                 </div>
             </div>
         </div>

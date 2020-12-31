@@ -9,8 +9,14 @@
             <div class="entry-header">
                 <strong>{% trans "Tell us about yourself." %} </strong>
             </div>
+            <div id="need_name" class="alert alert-danger alert-dismissible fade show form-error d-none" role="alert">
+                Please include your name.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <div id="need_address" class="alert alert-danger alert-dismissible fade show form-error d-none" role="alert">
-                Please include your address.
+                Please include your entire address.
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -75,9 +81,6 @@
                     </div>
                 {% endif %}
             </div>
-            {% comment %} <p class="card-text mb-1 mt-2">
-                {% trans "Your Address" %} {% if address_required %}<small class="text-required">*</small> {% endif %}
-            </p> {% endcomment %}
             <div id="street_error_alerts">
                 {% if addr_form.street.errors %}
                     <script>
@@ -172,11 +175,9 @@
                     {{ addr_form.zipcode|append_attr:"class:form-control addr-field" }}
                 </div>
             </div>
-            <div class="form-row text-center">
-                <div class="col mt-4">
-                    <div style="display: inline-block;">
-                        <button id="save" form="entryForm" type="submit" class="btn btn-lg btn-primary" value="Submit">{% trans "Next" %}</button>
-                    </div>
+            <div class="row pt-5">
+                <div class="col text-center">
+                    <button id="entry_address_button" class="btn btn-primary no-underline-link entry-nav-btn">{% trans "Next" %}<i class="fas fa-angle-right pl-2"></i></button>
                 </div>
             </div>
         </div>
