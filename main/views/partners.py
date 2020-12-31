@@ -106,7 +106,7 @@ class PartnerMap(TemplateView):
                     cities[obj.entry_ID] = (
                         a.city + ", " + a.state + " " + a.zipcode
                     )
-        
+
         context = {
             "streets": streets,
             "cities": cities,

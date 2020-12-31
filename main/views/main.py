@@ -486,6 +486,7 @@ class Submission(TemplateView):
 
         # query will have length 1 or database is invalid
         user_map = query[0]
+
         if user_map.drive:
             folder_name = query[0].drive.slug
             has_state = False
@@ -501,7 +502,7 @@ class Submission(TemplateView):
                 folder_name = state
 
         entryPolyDict = {}
-        
+
         if (
             user_map.census_blocks_polygon == ""
             or user_map.census_blocks_polygon is None
@@ -648,7 +649,7 @@ def make_geojson_for_state_map_page(request, entry):
         ] = user_map.organization.name
     if user_map.drive:
         gj["features"][0]["properties"]["drive"] = user_map.drive.name
-    
+
     feature = gj["features"][0]
     return feature
 
@@ -676,7 +677,7 @@ class ExportView(TemplateView):
                 folder_name = query.drive.slug
             else:
                 folder_name = query.state
-        
+
         gj = make_geojson(request, query)
 
         gs = geojson.dumps(gj)
@@ -774,6 +775,7 @@ def make_geojson_for_s3(entry):
             "economic_interests",
             "comm_activities",
             "other_considerations",
+            "population",
         ),
     )
     gj = geojson.loads(map_geojson)
@@ -864,6 +866,7 @@ class EntryView(LoginRequiredMixin, View):
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
             "recaptcha_public": settings.RECAPTCHA_PUBLIC,
             "check_captcha": settings.CHECK_CAPTCHA_SUBMIT,
+            "census_key": os.environ.get("CENSUS_API_KEY"),
             "has_token": has_token,
             "has_drive": has_drive,
             "organization_name": organization_name,
@@ -1000,4 +1003,3 @@ class MultiExportView(TemplateView):
             response = HttpResponse(df.to_csv(), content_type="text/csv")
 
         return response
-

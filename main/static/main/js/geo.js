@@ -26,6 +26,9 @@ var filterStack = JSON.parse(sessionStorage.getItem("filterStack"));
 var bboxStack = JSON.parse(sessionStorage.getItem("bboxStack"));
 if (filterStack === null) filterStack = [];
 if (bboxStack === null) bboxStack = [];
+// set population
+var pop = sessionStorage.getItem("pop");
+if (pop !== null) $(".comm-pop").html(pop);
 
 // change "Show Examples" to "Hide Examples" on click
 // TODO: change this to be updated for languages automatically, rather than manually
@@ -197,7 +200,7 @@ function startSurvey() {
 
 function surveyP1ToSurveyStart() {
   $("#survey-qs-p1").addClass("d-none");
-  $("#entry-survey-start").removeClass("d-none"); 
+  $("#entry-survey-start").removeClass("d-none");
 }
 
 function surveyP1ToP2() {
@@ -294,7 +297,7 @@ function addressValidated() {
   var flag = true;
   var name_field = document.getElementById("id_user_name");
   var entryForm = document.getElementById("entryForm");
-  
+
 
   var is_address_required = address_required == "True";
   if (is_address_required) {
@@ -542,6 +545,9 @@ function createCommPolygon() {
   polyFilter.splice(0, 1);
   polyFilter.splice(0, 1);
   document.getElementById("id_block_groups").value = polyFilter;
+  // load in the Population
+  var pop = sessionStorage.getItem("pop");
+  document.getElementById("id_population").value = pop;
   return true;
 }
 
@@ -897,10 +903,12 @@ class ClearMapButton {
         "Are you sure you want to clear the map? This will delete the blocks you have selected."
       );
       if (isConfirmed) {
+        $(".comm-pop").html(0);
         map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
         var undoBbox = sessionStorage.getItem("selectBbox");
         filterStack.push(undoFilter);
         bboxStack.push(undoBbox);
+        sessionStorage.setItem("pop", "0");
         sessionStorage.setItem("bgFilter", "[]");
         sessionStorage.setItem("selectBbox", "[]");
         sessionStorage.setItem("filterStack", JSON.stringify(filterStack));
@@ -1363,7 +1371,8 @@ map.on("style.load", function () {
         if (isEmptyFilter(filter)) {
           sessionStorage.setItem("selectBbox", "[]");
         }
-        selectBbox = turf.difference(selectBbox, currentBbox);
+        if (selectBbox === null) selectBbox = [];
+        else selectBbox = turf.difference(selectBbox, currentBbox);
       }
     } else {
       // check if previous selectBbox overlaps with current selectBbox
@@ -1396,7 +1405,7 @@ map.on("style.load", function () {
       );
 
       currentFilter.forEach(function (feature) {
-        if (feature !== "in" && feature !== "GEOID" && feature !== "") {
+        if (feature !== "in" && feature !== "GEOID" && feature !== "" && !filter.includes(feature)) {
           filter.push(feature);
         }
       });
@@ -1409,6 +1418,10 @@ map.on("style.load", function () {
         "This community is too large. Please select a smaller area to continue."
       );
     }
+    // set as indicator that population is loading
+    $(".comm-pop").html("...");
+    // remove "in" and "GEOID" parts of filter, for population
+    getCommPop(cleanFilter(filter));
     if (isChanged) {
       filterStack.push(currentFilter);
       bboxStack.push(JSON.stringify(currentBbox));
@@ -1634,4 +1647,55 @@ function arraysEqual(a, b) {
     if (a[i] !== b[i]) return false;
   }
   return true;
+}
+
+/***************************************************************************/
+
+var bgPopCache = {};
+// get the population for a community from filter
+// TODO: load this in automatically as part of the tilesets for immediate lookup?
+function getCommPop(filter) {
+  if (filter.length === 0) $(".comm-pop").html(0);
+  var pop = 0;
+  var ctr = 0;
+  filter.forEach(function(feature){
+    if (feature in bgPopCache) {
+      ctr++;
+      pop += bgPopCache[feature];
+      if (ctr === filter.length) {
+        $(".comm-pop").html(pop);
+        sessionStorage.setItem("pop", pop);
+      }
+    } else {
+      getBGPop(feature, function(bgPop) {
+        ctr++;
+        pop += parseInt(bgPop);
+        bgPopCache[feature] = parseInt(bgPop);
+        if (ctr === filter.length) {
+          $(".comm-pop").html(pop);
+          sessionStorage.setItem("pop", pop);
+        }
+      })
+    }
+  });
+}
+
+// query the ACS api in order to get blockgroup population data!
+// geoid chars 0-2:state, 2-5:county, 5-11:tract, 12:block group
+function getBGPop(geoid, callback) {
+  var req = new XMLHttpRequest();
+  req.open('GET', 'https://api.census.gov/data/2018/acs/acs5?get=B01003_001E&for=block%20group:' + geoid.substring(11) + '&in=state:' + geoid.substring(0,2) + '%20county:' + geoid.substring(2, 5) + '%20tract:' + geoid.substring(5, 11) + '&key=' + census_key, true);
+  req.onreadystatechange = function(){
+    if (req.readyState == 4 && req.status == 200) {
+      var data = JSON.parse(req.response);
+      callback(data[1][0]);
+    }
+  }
+  req.send();
+}
+
+function cleanFilter(filter) {
+  var cleanFilter = filter.slice();
+  cleanFilter.splice(0, 2);
+  return cleanFilter;
 }

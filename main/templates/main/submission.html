@@ -70,7 +70,7 @@
                           </span>
                           <hr class="my-1">
                           <span id="ignorePDF">
-                            {% if c.organization and c.organization.name%}
+                            {% if c.organization and c.organization.name %}
                             <span id="org-text" class="badge badge-pill badge-primary">{{c.organization}}</span>
                             <br>
                             {% endif %}
@@ -92,6 +92,12 @@
                               {% else %}
                               <br>
                               {% endif %}
+                              {% endif %}
+                            </span>
+                            <span class="small">
+                              {% if c.population > 0 %}
+                              <b>Population:</b> {{ c.population }}
+                              <br>
                               {% endif %}
                             </span>
                           </span>
