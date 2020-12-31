@@ -131,22 +131,9 @@
     function validateRecaptcha() {
         var response = grecaptcha.getResponse();
         if (response.length === 0 && "{{ check_captcha }}" === "True") {
-            console.log("inside the recaptcha method");
-            console.log(response);
-            let newAlert = document.createElement("div");
-            newAlert.innerHTML =
-              '<div id="' +
-              "captcha_submit" +
-              '" class="alert alert-danger alert-dismissible fade show map-alert" role="alert">\
-            ' +
-              "You must complete the captcha to submit this map" +
-              '\
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">\
-            <span aria-hidden="true">&times;</span>\
-            </button>\
-            </div>';
-            document.getElementById("rcaptcha").appendChild(newAlert);
-            return false;
+          document.getElementById("need_captcha").classList.remove("d-none");
+          scrollIntoViewSmooth(document.getElementById("need_captcha"));
+          return false;
         }
 
         // return formValidation();

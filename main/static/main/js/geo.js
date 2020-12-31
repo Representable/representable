@@ -197,7 +197,7 @@ function startSurvey() {
 
 function surveyP1ToSurveyStart() {
   $("#survey-qs-p1").addClass("d-none");
-  $("#entry-survey-start").removeClass("d-none"); 
+  $("#entry-survey-start").removeClass("d-none");
 }
 
 function surveyP1ToP2() {
@@ -294,7 +294,7 @@ function addressValidated() {
   var flag = true;
   var name_field = document.getElementById("id_user_name");
   var entryForm = document.getElementById("entryForm");
-  
+
 
   var is_address_required = address_required == "True";
   if (is_address_required) {
