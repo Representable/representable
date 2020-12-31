@@ -144,7 +144,7 @@
                           <a class="btn btn-outline-primary mx-4 d-none d-sm-inline" href="#" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>Export GeoJSON</a>
                           <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
                           <!-- ********************* -->
-                          <span class="btn btn-outline-primary btn-canvas mx-4 my-2 pdf-button" role="button">Export PDF</span>
+                          <span class="btn btn-outline-primary btn-canvas mx-4 my-2" id="pdf-button" role="button">Export PDF</span>
                           {% endwith %}
                           {% with link_text="/export/csv/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
                           <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.csv">Export CSV</a>
@@ -155,7 +155,7 @@
                           <a class="btn btn-outline-primary mx-4 d-none d-sm-inline" href="#" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>Export GeoJSON</a>
                           <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
                           <!-- ********************* -->
-                          <span class="btn btn-outline-primary btn-canvas mx-4 my-2 pdf-button" role="button">Export PDF</span>
+                          <span class="btn btn-outline-primary btn-canvas mx-4 my-2" id="pdf-button" role="button">Export PDF</span>
                           {% endwith %}
                           {% with link_text="/export/csv"|add:"/?map_id="|addstr:c.entry_ID %}
                           <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.csv">Export CSV</a>
@@ -199,7 +199,7 @@
                   <div class="row my-1">
                     <div class="col-lg-2"></div>
                     <div class="col-lg-8 text-center">
-                      <p>Your community is ready to be viewed and downloaded. You have <br class="d-none d-md-block"> recieved an email with your community as a pdf file. </p>
+                      <p>Your community is ready to be viewed and downloaded. Your map <br class="d-none d-md-block"> can make a difference in the fight against gerrymandering. </p>
                       <h4 class="mb-lg-4">Make an impact with your map.</h4>
                     </div>
                     <div class="col-lg-2"></div>
@@ -221,7 +221,7 @@
                     </div>
                     <div class="col-lg-7">
                       If your state has a redistricting commission or accepts Communities of Interest, send a pdf of your community to submit as public testimony. If not, you can send it to a local redistricting organization.<br>
-                      <div class="text-center"><a class="btn btn-outline-gray mx-2 my-1 pdf-button" target="_blank" data-dismiss="modal" role="button">Export PDF</a></div>
+                      <div class="text-center"><a class="btn btn-outline-gray mx-2 my-1" id="pdf-button-modal" target="_blank" data-dismiss="modal" role="button">Export PDF</a></div>
                     </div>
                     <div class="col-lg-3"></div>
                   </div>
@@ -255,7 +255,7 @@
                       <img class="mx-auto d-block w-125 h-100" src="{% static 'img/thanks-comm.svg' %}" alt="community icon"> </img>
                     </div>
                     <div class="col-lg-7">
-                      Send the map to your community members and encourage them to draw maps. When map drawers have more data from your community, they are more likely to draw fairer districts.<br>
+                      Get a copy of your map sent to your email for personal records. Easily forward and share your Representable map with other members of your community. When map drawers have more data from your community, they are more likely to draw fairer districts.<br>
                       <!-- <div class="text-center"><a class="btn btn-outline-gray mx-2 my-1" target="_blank" href="" role="button">Send Email</a></div> -->
                       <div class="text-center">
                         <!--Form Used to Send Email-->
