@@ -119,15 +119,45 @@
                         <tr>
                         </table>
                         <div class="text-center">
+                          <!-- ********************* -->
+                          <!-- GeoJSON Explainer Modal -->
+                          <div class="modal fade" id="geojson-explain-modal" tabindex="-1" role="dialog" aria-labelledby="geojson-explain-modalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">What is GeoJSON?</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  GeoJSON files are industry standard and usable with other mapping softwares like Maptitude for Redistricting, Dave's Redistricting App, ESRI, and more.
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- ********************* -->
                           {% if has_state %}
-                          {% with link_text="/export/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
-                          <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.geojson">Export GeoJSON</a>
+                          {% with link_text="/export/geojson/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
+                          <!-- <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.geojson">Export GeoJSON</a> -->
+                          <a class="btn btn-outline-primary mx-4 d-none d-sm-inline" href="#" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>Export GeoJSON</a>
+                          <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
+                          <!-- ********************* -->
                           <span class="btn btn-outline-primary btn-canvas mx-4 my-2" role="button" id="pdf-button">Export PDF</span>
                           {% endwith %}
+                          {% with link_text="/export/csv/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
+                          <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.csv">Export CSV</a>
+                          {% endwith %}
                           {% else %}
-                          {% with link_text="/export?map_id="|addstr:c.entry_ID %}
-                          <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.geojson">Export GeoJSON</a>
+                          {% with link_text="/export/geojson/?map_id="|addstr:c.entry_ID %}
+                          <!-- <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.geojson">Export GeoJSON</a> -->
+                          <a class="btn btn-outline-primary mx-4 d-none d-sm-inline" href="#" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>Export GeoJSON</a>
+                          <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
+                          <!-- ********************* -->
                           <span class="btn btn-outline-primary btn-canvas mx-4 my-2" role="button" id="pdf-button">Export PDF</span>
+                          {% endwith %}
+                          {% with link_text="/export/csv"|add:"/?map_id="|addstr:c.entry_ID %}
+                          <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.csv">Export CSV</a>
                           {% endwith %}
                           {% endif %}
                         </div>

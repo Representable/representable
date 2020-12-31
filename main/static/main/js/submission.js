@@ -91,6 +91,24 @@ map.on("load", function () {
   //     break;
   //   }
   // }
+  /****************************************************************************/
+  // school districts as a data layer
+  newSourceLayer("school-districts", SCHOOL_DISTR_KEY);
+  map.addLayer(
+    {
+      id: "school-districts-lines",
+      type: "line",
+      source: "school-districts",
+      "source-layer": "us_school_districts",
+      layout: {
+        visibility: "none",
+      },
+      paint: {
+        "line-color": "rgba(106,137,204,0.7)",
+        "line-width": 2,
+      },
+    }
+  );
   // ward + community areas for IL
   if (state === "il") {
     newSourceLayer("chi_wards", CHI_WARD_KEY);
@@ -241,7 +259,7 @@ map.on("load", function () {
       doc.setFontSize(12);
       doc.setTextColor(0);
       // link to view on rep
-      var rLink = "View this community at: " + window.location.href;
+      var rLink = doc.splitTextToSize("View this community at: " + window.location.href, 180);
       doc.text(20, 53, rLink);
 
       var org = window.document.getElementById("org-text");
@@ -286,6 +304,7 @@ map.on("load", function () {
 
 //create a button that toggles layers based on their IDs
 var toggleableLayerIds = JSON.parse(JSON.stringify(BOUNDARIES_LAYERS));
+toggleableLayerIds["school-districts"] = "School Districts";
 // add selector for chicago wards + community areas if illinois
 if (state === "il") {
   toggleableLayerIds["chi-ward"] = "Chicago Wards";
@@ -335,3 +354,18 @@ for (var id in toggleableLayerIds){
 function removeLastChar(str) {
   return str.substring(0, str.length - 1);
 }
+
+// Links "What GeoJSON is?" Modal and download for GeoJSON into one event
+$('[data-toggle=modal]').on('click', function(e) {
+  var $target = $($(this).data('target'));
+  $target.data('triggered', true);
+  setTimeout(function() {
+    if ($target.data('triggered')) {
+      $target.modal('show').data('triggered', false);
+    };
+  }, 100); // ms delay
+  return false;
+});
+$('#geojson-explain-modal').on('show.bs.modal', function () {
+  $('#hidden-download-geojson')[0].click();
+});
