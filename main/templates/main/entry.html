@@ -130,7 +130,10 @@
     <script type="text/javascript">
     function validateRecaptcha() {
         var response = grecaptcha.getResponse();
-        if (response.length === 0 && "{{ check_captcha }}" === "True") {
+        // && "{{ check_captcha }}" === "True"
+        if (response.length === 0 ) {
+            console.log("inside the recaptcha method");
+            console.log(response);
             let newAlert = document.createElement("div");
             newAlert.innerHTML =
               '<div id="' +
@@ -143,7 +146,7 @@
             <span aria-hidden="true">&times;</span>\
             </button>\
             </div>';
-            document.getElementById("captcha").appendChild(newAlert);
+            document.getElementById("re-captcha").appendChild(newAlert);
             return false;
         }
 
