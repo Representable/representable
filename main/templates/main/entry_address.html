@@ -16,7 +16,7 @@
                 </button>
             </div>
             <div class="accordion" id="privacy_accordion">
-                <button class="btn btn-link text-left pl-0" type="button" data-toggle="collapse" data-target="#privacy_example" aria-expanded="false" aria-controls="collapseOne">
+                <button class="btn btn-link text-left pl-0" style="text-decoration:underline;" type="button" data-toggle="collapse" data-target="#privacy_example" aria-expanded="false" aria-controls="collapseOne">
                 {% trans "Why do we need your information?" %}
                 </button>
                 <div id="privacy_example" class="collapse" aria-labelledby="privacy_accordion" data-parent="#privacy_accordion">
@@ -50,13 +50,9 @@
                     </div>
                 {% endif %}
             </div>
-            {% comment %} <p class="card-text mb-1 mt-2">
-
-                {% trans "Your Name"%} <small class="text-danger">{% trans "(Required)" %}</small>
-            </p> {% endcomment %}
             <div class="row my-2">
                 <div class="col">
-                    <small class="ml-2">{% trans "Your Name"%} <small class="text-danger">{% trans "(Required)" %}</small></small>
+                    <small class="ml-2">{% trans "Your Name"%} <small class="text-danger">*</small></small>
                     <div class="sr-only">{{ comm_form.user_name.label_tag }}</div>
                     {{ comm_form.user_name|append_attr:"class:form-control addr-field" }}
                 </div>
@@ -80,7 +76,7 @@
                 {% endif %}
             </div>
             {% comment %} <p class="card-text mb-1 mt-2">
-                {% trans "Your Address" %} {% if address_required %}<small class="text-danger">{% trans "(Required)" %}</small> {% endif %}
+                {% trans "Your Address" %} {% if address_required %}<small class="text-danger">*</small> {% endif %}
             </p> {% endcomment %}
             <div id="street_error_alerts">
                 {% if addr_form.street.errors %}
@@ -101,7 +97,7 @@
             </div>
             <div class="form-row my-1">
                 <div class="col">
-                    <small class="m-2">Street <small class="text-danger">{% trans "(Required)" %}</small></small>
+                    <small class="m-2">Street <small class="text-danger">*</small></small>
                     <div class="sr-only">{{ addr_form.street.label_tag }}</div>
                     {{ addr_form.street|append_attr:"class:form-control addr-field" }}
                 </div>
@@ -142,12 +138,12 @@
             </div>
             <div class="form-row my-1">
                 <div class="col-xs-6 col-md-6">
-                    <small class="m-2">City <small class="text-danger">{% trans "(Required)" %}</small></small>
+                    <small class="m-2">City <small class="text-danger">*</small></small>
                     <div class="sr-only">{{ addr_form.city.label_tag }}</div>
                     {{ addr_form.city|append_attr:"class:form-control addr-field" }}
                 </div>
                 <div class="col-xs-6 col-md-6">
-                    <small class="m-2">State <small class="text-danger">{% trans "(Required)" %}</small></small>
+                    <small class="m-2">State <small class="text-danger">*</small></small>
                     <div class="sr-only">{{ addr_form.state.label_tag }}</div>
                     {{ addr_form.state|append_attr:"class:form-control addr-field" }}
                 </div>
@@ -171,7 +167,7 @@
             </div>
             <div class="form-row my-1">
                 <div class="col">
-                    <small class="m-2">Zipcode <small class="text-danger">{% trans "(Required)" %}</small></small>
+                    <small class="m-2">Zipcode <small class="text-danger">*</small></small>
                     <div class="sr-only">{{ addr_form.zipcode.label_tag }}</div>
                     {{ addr_form.zipcode|append_attr:"class:form-control addr-field" }}
                 </div>
