@@ -19,6 +19,9 @@
 #
 import asyncio
 import boto3
+import urllib
+from urllib.request import urlopen
+from django.contrib import messages
 from django.http import (
     HttpResponse,
     HttpResponseNotFound,
@@ -890,6 +893,28 @@ class EntryView(LoginRequiredMixin, View):
         ]
         comm_form.data._mutable = False
         if comm_form.is_valid():
+            recaptcha_response = request.POST.get('g-recaptcha-response')
+            url = 'https://www.google.com/recaptcha/api/siteverify'
+            values = {
+                'secret': settings.RECAPTCHA_PRIVATE,
+                'response': recaptcha_response
+            }
+            data = urllib.parse.urlencode(values)
+            data = data.encode('ascii')
+            req = urllib.request.Request(url, data)
+            response = urlopen(req)
+            result = json.load(response)
+            ''' End reCAPTCHA validation '''
+            if not result['success']:
+                messages.add_message(request, messages.ERROR, 'Invalid reCAPTCHA. Please try again.')
+                context = {
+                    "comm_form": comm_form,
+                    "addr_form": addr_form,
+                    "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+                    "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
+                }
+                return render(request, self.template_name, context)
+            
             entryForm = comm_form.save(commit=False)
             s3 = boto3.resource(
                 "s3",
