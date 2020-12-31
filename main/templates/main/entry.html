@@ -55,6 +55,12 @@
 <!-- Entry Form -->
 <form id="entryForm" method="post" onSubmit="return validateRecaptcha();">
     {% csrf_token %}
+    <div id="main_community_form" class="form-group">
+        <!-- {# Include the hidden fields #} -->
+        {% for hidden in comm_form.hidden_fields %}
+        {{ hidden }}
+        {% endfor %}
+    </div>
     <div class="container-fluid">
         <div class="row row-content">
             <div class="col-sm-2">
@@ -139,9 +145,10 @@
             </div>';
             document.getElementById("captcha").appendChild(newAlert);
             return false;
-        } else {
-            return formValidation();
         }
+
+        // return formValidation();
+        return privacyCheckValidation;
     }
     </script>
     <!-- Turf to get the bounding box. -->

@@ -895,9 +895,10 @@ class EntryView(LoginRequiredMixin, View):
                         # approve this entry
                         entryForm.admin_approved = True
             gj = make_geojson_for_s3(entryForm)
+
             s3.Bucket(os.environ.get("AWS_STORAGE_BUCKET_NAME")).put_object(
                 Body=str(gj),
-                Key=f'{folder_name}/{comm_form.data["entry_ID"]}.geojson',
+                Key=f"{folder_name}/{comm_form.data['entry_ID']}.geojson",
                 ServerSideEncryption="AES256",
                 StorageClass="STANDARD_IA",
             )

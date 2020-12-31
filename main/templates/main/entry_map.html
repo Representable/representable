@@ -96,11 +96,6 @@
 <div id="map-comm-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
-            {% comment %} <div class="modal-header">
-                <button type="button" class="close" aria-label="Close" data-dismiss="modal">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div> {% endcomment %}
             <div class="modal-body p-1">
                 <button type="button" class="close p-2" aria-label="Close" data-dismiss="modal">
                 <span aria-hidden="true">&times;</span>
@@ -299,6 +294,8 @@
         </div>
     </div>
 
+
+    <!-- Navigation buttons-->
     <div id="map-bottom-row">
         <div class="container-fluid">
             <div class="row">
@@ -308,19 +305,18 @@
                 </div>
                 <div class="col text-center d-lg-none">
                     <button class="btn btn-primary no-underline-link entry-nav-btn mr-4 mapping-icon" onclick="mapToSurveyP2()"><i class="fas fa-angle-left pr-2"></i>{% trans "Back" %}</button>
-                    <button id="mapToPrivacy" class="btn btn-primary no-underline-link entry-nav-btn ml-4 mapping-icon">{% trans "Save" %}<i class="fas fa-angle-right pl-2"></i></button>
+                    <button id="mapToPrivacyMobile" class="btn btn-primary no-underline-link entry-nav-btn ml-4 mapping-icon">{% trans "Save" %}<i class="fas fa-angle-right pl-2"></i></button>
                 </div>
             </div>
         </div>
     </div>
+
     <span class="float-right my-2">
         <button class="btn btn-secondary btn-sm mb-2 mr-2 d-none" id="shepherd-btn" onclick="myTour.start()" type="button">{% trans "Step-by-step guide" %}</button>
     </span>
+
+    <!-- Actual Map -->
     <div class="map-bounding-box my-2 collapse">
-        {% comment %} <p>{% blocktrans %} Draw your community by selecting <a href="https://www.census.gov/programs-surveys/geography/about/glossary.html#par_textimage_4" target="_blank" data-toggle="tooltip" title="The units you are selecting to draw your community are census block groups. Map drawers use these units when creating districts.">units</a> on the map.
-            Make sure that all your community is contained within the highlighted units, and that your drawn community does not contain gaps.
-            {% endblocktrans %}
-        </p> {% endcomment %}
         <div class="map-box">
             <div id='menu'></div>
             <div id='map' class='draw_polygon_map' onload="map.resize()">
