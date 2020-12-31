@@ -35,7 +35,6 @@ urlpatterns = [
         name="account_signup",
     ),
     path("", views.main.Index.as_view(), name="index"),
-    path("map/", views.main.Map.as_view(), name="map"),
     path(
         "entry_preview/",
         views.main.EntryPreview.as_view(),
@@ -89,6 +88,8 @@ urlpatterns = [
         name="entry",
     ),
     path("about/", views.main.About.as_view(), name="about"),
+    path("faq/", views.main.FAQ.as_view(), name="faq"),
+    path("glossary/", views.main.Glossary.as_view(), name="glossary"),
     path("review/", views.main.Review.as_view(), name="review"),
     path("privacy/", views.main.Privacy.as_view(), name="privacy"),
     path("terms/", views.main.Terms.as_view(), name="terms"),
@@ -122,6 +123,11 @@ urlpatterns = [
     path("export/geojson/<abbr>/", views.main.ExportView.as_view(), name="export"),
     path("export/csv/<abbr>/", views.main.ExportView.as_view(), name="export"),
     path(
+        "multiexport/<abbr>/<type>/",
+        views.main.MultiExportView.as_view(),
+        name="multi_export",
+    ),
+    path(
         "multiexport/drive/<drive>/<type>/",
         views.partners.MultiExportView.as_view(),
         name="multi_export",
@@ -142,6 +148,7 @@ urlpatterns = [
         views.partners.PartnerView.as_view(),
         name="partner_page",
     ),
+    path("map/<state>/", views.main.Map.as_view(), name="map"),
     path(
         "map/p/<slug:slug>/",
         views.partners.PartnerMap.as_view(),

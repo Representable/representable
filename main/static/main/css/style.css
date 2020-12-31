@@ -39,11 +39,27 @@ form:invalid {
 }
 
 .has_error {
-  border-color: red;
+  border: 1px solid red !important;
+}
+
+.text-required {
+  color: #ff726f;
 }
 
 .has_success {
-  border-color: #ced4da;
+  border-color: 1px solid #ced4da;
+}
+
+.no-underline-link:hover {
+  text-decoration: none;
+}
+
+.no-underline-link:focus {
+  text-decoration: none;
+}
+
+.align-middle {
+  margin: auto;
 }
 
 /* TOC Checkbox*/
@@ -59,6 +75,7 @@ form:invalid {
   display: inline;
 }
 /* Pop up - bottom left corner of the map. */
+
 .map-popup-box {
   position: absolute;
   top: 10px;
@@ -75,11 +92,11 @@ form:invalid {
   border: 1px solid red;
 }
 
-/**
+/*********************************************************************
 
 Entry Preview Page
 
-**/
+**********************************************************************/
 #entry_preview_intro {
   padding: 15px 15px 15px 20px;
   line-height: 2;
@@ -127,12 +144,6 @@ Entry Preview Page
   }
 }
 
-/* Entry Page: Geocoder Full Width */
-.mapboxgl-ctrl-geocoder {
-  width: 100%;
-  max-width: none;
-}
-
 input[type="range"]::-webkit-slider-thumb {
   border-radius: 50%;
   width: 8px;
@@ -147,7 +158,8 @@ button:disabled:hover {
 /* Body and headings */
 /* Change the website default font. */
 body {
-  font-family: Inter, system-ui, sans-serif;
+  /* font-family: Inter, system-ui, sans-serif; */
+  font-family: europa, sans-serif;
 }
 
 html,
@@ -185,7 +197,7 @@ body {
   letter-spacing: 2.5px;
 }
 .navbar-logo {
-  width: 40px;
+  width: 60px;
 }
 
 .nav-link {
@@ -204,6 +216,20 @@ body {
 
 .w-10 {
   width: 10%;
+}
+.w-16 {
+  width: 16%
+}
+.px-10 {
+  padding-left: 10rem;
+  padding-right: 10rem;
+}
+.w-125 {
+  width: 125%;
+}
+.border-3 {
+  border-width: 3px !important;
+  border-color: #5b5b5b;
 }
 
 .container-full-width {
@@ -250,7 +276,8 @@ body {
   border-left-color: gray !important;
 }
 
-@media only screen and (max-width: 768px) {
+/* MOBILE ONLY */
+@media only screen and (max-width: 767.98px) {
   .what-is-gerrymandering p {
     font-size: 16px;
   }
@@ -267,8 +294,84 @@ body {
   .sidenav {
     height: 100%;
   }
+  .mobile-padding-x {
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
+  }
+  .mobile-padding-top {
+    padding-top: 3.5rem;
+  }
+  .font-large-mobile {
+    font-size: 1.5rem;
+  }
+  .font-medium-mobile {
+    font-size: 1rem;
+  }
+  .font-small-mobile {
+    font-size: 0.75rem;
+  }
+  .font-xs-mobile {
+    font-size: 0.5rem;
+  }
+  .w-35-mobile {
+    width: 35% !important;
+  }
+  #home-page-rect-mobile {
+    position: absolute;
+    width: 80%;
+    height: 130%;
+    left: 10%;
+    bottom: -40%;
+
+    background: rgba(204, 233, 255, 0.2);
+    z-index: -999;
+  }
+}
+/* TABLETS + MOBILE */
+@media only screen and (max-width: 992px) {
+  .px-10 {
+    padding: 10px;
+  }
+}
+/* EXCLUSIVELY FOR HOME PAGE rect */
+@media screen and (min-width:992px) and (max-width:1169px){
+  #home-page-rect {
+    height: 275% !important;
+  }
 }
 
+#home-page-rect {
+  position: absolute;
+  width: 250%;
+  height: 300%;
+  left: -10%;
+  bottom: 110%;
+
+  background: rgba(204, 233, 255, 0.2);
+  z-index: -999;
+}
+.line-space-less {
+  line-height: 97%;
+}
+#thanks-confetti {
+  position: absolute;
+  width: 100%;
+  height: 30%;
+  left: 0;
+  top: -15%;
+}
+.thanks-circle {
+  background: rgb(30, 87, 87);
+  width: 150%;
+  height: 0;
+  padding-top: 150%;
+  border-radius: 50%;
+
+  position: absolute;
+  z-index: -999;
+  left: 50%;
+  bottom: 10%;
+}
 .quote-footer {
   color: white;
 }
@@ -318,6 +421,15 @@ footer {
   border-color: #2a94f4;
 }
 
+.number-circle {
+  color: white;
+  background: #70C5EA;
+  border-radius: 50%;
+  padding: 18px 21px 18px 21px;
+}
+.number-circle-1 {
+  padding: 18px 23px 18px 23px;
+}
 /* Help dropup */
 
 #dropuphelp {
@@ -346,6 +458,32 @@ footer {
 }
 /* Bootstrap Buttons. */
 
+.btn-circle.btn-sm {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0px;
+  border-radius: 15px;
+  font-size: 8px;
+  text-align: center;
+}
+
+.btn-circle.btn-md {
+  width: 45px;
+  height: 45px;
+  border-radius: 25px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  border-radius: 35px;
+  font-size: 12px;
+  text-align: center;
+}
+
 #video_popup {
   position: fixed;
   bottom: 90px;
@@ -357,7 +495,12 @@ footer {
 color scheme. See readme.md*/
 
 .btn {
-  border-radius: 1.5rem;
+  border-radius: 3rem;
+}
+
+.btn-no-focus-outline:focus, .btn-no-focus-outline:active {
+  outline: none;
+  box-shadow: none;
 }
 
 .text-primary {
@@ -366,6 +509,10 @@ color scheme. See readme.md*/
 
 .text-secondary {
   color: #00c6a7 !important;
+}
+
+.btn-lg {
+  padding: .5rem 2rem;
 }
 
 .btn-primary {
@@ -445,7 +592,167 @@ color scheme. See readme.md*/
   width: 50%;
 }
 
+/******************************************
+
+Entry Mapping Page
+
+*******************************************/
+.mapping-icon {
+  box-shadow: 2px 2px rgba(0,0,0,0.2);
+}
+
 /* Hero block and particles.js animation */
+#map-card {
+  position: relative;
+  height: 100vh;
+}
+
+.map-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* Entry Page: Geocoder Full Width */
+.mapboxgl-ctrl-geocoder {
+  width: 60%;
+  max-width: none;
+  border-radius: 1.5rem;
+}
+
+.mapboxgl-ctrl-top-right .mapboxgl-ctrl {
+  margin: 1rem 1rem 0 0;
+}
+
+.mapboxgl-ctrl-geocoder .geocoder-icon-search {
+  top: 15px;
+}
+
+.mapboxgl-ctrl-geocoder input[type='text'] {
+  font-size: 1rem;
+  height: 50px;
+}
+
+#modal-geocoder .mapboxgl-ctrl-geocoder {
+  display: inline-block;
+  width: 80%;
+}
+#modal-geocoder ul {
+  text-align: left;
+}
+
+#entry-map-modal .modal-content {
+  background-color: rgba(216, 241, 237, 0.9);
+  border-radius: 20px;
+  border: none;
+  backdrop-filter: blur(4px); /* Note: backdrop-filter has minimal browser support */
+}
+
+#map-comm-info {
+  vertical-align: middle;
+  margin: auto;
+}
+
+#map-top-row {
+  position: absolute;
+  z-index: 1;
+  top: -.5rem;
+  width: 100%;
+  left: 0;
+}
+
+#map-bottom-row {
+  position: absolute;
+  z-index: 1;
+  bottom: 20%;
+  width:100%;
+  left: 0;
+}
+
+#mobile-map-help-btn:not(.opened),
+#map-help-btn:not(.opened) {
+  background-color:#fff;
+}
+
+.mapping-btn:hover,
+.mapping-btn.opened {
+  background-color: #2176c2 !important;
+  border-color: #2176c2 !important;
+  cursor: pointer !important;
+  color: #fff !important;
+}
+
+#map-help-menu {
+  height: fit-content;
+  max-height: 800px;
+}
+
+.comm-info-text {
+  color:#2A94F4;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.comm-item-text {
+  color:#2A94F4;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.map-survey-response {
+  color: #1b7a9f;
+  font-weight: normal;
+  max-height: 200px;
+  overflow: scroll;
+}
+
+.map-survey-response:hover {
+  color: #1b7a9f;
+  cursor: text;
+}
+
+@media only screen and (max-width: 568px) {
+  .comm-info-text {
+    color:#2A94F4;
+    font-weight: bold;
+    font-size: 1rem;
+    overflow: hidden;
+  }
+
+  .comm-item-text {
+    color:#2A94F4;
+    font-weight: bold;
+    font-size: .8rem;
+  }
+
+  .map-survey-response {
+    font-size: .7rem;
+    max-height: 100px;
+  }
+}
+
+.map-info-item {
+  background-color: #DAEFFF;
+  opacity: 0.9;
+  width: auto;
+  white-space: unset;
+}
+
+.map-info-item:hover {
+  background-color: #DAEFFF;
+  color:#2A94F4;
+  font-weight: bold;
+  cursor: default;
+}
+
+#map-comm-btn {
+  position: relative;
+  /* transition: 2s; */
+  transform-origin: left center;
+  z-index: 1000;
+}
 
 .map-visualization {
   width: 100%;
@@ -457,6 +764,7 @@ color scheme. See readme.md*/
   bottom: 0;
   /*  Required by Mapbox: Must Set Absolute Height in px */
   min-height: 500px;
+  height: 100%;
 }
 
 .col-map {
@@ -584,6 +892,9 @@ color scheme. See readme.md*/
 }
 .ws-normal {
   white-space: normal;
+}
+.word-break {
+  word-break: break-word;
 }
 
 @media screen and (min-width: 1600px) {
@@ -730,12 +1041,138 @@ input[type="range"]::-webkit-slider-thumb {
   height: 100%;
 }
 
-/* Entry Form Management */
+/*******************
+
+Entry Form Management
+
+********************/
+
+
+/************************************* General Entry *******************************************/
+
+.info-text {
+  color: #656565;
+}
+
+.header-text {
+  color: #5B5B5B;
+}
+
+.survey-field {
+  background: #DAEFFF;
+  opacity: 0.5;
+  border: none;
+}
+
+.entry-step {
+  color: rgba(101, 101, 101, 0.58);
+  font-size: 1.5rem;
+  padding-bottom: 10px;
+  width: auto;
+}
+
+.entry-header {
+  color: #5B5B5B;
+  font-size: 1.75rem;
+  padding-bottom: 5px;
+}
+
+/************************************* First Page *******************************************/
+
+#entryForm {
+  width: 100%;
+}
+
+#entry-addr-form {
+  display: inline-block;
+  text-align: left;
+}
+
+#entry-coi-def {
+  padding: 5px 0px;
+  font-size: .8rem;
+}
+
+#survey-start-infographic {
+  background-color: #DAEFFF;
+  padding: 30px;
+}
+
+.survey-start-sm-txt {
+  font-size: .75rem;
+  color: #3f3f3f;
+}
+
+/************************************* Survey Section *******************************************/
+
+textarea.survey-field {
+  color: #000000;
+  padding: 10px 20px;
+}
+
+textarea.survey-field:focus {
+  color: #000000;
+  opacity: 1;
+}
+
+.survey-angle-down {
+  padding-left: 10px;
+}
+
+.survey-sect-title {
+  padding-top: 15px;
+}
+
+.survey-sect-title-link:hover {
+  text-decoration: none;
+}
+
+.survey-sect-title-link:focus {
+  text-decoration: none;
+}
+
+.survey-instruction {
+  padding: 10px 20px 0px 20px;
+}
+
+.addr-field {
+  display: inline-block;
+  background-color: #cce9ff;
+  border: none;
+  border-radius: 2rem;
+  margin-bottom: 5px;
+}
 
 .g-recaptcha {
   display: inline-block;
   padding: 40px 0px 10px 0px;
   max-width: 80%;
+}
+
+/************************************* Entry Screen Specific *******************************************/
+
+@media only screen and (min-width: 1025px) {
+  #survey-qs-p2 {
+    width: 85%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+
+  #survey-comm-name-header {
+    display: inline-block;
+    width: 70%;
+  }
+
+  #survey-comm-name-pic {
+    display: inline-block;
+    width: 30%;
+  }
+
+  .survey-sect-title {
+    font-size: 1rem;
+  }
+
 }
 
 .button-edit {
@@ -767,17 +1204,45 @@ input[type="range"]::-webkit-slider-thumb {
   border-bottom: 3px solid black;
 }
 
+.gray-text {
+  color: #5B5B5B;
+}
 .light-blue-text {
   color: #65bff1;
+}
+.dark-blue-text {
+  color: #2583D8;
 }
 .blue-green-text {
   color: #6dccbb;
 }
+.blue-text {
+  color: #5996D2;
+}
 .light-blue-bg {
-  background-color: #daefff;
+  background: #DAEFFF 63%;
 }
 .blue-green-bg {
   background-color: #6dccbb;
+}
+.green-bg {
+  background-color: rgba(214, 242, 242, 0.82);
+}
+.white-bg {
+  background-color: #FFFFFF;
+}
+.content-blue-bg {
+  background: rgba(242, 250, 255, 0.5);
+}
+.btn-outline-gray {
+  background-color: transparent;
+  border-color: #5B5B5B;
+  border-width: 2px;
+  color: #5B5B5B;
+}
+.btn-outline-gray:hover {
+  background: #5B5B5B;
+  color: white !important;
 }
 
 .how-it-works {
@@ -953,6 +1418,15 @@ Signup and Login Page
   transform: rotate(0.43deg);
   left: 50%;
   top: 30%;
+}
+
+#auth-divider-home {
+  position: absolute;
+  width: 0px;
+  height: 48px;
+  border-left: 5px solid rgba(0, 0, 0, 0.17);
+  left: 90%;
+  top: 100%;
 }
 
 .auth-link {
@@ -1131,6 +1605,247 @@ Signup and Login Page
   background: #def8f4;
   color: #5b5b5b;
 }
+
+/** Height and Width Adjustments **/
+
+.vw-100 {
+  width:100vw!important;
+}
+.vw-75 {
+width:75vw!important;
+}
+.vw-50 {
+width:50vw!important;
+}
+.vw-25 {
+width:25vw!important;
+}
+.vh-100 {
+height:100vh!important;
+}
+.vh-75 {
+height:75vh!important;
+}
+.vh-50 {
+height:50vh!important;
+}
+.vh-25 {
+height:25vh!important;
+}
+
+
+/* Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+    .w-sm-100 {
+    width:100%!important;
+    }
+    .w-sm-75 {
+    width:75%!important;
+    }
+    .w-sm-50 {
+    width:50%!important;
+    }
+    .w-sm-25 {
+    width:25%!important;
+    }
+    .h-sm-100 {
+    height:100%!important;
+    }
+    .h-sm-75 {
+    height:75%!important;
+    }
+    .h-sm-50 {
+    height:50%!important;
+    }
+    .h-sm-25 {
+    height:25%!important;
+    }
+
+    .vw-sm-100 {
+      width:100vw!important;
+    }
+    .vw-sm-75 {
+    width:75vw!important;
+    }
+    .vw-sm-50 {
+    width:50vw!important;
+    }
+    .vw-sm-25 {
+    width:25vw!important;
+    }
+    .vh-sm-100 {
+    height:100vh!important;
+    }
+    .vh-sm-75 {
+    height:75vh!important;
+    }
+    .vh-sm-50 {
+    height:50vh!important;
+    }
+    .vh-sm-25 {
+    height:25vh!important;
+    }
+
+  }
+
+  /* Medium devices (tablets, 768px and up)*/
+  @media (min-width: 768px) {
+    .w-md-100 {
+    width:100%!important;
+    }
+    .w-md-75 {
+    width:75%!important;
+    }
+    .w-md-50 {
+    width:50%!important;
+    }
+    .w-md-25 {
+    width:25%!important;
+    }
+    .h-md-100 {
+    height:100%!important;
+    }
+    .h-md-75 {
+    height:75%!important;
+    }
+    .h-md-50 {
+    height:50%!important;
+    }
+    .h-md-25 {
+    height:25%!important;
+    }
+
+    .vw-md-100 {
+    width:100vw!important;
+    }
+    .vw-md-75 {
+    width:75vw!important;
+    }
+    .vw-md-50 {
+    width:50vw!important;
+    }
+    .vw-md-25 {
+    width:25vw!important;
+    }
+    .vh-md-100 {
+    height:100vh!important;
+    }
+    .vh-md-75 {
+    height:75vh!important;
+    }
+    .vh-md-50 {
+    height:50vh!important;
+    }
+    .vh-md-25 {
+    height:25vh!important;
+    }
+  }
+
+  /* Large devices (desktops, 992px and up)*/
+  @media (min-width: 992px) {
+    .w-lg-100 {
+    width:100%!important;
+    }
+    .w-lg-75 {
+    width:75%!important;
+    }
+    .w-lg-50 {
+    width:50%!important;
+    }
+    .w-lg-25 {
+    width:25%!important;
+    }
+    .h-lg-100 {
+    height:100%!important;
+    }
+    .h-lg-75 {
+    height:75%!important;
+    }
+    .h-lg-50 {
+    height:50%!important;
+    }
+    .h-lg-25 {
+    height:25%!important;
+    }
+
+    .vw-lg-100 {
+      width:100vw!important;
+    }
+    .vw-lg-75 {
+    width:75vw!important;
+    }
+    .vw-lg-50 {
+    width:50vw!important;
+    }
+    .vw-lg-25 {
+    width:25vw!important;
+    }
+    .vh-lg-100 {
+    height:100vh!important;
+    }
+    .vh-lg-75 {
+    height:75vh!important;
+    }
+    .vh-lg-50 {
+    height:50vh!important;
+    }
+    .vh-lg-25 {
+    height:25vh!important;
+    }
+  }
+
+  /* Extra large devices (large desktops, 1200px and up)*/
+  @media (min-width: 1200px) {
+    .w-xl-100 {
+    width:100%!important;
+    }
+    .w-xl-75 {
+    width:75%!important;
+    }
+    .w-xl-50 {
+    width:50%!important;
+    }
+    .w-xl-25 {
+    width:25%!important;
+    }
+    .h-xl-100 {
+    height:100%!important;
+    }
+    .h-xl-75 {
+    height:75%!important;
+    }
+    .h-xl-50 {
+    height:50%!important;
+    }
+    .h-xl-25 {
+    height:25%!important;
+    }
+
+    .vw-xl-100 {
+      width:100vw!important;
+    }
+    .vw-xl-75 {
+    width:75vw!important;
+    }
+    .vw-xl-50 {
+    width:50vw!important;
+    }
+    .vw-xl-25 {
+    width:25vw!important;
+    }
+    .vh-xl-100 {
+    height:100vh!important;
+    }
+    .vh-xl-75 {
+    height:75vh!important;
+    }
+    .vh-xl-50 {
+    height:50vh!important;
+    }
+    .vh-xl-25 {
+    height:25vh!important;
+    }
+  }
 
 /* Fallback for Edge
 -------------------------------------------------- */

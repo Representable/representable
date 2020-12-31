@@ -17,118 +17,85 @@
 {% block content %}
 <div class="container">
   <!-- Illustration -->
-  <div class="row row-hero row-eq-height m-sm-5">
-    <div class="col-lg-6 col-sm-12 col-md-6 pl-sm-5">
+  <div class="row row-hero row-eq-height my-sm-5 ml-sm-5">
+    <div class="col-lg-6 col-sm-12 col-md-6 mobile-padding-x mobile-padding-top pl-md-5">
       <div class="my-4 main-display-text-all">
-        <span class="d-block mb-3">Redistricting is coming.</span>
-        <span class="d-block h3 font-weight-light">Put your community on the map.</span>
+        <div id="home-page-rect-mobile"></div>
+        <span class="d-block mb-3 font-large-mobile font-weight-bold dark-blue-text line-space-less pt-md-3">Gerrymandering is silencing communities.</span>
+        <span class="d-block h4 font-weight-light gray-text font-medium-mobile">Make your voice heard with Representable <br> and put your community on the map.</span>
       </div>
-      <a id="get-started-btn" class="btn btn-outline-primary btn-lg mb-5 mt-2" href="{% url 'main:entry_preview' %}"  role="button">{% trans "Get Started" %} <i class="fa fa-arrow-circle-right"></i></a>
-      <div class="alert alert-custom px-5 d-none d-lg-block" role="alert">
-        <p class="my-3 h5 font-weight-bold">{% trans "Are you the leader of an organization?" %}</p>
-        <p class="my-3 font-weight-light">{% trans "Many organizations have partnered with Representable.org to collect community-of-interest data." %}</p>
-        <p class="my-3"><a class="link-custom" href='/partners/welcome'>{% trans "PARTNER WITH US" %}</a></p>
+      <a id="get-started-btn" class="text-center font-medium-mobile btn btn-primary btn-lg py-3 px-lg-5 px-4 mb-lg-5 mt-2" href="{% url 'main:entry_preview' %}"  role="button">{% trans "GET STARTED" %}</a>
+      <div class="row d-none d-lg-block mt-5">
+        <div class="col-lg-1">
+        </div>
+        <div class="col-lg-10">
+          <div id="home-page-rect"></div>
+          <div class="alert gray-text" role="alert">
+            <p class="my-2 px-4 h6 font-weight-bold">{% trans "Are you the leader of an organization?" %}</p>
+            <p class="small border-left border-dark border-3 px-4 my-2 font-weight-light">{% trans "Many organizations have partnered with Representable.org to collect community-of-interest data." %}</p>
+            <p class="small px-4 my-2"><a class="link-custom" href='/partners/welcome'>{% trans "PARTNER WITH US" %}</a></p>
+          </div>
+        </div>
+        <div class="col-lg-1"></div>
       </div>
       </div>
       <div class="col-lg-6 col-sm-12 col-md-6">
-        <img class="img-fluid align-bottom my-3 pl-sm-5" src="{% static 'img/illustration.svg' %}" alt="people drawing a map"> </img>
-      </div>
-      <div class="col d-lg-none">
-        <div class="alert alert-custom px-5" role="alert">
-          <p class="my-3 h5 font-weight-bold">{% trans "Are you the leader of an organization?" %}</p>
-          <p class="my-3 font-weight-light">{% trans "Many organizations have partnered with Representable.org to collect community-of-interest data." %}</p>
-          <p class="my-3"><a class="link-custom" href='/partners/welcome'>{% trans "PARTNER WITH US" %}</a></p>
-        </div>
+        <img class="img-fluid align-bottom my-md-5 pl-lg-0 pl-3" src="{% static 'img/illustration.svg' %}" alt="people drawing a map"> </img>
       </div>
     </div>
-    <!-- What does Representable do? -->
-    <div id="learn-more" class="container mb-5">
-      <img class="mx-auto d-block w-10" src="{% static 'img/logo.svg' %}" alt="representable logo - continental USA made of blocks"> </img>
-      <h2 class="text-center font-weight-light py-4">{% trans "What is Representable?" %}</h2>
-      <p class="my-3 d-none d-sm-block text-center lead mx-5 px-5">
-        {% if LANGUAGE_CODE == 'en-us' %}
-          Our mission is <b>to give communities a voice in drawing districts.</b> Representable is a free tool that empowers people to create maps of communities, alongside the cultural, historic, economic, and other interests that bind them together. Maps gathered with Representable are standardized and easy to understand, supporting mapmakers, journalists, non-profits, and policy groups as they draw and evaluate district plans. Join us to fight for communities to get the representation they deserve.
-          {% elif LANGUAGE_CODE == 'es' %}
-          Representable es una plataforma gratuita basada en la web diseñada para recopilar datos proporcionados por
-          las Comunidades para apoyar el trabajo de redistritación. Nuestra herramienta ofrece una plataforma para que
-          los miembros de la Comunidad proporcionen información sobre los límites geográficos de su Comunidad, junto con
-          los intereses culturales, históricos, económicos y de otros intereses que los unen. Los datos y los mapas recopilados
-          con Representable se estandarizan y fácil de entender, apoyando a los cartógrafos, periodistas, las organizaciones
-          sin fines de lucro, y grupos de pólizas a medida que dibujan y evalúan los mapas que se utilizarán en las elecciones
-          municipales del Congreso y del Estado. Unirse a nosotros para luchar contra la manipulación de circunscripciones electorales
-          y movilizar a las comunidades para obtener la representación que se merecen a través de una imparcial y proceso de dibujo
-          de mapas transparentes.
-        {% endif %}
-      </p>
-
-      <p class="my-3 d-sm-none small text-center lead">
-        {% if LANGUAGE_CODE == 'en-us' %}
-          Our mission is <b>to give communities a voice in drawing districts.</b> Representable is a free, open-source platform that empowers people to create maps of communities, alongside the cultural, historic, economic, and other interests that bind them together. Maps gathered with Representable are standardized and easy to understand, supporting mapmakers, journalists, non-profits, and policy groups as they draw and evaluate district plans. Join us to fight for communities to get the representation they deserve.
-            {% elif LANGUAGE_CODE == 'es' %}
-          Representable es una plataforma gratuita basada en la web diseñada para recopilar datos proporcionados por
-          las Comunidades para apoyar el trabajo de redistritación. Nuestra herramienta ofrece una plataforma para que
-          los miembros de la Comunidad proporcionen información sobre los límites geográficos de su Comunidad, junto con
-          los intereses culturales, históricos, económicos y de otros intereses que los unen. Los datos y los mapas recopilados
-          con Representable se estandarizan y fácil de entender, apoyando a los cartógrafos, periodistas, las organizaciones
-          sin fines de lucro, y grupos de pólizas a medida que dibujan y evalúan los mapas que se utilizarán en las elecciones
-          municipales del Congreso y del Estado. Unirse a nosotros para luchar contra la manipulación de circunscripciones electorales
-          y movilizar a las comunidades para obtener la representación que se merecen a través de una imparcial y proceso de dibujo
-          de mapas transparentes.
-        {% endif %}
-      </p>
-    </div>
-    <!-- How To -->
-    <div class="row my-3 d-none d-sm-flex">
-      <div class="col-sm my-3 shadow-sm mx-3">
-        <div class="card border-0">
-          <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/citizens.svg' %}" alt="Icon of people"></img>
-          <div class="card-body text-center d-flex flex-column align-items-center">
-            <h5>
-              {% trans "For community members" %}
-            </h5>
-            <p>
-              {% trans "Learn how to use Representable to draw your community." %}
-            </p>
-            <div class="text-center">
-              <a id="card-add-community-btn" class="btn btn-outline-primary mx-2 my-1" href="{% url 'main:entry_preview' %}" role="button">{% trans "Add your community" %}</a>
-            </div>
-            <!-- <a class="btn btn-primary btn-canvas mt-auto" href="/entry" role="button">Get Started</a> -->
-          </div>
+    <div class="container mb-5">
+      <div class="row mb-5">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 gray-text px-3">
+          <img class="mx-auto d-block w-16 w-35-mobile pb-5" src="{% static 'img/logo.svg' %}" alt="representable logo - continental USA made of blocks"> </img>
+          <h4 class="py-3 font-medium-mobile"><b>Our mission</b> is to give communities a voice in drawing voting districts.</h4>
+          <h4 class="py-4 font-weight-light font-small-mobile">Representable allows people to draw communities of interest and share information about the interests and needs in those communities.
+            <br><br>Making this information available encourages mapmakers to take these communities into account during redistricting, in order to avoid gerrymandering and the “packing and cracking” of marginalized groups. </h4>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+      <div class="row mx-md-5 mx-2 light-blue-bg px-10 gray-text pb-5">
+        <div class="col-12 pt-3">
+          <h4 class="pt-5 font-medium-mobile"><b>Gerrymandering</b> is threatening democracy.</h4>
+          <h5 class="py-3 font-weight-light font-small-mobile">Politicians have been splitting up and packing together communities into districts that silence the voices of community members. This prevents communities from electing representatives that listen to their needs. Gathering communities of interest maps helps fight gerrymandering. We can provide map drawers with the information they need to draw districts that empower communities.</h5>
+          <h5 class="pt-3 pb-lg-5 pb-3 font-weight-light font-medium-mobile"><b>We're fighting to make democracy more...</b></h5>
+        </div>
+        <div class="col-lg-4">
+          <h4 class=""><span class="badge number-circle number-circle-1 mr-3">1</span>Transparent</h4>
+        </div>
+        <div class="col-lg-4">
+          <h4 class=""><span class="badge number-circle mr-3">2</span>Inclusive</h4>
+        </div>
+        <div class="col-lg-4">
+          <h4 class=""><span class="badge number-circle mr-3">3</span>Accessible</h4>
         </div>
       </div>
-      <div class="col-sm my-3 shadow-sm mx-3">
-        <div class="card border-0">
-          <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/map.svg' %}" alt="Icon of map"></img>
-          <div class="card-body text-center flex-column align-items-center">
-            <h5 class="card-title">
-              {% trans "For organizations" %}
-            </h5>
-            <p class="card-text">
-              {% trans "Work with us to map communities across the United States." %}
-            </p>
-            <div class="text-center">
-              <a id="card-partner-btn" class="btn btn-outline-primary mx-2 my-1" href='/partners/welcome' role="button">{% trans "Partner with us" %}</a>
-            </div>
-            <!-- <a class="btn btn-primary btn-canvas mt-auto" href="mailto: team@representable.org?subject=Hello!" role="button">Contact Us</a> -->
-          </div>
+      <div class="row gray-text text-center py-md-5 mt-5">
+        <div class="col-md-4">
+          <img class="card-img-top img-fluid m-2 w-50 w-35-mobile mx-auto mb-md-4" src="{% static 'img/home_step_1.png' %}" alt="Icon of people"></img>
+          <h4 class="font-medium-mobile">Answer Questions</h4>
+          <p class="text-left mx-4 px-lg-5 font-small-mobile">that help you identify what bonds your community together.</p>
         </div>
+        <div class="col-md-4">
+          <img class="card-img-top img-fluid m-2 w-50 w-35-mobile mx-auto mb-md-4" src="{% static 'img/home_step_2.png' %}" alt="Icon of people"></img>
+          <h4 class="font-medium-mobile">Draw a Community Map</h4>
+          <p class="text-left mx-lg-4 px-4 font-small-mobile">by choosing units that make up your community. Use landmarks to draw your map.</p>
+        </div>
+        <div class="col-md-4">
+          <img class="card-img-top img-fluid m-2 w-50 w-35-mobile mx-auto mb-md-4" src="{% static 'img/home_step_3.png' %}" alt="Icon of people"></img>
+          <h4 class="font-medium-mobile">Share your Map</h4>
+          <p class="text-left mx-lg-5 px-4 font-small-mobile">as public input for map makers to use when drawing new voting districts.</p>
+        </div>
+        <hr class="line-break d-md-none d-block mb-4">
       </div>
-      <div class="col-sm my-3 shadow-sm mx-3">
-        <div class="card border-0">
-          <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/redistricter.svg' %}" alt="Icon of voting people"></img>
-          <div class="card-body text-center flex-column align-items-center">
-            <h5 class="card-title">
-              {% trans "For mapmakers" %}
-            </h5>
-            <p class="card-text">
-              {% trans "Use Representable data to protect communities during the map drawing process." %}
-            </p>
-            <div class="text-center">
-              <a class="btn btn-outline-secondary mx-2 my-1 disabled" href="#" role="button">{% trans "Coming soon!" %}</a>
-            </div>
-            <!-- <a class="btn btn-primary btn-canvas mt-auto disabled" href="#" role="button">Coming Soon</a> -->
-          </div>
+      <div class="row mx-lg-5 gray-text text-center">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+          <h5 class="font-weight-light font-medium-mobile">We are putting Representable in the hands of the communities that need it.
+          <br>Join us to help communities get the representation they deserve.</h5>
+          <img class="card-img-top img-fluid w-10 m-2 mx-auto pt-3" src="{% static 'img/handshake.png' %}" alt="handshake forming a heart"></img>
         </div>
+        <div class="col-lg-2"></div>
       </div>
     </div>
 </div>
