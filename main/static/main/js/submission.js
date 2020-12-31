@@ -4,10 +4,7 @@ $(document).ready(function () {});
 if (is_thanks === "True") {
   $("#thanksModal").modal("show");
 }
-$('#thanksModal').on('hidden.bs.modal', function () {
-  console.log("hello?")
-  window.location.href = '/submission/' + comm_id;
-})
+
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
@@ -226,9 +223,26 @@ map.on("load", function () {
       },
     });
   }
-  // pdf export button
-  // TODO: if creator of community -> include identifying info
+  //geojson export button - close thanks modal
+  $(".geojson-button").on("click", function () {
+    $("#thanksModal").modal("hide");
+  });
   $("#pdf-button").on("click", function () {
+    exportPDF(1500);
+  });
+  $('#thanksModal').on('hidden.bs.modal', function () {
+    window.location.href = '/submission/' + comm_id;
+  })
+  $("#pdf-button-modal").on("click", function () {
+    window.location.href = '/submission/' + comm_id + '?pdf=true';
+  })
+  if (window.location.search.includes("pdf=true")) {
+    console.log("in includes function");
+    exportPDF(4000);
+  }
+  // pdf export button
+  function exportPDF(delay) {
+    console.log("exportPDF called")
     // make the map look good for the PDF ! TODO: un-select other layers like census blocks (turn into functions)
     map.fitBounds(commBounds, { padding: 100 });
     // display loading popup
@@ -298,8 +312,8 @@ map.on("load", function () {
       // get entry name in order to name the PDF
       var pdfName = sanitizePDF($("#entry-name").text());
       doc.save(pdfName + ".pdf");
-    }, 1500);
-  });
+    }, delay);
+  };
 
   // Form for sending emailPDF
   var testForm = document.getElementById("pdfForm");
