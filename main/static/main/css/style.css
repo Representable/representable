@@ -42,6 +42,10 @@ form:invalid {
   border-color: red;
 }
 
+.text-required {
+  color: #ff726f;
+}
+
 .has_success {
   border-color: #ced4da;
 }
