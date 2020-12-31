@@ -158,7 +158,8 @@ button:disabled:hover {
 /* Body and headings */
 /* Change the website default font. */
 body {
-  font-family: Inter, system-ui, sans-serif;
+  /* font-family: Inter, system-ui, sans-serif; */
+  font-family: europa, sans-serif;
 }
 
 html,
@@ -225,6 +226,7 @@ body {
 }
 .border-3 {
   border-width: 3px !important;
+  border-color: #5b5b5b;
 }
 
 .container-full-width {
@@ -290,14 +292,14 @@ body {
     height: 100%;
   }
   .mobile-padding-x {
-    padding-left: 5rem;
-    padding-right: 5rem;
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
   }
   .mobile-padding-top {
-    padding-top: 5rem;
+    padding-top: 3.5rem;
   }
   .font-large-mobile {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
   }
   .font-medium-mobile {
     font-size: 1rem;
@@ -308,11 +310,18 @@ body {
   .font-xs-mobile {
     font-size: 0.5rem;
   }
-  .text-center-mobile {
-    text-align: center;
-  }
   .w-35-mobile {
     width: 35% !important;
+  }
+  #home-page-rect-mobile {
+    position: absolute;
+    width: 80%;
+    height: 130%;
+    left: 10%;
+    bottom: -40%;
+
+    background: rgba(204, 233, 255, 0.2);
+    z-index: -999;
   }
 }
 /* TABLETS + MOBILE */
@@ -320,31 +329,26 @@ body {
   .px-10 {
     padding: 10px;
   }
-  #home-page-rect {
-    top: 8vh !important;
-    height: 48vh !important;
-  }
 }
 /* EXCLUSIVELY FOR HOME PAGE rect */
-@media screen and (min-width:992px) and (max-width:1076px){
+@media screen and (min-width:1062px) and (max-width:1169px){
   #home-page-rect {
-    height: 70vh !important;
-  }
-}
-@media screen and (min-width:2560px){
-  #home-page-rect {
-    top: 8vh !important;
+    height: 275% !important;
   }
 }
 
 #home-page-rect {
   position: absolute;
-  width: 84vw;
-  height: 52vh;
-  left: 8vw;
-  top: 15vh;
+  width: 250%;
+  height: 300%;
+  left: -10%;
+  bottom: 110%;
 
   background: rgba(204, 233, 255, 0.2);
+  z-index: -999;
+}
+.line-space-less {
+  line-height: 97%;
 }
 .quote-footer {
   color: white;
@@ -432,30 +436,30 @@ footer {
 }
 /* Bootstrap Buttons. */
 
-.btn-circle.btn-sm { 
-  width: 30px; 
-  height: 30px; 
-  padding: 6px 0px; 
-  border-radius: 15px; 
-  font-size: 8px; 
-  text-align: center; 
-} 
-
-.btn-circle.btn-md { 
-  width: 45px; 
-  height: 45px; 
-  border-radius: 25px; 
-  font-size: 1rem; 
-  text-align: center; 
+.btn-circle.btn-sm {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0px;
+  border-radius: 15px;
+  font-size: 8px;
+  text-align: center;
 }
 
-.btn-circle.btn-xl { 
-  width: 70px; 
-  height: 70px; 
-  padding: 10px 16px; 
-  border-radius: 35px; 
-  font-size: 12px; 
-  text-align: center; 
+.btn-circle.btn-md {
+  width: 45px;
+  height: 45px;
+  border-radius: 25px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  border-radius: 35px;
+  font-size: 12px;
+  text-align: center;
 }
 
 #video_popup {
@@ -691,7 +695,7 @@ Entry Mapping Page
     font-size: 1rem;
     overflow: hidden;
   }
-  
+
   .comm-item-text {
     color:#2A94F4;
     font-weight: bold;
@@ -1014,7 +1018,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 /*******************
 
-Entry Form Management 
+Entry Form Management
 
 ********************/
 
@@ -1181,7 +1185,7 @@ textarea.survey-field:focus {
 .light-blue-text {
   color: #65bff1;
 }
-.blue-text {
+.dark-blue-text {
   color: #2583D8;
 }
 .blue-green-text {
@@ -1645,7 +1649,7 @@ height:25vh!important;
     }
 
   }
-  
+
   /* Medium devices (tablets, 768px and up)*/
   @media (min-width: 768px) {
     .w-md-100 {
@@ -1698,7 +1702,7 @@ height:25vh!important;
     height:25vh!important;
     }
   }
-  
+
   /* Large devices (desktops, 992px and up)*/
   @media (min-width: 992px) {
     .w-lg-100 {
@@ -1751,7 +1755,7 @@ height:25vh!important;
     height:25vh!important;
     }
   }
-  
+
   /* Extra large devices (large desktops, 1200px and up)*/
   @media (min-width: 1200px) {
     .w-xl-100 {
@@ -1778,7 +1782,7 @@ height:25vh!important;
     .h-xl-25 {
     height:25%!important;
     }
-  
+
     .vw-xl-100 {
       width:100vw!important;
     }
