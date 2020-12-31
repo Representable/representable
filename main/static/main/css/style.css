@@ -597,6 +597,11 @@ color scheme. See readme.md*/
 Entry Mapping Page
 
 *******************************************/
+#map-error-alerts {
+  position: absolute;
+  z-index:1011;
+  top: 0;
+}
 .mapping-icon {
   box-shadow: 2px 2px rgba(0,0,0,0.2);
 }

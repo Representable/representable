@@ -129,28 +129,16 @@
 
     </script>
     <script type="text/javascript">
-    function validateRecaptcha() {
-        var response = grecaptcha.getResponse();
-        if (response.length === 0 && "{{ check_captcha }}" === "True") {
-            let newAlert = document.createElement("div");
-            newAlert.innerHTML =
-              '<div id="' +
-              "captcha_submit" +
-              '" class="alert alert-danger alert-dismissible fade show map-alert" role="alert">\
-            ' +
-              "You must complete the captcha to submit this map" +
-              '\
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">\
-            <span aria-hidden="true">&times;</span>\
-            </button>\
-            </div>';
-            document.getElementById("captcha").appendChild(newAlert);
-            return false;
-        }
+        function validateRecaptcha() {
+            var response = grecaptcha.getResponse();
+            if (response.length === 0 && "{{ check_captcha }}" === "True") {
+                $("#need-captcha").removeClass("d-none");
+                return false;
+            }
 
-        // return formValidation();
-        return privacyCheckValidation;
-    }
+            sessionStorage.clear();
+            return true;
+        }
     </script>
     <!-- Turf to get the bounding box. -->
     <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
