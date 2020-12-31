@@ -183,13 +183,37 @@ class OrganizationForm(ModelForm):
                     "placeholder": "External link to your organization's website. Include 'http'."
                 }
             ),
-            "states": Select2MultipleWidget(
+            "states": forms.Select(
                 choices=STATES, attrs={"data-placeholder": "Select States"},
             ),
         }
 
+class EditOrganizationForm(ModelForm):
+    class Meta:
+        model = Organization
+        fields = ["name", "description", "ext_link"]
+        labels = {
+            "name": "Organization Name",
+            "ext_link": "Link to Organization Website",
+        }
+        widgets = {
+            "name": forms.TextInput(
+                attrs={"placeholder": "Name of Organization"}
+            ),
+            "description": forms.Textarea(
+                attrs={
+                    "placeholder": "Short Description",
+                    "rows": 4,
+                    "cols": 20,
+                }
+            ),
+            "ext_link": forms.TextInput(
+                attrs={
+                    "placeholder": "External link to your organization's website. Include 'http'."
+                }
+            ),
+        }
 
-#
 class AllowlistForm(ModelForm):
     class Meta:
         model = Organization
