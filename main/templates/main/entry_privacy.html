@@ -8,6 +8,12 @@
 </div>
 <div class="row row-equal-cols">
     <div class="col">
+        <div id="need_privacy" class="alert alert-danger alert-dismissible fade show form-error d-none" role="alert">
+            {% trans "Please make sure to agree to the terms and conditions." %}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         <div class="row mx-auto">
             <h4>
                 <strong class="header-text">
@@ -30,7 +36,7 @@
 
         <div class="row row-equal-cols toc-check my-5">
             <div class="col d-none d-xl-block">
-                <input class="toc-check-input" type="checkbox" value="" id="toc_check_xl" required="true">
+                <input class="toc-check-input" type="checkbox" value="" id="toc_check_xl" required="">
                 <label class="toc-check-label info-text" for="toc_check_xl">
                     {% url 'main:privacy' as url1%}
                     {% url 'main:terms' as url2%}
@@ -38,13 +44,13 @@
                     {% blocktrans %} Click here to indicate that you have read and agree to the
                     <a target="_blank" rel="noopener noreferrer" href={{url2}}>Terms of Use</a> and
                     <a target="_blank" rel="noopener noreferrer" href="{{url1}}">Privacy Policy</a>.
-                    <small class="text-danger">(Required)</small>
+                    <small class="text-danger">*</small>
                     {% endblocktrans %}
                 </label>
             </div>
 
             <div class="col-1 mt-1 d-xl-none">
-                <input class="toc-check-input" type="checkbox" value="" id="toc_check" required="true">
+                <input class="toc-check-input" type="checkbox" value="" id="toc_check" required="">
             </div>
             <div class="col-9 p-md-0 d-xl-none">
                 <label class="toc-check-label p-0 info-text" for="toc_check">
@@ -54,7 +60,7 @@
                     {% blocktrans %} Click here to indicate that you have read and agree to the
                     <a target="_blank" rel="noopener noreferrer" href={{url2}}>Terms of Use</a> and
                     <a target="_blank" rel="noopener noreferrer" href="{{url1}}">Privacy Policy</a>.
-                    <small class="text-danger">(Required)</small>
+                    <small class="text-required">*</small>
                     {% endblocktrans %}
                 </label>
             </div>

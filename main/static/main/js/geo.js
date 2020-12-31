@@ -423,68 +423,76 @@ $("#mapToPrivacyMobile").on("click", function(e) {
   mapToPrivacy();
 })
 
-function formValidation() {
-  // Check Normal Fields
-  var flag = true;
-  var entryForm = document.getElementById("entryForm");
-  var form_elements = entryForm.elements;
-  for (var i = 0; i < form_elements.length; i++) {
-    if (form_elements[i].required) {
-      if (checkFieldById(form_elements[i].id) == false) {
-        flag = false;
-      }
-    }
+function privacyCheckValidation() {
+  if (document.getElementById("toc_check").checked === true || document.getElementById("toc_check_xl").checked === true) {
+    return true;
+  } else {
+    document.getElementById("need_privacy").classList.remove("d-none");
   }
-
-  var cultural_interests_field = document.getElementById(
-    "id_cultural_interests"
-  );
-  var economic_intetersts_field = document.getElementById(
-    "id_economic_interests"
-  );
-  var comm_activities_field = document.getElementById("id_comm_activities");
-  var other_considerations_field = document.getElementById(
-    "id_other_considerations"
-  );
-
-  if (
-    cultural_interests_field.value == "" &&
-    economic_intetersts_field.value == "" &&
-    comm_activities_field.value == "" &&
-    other_considerations_field.value == ""
-  ) {
-    cultural_interests_field.classList.add("has_error");
-    economic_intetersts_field.classList.add("has_error");
-    comm_activities_field.classList.add("has_error");
-    other_considerations_field.classList.add("has_error");
-    var interests_alert = document.getElementById("need_one_interest");
-    interests_alert.classList.remove("d-none");
-    flag = false;
-  }
-  var is_address_required = address_required == "True";
-  if (
-    is_address_required &&
-    (entryForm.street.value == "" ||
-      entryForm.city.value == "" ||
-      entryForm.state.value == "" ||
-      entryForm.zipcode.value == "")
-  ) {
-    entryForm.street.classList.add("has_error");
-    entryForm.city.classList.add("has_error");
-    entryForm.state.classList.add("has_error");
-    entryForm.zipcode.classList.add("has_error");
-    document.getElementById("need_address").classList.remove("d-none");
-    flag = false;
-  }
-
-  if (flag == false) {
-    // Add alert.
-    var alert = document.getElementById("form_error");
-    alert.classList.remove("d-none");
-    scrollIntoViewSmooth(alert.id);
-  }
-  return flag;
+  return false;
 }
+// function formValidation() {
+//   // Check Normal Fields
+//   var flag = true;
+//   var entryForm = document.getElementById("entryForm");
+//   var form_elements = entryForm.elements;
+//   for (var i = 0; i < form_elements.length; i++) {
+//     if (form_elements[i].required) {
+//       if (checkFieldById(form_elements[i].id) == false) {
+//         flag = false;
+//       }
+//     }
+//   }
+
+//   var cultural_interests_field = document.getElementById(
+//     "id_cultural_interests"
+//   );
+//   var economic_intetersts_field = document.getElementById(
+//     "id_economic_interests"
+//   );
+//   var comm_activities_field = document.getElementById("id_comm_activities");
+//   var other_considerations_field = document.getElementById(
+//     "id_other_considerations"
+//   );
+
+//   if (
+//     cultural_interests_field.value == "" &&
+//     economic_intetersts_field.value == "" &&
+//     comm_activities_field.value == "" &&
+//     other_considerations_field.value == ""
+//   ) {
+//     cultural_interests_field.classList.add("has_error");
+//     economic_intetersts_field.classList.add("has_error");
+//     comm_activities_field.classList.add("has_error");
+//     other_considerations_field.classList.add("has_error");
+//     var interests_alert = document.getElementById("need_one_interest");
+//     interests_alert.classList.remove("d-none");
+//     flag = false;
+//   }
+//   var is_address_required = address_required == "True";
+//   if (
+//     is_address_required &&
+//     (entryForm.street.value == "" ||
+//       entryForm.city.value == "" ||
+//       entryForm.state.value == "" ||
+//       entryForm.zipcode.value == "")
+//   ) {
+//     entryForm.street.classList.add("has_error");
+//     entryForm.city.classList.add("has_error");
+//     entryForm.state.classList.add("has_error");
+//     entryForm.zipcode.classList.add("has_error");
+//     document.getElementById("need_address").classList.remove("d-none");
+//     flag = false;
+//   }
+
+//   if (flag == false) {
+//     // Add alert.
+//     var alert = document.getElementById("form_error");
+//     alert.classList.remove("d-none");
+//     scrollIntoViewSmooth(alert.id);
+//   }
+//   return flag;
+// }
 
 /****************************************************************************/
 // generates polygon to be saved from the selection
@@ -571,10 +579,10 @@ document.addEventListener(
       //todo: switch this to a promise ?
       setTimeout(function () {
         polySuccess = createCommPolygon();
-        formSuccess = formValidation();
+        privacySuccess = privacyCheckValidation();
       }, 500);
       setTimeout(function () {
-        if (polySuccess && formSuccess) {
+        if (polySuccess && privacySuccess) {
           sessionStorage.clear();
           form.submit();
         }
