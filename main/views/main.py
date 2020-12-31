@@ -904,7 +904,6 @@ class EntryView(LoginRequiredMixin, View):
             ''' End reCAPTCHA validation '''
             if not result['success']:
                 messages.add_message(request, messages.ERROR, 'Invalid reCAPTCHA. Please try again.')
-                messages.error(request, 'Invalid reCAPTCHA. Please try again.')
                 context = {
                     "comm_form": comm_form,
                     "addr_form": addr_form,
