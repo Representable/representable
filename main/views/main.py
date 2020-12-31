@@ -68,6 +68,8 @@ from ..models import (
     Drive,
     State,
     BlockGroup,
+    FrequentlyAskedQuestion,
+    GlossaryDefinition,
 )
 from ..choices import STATES
 from django.views.generic.edit import FormView
@@ -239,6 +241,38 @@ class Index(TemplateView):
 
 class About(TemplateView):
     template_name = "main/pages/about.html"
+
+# ******************************************************************************#
+
+
+class FAQ(TemplateView):
+    template_name = "main/pages/faq.html"
+
+    def get(self, request, *args, **kwargs):
+
+        faqs_users = FrequentlyAskedQuestion.objects.filter(type='USER')
+        faqs_orgs = FrequentlyAskedQuestion.objects.filter(type='ORGANIZATION')
+        return render(
+            request,
+            self.template_name,
+            {"faqs_users": faqs_users, "faqs_orgs": faqs_orgs},
+        )
+
+
+# ******************************************************************************#
+
+
+class Glossary(TemplateView):
+    template_name = "main/pages/glossary.html"
+
+    def get(self, request, *args, **kwargs):
+
+        glossaryterms = GlossaryDefinition.objects.all()
+        return render(
+            request,
+            self.template_name,
+            {"glossaryterms": glossaryterms},
+        )
 
 
 # ******************************************************************************#

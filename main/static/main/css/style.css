@@ -435,6 +435,11 @@ color scheme. See readme.md*/
   border-radius: 3rem;
 }
 
+.btn-no-focus-outline:focus, .btn-no-focus-outline:active {
+  outline: none;
+  box-shadow: none;
+}
+
 .text-primary {
   color: #2a94f4 !important;
 }
@@ -660,6 +665,9 @@ color scheme. See readme.md*/
 .ws-normal {
   white-space: normal;
 }
+.word-break {
+  word-break: break-word;
+}
 
 @media screen and (min-width: 1600px) {
   #mapping-image-div {
@@ -854,11 +862,20 @@ input[type="range"]::-webkit-slider-thumb {
 .blue-green-text {
   color: #6dccbb;
 }
+.blue-text {
+  color: #5996D2;
+}
 .light-blue-bg {
   background: #DAEFFF 63%;
 }
 .blue-green-bg {
   background-color: #6dccbb;
+}
+.white-bg {
+  background-color: #FFFFFF;
+}
+.content-blue-bg {
+  background: rgba(242, 250, 255, 0.5);
 }
 
 .how-it-works {

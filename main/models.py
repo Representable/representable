@@ -368,6 +368,43 @@ class State(models.Model):
 
 
 # ******************************************************************************#
+
+
+class FrequentlyAskedQuestion(models.Model):
+
+    FAQ_TYPE_CHOICES = [
+        ('USER', 'User'),
+        ('ORGANIZATION', 'Organization'),
+    ]
+
+    type = models.CharField(
+        max_length=12,
+        choices=FAQ_TYPE_CHOICES,
+        default='USER',
+    )
+
+    question = RichTextField()
+    answer = RichTextField()
+
+    class Meta:
+        db_table = "faq"
+
+
+# ******************************************************************************#
+
+
+class GlossaryDefinition(models.Model):
+
+    term = models.CharField(
+        max_length=100, blank=False, unique=True, default=""
+    )
+    definition = models.CharField(max_length=1000, blank=False, unique=True, default="")
+
+    class Meta:
+        db_table = "glossary"
+
+
+# ******************************************************************************#
 class Report(models.Model):
     community = models.ForeignKey(
         CommunityEntry, on_delete=models.CASCADE, related_name="reports"
