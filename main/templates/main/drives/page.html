@@ -14,25 +14,24 @@
   );
 </script>
 <div class="container">
-  <div class="row row-hero row-eq-height m-sm-5">
-    <div class="col-lg-6 col-sm-12 col-md-6 pl-sm-5">
+  <div class="row row-hero row-eq-height my-sm-5 ml-sm-5">
+    <div class="col-lg-6 col-sm-12 col-md-6 mobile-padding-x mobile-padding-top pl-md-5">
       <div class="my-4 main-display-text-all">
-        <span class="d-block mb-3">Redistricting is coming.</span>
-        <span class="d-block h3 font-weight-light">Put your community on the map.</span>
+        <span class="d-block mb-3 font-large-mobile font-weight-bold dark-blue-text line-space-less pt-md-3">Gerrymandering is silencing communities.</span>
+        <span class="d-block h4 font-weight-light gray-text font-medium-mobile">Make your voice heard with Representable <br> and put your community on the map.</span>
       </div>
-        <div class="alert alert-custom p-5 d-none d-xl-block mt-5">
-          <h2 class="text-center"> What is Representable?</h2>
-          <p>Our mission is <b>to give communities a voice in drawing districts.</b> Representable is a free tool that empowers people to create maps of communities, alongside the cultural, historic, economic, and other interests that bind them together. Maps gathered with Representable are standardized and easy to understand, supporting mapmakers, journalists, non-profits, and policy groups as they draw and evaluate district plans. Join us to fight for communities to get the representation they deserve.</p>
+      <div class="row d-none d-lg-block mt-5">
+        <div class="col-lg-12">
+          <div class="alert alert-custom py-5 px-4">
+            <h4 class="text-center font-medium-mobile"> What is Representable?</h4>
+            <p class="py-4 font-weight-light font-small-mobile">Representable allows people to draw communities of interest and share information about the interests and needs in those communities.
+              <br><br>Making this information available encourages mapmakers to take these communities into account during redistricting, in order to avoid gerrymandering and the “packing and cracking” of marginalized groups. </p>
+          </div>
         </div>
+      </div>
       </div>
       <div class="col-lg-6 col-sm-12 col-md-6">
-        <img class="img-fluid align-bottom my-3 pl-sm-5" src="{% static 'img/illustration.svg' %}" alt="people drawing a map"> </img>
-      </div>
-      <div class="col d-xl-none">
-        <div class="alert alert-custom p-5">
-          <h2 class="text-center"> What is Representable?</h2>
-          <p>Our mission is <b>to give communities a voice in drawing districts.</b> Representable is a free tool that empowers people to create maps of communities, alongside the cultural, historic, economic, and other interests that bind them together. Maps gathered with Representable are standardized and easy to understand, supporting mapmakers, journalists, non-profits, and policy groups as they draw and evaluate district plans. Join us to fight for communities to get the representation they deserve.</p>
-        </div>
+        <img class="img-fluid align-bottom my-md-5 pl-lg-0 pl-3" src="{% static 'img/illustration.svg' %}" alt="people drawing a map"> </img>
       </div>
     </div>
 <div class="row">
@@ -50,44 +49,44 @@
     <hr class="line-break">
   </div>
 </div>
-  <div class="row mx-lg-5">
-    <div class="col-sm-6">
-      {% autoescape off %}
-      {{ state.content_news }}
-      {% endautoescape %}
-    </div>
-    <div class="col-6 d-none d-sm-block">
-      <div class="m-auto py-4 h-100">
-        <object type="image/svg+xml" class="w-75 mx-auto d-block h-100" data="{% static 'img/map-info.svg' %}" alt="image of map with information icon"></object>
-      </div>
+<div class="row mx-lg-5 px-md-5">
+  <div class="col-sm-6">
+    {% autoescape off %}
+    {{ state.content_news }}
+    {% endautoescape %}
+  </div>
+  <div class="col-6 d-none d-sm-block">
+    <div class="m-auto py-4 h-100">
+      <object type="image/svg+xml" class="w-75 mx-auto d-block h-100" data="{% static 'img/map-info.svg' %}" alt="image of map with information icon"></object>
     </div>
   </div>
+</div>
 
-  <div class="row mb-4 mx-lg-5">
-    <div class="col-12">
-        <u><a data-toggle="collapse" href="#collapseCriteria" aria-expanded="false" aria-controls="collapseCriteria">
-          <h5 style="width: fit-content;">{{ state.name }}'s Redistricting Criteria &#32; &or;</h5>
-        </a></u>
-      <div class="collapse" id="collapseCriteria">
-          {% autoescape off %}
-          {{ state.content_criteria }}
-          {% endautoescape %}
-      </div>
+<div class="row mb-4 mx-lg-5 px-md-5">
+  <div class="col-12 p-4 light-blue-bg">
+      <a class="btn ws-normal btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" href="#collapseCriteria" aria-expanded="false" aria-controls="collapseCriteria">
+        <h5 style="width: fit-content;">{{ state.name }}'s Redistricting Criteria &#32;<i class="fas fa-angle-down pl-3"></i></h5>
+      </a>
+    <div class="collapse" id="collapseCriteria">
+        {% autoescape off %}
+        {{ state.content_criteria }}
+        {% endautoescape %}
     </div>
   </div>
-  <div class="jumbotron mx-lg-5">
-    <div>
-      <h5>Communities of Interest</h5>
-      {% autoescape off %}
-      {{ state.content_coi }}
-      {% endautoescape %}
-    </div>
+</div>
+<div class="row mx-lg-5 px-md-5">
+  <div class="col-12 p-4 light-blue-bg px-md-5">
+    <h5>Communities of Interest in {{ state.name }}</h5>
+    {% autoescape off %}
+    {{ state.content_coi }}
+    {% endautoescape %}
   </div>
+</div>
 </div>
 {% endif %}
 <div class="row">
   <div class="col text-center mb-4">
-    <a class="btn btn-primary btn-lg my-3 drive-new-entry" href="{% url 'main:entry' drive=object.slug %}{{object.state|lower}}" role="button">Draw My Community</a>
+    <a class="btn btn-primary btn-lg my-5 drive-new-entry" href="{% url 'main:entry' drive=object.slug %}{{object.state|lower}}" role="button">Draw My Community</a>
   </div>
 </div>
 </div>
