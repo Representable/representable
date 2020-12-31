@@ -28,7 +28,7 @@ if (filterStack === null) filterStack = [];
 if (bboxStack === null) bboxStack = [];
 // set population
 var pop = sessionStorage.getItem("pop");
-if (pop !== null) document.getElementById("comm-pop").innerHTML = pop;
+if (pop !== null) $(".comm-pop").html(pop);
 
 // change "Show Examples" to "Hide Examples" on click
 // TODO: change this to be updated for languages automatically, rather than manually
@@ -200,7 +200,7 @@ function startSurvey() {
 
 function surveyP1ToSurveyStart() {
   $("#survey-qs-p1").addClass("d-none");
-  $("#entry-survey-start").removeClass("d-none"); 
+  $("#entry-survey-start").removeClass("d-none");
 }
 
 function surveyP1ToP2() {
@@ -297,7 +297,7 @@ function addressValidated() {
   var flag = true;
   var name_field = document.getElementById("id_user_name");
   var entryForm = document.getElementById("entryForm");
-  
+
 
   var is_address_required = address_required == "True";
   if (is_address_required) {
@@ -903,7 +903,7 @@ class ClearMapButton {
         "Are you sure you want to clear the map? This will delete the blocks you have selected."
       );
       if (isConfirmed) {
-        document.getElementById("comm-pop").innerHTML = 0;
+        $(".comm-pop").html(0);
         map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
         var undoBbox = sessionStorage.getItem("selectBbox");
         filterStack.push(undoFilter);
@@ -1419,7 +1419,7 @@ map.on("style.load", function () {
       );
     }
     // set as indicator that population is loading
-    document.getElementById("comm-pop").innerHTML = "...";
+    $(".comm-pop").html("...");
     // remove "in" and "GEOID" parts of filter, for population
     getCommPop(cleanFilter(filter));
     if (isChanged) {
@@ -1655,7 +1655,7 @@ var bgPopCache = {};
 // get the population for a community from filter
 // TODO: load this in automatically as part of the tilesets for immediate lookup?
 function getCommPop(filter) {
-  if (filter.length === 0) document.getElementById("comm-pop").innerHTML = 0;
+  if (filter.length === 0) $(".comm-pop").html(0);
   var pop = 0;
   var ctr = 0;
   filter.forEach(function(feature){
@@ -1663,7 +1663,7 @@ function getCommPop(filter) {
       ctr++;
       pop += bgPopCache[feature];
       if (ctr === filter.length) {
-        document.getElementById("comm-pop").innerHTML = pop;
+        $(".comm-pop").html(pop);
         sessionStorage.setItem("pop", pop);
       }
     } else {
@@ -1672,7 +1672,7 @@ function getCommPop(filter) {
         pop += parseInt(bgPop);
         bgPopCache[feature] = parseInt(bgPop);
         if (ctr === filter.length) {
-          document.getElementById("comm-pop").innerHTML = pop;
+          $(".comm-pop").html(pop);
           sessionStorage.setItem("pop", pop);
         }
       })
