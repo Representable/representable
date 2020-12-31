@@ -944,14 +944,11 @@ class EntryView(LoginRequiredMixin, View):
             if entryForm.drive:
                 finalres["drive"] = entryForm.drive.name
             finalres["state_obj"] = finalres["state"]
-            
 
             string_to_hash = str(finalres)
 
             addres = dict()
-            addr_form_valid = False
             if addr_form.is_valid():
-                addr_form_valid = True
                 addrForm = addr_form.save(commit=False)
                 addrForm.entry = entryForm
                 addrForm.save()
