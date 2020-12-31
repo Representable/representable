@@ -31,5 +31,5 @@ MIXPANEL_TOKEN = "ce31fc3e8e15a16619bb3672f9c25407"
 # keys from prod -- if you don't have the recaptcha private key in your
 # os environment, it won't work if we verify on the backend. It's available in the bitwarden. the checkbox will
 # still need to be checked unless you change the CHECK_CAPTCHA_SUBMIT setting here
-RECAPTCHA_PUBLIC = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+RECAPTCHA_PUBLIC = "6Lcz7BsaAAAAAPZw-gbTKcIoAZcw55QqVxe3PWzz"
 RECAPTCHA_PRIVATE = os.getenv("RECAPTCHA_PRIVATE")
