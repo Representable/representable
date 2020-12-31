@@ -46,6 +46,10 @@ from allauth.account.models import (
     EmailAddress,
     EmailConfirmationHMAC,
 )
+from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.core.mail import EmailMessage
+
 from allauth.account import adapter
 from allauth.account.app_settings import ADAPTER
 from allauth.account.forms import LoginForm, SignupForm
@@ -68,6 +72,8 @@ from ..models import (
     Drive,
     State,
     BlockGroup,
+    FrequentlyAskedQuestion,
+    GlossaryDefinition,
 )
 from ..choices import STATES
 from django.views.generic.edit import FormView
@@ -240,6 +246,38 @@ class Index(TemplateView):
 class About(TemplateView):
     template_name = "main/pages/about.html"
 
+# ******************************************************************************#
+
+
+class FAQ(TemplateView):
+    template_name = "main/pages/faq.html"
+
+    def get(self, request, *args, **kwargs):
+
+        faqs_users = FrequentlyAskedQuestion.objects.filter(type='USER')
+        faqs_orgs = FrequentlyAskedQuestion.objects.filter(type='ORGANIZATION')
+        return render(
+            request,
+            self.template_name,
+            {"faqs_users": faqs_users, "faqs_orgs": faqs_orgs},
+        )
+
+
+# ******************************************************************************#
+
+
+class Glossary(TemplateView):
+    template_name = "main/pages/glossary.html"
+
+    def get(self, request, *args, **kwargs):
+
+        glossaryterms = GlossaryDefinition.objects.all()
+        return render(
+            request,
+            self.template_name,
+            {"glossaryterms": glossaryterms},
+        )
+
 
 # ******************************************************************************#
 
@@ -358,61 +396,82 @@ class Review(LoginRequiredMixin, TemplateView):
         return render(request, self.template_name, context)
 
 
-async def getcommsforreview(query, client):
-    comms = []
-    entryPolyDict = dict()
-    for obj in query:
-        try:
-            await getfroms3(
-                client, obj, obj.drive, obj.state, comms, entryPolyDict
-            )
-        except Exception:
-            if (
-                obj.census_blocks_polygon == ""
-                or obj.census_blocks_polygon is None
-                and obj.user_polygon
-            ):
-                s = "".join(obj.user_polygon.geojson)
-            elif obj.census_blocks_polygon:
-                s = "".join(obj.census_blocks_polygon.geojson)
-            else:
-                continue
-            comms.append(obj)
-            # add all the coordinates in the array
-            # at this point all the elements of the array are coordinates of the polygons
-            struct = geojson.loads(s)
-            entryPolyDict[obj.entry_ID] = struct.coordinates
-    return entryPolyDict, comms
+# async def getcommsforreview(query, client):
+#     comms = []
+#     entryPolyDict = dict()
+#     for obj in query:
+#         try:
+#             await getfroms3(
+#                 client, obj, obj.drive, obj.state, comms, entryPolyDict
+#             )
+#         except Exception:
+#             if (
+#                 obj.census_blocks_polygon == ""
+#                 or obj.census_blocks_polygon is None
+#                 and obj.user_polygon
+#             ):
+#                 s = "".join(obj.user_polygon.geojson)
+#             elif obj.census_blocks_polygon:
+#                 s = "".join(obj.census_blocks_polygon.geojson)
+#             else:
+#                 continue
+#             comms.append(obj)
+#             # add all the coordinates in the array
+#             # at this point all the elements of the array are coordinates of the polygons
+#             struct = geojson.loads(s)
+#             entryPolyDict[obj.entry_ID] = struct.coordinates
+#     return entryPolyDict, comms
 
 
-async def getfroms3(client, obj, drive, state, comms, entryPolyDict):
-    if drive:
-        folder_name = drive
-    elif not drive and obj.drive:
-        folder_name = obj.drive.slug
-    else:
-        folder_name = state
-    response = client.get_object(
-        Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
-        Key=str(folder_name) + "/" + obj.entry_ID + ".geojson",
-    )
-    strobject = response["Body"].read().decode("utf-8")
-    mapentry = geojson.loads(strobject)
-    comm = CommunityEntry(
-        entry_ID=obj.entry_ID,
-        comm_activities=mapentry["properties"]["comm_activities"],
-        entry_name=mapentry["properties"]["entry_name"],
-        economic_interests=mapentry["properties"]["economic_interests"],
-        other_considerations=mapentry["properties"]["other_considerations"],
-        cultural_interests=mapentry["properties"]["cultural_interests"],
-    )
-    comm.drive = Drive(name=mapentry["properties"]["drive"])
-    comm.organization = Organization(
-        name=mapentry["properties"]["organization"]
-    )
-    comms.append(comm)
-    entryPolyDict[obj.entry_ID] = mapentry["geometry"]["coordinates"]
+# async def getfroms3(client, obj, drive, state, comms, entryPolyDict):
+#     if drive:
+#         folder_name = drive
+#     elif not drive and obj.drive:
+#         folder_name = obj.drive.slug
+#     else:
+#         folder_name = state
+#     response = client.get_object(
+#         Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
+#         Key=str(folder_name) + "/" + obj.entry_ID + ".geojson",
+#     )
+#     strobject = response["Body"].read().decode("utf-8")
+#     mapentry = geojson.loads(strobject)
+#     comm = CommunityEntry(
+#         entry_ID=obj.entry_ID,
+#         comm_activities=mapentry["properties"]["comm_activities"],
+#         entry_name=mapentry["properties"]["entry_name"],
+#         economic_interests=mapentry["properties"]["economic_interests"],
+#         other_considerations=mapentry["properties"]["other_considerations"],
+#         cultural_interests=mapentry["properties"]["cultural_interests"],
+#     )
+#     comm.drive = Drive(name=mapentry["properties"]["drive"])
+#     comm.organization = Organization(
+#         name=mapentry["properties"]["organization"]
+#     )
+#     comms.append(comm)
+#     entryPolyDict[obj.entry_ID] = mapentry["geometry"]["coordinates"]
 
+
+def SendPlainEmail(request):
+    # user_email_address = EmailAddress.objects.get(
+    #     user=self.request.user
+    # )
+    post_email = request.POST.get("message")
+    # user_email_address = "edwardtian2000@gmail.com"
+
+    email = EmailMessage(
+        "Your Representable Map",
+        "Congratulations! <br> You have mapped your community with Representable. <br> We have attached a copy of your map below.",
+        "no-reply@representable.org",
+        [post_email],
+    )
+    email.content_subtype = "html"
+
+    file = request.FILES["generatedpdf"]
+    email.attach(file.name, file.read(), file.content_type)
+
+    email.send()
+    return HttpResponse("Sent")
 
 class Submission(TemplateView):
     template_name = "main/submission.html"
@@ -457,6 +516,9 @@ class Submission(TemplateView):
         entryPolyDict[m_uuid] = map_poly.coordinates
         comm = user_map
 
+        # get user email address
+        user_email_address = EmailAddress.objects.get(user=self.request.user)
+
         context = {
             "has_state": has_state,
             "state": state,
@@ -465,7 +527,9 @@ class Submission(TemplateView):
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
             "map_id": m_uuid,
+            "email": user_email_address,
         }
+
         # from thanks view
         context["is_thanks"] = False
         if "thanks" in request.path:
@@ -489,9 +553,6 @@ class Submission(TemplateView):
                 context["verified"] = True
 
             else:
-                user_email_address = EmailAddress.objects.get(
-                    user=self.request.user
-                )
 
                 user_email_confirmation = EmailConfirmationHMAC(
                     email_address=user_email_address
@@ -607,30 +668,30 @@ class Map(TemplateView):
     template_name = "main/map.html"
 
     def get_context_data(self, **kwargs):
+        state = self.kwargs["state"].lower()
 
         # the polygon coordinates
         entryPolyDict = dict()
-        # all communities for display TODO: might need to limit this? or go by state
-        org = Organization.objects.get(id=0)
-        query = org.submissions.all().prefetch_related("drive")
+        query = CommunityEntry.objects.filter(state=state)
         # state map page --> drives in the state, entries without a drive but with a state
         drives = []
-        # query = (
-        #     CommunityEntry.objects.all()
-        #     .prefetch_related("drive", "organization")
-        #     .filter(organization__id=0)
-        # )
+        streets = {}
+        cities = {}
+        authenticated = self.request.user.is_authenticated
         # get the polygon from db and pass it on to html
         for obj in query:
-            if not obj.admin_approved:
+            if obj.organization and not obj.admin_approved:
                 continue
             if (
                 obj.census_blocks_polygon == ""
                 or obj.census_blocks_polygon is None
+                and obj.user_polygon
             ):
                 s = "".join(obj.user_polygon.geojson)
-            else:
+            elif (obj.census_blocks_polygon):
                 s = "".join(obj.census_blocks_polygon.geojson)
+            else:
+                continue
             drives.append(obj.drive)
 
             # add all the coordinates in the array
@@ -638,7 +699,20 @@ class Map(TemplateView):
             struct = geojson.loads(s)
             entryPolyDict[obj.entry_ID] = struct.coordinates
 
+            # Addresses only if user created comm, user is admin of the org
+            if authenticated:
+                if obj.user is self.request.user or self.request.user.is_org_admin(obj.organization_id):
+                # get the addresses:
+                    for a in Address.objects.filter(entry=obj):
+                        streets[obj.entry_ID] = a.street
+                        cities[obj.entry_ID] = (
+                            a.city + ", " + a.state + " " + a.zipcode
+                        )
+
         context = {
+            "streets": streets,
+            "cities": cities,
+            "state": state,
             "communities": query,
             "drives": drives,
             "entries": json.dumps(entryPolyDict),
@@ -807,7 +881,7 @@ class EntryView(LoginRequiredMixin, View):
                     entryForm.organization = drive.organization
             else:
                 folder_name = self.kwargs["abbr"]
-                entryForm.state = self.kwargs["abbr"]
+                entryForm.state = self.kwargs["abbr"].lower()
             if entryForm.organization:
                 if self.request.user.is_org_admin(entryForm.organization.id):
                     entryForm.admin_approved = True

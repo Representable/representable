@@ -34,7 +34,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
       <script type="text/javascript">
         var coidata = '{{ entries | escapejs }}';
         var mapbox_user_name = "{{mapbox_user_name}}";
-        var state = '';
+        var state = "{{state}}";
       </script>
     </div>
     <div class="col-md-4 col-wide">
@@ -42,7 +42,6 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
         <div class="sidenav">
           <div class="accordion" id="accordionExample">
             <div class="card">
-              <small class="font-weight-light mx-1 my-1">Please note: Representable.org is in beta. This page may not be updated as frequently as other aspects of the website.</small>
               <div id="headingOne">
                 <button class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne"
                 aria-expanded="false" aria-controls="collapseOne" style="width: 100%">
@@ -108,9 +107,6 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                     {% endfor %}
                   </table>
                   {% endif %}
-                  <div class="d-flex justify-content-center">
-                    <div class="loader loader-large my-5"></div>
-                  </div>
                 </div>
               </div>
             </div>

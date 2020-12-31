@@ -18,8 +18,8 @@ from django.views.generic import (
     DetailView,
 )
 
-import boto3
-import botocore
+# import boto3
+# import botocore
 import pandas
 from django.contrib.gis import geos
 from django.contrib.gis.geos import GEOSGeometry, MultiPolygon, Polygon
@@ -267,7 +267,7 @@ class MultiExportView(TemplateView):
             if not entry.organization:
                 continue
             gj = make_geojson(request, entry)
-        all_gj.append(gj)
+            all_gj.append(gj)
 
         final = geojson.FeatureCollection(all_gj)
 
