@@ -1,9 +1,8 @@
 $(document).ready(function () {});
 
-
 // if thanks page, show modal
 if (is_thanks === "True") {
-  $('#thanksModal').modal('show');
+  $("#thanksModal").modal("show");
 }
 
 /*------------------------------------------------------------------------*/
@@ -52,23 +51,25 @@ function newSourceLayer(name, mbCode) {
 function newBoundariesLayer(name) {
   map.addSource(name, {
     type: "vector",
-    url: "mapbox://mapbox.boundaries-" + name + "-v3"
+    url: "mapbox://mapbox.boundaries-" + name + "-v3",
   });
-  map.addLayer(
-    {
-      id: name + "-lines",
-      type: "line",
-      source: name,
-      "source-layer": "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1),
-      layout: {
-        visibility: "none"
-      },
-      paint: {
-        "line-color": "rgba(106,137,204,0.7)",
-        "line-width": 3,
-      }
-    }
-  );
+  map.addLayer({
+    id: name + "-lines",
+    type: "line",
+    source: name,
+    "source-layer":
+      "boundaries_" +
+      BOUNDARIES_ABBREV[removeLastChar(name)] +
+      "_" +
+      name.slice(-1),
+    layout: {
+      visibility: "none",
+    },
+    paint: {
+      "line-color": "rgba(106,137,204,0.7)",
+      "line-width": 3,
+    },
+  });
 }
 
 function sanitizePDF(x) {
@@ -91,40 +92,54 @@ map.on("load", function () {
   //     break;
   //   }
   // }
+  /****************************************************************************/
+  // school districts as a data layer
+  newSourceLayer("school-districts", SCHOOL_DISTR_KEY);
+  map.addLayer(
+    {
+      id: "school-districts-lines",
+      type: "line",
+      source: "school-districts",
+      "source-layer": "us_school_districts",
+      layout: {
+        visibility: "none",
+      },
+      paint: {
+        "line-color": "rgba(106,137,204,0.7)",
+        "line-width": 2,
+      },
+    }
+  );
   // ward + community areas for IL
   if (state === "il") {
     newSourceLayer("chi_wards", CHI_WARD_KEY);
     newSourceLayer("chi_comm", CHI_COMM_KEY);
-    map.addLayer(
-      {
-        id: "chi-ward-lines",
-        type: "line",
-        source: "chi_wards",
-        "source-layer": "chi_wards",
-        layout: {
-          visibility: "none",
-        },
-        paint: {
-          "line-color": "rgba(106,137,204,0.7)",
-          "line-width": 2,
-        },
-      }
-    );
-    map.addLayer(
-      {
-        id: "chi-comm-lines",
-        type: "line",
-        source: "chi_comm",
-        "source-layer": "chi_comm",
-        layout: {
-          visibility: "none",
-        },
-        paint: {
-          "line-color": "rgba(106,137,204,0.7)",
-          "line-width": 2,
-        },
-      }
-    );
+    map.addLayer({
+      id: "chi-ward-lines",
+      type: "line",
+      source: "chi_wards",
+      "source-layer": "chi_wards",
+      layout: {
+        visibility: "none",
+      },
+      paint: {
+        "line-color": "rgba(106,137,204,0.7)",
+        "line-width": 2,
+      },
+    });
+    map.addLayer({
+      id: "chi-comm-lines",
+      type: "line",
+      source: "chi_comm",
+      "source-layer": "chi_comm",
+      layout: {
+        visibility: "none",
+      },
+      paint: {
+        "line-color": "rgba(106,137,204,0.7)",
+        "line-width": 2,
+      },
+    });
   }
   // leg2 : congressional district
   // leg3 : state senate district
@@ -241,7 +256,7 @@ map.on("load", function () {
       doc.setFontSize(12);
       doc.setTextColor(0);
       // link to view on rep
-      var rLink = "View this community at: " + window.location.href;
+      var rLink = doc.splitTextToSize("View this community at: " + window.location.href, 180);
       doc.text(20, 53, rLink);
 
       var org = window.document.getElementById("org-text");
@@ -282,18 +297,97 @@ map.on("load", function () {
       doc.save(pdfName + ".pdf");
     }, 1500);
   });
+
+  // Form for sending emailPDF
+  var testForm = document.getElementById("pdfForm");
+
+  testForm.onsubmit = function (event) {
+    event.preventDefault();
+    var request = new XMLHttpRequest();
+    request.open("POST", "/send_mail_plain", false);
+    var formData = new FormData(document.getElementById("pdfForm"));
+
+    // generate email PDF using a copy of the above javascript code
+    // let pdfDoc = new jsPDF();
+    // pdfDoc.text("Hello world!", 10, 10);
+
+    var doc = new jsPDF();
+    var entryName = window.document.getElementById("entry-name");
+    doc.fromHTML(entryName, 20, 20, { width: 180 });
+    doc.setFontSize(10);
+    doc.setTextColor(150);
+    // identifying info
+    var userName = window.document.getElementById("user-name");
+    var adStreet = window.document.getElementById("address-street");
+    var adCity = window.document.getElementById("address-city");
+    if (userName !== null) {
+      doc.text(20, 35, userName.textContent);
+    }
+    if (adStreet !== null) {
+      doc.text(20, 40, adStreet.textContent);
+    }
+    if (adCity !== null) {
+      doc.text(20, 45, adCity.textContent);
+    }
+    doc.setFontSize(12);
+    doc.setTextColor(0);
+    // link to view on rep
+    var rLink = "View this community at: " + window.location.href;
+    doc.text(20, 53, rLink);
+
+    var org = window.document.getElementById("org-text");
+    var drive = window.document.getElementById("drive-text");
+    if (org !== null) {
+      doc.text(20, 61, "Organization: " + org.textContent);
+    }
+    if (drive !== null) {
+      doc.text(20, 69, "Drive: " + drive.textContent);
+    }
+    var imgData = map.getCanvas().toDataURL("image/png");
+    // calculate ratio of map so it isn't squashed / stretched
+    var mapDim = map.getCanvas().getBoundingClientRect();
+    var mapPDFHeight = (mapDim.height * 170) / mapDim.width;
+    doc.addImage(imgData, "PNG", 20, 75, 170, mapPDFHeight);
+    // next page
+    doc.addPage();
+    doc.setFontSize(24);
+    doc.text(20, 20, "Community Information");
+
+    var elementHandler = {
+      "#ignorePDF": function (element, renderer) {
+        return true;
+      },
+      "#entry-name": function (element, renderer) {
+        return true;
+      },
+    };
+    // entry fields
+    var table = window.document.getElementById("table-content");
+    doc.fromHTML(table, 20, 25, {
+      width: 180,
+      elementHandlers: elementHandler,
+    });
+    // get entry name in order to name the PDF
+    var pdfName = sanitizePDF($("#entry-name").text());
+
+    // output and send to requests handled in url
+    var pdf = doc.output("blob");
+    formData.append("generatedpdf", pdf, pdfName);
+    request.send(formData);
+    console.log(request.response);
+  };
 });
 
 //create a button that toggles layers based on their IDs
 var toggleableLayerIds = JSON.parse(JSON.stringify(BOUNDARIES_LAYERS));
+toggleableLayerIds["school-districts"] = "School Districts";
 // add selector for chicago wards + community areas if illinois
 if (state === "il") {
   toggleableLayerIds["chi-ward"] = "Chicago Wards";
   toggleableLayerIds["chi-comm"] = "Chicago Community Areas";
 }
 
-for (var id in toggleableLayerIds){
-
+for (var id in toggleableLayerIds) {
   var link = document.createElement("input");
 
   link.value = id;
@@ -328,10 +422,25 @@ for (var id in toggleableLayerIds){
   div.appendChild(label);
   layers.appendChild(div);
   var newline = document.createElement("br");
-};
+}
 
 /*******************************************************************/
 // remove the last char in the string
 function removeLastChar(str) {
   return str.substring(0, str.length - 1);
 }
+
+// Links "What GeoJSON is?" Modal and download for GeoJSON into one event
+$('[data-toggle=modal]').on('click', function(e) {
+  var $target = $($(this).data('target'));
+  $target.data('triggered', true);
+  setTimeout(function() {
+    if ($target.data('triggered')) {
+      $target.modal('show').data('triggered', false);
+    };
+  }, 100); // ms delay
+  return false;
+});
+$('#geojson-explain-modal').on('show.bs.modal', function () {
+  $('#hidden-download-geojson')[0].click();
+});
