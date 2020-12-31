@@ -870,10 +870,11 @@ class EntryView(LoginRequiredMixin, View):
                     entryForm.organization = drive.organization
             else:
                 folder_name = self.kwargs["abbr"]
-                entryForm.state = self.kwargs["abbr"].lower()
-                entryForm.state_obj = State.objects.get(
-                    abbr=self.kwargs["abbr"].upper()
-                    )
+
+            entryForm.state = self.kwargs["abbr"].lower()
+            entryForm.state_obj = State.objects.get(
+                abbr=self.kwargs["abbr"].upper()
+                )
             if entryForm.organization:
                 if self.request.user.is_org_admin(entryForm.organization.id):
                     entryForm.admin_approved = True
