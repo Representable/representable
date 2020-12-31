@@ -226,6 +226,7 @@ body {
 }
 .border-3 {
   border-width: 3px !important;
+  border-color: #5b5b5b;
 }
 
 .container-full-width {
@@ -339,12 +340,15 @@ body {
 #home-page-rect {
   position: absolute;
   width: 250%;
-  height: 320%;
+  height: 300%;
   left: -10%;
   bottom: 110%;
 
   background: rgba(204, 233, 255, 0.2);
   z-index: -999;
+}
+.line-space-less {
+  line-height: 97%;
 }
 .quote-footer {
   color: white;
@@ -432,30 +436,30 @@ footer {
 }
 /* Bootstrap Buttons. */
 
-.btn-circle.btn-sm { 
-  width: 30px; 
-  height: 30px; 
-  padding: 6px 0px; 
-  border-radius: 15px; 
-  font-size: 8px; 
-  text-align: center; 
-} 
-
-.btn-circle.btn-md { 
-  width: 45px; 
-  height: 45px; 
-  border-radius: 25px; 
-  font-size: 1rem; 
-  text-align: center; 
+.btn-circle.btn-sm {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0px;
+  border-radius: 15px;
+  font-size: 8px;
+  text-align: center;
 }
 
-.btn-circle.btn-xl { 
-  width: 70px; 
-  height: 70px; 
-  padding: 10px 16px; 
-  border-radius: 35px; 
-  font-size: 12px; 
-  text-align: center; 
+.btn-circle.btn-md {
+  width: 45px;
+  height: 45px;
+  border-radius: 25px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  border-radius: 35px;
+  font-size: 12px;
+  text-align: center;
 }
 
 #video_popup {
@@ -691,7 +695,7 @@ Entry Mapping Page
     font-size: 1rem;
     overflow: hidden;
   }
-  
+
   .comm-item-text {
     color:#2A94F4;
     font-weight: bold;
@@ -1014,7 +1018,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 /*******************
 
-Entry Form Management 
+Entry Form Management
 
 ********************/
 
@@ -1645,7 +1649,7 @@ height:25vh!important;
     }
 
   }
-  
+
   /* Medium devices (tablets, 768px and up)*/
   @media (min-width: 768px) {
     .w-md-100 {
@@ -1698,7 +1702,7 @@ height:25vh!important;
     height:25vh!important;
     }
   }
-  
+
   /* Large devices (desktops, 992px and up)*/
   @media (min-width: 992px) {
     .w-lg-100 {
@@ -1751,7 +1755,7 @@ height:25vh!important;
     height:25vh!important;
     }
   }
-  
+
   /* Extra large devices (large desktops, 1200px and up)*/
   @media (min-width: 1200px) {
     .w-xl-100 {
@@ -1778,7 +1782,7 @@ height:25vh!important;
     .h-xl-25 {
     height:25%!important;
     }
-  
+
     .vw-xl-100 {
       width:100vw!important;
     }

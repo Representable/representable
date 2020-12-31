@@ -35,6 +35,7 @@
         var mapbox_user_name = "{{mapbox_user_name}}";
         var state = '';
         var is_thanks = '{{ is_thanks }}'
+        var comm_id = '{{ c.entry_ID }}'
       </script>
     </div>
     {% if entries is None %}
@@ -185,9 +186,11 @@
             <div class="modal-content">
               <div class="modal-header">
                 <h1 class="modal-title text-center font-weight-light" id="thanksModalLabel">Thank you for your submission!</h1>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                {% with link_text="/submission/"|addstr:c.entry_ID %}
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" href={{link_text}}>
                   <span aria-hidden="true">&times;</span>
                 </button>
+                {% endwith %}
               </div>
               <div class="modal-body">
                 <div class="row my-1">

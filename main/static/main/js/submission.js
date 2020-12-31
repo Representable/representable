@@ -4,7 +4,10 @@ $(document).ready(function () {});
 if (is_thanks === "True") {
   $("#thanksModal").modal("show");
 }
-
+$('#thanksModal').on('hidden.bs.modal', function () {
+  console.log("hello?")
+  window.location.href = '/submission/' + comm_id;
+})
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
