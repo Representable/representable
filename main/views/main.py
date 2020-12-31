@@ -882,6 +882,9 @@ class EntryView(LoginRequiredMixin, View):
             else:
                 folder_name = self.kwargs["abbr"]
                 entryForm.state = self.kwargs["abbr"].lower()
+                entryForm.state_obj = State.objects.filter(
+                    abbr=self.kwargs["abbr"].upper()
+                    )
             if entryForm.organization:
                 if self.request.user.is_org_admin(entryForm.organization.id):
                     entryForm.admin_approved = True
