@@ -130,6 +130,7 @@
                           <span class="btn btn-outline-primary btn-canvas mx-4 my-2" role="button" id="pdf-button">Export PDF</span>
                           {% endwith %}
                           {% endif %}
+
                         </div>
                       </div>
                     </div>
@@ -159,10 +160,10 @@
                 </button>
               </div>
               <div class="modal-body">
-                <div class="row my-3">
-                  <div class="col-sm my-3 mx-3">
+                <div class="row my-1">
+                  <div class="col-sm my-0 mx-3">
                     <div class="card border-0">
-                      <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/send.svg' %}"></img>
+                      <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/map.svg' %}"></img>
                       <div class="card-body text-center d-flex flex-column align-items-center">
                         <h5>
                           Visualize/Export
@@ -177,8 +178,57 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-sm my-0 mx-3">
+                    <div class="card border-0">
+                      <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/send.svg' %}"></img>
+                      <div class="card-body text-center d-flex flex-column align-items-center">
+                        <h5>
+                          Email Map
+                        </h5>
+                        <p>
+                          Get a copy of your map sent to your email for personal records. Easily forward and share your Representable map with friends in your community.
+                        </p>
+                        <div class="text-center">
+                          <!--Form Used to Send Email-->
+                          <div>
+                            <form name="pdfForm" id="pdfForm">
+                              {% csrf_token %}
+                              <div class = "form-group" style = "display:none">
+                                <textarea name = "message" class = "form-control">{{email}}</textarea>
+                              </div>
+                              <div class = "form-group">
+                                <button type = "submit" class="btn btn-outline-primary mx-2 my-0">Send Email</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                        <!-- <a class="btn btn-primary btn-canvas mt-auto" href="/entry" role="button">Get Started</a> -->
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row my-1">
+
+                  <div class="col-sm my-0 mx-3">
+                    <div class="card border-0 card-body">
+                      <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/redistricter.svg' %}"></img>
+                      <div class="card-body text-center flex-column align-items-center">
+                        <h5 class="card-title">
+                          Provide Feedback
+                        </h5>
+                        <p class="card-text">
+                          We are interested in your feedback. Let us know if you found a bug or have any suggestions for our team.
+                        </p>
+                        <div class="text-center">
+                          <a class="btn btn-outline-primary mx-2 my-1" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSfeyoZ87pS67iTh2c3t5031XqoNFNAdwF6Pt1NUns_z_Myxaw/viewform" role="button">Send Feedback</a>
+                        </div>
+                        <!-- <a class="btn btn-primary btn-canvas mt-auto disabled" href="#" role="button">Coming Soon</a> -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm my-0 mx-3">
                   {% if has_drive %}
-                  <div class="col-sm my-3 mx-3">
                     <div class="card border-0">
                       <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/map.svg' %}"></img>
                       <div class="card-body text-center flex-column align-items-center">
@@ -194,24 +244,7 @@
                         <!-- <a class="btn btn-primary btn-canvas mt-auto" href="mailto: team@representable.org?subject=Hello!" role="button">Contact Us</a> -->
                       </div>
                     </div>
-                  </div>
                   {% endif %}
-                  <div class="col-sm m-3">
-                    <div class="card border-0 card-body">
-                      <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/redistricter.svg' %}"></img>
-                      <div class="card-body text-center flex-column align-items-center">
-                        <h5 class="card-title">
-                          Provide Feedback
-                        </h5>
-                        <p class="card-text">
-                          We are interested in your feedback. If you found a bug or have any suggestions for us, please send them to us by pressing on the button below.
-                        </p>
-                        <div class="text-center">
-                          <a class="btn btn-outline-primary mx-2 my-1" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSfeyoZ87pS67iTh2c3t5031XqoNFNAdwF6Pt1NUns_z_Myxaw/viewform" role="button">Send Feedback</a>
-                        </div>
-                        <!-- <a class="btn btn-primary btn-canvas mt-auto disabled" href="#" role="button">Coming Soon</a> -->
-                      </div>
-                    </div>
                   </div>
                 </div>
                 {% if verified %}
@@ -225,6 +258,7 @@
                   <p class="text-center"> Account verification allows Representable.org and our partner organizations to submit credible maps to Redistricting Commissions ensuring that your entry has an impact in ending gerrymandering. </p>
                 </div>
                 {% endif %}
+
               </div>
             </div>
           </div>

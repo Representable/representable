@@ -46,6 +46,10 @@ from allauth.account.models import (
     EmailAddress,
     EmailConfirmationHMAC,
 )
+from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.core.mail import EmailMessage
+
 from allauth.account import adapter
 from allauth.account.app_settings import ADAPTER
 from allauth.account.forms import LoginForm, SignupForm
@@ -360,7 +364,7 @@ async def getcommsforreview(query, client):
                 and obj.user_polygon
             ):
                 s = "".join(obj.user_polygon.geojson)
-            elif (obj.census_blocks_polygon):
+            elif obj.census_blocks_polygon:
                 s = "".join(obj.census_blocks_polygon.geojson)
             else:
                 continue
@@ -402,6 +406,26 @@ async def getfroms3(client, obj, drive, state, comms, entryPolyDict):
 
 
 # ******************************************************************************#
+def SendPlainEmail(request):
+    # user_email_address = EmailAddress.objects.get(
+    #     user=self.request.user
+    # )
+    post_email = request.POST.get("message")
+    # user_email_address = "edwardtian2000@gmail.com"
+
+    email = EmailMessage(
+        "Your Representable Map",
+        "Congratulations! <br> You have mapped your community with Representable. <br> We have attached a copy of your map below.",
+        "no-reply@representable.org",
+        [post_email],
+    )
+    email.content_subtype = "html"
+
+    file = request.FILES["generatedpdf"]
+    email.attach(file.name, file.read(), file.content_type)
+
+    email.send()
+    return HttpResponse("Sent")
 
 
 class Submission(TemplateView):
@@ -485,6 +509,9 @@ class Submission(TemplateView):
             entryPolyDict[m_uuid] = map_poly.coordinates
             comm = user_map
 
+        # get user email address
+        user_email_address = EmailAddress.objects.get(user=self.request.user)
+
         context = {
             "has_state": has_state,
             "state": state,
@@ -493,7 +520,9 @@ class Submission(TemplateView):
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
             "map_id": m_uuid,
+            "email": user_email_address,
         }
+
         # from thanks view
         context["is_thanks"] = False
         if "thanks" in request.path:
@@ -516,9 +545,6 @@ class Submission(TemplateView):
             ).exists():
                 context["verified"] = True
             else:
-                user_email_address = EmailAddress.objects.get(
-                    user=self.request.user
-                )
 
                 user_email_confirmation = EmailConfirmationHMAC(
                     email_address=user_email_address
@@ -630,7 +656,9 @@ class ExportView(TemplateView):
                 gj = make_geojson(request, query)
         except Exception:
             msg = "Unable to export the community geojson. Please check again"
-            response = HttpResponseNotFound(msg, content_type="application/json")
+            response = HttpResponseNotFound(
+                msg, content_type="application/json"
+            )
 
         gs = geojson.dumps(gj)
         response = HttpResponse(gs, content_type="application/json")
