@@ -685,6 +685,10 @@ var modalGeocoder = new MapboxGeocoder({
 document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
 document.getElementById("modal-geocoder").appendChild(modalGeocoder.onAdd(map));
 
+modalGeocoder.on('result', function () {
+  $('#entry-map-modal').modal('hide');
+})
+
 /* Creating custom draw buttons */
 class DropdownButton {
   onAdd(map) {
