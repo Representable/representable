@@ -617,6 +617,9 @@ Entry Mapping Page
   display: inline-block;
   width: 80%;
 }
+#modal-geocoder ul {
+  text-align: left;
+}
 
 #entry-map-modal .modal-content {
   background-color: rgba(216, 241, 237, 0.9);
