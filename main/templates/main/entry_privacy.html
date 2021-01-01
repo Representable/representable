@@ -22,12 +22,6 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div id="need_captcha" class="alert alert-danger alert-dismissible fade show form-error d-none mt-3" role="alert">
-            You must complete the captcha to submit this map.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
         <div class="row mx-auto">
             <h4>
                 <strong class="header-text">
@@ -96,7 +90,7 @@
         </div>
 
         <div class="row pt-5">
-            <div id="need-captcha" class="col-12 text-center w-xl-50 d-none">
+            <div id="need_captcha" class="col-12 text-center w-xl-50 d-none">
                 <div class="alert alert-danger alert-dismissible fade show form-error d-inline-block" role="alert">
                     {% trans "You need to complete the recaptcha to submit this map." %}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">

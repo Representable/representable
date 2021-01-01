@@ -901,6 +901,7 @@ class EntryView(LoginRequiredMixin, View):
             }
             data = urllib.parse.urlencode(values)
             data = data.encode('ascii')
+
             req = urllib.request.Request(url, data)
             response = urlopen(req)
             result = json.load(response)
