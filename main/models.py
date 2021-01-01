@@ -330,6 +330,7 @@ class CommunityEntry(models.Model):
     state = models.CharField(
         max_length=10, blank=True, unique=False, default=""
     )
+    # signature = models.CharField(max_length=64, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     admin_approved = models.BooleanField(default=True)
     population = models.IntegerField(blank=True, default=0)
@@ -367,6 +368,12 @@ class Address(models.Model):
 
 # ******************************************************************************#
 
+
+class Signature(models.Model):
+    entry = models.ForeignKey(
+        CommunityEntry, on_delete=models.CASCADE, default=""
+    )
+    hash = models.CharField(max_length=64, blank=True)
 
 
 
