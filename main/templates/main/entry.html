@@ -129,12 +129,13 @@
 
     </script>
     <script type="text/javascript">
-        function validateRecaptcha() {
-            var response = grecaptcha.getResponse();
-            if (response.length === 0 && "{{ check_captcha }}" === "True") {
-                $("#need-captcha").removeClass("d-none");
-                return false;
-            }
+    function validateRecaptcha() {
+        var response = grecaptcha.getResponse();
+        if (response.length === 0 && "{{ check_captcha }}" === "True") {
+          document.getElementById("need_captcha").classList.remove("d-none");
+          scrollIntoViewSmooth(document.getElementById("need_captcha"));
+          return false;
+        }
 
             sessionStorage.clear();
             return true;

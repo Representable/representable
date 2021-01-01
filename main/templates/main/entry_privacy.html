@@ -22,6 +22,12 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
+        <div id="need_captcha" class="alert alert-danger alert-dismissible fade show form-error d-none mt-3" role="alert">
+            You must complete the captcha to submit this map.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         <div class="row mx-auto">
             <h4>
                 <strong class="header-text">
@@ -34,7 +40,7 @@
 
         <p class="info-text">
             {% blocktrans %}We gather your identifying information to verify that you are a real person.
-            We will not publicly share anyone's individual personal information, such as name, address, or email. Your privacy is our highest priority. 
+            We will not publicly share anyone's individual personal information, such as name, address, or email. Your privacy is our highest priority.
             {% endblocktrans %}
             {% if has_drive %}
             <br>
@@ -101,10 +107,10 @@
             <div class="col-12 text-center p-0"><div class="g-recaptcha pt-0 mr-4 mr-md-0" data-sitekey="{{recaptcha_public}}"></div></div>
         </div>
 
-        <div class="row my-5 pt-5 pb-2">
+        <div class="row my-5 pb-2">
             <div class="col text-center">
-                <button class="btn btn-primary no-underline-link entry-nav-btn mr-4 mapping-icon" onclick="privacyToMap()"><i class="fas fa-angle-left pr-2"></i>{% trans "Back" %}</button>
-                <button id="entrySubmissionButton" class="btn btn-primary no-underline-link entry-nav-btn ml-4 mapping-icon" type="submit" form="entryForm" value="Submit">{% trans "Submit" %}</button>
+                <button class="btn btn-lg btn-primary no-underline-link entry-nav-btn mr-4 mapping-icon" onclick="privacyToMap()"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
+                <button id="entrySubmissionButton" class="btn btn-lg btn-primary no-underline-link entry-nav-btn ml-4 mapping-icon" type="submit" form="entryForm" value="Submit">{% trans "SUBMIT" %}</button>
             </div>
         </div>
 
