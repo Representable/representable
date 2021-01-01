@@ -241,6 +241,8 @@ function privacyToMap() {
   $("#entry_map").removeClass("d-none");
   $("#entry_survey").removeClass("d-none");
   map.resize();
+  $("#backup_error").addClass("d-none");
+  privacyCheckValidation();
 }
 
 function clearFieldsError(fields) {
@@ -417,85 +419,55 @@ $("#surveyP2ToMap_button").on("click", function(e) {
 })
 
 $("#mapToPrivacy").on("click", function(e) {
-  e.preventDefault();
-  mapToPrivacy();
+  if (createCommPolygon()) {
+    e.preventDefault();
+    mapToPrivacy();
+    $('#map-card').removeClass("has_error");
+  }
 })
 
 $("#mapToPrivacyMobile").on("click", function(e) {
-  e.preventDefault();
-  mapToPrivacy();
+  if (createCommPolygon()) {
+    e.preventDefault();
+    mapToPrivacy();
+    $('#map-card').removeClass("has_error");
+  }
 })
 
 function privacyCheckValidation() {
   if (document.getElementById("toc_check").checked === true || document.getElementById("toc_check_xl").checked === true) {
+    $("#need_privacy").addClass("d-none");
     return true;
   } else {
     document.getElementById("need_privacy").classList.remove("d-none");
   }
   return false;
 }
-// function formValidation() {
-//   // Check Normal Fields
-//   var flag = true;
-//   var entryForm = document.getElementById("entryForm");
-//   var form_elements = entryForm.elements;
-//   for (var i = 0; i < form_elements.length; i++) {
-//     if (form_elements[i].required) {
-//       if (checkFieldById(form_elements[i].id) == false) {
-//         flag = false;
-//       }
-//     }
-//   }
 
-//   var cultural_interests_field = document.getElementById(
-//     "id_cultural_interests"
-//   );
-//   var economic_intetersts_field = document.getElementById(
-//     "id_economic_interests"
-//   );
-//   var comm_activities_field = document.getElementById("id_comm_activities");
-//   var other_considerations_field = document.getElementById(
-//     "id_other_considerations"
-//   );
-
-//   if (
-//     cultural_interests_field.value == "" &&
-//     economic_intetersts_field.value == "" &&
-//     comm_activities_field.value == "" &&
-//     other_considerations_field.value == ""
-//   ) {
-//     cultural_interests_field.classList.add("has_error");
-//     economic_intetersts_field.classList.add("has_error");
-//     comm_activities_field.classList.add("has_error");
-//     other_considerations_field.classList.add("has_error");
-//     var interests_alert = document.getElementById("need_one_interest");
-//     interests_alert.classList.remove("d-none");
-//     flag = false;
-//   }
-//   var is_address_required = address_required == "True";
-//   if (
-//     is_address_required &&
-//     (entryForm.street.value == "" ||
-//       entryForm.city.value == "" ||
-//       entryForm.state.value == "" ||
-//       entryForm.zipcode.value == "")
-//   ) {
-//     entryForm.street.classList.add("has_error");
-//     entryForm.city.classList.add("has_error");
-//     entryForm.state.classList.add("has_error");
-//     entryForm.zipcode.classList.add("has_error");
-//     document.getElementById("need_address").classList.remove("d-none");
-//     flag = false;
-//   }
-
-//   if (flag == false) {
-//     // Add alert.
-//     var alert = document.getElementById("form_error");
-//     alert.classList.remove("d-none");
-//     scrollIntoViewSmooth(alert.id);
-//   }
-//   return flag;
-// }
+// Not expected to be used 99% of the time. Backup validation if user messes with the html to trick design flow.
+function backupFormValidation() {
+  if (!addressValidated()) {
+    $("#backup_error_txt").text("There is an error with one of your fields on the address page.")
+    $("#backup_error").removeClass("d-none")
+    return false;
+  }
+  if (!interestsValidated()) {
+    $("#backup_error_txt").text("You did not fill out one of the fields on the survey page.")
+    $("#backup_error").removeClass("d-none")
+    return false;
+  }
+  if (!commNameValidated()) {
+    $("#backup_error_txt").text("You did not give your community a name.")
+    $("#backup_error").removeClass("d-none")
+    return false;
+  }
+  if (!(sessionStorage.getItem("map_drawn_successfully") == "true")) {
+    $("#backup_error_txt").text("You did not fill out your map or it was done so incorrectly. Please review it.")
+    $("#backup_error").removeClass("d-none")
+    return false;
+  }
+  return true;
+}
 
 /****************************************************************************/
 // generates polygon to be saved from the selection
@@ -572,6 +544,7 @@ document.addEventListener(
       .removeClass("add-form-row")
       .addClass("remove-form-row")
       .html('<span class="" aria-hidden="true">Remove</span>');
+
     $("#entrySubmissionButton").on("click", function (e) {
       e.preventDefault();
       var form = $("#entryForm");
@@ -584,12 +557,11 @@ document.addEventListener(
       $("#loading-entry").delay(2000).fadeOut(2000);
       //todo: switch this to a promise ?
       setTimeout(function () {
-        polySuccess = createCommPolygon();
+        backupSuccess = backupFormValidation();
         privacySuccess = privacyCheckValidation();
       }, 500);
       setTimeout(function () {
-        if (polySuccess && privacySuccess) {
-          sessionStorage.clear();
+        if (backupSuccess && privacySuccess) {
           form.submit();
         }
       }, 2000);
@@ -1529,7 +1501,7 @@ function cleanAlerts() {
 function triggerMissingPolygonError() {
   triggerDrawError(
     "polygon_missing",
-    "You must draw a polygon to submit this entry."
+    "You must draw a polygon to continue."
   );
 }
 
@@ -1551,7 +1523,7 @@ function triggerDrawError(id, stringErrorText) {
   newAlert.innerHTML =
     '<div id="' +
     id +
-    '" class="alert alert-danger alert-dismissible fade show map-alert" role="alert">\
+    '" class="alert alert-danger alert-dismissible fade show map-alert mr-3 mr-md-0" role="alert">\
   ' +
     stringErrorText +
     '\
@@ -1561,6 +1533,7 @@ function triggerDrawError(id, stringErrorText) {
   </div>';
   document.getElementById("map-error-alerts").appendChild(newAlert);
   scrollIntoViewSmooth(id);
+  $("#map-card").toggleClass("has_error");
   sessionStorage.setItem("map_drawn_successfully", false);
 }
 

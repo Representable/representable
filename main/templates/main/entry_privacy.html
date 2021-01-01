@@ -8,14 +8,16 @@
 </div>
 <div class="row row-equal-cols">
     <div class="col">
-        <div id="need_privacy" class="alert alert-danger alert-dismissible fade show form-error d-none" role="alert">
-            {% trans "Please make sure to agree to the terms and conditions." %}
+        <div id="backup_error" class="alert alert-danger alert-dismissible fade show form-error d-none" role="alert">
+            {% blocktrans %}
+                <p id="backup_error_txt" class="p-0 m-0"></p>
+            {% endblocktrans %}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div id="need_captcha" class="alert alert-danger alert-dismissible fade show form-error d-none mt-3" role="alert">
-            You must complete the captcha to submit this map.
+        <div id="need_privacy" class="alert alert-danger alert-dismissible fade show form-error d-none" role="alert">
+            {% trans "Please make sure to agree to the terms and conditions." %}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -87,10 +89,16 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col text-center p-0">
-              <div class="g-recaptcha mr-4 mr-md-0" id="rcaptcha" data-sitekey="{{recaptcha_public}}"></div>
+        <div class="row pt-5">
+            <div id="need_captcha" class="col-12 text-center w-xl-50 d-none">
+                <div class="alert alert-danger alert-dismissible fade show form-error d-inline-block" role="alert">
+                    {% trans "You need to complete the recaptcha to submit this map." %}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
             </div>
+            <div class="col-12 text-center p-0"><div class="g-recaptcha pt-0 mr-4 mr-md-0" data-sitekey="{{recaptcha_public}}"></div></div>
         </div>
 
         <div class="row my-5 pb-2">
