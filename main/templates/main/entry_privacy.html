@@ -1,0 +1,109 @@
+{% load i18n %}
+{% load widget_tweaks %}
+
+<div class="entry-step row mb-2">
+    <div class="col">
+        Step 4
+    </div>
+</div>
+<div class="row row-equal-cols">
+    <div class="col">
+        <div id="need_privacy" class="alert alert-danger alert-dismissible fade show form-error d-none" role="alert">
+            {% trans "Please make sure to agree to the terms and conditions." %}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div id="need_captcha" class="alert alert-danger alert-dismissible fade show form-error d-none mt-3" role="alert">
+            You must complete the captcha to submit this map.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="row mx-auto">
+            <h4>
+                <strong class="header-text">
+                {% trans "Privacy and Terms of Use" %}
+                </strong>
+            </h4>
+        </div>
+
+        <br>
+
+        <p class="info-text">
+            {% blocktrans %}We gather your identifying information to verify that you are a real person.
+            We will not publicly share anyone's individual personal information, such as name, address, or email. Your privacy is our highest priority.
+            {% endblocktrans %}
+            {% if has_drive %}
+            <br>
+            We will only share your information with the organizers of {{organization_name}} because you are adding the community through their community mapping drive.
+            {% endif %}
+        </p>
+
+        <div class="row row-equal-cols toc-check my-5">
+            <div class="col d-none d-xl-block">
+                <input class="toc-check-input" type="checkbox" value="" id="toc_check_xl" required="">
+                <label class="toc-check-label info-text" for="toc_check_xl">
+                    {% url 'main:privacy' as url1%}
+                    {% url 'main:terms' as url2%}
+
+                    {% blocktrans %} Click here to indicate that you have read and agree to the
+                    <a target="_blank" rel="noopener noreferrer" href={{url2}}>Terms of Use</a> and
+                    <a target="_blank" rel="noopener noreferrer" href="{{url1}}">Privacy Policy</a>.
+                    <small class="text-danger">*</small>
+                    {% endblocktrans %}
+                </label>
+            </div>
+
+            <div class="col-1 mt-1 d-xl-none">
+                <input class="toc-check-input" type="checkbox" value="" id="toc_check" required="">
+            </div>
+            <div class="col-9 p-md-0 d-xl-none">
+                <label class="toc-check-label p-0 info-text" for="toc_check">
+                    {% url 'main:privacy' as url1%}
+                    {% url 'main:terms' as url2%}
+
+                    {% blocktrans %} Click here to indicate that you have read and agree to the
+                    <a target="_blank" rel="noopener noreferrer" href={{url2}}>Terms of Use</a> and
+                    <a target="_blank" rel="noopener noreferrer" href="{{url1}}">Privacy Policy</a>.
+                    <small class="text-required">*</small>
+                    {% endblocktrans %}
+                </label>
+            </div>
+        </div>
+
+        <div class="row w-xl-50 mx-auto rounded" style="background-color: #DAEFFF;">
+            <div class="m-4">
+                <p><strong class="header-text">
+                {% blocktrans %}
+                    Submitted communities are final.
+                {% endblocktrans %}
+                </strong></p>
+
+                <p class="info-text">
+                    {% blocktrans %} In order to edit a saved community you will need
+                    to create a new community and delete the old one. {% endblocktrans %}
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col text-center p-0">
+              <div class="g-recaptcha mr-4 mr-md-0" id="rcaptcha" data-sitekey="{{recaptcha_public}}"></div>
+            </div>
+        </div>
+
+        <div class="row my-5 pb-2">
+            <div class="col text-center">
+                <button class="btn btn-lg btn-primary no-underline-link entry-nav-btn mr-4 mapping-icon" onclick="privacyToMap()"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
+                <button id="entrySubmissionButton" class="btn btn-lg btn-primary no-underline-link entry-nav-btn ml-4 mapping-icon" type="submit" form="entryForm" value="Submit">{% trans "SUBMIT" %}</button>
+            </div>
+        </div>
+
+        <div class="btn-floating btn-group shadow-lg">
+            <button type="button" class="btn fixed-action-btn btn-secondary shadow-lg" id="loading-entry">
+            <div class="loader loader-small text-center"></div><span class="d-none d-sm-inline"> {% trans "Saving Community..." %}</span>
+            </button>
+        </div>
+    </div>
+</div>

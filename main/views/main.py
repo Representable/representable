@@ -19,6 +19,9 @@
 #
 import asyncio
 import boto3
+import urllib
+from urllib.request import urlopen
+from django.contrib import messages
 from django.http import (
     HttpResponse,
     HttpResponseNotFound,
@@ -46,6 +49,10 @@ from allauth.account.models import (
     EmailAddress,
     EmailConfirmationHMAC,
 )
+from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.core.mail import EmailMessage
+
 from allauth.account import adapter
 from allauth.account.app_settings import ADAPTER
 from allauth.account.forms import LoginForm, SignupForm
@@ -68,7 +75,10 @@ from ..models import (
     Drive,
     State,
     BlockGroup,
+    FrequentlyAskedQuestion,
+    GlossaryDefinition,
 )
+from ..choices import STATES
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
 from django.utils.translation import ugettext as _
@@ -100,6 +110,7 @@ from django.contrib.auth.models import Group
 from itertools import islice
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
+import pandas as pd
 
 from django.conf import settings
 
@@ -238,6 +249,38 @@ class Index(TemplateView):
 class About(TemplateView):
     template_name = "main/pages/about.html"
 
+# ******************************************************************************#
+
+
+class FAQ(TemplateView):
+    template_name = "main/pages/faq.html"
+
+    def get(self, request, *args, **kwargs):
+
+        faqs_users = FrequentlyAskedQuestion.objects.filter(type='USER')
+        faqs_orgs = FrequentlyAskedQuestion.objects.filter(type='ORGANIZATION')
+        return render(
+            request,
+            self.template_name,
+            {"faqs_users": faqs_users, "faqs_orgs": faqs_orgs},
+        )
+
+
+# ******************************************************************************#
+
+
+class Glossary(TemplateView):
+    template_name = "main/pages/glossary.html"
+
+    def get(self, request, *args, **kwargs):
+
+        glossaryterms = GlossaryDefinition.objects.all()
+        return render(
+            request,
+            self.template_name,
+            {"glossaryterms": glossaryterms},
+        )
+
 
 # ******************************************************************************#
 
@@ -313,12 +356,23 @@ class Review(LoginRequiredMixin, TemplateView):
         approvedList = list()
         # in this case, just get the ones we made
         query = CommunityEntry.objects.filter(user=user)
-        client = boto3.client(
-            "s3",
-            aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
-            aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
-        )
-        entryPolyDict, comms = asyncio.run(getcommsforreview(query, client))
+        comms = []
+        # the polygon coordinates
+        entryPolyDict = dict()
+        for obj in query:
+            if (
+                obj.census_blocks_polygon == ""
+                or obj.census_blocks_polygon is None
+                and obj.user_polygon
+                ):
+                s = "".join(obj.user_polygon.geojson)
+            elif obj.census_blocks_polygon:
+                s = "".join(obj.census_blocks_polygon.geojson)
+            else:
+                continue
+            comms.append(obj)
+            struct = geojson.loads(s)
+            entryPolyDict[obj.entry_ID] = struct.coordinates
         context = {
             "form": form,
             "entry_poly_dict": json.dumps(entryPolyDict),
@@ -345,64 +399,82 @@ class Review(LoginRequiredMixin, TemplateView):
         return render(request, self.template_name, context)
 
 
-async def getcommsforreview(query, client):
-    comms = []
-    entryPolyDict = dict()
-    for obj in query:
-        try:
-            await getfroms3(
-                client, obj, obj.drive, obj.state, comms, entryPolyDict
-            )
-        except Exception:
-            if (
-                obj.census_blocks_polygon == ""
-                or obj.census_blocks_polygon is None
-                and obj.user_polygon
-            ):
-                s = "".join(obj.user_polygon.geojson)
-            elif (obj.census_blocks_polygon):
-                s = "".join(obj.census_blocks_polygon.geojson)
-            else:
-                continue
-            comms.append(obj)
-            # add all the coordinates in the array
-            # at this point all the elements of the array are coordinates of the polygons
-            struct = geojson.loads(s)
-            entryPolyDict[obj.entry_ID] = struct.coordinates
-    return entryPolyDict, comms
+# async def getcommsforreview(query, client):
+#     comms = []
+#     entryPolyDict = dict()
+#     for obj in query:
+#         try:
+#             await getfroms3(
+#                 client, obj, obj.drive, obj.state, comms, entryPolyDict
+#             )
+#         except Exception:
+#             if (
+#                 obj.census_blocks_polygon == ""
+#                 or obj.census_blocks_polygon is None
+#                 and obj.user_polygon
+#             ):
+#                 s = "".join(obj.user_polygon.geojson)
+#             elif obj.census_blocks_polygon:
+#                 s = "".join(obj.census_blocks_polygon.geojson)
+#             else:
+#                 continue
+#             comms.append(obj)
+#             # add all the coordinates in the array
+#             # at this point all the elements of the array are coordinates of the polygons
+#             struct = geojson.loads(s)
+#             entryPolyDict[obj.entry_ID] = struct.coordinates
+#     return entryPolyDict, comms
 
 
-async def getfroms3(client, obj, drive, state, comms, entryPolyDict):
-    if drive:
-        folder_name = drive
-    elif not drive and obj.drive:
-        folder_name = obj.drive.slug
-    else:
-        folder_name = state
-    response = client.get_object(
-        Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
-        Key=str(folder_name) + "/" + obj.entry_ID + ".geojson",
+# async def getfroms3(client, obj, drive, state, comms, entryPolyDict):
+#     if drive:
+#         folder_name = drive
+#     elif not drive and obj.drive:
+#         folder_name = obj.drive.slug
+#     else:
+#         folder_name = state
+#     response = client.get_object(
+#         Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
+#         Key=str(folder_name) + "/" + obj.entry_ID + ".geojson",
+#     )
+#     strobject = response["Body"].read().decode("utf-8")
+#     mapentry = geojson.loads(strobject)
+#     comm = CommunityEntry(
+#         entry_ID=obj.entry_ID,
+#         comm_activities=mapentry["properties"]["comm_activities"],
+#         entry_name=mapentry["properties"]["entry_name"],
+#         economic_interests=mapentry["properties"]["economic_interests"],
+#         other_considerations=mapentry["properties"]["other_considerations"],
+#         cultural_interests=mapentry["properties"]["cultural_interests"],
+#     )
+#     comm.drive = Drive(name=mapentry["properties"]["drive"])
+#     comm.organization = Organization(
+#         name=mapentry["properties"]["organization"]
+#     )
+#     comms.append(comm)
+#     entryPolyDict[obj.entry_ID] = mapentry["geometry"]["coordinates"]
+
+
+def SendPlainEmail(request):
+    # user_email_address = EmailAddress.objects.get(
+    #     user=self.request.user
+    # )
+    post_email = request.POST.get("message")
+    # user_email_address = "edwardtian2000@gmail.com"
+
+    email = EmailMessage(
+        "Your Representable Map",
+        "Congratulations! <br> You have mapped your community with Representable. <br> We have attached a copy of your map below.",
+        "no-reply@representable.org",
+        [post_email],
     )
-    strobject = response["Body"].read().decode("utf-8")
-    mapentry = geojson.loads(strobject)
-    comm = CommunityEntry(
-        entry_ID=obj.entry_ID,
-        comm_activities=mapentry["properties"]["comm_activities"],
-        entry_name=mapentry["properties"]["entry_name"],
-        economic_interests=mapentry["properties"]["economic_interests"],
-        other_considerations=mapentry["properties"]["other_considerations"],
-        cultural_interests=mapentry["properties"]["cultural_interests"],
-    )
-    comm.drive = Drive(name=mapentry["properties"]["drive"])
-    comm.organization = Organization(
-        name=mapentry["properties"]["organization"]
-    )
-    comms.append(comm)
-    entryPolyDict[obj.entry_ID] = mapentry["geometry"]["coordinates"]
+    email.content_subtype = "html"
 
+    file = request.FILES["generatedpdf"]
+    email.attach(file.name, file.read(), file.content_type)
 
-# ******************************************************************************#
-
+    email.send()
+    return HttpResponse("Sent")
 
 class Submission(TemplateView):
     template_name = "main/submission.html"
@@ -417,6 +489,7 @@ class Submission(TemplateView):
 
         # query will have length 1 or database is invalid
         user_map = query[0]
+
         if user_map.drive:
             folder_name = query[0].drive.slug
             has_state = False
@@ -433,57 +506,22 @@ class Submission(TemplateView):
 
         entryPolyDict = {}
 
-        client = boto3.client(
-            "s3",
-            aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
-            aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
-        )
-        try:
-            s3response = client.get_object(
-                Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
-                Key=folder_name + "/" + user_map.entry_ID + ".geojson",
-            )
-            strobject = s3response["Body"].read().decode("utf-8")
-            mapentry = geojson.loads(strobject)
-            poly = Polygon(mapentry["geometry"]["coordinates"][0])
-            comm = CommunityEntry(
-                entry_ID=m_uuid,
-                census_blocks_polygon=poly,
-                entry_name=mapentry["properties"]["entry_name"],
-                comm_activities=mapentry["properties"]["comm_activities"],
-                economic_interests=mapentry["properties"][
-                    "economic_interests"
-                ],
-                other_considerations=mapentry["properties"][
-                    "other_considerations"
-                ],
-                cultural_interests=mapentry["properties"][
-                    "cultural_interests"
-                ],
-            )
-            if mapentry["properties"]["drive"]:
-                comm.drive = Drive(name=mapentry["properties"]["drive"])
-            if mapentry["properties"]["organization"]:
-                comm.organization = Organization(
-                    name=mapentry["properties"]["organization"]
-                )
-            entryPolyDict[user_map.entry_ID] = mapentry["geometry"][
-                "coordinates"
-            ]
-        except Exception:
-            if (
-                user_map.census_blocks_polygon == ""
-                or user_map.census_blocks_polygon is None
-                and user_map.user_polygon
-            ):
-                s = "".join(user_map.user_polygon.geojson)
-            elif user_map.census_blocks_polygon:
-                s = "".join(user_map.census_blocks_polygon.geojson)
-            else:
-                raise Http404
-            map_poly = geojson.loads(s)
-            entryPolyDict[m_uuid] = map_poly.coordinates
-            comm = user_map
+        if (
+            user_map.census_blocks_polygon == ""
+            or user_map.census_blocks_polygon is None
+            and user_map.user_polygon
+        ):
+            s = "".join(user_map.user_polygon.geojson)
+        elif user_map.census_blocks_polygon:
+            s = "".join(user_map.census_blocks_polygon.geojson)
+        else:
+            raise Http404
+        map_poly = geojson.loads(s)
+        entryPolyDict[m_uuid] = map_poly.coordinates
+        comm = user_map
+
+        # get user email address
+        user_email_address = EmailAddress.objects.get(user=self.request.user)
 
         context = {
             "has_state": has_state,
@@ -493,7 +531,9 @@ class Submission(TemplateView):
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
             "map_id": m_uuid,
+            "email": user_email_address,
         }
+
         # from thanks view
         context["is_thanks"] = False
         if "thanks" in request.path:
@@ -515,10 +555,8 @@ class Submission(TemplateView):
                 user=self.request.user, verified=True
             ).exists():
                 context["verified"] = True
+
             else:
-                user_email_address = EmailAddress.objects.get(
-                    user=self.request.user
-                )
 
                 user_email_confirmation = EmailConfirmationHMAC(
                     email_address=user_email_address
@@ -590,6 +628,35 @@ def make_geojson(request, entry):
     feature = gj["features"][0]
     return feature
 
+# make geojson for state map pages
+def make_geojson_for_state_map_page(request, entry):
+    map_geojson = serialize(
+        "geojson",
+        [entry],
+        geometry_field="census_blocks_polygon",
+        fields=(
+            "entry_name",
+            "cultural_interests",
+            "economic_interests",
+            "comm_activities",
+            "other_considerations",
+        ),
+    )
+    gj = geojson.loads(map_geojson)
+    gj = rewind(gj)
+    del gj["crs"]
+    user_map = entry
+    if user_map.organization:
+        gj["features"][0]["properties"][
+            "organization"
+        ] = user_map.organization.name
+    if user_map.drive:
+        gj["features"][0]["properties"]["drive"] = user_map.drive.name
+
+    feature = gj["features"][0]
+    return feature
+
+# ******************************************************************************#
 
 class ExportView(TemplateView):
     template = "main/export.html"
@@ -614,26 +681,16 @@ class ExportView(TemplateView):
             else:
                 folder_name = query.state
 
-        client = boto3.client(
-            "s3",
-            aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
-            aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
-        )
-        try:
-            try:
-                s3response = client.get_object(
-                    Bucket=os.environ.get("AWS_STORAGE_BUCKET_NAME"),
-                    Key=folder_name + "/" + query.entry_ID + ".geojson",
-                )
-                gj = s3_geojson_export(s3response, query, request)
-            except Exception:
-                gj = make_geojson(request, query)
-        except Exception:
-            msg = "Unable to export the community geojson. Please check again"
-            response = HttpResponseNotFound(msg, content_type="application/json")
+        gj = make_geojson(request, query)
 
         gs = geojson.dumps(gj)
-        response = HttpResponse(gs, content_type="application/json")
+        if "csv" in request.path:
+            # this is the new code -- turns geojson into csv for export
+            df = pd.json_normalize(gj)
+            comm_csv = df.to_csv()
+            response = HttpResponse(comm_csv, content_type="text/csv")
+        else:
+            response = HttpResponse(gs, content_type="application/json")
         return response
 
 
@@ -644,22 +701,32 @@ class Map(TemplateView):
     template_name = "main/map.html"
 
     def get_context_data(self, **kwargs):
+        state = self.kwargs["state"].lower()
 
         # the polygon coordinates
         entryPolyDict = dict()
-        # all communities for display TODO: might need to limit this? or go by state
-        query = CommunityEntry.objects.all()
+        state_obj = State.objects.get(abbr=state.upper())
+        query = state_obj.submissions.all().defer(
+            "census_blocks_polygon_array", "user_polygon"
+        ).prefetch_related("organization", "drive")
+        # state map page --> drives in the state, entries without a drive but with a state
+        drives = []
+        authenticated = self.request.user.is_authenticated
         # get the polygon from db and pass it on to html
-        for obj in CommunityEntry.objects.all():
-            if not obj.admin_approved:
+        for obj in query:
+            if obj.organization and not obj.admin_approved:
                 continue
             if (
                 obj.census_blocks_polygon == ""
                 or obj.census_blocks_polygon is None
+                and obj.user_polygon
             ):
                 s = "".join(obj.user_polygon.geojson)
-            else:
+            elif (obj.census_blocks_polygon):
                 s = "".join(obj.census_blocks_polygon.geojson)
+            else:
+                continue
+            drives.append(obj.drive)
 
             # add all the coordinates in the array
             # at this point all the elements of the array are coordinates of the polygons
@@ -667,11 +734,15 @@ class Map(TemplateView):
             entryPolyDict[obj.entry_ID] = struct.coordinates
 
         context = {
+            "state": state,
+            "state_name": state_obj.name,
             "communities": query,
+            "drives": drives,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
+        context["multi_export_link"] = (f"/multiexport/{state}")
         return context
 
 
@@ -707,6 +778,7 @@ def make_geojson_for_s3(entry):
             "economic_interests",
             "comm_activities",
             "other_considerations",
+            "population",
         ),
     )
     gj = geojson.loads(map_geojson)
@@ -759,6 +831,9 @@ class EntryView(LoginRequiredMixin, View):
     def get(self, request, abbr=None, *args, **kwargs):
         if not abbr:
             return redirect("/#select")
+        else:
+            if not any(abbr.upper() in i for i in STATES):
+                return redirect("/entry_state_selection")
         comm_form = self.community_form_class(
             initial=self.get_initial(), label_suffix=""
         )
@@ -794,6 +869,7 @@ class EntryView(LoginRequiredMixin, View):
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
             "recaptcha_public": settings.RECAPTCHA_PUBLIC,
             "check_captcha": settings.CHECK_CAPTCHA_SUBMIT,
+            "census_key": os.environ.get("CENSUS_API_KEY"),
             "has_token": has_token,
             "has_drive": has_drive,
             "organization_name": organization_name,
@@ -817,6 +893,28 @@ class EntryView(LoginRequiredMixin, View):
         ]
         comm_form.data._mutable = False
         if comm_form.is_valid():
+            recaptcha_response = request.POST.get('g-recaptcha-response')
+            url = 'https://www.google.com/recaptcha/api/siteverify'
+            values = {
+                'secret': settings.RECAPTCHA_PRIVATE,
+                'response': recaptcha_response
+            }
+            data = urllib.parse.urlencode(values)
+            data = data.encode('ascii')
+            req = urllib.request.Request(url, data)
+            response = urlopen(req)
+            result = json.load(response)
+            ''' End reCAPTCHA validation '''
+            if not result['success']:
+                messages.add_message(request, messages.ERROR, 'Invalid reCAPTCHA. Please try again.')
+                context = {
+                    "comm_form": comm_form,
+                    "addr_form": addr_form,
+                    "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+                    "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
+                }
+                return render(request, self.template_name, context)
+            
             entryForm = comm_form.save(commit=False)
             s3 = boto3.resource(
                 "s3",
@@ -831,7 +929,11 @@ class EntryView(LoginRequiredMixin, View):
                     entryForm.organization = drive.organization
             else:
                 folder_name = self.kwargs["abbr"]
-                entryForm.state = self.kwargs["abbr"]
+
+            entryForm.state = self.kwargs["abbr"].lower()
+            entryForm.state_obj = State.objects.get(
+                abbr=self.kwargs["abbr"].upper()
+                )
             if entryForm.organization:
                 if self.request.user.is_org_admin(entryForm.organization.id):
                     entryForm.admin_approved = True
@@ -845,9 +947,10 @@ class EntryView(LoginRequiredMixin, View):
                         # approve this entry
                         entryForm.admin_approved = True
             gj = make_geojson_for_s3(entryForm)
+
             s3.Bucket(os.environ.get("AWS_STORAGE_BUCKET_NAME")).put_object(
                 Body=str(gj),
-                Key=f'{folder_name}/{comm_form.data["entry_ID"]}.geojson',
+                Key=f"{folder_name}/{comm_form.data['entry_ID']}.geojson",
                 ServerSideEncryption="AES256",
                 StorageClass="STANDARD_IA",
             )
@@ -883,3 +986,45 @@ class EntryView(LoginRequiredMixin, View):
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
         return render(request, self.template_name, context)
+
+# ******************************************************************************#
+
+class MultiExportView(TemplateView):
+    template = "main/export.html"
+
+    def get(self, request, **kwargs):
+        state = self.kwargs["abbr"]
+        state_obj = State.objects.get(abbr=state.upper())
+        query = state_obj.submissions.all().defer(
+            "census_blocks_polygon_array", "user_polygon"
+        ).prefetch_related("organization", "drive")
+
+        if not query:
+            # TODO: if the query is empty, return something more appropriate
+            # than an empty geojson? - jf
+
+            return HttpResponse(
+                geojson.dumps({}), content_type="application/json"
+            )
+
+        all_gj = []
+        for entry in query:
+            gj = make_geojson_for_state_map_page(request, entry)
+            all_gj.append(gj)
+
+        final = geojson.FeatureCollection(all_gj)
+
+        if(kwargs['type'] == 'geo'):
+            print('********', 'geo', '********')
+            response = HttpResponse(geojson.dumps(final), content_type="application/json")
+        else:
+            print('********', 'csv', '********')
+            dictform = json.loads(geojson.dumps(final))
+            df = pd.DataFrame()
+            for entry in dictform['features']:
+                row_dict = entry['properties'].copy()
+                row_dict['geometry'] = str(entry['geometry'])
+                df = df.append(row_dict, ignore_index=True)
+            response = HttpResponse(df.to_csv(), content_type="text/csv")
+
+        return response

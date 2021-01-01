@@ -163,7 +163,7 @@ class Drive(models.Model):
     """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    slug = models.SlugField(null=True, unique=True)
+    slug = models.SlugField(max_length=255, null=True, unique=True)
     name = models.CharField(max_length=128)
     description = models.CharField(max_length=700, blank=True, null=True)
     state = models.CharField(
@@ -226,6 +226,25 @@ class BlockGroup(models.Model):
 
 # ******************************************************************************#
 
+class State(models.Model):
+
+    name = models.CharField(
+        max_length=500, blank=False, unique=False, default=""
+    )
+    abbr = models.CharField(max_length=2, blank=False, unique=True, default="")
+
+    content_news = RichTextField()
+    content_criteria = RichTextField()
+    content_coi = RichTextField()
+
+    def get_drives(self):
+        return Drive.objects.filter(state=self.abbr.upper())
+
+    get_drives.allow_tags = True
+
+    class Meta:
+        db_table = "state"
+
 
 class CommunityEntry(models.Model):
     """
@@ -239,6 +258,7 @@ class CommunityEntry(models.Model):
      - user_polygon:  User polygon contains the polygon drawn by the user.
      - census_blocks_polygon_array: Array containing multiple polygons.
      - census_blocks_polygon: The union of the census block polygons.
+     - population: The population of the community entry, based on ACS data.
 
     """
 
@@ -299,11 +319,20 @@ class CommunityEntry(models.Model):
     other_considerations = models.TextField(
         max_length=500, blank=True, unique=False, default=""
     )
+    # make this foreign key relation
+    state_obj = models.ForeignKey(
+        State, 
+        on_delete=models.SET_NULL, 
+        blank=True, 
+        null=True, 
+        related_name="submissions"
+    )
     state = models.CharField(
         max_length=10, blank=True, unique=False, default=""
     )
     created_at = models.DateTimeField(auto_now_add=True)
     admin_approved = models.BooleanField(default=True)
+    population = models.IntegerField(blank=True, default=0)
 
     def __str__(self):
         return str(self.entry_ID)
@@ -339,24 +368,44 @@ class Address(models.Model):
 # ******************************************************************************#
 
 
-class State(models.Model):
 
-    name = models.CharField(
-        max_length=500, blank=False, unique=False, default=""
+
+
+# ******************************************************************************#
+
+
+class FrequentlyAskedQuestion(models.Model):
+
+    FAQ_TYPE_CHOICES = [
+        ('USER', 'User'),
+        ('ORGANIZATION', 'Organization'),
+    ]
+
+    type = models.CharField(
+        max_length=12,
+        choices=FAQ_TYPE_CHOICES,
+        default='USER',
     )
-    abbr = models.CharField(max_length=2, blank=False, unique=True, default="")
 
-    content_news = RichTextField()
-    content_criteria = RichTextField()
-    content_coi = RichTextField()
-
-    def get_drives(self):
-        return Drive.objects.filter(state=self.abbr.upper())
-
-    get_drives.allow_tags = True
+    question = RichTextField()
+    answer = RichTextField()
 
     class Meta:
-        db_table = "state"
+        db_table = "faq"
+
+
+# ******************************************************************************#
+
+
+class GlossaryDefinition(models.Model):
+
+    term = models.CharField(
+        max_length=100, blank=False, unique=True, default=""
+    )
+    definition = models.CharField(max_length=1000, blank=False, unique=True, default="")
+
+    class Meta:
+        db_table = "glossary"
 
 
 # ******************************************************************************#

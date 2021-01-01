@@ -26,14 +26,35 @@ var filterStack = JSON.parse(sessionStorage.getItem("filterStack"));
 var bboxStack = JSON.parse(sessionStorage.getItem("bboxStack"));
 if (filterStack === null) filterStack = [];
 if (bboxStack === null) bboxStack = [];
+// set population
+var pop = sessionStorage.getItem("pop");
+if (pop !== null) $(".comm-pop").html(pop);
 
 // change "Show Examples" to "Hide Examples" on click
+// TODO: change this to be updated for languages automatically, rather than manually
 function changeText(element) {
-  if (element.innerText == "Show Examples") {
-    element.innerText = "Hide Examples";
+  var target_id = element.getAttribute("data-target").replace("#","");
+  var targetVis = document.getElementById(target_id).classList.contains("show");
+  var txt = element.innerText;
+  if (!targetVis) {
+    if (txt == "Show Examples") {
+      element.innerText = "Hide Examples";
+    } else if (txt == "Mostar ejemplos") {
+      element.innerText = "Ocultar ejemplos";
+    }
   } else {
-    element.innerText = "Show Examples";
+    if (txt == "Hide Examples") {
+      element.innerText = "Show Examples";
+    } else if (txt == "Ocultar ejemplos"){
+      element.innerText = "Mostar ejemplos";
+    }
   }
+}
+
+// changes page entry page from the survey start page to the first part of the survey
+function startSurvey() {
+  $("#entry-survey-start").addClass("d-none");
+  $("#survey-qs-p1").removeClass("d-none");
 }
 
 function showVideoPopup() {
@@ -91,7 +112,142 @@ function isEmptyFilter(filter) {
   return isEmpty;
 }
 
-/******************************************************************************/
+/******************************************************************************
+
+Entry Page functions
+
+*******************************************************************************/
+function toggleAngle(e) {
+  var collapsible = e.parentNode.getElementsByClassName('collapse')[0].id;
+  $('#' + collapsible).collapse('toggle');
+  if (e.innerHTML.includes("fa-angle-down")) {
+    e.innerHTML = e.innerHTML.replace("fa-angle-down", "fa-angle-up");
+  } else {
+    e.innerHTML = e.innerHTML.replace("fa-angle-up", "fa-angle-down");
+  }
+}
+
+// Adds the responses given to the survey questions to the dropdown on the map page
+function fillSurveyQuestions() {
+  $("h6#dropdown-comm-name").text(`${$("#id_entry_name").val()}:`);
+  $("#map-economic-interests-resp>p.collapse-in").text($("#id_economic_interests").val());
+  $("#map-activities-resp>p.collapse-in").text($("#id_comm_activities").val());
+  $("#map-cultural-interests-resp>p.collapse-in").text($("#id_cultural_interests").val());
+  $("#map-other-interests-resp>p.collapse-in").text($("#id_other_considerations").val());
+
+  $("h6#modal-comm-name").text(`${$("#id_entry_name").val()}:`);
+  $("#mobile-map-economic-interests-resp>p.collapse-in").text($("#id_economic_interests").val());
+  $("#mobile-map-activities-resp>p.collapse-in").text($("#id_comm_activities").val());
+  $("#mobile-map-cultural-interests-resp>p.collapse-in").text($("#id_cultural_interests").val());
+  $("#mobile-map-other-interests-resp>p.collapse-in").text($("#id_other_considerations").val());
+}
+
+$('#map-help-menu').on('click', function (event) {
+  event.stopPropagation();
+});
+
+$('#map-help-menu').on('touchstart', function (event) {
+  event.stopPropagation();
+});
+
+$('#map-comm-menu').on('click', function (event) {
+    event.stopPropagation();
+});
+
+$('#map-comm-menu').on('touchstart', function (event) {
+  event.stopPropagation();
+});
+
+$("#mobile-map-help-btn").on("click", function() {
+  $("#map-help-modal").modal();
+});
+
+$("#mobile-map-comm-btn").on("click", function() {
+  $("#map-comm-modal").modal();
+});
+
+$('#map-help-dropdown').on('shown.bs.dropdown hidden.bs.dropdown', function() {
+  $("#map-help-btn").toggleClass("opened")
+});
+
+$('#map-comm-dropdown').on('shown.bs.dropdown hidden.bs.dropdown', function() {
+  $("#map-comm-btn").toggleClass("opened")
+});
+
+$('#map-help-modal').on('shown.bs.modal hidden.bs.modal', function() {
+  $("#mobile-map-help-btn").toggleClass("opened")
+});
+
+$('#map-comm-modal').on('shown.bs.modal hidden.bs.modal', function() {
+  $("#mobile-map-comm-btn").toggleClass("opened")
+});
+
+function addressToSurveyStart() {
+  $("#entry_address").addClass("d-none");
+  $("#entry_survey").removeClass("d-none");
+}
+
+function surveyStartToAddress() {
+  $("#entry_survey").addClass("d-none");
+  $("#entry_address").removeClass("d-none");
+}
+
+// changes page entry page from the survey start page to the first part of the survey
+function startSurvey() {
+  $("#entry-survey-start").addClass("d-none");
+  $("#survey-qs-p1").removeClass("d-none");
+}
+
+function surveyP1ToSurveyStart() {
+  $("#survey-qs-p1").addClass("d-none");
+  $("#entry-survey-start").removeClass("d-none");
+}
+
+function surveyP1ToP2() {
+  $("#survey-qs-p1").addClass("d-none");
+  $("#survey-qs-p2").removeClass("d-none");
+}
+
+function surveyP2ToP1() {
+  $("#survey-qs-p2").addClass("d-none");
+  $("#survey-qs-p1").removeClass("d-none");
+}
+
+function surveyP2ToMap() {
+  $("#survey-qs-p2").addClass("d-none");
+  $("#entryForm").children(".container-fluid").addClass("d-none");
+  $("#entry_map").removeClass("d-none");
+  $("#entry-map-modal").modal();
+  map.resize();
+  fillSurveyQuestions();
+}
+
+function mapToSurveyP2() {
+  $("#entry_map").addClass("d-none");
+  $("#entryForm").children(".container-fluid").removeClass("d-none");
+  $("#survey-qs-p2").removeClass("d-none");
+}
+
+function mapToPrivacy() {
+  $("#entry_map").addClass("d-none");
+  $("#entryForm").children(".container-fluid").removeClass("d-none");
+  $("#entry_privacy").removeClass("d-none");
+  $("#entry_survey").addClass("d-none");
+}
+
+function privacyToMap() {
+  $("#entry_privacy").addClass("d-none");
+  $("#entryForm").children(".container-fluid").addClass("d-none");
+  $("#entry_map").removeClass("d-none");
+  $("#entry_survey").removeClass("d-none");
+  map.resize();
+}
+
+function clearFieldsError(fields) {
+  for (var i = 0; i < fields.length; i++) {
+    fields[i].classList.remove("has_error");
+  }
+}
 
 function showMap() {
   $(".map-bounding-box.collapse").collapse("show");
@@ -111,6 +267,7 @@ function toggleErrorFail(field) {
   field.classList.add("has_error");
 }
 
+// Checks each of the non-interest form fields
 function checkFieldById(field_id) {
   var field = document.getElementById(field_id);
   if (field.type === "checkbox") {
@@ -132,23 +289,74 @@ function checkFieldById(field_id) {
   return true;
 }
 
-function formValidation() {
-  // Check Normal Fields
+function trim(x) {
+  return x.replace(/^\s+|\s+$/gm,'');
+}
+
+function addressValidated() {
   var flag = true;
+  var name_field = document.getElementById("id_user_name");
   var entryForm = document.getElementById("entryForm");
-  var form_elements = entryForm.elements;
-  for (var i = 0; i < form_elements.length; i++) {
-    if (form_elements[i].required) {
-      if (checkFieldById(form_elements[i].id) == false) {
-        flag = false;
-      }
+
+
+  var is_address_required = address_required == "True";
+  if (is_address_required) {
+    entryForm.street.value = trim(entryForm.street.value);
+    entryForm.city.value = trim(entryForm.city.value);
+    entryForm.state.value = trim(entryForm.state.value);
+    entryForm.zipcode.value = trim(entryForm.zipcode.value);
+
+    if (entryForm.street.value == "") {
+      entryForm.street.classList.add("has_error");
+      flag = false
+    }
+    if (entryForm.city.value == "") {
+      entryForm.city.classList.add("has_error");
+      flag = false
+    }
+    if (entryForm.state.value == "") {
+      entryForm.state.classList.add("has_error");
+      flag = false
+    }
+
+    if (entryForm.zipcode.value == "") {
+      entryForm.zipcode.classList.add("has_error");
+      flag = false
+    }
+
+
+    if (!flag) {
+      document.getElementById("need_address").classList.remove("d-none");
     }
   }
 
+  name_field.value = trim(name_field.value)
+  if (name_field.value == "") {
+    name_field.classList.add("has_error");
+    document.getElementById("need_name").classList.remove("d-none");
+    flag = false;
+  }
+
+  return flag;
+}
+
+$("#entry_address_button").on("click", function(e) {
+  e.preventDefault();
+  if (addressValidated()) {
+     addressToSurveyStart();
+     var entryForm = document.getElementById("entryForm");
+     clearFieldsError(entryForm.getElementsByClassName("addr-field"));
+     document.getElementById("need_name").classList.add("d-none");
+     document.getElementById("need_address").classList.add("d-none");
+  }
+});
+
+function interestsValidated() {
+  var flag = true;
   var cultural_interests_field = document.getElementById(
     "id_cultural_interests"
   );
-  var economic_intetersts_field = document.getElementById(
+  var economic_interests_field = document.getElementById(
     "id_economic_interests"
   );
   var comm_activities_field = document.getElementById("id_comm_activities");
@@ -156,44 +364,138 @@ function formValidation() {
     "id_other_considerations"
   );
 
+  cultural_interests_field.value = trim(cultural_interests_field.value);
+  economic_interests_field.value = trim(economic_interests_field.value);
+  comm_activities_field.value = trim(comm_activities_field.value);
+  other_considerations_field.value = trim(other_considerations_field.value);
+
   if (
     cultural_interests_field.value == "" &&
-    economic_intetersts_field.value == "" &&
+    economic_interests_field.value == "" &&
     comm_activities_field.value == "" &&
     other_considerations_field.value == ""
   ) {
     cultural_interests_field.classList.add("has_error");
-    economic_intetersts_field.classList.add("has_error");
+    economic_interests_field.classList.add("has_error");
     comm_activities_field.classList.add("has_error");
     other_considerations_field.classList.add("has_error");
     var interests_alert = document.getElementById("need_one_interest");
     interests_alert.classList.remove("d-none");
     flag = false;
   }
-  var is_address_required = address_required == "True";
-  if (
-    is_address_required &&
-    (entryForm.street.value == "" ||
-      entryForm.city.value == "" ||
-      entryForm.state.value == "" ||
-      entryForm.zipcode.value == "")
-  ) {
-    entryForm.street.classList.add("has_error");
-    entryForm.city.classList.add("has_error");
-    entryForm.state.classList.add("has_error");
-    entryForm.zipcode.classList.add("has_error");
-    document.getElementById("need_address").classList.remove("d-none");
-    flag = false;
-  }
 
-  if (flag == false) {
-    // Add alert.
-    var alert = document.getElementById("form_error");
-    alert.classList.remove("d-none");
-    scrollIntoViewSmooth(alert.id);
-  }
-  return flag;
+  return flag
 }
+
+$("#surveyP1ToP2_button").on("click", function(e) {
+  e.preventDefault();
+  if (interestsValidated()) {
+    surveyP1ToP2();
+    clearFieldsError(document.getElementById("entryForm").getElementsByClassName("survey-field"));
+    document.getElementById("need_one_interest").classList.add("d-none");
+  }
+});
+
+function commNameValidated() {
+  var commName = document.getElementById("id_entry_name");
+  commName.value = trim(commName.value);
+  if (commName.value == "") {
+    commName.classList.add("has_error");
+    document.getElementById("need_comm_name").classList.remove("d-none");
+    return false;
+  }
+  return true;
+}
+
+$("#surveyP2ToMap_button").on("click", function(e) {
+  e.preventDefault();
+  if (commNameValidated()) {
+    surveyP2ToMap();
+    document.getElementById("id_entry_name").classList.remove("has_error");
+    document.getElementById("need_comm_name").classList.add("d-none");
+  }
+})
+
+$("#mapToPrivacy").on("click", function(e) {
+  e.preventDefault();
+  mapToPrivacy();
+})
+
+$("#mapToPrivacyMobile").on("click", function(e) {
+  e.preventDefault();
+  mapToPrivacy();
+})
+
+function privacyCheckValidation() {
+  if (document.getElementById("toc_check").checked === true || document.getElementById("toc_check_xl").checked === true) {
+    return true;
+  } else {
+    document.getElementById("need_privacy").classList.remove("d-none");
+  }
+  return false;
+}
+// function formValidation() {
+//   // Check Normal Fields
+//   var flag = true;
+//   var entryForm = document.getElementById("entryForm");
+//   var form_elements = entryForm.elements;
+//   for (var i = 0; i < form_elements.length; i++) {
+//     if (form_elements[i].required) {
+//       if (checkFieldById(form_elements[i].id) == false) {
+//         flag = false;
+//       }
+//     }
+//   }
+
+//   var cultural_interests_field = document.getElementById(
+//     "id_cultural_interests"
+//   );
+//   var economic_intetersts_field = document.getElementById(
+//     "id_economic_interests"
+//   );
+//   var comm_activities_field = document.getElementById("id_comm_activities");
+//   var other_considerations_field = document.getElementById(
+//     "id_other_considerations"
+//   );
+
+//   if (
+//     cultural_interests_field.value == "" &&
+//     economic_intetersts_field.value == "" &&
+//     comm_activities_field.value == "" &&
+//     other_considerations_field.value == ""
+//   ) {
+//     cultural_interests_field.classList.add("has_error");
+//     economic_intetersts_field.classList.add("has_error");
+//     comm_activities_field.classList.add("has_error");
+//     other_considerations_field.classList.add("has_error");
+//     var interests_alert = document.getElementById("need_one_interest");
+//     interests_alert.classList.remove("d-none");
+//     flag = false;
+//   }
+//   var is_address_required = address_required == "True";
+//   if (
+//     is_address_required &&
+//     (entryForm.street.value == "" ||
+//       entryForm.city.value == "" ||
+//       entryForm.state.value == "" ||
+//       entryForm.zipcode.value == "")
+//   ) {
+//     entryForm.street.classList.add("has_error");
+//     entryForm.city.classList.add("has_error");
+//     entryForm.state.classList.add("has_error");
+//     entryForm.zipcode.classList.add("has_error");
+//     document.getElementById("need_address").classList.remove("d-none");
+//     flag = false;
+//   }
+
+//   if (flag == false) {
+//     // Add alert.
+//     var alert = document.getElementById("form_error");
+//     alert.classList.remove("d-none");
+//     scrollIntoViewSmooth(alert.id);
+//   }
+//   return flag;
+// }
 
 /****************************************************************************/
 // generates polygon to be saved from the selection
@@ -202,7 +504,10 @@ function createCommPolygon() {
   // it means a community with a population between 480,000 & 2,400,000
   var polyFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
 
-  if (polyFilter === null) return false;
+  if (polyFilter === null) {
+    triggerMissingPolygonError();
+    return false;
+  }
   if (polyFilter.length > 802) {
     triggerDrawError(
       "polygon_size",
@@ -240,6 +545,9 @@ function createCommPolygon() {
   polyFilter.splice(0, 1);
   polyFilter.splice(0, 1);
   document.getElementById("id_block_groups").value = polyFilter;
+  // load in the Population
+  var pop = sessionStorage.getItem("pop");
+  document.getElementById("id_population").value = pop;
   return true;
 }
 
@@ -264,7 +572,7 @@ document.addEventListener(
       .removeClass("add-form-row")
       .addClass("remove-form-row")
       .html('<span class="" aria-hidden="true">Remove</span>');
-    $("#save").on("click", function (e) {
+    $("#entrySubmissionButton").on("click", function (e) {
       e.preventDefault();
       var form = $("#entryForm");
       zoomToCommunity();
@@ -277,15 +585,17 @@ document.addEventListener(
       //todo: switch this to a promise ?
       setTimeout(function () {
         polySuccess = createCommPolygon();
-        formSuccess = formValidation();
+        privacySuccess = privacyCheckValidation();
       }, 500);
       setTimeout(function () {
-        if (polySuccess && formSuccess) {
+        if (polySuccess && privacySuccess) {
+          sessionStorage.clear();
           form.submit();
         }
       }, 2000);
       return false;
     });
+
     // If there are alerts, scroll to first one.
     var document_alerts = document.getElementsByClassName("django-alert");
     if (document_alerts.length > 0) {
@@ -335,6 +645,10 @@ document.addEventListener(
 
 /******************************************************************************/
 
+function geocoderRender(item) {
+  return '<div class="mapboxgl-ctrl-geocoder mapboxgl-ctrl"><span class="geocoder-icon geocoder-icon-search"></span><input type="text" placeholder="Search Location"><ul class="suggestions" style="display: none;"></ul><div class="geocoder-pin-right"><button class="geocoder-icon geocoder-icon-close" aria-label="Clear"></button><span class="geocoder-icon geocoder-icon-loading"></span></div></div>'
+}
+
 // Initialize the Map
 /* eslint-disable */
 var map = new mapboxgl.Map({
@@ -344,6 +658,10 @@ var map = new mapboxgl.Map({
   zoom: 3, // starting zoom -- higher is closer
   maxZoom: 14, // camelCase. There's no official documentation for this smh :/
   minZoom: 7,
+});
+
+map.on('load', function() {
+  map.resize();
 });
 
 var layerList = document.getElementById("menu");
@@ -364,7 +682,18 @@ var geocoder = new MapboxGeocoder({
   mapboxgl: mapboxgl,
 });
 
+var modalGeocoder = new MapboxGeocoder({
+  accessToken: mapboxgl.accessToken,
+  country: "us",
+  mapboxgl: mapboxgl,
+});
+
 document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
+document.getElementById("modal-geocoder").appendChild(modalGeocoder.onAdd(map));
+
+modalGeocoder.on('result', function () {
+  $('#entry-map-modal').modal('hide');
+})
 
 /* Creating custom draw buttons */
 class DropdownButton {
@@ -574,10 +903,12 @@ class ClearMapButton {
         "Are you sure you want to clear the map? This will delete the blocks you have selected."
       );
       if (isConfirmed) {
+        $(".comm-pop").html(0);
         map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
         var undoBbox = sessionStorage.getItem("selectBbox");
         filterStack.push(undoFilter);
         bboxStack.push(undoBbox);
+        sessionStorage.setItem("pop", "0");
         sessionStorage.setItem("bgFilter", "[]");
         sessionStorage.setItem("selectBbox", "[]");
         sessionStorage.setItem("filterStack", JSON.stringify(filterStack));
@@ -1002,6 +1333,8 @@ map.on("style.load", function () {
     var queryFeatures = map.queryRenderedFeatures(bbox, {
       layers: [state + "-census-shading"],
     });
+    // if no features are found - probably selected an invalid area (outside state) or some other error occurred
+    if (queryFeatures.length == 0) return;
     var isChanged = false; // store only valid moves in stack
     var features = []; // the features in click radius
     var currentBbox; // the current selection area bounding box
@@ -1038,7 +1371,8 @@ map.on("style.load", function () {
         if (isEmptyFilter(filter)) {
           sessionStorage.setItem("selectBbox", "[]");
         }
-        selectBbox = turf.difference(selectBbox, currentBbox);
+        if (selectBbox === null) selectBbox = [];
+        else selectBbox = turf.difference(selectBbox, currentBbox);
       }
     } else {
       // check if previous selectBbox overlaps with current selectBbox
@@ -1071,7 +1405,7 @@ map.on("style.load", function () {
       );
 
       currentFilter.forEach(function (feature) {
-        if (feature !== "in" && feature !== "GEOID" && feature !== "") {
+        if (feature !== "in" && feature !== "GEOID" && feature !== "" && !filter.includes(feature)) {
           filter.push(feature);
         }
       });
@@ -1084,6 +1418,10 @@ map.on("style.load", function () {
         "This community is too large. Please select a smaller area to continue."
       );
     }
+    // set as indicator that population is loading
+    $(".comm-pop").html("...");
+    // remove "in" and "GEOID" parts of filter, for population
+    getCommPop(cleanFilter(filter));
     if (isChanged) {
       filterStack.push(currentFilter);
       bboxStack.push(JSON.stringify(currentBbox));
@@ -1309,4 +1647,55 @@ function arraysEqual(a, b) {
     if (a[i] !== b[i]) return false;
   }
   return true;
+}
+
+/***************************************************************************/
+
+var bgPopCache = {};
+// get the population for a community from filter
+// TODO: load this in automatically as part of the tilesets for immediate lookup?
+function getCommPop(filter) {
+  if (filter.length === 0) $(".comm-pop").html(0);
+  var pop = 0;
+  var ctr = 0;
+  filter.forEach(function(feature){
+    if (feature in bgPopCache) {
+      ctr++;
+      pop += bgPopCache[feature];
+      if (ctr === filter.length) {
+        $(".comm-pop").html(pop);
+        sessionStorage.setItem("pop", pop);
+      }
+    } else {
+      getBGPop(feature, function(bgPop) {
+        ctr++;
+        pop += parseInt(bgPop);
+        bgPopCache[feature] = parseInt(bgPop);
+        if (ctr === filter.length) {
+          $(".comm-pop").html(pop);
+          sessionStorage.setItem("pop", pop);
+        }
+      })
+    }
+  });
+}
+
+// query the ACS api in order to get blockgroup population data!
+// geoid chars 0-2:state, 2-5:county, 5-11:tract, 12:block group
+function getBGPop(geoid, callback) {
+  var req = new XMLHttpRequest();
+  req.open('GET', 'https://api.census.gov/data/2018/acs/acs5?get=B01003_001E&for=block%20group:' + geoid.substring(11) + '&in=state:' + geoid.substring(0,2) + '%20county:' + geoid.substring(2, 5) + '%20tract:' + geoid.substring(5, 11) + '&key=' + census_key, true);
+  req.onreadystatechange = function(){
+    if (req.readyState == 4 && req.status == 200) {
+      var data = JSON.parse(req.response);
+      callback(data[1][0]);
+    }
+  }
+  req.send();
+}
+
+function cleanFilter(filter) {
+  var cleanFilter = filter.slice();
+  cleanFilter.splice(0, 2);
+  return cleanFilter;
 }
