@@ -317,6 +317,20 @@
         <button class="btn btn-secondary btn-sm mb-2 mr-2 d-none" id="shepherd-btn" onclick="myTour.start()" type="button">{% trans "Step-by-step guide" %}</button>
     </span>
 
+    <div id="map-error-alerts">
+        {% if comm_form.user_polygon.errors %}
+        <script>
+            sessionStorage.setItem("allChecks", "fail");
+        </script>
+        <div id="polygon_missing" class="alert alert-danger django-alert alert-dismissible fade show form-error" role="alert">
+            {% trans "You need to draw a community to submit the form." %}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endif %}
+    </div>
+
     <!-- Actual Map -->
     <div class="map-bounding-box my-2 collapse">
         <div class="map-box">
