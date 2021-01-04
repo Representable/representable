@@ -361,10 +361,11 @@ class AllowListManage(LoginRequiredMixin, OrgAdminRequiredMixin, TemplateView):
 
     def post(self, request, cam_pk, *args, **kwargs):
         drive = Drive.objects.get(pk=cam_pk)
+        state = drive.state.lower()
         email = self.request.POST["email"]
         link = (
-            "<a href=representable.org/entry/"
-            + drive.slug
+            "<a href=representable.org/entry/drive/"
+            + drive.slug + "/" + state
             + " > this link </a>"
         )
         query = AllowList.objects.filter(email=email, drive=drive)
