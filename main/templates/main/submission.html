@@ -35,6 +35,7 @@
         var mapbox_user_name = "{{mapbox_user_name}}";
         var state = '';
         var is_thanks = '{{ is_thanks }}'
+        var comm_id = '{{ c.entry_ID }}'
       </script>
     </div>
     {% if entries is None %}
@@ -69,7 +70,7 @@
                           </span>
                           <hr class="my-1">
                           <span id="ignorePDF">
-                            {% if c.organization and c.organization.name%}
+                            {% if c.organization and c.organization.name %}
                             <span id="org-text" class="badge badge-pill badge-primary">{{c.organization}}</span>
                             <br>
                             {% endif %}
@@ -91,6 +92,12 @@
                               {% else %}
                               <br>
                               {% endif %}
+                              {% endif %}
+                            </span>
+                            <span class="small">
+                              {% if c.population > 0 %}
+                              <b>Population:</b> {{ c.population }}
+                              <br>
                               {% endif %}
                             </span>
                           </span>
@@ -119,17 +126,48 @@
                         <tr>
                         </table>
                         <div class="text-center">
+                          <!-- ********************* -->
+                          <!-- GeoJSON Explainer Modal -->
+                          <div class="modal fade" id="geojson-explain-modal" tabindex="-1" role="dialog" aria-labelledby="geojson-explain-modalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">What is GeoJSON?</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  GeoJSON files are industry standard and usable with other mapping softwares like Maptitude for Redistricting, Dave's Redistricting App, ESRI, and more.
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- ********************* -->
                           {% if has_state %}
-                          {% with link_text="/export/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
-                          <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.geojson">Export GeoJSON</a>
-                          <span class="btn btn-outline-primary btn-canvas mx-4 my-2" role="button" id="pdf-button">Export PDF</span>
+                          {% with link_text="/export/geojson/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
+                          <!-- <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.geojson">Export GeoJSON</a> -->
+                          <a class="btn btn-outline-primary mx-4 d-none d-sm-inline" href="#" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>Export GeoJSON</a>
+                          <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
+                          <!-- ********************* -->
+                          <span class="btn btn-outline-primary btn-canvas mx-4 my-2" id="pdf-button" role="button">Export PDF</span>
+                          {% endwith %}
+                          {% with link_text="/export/csv/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
+                          <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.csv">Export CSV</a>
                           {% endwith %}
                           {% else %}
-                          {% with link_text="/export?map_id="|addstr:c.entry_ID %}
-                          <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.geojson">Export GeoJSON</a>
-                          <span class="btn btn-outline-primary btn-canvas mx-4 my-2" role="button" id="pdf-button">Export PDF</span>
+                          {% with link_text="/export/geojson/?map_id="|addstr:c.entry_ID %}
+                          <!-- <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.geojson">Export GeoJSON</a> -->
+                          <a class="btn btn-outline-primary mx-4 d-none d-sm-inline" href="#" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>Export GeoJSON</a>
+                          <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
+                          <!-- ********************* -->
+                          <span class="btn btn-outline-primary btn-canvas mx-4 my-2" id="pdf-button" role="button">Export PDF</span>
+                          {% endwith %}
+                          {% with link_text="/export/csv"|add:"/?map_id="|addstr:c.entry_ID %}
+                          <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.csv">Export CSV</a>
                           {% endwith %}
                           {% endif %}
+
                         </div>
                       </div>
                     </div>
@@ -151,84 +189,101 @@
 
         <div class="modal fade" id="thanksModal" tabindex="-1" role="dialog" aria-labelledby="thanksModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document" id="thanksModalDialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title text-center font-weight-light" id="thanksModalLabel">Thank you for your submission!</h1>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="row my-3">
-                  <div class="col-sm my-3 mx-3">
-                    <div class="card border-0">
-                      <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/send.svg' %}"></img>
-                      <div class="card-body text-center d-flex flex-column align-items-center">
-                        <h5>
-                          Visualize/Export
-                        </h5>
-                        <p>
-                          View your community on our live map, and export in PDF or industry standard GeoJSON formats to share with your representatives or mapmakers.
-                        </p>
-                        <div class="text-center">
-                          <button id="card-add-community-btn" class="btn btn-outline-primary mx-2 my-1" data-dismiss="modal" aria-label="Close" type="button">View Community</button>
-                        </div>
-                        <!-- <a class="btn btn-primary btn-canvas mt-auto" href="/entry" role="button">Get Started</a> -->
-                      </div>
+            <div class="modal-content green-bg mt-5" style="border-radius: 40px;">
+              <div class="modal-header border-0 pb-0">
+                <h1 class="modal-title text-center mt-lg-4 d-none d-lg-flex pl-5" id="thanksModalLabel">Congratulations!
+                  <img id="thanks-confetti" class="" src="{% static 'img/confetti.svg' %}" alt="celebratory confetti"> </img>
+                </h1>
+                <h4 class="modal-title text-center mt-lg-4 d-flex d-lg-none mx-auto pl-5" id="thanksModalLabel">Congratulations!
+                  <img id="thanks-confetti" class="" src="{% static 'img/confetti.svg' %}" alt="celebratory confetti"> </img>
+                </h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body gray-text">
+                  <div class="row my-1">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-8 text-center">
+                      <p>Your community is ready to be viewed and downloaded. Your map <br class="d-none d-md-block"> can make a difference in the fight against gerrymandering. </p>
+                      <h4 class="mb-lg-4">Make an impact with your map.</h4>
+                    </div>
+                    <div class="col-lg-2"></div>
+                  </div>
+                  <!-- MOBILE ONLY - NO download links but instead we provide more info -->
+                  <div class="row my-2">
+                    <div class="col-4 d-flex d-lg-none">
+                      <img class="mx-auto d-block w-75 h-100" src="{% static 'img/thanks-district.svg' %}" alt="district icon"> </img>
+                    </div>
+                    <div class="col-8 d-flex d-lg-none">
+                      <p class="">View your community on a computer to download as a PDF or geoJSON file. You can submit these files as public testimony or to a local redistricting organization.</p>
                     </div>
                   </div>
-                  {% if has_drive %}
-                  <div class="col-sm my-3 mx-3">
-                    <div class="card border-0">
-                      <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/map.svg' %}"></img>
-                      <div class="card-body text-center flex-column align-items-center">
-                        <h5 class="card-title">
-                          {{ drive_name }} Map
-                        </h5>
-                        <p class="card-text">
-                          Your community is part of a community mapping drive, organized by {{ organization_name }}. View all communities submitted to {{drive_name}}.
-                        </p>
-                        <div class="text-center">
-                          <a id="card-partner-btn" class="btn btn-outline-primary mx-2 my-1" href="{% url 'main:partner_map' organization_slug drive_slug %}" role="button">View Map</a>
-                        </div>
-                        <!-- <a class="btn btn-primary btn-canvas mt-auto" href="mailto: team@representable.org?subject=Hello!" role="button">Contact Us</a> -->
-                      </div>
+                  <div class="row my-1 mb-lg-3 d-none d-lg-flex">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-1">
+                      <div class="thanks-circle"></div>
+                      <img class="mx-auto w-125 h-100" src="{% static 'img/thanks-email.svg' %}" alt="email icon"> </img>
+                    </div>
+                    <div class="col-lg-7">
+                      If your state has a redistricting commission or accepts Communities of Interest, send a pdf of your community to submit as public testimony. If not, you can send it to a local redistricting organization.<br>
+                      <div class="text-center"><a class="btn btn-outline-gray mx-2 my-1" id="pdf-button-modal" target="_blank" data-dismiss="modal" role="button">Export PDF</a></div>
+                    </div>
+                    <div class="col-lg-3"></div>
+                  </div>
+                  <div class="row my-1 mb-lg-3 d-none d-lg-flex">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-1">
+                      <div class="thanks-circle"></div>
+                      <img class="mx-auto d-block w-125 h-100" src="{% static 'img/thanks-district.svg' %}" alt="district icon"> </img>
+                    </div>
+                    <div class="col-lg-7">
+                      If you would like to use your map to draw voting districts, you can upload the geoJSON file to mapping softwares such as Maptitude, Dave’s Redistricting App, or Districtr.<br>
+                      <!-- <div class="text-center"><a class="btn btn-outline-gray mx-2 my-1" target="_blank" href="" role="button">Export geoJSON</a></div> -->
+                      {% if has_state %}
+                      {% with link_text="/export/geojson/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
+                      <div class="text-center"><a class="btn btn-outline-gray mx-2 my-1 geojson-button" href="#" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>Export geoJSON</a></div>
+                      <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
+                      {% endwith %}
+                      {% else %}
+                      {% with link_text="/export/geojson/?map_id="|addstr:c.entry_ID %}
+                      <div class="text-center"><a class="btn btn-outline-gray mx-2 my-1 geojson-button" href="#" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>Export geoJSON</a></div>
+                      <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
+                      {% endwith %}
+                      {% endif %}
                     </div>
                   </div>
-                  {% endif %}
-                  <div class="col-sm m-3">
-                    <div class="card border-0 card-body">
-                      <img class="card-img-top img-fluid small-icon m-2 h-25 w-50 mx-auto" src="{% static 'img/redistricter.svg' %}"></img>
-                      <div class="card-body text-center flex-column align-items-center">
-                        <h5 class="card-title">
-                          Provide Feedback
-                        </h5>
-                        <p class="card-text">
-                          We are interested in your feedback. If you found a bug or have any suggestions for us, please send them to us by pressing on the button below.
-                        </p>
-                        <div class="text-center">
-                          <a class="btn btn-outline-primary mx-2 my-1" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSfeyoZ87pS67iTh2c3t5031XqoNFNAdwF6Pt1NUns_z_Myxaw/viewform" role="button">Send Feedback</a>
+                  <div class="row my-1 mb-lg-3 d-none d-lg-flex">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-1">
+                      <div class="thanks-circle"></div>
+                      <img class="mx-auto d-block w-125 h-100" src="{% static 'img/thanks-comm.svg' %}" alt="community icon"> </img>
+                    </div>
+                    <div class="col-lg-7">
+                      Get a copy of your map sent to your email for personal records. Easily forward and share your Representable map with other members of your community. When map drawers have more data from your community, they are more likely to draw fairer districts.<br>
+                      <!-- <div class="text-center"><a class="btn btn-outline-gray mx-2 my-1" target="_blank" href="" role="button">Send Email</a></div> -->
+                      <div class="text-center">
+                        <!--Form Used to Send Email-->
+                        <div>
+                          <form name="pdfForm" id="pdfForm">
+                            {% csrf_token %}
+                            <div class = "form-group" style = "display:none">
+                              <textarea name = "message" class = "form-control">{{email}}</textarea>
+                            </div>
+                            <div class = "form-group">
+                              <button type = "submit" class="btn btn-outline-gray mx-2 my-1">Send Email</button>
+                            </div>
+                          </form>
                         </div>
-                        <!-- <a class="btn btn-primary btn-canvas mt-auto disabled" href="#" role="button">Coming Soon</a> -->
                       </div>
                     </div>
+                    <div class="col-lg-3"></div>
                   </div>
                 </div>
-                {% if verified %}
-                <div class="alert alert-primary mx-5" role="alert">
-                  <p class="text-center">By adding your community to Representable you are not submitting a map to a redistricting commission or representative. We will add information about submitting to the commission as soon as it becomes available in your state.</p>
-                </div>
-                {% endif %}
-                {% if not verified %}
-                <div class="alert alert-warning mx-5" role="alert">
-                  <p class="text-center"> Thank you for submitting your map. The next step is to verify your email. We resent an email verification link to your inbox.</p>
-                  <p class="text-center"> Account verification allows Representable.org and our partner organizations to submit credible maps to Redistricting Commissions ensuring that your entry has an impact in ending gerrymandering. </p>
-                </div>
-                {% endif %}
               </div>
             </div>
           </div>
-        </div>
         {% endblock %}
 
         {% block script %}

@@ -44,6 +44,7 @@ from ..forms import (
     OrganizationForm,
     AllowlistForm,
     MemberForm,
+    EditOrganizationForm,
 )
 from ..models import (
     Membership,
@@ -206,7 +207,7 @@ class EditOrg(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
     """
 
     template_name = "main/dashboard/partners/edit.html"
-    form_class = OrganizationForm
+    form_class = EditOrganizationForm
     model = Organization
 
 

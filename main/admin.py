@@ -29,7 +29,7 @@ from django.utils.html import format_html
 from django import forms
 from ckeditor.widgets import CKEditorWidget
 
-from .models import State, Drive
+from .models import State, Drive, FrequentlyAskedQuestion, GlossaryDefinition
 
 
 class StateAdminForm(forms.ModelForm):
@@ -48,6 +48,25 @@ class StateAdminForm(forms.ModelForm):
             "content_coi",
         )
 
+class FAQForm(forms.ModelForm):
+    question = forms.CharField(widget=CKEditorWidget())
+    answer = forms.CharField(widget=CKEditorWidget())
+
+    class Meta:
+        model = FrequentlyAskedQuestion
+        fields = (
+            "type",
+            "question",
+            "answer",
+        )
+
+class FAQAdmin(admin.ModelAdmin):
+    form = FAQForm
+    list_display = ("question", "answer", "type")
+
+admin.site.register(FrequentlyAskedQuestion, FAQAdmin)
+
+admin.site.register(GlossaryDefinition)
 
 class StateAdmin(admin.ModelAdmin):
     form = StateAdminForm
