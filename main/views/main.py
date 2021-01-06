@@ -19,6 +19,9 @@
 #
 import asyncio
 import boto3
+import urllib
+from urllib.request import urlopen
+from django.contrib import messages
 from django.http import (
     HttpResponse,
     HttpResponseNotFound,
@@ -71,6 +74,7 @@ from ..models import (
     DriveToken,
     Drive,
     State,
+    Signature,
     BlockGroup,
     FrequentlyAskedQuestion,
     GlossaryDefinition,
@@ -98,7 +102,9 @@ import os
 import json
 import re
 import csv
+import hmac
 import hashlib
+import base64
 from django.template import loader
 import shapely.wkt
 import reverse_geocoder as rg
@@ -890,6 +896,29 @@ class EntryView(LoginRequiredMixin, View):
         ]
         comm_form.data._mutable = False
         if comm_form.is_valid():
+            recaptcha_response = request.POST.get('g-recaptcha-response')
+            url = 'https://www.google.com/recaptcha/api/siteverify'
+            values = {
+                'secret': settings.RECAPTCHA_PRIVATE,
+                'response': recaptcha_response
+            }
+            data = urllib.parse.urlencode(values)
+            data = data.encode('ascii')
+
+            req = urllib.request.Request(url, data)
+            response = urlopen(req)
+            result = json.load(response)
+            ''' End reCAPTCHA validation '''
+            if not result['success']:
+                messages.add_message(request, messages.ERROR, 'Invalid reCAPTCHA. Please try again.')
+                context = {
+                    "comm_form": comm_form,
+                    "addr_form": addr_form,
+                    "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+                    "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
+                }
+                return render(request, self.template_name, context)
+            
             entryForm = comm_form.save(commit=False)
             s3 = boto3.resource(
                 "s3",
@@ -932,11 +961,34 @@ class EntryView(LoginRequiredMixin, View):
 
             entryForm.save()
             comm_form.save_m2m()
+            
+            finalres = dict([(field.name, getattr(entryForm,field.name)) for field in entryForm._meta.fields])
+            finalres["census_blocks_polygon"] = str(entryForm.census_blocks_polygon)
+            finalres["user"] = entryForm.user.email
+            if entryForm.organization:
+                finalres["organization"] = entryForm.organization.name
+            if entryForm.drive:
+                finalres["drive"] = entryForm.drive.name
+            finalres["state_obj"] = finalres["state"]
+            del finalres["admin_approved"]
 
+            string_to_hash = str(finalres)
+
+            addres = dict()
             if addr_form.is_valid():
                 addrForm = addr_form.save(commit=False)
                 addrForm.entry = entryForm
                 addrForm.save()
+
+                addres = dict([(field.name, getattr(addrForm,field.name)) for field in addrForm._meta.fields])
+                del addres['id']
+                finalres.update(addres)
+                string_to_hash = str(finalres)
+                
+            digest = hmac.new(bytes(os.environ.get("AUDIT_SECRET"), encoding='utf8'), msg=bytes(string_to_hash, encoding='utf8'), digestmod=hashlib.sha256).digest()
+            signature = base64.b64encode(digest).decode()
+            sign_obj = Signature(entry=entryForm, hash=signature)
+            sign_obj.save()
 
             m_uuid = str(entryForm.entry_ID)
             if not entryForm.drive:
