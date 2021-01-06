@@ -2,6 +2,7 @@
 {% load leaflet_tags %}
 {% load static %}
 {% load representable_extras %}
+{% load i18n %}
 
 
 {% block head %}
@@ -26,9 +27,9 @@
 <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
 {% endblock %}
 {% block content %}
-<div class="container-fluid">
+<div class="container-fluid w-100">
 
-  <div class="row row-wide">
+  <div class="row row-wide light-green-bg pb-5">
     <div>
       <script type="text/javascript">
         let a = '{{ entries | escapejs}}';
@@ -43,142 +44,168 @@
       alert('No map found with the given map_id.');
     </script>
     {% endif %}
-    <div class="col-md-4 col-wide">
-      <nav id='menu'>
-        <div class="sidenav">
-          <div class="accordion" id="accordionExample">
-            <div class="card">
-              <div id="headingOne">
-                <button class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" style="width: 100%">
-                  Data layers <i class="fas fa-caret-down"></i></button>
-                </div>
-                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                  <div class="font-weight-light text-uppercase small" id="outline-menu">
-                  </div>
-                  <!-- <button class="dropdown-btn btn-canvas" id="all">Clear All Filters -->
-                </div>
-                <div id="headingTwo">
-                  <button class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" style="width: 100%">
-                    Community Information <i class="fas fa-caret-down"></i></button>
-                  </div>
-                  <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                    <table class="table" id="table-content">
-                      <tr>
-                        <td>
-                          <span id="entry-name" class="text-uppercase entry-name">
-                            <h5>{{c.entry_name}}</h5>
-                          </span>
-                          <hr class="my-1">
-                          <span id="ignorePDF">
-                            {% if c.organization and c.organization.name %}
-                            <span id="org-text" class="badge badge-pill badge-primary">{{c.organization}}</span>
-                            <br>
-                            {% endif %}
-                            {% if c.drive and c.drive.name %}
-                            <span id="drive-text" class="badge badge-pill badge-secondary">{{c.drive}}</span>
-                            <br>
-                            {% endif %}
-                            <span class="small text-muted">
-                              {% if is_org_admin or is_community_author %}
-                              {% if c.user_name %}
-                              <span id="user-name">{{c.user_name}}</span>
-                              {% else %}
-                              {{ c.user_name }}
-                              {% endif %}
-                              {% if street %}
-                              | <span id="address-street">{{street}}</span>
-                              <span id="address-city">{{city}}</span>
-                              <br>
-                              {% else %}
-                              <br>
-                              {% endif %}
-                              {% endif %}
-                            </span>
-                            <span class="small">
-                              {% if c.population > 0 %}
-                              <b>Population:</b> {{ c.population }}
-                              <br>
-                              {% endif %}
-                            </span>
-                          </span>
-                          {% if c.cultural_interests %}
-                          <b><i class="fas fa-palette"></i> Cultural Interests</b><br>
-                          <span class="text-muted small">{{c.cultural_interests}}</span>
-                          <br>
-                          {% endif %}
-                          {% if c.comm_activities %}
-                          <b><i class="fas fa-hiking"></i> Community Activities</b><br>
-                          <span class="text-muted small">{{c.comm_activities}}</span>
-                          <br>
-                          {% endif %}
-                          {% if c.economic_interests %}
-                          <b><i class="fas fa-comments-dollar"></i> Economic Interests</b><br>
-                          <span class="text-muted small">{{c.economic_interests}}</span>
-                          <br>
-                          {% endif %}
-                          {% if c.other_considerations %}
-                          <b><i class="fas fa-users"></i> Other Interests</b><br>
-                          <span class="text-muted small">{{c.other_considerations}}</span>
-                          <br>
-                          {% endif %}
-
-                        </td>
-                        <tr>
-                        </table>
-                        <div class="text-center">
-                          <!-- ********************* -->
-                          <!-- GeoJSON Explainer Modal -->
-                          <div class="modal fade" id="geojson-explain-modal" tabindex="-1" role="dialog" aria-labelledby="geojson-explain-modalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel">What is GeoJSON?</h5>
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
-                                </div>
-                                <div class="modal-body">
-                                  GeoJSON files are industry standard and usable with other mapping softwares like Maptitude for Redistricting, Dave's Redistricting App, ESRI, and more.
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <!-- ********************* -->
-                          {% if has_state %}
-                          {% with link_text="/export/geojson/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
-                          <!-- <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.geojson">Export GeoJSON</a> -->
-                          <a class="btn btn-outline-primary mx-4 d-none d-sm-inline" href="#" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>Export GeoJSON</a>
-                          <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
-                          <!-- ********************* -->
-                          <span class="btn btn-outline-primary btn-canvas mx-4 my-2" id="pdf-button" role="button">Export PDF</span>
-                          {% endwith %}
-                          {% with link_text="/export/csv/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
-                          <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.csv">Export CSV</a>
-                          {% endwith %}
-                          {% else %}
-                          {% with link_text="/export/geojson/?map_id="|addstr:c.entry_ID %}
-                          <!-- <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.geojson">Export GeoJSON</a> -->
-                          <a class="btn btn-outline-primary mx-4 d-none d-sm-inline" href="#" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>Export GeoJSON</a>
-                          <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
-                          <!-- ********************* -->
-                          <span class="btn btn-outline-primary btn-canvas mx-4 my-2" id="pdf-button" role="button">Export PDF</span>
-                          {% endwith %}
-                          {% with link_text="/export/csv"|add:"/?map_id="|addstr:c.entry_ID %}
-                          <a class="btn btn-outline-primary btn-canvas mx-4" href={{link_text}} role="button" download="community_{{c.entry_ID}}.csv">Export CSV</a>
-                          {% endwith %}
-                          {% endif %}
-
+    <div class="col-xl-5 col-wide text-center text-xl-right pt-3 pr-xl-5 mb-5">
+      <div class="row w-md-75 d-inline-block m-0">
+        <div class="card text-left w-100 border-0 rounded-lg">
+          <div class="card-body">
+            <h5 class="card-title header-text"><strong>{% trans "Download this map" %}</strong></h5>
+            <p class="header-text small">
+              {% blocktrans %}
+                Map downloads include the community information below.
+              {% endblocktrans %}
+            </p>
+            <div class="row">
+              <div class="col text-center">
+                  <!-- ********************* -->
+                  <!-- GeoJSON Explainer Modal -->
+                  <div class="modal fade" id="geojson-explain-modal" tabindex="-1" role="dialog" aria-labelledby="geojson-explain-modalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">What is GeoJSON?</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          GeoJSON files are industry standard and usable with other mapping softwares like Maptitude for Redistricting, Dave's Redistricting App, ESRI, and more.
                         </div>
                       </div>
                     </div>
-                    <!-- Note: TODO issues temporarily removed because it's just one map, could add back -->
-                    <!-- Note: TODO communities temporarily removed because it's just one map, could add back -->
+                  </div>
+                  <div class="row">
+                    {% if has_state %}
+                      {% with link_text="/export/geojson/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
+                      <div class="col-12 col-md-4">
+                        <a class="btn btn-primary w-50 w-md-75 w-xl-100 mb-3 mb-md-0" data-toggle="modal" href="#" data-target="#geojson-explain-modal" rel="nofollow" download>GeoJSON</a>
+                        <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
+                      </div>
+                      <!-- ********************* -->
+                      <div class="col-12 col-md-4">
+                        <button class="btn btn-primary w-50 w-md-75 w-xl-100 mb-3 mb-md-0" id="pdf-button">PDF</button>
+                      </div>
+                      {% endwith %}
+                      {% with link_text="/export/csv/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
+                      <div class="col-12 col-md-4">
+                        <a class="btn btn-primary w-50 w-md-75 w-xl-100" href={{link_text}} role="button" download="community_{{c.entry_ID}}.csv">CSV</a>
+                      </div>
+                      {% endwith %}
+                    {% else %}
+                      {% with link_text="/export/geojson/?map_id="|addstr:c.entry_ID %}
+                      <div class="col-12 col-md-4">
+                        <a class="btn btn-primary w-50 w-md-75 w-xl-100 mb-3 mb-md-0" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>GeoJSON</a>
+                        <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
+                      </div>
+                      <!-- ********************* -->
+                      <div class="col-12 col-md-4">
+                        <button class="btn btn-outline-primary w-50 w-md-75 w-xl-100 mb-3 mb-md-0" id="pdf-button" role="button">PDF</button>
+                      </div>
+                      {% endwith %}
+                      {% with link_text="/export/csv"|add:"/?map_id="|addstr:c.entry_ID %}
+                      <div class="col-12 col-md-4">
+                        <a class="btn btn-outline-primary w-50 w-md-75 w-xl-100" href={{link_text}} role="button" download="community_{{c.entry_ID}}.csv">CSV</a>
+                      </div>
+                      {% endwith %}
+                    {% endif %}
+                  </div>
+                  <!-- ********************* -->
+              </div>
+            </div> 
+          </div>
+        </div>
+        <div class="card text-left border-0 w-100 rounded-lg mt-3">
+          <div class="card-body">
+            <h4 class="card-title header-text"><strong>{{c.entry_name}}</strong></h4>
+            <div class="accordion mt-4 map-info-item" id="economic-interests-accordion">
+                <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#economic-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                    {% trans "Economic and Environmental Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
+                </button>
+                <div id="economic-interests-resp" class="collapse pl-3 pb-1" aria-labelledby="economic-interests-accordion" data-parent="#economic-interests-accordion">
+                    <p class="collapse-in map-survey-response">
+                        {{c.economic_interests}}
+                    </p>
+                </div>
+            </div>
+            <div class="accordion map-info-item mt-3" id="mobile-map-activities-accordion">
+                <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-activities-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                    {% trans "Communities Activities and Services" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
+                </button>
+                <div id="mobile-map-activities-resp" class="collapse pl-3 pb-1" aria-labelledby="mobile-map-activities-accordion" data-parent="#mobile-map-activities-accordion">
+                    <p class="collapse-in map-survey-response">
+                        {{c.comm_activities}}
+                    </p>
+                </div>
+            </div>
+            <div class="accordion map-info-item mt-3" id="mobile-map-cultural-interests-accordion">
+                <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#map-cultural-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                    {% trans "Cultural or Historical Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
+                </button>
+                <div id="mobile-map-cultural-interests-resp" class="collapse pl-3 pb-1" aria-labelledby="map_cultural_activities_accordion" data-parent="#mobile-map-cultural-interests-accordion">
+                    <p class="collapse-in map-survey-response">
+                        {{c.cultural_interests}}
+                    </p>
+                </div>
+            </div>
+            <div class="accordion map-info-item mt-3 mb-3" id="mobile-map-other-interests-accordion">
+                <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-other-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                    {% trans "Other Interests and Concerns" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
+                </button>
+                <div id="mobile-map-other-interests-resp" class="collapse pl-3 pb-1" aria-labelledby="mobile-map-other-interests-accordion" data-parent="#mobile-map-other-interests-accordion">
+                    <p class="collapse-in map-survey-response">
+                        {{c.other_considerations}}
+                    </p>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- The map -->
+    <div class="col-xl-7 col-wide order-first order-xl-last text-center text-xl-left pt-3 pr-3 pb-xl-5">
+        <div class="row d-inline-block m-0 border-0" style="width:85%;">
+          <div class="col-12 text-left">
+            <div id="filter-row" class="row">
+              <div id="data-layer-card" class="col-12 col-lg-8 card border-0 rounded-lg p-0 d-none mr-2 mb-3">
+                <div class="card-body pb-0">
+                  <h5 class="card-title filter-header header-text pb-2"><strong>Data Layers <i class="fas fa-minus ml-2 filter-sign"></i></strong></h5>
+                  <div class="font-weight-light text-uppercase small" id="outline-menu"></div>
+                </div>
+              </div>
+
+              <div id="data-layer-col" class="col-5 col-sm-6 col-md-4 col-lg-3 p-0 mb-3 filter-col mr-5 mr-md-2">
+                <div class="d-none d-md-block">
+                  <button id="data-layer-btn" class="btn filter-btn btn-lg rounded m-0 bottom w-100">Data Layers <i class="fas fa-plus ml-2 filter-sign"></i></button>
+                </div>
+                <div class="d-md-none">
+                  <button id="mobile-data-layer-btn" class="btn filter-btn rounded m-0 w-100">Data Layers <i class="fas fa-plus ml-2 filter-sign"></i></button>
+                </div>
+              </div>
+
+              <div id="demographics-card" class="col-12 col-lg-8 card border-0 rounded-lg p-0 d-none mr-2 mb-3">
+                <div class="card-body pb-0">
+                  <h5 class="card-title filter-header header-text pb-2"><strong>Demographics <i class="fas fa-minus ml-2 filter-sign"></i></strong></h5>
+                  <div class="font-weight-light text-uppercase small mb-3" id="demographic-menu">
+                        {% if c.population > 0 %}
+                        <b>Population:</b> {{ c.population }}
+                        <br>
+                        {% endif %}
                   </div>
                 </div>
-              </nav>
+              </div>
+              <div id="demographics-col" class="col-5 col-sm-6 col-md-4 col-lg-3 p-0 mb-3 filter-col mr-md-2">
+                <div class="d-none d-md-block">
+                  <button id="demographics-btn" class="btn filter-btn btn-lg rounded m-0 bottom w-100">Demographics <i class="fas fa-plus ml-2 filter-sign"></i></button>
+                </div>
+                <div class="d-md-none">
+                  <button id="mobile-demographics-btn" class="btn filter-btn rounded m-0 w-100">Demographics <i class="fas fa-plus ml-2 filter-sign"></i></button>
+                </div>               
+              </div>
             </div>
-            <div class="col-md-8 col-map col-wide">
-              <div id='map' class="map-visualization">
+          </div>
+          <div class="col-12 border-0 text-left">
+            <div class="row vh-50">
+              <div id='map' class="map-visualization p-0">
                 <div id="pdf-loading-box" class="map-popup-box">
                   <p class="mb-0">Loading PDF...</p>
                 </div>
@@ -186,6 +213,9 @@
             </div>
           </div>
         </div>
+    </div>
+  </div>
+</div>
 
         <div class="modal fade" id="thanksModal" tabindex="-1" role="dialog" aria-labelledby="thanksModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document" id="thanksModalDialog">
