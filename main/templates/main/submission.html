@@ -103,14 +103,14 @@
                       {% endwith %}
                       {% with link_text="/export/csv"|add:"/?map_id="|addstr:c.entry_ID %}
                       <div class="col-12 col-md-4">
-                        <a class="btn btn-outline-primary w-50 w-md-75 w-xl-100" href={{link_text}} role="button" download="community_{{c.entry_ID}}.csv">CSV</a>
+                        <a class="btn btn-primary w-50 w-md-75 w-xl-100" href={{link_text}} role="button" download="community_{{c.entry_ID}}.csv">CSV</a>
                       </div>
                       {% endwith %}
                     {% endif %}
                   </div>
                   <!-- ********************* -->
               </div>
-            </div> 
+            </div>
           </div>
         </div>
         <div class="card text-left border-0 w-100 rounded-lg mt-3">
@@ -160,7 +160,7 @@
         </div>
       </div>
     </div>
-  
+
     <!-- The map -->
     <div class="col-xl-7 col-wide order-first order-xl-last text-center text-xl-left pt-3 pr-3 pb-xl-5">
         <div class="row d-inline-block m-0 border-0" style="width:85%;">
@@ -199,7 +199,7 @@
                 </div>
                 <div class="d-md-none">
                   <button id="mobile-demographics-btn" class="btn filter-btn rounded m-0 w-100">Demographics <i class="fas fa-plus ml-2 filter-sign"></i></button>
-                </div>               
+                </div>
               </div>
             </div>
           </div>
