@@ -17,7 +17,7 @@
                     <strong>{% trans "Tell us about what unites your community." %}</strong>
                 </div>
                 <div class="info-text">
-                    {% trans "Next, you will share information about what brings your community together. What do you think is important for politicians to know about your community?"%}
+                    {% trans "Next, you will answer questions about your community before mapping it. We want to know what brings your community together."%}
                 </div>
                 <br>
 
@@ -76,7 +76,7 @@
                                     <div class="row h-100 survey-start-txt-pic">
                                         <div class="col-lg-12 px-0 pb-3 text-left survey-start-sm-txt">
                                             {% blocktrans %}
-                                                The people you would like to choose representatives with.
+                                                The people you would like to be represented with by public servants.
                                             {% endblocktrans %}
                                         </div>
 
@@ -99,7 +99,7 @@
                                     <div class="row h-100 survey-start-txt-pic">
                                         <div class="col-lg-12 px-0 pb-3 text-left survey-start-sm-txt">
                                             {% blocktrans %}
-                                                A local group that is brought together by a common interest.
+                                                A group that is brought together by a common interest.
                                             {% endblocktrans %}
                                         </div>
 
@@ -153,7 +153,7 @@
                                 <div class="col-6">
                                     <div class="text-left survey-start-sm-txt">
                                         {% blocktrans %}
-                                            The people you would like to choose representatives with.
+                                            The people you would like to vote for politicians with.
                                         {% endblocktrans %}
                                     </div>
                                 </div>
@@ -195,7 +195,7 @@
                                 <div class="col-6">
                                     <div class="text-left survey-start-sm-txt">
                                         {% blocktrans %}
-                                            AA local group that is brought together by a common interest.
+                                            Any group you are a part of that shares common interests.
                                         {% endblocktrans %}
                                     </div>
                                 </div>
@@ -228,9 +228,10 @@
             <div class="survey-instruction">
                 {% blocktrans %}
                     <p>
-                      Respond to <b>at least one</b> of the sections below. There are no wrong answers.<br>
+                        To submit your community entry, you must provide a response to <b>at least one</b> of the questions below.
+                        Please respond to all the questions that apply.<br><br>
 
-                      Click on each category to see helpful questions and examples.
+                        Click on each category to see helpful questions.
                     </p>
                 {% endblocktrans %}
             </div>
@@ -259,7 +260,7 @@
                 <!-- Sections: -->
                 <!--  Economic -->
                 <button class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#economic_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
-                    <h5 class="survey-sect-title">{% trans "Economic or Environmental Interests" %}<i class="fas fa-angle-down pl-3"></i></h5>
+                    <h5 class="survey-sect-title">{% trans "Economic and Environmental Interests" %}<i class="fas fa-angle-down pl-3"></i></h5>
                 </button>
                 <div class="accordion" id="economic_interests_accordion">
                     <div id="economic_interests_example" class="collapse" aria-labelledby="economic_interests_accordion" data-parent="#economic_interests_accordion">
