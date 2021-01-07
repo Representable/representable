@@ -5,6 +5,16 @@ if (is_thanks === "True") {
   $("#thanksModal").modal("show");
 }
 
+function toggleAngle(e) {
+  var collapsible = e.parentNode.getElementsByClassName('collapse')[0].id;
+  $('#' + collapsible).collapse('toggle');
+  if (e.innerHTML.includes("fa-angle-down")) {
+    e.innerHTML = e.innerHTML.replace("fa-angle-down", "fa-angle-up");
+  } else {
+    e.innerHTML = e.innerHTML.replace("fa-angle-up", "fa-angle-down");
+  }
+}
+
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
@@ -395,7 +405,7 @@ map.on("load", function () {
   };
 });
 
-//create a button that toggles layers based on their IDs
+// create a button that toggles layers based on their IDs
 var toggleableLayerIds = JSON.parse(JSON.stringify(BOUNDARIES_LAYERS));
 toggleableLayerIds["school-districts"] = "School Districts";
 // add selector for chicago wards + community areas if illinois
@@ -404,7 +414,41 @@ if (state === "il") {
   toggleableLayerIds["chi-comm"] = "Chicago Community Areas";
 }
 
+// Create toggle switches
+var layers = document.getElementById("outline-menu");
+var addContainer = document.createElement("div");
+addContainer.classList.add("container-fluid", "w-100");
+layers.appendChild(addContainer);
+
+var layersContainer = layers.children[0];
+var addRow = document.createElement("div")
+addRow.classList.add("row", "row-wide");
+layersContainer.appendChild(addRow);
+
+var layersRow = layersContainer.children[0];
+var addCol1 = document.createElement("div");
+addCol1.classList.add("col-12", "col-md-6", "m-0", "p-0");
+var addCol2 = document.createElement("div");
+addCol2.classList.add("col-12", "col-md-6", "m-0", "p-0");
+
+layersRow.appendChild(addCol1);
+layersRow.appendChild(addCol2);
+
+var layersCol1 = layersRow.children[0]
+var layersCol2 = layersRow.children[1]
+
+var count = 0;
+// Append the switches
 for (var id in toggleableLayerIds) {
+  if (count % 2 == 0) {
+    addToggleableLayer(id, layersCol1);
+  } else {
+    addToggleableLayer(id, layersCol2);
+  }
+  count++;
+}
+
+function addToggleableLayer(id, appendElement) {
   var link = document.createElement("input");
 
   link.value = id;
@@ -430,17 +474,50 @@ for (var id in toggleableLayerIds) {
   };
   // in order to create the buttons
   var div = document.createElement("div");
-  div.className = "switch_box box_1";
+  div.className = "switch_box box_1 mb-3";
   var label = document.createElement("label");
   label.setAttribute("for", id);
   label.textContent = toggleableLayerIds[id];
-  var layers = document.getElementById("outline-menu");
+  // var layers = document.getElementById("outline-menu");
   div.appendChild(link);
   div.appendChild(label);
-  layers.appendChild(div);
+  appendElement.appendChild(div);
   var newline = document.createElement("br");
 }
 
+$("#data-layer-btn").on("click", function() {
+  toggleDataLayers();
+});
+
+$("#mobile-data-layer-btn").on("click", function() {
+  toggleDataLayers();
+});
+
+$("#data-layer-card div.card-body h5.card-title").on("click", function() {
+  toggleDataLayers();
+})
+
+$("#demographics-btn").on("click", function() {
+  toggleDemographics();
+});
+
+$("#mobile-demographics-btn").on("click", function() {
+  toggleDemographics();
+});
+
+$("#demographics-card div.card-body h5.card-title").on("click", function() {
+  toggleDemographics();
+})
+
+function toggleDemographics() {
+  $("#demographics-col").toggleClass("d-none");
+  $("#demographics-card").toggleClass("d-none");
+}
+
+function toggleDataLayers() {
+  $("#data-layer-col").toggleClass("d-none");
+  $("#data-layer-card").toggleClass("d-none");  
+}
 /*******************************************************************/
 // remove the last char in the string
 function removeLastChar(str) {

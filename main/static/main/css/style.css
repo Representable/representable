@@ -58,6 +58,19 @@ form:invalid {
   text-decoration: none;
 }
 
+.rounded-lg {
+  border-radius: 10px;
+}
+
+.mw-75 {
+  min-width: 75%;
+}
+
+.bottom {
+  position: absolute;
+  bottom: 0;
+}
+
 .align-middle {
   margin: auto;
 }
@@ -558,6 +571,43 @@ color scheme. See readme.md*/
   color: white;
 }
 
+.filter-btn {
+  background-color: white;
+}
+
+@media only screen and (max-width: 767px) {
+  .filter-btn {
+    font-size: .8rem;
+  }
+}
+
+.filter-sign {
+  font-size: small;
+}
+
+.card-title.filter-header:hover {
+  color: gray;
+  cursor: pointer;
+}
+
+#filter-row {
+  min-height: 65px;
+}
+
+.filter-col {
+  min-height: 45px;
+}
+
+@media only screen and (max-width: 767px) {
+  #filter-row {
+    min-height: fit-content;
+  }
+
+  .filter-col {
+    min-height: fit-content;
+  }
+}
+
 @media only screen and (min-width: 768px) {
   /* for the modal on submission page (thanks) */
   .modal-header .close {
@@ -773,7 +823,7 @@ Entry Mapping Page
 }
 
 .col-map {
-  height: 500px;
+  height: 50vh;
 }
 
 @media screen and (min-width: 768px) {
@@ -1226,6 +1276,9 @@ textarea.survey-field:focus {
 }
 .light-blue-bg {
   background: #DAEFFF 63%;
+}
+.light-green-bg {
+  background-color: #F2FAFF;
 }
 .blue-green-bg {
   background-color: #6dccbb;
