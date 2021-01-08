@@ -225,7 +225,9 @@ class AllowlistForm(ModelForm):
 
 
 class DriveForm(ModelForm):
-    def __init__(self, org_states, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
+        drive = kwargs['instance']
+        org_states = drive.organization.states
         super(DriveForm, self).__init__(*args, **kwargs)
         choices = [state for state in STATES if state[0] in org_states]
         self.fields["state"].widget = forms.Select(
