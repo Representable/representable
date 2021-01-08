@@ -46,6 +46,12 @@
     {% endif %}
     <div class="col-xl-5 col-wide text-center text-xl-right pt-3 pr-xl-5 mb-5">
       <div class="row w-md-75 d-inline-block m-0">
+        <div class="card text-left border-0 w-100 rounded-lg mb-3 d-none d-xl-block">
+          <div class="card-body">
+            <h3 class="card-title header-text"><strong>{{c.entry_name}}</strong></h3>
+            <h6 class="info-text"><strong>{{c.drive.name}}</strong></h5>
+          </div>
+        </div>
         <div class="card text-left w-100 border-0 rounded-lg">
           <div class="card-body">
             <h5 class="card-title header-text"><strong>{% trans "Download this map" %}</strong></h5>
@@ -115,7 +121,7 @@
         </div>
         <div class="card text-left border-0 w-100 rounded-lg mt-3">
           <div class="card-body">
-            <h4 class="card-title header-text"><strong>{{c.entry_name}}</strong></h4>
+            <h4 class="card-title header-text"><strong>{% trans "Community Information" %}</strong></h4>
             <div class="accordion mt-4 map-info-item" id="economic-interests-accordion">
                 <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#economic-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                     {% trans "Economic and Environmental Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
@@ -165,6 +171,14 @@
     <div class="col-xl-7 col-wide order-first order-xl-last text-center text-xl-left pt-3 pr-3 pb-xl-5">
         <div class="row d-inline-block m-0 border-0" style="width:85%;">
           <div class="col-12 text-left">
+            <div class="text-center mb-5 d-xl-none">
+              <div class="card border-0 rounded-lg d-inline-block w-100 w-md-75">
+                <div class="card-body p-3">
+                  <h3 class="card-title header-text"><strong>{{c.entry_name}}</strong></h3>
+                  <h6 class="info-text"><strong>{{c.drive.name}}</strong></h5>
+                </div>
+              </div>
+            </div>
             <div id="filter-row" class="row">
               <div id="data-layer-card" class="col-12 col-lg-8 card border-0 rounded-lg p-0 d-none mr-2 mb-3">
                 <div class="card-body pb-0">
