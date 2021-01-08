@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="col-lg-8 col-sm-11">
                                     <div class="row h-100 survey-start-txt-pic">
-                                        <div class="col-lg-12 text-left survey-start-sm-txt">
+                                        <div class="col-lg-12 px-0 pb-4 text-left survey-start-sm-txt">
                                             {% blocktrans %}
                                                 Your neighborhood, or an area you live in.
                                             {% endblocktrans %}
@@ -74,7 +74,7 @@
                                 </div>
                                 <div class="col-lg-8">
                                     <div class="row h-100 survey-start-txt-pic">
-                                        <div class="col-lg-12 text-left survey-start-sm-txt">
+                                        <div class="col-lg-12 px-0 pb-3 text-left survey-start-sm-txt">
                                             {% blocktrans %}
                                                 The people you would like to be represented with by public servants.
                                             {% endblocktrans %}
@@ -97,7 +97,7 @@
                                 </div>
                                 <div class="col-lg-8">
                                     <div class="row h-100 survey-start-txt-pic">
-                                        <div class="col-lg-12 text-left survey-start-sm-txt">
+                                        <div class="col-lg-12 px-0 pb-3 text-left survey-start-sm-txt">
                                             {% blocktrans %}
                                                 A group that is brought together by a common interest.
                                             {% endblocktrans %}
@@ -260,12 +260,17 @@
                 <!-- Sections: -->
                 <!--  Economic -->
                 <button class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#economic_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
-                    <h5 class="survey-sect-title">{% trans "Economic and Environmental Interests" %}<i class="fas fa-angle-down pl-3"></i></h5>
+                    <h5 class="survey-sect-title">{% trans "Economic or Environmental Interests" %}<i class="fas fa-angle-down pl-3"></i></h5>
                 </button>
                 <div class="accordion" id="economic_interests_accordion">
                     <div id="economic_interests_example" class="collapse" aria-labelledby="economic_interests_accordion" data-parent="#economic_interests_accordion">
-                        <p class="collapse-in ml-4">
-                            {% blocktrans %} Is there a shared economy in the geographic area of your community? <br>How and where are residents employed? <br>Are there shared environmental concerns such as landfills or water quality? {% endblocktrans %}
+                        <p class="collapse-in ml-4 gray-text">
+                            {% blocktrans %}
+                            <b>Use these questions to think more about how you would describe your community...</b><br>
+                            &emsp; - Where are residents employed?<br>
+                            &emsp; - If there are environmental concerns in your community, what are they?<br><br>
+                            <span class="blue-text"><b>Examples of economic or environmental interests:</b> Tourism industry, agricultural workers, mining town, manufacturing center, polluted natural resource, unemployment problem, etc.</span>
+                            {% endblocktrans %}
                         </p>
                     </div>
                 </div>
@@ -274,11 +279,16 @@
                 <!-- Activities -->
                 <div class="accordion" id="comm_activities_accordion">
                     <button class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#comm_activities_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
-                        <h5 class="survey-sect-title">{% trans "Communities Activities and Services" %}<i class="fas fa-angle-down pl-3"></i></h5>
+                        <h5 class="survey-sect-title">{% trans "Community Activities and Services" %}<i class="fas fa-angle-down pl-3"></i></h5>
                     </button>
                     <div id="comm_activities_example" class="collapse" aria-labelledby="comm_activities_accordion" data-parent="#comm_activities_accordion">
-                        <p class="collapse-in ml-4">
-                            {% blocktrans %} Where do people in your community gather or socialize? <br>Where does your community get its services? {% endblocktrans %}
+                        <p class="collapse-in ml-4 gray-text">
+                          {% blocktrans %}
+                          <b>Use these questions to think more about how you would describe your community...</b><br>
+                          &emsp; - Where do people in your community gather or socialize? <br>
+                          &emsp; - How and where does your community access services (healthcare, transportation, educational services, etc.)?<br><br>
+                          <span class="blue-text"><b>Examples of activities and services:</b> Shopping areas, schools and universities, libraries, parks, lakes, rivers, places of worship, healthcare services, public transport, local nonprofit organizations, etc.</span>
+                          {% endblocktrans %}
                         </p>
                     </div>
                 </div>
@@ -291,10 +301,14 @@
                         <h5 class="survey-sect-title">{% trans "Cultural or Historical Interests" %}<i class="fas fa-angle-down pl-3"></i></h5>
                     </button>
                     <div id="cultural_interests_example" class="collapse" aria-labelledby="cultural_interests_accordion" data-parent="#cultural_interests_accordion">
-                        <p class="collapse-in ml-4">
-                            {% blocktrans %} What fosters a sense of belonging in your community?
-                    <br>What common beliefs or values exist? {% endblocktrans %}
-                        </p>
+                      <p class="collapse-in ml-4 gray-text">
+                        {% blocktrans %}
+                        <b>Use these questions to think more about how you would describe your community...</b><br>
+                        &emsp; - What are the cultural bonds in your community? <br>
+                        &emsp; - If your community has a shared history, what is it?<br><br>
+                        <span class="blue-text"><b>Examples of cultural or historical interests:</b> Religious groups, ethnic groups, languages, age groups, immigration status, historic or arts districts, etc. </span>
+                        {% endblocktrans %}
+                      </p>
                     </div>
                 </div>
                 <div class="sr-only">{{ comm_form.cultural_interests.label_tag }}</div>
@@ -305,9 +319,15 @@
                         <h5 class="survey-sect-title">{% trans "Community Needs and Concerns" %}<i class="fas fa-angle-down pl-3"></i></h5>
                     </button>
                     <div id="other_interests_example" class="collapse" aria-labelledby="other_interests_accordion" data-parent="#other_interests_accordion">
-                        <p class="collapse-in ml-4">
-                            {% trans "What other interests does your community care about? <br>Do you have any suggestions for how the redistricting commission in your state could help address these concerns?" %}
-                        </p>
+                      <p class="collapse-in ml-4 gray-text">
+                        {% blocktrans %}
+                        <b>Use these questions to think more about how you would describe your community...</b><br>
+                        &emsp; - What should politicians and/or map drawers know about your community?<br>
+                        &emsp; - What are the needs of your community?<br>
+                        &emsp; - Is there anything else you want to tell us about your community? <br><br>
+                        <span class="blue-text"><b>Examples of needs or concerns:</b> Keep community in the same district or separate into multiple districts, shared policy concerns, need for a social service, relationship to other nearby communities, issues with current district lines</span>
+                        {% endblocktrans %}
+                      </p>
                     </div>
                 </div>
                 <div class="sr-only">{{ comm_form.other_considerations.label_tag }}</div>

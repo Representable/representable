@@ -5,6 +5,16 @@ if (is_thanks === "True") {
   $("#thanksModal").modal("show");
 }
 
+function toggleAngle(e) {
+  var collapsible = e.parentNode.getElementsByClassName('collapse')[0].id;
+  $('#' + collapsible).collapse('toggle');
+  if (e.innerHTML.includes("fa-angle-down")) {
+    e.innerHTML = e.innerHTML.replace("fa-angle-down", "fa-angle-up");
+  } else {
+    e.innerHTML = e.innerHTML.replace("fa-angle-up", "fa-angle-down");
+  }
+}
+
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
@@ -241,8 +251,8 @@ map.on("load", function () {
     exportPDF(4000);
   }
   // pdf export button
+  // TODO: add array of blockgroup ids, add population and other demographic info
   function exportPDF(delay) {
-    console.log("exportPDF called")
     // make the map look good for the PDF ! TODO: un-select other layers like census blocks (turn into functions)
     map.fitBounds(commBounds, { padding: 100 });
     // display loading popup
@@ -253,36 +263,23 @@ map.on("load", function () {
       instruction_box.style.display = "none";
       var doc = new jsPDF();
 
-      var entryName = window.document.getElementById("entry-name");
+      var entryName = window.document.getElementById("pdfName");
       doc.fromHTML(entryName, 20, 20, { width: 180 });
+      var createdWith = window.document.getElementById("pdfCreatedWith");
+      doc.fromHTML(createdWith, 20, 32, { width: 180 });
       doc.setFontSize(10);
       doc.setTextColor(150);
-      // identifying info
-      var userName = window.document.getElementById("user-name");
-      var adStreet = window.document.getElementById("address-street");
-      var adCity = window.document.getElementById("address-city");
-      if (userName !== null) {
-        doc.text(20, 35, userName.textContent);
-      }
-      if (adStreet !== null) {
-        doc.text(20, 40, adStreet.textContent);
-      }
-      if (adCity !== null) {
-        doc.text(20, 45, adCity.textContent);
-      }
       doc.setFontSize(12);
       doc.setTextColor(0);
       // link to view on rep
       var rLink = doc.splitTextToSize("View this community at: " + window.location.href, 180);
-      doc.text(20, 53, rLink);
+      doc.text(20, 45, rLink);
 
-      var org = window.document.getElementById("org-text");
-      var drive = window.document.getElementById("drive-text");
-      if (org !== null) {
-        doc.text(20, 61, "Organization: " + org.textContent);
-      }
+      var org = window.document.getElementById("pdfOrg");
+      var drive = window.document.getElementById("pdfDrive");
       if (drive !== null) {
-        doc.text(20, 69, "Drive: " + drive.textContent);
+        doc.text(20, 63, "Organization: " + org.textContent);
+        doc.text(20, 69, "Community Mapping Drive: " + drive.textContent);
       }
 
       var imgData = map.getCanvas().toDataURL("image/png");
@@ -294,23 +291,13 @@ map.on("load", function () {
       doc.addPage();
       doc.setFontSize(24);
       doc.text(20, 20, "Community Information");
-
-      var elementHandler = {
-        "#ignorePDF": function (element, renderer) {
-          return true;
-        },
-        "#entry-name": function (element, renderer) {
-          return true;
-        },
-      };
       // entry fields
-      var table = window.document.getElementById("table-content");
-      doc.fromHTML(table, 20, 25, {
+      var entryInfo = window.document.getElementById("pdfInfo");
+      doc.fromHTML(entryInfo, 20, 25, {
         width: 180,
-        elementHandlers: elementHandler,
       });
       // get entry name in order to name the PDF
-      var pdfName = sanitizePDF($("#entry-name").text());
+      var pdfName = sanitizePDF($("#pdfName").text());
       doc.save(pdfName + ".pdf");
     }, delay);
   };
@@ -395,7 +382,7 @@ map.on("load", function () {
   };
 });
 
-//create a button that toggles layers based on their IDs
+// create a button that toggles layers based on their IDs
 var toggleableLayerIds = JSON.parse(JSON.stringify(BOUNDARIES_LAYERS));
 toggleableLayerIds["school-districts"] = "School Districts";
 // add selector for chicago wards + community areas if illinois
@@ -404,7 +391,41 @@ if (state === "il") {
   toggleableLayerIds["chi-comm"] = "Chicago Community Areas";
 }
 
+// Create toggle switches
+var layers = document.getElementById("outline-menu");
+var addContainer = document.createElement("div");
+addContainer.classList.add("container-fluid", "w-100");
+layers.appendChild(addContainer);
+
+var layersContainer = layers.children[0];
+var addRow = document.createElement("div")
+addRow.classList.add("row", "row-wide");
+layersContainer.appendChild(addRow);
+
+var layersRow = layersContainer.children[0];
+var addCol1 = document.createElement("div");
+addCol1.classList.add("col-12", "col-md-6", "m-0", "p-0");
+var addCol2 = document.createElement("div");
+addCol2.classList.add("col-12", "col-md-6", "m-0", "p-0");
+
+layersRow.appendChild(addCol1);
+layersRow.appendChild(addCol2);
+
+var layersCol1 = layersRow.children[0]
+var layersCol2 = layersRow.children[1]
+
+var count = 0;
+// Append the switches
 for (var id in toggleableLayerIds) {
+  if (count % 2 == 0) {
+    addToggleableLayer(id, layersCol1);
+  } else {
+    addToggleableLayer(id, layersCol2);
+  }
+  count++;
+}
+
+function addToggleableLayer(id, appendElement) {
   var link = document.createElement("input");
 
   link.value = id;
@@ -430,17 +451,50 @@ for (var id in toggleableLayerIds) {
   };
   // in order to create the buttons
   var div = document.createElement("div");
-  div.className = "switch_box box_1";
+  div.className = "switch_box box_1 mb-3";
   var label = document.createElement("label");
   label.setAttribute("for", id);
   label.textContent = toggleableLayerIds[id];
-  var layers = document.getElementById("outline-menu");
+  // var layers = document.getElementById("outline-menu");
   div.appendChild(link);
   div.appendChild(label);
-  layers.appendChild(div);
+  appendElement.appendChild(div);
   var newline = document.createElement("br");
 }
 
+$("#data-layer-btn").on("click", function() {
+  toggleDataLayers();
+});
+
+$("#mobile-data-layer-btn").on("click", function() {
+  toggleDataLayers();
+});
+
+$("#data-layer-card div.card-body h5.card-title").on("click", function() {
+  toggleDataLayers();
+})
+
+$("#demographics-btn").on("click", function() {
+  toggleDemographics();
+});
+
+$("#mobile-demographics-btn").on("click", function() {
+  toggleDemographics();
+});
+
+$("#demographics-card div.card-body h5.card-title").on("click", function() {
+  toggleDemographics();
+})
+
+function toggleDemographics() {
+  $("#demographics-col").toggleClass("d-none");
+  $("#demographics-card").toggleClass("d-none");
+}
+
+function toggleDataLayers() {
+  $("#data-layer-col").toggleClass("d-none");
+  $("#data-layer-card").toggleClass("d-none");
+}
 /*******************************************************************/
 // remove the last char in the string
 function removeLastChar(str) {

@@ -125,29 +125,6 @@ class Membership(models.Model):
 # ******************************************************************************#
 
 
-class AllowList(models.Model):
-    """
-    A given allowlist entry with the following
-    fields included:
-    - email: allowlisted email
-    - organization: the organization that created the link
-    - date added: when the email was added to the allowlist
-    """
-
-    email = models.CharField(max_length=128)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    date_added = models.DateField(auto_now_add=True, blank=True)
-
-    class Meta:
-        ordering = ("email",)
-
-    def __str__(self):
-        return self.email
-
-
-# ******************************************************************************#
-
-
 class Drive(models.Model):
     """
     Drive represents an organization's entry collection drive.
@@ -159,6 +136,7 @@ class Drive(models.Model):
     - organization: organization hosting the drive
     - created_at: when the drive was created
     - is_active: is the drive active
+    - private: is the drive private
     - require_user_addresses: does the drive require users to include an address
     """
 
@@ -172,7 +150,10 @@ class Drive(models.Model):
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
-    require_user_addresses = models.BooleanField(default=True, blank=True, null=True)
+    private = models.BooleanField(default=False)
+    require_user_addresses = models.BooleanField(
+        default=True, blank=True, null=True
+    )
 
     class Meta:
         ordering = ("description",)
@@ -207,6 +188,31 @@ class DriveToken(models.Model):
         if not self.token:
             self.token = generate_unique_token(self.drive.name)
         super(DriveToken, self).save(*args, **kwargs)
+
+
+# ******************************************************************************#\
+
+
+class AllowList(models.Model):
+    """
+    A given allowlist entry with the following
+    fields included:
+    - email: allowlisted email
+    - organization: the organization that created the link
+    - drive: the drive that this allowlist is associated with
+    - date added: when the email was added to the allowlist
+    """
+
+    email = models.CharField(max_length=128)
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    drive = models.ForeignKey(Drive, on_delete=models.CASCADE, null=True)
+    date_added = models.DateField(auto_now_add=True, blank=True)
+
+    class Meta:
+        ordering = ("email",)
+
+    def __str__(self):
+        return self.email
 
 
 # ******************************************************************************#
@@ -333,6 +339,7 @@ class CommunityEntry(models.Model):
     # signature = models.CharField(max_length=64, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     admin_approved = models.BooleanField(default=True)
+    private = models.BooleanField(default=False, null=True)
     population = models.IntegerField(blank=True, default=0)
 
     def __str__(self):

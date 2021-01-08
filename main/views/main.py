@@ -863,6 +863,18 @@ class EntryView(LoginRequiredMixin, View):
             organization = drive.organization
             organization_name = organization.name
             organization_id = organization.id
+            org_admin = self.request.user.is_org_admin(drive.organization.id)
+            on_allowlist = False
+            allowlist_q = AllowList.objects.filter(
+                organization=drive.organization.id,
+                email=self.request.user.email,
+            )
+            if allowlist_q:
+                on_allowlist = True
+            if drive.private and not (org_admin or on_allowlist):
+                # if someone somehow gets the URL for a private drive,
+                # redirect them if they're not an org admin or on the allowlist
+                return redirect(reverse_lazy("main:entry"))
             address_required = drive.require_user_addresses
 
         context = {
@@ -931,6 +943,8 @@ class EntryView(LoginRequiredMixin, View):
                 if drive:
                     entryForm.drive = drive
                     entryForm.organization = drive.organization
+                    entryForm.private = drive.private
+
             else:
                 folder_name = self.kwargs["abbr"]
 
