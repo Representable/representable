@@ -64,11 +64,18 @@ class PartnerMap(TemplateView):
 
         # the polygon coordinates
         entryPolyDict = dict()
+
+        # get the org to which this map belongs
         org = Organization.objects.get(slug=self.kwargs["slug"])
+
+        # get the user
+        user = self.request.user
+
+        # is the user an admin of this map's org? default is false
         is_admin = False
-        if self.request.user.is_authenticated:
-            if self.request.user.is_org_admin(org.id):
-                is_admin = True
+        if user.is_authenticated:
+            is_admin = user.is_org_admin(org.id)
+
         # get the polygon from db and pass it on to html
         if self.kwargs["drive"]:
             drive = Drive.objects.get(slug=self.kwargs["drive"])
@@ -117,7 +124,7 @@ class PartnerMap(TemplateView):
         }
         context["organization"] = org
         context["state"] = org.states[0].lower()
-        if self.request.user.is_authenticated:
+        if user.is_authenticated:
             email = {
                 "exists": True,
                 "value": self.request.user.email,
