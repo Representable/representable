@@ -124,7 +124,7 @@
             <h4 class="card-title header-text"><strong>{% trans "Community Information" %}</strong></h4>
             <div class="accordion mt-4 map-info-item" id="economic-interests-accordion">
                 <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#economic-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
-                    {% trans "Economic and Environmental Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
+                    {% trans "Economic or Environmental Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
                 </button>
                 <div id="economic-interests-resp" class="collapse pl-3 pb-1" aria-labelledby="economic-interests-accordion" data-parent="#economic-interests-accordion">
                     <p class="collapse-in map-survey-response">
@@ -134,7 +134,7 @@
             </div>
             <div class="accordion map-info-item mt-3" id="mobile-map-activities-accordion">
                 <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-activities-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
-                    {% trans "Communities Activities and Services" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
+                    {% trans "Community Activities and Services" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
                 </button>
                 <div id="mobile-map-activities-resp" class="collapse pl-3 pb-1" aria-labelledby="mobile-map-activities-accordion" data-parent="#mobile-map-activities-accordion">
                     <p class="collapse-in map-survey-response">
@@ -328,6 +328,55 @@
               </div>
             </div>
           </div>
+          <div class="d-none" id="pdfCreatedWith">
+            <small class="text-muted">This map was created at <a href="https://representable.org/">Representable.org</a></small>
+          </div>
+          <div class="d-none" id="pdfInfo">
+            {% if c.economic_interests %}
+            <h6>
+              <br>
+
+              Economic or Environmental Interests
+            </h6>
+            <small>
+              {{c.economic_interests}}
+            </small>
+            {% endif %}
+            {% if c.economic_interests %}
+            <h6>
+              <br>
+
+              Community Activities and Services
+            </h6>
+            <small>
+              {{c.comm_activities}}
+            </small>
+            {% endif %}
+            {% if c.economic_interests %}
+            <h6>
+              <br>
+
+              Cultural or Historical Interests
+            </h6>
+            <small>
+              {{c.cultural_interests}}
+            </small>
+            {% endif %}
+            {% if c.economic_interests %}
+            <h6>
+              <br>
+              
+              Community Needs and Concerns
+            </h6>
+            <small>
+              {{c.other_considerations}}
+            </small>
+            {% endif %}
+          </div>
+          {% if c.drive %}
+          <div class="d-none" id="pdfOrg">{{c.organization}}</div>
+          <div class="d-none" id="pdfDrive">{{c.drive}}</div>
+          {% endif %}
         {% endblock %}
 
         {% block script %}

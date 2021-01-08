@@ -251,8 +251,8 @@ map.on("load", function () {
     exportPDF(4000);
   }
   // pdf export button
+  // TODO: add array of blockgroup ids, add population and other demographic info
   function exportPDF(delay) {
-    console.log("exportPDF called")
     // make the map look good for the PDF ! TODO: un-select other layers like census blocks (turn into functions)
     map.fitBounds(commBounds, { padding: 100 });
     // display loading popup
@@ -263,36 +263,23 @@ map.on("load", function () {
       instruction_box.style.display = "none";
       var doc = new jsPDF();
 
-      var entryName = window.document.getElementById("entry-name");
+      var entryName = window.document.getElementById("pdfName");
       doc.fromHTML(entryName, 20, 20, { width: 180 });
+      var createdWith = window.document.getElementById("pdfCreatedWith");
+      doc.fromHTML(createdWith, 20, 32, { width: 180 });
       doc.setFontSize(10);
       doc.setTextColor(150);
-      // identifying info
-      var userName = window.document.getElementById("user-name");
-      var adStreet = window.document.getElementById("address-street");
-      var adCity = window.document.getElementById("address-city");
-      if (userName !== null) {
-        doc.text(20, 35, userName.textContent);
-      }
-      if (adStreet !== null) {
-        doc.text(20, 40, adStreet.textContent);
-      }
-      if (adCity !== null) {
-        doc.text(20, 45, adCity.textContent);
-      }
       doc.setFontSize(12);
       doc.setTextColor(0);
       // link to view on rep
       var rLink = doc.splitTextToSize("View this community at: " + window.location.href, 180);
-      doc.text(20, 53, rLink);
+      doc.text(20, 45, rLink);
 
-      var org = window.document.getElementById("org-text");
-      var drive = window.document.getElementById("drive-text");
-      if (org !== null) {
-        doc.text(20, 61, "Organization: " + org.textContent);
-      }
+      var org = window.document.getElementById("pdfOrg");
+      var drive = window.document.getElementById("pdfDrive");
       if (drive !== null) {
-        doc.text(20, 69, "Drive: " + drive.textContent);
+        doc.text(20, 63, "Organization: " + org.textContent);
+        doc.text(20, 69, "Community Mapping Drive: " + drive.textContent);
       }
 
       var imgData = map.getCanvas().toDataURL("image/png");
@@ -304,23 +291,13 @@ map.on("load", function () {
       doc.addPage();
       doc.setFontSize(24);
       doc.text(20, 20, "Community Information");
-
-      var elementHandler = {
-        "#ignorePDF": function (element, renderer) {
-          return true;
-        },
-        "#entry-name": function (element, renderer) {
-          return true;
-        },
-      };
       // entry fields
-      var table = window.document.getElementById("table-content");
-      doc.fromHTML(table, 20, 25, {
+      var entryInfo = window.document.getElementById("pdfInfo");
+      doc.fromHTML(entryInfo, 20, 25, {
         width: 180,
-        elementHandlers: elementHandler,
       });
       // get entry name in order to name the PDF
-      var pdfName = sanitizePDF($("#entry-name").text());
+      var pdfName = sanitizePDF($("#pdfName").text());
       doc.save(pdfName + ".pdf");
     }, delay);
   };
@@ -516,7 +493,7 @@ function toggleDemographics() {
 
 function toggleDataLayers() {
   $("#data-layer-col").toggleClass("d-none");
-  $("#data-layer-card").toggleClass("d-none");  
+  $("#data-layer-card").toggleClass("d-none");
 }
 /*******************************************************************/
 // remove the last char in the string
