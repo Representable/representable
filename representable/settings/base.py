@@ -258,6 +258,3 @@ if "TRAVIS" in os.environ:
     CHECK_CAPTCHA_SUBMIT = False
 else:
     CHECK_CAPTCHA_SUBMIT = True
-
-# Data Memory Size
-DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880
