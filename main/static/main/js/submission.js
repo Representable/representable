@@ -95,21 +95,19 @@ map.on("load", function () {
   /****************************************************************************/
   // school districts as a data layer
   newSourceLayer("school-districts", SCHOOL_DISTR_KEY);
-  map.addLayer(
-    {
-      id: "school-districts-lines",
-      type: "line",
-      source: "school-districts",
-      "source-layer": "us_school_districts",
-      layout: {
-        visibility: "none",
-      },
-      paint: {
-        "line-color": "rgba(106,137,204,0.7)",
-        "line-width": 2,
-      },
-    }
-  );
+  map.addLayer({
+    id: "school-districts-lines",
+    type: "line",
+    source: "school-districts",
+    "source-layer": "us_school_districts",
+    layout: {
+      visibility: "none",
+    },
+    paint: {
+      "line-color": "rgba(106,137,204,0.7)",
+      "line-width": 2,
+    },
+  });
   // ward + community areas for IL
   if (state === "il") {
     newSourceLayer("chi_wards", CHI_WARD_KEY);
@@ -256,7 +254,10 @@ map.on("load", function () {
       doc.setFontSize(12);
       doc.setTextColor(0);
       // link to view on rep
-      var rLink = doc.splitTextToSize("View this community at: " + window.location.href, 180);
+      var rLink = doc.splitTextToSize(
+        "View this community at: " + window.location.href,
+        180
+      );
       doc.text(20, 53, rLink);
 
       var org = window.document.getElementById("org-text");
@@ -301,8 +302,29 @@ map.on("load", function () {
   // Form for sending emailPDF
   var testForm = document.getElementById("pdfForm");
 
-  testForm.onsubmit = function (event) {
-    event.preventDefault();
+  function once(fn, context) {
+    var result;
+
+    return function () {
+      if (fn) {
+        result = fn.apply(context || this, arguments);
+        fn = null;
+      }
+
+      return result;
+    };
+  }
+
+  // Usage
+  var canOnlyFireOnce = once(function () {
+    console.log("Fired!");
+    emailPDF();
+  });
+
+  canOnlyFireOnce(); // "Fired!"
+
+  function emailPDF() {
+    //    event.preventDefault();
     var request = new XMLHttpRequest();
     request.open("POST", "/send_mail_plain", false);
     var formData = new FormData(document.getElementById("pdfForm"));
@@ -375,6 +397,10 @@ map.on("load", function () {
     formData.append("generatedpdf", pdf, pdfName);
     request.send(formData);
     console.log(request.response);
+  }
+
+  testForm.onsubmit = function (event) {
+    emailPDF();
   };
 });
 
@@ -431,16 +457,16 @@ function removeLastChar(str) {
 }
 
 // Links "What GeoJSON is?" Modal and download for GeoJSON into one event
-$('[data-toggle=modal]').on('click', function(e) {
-  var $target = $($(this).data('target'));
-  $target.data('triggered', true);
-  setTimeout(function() {
-    if ($target.data('triggered')) {
-      $target.modal('show').data('triggered', false);
-    };
+$("[data-toggle=modal]").on("click", function (e) {
+  var $target = $($(this).data("target"));
+  $target.data("triggered", true);
+  setTimeout(function () {
+    if ($target.data("triggered")) {
+      $target.modal("show").data("triggered", false);
+    }
   }, 100); // ms delay
   return false;
 });
-$('#geojson-explain-modal').on('show.bs.modal', function () {
-  $('#hidden-download-geojson')[0].click();
+$("#geojson-explain-modal").on("show.bs.modal", function () {
+  $("#hidden-download-geojson")[0].click();
 });
