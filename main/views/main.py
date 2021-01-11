@@ -163,7 +163,7 @@ class RepresentableLoginView(LoginView):
 
     def form_invalid(self, form):
         self.request.session["invalid_login"] = True
-        # if the login prompt is from a redirect
+        # if the login prompt is from a redirect 
         if "next" in self.request.POST:
             return redirect_to_login(
                 self.request.POST["next"], "/accounts/login/", "next"
