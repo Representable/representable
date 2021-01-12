@@ -316,7 +316,7 @@ map.on("load", function () {
     // pdfDoc.text("Hello world!", 10, 10);
 
     var doc = new jsPDF();
-    var entryName = window.document.getElementById("entry-name");
+    var entryName = window.document.getElementById("pdfName");
     doc.fromHTML(entryName, 20, 20, { width: 180 });
     doc.setFontSize(10);
     doc.setTextColor(150);

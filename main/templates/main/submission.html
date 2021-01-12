@@ -48,8 +48,8 @@
       <div class="row w-md-75 d-inline-block m-0">
         <div class="card text-left border-0 w-100 rounded-lg mb-3 d-none d-xl-block">
           <div class="card-body">
-            <h3 class="card-title header-text"><strong>{{c.entry_name}}</strong></h3>
-            <h6 class="info-text"><strong>{{c.drive.name}}</strong></h5>
+            <h3 id="pdfName" class="card-title header-text"><strong>{{c.entry_name}}</strong></h3>
+            <h6 class="info-text"><strong>{{c.drive.name}}</strong></h6>
           </div>
         </div>
         <div class="card text-left w-100 border-0 rounded-lg">
@@ -180,14 +180,14 @@
               </div>
             </div>
             <div id="filter-row" class="row">
-              <div id="data-layer-card" class="col-12 col-lg-8 card border-0 rounded-lg p-0 d-none mr-2 mb-3">
+              <div id="data-layer-card" class="col-12 col-lg-8 card border-0 rounded-lg p-0 d-none mr-2 mb-3 mr-xl-3">
                 <div class="card-body pb-0">
                   <h5 class="card-title filter-header header-text pb-2"><strong>Data Layers <i class="fas fa-minus ml-2 filter-sign"></i></strong></h5>
                   <div class="font-weight-light text-uppercase small" id="outline-menu"></div>
                 </div>
               </div>
 
-              <div id="data-layer-col" class="col-5 col-sm-6 col-md-4 col-lg-3 p-0 mb-3 filter-col mr-5 mr-md-2 mr-xl-4">
+              <div id="data-layer-col" class="col-5 col-sm-6 col-md-4 col-lg-3 p-0 mb-3 filter-col mr-5 mr-md-2 mr-xl-5">
                 <div class="d-none d-md-block">
                   <button id="data-layer-btn" class="btn filter-btn btn-lg rounded m-0 bottom">Data Layers <i class="fas fa-plus ml-2 filter-sign"></i></button>
                 </div>
@@ -365,7 +365,7 @@
             {% if c.economic_interests %}
             <h6>
               <br>
-              
+
               Community Needs and Concerns
             </h6>
             <small>
