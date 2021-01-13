@@ -140,7 +140,7 @@ form:invalid {
 
 .progress-step.current {
   background: #80E3D3;
-  box-shadow: 2px 2px 2px 1px rgba(0,0,0,0.2);
+  box-shadow: 0px 2px 5px 1px rgba(0,0,0,0.2);
 }
 
 .progress-bar-vert {
