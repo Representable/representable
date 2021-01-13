@@ -478,9 +478,18 @@ def SendPlainEmail(request):
 
     email.send()
     return HttpResponse("Sent")
+# ******************************************************
 
-class Submission(TemplateView):
-    template_name = "main/submission.html"
+from django import forms
+
+class ContactForm(forms.Form):
+    name = forms.EmailField()
+    message = forms.CharField(widget=forms.Textarea)
+
+class SubmissionDriveUpdateView(View):
+    form_class = ContactForm
+    template_name = 'main/submissiondriveupdate.html'
+    success_url = '/submissiondriveupdate/'
 
     def get(self, request, *args, **kwargs):
         m_uuid = str(self.kwargs["map_id"])
@@ -587,7 +596,252 @@ class Submission(TemplateView):
                         self.request.user == user_map.user
                     )
                     comm.user_name = user_map.user_name
+        context['form'] = self.form_class
+        return render(request, self.template_name, context)
 
+
+# def get_initial(self):
+#     initial = super(SubmissionDriveUpdateView, self).get_initial()
+#     if self.request.user.is_authenticated:
+#         initial.update({'name': self.request.user.get_full_name()})
+#     return initial
+
+# def form_valid(self, form):
+#     self.send_mail(form.cleaned_data)
+#     return super(SubmissionDriveUpdateView, self).form_valid(form)
+
+# def send_mail(self, valid_data):
+#     # Send mail logic
+#     print(valid_data)
+
+# ******************************************************
+class Submission(View):
+    template_name = "main/submission.html"
+    form_class = ContactForm
+
+    def post(self, request, *args, **kwargs):
+        form = ContactForm(data=request.POST)
+        if form.is_valid():
+            self.send_mail(form.cleaned_data)
+        
+        m_uuid = str(self.kwargs["map_id"])
+        if not m_uuid:
+            raise Http404
+        query = CommunityEntry.objects.filter(entry_ID__startswith=m_uuid)
+        if not query:
+            raise Http404
+
+        # query will have length 1 or database is invalid
+        user_map = query[0]
+
+        if user_map.drive:
+            folder_name = query[0].drive.slug
+            has_state = False
+            state = ""
+        else:
+            if "abbr" in self.kwargs:
+                folder_name = self.kwargs["abbr"]
+                has_state = True
+                state = folder_name
+            else:
+                has_state = user_map.state != ""
+                state = user_map.state
+                folder_name = state
+
+        entryPolyDict = {}
+
+        if (
+            user_map.census_blocks_polygon == ""
+            or user_map.census_blocks_polygon is None
+            and user_map.user_polygon
+        ):
+            s = "".join(user_map.user_polygon.geojson)
+        elif user_map.census_blocks_polygon:
+            s = "".join(user_map.census_blocks_polygon.geojson)
+        else:
+            raise Http404
+        map_poly = geojson.loads(s)
+        entryPolyDict[m_uuid] = map_poly.coordinates
+        comm = user_map
+
+        # get user email address
+        user_email_address = EmailAddress.objects.get(user=self.request.user)
+
+        context = {
+            "has_state": has_state,
+            "state": state,
+            "c": comm,
+            "entries": json.dumps(entryPolyDict),
+            "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+            "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
+            "map_id": m_uuid,
+            "email": user_email_address,
+        }
+
+        # from thanks view
+        context["is_thanks"] = False
+        if "thanks" in request.path:
+            context["is_thanks"] = True
+            has_drive = False
+            organization_name = ""
+            drive_name = ""
+            organization_slug = ""
+            if kwargs["drive"]:
+                has_drive = True
+                drive_slug = self.kwargs["drive"]
+                drive = Drive.objects.get(slug=drive_slug)
+                drive_name = drive.name
+                organization = drive.organization
+                organization_name = organization.name
+                organization_slug = organization.slug
+
+            if EmailAddress.objects.filter(
+                user=self.request.user, verified=True
+            ).exists():
+                context["verified"] = True
+
+            else:
+
+                user_email_confirmation = EmailConfirmationHMAC(
+                    email_address=user_email_address
+                )
+
+                user_email_confirmation.send(self.request, False)
+                context["verified"] = False
+
+            context["drive_slug"] = self.kwargs["drive"]
+            context["has_drive"] = has_drive
+            context["organization_name"] = organization_name
+            context["organization_slug"] = organization_slug
+            context["drive_name"] = drive_name
+
+        if self.request.user.is_authenticated:
+            if user_map.organization:
+                context["is_org_admin"] = self.request.user.is_org_admin(
+                    user_map.organization_id
+                )
+            if self.request.user == user_map.user:
+                for a in Address.objects.filter(entry=user_map):
+                    context["street"] = a.street
+                    context["city"] = a.city + ", " + a.state + " " + a.zipcode
+                    context["is_community_author"] = (
+                        self.request.user == user_map.user
+                    )
+                    comm.user_name = user_map.user_name
+        context['form'] = self.form_class
+        return render(request, self.template_name, context)
+
+    def send_mail(self, valid_data):
+        # Send mail logic
+        print(valid_data)
+        pass
+
+    def get(self, request, *args, **kwargs):
+        m_uuid = str(self.kwargs["map_id"])
+        if not m_uuid:
+            raise Http404
+        query = CommunityEntry.objects.filter(entry_ID__startswith=m_uuid)
+        if not query:
+            raise Http404
+
+        # query will have length 1 or database is invalid
+        user_map = query[0]
+
+        if user_map.drive:
+            folder_name = query[0].drive.slug
+            has_state = False
+            state = ""
+        else:
+            if "abbr" in self.kwargs:
+                folder_name = self.kwargs["abbr"]
+                has_state = True
+                state = folder_name
+            else:
+                has_state = user_map.state != ""
+                state = user_map.state
+                folder_name = state
+
+        entryPolyDict = {}
+
+        if (
+            user_map.census_blocks_polygon == ""
+            or user_map.census_blocks_polygon is None
+            and user_map.user_polygon
+        ):
+            s = "".join(user_map.user_polygon.geojson)
+        elif user_map.census_blocks_polygon:
+            s = "".join(user_map.census_blocks_polygon.geojson)
+        else:
+            raise Http404
+        map_poly = geojson.loads(s)
+        entryPolyDict[m_uuid] = map_poly.coordinates
+        comm = user_map
+
+        # get user email address
+        user_email_address = EmailAddress.objects.get(user=self.request.user)
+
+        context = {
+            "has_state": has_state,
+            "state": state,
+            "c": comm,
+            "entries": json.dumps(entryPolyDict),
+            "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+            "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
+            "map_id": m_uuid,
+            "email": user_email_address,
+        }
+
+        # from thanks view
+        context["is_thanks"] = False
+        if "thanks" in request.path:
+            context["is_thanks"] = True
+            has_drive = False
+            organization_name = ""
+            drive_name = ""
+            organization_slug = ""
+            if kwargs["drive"]:
+                has_drive = True
+                drive_slug = self.kwargs["drive"]
+                drive = Drive.objects.get(slug=drive_slug)
+                drive_name = drive.name
+                organization = drive.organization
+                organization_name = organization.name
+                organization_slug = organization.slug
+
+            if EmailAddress.objects.filter(
+                user=self.request.user, verified=True
+            ).exists():
+                context["verified"] = True
+
+            else:
+
+                user_email_confirmation = EmailConfirmationHMAC(
+                    email_address=user_email_address
+                )
+
+                user_email_confirmation.send(self.request, False)
+                context["verified"] = False
+
+            context["drive_slug"] = self.kwargs["drive"]
+            context["has_drive"] = has_drive
+            context["organization_name"] = organization_name
+            context["organization_slug"] = organization_slug
+            context["drive_name"] = drive_name
+
+        if self.request.user.is_authenticated:
+            if user_map.organization:
+                context["is_org_admin"] = self.request.user.is_org_admin(
+                    user_map.organization_id
+                )
+            if self.request.user == user_map.user:
+                for a in Address.objects.filter(entry=user_map):
+                    context["street"] = a.street
+                    context["city"] = a.city + ", " + a.state + " " + a.zipcode
+                    context["is_community_author"] = (
+                        self.request.user == user_map.user
+                    )
+                    comm.user_name = user_map.user_name
+        context['form'] = self.form_class
         return render(request, self.template_name, context)
 
 
