@@ -48,8 +48,8 @@
       <div class="row w-md-75 d-inline-block m-0">
         <div class="card text-left border-0 w-100 rounded-lg mb-3 d-none d-xl-block">
           <div class="card-body">
-            <h3 class="card-title header-text"><strong>{{c.entry_name}}</strong></h3>
-            <h6 class="info-text"><strong>{{c.drive.name}}</strong></h5>
+            <h3 id="pdfName" class="card-title header-text"><strong>{{c.entry_name}}</strong></h3>
+            <h6 class="info-text"><strong>{{c.drive.name}}</strong></h6>
           </div>
         </div>
         <div class="card text-left w-100 border-0 rounded-lg">
@@ -365,7 +365,7 @@
             {% if c.economic_interests %}
             <h6>
               <br>
-              
+
               Community Needs and Concerns
             </h6>
             <small>

@@ -1279,6 +1279,15 @@ textarea.survey-field:focus {
   padding-left: 10px;
 }
 
+.survey-questions-list {
+  list-style-type: none;
+}
+.survey-questions-list li:before {
+  content: '\2014';
+  position: absolute;
+  margin-left: -20px;
+}
+
 .survey-sect-title {
   padding-top: 15px;
 }
