@@ -590,6 +590,12 @@ class UpdateDrive(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
     form_class = DriveForm
     pk_url_kwarg = "cam_pk"
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        org = Organization.objects.get(pk=self.kwargs["pk"])
+        kwargs["org_states"] = org.states
+        return kwargs
+
 
 class DeleteDrive(LoginRequiredMixin, OrgAdminRequiredMixin, DeleteView):
     """
