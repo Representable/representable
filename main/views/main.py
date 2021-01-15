@@ -524,7 +524,10 @@ class Submission(TemplateView):
         comm = user_map
 
         # get user email address
-        user_email_address = EmailAddress.objects.get(user=self.request.user)
+        if self.request.user.is_authenticated():
+            user_email_address = EmailAddress.objects.get(user=self.request.user)
+        else:
+            user_email_address = ""
 
         context = {
             "has_state": has_state,
