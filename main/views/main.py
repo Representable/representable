@@ -597,6 +597,7 @@ class SubmissionDriveUpdateView(View):
                     )
                     comm.user_name = user_map.user_name
         context['form'] = self.form_class
+
         return render(request, self.template_name, context)
 
 
@@ -842,9 +843,18 @@ class Submission(View):
                     )
                     comm.user_name = user_map.user_name
         context['form'] = self.form_class
+
+        
+        context['driveinfo'] = '\n\n'.join([stringify_drive(f) for f in State.objects.get(abbr='ND').get_drives()])
         return render(request, self.template_name, context)
 
+def stringify_drive(d):
+    # ASSUME submission has user addresses
+    verdict = d.state=='ND' and d.is_active==True and d.private==False
+    return str(verdict) + '\t id: {} \n \t slug: {} \n \t name: {} \n \t state: {} \n \t description: {} \n \t organization: {} \n \t created_at: {} \n \t is_active: {} \n \t private: {} \n \t require_user_addresses: {}'.format(d.id, d.slug, d.name, d.state, d.description, d.organization, d.created_at, d.is_active, d.private, d.require_user_addresses)
 
+
+    
 # ******************************************************************************#
 
 
