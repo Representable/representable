@@ -116,8 +116,8 @@
                 </div>
                 <div class="row d-none d-xl-flex pt-4">
                     <div class="col text-center">
-                        <button class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4" onclick="surveyStartToAddress()"><i class="fas fa-angle-left pr-2"></i>{% trans "Back" %}</button>
-                        <button class="btn btn-primary no-underline-link entry-nav-btn ml-4" onclick="startSurvey()">{% trans "Start" %}<i class="fas fa-angle-right pl-2"></i></button>
+                        <button class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4" onclick="surveyStartToAddress()"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
+                        <button class="btn btn-primary no-underline-link entry-nav-btn ml-4" onclick="startSurvey()">{% trans "START" %}<i class="fas fa-angle-right pl-2"></i></button>
                     </div>
                 </div>
             </div>
@@ -210,7 +210,7 @@
                 </div>
                 <div class="row">
                     <div class="col text-center">
-                        <button class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4" onclick="surveyStartToAddress()"><i class="fas fa-angle-left pr-2"></i>{% trans "Back" %}</button>
+                        <button class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4" onclick="surveyStartToAddress()"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
                         <button class="btn btn-primary no-underline-link entry-nav-btn ml-4" onclick="startSurvey()">{% trans "Start" %}<i class="fas fa-angle-right pl-2"></i></button>
                     </div>
                 </div>
@@ -223,9 +223,19 @@
     <div id="survey-qs-p1" class="row row-equal-cols d-none">
         <div class="col-lg">
             <div class="entry-header">
-                <strong>{% trans "Community of Interest Questions" %}</strong>
+                <strong>{% trans "What unites your Community of Interest?" %}</strong>
             </div>
-            <div class="survey-instruction">
+            <div class="col-12 py-3 px-4 light-blue-bg opacity-4 mt-2">
+                <button class="btn btn-link ws-normal btn-no-focus-outline bg-transparent text-left my-0 p-0 no-underline-link" aria-expanded="false" aria-controls="collapseCriteria" onclick="toggleAngle(this)">
+                <h5 style="width: fit-content; color: initial;">Community of Interest Definition in {{ state_obj.name }} &#32;<i class="fas fa-angle-down pl-3"></i></h5>
+                </button>
+                <div class="collapse mt-2" id="collapseCriteria">
+                    {% autoescape off %}
+                    {{ state_obj.content_coi }}
+                    {% endautoescape %}
+                </div>
+            </div>
+            <div class="survey-instruction mt-2">
                 {% blocktrans %}
                     <p>
                       Respond to <b>at least one</b> of the sections below. There are no wrong answers.<br>
@@ -334,8 +344,8 @@
             </div>
             <div class="row pt-5">
                 <div class="col text-center">
-                    <button class="btn btn-outline-primary entry-nav-btn mr-4" onclick="surveyP1ToSurveyStart()"><i class="fas fa-angle-left pr-2"></i>{% trans "Back" %}</button>
-                    <button id="surveyP1ToP2_button" class="btn btn-primary entry-nav-btn ml-4">{% trans "Next" %}<i class="fas fa-angle-right pl-2"></i></button>
+                    <button class="btn btn-outline-primary entry-nav-btn mr-4" onclick="surveyP1ToSurveyStart()"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
+                    <button id="surveyP1ToP2_button" class="btn btn-primary entry-nav-btn ml-4">{% trans "NEXT" %}<i class="fas fa-angle-right pl-2"></i></button>
                 </div>
             </div>
         </div>
@@ -405,8 +415,8 @@
 
             <div class="row pt-5">
                 <div class="col text-center">
-                    <button class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4" onclick="surveyP2ToP1()"><i class="fas fa-angle-left pr-2"></i>{% trans "Back" %}</button>
-                    <button id="surveyP2ToMap_button" class="btn btn-primary no-underline-link entry-nav-btn ml-4">{% trans "Next" %}<i class="fas fa-angle-right pl-2"></i></button>
+                    <button class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4" onclick="surveyP2ToP1()"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
+                    <button id="surveyP2ToMap_button" class="btn btn-primary no-underline-link entry-nav-btn ml-4">{% trans "NEXT" %}<i class="fas fa-angle-right pl-2"></i></button>
                 </div>
             </div>
         </div>

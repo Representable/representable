@@ -75,6 +75,30 @@ form:invalid {
   margin: auto;
 }
 
+.opacity-5 {
+  opacity: 1;
+}
+
+.opacity-4 {
+  opacity: .8;
+}
+
+.opacity-3 {
+  opacity: .6;
+}
+
+.opacity-2 {
+  opacity: .4;
+}
+
+.opacity-1 {
+  opacity: .2;
+}
+
+.opacity-0 {
+  opacity: 0;
+}
+
 /* TOC Checkbox*/
 .toc-check {
   display: inline;
@@ -1389,7 +1413,7 @@ textarea.survey-field:focus {
   color: #5996D2;
 }
 .light-blue-bg {
-  background: #DAEFFF 63%;
+  background: #DAEFFF 60%;
 }
 .light-green-bg {
   background-color: #F2FAFF;

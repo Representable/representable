@@ -896,6 +896,7 @@ class EntryView(LoginRequiredMixin, View):
             "drive_id": drive_id,
             "state": abbr,
             "address_required": address_required,
+            "state_obj": State.objects.get(abbr=abbr.upper())
         }
         return render(request, self.template_name, context)
 
