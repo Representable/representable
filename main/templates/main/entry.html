@@ -63,8 +63,68 @@
         {% endfor %}
     </div>
     <div class="container-fluid">
-        <div class="row row-content">
+        <div class="row row-content row-equal-cols">
             <div class="col-sm-2">
+                <div id="entry-progress" class="text-xl-center">
+                    <div class="row d-md-none mb-3">
+                        <div class="col-1"></div>
+                        <div class="col-2 p-0">
+                            <div class="circle-sm progress-step current"> 1 </div>
+                        </div>
+                        <div class="col-2 p-0">
+                            <div class="circle-sm progress-step unseen">2</div>
+                        </div>
+                        <div class="col-2 p-0">
+                            <div class="circle-sm progress-step unseen"> 3 </div>
+                        </div>
+                        <div class="col-2 p-0">
+                            <div class="circle-sm progress-step unseen"> 4 </div>
+                        </div>
+                        <div class="col-2 p-0">
+                            <div class="circle-sm progress-step unseen"><i class="fa fa-check" aria-hidden="true"></i></div>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="entry-progress-vert" class="text-center">
+                    <div class="row d-none d-md-inline-block mt-5">
+                        <div class="col-12">
+                            <div class="circle progress-step current"> 1 </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="progress-line-vert text-center mx-auto">
+                                <div id="1to2" class="progress-bar-vert current"></div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="circle progress-step unseen">2</div>
+                        </div>
+                        <div class="col-12">
+                            <div class="progress-line-vert text-center mx-auto">
+                                <div id="2to3" class="progress-bar-vert unseen"></div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="circle progress-step unseen"> 3 </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="progress-line-vert text-center mx-auto">
+                                <div id="3to4" class="progress-bar-vert unseen"></div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="circle progress-step unseen"> 4 </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="progress-line-vert text-center mx-auto">
+                                <div id="4to5" class="progress-bar-vert unseen"></div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="circle progress-step unseen"><i class="fa fa-check" aria-hidden="true"></i></div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-sm-8">
                 <!-- START FORM BODY -->
@@ -130,12 +190,13 @@
     </script>
     <script type="text/javascript">
     function validateRecaptcha() {
-        var response = grecaptcha.getResponse();
-        if (response.length === 0 && "{{ check_captcha }}" === "True") {
-          document.getElementById("need_captcha").classList.remove("d-none");
-          scrollIntoViewSmooth(document.getElementById("need_captcha"));
-          return false;
-        }
+            var response = grecaptcha.getResponse();
+            if (response.length === 0 && "{{ check_captcha }}" === "True") {
+            document.getElementById("need_captcha").classList.remove("d-none");
+            scrollIntoViewSmooth(document.getElementById("need_captcha"));
+            animateStepBackward(5, 4, null);
+            return false;
+            }
 
             sessionStorage.clear();
             return true;
