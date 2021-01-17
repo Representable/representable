@@ -524,7 +524,7 @@ class Submission(TemplateView):
         comm = user_map
 
         # get user email address
-        if self.request.user.is_authenticated():
+        if self.request.user.is_authenticated:
             user_email_address = EmailAddress.objects.get(user=self.request.user)
         else:
             user_email_address = ""
@@ -557,9 +557,10 @@ class Submission(TemplateView):
                 organization_name = organization.name
                 organization_slug = organization.slug
 
-            if EmailAddress.objects.filter(
+            if (self.request.user.is_authenticated 
+            and EmailAddress.objects.filter(
                 user=self.request.user, verified=True
-            ).exists():
+            ).exists()):
                 context["verified"] = True
 
             else:
