@@ -182,7 +182,7 @@ $('#map-comm-modal').on('shown.bs.modal hidden.bs.modal', function() {
   $("#mobile-map-comm-btn").toggleClass("opened")
 });
 
-/** 
+/**
  * "May not be needed": Lines tagged with this are meant to animate the load in between the progress bars on a mobile view. However
  * right now those bars have been left out so those lines can be deleted if the bars won't be put back in
 */
@@ -211,7 +211,7 @@ function animateStepForward(at, to, after) {
   }, 600);
 }
 
-/** 
+/**
  * "May not be needed": Lines tagged with this are meant to animate the load in between the progress bars on a mobile view. However
  * right now those bars have been left out so those lines can be deleted if the bars won't be put back in
 */
@@ -262,7 +262,7 @@ function startSurvey() {
 function surveyP1ToSurveyStart() {
   $("#survey-qs-p1").addClass("d-none");
   $("#entry-survey-start").removeClass("d-none");
-  $("#2to3").removeClass("h-50"); 
+  $("#2to3").removeClass("h-50");
 }
 
 function surveyP1ToP2() {
@@ -1410,6 +1410,7 @@ map.on("style.load", function () {
     // todo: bug where you can select non-contiguous areas on basicMode
     if ((eraseMode && !basicMode) || isBasicErase) {
       currentFilter.forEach(function (feature) {
+        // push current filter MINUS the selected area
         if (!features.includes(feature)) filter.push(feature);
       });
       arraysEqual(filter, currentFilter)
@@ -1419,10 +1420,22 @@ map.on("style.load", function () {
         if (isEmptyFilter(filter)) {
           sessionStorage.setItem("selectBbox", "[]");
         }
-        if (selectBbox === null) selectBbox = [];
-        else selectBbox = turf.difference(selectBbox, currentBbox);
+        if (selectBbox === null) {
+          selectBbox = [];
+        }
+        else {
+          selectBbox = turf.difference(selectBbox, currentBbox);
+          if (turf.getType(selectBbox) == "MultiPolygon") {
+            showWarningMessage(
+              "Please ensure that your community does not contain any gaps. Your selected units must connect."
+            );
+            selectBbox = turf.union(selectBbox, currentBbox);
+            filter = currentFilter.slice();
+          }
+        }
       }
     } else {
+      // this is select mode 
       // check if previous selectBbox overlaps with current selectBbox
       if (selectBbox === null || selectBbox.length === 0) {
         isChanged = true;
