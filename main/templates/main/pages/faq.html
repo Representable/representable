@@ -1,0 +1,46 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid content-blue-bg">
+  <div class="row row-content mx-lg-5 px-lg-5">
+    <div class="col mx-lg-5 px-lg-5">
+      <div class="row mx-lg-5 px-lg-5">
+        <div class="col-12">
+          <h1>FAQs</h1>
+          <p class="text-muted">Check out our most frequently asked questions below. </p>
+        </div>
+        <h3 class="blue-text ml-3 mt-3">For Community Members</h3>
+        {% for q in faqs_users %}
+        <div class="col-12 my-2 light-blue-bg">
+          <button class="btn ws-normal btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" type="button" data-target="#faq-question-{{q.id}}" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+              <h6 class="mt-2 dropdown-toggle-angle word-break">{{ q.question|striptags }}<i class="fas fa-angle-down pl-3"></i></h6>
+          </button>
+          <div class="accordion" id="faq-question-{{q.id}}-accordion">
+              <div id="faq-question-{{q.id}}" class="collapse ml-lg-5" aria-labelledby="faq question accordion" data-parent="#faq-question-{{q.id}}-accordion">
+                  <p class="collapse-in mb-lg-4 mt-lg-2">{{ q.answer|safe }}</p>
+              </div>
+          </div>
+        </div>
+        {% endfor %}
+        <h3 class="blue-text ml-3 mt-3">For Organizations</h3>
+        {% for q in faqs_orgs %}
+        <div class="col-12 my-2 light-blue-bg">
+          <button class="btn ws-normal btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" type="button" data-target="#faq-question-{{q.id}}" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+              <h6 class="mt-2 dropdown-toggle-angle word-break">{{ q.question|striptags }}<i class="fas fa-angle-down pl-3"></i></h6>
+          </button>
+          <div class="accordion" id="faq-question-{{q.id}}-accordion">
+              <div id="faq-question-{{q.id}}" class="collapse" aria-labelledby="faq question accordion" data-parent="#faq-question-{{q.id}}-accordion">
+                  <p class="collapse-in ml-4">{{ q.answer|safe }}</p>
+              </div>
+          </div>
+        </div>
+        {% endfor %}
+        <div class="col-12 small px-5 py-4">Have more questions? Email us at <a href="mailto:team@representable.org">team@representable.org</a>.</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="{% static 'main/js/components/dropdown.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container">
+  <div class="row pt-3">
+    <div class="col">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'main:index' %}">Home</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'main:dashboard' %}">Dashboard</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'main:home_org' object.organization.slug  object.organization.pk %}">Partners / {{ object.organization.name }}</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'main:drive_home' object.organization.slug object.organization.pk object.pk %}">Drives / {{ object.name }} </a></li>
+          <li class="breadcrumb-item active" aria-current="page"> Manage Invite List</li>
+
+        </ol>
+      </nav>
+    </div>
+  </div>
+  <div class="row pt-3">
+    <div class="col-sm">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5>
+            Invite List for {{ object.name }}
+          </h5>
+          <hr>
+          <div>
+          Invitations will automatically be sent to emails you add to this list.
+          </div>
+          <br>
+            <div class="card shadow-sm">
+            <div class="card-body">
+                <h5><span class="badge badge-secondary"><i class="fas fa-file-upload"></i></span> Upload Email List </h5>
+                <p> Upload a csv of emails to add them all to your list, or add individually below. <p>
+                <a class="btn btn-primary float-right" href="{% url 'main:upload_allowlist' object.organization.slug  object.organization.pk object.pk %}" role="button">Upload <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+            </div>
+            
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      <div class="card shadow-sm my-3">
+        <div class="card-body">
+          <h5> Invitees </h5>
+          <div class="container">
+            <div class="row">
+              <div class="col-md">
+                <form role="form" id="EmailAllowList" method="post">{% csrf_token %}
+                  <div style="display: inline-block;">
+                      <input style="height:36px" type="text" id="email" value="" name="email" placeholder="Add a member"/>
+                      <button id="save" form="EmailAllowList" type="submit" class="btn btn-primary mb-1" value="Submit">Add</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <table class="table table-hover">
+
+          {% for l in list %}
+          <tr>
+
+          <td> {{l.email}} </td>
+
+          <td>
+            {% comment %} {% if is_org_admin %}
+              <button class="btn btn-danger float-right" data-toggle="modal" data-target="#deleteInvitee">
+                <i class="fas fa-trash"></i>
+              </button>
+            {% endif %} {% endcomment %}
+            <button class="btn btn-danger float-right" id="remove" data-toggle="modal" data-alid={{l.id}} data-target="#deleteInvitee">
+            <i class="fas fa-trash"></i>
+            </button>
+          </td>
+
+          </tr>
+          {% endfor %}
+
+          </table>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteInvitee" tabindex="-1" role="dialog" aria-labelledby="deleteInviteeLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to remove this member from your drive?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This member will no longer be able to submit communities to your drive.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <form role="form" id="deleteInviteeInfo" method="post" action="delete\">{% csrf_token %}
+          <input type="text" class="hidden" name="alid" id="alid" value=""/>
+          <button type="submit" class="btn btn-danger" name="Delete">Remove member</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+
+    <script>
+    $(document).on("click", "#remove", function () {
+         var alid = $(this).data('alid');
+         $(".modal-footer #alid").val( alid );
+    });
+    </script>
+
+{% endblock %}
