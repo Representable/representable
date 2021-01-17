@@ -36,6 +36,7 @@ from allauth.account.models import (
     EmailAddress,
     EmailConfirmationHMAC,
 )
+from django.core.mail import EmailMessage
 from ..forms import (
     CommunityForm,
     DriveForm,
@@ -43,6 +44,7 @@ from ..forms import (
     OrganizationForm,
     AllowlistForm,
     MemberForm,
+    EditOrganizationForm,
 )
 from ..models import (
     Membership,
@@ -205,7 +207,7 @@ class EditOrg(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
     """
 
     template_name = "main/dashboard/partners/edit.html"
-    form_class = OrganizationForm
+    form_class = EditOrganizationForm
     model = Organization
 
 
@@ -317,9 +319,9 @@ class AllowListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
     """
 
     form_class = AllowlistForm
-    model = Organization
+    model = Drive
     template_name = "main/dashboard/partners/allowlist_upload.html"
-    pk_url_kwarg = "pk"
+    pk_url_kwarg = "cam_pk"
 
     def form_valid(self, form):
         file = self.request.FILES["file"]
@@ -328,14 +330,84 @@ class AllowListUpdate(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
         for line in file:
             matches = re.findall(b"[\w\.-]+@[\w\.-]+\.\w+", line)  # noqa: W605
             for match in matches:
-                AllowList.objects.create(
-                    email=match.decode("utf-8"), organization=self.object
+                AllowList.objects.get_or_create(
+                    email=match.decode("utf-8"),
+                    organization=self.object.organization,
+                    drive=self.object,
                 )
             if line_count == max_line_count:
                 break
             line_count += 1
 
         return super().form_valid(form)
+
+
+class AllowListManage(LoginRequiredMixin, OrgAdminRequiredMixin, TemplateView):
+    """
+    Page to view and edit allowlist
+    """
+
+    template_name = "main/dashboard/partners/allowlist_manage.html"
+
+    def get(self, request, cam_pk, *args, **kwargs):
+
+        drive = Drive.objects.get(pk=cam_pk)
+        allowlist = AllowList.objects.filter(drive=drive)
+        context = {
+            "object": drive,
+            "list": allowlist,
+        }
+        return render(request, self.template_name, context,)
+
+    def post(self, request, cam_pk, *args, **kwargs):
+        drive = Drive.objects.get(pk=cam_pk)
+        state = drive.state.lower()
+        email = self.request.POST["email"]
+        link = (
+            "<a href=representable.org/entry/drive/"
+            + drive.slug + "/" + state
+            + " > this link </a>"
+        )
+        query = AllowList.objects.filter(email=email, drive=drive)
+        if not query:
+            AllowList.objects.create(
+                email=email, organization=drive.organization, drive=drive,
+            )
+
+            email = EmailMessage(
+                "You've Been Invited to a Representable Mapping Drive",  # subject line
+                "Hello! <br> You've been invited to a Representable drive called"
+                + drive.name
+                + ". <br> Access the submission form at "
+                + link
+                + ". <br> Remember to sign in or sign up with this email address.",  # html content
+                "no-reply@representable.org",  # from email
+                [email],  # list of recipients
+            )
+            email.content_subtype = "html"
+            email.send()
+        url_kwargs = kwargs
+        url_kwargs["cam_pk"] = cam_pk
+
+        return redirect(
+            reverse_lazy("main:manage_allowlist", kwargs=url_kwargs)
+        )
+
+
+class AllowListDelete(LoginRequiredMixin, OrgAdminRequiredMixin, DeleteView):
+    """
+    The view for deleting drives
+    """
+
+    model = Drive
+    pk_url_kwarg = "cam_pk"
+
+    def delete(self, request, *args, **kwargs):
+        alid = request.POST["alid"]
+        member = AllowList.objects.get(pk=alid)
+        member.delete()
+        url = reverse_lazy("main:manage_allowlist", kwargs=kwargs)
+        return HttpResponseRedirect(url)
 
 
 class ReviewOrg(LoginRequiredMixin, OrgAdminRequiredMixin, TemplateView):
@@ -504,7 +576,7 @@ class CreateDrive(LoginRequiredMixin, OrgAdminRequiredMixin, CreateView):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         org = Organization.objects.get(pk=self.kwargs["pk"])
-        kwargs['org_states'] = org.states
+        kwargs["org_states"] = org.states
         return kwargs
 
 
@@ -517,6 +589,12 @@ class UpdateDrive(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
     model = Drive
     form_class = DriveForm
     pk_url_kwarg = "cam_pk"
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        org = Organization.objects.get(pk=self.kwargs["pk"])
+        kwargs["org_states"] = org.states
+        return kwargs
 
 
 class DeleteDrive(LoginRequiredMixin, OrgAdminRequiredMixin, DeleteView):
