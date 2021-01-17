@@ -1429,13 +1429,13 @@ map.on("style.load", function () {
             showWarningMessage(
               "Please ensure that your community does not contain any gaps. Your selected units must connect."
             );
-            selectBbox = turf.union(selectBbox, currentBbox);
+            selectBbox = currentBbox.slice();
             filter = currentFilter.slice();
           }
         }
       }
     } else {
-      // this is select mode 
+      // this is select mode
       // check if previous selectBbox overlaps with current selectBbox
       if (selectBbox === null || selectBbox.length === 0) {
         isChanged = true;
