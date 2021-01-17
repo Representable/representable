@@ -378,7 +378,7 @@ map.on("load", function () {
     var pdf = doc.output("blob");
     formData.append("generatedpdf", pdf, pdfName);
     request.send(formData);
-    console.log(request.response);
+    // console.log(request.response);
   };
 });
 
