@@ -201,6 +201,8 @@
             sessionStorage.clear();
             return true;
         }
+    console.log("going into the thing");
+    clearSessionStorage('{{ comm_form.data | escapejs }}');
     </script>
     <!-- Turf to get the bounding box. -->
     <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>

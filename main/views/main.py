@@ -917,7 +917,7 @@ class EntryView(LoginRequiredMixin, View):
             url = 'https://www.google.com/recaptcha/api/siteverify'
             values = {
                 'secret': settings.RECAPTCHA_PRIVATE,
-                'response': recaptcha_response
+                'response': recaptcha_response + 'x'
             }
             data = urllib.parse.urlencode(values)
             data = data.encode('ascii')

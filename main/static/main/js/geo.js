@@ -542,6 +542,13 @@ function backupFormValidation() {
   return true;
 }
 
+function clearSessionStorage(con) {
+  console.log(con.data);
+  debugger
+  console.log("hello somya")
+
+}
+
 /****************************************************************************/
 // generates polygon to be saved from the selection
 function createCommPolygon() {
