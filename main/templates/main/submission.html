@@ -28,14 +28,16 @@
 {% endblock %}
 {% block content %}
 <div class="container-fluid w-100">
-  <pre>{{ driveinfo }}</pre>
-  <form action="" method="post">
-    {% csrf_token %}
-    <table>
-    {{ form.as_table }}
-    </table>
-    <input type="submit" value="Submit">
-  </form>
+  <pre>{{ form_info }}</pre>
+  {% if show_form is True %}
+    <form action="" method="post">
+      {% csrf_token %}
+      <table>
+      {{ form.as_table }}
+      </table>
+      <input type="submit" value="Submit">
+    </form>
+  {% endif %}
 
   <div class="row row-wide light-green-bg pb-5">
     <div>

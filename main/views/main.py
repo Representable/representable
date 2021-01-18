@@ -478,27 +478,37 @@ def SendPlainEmail(request):
 
     email.send()
     return HttpResponse("Sent")
+
+# ******************************************************
+# ******************************************************
+# ******************************************************
 # ******************************************************
 
 from django import forms
+from django.shortcuts import redirect
 
 class SubmissionAddDrive(forms.Form):
-    def __init__(self, *args, **kwargs):
-        super().__init__()
-        if 'drive_choices' in kwargs:
-            self.fields['Add new drive'] = forms.ChoiceField(choices=kwargs['drive_choices'])
-        else:
-            self.fields['Add new drive'] = forms.ChoiceField()            
+    def upd(self, state):
+        """
+        Req: state must be a valid, uppercased, state abbreviation
 
-# ******************************************************
+        Creates a dropdown of drives that satisfy the rules:
+            * Are in state
+            * Are active
+            * Are not private
+        """
+        all_drives = State.objects.get(abbr=state).get_drives()
+        drives_to_add = [d for d in all_drives if d.state==state and d.is_active==True and d.private==False]
+        choices = [(str(d.id), str(d.name) + ' - ' + str(d.organization)) for d in drives_to_add]
+        self.fields['Add a new drive'] = forms.ChoiceField(choices=choices)
+# ***********************
+# ***********************
+
+
 class Submission(View):
     template_name = "main/submission.html"
 
     def post(self, request, *args, **kwargs):
-        form = ContactForm(data=request.POST)
-        if form.is_valid():
-            self.send_mail(form.cleaned_data)
-        
         m_uuid = str(self.kwargs["map_id"])
         if not m_uuid:
             raise Http404
@@ -603,13 +613,27 @@ class Submission(View):
                         self.request.user == user_map.user
                     )
                     comm.user_name = user_map.user_name
-        context['form'] = self.form_class
-        return render(request, self.template_name, context)
 
-    def send_mail(self, valid_data):
-        # Send mail logic
-        print(valid_data)
-        pass
+        show_form, form_info = self.should_show_form(state=context['state'], entryid=context['map_id'])
+
+        if(show_form == True):
+            form = SubmissionAddDrive(request.POST)
+            form.upd(state=context['state'].upper())
+            if form.is_valid():
+                print('\n\n\nPOST\n\n\n', 'I need to connect mapid', context['map_id'], 'with driveid', form.cleaned_data['Add a new drive'], '\n\n\n')
+                try:
+                    d = Drive.objects.get(id=form.cleaned_data['Add a new drive'])
+                    o = d.organization
+                    c = CommunityEntry.objects.get(entry_ID=context['map_id'])
+                    c.drive = d
+                    c.organization = o
+                    c.save()
+                    print('success')
+                except Exception as e:
+                    print('fail')
+                    print(e)
+
+        return HttpResponseRedirect(request.path)
 
     def get(self, request, *args, **kwargs):
         m_uuid = str(self.kwargs["map_id"])
@@ -717,25 +741,58 @@ class Submission(View):
                     )
                     comm.user_name = user_map.user_name
 
-        # ! Assumes state is valid !
-        # ! Also assumes user always has address ! #
-        drive_add = select_valid_drives_toadd(state=state)
-        context['driveinfo'] = '\n\n'.join([stringify_drive(d) for d in drive_add])
-        context['form'] = SubmissionAddDrive(drive_choices=[(d.id,str(d.name) + ' - ' + str(d.organization)) for d in drive_add])
-        
+        show_form, form_info = self.should_show_form(state=context['state'], entryid=context['map_id'])
+        context['form_info'] = form_info
+        context['show_form'] = show_form
+        if(show_form == True):
+            context['form'] = SubmissionAddDrive()
+            context['form'].upd(state=context['state'].upper())
+
         return render(request, self.template_name, context)
+    def should_show_form(self, state, entryid):
+        """
+        Req: state = a potential state field, map_id = a potential CommEntryID
 
-def select_valid_drives_toadd(state):
-    """ given a state abbrv, returns list of active & public drives in that state"""
-    state = state.upper()
-    all_drives = State.objects.get(abbr=state).get_drives()
-    filtered_drives = [d for d in all_drives if d.state==state and d.is_active==True and d.private==False]
-    return filtered_drives
+        Returns:
+            A tuple (Bool - Whether do display addDrive Form, String - debugging message)
 
-def stringify_drive(d):
-    """given a drive d, returns a string representation of the drive"""
-    return '\t id: {} \n \t slug: {} \n \t name: {} \n \t state: {} \n \t description: {} \n \t organization: {} \n \t created_at: {} \n \t is_active: {} \n \t private: {} \n \t require_user_addresses: {}'.format(d.id, d.slug, d.name, d.state, d.description, d.organization, d.created_at, d.is_active, d.private, d.require_user_addresses)
-    
+        Checks the following conditions:
+            * User is logged in - Not Implemented !!!
+            * context['map_id'] points to a valid CommunityEntry
+            * that CommunityEntry does not have a drive
+            * that CommunityEntry has an associated Address 
+            * context['state'] exists and is a valid state
+        """
+        form_info = 'Should show Add drive form for this community?\n'
+        form_info += 'User is logged in: Assume True \n'
+        try:        
+            entry = CommunityEntry.objects.get(entry_ID=entryid)
+            form_info += "context['map_id'] points to a valid CommunityEntry: True\n"
+        except:
+            form_info += "context['map_id'] points to a valid CommunityEntry: False\n"
+            return (False, form_info + '* Should NOT Display form *')
+        if(entry.drive == None):
+            form_info += "that CommunityEntry does not have a drive: True\n"
+        else:
+            form_info += "that CommunityEntry does not have a drive: False\n"
+            return (False, form_info + '* Should NOT Display form *')
+        try:
+            Address.objects.get(entry=entry)
+            form_info += "that CommunityEntry has an associated Address : True\n"
+        except:
+            form_info += "that CommunityEntry has an associated Address : False\n"
+            return (False, form_info + '* Should NOT Display form *')
+        try:
+            State.objects.get(abbr=state.upper())
+            form_info += "context['state'] exists and is a valid state: True\n"
+        except:
+            form_info += "context['state'] exists and is a valid state: False\n"
+            return (False, form_info + '* Should NOT Display form *')
+        return (True, form_info + '* Should Display form *')
+  
+# ******************************************************************************#
+# ******************************************************************************#
+# ******************************************************************************#
 # ******************************************************************************#
 
 def make_geojson(request, entry):
