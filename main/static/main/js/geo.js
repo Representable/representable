@@ -1008,7 +1008,7 @@ function showWarningMessage(warning) {
   warning_box.style.display = "block";
   setTimeout(function () {
     warning_box.style.display = "none";
-  }, 4000);
+  }, 10000);
 }
 
 function hideWarningMessage() {
@@ -1410,6 +1410,7 @@ map.on("style.load", function () {
     // todo: bug where you can select non-contiguous areas on basicMode
     if ((eraseMode && !basicMode) || isBasicErase) {
       currentFilter.forEach(function (feature) {
+        // push current filter MINUS the selected area
         if (!features.includes(feature)) filter.push(feature);
       });
       arraysEqual(filter, currentFilter)
@@ -1419,10 +1420,20 @@ map.on("style.load", function () {
         if (isEmptyFilter(filter)) {
           sessionStorage.setItem("selectBbox", "[]");
         }
-        if (selectBbox === null) selectBbox = [];
-        else selectBbox = turf.difference(selectBbox, currentBbox);
+        if (selectBbox === null) {
+          selectBbox = [];
+        }
+        else {
+          selectBbox = turf.difference(selectBbox, currentBbox);
+          if (turf.getType(selectBbox) == "MultiPolygon") {
+            showWarningMessage(
+              "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest connected piece will be visible on Representable.org"
+            );
+          }
+        }
       }
     } else {
+      // this is select mode
       // check if previous selectBbox overlaps with current selectBbox
       if (selectBbox === null || selectBbox.length === 0) {
         isChanged = true;
