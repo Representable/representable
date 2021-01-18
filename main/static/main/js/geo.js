@@ -182,35 +182,99 @@ $('#map-comm-modal').on('shown.bs.modal hidden.bs.modal', function() {
   $("#mobile-map-comm-btn").toggleClass("opened")
 });
 
+/**
+ * "May not be needed": Lines tagged with this are meant to animate the load in between the progress bars on a mobile view. However
+ * right now those bars have been left out so those lines can be deleted if the bars won't be put back in
+*/
+function animateStepForward(at, to, after) {
+  mobileTxt = "Mobile";
+
+  completedBarId = "#" + at + "to" + to;
+  completedBarIdMobile = "#" + at + "to" + to + mobileTxt; // may not be needed
+
+  if (after != null) {
+    nextBarId = "#" + to + "to" + after;
+    nextBarIdMobile = "#" + to + "to" + after + mobileTxt; // may not be needed
+  }
+  $(completedBarId).removeClass("current").addClass("complete");
+  $(completedBarIdMobile).removeClass("current").addClass("complete"); // may not be needed
+
+  $($(".circle.progress-step").get(at - 1)).removeClass("current").addClass("complete");
+  $($(".circle-sm.progress-step").get(at - 1)).removeClass("current").addClass("complete");
+  setTimeout(function () {
+    $($(".circle.progress-step").get(to - 1)).removeClass("unseen").addClass("current");
+    $($(".circle-sm.progress-step").get(to - 1)).removeClass("unseen").addClass("current");
+    if (after != null) {
+      $(nextBarId).removeClass("unseen").addClass("current");
+      $(nextBarIdMobile).removeClass("unseen").addClass("current"); //may not be needed
+    }
+  }, 600);
+}
+
+/**
+ * "May not be needed": Lines tagged with this are meant to animate the load in between the progress bars on a mobile view. However
+ * right now those bars have been left out so those lines can be deleted if the bars won't be put back in
+*/
+function animateStepBackward(at, to, next) {
+  mobileTxt = "Mobile";
+  if (next != null) {
+    currentBarId = "#" + at + "to" + next;
+    currentBarIdMobile = "#" + at + "to" + next + mobileTxt;
+  }
+  previousBarId = "#" + to + "to" + at;
+  previousBarIdMobile = "#" + to + "to" + at + mobileTxt; // may not be needed
+
+  if (next != null) {
+    $(currentBarId).removeClass("current").addClass("unseen");
+    $(currentBarIdMobile).removeClass("current").addClass("unseen"); // may not be needed
+  }
+  setTimeout(function () {
+    $($('.circle.progress-step').get(at - 1)).removeClass("current").addClass("unseen");
+    $($('.circle-sm.progress-step').get(at - 1)).removeClass("current").addClass("unseen");
+  }, 400);
+  setTimeout(function () {
+    $($('.circle.progress-step').get(to - 1)).removeClass("complete").addClass("current");
+    $($('.circle-sm.progress-step').get(to - 1)).removeClass("complete").addClass("current");
+    $(previousBarId).removeClass("complete").addClass("current");
+    $(previousBarIdMobile).removeClass("complete").addClass("current"); // may not be needed
+  }, 600);
+}
+
 function addressToSurveyStart() {
   $("#entry_address").addClass("d-none");
   $("#entry_survey").removeClass("d-none");
+  animateStepForward(1, 2, 3);
 }
 
 function surveyStartToAddress() {
   $("#entry_survey").addClass("d-none");
   $("#entry_address").removeClass("d-none");
+  animateStepBackward(2, 1, 3);
 }
 
 // changes page entry page from the survey start page to the first part of the survey
 function startSurvey() {
   $("#entry-survey-start").addClass("d-none");
   $("#survey-qs-p1").removeClass("d-none");
+  $("#2to3").addClass("h-50");
 }
 
 function surveyP1ToSurveyStart() {
   $("#survey-qs-p1").addClass("d-none");
   $("#entry-survey-start").removeClass("d-none");
+  $("#2to3").removeClass("h-50");
 }
 
 function surveyP1ToP2() {
   $("#survey-qs-p1").addClass("d-none");
   $("#survey-qs-p2").removeClass("d-none");
+  $("#2to3").addClass("h-75").removeClass("h-50");
 }
 
 function surveyP2ToP1() {
   $("#survey-qs-p2").addClass("d-none");
   $("#survey-qs-p1").removeClass("d-none");
+  $("#2to3").addClass("h-50").removeClass("h-75");
 }
 
 function surveyP2ToMap() {
@@ -220,12 +284,18 @@ function surveyP2ToMap() {
   $("#entry-map-modal").modal();
   map.resize();
   fillSurveyQuestions();
+  animateStepForward(2, 3, 4);
+  $("#2to3").removeClass("h-75");
 }
 
 function mapToSurveyP2() {
   $("#entry_map").addClass("d-none");
   $("#entryForm").children(".container-fluid").removeClass("d-none");
   $("#survey-qs-p2").removeClass("d-none");
+  animateStepBackward(3, 2, 4);
+  setTimeout(function () {
+    $("#2to3").addClass("h-75");
+  }, 600);
 }
 
 function mapToPrivacy() {
@@ -233,6 +303,7 @@ function mapToPrivacy() {
   $("#entryForm").children(".container-fluid").removeClass("d-none");
   $("#entry_privacy").removeClass("d-none");
   $("#entry_survey").addClass("d-none");
+  animateStepForward(3, 4, 5);
 }
 
 function privacyToMap() {
@@ -243,7 +314,9 @@ function privacyToMap() {
   map.resize();
   $("#backup_error").addClass("d-none");
   privacyCheckValidation();
+  animateStepBackward(4, 3, 5);
 }
+
 
 function clearFieldsError(fields) {
   for (var i = 0; i < fields.length; i++) {
@@ -559,10 +632,13 @@ document.addEventListener(
       setTimeout(function () {
         backupSuccess = backupFormValidation();
         privacySuccess = privacyCheckValidation();
+        animateStepForward(4, 5, null);
       }, 500);
       setTimeout(function () {
         if (backupSuccess && privacySuccess) {
           form.submit();
+        } else {
+          animateStepBackward(5, 4, null);
         }
       }, 2000);
       return false;
@@ -932,7 +1008,7 @@ function showWarningMessage(warning) {
   warning_box.style.display = "block";
   setTimeout(function () {
     warning_box.style.display = "none";
-  }, 4000);
+  }, 10000);
 }
 
 function hideWarningMessage() {
@@ -1334,6 +1410,7 @@ map.on("style.load", function () {
     // todo: bug where you can select non-contiguous areas on basicMode
     if ((eraseMode && !basicMode) || isBasicErase) {
       currentFilter.forEach(function (feature) {
+        // push current filter MINUS the selected area
         if (!features.includes(feature)) filter.push(feature);
       });
       arraysEqual(filter, currentFilter)
@@ -1343,10 +1420,20 @@ map.on("style.load", function () {
         if (isEmptyFilter(filter)) {
           sessionStorage.setItem("selectBbox", "[]");
         }
-        if (selectBbox === null) selectBbox = [];
-        else selectBbox = turf.difference(selectBbox, currentBbox);
+        if (selectBbox === null) {
+          selectBbox = [];
+        }
+        else {
+          selectBbox = turf.difference(selectBbox, currentBbox);
+          if (turf.getType(selectBbox) == "MultiPolygon") {
+            showWarningMessage(
+              "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest connected piece will be visible on Representable.org"
+            );
+          }
+        }
       }
     } else {
+      // this is select mode
       // check if previous selectBbox overlaps with current selectBbox
       if (selectBbox === null || selectBbox.length === 0) {
         isChanged = true;

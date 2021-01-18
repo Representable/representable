@@ -75,6 +75,38 @@ form:invalid {
   margin: auto;
 }
 
+.bckgrd-70C5EA {
+  background: #70C5EA;
+}
+
+.txt-16 {
+  font-size: 1rem;
+}
+
+.opacity-5 {
+  opacity: 1;
+}
+
+.opacity-4 {
+  opacity: .8;
+}
+
+.opacity-3 {
+  opacity: .6;
+}
+
+.opacity-2 {
+  opacity: .4;
+}
+
+.opacity-1 {
+  opacity: .2;
+}
+
+.opacity-0 {
+  opacity: 0;
+}
+
 /* TOC Checkbox*/
 .toc-check {
   display: inline;
@@ -87,11 +119,116 @@ form:invalid {
 .toc-check-input {
   display: inline;
 }
+
+.grayed-out {
+  background: #DFDFDF !important;
+}
+
+.circle, .circle-sm, .circle-xs {
+  display: table-cell;
+  vertical-align: middle;
+  border-radius: 50%;
+  font-size: 1rem;
+  color: #fff;
+  text-align: center;
+}
+
+.circle {
+  width: 50px;
+  height: 50px;
+}
+
+.circle-sm {
+  width: 40px;
+  height: 40px;
+}
+
+.circle-xs {
+  width: 30px;
+  height: 30px;
+}
+
+.progress-line {
+  background: #DFDFDF;
+  width: 50px;
+  height: .25rem;
+  overflow: hidden;
+}
+
+.progress-line-vert {
+  background: #DFDFDF;
+  height: 50px;
+  width: .25rem;
+  overflow: hidden;
+}
+
+.progress-step.unseen {
+  background: #DFDFDF !important;
+}
+
+.progress-step.complete {
+  background: #80E3D3;
+}
+
+.progress-step.current {
+  background: #80E3D3;
+  box-shadow: 0px 2px 5px 1px rgba(0,0,0,0.2);
+}
+
+.progress-bar-vert {
+  transition: height 0.6s ease;
+}
+
+.progress-bar-vert.complete {
+  background-color: #80E3D3;
+  height: 100%;
+}
+
+.progress-bar-vert.current {
+  height: 25%;
+  background-color: #80E3D3;
+}
+
+.progress-bar-vert.unseen {
+  background-color: #80E3D3;
+  height: 0%;
+}
+
+
+.progress-bar {
+  transition: width 0.6s ease;
+  height: 100%;
+}
+.progress-bar.complete {
+  background-color: #80E3D3;
+  width: 100%;
+}
+
+.progress-bar.current {
+  width: 25%;
+  background-color: #80E3D3;
+}
+
+.progress-bar.unseen {
+  background-color: #80E3D3;
+  width: 0%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-bar, .progress-bar-vert {
+    transition: none;
+  }
+}
+
+/* .progress-bar.complete:hover {
+  height: 100% !important;
+} */
+
 /* Pop up - bottom left corner of the map. */
 
 .map-popup-box {
   position: absolute;
-  top: 10px;
+  top: 63px;
   left: 10px;
   background-color: rgba(255, 255, 255, 0.9);
   padding: 10px;
@@ -103,6 +240,7 @@ form:invalid {
 }
 .warning-box {
   border: 1px solid red;
+  font-size: 1rem;
 }
 
 /*********************************************************************
@@ -708,6 +846,7 @@ Entry Mapping Page
 #map-comm-info {
   vertical-align: middle;
   margin: auto;
+  top: 10px !important;
 }
 
 #map-top-row {
@@ -742,6 +881,7 @@ Entry Mapping Page
 #map-help-menu {
   height: fit-content;
   max-height: 800px;
+  top: 10px !important;
 }
 
 .comm-info-text {
@@ -1153,8 +1293,13 @@ Entry Form Management
   padding: 30px;
 }
 
+#mobile-survey-start-infographic {
+  background-color: #DAEFFF;
+  padding: 30px;
+}
+
 .survey-start-sm-txt {
-  font-size: .75rem;
+  font-size: 1rem;
   color: #3f3f3f;
 }
 
@@ -1284,7 +1429,7 @@ textarea.survey-field:focus {
   color: #5996D2;
 }
 .light-blue-bg {
-  background: #DAEFFF 63%;
+  background: #DAEFFF 60%;
 }
 .light-green-bg {
   background-color: #F2FAFF;
