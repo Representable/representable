@@ -2098,3 +2098,11 @@ height:25vh!important;
 #rtb a h2 {
   padding-top: 20px;
 }
+
+/* Flips element vertically, in place*/
+.flipY-inplace {
+  -moz-transform: scale(1, -1);
+  -o-transform: scale(1, -1);
+  -webkit-transform: scale(1, -1);
+  transform: scale(1, -1);
+}

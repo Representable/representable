@@ -228,7 +228,14 @@ map.on("load", function () {
           'line-width': 2
       },
   });
-
+  
+  /* Flips arrows on the dropdown menus upon clicking */
+  $("#buttonOne").click(function() {
+    $("#arrowOne").toggleClass('flipY-inplace');
+  });
+  $("#buttonThree").click(function() {
+    $("#arrowThree").toggleClass('flipY-inplace');
+  });
   // console.log('finsihed layers');
 
   // hover to highlight

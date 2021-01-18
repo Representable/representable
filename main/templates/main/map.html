@@ -50,9 +50,9 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                 <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/csv/ role="button" download="communities.csv">Export All as CSV</a>
               </div>
               <div id="headingOne">
-                <button class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne"
+                <button id="buttonOne"class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne"
                 aria-expanded="false" aria-controls="collapseOne" style="width: 100%">
-                Data layers <i class="fas fa-caret-down"></i></button>
+                Data layers <i id="arrowOne" class="fas fa-caret-down"></i></button>
               </div>
               <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="font-weight-light text-uppercase small" id="outline-menu">
@@ -61,9 +61,9 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
             </div>
             <div class="items card">
               <div id="headingThree">
-                <button class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseThree"
+                <button id="buttonThree" class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseThree"
                 aria-expanded="true" aria-controls="collapseThree" style="width: 100%">
-                Communities <i class="fas fa-caret-down"></i></button>
+                Communities <i id="arrowThree"class="fas fa-caret-down flipY-inplace"></i></button>
               </div>
               {% if communities %}
               <table id="collapseThree" class="collapse show table table-hover">
