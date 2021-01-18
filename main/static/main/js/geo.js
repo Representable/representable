@@ -1008,7 +1008,7 @@ function showWarningMessage(warning) {
   warning_box.style.display = "block";
   setTimeout(function () {
     warning_box.style.display = "none";
-  }, 4000);
+  }, 10000);
 }
 
 function hideWarningMessage() {
@@ -1427,10 +1427,8 @@ map.on("style.load", function () {
           selectBbox = turf.difference(selectBbox, currentBbox);
           if (turf.getType(selectBbox) == "MultiPolygon") {
             showWarningMessage(
-              "Please ensure that your community does not contain any gaps. Your selected units must connect."
+              "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest connected piece will be visible on Representable.org"
             );
-            selectBbox = currentBbox.slice();
-            filter = currentFilter.slice();
           }
         }
       }
