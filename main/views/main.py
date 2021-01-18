@@ -905,19 +905,36 @@ class EntryView(LoginRequiredMixin, View):
         comm_form = self.community_form_class(request.POST, label_suffix="")
         addr_form = self.address_form_class(request.POST, label_suffix="")
         # parse block groups and add to field
+        state = self.kwargs['abbr']
         comm_form.data._mutable = True
         block_groups = comm_form.data["block_groups"].split(",")
         comm_form.data["block_groups"] = [
             BlockGroup.objects.get_or_create(census_id=bg)[0].id
             for bg in block_groups
         ]
+        # in case validation fails
         comm_form.data._mutable = False
+        address_required = True
+        has_drive = False
+        organization_name = ""
+        organization_id = None
+        drive_name = ""
+        drive_id = None
+        if kwargs["drive"]:
+            has_drive = True
+            drive_slug = self.kwargs["drive"]
+            drive = Drive.objects.get(slug=drive_slug)
+            drive_name = drive.name
+            drive_id = drive.id
+            organization = drive.organization
+            organization_name = organization.name
+            organization_id = organization.id
         if comm_form.is_valid():
             recaptcha_response = request.POST.get('g-recaptcha-response')
             url = 'https://www.google.com/recaptcha/api/siteverify'
             values = {
                 'secret': settings.RECAPTCHA_PRIVATE,
-                'response': recaptcha_response + 'x'
+                'response': recaptcha_response
             }
             data = urllib.parse.urlencode(values)
             data = data.encode('ascii')
@@ -926,13 +943,25 @@ class EntryView(LoginRequiredMixin, View):
             response = urlopen(req)
             result = json.load(response)
             ''' End reCAPTCHA validation '''
-            if not result['success']:
+            # if not result['success']:
+            if True:
                 messages.add_message(request, messages.ERROR, 'Invalid reCAPTCHA. Please try again.')
                 context = {
                     "comm_form": comm_form,
                     "addr_form": addr_form,
                     "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
                     "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
+                    "recaptcha_public": settings.RECAPTCHA_PUBLIC,
+                    "check_captcha": settings.CHECK_CAPTCHA_SUBMIT,
+                    "census_key": os.environ.get("CENSUS_API_KEY"),
+                    "state": state,
+                    "state_obj": State.objects.get(abbr=state.upper()),
+                    "has_drive": has_drive,
+                    "organization_name": organization_name,
+                    "organization_id": organization_id,
+                    "drive_name": drive_name,
+                    "drive_id": drive_id,
+                    "validation_failed": True
                 }
                 return render(request, self.template_name, context)
             
@@ -1030,6 +1059,16 @@ class EntryView(LoginRequiredMixin, View):
             "addr_form": addr_form,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
+            "recaptcha_public": settings.RECAPTCHA_PUBLIC,
+            "check_captcha": settings.CHECK_CAPTCHA_SUBMIT,
+            "census_key": os.environ.get("CENSUS_API_KEY"),
+            "state": state,
+            "state_obj": State.objects.get(abbr=state.upper()),
+            "has_drive": has_drive,
+            "organization_name": organization_name,
+            "organization_id": organization_id,
+            "drive_name": drive_name,
+            "drive_id": drive_id
         }
         return render(request, self.template_name, context)
 

@@ -544,7 +544,6 @@ function backupFormValidation() {
 
 function clearSessionStorage(con) {
   console.log(con.data);
-  debugger
   console.log("hello somya")
 
 }
