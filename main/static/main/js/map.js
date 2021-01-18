@@ -158,7 +158,6 @@ map.on("load", function () {
   }
 
   // draw all coi's in one layer
-  // console.log('starting data preprocess');
   coidata = JSON.parse(coidata.replace(/'/g, '"'));
 
   var coidata_geojson_format = {
@@ -193,22 +192,16 @@ map.on("load", function () {
     });
   }
 
-  // console.log('finished data preprocess');
-
   // mxzoom(def 18 higher = more detail)
   // tol(def .375 higher = simpler geometry)
   const mxzoom = 10, tol = 3.5;
 
-  // console.log('adding source');
-
   map.addSource('coi_all', {
       'type': 'geojson',
       'data': coidata_geojson_format,
-      'maxzoom': mxzoom, 
+      'maxzoom': mxzoom,
       'tolerance': tol
   });
-
-  // console.log('finished source; adding layers');
 
   map.addLayer({
       'id': 'coi_layer_fill',
@@ -229,18 +222,10 @@ map.on("load", function () {
       },
   });
   
-  /* Flips arrows on the dropdown menus upon clicking */
-  $("#buttonOne").click(function() {
-    $("#arrowOne").toggleClass('flipY-inplace');
-  });
-  $("#buttonThree").click(function() {
-    $("#arrowThree").toggleClass('flipY-inplace');
-  });
   // console.log('finsihed layers');
 
   // hover to highlight
   $(".community-review-span").hover(function() {
-    // console.log('adding highlight layer');
     let highlight_id = this.id + "_boldline";
     map.addSource(highlight_id, {
         'type': 'geojson',
@@ -263,17 +248,14 @@ map.on("load", function () {
             'line-width': 4
         },
     });
-    // console.log('finished highlight layers');
   }, function () {
-    // console.log('removing highlight layers');
     map.removeLayer(this.id+"_boldline");
     map.removeSource(this.id+"_boldline");
-    // console.log('finished removing highlight layers');
   });
 
   // find what features are currently on view
   // multiple features are gathered that have the same source (or have the same source with 'line' added on)
-  
+
   // if (state === "") {
   //   map.on("moveend", function () {
   //     var sources = [];
@@ -304,7 +286,7 @@ map.on("load", function () {
   //   });
   // }
 
-  
+
   // loading icon
   $(".loader").delay(500).fadeOut(500);
   // fly to state if org, otherwise stay on map
@@ -399,4 +381,12 @@ $(document).ready(function(){
       $(this).toggle(innerText.indexOf(value) > -1)
     });
   });
+});
+
+/* Flips arrows on the dropdown menus upon clicking */
+$("#buttonOne").click(function() {
+  $("#arrowOne").toggleClass('flipY-inplace');
+});
+$("#buttonThree").click(function() {
+  $("#arrowThree").toggleClass('flipY-inplace');
 });
