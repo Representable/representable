@@ -75,6 +75,14 @@ form:invalid {
   margin: auto;
 }
 
+.bckgrd-70C5EA {
+  background: #70C5EA;
+}
+
+.txt-16 {
+  font-size: 1rem;
+}
+
 .opacity-5 {
   opacity: 1;
 }
@@ -1282,8 +1290,13 @@ Entry Form Management
   padding: 30px;
 }
 
+#mobile-survey-start-infographic {
+  background-color: #DAEFFF;
+  padding: 30px;
+}
+
 .survey-start-sm-txt {
-  font-size: .75rem;
+  font-size: 1rem;
   color: #3f3f3f;
 }
 
