@@ -263,15 +263,7 @@ Entry Preview Page
   margin: 15px;
   padding: 50px 110px;
   color: black;
-  display:flex;
-}
-
-#info{
-    padding-right: 50px;
-}
-
-#video {
-    margin-left: 20px;
+  display: flex;
 }
 
 #entry_preview_button {
