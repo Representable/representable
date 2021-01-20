@@ -246,7 +246,6 @@ map.on("load", function () {
     window.location.href = "/submission/" + comm_id + "?pdf=true";
   });
   if (window.location.search.includes("pdf=true")) {
-    console.log("in includes function");
     exportPDF(4000);
   }
   // pdf export button
@@ -387,7 +386,7 @@ map.on("load", function () {
 
   // Usage
   var canOnlyFireOnce = once(function () {
-    emailPDF();
+    setTimeout(emailPDF, 5000);
   });
 
   canOnlyFireOnce(); // "Fired!"
