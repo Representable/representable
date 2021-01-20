@@ -306,9 +306,6 @@ map.on("load", function () {
   function emailPDF() {
     // make the map look good for the PDF ! TODO: un-select other layers like census blocks (turn into functions)
     map.fitBounds(commBounds, { padding: 100 });
-    // display loading popup
-    var instruction_box = document.getElementById("pdf-loading-box");
-    instruction_box.style.display = "block";
 
     // setup XMLH request
     var request = new XMLHttpRequest();
