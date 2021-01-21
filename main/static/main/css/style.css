@@ -287,6 +287,8 @@ Entry Preview Page
 
   #entry_video_wrap {
     align-self: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 
   #entry_preview_video {
@@ -321,6 +323,8 @@ Entry Preview Page
   #entry_video_wrap {
     width: 100%;
     max-width: 300px;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 
   #entry_preview_button {
