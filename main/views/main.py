@@ -64,6 +64,7 @@ from ..forms import (
     AddressForm,
     RepresentableSignupForm,
     RepresentableLoginForm,
+    SubmissionAddDrive,
 )
 from ..models import (
     CommunityEntry,
@@ -479,32 +480,6 @@ def SendPlainEmail(request):
     email.send()
     return HttpResponse("Sent")
 
-# ******************************************************
-# ******************************************************
-# ******************************************************
-# ******************************************************
-
-from django import forms
-from django.shortcuts import redirect
-
-class SubmissionAddDrive(forms.Form):
-    def upd(self, state):
-        """
-        Req: state must be a valid, uppercased, state abbreviation
-
-        Creates a dropdown of drives that satisfy the rules:
-            * Are in state
-            * Are active
-            * Are not private
-        """
-        all_drives = State.objects.get(abbr=state).get_drives()
-        drives_to_add = [d for d in all_drives if d.state==state and d.is_active==True and d.private==False]
-        choices = [(str(d.id), str(d.name) + ' - ' + str(d.organization)) for d in drives_to_add]
-        self.fields['Add a new drive'] = forms.ChoiceField(choices=choices)
-# ***********************
-# ***********************
-
-
 class Submission(View):
     template_name = "main/submission.html"
 
@@ -525,14 +500,14 @@ class Submission(View):
             else:
                 state = user_map.state
 
-        show_form, form_info = self.should_show_form(state=state, entryid=m_uuid, auth=self.request.user.is_authenticated)
-        print(show_form, form_info)
+        show_form = self.should_show_form(state=state, entryid=m_uuid, auth=self.request.user.is_authenticated)
+        # print(show_form, form_info)
 
         if(show_form == True):
             form = SubmissionAddDrive(request.POST)
             form.upd(state=state.upper())
             if form.is_valid():
-                print('form is valid', m_uuid, form.cleaned_data['Add a new drive'])
+                # print('form is valid', m_uuid, form.cleaned_data['Add a new drive'])
                 try:
                     d = Drive.objects.get(id=form.cleaned_data['Add a new drive'])
                     o = d.organization
@@ -540,12 +515,9 @@ class Submission(View):
                     c.drive = d
                     c.organization = o
                     c.save()
-                    print('success')
+                    # print('success')
                 except Exception as e:
-                    print('fail')
-                    print(e)
-            else:
-                print('form not valid')
+                    print('fail', e)
 
         return HttpResponseRedirect(request.path)
 
@@ -655,8 +627,7 @@ class Submission(View):
                     )
                     comm.user_name = user_map.user_name
 
-        show_form, form_info = self.should_show_form(state=context['state'], entryid=context['map_id'], auth=self.request.user.is_authenticated)
-        context['form_info'] = form_info
+        show_form = self.should_show_form(state=context['state'], entryid=context['map_id'], auth=self.request.user.is_authenticated)
         context['show_form'] = show_form
         if(show_form == True):
             context['form'] = SubmissionAddDrive()
@@ -665,10 +636,10 @@ class Submission(View):
         return render(request, self.template_name, context)
     def should_show_form(self, state, entryid, auth):
         """
-        Req: state = a potential state field, map_id = a potential CommEntryID
+        Req: state = a potential state field, map_id = a potential CommEntryID, auth = whether user is authenticated
 
         Returns:
-            A tuple (Bool - Whether do display addDrive Form, String - debugging message)
+            Bool - Whether do display addDrive Form
 
         Checks the following conditions:
             * User is logged in
@@ -678,39 +649,23 @@ class Submission(View):
             * context['state'] exists and is a valid state
             * community was created by the user who is signed in - (Already true if no drive & logged in)
         """
-        form_info = 'Should show Add drive form for this community?\n'
-        form_info += 'User is logged in: ' + str(auth) + '\n'
         if(not auth):
-            return (False, form_info + '* Should NOT Display form *')
+            return False
         try:        
             entry = CommunityEntry.objects.get(entry_ID=entryid)
-            form_info += "context['map_id'] points to a valid CommunityEntry: True\n"
         except:
-            form_info += "context['map_id'] points to a valid CommunityEntry: False\n"
-            return (False, form_info + '* Should NOT Display form *')
-        if(entry.drive == None):
-            form_info += "that CommunityEntry does not have a drive: True\n"
-        else:
-            form_info += "that CommunityEntry does not have a drive: False\n"
-            return (False, form_info + '* Should NOT Display form *')
+            return False
+        if(entry.drive != None):
+            return False
         try:
             Address.objects.get(entry=entry)
-            form_info += "that CommunityEntry has an associated Address : True\n"
         except:
-            form_info += "that CommunityEntry has an associated Address : False\n"
-            return (False, form_info + '* Should NOT Display form *')
+            return False
         try:
             State.objects.get(abbr=state.upper())
-            form_info += "context['state'] exists and is a valid state: True\n"
         except:
-            form_info += "context['state'] exists and is a valid state: False\n"
-            return (False, form_info + '* Should NOT Display form *')
-        return (True, form_info + '* Should Display form *')
-  
-# ******************************************************************************#
-# ******************************************************************************#
-# ******************************************************************************#
-# ******************************************************************************#
+            return False
+        return True
 
 def make_geojson(request, entry):
     map_geojson = serialize(
