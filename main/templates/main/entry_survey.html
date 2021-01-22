@@ -9,26 +9,26 @@
     </div>
     <div id="entry-survey-start" class="">
         <div class="row">
-            <div class="col-3">
-                <object type="image/svg+xml" class="w-100 w-md-75" data="{% static 'img/mapping.svg' %}" alt="image of someone drawing a community map"></object>
+            <div class="col-4 col-md-3 col-xl-2 pr-0">
+                <object type="image/svg+xml" class="w-100" data="{% static 'img/mapping.svg' %}" alt="image of someone drawing a community map"></object>
             </div>
-            <div class="col-9">
-                <div class="entry-header">
+            <div class="col-8 col-md-9 col-xl-10">
+                <div class="entry-header ml-3">
                     <strong>{% trans "Tell us about what unites your community." %}</strong>
                 </div>
-                <div class="info-text">
+                <div class="info-text ml-3 txt-16">
                     {% trans "Next, you will share information about what brings your community together. What do you think is important for politicians to know about your community?"%}
                 </div>
                 <br>
 
-                <div id="survey-start-infographic" class="d-none d-xl-inline-block mb-3">
+                <div id="survey-start-infographic" class="d-none d-xl-inline-block mb-3 ml-3">
                     <div class="row m-0 header-text mb-2">
-                        <strong>{% trans "What is a Community of Interest?" %}</strong>
+                        <h5><strong>{% trans "What is a Community of Interest?" %}</strong></h5>
                     </div>
 
-                    <div id="entry-coi-def" class="row m-0 info-text mb-2">
+                    <div id="entry-coi-def" class="row m-0 mb-2">
                         {% blocktrans %}
-                            <p>
+                            <p class="info-text txt-16">
                                 A Community of Interest is a <strong>geographic area</strong> that shares <strong>cultural</strong>, <strong>historical</strong>, or <strong>economic</strong> interests.
                                 Communities of Interest encourage the drawing of fairer voting districts.
                             </p>
@@ -40,14 +40,14 @@
                     </div>
 
                     <div class="row row-equal-cols text-center mx-0 mt-3 ">
-                        <div class="col-lg-4 col-sm-12">
-                            <div class="row h-100 row-equal-cols">
-                                <div class="col-lg-4 col-sm-1 text-center">
-                                    <div class="justify-content-center">
-                                        <object type="image/svg+xml" class="w-100" data="{% static 'img/num1-circle.svg' %}" alt="image of white number 1 with blue circle background"></object>
+                        <div class="col-lg-4">
+                            <div class="row h-100">
+                                <div class="col-4 text-center">
+                                    <div class="d-inline-block">
+                                        <div class="circle-xs bckgrd-70C5EA">1</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-8 col-sm-11">
+                                <div class="col-lg-8">
                                     <div class="row h-100 survey-start-txt-pic">
                                         <div class="col-lg-12 px-0 pb-4 text-left survey-start-sm-txt">
                                             {% blocktrans %}
@@ -57,7 +57,7 @@
 
                                         <div class="col-lg-12 text-center survey-start-pic">
                                             <div class="">
-                                                <object type="image/svg+xml" class="w-50 mt-1 mb-0" data="{% static 'img/voting.svg' %}" alt="image of clipart of voting"></object>
+                                                <object type="image/svg+xml" class="w-25" data="{% static 'img/voting.svg' %}" alt="image of clipart of voting"></object>
                                             </div>
                                         </div>
                                     </div>
@@ -65,11 +65,11 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-sm-12">
-                            <div class="row h-100 row-equal-cols">
-                                <div class="col-lg-4 text-center">
-                                    <div class="justify-content-center">
-                                        <object type="image/svg+xml" class="w-100" data="{% static 'img/num2-circle.svg' %}" alt="image of white number 2 with blue circle background"></object>
+                        <div class="col-lg-4">
+                            <div class="row h-100">
+                                <div class="col-4 text-center">
+                                    <div class="d-inline-block">
+                                        <div class="circle-xs bckgrd-70C5EA">2</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-8">
@@ -82,7 +82,7 @@
 
                                         <div class="col-lg-12 text-center survey-start-pic">
                                             <div class="">
-                                                <object type="image/svg+xml" class="w-50" data="{% static 'img/city_icon-2.svg' %}" alt="image of clipart buildings"></object>
+                                                <object type="image/svg+xml" class="w-25" data="{% static 'img/city_icon-2.svg' %}" alt="image of clipart buildings"></object>
                                             </div>
                                         </div>
                                     </div>
@@ -90,10 +90,12 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-sm-12">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <object type="image/svg+xml" class="w-100" data="{% static 'img/num3-circle.svg' %}" alt="image of white number 3 with blue circle background"></object>
+                        <div class="col-lg-4">
+                            <div class="row h-100">
+                                <div class="col-4 text-center">
+                                    <div class="d-inline-block">
+                                        <div class="circle-xs bckgrd-70C5EA">3</div>
+                                    </div>
                                 </div>
                                 <div class="col-lg-8">
                                     <div class="row h-100 survey-start-txt-pic">
@@ -105,7 +107,7 @@
 
                                         <div class="col-lg-12 text-center survey-start-pic">
                                             <div class="">
-                                                <object type="image/svg+xml" class="w-50 mt-2" data="{% static 'img/community_input.svg' %}" alt="image of silhouette people talking"></object>
+                                                <object type="image/svg+xml" class="w-25" data="{% static 'img/community_input.svg' %}" alt="image of silhouette people talking"></object>
                                             </div>
                                         </div>
                                     </div>
@@ -116,8 +118,8 @@
                 </div>
                 <div class="row d-none d-xl-flex pt-4">
                     <div class="col text-center">
-                        <button class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4" onclick="surveyStartToAddress()"><i class="fas fa-angle-left pr-2"></i>{% trans "Back" %}</button>
-                        <button class="btn btn-primary no-underline-link entry-nav-btn ml-4" onclick="startSurvey()">{% trans "Start" %}<i class="fas fa-angle-right pl-2"></i></button>
+                        <button class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4" onclick="surveyStartToAddress()"><i class="fas fa-angle-left pr-2" type="button"></i>{% trans "BACK" %}</button>
+                        <button class="btn btn-primary no-underline-link entry-nav-btn ml-4" onclick="startSurvey()" type="button">{% trans "START" %}<i class="fas fa-angle-right pl-2"></i></button>
                     </div>
                 </div>
             </div>
@@ -125,15 +127,15 @@
 
         <!-- For tablet and mobile views-->
         <div class="row d-xl-none">
-            <div class="col-12">
-                <div id="survey-start-infographic" class="mt-3 mb-5">
+            <div class="col-12 px-0 px-md-2">
+                <div id="mobile-survey-start-infographic" class="mt-3 mb-5">
                     <div class="row m-0 header-text mb-2">
                         <strong>{% trans "What is a Community of Interest?" %}</strong>
                     </div>
 
-                    <div id="entry-coi-def" class="row m-0 info-text mb-2">
+                    <div id="entry-coi-def" class="row m-0 mb-2">
                         {% blocktrans %}
-                            <p>
+                            <p class="info-text txt-16">
                                 A Community of Interest is a geographic area that shares <strong>cultural</strong>, <strong>historical</strong>, or <strong>economic</strong> interests.
                                 Communities of Interest encourage the drawing of fairer voting districts.
                             </p>
@@ -145,63 +147,67 @@
                     </div>
 
                     <div class="row row-equal-cols text-center mx-0 mt-3">
-                        <div class="col-12">
+                        <div class="col-12 px-0 px-md-3">
                             <div class="row">
-                                <div class="col-3 text-right">
-                                    <object type="image/svg+xml" class="w-50 w-lg-25" data="{% static 'img/num1-circle.svg' %}" alt="image of white number 1 with blue circle background"></object>
+                                <div class="col-2 text-center p-0">
+                                    <div class="d-inline-block">
+                                        <div class="circle-xs bckgrd-70C5EA">1</div>
+                                    </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-7">
                                     <div class="text-left survey-start-sm-txt">
                                         {% blocktrans %}
                                             The people you would like to choose representatives with.
                                         {% endblocktrans %}
                                     </div>
                                 </div>
-                                <div class="col-3 text-left">
+                                <div class="col-3 text-center p-0">
                                     <div class="">
-                                        <object type="image/svg+xml" class="w-50 w-lg-25 mt-1 mb-0" data="{% static 'img/voting.svg' %}" alt="image of clipart of voting"></object>
+                                        <object type="image/svg+xml" class="w-50 w-md-25" data="{% static 'img/voting.svg' %}" alt="image of clipart of voting"></object>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-12 pt-2">
+                        <div class="col-12 pt-2 px-0 px-md-3">
                             <div class="row">
-                                <div class="col-3 text-right">
-                                    <object type="image/svg+xml" class="w-50 w-lg-25" data="{% static 'img/num2-circle.svg' %}" alt="image of white number 2 with blue circle background"></object>
+                                <div class="col-2 text-center p-0">
+                                    <div class="d-inline-block">
+                                        <div class="circle-xs bckgrd-70C5EA">2</div>
+                                    </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-7">
                                     <div class="text-left survey-start-sm-txt">
                                         {% blocktrans %}
                                             Your neighborhood, or an area you live in.
                                         {% endblocktrans %}
                                     </div>
                                 </div>
-                                <div class="col-3 text-left">
+                                <div class="col-3 text-center p-0">
                                     <div class="">
-                                        <object type="image/svg+xml" class="w-50 w-lg-25" data="{% static 'img/city_icon-2.svg' %}" alt="image of clipart buildings"></object>
+                                        <object type="image/svg+xml" class="w-50 w-md-25" data="{% static 'img/city_icon-2.svg' %}" alt="image of clipart buildings"></object>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-12 pt-2">
+                        <div class="col-12 pt-2 px-0 px-md-3">
                             <div class="row">
-                                <div class="col-3 text-right">
-                                    <div class="justify-content-center">
-                                        <object type="image/svg+xml" class="w-50 w-lg-25" data="{% static 'img/num3-circle.svg' %}" alt="image of white number 3 with blue circle background"></object>
+                                <div class="col-2 text-center p-0">
+                                    <div class="d-inline-block">
+                                        <div class="circle-xs bckgrd-70C5EA">3</div>
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-7">
                                     <div class="text-left survey-start-sm-txt">
                                         {% blocktrans %}
                                             AA local group that is brought together by a common interest.
                                         {% endblocktrans %}
                                     </div>
                                 </div>
-                                <div class="col-3 text-left">
+                                <div class="col-3 text-center p-0">
                                     <div class="">
-                                        <object type="image/svg+xml" class="w-50 w-lg-25 mt-2" data="{% static 'img/community_input.svg' %}" alt="image of silhouette people talking"></object>
+                                        <object type="image/svg+xml" class="w-50 w-md-25" data="{% static 'img/community_input.svg' %}" alt="image of silhouette people talking"></object>
                                     </div>
                                 </div>
                             </div>
@@ -210,8 +216,8 @@
                 </div>
                 <div class="row">
                     <div class="col text-center">
-                        <button class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4" onclick="surveyStartToAddress()"><i class="fas fa-angle-left pr-2"></i>{% trans "Back" %}</button>
-                        <button class="btn btn-primary no-underline-link entry-nav-btn ml-4" onclick="startSurvey()">{% trans "Start" %}<i class="fas fa-angle-right pl-2"></i></button>
+                        <button class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4" onclick="surveyStartToAddress()" type="button"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
+                        <button class="btn btn-primary no-underline-link entry-nav-btn ml-4" onclick="startSurvey()" type="button">{% trans "START" %}<i class="fas fa-angle-right pl-2"></i></button>
                     </div>
                 </div>
             </div>
@@ -223,9 +229,19 @@
     <div id="survey-qs-p1" class="row row-equal-cols d-none">
         <div class="col-lg">
             <div class="entry-header">
-                <strong>{% trans "Community of Interest Questions" %}</strong>
+                <strong>{% trans "What unites your Community of Interest?" %}</strong>
             </div>
-            <div class="survey-instruction">
+            <div class="col-12 py-3 px-4 light-blue-bg opacity-4 mt-2">
+                <button class="btn btn-link ws-normal btn-no-focus-outline bg-transparent text-left my-0 p-0 no-underline-link" aria-expanded="false" aria-controls="collapseCriteria" onclick="toggleAngle(this)" type="button">
+                <h5 style="width: fit-content; color: initial;">Community of Interest Definition in {{ state_obj.name }} &#32;<i class="fas fa-angle-down pl-3"></i></h5>
+                </button>
+                <div class="collapse mt-2" id="collapseCriteria">
+                    {% autoescape off %}
+                    {{ state_obj.content_coi }}
+                    {% endautoescape %}
+                </div>
+            </div>
+            <div class="survey-instruction mt-2">
                 {% blocktrans %}
                     <p>
                       Respond to <b>at least one</b> of the sections below. There are no wrong answers.<br>
@@ -334,8 +350,8 @@
             </div>
             <div class="row pt-5">
                 <div class="col text-center">
-                    <button class="btn btn-outline-primary entry-nav-btn mr-4" onclick="surveyP1ToSurveyStart()"><i class="fas fa-angle-left pr-2"></i>{% trans "Back" %}</button>
-                    <button id="surveyP1ToP2_button" class="btn btn-primary entry-nav-btn ml-4">{% trans "Next" %}<i class="fas fa-angle-right pl-2"></i></button>
+                    <button class="btn btn-outline-primary entry-nav-btn mr-4" onclick="surveyP1ToSurveyStart()" type="button"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
+                    <button id="surveyP1ToP2_button" class="btn btn-primary entry-nav-btn ml-4" type="button">{% trans "NEXT" %}<i class="fas fa-angle-right pl-2"></i></button>
                 </div>
             </div>
         </div>
@@ -405,8 +421,8 @@
 
             <div class="row pt-5">
                 <div class="col text-center">
-                    <button class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4" onclick="surveyP2ToP1()"><i class="fas fa-angle-left pr-2"></i>{% trans "Back" %}</button>
-                    <button id="surveyP2ToMap_button" class="btn btn-primary no-underline-link entry-nav-btn ml-4">{% trans "Next" %}<i class="fas fa-angle-right pl-2"></i></button>
+                    <button class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4" onclick="surveyP2ToP1()" type="button"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
+                    <button id="surveyP2ToMap_button" class="btn btn-primary no-underline-link entry-nav-btn ml-4" type="button">{% trans "NEXT" %}<i class="fas fa-angle-right pl-2"></i></button>
                 </div>
             </div>
         </div>

@@ -563,7 +563,10 @@ class Submission(View):
         comm = user_map
 
         # get user email address
-        user_email_address = EmailAddress.objects.get(user=self.request.user)
+        if self.request.user.is_authenticated:
+            user_email_address = EmailAddress.objects.get(user=self.request.user)
+        else:
+            user_email_address = ""
 
         context = {
             "has_state": has_state,
@@ -593,9 +596,10 @@ class Submission(View):
                 organization_name = organization.name
                 organization_slug = organization.slug
 
-            if EmailAddress.objects.filter(
+            if (self.request.user.is_authenticated 
+            and EmailAddress.objects.filter(
                 user=self.request.user, verified=True
-            ).exists():
+            ).exists()):
                 context["verified"] = True
 
             else:
@@ -966,6 +970,7 @@ class EntryView(LoginRequiredMixin, View):
             "drive_id": drive_id,
             "state": abbr,
             "address_required": address_required,
+            "state_obj": State.objects.get(abbr=abbr.upper())
         }
         return render(request, self.template_name, context)
 
