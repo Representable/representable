@@ -221,6 +221,8 @@ map.on("load", function () {
           'line-width': 2
       },
   });
+  
+  // console.log('finsihed layers');
 
   // hover to highlight
   $(".community-review-span").hover(function() {
@@ -379,4 +381,12 @@ $(document).ready(function(){
       $(this).toggle(innerText.indexOf(value) > -1)
     });
   });
+});
+
+/* Flips arrows on the dropdown menus upon clicking */
+$("#buttonOne").click(function() {
+  $("#arrowOne").toggleClass('flipY-inplace');
+});
+$("#buttonThree").click(function() {
+  $("#arrowThree").toggleClass('flipY-inplace');
 });
