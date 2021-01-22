@@ -161,21 +161,36 @@
                     </p>
                 </div>
             </div>
-            <div class="card text-left border-0 w-100 rounded-lg mb-3 d-none d-xl-block">
-              <div class="card-body">
-                <h5 class="card-title header-text"><strong>Submit to an organization in your state</strong></h5>
-                {% if show_form is True %}
-                  <p class="header-text small">Many organizations in your state are collecting community maps. Submit yours to one of their collection drives.</p>
-                  <form method="post">
-                    {% csrf_token %}
-                    {{ form }}
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </form>
-                {% else %}
-                  <p class="header-text small">This community map has already been submitted to an organization</p>
-                {% endif %}
-              </div>
-            </div>
+          </div>
+        </div>
+        <div class="card text-left border-0 w-100 rounded-lg mt-3 mb-3 d-xl-block">
+          <div class="card-body">
+            <h5 class="card-title header-text"><strong>Submit to an organization in your state</strong></h5>
+            {% if show_form is True %}
+              <p class="header-text small">Many organizations in your state are collecting community maps. Submit yours to one of their collection drives.</p>
+              <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="row">
+                  <div>
+                    {{ field.label_tag }}
+                  </div>
+                </div>
+                <div class="row pl-3">
+                  <div>
+                    {{ field }}
+                  </div>
+                </div>
+                {% endfor %}
+                <div class="row justify-content-center pt-3">
+                  <div>
+                    <button type="submit" class="btn btn-primary">Submit</button>                    
+                  </div>
+                </div>
+              </form>
+            {% else %}
+              <p class="header-text small">This community map has already been submitted to an organization</p>
+            {% endif %}
           </div>
         </div>
       </div>
