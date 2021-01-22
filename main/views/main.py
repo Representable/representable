@@ -516,115 +516,27 @@ class Submission(View):
         if not query:
             raise Http404
 
-        # query will have length 1 or database is invalid
         user_map = query[0]
-
         if user_map.drive:
-            folder_name = query[0].drive.slug
-            has_state = False
             state = ""
         else:
             if "abbr" in self.kwargs:
-                folder_name = self.kwargs["abbr"]
-                has_state = True
                 state = folder_name
             else:
-                has_state = user_map.state != ""
                 state = user_map.state
-                folder_name = state
 
-        entryPolyDict = {}
-
-        if (
-            user_map.census_blocks_polygon == ""
-            or user_map.census_blocks_polygon is None
-            and user_map.user_polygon
-        ):
-            s = "".join(user_map.user_polygon.geojson)
-        elif user_map.census_blocks_polygon:
-            s = "".join(user_map.census_blocks_polygon.geojson)
-        else:
-            raise Http404
-        map_poly = geojson.loads(s)
-        entryPolyDict[m_uuid] = map_poly.coordinates
-        comm = user_map
-
-        # get user email address
-        user_email_address = EmailAddress.objects.get(user=self.request.user)
-
-        context = {
-            "has_state": has_state,
-            "state": state,
-            "c": comm,
-            "entries": json.dumps(entryPolyDict),
-            "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
-            "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
-            "map_id": m_uuid,
-            "email": user_email_address,
-        }
-
-        # from thanks view
-        context["is_thanks"] = False
-        if "thanks" in request.path:
-            context["is_thanks"] = True
-            has_drive = False
-            organization_name = ""
-            drive_name = ""
-            organization_slug = ""
-            if kwargs["drive"]:
-                has_drive = True
-                drive_slug = self.kwargs["drive"]
-                drive = Drive.objects.get(slug=drive_slug)
-                drive_name = drive.name
-                organization = drive.organization
-                organization_name = organization.name
-                organization_slug = organization.slug
-
-            if EmailAddress.objects.filter(
-                user=self.request.user, verified=True
-            ).exists():
-                context["verified"] = True
-
-            else:
-
-                user_email_confirmation = EmailConfirmationHMAC(
-                    email_address=user_email_address
-                )
-
-                user_email_confirmation.send(self.request, False)
-                context["verified"] = False
-
-            context["drive_slug"] = self.kwargs["drive"]
-            context["has_drive"] = has_drive
-            context["organization_name"] = organization_name
-            context["organization_slug"] = organization_slug
-            context["drive_name"] = drive_name
-
-        if self.request.user.is_authenticated:
-            if user_map.organization:
-                context["is_org_admin"] = self.request.user.is_org_admin(
-                    user_map.organization_id
-                )
-            if self.request.user == user_map.user:
-                for a in Address.objects.filter(entry=user_map):
-                    context["street"] = a.street
-                    context["city"] = a.city + ", " + a.state + " " + a.zipcode
-                    context["is_community_author"] = (
-                        self.request.user == user_map.user
-                    )
-                    comm.user_name = user_map.user_name
-
-        show_form, form_info = self.should_show_form(state=context['state'], entryid=context['map_id'])
+        show_form, form_info = self.should_show_form(state=state, entryid=m_uuid, auth=self.request.user.is_authenticated)
+        print(show_form, form_info)
 
         if(show_form == True):
             form = SubmissionAddDrive(request.POST)
-            form.upd(state=context['state'].upper())
+            form.upd(state=state.upper())
             if form.is_valid():
-                print('\n\n\nPOST\n\n\n', 'I need to connect mapid', context['map_id'], 'with driveid', form.cleaned_data['Add a new drive'], '\n\n\n')
+                print('form is valid', m_uuid, form.cleaned_data['Add a new drive'])
                 try:
                     d = Drive.objects.get(id=form.cleaned_data['Add a new drive'])
                     o = d.organization
-                    c = CommunityEntry.objects.get(entry_ID=context['map_id'])
+                    c = CommunityEntry.objects.get(entry_ID=m_uuid)
                     c.drive = d
                     c.organization = o
                     c.save()
@@ -632,6 +544,8 @@ class Submission(View):
                 except Exception as e:
                     print('fail')
                     print(e)
+            else:
+                print('form not valid')
 
         return HttpResponseRedirect(request.path)
 
@@ -741,7 +655,7 @@ class Submission(View):
                     )
                     comm.user_name = user_map.user_name
 
-        show_form, form_info = self.should_show_form(state=context['state'], entryid=context['map_id'])
+        show_form, form_info = self.should_show_form(state=context['state'], entryid=context['map_id'], auth=self.request.user.is_authenticated)
         context['form_info'] = form_info
         context['show_form'] = show_form
         if(show_form == True):
@@ -749,7 +663,7 @@ class Submission(View):
             context['form'].upd(state=context['state'].upper())
 
         return render(request, self.template_name, context)
-    def should_show_form(self, state, entryid):
+    def should_show_form(self, state, entryid, auth):
         """
         Req: state = a potential state field, map_id = a potential CommEntryID
 
@@ -757,14 +671,17 @@ class Submission(View):
             A tuple (Bool - Whether do display addDrive Form, String - debugging message)
 
         Checks the following conditions:
-            * User is logged in - Not Implemented !!!
+            * User is logged in
             * context['map_id'] points to a valid CommunityEntry
             * that CommunityEntry does not have a drive
             * that CommunityEntry has an associated Address 
             * context['state'] exists and is a valid state
+            * community was created by the user who is signed in - (Already true if no drive & logged in)
         """
         form_info = 'Should show Add drive form for this community?\n'
-        form_info += 'User is logged in: Assume True \n'
+        form_info += 'User is logged in: ' + str(auth) + '\n'
+        if(not auth):
+            return (False, form_info + '* Should NOT Display form *')
         try:        
             entry = CommunityEntry.objects.get(entry_ID=entryid)
             form_info += "context['map_id'] points to a valid CommunityEntry: True\n"
