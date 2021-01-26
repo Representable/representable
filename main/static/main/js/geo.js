@@ -1200,7 +1200,7 @@ map.on("style.load", function () {
           selectBbox = turf.difference(selectBbox, currentBbox);
           if (turf.getType(selectBbox) == "MultiPolygon") {
             showWarningMessage(
-              "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest connected piece will be visible on Representable.org"
+              "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
             );
           }
         }
@@ -1218,13 +1218,10 @@ map.on("style.load", function () {
           !isEmptyFilter(currentFilter)
         ) {
           showWarningMessage(
-            "Please ensure that your community does not contain any gaps. Your selected units must connect."
+            "WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
           );
-          return;
-        } else {
           isChanged = true;
           selectBbox = turf.union(currentBbox, selectBbox);
-          hideWarningMessage();
         }
       }
       // Run through the queried features and set a filter based on GEOID
