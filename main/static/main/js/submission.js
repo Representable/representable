@@ -385,8 +385,9 @@ map.on("load", function () {
   var canOnlyFireOnce = once(function () {
     setTimeout(emailPDF, 5000);
   });
-
-  canOnlyFireOnce(); // "Fired!"
+  if (is_thanks === "True") {
+    canOnlyFireOnce(); // "Fired!"
+  }
 
   // Form for sending emailPDF
   var testForm = document.getElementById("pdfForm");
