@@ -846,6 +846,9 @@ Entry Mapping Page
 #map-comm-info {
   vertical-align: middle;
   margin: auto;
+}
+
+#map-comm-menu {
   top: 10px !important;
 }
 
