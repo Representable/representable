@@ -75,6 +75,14 @@ form:invalid {
   margin: auto;
 }
 
+.bckgrd-70C5EA {
+  background: #70C5EA;
+}
+
+.txt-16 {
+  font-size: 1rem;
+}
+
 .opacity-5 {
   opacity: 1;
 }
@@ -144,7 +152,7 @@ form:invalid {
   background: #DFDFDF;
   width: 50px;
   height: .25rem;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 .progress-line-vert {
@@ -220,7 +228,7 @@ form:invalid {
 
 .map-popup-box {
   position: absolute;
-  top: 10px;
+  top: 63px;
   left: 10px;
   background-color: rgba(255, 255, 255, 0.9);
   padding: 10px;
@@ -232,6 +240,7 @@ form:invalid {
 }
 .warning-box {
   border: 1px solid red;
+  font-size: 1rem;
 }
 
 /*********************************************************************
@@ -1282,8 +1291,13 @@ Entry Form Management
   padding: 30px;
 }
 
+#mobile-survey-start-infographic {
+  background-color: #DAEFFF;
+  padding: 30px;
+}
+
 .survey-start-sm-txt {
-  font-size: .75rem;
+  font-size: 1rem;
   color: #3f3f3f;
 }
 
@@ -1314,6 +1328,7 @@ textarea.survey-field:focus {
 
 .survey-sect-title {
   padding-top: 15px;
+  color: #5996D2;
 }
 
 .survey-sect-title-link:hover {
@@ -2084,4 +2099,12 @@ height:25vh!important;
 
 #rtb a h2 {
   padding-top: 20px;
+}
+
+/* Flips element vertically, in place*/
+.flipY-inplace {
+  -moz-transform: scale(1, -1);
+  -o-transform: scale(1, -1);
+  -webkit-transform: scale(1, -1);
+  transform: scale(1, -1);
 }

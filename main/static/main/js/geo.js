@@ -182,7 +182,7 @@ $('#map-comm-modal').on('shown.bs.modal hidden.bs.modal', function() {
   $("#mobile-map-comm-btn").toggleClass("opened")
 });
 
-/** 
+/**
  * "May not be needed": Lines tagged with this are meant to animate the load in between the progress bars on a mobile view. However
  * right now those bars have been left out so those lines can be deleted if the bars won't be put back in
 */
@@ -211,7 +211,7 @@ function animateStepForward(at, to, after) {
   }, 600);
 }
 
-/** 
+/**
  * "May not be needed": Lines tagged with this are meant to animate the load in between the progress bars on a mobile view. However
  * right now those bars have been left out so those lines can be deleted if the bars won't be put back in
 */
@@ -244,12 +244,14 @@ function addressToSurveyStart() {
   $("#entry_address").addClass("d-none");
   $("#entry_survey").removeClass("d-none");
   animateStepForward(1, 2, 3);
+  automaticScrollToTop();
 }
 
 function surveyStartToAddress() {
   $("#entry_survey").addClass("d-none");
   $("#entry_address").removeClass("d-none");
   animateStepBackward(2, 1, 3);
+  automaticScrollToTop();
 }
 
 // changes page entry page from the survey start page to the first part of the survey
@@ -257,24 +259,28 @@ function startSurvey() {
   $("#entry-survey-start").addClass("d-none");
   $("#survey-qs-p1").removeClass("d-none");
   $("#2to3").addClass("h-50");
+  automaticScrollToTop();
 }
 
 function surveyP1ToSurveyStart() {
   $("#survey-qs-p1").addClass("d-none");
   $("#entry-survey-start").removeClass("d-none");
-  $("#2to3").removeClass("h-50"); 
+  $("#2to3").removeClass("h-50");
+  automaticScrollToTop();
 }
 
 function surveyP1ToP2() {
   $("#survey-qs-p1").addClass("d-none");
   $("#survey-qs-p2").removeClass("d-none");
   $("#2to3").addClass("h-75").removeClass("h-50");
+  automaticScrollToTop();
 }
 
 function surveyP2ToP1() {
   $("#survey-qs-p2").addClass("d-none");
   $("#survey-qs-p1").removeClass("d-none");
   $("#2to3").addClass("h-50").removeClass("h-75");
+  automaticScrollToTop();
 }
 
 function surveyP2ToMap() {
@@ -286,6 +292,7 @@ function surveyP2ToMap() {
   fillSurveyQuestions();
   animateStepForward(2, 3, 4);
   $("#2to3").removeClass("h-75");
+  automaticScrollToTop();
 }
 
 function mapToSurveyP2() {
@@ -296,6 +303,7 @@ function mapToSurveyP2() {
   setTimeout(function () {
     $("#2to3").addClass("h-75");
   }, 600);
+  automaticScrollToTop();
 }
 
 function mapToPrivacy() {
@@ -304,6 +312,7 @@ function mapToPrivacy() {
   $("#entry_privacy").removeClass("d-none");
   $("#entry_survey").addClass("d-none");
   animateStepForward(3, 4, 5);
+  automaticScrollToTop();
 }
 
 function privacyToMap() {
@@ -315,6 +324,7 @@ function privacyToMap() {
   $("#backup_error").addClass("d-none");
   privacyCheckValidation();
   animateStepBackward(4, 3, 5);
+  automaticScrollToTop();
 }
 
 
@@ -423,6 +433,7 @@ $("#entry_address_button").on("click", function(e) {
      clearFieldsError(entryForm.getElementsByClassName("addr-field"));
      document.getElementById("need_name").classList.add("d-none");
      document.getElementById("need_address").classList.add("d-none");
+     automaticScrollToTop();
   }
 });
 
@@ -468,6 +479,7 @@ $("#surveyP1ToP2_button").on("click", function(e) {
     surveyP1ToP2();
     clearFieldsError(document.getElementById("entryForm").getElementsByClassName("survey-field"));
     document.getElementById("need_one_interest").classList.add("d-none");
+    automaticScrollToTop();
   }
 });
 
@@ -488,22 +500,27 @@ $("#surveyP2ToMap_button").on("click", function(e) {
     surveyP2ToMap();
     document.getElementById("id_entry_name").classList.remove("has_error");
     document.getElementById("need_comm_name").classList.add("d-none");
+    automaticScrollToTop();
   }
 })
 
 $("#mapToPrivacy").on("click", function(e) {
+  zoomToCommunity();
   if (createCommPolygon()) {
     e.preventDefault();
     mapToPrivacy();
     $('#map-card').removeClass("has_error");
+    automaticScrollToTop();
   }
 })
 
 $("#mapToPrivacyMobile").on("click", function(e) {
+  zoomToCommunity();
   if (createCommPolygon()) {
     e.preventDefault();
     mapToPrivacy();
     $('#map-card').removeClass("has_error");
+    automaticScrollToTop()
   }
 })
 
@@ -728,12 +745,14 @@ var geocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
   country: "us",
   mapboxgl: mapboxgl,
+  placeholder: "Search Location"
 });
 
 var modalGeocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
   country: "us",
   mapboxgl: mapboxgl,
+  placeholder: "Search Location"
 });
 
 document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
@@ -1008,7 +1027,7 @@ function showWarningMessage(warning) {
   warning_box.style.display = "block";
   setTimeout(function () {
     warning_box.style.display = "none";
-  }, 4000);
+  }, 10000);
 }
 
 function hideWarningMessage() {
@@ -1086,235 +1105,6 @@ function newHighlightLayer(state, firstSymbolId) {
     firstSymbolId
   );
 }
-
-/******************************************************************************/
-
-// initialize shepherd.js tour
-let myTour = new Shepherd.Tour({
-  defaultStepOptions: {
-    cancelIcon: {
-      enabled: true,
-    },
-    classes: "class-1 class-2",
-    scrollTo: { behavior: "smooth", block: "center" },
-  },
-});
-
-myTour.addStep({
-  title: "Draw Your Community Map",
-  text:
-    "Hover over the map and certain units will appear highlighted. Click to add the highlighted region into your community.",
-  buttons: [
-    {
-      action() {
-        return this.complete();
-      },
-      classes: "shepherd-button-secondary",
-      text: "Exit",
-    },
-    {
-      action() {
-        // adjust draw size
-        document.getElementById("radius-control").value = 30;
-        document.getElementById("radius-value").textContent = "30";
-        return this.next();
-      },
-      text: "Next",
-    },
-  ],
-});
-
-myTour.addStep({
-  title: "Adjust Size",
-  text:
-    "Use the Selection Size bar to adjust the size of your selection region \
-  ",
-  attachTo: {
-    element: "#map-radius-control-id",
-    on: "top",
-  },
-  buttons: [
-    {
-      action() {
-        // adjust draw size
-        document.getElementById("radius-control").value = 25;
-        document.getElementById("radius-value").textContent = "25";
-        return this.back();
-      },
-      classes: "shepherd-button-secondary",
-      text: "Back",
-    },
-    {
-      action() {
-        // Open Eraser
-        document.getElementById("map-eraser-button-id").click();
-        return this.next();
-      },
-      text: "Next",
-    },
-  ],
-});
-
-myTour.addStep({
-  title: "Eraser ",
-  text: "Use the Eraser tool to erase selected units from your map.",
-  attachTo: {
-    element: "#map-eraser-button-id",
-    on: "bottom",
-  },
-  buttons: [
-    {
-      action() {
-        // Close eraser
-        document.getElementById("map-eraser-button-id").click();
-        return this.back();
-      },
-      classes: "shepherd-button-secondary",
-      text: "Back",
-    },
-    {
-      action() {
-        // adjust to smaller eraser size
-        document.getElementById("radius-control").value = 15;
-        document.getElementById("radius-value").textContent = "15";
-        return this.next();
-      },
-      text: "Next",
-    },
-  ],
-});
-
-myTour.addStep({
-  title: "Adjust Eraser Size",
-  text:
-    "You can also adjust the size of your eraser with the select size bar \
-  ",
-  attachTo: {
-    element: "#map-radius-control-id",
-    on: "top",
-  },
-  buttons: [
-    {
-      action() {
-        // adjust to smaller eraser size
-        document.getElementById("radius-control").value = 30;
-        document.getElementById("radius-value").textContent = "30";
-        return this.back();
-      },
-      classes: "shepherd-button-secondary",
-      text: "Back",
-    },
-    {
-      action() {
-        // Exit eraser
-        document.getElementById("map-draw-button-id").click();
-        return this.next();
-      },
-      text: "Next",
-    },
-  ],
-});
-
-myTour.addStep({
-  title: "Draw",
-  text: "Click the draw button to return to to adding units to the map.",
-  attachTo: {
-    element: "#map-draw-button-id",
-    on: "bottom",
-  },
-  buttons: [
-    {
-      action() {
-        // Reselect eraser tool
-        document.getElementById("map-eraser-button-id").click();
-        return this.back();
-      },
-      classes: "shepherd-button-secondary",
-      text: "Back",
-    },
-    {
-      action() {
-        document.getElementById("map-undo-button-id").click();
-        return this.next();
-      },
-      text: "Next",
-    },
-  ],
-});
-
-myTour.addStep({
-  title: "Undo",
-  text: "To undo your previous action, click on the Undo button.",
-  attachTo: {
-    element: "#map-undo-button-id",
-    on: "bottom",
-  },
-  buttons: [
-    {
-      action() {
-        return this.back();
-      },
-      classes: "shepherd-button-secondary",
-      text: "Back",
-    },
-    {
-      action() {
-        return this.next();
-      },
-      text: "Next",
-    },
-  ],
-});
-
-myTour.addStep({
-  title: "Clear Selection",
-  text:
-    "Delete the community you have drawn or restart the drawing process by clicking the Clear Selection button.",
-  attachTo: {
-    element: "#map-clear-button-id",
-    on: "bottom",
-  },
-  buttons: [
-    {
-      action() {
-        return this.back();
-      },
-      classes: "shepherd-button-secondary",
-      text: "Back",
-    },
-    {
-      action() {
-        return this.next();
-      },
-      text: "Next",
-    },
-  ],
-});
-
-myTour.addStep({
-  title: "Finish Drawing",
-  text: `Once you are done fine-tuning your drawing to reflect the geographical boundaries of
-  your Community of Interest continue on to the next section to save your community!`,
-  attachTo: {
-    element: "#map-finish-drawing-button-id",
-    on: "bottom",
-  },
-  buttons: [
-    {
-      action() {
-        return this.back();
-      },
-      classes: "shepherd-button-secondary",
-      text: "Back",
-    },
-    {
-      action() {
-        return this.complete();
-      },
-      text: "Done",
-    },
-  ],
-});
 
 /******************************************************************************/
 // the drawing radius for select tool
@@ -1410,6 +1200,7 @@ map.on("style.load", function () {
     // todo: bug where you can select non-contiguous areas on basicMode
     if ((eraseMode && !basicMode) || isBasicErase) {
       currentFilter.forEach(function (feature) {
+        // push current filter MINUS the selected area
         if (!features.includes(feature)) filter.push(feature);
       });
       arraysEqual(filter, currentFilter)
@@ -1419,10 +1210,20 @@ map.on("style.load", function () {
         if (isEmptyFilter(filter)) {
           sessionStorage.setItem("selectBbox", "[]");
         }
-        if (selectBbox === null) selectBbox = [];
-        else selectBbox = turf.difference(selectBbox, currentBbox);
+        if (selectBbox === null) {
+          selectBbox = [];
+        }
+        else {
+          selectBbox = turf.difference(selectBbox, currentBbox);
+          if (turf.getType(selectBbox) == "MultiPolygon") {
+            showWarningMessage(
+              "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest connected piece will be visible on Representable.org"
+            );
+          }
+        }
       }
     } else {
+      // this is select mode
       // check if previous selectBbox overlaps with current selectBbox
       if (selectBbox === null || selectBbox.length === 0) {
         isChanged = true;
@@ -1684,6 +1485,11 @@ function scrollIntoViewSmooth(id) {
   var y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
 
   window.scrollTo({ top: y, behavior: "smooth" });
+}
+
+function automaticScrollToTop() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
 
 // check if two arrays are equal (same elements)
