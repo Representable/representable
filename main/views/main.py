@@ -163,7 +163,7 @@ class RepresentableLoginView(LoginView):
 
     def form_invalid(self, form):
         self.request.session["invalid_login"] = True
-        # if the login prompt is from a redirect 
+        # if the login prompt is from a redirect
         if "next" in self.request.POST:
             return redirect_to_login(
                 self.request.POST["next"], "/accounts/login/", "next"
@@ -283,6 +283,13 @@ class Glossary(TemplateView):
             self.template_name,
             {"glossaryterms": glossaryterms},
         )
+
+
+# ******************************************************************************#
+
+
+class Resources(TemplateView):
+    template_name = "main/pages/resources.html"
 
 
 # ******************************************************************************#
@@ -557,7 +564,7 @@ class Submission(TemplateView):
                 organization_name = organization.name
                 organization_slug = organization.slug
 
-            if (self.request.user.is_authenticated 
+            if (self.request.user.is_authenticated
             and EmailAddress.objects.filter(
                 user=self.request.user, verified=True
             ).exists()):
@@ -935,7 +942,7 @@ class EntryView(LoginRequiredMixin, View):
                     "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
                 }
                 return render(request, self.template_name, context)
-            
+
             entryForm = comm_form.save(commit=False)
             s3 = boto3.resource(
                 "s3",
@@ -980,7 +987,7 @@ class EntryView(LoginRequiredMixin, View):
 
             entryForm.save()
             comm_form.save_m2m()
-            
+
             finalres = dict([(field.name, getattr(entryForm,field.name)) for field in entryForm._meta.fields])
             finalres["census_blocks_polygon"] = str(entryForm.census_blocks_polygon)
             finalres["user"] = entryForm.user.email
@@ -1003,7 +1010,7 @@ class EntryView(LoginRequiredMixin, View):
                 del addres['id']
                 finalres.update(addres)
                 string_to_hash = str(finalres)
-                
+
             digest = hmac.new(bytes(os.environ.get("AUDIT_SECRET"), encoding='utf8'), msg=bytes(string_to_hash, encoding='utf8'), digestmod=hashlib.sha256).digest()
             signature = base64.b64encode(digest).decode()
             sign_obj = Signature(entry=entryForm, hash=signature)
