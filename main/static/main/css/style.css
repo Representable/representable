@@ -885,6 +885,10 @@ Entry Mapping Page
   margin: auto;
 }
 
+#map-comm-menu {
+  top: 10px !important;
+}
+
 #map-top-row {
   position: absolute;
   z-index: 1;
