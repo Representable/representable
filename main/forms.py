@@ -286,4 +286,5 @@ class RepresentableLoginForm(LoginForm):
         for _, field in self.fields.items():
             del field.widget.attrs["placeholder"]
         self.fields["login"].label = "E-mail"
+        self.fields["password"].label = "Password"
         del self.fields["login"].widget.attrs["autofocus"]

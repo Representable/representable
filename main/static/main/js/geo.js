@@ -244,12 +244,14 @@ function addressToSurveyStart() {
   $("#entry_address").addClass("d-none");
   $("#entry_survey").removeClass("d-none");
   animateStepForward(1, 2, 3);
+  automaticScrollToTop();
 }
 
 function surveyStartToAddress() {
   $("#entry_survey").addClass("d-none");
   $("#entry_address").removeClass("d-none");
   animateStepBackward(2, 1, 3);
+  automaticScrollToTop();
 }
 
 // changes page entry page from the survey start page to the first part of the survey
@@ -257,24 +259,28 @@ function startSurvey() {
   $("#entry-survey-start").addClass("d-none");
   $("#survey-qs-p1").removeClass("d-none");
   $("#2to3").addClass("h-50");
+  automaticScrollToTop();
 }
 
 function surveyP1ToSurveyStart() {
   $("#survey-qs-p1").addClass("d-none");
   $("#entry-survey-start").removeClass("d-none");
   $("#2to3").removeClass("h-50");
+  automaticScrollToTop();
 }
 
 function surveyP1ToP2() {
   $("#survey-qs-p1").addClass("d-none");
   $("#survey-qs-p2").removeClass("d-none");
   $("#2to3").addClass("h-75").removeClass("h-50");
+  automaticScrollToTop();
 }
 
 function surveyP2ToP1() {
   $("#survey-qs-p2").addClass("d-none");
   $("#survey-qs-p1").removeClass("d-none");
   $("#2to3").addClass("h-50").removeClass("h-75");
+  automaticScrollToTop();
 }
 
 function surveyP2ToMap() {
@@ -286,6 +292,7 @@ function surveyP2ToMap() {
   fillSurveyQuestions();
   animateStepForward(2, 3, 4);
   $("#2to3").removeClass("h-75");
+  automaticScrollToTop();
 }
 
 function mapToSurveyP2() {
@@ -296,6 +303,7 @@ function mapToSurveyP2() {
   setTimeout(function () {
     $("#2to3").addClass("h-75");
   }, 600);
+  automaticScrollToTop();
 }
 
 function mapToPrivacy() {
@@ -304,6 +312,7 @@ function mapToPrivacy() {
   $("#entry_privacy").removeClass("d-none");
   $("#entry_survey").addClass("d-none");
   animateStepForward(3, 4, 5);
+  automaticScrollToTop();
 }
 
 function privacyToMap() {
@@ -315,6 +324,7 @@ function privacyToMap() {
   $("#backup_error").addClass("d-none");
   privacyCheckValidation();
   animateStepBackward(4, 3, 5);
+  automaticScrollToTop();
 }
 
 
@@ -423,6 +433,7 @@ $("#entry_address_button").on("click", function(e) {
      clearFieldsError(entryForm.getElementsByClassName("addr-field"));
      document.getElementById("need_name").classList.add("d-none");
      document.getElementById("need_address").classList.add("d-none");
+     automaticScrollToTop();
   }
 });
 
@@ -468,6 +479,7 @@ $("#surveyP1ToP2_button").on("click", function(e) {
     surveyP1ToP2();
     clearFieldsError(document.getElementById("entryForm").getElementsByClassName("survey-field"));
     document.getElementById("need_one_interest").classList.add("d-none");
+    automaticScrollToTop();
   }
 });
 
@@ -488,6 +500,7 @@ $("#surveyP2ToMap_button").on("click", function(e) {
     surveyP2ToMap();
     document.getElementById("id_entry_name").classList.remove("has_error");
     document.getElementById("need_comm_name").classList.add("d-none");
+    automaticScrollToTop();
   }
 })
 
@@ -497,6 +510,7 @@ $("#mapToPrivacy").on("click", function(e) {
     e.preventDefault();
     mapToPrivacy();
     $('#map-card').removeClass("has_error");
+    automaticScrollToTop();
   }
 })
 
@@ -506,6 +520,7 @@ $("#mapToPrivacyMobile").on("click", function(e) {
     e.preventDefault();
     mapToPrivacy();
     $('#map-card').removeClass("has_error");
+    automaticScrollToTop()
   }
 })
 
@@ -730,12 +745,14 @@ var geocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
   country: "us",
   mapboxgl: mapboxgl,
+  placeholder: "Search Location"
 });
 
 var modalGeocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
   country: "us",
   mapboxgl: mapboxgl,
+  placeholder: "Search Location"
 });
 
 document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
@@ -1465,6 +1482,11 @@ function scrollIntoViewSmooth(id) {
   var y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
 
   window.scrollTo({ top: y, behavior: "smooth" });
+}
+
+function automaticScrollToTop() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
 
 // check if two arrays are equal (same elements)

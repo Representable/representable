@@ -958,7 +958,7 @@ class EntryView(LoginRequiredMixin, View):
                 abbr=self.kwargs["abbr"].upper()
                 )
             if entryForm.organization:
-                if self.request.user.is_org_admin(entryForm.organization.id):
+                if self.request.user.is_org_admin(entryForm.organization.id) or not drive.private:
                     entryForm.admin_approved = True
                 else:
                     # check if user is on the allowlist
