@@ -13,12 +13,12 @@
           <div class="row">
             <div class="col-1"></div>
             <div class="col-10 mt-3 white-bg">
-              <h6><b>Educational Video</b></h6>
+              <h6 class="mb-3"><b>Educational Video</b></h6>
               <div class="row">
-                <div class="col">
+                <div class="col-md">
                   <iframe width="80%" height="148" src="https://www.youtube.com/embed/vUbZoyCCR44" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
-                <div class="col">
+                <div class="col-md">
                   This video is a text-based educational tool meant to inform users about the redistricting process, dangers of gerrymandering, and the effectiveness of Communities of Interest which can be mapped easily on Representable.org.
                 </div>
               </div>
@@ -28,12 +28,12 @@
           <div class="row">
             <div class="col-1"></div>
             <div class="col-10 mt-3 white-bg">
-              <h6><b>Demo Videos</b></h6>
+              <h6 class="mb-3"><b>Demo Videos</b></h6>
               <div class="row">
-                <div class="col">
+                <div class="col-md">
                   <iframe width="80%" height="148" src="https://www.youtube.com/embed/i4Sb8a6Ihzo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
-                <div class="col">
+                <div class="col-md">
                   These video walkthroughs are key to navigating Representable from both the perspective of a user and an organization, complete with tips for easily mapping your community and collecting communities of interest.
                 </div>
                 </div>
@@ -43,14 +43,50 @@
           <div class="row">
             <div class="col-1"></div>
             <div class="col-10 mt-3 white-bg">
-              <h6><b>One Pager</b></h6>
+              <h6 class="mb-3"><b>One Pager</b></h6>
               <div class="row">
-                <div class="col">
-                  <iframe width="80%" height="148" src="https://www.youtube.com/embed/i4Sb8a6Ihzo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <div class="col-md">
+                  <img height="196" src="{% static 'img/one-pager.png' %}" alt="representable infographic preview"></img>
                 </div>
-                <div class="col">
+                <div class="col-md">
                   This infographic provides a short overview of redistricting, gerrymandering, and how Representable can be used to address this issue using communities of interest.
-                  <br><a class="btn btn-outline-primary" href="/">
+                  <br><a target="_blank" class="btn btn-outline-primary px-4 my-4" href="https://drive.google.com/file/d/132yv4mG9BqH12x3qVvexOFkkTlBmmmEf/view?usp=sharing">
+                      VIEW & DOWNLOAD
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-1"></div>
+          </div>
+          <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10 mt-3 white-bg">
+              <h6 class="mb-3"><b>Organization Guide</b></h6>
+              <div class="row">
+                <div class="col-md-6">
+                  <img width="100%" src="{% static 'img/org-guide.png' %}" alt="representable organization guide preview"></img>
+                </div>
+                <div class="col-md-6">
+                  This guide is the primary reference point for organizations to find information about the tool, community mapping drives, our educational materials, FAQs, and more!
+                  <br><a target="_blank" class="btn btn-outline-primary px-4 my-4" href="https://docs.google.com/document/d/19IyZA1XFp0A__kv65onPS8zkggX_nAl-WvtyItJGLpQ/edit?usp=sharing">
+                      READ MORE
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-1"></div>
+          </div>
+          <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10 mt-3 white-bg">
+              <h6 class="mb-3"><b>Community Mapping Event Powerpoint</b></h6>
+              <div class="row">
+                <div class="col-md-6">
+                  <img width="100%" src="{% static 'img/webinar-deck.png' %}" alt="representable webinar deck preview"></img>
+                </div>
+                <div class="col-md-6">
+                  This powerpoint can be used to run online mapping events with your community. Guide people through the process of identifying their community’s needs and mapping their COI.
+                  <br><a target="_blank" class="btn btn-outline-primary px-4 my-4" href="https://drive.google.com/file/d/1iN5m7e9LwhitkiLyogWRU5G7t9Y1_cA6/view?usp=sharing">
                       DOWNLOAD
                   </a>
                 </div>
@@ -58,16 +94,19 @@
             </div>
             <div class="col-1"></div>
           </div>
-      </div>
-      <div class="row mx-lg-5 mb-5">
-        <div class="col-1"></div>
-        <div class="col-10 light-blue-bg small">
-          <div class="mx-3 blue-text">
-            <p class="my-3"><b>More Information</b></p>
-            <p class="text-break" style="overflow-wrap: break-word">https://www.ncsl.org/research/redistricting/the-redistricting-lexicon-glossary.aspx <br>“What is the 2020 Census?”, US Department of Commerce, <br>https://2020census.gov/en/what-is-2020-census.html<br>https://www.ncsl.org/research/redistricting/the-redistricting-lexicon-glossary.aspx</p>
+          <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+              <div class="h3 my-4">Additional Resources</div>
+              <h6><b>Princeton Gerrymandering Project  </b><a class="font-weight-light" href="https://gerrymander.princeton.edu/">https://gerrymander.princeton.edu/</a></h6>
+              Through nonpartisan analysis, the Princeton Gerrymandering Project bridges the gap between mathematics and the law to achieve fair representation through redistricting reform.
+              <br><br>
+              <h6><b>GeoCivics Redistricting Materials  </b><a class="font-weight-light" href="https://geocivics.uccs.edu/">https://geocivics.uccs.edu/</a></h6>
+              GeoCivics provides a suite of state-based resources to develop skills and knowledge for discussing the apportionment and redistricting process in the United States. These resources prepare and support students, teachers, and community members with interactive tools and geospatial data, leading to engagement in conversation about the construction of electoral districts.
+              <br><br><br>
+            </div>
+            <div class="col-1"></div>
           </div>
-        </div>
-        <div class="col-1"></div>
       </div>
     </div>
   </div>
