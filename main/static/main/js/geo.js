@@ -437,6 +437,28 @@ $("#entry_address_button").on("click", function(e) {
   }
 });
 
+// these check for a user clicking on the text box and open examples
+$("#id_economic_interests").on("click", function(e) {
+  if (!$('#economic_interests_example').hasClass("show")) {
+    $('#economic_interests_btn').click();
+  }
+});
+$("#id_comm_activities").on("click", function(e) {
+  if (!$('#comm_activities_example').hasClass("show")) {
+    $('#comm_activities_btn').click();
+  }
+});
+$("#id_cultural_interests").on("click", function(e) {
+  if (!$('#cultural_interests_example').hasClass("show")) {
+    $('#cultural_interests_btn').click();
+  }
+});
+$("#id_other_considerations").on("click", function(e) {
+  if (!$('#other_interests_example').hasClass("show")) {
+    $('#other_interests_btn').click();
+  }
+});
+
 function interestsValidated() {
   var flag = true;
   var cultural_interests_field = document.getElementById(
