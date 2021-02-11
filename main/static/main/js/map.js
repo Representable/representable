@@ -78,6 +78,7 @@ function newBoundariesLayer(name) {
       },
       paint: {
         "line-color": "rgba(106,137,204,0.7)",
+        "line-width": 2,
       }
     }
   );
@@ -110,6 +111,7 @@ map.on("load", function () {
       },
       paint: {
         "line-color": "rgba(106,137,204,0.7)",
+        "line-width": 2,
       },
     }
   );
@@ -128,6 +130,7 @@ map.on("load", function () {
         },
         paint: {
           "line-color": "rgba(106,137,204,0.7)",
+          "line-width": 2,
         },
       }
     );
@@ -142,6 +145,7 @@ map.on("load", function () {
         },
         paint: {
           "line-color": "rgba(106,137,204,0.7)",
+          "line-width": 2,
         },
       }
     );
@@ -212,21 +216,22 @@ map.on("load", function () {
           'fill-opacity': 0.15
       },
   });
-  map.addLayer({
-      'id': 'coi_layer_line',
-      'type': 'line',
-      'source': 'coi_all',
-      'paint': {
-          'line-color': '#808080',
-          'line-width': 2
-      },
-  });
-  
+  // map.addLayer({
+  //     'id': 'coi_layer_line',
+  //     'type': 'line',
+  //     'source': 'coi_all',
+  //     'paint': {
+  //         'line-color': '#808080',
+  //         'line-width': 2
+  //     },
+  // });
+
   // console.log('finsihed layers');
 
   // hover to highlight
   $(".community-review-span").hover(function() {
     let highlight_id = this.id + "_boldline";
+    let highlight_id_fill = this.id + "_fill";
     map.addSource(highlight_id, {
         'type': 'geojson',
         'data': {
@@ -240,16 +245,26 @@ map.on("load", function () {
         'tolerance': tol // def .375 higher = simpler geometry
     });
     map.addLayer({
+        'id': highlight_id_fill,
+        'type': 'fill',
+        'source': highlight_id,
+        'paint': {
+          'fill-color': 'rgb(110, 178, 181)',
+          'fill-opacity': 0.15
+        },
+    });
+    map.addLayer({
         'id': highlight_id,
         'type': 'line',
         'source': highlight_id,
         'paint': {
-            'line-color': '#000000',
-            'line-width': 4
+          'line-color': '#808080',
+          'line-width': 2,
         },
     });
   }, function () {
     map.removeLayer(this.id+"_boldline");
+    map.removeLayer(this.id+"_fill");
     map.removeSource(this.id+"_boldline");
   });
 
