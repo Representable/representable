@@ -77,7 +77,8 @@ function newBoundariesLayer(name) {
         visibility: "none"
       },
       paint: {
-        "line-color": "rgba(106,137,204,0.7)",
+        "line-color": BOUNDARIES_COLORS[name],
+        "line-opacity": 0.7,
         "line-width": 2,
       }
     }
@@ -110,7 +111,8 @@ map.on("load", function () {
         visibility: "none",
       },
       paint: {
-        "line-color": "rgba(106,137,204,0.7)",
+        "line-color": BOUNDARIES_COLORS["school"],
+        "line-opacity": 0.7,
         "line-width": 2,
       },
     }
@@ -129,7 +131,8 @@ map.on("load", function () {
           visibility: "none",
         },
         paint: {
-          "line-color": "rgba(106,137,204,0.7)",
+          "line-color": BOUNDARIES_COLORS["chi-ward"],
+          "line-opacity": 0.7,
           "line-width": 2,
         },
       }
@@ -144,7 +147,8 @@ map.on("load", function () {
           visibility: "none",
         },
         paint: {
-          "line-color": "rgba(106,137,204,0.7)",
+          "line-color": BOUNDARIES_COLORS["chi-comm"],
+          "line-opacity": 0.7,
           "line-width": 2,
         },
       }
@@ -216,15 +220,6 @@ map.on("load", function () {
           'fill-opacity': 0.15
       },
   });
-  // map.addLayer({
-  //     'id': 'coi_layer_line',
-  //     'type': 'line',
-  //     'source': 'coi_all',
-  //     'paint': {
-  //         'line-color': '#808080',
-  //         'line-width': 2
-  //     },
-  // });
 
   // console.log('finsihed layers');
 
