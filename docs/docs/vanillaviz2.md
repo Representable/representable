@@ -11,7 +11,7 @@ Contact Kyle (ktbarnes@princeton.edu) with any questions!
 This is how we uploaded census blocks + state legislature borders. Counties are through Mapbox's existing election data tileset. Also note that for some reason Nebraska's files don't show on Mapbox? This is an ongoing mystery.
 
 :::
-1. Find your data ! Census blocks and a lot of other shapefiles are available from the census website at https://www.census.gov/cgi-bin/geo/shapefiles/index.php
+1. Find your data ! Census blocks and a lot of other shapefiles are available from the census website at https://www.census.gov/cgi-bin/geo/shapefiles/index.php -- blocks with population are found here: https://www2.census.gov/geo/tiger/TIGER2010BLKPOPHU/
 2. Install tippecanoe (https://github.com/mapbox/tippecanoe)
 
 ```
