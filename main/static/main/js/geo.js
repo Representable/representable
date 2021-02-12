@@ -1055,7 +1055,7 @@ function newCensusLines(state) {
     id: state + "-census-lines",
     type: "line",
     source: state + "bg",
-    "source-layer": state + "bg",
+    "source-layer": state + "block",
     layout: {
       visibility: "none",
     },
@@ -1073,7 +1073,7 @@ function newCensusShading(state, firstSymbolId) {
       id: state + "-census-shading",
       type: "fill",
       source: state + "bg",
-      "source-layer": state + "bg",
+      "source-layer": state + "block",
       paint: {
         "fill-outline-color": "#000000",
         "fill-color": "#000000",
@@ -1094,7 +1094,7 @@ function newHighlightLayer(state, firstSymbolId) {
       id: state + "-bg-highlighted",
       type: "fill",
       source: state + "bg",
-      "source-layer": state + "bg",
+      "source-layer": state + "block",
       paint: {
         "fill-outline-color": "#1e3799",
         "fill-color": "#4a69bd",
@@ -1135,7 +1135,7 @@ map.on("style.load", function () {
   });
 
   // this is where the census block groups are loaded, from a url to the mbtiles file uploaded to mapbox
-  newSourceLayer(state + "bg", BG_KEYS[state + "bg"]);
+  newSourceLayer(state + "bg", "d7hs49xn");
   newCensusShading(state, firstSymbolId);
   newCensusLines(state);
   newHighlightLayer(state);
