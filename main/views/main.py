@@ -252,6 +252,7 @@ class Index(TemplateView):
 class About(TemplateView):
     template_name = "main/pages/about.html"
 
+
 # ******************************************************************************#
 
 
@@ -260,8 +261,8 @@ class FAQ(TemplateView):
 
     def get(self, request, *args, **kwargs):
 
-        faqs_users = FrequentlyAskedQuestion.objects.filter(type='USER')
-        faqs_orgs = FrequentlyAskedQuestion.objects.filter(type='ORGANIZATION')
+        faqs_users = FrequentlyAskedQuestion.objects.filter(type="USER")
+        faqs_orgs = FrequentlyAskedQuestion.objects.filter(type="ORGANIZATION")
         return render(
             request,
             self.template_name,
@@ -279,9 +280,7 @@ class Glossary(TemplateView):
 
         glossaryterms = GlossaryDefinition.objects.all()
         return render(
-            request,
-            self.template_name,
-            {"glossaryterms": glossaryterms},
+            request, self.template_name, {"glossaryterms": glossaryterms},
         )
 
 
@@ -374,7 +373,7 @@ class Review(LoginRequiredMixin, TemplateView):
                 obj.census_blocks_polygon == ""
                 or obj.census_blocks_polygon is None
                 and obj.user_polygon
-                ):
+            ):
                 s = "".join(obj.user_polygon.geojson)
             elif obj.census_blocks_polygon:
                 s = "".join(obj.census_blocks_polygon.geojson)
@@ -479,12 +478,12 @@ def SendPlainEmail(request):
         [post_email],
     )
     email.content_subtype = "html"
-
     file = request.FILES["generatedpdf"]
     email.attach(file.name, file.read(), file.content_type)
 
     email.send()
     return HttpResponse("Sent")
+
 
 class Submission(TemplateView):
     template_name = "main/submission.html"
@@ -532,7 +531,9 @@ class Submission(TemplateView):
 
         # get user email address
         if self.request.user.is_authenticated:
-            user_email_address = EmailAddress.objects.get(user=self.request.user)
+            user_email_address = EmailAddress.objects.get(
+                user=self.request.user
+            )
         else:
             user_email_address = ""
 
@@ -564,10 +565,12 @@ class Submission(TemplateView):
                 organization_name = organization.name
                 organization_slug = organization.slug
 
-            if (self.request.user.is_authenticated
-            and EmailAddress.objects.filter(
-                user=self.request.user, verified=True
-            ).exists()):
+            if (
+                self.request.user.is_authenticated
+                and EmailAddress.objects.filter(
+                    user=self.request.user, verified=True
+                ).exists()
+            ):
                 context["verified"] = True
 
             else:
@@ -642,6 +645,7 @@ def make_geojson(request, entry):
     feature = gj["features"][0]
     return feature
 
+
 # make geojson for state map pages
 def make_geojson_for_state_map_page(request, entry):
     map_geojson = serialize(
@@ -670,7 +674,9 @@ def make_geojson_for_state_map_page(request, entry):
     feature = gj["features"][0]
     return feature
 
+
 # ******************************************************************************#
+
 
 class ExportView(TemplateView):
     template = "main/export.html"
@@ -694,6 +700,7 @@ class ExportView(TemplateView):
                 folder_name = query.drive.slug
             else:
                 folder_name = query.state
+        print(folder_name)
 
         gj = make_geojson(request, query)
 
@@ -720,12 +727,15 @@ class Map(TemplateView):
         # the polygon coordinates
         entryPolyDict = dict()
         state_obj = State.objects.get(abbr=state.upper())
-        query = state_obj.submissions.all().defer(
-            "census_blocks_polygon_array", "user_polygon"
-        ).prefetch_related("organization", "drive")
+        query = (
+            state_obj.submissions.all()
+            .defer("census_blocks_polygon_array", "user_polygon")
+            .prefetch_related("organization", "drive")
+        )
         # state map page --> drives in the state, entries without a drive but with a state
         drives = []
         authenticated = self.request.user.is_authenticated
+        print(authenticated)
         # get the polygon from db and pass it on to html
         for obj in query:
             if obj.organization and not obj.admin_approved:
@@ -736,7 +746,7 @@ class Map(TemplateView):
                 and obj.user_polygon
             ):
                 s = "".join(obj.user_polygon.geojson)
-            elif (obj.census_blocks_polygon):
+            elif obj.census_blocks_polygon:
                 s = "".join(obj.census_blocks_polygon.geojson)
             else:
                 continue
@@ -756,7 +766,7 @@ class Map(TemplateView):
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
-        context["multi_export_link"] = (f"/multiexport/{state}")
+        context["multi_export_link"] = f"/multiexport/{state}"
         return context
 
 
@@ -904,7 +914,7 @@ class EntryView(LoginRequiredMixin, View):
             "drive_id": drive_id,
             "state": abbr,
             "address_required": address_required,
-            "state_obj": State.objects.get(abbr=abbr.upper())
+            "state_obj": State.objects.get(abbr=abbr.upper()),
         }
         return render(request, self.template_name, context)
 
@@ -920,21 +930,25 @@ class EntryView(LoginRequiredMixin, View):
         ]
         comm_form.data._mutable = False
         if comm_form.is_valid():
-            recaptcha_response = request.POST.get('g-recaptcha-response')
-            url = 'https://www.google.com/recaptcha/api/siteverify'
+            recaptcha_response = request.POST.get("g-recaptcha-response")
+            url = "https://www.google.com/recaptcha/api/siteverify"
             values = {
-                'secret': settings.RECAPTCHA_PRIVATE,
-                'response': recaptcha_response
+                "secret": settings.RECAPTCHA_PRIVATE,
+                "response": recaptcha_response,
             }
             data = urllib.parse.urlencode(values)
-            data = data.encode('ascii')
+            data = data.encode("ascii")
 
             req = urllib.request.Request(url, data)
             response = urlopen(req)
             result = json.load(response)
-            ''' End reCAPTCHA validation '''
-            if not result['success']:
-                messages.add_message(request, messages.ERROR, 'Invalid reCAPTCHA. Please try again.')
+            """ End reCAPTCHA validation """
+            if not result["success"]:
+                messages.add_message(
+                    request,
+                    messages.ERROR,
+                    "Invalid reCAPTCHA. Please try again.",
+                )
                 context = {
                     "comm_form": comm_form,
                     "addr_form": addr_form,
@@ -963,9 +977,9 @@ class EntryView(LoginRequiredMixin, View):
             entryForm.state = self.kwargs["abbr"].lower()
             entryForm.state_obj = State.objects.get(
                 abbr=self.kwargs["abbr"].upper()
-                )
+            )
             if entryForm.organization:
-                if self.request.user.is_org_admin(entryForm.organization.id):
+                if self.request.user.is_org_admin(entryForm.organization.id) or not drive.private:
                     entryForm.admin_approved = True
                 else:
                     # check if user is on the allowlist
@@ -988,8 +1002,15 @@ class EntryView(LoginRequiredMixin, View):
             entryForm.save()
             comm_form.save_m2m()
 
-            finalres = dict([(field.name, getattr(entryForm,field.name)) for field in entryForm._meta.fields])
-            finalres["census_blocks_polygon"] = str(entryForm.census_blocks_polygon)
+            finalres = dict(
+                [
+                    (field.name, getattr(entryForm, field.name))
+                    for field in entryForm._meta.fields
+                ]
+            )
+            finalres["census_blocks_polygon"] = str(
+                entryForm.census_blocks_polygon
+            )
             finalres["user"] = entryForm.user.email
             if entryForm.organization:
                 finalres["organization"] = entryForm.organization.name
@@ -1006,12 +1027,21 @@ class EntryView(LoginRequiredMixin, View):
                 addrForm.entry = entryForm
                 addrForm.save()
 
-                addres = dict([(field.name, getattr(addrForm,field.name)) for field in addrForm._meta.fields])
-                del addres['id']
+                addres = dict(
+                    [
+                        (field.name, getattr(addrForm, field.name))
+                        for field in addrForm._meta.fields
+                    ]
+                )
+                del addres["id"]
                 finalres.update(addres)
                 string_to_hash = str(finalres)
 
-            digest = hmac.new(bytes(os.environ.get("AUDIT_SECRET"), encoding='utf8'), msg=bytes(string_to_hash, encoding='utf8'), digestmod=hashlib.sha256).digest()
+            digest = hmac.new(
+                bytes(os.environ.get("AUDIT_SECRET"), encoding="utf8"),
+                msg=bytes(string_to_hash, encoding="utf8"),
+                digestmod=hashlib.sha256,
+            ).digest()
             signature = base64.b64encode(digest).decode()
             sign_obj = Signature(entry=entryForm, hash=signature)
             sign_obj.save()
@@ -1040,7 +1070,9 @@ class EntryView(LoginRequiredMixin, View):
         }
         return render(request, self.template_name, context)
 
+
 # ******************************************************************************#
+
 
 class MultiExportView(TemplateView):
     template = "main/export.html"
@@ -1048,9 +1080,11 @@ class MultiExportView(TemplateView):
     def get(self, request, **kwargs):
         state = self.kwargs["abbr"]
         state_obj = State.objects.get(abbr=state.upper())
-        query = state_obj.submissions.all().defer(
-            "census_blocks_polygon_array", "user_polygon"
-        ).prefetch_related("organization", "drive")
+        query = (
+            state_obj.submissions.all()
+            .defer("census_blocks_polygon_array", "user_polygon")
+            .prefetch_related("organization", "drive")
+        )
 
         if not query:
             # TODO: if the query is empty, return something more appropriate
@@ -1067,16 +1101,18 @@ class MultiExportView(TemplateView):
 
         final = geojson.FeatureCollection(all_gj)
 
-        if(kwargs['type'] == 'geo'):
-            print('********', 'geo', '********')
-            response = HttpResponse(geojson.dumps(final), content_type="application/json")
+        if kwargs["type"] == "geo":
+            print("********", "geo", "********")
+            response = HttpResponse(
+                geojson.dumps(final), content_type="application/json"
+            )
         else:
-            print('********', 'csv', '********')
+            print("********", "csv", "********")
             dictform = json.loads(geojson.dumps(final))
             df = pd.DataFrame()
-            for entry in dictform['features']:
-                row_dict = entry['properties'].copy()
-                row_dict['geometry'] = str(entry['geometry'])
+            for entry in dictform["features"]:
+                row_dict = entry["properties"].copy()
+                row_dict["geometry"] = str(entry["geometry"])
                 df = df.append(row_dict, ignore_index=True)
             response = HttpResponse(df.to_csv(), content_type="text/csv")
 
