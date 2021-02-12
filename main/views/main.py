@@ -287,6 +287,13 @@ class Glossary(TemplateView):
 # ******************************************************************************#
 
 
+class Resources(TemplateView):
+    template_name = "main/pages/resources.html"
+
+
+# ******************************************************************************#
+
+
 class Privacy(TemplateView):
     template_name = "main/pages/privacy.html"
 
