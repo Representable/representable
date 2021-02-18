@@ -3,6 +3,10 @@ id: viz1
 title: Overview
 ---
 
+:::note
+This method of visualizing is deprecated.
+:::
+
 ### React Visualizations App
 This app is currently under development as we move from a vanilla JS model for visualizations to a react app which can be integrated on the various pages which display communities. This should enable more flexibility when it comes to displaying communities in a variety of ways.
 

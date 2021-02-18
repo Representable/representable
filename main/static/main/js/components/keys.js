@@ -15,6 +15,17 @@ var BOUNDARIES_LAYERS = {
   "pos4": "5-digit Postcode Areas",
   "sta5": "Census Block Groups"
 }
+var BOUNDARIES_COLORS = {
+  "leg2": "rgb(60, 180, 75)", // green
+  "leg3": "rgb(245, 130, 49)", // orange
+  "leg4": "rgb(145, 30, 180)", // purple
+  "adm2": "rgb(230, 25, 75)", // red
+  "pos4": "rgb(67, 99, 216)", // blue
+  "sta5": "rgb(128, 128, 0)", // olive
+  "school": "rgb(70, 153, 144)", // teal
+  "chi-ward": "rgb(0, 0, 117)", // navy
+  "chi-comm": "rgb(169, 169, 169)" // gray
+}
 var BG_KEYS = {
   "albg": "300jwyj1",
   "akbg": "6tvgdw55",
