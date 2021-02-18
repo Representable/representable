@@ -1296,6 +1296,13 @@ Entry Form Management
   background: #DAEFFF;
   opacity: 0.5;
   border: none;
+  outline: none;
+}
+.survey-field:focus {
+  background: #DAEFFF;
+  opacity: 0.5;
+  border: none;
+  outline: none;
 }
 
 .entry-step {
