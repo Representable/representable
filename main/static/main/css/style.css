@@ -261,12 +261,18 @@ Entry Preview Page
   background: rgba(218, 239, 255, 0.63);
   border-color: rgba(218, 239, 255, 0.63);
   margin: 15px;
-  padding: 50px 110px;
+  padding: 50px 90px;
   color: black;
 }
 
 #entry_preview_button {
   text-align: center;
+}
+
+@media only screen and (max-width: 1025px) {
+  .entry-pr-gerry-txt {
+    font-size: initial !important;
+  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -1294,13 +1300,13 @@ Entry Form Management
 
 .survey-field {
   background: #DAEFFF;
-  opacity: 0.5;
+  opacity: 0.8;
   border: none;
   outline: none;
 }
+
 .survey-field:focus {
   background: #DAEFFF;
-  opacity: 0.5;
   border: none;
   outline: none;
 }
