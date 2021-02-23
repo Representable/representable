@@ -104,7 +104,7 @@ function parseReverseGeo(geoData) {
 function isEmptyFilter(filter) {
   var isEmpty = true;
   filter.forEach(function (feature) {
-    if (feature !== "in" && feature !== "GEOID" && feature !== "") {
+    if (feature !== "in" && feature !== "BLOCKID10" && feature !== "") {
       isEmpty = false;
       return;
     }
@@ -586,7 +586,7 @@ function createCommPolygon() {
   });
   var multiPolySave;
   queryFeatures.forEach(function (feature) {
-    if (polyFilter.includes(feature.properties.GEOID)) {
+    if (polyFilter.includes(feature.properties.BLOCKID10)) {
       if (multiPolySave === undefined) {
         multiPolySave = feature;
       } else {
@@ -971,7 +971,7 @@ class ClearMapButton {
       );
       if (isConfirmed) {
         $(".comm-pop").html(0);
-        map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
+        map.setFilter(state + "-bg-highlighted", ["in", "BLOCKID10"]);
         var undoBbox = sessionStorage.getItem("selectBbox");
         filterStack.push(undoFilter);
         bboxStack.push(undoBbox);
@@ -1100,7 +1100,7 @@ function newHighlightLayer(state, firstSymbolId) {
         "fill-color": "#4a69bd",
         "fill-opacity": 0.4,
       },
-      filter: ["in", "GEOID", ""],
+      filter: ["in", "BLOCKID10", ""],
     },
     firstSymbolId
   );
@@ -1171,6 +1171,8 @@ map.on("style.load", function () {
     var queryFeatures = map.queryRenderedFeatures(bbox, {
       layers: [state + "-census-shading"],
     });
+    console.log("queried features");
+    console.log(queryFeatures);
     // if no features are found - probably selected an invalid area (outside state) or some other error occurred
     if (queryFeatures.length == 0) return;
     var isChanged = false; // store only valid moves in stack
@@ -1179,7 +1181,10 @@ map.on("style.load", function () {
     for (let i = 0; i < queryFeatures.length; i++) {
       var feature = queryFeatures[i];
       // push to highlight layer for visibility
-      features.push(feature.properties.GEOID);
+      // NOTE: for blocks, has to be BLOCKID10
+      features.push(feature.properties.BLOCKID10);
+      console.log("features");
+      console.log(features);
       if (features.length >= 1) {
         // polyCon : the turf polygon from coordinates
         var polyCon = turf.bbox(feature.geometry);
@@ -1247,17 +1252,18 @@ map.on("style.load", function () {
           memo.push(feature);
           return memo;
         },
-        ["in", "GEOID"]
+        ["in", "BLOCKID10"]
       );
 
       currentFilter.forEach(function (feature) {
-        if (feature !== "in" && feature !== "GEOID" && feature !== "" && !filter.includes(feature)) {
+        if (feature !== "in" && feature !== "BLOCKID10" && feature !== "" && !filter.includes(feature)) {
           filter.push(feature);
         }
       });
     }
     // check size of community
     if (filter.length < 802) {
+      console.log(filter);
       map.setFilter(state + "-bg-highlighted", filter);
     } else {
       showWarningMessage(
@@ -1534,6 +1540,7 @@ function getCommPop(filter) {
 
 // query the ACS api in order to get blockgroup population data!
 // geoid chars 0-2:state, 2-5:county, 5-11:tract, 12:block group
+// TODO: fix this for just blocks
 function getBGPop(geoid, callback) {
   var req = new XMLHttpRequest();
   req.open('GET', 'https://api.census.gov/data/2018/acs/acs5?get=B01003_001E&for=block%20group:' + geoid.substring(11) + '&in=state:' + geoid.substring(0,2) + '%20county:' + geoid.substring(2, 5) + '%20tract:' + geoid.substring(5, 11) + '&key=' + census_key, true);
