@@ -15,6 +15,9 @@ var BOUNDARIES_LAYERS = {
   "pos4": "5-digit Postcode Areas",
   "sta5": "Census Block Groups"
 }
+var BLOCK_KEYS = {
+  "ilblock": "d7hs49xn",
+}
 var BG_KEYS = {
   "albg": "300jwyj1",
   "akbg": "6tvgdw55",
