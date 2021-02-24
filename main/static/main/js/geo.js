@@ -27,8 +27,6 @@ if (DRAW_USING_BLOCKS === true) {
   unit_id = "BLOCKID10";
   layer_suffix = "block";
 }
-console.log(unit_id);
-console.log(layer_suffix);
 // stack of filters (which block to highlight) and bounding boxes (for contiguity check)
 var filterStack = JSON.parse(sessionStorage.getItem("filterStack"));
 var bboxStack = JSON.parse(sessionStorage.getItem("bboxStack"));
@@ -1172,6 +1170,7 @@ map.on("style.load", function () {
   var bgID = null;
   var features = [];
   var stateCensus = state + "-census-shading";
+  var blockPopCache = {};
 
   // when selecting or erasing
   map.on("click", function (e) {
@@ -1194,6 +1193,9 @@ map.on("style.load", function () {
       // NOTE: for blocks, has to be BLOCKID10
       if (DRAW_USING_BLOCKS) {
         features.push(feature.properties.BLOCKID10);
+        if (!(feature.properties.BLOCKID10 in blockPopCache)) {
+          blockPopCache[feature.properties.BLOCKID10] = feature.properties.POP10;
+        }
       } else {
         features.push(feature.properties.GEOID);
       }
@@ -1274,7 +1276,7 @@ map.on("style.load", function () {
       });
     }
     // check size of community
-    if (filter.length < 802) {
+    if ((!DRAW_USING_BLOCKS && filter.length < 802) || (DRAW_USING_BLOCKS && filter.length < 2402)) {
       map.setFilter(state + "-highlighted", filter);
     } else {
       showWarningMessage(
@@ -1284,7 +1286,17 @@ map.on("style.load", function () {
     // set as indicator that population is loading
     $(".comm-pop").html("...");
     // remove "in" and "GEOID" parts of filter, for population
-    getCommPop(cleanFilter(filter));
+    if (DRAW_USING_BLOCKS) {
+      var blockCommPop = 0;
+      filter.forEach(function(feature) {
+        if (feature in blockPopCache) {
+          blockCommPop += blockPopCache[feature];
+        }
+      });
+      $(".comm-pop").html(blockCommPop);
+    } else {
+      getCommPop(cleanFilter(filter));
+    }
     if (isChanged) {
       filterStack.push(currentFilter);
       bboxStack.push(JSON.stringify(currentBbox));
@@ -1520,7 +1532,7 @@ function arraysEqual(a, b) {
 
 /***************************************************************************/
 
-var bgPopCache = {};
+var popCache = {};
 // get the population for a community from filter
 // TODO: load this in automatically as part of the tilesets for immediate lookup?
 function getCommPop(filter) {
@@ -1528,9 +1540,9 @@ function getCommPop(filter) {
   var pop = 0;
   var ctr = 0;
   filter.forEach(function(feature){
-    if (feature in bgPopCache) {
+    if (feature in popCache) {
       ctr++;
-      pop += bgPopCache[feature];
+      pop += popCache[feature];
       if (ctr === filter.length) {
         $(".comm-pop").html(pop);
         sessionStorage.setItem("pop", pop);
@@ -1539,15 +1551,17 @@ function getCommPop(filter) {
       getBGPop(feature, function(bgPop) {
         ctr++;
         pop += parseInt(bgPop);
-        bgPopCache[feature] = parseInt(bgPop);
+        popCache[feature] = parseInt(bgPop);
         if (ctr === filter.length) {
           $(".comm-pop").html(pop);
           sessionStorage.setItem("pop", pop);
         }
-      })
+      });
     }
   });
 }
+
+/****************************************************************************/
 
 // query the ACS api in order to get blockgroup population data!
 // geoid chars 0-2:state, 2-5:county, 5-11:tract, 12:block group
