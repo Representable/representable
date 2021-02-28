@@ -287,7 +287,7 @@ function surveyP2ToMap() {
   $("#survey-qs-p2").addClass("d-none");
   $("#entryForm").children(".container-fluid").addClass("d-none");
   $("#entry_map").removeClass("d-none");
-  $("#entry-map-modal").modal();
+  $("#entry-map-modal").modal({backdrop: 'static', keyboard: false});
   map.resize();
   fillSurveyQuestions();
   animateStepForward(2, 3, 4);
@@ -782,6 +782,16 @@ document.getElementById("modal-geocoder").appendChild(modalGeocoder.onAdd(map));
 
 modalGeocoder.on('result', function () {
   $('#entry-map-modal').modal('hide');
+
+  // if ($('#map-comm-dropdown').find('.dropdown-menu').is(":hidden")){
+  //   $('#map-comm-menu').dropdown('toggle');
+  // }
+  setTimeout(function () {
+    if ($('#map-comm-dropdown').find('.dropdown-menu').is(":hidden")){
+      $('#map-comm-menu').dropdown('show');
+      // $('#map-comm-menu').dropdown('update');
+    }
+  }, 2000);
 })
 
 /* Creating custom draw buttons */
