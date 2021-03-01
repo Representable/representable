@@ -1,10 +1,16 @@
 {% extends "main/base.html" %}
+{% load static %}
 
 {% block content %}
 <div class="container">
   <div class="row my-5">
     <div class="col-9 mx-auto">
-      <h2>{{object.name}}</h2>
+      <h2>
+        {{object.name}}
+        {% if object.verified %}
+          <img class="img-fluid verified-logo-md" src="{% static 'img/verified.svg' %}" alt="verified check mark"></img>
+        {% endif %}
+      </h2>
       <hr>
       <p>
         {% for state in object.states %}

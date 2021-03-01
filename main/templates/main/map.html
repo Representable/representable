@@ -77,7 +77,12 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                     </span>
                     <hr class="my-1">
                     {% if c.organization and c.organization.name %}
-                    <span class="badge badge-pill badge-primary">{{c.organization}}</span>
+                    <span class="badge badge-pill badge-primary">
+                      {{c.organization}}
+                    </span>
+                    {% if c.organization.verified %}
+                      <img class="verified-logo-md" src="{% static 'img/verified.svg' %}" alt="verified check mark"></img>
+                    {% endif %}
                     <br>
                     {% endif %}
                     {% if c.drive and c.drive.name %}

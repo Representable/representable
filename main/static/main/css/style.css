@@ -387,6 +387,15 @@ body {
 .navbar-logo {
   width: 60px;
 }
+.verified-logo-sm {
+  width: 1.5%;
+}
+.verified-logo-md {
+  width: 3%;
+}
+.verified-logo-lg {
+  width: 5%;
+}
 
 .nav-link {
   /* font-weight: 500; */
@@ -513,6 +522,9 @@ body {
 
     background: rgba(204, 233, 255, 0.2);
     z-index: -999;
+  }
+  .verified-logo-sm {
+    width: 5%;
   }
 }
 /* TABLETS + MOBILE */
