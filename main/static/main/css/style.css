@@ -75,7 +75,7 @@ form:invalid {
   margin: auto;
 }
 
-.bckgrd-70C5EA {
+.bg-70C5EA {
   background: #70C5EA;
 }
 
@@ -1466,9 +1466,14 @@ textarea.survey-field:focus {
   border-bottom: 3px solid black;
 }
 
+.dark-gray-text {
+  color: #3f3f3f;
+}
+
 .gray-text {
   color: #5B5B5B;
 }
+
 .light-blue-text {
   color: #65bff1;
 }
