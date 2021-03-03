@@ -57,6 +57,7 @@ from allauth.account import adapter
 from allauth.account.app_settings import ADAPTER
 from allauth.account.forms import LoginForm, SignupForm
 from allauth.account.views import LoginView, SignupView
+from allauth.socialaccount.views import SignupView as SocialSignupView
 from django.forms import formset_factory
 from ..forms import (
     CommunityForm,
@@ -187,7 +188,6 @@ class RepresentableLoginView(LoginView):
             del self.request.session["invalid_signup"]
         return context
 
-
 class RepresentableSignupView(SignupView):
     template_name = "account/signup_login.html"
     login_form = RepresentableLoginForm()
@@ -227,6 +227,15 @@ class RepresentableSignupView(SignupView):
             del self.request.session["invalid_signup"]
 
         return context
+
+
+# The view that this class inherits seems to only be used when a user attempts to
+# login with a social account whose email has already been used by another user
+#
+# Rather than showing the original form, display a message stating that the user
+# should connect the social account with their existing account
+class RepresentableSocialSignupView(SocialSignupView):
+    template_name = "account/social_signup_error.html"
 
 
 class Index(TemplateView):
