@@ -118,6 +118,21 @@ map.on("load", function () {
       "line-width": 2,
     },
   });
+  // tribal boundaries as a data layer
+  newSourceLayer("tribal-boundaries", TRIBAL_BOUND_KEY);
+  map.addLayer({
+    id: "tribal-boundaries-lines",
+    type: "line",
+    source: "tribal-boundaries",
+    "source-layer": "tl_2020_us_aiannh", //-7f7uk7
+    layout: {
+      visibility: "none",
+    },
+    paint: {
+      "line-color": "rgba(106,137,204,0.7)",
+      "line-width": 2,
+    },
+  });
   // ward + community areas for IL
   if (state === "il") {
     newSourceLayer("chi_wards", CHI_WARD_KEY);
@@ -387,8 +402,8 @@ map.on("load", function () {
   });
   if (is_thanks === "True") {
     history.pushState(null, null, document.URL);
-    window.addEventListener('popstate', function () {
-        history.pushState(null, null, document.URL);
+    window.addEventListener("popstate", function () {
+      history.pushState(null, null, document.URL);
     });
     canOnlyFireOnce(); // "Fired!"
   }
@@ -405,6 +420,7 @@ map.on("load", function () {
 // create a button that toggles layers based on their IDs
 var toggleableLayerIds = JSON.parse(JSON.stringify(BOUNDARIES_LAYERS));
 toggleableLayerIds["school-districts"] = "School Districts";
+toggleableLayerIds["tribal-boundaries"] = "Tribal Boundaries";
 // add selector for chicago wards + community areas if illinois
 if (state === "il") {
   toggleableLayerIds["chi-ward"] = "Chicago Wards";

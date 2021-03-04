@@ -65,24 +65,26 @@ function newSourceLayer(name, mbCode) {
 function newBoundariesLayer(name) {
   map.addSource(name, {
     type: "vector",
-    url: "mapbox://mapbox.boundaries-" + name + "-v3"
+    url: "mapbox://mapbox.boundaries-" + name + "-v3",
   });
-  map.addLayer(
-    {
-      id: name + "-lines",
-      type: "line",
-      source: name,
-      "source-layer": "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1),
-      layout: {
-        visibility: "none"
-      },
-      paint: {
-        "line-color": BOUNDARIES_COLORS[name],
-        "line-opacity": 0.7,
-        "line-width": 2,
-      }
-    }
-  );
+  map.addLayer({
+    id: name + "-lines",
+    type: "line",
+    source: name,
+    "source-layer":
+      "boundaries_" +
+      BOUNDARIES_ABBREV[removeLastChar(name)] +
+      "_" +
+      name.slice(-1),
+    layout: {
+      visibility: "none",
+    },
+    paint: {
+      "line-color": BOUNDARIES_COLORS[name],
+      "line-opacity": 0.7,
+      "line-width": 2,
+    },
+  });
 }
 
 var community_bounds = {};
@@ -101,58 +103,68 @@ map.on("load", function () {
   /****************************************************************************/
   // school districts as a data layer
   newSourceLayer("school-districts", SCHOOL_DISTR_KEY);
-  map.addLayer(
-    {
-      id: "school-districts-lines",
-      type: "line",
-      source: "school-districts",
-      "source-layer": "us_school_districts",
-      layout: {
-        visibility: "none",
-      },
-      paint: {
-        "line-color": BOUNDARIES_COLORS["school"],
-        "line-opacity": 0.7,
-        "line-width": 2,
-      },
-    }
-  );
+  map.addLayer({
+    id: "school-districts-lines",
+    type: "line",
+    source: "school-districts",
+    "source-layer": "us_school_districts",
+    layout: {
+      visibility: "none",
+    },
+    paint: {
+      "line-color": BOUNDARIES_COLORS["school"],
+      "line-opacity": 0.7,
+      "line-width": 2,
+    },
+  });
+  // tribal boundaries as a data layer
+  newSourceLayer("tribal-boundaries", TRIBAL_BOUND_KEY);
+  map.addLayer({
+    id: "tribal-boundaries-lines",
+    type: "line",
+    source: "tribal-boundaries",
+    "source-layer": "tl_2020_us_aiannh", //-7f7uk7
+    layout: {
+      visibility: "none",
+    },
+    paint: {
+      "line-color": BOUNDARIES_COLORS["tribal"],
+      "line-opacity": 0.7,
+      "line-width": 2,
+    },
+  });
   // ward + community areas for IL
   if (state === "il") {
     newSourceLayer("chi_wards", CHI_WARD_KEY);
     newSourceLayer("chi_comm", CHI_COMM_KEY);
-    map.addLayer(
-      {
-        id: "chi-ward-lines",
-        type: "line",
-        source: "chi_wards",
-        "source-layer": "chi_wards",
-        layout: {
-          visibility: "none",
-        },
-        paint: {
-          "line-color": BOUNDARIES_COLORS["chi-ward"],
-          "line-opacity": 0.7,
-          "line-width": 2,
-        },
-      }
-    );
-    map.addLayer(
-      {
-        id: "chi-comm-lines",
-        type: "line",
-        source: "chi_comm",
-        "source-layer": "chi_comm",
-        layout: {
-          visibility: "none",
-        },
-        paint: {
-          "line-color": BOUNDARIES_COLORS["chi-comm"],
-          "line-opacity": 0.7,
-          "line-width": 2,
-        },
-      }
-    );
+    map.addLayer({
+      id: "chi-ward-lines",
+      type: "line",
+      source: "chi_wards",
+      "source-layer": "chi_wards",
+      layout: {
+        visibility: "none",
+      },
+      paint: {
+        "line-color": BOUNDARIES_COLORS["chi-ward"],
+        "line-opacity": 0.7,
+        "line-width": 2,
+      },
+    });
+    map.addLayer({
+      id: "chi-comm-lines",
+      type: "line",
+      source: "chi_comm",
+      "source-layer": "chi_comm",
+      layout: {
+        visibility: "none",
+      },
+      paint: {
+        "line-color": BOUNDARIES_COLORS["chi-comm"],
+        "line-opacity": 0.7,
+        "line-width": 2,
+      },
+    });
   }
   // leg2 : congressional district
   // leg3 : state senate district
@@ -169,8 +181,8 @@ map.on("load", function () {
   coidata = JSON.parse(coidata.replace(/'/g, '"'));
 
   var coidata_geojson_format = {
-    'type': 'FeatureCollection',
-    'features': []
+    type: "FeatureCollection",
+    features: [],
   };
 
   for (coi_id in coidata) {
@@ -183,85 +195,95 @@ map.on("load", function () {
     } else {
       final = coidata[coi_id];
     }
-    coidata[coi_id] = final
+    coidata[coi_id] = final;
 
     // add info to bounds list for zooming
     var fit = new L.Polygon(final).getBounds();
-    var southWest = new mapboxgl.LngLat(fit['_southWest']['lat'], fit['_southWest']['lng']);
-    var northEast = new mapboxgl.LngLat(fit['_northEast']['lat'], fit['_northEast']['lng']);
-    community_bounds[coi_id] = new mapboxgl.LngLatBounds(southWest, northEast)
+    var southWest = new mapboxgl.LngLat(
+      fit["_southWest"]["lat"],
+      fit["_southWest"]["lng"]
+    );
+    var northEast = new mapboxgl.LngLat(
+      fit["_northEast"]["lat"],
+      fit["_northEast"]["lng"]
+    );
+    community_bounds[coi_id] = new mapboxgl.LngLatBounds(southWest, northEast);
 
     coidata_geojson_format.features.push({
-      'type': 'Feature',
-      'geometry': {
-          'type': 'Polygon',
-          'coordinates': final
-      }
+      type: "Feature",
+      geometry: {
+        type: "Polygon",
+        coordinates: final,
+      },
     });
   }
 
   // mxzoom(def 18 higher = more detail)
   // tol(def .375 higher = simpler geometry)
-  const mxzoom = 10, tol = 3.5;
+  const mxzoom = 10,
+    tol = 3.5;
 
-  map.addSource('coi_all', {
-      'type': 'geojson',
-      'data': coidata_geojson_format,
-      'maxzoom': mxzoom,
-      'tolerance': tol
+  map.addSource("coi_all", {
+    type: "geojson",
+    data: coidata_geojson_format,
+    maxzoom: mxzoom,
+    tolerance: tol,
   });
 
   map.addLayer({
-      'id': 'coi_layer_fill',
-      'type': 'fill',
-      'source': 'coi_all',
-      'paint': {
-          'fill-color': 'rgb(110, 178, 181)',
-          'fill-opacity': 0.15
-      },
+    id: "coi_layer_fill",
+    type: "fill",
+    source: "coi_all",
+    paint: {
+      "fill-color": "rgb(110, 178, 181)",
+      "fill-opacity": 0.15,
+    },
   });
 
   // console.log('finsihed layers');
 
   // hover to highlight
-  $(".community-review-span").hover(function() {
-    let highlight_id = this.id + "_boldline";
-    let highlight_id_fill = this.id + "_fill";
-    map.addSource(highlight_id, {
-        'type': 'geojson',
-        'data': {
+  $(".community-review-span").hover(
+    function () {
+      let highlight_id = this.id + "_boldline";
+      let highlight_id_fill = this.id + "_fill";
+      map.addSource(highlight_id, {
+        type: "geojson",
+        data: {
           type: "Feature",
           geometry: {
             type: "Polygon",
             coordinates: coidata[this.id],
           },
         },
-        'maxzoom': mxzoom, // def 18 higher = more detail
-        'tolerance': tol // def .375 higher = simpler geometry
-    });
-    map.addLayer({
-        'id': highlight_id_fill,
-        'type': 'fill',
-        'source': highlight_id,
-        'paint': {
-          'fill-color': 'rgb(110, 178, 181)',
-          'fill-opacity': 0.15
+        maxzoom: mxzoom, // def 18 higher = more detail
+        tolerance: tol, // def .375 higher = simpler geometry
+      });
+      map.addLayer({
+        id: highlight_id_fill,
+        type: "fill",
+        source: highlight_id,
+        paint: {
+          "fill-color": "rgb(110, 178, 181)",
+          "fill-opacity": 0.15,
         },
-    });
-    map.addLayer({
-        'id': highlight_id,
-        'type': 'line',
-        'source': highlight_id,
-        'paint': {
-          'line-color': '#808080',
-          'line-width': 2,
+      });
+      map.addLayer({
+        id: highlight_id,
+        type: "line",
+        source: highlight_id,
+        paint: {
+          "line-color": "#808080",
+          "line-width": 2,
         },
-    });
-  }, function () {
-    map.removeLayer(this.id+"_boldline");
-    map.removeLayer(this.id+"_fill");
-    map.removeSource(this.id+"_boldline");
-  });
+      });
+    },
+    function () {
+      map.removeLayer(this.id + "_boldline");
+      map.removeLayer(this.id + "_fill");
+      map.removeSource(this.id + "_boldline");
+    }
+  );
 
   // find what features are currently on view
   // multiple features are gathered that have the same source (or have the same source with 'line' added on)
@@ -296,7 +318,6 @@ map.on("load", function () {
   //   });
   // }
 
-
   // loading icon
   $(".loader").delay(500).fadeOut(500);
   // fly to state if org, otherwise stay on map
@@ -304,20 +325,20 @@ map.on("load", function () {
     map.flyTo({
       center: statesLngLat[state.toUpperCase()],
       zoom: 5,
-      essential: true // this animation is considered essential with respect to prefers-reduced-motion
+      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
     });
   } else {
     map.flyTo({
       center: [-96.7026, 40.8136],
       zoom: 3,
-      essential: true // this animation is considered essential with respect to prefers-reduced-motion
+      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
     });
   }
 });
 
 // on click, zoom to community
 $(".community-review-span").click(function () {
-  map.fitBounds(community_bounds[this.id], {padding: 100});
+  map.fitBounds(community_bounds[this.id], { padding: 100 });
 });
 
 // show more button
@@ -332,14 +353,14 @@ document.querySelectorAll(".comm-content").forEach(function (p) {
 //create a button that toggles layers based on their IDs
 var toggleableLayerIds = JSON.parse(JSON.stringify(BOUNDARIES_LAYERS));
 toggleableLayerIds["school-districts"] = "School Districts";
+toggleableLayerIds["tribal-boundaries"] = "Tribal Boundaries";
 // add selector for chicago wards + community areas if illinois
 if (state === "il") {
   toggleableLayerIds["chi-ward"] = "Chicago Wards";
   toggleableLayerIds["chi-comm"] = "Chicago Community Areas";
 }
 
-for (var id in toggleableLayerIds){
-
+for (var id in toggleableLayerIds) {
   var link = document.createElement("input");
 
   link.value = id;
@@ -374,7 +395,7 @@ for (var id in toggleableLayerIds){
   div.appendChild(label);
   layers.appendChild(div);
   var newline = document.createElement("br");
-};
+}
 
 /*******************************************************************/
 // remove the last char in the string
@@ -383,20 +404,25 @@ function removeLastChar(str) {
 }
 
 // search bar filtering Communities
-$(document).ready(function(){
-  $("#search-comm").on("keyup", function() {
+$(document).ready(function () {
+  $("#search-comm").on("keyup", function () {
     var value = $(this).val().toLowerCase();
-    $("#collapseThree tr").filter(function() {
-      var innerText = $(this).text().toLowerCase().replace("show more", "").replace("show less", "").replace("report", "");
-      $(this).toggle(innerText.indexOf(value) > -1)
+    $("#collapseThree tr").filter(function () {
+      var innerText = $(this)
+        .text()
+        .toLowerCase()
+        .replace("show more", "")
+        .replace("show less", "")
+        .replace("report", "");
+      $(this).toggle(innerText.indexOf(value) > -1);
     });
   });
 });
 
 /* Flips arrows on the dropdown menus upon clicking */
-$("#buttonOne").click(function() {
-  $("#arrowOne").toggleClass('flipY-inplace');
+$("#buttonOne").click(function () {
+  $("#arrowOne").toggleClass("flipY-inplace");
 });
-$("#buttonThree").click(function() {
-  $("#arrowThree").toggleClass('flipY-inplace');
+$("#buttonThree").click(function () {
+  $("#arrowThree").toggleClass("flipY-inplace");
 });
