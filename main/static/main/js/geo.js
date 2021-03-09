@@ -51,6 +51,11 @@ function changeText(element) {
   }
 }
 
+// removes population from community info dropdown, if in a state using new census geographies
+if (STATES_USING_NEW_BG.indexOf(state) >= 0) {
+  $(".comm-pop-text").hide();
+}
+
 // changes page entry page from the survey start page to the first part of the survey
 function startSurvey() {
   $("#entry-survey-start").addClass("d-none");
@@ -287,7 +292,7 @@ function surveyP2ToMap() {
   $("#survey-qs-p2").addClass("d-none");
   $("#entryForm").children(".container-fluid").addClass("d-none");
   $("#entry_map").removeClass("d-none");
-  $("#entry-map-modal").modal();
+  $("#entry-map-modal").modal({backdrop: 'static', keyboard: false});
   map.resize();
   fillSurveyQuestions();
   animateStepForward(2, 3, 4);
@@ -782,6 +787,16 @@ document.getElementById("modal-geocoder").appendChild(modalGeocoder.onAdd(map));
 
 modalGeocoder.on('result', function () {
   $('#entry-map-modal').modal('hide');
+
+  // if ($('#map-comm-dropdown').find('.dropdown-menu').is(":hidden")){
+  //   $('#map-comm-menu').dropdown('toggle');
+  // }
+  setTimeout(function () {
+    if ($('#map-comm-dropdown').find('.dropdown-menu').is(":hidden")){
+      $('#map-comm-menu').dropdown('show');
+      // $('#map-comm-menu').dropdown('update');
+    }
+  }, 2000);
 })
 
 /* Creating custom draw buttons */
@@ -1287,9 +1302,11 @@ map.on("style.load", function () {
       );
     }
     // set as indicator that population is loading
-    $(".comm-pop").html("...");
-    // remove "in" and "GEOID" parts of filter, for population
-    getCommPop(cleanFilter(filter));
+    if (STATES_USING_NEW_BG.indexOf(state) === -1) {
+      $(".comm-pop").html("...");
+      // remove "in" and "GEOID" parts of filter, for population
+      getCommPop(cleanFilter(filter));
+    }
     if (isChanged) {
       filterStack.push(currentFilter);
       bboxStack.push(JSON.stringify(currentBbox));
