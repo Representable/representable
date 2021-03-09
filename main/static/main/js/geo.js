@@ -51,6 +51,11 @@ function changeText(element) {
   }
 }
 
+// removes population from community info dropdown, if in a state using new census geographies
+if (STATES_USING_NEW_BG.indexOf(state) >= 0) {
+  $(".comm-pop-text").hide();
+}
+
 // changes page entry page from the survey start page to the first part of the survey
 function startSurvey() {
   $("#entry-survey-start").addClass("d-none");
@@ -1297,9 +1302,11 @@ map.on("style.load", function () {
       );
     }
     // set as indicator that population is loading
-    $(".comm-pop").html("...");
-    // remove "in" and "GEOID" parts of filter, for population
-    getCommPop(cleanFilter(filter));
+    if (STATES_USING_NEW_BG.indexOf(state) === -1) {
+      $(".comm-pop").html("...");
+      // remove "in" and "GEOID" parts of filter, for population
+      getCommPop(cleanFilter(filter));
+    }
     if (isChanged) {
       filterStack.push(currentFilter);
       bboxStack.push(JSON.stringify(currentBbox));

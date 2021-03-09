@@ -327,10 +327,10 @@ class CommunityEntry(models.Model):
     )
     # make this foreign key relation
     state_obj = models.ForeignKey(
-        State, 
-        on_delete=models.SET_NULL, 
-        blank=True, 
-        null=True, 
+        State,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
         related_name="submissions"
     )
     state = models.CharField(
@@ -340,7 +340,7 @@ class CommunityEntry(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     admin_approved = models.BooleanField(default=True)
     private = models.BooleanField(default=False, null=True)
-    population = models.IntegerField(blank=True, default=0)
+    population = models.IntegerField(blank=True, null=True, default=0)
 
     def __str__(self):
         return str(self.entry_ID)
