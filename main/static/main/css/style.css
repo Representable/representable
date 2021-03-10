@@ -75,6 +75,14 @@ form:invalid {
   margin: auto;
 }
 
+.bg-70C5EA {
+  background: #70C5EA;
+}
+
+.txt-16 {
+  font-size: 1rem;
+}
+
 .opacity-5 {
   opacity: 1;
 }
@@ -144,7 +152,7 @@ form:invalid {
   background: #DFDFDF;
   width: 50px;
   height: .25rem;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 .progress-line-vert {
@@ -220,7 +228,7 @@ form:invalid {
 
 .map-popup-box {
   position: absolute;
-  top: 10px;
+  top: 63px;
   left: 10px;
   background-color: rgba(255, 255, 255, 0.9);
   padding: 10px;
@@ -232,6 +240,7 @@ form:invalid {
 }
 .warning-box {
   border: 1px solid red;
+  font-size: 1rem;
 }
 
 /*********************************************************************
@@ -252,12 +261,18 @@ Entry Preview Page
   background: rgba(218, 239, 255, 0.63);
   border-color: rgba(218, 239, 255, 0.63);
   margin: 15px;
-  padding: 50px 110px;
+  padding: 50px 90px;
   color: black;
 }
 
 #entry_preview_button {
   text-align: center;
+}
+
+@media only screen and (max-width: 1025px) {
+  .entry-pr-gerry-txt {
+    font-size: initial !important;
+  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -273,12 +288,49 @@ Entry Preview Page
 
   #entry_preview_info {
     padding: 30px 50px;
+    flex-direction: column;
+  }
+
+  #entry_video_wrap {
+    align-self: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  #entry_preview_video {
+    margin-top: 20px;
+    margin-left: 0px !important;
   }
 }
 
 @media only screen and (max-width: 540px) {
   #entry_preview_info {
     padding: 30px 30px;
+    flex-direction: column;
+  }
+
+  #entry_preview_video {
+    position: relative;
+    overflow: hidden;
+    height: 0;
+    margin-left: 0px !important;
+    padding-top: 20px;
+    padding-bottom: 56.25%;
+  }
+
+  #entry_preview_video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  #entry_video_wrap {
+    width: 100%;
+    max-width: 300px;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 
   #entry_preview_button {
@@ -839,6 +891,10 @@ Entry Mapping Page
   margin: auto;
 }
 
+#map-comm-menu {
+  top: 10px !important;
+}
+
 #map-top-row {
   position: absolute;
   z-index: 1;
@@ -1244,8 +1300,15 @@ Entry Form Management
 
 .survey-field {
   background: #DAEFFF;
-  opacity: 0.5;
+  opacity: 0.8;
   border: none;
+  outline: none;
+}
+
+.survey-field:focus {
+  background: #DAEFFF;
+  border: none;
+  outline: none;
 }
 
 .entry-step {
@@ -1282,8 +1345,13 @@ Entry Form Management
   padding: 30px;
 }
 
+#mobile-survey-start-infographic {
+  background-color: #DAEFFF;
+  padding: 30px;
+}
+
 .survey-start-sm-txt {
-  font-size: .75rem;
+  font-size: 1rem;
   color: #3f3f3f;
 }
 
@@ -1314,6 +1382,7 @@ textarea.survey-field:focus {
 
 .survey-sect-title {
   padding-top: 15px;
+  color: #5996D2;
 }
 
 .survey-sect-title-link:hover {
@@ -1397,9 +1466,14 @@ textarea.survey-field:focus {
   border-bottom: 3px solid black;
 }
 
+.dark-gray-text {
+  color: #3f3f3f;
+}
+
 .gray-text {
   color: #5B5B5B;
 }
+
 .light-blue-text {
   color: #65bff1;
 }
@@ -1558,7 +1632,6 @@ Signup and Login Page
 
 .auth-form {
   display: inline-block;
-  width: 70%;
 }
 
 .auth-form .btn {
@@ -1577,6 +1650,16 @@ Signup and Login Page
 
 .auth-btn {
   width: 50%;
+}
+
+.social-btn {
+  border: 1px solid gray;
+  height: 60px;
+}
+
+.connect-social-btn {
+  height: 50px;
+  width: 200px;
 }
 
 .auth-form-label {
@@ -2084,4 +2167,12 @@ height:25vh!important;
 
 #rtb a h2 {
   padding-top: 20px;
+}
+
+/* Flips element vertically, in place*/
+.flipY-inplace {
+  -moz-transform: scale(1, -1);
+  -o-transform: scale(1, -1);
+  -webkit-transform: scale(1, -1);
+  transform: scale(1, -1);
 }

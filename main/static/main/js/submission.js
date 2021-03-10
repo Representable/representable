@@ -6,8 +6,8 @@ if (is_thanks === "True") {
 }
 
 function toggleAngle(e) {
-  var collapsible = e.parentNode.getElementsByClassName('collapse')[0].id;
-  $('#' + collapsible).collapse('toggle');
+  var collapsible = e.parentNode.getElementsByClassName("collapse")[0].id;
+  $("#" + collapsible).collapse("toggle");
   if (e.innerHTML.includes("fa-angle-down")) {
     e.innerHTML = e.innerHTML.replace("fa-angle-down", "fa-angle-up");
   } else {
@@ -105,21 +105,19 @@ map.on("load", function () {
   /****************************************************************************/
   // school districts as a data layer
   newSourceLayer("school-districts", SCHOOL_DISTR_KEY);
-  map.addLayer(
-    {
-      id: "school-districts-lines",
-      type: "line",
-      source: "school-districts",
-      "source-layer": "us_school_districts",
-      layout: {
-        visibility: "none",
-      },
-      paint: {
-        "line-color": "rgba(106,137,204,0.7)",
-        "line-width": 2,
-      },
-    }
-  );
+  map.addLayer({
+    id: "school-districts-lines",
+    type: "line",
+    source: "school-districts",
+    "source-layer": "us_school_districts",
+    layout: {
+      visibility: "none",
+    },
+    paint: {
+      "line-color": "rgba(106,137,204,0.7)",
+      "line-width": 2,
+    },
+  });
   // ward + community areas for IL
   if (state === "il") {
     newSourceLayer("chi_wards", CHI_WARD_KEY);
@@ -240,14 +238,14 @@ map.on("load", function () {
   $("#pdf-button").on("click", function () {
     exportPDF(1500);
   });
-  $('#thanksModal').on('hidden.bs.modal', function () {
-    window.location.href = '/submission/' + comm_id;
-  })
+
+  $("#thanksModal").on("hidden.bs.modal", function () {
+    window.location.href = "/submission/" + comm_id;
+  });
   $("#pdf-button-modal").on("click", function () {
-    window.location.href = '/submission/' + comm_id + '?pdf=true';
-  })
+    window.location.href = "/submission/" + comm_id + "?pdf=true";
+  });
   if (window.location.search.includes("pdf=true")) {
-    console.log("in includes function");
     exportPDF(4000);
   }
   // pdf export button
@@ -272,7 +270,10 @@ map.on("load", function () {
       doc.setFontSize(12);
       doc.setTextColor(0);
       // link to view on rep
-      var rLink = doc.splitTextToSize("View this community at: " + window.location.href, 180);
+      var rLink = doc.splitTextToSize(
+        "View this community at: " + window.location.href,
+        180
+      );
       doc.text(20, 45, rLink);
 
       var org = window.document.getElementById("pdfOrg");
@@ -300,13 +301,13 @@ map.on("load", function () {
       var pdfName = sanitizePDF($("#pdfName").text());
       doc.save(pdfName + ".pdf");
     }, delay);
-  };
+  }
 
-  // Form for sending emailPDF
-  var testForm = document.getElementById("pdfForm");
+  function emailPDF() {
+    // make the map look good for the PDF ! TODO: un-select other layers like census blocks (turn into functions)
+    map.fitBounds(commBounds, { padding: 100 });
 
-  testForm.onsubmit = function (event) {
-    event.preventDefault();
+    // setup XMLH request
     var request = new XMLHttpRequest();
     request.open("POST", "/send_mail_plain", false);
     var formData = new FormData(document.getElementById("pdfForm"));
@@ -316,37 +317,29 @@ map.on("load", function () {
     // pdfDoc.text("Hello world!", 10, 10);
 
     var doc = new jsPDF();
+
     var entryName = window.document.getElementById("pdfName");
     doc.fromHTML(entryName, 20, 20, { width: 180 });
+    var createdWith = window.document.getElementById("pdfCreatedWith");
+    doc.fromHTML(createdWith, 20, 32, { width: 180 });
     doc.setFontSize(10);
     doc.setTextColor(150);
-    // identifying info
-    var userName = window.document.getElementById("user-name");
-    var adStreet = window.document.getElementById("address-street");
-    var adCity = window.document.getElementById("address-city");
-    if (userName !== null) {
-      doc.text(20, 35, userName.textContent);
-    }
-    if (adStreet !== null) {
-      doc.text(20, 40, adStreet.textContent);
-    }
-    if (adCity !== null) {
-      doc.text(20, 45, adCity.textContent);
-    }
     doc.setFontSize(12);
     doc.setTextColor(0);
     // link to view on rep
-    var rLink = "View this community at: " + window.location.href;
-    doc.text(20, 53, rLink);
+    var rLink = doc.splitTextToSize(
+      "View this community at: " + window.location.href,
+      180
+    );
+    doc.text(20, 45, rLink);
 
-    var org = window.document.getElementById("org-text");
-    var drive = window.document.getElementById("drive-text");
-    if (org !== null) {
-      doc.text(20, 61, "Organization: " + org.textContent);
-    }
+    var org = window.document.getElementById("pdfOrg");
+    var drive = window.document.getElementById("pdfDrive");
     if (drive !== null) {
-      doc.text(20, 69, "Drive: " + drive.textContent);
+      doc.text(20, 63, "Organization: " + org.textContent);
+      doc.text(20, 69, "Community Mapping Drive: " + drive.textContent);
     }
+
     var imgData = map.getCanvas().toDataURL("image/png");
     // calculate ratio of map so it isn't squashed / stretched
     var mapDim = map.getCanvas().getBoundingClientRect();
@@ -356,29 +349,56 @@ map.on("load", function () {
     doc.addPage();
     doc.setFontSize(24);
     doc.text(20, 20, "Community Information");
-
-    var elementHandler = {
-      "#ignorePDF": function (element, renderer) {
-        return true;
-      },
-      "#entry-name": function (element, renderer) {
-        return true;
-      },
-    };
     // entry fields
-    var table = window.document.getElementById("table-content");
-    doc.fromHTML(table, 20, 25, {
+    var entryInfo = window.document.getElementById("pdfInfo");
+    doc.fromHTML(entryInfo, 20, 25, {
       width: 180,
-      elementHandlers: elementHandler,
     });
     // get entry name in order to name the PDF
-    var pdfName = sanitizePDF($("#entry-name").text());
+    var pdfName = sanitizePDF($("#pdfName").text());
 
     // output and send to requests handled in url
+    console.log(formData);
+    console.log(pdf);
+    console.log(doc);
+
     var pdf = doc.output("blob");
     formData.append("generatedpdf", pdf, pdfName);
     request.send(formData);
-    console.log(request.response);
+  }
+
+  // Automatically email PDF once
+  function once(fn, context) {
+    var result;
+
+    return function () {
+      if (fn) {
+        result = fn.apply(context || this, arguments);
+        fn = null;
+      }
+
+      return result;
+    };
+  }
+
+  // Usage
+  var canOnlyFireOnce = once(function () {
+    setTimeout(emailPDF, 5000);
+  });
+  if (is_thanks === "True") {
+    history.pushState(null, null, document.URL);
+    window.addEventListener('popstate', function () {
+        history.pushState(null, null, document.URL);
+    });
+    canOnlyFireOnce(); // "Fired!"
+  }
+
+  // Form for sending emailPDF
+  var testForm = document.getElementById("pdfForm");
+
+  testForm.onsubmit = function (event) {
+    console.log("clicked");
+    emailPDF();
   };
 });
 
@@ -398,7 +418,7 @@ addContainer.classList.add("container-fluid", "w-100");
 layers.appendChild(addContainer);
 
 var layersContainer = layers.children[0];
-var addRow = document.createElement("div")
+var addRow = document.createElement("div");
 addRow.classList.add("row", "row-wide");
 layersContainer.appendChild(addRow);
 
@@ -411,8 +431,8 @@ addCol2.classList.add("col-12", "col-md-6", "m-0", "p-0");
 layersRow.appendChild(addCol1);
 layersRow.appendChild(addCol2);
 
-var layersCol1 = layersRow.children[0]
-var layersCol2 = layersRow.children[1]
+var layersCol1 = layersRow.children[0];
+var layersCol2 = layersRow.children[1];
 
 var count = 0;
 // Append the switches
@@ -462,29 +482,29 @@ function addToggleableLayer(id, appendElement) {
   var newline = document.createElement("br");
 }
 
-$("#data-layer-btn").on("click", function() {
+$("#data-layer-btn").on("click", function () {
   toggleDataLayers();
 });
 
-$("#mobile-data-layer-btn").on("click", function() {
+$("#mobile-data-layer-btn").on("click", function () {
   toggleDataLayers();
 });
 
-$("#data-layer-card div.card-body h5.card-title").on("click", function() {
+$("#data-layer-card div.card-body h5.card-title").on("click", function () {
   toggleDataLayers();
-})
+});
 
-$("#demographics-btn").on("click", function() {
+$("#demographics-btn").on("click", function () {
   toggleDemographics();
 });
 
-$("#mobile-demographics-btn").on("click", function() {
+$("#mobile-demographics-btn").on("click", function () {
   toggleDemographics();
 });
 
-$("#demographics-card div.card-body h5.card-title").on("click", function() {
+$("#demographics-card div.card-body h5.card-title").on("click", function () {
   toggleDemographics();
-})
+});
 
 function toggleDemographics() {
   $("#demographics-col").toggleClass("d-none");
@@ -502,16 +522,16 @@ function removeLastChar(str) {
 }
 
 // Links "What GeoJSON is?" Modal and download for GeoJSON into one event
-$('[data-toggle=modal]').on('click', function(e) {
-  var $target = $($(this).data('target'));
-  $target.data('triggered', true);
-  setTimeout(function() {
-    if ($target.data('triggered')) {
-      $target.modal('show').data('triggered', false);
-    };
+$("[data-toggle=modal]").on("click", function (e) {
+  var $target = $($(this).data("target"));
+  $target.data("triggered", true);
+  setTimeout(function () {
+    if ($target.data("triggered")) {
+      $target.modal("show").data("triggered", false);
+    }
   }, 100); // ms delay
   return false;
 });
-$('#geojson-explain-modal').on('show.bs.modal', function () {
-  $('#hidden-download-geojson')[0].click();
+$("#geojson-explain-modal").on("show.bs.modal", function () {
+  $("#hidden-download-geojson")[0].click();
 });
