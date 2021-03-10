@@ -467,6 +467,13 @@ function addToggleableLayer(id, appendElement) {
       map.setLayoutProperty(txt + "-lines", "visibility", "none");
     } else {
       map.setLayoutProperty(txt + "-lines", "visibility", "visible");
+      // TODO: set all other layers to "none"
+      for (var layerID in toggleableLayerIds) {
+        if (layerID != txt) {
+          map.setLayoutProperty(layerID + "-lines", "visibility", "none");
+        }
+      }
+
     }
   };
   // in order to create the buttons
