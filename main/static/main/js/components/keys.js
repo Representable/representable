@@ -13,7 +13,7 @@ var BOUNDARIES_LAYERS = {
   leg4: "State House Districts",
   adm2: "Counties",
   pos4: "5-digit Postcode Areas",
-  sta5: "Census Block Groups",
+  sta5: "2010 Census Block Groups",
 };
 var BOUNDARIES_COLORS = {
   leg2: "rgb(60, 180, 75)", // green
@@ -74,7 +74,7 @@ var BG_KEYS = {
   txbg: "9onkqc5t",
   utbg: "3i55e9ql",
   vtbg: "bzcxijma",
-  vabg: "5qxcnhry",
+  vabg: "2qpo9fjv", //2010: 5qxcnhry
   wabg: "9nxwrro5",
   wvbg: "1ya1ngou",
   wibg: "7pmyno56",
@@ -84,3 +84,4 @@ var CHI_WARD_KEY = "179v2oeh";
 var CHI_COMM_KEY = "63nswxfc";
 var SCHOOL_DISTR_KEY = "1ezqvmlm";
 var TRIBAL_BOUND_KEY = "6jhw01g1";
+var STATES_USING_NEW_BG = ["va"];
