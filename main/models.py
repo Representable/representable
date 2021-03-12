@@ -232,6 +232,21 @@ class BlockGroup(models.Model):
 
 # ******************************************************************************#
 
+
+class CensusBlock(models.Model):
+    """
+    CensusBlock represents census blocks from a given year. These are the building blocks of COIs.
+    Fields included:
+     - census_id: the official block group id
+     - year: year of census (default - 2020, since those are the block's we'll be using)
+    """
+
+    census_id = models.CharField(max_length=15)
+    year = models.IntegerField(default=2020)
+
+
+# ******************************************************************************#
+
 class State(models.Model):
 
     name = models.CharField(
@@ -327,10 +342,10 @@ class CommunityEntry(models.Model):
     )
     # make this foreign key relation
     state_obj = models.ForeignKey(
-        State, 
-        on_delete=models.SET_NULL, 
-        blank=True, 
-        null=True, 
+        State,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
         related_name="submissions"
     )
     state = models.CharField(

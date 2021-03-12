@@ -22,10 +22,9 @@
 // GEO Js file for handling map drawing.
 /* https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ */
 var unit_id = "GEOID";
-var layer_suffix = "bg";
+var layer_suffix = (BLOCK_STATES.includes(state) ? "block" : "bg");
 if (DRAW_USING_BLOCKS === true) {
   unit_id = "BLOCKID10";
-  layer_suffix = "block";
 }
 // stack of filters (which block to highlight) and bounding boxes (for contiguity check)
 var filterStack = JSON.parse(sessionStorage.getItem("filterStack"));
@@ -588,11 +587,12 @@ function createCommPolygon() {
   }
   // now query the features and build the polygon to be saved
   var queryFeatures = map.queryRenderedFeatures({
-    layers: [state + "-census-shading"],
+    layers: [state + "-census-shading-" + layer_suffix],
   });
   var multiPolySave;
   queryFeatures.forEach(function (feature) {
-    if (polyFilter.includes(feature.properties.BLOCKID10)) {
+    featureProp = (DRAW_USING_BLOCKS ? feature.properties.BLOCKID10 : feature.properties.GEOID)
+    if (polyFilter.includes(featureProp)) {
       if (multiPolySave === undefined) {
         multiPolySave = feature;
       } else {
@@ -935,7 +935,7 @@ class UndoButton {
         } else {
           sessionStorage.setItem("selectBbox", undoBbox);
         }
-        map.setFilter(state + "-highlighted", undoFilter);
+        map.setFilter(state + "-highlighted-" + layer_suffix, undoFilter);
         sessionStorage.setItem("bgFilter", JSON.stringify(undoFilter));
         sessionStorage.setItem("filterStack", JSON.stringify(filterStack));
         sessionStorage.setItem("bboxStack", JSON.stringify(bboxStack));
@@ -977,7 +977,7 @@ class ClearMapButton {
       );
       if (isConfirmed) {
         $(".comm-pop").html(0);
-        map.setFilter(state + "-highlighted", ["in", unit_id]);
+        map.setFilter(state + "-highlighted-" + layer_suffix, ["in", unit_id]);
         var undoBbox = sessionStorage.getItem("selectBbox");
         filterStack.push(undoFilter);
         bboxStack.push(undoBbox);
@@ -1056,12 +1056,12 @@ function newSourceLayer(name, mbCode) {
   });
 }
 // census block data - lines only, always visible
-function newCensusLines(state) {
+function newCensusLines(state, suffix) {
   map.addLayer({
-    id: state + "-census-lines",
+    id: state + "-census-lines-" + suffix,
     type: "line",
-    source: state + layer_suffix,
-    "source-layer": state + layer_suffix,
+    source: state + suffix,
+    "source-layer": state + suffix,
     layout: {
       visibility: "none",
     },
@@ -1073,13 +1073,13 @@ function newCensusLines(state) {
 }
 
 // add a new layer of census block data (transparent layer)
-function newCensusShading(state, firstSymbolId) {
+function newCensusShading(state, firstSymbolId, suffix) {
   map.addLayer(
     {
-      id: state + "-census-shading",
+      id: state + "-census-shading-" + suffix,
       type: "fill",
-      source: state + layer_suffix,
-      "source-layer": state + layer_suffix,
+      source: state + suffix,
+      "source-layer": state + suffix,
       paint: {
         "fill-outline-color": "#000000",
         "fill-color": "#000000",
@@ -1094,13 +1094,13 @@ function newCensusShading(state, firstSymbolId) {
     firstSymbolId
   );
 }
-function newHighlightLayer(state, firstSymbolId) {
+function newHighlightLayer(state, firstSymbolId, suffix) {
   map.addLayer(
     {
-      id: state + "-highlighted",
+      id: state + "-highlighted-" + suffix ,
       type: "fill",
-      source: state + layer_suffix,
-      "source-layer": state + layer_suffix,
+      source: state + suffix,
+      "source-layer": state + suffix,
       paint: {
         "fill-outline-color": "#1e3799",
         "fill-color": "#4a69bd",
@@ -1141,21 +1141,26 @@ map.on("style.load", function () {
   });
 
   // this is where the census block groups are loaded, from a url to the mbtiles file uploaded to mapbox
-  if (DRAW_USING_BLOCKS) {
-    newSourceLayer(state + layer_suffix, BLOCK_KEYS[state + layer_suffix]);
-  } else {
-    newSourceLayer(state + layer_suffix, BG_KEYS[state + layer_suffix]);
+  // need to create layers for both blocks and block groups if state has functionality for both
+  if (BLOCK_STATES.includes(state)) {
+    console.log(state);
+    newSourceLayer(state + "block", BLOCK_KEYS[state + "block"]);
+    newCensusShading(state, firstSymbolId, "block");
+    newCensusLines(state, "block");
+    newHighlightLayer(state, firstSymbolId, "block");
   }
-  newCensusShading(state, firstSymbolId);
-  newCensusLines(state);
-  newHighlightLayer(state);
+  newSourceLayer(state + "bg", BG_KEYS[state + "bg"]);
+  newCensusShading(state, firstSymbolId, "bg");
+  newCensusLines(state, "bg");
+  newHighlightLayer(state, firstSymbolId, "bg");
   showMap();
   map.flyTo({
     center: statesLngLat[state.toUpperCase()],
     zoom: 6,
     essential: true, // this animation is considered essential with respect to prefers-reduced-motion
   });
-  map.setLayoutProperty(state + "-census-lines", "visibility", "visible");
+  console.log(layer_suffix);
+  map.setLayoutProperty(state + "-census-lines-" + layer_suffix, "visibility", "visible");
   // check if someone has entered in a new state in the same session
   var prev_state = sessionStorage.getItem("prev_state");
   if (prev_state !== null && state !== prev_state) {
@@ -1169,7 +1174,7 @@ map.on("style.load", function () {
   // feature state for the feature under the mouse.
   var bgID = null;
   var features = [];
-  var stateCensus = state + "-census-shading";
+  var stateCensus = state + "-census-shading-" + layer_suffix;
   var blockPopCache = {};
 
   // when selecting or erasing
@@ -1180,7 +1185,7 @@ map.on("style.load", function () {
       [e.point.x + drawRadius, e.point.y + drawRadius],
     ];
     var queryFeatures = map.queryRenderedFeatures(bbox, {
-      layers: [state + "-census-shading"],
+      layers: [state + "-census-shading-" + layer_suffix],
     });
     // if no features are found - probably selected an invalid area (outside state) or some other error occurred
     if (queryFeatures.length == 0) return;
@@ -1189,6 +1194,7 @@ map.on("style.load", function () {
     var currentBbox; // the current selection area bounding box
     for (let i = 0; i < queryFeatures.length; i++) {
       var feature = queryFeatures[i];
+      console.log(feature.properties.GEOID);
       // push to highlight layer for visibility
       // NOTE: for blocks, has to be BLOCKID10
       if (DRAW_USING_BLOCKS) {
@@ -1199,6 +1205,8 @@ map.on("style.load", function () {
       } else {
         features.push(feature.properties.GEOID);
       }
+      console.log("after pushing");
+      console.log(features);
       if (features.length >= 1) {
         // polyCon : the turf polygon from coordinates
         var polyCon = turf.bbox(feature.geometry);
@@ -1214,7 +1222,7 @@ map.on("style.load", function () {
     var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
 
     var filter = [];
-    var currentFilter = map.getFilter(state + "-highlighted");
+    var currentFilter = map.getFilter(state + "-highlighted-" + layer_suffix);
     var isBasicErase = basicMode && currentFilter.includes(features[0]);
     // todo: bug where you can select non-contiguous areas on basicMode
     if ((eraseMode && !basicMode) || isBasicErase) {
@@ -1275,9 +1283,10 @@ map.on("style.load", function () {
         }
       });
     }
-    // check size of community
+    // check size of community - 800 block groups or 2400 blocks
     if ((!DRAW_USING_BLOCKS && filter.length < 802) || (DRAW_USING_BLOCKS && filter.length < 2402)) {
-      map.setFilter(state + "-highlighted", filter);
+      console.log(filter);
+      map.setFilter(state + "-highlighted-" + layer_suffix, filter);
     } else {
       showWarningMessage(
         "This community is too large. Please select a smaller area to continue."
@@ -1311,7 +1320,7 @@ map.on("style.load", function () {
   // feature state for the feature under the mouse.
   var bgID = null;
   var features = [];
-  stateCensus = state + "-census-shading";
+  stateCensus = state + "-census-shading-" + layer_suffix;
   // if touch screen, disable.
   if (!is_touch_device()) {
     map.on("mousemove", stateCensus, function (e) {
@@ -1323,7 +1332,7 @@ map.on("style.load", function () {
           [e.point.x + drawRadius, e.point.y + drawRadius],
         ];
         var hoverFeatures = map.queryRenderedFeatures(bbox, {
-          layers: [state + "-census-shading"],
+          layers: [state + "-census-shading-" + layer_suffix],
         });
         stateBG = state + layer_suffix;
         features.forEach(function (feature) {
@@ -1375,7 +1384,7 @@ map.on("render", function (e) {
     bgPoly !== "null"
   ) {
     // re-display the polygon
-    map.setFilter(state + "-highlighted", JSON.parse(bgPoly));
+    map.setFilter(state + "-highlighted-" + layer_suffix, JSON.parse(bgPoly));
     var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
     if (selectBbox.length !== 0 && !isStateChanged) {
       map.flyTo({
