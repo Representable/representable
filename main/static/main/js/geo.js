@@ -192,6 +192,10 @@ $('#map-comm-modal').on('shown.bs.modal hidden.bs.modal', function() {
  * right now those bars have been left out so those lines can be deleted if the bars won't be put back in
 */
 function animateStepForward(at, to, after) {
+  console.log("animatestepforward");
+  console.log("at: " + at);
+  console.log("to: " + to);
+  console.log("after: " + after);
   mobileTxt = "Mobile";
 
   completedBarId = "#" + at + "to" + to;
@@ -221,6 +225,10 @@ function animateStepForward(at, to, after) {
  * right now those bars have been left out so those lines can be deleted if the bars won't be put back in
 */
 function animateStepBackward(at, to, next) {
+  console.log("animatestepbackward");
+  console.log("at: " + at);
+  console.log("to: " + to);
+  console.log("next: " + next);
   mobileTxt = "Mobile";
   if (next != null) {
     currentBarId = "#" + at + "to" + next;
@@ -253,6 +261,7 @@ function addressToSurveyStart() {
 }
 
 function surveyStartToAddress() {
+  console.log("surveystarttoaddress");
   $("#entry_survey").addClass("d-none");
   $("#entry_address").removeClass("d-none");
   animateStepBackward(2, 1, 3);
@@ -331,6 +340,13 @@ function privacyToMap() {
   animateStepBackward(4, 3, 5);
   automaticScrollToTop();
 }
+
+$("#entrySubmissionButton").keypress(
+  function(event){
+    if (event.which == '13') {
+      event.preventDefault();
+    }
+});
 
 
 function clearFieldsError(fields) {
