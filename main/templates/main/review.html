@@ -109,8 +109,8 @@
         </div>
         {% else %}
         <div class="jumbotron">
-          <h3 class="font-weight-light">No entries!</h3>
-          <p class="font-weight-light">Join us in the fight against gerrymandering. <a href"{% url 'main:entry_preview' %}">Add your community</a></p>
+          <h3 class="font-weight-light">{% trans "No entries!" %}</h3>
+          <p class="font-weight-light">{% trans "Join us in the fight against gerrymandering." %} Click <a href="{% url 'main:entry_preview' %}">here</a> to add your community.</p>
         </div>
         {% endif %}
       </div>
