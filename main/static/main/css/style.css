@@ -1107,6 +1107,23 @@ Entry Mapping Page
   color: black;
 }
 
+.community-review-span:hover {
+  background-color: #dee2e6;
+  cursor: pointer;
+}
+
+.communities-menu {
+  max-height: 500px;
+  overflow: scroll;
+}
+
+@media screen and (min-width: 768px) {
+  .communities-menu {
+    max-height: 800px;
+    overflow: scroll;
+  }
+}
+
 /* landing page map */
 #usa-map {
   width: 100%;

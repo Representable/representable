@@ -3,7 +3,7 @@
 {% load static %}
 {% load widget_tweaks %}
 {% load representable_extras %}
-
+{% load i18n %}
 
 {% block head %}
 {{ form.media.css }}
@@ -37,92 +37,88 @@
         var mapbox_user_name = "{{mapbox_user_name}}";
       </script>
     </div>
-    <div class="col-md-6 col-wide">
-      <nav id='menu'>
-        <div class="sidenav">
-          <div class="dropdown-container"></div>
-          <div id="outline-menu">
-          </div>
-          {% if query_error %}
-          <div class="alert alert-warning" role="alert">
-            The community was already deleted.
-          </div>
-          {% endif %}
-          {% if communities %}
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th class="table-col-large" scope="col">Community Information</th>
-                <th class="table-col-small" scope="col">Action</th>
-              </tr>
-            </thead>
-            {% for c in communities %}
-            <tr class="community-review-span" id={{c.entry_ID}}>
-              <td>
-                <span class=" text-uppercase entry-name">
-                  {% with link_text="/submission/"|addstr:c.entry_ID %}
-                  <a href={{link_text}}>{{c.entry_name}}</a>
-                  {% endwith %}
-                </span>
-                <hr class="my-1">
-                {% if c.organization and c.organization.name%}
-                <span class="badge badge-pill badge-primary">{{c.organization}}</span>
-                <br>
-                {% endif %}
-                {% if c.drive and c.drive.name %}
-                <span class="badge badge-pill badge-secondary">{{c.drive}}</span>
-                <br>
-                {% endif %}
-                <span class="font-weight-light comm-content">
-                  <span class="more-content">
-                    {% if c.cultural_interests %}
-                    <b><i class="fas fa-palette"></i> Cultural or Historical Interests</b><br>
-                    <span class="text-muted small">{{c.cultural_interests}}</span>
-                    <br>
-                    {% endif %}
-                    {% if c.comm_activities %}
-                    <b><i class="fas fa-hiking"></i> Community Activities and Services</b><br>
-                    <span class="text-muted small">{{c.comm_activities}}</span>
-                    <br>
-                    {% endif %}
-                    {% if c.economic_interests %}
-                    <b><i class="fas fa-comments-dollar"></i> Economic or Environmental Interests</b><br>
-                    <span class="text-muted small">{{c.economic_interests}}</span>
-                    <br>
-                    {% endif %}
-                    {% if c.other_considerations %}
-                    <b><i class="fas fa-users"></i> Community Needs and Concerns</b><br>
-                    <span class="text-muted small">{{c.other_considerations}}</span>
-                    <br>
-                    {% endif %}
-                  </span>
-                  <u><a class="small read-more small-link">Show More</a></u>
-                </span>
-              </td>
-              <td>
-                <form method="post" action="">{% csrf_token %}
-                  {{ form }}
-                  <input type="hidden" name="c_id" value="{{ c }}">
-                  <button type="submit" class="btn btn-danger", name="Delete">Delete</button>
-                </form>
-              </td>
-              <tr>
-                {% endfor %}
-              </table>
-              {% else %}
-              <div class=jumbotron>
-                <h3 class="font-weight-light">No entries!</h3>
-                <p class="font-weight-light">Join us in the fight against gerrymandering. Visit the <a href="/">home page</a> to select a state and draw your community.</p>
-              </div>
+    <div class="col-md-6 col-wide mb-3">
+        {% if query_error %}
+        <div class="alert alert-warning" role="alert">
+          The community was already deleted.
+        </div>
+        {% endif %}
+        {% if communities %}
+        <div class="communities-menu container-fluid px-3 pt-3">
+          <div class="row">
+            <div class="col-7 col-lg-8">{% trans "Community Information" %}</div>
+            <div class="col-3 col-lg-2 text-center">{% trans "Action" %}</div>
+            <div class="col-2 text-center">{% trans "Show" %}</div>
+          </div> 
+          <hr>
+          {% for c in communities %}
+          <div class="row community-review-span mb-4 py-3" id="{{c.entry_ID}}">
+            <div class="col-7 col-lg-8">
+              <span class=" text-uppercase entry-name">
+                {% with link_text="/submission/"|addstr:c.entry_ID %}
+                <a href={{link_text}}>{{c.entry_name}}</a>
+                {% endwith %}
+              </span>
+              <hr class="my-1">
+              {% if c.organization and c.organization.name%}
+              <span class="badge badge-pill badge-primary">{{c.organization}}</span>
+              <br>
               {% endif %}
+              {% if c.drive and c.drive.name %}
+              <span class="badge badge-pill badge-secondary">{{c.drive}}</span>
+              <br>
+              {% endif %}
+              <span class="font-weight-light comm-content">
+                <span class="more-content">
+                  {% if c.cultural_interests %}
+                  <b><i class="fas fa-palette"></i> Cultural or Historical Interests</b><br>
+                  <span class="text-muted small">{{c.cultural_interests}}</span>
+                  <br>
+                  {% endif %}
+                  {% if c.comm_activities %}
+                  <b><i class="fas fa-hiking"></i> Community Activities and Services</b><br>
+                  <span class="text-muted small">{{c.comm_activities}}</span>
+                  <br>
+                  {% endif %}
+                  {% if c.economic_interests %}
+                  <b><i class="fas fa-comments-dollar"></i> Economic or Environmental Interests</b><br>
+                  <span class="text-muted small">{{c.economic_interests}}</span>
+                  <br>
+                  {% endif %}
+                  {% if c.other_considerations %}
+                  <b><i class="fas fa-users"></i> Community Needs and Concerns</b><br>
+                  <span class="text-muted small">{{c.other_considerations}}</span>
+                  <br>
+                  {% endif %}
+                </span>
+                <u><a class="small read-more small-link">Show More</a></u>
+              </span>
             </div>
-          </nav>
+            <div class="col-3 col-lg-2 text-center my-auto">
+              <form method="post" action="">{% csrf_token %}
+                {{ form }}
+                <input type="hidden" name="c_id" value="{{ c }}">
+                <button type="submit" class="btn btn-danger", name="Delete">Delete</button>
+              </form>
+            </div>
+            <div class="col-2 text-center my-auto">
+              <input type="checkbox" name="" value="{{ c.entry_ID }}" onclick="toggleEntryVisibility(this)">
+            </div>
+          </div>
+          {% endfor %}
         </div>
-        <div class="col-md-6 col-map col-wide">
-          <div id='map' class="map-visualization"></div>
+        {% else %}
+        <div class="jumbotron">
+          <h3 class="font-weight-light">No entries!</h3>
+          <p class="font-weight-light">Join us in the fight against gerrymandering. <a href"{% url 'main:entry_preview' %}">Add your community</a></p>
         </div>
+        {% endif %}
       </div>
+    <div class="col-md-6 col-map col-wide">
+      <div id='map' class="map-visualization"></div>
     </div>
+  </div>
+</div>
     {% endblock %}
 
     {% block script %}
