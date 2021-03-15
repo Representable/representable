@@ -191,7 +191,7 @@ map.once("load", function () {
         },
       },
       layout: {
-        visibility: "none",
+        visibility: "visible",
       },
       paint: {
         "fill-color": color,
@@ -212,7 +212,7 @@ map.once("load", function () {
         },
       },
       layout: {
-        visibility: "none",
+        visibility: "visible",
         "line-join": "round",
         "line-cap": "round",
       },
