@@ -684,7 +684,7 @@ document.addEventListener(
         } else {
           animateStepBackward(5, 4, null);
         }
-      }, 2000);
+      }, 4000);
       return false;
     });
 

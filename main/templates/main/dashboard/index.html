@@ -1,5 +1,8 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% load socialaccount %}
+{% load i18n %}
+{% get_providers as socialaccount_providers %}
 
 {% block content %}
 <div class="container">
@@ -44,8 +47,8 @@
               Quick Links
             </h5>
             <hr>
-            <div class="text-center"">
-          <a class=" btn btn-block btn-outline-primary" href="{% url 'main:create_org' %}" role="button">Create Organization</a>
+            <div class="text-center">
+              <a class=" btn btn-block btn-outline-primary" href="{% url 'main:create_org' %}" role="button">Create Organization</a>
               <a class="btn btn-block btn-outline-primary" href="{% url 'main:entry' %}" role="button">Create Entry</a>
               <a class="btn btn-block btn-outline-primary" href="{% url 'main:review' %}" role="button">My Communities</a>
             </div>
@@ -60,6 +63,16 @@
             <h5>
               Account Settings
             </h5>
+            <hr>
+            <h6>Third-Party Accounts</h6>
+            <p class="mb-0">Connect your account with one of your existing third-party accounts.</p>
+            <div class="container-fluid my-2">
+                {% include "socialaccount/snippets/connect_social.html" with process="connect" %}
+            </div>
+            {% blocktrans %}
+            <p>To manage your connected social accounts click 
+            {% endblocktrans %}
+            <a href="{% url "socialaccount_connections" %}">{% trans "here" %}</a>.</p>
             <hr>
             <h6>Reset password</h6>
             <p>Reset your password by pressing on the following button. You will receive an email with the appropiate instructions.</p>
