@@ -558,6 +558,10 @@ $("#mapToPrivacyMobile").on("click", function(e) {
   }
 })
 
+$("#mapToSurveyP2").click(mapToSurveyP2);
+
+$("#mapToSurveyP2Mobile").click(mapToSurveyP2);
+
 function privacyCheckValidation() {
   if (document.getElementById("toc_check").checked === true || document.getElementById("toc_check_xl").checked === true) {
     $("#need_privacy").addClass("d-none");
