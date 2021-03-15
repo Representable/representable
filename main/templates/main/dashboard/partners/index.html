@@ -10,7 +10,7 @@
           <h5>
             {{ object.name}}
             {% if object.verified %}
-              <img class="img-fluid verified-logo-md" src="{% static 'img/verified.svg' %}" alt="verified check mark"></img>
+              <img class="img-fluid verified-logo" src="{% static 'img/verified.svg' %}" alt="verified check mark"></img>
             {% endif %}
           </h5>
           {% if is_org_admin %}
