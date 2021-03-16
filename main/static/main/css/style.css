@@ -75,7 +75,7 @@ form:invalid {
   margin: auto;
 }
 
-.bg-70C5EA {
+.bckgrd-70C5EA {
   background: #70C5EA;
 }
 
@@ -261,18 +261,12 @@ Entry Preview Page
   background: rgba(218, 239, 255, 0.63);
   border-color: rgba(218, 239, 255, 0.63);
   margin: 15px;
-  padding: 50px 90px;
+  padding: 50px 110px;
   color: black;
 }
 
 #entry_preview_button {
   text-align: center;
-}
-
-@media only screen and (max-width: 1025px) {
-  .entry-pr-gerry-txt {
-    font-size: initial !important;
-  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -1300,13 +1294,13 @@ Entry Form Management
 
 .survey-field {
   background: #DAEFFF;
-  opacity: 0.8;
+  opacity: 0.5;
   border: none;
   outline: none;
 }
-
 .survey-field:focus {
   background: #DAEFFF;
+  opacity: 0.5;
   border: none;
   outline: none;
 }
@@ -1466,14 +1460,9 @@ textarea.survey-field:focus {
   border-bottom: 3px solid black;
 }
 
-.dark-gray-text {
-  color: #3f3f3f;
-}
-
 .gray-text {
   color: #5B5B5B;
 }
-
 .light-blue-text {
   color: #65bff1;
 }
