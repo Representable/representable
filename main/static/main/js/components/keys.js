@@ -57,7 +57,7 @@ var BG_KEYS = {
   "nebg": "3ppwl6ix",
   "nvbg": "8s8o0386", //2010: 0dgcp7py
   "nhbg": "1h5rofgu",
-  "njbg": "9va600u8",
+  "njbg": "cxptfxf4", //2010: 9va600u8
   "nmbg": "2r4kzila", //2010: bbx551ad
   "nybg": "7xcrytdf", //2010: 7xcrytdf
   "ncbg": "1amgtw27", //2010: cexlxubg
@@ -82,4 +82,4 @@ var BG_KEYS = {
 var CHI_WARD_KEY = "179v2oeh";
 var CHI_COMM_KEY = "63nswxfc";
 var SCHOOL_DISTR_KEY = "1ezqvmlm";
-var STATES_USING_NEW_BG = ["mi", "nv", "nm", "nc", "pa", "ut", "va", "wa"];
+var STATES_USING_NEW_BG = ["mi", "nv", "nj", "nm", "nc", "pa", "ut", "va", "wa"];
