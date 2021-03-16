@@ -530,14 +530,14 @@ body {
 /* EXCLUSIVELY FOR HOME PAGE rect */
 @media screen and (min-width:992px) and (max-width:1169px){
   #home-page-rect {
-    height: 260% !important;
+    height: 275% !important;
   }
 }
 
 #home-page-rect {
   position: absolute;
   width: 250%;
-  height: 275%;
+  height: 300%;
   left: -10%;
   bottom: 110%;
 
@@ -1147,7 +1147,7 @@ Entry Mapping Page
   border: 8px solid #f3f3f3; /* Light grey */
   border-top: 8px solid #2a94f4; /* Blue */
   border-radius: 50%;
-  animation: spin 4s linear infinite;
+  animation: spin 2s linear infinite;
   margin: auto;
 }
 .loader-small {
@@ -1632,6 +1632,7 @@ Signup and Login Page
 
 .auth-form {
   display: inline-block;
+  width: 70%;
 }
 
 .auth-form .btn {
@@ -1650,16 +1651,6 @@ Signup and Login Page
 
 .auth-btn {
   width: 50%;
-}
-
-.social-btn {
-  border: 1px solid gray;
-  height: 60px;
-}
-
-.connect-social-btn {
-  height: 50px;
-  width: 200px;
 }
 
 .auth-form-label {
