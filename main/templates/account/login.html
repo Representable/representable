@@ -3,11 +3,10 @@
 {% load i18n %}
 {% load account socialaccount %}
 {% load widget_tweaks %}
-{% load static %}
 
 <!-- Login component -->
 <div class="auth-wrap col-sm-9 col-md-7 col-lg-5 mx-auto">
-    <form id="login-form" class="login auth-form w-75" method="POST" action="{% url 'account_login' %}">
+    <form id="login-form" class="login auth-form" method="POST" action="{% url 'account_login' %}">
         {% if redirect_field_value %}
             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
         {% endif %}
@@ -40,6 +39,4 @@
         <a class="auth-link to-auth-link" href="#signup-form">{% trans "No Account? Sign up."%}</a>
 
     </form>
-    <a href="{% provider_login_url 'google' %}"><button class="btn btn-outline-primary mt-5 social-btn w-75"><img class="mr-3 mt-0" src="{% static 'img/google-icon.svg' %}" width="16" height="16" alt="Google icon logo"/>Login with Google</button></a>
-
 </div>
