@@ -332,13 +332,6 @@ function privacyToMap() {
   automaticScrollToTop();
 }
 
-$("#entrySubmissionButton").keypress(
-  function(event){
-    if (event.which == '13') {
-      event.preventDefault();
-    }
-});
-
 
 function clearFieldsError(fields) {
   for (var i = 0; i < fields.length; i++) {
@@ -558,10 +551,6 @@ $("#mapToPrivacyMobile").on("click", function(e) {
   }
 })
 
-$("#mapToSurveyP2").click(mapToSurveyP2);
-
-$("#mapToSurveyP2Mobile").click(mapToSurveyP2);
-
 function privacyCheckValidation() {
   if (document.getElementById("toc_check").checked === true || document.getElementById("toc_check_xl").checked === true) {
     $("#need_privacy").addClass("d-none");
@@ -695,7 +684,7 @@ document.addEventListener(
         } else {
           animateStepBackward(5, 4, null);
         }
-      }, 4000);
+      }, 2000);
       return false;
     });
 
