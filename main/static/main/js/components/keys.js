@@ -49,7 +49,7 @@ var BG_KEYS = {
   "mebg": "6epxgjkx",
   "mdbg": "92jrtgxz",
   "mabg": "b74lbqvs",
-  "mibg": "6rmkafit",
+  "mibg": "1isev57e", //2010: 6rmkafit
   "mnbg": "37vpwigo",
   "msbg": "ajbh778v",
   "mobg": "0h5galqm",
@@ -58,23 +58,23 @@ var BG_KEYS = {
   "nvbg": "0dgcp7py",
   "nhbg": "1h5rofgu",
   "njbg": "9va600u8",
-  "nmbg": "bbx551ad",
-  "nybg": "7xcrytdf",
-  "ncbg": "cexlxubg",
+  "nmbg": "2r4kzila", //2010: bbx551ad
+  "nybg": "7xcrytdf", //2010: 7xcrytdf
+  "ncbg": "1amgtw27", //2010: cexlxubg
   "ndbg": "4jpxsqxa",
   "ohbg": "6bunasmx",
   "okbg": "dlg7zdn0",
   "orbg": "13ookshu",
-  "pabg": "cpap9ug0",
+  "pabg": "bias7ts6", //2010: cpap9ug0
   "ribg": "564jbkj2",
   "scbg": "717b0zsq",
   "sdbg": "cklc8t21",
   "tnbg": "a8a1139u",
   "txbg": "9onkqc5t",
-  "utbg": "3i55e9ql",
+  "utbg": "bbpdc27n", //2010: 3i55e9ql
   "vtbg": "bzcxijma",
   "vabg": "2qpo9fjv", //2010: 5qxcnhry
-  "wabg": "9nxwrro5",
+  "wabg": "bnrqxpjq", //2010: 9nxwrro5
   "wvbg": "1ya1ngou",
   "wibg": "7pmyno56",
   "wybg": "0q0iu141"
@@ -82,4 +82,4 @@ var BG_KEYS = {
 var CHI_WARD_KEY = "179v2oeh";
 var CHI_COMM_KEY = "63nswxfc";
 var SCHOOL_DISTR_KEY = "1ezqvmlm";
-var STATES_USING_NEW_BG = ["va"];
+var STATES_USING_NEW_BG = ["mi", "nm", "nc", "pa", "ut", "va", "wa"];
