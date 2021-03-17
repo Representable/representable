@@ -1605,7 +1605,7 @@ msgstr ""
 
 #: main/templates/main/index.html:27
 msgid "GET STARTED"
-msgstr ""
+msgstr "EMPIEZA"
 
 #: main/templates/main/index.html:34
 msgid "Are you the leader of an organization?"
