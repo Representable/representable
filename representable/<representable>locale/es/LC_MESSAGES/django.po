@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-11 06:08+0000\n"
+"POT-Creation-Date: 2021-03-17 00:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -706,27 +706,27 @@ msgid ""
 "\"%(email_url)s\">issue a new e-mail confirmation request</a>."
 msgstr ""
 
-#: main/templates/account/login.html:14
+#: main/templates/account/login.html:13
 msgid "Already have an account?"
 msgstr ""
 
-#: main/templates/account/login.html:15
+#: main/templates/account/login.html:14
 #, fuzzy
 #| msgid "Log in"
 msgid "Log In"
 msgstr "Iniciar sesión"
 
-#: main/templates/account/login.html:35
+#: main/templates/account/login.html:34
 msgid "Forgot Password?"
 msgstr ""
 
-#: main/templates/account/login.html:37
+#: main/templates/account/login.html:36
 #, fuzzy
 #| msgid "Log in"
 msgid "log in"
 msgstr "Iniciar sesión"
 
-#: main/templates/account/login.html:40
+#: main/templates/account/login.html:39
 #, fuzzy
 #| msgid "Account Settings"
 msgid "No Account? Sign up."
@@ -816,22 +816,6 @@ msgstr ""
 msgid "Let's have you sign up or log in before you start..."
 msgstr ""
 
-#: main/templates/account/social_signup_error.html:12
-msgid "Third-Party Signup Error"
-msgstr ""
-
-#: main/templates/account/social_signup_error.html:17
-msgid ""
-"\n"
-"                    <p>It appears that the email associated with the third-"
-"party account that you are trying to connect is already in use. If you "
-"already have a Representable account under \n"
-"                    that email, you can login and connect this third-party "
-"account in the Account Settings page.\n"
-"                    </p>\n"
-"                    "
-msgstr ""
-
 #: main/templates/account/verification_sent.html:5
 msgid "Verify Your E-mail Address"
 msgstr ""
@@ -845,17 +829,6 @@ msgid ""
 "We have sent an e-mail to you for verification. Follow the link provided to "
 "finalize the signup process. Please contact us if you do not receive it "
 "within a few minutes."
-msgstr ""
-
-#: main/templates/main/dashboard/index.html:72
-msgid ""
-"\n"
-"            <p>To manage your connected social accounts click \n"
-"            "
-msgstr ""
-
-#: main/templates/main/dashboard/index.html:75
-msgid "here"
 msgstr ""
 
 #: main/templates/main/entry_address.html:10
@@ -2003,62 +1976,23 @@ msgstr "¡Gracias por su envío!"
 msgid "Please Verify Your Email"
 msgstr ""
 
-#: main/templates/socialaccount/authentication_error.html:12
-msgid "Third-Party Login Failure"
-msgstr ""
-
-#: main/templates/socialaccount/authentication_error.html:17
-msgid ""
-"\n"
-"                    <p>An error occurred while attempting to login via Third-"
-"Party account.</p>\n"
-"                    "
-msgstr ""
-
-#: main/templates/socialaccount/connections.html:5
-#: main/templates/socialaccount/connections.html:10
-msgid "Manage Third-Party Connections"
-msgstr ""
-
-#: main/templates/socialaccount/connections.html:18
-msgid "Current Connections"
-msgstr ""
-
-#: main/templates/socialaccount/connections.html:22
-msgid ""
-"You can sign in to your account using any of the following third-party "
-"accounts:"
-msgstr ""
-
-#: main/templates/socialaccount/connections.html:49
-msgid "Remove"
-msgstr ""
-
-#: main/templates/socialaccount/connections.html:57
-msgid "You currently have no third-party accounts connected to this account."
-msgstr ""
-
-#: main/templates/socialaccount/connections.html:65
-msgid "Add a Third-Party Account"
-msgstr ""
-
-#: main/views/main.py:254
+#: main/views/main.py:245
 msgid "HELLO"
 msgstr ""
 
-#: representable/settings/base.py:196
+#: representable/settings/base.py:184
 msgid "English"
 msgstr ""
 
-#: representable/settings/base.py:197
+#: representable/settings/base.py:185
 msgid "Spanish"
 msgstr ""
 
-#: representable/settings/base.py:198
+#: representable/settings/base.py:186
 msgid "Arabic"
 msgstr ""
 
-#: representable/settings/base.py:199
+#: representable/settings/base.py:187
 msgid "French"
 msgstr ""
 
