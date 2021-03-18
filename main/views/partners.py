@@ -79,14 +79,21 @@ class PartnerMap(TemplateView):
         # get the polygon from db and pass it on to html
         if self.kwargs["drive"]:
             drive = Drive.objects.get(slug=self.kwargs["drive"])
-            query = drive.submissions.all().defer(
-                "census_blocks_polygon_array", "user_polygon",
-            ).prefetch_related("organization")
+            query = (
+                drive.submissions.all()
+                .defer(
+                    "census_blocks_polygon_array",
+                    "user_polygon",
+                )
+                .prefetch_related("organization")
+            )
         else:
             drive = None
-            query = org.submissions.all().defer(
-                "census_blocks_polygon_array", "user_polygon"
-            ).prefetch_related("drive")
+            query = (
+                org.submissions.all()
+                .defer("census_blocks_polygon_array", "user_polygon")
+                .prefetch_related("drive")
+            )
 
         # address information if admin/user drew the comms
         streets = {}
@@ -278,16 +285,18 @@ class MultiExportView(TemplateView):
 
         final = geojson.FeatureCollection(all_gj)
 
-        if(kwargs['type'] == 'geo'):
-            print('********', 'geo', '********')
-            response = HttpResponse(geojson.dumps(final), content_type="application/json")
+        if kwargs["type"] == "geo":
+            print("********", "geo", "********")
+            response = HttpResponse(
+                geojson.dumps(final), content_type="application/json"
+            )
         else:
-            print('********', 'csv', '********')
+            print("********", "csv", "********")
             dictform = json.loads(geojson.dumps(final))
             df = pandas.DataFrame()
-            for entry in dictform['features']:
-                row_dict = entry['properties'].copy()
-                row_dict['geometry'] = str(entry['geometry'])
+            for entry in dictform["features"]:
+                row_dict = entry["properties"].copy()
+                row_dict["geometry"] = str(entry["geometry"])
                 df = df.append(row_dict, ignore_index=True)
             response = HttpResponse(df.to_csv(), content_type="text/csv")
 

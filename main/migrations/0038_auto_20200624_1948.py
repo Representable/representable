@@ -11,7 +11,12 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RenameField(
-            model_name="state", old_name="content1", new_name="content",
+            model_name="state",
+            old_name="content1",
+            new_name="content",
         ),
-        migrations.RemoveField(model_name="state", name="content2",),
+        migrations.RemoveField(
+            model_name="state",
+            name="content2",
+        ),
     ]

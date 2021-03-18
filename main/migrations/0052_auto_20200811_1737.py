@@ -10,7 +10,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(model_name="blockgroup", name="geometry",),
+        migrations.RemoveField(
+            model_name="blockgroup",
+            name="geometry",
+        ),
         migrations.AlterField(
             model_name="blockgroup",
             name="census_id",

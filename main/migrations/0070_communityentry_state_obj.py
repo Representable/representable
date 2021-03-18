@@ -7,13 +7,19 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0069_auto_20201229_2232'),
+        ("main", "0069_auto_20201229_2232"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='communityentry',
-            name='state_obj',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='submissions', to='main.State'),
+            model_name="communityentry",
+            name="state_obj",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="submissions",
+                to="main.State",
+            ),
         ),
     ]

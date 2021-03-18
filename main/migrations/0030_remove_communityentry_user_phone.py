@@ -11,6 +11,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RemoveField(
-            model_name="communityentry", name="user_phone",
+            model_name="communityentry",
+            name="user_phone",
         ),
     ]

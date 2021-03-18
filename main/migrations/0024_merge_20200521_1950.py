@@ -6,9 +6,8 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0019_communityentry_campaign'),
-        ('main', '0023_auto_20200520_1755'),
+        ("main", "0019_communityentry_campaign"),
+        ("main", "0023_auto_20200520_1755"),
     ]
 
-    operations = [
-    ]
+    operations = []

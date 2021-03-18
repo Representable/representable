@@ -232,6 +232,7 @@ class BlockGroup(models.Model):
 
 # ******************************************************************************#
 
+
 class State(models.Model):
 
     name = models.CharField(
@@ -331,7 +332,7 @@ class CommunityEntry(models.Model):
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
-        related_name="submissions"
+        related_name="submissions",
     )
     state = models.CharField(
         max_length=10, blank=True, unique=False, default=""
@@ -383,22 +384,20 @@ class Signature(models.Model):
     hash = models.CharField(max_length=64, blank=True)
 
 
-
-
 # ******************************************************************************#
 
 
 class FrequentlyAskedQuestion(models.Model):
 
     FAQ_TYPE_CHOICES = [
-        ('USER', 'User'),
-        ('ORGANIZATION', 'Organization'),
+        ("USER", "User"),
+        ("ORGANIZATION", "Organization"),
     ]
 
     type = models.CharField(
         max_length=12,
         choices=FAQ_TYPE_CHOICES,
-        default='USER',
+        default="USER",
     )
 
     question = RichTextField()
@@ -416,7 +415,9 @@ class GlossaryDefinition(models.Model):
     term = models.CharField(
         max_length=100, blank=False, unique=True, default=""
     )
-    definition = models.CharField(max_length=1000, blank=False, unique=True, default="")
+    definition = models.CharField(
+        max_length=1000, blank=False, unique=True, default=""
+    )
 
     class Meta:
         db_table = "glossary"

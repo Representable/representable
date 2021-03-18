@@ -140,7 +140,10 @@ class CreateOrg(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         org = form.save()
         # by default, make the user creating the org the admin
-        admin = Membership(member=self.request.user, organization=org,)
+        admin = Membership(
+            member=self.request.user,
+            organization=org,
+        )
         admin.save()
 
         email_content = (
@@ -357,7 +360,11 @@ class AllowListManage(LoginRequiredMixin, OrgAdminRequiredMixin, TemplateView):
             "object": drive,
             "list": allowlist,
         }
-        return render(request, self.template_name, context,)
+        return render(
+            request,
+            self.template_name,
+            context,
+        )
 
     def post(self, request, cam_pk, *args, **kwargs):
         drive = Drive.objects.get(pk=cam_pk)
@@ -365,13 +372,17 @@ class AllowListManage(LoginRequiredMixin, OrgAdminRequiredMixin, TemplateView):
         email = self.request.POST["email"]
         link = (
             "<a href=representable.org/entry/drive/"
-            + drive.slug + "/" + state
+            + drive.slug
+            + "/"
+            + state
             + " > this link </a>"
         )
         query = AllowList.objects.filter(email=email, drive=drive)
         if not query:
             AllowList.objects.create(
-                email=email, organization=drive.organization, drive=drive,
+                email=email,
+                organization=drive.organization,
+                drive=drive,
             )
 
             email = EmailMessage(

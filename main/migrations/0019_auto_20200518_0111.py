@@ -6,23 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0018_auto_20200517_2309'),
+        ("main", "0018_auto_20200517_2309"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='communityentry',
-            name='comm_activities',
-            field=models.TextField(default='', max_length=500),
+            model_name="communityentry",
+            name="comm_activities",
+            field=models.TextField(default="", max_length=500),
         ),
         migrations.AddField(
-            model_name='communityentry',
-            name='cultural_interests',
-            field=models.TextField(default='', max_length=500),
+            model_name="communityentry",
+            name="cultural_interests",
+            field=models.TextField(default="", max_length=500),
         ),
         migrations.AddField(
-            model_name='communityentry',
-            name='economic_interests',
-            field=models.TextField(default='', max_length=500),
+            model_name="communityentry",
+            name="economic_interests",
+            field=models.TextField(default="", max_length=500),
         ),
     ]

@@ -95,7 +95,11 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"ordering": ("description",),},
+            options={
+                "ordering": ("description",),
+            },
         ),
-        migrations.DeleteModel(name="Campaign",),
+        migrations.DeleteModel(
+            name="Campaign",
+        ),
     ]

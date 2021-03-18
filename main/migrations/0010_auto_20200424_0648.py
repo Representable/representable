@@ -162,6 +162,8 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"ordering": ("description",),},
+            options={
+                "ordering": ("description",),
+            },
         ),
     ]

@@ -10,6 +10,11 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(model_name="communityentry", name="tags",),
-        migrations.DeleteModel(name="Tag",),
+        migrations.RemoveField(
+            model_name="communityentry",
+            name="tags",
+        ),
+        migrations.DeleteModel(
+            name="Tag",
+        ),
     ]

@@ -27,9 +27,13 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.RemoveField(
-            model_name="whitelistentry", name="date_added",
+            model_name="whitelistentry",
+            name="date_added",
         ),
-        migrations.RemoveField(model_name="organization", name="whitelist",),
+        migrations.RemoveField(
+            model_name="organization",
+            name="whitelist",
+        ),
         migrations.AddField(
             model_name="organization",
             name="email_whitelist",

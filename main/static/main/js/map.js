@@ -166,6 +166,23 @@ map.on("load", function () {
       },
     });
   }
+  if (state === "ny") {
+    newSourceLayer("nyc-city-council", NYC_COUNCIL_KEY);
+    map.addLayer({
+      id: "nyc-city-council-lines",
+      type: "line",
+      source: "nyc-city-council",
+      "source-layer": "nyc_council-08swpg",
+      layout: {
+        visibility: "none",
+      },
+      paint: {
+        "line-color": BOUNDARIES_COLORS["nyc"],
+        "line-opacity": 0.7,
+        "line-width": 2,
+      },
+    });
+  }
   // leg2 : congressional district
   // leg3 : state senate district
   // leg4 : state house district
@@ -358,6 +375,9 @@ toggleableLayerIds["tribal-boundaries"] = "Tribal Boundaries";
 if (state === "il") {
   toggleableLayerIds["chi-ward"] = "Chicago Wards";
   toggleableLayerIds["chi-comm"] = "Chicago Community Areas";
+}
+if (state === "ny") {
+  toggleableLayerIds["nyc-city-council"] = "New York City Council districts";
 }
 
 for (var id in toggleableLayerIds) {

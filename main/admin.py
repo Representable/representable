@@ -48,6 +48,7 @@ class StateAdminForm(forms.ModelForm):
             "content_coi",
         )
 
+
 class FAQForm(forms.ModelForm):
     question = forms.CharField(widget=CKEditorWidget())
     answer = forms.CharField(widget=CKEditorWidget())
@@ -60,13 +61,16 @@ class FAQForm(forms.ModelForm):
             "answer",
         )
 
+
 class FAQAdmin(admin.ModelAdmin):
     form = FAQForm
     list_display = ("question", "answer", "type")
 
+
 admin.site.register(FrequentlyAskedQuestion, FAQAdmin)
 
 admin.site.register(GlossaryDefinition)
+
 
 class StateAdmin(admin.ModelAdmin):
     form = StateAdminForm

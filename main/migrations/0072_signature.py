@@ -7,16 +7,31 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0071_merge_20201231_1930'),
+        ("main", "0071_merge_20201231_1930"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Signature',
+            name="Signature",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('hash', models.CharField(blank=True, max_length=64)),
-                ('entry', models.ForeignKey(default='', on_delete=django.db.models.deletion.CASCADE, to='main.CommunityEntry')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("hash", models.CharField(blank=True, max_length=64)),
+                (
+                    "entry",
+                    models.ForeignKey(
+                        default="",
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="main.CommunityEntry",
+                    ),
+                ),
             ],
         ),
     ]

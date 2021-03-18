@@ -6,33 +6,33 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0026_populatecampaignslug'),
+        ("main", "0026_populatecampaignslug"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='communityentry',
-            name='other_considerations',
-            field=models.TextField(blank=True, default='', max_length=500),
+            model_name="communityentry",
+            name="other_considerations",
+            field=models.TextField(blank=True, default="", max_length=500),
         ),
         migrations.AlterField(
-            model_name='communityentry',
-            name='comm_activities',
-            field=models.TextField(blank=True, default='', max_length=500),
+            model_name="communityentry",
+            name="comm_activities",
+            field=models.TextField(blank=True, default="", max_length=500),
         ),
         migrations.AlterField(
-            model_name='communityentry',
-            name='cultural_interests',
-            field=models.TextField(blank=True, default='', max_length=500),
+            model_name="communityentry",
+            name="cultural_interests",
+            field=models.TextField(blank=True, default="", max_length=500),
         ),
         migrations.AlterField(
-            model_name='communityentry',
-            name='economic_interests',
-            field=models.TextField(blank=True, default='', max_length=500),
+            model_name="communityentry",
+            name="economic_interests",
+            field=models.TextField(blank=True, default="", max_length=500),
         ),
         migrations.AlterField(
-            model_name='communityentry',
-            name='entry_reason',
-            field=models.TextField(blank=True, default='', max_length=500),
+            model_name="communityentry",
+            name="entry_reason",
+            field=models.TextField(blank=True, default="", max_length=500),
         ),
     ]

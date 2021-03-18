@@ -7,13 +7,15 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0055_auto_20200907_2034'),
+        ("main", "0055_auto_20200907_2034"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='communityentry',
-            name='census_blocks_polygon',
-            field=django.contrib.gis.db.models.fields.GeometryField(blank=True, geography=True, null=True, srid=4326),
+            model_name="communityentry",
+            name="census_blocks_polygon",
+            field=django.contrib.gis.db.models.fields.GeometryField(
+                blank=True, geography=True, null=True, srid=4326
+            ),
         ),
     ]

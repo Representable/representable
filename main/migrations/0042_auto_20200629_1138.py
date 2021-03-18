@@ -6,27 +6,27 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0041_merge_20200626_2055'),
+        ("main", "0041_merge_20200626_2055"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='state',
-            old_name='content1',
-            new_name='content_coi',
+            model_name="state",
+            old_name="content1",
+            new_name="content_coi",
         ),
         migrations.RenameField(
-            model_name='state',
-            old_name='content2',
-            new_name='content_criteria',
+            model_name="state",
+            old_name="content2",
+            new_name="content_criteria",
         ),
         migrations.RenameField(
-            model_name='state',
-            old_name='content3',
-            new_name='content_news',
+            model_name="state",
+            old_name="content3",
+            new_name="content_news",
         ),
         migrations.RemoveField(
-            model_name='state',
-            name='content4',
+            model_name="state",
+            name="content4",
         ),
     ]

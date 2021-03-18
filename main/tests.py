@@ -56,7 +56,6 @@ class UserTest(TestCase):
         response = self.client.get("/entry/mi")
         self.assertEqual(response.status_code, 301)
 
-
     def testSimpleUser(self):
         """
         Test create user/login/logout.

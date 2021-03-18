@@ -97,26 +97,44 @@ class CommunityForm(ModelForm):
             "block_groups": forms.HiddenInput(),
             "population": forms.HiddenInput(),
             "entry_name": forms.Textarea(
-                attrs={"placeholder": "ex. University of Texas Students", "maxlength": 100, "rows": 1}
+                attrs={
+                    "placeholder": "ex. University of Texas Students",
+                    "maxlength": 100,
+                    "rows": 1,
+                }
             ),
             "entry_reason": forms.Textarea(
                 attrs={"rows": 3, "maxlength": 500}
             ),
             "cultural_interests": forms.Textarea(
-                attrs={"rows": 3, "maxlength": 500, "placeholder":"ex. My community is made of the Latinx community in east Brooklyn. The community has been in the neighborhood for 20 years and is affected by gentrification."}
+                attrs={
+                    "rows": 3,
+                    "maxlength": 500,
+                    "placeholder": "ex. My community is made of the Latinx community in east Brooklyn. The community has been in the neighborhood for 20 years and is affected by gentrification.",
+                }
             ),
             "economic_interests": forms.Textarea(
-                attrs={"rows": 3, "maxlength": 500, "placeholder": "ex. My community is located near a river. Fishing is the main industry. We experience seasonal unemployment. Water pollution of the river is a common concern of ours."}
+                attrs={
+                    "rows": 3,
+                    "maxlength": 500,
+                    "placeholder": "ex. My community is located near a river. Fishing is the main industry. We experience seasonal unemployment. Water pollution of the river is a common concern of ours.",
+                }
             ),
             "comm_activities": forms.Textarea(
-                attrs={"rows": 3, "maxlength": 500, "placeholder": "ex. My community is made of the people who go to St. Peters Catholic Church. The church provides child care and charity services for the less fortunate in our community. "}
+                attrs={
+                    "rows": 3,
+                    "maxlength": 500,
+                    "placeholder": "ex. My community is made of the people who go to St. Peters Catholic Church. The church provides child care and charity services for the less fortunate in our community. ",
+                }
             ),
             "other_considerations": forms.Textarea(
-                attrs={"rows": 3, "maxlength": 500, "placeholder": "ex. My farming community extends over two counties and we hope you can put the community together in a single State Senate district."}
+                attrs={
+                    "rows": 3,
+                    "maxlength": 500,
+                    "placeholder": "ex. My farming community extends over two counties and we hope you can put the community together in a single State Senate district.",
+                }
             ),
-            "user_name": forms.TextInput(
-                attrs={"maxlength": 500}
-            ),
+            "user_name": forms.TextInput(attrs={"maxlength": 500}),
             "user_polygon": forms.HiddenInput(),
         }
         label = {
@@ -185,9 +203,11 @@ class OrganizationForm(ModelForm):
                 }
             ),
             "states": forms.Select(
-                choices=STATES, attrs={"data-placeholder": "Select States"},
+                choices=STATES,
+                attrs={"data-placeholder": "Select States"},
             ),
         }
+
 
 class EditOrganizationForm(ModelForm):
     class Meta:
@@ -214,6 +234,7 @@ class EditOrganizationForm(ModelForm):
                 }
             ),
         }
+
 
 class AllowlistForm(ModelForm):
     class Meta:

@@ -10,8 +10,12 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RenameModel(old_name="Campaign", new_name="Drive",),
         migrations.RenameModel(
-            old_name="CampaignToken", new_name="DriveToken",
+            old_name="Campaign",
+            new_name="Drive",
+        ),
+        migrations.RenameModel(
+            old_name="CampaignToken",
+            new_name="DriveToken",
         ),
     ]

@@ -136,7 +136,9 @@ class Migration(migrations.Migration):
                 "verbose_name_plural": "users",
                 "abstract": False,
             },
-            managers=[("objects", django.contrib.auth.models.UserManager()),],
+            managers=[
+                ("objects", django.contrib.auth.models.UserManager()),
+            ],
         ),
         migrations.CreateModel(
             name="CommunityEntry",
@@ -196,7 +198,9 @@ class Migration(migrations.Migration):
                 ),
                 ("admin_approved", models.BooleanField(default=False)),
             ],
-            options={"db_table": "community_entry",},
+            options={
+                "db_table": "community_entry",
+            },
         ),
         migrations.CreateModel(
             name="Issue",
@@ -247,7 +251,9 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"ordering": ("category", "description"),},
+            options={
+                "ordering": ("category", "description"),
+            },
         ),
         migrations.CreateModel(
             name="Tag",
@@ -259,7 +265,9 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"ordering": ("name",),},
+            options={
+                "ordering": ("name",),
+            },
         ),
         migrations.AddField(
             model_name="communityentry",

@@ -50,7 +50,9 @@ class OrganizationAdminTest(TestCase):
 
         # by default, make the user creating the org the admin
         admin = Membership(
-            member=self.user, organization=org, is_org_admin=True,
+            member=self.user,
+            organization=org,
+            is_org_admin=True,
         )
         try:
             admin.save()

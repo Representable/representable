@@ -11,9 +11,13 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RenameField(
-            model_name="communityentry", old_name="campaign", new_name="drive",
+            model_name="communityentry",
+            old_name="campaign",
+            new_name="drive",
         ),
         migrations.RenameField(
-            model_name="drivetoken", old_name="campaign", new_name="drive",
+            model_name="drivetoken",
+            old_name="campaign",
+            new_name="drive",
         ),
     ]

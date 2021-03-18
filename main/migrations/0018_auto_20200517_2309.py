@@ -7,13 +7,13 @@ import phone_field.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0016_communityentry_user_name'),
+        ("main", "0016_communityentry_user_name"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='communityentry',
-            name='user_phone',
-            field=phone_field.models.PhoneField(default='', max_length=31),
+            model_name="communityentry",
+            name="user_phone",
+            field=phone_field.models.PhoneField(default="", max_length=31),
         ),
     ]

@@ -8,21 +8,35 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0019_auto_20200518_0111'),
+        ("main", "0019_auto_20200518_0111"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Address',
+            name="Address",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('street', models.CharField(default='', max_length=500)),
-                ('state', models.CharField(default='', max_length=100)),
-                ('zipcode', models.CharField(default='', max_length=12)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("street", models.CharField(default="", max_length=500)),
+                ("state", models.CharField(default="", max_length=100)),
+                ("zipcode", models.CharField(default="", max_length=12)),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'ordering': ('user',),
+                "ordering": ("user",),
             },
         ),
     ]

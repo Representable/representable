@@ -26,11 +26,22 @@ class Migration(migrations.Migration):
                 ),
                 ("email", models.CharField(max_length=128)),
             ],
-            options={"ordering": ("email",),},
+            options={
+                "ordering": ("email",),
+            },
         ),
-        migrations.RemoveField(model_name="organization", name="admin_group",),
-        migrations.RemoveField(model_name="organization", name="link",),
-        migrations.RemoveField(model_name="organization", name="mod_group",),
+        migrations.RemoveField(
+            model_name="organization",
+            name="admin_group",
+        ),
+        migrations.RemoveField(
+            model_name="organization",
+            name="link",
+        ),
+        migrations.RemoveField(
+            model_name="organization",
+            name="mod_group",
+        ),
         migrations.CreateModel(
             name="Membership",
             fields=[

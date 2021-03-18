@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0015_merge_20200501_1625'),
+        ("main", "0015_merge_20200501_1625"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='communityentry',
-            name='user_name',
-            field=models.CharField(default='', max_length=500),
+            model_name="communityentry",
+            name="user_name",
+            field=models.CharField(default="", max_length=500),
         ),
     ]

@@ -6,30 +6,58 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0066_auto_20201223_0731'),
+        ("main", "0066_auto_20201223_0731"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='FrequentlyAskedQuestion',
+            name="FrequentlyAskedQuestion",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('question', models.CharField(default='', max_length=500, unique=True)),
-                ('answer', models.CharField(default='', max_length=1000, unique=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "question",
+                    models.CharField(default="", max_length=500, unique=True),
+                ),
+                (
+                    "answer",
+                    models.CharField(default="", max_length=1000, unique=True),
+                ),
             ],
             options={
-                'db_table': 'faq',
+                "db_table": "faq",
             },
         ),
         migrations.CreateModel(
-            name='GlossaryDefinition',
+            name="GlossaryDefinition",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('term', models.CharField(default='', max_length=100, unique=True)),
-                ('definition', models.CharField(default='', max_length=1000, unique=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "term",
+                    models.CharField(default="", max_length=100, unique=True),
+                ),
+                (
+                    "definition",
+                    models.CharField(default="", max_length=1000, unique=True),
+                ),
             ],
             options={
-                'db_table': 'glossary',
+                "db_table": "glossary",
             },
         ),
     ]

@@ -11,7 +11,8 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RenameModel(
-            old_name="WhiteListEntry", new_name="AllowList",
+            old_name="WhiteListEntry",
+            new_name="AllowList",
         ),
         migrations.RenameField(
             model_name="membership",

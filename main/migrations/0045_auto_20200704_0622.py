@@ -11,10 +11,12 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RemoveField(
-            model_name="membership", name="is_allowlisted",
+            model_name="membership",
+            name="is_allowlisted",
         ),
         migrations.RemoveField(
-            model_name="membership", name="is_org_moderator",
+            model_name="membership",
+            name="is_org_moderator",
         ),
         migrations.AlterField(
             model_name="membership",

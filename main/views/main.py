@@ -187,6 +187,7 @@ class RepresentableLoginView(LoginView):
             del self.request.session["invalid_signup"]
         return context
 
+
 class RepresentableSignupView(SignupView):
     template_name = "account/signup_login.html"
     login_form = RepresentableLoginForm()
@@ -289,7 +290,9 @@ class Glossary(TemplateView):
 
         glossaryterms = GlossaryDefinition.objects.all()
         return render(
-            request, self.template_name, {"glossaryterms": glossaryterms},
+            request,
+            self.template_name,
+            {"glossaryterms": glossaryterms},
         )
 
 
@@ -988,7 +991,10 @@ class EntryView(LoginRequiredMixin, View):
                 abbr=self.kwargs["abbr"].upper()
             )
             if entryForm.organization:
-                if self.request.user.is_org_admin(entryForm.organization.id) or not drive.private:
+                if (
+                    self.request.user.is_org_admin(entryForm.organization.id)
+                    or not drive.private
+                ):
                     entryForm.admin_approved = True
                 else:
                     # check if user is on the allowlist

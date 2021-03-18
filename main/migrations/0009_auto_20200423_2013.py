@@ -13,7 +13,8 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RemoveField(
-            model_name="organization", name="email_whitelist",
+            model_name="organization",
+            name="email_whitelist",
         ),
         migrations.AddField(
             model_name="whitelistentry",
@@ -33,5 +34,7 @@ class Migration(migrations.Migration):
             ),
             preserve_default=False,
         ),
-        migrations.DeleteModel(name="WhiteListLink",),
+        migrations.DeleteModel(
+            name="WhiteListLink",
+        ),
     ]
