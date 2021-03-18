@@ -475,7 +475,6 @@ function addToggleableLayer(id, appendElement) {
           button.checked = false;
         }
       }
-
     }
   };
   // in order to create the buttons

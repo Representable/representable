@@ -360,7 +360,15 @@ for (var id in toggleableLayerIds){
     if (visibility === "visible") {
       map.setLayoutProperty(txt + "-lines", "visibility", "none");
     } else {
+      // set all other layers to not visible, uncheck the display box for all other layers
       map.setLayoutProperty(txt + "-lines", "visibility", "visible");
+      for (var layerID in toggleableLayerIds) {
+        if (layerID != txt) {
+          map.setLayoutProperty(layerID + "-lines", "visibility", "none");
+          var button = document.getElementById(layerID);
+          button.checked = false;
+        }
+      }
     }
   };
   // in order to create the buttons
