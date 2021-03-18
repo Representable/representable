@@ -26,7 +26,7 @@ var BOUNDARIES_COLORS = {
   "chi-ward": "rgb(0, 0, 117)", // navy
   "chi-comm": "rgb(169, 169, 169)", // gray
   tribal: "rgb(255,0,255)", // magenta
-  nyc: "rgb(100,100,100)",
+  nyc: "rgb(100,100,100)", // gray
 };
 var BG_KEYS = {
   albg: "300jwyj1",
