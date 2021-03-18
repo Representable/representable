@@ -182,6 +182,21 @@ map.on("load", function () {
         "line-width": 2,
       },
     });
+    newSourceLayer("nyc-state-assembly", NYC_STATE_ASSEMBLY_KEY);
+    map.addLayer({
+      id: "nyc-state-assembly-lines",
+      type: "line",
+      source: "nyc-state-assembly",
+      "source-layer": "nyc_state_assembly-5gr5zo",
+      layout: {
+        visibility: "none",
+      },
+      paint: {
+        "line-color": BOUNDARIES_COLORS["nyc_assembly"],
+        "line-opacity": 0.7,
+        "line-width": 2,
+      },
+    });
   }
   // leg2 : congressional district
   // leg3 : state senate district
@@ -370,7 +385,7 @@ document.querySelectorAll(".comm-content").forEach(function (p) {
 //create a button that toggles layers based on their IDs
 var toggleableLayerIds = JSON.parse(JSON.stringify(BOUNDARIES_LAYERS));
 toggleableLayerIds["school-districts"] = "School Districts";
-toggleableLayerIds["tribal-boundaries"] = "Tribal Boundaries";
+toggleableLayerIds["tribal-boundaries"] = "2010 Census Tribal Boundaries";
 // add selector for chicago wards + community areas if illinois
 if (state === "il") {
   toggleableLayerIds["chi-ward"] = "Chicago Wards";
@@ -378,6 +393,7 @@ if (state === "il") {
 }
 if (state === "ny") {
   toggleableLayerIds["nyc-city-council"] = "New York City Council districts";
+  toggleableLayerIds["nyc-state-assembly"] = "New York City state assembly districts";
 }
 
 for (var id in toggleableLayerIds) {
