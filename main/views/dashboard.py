@@ -145,14 +145,13 @@ class CreateOrg(LoginRequiredMixin, CreateView):
 
         email_content = (
             "Dear Representable Team, "
-            + self.request.user.email
+            + self.request.user.username
             + " signed up to create an organization called "
             + org.name
-            + ", in the state(s) of "
-            + org.states
-            + " Their organization description: "
-            + org.description
             + "."
+            + " You can follow up via email at : "
+            + self.request.user.email
+            + "!"
         )
 
         send_mail(

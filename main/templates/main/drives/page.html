@@ -37,11 +37,7 @@
 <div class="row">
   <div class="col mx-5">
     <h1 class="text-center font-weight-light">{{object.name}}</h1>
-    <p class="text-center">Organized by <a href="{% url 'main:partner_page' object.organization.slug %}">{{object.organization}}
-      {% if object.organization.verified %}
-        <img class="img-fluid verified-logo" src="{% static 'img/verified.svg' %}" alt="verified check mark"></img>
-      {% endif %}
-    </a> in {{drive.state}}</p>
+    <p class="text-center">Organized by <a href="{% url 'main:partner_page' object.organization.slug %}">{{object.organization}}</a> in {{drive.state}}</p>
     <hr class="line-break">
     <p class="mx-lg-5">{{object.description}}</p>
   </div>

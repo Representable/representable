@@ -42,10 +42,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
           <div class="accordion" id="accordionExample">
             <div class="card">
               <div class="my-1">
-                <h4 class="font-weight-light text-center my-2"> {{ organization }}
-                  {% if organization.verified %}
-                    <img class="verified-logo" src="{% static 'img/verified.svg' %}" alt="verified check mark"></img>
-                  {% endif %} </h4>
+                <h4 class="font-weight-light text-center my-2"> {{ organization }} </h4>
                 {% if drive %}
                 <p class="font-weight-light text-center">{{ drive }} </p>
                 {% endif %}

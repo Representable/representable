@@ -72,7 +72,6 @@ class Organization(models.Model):
     - states: the states that the organization operates in
     - slug: internal representable link slug
     - members: members of the organization
-    - verified: is the organization verified as legitimate by our team
     """
 
     name = models.CharField(max_length=128)
@@ -84,7 +83,6 @@ class Organization(models.Model):
     )
     slug = models.SlugField(unique=True)
     members = models.ManyToManyField(User, through="Membership")
-    verified = models.BooleanField(default=False)
 
     class Meta:
         ordering = ("description",)

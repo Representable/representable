@@ -6,7 +6,7 @@
   <div class="row row-content">
     <div class="col-lg-9 mx-auto">
       <h1 class="font-weight-light">Partners</h1>
-      <p>Find out more about the organizations using Representable.org to gather community data. Want to become a partner? Learn more <a href="{% url 'main:partner_welcome' %}">here!</p>
+      <p>Learn more about the organizations using Representable.org to gather community data. Want to become a partner? Learn more <a href="{% url 'main:partner_welcome' %}">here!</p>
       <div class="row">
         <div class="card-columns">
         {% for partner in object_list %}
@@ -14,11 +14,8 @@
             <div class="card-body">
               <h5>
                 <a href="{% url 'main:partner_page' partner.slug %}">
-                  <!-- <img class="mb-2" src="{% static 'img/logo-lowres.svg' %}" alt="representable logo" width="24" height="24"> -->
+                  <img class="mb-2" src="{% static 'img/logo-lowres.svg' %}" alt="representable logo" width="24" height="24">
                   {{ partner.name }}
-                  {% if partner.verified %}
-                    <img class="img-fluid verified-logo" src="{% static 'img/verified.svg' %}" alt="verified check mark"></img>
-                  {% endif %}
                 </a>
               </h5>
               <hr>

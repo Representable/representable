@@ -9,9 +9,6 @@
         <div class="card-body">
           <h5>
             {{ object.name}}
-            {% if object.verified %}
-              <img class="img-fluid verified-logo" src="{% static 'img/verified.svg' %}" alt="verified check mark"></img>
-            {% endif %}
           </h5>
           {% if is_org_admin %}
           <button class="btn btn-danger float-right mt-4" data-toggle="modal" data-target="#deleteOrgConfirm">
@@ -43,7 +40,7 @@
           <ul class="list-group my-3">
             {% for drive in drives %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              <div class="text-truncate">{{ drive.name }}</div>
+              {{ drive.name }}
               <a class="btn btn-primary" href="{% url 'main:drive_home' object.slug  object.pk drive.id %}" role="button">Manage <i class="fa fa-arrow-circle-right"></i></a>
             </li>
             {% endfor %}
