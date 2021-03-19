@@ -393,6 +393,9 @@ body {
 .navbar-logo {
   width: 60px;
 }
+.verified-logo {
+  width: 1rem;
+}
 
 .nav-link {
   /* font-weight: 500; */
