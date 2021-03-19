@@ -82,4 +82,4 @@ var BG_KEYS = {
 var CHI_WARD_KEY = "179v2oeh";
 var CHI_COMM_KEY = "63nswxfc";
 var SCHOOL_DISTR_KEY = "1ezqvmlm";
-var STATES_USING_NEW_BG = ["mi", "nv", "nj", "nm", "nc", "pa", "ut", "va", "wa"];
+var STATES_USING_NEW_BG = ["az", "mi", "nv", "nj", "nm", "nc", "pa", "ut", "va", "wa"];
