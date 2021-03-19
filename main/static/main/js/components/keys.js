@@ -29,7 +29,7 @@ var BOUNDARIES_COLORS = {
 var BG_KEYS = {
   "albg": "300jwyj1",
   "akbg": "6tvgdw55",
-  "azbg": "36qwamka",
+  "azbg": "0n1ps1t2", //2010: 36qwamka
   "arbg": "9k17jaaj",
   "cabg": "268q9ean",
   "cobg": "1jz1bbbn",
