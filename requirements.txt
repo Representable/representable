@@ -36,7 +36,7 @@ idna==2.8
 isort==4.3.21
 itsdangerous==1.1.0
 jdcal==1.4.1
-Jinja2==2.10.1
+Jinja2==2.11.3
 jmespath==0.10.0
 lazy-object-proxy==1.4.3
 licenseheaders==0.6
