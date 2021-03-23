@@ -23,7 +23,7 @@
 /* https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ */
 var unit_id = "GEOID";
 var layer_suffix = (BLOCK_STATES.includes(state) ? "block" : "bg");
-if (DRAW_USING_BLOCKS === true) {
+if (drawUsingBlocks === true) {
   unit_id = "BLOCKID10";
 }
 // stack of filters (which block to highlight) and bounding boxes (for contiguity check)
@@ -34,6 +34,44 @@ if (bboxStack === null) bboxStack = [];
 // set population
 var pop = sessionStorage.getItem("pop");
 if (pop !== null) $(".comm-pop").html(pop);
+
+//switch from blocks to blockgroups and vice versa for drawing map
+function changeMappingUnit() {
+  console.log("TODO: popup that warns of removing selection");
+  // remove layers: lines + shading
+  // add in other layers (make visible)
+  // change variables for selecting units
+  // clear cache and sessionStorage stuff
+  if (drawUsingBlocks) {
+    map.setLayoutProperty(state + "-census-lines-block", "visibility", "none");
+    map.setLayoutProperty(state + "-census-shading-block", "visibility", "none");
+    map.setLayoutProperty(state + "-highlighted-block", "visibility", "none");
+    map.setLayoutProperty(state + "-census-lines-bg", "visibility", "visible");
+    map.setLayoutProperty(state + "-census-shading-bg", "visibility", "visible");
+    map.setLayoutProperty(state + "-highlighted-bg", "visibility", "visible");
+    drawUsingBlocks = false;
+    unit_id = "GEOID";
+    layer_suffix = "bg";
+    sessionStorage.clear();
+    map.setFilter(state + "-highlighted-block", ["in", "BLOCKID10", ""]);
+    map.setFilter(state + "-highlighted-bg", ["in", "GEOID", ""]);
+    mapHover();
+  } else {
+    map.setLayoutProperty(state + "-census-lines-block", "visibility", "visible");
+    map.setLayoutProperty(state + "-census-shading-block", "visibility", "visible");
+    map.setLayoutProperty(state + "-highlighted-block", "visibility", "visible");
+    map.setLayoutProperty(state + "-census-lines-bg", "visibility", "none");
+    map.setLayoutProperty(state + "-census-shading-bg", "visibility", "none");
+    map.setLayoutProperty(state + "-highlighted-bg", "visibility", "none");
+    drawUsingBlocks = true;
+    unit_id = "BLOCKID10";
+    layer_suffix = "block";
+    sessionStorage.clear();
+    map.setFilter(state + "-highlighted-block", ["in", "BLOCKID10", ""]);
+    map.setFilter(state + "-highlighted-bg", ["in", "GEOID", ""]);
+    mapHover();
+  }
+}
 
 // change "Show Examples" to "Hide Examples" on click
 // TODO: change this to be updated for languages automatically, rather than manually
@@ -591,7 +629,7 @@ function createCommPolygon() {
   });
   var multiPolySave;
   queryFeatures.forEach(function (feature) {
-    featureProp = (DRAW_USING_BLOCKS ? feature.properties.BLOCKID10 : feature.properties.GEOID)
+    featureProp = (drawUsingBlocks ? feature.properties.BLOCKID10 : feature.properties.GEOID)
     if (polyFilter.includes(featureProp)) {
       if (multiPolySave === undefined) {
         multiPolySave = feature;
@@ -1143,7 +1181,6 @@ map.on("style.load", function () {
   // this is where the census block groups are loaded, from a url to the mbtiles file uploaded to mapbox
   // need to create layers for both blocks and block groups if state has functionality for both
   if (BLOCK_STATES.includes(state)) {
-    console.log(state);
     newSourceLayer(state + "block", BLOCK_KEYS[state + "block"]);
     newCensusShading(state, firstSymbolId, "block");
     newCensusLines(state, "block");
@@ -1159,8 +1196,9 @@ map.on("style.load", function () {
     zoom: 6,
     essential: true, // this animation is considered essential with respect to prefers-reduced-motion
   });
-  console.log(layer_suffix);
   map.setLayoutProperty(state + "-census-lines-" + layer_suffix, "visibility", "visible");
+  map.setLayoutProperty(state + "-census-shading-" + layer_suffix, "visibility", "visible");
+  map.setLayoutProperty(state + "-highlighted-" + layer_suffix, "visibility", "visible");
   // check if someone has entered in a new state in the same session
   var prev_state = sessionStorage.getItem("prev_state");
   if (prev_state !== null && state !== prev_state) {
@@ -1194,10 +1232,9 @@ map.on("style.load", function () {
     var currentBbox; // the current selection area bounding box
     for (let i = 0; i < queryFeatures.length; i++) {
       var feature = queryFeatures[i];
-      console.log(feature.properties.GEOID);
       // push to highlight layer for visibility
       // NOTE: for blocks, has to be BLOCKID10
-      if (DRAW_USING_BLOCKS) {
+      if (drawUsingBlocks) {
         features.push(feature.properties.BLOCKID10);
         if (!(feature.properties.BLOCKID10 in blockPopCache)) {
           blockPopCache[feature.properties.BLOCKID10] = feature.properties.POP10;
@@ -1205,8 +1242,6 @@ map.on("style.load", function () {
       } else {
         features.push(feature.properties.GEOID);
       }
-      console.log("after pushing");
-      console.log(features);
       if (features.length >= 1) {
         // polyCon : the turf polygon from coordinates
         var polyCon = turf.bbox(feature.geometry);
@@ -1284,8 +1319,7 @@ map.on("style.load", function () {
       });
     }
     // check size of community - 800 block groups or 2400 blocks
-    if ((!DRAW_USING_BLOCKS && filter.length < 802) || (DRAW_USING_BLOCKS && filter.length < 2402)) {
-      console.log(filter);
+    if ((!drawUsingBlocks && filter.length < 802) || (drawUsingBlocks && filter.length < 2402)) {
       map.setFilter(state + "-highlighted-" + layer_suffix, filter);
     } else {
       showWarningMessage(
@@ -1295,7 +1329,7 @@ map.on("style.load", function () {
     // set as indicator that population is loading
     $(".comm-pop").html("...");
     // remove "in" and "GEOID" parts of filter, for population
-    if (DRAW_USING_BLOCKS) {
+    if (drawUsingBlocks) {
       var blockCommPop = 0;
       filter.forEach(function(feature) {
         if (feature in blockPopCache) {
@@ -1315,7 +1349,10 @@ map.on("style.load", function () {
       sessionStorage.setItem("selectBbox", JSON.stringify(selectBbox));
     }
   });
+  mapHover();
+});
 
+function mapHover() {
   // When the user moves their mouse over the census shading layer, we'll update the
   // feature state for the feature under the mouse.
   var bgID = null;
@@ -1367,7 +1404,7 @@ map.on("style.load", function () {
       bgID = null;
     });
   }
-});
+}
 
 // reloading the page (like when the form fails validation)
 // this is still a lil fuzzy
@@ -1459,25 +1496,13 @@ function triggerSuccessMessage() {
   // Remove all map alert messages.
   cleanAlerts();
 
-  let newAlert = document.createElement("div");
-  newAlert.innerHTML =
-    '<div id="map-success-message" class="alert alert-success alert-dismissible fade show map-alert" role="alert">\
-  <strong>Congratulations!</strong> Your map looks great.\
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">\
-  <span aria-hidden="true">&times;</span>\
-  </button>\
-  </div>';
-  // document.getElementById("map-error-alerts").appendChild(newAlert);
-  var map_drawn_flag = sessionStorage.getItem("map_drawn_successfully");
-  if (map_drawn_flag == "false") {
-    mixpanel.track("Map Drawing Successful", {
-      drive_id: drive_id,
-      drive_name: drive_name,
-      organization_id: organization_id,
-      organization_name: organization_name,
-    });
-    sessionStorage.setItem("map_drawn_successfully", true);
-  }
+  mixpanel.track("Map Drawing Successful", {
+    drive_id: drive_id,
+    drive_name: drive_name,
+    organization_id: organization_id,
+    organization_name: organization_name,
+  });
+  sessionStorage.setItem("map_drawn_successfully", true);
 }
 
 function updateFormFields(census_blocks_polygon_array) {
