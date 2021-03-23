@@ -665,12 +665,9 @@ function createCommPolygon() {
 
 // zoom to the current Selection
 function zoomToCommunity() {
-  console.log("in zoomToCommunity");
   var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
   if (selectBbox === null || selectBbox.length === 0) return;
   var bbox = turf.bbox(selectBbox);
-  console.log(selectBbox);
-  console.log(bbox);
   map.fitBounds(bbox, { padding: 300, duration: 0 });
 }
 /****************************************************************************/
@@ -696,8 +693,8 @@ document.addEventListener(
       var polySuccess = true,
         formSuccess = true;
       // loading icon
-      $("#loading-entry").css("display", "block");
-      $("#loading-entry").delay(1000).fadeOut(1000);
+      // $("#loading-entry").css("display", "block");
+      // $("#loading-entry").delay(1000).fadeOut(1000);
       //todo: switch this to a promise ?
       setTimeout(function () {
         backupSuccess = backupFormValidation();
