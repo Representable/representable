@@ -1263,7 +1263,7 @@ map.on("style.load", function () {
         }
         else {
           selectBbox = turf.difference(selectBbox, currentBbox);
-          if (turf.getType(selectBbox) == "MultiPolygon") {
+          if (selectBbox != null && turf.getType(selectBbox) == "MultiPolygon") {
             showWarningMessage(
               "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
             );
