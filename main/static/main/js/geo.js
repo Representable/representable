@@ -1075,7 +1075,7 @@ function showWarningMessage(warning) {
   warning_box.style.display = "block";
   setTimeout(function () {
     warning_box.style.display = "none";
-  }, 10000);
+  }, 5000);
 }
 
 function hideWarningMessage() {

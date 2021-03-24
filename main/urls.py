@@ -123,7 +123,7 @@ urlpatterns = [
         views.main.Submission.as_view(),
         name="submission_thanks",
     ),
-    path("blog/", views.main.Blog.as_view(), name="blog"),
+    # path("blog/", views.main.Blog.as_view(), name="blog"),
     path("export/geojson/", views.main.ExportView.as_view(), name="export"),
     path("export/csv/", views.main.ExportView.as_view(), name="export"),
     path("export/geojson/<abbr>/", views.main.ExportView.as_view(), name="export"),

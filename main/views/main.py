@@ -317,8 +317,8 @@ class Terms(TemplateView):
 # ******************************************************************************#
 
 
-class Blog(TemplateView):
-    template_name = "main/pages/blog.html"
+# class Blog(TemplateView):
+#     template_name = "main/pages/blog.html"
 
 
 # ******************************************************************************#
