@@ -280,7 +280,9 @@ class Glossary(TemplateView):
 
         glossaryterms = GlossaryDefinition.objects.all()
         return render(
-            request, self.template_name, {"glossaryterms": glossaryterms},
+            request,
+            self.template_name,
+            {"glossaryterms": glossaryterms},
         )
 
 
@@ -501,8 +503,10 @@ class Submission(TemplateView):
 
         if user_map.drive:
             folder_name = query[0].drive.slug
-            has_state = False
-            state = ""
+            # has_state = False
+            # state = ""
+            has_state = user_map.state != ""
+            state = user_map.state
         else:
             if "abbr" in self.kwargs:
                 folder_name = self.kwargs["abbr"]
@@ -979,7 +983,10 @@ class EntryView(LoginRequiredMixin, View):
                 abbr=self.kwargs["abbr"].upper()
             )
             if entryForm.organization:
-                if self.request.user.is_org_admin(entryForm.organization.id) or not drive.private:
+                if (
+                    self.request.user.is_org_admin(entryForm.organization.id)
+                    or not drive.private
+                ):
                     entryForm.admin_approved = True
                 else:
                     # check if user is on the allowlist

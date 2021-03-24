@@ -117,6 +117,22 @@ map.on("load", function () {
       },
     }
   );
+  // tribal boundaries as a data layer
+  newSourceLayer("tribal-boundaries", TRIBAL_BOUND_KEY);
+  map.addLayer({
+    id: "tribal-boundaries-lines",
+    type: "line",
+    source: "tribal-boundaries",
+    "source-layer": "tl_2020_us_aiannh", //-7f7uk7
+    layout: {
+      visibility: "none",
+    },
+    paint: {
+      "line-color": BOUNDARIES_COLORS["tribal"],
+      "line-opacity": 0.7,
+      "line-width": 2,
+    },
+  });
   // ward + community areas for IL
   if (state === "il") {
     newSourceLayer("chi_wards", CHI_WARD_KEY);
@@ -153,6 +169,38 @@ map.on("load", function () {
         },
       }
     );
+  }
+  if (state === "ny") {
+    newSourceLayer("nyc-city-council", NYC_COUNCIL_KEY);
+    map.addLayer({
+      id: "nyc-city-council-lines",
+      type: "line",
+      source: "nyc-city-council",
+      "source-layer": "nyc_council-08swpg",
+      layout: {
+        visibility: "none",
+      },
+      paint: {
+        "line-color": BOUNDARIES_COLORS["nyc"],
+        "line-opacity": 0.7,
+        "line-width": 2,
+      },
+    });
+    newSourceLayer("nyc-state-assembly", NYC_STATE_ASSEMBLY_KEY);
+    map.addLayer({
+      id: "nyc-state-assembly-lines",
+      type: "line",
+      source: "nyc-state-assembly",
+      "source-layer": "nyc_state_assembly-5gr5zo",
+      layout: {
+        visibility: "none",
+      },
+      paint: {
+        "line-color": BOUNDARIES_COLORS["nyc_assembly"],
+        "line-opacity": 0.7,
+        "line-width": 2,
+      },
+    });
   }
   // leg2 : congressional district
   // leg3 : state senate district
@@ -332,10 +380,15 @@ document.querySelectorAll(".comm-content").forEach(function (p) {
 //create a button that toggles layers based on their IDs
 var toggleableLayerIds = JSON.parse(JSON.stringify(BOUNDARIES_LAYERS));
 toggleableLayerIds["school-districts"] = "School Districts";
+toggleableLayerIds["tribal-boundaries"] = "2010 Census Tribal Boundaries";
 // add selector for chicago wards + community areas if illinois
 if (state === "il") {
   toggleableLayerIds["chi-ward"] = "Chicago Wards";
   toggleableLayerIds["chi-comm"] = "Chicago Community Areas";
+}
+if (state === "ny") {
+  toggleableLayerIds["nyc-city-council"] = "New York City Council districts";
+  toggleableLayerIds["nyc-state-assembly"] = "New York City state assembly districts";
 }
 
 for (var id in toggleableLayerIds){
