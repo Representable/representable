@@ -332,13 +332,6 @@ function privacyToMap() {
   automaticScrollToTop();
 }
 
-$("#entrySubmissionButton").keypress(
-  function(event){
-    if (event.which == '13') {
-      event.preventDefault();
-    }
-});
-
 
 function clearFieldsError(fields) {
   for (var i = 0; i < fields.length; i++) {
