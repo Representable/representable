@@ -503,8 +503,11 @@ class Submission(TemplateView):
 
         if user_map.drive:
             folder_name = query[0].drive.slug
-            has_state = False
-            state = ""
+            # has_state = False
+            # state = ""
+            has_state = user_map.state != ""
+            state = user_map.state
+
         else:
             if "abbr" in self.kwargs:
                 folder_name = self.kwargs["abbr"]
