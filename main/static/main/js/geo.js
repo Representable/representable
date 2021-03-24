@@ -540,22 +540,34 @@ $("#surveyP2ToMap_button").on("click", function(e) {
 
 $("#mapToPrivacy").on("click", function(e) {
   zoomToCommunity();
-  if (createCommPolygon()) {
-    e.preventDefault();
-    mapToPrivacy();
-    $('#map-card').removeClass("has_error");
-    automaticScrollToTop();
-  }
+  createCommSuccess = createCommPolygon();
+  // loading icon
+  $("#loading-entry").css("display", "block");
+  $("#loading-entry").delay(2000).fadeOut(2000);
+  setTimeout(function() {
+    if (createCommSuccess) {
+      e.preventDefault();
+      mapToPrivacy();
+      $('#map-card').removeClass("has_error");
+      automaticScrollToTop();
+    }
+  }, 2000);
 })
 
 $("#mapToPrivacyMobile").on("click", function(e) {
   zoomToCommunity();
-  if (createCommPolygon()) {
-    e.preventDefault();
-    mapToPrivacy();
-    $('#map-card').removeClass("has_error");
-    automaticScrollToTop()
-  }
+  createCommSuccess = createCommPolygon();
+  // loading icon
+  $("#loading-entry").css("display", "block");
+  $("#loading-entry").delay(2000).fadeOut(2000);
+  setTimeout(function() {
+    if (createCommSuccess) {
+      e.preventDefault();
+      mapToPrivacy();
+      $('#map-card').removeClass("has_error");
+      automaticScrollToTop();
+    }
+  }, 2000);
 })
 
 $("#mapToSurveyP2").click(mapToSurveyP2);
@@ -656,7 +668,7 @@ function zoomToCommunity() {
   var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
   if (selectBbox === null || selectBbox.length === 0) return;
   var bbox = turf.bbox(selectBbox);
-  map.fitBounds(bbox, { padding: 100, duration: 0 });
+  map.fitBounds(bbox, { padding: 300, duration: 0 });
 }
 /****************************************************************************/
 
@@ -681,8 +693,8 @@ document.addEventListener(
       var polySuccess = true,
         formSuccess = true;
       // loading icon
-      $("#loading-entry").css("display", "block");
-      $("#loading-entry").delay(2000).fadeOut(2000);
+      // $("#loading-entry").css("display", "block");
+      // $("#loading-entry").delay(1000).fadeOut(1000);
       //todo: switch this to a promise ?
       setTimeout(function () {
         backupSuccess = backupFormValidation();
@@ -695,7 +707,7 @@ document.addEventListener(
         } else {
           animateStepBackward(5, 4, null);
         }
-      }, 2000);
+      }, 850);
       return false;
     });
 
@@ -1075,7 +1087,7 @@ function showWarningMessage(warning) {
   warning_box.style.display = "block";
   setTimeout(function () {
     warning_box.style.display = "none";
-  }, 10000);
+  }, 5000);
 }
 
 function hideWarningMessage() {
@@ -1263,7 +1275,7 @@ map.on("style.load", function () {
         }
         else {
           selectBbox = turf.difference(selectBbox, currentBbox);
-          if (turf.getType(selectBbox) == "MultiPolygon") {
+          if (selectBbox != null && turf.getType(selectBbox) == "MultiPolygon") {
             showWarningMessage(
               "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
             );
@@ -1278,6 +1290,7 @@ map.on("style.load", function () {
         selectBbox = currentBbox;
         hideWarningMessage();
       } else {
+        isChanged = true;
         if (
           turf.booleanDisjoint(currentBbox, selectBbox) &&
           !isEmptyFilter(currentFilter)
@@ -1285,10 +1298,10 @@ map.on("style.load", function () {
           showWarningMessage(
             "WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
           );
-          isChanged = true;
-          selectBbox = turf.union(currentBbox, selectBbox);
         }
+        selectBbox = turf.union(currentBbox, selectBbox);
       }
+
       // Run through the queried features and set a filter based on GEOID
       filter = features.reduce(
         function (memo, feature) {
