@@ -43,7 +43,7 @@
           <ul class="list-group my-3">
             {% for drive in drives %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              <div class="text-truncate">{{ drive.name }}</div>
+              {{ drive.name }}
               <a class="btn btn-primary" href="{% url 'main:drive_home' object.slug  object.pk drive.id %}" role="button">Manage <i class="fa fa-arrow-circle-right"></i></a>
             </li>
             {% endfor %}
