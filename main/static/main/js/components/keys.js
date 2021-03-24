@@ -33,7 +33,7 @@ var BOUNDARIES_COLORS = {
 var BG_KEYS = {
   "albg": "300jwyj1",
   "akbg": "6tvgdw55",
-  "azbg": "36qwamka",
+  "azbg": "0n1ps1t2", //2010: 36qwamka
   "arbg": "9k17jaaj",
   "cabg": "268q9ean",
   "cobg": "1jz1bbbn",
@@ -89,4 +89,5 @@ var SCHOOL_DISTR_KEY = "1ezqvmlm";
 var TRIBAL_BOUND_KEY = "6jhw01g1";
 var NYC_COUNCIL_KEY = "8igk12p1";
 var NYC_STATE_ASSEMBLY_KEY = "61wjirls";
-var STATES_USING_NEW_BG = ["mi", "nv", "nj", "nm", "nc", "pa", "ut", "va", "wa"];
+
+var STATES_USING_NEW_BG = ["az", "mi", "nv", "nj", "nm", "nc", "pa", "ut", "va", "wa"];

@@ -44,7 +44,7 @@
                             <div class="row h-100">
                                 <div class="col-4 text-center">
                                     <div class="d-inline-block">
-                                        <div class="circle-xs bckgrd-70C5EA">1</div>
+                                        <div class="circle-xs bg-70C5EA">1</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-8">
@@ -69,7 +69,7 @@
                             <div class="row h-100">
                                 <div class="col-4 text-center">
                                     <div class="d-inline-block">
-                                        <div class="circle-xs bckgrd-70C5EA">2</div>
+                                        <div class="circle-xs bg-70C5EA">2</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-8">
@@ -94,7 +94,7 @@
                             <div class="row h-100">
                                 <div class="col-4 text-center">
                                     <div class="d-inline-block">
-                                        <div class="circle-xs bckgrd-70C5EA">3</div>
+                                        <div class="circle-xs bg-70C5EA">3</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-8">
@@ -118,8 +118,8 @@
                 </div>
                 <div class="row d-none d-xl-flex pt-4">
                     <div class="col text-center">
-                        <button type="button" class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4" onclick="surveyStartToAddress()"><i class="fas fa-angle-left pr-2" type="button"></i>{% trans "BACK" %}</button>
-                        <button type="button" class="btn btn-primary no-underline-link entry-nav-btn ml-4" onclick="startSurvey()" type="button">{% trans "START" %}<i class="fas fa-angle-right pl-2"></i></button>
+                        <button class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4" onclick="surveyStartToAddress()"><i class="fas fa-angle-left pr-2" type="button"></i>{% trans "BACK" %}</button>
+                        <button class="btn btn-primary no-underline-link entry-nav-btn ml-4" onclick="startSurvey()" type="button">{% trans "START" %}<i class="fas fa-angle-right pl-2"></i></button>
                     </div>
                 </div>
             </div>
@@ -151,7 +151,7 @@
                             <div class="row">
                                 <div class="col-2 text-center p-0">
                                     <div class="d-inline-block">
-                                        <div class="circle-xs bckgrd-70C5EA">1</div>
+                                        <div class="circle-xs bg-70C5EA">1</div>
                                     </div>
                                 </div>
                                 <div class="col-7">
@@ -173,7 +173,7 @@
                             <div class="row">
                                 <div class="col-2 text-center p-0">
                                     <div class="d-inline-block">
-                                        <div class="circle-xs bckgrd-70C5EA">2</div>
+                                        <div class="circle-xs bg-70C5EA">2</div>
                                     </div>
                                 </div>
                                 <div class="col-7">
@@ -195,7 +195,7 @@
                             <div class="row">
                                 <div class="col-2 text-center p-0">
                                     <div class="d-inline-block">
-                                        <div class="circle-xs bckgrd-70C5EA">3</div>
+                                        <div class="circle-xs bg-70C5EA">3</div>
                                     </div>
                                 </div>
                                 <div class="col-7">
@@ -216,8 +216,8 @@
                 </div>
                 <div class="row">
                     <div class="col text-center">
-                        <button type="button" class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4" onclick="surveyStartToAddress()" type="button"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
-                        <button type="button" class="btn btn-primary no-underline-link entry-nav-btn ml-4" onclick="startSurvey()" type="button">{% trans "START" %}<i class="fas fa-angle-right pl-2"></i></button>
+                        <button class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4" onclick="surveyStartToAddress()" type="button"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
+                        <button class="btn btn-primary no-underline-link entry-nav-btn ml-4" onclick="startSurvey()" type="button">{% trans "START" %}<i class="fas fa-angle-right pl-2"></i></button>
                     </div>
                 </div>
             </div>
@@ -232,7 +232,7 @@
                 <strong>{% trans "What unites your Community of Interest?" %}</strong>
             </div>
             <div class="py-3 px-4 light-blue-bg opacity-4 mt-2">
-                <button class="btn btn-link ws-normal btn-no-focus-outline bg-transparent text-left my-0 p-0 no-underline-link" aria-expanded="false" aria-controls="collapseCriteria" onclick="toggleAngle(this)" type="button" style="border-radius:0.5rem;">
+                <button class="btn btn-link ws-normal btn-no-focus-outline bg-transparent text-left my-0 p-0 no-underline-link" aria-expanded="false" aria-controls="collapseCriteria" onclick="toggleAngle(this)" type="button">
                 <h5 style="width: fit-content; color: initial;">Community of Interest Definition in {{ state_obj.name }} &#32;<i class="fas fa-angle-down pl-3"></i></h5>
                 </button>
                 <div class="collapse mt-2" id="collapseCriteria">

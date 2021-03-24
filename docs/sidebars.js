@@ -8,7 +8,6 @@ module.exports = {
       "doc1",
       "server",
       "doc2",
-      "linux",
     ],
     "Accessibility": ["access1"],
     "Django Project": ["django1", "django2"],
