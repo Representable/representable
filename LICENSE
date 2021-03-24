@@ -278,7 +278,7 @@ in one of these ways:
     further charge.  You need not require recipients to copy the
     Corresponding Source along with the object code.  If the place to
     copy the object code is a network server, the Corresponding Source
-    may be on a different server (operated by you or a third-party)
+    may be on a different server (operated by you or a third party)
     that supports equivalent copying facilities, provided you maintain
     clear directions next to the object code saying where to find the
     Corresponding Source.  Regardless of what server hosts the
@@ -322,7 +322,7 @@ User Product is transferred to the recipient in perpetuity or for a
 fixed term (regardless of how the transaction is characterized), the
 Corresponding Source conveyed under this section must be accompanied
 by the Installation Information.  But this requirement does not apply
-if neither you nor any third-party retains the ability to install
+if neither you nor any third party retains the ability to install
 modified object code on the User Product (for example, the work has
 been installed in ROM).
 
@@ -522,10 +522,10 @@ work and works based on it.
 the scope of its coverage, prohibits the exercise of, or is
 conditioned on the non-exercise of one or more of the rights that are
 specifically granted under this License.  You may not convey a covered
-work if you are a party to an arrangement with a third-party that is
+work if you are a party to an arrangement with a third party that is
 in the business of distributing software, under which you make payment
-to the third-party based on the extent of your activity of conveying
-the work, and under which the third-party grants, to any of the
+to the third party based on the extent of your activity of conveying
+the work, and under which the third party grants, to any of the
 parties who would receive the covered work from you, a discriminatory
 patent license (a) in connection with copies of the covered work
 conveyed by you (or copies made from those copies), or (b) primarily
