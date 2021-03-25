@@ -109,22 +109,9 @@ function newLowerLegislatureLayer(state) {
   });
 }
 
-function toggleEntryVisibility(checkbox){
-  if (checkbox.checked){
-    map.setLayoutProperty(checkbox.value, "visibility", "visible");
-    map.setLayoutProperty(checkbox.value + "line", "visibility", "visible");
-    hoveredOverHidden = false;
-  }
-  //If it has been unchecked.
-  else {
-    map.setLayoutProperty(checkbox.value, "visibility", "none");
-    map.setLayoutProperty(checkbox.value + "line", "visibility", "none");
-  }
-}
-
 var community_bounds = {};
 
-map.once("load", function () {
+map.on("load", function () {
   // this is where the census blocks are loaded, from a url to the mbtiles file uploaded to mapbox
   // for (let census in CENSUS_KEYS) {
   //   newSourceLayer(census, CENSUS_KEYS[census]);
@@ -222,33 +209,16 @@ map.once("load", function () {
       },
     });
   }
-});
-
-hoveredOverHidden = false; // true if the user is hovering over an entry that is hidden
-// hover to highlight
-$(".community-review-span").hover(function() {
-  if (map.getLayer(this.id).visibility == "visible") {
+  // hover to highlight
+  $(".community-review-span").hover(function() {
     map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
     map.setPaintProperty(this.id + "line", "line-width", 4);
     map.setPaintProperty(this.id, "fill-opacity", 0.5);
-  } else {
-    map.setLayoutProperty(this.id, "visibility", "visible");
-    map.setLayoutProperty(this.id + "line", "visibility", "visible");
-    map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.5)");
-    map.setPaintProperty(this.id + "line", "line-width", 4);
-    map.setPaintProperty(this.id, "fill-opacity", 0.5);
-    hoveredOverHidden = true;
-  }
-}, function () {
-  if (!hoveredOverHidden) {
+  }, function () {
     map.setPaintProperty(this.id + "line", "line-color", "rgba(0, 0, 0,0.2)");
     map.setPaintProperty(this.id + "line", "line-width", 2);
     map.setPaintProperty(this.id, "fill-opacity", 0.15);
-  } else {
-    map.setLayoutProperty(this.id, "visibility", "none");
-    map.setLayoutProperty(this.id + "line", "visibility", "none");
-    hoveredOverHidden = false;
-  }
+  });
 });
 
 // on click, zoom to community
