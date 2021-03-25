@@ -34,11 +34,6 @@ urlpatterns = [
         views.main.RepresentableSignupView.as_view(),
         name="account_signup",
     ),
-    path(
-        "accounts/social/signup/",
-        views.main.RepresentableSocialSignupView.as_view(),
-        name="socialaccount_signup",
-    ),
     path("", views.main.Index.as_view(), name="index"),
     path(
         "entry_preview/",
@@ -123,7 +118,7 @@ urlpatterns = [
         views.main.Submission.as_view(),
         name="submission_thanks",
     ),
-    path("blog/", views.main.Blog.as_view(), name="blog"),
+    # path("blog/", views.main.Blog.as_view(), name="blog"),
     path("export/geojson/", views.main.ExportView.as_view(), name="export"),
     path("export/csv/", views.main.ExportView.as_view(), name="export"),
     path("export/geojson/<abbr>/", views.main.ExportView.as_view(), name="export"),
