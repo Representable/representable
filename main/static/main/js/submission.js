@@ -73,13 +73,19 @@ function newBoundariesLayer(name) {
       "_" +
       name.slice(-1),
     layout: {
-      visibility: "none",
+      // visibility: "none",
+      visibility: "visible",
+
     },
     paint: {
       "line-color": "rgba(106,137,204,0.7)",
       "line-width": 3,
     },
-  });
+  },
+  insertBeforeLayer,
+    // TODO: add layer name here
+    // layer_names;
+  );
 }
 
 function sanitizePDF(x) {
@@ -157,6 +163,7 @@ map.on("load", function () {
   // pos4 : 5-digit postcode area
   // sta5 : block groups
   for (var key in BOUNDARIES_LAYERS) {
+    // TODO: change so that we also pass in labels(?)
     newBoundariesLayer(key);
   }
 
