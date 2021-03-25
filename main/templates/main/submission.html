@@ -171,16 +171,7 @@
               <form method="post">
                 {% csrf_token %}
                 {% for field in form %}
-                <div class="row">
-                  <div>
-                    {{ field.label_tag }}
-                  </div>
-                </div>
-                <div class="row pl-3">
-                  <div>
-                    {{ field }}
-                  </div>
-                </div>
+                {{ field }}
                 {% endfor %}
                 <div class="row justify-content-center pt-3">
                   <div>

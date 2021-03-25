@@ -2101,3 +2101,8 @@ height:25vh!important;
 #rtb a h2 {
   padding-top: 20px;
 }
+
+.custom-select {
+  color: #2a94f4;
+  border-color: #2a94f4;
+}

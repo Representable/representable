@@ -302,4 +302,7 @@ class SubmissionAddDrive(forms.Form):
         all_drives = State.objects.get(abbr=state).get_drives()
         drives_to_add = [d for d in all_drives if d.state==state and d.is_active==True and d.private==False]
         choices = [(str(d.id), str(d.name) + ' - ' + str(d.organization)) for d in drives_to_add]
-        self.fields['Add a new drive'] = forms.ChoiceField(choices=choices)
+        self.fields['Add a new drive'] = forms.ChoiceField(
+            choices=choices, 
+            widget=forms.Select(attrs={'class' : 'custom-select'}),
+        )
