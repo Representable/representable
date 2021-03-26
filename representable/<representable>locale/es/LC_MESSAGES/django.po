@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-17 00:34+0000\n"
+"POT-Creation-Date: 2021-03-26 19:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -977,7 +977,7 @@ msgstr ""
 #: main/templates/main/entry_map.html:118
 #: main/templates/main/entry_map.html:244
 #: main/templates/main/entry_survey.html:278
-#: main/templates/main/submission.html:127
+#: main/templates/main/submission.html:126
 #, fuzzy
 #| msgid "Economic Interests"
 msgid "Economic or Environmental Interests"
@@ -1004,14 +1004,14 @@ msgstr ""
 #: main/templates/main/entry_map.html:138
 #: main/templates/main/entry_map.html:264
 #: main/templates/main/entry_survey.html:316
-#: main/templates/main/submission.html:147
+#: main/templates/main/submission.html:146
 msgid "Cultural or Historical Interests"
 msgstr "Intereses culturales o históricos"
 
 #: main/templates/main/entry_map.html:148
 #: main/templates/main/entry_map.html:274
 #: main/templates/main/entry_survey.html:334
-#: main/templates/main/submission.html:157
+#: main/templates/main/submission.html:156
 #, fuzzy
 #| msgid "Community Activities and Services"
 msgid "Community Needs and Concerns"
@@ -1090,15 +1090,19 @@ msgid ""
 "                            "
 msgstr ""
 
-#: main/templates/main/entry_map.html:294
+#: main/templates/main/entry_map.html:288
+msgid "Saving Community..."
+msgstr ""
+
+#: main/templates/main/entry_map.html:300
 msgid ""
 "\n"
 "                                    +\n"
 "                                "
 msgstr ""
 
-#: main/templates/main/entry_map.html:315
-#: main/templates/main/entry_map.html:319
+#: main/templates/main/entry_map.html:321
+#: main/templates/main/entry_map.html:325
 #: main/templates/main/entry_privacy.html:106
 #: main/templates/main/entry_survey.html:121
 #: main/templates/main/entry_survey.html:219
@@ -1107,16 +1111,16 @@ msgstr ""
 msgid "BACK"
 msgstr ""
 
-#: main/templates/main/entry_map.html:316
-#: main/templates/main/entry_map.html:320
+#: main/templates/main/entry_map.html:322
+#: main/templates/main/entry_map.html:326
 msgid "SAVE"
 msgstr ""
 
-#: main/templates/main/entry_map.html:327
+#: main/templates/main/entry_map.html:333
 msgid "Step-by-step guide"
 msgstr "Guía paso a paso "
 
-#: main/templates/main/entry_map.html:336
+#: main/templates/main/entry_map.html:342
 msgid "You need to draw a community to submit the form."
 msgstr ""
 
@@ -1275,10 +1279,6 @@ msgstr ""
 
 #: main/templates/main/entry_privacy.html:107
 msgid "SUBMIT"
-msgstr ""
-
-#: main/templates/main/entry_privacy.html:113
-msgid "Saving Community..."
 msgstr ""
 
 #: main/templates/main/entry_state_selection.html:20
@@ -1499,7 +1499,7 @@ msgid ""
 msgstr ""
 
 #: main/templates/main/entry_survey.html:297
-#: main/templates/main/submission.html:137
+#: main/templates/main/submission.html:136
 msgid "Community Activities and Services"
 msgstr "Actividades y servicios comunitarios"
 
@@ -1612,15 +1612,10 @@ msgid "Are you the leader of an organization?"
 msgstr "¿Eres la líder de una organización?"
 
 #: main/templates/main/index.html:35
-#, fuzzy
-#| msgid ""
-#| "Many organizations have partnered with Representable.org to collect "
-#| "community-of-interest data. Get started by creating a partner profile."
 msgid ""
 "Many organizations have partnered with Representable.org to collect "
 "community-of-interest data."
-msgstr ""
-"Muchas organizaciones se han asociado con Representable.org para recopilar "
+msgstr "Muchas organizaciones se han asociado con Representable.org para recopilar "
 "datos comunitarios. ¡Empiece hoy!"
 
 #: main/templates/main/index.html:36
@@ -1631,7 +1626,9 @@ msgstr "ASCOCIATE CON NOSOTROS"
 msgid ""
 "<b>Our mission</b> is to give communities a voice in drawing voting "
 "districts."
-msgstr "Nuestra misión es darle una voz a comunidades al dibujar distritos electorales."
+msgstr ""
+"Nuestra misión es darle una voz a comunidades al dibujar distritos "
+"electorales."
 
 #: main/templates/main/index.html:52
 msgid ""
@@ -1640,11 +1637,14 @@ msgid ""
 "            <br><br>Making this information available encourages mapmakers "
 "to take these communities into account during redistricting, in order to "
 "avoid gerrymandering and the “packing and cracking” of marginalized groups."
-msgstr "Representable hace que las personas puedan dibujar sus comunidades de interés "
-"y que puedan compartir información sobre los intereses y necesidades de estas comunidades.\n"
-"            <br><brHacer que esta información esté disponible motiva a diseñadores "
-"de mapas a tomar las comunidades en cuenta durante la redistribución de distritos. "
-"Así, podemos evitar el gerrymandering y la agrupación ventajosa  de grupos marginalizados para un partido."
+msgstr ""
+"Representable hace que las personas puedan dibujar sus comunidades de "
+"interés y que puedan compartir información sobre los intereses y necesidades "
+"de estas comunidades.\n"
+"            <br><brHacer que esta información esté disponible motiva a "
+"diseñadores de mapas a tomar las comunidades en cuenta durante la "
+"redistribución de distritos. Así, podemos evitar el gerrymandering y la "
+"agrupación ventajosa  de grupos marginalizados para un partido."
 
 #: main/templates/main/index.html:59
 msgid "<b>Gerrymandering</b> is threatening democracy."
@@ -1658,7 +1658,13 @@ msgid ""
 "Gathering communities of interest maps helps fight gerrymandering. We can "
 "provide map drawers with the information they need to draw districts that "
 "empower communities."
-msgstr "Los políticos han estado dividiendo y concentrando comunidades en distritos que silencian las voces de los miembros de esas comunidades. Esto evita que las comunidades elijan representantes que atiendan a sus necesidades. Reunir mapas de comunidades de interés nos ayuda a luchar contra el gerrymandering. Nosotros podemos proveer a los diseñadores de mapas con la información necesaria para que dibujen distritos que empoderen a las comunidades."
+msgstr ""
+"Los políticos han estado dividiendo y concentrando comunidades en distritos "
+"que silencian las voces de los miembros de esas comunidades. Esto evita que "
+"las comunidades elijan representantes que atiendan a sus necesidades. Reunir "
+"mapas de comunidades de interés nos ayuda a luchar contra el gerrymandering. "
+"Nosotros podemos proveer a los diseñadores de mapas con la información "
+"necesaria para que dibujen distritos que empoderen a las comunidades."
 
 #: main/templates/main/index.html:61
 msgid "We're fighting to make democracy more..."
@@ -1682,7 +1688,9 @@ msgstr "Describa su comunidad"
 
 #: main/templates/main/index.html:77
 msgid "that help you identify what bonds your community together."
-msgstr "a traves de nuestras preguntas analiticas que se basan en definiciones políticas y legales de COIs."
+msgstr ""
+"a traves de nuestras preguntas analiticas que se basan en definiciones "
+"políticas y legales de COIs."
 
 #: main/templates/main/index.html:81 main/templates/main/pages/about.html:109
 msgid "Draw a Community Map"
@@ -1692,7 +1700,9 @@ msgstr "Dibujar un mapa de la comunidad"
 msgid ""
 "by choosing units that make up your community. Use landmarks to draw your "
 "map."
-msgstr "eligiendo las unidades que componen tu comunidad. Usa puntos de referencia para dibujar tu mapa."
+msgstr ""
+"eligiendo las unidades que componen tu comunidad. Usa puntos de referencia "
+"para dibujar tu mapa."
 
 #: main/templates/main/index.html:86
 msgid "Share your Map"
@@ -1701,16 +1711,22 @@ msgstr "Comparte y contribuye tu mapa"
 #: main/templates/main/index.html:87
 msgid ""
 "as public input for map makers to use when drawing new voting districts."
-msgstr "con diseñadores de mapas para que lo tomen en cuenta al trazar nuevos distritos electorales."
+msgstr ""
+"con diseñadores de mapas para que lo tomen en cuenta al trazar nuevos "
+"distritos electorales."
 
 #: main/templates/main/index.html:94
 msgid ""
 "We are putting Representable in the hands of the communities that need it."
-msgstr "Estamos poniendo Representable en las manos de las comunidades que lo necesitan."
+msgstr ""
+"Estamos poniendo Representable en las manos de las comunidades que lo "
+"necesitan."
 
 #: main/templates/main/index.html:95
 msgid "Join us to help communities get the representation they deserve."
-msgstr "Únete a nosotros, y trabajemos para que las comunidades reciban la representación que merecen."
+msgstr ""
+"Únete a nosotros, y trabajemos para que las comunidades reciban la "
+"representación que merecen."
 
 #: main/templates/main/pages/about.html:8
 msgid "About Representable"
@@ -1955,22 +1971,38 @@ msgstr "Divulgación, Contenido"
 msgid "Engineering, Product"
 msgstr "Ingeniería, Producto"
 
-#: main/templates/main/submission.html:57
+#: main/templates/main/review.html:49 main/templates/main/submission.html:123
+#, fuzzy
+#| msgid "1. Your Identifying Information"
+msgid "Community Information"
+msgstr "1. Su información de identificación"
+
+#: main/templates/main/review.html:50
+msgid "Action"
+msgstr ""
+
+#: main/templates/main/review.html:51
+msgid "Show"
+msgstr ""
+
+#: main/templates/main/review.html:112
+msgid "No entries!"
+msgstr ""
+
+#: main/templates/main/review.html:113
+msgid "Join us in the fight against gerrymandering."
+msgstr ""
+
+#: main/templates/main/submission.html:56
 msgid "Download this map"
 msgstr ""
 
-#: main/templates/main/submission.html:59
+#: main/templates/main/submission.html:58
 msgid ""
 "\n"
 "                Map downloads include the community information below.\n"
 "              "
 msgstr ""
-
-#: main/templates/main/submission.html:124
-#, fuzzy
-#| msgid "1. Your Identifying Information"
-msgid "Community Information"
-msgstr "1. Su información de identificación"
 
 #: main/templates/main/thanks.html:13
 msgid "Thank you for your submission!"
@@ -1980,7 +2012,7 @@ msgstr "¡Gracias por su envío!"
 msgid "Please Verify Your Email"
 msgstr ""
 
-#: main/views/main.py:245
+#: main/views/main.py:246
 msgid "HELLO"
 msgstr ""
 
@@ -2030,59 +2062,55 @@ msgstr ""
 msgid "About"
 msgstr "Sobre"
 
-#: representable/templates/base.html:126
-msgid "Blog"
-msgstr ""
-
-#: representable/templates/base.html:133
+#: representable/templates/base.html:127
 msgid "My Account"
 msgstr ""
 
-#: representable/templates/base.html:136
+#: representable/templates/base.html:130
 msgid "Account Settings"
 msgstr "Configuraciones"
 
-#: representable/templates/base.html:137
+#: representable/templates/base.html:131
 msgid "My communities"
 msgstr "Mis Comunidades"
 
-#: representable/templates/base.html:138
+#: representable/templates/base.html:132
 msgid "Logout"
 msgstr ""
 
-#: representable/templates/base.html:143
+#: representable/templates/base.html:137
 msgid "Add community"
 msgstr "Agregar comunidad"
 
-#: representable/templates/base.html:149
+#: representable/templates/base.html:143
 msgid "Log in"
 msgstr "Iniciar sesión"
 
-#: representable/templates/base.html:154
+#: representable/templates/base.html:148
 msgid "Sign up"
 msgstr "Regístrate"
 
-#: representable/templates/base.html:255
+#: representable/templates/base.html:249
 msgid "Add Your Community"
 msgstr "Añadir su comunidad"
 
-#: representable/templates/base.html:258
+#: representable/templates/base.html:252
 msgid "Create a Partner Profile"
 msgstr ""
 
-#: representable/templates/base.html:262
+#: representable/templates/base.html:256
 msgid "My Communities"
 msgstr "Mis Comunidades"
 
-#: representable/templates/base.html:271
+#: representable/templates/base.html:265
 msgid "Privacy"
 msgstr "Privacidad"
 
-#: representable/templates/base.html:274
+#: representable/templates/base.html:268
 msgid "Terms"
 msgstr "Condiciones"
 
-#: representable/templates/base.html:280
+#: representable/templates/base.html:274
 msgid "More questions? Reach out at"
 msgstr "¿Más preguntas? Comuníquese con"
 
