@@ -10,6 +10,8 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta property="og:image" content="https://representable.org/static/img/community-name-page.6f0a16176c19.png" />
+    <meta property="og:description" content="Gerrymandering is silencing communities. Make your voice heard with Representable and put your community on the map" />
 
     <!-- Bootstrap CSS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -110,17 +112,12 @@
                 <ul class="dropdown-menu">
                   <li class="nav-link mx-1"><a href="{% url 'main:faq' %}">FAQ</a></li>
                   <li class="nav-link mx-1"><a href="{% url 'main:glossary' %}">Redistricting Glossary</a></li>
+                  <li class="nav-link mx-1"><a href="{% url 'main:resources' %}">Resources</a></li>
                 </ul>
             </li>
                 <li class="nav-item mx-auto">
                     <a class="nav-link" href="{% url 'main:about' %}">
                         {% trans "About" %}
-                    </a>
-                </li>
-
-                <li class="nav-item mx-auto">
-                    <a class="nav-link" href="{% url 'main:blog' %}">
-                        {% trans "Blog" %}
                     </a>
                 </li>
 

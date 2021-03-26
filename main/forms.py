@@ -97,8 +97,8 @@ class CommunityForm(ModelForm):
             "census_blocks_polygon": forms.HiddenInput(),
             "block_groups": forms.HiddenInput(),
             "population": forms.HiddenInput(),
-            "entry_name": forms.TextInput(
-                attrs={"placeholder": "ex. University of Texas Students", "maxlength": 100}
+            "entry_name": forms.Textarea(
+                attrs={"placeholder": "ex. University of Texas Students", "maxlength": 100, "rows": 1}
             ),
             "entry_reason": forms.Textarea(
                 attrs={"rows": 3, "maxlength": 500}
@@ -287,6 +287,7 @@ class RepresentableLoginForm(LoginForm):
         for _, field in self.fields.items():
             del field.widget.attrs["placeholder"]
         self.fields["login"].label = "E-mail"
+        self.fields["password"].label = "Password"
         del self.fields["login"].widget.attrs["autofocus"]
 
 class SubmissionAddDrive(forms.Form):

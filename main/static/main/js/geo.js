@@ -51,6 +51,11 @@ function changeText(element) {
   }
 }
 
+// removes population from community info dropdown, if in a state using new census geographies
+if (STATES_USING_NEW_BG.indexOf(state) >= 0) {
+  $(".comm-pop-text").hide();
+}
+
 // changes page entry page from the survey start page to the first part of the survey
 function startSurvey() {
   $("#entry-survey-start").addClass("d-none");
@@ -244,12 +249,14 @@ function addressToSurveyStart() {
   $("#entry_address").addClass("d-none");
   $("#entry_survey").removeClass("d-none");
   animateStepForward(1, 2, 3);
+  automaticScrollToTop();
 }
 
 function surveyStartToAddress() {
   $("#entry_survey").addClass("d-none");
   $("#entry_address").removeClass("d-none");
   animateStepBackward(2, 1, 3);
+  automaticScrollToTop();
 }
 
 // changes page entry page from the survey start page to the first part of the survey
@@ -257,35 +264,40 @@ function startSurvey() {
   $("#entry-survey-start").addClass("d-none");
   $("#survey-qs-p1").removeClass("d-none");
   $("#2to3").addClass("h-50");
+  automaticScrollToTop();
 }
 
 function surveyP1ToSurveyStart() {
   $("#survey-qs-p1").addClass("d-none");
   $("#entry-survey-start").removeClass("d-none");
   $("#2to3").removeClass("h-50");
+  automaticScrollToTop();
 }
 
 function surveyP1ToP2() {
   $("#survey-qs-p1").addClass("d-none");
   $("#survey-qs-p2").removeClass("d-none");
   $("#2to3").addClass("h-75").removeClass("h-50");
+  automaticScrollToTop();
 }
 
 function surveyP2ToP1() {
   $("#survey-qs-p2").addClass("d-none");
   $("#survey-qs-p1").removeClass("d-none");
   $("#2to3").addClass("h-50").removeClass("h-75");
+  automaticScrollToTop();
 }
 
 function surveyP2ToMap() {
   $("#survey-qs-p2").addClass("d-none");
   $("#entryForm").children(".container-fluid").addClass("d-none");
   $("#entry_map").removeClass("d-none");
-  $("#entry-map-modal").modal();
+  $("#entry-map-modal").modal({backdrop: 'static', keyboard: false});
   map.resize();
   fillSurveyQuestions();
   animateStepForward(2, 3, 4);
   $("#2to3").removeClass("h-75");
+  automaticScrollToTop();
 }
 
 function mapToSurveyP2() {
@@ -296,6 +308,7 @@ function mapToSurveyP2() {
   setTimeout(function () {
     $("#2to3").addClass("h-75");
   }, 600);
+  automaticScrollToTop();
 }
 
 function mapToPrivacy() {
@@ -304,6 +317,7 @@ function mapToPrivacy() {
   $("#entry_privacy").removeClass("d-none");
   $("#entry_survey").addClass("d-none");
   animateStepForward(3, 4, 5);
+  automaticScrollToTop();
 }
 
 function privacyToMap() {
@@ -315,6 +329,7 @@ function privacyToMap() {
   $("#backup_error").addClass("d-none");
   privacyCheckValidation();
   animateStepBackward(4, 3, 5);
+  automaticScrollToTop();
 }
 
 
@@ -423,6 +438,29 @@ $("#entry_address_button").on("click", function(e) {
      clearFieldsError(entryForm.getElementsByClassName("addr-field"));
      document.getElementById("need_name").classList.add("d-none");
      document.getElementById("need_address").classList.add("d-none");
+     automaticScrollToTop();
+  }
+});
+
+// these check for a user clicking on the text box and open examples
+$("#id_economic_interests").on("click", function(e) {
+  if (!$('#economic_interests_example').hasClass("show")) {
+    $('#economic_interests_btn').click();
+  }
+});
+$("#id_comm_activities").on("click", function(e) {
+  if (!$('#comm_activities_example').hasClass("show")) {
+    $('#comm_activities_btn').click();
+  }
+});
+$("#id_cultural_interests").on("click", function(e) {
+  if (!$('#cultural_interests_example').hasClass("show")) {
+    $('#cultural_interests_btn').click();
+  }
+});
+$("#id_other_considerations").on("click", function(e) {
+  if (!$('#other_interests_example').hasClass("show")) {
+    $('#other_interests_btn').click();
   }
 });
 
@@ -468,6 +506,7 @@ $("#surveyP1ToP2_button").on("click", function(e) {
     surveyP1ToP2();
     clearFieldsError(document.getElementById("entryForm").getElementsByClassName("survey-field"));
     document.getElementById("need_one_interest").classList.add("d-none");
+    automaticScrollToTop();
   }
 });
 
@@ -488,24 +527,45 @@ $("#surveyP2ToMap_button").on("click", function(e) {
     surveyP2ToMap();
     document.getElementById("id_entry_name").classList.remove("has_error");
     document.getElementById("need_comm_name").classList.add("d-none");
+    automaticScrollToTop();
   }
 })
 
 $("#mapToPrivacy").on("click", function(e) {
-  if (createCommPolygon()) {
-    e.preventDefault();
-    mapToPrivacy();
-    $('#map-card').removeClass("has_error");
-  }
+  zoomToCommunity();
+  createCommSuccess = createCommPolygon();
+  // loading icon
+  $("#loading-entry").css("display", "block");
+  $("#loading-entry").delay(2000).fadeOut(2000);
+  setTimeout(function() {
+    if (createCommSuccess) {
+      e.preventDefault();
+      mapToPrivacy();
+      $('#map-card').removeClass("has_error");
+      automaticScrollToTop();
+    }
+  }, 2000);
 })
 
 $("#mapToPrivacyMobile").on("click", function(e) {
-  if (createCommPolygon()) {
-    e.preventDefault();
-    mapToPrivacy();
-    $('#map-card').removeClass("has_error");
-  }
+  zoomToCommunity();
+  createCommSuccess = createCommPolygon();
+  // loading icon
+  $("#loading-entry").css("display", "block");
+  $("#loading-entry").delay(2000).fadeOut(2000);
+  setTimeout(function() {
+    if (createCommSuccess) {
+      e.preventDefault();
+      mapToPrivacy();
+      $('#map-card').removeClass("has_error");
+      automaticScrollToTop();
+    }
+  }, 2000);
 })
+
+$("#mapToSurveyP2").click(mapToSurveyP2);
+
+$("#mapToSurveyP2Mobile").click(mapToSurveyP2);
 
 function privacyCheckValidation() {
   if (document.getElementById("toc_check").checked === true || document.getElementById("toc_check_xl").checked === true) {
@@ -601,7 +661,7 @@ function zoomToCommunity() {
   var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
   if (selectBbox === null || selectBbox.length === 0) return;
   var bbox = turf.bbox(selectBbox);
-  map.fitBounds(bbox, { padding: 100, duration: 0 });
+  map.fitBounds(bbox, { padding: 300, duration: 0 });
 }
 /****************************************************************************/
 
@@ -626,8 +686,8 @@ document.addEventListener(
       var polySuccess = true,
         formSuccess = true;
       // loading icon
-      $("#loading-entry").css("display", "block");
-      $("#loading-entry").delay(2000).fadeOut(2000);
+      // $("#loading-entry").css("display", "block");
+      // $("#loading-entry").delay(1000).fadeOut(1000);
       //todo: switch this to a promise ?
       setTimeout(function () {
         backupSuccess = backupFormValidation();
@@ -640,7 +700,7 @@ document.addEventListener(
         } else {
           animateStepBackward(5, 4, null);
         }
-      }, 2000);
+      }, 850);
       return false;
     });
 
@@ -728,12 +788,14 @@ var geocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
   country: "us",
   mapboxgl: mapboxgl,
+  placeholder: "Search Location"
 });
 
 var modalGeocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
   country: "us",
   mapboxgl: mapboxgl,
+  placeholder: "Search Location"
 });
 
 document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
@@ -741,6 +803,16 @@ document.getElementById("modal-geocoder").appendChild(modalGeocoder.onAdd(map));
 
 modalGeocoder.on('result', function () {
   $('#entry-map-modal').modal('hide');
+
+  // if ($('#map-comm-dropdown').find('.dropdown-menu').is(":hidden")){
+  //   $('#map-comm-menu').dropdown('toggle');
+  // }
+  setTimeout(function () {
+    if ($('#map-comm-dropdown').find('.dropdown-menu').is(":hidden")){
+      $('#map-comm-menu').dropdown('show');
+      // $('#map-comm-menu').dropdown('update');
+    }
+  }, 2000);
 })
 
 /* Creating custom draw buttons */
@@ -1008,7 +1080,7 @@ function showWarningMessage(warning) {
   warning_box.style.display = "block";
   setTimeout(function () {
     warning_box.style.display = "none";
-  }, 10000);
+  }, 5000);
 }
 
 function hideWarningMessage() {
@@ -1086,235 +1158,6 @@ function newHighlightLayer(state, firstSymbolId) {
     firstSymbolId
   );
 }
-
-/******************************************************************************/
-
-// initialize shepherd.js tour
-let myTour = new Shepherd.Tour({
-  defaultStepOptions: {
-    cancelIcon: {
-      enabled: true,
-    },
-    classes: "class-1 class-2",
-    scrollTo: { behavior: "smooth", block: "center" },
-  },
-});
-
-myTour.addStep({
-  title: "Draw Your Community Map",
-  text:
-    "Hover over the map and certain units will appear highlighted. Click to add the highlighted region into your community.",
-  buttons: [
-    {
-      action() {
-        return this.complete();
-      },
-      classes: "shepherd-button-secondary",
-      text: "Exit",
-    },
-    {
-      action() {
-        // adjust draw size
-        document.getElementById("radius-control").value = 30;
-        document.getElementById("radius-value").textContent = "30";
-        return this.next();
-      },
-      text: "Next",
-    },
-  ],
-});
-
-myTour.addStep({
-  title: "Adjust Size",
-  text:
-    "Use the Selection Size bar to adjust the size of your selection region \
-  ",
-  attachTo: {
-    element: "#map-radius-control-id",
-    on: "top",
-  },
-  buttons: [
-    {
-      action() {
-        // adjust draw size
-        document.getElementById("radius-control").value = 25;
-        document.getElementById("radius-value").textContent = "25";
-        return this.back();
-      },
-      classes: "shepherd-button-secondary",
-      text: "Back",
-    },
-    {
-      action() {
-        // Open Eraser
-        document.getElementById("map-eraser-button-id").click();
-        return this.next();
-      },
-      text: "Next",
-    },
-  ],
-});
-
-myTour.addStep({
-  title: "Eraser ",
-  text: "Use the Eraser tool to erase selected units from your map.",
-  attachTo: {
-    element: "#map-eraser-button-id",
-    on: "bottom",
-  },
-  buttons: [
-    {
-      action() {
-        // Close eraser
-        document.getElementById("map-eraser-button-id").click();
-        return this.back();
-      },
-      classes: "shepherd-button-secondary",
-      text: "Back",
-    },
-    {
-      action() {
-        // adjust to smaller eraser size
-        document.getElementById("radius-control").value = 15;
-        document.getElementById("radius-value").textContent = "15";
-        return this.next();
-      },
-      text: "Next",
-    },
-  ],
-});
-
-myTour.addStep({
-  title: "Adjust Eraser Size",
-  text:
-    "You can also adjust the size of your eraser with the select size bar \
-  ",
-  attachTo: {
-    element: "#map-radius-control-id",
-    on: "top",
-  },
-  buttons: [
-    {
-      action() {
-        // adjust to smaller eraser size
-        document.getElementById("radius-control").value = 30;
-        document.getElementById("radius-value").textContent = "30";
-        return this.back();
-      },
-      classes: "shepherd-button-secondary",
-      text: "Back",
-    },
-    {
-      action() {
-        // Exit eraser
-        document.getElementById("map-draw-button-id").click();
-        return this.next();
-      },
-      text: "Next",
-    },
-  ],
-});
-
-myTour.addStep({
-  title: "Draw",
-  text: "Click the draw button to return to to adding units to the map.",
-  attachTo: {
-    element: "#map-draw-button-id",
-    on: "bottom",
-  },
-  buttons: [
-    {
-      action() {
-        // Reselect eraser tool
-        document.getElementById("map-eraser-button-id").click();
-        return this.back();
-      },
-      classes: "shepherd-button-secondary",
-      text: "Back",
-    },
-    {
-      action() {
-        document.getElementById("map-undo-button-id").click();
-        return this.next();
-      },
-      text: "Next",
-    },
-  ],
-});
-
-myTour.addStep({
-  title: "Undo",
-  text: "To undo your previous action, click on the Undo button.",
-  attachTo: {
-    element: "#map-undo-button-id",
-    on: "bottom",
-  },
-  buttons: [
-    {
-      action() {
-        return this.back();
-      },
-      classes: "shepherd-button-secondary",
-      text: "Back",
-    },
-    {
-      action() {
-        return this.next();
-      },
-      text: "Next",
-    },
-  ],
-});
-
-myTour.addStep({
-  title: "Clear Selection",
-  text:
-    "Delete the community you have drawn or restart the drawing process by clicking the Clear Selection button.",
-  attachTo: {
-    element: "#map-clear-button-id",
-    on: "bottom",
-  },
-  buttons: [
-    {
-      action() {
-        return this.back();
-      },
-      classes: "shepherd-button-secondary",
-      text: "Back",
-    },
-    {
-      action() {
-        return this.next();
-      },
-      text: "Next",
-    },
-  ],
-});
-
-myTour.addStep({
-  title: "Finish Drawing",
-  text: `Once you are done fine-tuning your drawing to reflect the geographical boundaries of
-  your Community of Interest continue on to the next section to save your community!`,
-  attachTo: {
-    element: "#map-finish-drawing-button-id",
-    on: "bottom",
-  },
-  buttons: [
-    {
-      action() {
-        return this.back();
-      },
-      classes: "shepherd-button-secondary",
-      text: "Back",
-    },
-    {
-      action() {
-        return this.complete();
-      },
-      text: "Done",
-    },
-  ],
-});
 
 /******************************************************************************/
 // the drawing radius for select tool
@@ -1425,9 +1268,9 @@ map.on("style.load", function () {
         }
         else {
           selectBbox = turf.difference(selectBbox, currentBbox);
-          if (turf.getType(selectBbox) == "MultiPolygon") {
+          if (selectBbox != null && turf.getType(selectBbox) == "MultiPolygon") {
             showWarningMessage(
-              "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest connected piece will be visible on Representable.org"
+              "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
             );
           }
         }
@@ -1440,20 +1283,18 @@ map.on("style.load", function () {
         selectBbox = currentBbox;
         hideWarningMessage();
       } else {
+        isChanged = true;
         if (
           turf.booleanDisjoint(currentBbox, selectBbox) &&
           !isEmptyFilter(currentFilter)
         ) {
           showWarningMessage(
-            "Please ensure that your community does not contain any gaps. Your selected units must connect."
+            "WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
           );
-          return;
-        } else {
-          isChanged = true;
-          selectBbox = turf.union(currentBbox, selectBbox);
-          hideWarningMessage();
         }
+        selectBbox = turf.union(currentBbox, selectBbox);
       }
+
       // Run through the queried features and set a filter based on GEOID
       filter = features.reduce(
         function (memo, feature) {
@@ -1478,9 +1319,11 @@ map.on("style.load", function () {
       );
     }
     // set as indicator that population is loading
-    $(".comm-pop").html("...");
-    // remove "in" and "GEOID" parts of filter, for population
-    getCommPop(cleanFilter(filter));
+    if (STATES_USING_NEW_BG.indexOf(state) === -1) {
+      $(".comm-pop").html("...");
+      // remove "in" and "GEOID" parts of filter, for population
+      getCommPop(cleanFilter(filter));
+    }
     if (isChanged) {
       filterStack.push(currentFilter);
       bboxStack.push(JSON.stringify(currentBbox));
@@ -1695,6 +1538,11 @@ function scrollIntoViewSmooth(id) {
   var y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
 
   window.scrollTo({ top: y, behavior: "smooth" });
+}
+
+function automaticScrollToTop() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
 
 // check if two arrays are equal (same elements)
