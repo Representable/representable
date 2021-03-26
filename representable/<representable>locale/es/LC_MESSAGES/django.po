@@ -1601,7 +1601,7 @@ msgstr "El gerrymandering está silenciando a las comunidades"
 msgid ""
 " Make your voice heard with Representable\" <br> and put your community on "
 "the map. "
-msgstr "Haz que escuchen tu voz \" <br> y pon tu comunidad en el mapa."
+msgstr "Haz que escuchen tu voz  \" <br> y pon tu comunidad en el mapa."
 
 #: main/templates/main/index.html:27
 msgid "GET STARTED"
