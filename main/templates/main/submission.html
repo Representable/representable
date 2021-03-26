@@ -28,7 +28,6 @@
 {% endblock %}
 {% block content %}
 <div class="container-fluid w-100">
-
   <div class="row row-wide light-green-bg pb-5">
     <div>
       <script type="text/javascript">
@@ -162,6 +161,27 @@
                     </p>
                 </div>
             </div>
+          </div>
+        </div>
+        <div class="card text-left border-0 w-100 rounded-lg mt-3 mb-3 d-xl-block">
+          <div class="card-body">
+            <h5 class="card-title header-text"><strong>Submit to an organization in your state</strong></h5>
+            {% if show_form is True %}
+              <p class="header-text small">Many organizations in your state are collecting community maps. Submit yours to one of their collection drives.</p>
+              <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                {{ field }}
+                {% endfor %}
+                <div class="row justify-content-center pt-3">
+                  <div>
+                    <button type="submit" class="btn btn-primary">Submit</button>                    
+                  </div>
+                </div>
+              </form>
+            {% else %}
+              <p class="header-text small">This community map has already been submitted to an organization</p>
+            {% endif %}
           </div>
         </div>
       </div>

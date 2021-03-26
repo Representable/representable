@@ -2207,6 +2207,11 @@ height:25vh!important;
   padding-top: 20px;
 }
 
+.custom-select {
+  color: #2a94f4;
+  border-color: #2a94f4;
+}
+
 /* Flips element vertically, in place*/
 .flipY-inplace {
   -moz-transform: scale(1, -1);
