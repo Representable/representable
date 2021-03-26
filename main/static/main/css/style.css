@@ -393,6 +393,9 @@ body {
 .navbar-logo {
   width: 60px;
 }
+.verified-logo {
+  width: 1rem;
+}
 
 .nav-link {
   /* font-weight: 500; */
@@ -530,14 +533,14 @@ body {
 /* EXCLUSIVELY FOR HOME PAGE rect */
 @media screen and (min-width:992px) and (max-width:1169px){
   #home-page-rect {
-    height: 260% !important;
+    height: 275% !important;
   }
 }
 
 #home-page-rect {
   position: absolute;
   width: 250%;
-  height: 275%;
+  height: 300%;
   left: -10%;
   bottom: 110%;
 
@@ -1134,6 +1137,23 @@ Entry Mapping Page
   color: black;
 }
 
+.community-review-span:hover {
+  background-color: #dee2e6;
+  cursor: pointer;
+}
+
+.communities-menu {
+  max-height: 500px;
+  overflow: scroll;
+}
+
+@media screen and (min-width: 768px) {
+  .communities-menu {
+    max-height: 800px;
+    overflow: scroll;
+  }
+}
+
 /* landing page map */
 #usa-map {
   width: 100%;
@@ -1174,7 +1194,7 @@ Entry Mapping Page
   border: 8px solid #f3f3f3; /* Light grey */
   border-top: 8px solid #2a94f4; /* Blue */
   border-radius: 50%;
-  animation: spin 4s linear infinite;
+  animation: spin 2s linear infinite;
   margin: auto;
 }
 .loader-small {
@@ -2185,6 +2205,11 @@ height:25vh!important;
 
 #rtb a h2 {
   padding-top: 20px;
+}
+
+.custom-select {
+  color: #2a94f4;
+  border-color: #2a94f4;
 }
 
 /* Flips element vertically, in place*/
