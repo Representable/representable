@@ -1436,7 +1436,7 @@ msgid ""
 "                                        "
 msgstr ""
 "\n"
-"                                            ¿Dónde la gente en sucomunidad "
+"                                            ¿Dónde la gente en su comunidad "
 "se reúne o socializa? ¿Dónde obtiene su comunidad sus servicios?"
 
 #: main/templates/main/entry_survey.html:232
@@ -1625,13 +1625,13 @@ msgstr ""
 
 #: main/templates/main/index.html:36
 msgid "PARTNER WITH US"
-msgstr ""
+msgstr "ASCOCIATE CON NOSOTROS"
 
 #: main/templates/main/index.html:51
 msgid ""
 "<b>Our mission</b> is to give communities a voice in drawing voting "
 "districts."
-msgstr ""
+msgstr "Nuestra misión es darle una voz a comunidades al dibujar distritos electorales."
 
 #: main/templates/main/index.html:52
 msgid ""
@@ -1640,11 +1640,15 @@ msgid ""
 "            <br><br>Making this information available encourages mapmakers "
 "to take these communities into account during redistricting, in order to "
 "avoid gerrymandering and the “packing and cracking” of marginalized groups."
-msgstr ""
+msgstr "Representable hace que las personas puedan dibujar sus comunidades de interés 
+y que puedan compartir información sobre los intereses y necesidades de estas comunidades.\n"
+"            <br><brHacer que esta información esté disponible motiva a diseñadores "
+"de mapas a tomar las comunidades en cuenta durante la redistribución de distritos. "
+"Así, podemos evitar el gerrymandering y la agrupación ventajosa  de grupos marginalizados para un partido."
 
 #: main/templates/main/index.html:59
 msgid "<b>Gerrymandering</b> is threatening democracy."
-msgstr ""
+msgstr "<b>El gerrymandering</b> está amenazando a la democracia."
 
 #: main/templates/main/index.html:60
 msgid ""
@@ -1654,31 +1658,31 @@ msgid ""
 "Gathering communities of interest maps helps fight gerrymandering. We can "
 "provide map drawers with the information they need to draw districts that "
 "empower communities."
-msgstr ""
+msgstr "Los políticos han estado dividiendo y concentrando comunidades en distritos que silencian las voces de los miembros de esas comunidades. Esto evita que las comunidades elijan representantes que atiendan a sus necesidades. Reunir mapas de comunidades de interés nos ayuda a luchar contra el gerrymandering. Nosotros podemos proveer a los diseñadores de mapas con la información necesaria para que dibujen distritos que empoderen a las comunidades."
 
 #: main/templates/main/index.html:61
 msgid "We're fighting to make democracy more..."
-msgstr ""
+msgstr "Estamos luchando para hacer la democracia más…"
 
 #: main/templates/main/index.html:64
 msgid "Transparent"
-msgstr ""
+msgstr "Transparente"
 
 #: main/templates/main/index.html:67
 msgid "Inclusive"
-msgstr ""
+msgstr "Inclusiva"
 
 #: main/templates/main/index.html:70
 msgid "Accessible"
-msgstr ""
+msgstr "Accessible"
 
 #: main/templates/main/index.html:76 main/templates/main/pages/about.html:96
 msgid "Answer Questions"
-msgstr "Responder a preguntas"
+msgstr "Describa su comunidad"
 
 #: main/templates/main/index.html:77
 msgid "that help you identify what bonds your community together."
-msgstr ""
+msgstr "a traves de nuestras preguntas analiticas que se basan en definiciones políticas y legales de COIs."
 
 #: main/templates/main/index.html:81 main/templates/main/pages/about.html:109
 msgid "Draw a Community Map"
@@ -1688,25 +1692,25 @@ msgstr "Dibujar un mapa de la comunidad"
 msgid ""
 "by choosing units that make up your community. Use landmarks to draw your "
 "map."
-msgstr ""
+msgstr "eligiendo las unidades que componen tu comunidad. Usa puntos de referencia para dibujar tu mapa."
 
 #: main/templates/main/index.html:86
 msgid "Share your Map"
-msgstr ""
+msgstr "Comparte y contribuye tu mapa"
 
 #: main/templates/main/index.html:87
 msgid ""
 "as public input for map makers to use when drawing new voting districts."
-msgstr ""
+msgstr "con diseñadores de mapas para que lo tomen en cuenta al trazar nuevos distritos electorales."
 
 #: main/templates/main/index.html:94
 msgid ""
 "We are putting Representable in the hands of the communities that need it."
-msgstr ""
+msgstr "Estamos poniendo Representable en las manos de las comunidades que lo necesitan."
 
 #: main/templates/main/index.html:95
 msgid "Join us to help communities get the representation they deserve."
-msgstr ""
+msgstr "Únete a nosotros, y trabajemos para que las comunidades reciban la representación que merecen."
 
 #: main/templates/main/pages/about.html:8
 msgid "About Representable"
