@@ -21,7 +21,7 @@
     <div class="col-sm-6">
       <div class="col-12 p-3 light-blue-bg px-md-5 mb-4">
           <a class="btn ws-normal btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" href="#collapseCriteria1" aria-expanded="false" aria-controls="collapseCriteria1">
-            <h5 class="dark-gray-text" style="width: fit-content;">What is redistricting?<i class="fas fa-angle-down pl-lg-3 pl-1"></i></h5>
+            <h5 class="dark-gray-text" style="width: fit-content;"><b>What is redistricting?<i class="fas fa-angle-down pl-lg-3 pl-1"></i></b></h5>
           </a>
         <div class="collapse" id="collapseCriteria1">
           In 2021, voting district lines across the country will be redrawn to determine who represents the people of your state.
@@ -30,19 +30,18 @@
 
       <div class="col-12 p-3 light-blue-bg px-md-5 mb-4">
           <a class="btn ws-normal btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" href="#collapseCriteria2" aria-expanded="false" aria-controls="collapseCriteria2">
-            <h5 class="dark-gray-text" style="width: fit-content;">How does redistricing work in {{ state_obj.name }}?<i class="fas fa-angle-down pl-lg-3 pl-1"></i></h5>
+            <h5 class="dark-gray-text" style="width: fit-content;"><b>How does redistricing work in {{ state_obj.name }}?<i class="fas fa-angle-down pl-lg-3 pl-1"></i></b></h5>
           </a>
         <div class="collapse" id="collapseCriteria2">
           {% autoescape off %}
           {{ state_obj.content_news }}
-          In North Dakota, maps are drawn by the Legislature by ordinary statute, and are subject to the Governor's veto. The Legislature can override vetoes with a two-thirds vote in each chamber.
           {% endautoescape %}
         </div>
       </div>
 
       <div class="col-12 p-3 light-blue-bg px-md-5 mb-4">
           <a class="btn ws-normal btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" href="#collapseCriteria3" aria-expanded="false" aria-controls="collapseCriteria3">
-            <h5 class="dark-gray-text" style="width: fit-content;">How can Representable help?<i class="fas fa-angle-down pl-lg-3 pl-1"></i></h5>
+            <h5 class="dark-gray-text" style="width: fit-content;"><b>How can Representable help?<i class="fas fa-angle-down pl-lg-3 pl-1"></i></b></h5>
           </a>
         <div class="collapse" id="collapseCriteria3">
           Representable will help you tell mapmakers about your community interests and boundaries, so that they can fairly consider it when they draw new voting district lines.
@@ -51,7 +50,7 @@
 
       <div class="col-12 p-3 light-blue-bg px-md-5 mb-4">
           <a class="btn ws-normal btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" href="#collapseCriteria4" aria-expanded="false" aria-controls="collapseCriteria4">
-            <h5 class="dark-gray-text" style="width: fit-content;">{{ state_obj.name }}'s redistricting criteria &#32;<i class="fas fa-angle-down pl-lg-3 pl-1"></i></h5>
+            <h5 class="dark-gray-text" style="width: fit-content;"><b>{{ state_obj.name }}'s redistricting criteria &#32;<i class="fas fa-angle-down pl-lg-3 pl-1"></i></b></h5>
           </a>
         <div class="collapse" id="collapseCriteria4">
           {% autoescape off %}
@@ -62,9 +61,10 @@
     </div>
     <div class="col-6 d-none d-sm-block">
       <div class="m-auto py-4 h-100">
-        <object type="image/svg+xml" class="w-75 mx-auto d-block h-100" data="{% static 'img/map-info.svg' %}" alt="image of map with information icon"></object>        
-        <a href="https://www.google.com"class="text-primary"> See community maps drawn in {{ state_obj.name }} here <i class="fas fa-arrow-circle-right"></i>
-        </a>
+        <object type="image/svg+xml" class="w-75 mx-auto d-block" data="{% static 'img/map-info.svg' %}" alt="image of map with information icon"></object> 
+        <p class="text-center"> <a href="/map/{{state_obj.abbr}}" class="link-primary"> <h5>See community maps drawn in {{ state_obj.name }} here <i class="fas fa-arrow-circle-right"></i>
+        </h5></a></p>
+
       </div>
     </div>
   </div>
@@ -72,7 +72,7 @@
   <div class="row mx-lg-5 px-md-5">
     <div class="col-sm-12">
       <div class="col-12 p-4 light-blue-bg px-md-5">
-        <h5>Communities of Interest in {{ state_obj.name }}</h5>
+        <h5><b>Communities of Interest in {{ state_obj.name }}</b></h5>
         {% autoescape off %}
         {{ state_obj.content_coi }}
         {% endautoescape %}
