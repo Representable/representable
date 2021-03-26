@@ -8,7 +8,7 @@ Contact Kyle (ktbarnes@princeton.edu) with any questions!
 
 :::note
 
-This is how we uploaded census blocks + state legislature borders. Counties are through Mapbox's existing election data tileset. Also note that for some reason Nebraska's files don't show on Mapbox? This is an ongoing mystery.
+This is how we uploaded census blocks groups, school districts, chicago wards and neighborhood boundaries. All other layers on the visualization pages are through Mapbox Boundaries. Implementing drawing with census blocks will require
 
 :::
 1. Find your data ! Census blocks and a lot of other shapefiles are available from the census website at https://www.census.gov/cgi-bin/geo/shapefiles/index.php -- blocks with population are found here: https://www2.census.gov/geo/tiger/TIGER2010BLKPOPHU/
@@ -32,8 +32,8 @@ unzip {file-name}.zip
 ogr2ogr -f GeoJSON {file-name}.geojson {file-name}.shp
 ```
 
-4. Convert to mbtiles (much smaller!) -ai & -aN create unique ids for use in filter on entry page: `tippecanoe -o {file-name}.mbtiles -ai -aN -ab {file-name}.geojson`
-5. Install mapbox cli: `pip install mapboxcli`
+4. Convert to mbtiles (much smaller!) -ai & -aN create unique ids for use in filter on entry page. Use the same name for the mbtiles as the geojson file to reduce confusion, you'll need this when adding the `source-layer` in mapbox gl js: `tippecanoe -o {file-name}.mbtiles -ai -aN -ab {file-name}.geojson`
+5. Install mapbox cli, if uploading through the CLI. Typically, it's easier to upload through the mapbox GUI: `pip install mapboxcli`
 6. Export mapbox token (ask Kyle if you need it, different from mapbox key): `export MAPBOX_ACCESS_TOKEN={TOKEN}`
 7. upload the file: `mapbox upload mapbox_user_name.{name} {file-name}.geojson` it's also possible to do this through mapbox studio with an easy to use GUI
 8. now you can edit the javascript

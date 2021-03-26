@@ -94,6 +94,11 @@ function changeText(element) {
   }
 }
 
+// removes population from community info dropdown, if in a state using new census geographies
+if (STATES_USING_NEW_BG.indexOf(state) >= 0) {
+  $(".comm-pop-text").hide();
+}
+
 // changes page entry page from the survey start page to the first part of the survey
 function startSurvey() {
   $("#entry-survey-start").addClass("d-none");
@@ -330,7 +335,7 @@ function surveyP2ToMap() {
   $("#survey-qs-p2").addClass("d-none");
   $("#entryForm").children(".container-fluid").addClass("d-none");
   $("#entry_map").removeClass("d-none");
-  $("#entry-map-modal").modal();
+  $("#entry-map-modal").modal({backdrop: 'static', keyboard: false});
   map.resize();
   fillSurveyQuestions();
   animateStepForward(2, 3, 4);
@@ -480,6 +485,28 @@ $("#entry_address_button").on("click", function(e) {
   }
 });
 
+// these check for a user clicking on the text box and open examples
+$("#id_economic_interests").on("click", function(e) {
+  if (!$('#economic_interests_example').hasClass("show")) {
+    $('#economic_interests_btn').click();
+  }
+});
+$("#id_comm_activities").on("click", function(e) {
+  if (!$('#comm_activities_example').hasClass("show")) {
+    $('#comm_activities_btn').click();
+  }
+});
+$("#id_cultural_interests").on("click", function(e) {
+  if (!$('#cultural_interests_example').hasClass("show")) {
+    $('#cultural_interests_btn').click();
+  }
+});
+$("#id_other_considerations").on("click", function(e) {
+  if (!$('#other_interests_example').hasClass("show")) {
+    $('#other_interests_btn').click();
+  }
+});
+
 function interestsValidated() {
   var flag = true;
   var cultural_interests_field = document.getElementById(
@@ -549,23 +576,39 @@ $("#surveyP2ToMap_button").on("click", function(e) {
 
 $("#mapToPrivacy").on("click", function(e) {
   zoomToCommunity();
-  if (createCommPolygon()) {
-    e.preventDefault();
-    mapToPrivacy();
-    $('#map-card').removeClass("has_error");
-    automaticScrollToTop();
-  }
+  createCommSuccess = createCommPolygon();
+  // loading icon
+  $("#loading-entry").css("display", "block");
+  $("#loading-entry").delay(2000).fadeOut(2000);
+  setTimeout(function() {
+    if (createCommSuccess) {
+      e.preventDefault();
+      mapToPrivacy();
+      $('#map-card').removeClass("has_error");
+      automaticScrollToTop();
+    }
+  }, 2000);
 })
 
 $("#mapToPrivacyMobile").on("click", function(e) {
   zoomToCommunity();
-  if (createCommPolygon()) {
-    e.preventDefault();
-    mapToPrivacy();
-    $('#map-card').removeClass("has_error");
-    automaticScrollToTop()
-  }
+  createCommSuccess = createCommPolygon();
+  // loading icon
+  $("#loading-entry").css("display", "block");
+  $("#loading-entry").delay(2000).fadeOut(2000);
+  setTimeout(function() {
+    if (createCommSuccess) {
+      e.preventDefault();
+      mapToPrivacy();
+      $('#map-card').removeClass("has_error");
+      automaticScrollToTop();
+    }
+  }, 2000);
 })
+
+$("#mapToSurveyP2").click(mapToSurveyP2);
+
+$("#mapToSurveyP2Mobile").click(mapToSurveyP2);
 
 function privacyCheckValidation() {
   if (document.getElementById("toc_check").checked === true || document.getElementById("toc_check_xl").checked === true) {
@@ -662,7 +705,7 @@ function zoomToCommunity() {
   var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
   if (selectBbox === null || selectBbox.length === 0) return;
   var bbox = turf.bbox(selectBbox);
-  map.fitBounds(bbox, { padding: 100, duration: 0 });
+  map.fitBounds(bbox, { padding: 300, duration: 0 });
 }
 /****************************************************************************/
 
@@ -687,8 +730,8 @@ document.addEventListener(
       var polySuccess = true,
         formSuccess = true;
       // loading icon
-      $("#loading-entry").css("display", "block");
-      $("#loading-entry").delay(2000).fadeOut(2000);
+      // $("#loading-entry").css("display", "block");
+      // $("#loading-entry").delay(1000).fadeOut(1000);
       //todo: switch this to a promise ?
       setTimeout(function () {
         backupSuccess = backupFormValidation();
@@ -701,7 +744,7 @@ document.addEventListener(
         } else {
           animateStepBackward(5, 4, null);
         }
-      }, 2000);
+      }, 850);
       return false;
     });
 
@@ -804,6 +847,16 @@ document.getElementById("modal-geocoder").appendChild(modalGeocoder.onAdd(map));
 
 modalGeocoder.on('result', function () {
   $('#entry-map-modal').modal('hide');
+
+  // if ($('#map-comm-dropdown').find('.dropdown-menu').is(":hidden")){
+  //   $('#map-comm-menu').dropdown('toggle');
+  // }
+  setTimeout(function () {
+    if ($('#map-comm-dropdown').find('.dropdown-menu').is(":hidden")){
+      $('#map-comm-menu').dropdown('show');
+      // $('#map-comm-menu').dropdown('update');
+    }
+  }, 2000);
 })
 
 /* Creating custom draw buttons */
@@ -1071,7 +1124,7 @@ function showWarningMessage(warning) {
   warning_box.style.display = "block";
   setTimeout(function () {
     warning_box.style.display = "none";
-  }, 10000);
+  }, 5000);
 }
 
 function hideWarningMessage() {
@@ -1277,7 +1330,7 @@ map.on("style.load", function () {
         }
         else {
           selectBbox = turf.difference(selectBbox, currentBbox);
-          if (turf.getType(selectBbox) == "MultiPolygon") {
+          if (selectBbox != null && turf.getType(selectBbox) == "MultiPolygon") {
             showWarningMessage(
               "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
             );
@@ -1292,6 +1345,7 @@ map.on("style.load", function () {
         selectBbox = currentBbox;
         hideWarningMessage();
       } else {
+        isChanged = true;
         if (
           turf.booleanDisjoint(currentBbox, selectBbox) &&
           !isEmptyFilter(currentFilter)
@@ -1299,10 +1353,10 @@ map.on("style.load", function () {
           showWarningMessage(
             "WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
           );
-          isChanged = true;
-          selectBbox = turf.union(currentBbox, selectBbox);
         }
+        selectBbox = turf.union(currentBbox, selectBbox);
       }
+
       // Run through the queried features and set a filter based on GEOID
       filter = features.reduce(
         function (memo, feature) {
@@ -1327,26 +1381,28 @@ map.on("style.load", function () {
       );
     }
     // set as indicator that population is loading
-    $(".comm-pop").html("...");
-    // remove "in" and "GEOID" parts of filter, for population
-    if (drawUsingBlocks) {
-      var blockCommPop = 0;
-      filter.forEach(function(feature) {
-        if (feature in blockPopCache) {
-          blockCommPop += blockPopCache[feature];
-        }
-      });
-      $(".comm-pop").html(blockCommPop);
-    } else {
-      getCommPop(cleanFilter(filter));
-    }
-    if (isChanged) {
-      filterStack.push(currentFilter);
-      bboxStack.push(JSON.stringify(currentBbox));
-      sessionStorage.setItem("filterStack", JSON.stringify(filterStack));
-      sessionStorage.setItem("bboxStack", JSON.stringify(bboxStack));
-      sessionStorage.setItem("bgFilter", JSON.stringify(filter));
-      sessionStorage.setItem("selectBbox", JSON.stringify(selectBbox));
+    if (STATES_USING_NEW_BG.indexOf(state) === -1) {
+      $(".comm-pop").html("...");
+      // remove "in" and "GEOID" parts of filter, for population
+      if (drawUsingBlocks) {
+        var blockCommPop = 0;
+        filter.forEach(function(feature) {
+          if (feature in blockPopCache) {
+            blockCommPop += blockPopCache[feature];
+          }
+        });
+        $(".comm-pop").html(blockCommPop);
+      } else {
+        getCommPop(cleanFilter(filter));
+      }
+      if (isChanged) {
+        filterStack.push(currentFilter);
+        bboxStack.push(JSON.stringify(currentBbox));
+        sessionStorage.setItem("filterStack", JSON.stringify(filterStack));
+        sessionStorage.setItem("bboxStack", JSON.stringify(bboxStack));
+        sessionStorage.setItem("bgFilter", JSON.stringify(filter));
+        sessionStorage.setItem("selectBbox", JSON.stringify(selectBbox));
+      }
     }
   });
   mapHover();

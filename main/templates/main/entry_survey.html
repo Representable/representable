@@ -44,7 +44,7 @@
                             <div class="row h-100">
                                 <div class="col-4 text-center">
                                     <div class="d-inline-block">
-                                        <div class="circle-xs bckgrd-70C5EA">1</div>
+                                        <div class="circle-xs bg-70C5EA">1</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-8">
@@ -69,7 +69,7 @@
                             <div class="row h-100">
                                 <div class="col-4 text-center">
                                     <div class="d-inline-block">
-                                        <div class="circle-xs bckgrd-70C5EA">2</div>
+                                        <div class="circle-xs bg-70C5EA">2</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-8">
@@ -94,7 +94,7 @@
                             <div class="row h-100">
                                 <div class="col-4 text-center">
                                     <div class="d-inline-block">
-                                        <div class="circle-xs bckgrd-70C5EA">3</div>
+                                        <div class="circle-xs bg-70C5EA">3</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-8">
@@ -151,7 +151,7 @@
                             <div class="row">
                                 <div class="col-2 text-center p-0">
                                     <div class="d-inline-block">
-                                        <div class="circle-xs bckgrd-70C5EA">1</div>
+                                        <div class="circle-xs bg-70C5EA">1</div>
                                     </div>
                                 </div>
                                 <div class="col-7">
@@ -173,7 +173,7 @@
                             <div class="row">
                                 <div class="col-2 text-center p-0">
                                     <div class="d-inline-block">
-                                        <div class="circle-xs bckgrd-70C5EA">2</div>
+                                        <div class="circle-xs bg-70C5EA">2</div>
                                     </div>
                                 </div>
                                 <div class="col-7">
@@ -195,13 +195,13 @@
                             <div class="row">
                                 <div class="col-2 text-center p-0">
                                     <div class="d-inline-block">
-                                        <div class="circle-xs bckgrd-70C5EA">3</div>
+                                        <div class="circle-xs bg-70C5EA">3</div>
                                     </div>
                                 </div>
                                 <div class="col-7">
                                     <div class="text-left survey-start-sm-txt">
                                         {% blocktrans %}
-                                            AA local group that is brought together by a common interest.
+                                            A local group that is brought together by a common interest.
                                         {% endblocktrans %}
                                     </div>
                                 </div>
@@ -231,7 +231,7 @@
             <div class="entry-header">
                 <strong>{% trans "What unites your Community of Interest?" %}</strong>
             </div>
-            <div class="col-12 py-3 px-4 light-blue-bg opacity-4 mt-2">
+            <div class="py-3 px-4 light-blue-bg opacity-4 mt-2">
                 <button class="btn btn-link ws-normal btn-no-focus-outline bg-transparent text-left my-0 p-0 no-underline-link" aria-expanded="false" aria-controls="collapseCriteria" onclick="toggleAngle(this)" type="button">
                 <h5 style="width: fit-content; color: initial;">Community of Interest Definition in {{ state_obj.name }} &#32;<i class="fas fa-angle-down pl-3"></i></h5>
                 </button>
@@ -274,7 +274,7 @@
                 <!-- Form Errors END -->
                 <!-- Sections: -->
                 <!--  Economic -->
-                <button class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#economic_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                <button id="economic_interests_btn" class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#economic_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                     <h5 class="survey-sect-title">{% trans "Economic or Environmental Interests" %}<i class="fas fa-angle-down pl-3"></i></h5>
                 </button>
                 <div class="accordion" id="economic_interests_accordion">
@@ -293,7 +293,7 @@
                 {{ comm_form.economic_interests|append_attr:"class:form-control survey-field" }}
                 <!-- Activities -->
                 <div class="accordion" id="comm_activities_accordion">
-                    <button class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#comm_activities_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                    <button id="comm_activities_btn" class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#comm_activities_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                         <h5 class="survey-sect-title">{% trans "Community Activities and Services" %}<i class="fas fa-angle-down pl-3"></i></h5>
                     </button>
                     <div id="comm_activities_example" class="collapse" aria-labelledby="comm_activities_accordion" data-parent="#comm_activities_accordion">
@@ -312,7 +312,7 @@
 
                 <!-- Cultural -->
                 <div class="accordion" id="cultural_interests_accordion">
-                    <button class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#cultural_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                    <button id="cultural_interests_btn" class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#cultural_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                         <h5 class="survey-sect-title">{% trans "Cultural or Historical Interests" %}<i class="fas fa-angle-down pl-3"></i></h5>
                     </button>
                     <div id="cultural_interests_example" class="collapse" aria-labelledby="cultural_interests_accordion" data-parent="#cultural_interests_accordion">
@@ -330,7 +330,7 @@
                 {{ comm_form.cultural_interests|append_attr:"class:form-control survey-field" }}
                 <!-- Other -->
                 <div class="accordion" id="other_interests_accordion">
-                    <button class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#other_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                    <button id="other_interests_btn" class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#other_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                         <h5 class="survey-sect-title">{% trans "Community Needs and Concerns" %}<i class="fas fa-angle-down pl-3"></i></h5>
                     </button>
                     <div id="other_interests_example" class="collapse" aria-labelledby="other_interests_accordion" data-parent="#other_interests_accordion">

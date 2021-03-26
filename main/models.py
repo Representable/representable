@@ -72,6 +72,7 @@ class Organization(models.Model):
     - states: the states that the organization operates in
     - slug: internal representable link slug
     - members: members of the organization
+    - verified: is the organization verified as legitimate by our team
     """
 
     name = models.CharField(max_length=128)
@@ -83,6 +84,7 @@ class Organization(models.Model):
     )
     slug = models.SlugField(unique=True)
     members = models.ManyToManyField(User, through="Membership")
+    verified = models.BooleanField(default=False)
 
     class Meta:
         ordering = ("description",)
@@ -355,7 +357,7 @@ class CommunityEntry(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     admin_approved = models.BooleanField(default=True)
     private = models.BooleanField(default=False, null=True)
-    population = models.IntegerField(blank=True, default=0)
+    population = models.IntegerField(blank=True, null=True, default=0)
 
     def __str__(self):
         return str(self.entry_ID)

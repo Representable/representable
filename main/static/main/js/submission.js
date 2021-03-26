@@ -386,6 +386,10 @@ map.on("load", function () {
     setTimeout(emailPDF, 5000);
   });
   if (is_thanks === "True") {
+    history.pushState(null, null, document.URL);
+    window.addEventListener('popstate', function () {
+        history.pushState(null, null, document.URL);
+    });
     canOnlyFireOnce(); // "Fired!"
   }
 
