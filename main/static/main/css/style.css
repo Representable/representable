@@ -1024,6 +1024,21 @@ Entry Mapping Page
   z-index: 1000;
 }
 
+#map-units-btn {
+  position: absolute;
+  z-index: 1;
+  left: 5%;
+  bottom: 0%;
+}
+
+#map-pop-btn {
+  position: absolute;
+  z-index: 1;
+  right: 5%;
+  bottom: 0%;
+  border: black;
+}
+
 .map-visualization {
   width: 100%;
   height: 100%;

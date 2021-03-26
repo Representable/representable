@@ -37,7 +37,6 @@ if (pop !== null) $(".comm-pop").html(pop);
 
 //switch from blocks to blockgroups and vice versa for drawing map
 function changeMappingUnit() {
-  console.log("TODO: popup that warns of removing selection");
   // remove layers: lines + shading
   // add in other layers (make visible)
   // change variables for selecting units
@@ -228,6 +227,11 @@ $('#map-help-modal').on('shown.bs.modal hidden.bs.modal', function() {
 
 $('#map-comm-modal').on('shown.bs.modal hidden.bs.modal', function() {
   $("#mobile-map-comm-btn").toggleClass("opened")
+});
+
+$('#map-units-btn').on('click', function() {
+  console.log("modal open to confirm");
+  changeMappingUnit();
 });
 
 /**

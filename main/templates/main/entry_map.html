@@ -112,7 +112,6 @@
                 </button>
 
                 <h6 id="modal-comm-name" class="dropdown-header comm-info-text w-75 pt-5">Community Name:</h6>
-                <p class="ml-4 comm-item-text comm-pop-text"> Community Population: <span class="font-weight-normal comm-pop">0</span></p>
                 <div class="accordion ml-4 mr-4 mt-1 map-info-item" id="mobile-map-economic-interests-accordion">
                     <button class="btn btn-link text-left comm-item-text pl-2 no-underline-link" type="button" data-target="#mobile-map-economic-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                         {% trans "Economic or Environmental Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
@@ -169,7 +168,7 @@
                 <!-- Help Button and Dropdown -->
                 <div class="col-1 text-md-right align-middle d-none d-md-block">
                     <div id="map-help-dropdown" class="dropdown text-md-right">
-                        <button id="map-help-btn" class="btn btn-outline-primary btn-circle btn-md mapping-icon mapping-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">?</button>
+                        <button id="map-help-btn" class="btn btn-outline-primary btn-circle btn-md mapping-icon mapping-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><b>?</b></button>
 
                         <div id="map-help-menu" class="dropdown-menu vw-md-75 vw-lg-50" aria-labelledby="map-help-btn">
                             <div class="container pl-5 pr-5 pb-5 h-100">
@@ -232,12 +231,12 @@
                     <div id="map-comm-dropdown" class="dropdown text-md-left">
                         <button class="btn btn-primary d-none d-md-inline-block mapping-icon mapping-btn" data-toggle="dropdown" style="border-radius: .5rem;" id="map-comm-btn" aria-haspopup="true" aria-expanded="false">
                             {% blocktrans %}
-                                Community Information
+                                Your Community Info <b>+</b>
                             {% endblocktrans %}
                         </button>
 
                         <div id="map-comm-menu" class="dropdown-menu" aria-labelledby="map-comm-btn">
-                            <h6 id="dropdown-comm-name" class="dropdown-header comm-info-text">University of Texas Students:</h6>
+                            <h6 id="dropdown-comm-name" class="dropdown-header comm-info-text">Community Name:</h6>
                             <p class="ml-4 comm-item-text comm-pop-text"> Community Population: <span class="font-weight-normal comm-pop">0</span></p>
                             <div class="dropdown-item accordion map-info-item ml-4 mr-4 mt-1" id="map-economic-interests-accordion">
                                 <button class="btn btn-link text-left comm-item-text pl-0 no-underline-link" type="button" data-target="#map-economic-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
@@ -318,13 +317,23 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col text-center d-none d-lg-block">
-                    <button id="mapToSurveyP2" class="btn btn-primary btn-lg no-underline-link entry-nav-btn mr-4 mapping-icon"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
+                    <button id="mapToSurveyP2" class="btn btn-outline-primary btn-lg no-underline-link entry-nav-btn mr-4 mapping-icon white-bg"><i class="fas fa-angle-left pr-2"></i>{% trans "EDIT INFO" %}</button>
                     <button id="mapToPrivacy" class="btn btn-primary btn-lg no-underline-link entry-nav-btn ml-4 mapping-icon">{% trans "SAVE" %}<i class="fas fa-angle-right pl-2"></i></button>
                 </div>
                 <div class="col text-center d-lg-none">
-                    <button id="mapToSurveyP2Mobile" class="btn btn-primary no-underline-link entry-nav-btn mr-4 mapping-icon"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
+                    <button id="mapToSurveyP2Mobile" class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4 mapping-icon white-bg"><i class="fas fa-angle-left pr-2"></i>{% trans "EDIT INFO" %}</button>
                     <button id="mapToPrivacyMobile" class="btn btn-primary no-underline-link entry-nav-btn ml-4 mapping-icon">{% trans "SAVE" %}<i class="fas fa-angle-right pl-2"></i></button>
                 </div>
+            </div>
+            <div class="row">
+              <button class="btn btn-primary d-none d-md-inline-block mapping-icon mapping-btn"  style="border-radius: .5rem;" id="map-units-btn" aria-haspopup="true" aria-expanded="false">
+                  Want smaller units?
+              </button>
+            </div>
+            <div class="row">
+              <button class="d-none d-md-inline-block mapping-icon" style="border-radius: .5rem;" id="map-pop-btn" aria-haspopup="true" aria-expanded="false">
+                <span class="comm-pop-text"> Population: <span class="font-weight-normal comm-pop">0</span></span>
+              </button>
             </div>
         </div>
     </div>
