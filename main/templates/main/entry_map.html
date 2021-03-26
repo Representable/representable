@@ -169,7 +169,7 @@
                 <!-- Help Button and Dropdown -->
                 <div class="col-1 text-md-right align-middle d-none d-md-block">
                     <div id="map-help-dropdown" class="dropdown text-md-right">
-                        <button id="map-help-btn" type="button" class="btn btn-outline-primary btn-circle btn-md mapping-icon mapping-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">?</button>
+                        <button id="map-help-btn" class="btn btn-outline-primary btn-circle btn-md mapping-icon mapping-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">?</button>
 
                         <div id="map-help-menu" class="dropdown-menu vw-md-75 vw-lg-50" aria-labelledby="map-help-btn">
                             <div class="container pl-5 pr-5 pb-5 h-100">
@@ -230,7 +230,7 @@
                 <!-- Community Button and Dropdown -->
                 <div id="map-comm-info" class="col-1 col-md-4 col-lg-3 col-xl-2 d-md-block">
                     <div id="map-comm-dropdown" class="dropdown text-md-left">
-                        <button type="button" class="btn btn-primary d-none d-md-inline-block mapping-icon mapping-btn" data-toggle="dropdown" style="border-radius: .5rem;" id="map-comm-btn" aria-haspopup="true" aria-expanded="false">
+                        <button class="btn btn-primary d-none d-md-inline-block mapping-icon mapping-btn" data-toggle="dropdown" style="border-radius: .5rem;" id="map-comm-btn" aria-haspopup="true" aria-expanded="false">
                             {% blocktrans %}
                                 Community Information
                             {% endblocktrans %}
@@ -283,14 +283,20 @@
                     </div>
                 </div>
 
+                <div class="btn-floating btn-group shadow-lg">
+                    <button type="button" class="btn fixed-action-btn btn-secondary shadow-lg" id="loading-entry">
+                    <div class="loader loader-small text-center"></div><span class="d-none d-sm-inline"> {% trans "Saving Community..." %}</span>
+                    </button>
+                </div>
+
                 <!-- Help and community button on mobile screens -->
                 <div class="col-1 d-md-none p-0">
                     <div class="row pt-3">
                         <div class="col-12 text-center pl-0">
-                            <button id="mobile-map-help-btn" type="button" class="btn btn-outline-primary btn-circle btn-md mapping-icon mapping-btn">?</button>
+                            <button id="mobile-map-help-btn" class="btn btn-outline-primary btn-circle btn-md mapping-icon mapping-btn">?</button>
                         </div>
                         <div class="col-12 text-center pl-0 pt-2">
-                            <button id="mobile-map-comm-btn" type="button" class="btn btn-primary mapping-icon mapping-btn" style="border-radius: .5rem;" data-toggle="dropdown" style="border-radius: .5rem;" id="map-comm-btn" aria-haspopup="true" aria-expanded="false">
+                            <button id="mobile-map-comm-btn" class="btn btn-primary mapping-icon mapping-btn" style="border-radius: .5rem;" data-toggle="dropdown" style="border-radius: .5rem;" id="map-comm-btn" aria-haspopup="true" aria-expanded="false">
                                 {% blocktrans %}
                                     +
                                 {% endblocktrans %}
@@ -312,12 +318,12 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col text-center d-none d-lg-block">
-                    <button id="mapToSurveyP2" type="button" class="btn btn-primary btn-lg no-underline-link entry-nav-btn mr-4 mapping-icon"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
-                    <button id="mapToPrivacy" type="button" class="btn btn-primary btn-lg no-underline-link entry-nav-btn ml-4 mapping-icon">{% trans "SAVE" %}<i class="fas fa-angle-right pl-2"></i></button>
+                    <button id="mapToSurveyP2" class="btn btn-primary btn-lg no-underline-link entry-nav-btn mr-4 mapping-icon"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
+                    <button id="mapToPrivacy" class="btn btn-primary btn-lg no-underline-link entry-nav-btn ml-4 mapping-icon">{% trans "SAVE" %}<i class="fas fa-angle-right pl-2"></i></button>
                 </div>
                 <div class="col text-center d-lg-none">
-                    <button id="mapToSurveyP2Mobile" type="button" class="btn btn-primary no-underline-link entry-nav-btn mr-4 mapping-icon"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
-                    <button id="mapToPrivacyMobile" type="button" class="btn btn-primary no-underline-link entry-nav-btn ml-4 mapping-icon">{% trans "SAVE" %}<i class="fas fa-angle-right pl-2"></i></button>
+                    <button id="mapToSurveyP2Mobile" class="btn btn-primary no-underline-link entry-nav-btn mr-4 mapping-icon"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
+                    <button id="mapToPrivacyMobile" class="btn btn-primary no-underline-link entry-nav-btn ml-4 mapping-icon">{% trans "SAVE" %}<i class="fas fa-angle-right pl-2"></i></button>
                 </div>
             </div>
         </div>

@@ -38,7 +38,7 @@
             {% endblocktrans %}
             {% if has_drive %}
             <br>
-            We will only share your information with the organizers of {{organization_name}} because you are adding the community through their community mapping drive. By submitting to this organization, you consent to receiving emails from the organizers about news and events as it relates to your community and redistricting.
+            We will only share your information with the organizers of {{organization_name}} because you are adding the community through their community mapping drive.
             {% endif %}
         </p>
 
@@ -106,12 +106,6 @@
                 <button class="btn btn-lg btn-primary no-underline-link entry-nav-btn mr-3 mapping-icon" onclick="privacyToMap()" type="button"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
                 <button id="entrySubmissionButton" class="btn btn-lg btn-primary no-underline-link entry-nav-btn ml-4 mapping-icon" type="submit" form="entryForm" value="Submit">{% trans "SUBMIT" %}</button>
             </div>
-        </div>
-
-        <div class="btn-floating btn-group shadow-lg">
-            <button type="button" class="btn fixed-action-btn btn-secondary shadow-lg" id="loading-entry">
-            <div class="loader loader-small text-center"></div><span class="d-none d-sm-inline"> {% trans "Saving Community..." %}</span>
-            </button>
         </div>
     </div>
 </div>
