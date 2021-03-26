@@ -64,6 +64,7 @@ from ..forms import (
     AddressForm,
     RepresentableSignupForm,
     RepresentableLoginForm,
+    SubmissionAddDrive,
 )
 from ..models import (
     CommunityEntry,
@@ -484,9 +485,46 @@ def SendPlainEmail(request):
     email.send()
     return HttpResponse("Sent")
 
-
-class Submission(TemplateView):
+class Submission(View):
     template_name = "main/submission.html"
+
+    def post(self, request, *args, **kwargs):
+        m_uuid = str(self.kwargs["map_id"])
+        if not m_uuid:
+            raise Http404
+        query = CommunityEntry.objects.filter(entry_ID__startswith=m_uuid)
+        if not query:
+            raise Http404
+
+        user_map = query[0]
+        if user_map.drive:
+            state = ""
+        else:
+            if "abbr" in self.kwargs:
+                state = folder_name
+            else:
+                state = user_map.state
+
+        show_form = self.should_show_form(state=state, entryid=m_uuid, auth=self.request.user.is_authenticated)
+        # print(show_form, form_info)
+
+        if(show_form == True):
+            form = SubmissionAddDrive(request.POST)
+            form.upd(state=state.upper())
+            if form.is_valid():
+                # print('form is valid', m_uuid, form.cleaned_data['Add a new drive'])
+                try:
+                    d = Drive.objects.get(id=form.cleaned_data['Add a new drive'])
+                    o = d.organization
+                    c = CommunityEntry.objects.get(entry_ID=m_uuid)
+                    c.drive = d
+                    c.organization = o
+                    c.save()
+                    # print('success')
+                except Exception as e:
+                    print('fail', e)
+
+        return HttpResponseRedirect(request.path)
 
     def get(self, request, *args, **kwargs):
         m_uuid = str(self.kwargs["map_id"])
@@ -602,11 +640,45 @@ class Submission(TemplateView):
                     )
                     comm.user_name = user_map.user_name
 
+        show_form = self.should_show_form(state=context['state'], entryid=context['map_id'], auth=self.request.user.is_authenticated)
+        context['show_form'] = show_form
+        if(show_form == True):
+            context['form'] = SubmissionAddDrive()
+            context['form'].upd(state=context['state'].upper())
+
         return render(request, self.template_name, context)
+    def should_show_form(self, state, entryid, auth):
+        """
+        Req: state = a potential state field, map_id = a potential CommEntryID, auth = whether user is authenticated
 
+        Returns:
+            Bool - Whether do display addDrive Form
 
-# ******************************************************************************#
-
+        Checks the following conditions:
+            * User is logged in
+            * context['map_id'] points to a valid CommunityEntry
+            * that CommunityEntry does not have a drive
+            * that CommunityEntry has an associated Address 
+            * context['state'] exists and is a valid state
+            * community was created by the user who is signed in - (Already true if no drive & logged in)
+        """
+        if(not auth):
+            return False
+        try:        
+            entry = CommunityEntry.objects.get(entry_ID=entryid)
+        except:
+            return False
+        if(entry.drive != None):
+            return False
+        try:
+            Address.objects.get(entry=entry)
+        except:
+            return False
+        try:
+            State.objects.get(abbr=state.upper())
+        except:
+            return False
+        return True
 
 def make_geojson(request, entry):
     map_geojson = serialize(
