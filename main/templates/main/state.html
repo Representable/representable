@@ -59,14 +59,20 @@
         </div>
       </div>
     </div>
-    <div class="col-6 d-none d-sm-block">
-      <div class="m-auto py-4 h-100">
-        <object type="image/svg+xml" class="w-75 mx-auto d-block" data="{% static 'img/map-info.svg' %}" alt="image of map with information icon"></object> 
-        <p class="text-center"> <a href="/map/{{state_obj.abbr}}" class="link-primary"> <h5>See community maps drawn in {{ state_obj.name }} here <i class="fas fa-arrow-circle-right"></i>
-        </h5></a></p>
 
+
+    <div class="col-6 d-none d-sm-block">
+      <div class="m-auto py-4">
+        <object type="image/svg+xml" class="w-75 mx-auto d-block h-100" data="{% static 'img/map-info.svg' %}" alt="image of map with information icon"></object>
+        <h5><p class="text-center">
+          <a href="/map/{{state_obj.abbr}}" class="link-primary">
+            See community maps drawn in {{ state_obj.name }} here <i class="fas fa-arrow-circle-right"></i>
+          </a>
+        </p></h5>
       </div>
     </div>
+
+
   </div>
 
   <div class="row mx-lg-5 px-md-5">
