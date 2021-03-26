@@ -77,6 +77,7 @@ from ..models import (
     State,
     Signature,
     BlockGroup,
+    CensusBlock,
     FrequentlyAskedQuestion,
     GlossaryDefinition,
 )
@@ -658,13 +659,13 @@ class Submission(View):
             * User is logged in
             * context['map_id'] points to a valid CommunityEntry
             * that CommunityEntry does not have a drive
-            * that CommunityEntry has an associated Address 
+            * that CommunityEntry has an associated Address
             * context['state'] exists and is a valid state
             * community was created by the user who is signed in - (Already true if no drive & logged in)
         """
         if(not auth):
             return False
-        try:        
+        try:
             entry = CommunityEntry.objects.get(entry_ID=entryid)
         except:
             return False
