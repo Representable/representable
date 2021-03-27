@@ -27,6 +27,7 @@ from django.views.generic import (
     DetailView,
     DeleteView,
 )
+from django.contrib import messages
 from django import forms
 from django.views import View
 from django.core.mail import send_mail
@@ -54,6 +55,7 @@ from ..models import (
     CommunityEntry,
     DriveToken,
     Address,
+    User,
 )
 from django.shortcuts import get_object_or_404
 from django.views.generic.edit import FormView
@@ -285,25 +287,38 @@ class CreateMember(LoginRequiredMixin, OrgAdminRequiredMixin, FormView):
         context = super().get_context_data(**kwargs)
 
         members = Membership.objects.filter(organization__pk=self.kwargs["pk"])
+        print(members)
+        for item in members:
+            print(item.member)
         context["organization"] = Organization.objects.get(
             id=self.kwargs["pk"]
         )
         context["header"] = ["Username", "Permissions", "Date Joined"]
-        context["members"] = members
 
         return context
+
+
 
     def form_valid(self, form):
         form.instance.organization = get_object_or_404(
             Organization, pk=self.kwargs["pk"]
         )
+        # get the email
+        email = form.cleaned_data['email']
+        try:
+            us = User.objects.get(email=email)
+        except User.DoesNotExist:
+            # send back error message
+            messages.error(self.request, "User with the provided email does not exist")
+            return render(self.request, "main/dashboard/partners/member_form.html", {'form':MemberForm})
+
         member = Membership.objects.filter(
-            organization__pk=self.kwargs["pk"], member=form.instance.member
+            organization__pk=self.kwargs["pk"], member=us,
         )
         if not member:
             # create new member with the given permissions
             new_member = Membership(
-                member=form.instance.member,
+                member=us,
                 organization=form.instance.organization,
             )
             new_member.save()
