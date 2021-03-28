@@ -287,9 +287,6 @@ class CreateMember(LoginRequiredMixin, OrgAdminRequiredMixin, FormView):
         context = super().get_context_data(**kwargs)
 
         members = Membership.objects.filter(organization__pk=self.kwargs["pk"])
-        print(members)
-        for item in members:
-            print(item.member)
         context["organization"] = Organization.objects.get(
             id=self.kwargs["pk"]
         )
