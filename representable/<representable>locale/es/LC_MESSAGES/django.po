@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-26 19:03+0000\n"
+"POT-Creation-Date: 2021-03-29 00:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1151,6 +1151,10 @@ msgid ""
 "fight gerrymandering."
 msgstr ""
 
+#: main/templates/main/entry_preview.html:33
+msgid "ADD MY COMMUNITY"
+msgstr ""
+
 #: main/templates/main/entry_privacy.html:12
 msgid ""
 "\n"
@@ -1615,7 +1619,8 @@ msgstr "¿Eres la líder de una organización?"
 msgid ""
 "Many organizations have partnered with Representable.org to collect "
 "community-of-interest data."
-msgstr "Muchas organizaciones se han asociado con Representable.org para recopilar "
+msgstr ""
+"Muchas organizaciones se han asociado con Representable.org para recopilar "
 "datos comunitarios. ¡Empiece hoy!"
 
 #: main/templates/main/index.html:36
