@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-29 00:45+0000\n"
+"POT-Creation-Date: 2021-03-29 20:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -831,6 +831,10 @@ msgid ""
 "within a few minutes."
 msgstr ""
 
+#: main/templates/main/entry_address.html:7
+msgid "Step 1"
+msgstr ""
+
 #: main/templates/main/entry_address.html:10
 msgid "Tell us about yourself."
 msgstr ""
@@ -867,9 +871,25 @@ msgstr ""
 msgid "Your Name"
 msgstr "Su nombre"
 
+#: main/templates/main/entry_address.html:103
+msgid "Street"
+msgstr ""
+
+#: main/templates/main/entry_address.html:144
+msgid "City"
+msgstr ""
+
+#: main/templates/main/entry_address.html:149
+msgid "State"
+msgstr ""
+
+#: main/templates/main/entry_address.html:173
+msgid "Zipcode"
+msgstr ""
+
 #: main/templates/main/entry_address.html:180
-#: main/templates/main/entry_survey.html:354
-#: main/templates/main/entry_survey.html:425
+#: main/templates/main/entry_survey.html:346
+#: main/templates/main/entry_survey.html:413
 msgid "NEXT"
 msgstr ""
 
@@ -1003,14 +1023,14 @@ msgstr ""
 
 #: main/templates/main/entry_map.html:138
 #: main/templates/main/entry_map.html:264
-#: main/templates/main/entry_survey.html:316
+#: main/templates/main/entry_survey.html:312
 #: main/templates/main/submission.html:146
 msgid "Cultural or Historical Interests"
 msgstr "Intereses culturales o históricos"
 
 #: main/templates/main/entry_map.html:148
 #: main/templates/main/entry_map.html:274
-#: main/templates/main/entry_survey.html:334
+#: main/templates/main/entry_survey.html:328
 #: main/templates/main/submission.html:156
 #, fuzzy
 #| msgid "Community Activities and Services"
@@ -1106,8 +1126,8 @@ msgstr ""
 #: main/templates/main/entry_privacy.html:106
 #: main/templates/main/entry_survey.html:121
 #: main/templates/main/entry_survey.html:219
-#: main/templates/main/entry_survey.html:353
-#: main/templates/main/entry_survey.html:424
+#: main/templates/main/entry_survey.html:345
+#: main/templates/main/entry_survey.html:412
 msgid "BACK"
 msgstr ""
 
@@ -1290,6 +1310,10 @@ msgstr ""
 msgid "Select your state to get started."
 msgstr "Seleccione su estado para comenzar."
 
+#: main/templates/main/entry_survey.html:7
+msgid "Step 2"
+msgstr ""
+
 #: main/templates/main/entry_survey.html:17
 msgid "Tell us about what unites your community."
 msgstr ""
@@ -1307,7 +1331,7 @@ msgstr ""
 msgid "What is a Community of Interest?"
 msgstr "2. Los intereses compartidos de tu comunidad"
 
-#: main/templates/main/entry_survey.html:30
+#: main/templates/main/entry_survey.html:31
 #, fuzzy
 #| msgid ""
 #| "\n"
@@ -1321,14 +1345,12 @@ msgstr "2. Los intereses compartidos de tu comunidad"
 #| "                                        "
 msgid ""
 "\n"
-"                            <p class=\"info-text txt-16\">\n"
-"                                A Community of Interest is a "
-"<strong>geographic area</strong> that shares <strong>cultural</strong>, "
-"<strong>historical</strong>, or <strong>economic</strong> interests.\n"
-"                                Communities of Interest encourage the "
-"drawing of fairer voting districts.\n"
-"                            </p>\n"
-"                        "
+"                            A Community of Interest is a <strong>geographic "
+"area</strong> that shares <strong>cultural</strong>, <strong>historical</"
+"strong>, or <strong>economic</strong> interests.\n"
+"                            Communities of Interest encourage the drawing of "
+"fairer voting districts.\n"
+"                            "
 msgstr ""
 "\n"
 "                                        <p>\n"
@@ -1374,7 +1396,7 @@ msgstr ""
 msgid "START"
 msgstr ""
 
-#: main/templates/main/entry_survey.html:137
+#: main/templates/main/entry_survey.html:138
 #, fuzzy
 #| msgid ""
 #| "\n"
@@ -1388,14 +1410,12 @@ msgstr ""
 #| "                                        "
 msgid ""
 "\n"
-"                            <p class=\"info-text txt-16\">\n"
-"                                A Community of Interest is a geographic area "
+"                            A Community of Interest is a geographic area "
 "that shares <strong>cultural</strong>, <strong>historical</strong>, or "
 "<strong>economic</strong> interests.\n"
-"                                Communities of Interest encourage the "
-"drawing of fairer voting districts.\n"
-"                            </p>\n"
-"                        "
+"                            Communities of Interest encourage the drawing of "
+"fairer voting districts.\n"
+"                            "
 msgstr ""
 "\n"
 "                                        <p>\n"
@@ -1449,7 +1469,13 @@ msgstr ""
 msgid "What unites your Community of Interest?"
 msgstr "2. Los intereses compartidos de tu comunidad"
 
-#: main/templates/main/entry_survey.html:245
+#: main/templates/main/entry_survey.html:236
+#, fuzzy
+#| msgid "2. Your Community's Shared Interests"
+msgid "Community of Interest Definition in "
+msgstr "2. Los intereses compartidos de tu comunidad"
+
+#: main/templates/main/entry_survey.html:246
 #, fuzzy
 #| msgid ""
 #| "\n"
@@ -1463,14 +1489,12 @@ msgstr "2. Los intereses compartidos de tu comunidad"
 #| "                                        "
 msgid ""
 "\n"
-"                    <p>\n"
-"                      Respond to <b>at least one</b> of the sections below. "
+"                    Respond to <b>at least one</b> of the sections below. "
 "There are no wrong answers.<br>\n"
 "\n"
-"                      Click on each category to see helpful questions and "
+"                    Click on each category to see helpful questions and "
 "examples.\n"
-"                    </p>\n"
-"                "
+"                    "
 msgstr ""
 "\n"
 "                                        <p>\n"
@@ -1488,110 +1512,149 @@ msgid "Please fill out at least one of the interest fields."
 msgstr ""
 
 #: main/templates/main/entry_survey.html:283
+#: main/templates/main/entry_survey.html:299
+#: main/templates/main/entry_survey.html:316
+#: main/templates/main/entry_survey.html:332
 msgid ""
-"\n"
-"                            <b>Use these questions to think more about how "
-"you would describe your community...</b><br>\n"
-"                            &emsp; - Where are residents employed?<br>\n"
-"                            &emsp; - If there are environmental concerns in "
-"your community, what are they?<br><br>\n"
-"                            <span class=\"blue-text\"><b>Examples of "
-"economic or environmental interests:</b> Tourism industry, agricultural "
-"workers, mining town, manufacturing center, polluted natural resource, "
-"unemployment problem, etc.</span>\n"
-"                            "
+"Use these questions to think more about how you would describe your "
+"community..."
 msgstr ""
 
-#: main/templates/main/entry_survey.html:297
+#: main/templates/main/entry_survey.html:284
+msgid "Where are residents employed?"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:285
+msgid "If there are environmental concerns in your community, what are they?"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:286
+#, fuzzy
+#| msgid "Economic Interests"
+msgid "Examples of economic or environmental interests:"
+msgstr "Intereses Económicos"
+
+#: main/templates/main/entry_survey.html:286
+msgid ""
+"Tourism industry, agricultural workers, mining town, manufacturing center, "
+"polluted natural resource, unemployment problem, etc."
+msgstr ""
+
+#: main/templates/main/entry_survey.html:295
 #: main/templates/main/submission.html:136
 msgid "Community Activities and Services"
 msgstr "Actividades y servicios comunitarios"
 
+#: main/templates/main/entry_survey.html:300
+msgid "Where do people in your community gather or socialize?"
+msgstr ""
+
 #: main/templates/main/entry_survey.html:301
 msgid ""
-"\n"
-"                          <b>Use these questions to think more about how you "
-"would describe your community...</b><br>\n"
-"                          &emsp; - Where do people in your community gather "
-"or socialize? <br>\n"
-"                          &emsp; - How and where does your community access "
-"services (healthcare, transportation, educational services, etc.)?<br><br>\n"
-"                          <span class=\"blue-text\"><b>Examples of "
-"activities and services:</b> Shopping areas, schools and universities, "
-"libraries, parks, lakes, rivers, places of worship, healthcare services, "
-"public transport, local nonprofit organizations, etc.</span>\n"
-"                          "
+"How and where does your community access services (healthcare, "
+"transportation, educational services, etc.)?"
 msgstr ""
 
-#: main/templates/main/entry_survey.html:320
+#: main/templates/main/entry_survey.html:302
+#, fuzzy
+#| msgid "Community Activities and Services"
+msgid "Examples of activities and services:"
+msgstr "Actividades y servicios comunitarios"
+
+#: main/templates/main/entry_survey.html:302
 msgid ""
-"\n"
-"                        <b>Use these questions to think more about how you "
-"would describe your community...</b><br>\n"
-"                        &emsp; - What are the cultural bonds in your "
-"community? <br>\n"
-"                        &emsp; - If your community has a shared history, "
-"what is it?<br><br>\n"
-"                        <span class=\"blue-text\"><b>Examples of cultural or "
-"historical interests:</b> Religious groups, ethnic groups, languages, age "
-"groups, immigration status, historic or arts districts, etc. </span>\n"
-"                        "
+"Shopping areas, schools and universities, libraries, parks, lakes, rivers, "
+"places of worship, healthcare services, public transport, local nonprofit "
+"organizations, etc."
 msgstr ""
 
-#: main/templates/main/entry_survey.html:338
+#: main/templates/main/entry_survey.html:317
+#, fuzzy
+#| msgid "What name can we use to identify your community?"
+msgid "What are the cultural bonds in your community?"
+msgstr "¿Cual nombre podemos usar para identificar tu comunidad? (obligatorio)"
+
+#: main/templates/main/entry_survey.html:318
+msgid "If your community has a shared history, what is it?"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:319
+#, fuzzy
+#| msgid "Cultural or Historical Interests"
+msgid "Examples of cultural or historical interests:"
+msgstr "Intereses culturales o históricos"
+
+#: main/templates/main/entry_survey.html:319
 msgid ""
-"\n"
-"                        <b>Use these questions to think more about how you "
-"would describe your community...</b><br>\n"
-"                        &emsp; - What should politicians and/or map drawers "
-"know about your community?<br>\n"
-"                        &emsp; - What are the needs of your community?<br>\n"
-"                        &emsp; - Is there anything else you want to tell us "
-"about your community? <br><br>\n"
-"                        <span class=\"blue-text\"><b>Examples of needs or "
-"concerns:</b> Keep community in the same district or separate into multiple "
-"districts, shared policy concerns, need for a social service, relationship "
-"to other nearby communities, issues with current district lines</span>\n"
-"                        "
+"Religious groups, ethnic groups, languages, age groups, immigration status, "
+"historic or arts districts, etc."
 msgstr ""
 
-#: main/templates/main/entry_survey.html:380
+#: main/templates/main/entry_survey.html:333
+msgid "What should politicians and/or map drawers know about your community?"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:334
+#, fuzzy
+#| msgid "What name can we use to identify your community?"
+msgid "What are the needs of your community?"
+msgstr "¿Cual nombre podemos usar para identificar tu comunidad? (obligatorio)"
+
+#: main/templates/main/entry_survey.html:335
+msgid "Is there anything else you want to tell us about your community?"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:336
+msgid "Examples of needs or concerns:"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:336
+msgid ""
+"Keep community in the same district or separate into multiple districts, "
+"shared policy concerns, need for a social service, relationship to other "
+"nearby communities, issues with current district lines"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:372
 msgid "Please include a community name."
 msgstr ""
 
-#: main/templates/main/entry_survey.html:392
+#: main/templates/main/entry_survey.html:384
 #, fuzzy
 #| msgid "Add Your Community"
 msgid "Name your community."
 msgstr "Añadir su comunidad"
 
-#: main/templates/main/entry_survey.html:396
+#: main/templates/main/entry_survey.html:389
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                            <p>\n"
+#| "                                Give your community of interest a name. "
+#| "This does not have to be the official name of your community.\n"
+#| "                            </p>\n"
+#| "                        "
 msgid ""
-"\n"
-"                            <p>\n"
-"                                Give your community of interest a name. This "
-"does not have to be the official name of your community.\n"
-"                            </p>\n"
-"                        "
+"Give your community of interest a name. This does not have to be the "
+"official name of your community."
 msgstr ""
 "\n"
 "                                            ¿Dónde la gente en sucomunidad "
 "se reúne o socializa? ¿Dónde obtiene su comunidad sus servicios?"
 
-#: main/templates/main/entry_survey.html:404
-msgid ""
-"\n"
-"                            <p class=\"small\" style=\"color: #5996D2\">\n"
-"                                <strong>Examples:</strong> Cherry Farmers "
-"Community, St. Peters Church Community, Riverside Fishing Community\n"
-"                            </p>\n"
-"                        "
-msgstr ""
-"\n"
-"                                            ¿Dónde la gente en sucomunidad "
-"se reúne o socializa? ¿Dónde obtiene su comunidad sus servicios?"
+#: main/templates/main/entry_survey.html:395
+#, fuzzy
+#| msgid "Show Examples"
+msgid "Examples"
+msgstr "Mostar ejemplos"
 
-#: main/templates/main/entry_survey.html:414
+#: main/templates/main/entry_survey.html:395
+msgid ""
+"Cherry Farmers Community, St. Peters Church Community, Riverside Fishing "
+"Community"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:402
 #, fuzzy
 #| msgid "Draw a Community Map"
 msgid "Community Name:"
@@ -1996,6 +2059,26 @@ msgstr ""
 
 #: main/templates/main/review.html:113
 msgid "Join us in the fight against gerrymandering."
+msgstr ""
+
+#: main/templates/main/state.html:15
+msgid "Welcome to"
+msgstr ""
+
+#: main/templates/main/state.html:36
+#, fuzzy
+#| msgid "Redistricting is coming."
+msgid "Redistricting Criteria"
+msgstr "Redistritación está llegando."
+
+#: main/templates/main/state.html:47
+#, fuzzy
+#| msgid "2. Your Community's Shared Interests"
+msgid "Communities of Interest in "
+msgstr "2. Los intereses compartidos de tu comunidad"
+
+#: main/templates/main/state.html:54 main/templates/main/state.html:55
+msgid "START MAPPING"
 msgstr ""
 
 #: main/templates/main/submission.html:56
@@ -3504,6 +3587,19 @@ msgstr ""
 msgid "%s: error: %s\n"
 msgstr ""
 
+#~ msgid ""
+#~ "\n"
+#~ "                            <p class=\"small\" style=\"color: #5996D2\">\n"
+#~ "                                <strong>Examples:</strong> Cherry Farmers "
+#~ "Community, St. Peters Church Community, Riverside Fishing Community\n"
+#~ "                            </p>\n"
+#~ "                        "
+#~ msgstr ""
+#~ "\n"
+#~ "                                            ¿Dónde la gente en "
+#~ "sucomunidad se reúne o socializa? ¿Dónde obtiene su comunidad sus "
+#~ "servicios?"
+
 #, fuzzy
 #~| msgid "Economic Interests"
 #~ msgid "Economic and Environmental Interests"
@@ -3562,9 +3658,6 @@ msgstr ""
 #~ "¿Hay una economía compartida en la zona geográfica de su comunidad? ¿Cómo "
 #~ "y dónde están empleados los residentes? ¿Hay preocupaciones ambientales "
 #~ "compartidas como vertederos o la calidad de agua?"
-
-#~ msgid "Show Examples"
-#~ msgstr "Mostar ejemplos"
 
 #~ msgid ""
 #~ " Tech firms and their employees, tourism, agriculture such as the cherry "
@@ -3640,10 +3733,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Nuestros agricultores se extienden en dos países y esperamos que pueda "
 #~ "ponerlos juntos en un distrito de un solo estado."
-
-#~ msgid "What name can we use to identify your community?"
-#~ msgstr ""
-#~ "¿Cual nombre podemos usar para identificar tu comunidad? (obligatorio)"
 
 #~ msgid "4. Draw Your Community"
 #~ msgstr "4. Dibujar su comunidad"
