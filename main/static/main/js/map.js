@@ -87,7 +87,8 @@ function newBoundariesLayer(name) {
 
 var community_bounds = {};
 var coidata;
-var shownCois = {};
+var shownCois = new Set(); // Tracks the ids of the cois that are selected to be "only show"
+var coidata_geojson_format;
 const mxzoom = 10, tol = 3.5;
 map.on("load", function () {
   var layers = map.getStyle().layers;
@@ -170,7 +171,7 @@ map.on("load", function () {
   // draw all coi's in one layer
   coidata = JSON.parse(coidata.replace(/'/g, '"'));
 
-  var coidata_geojson_format = {
+  coidata_geojson_format = {
     'type': 'FeatureCollection',
     'features': []
   };
@@ -386,6 +387,7 @@ for (var id in toggleableLayerIds){
 function toggleEntryVisibility(checkbox)  {
   map.setLayoutProperty('coi_layer_fill', "visibility", "none");
   if (checkbox.checked) {
+    shownCois.add(checkbox.value)
     if (map.getLayer(checkbox.value)) {
       map.setLayoutProperty(checkbox.value, "visibility", "visible");
     } else {
@@ -416,6 +418,8 @@ function toggleEntryVisibility(checkbox)  {
   //If it has been unchecked.
   else {
     map.setLayoutProperty(checkbox.value, "visibility", "none");
+    shownCois.delete(checkbox.value)
+    if (shownCois.size == 0) map.setLayoutProperty('coi_layer_fill', "visibility", "visible");
   }
 };
 
@@ -423,8 +427,8 @@ function showAllCommunities() {
   $(".map-checkbox:checkbox:checked").toArray().forEach(function(coiCheckbox) {
     coiCheckbox.checked = false;
     toggleEntryVisibility(coiCheckbox);
-    map.setLayoutProperty('coi_layer_fill', "visibility", "visible");
   })
+  map.setLayoutProperty('coi_layer_fill', "visibility", "visible");
 }
 /*******************************************************************/
 
