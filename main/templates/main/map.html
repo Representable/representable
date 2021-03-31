@@ -74,8 +74,8 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                 {% trans "Communities" %} <i id="arrowThree"class="fas fa-caret-down flipY-inplace"></i></button>
               </div>
               {% if communities %}
-                <div id="coisCollapse" class="collapse show container-fluid py-3">
-                    <div class="row">
+                <div id="coisCollapse" class="collapse show container-fluid py-3 p-0">
+                    <div class="row px-3">
                       <div class="col-8 col-xl-9">{% trans "Community Information" %}</div>
                       <div class="col-4 col-xl-3 text-xl-right text-center">{% trans "Only Show" %}</div>
                     </div> 
@@ -86,7 +86,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                     </div> {% endcomment %}
                   <div id="state-map-cois">
                     {% for c in communities %}
-                      <div class="row community-review-span py-3" id="{{c.entry_ID}}">
+                      <div class="row community-review-span py-3 px-3" id="{{c.entry_ID}}">
                         <div class="col-8 col-xl-10">
                           <span class="text-uppercase entry-name">
                             {% with link_text="/submission/"|addstr:c.entry_ID %}
