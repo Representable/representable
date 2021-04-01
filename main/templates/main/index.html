@@ -21,9 +21,8 @@
     <div class="col-lg-6 col-sm-12 col-md-6 mobile-padding-x mobile-padding-top pl-md-5">
       <div class="my-4 main-display-text-all">
         <div id="home-page-rect-mobile"></div>
-        <span class="d-block mb-3 font-large-mobile font-weight-bold dark-blue-text line-space-less pt-md-3">Gerrymandering is silencing communities.</span>
-        <span class="d-none d-xl-block h4 font-weight-light gray-text">Make your voice heard with Representable <br> and put your community on the map.</span>
-        <span class="d-block d-xl-none h4 font-weight-light gray-text font-medium-mobile">Make your voice heard with Representable and put your community on the map.</span>
+        <span class="d-block mb-3 font-large-mobile font-weight-bold dark-blue-text line-space-less pt-md-3">{% trans "Gerrymandering is silencing communities." %}</span>
+        <span class="d-block h4 font-weight-light gray-text font-medium-mobile">{% blocktrans %} Make your voice heard with Representable" <br> and put your community on the map. {% endblocktrans %}</span>
       </div>
       <a id="get-started-btn" class="text-center font-medium-mobile btn btn-primary btn-lg py-3 px-lg-5 px-4 mb-lg-5 mt-2" href="{% url 'main:entry_preview' %}"  role="button">{% trans "GET STARTED" %}</a>
       <div class="row d-none d-lg-block mt-5">
@@ -49,54 +48,73 @@
         <div class="col-md-2"></div>
         <div class="col-md-8 gray-text px-3">
           <img class="mx-auto d-block w-16 w-35-mobile pb-5" src="{% static 'img/logo.svg' %}" alt="representable logo - continental USA made of blocks"> </img>
-          <h4 class="py-3 font-medium-mobile"><b>Our mission</b> is to give communities a voice in drawing voting districts.</h4>
-          <h4 class="py-4 font-weight-light font-small-mobile">Representable allows people to draw communities of interest and share information about the interests and needs in those communities.
-            <br><br>Making this information available encourages mapmakers to take these communities into account during redistricting, in order to avoid gerrymandering and the “packing and cracking” of marginalized groups. </h4>
+          <h4 class="py-3 font-medium-mobile">{% blocktrans %}<b>Our mission</b> is to give communities a voice in drawing voting districts.{% endblocktrans %}</h4>
+          <h4 class="py-4 font-weight-light font-small-mobile">{% blocktrans %}Representable allows people to draw communities of interest and share information about the interests and needs in those communities.
+            <br><br>Making this information available encourages mapmakers to take these communities into account during redistricting, in order to avoid gerrymandering and the “packing and cracking” of marginalized groups.{% endblocktrans %}</h4>
         </div>
         <div class="col-md-2"></div>
       </div>
       <div class="row mx-md-5 mx-2 light-blue-bg px-10 gray-text pb-5">
         <div class="col-12 pt-3">
-          <h4 class="pt-5 font-medium-mobile"><b>Gerrymandering</b> is threatening democracy.</h4>
-          <h5 class="py-3 font-weight-light font-small-mobile">Politicians have been splitting up and packing together communities into districts that silence the voices of community members. This prevents communities from electing representatives that listen to their needs. Gathering communities of interest maps helps fight gerrymandering. We can provide map drawers with the information they need to draw districts that empower communities.</h5>
-          <h5 class="pt-3 pb-lg-5 pb-3 font-weight-light font-medium-mobile"><b>We're fighting to make democracy more...</b></h5>
+          <h4 class="pt-5 font-medium-mobile">{% blocktrans %}<b>Gerrymandering</b> is threatening democracy.{% endblocktrans %}</h4>
+          <h5 class="py-3 font-weight-light font-small-mobile">{% blocktrans %}Politicians have been splitting up and packing together communities into districts that silence the voices of community members. This prevents communities from electing representatives that listen to their needs. Gathering communities of interest maps helps fight gerrymandering. We can provide map drawers with the information they need to draw districts that empower communities.{% endblocktrans %}</h5>
+          <h5 class="pt-3 pb-lg-5 pb-3 font-weight-light font-medium-mobile"><b>{% blocktrans %}We're fighting to make democracy more...{% endblocktrans %}</b></h5>
         </div>
         <div class="col-lg-4">
-          <h4 class=""><span class="badge number-circle number-circle-1 mr-3">1</span>Transparent</h4>
+          <h4 class=""><span class="badge number-circle number-circle-1 mr-3">1</span>{% trans "Transparent" %}</h4>
         </div>
         <div class="col-lg-4">
-          <h4 class=""><span class="badge number-circle mr-3">2</span>Inclusive</h4>
+          <h4 class=""><span class="badge number-circle mr-3">2</span>{% trans "Inclusive" %}</h4>
         </div>
         <div class="col-lg-4">
-          <h4 class=""><span class="badge number-circle mr-3">3</span>Accessible</h4>
+          <h4 class=""><span class="badge number-circle mr-3">3</span>{% trans "Accessible" %}</h4>
         </div>
       </div>
       <div class="row gray-text text-center py-md-5 mt-5">
         <div class="col-md-4">
           <img class="card-img-top img-fluid m-2 w-50 w-35-mobile mx-auto mb-md-4" src="{% static 'img/home_step_1.png' %}" alt="Icon of people"></img>
-          <h4 class="font-medium-mobile">Answer Questions</h4>
-          <p class="text-center mx-4 px-lg-5 font-small-mobile">that help you identify what bonds your community together.</p>
+          <h4 class="font-medium-mobile">{% trans "Answer Questions" %}</h4>
+          <p class="text-center mx-4 px-lg-5 font-small-mobile">{% trans "that help you identify what bonds your community together." %}</p>
         </div>
         <div class="col-md-4">
           <img class="card-img-top img-fluid m-2 w-50 w-35-mobile mx-auto mb-md-4" src="{% static 'img/home_step_2.png' %}" alt="Icon of blocks being clicked"></img>
-          <h4 class="font-medium-mobile">Draw a Community Map</h4>
-          <p class="text-center mx-lg-4 px-4 font-small-mobile">by choosing units that make up your community. Use landmarks to draw your map.</p>
+          <h4 class="font-medium-mobile">{% trans "Draw a Community Map" %}</h4>
+          <p class="text-center mx-lg-4 px-4 font-small-mobile">{% trans "by choosing units that make up your community. Use landmarks to draw your map." %}</p>
         </div>
         <div class="col-md-4">
           <img class="card-img-top img-fluid m-2 w-50 w-35-mobile mx-auto mb-md-4" src="{% static 'img/home_step_3.png' %}" alt="Icon of envelope"></img>
-          <h4 class="font-medium-mobile">Share your Map</h4>
-          <p class="text-center mx-lg-5 px-4 font-small-mobile">as public input for map makers to use when drawing new voting districts.</p>
+          <h4 class="font-medium-mobile">{% trans 'Share your Map' %}</h4>
+          <p class="text-center mx-lg-5 px-4 font-small-mobile">{% trans "as public input for map makers to use when drawing new voting districts." %}</p>
         </div>
         <hr class="line-break d-md-none d-block mb-4">
       </div>
-      <div class="row mx-lg-5 gray-text text-center">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-8">
-          <h5 class="font-weight-light font-medium-mobile">We are putting Representable in the hands of the communities that need it.
-          <br>Join us to help communities get the representation they deserve.</h5>
-          <img class="card-img-top img-fluid w-10 m-2 mx-auto pt-3" src="{% static 'img/handshake.png' %}" alt="handshake forming a heart"></img>
+      <div class="row mx-lg-5 gray-text">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-10 col-12">
+          <div class="row">
+            <div class="col-2 p-0 text-center text-lg-left text-xl-center">
+              <img class="mx-auto w-75 w-md-50 w-xl-25 my-auto" src="{% static 'img/handshake.png' %}" alt="handshake forming a heart"></img>
+            </div>
+            <div class="col-10">
+              <h5 class="font-weight-light font-medium-mobile">{% blocktrans %}We are putting Representable in the hands of the communities that need it.{% endblocktrans %}
+              <br>{% blocktrans %}Join us to help communities get the representation they deserve.{% endblocktrans %}</h5>
+            </div>
+          </div>
         </div>
-        <div class="col-lg-2"></div>
+        <div class="col-lg-1"></div>
+      </div>
+      <div class="row mt-5 pt-5">
+        <div class="col-3"></div>
+        <div class="col-2 text-right">
+          <a href="https://www.facebook.com/Representable.org/" target="_blank"><img class="social-media-logo mx-auto w-md-50 w-lg-25" src="{% static 'img/facebook-grey-logo.svg' %}" alt="Representable's Facebook page linked from Facebook logo"></img></a>
+        </div>
+        <div class="col-2 text-center">
+          <a href="https://www.instagram.com/representable_org/" target="_blank"><img class="social-media-logo mx-auto w-md-50 w-lg-25" src="{% static 'img/ig-grey-logo.svg' %}" alt="Representable's Instagram page linked from Instagram logo"></img></a>
+        </div>
+        <div class="col-2 text-left">
+          <a href="https://twitter.com/representable_" target="_blank"><img class="social-media-logo mx-auto w-md-50 w-lg-25" src="{% static 'img/twitter-grey-logo.svg' %}" alt="Representable's Twitter page linked from Twitter logo"></img></a>
+        </div>
+        <div class="col-3"></div>
       </div>
     </div>
 </div>
