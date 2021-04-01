@@ -78,7 +78,7 @@
             {% if user.is_generic_admin %}
               {% if user.get_organizations|length > 1 %}
               <li class="dropdown mx-auto nav-item">
-                  <button class="btn btn-link nav-link" type="button" data-toggle="dropdown">My Organizations
+                  <button class="btn btn-link nav-link" type="button" data-toggle="dropdown">{% trans "My Organizations" %}
                   <i class="fas fa-angle-down pl-1"></i></button>
                   <ul class="dropdown-menu">
                     {% for org in user.get_organizations %}
@@ -107,23 +107,17 @@
               </li>
             {% endif %}
             <li class="dropdown mx-auto nav-item">
-                <button class="btn btn-link nav-link" type="button" data-toggle="dropdown">Learn More
+                <button class="btn btn-link nav-link" type="button" data-toggle="dropdown">{% trans "Learn More" %}
                 <i class="fas fa-angle-down"></i></button>
                 <ul class="dropdown-menu">
-                  <li class="nav-link mx-1"><a href="{% url 'main:faq' %}">FAQ</a></li>
-                  <li class="nav-link mx-1"><a href="{% url 'main:glossary' %}">Redistricting Glossary</a></li>
-                  <li class="nav-link mx-1"><a href="{% url 'main:resources' %}">Resources</a></li>
+                  <li class="nav-link mx-1"><a href="{% url 'main:faq' %}">{% trans "FAQ" %}</a></li>
+                  <li class="nav-link mx-1"><a href="{% url 'main:glossary' %}">{% trans "Redistricting Glossary" %}</a></li>
+                  <li class="nav-link mx-1"><a href="{% url 'main:resources' %}">{% trans "Resources" %}</a></li>
                 </ul>
             </li>
                 <li class="nav-item mx-auto">
                     <a class="nav-link" href="{% url 'main:about' %}">
                         {% trans "About" %}
-                    </a>
-                </li>
-
-                <li class="nav-item mx-auto">
-                    <a class="nav-link" href="{% url 'main:blog' %}">
-                        {% trans "Blog" %}
                     </a>
                 </li>
 
