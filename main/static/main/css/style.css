@@ -529,6 +529,15 @@ body {
   .px-10 {
     padding: 10px;
   }
+  #map-units-btn {
+    right: 2% !important;
+    bottom: -6000% !important;
+  }
+
+  #map-pop-btn {
+    right: 2% !important;
+    bottom: -6000% !important;
+  }
 }
 /* EXCLUSIVELY FOR HOME PAGE rect */
 @media screen and (min-width:992px) and (max-width:1169px){
