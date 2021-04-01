@@ -253,7 +253,7 @@ form:invalid {
 
 #state-map-cois {
   overflow: scroll;
-  max-height: 800px;
+  max-height: 500px;
 }
 
 /*********************************************************************
