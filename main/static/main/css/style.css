@@ -889,6 +889,13 @@ Entry Mapping Page
   backdrop-filter: blur(4px); /* Note: backdrop-filter has minimal browser support */
 }
 
+.units-modal .modal-content {
+  background-color: rgba(218, 239, 255, 0.85);
+  border-radius: 20px;
+  border: none;
+  backdrop-filter: blur(4px); /* Note: backdrop-filter has minimal browser support */
+}
+
 #map-comm-info {
   vertical-align: middle;
   margin: auto;

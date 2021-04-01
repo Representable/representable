@@ -230,10 +230,18 @@ $('#map-comm-modal').on('shown.bs.modal hidden.bs.modal', function() {
 });
 
 $('#map-units-btn').on('click', function() {
-  console.log("modal open to confirm");
-  changeMappingUnit();
+  drawUsingBlocks ? $("#map-block-to-bg-modal").modal() : $("#map-bg-to-block-modal").modal()
 });
 
+$('#map-block-to-bg-btn').on('click', function() {
+  changeMappingUnit();
+  $("#map-block-to-bg-modal").modal('hide');
+});
+
+$('#map-bg-to-block-btn').on('click', function() {
+  changeMappingUnit();
+  $("#map-bg-to-block-modal").modal('hide');
+});
 /**
  * "May not be needed": Lines tagged with this are meant to animate the load in between the progress bars on a mobile view. However
  * right now those bars have been left out so those lines can be deleted if the bars won't be put back in

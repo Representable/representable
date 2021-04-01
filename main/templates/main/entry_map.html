@@ -2,7 +2,7 @@
 {% load widget_tweaks %}
 {% load static %}
 
-<!-- Modal -->
+<!-- First modal - search for location -->
 <div id="entry-map-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -30,6 +30,62 @@
                         <div class="row">
                             <div class="col text-center">
                                 <div id="modal-geocoder" class="geocoder my-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal for census block groups -> census blocks -->
+<div id="map-bg-to-block-modal" class="modal fade units-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content px-lg-5 gray-text">
+            <div class="modal-body">
+                <button type="button" class="close p-2" aria-label="Close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="mx-3 my-5">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col">
+                              <h2>Change your mapping units.</h2>
+                              <br>
+                              <p>Currently, you are mapping with <b>census block groups</b>. These units are used by map drawers to draw voting districts. </p>
+                              <p>If you would like to map your community with smaller units, you can switch to <b>census blocks</b>. Census blocks are small units that make up census block groups. </p>
+                              <p class="text-danger">If you switch the units now, your current selection will be erased. </p>
+                              <br>
+                              <button id="map-bg-to-block-btn" class="btn btn-outline-gray btn-lg no-underline-link entry-nav-btn mr-4">Switch to smaller units</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal for census blocks -> census block groups -->
+<div id="map-block-to-bg-modal" class="modal fade units-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content px-lg-5 gray-text">
+            <div class="modal-body">
+                <button type="button" class="close p-2" aria-label="Close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="mx-3 my-5">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col">
+                              <h2>Change your mapping units.</h2>
+                              <br>
+                              <p>Currently, you are mapping with <b>census blocks</b>. These units are used by map drawers to draw voting districts. </p>
+                              <p>If you would like to map your community with larger units, you can switch to <b>census block groups</b>. Census block groups are large units comprised of census blocks. </p>
+                              <p class="text-danger">If you switch the units now, your current selection will be erased. </p>
+                              <br>
+                              <button id="map-block-to-bg-btn" class="btn btn-outline-gray btn-lg no-underline-link entry-nav-btn mr-4">Switch to larger units</button>
                             </div>
                         </div>
                     </div>
@@ -327,7 +383,7 @@
             </div>
             <div class="row">
               <button class="btn btn-primary d-none d-md-inline-block mapping-icon mapping-btn m-1"  style="border-radius: .5rem;" id="map-units-btn" aria-haspopup="true" aria-expanded="false">
-                  Want smaller units?
+                  Want different units?
               </button>
             </div>
             <div class="row">
