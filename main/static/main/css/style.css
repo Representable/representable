@@ -251,6 +251,11 @@ form:invalid {
   font-size: 1rem;
 }
 
+#state-map-cois {
+  overflow: scroll;
+  max-height: 500px;
+}
+
 /*********************************************************************
 
 Entry Preview Page
