@@ -530,19 +530,12 @@ body {
     padding: 10px;
   }
 }
-/* EXCLUSIVELY FOR HOME PAGE rect */
-@media screen and (min-width:992px) and (max-width:1169px){
-  #home-page-rect {
-    height: 275% !important;
-  }
-}
 
 #home-page-rect {
   position: absolute;
-  width: 250%;
-  height: 300%;
-  left: -10%;
-  bottom: 110%;
+  width: 90%;
+  height: 50%;
+  right: 5%;
 
   background: rgba(204, 233, 255, 0.2);
   z-index: -999;
