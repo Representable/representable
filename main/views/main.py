@@ -1169,7 +1169,7 @@ class MultiExportView(TemplateView):
 
         cois = set(json.loads(request.POST['cois']))
         if 'all' not in cois:
-            query = [entry for entry in list(query) if entry.entry_ID in cois]
+            query = [entry for entry in query if entry.entry_ID in cois]
         
         all_gj = []
         for entry in query:
