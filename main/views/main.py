@@ -1152,12 +1152,21 @@ class MultiExportView(TemplateView):
 
     def post(self, request, *args, **kwargs):
         state = self.kwargs["abbr"]
+        cois = set(json.loads(request.POST['cois']))
         state_obj = State.objects.get(abbr=state.upper())
-        query = (
-            state_obj.submissions.all()
-            .defer("census_blocks_polygon_array", "user_polygon")
-            .prefetch_related("organization", "drive")
-        )
+        
+        if 'all' not in cois:
+            query = (
+                state_obj.submissions.filter(entry_ID__in=cois)
+                .defer("census_blocks_polygon_array", "user_polygon")
+                .prefetch_related("organization", "drive")
+            )
+        else:
+            query = (
+                state_obj.submissions.all()
+                .defer("census_blocks_polygon_array", "user_polygon")
+                .prefetch_related("organization", "drive")
+            )
 
         if not query:
             # TODO: if the query is empty, return something more appropriate
@@ -1166,10 +1175,6 @@ class MultiExportView(TemplateView):
             return HttpResponse(
                 geojson.dumps({}), content_type="application/json"
             )
-
-        cois = set(json.loads(request.POST['cois']))
-        if 'all' not in cois:
-            query = [entry for entry in query if entry.entry_ID in cois]
         
         all_gj = []
         for entry in query:
