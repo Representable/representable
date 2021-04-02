@@ -1150,7 +1150,7 @@ class EntryView(LoginRequiredMixin, View):
 class MultiExportView(TemplateView):
     template = "main/export.html"
 
-    def get(self, request, **kwargs):
+    def post(self, request, *args, **kwargs):
         state = self.kwargs["abbr"]
         state_obj = State.objects.get(abbr=state.upper())
         query = (
@@ -1167,13 +1167,16 @@ class MultiExportView(TemplateView):
                 geojson.dumps({}), content_type="application/json"
             )
 
+        cois = set(json.loads(request.POST['cois']))
+        if 'all' not in cois:
+            query = [entry for entry in list(query) if entry.entry_ID in cois]
+        
         all_gj = []
         for entry in query:
             gj = make_geojson_for_state_map_page(request, entry)
             all_gj.append(gj)
 
         final = geojson.FeatureCollection(all_gj)
-
         if kwargs["type"] == "geo":
             print("********", "geo", "********")
             response = HttpResponse(

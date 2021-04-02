@@ -384,6 +384,8 @@ for (var id in toggleableLayerIds){
   var newline = document.createElement("br");
 };
 
+// Toggles the visibility of the selected community. If the coi_layer_fill layer (all the communities) is displayed, remove it and
+// display the selected community. If the last selected community community is hidden, display the coi_layer_fill layer.
 function toggleEntryVisibility(checkbox)  {
   map.setLayoutProperty('coi_layer_fill', "visibility", "none");
   if (checkbox.checked) {
@@ -415,7 +417,6 @@ function toggleEntryVisibility(checkbox)  {
       });
     }
   }
-  //If it has been unchecked.
   else {
     map.setLayoutProperty(checkbox.value, "visibility", "none");
     shownCois.delete(checkbox.value)
@@ -423,6 +424,7 @@ function toggleEntryVisibility(checkbox)  {
   }
 };
 
+// Uncheck all communities that are currently checked and display the total community layer
 function showAllCommunities() {
   $(".map-checkbox:checkbox:checked").toArray().forEach(function(coiCheckbox) {
     coiCheckbox.checked = false;
@@ -430,6 +432,27 @@ function showAllCommunities() {
   })
   map.setLayoutProperty('coi_layer_fill', "visibility", "visible");
 }
+
+function exportCois(url, type) {
+  let coisToExport = shownCois.size > 0 ? shownCois : new Set(["all"]);
+  dataToSend = {
+      'cois': JSON.stringify(Array.from(coisToExport)),
+      csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').attr('value'),
+  }
+  $.ajax({
+          type: "POST",
+          url: url,
+          data: dataToSend,
+          success:function(response){ 
+            const blob = type == "geo" ? new Blob([JSON.stringify(response)], {type : 'application/json'}) : new Blob([response], {type : 'application/csv'})
+            const url = window.URL.createObjectURL(blob);
+            var link = type == "geo" ? document.getElementById("map-geo-link") : link = document.getElementById("map-csv-link")
+            link.href = url
+            link.click()
+            window.URL.revokeObjectURL(url);
+        }
+      });
+};
 /*******************************************************************/
 
 // remove the last char in the string
