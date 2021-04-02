@@ -214,6 +214,14 @@ form:invalid {
   width: 0%;
 }
 
+.social-media-logo {
+  opacity: 70%;
+}
+
+.social-media-logo:hover {
+  opacity: 40%;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .progress-bar, .progress-bar-vert {
     transition: none;
@@ -241,6 +249,11 @@ form:invalid {
 .warning-box {
   border: 1px solid red;
   font-size: 1rem;
+}
+
+#state-map-cois {
+  overflow: scroll;
+  max-height: 500px;
 }
 
 /*********************************************************************

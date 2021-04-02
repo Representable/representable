@@ -86,7 +86,10 @@ function newBoundariesLayer(name) {
 }
 
 var community_bounds = {};
-
+var coidata;
+var shownCois = new Set(); // Tracks the ids of the cois that are selected to be "only show"
+var coidata_geojson_format;
+const mxzoom = 10, tol = 3.5;
 map.on("load", function () {
   var layers = map.getStyle().layers;
   // Find the index of the first symbol layer in the map style
@@ -168,7 +171,7 @@ map.on("load", function () {
   // draw all coi's in one layer
   coidata = JSON.parse(coidata.replace(/'/g, '"'));
 
-  var coidata_geojson_format = {
+  coidata_geojson_format = {
     'type': 'FeatureCollection',
     'features': []
   };
@@ -202,7 +205,6 @@ map.on("load", function () {
 
   // mxzoom(def 18 higher = more detail)
   // tol(def .375 higher = simpler geometry)
-  const mxzoom = 10, tol = 3.5;
 
   map.addSource('coi_all', {
       'type': 'geojson',
@@ -225,42 +227,48 @@ map.on("load", function () {
 
   // hover to highlight
   $(".community-review-span").hover(function() {
+      let highlight_id = this.id + "_boldline";
+      let highlight_id_fill = this.id + "_fill";
+      if (map.getLayer(highlight_id)) {
+        map.setLayoutProperty(highlight_id, "visibility", "visible")
+        map.setLayoutProperty(highlight_id_fill, "visibility", "visible")
+      } else {
+        map.addSource(highlight_id, {
+          'type': 'geojson',
+          'data': {
+            type: "Feature",
+            geometry: {
+              type: "Polygon",
+              coordinates: coidata[this.id],
+            },
+          },
+          'maxzoom': mxzoom, // def 18 higher = more detail
+          'tolerance': tol // def .375 higher = simpler geometry
+      });
+      map.addLayer({
+          'id': highlight_id_fill,
+          'type': 'fill',
+          'source': highlight_id,
+          'paint': {
+            'fill-color': 'rgb(110, 178, 181)',
+            'fill-opacity': 0.15
+          },
+      });
+      map.addLayer({
+          'id': highlight_id,
+          'type': 'line',
+          'source': highlight_id,
+          'paint': {
+            'line-color': '#808080',
+            'line-width': 2,
+          },
+      });
+    }
+  }, function () {
     let highlight_id = this.id + "_boldline";
     let highlight_id_fill = this.id + "_fill";
-    map.addSource(highlight_id, {
-        'type': 'geojson',
-        'data': {
-          type: "Feature",
-          geometry: {
-            type: "Polygon",
-            coordinates: coidata[this.id],
-          },
-        },
-        'maxzoom': mxzoom, // def 18 higher = more detail
-        'tolerance': tol // def .375 higher = simpler geometry
-    });
-    map.addLayer({
-        'id': highlight_id_fill,
-        'type': 'fill',
-        'source': highlight_id,
-        'paint': {
-          'fill-color': 'rgb(110, 178, 181)',
-          'fill-opacity': 0.15
-        },
-    });
-    map.addLayer({
-        'id': highlight_id,
-        'type': 'line',
-        'source': highlight_id,
-        'paint': {
-          'line-color': '#808080',
-          'line-width': 2,
-        },
-    });
-  }, function () {
-    map.removeLayer(this.id+"_boldline");
-    map.removeLayer(this.id+"_fill");
-    map.removeSource(this.id+"_boldline");
+    map.setLayoutProperty(highlight_id, "visibility", "none")
+    map.setLayoutProperty(highlight_id_fill, "visibility", "none")
   });
 
   // find what features are currently on view
@@ -376,7 +384,54 @@ for (var id in toggleableLayerIds){
   var newline = document.createElement("br");
 };
 
+function toggleEntryVisibility(checkbox)  {
+  map.setLayoutProperty('coi_layer_fill', "visibility", "none");
+  if (checkbox.checked) {
+    shownCois.add(checkbox.value)
+    if (map.getLayer(checkbox.value)) {
+      map.setLayoutProperty(checkbox.value, "visibility", "visible");
+    } else {
+      map.addSource(checkbox.value, {
+          'type': 'geojson',
+          'data': {
+            type: "Feature",
+            geometry: {
+              type: "Polygon",
+              coordinates: coidata[checkbox.value],
+            },
+          },
+          'maxzoom': mxzoom,
+          'tolerance': tol
+      });
+    
+      map.addLayer({
+          'id': checkbox.value,
+          'type': 'fill',
+          'source': checkbox.value,
+          'paint': {
+              'fill-color': 'rgb(110, 178, 181)',
+              'fill-opacity': 0.15
+          },
+      });
+    }
+  }
+  //If it has been unchecked.
+  else {
+    map.setLayoutProperty(checkbox.value, "visibility", "none");
+    shownCois.delete(checkbox.value)
+    if (shownCois.size == 0) map.setLayoutProperty('coi_layer_fill', "visibility", "visible");
+  }
+};
+
+function showAllCommunities() {
+  $(".map-checkbox:checkbox:checked").toArray().forEach(function(coiCheckbox) {
+    coiCheckbox.checked = false;
+    toggleEntryVisibility(coiCheckbox);
+  })
+  map.setLayoutProperty('coi_layer_fill', "visibility", "visible");
+}
 /*******************************************************************/
+
 // remove the last char in the string
 function removeLastChar(str) {
   return str.substring(0, str.length - 1);
