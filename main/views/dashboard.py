@@ -149,7 +149,7 @@ class CreateOrg(LoginRequiredMixin, CreateView):
             + " signed up to create an organization called "
             + org.name
             + ", in the state(s) of "
-            + org.states
+            + str(org.states)
             + " Their organization description: "
             + org.description
             + "."

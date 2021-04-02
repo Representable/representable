@@ -519,6 +519,7 @@ class Submission(View):
                     c = CommunityEntry.objects.get(entry_ID=m_uuid)
                     c.drive = d
                     c.organization = o
+                    c.admin_approved = True
                     c.save()
                     # print('success')
                 except Exception as e:
