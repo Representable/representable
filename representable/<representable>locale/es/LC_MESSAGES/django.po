@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-29 20:17+0000\n"
+"POT-Creation-Date: 2021-04-02 21:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -888,8 +888,8 @@ msgid "Zipcode"
 msgstr ""
 
 #: main/templates/main/entry_address.html:180
-#: main/templates/main/entry_survey.html:346
-#: main/templates/main/entry_survey.html:413
+#: main/templates/main/entry_survey.html:357
+#: main/templates/main/entry_survey.html:428
 msgid "NEXT"
 msgstr ""
 
@@ -996,42 +996,45 @@ msgstr ""
 
 #: main/templates/main/entry_map.html:118
 #: main/templates/main/entry_map.html:244
-#: main/templates/main/entry_survey.html:278
-#: main/templates/main/submission.html:126
-#, fuzzy
-#| msgid "Economic Interests"
-msgid "Economic or Environmental Interests"
-msgstr "Intereses Económicos"
-
-#: main/templates/main/entry_map.html:128
-#: main/templates/main/entry_map.html:254
 #, fuzzy
 #| msgid "Community Activities and Services"
 msgid "Communities Activities and Services"
 msgstr "Actividades y servicios comunitarios"
 
+#: main/templates/main/entry_map.html:122
 #: main/templates/main/entry_map.html:132
-#: main/templates/main/entry_map.html:142
 #: main/templates/main/entry_map.html:152
+#: main/templates/main/entry_map.html:248
 #: main/templates/main/entry_map.html:258
-#: main/templates/main/entry_map.html:268
 #: main/templates/main/entry_map.html:278
 msgid ""
 " Where do people in your community gather or socialize? <br>Where does your "
 "community get its services? "
 msgstr ""
 
-#: main/templates/main/entry_map.html:138
-#: main/templates/main/entry_map.html:264
-#: main/templates/main/entry_survey.html:312
-#: main/templates/main/submission.html:146
+#: main/templates/main/entry_map.html:128
+#: main/templates/main/entry_map.html:254
+#: main/templates/main/entry_survey.html:300 main/templates/main/map.html:103
+#: main/templates/main/submission.html:136
+#: main/templates/main/submission.html:382
 msgid "Cultural or Historical Interests"
 msgstr "Intereses culturales o históricos"
 
+#: main/templates/main/entry_map.html:138
+#: main/templates/main/entry_map.html:264
+#: main/templates/main/entry_survey.html:318 main/templates/main/map.html:113
+#: main/templates/main/submission.html:146
+#: main/templates/main/submission.html:362
+#, fuzzy
+#| msgid "Economic Interests"
+msgid "Economic or Environmental Interests"
+msgstr "Intereses Económicos"
+
 #: main/templates/main/entry_map.html:148
 #: main/templates/main/entry_map.html:274
-#: main/templates/main/entry_survey.html:328
+#: main/templates/main/entry_survey.html:337 main/templates/main/map.html:118
 #: main/templates/main/submission.html:156
+#: main/templates/main/submission.html:392
 #, fuzzy
 #| msgid "Community Activities and Services"
 msgid "Community Needs and Concerns"
@@ -1126,8 +1129,8 @@ msgstr ""
 #: main/templates/main/entry_privacy.html:106
 #: main/templates/main/entry_survey.html:121
 #: main/templates/main/entry_survey.html:219
-#: main/templates/main/entry_survey.html:345
-#: main/templates/main/entry_survey.html:412
+#: main/templates/main/entry_survey.html:356
+#: main/templates/main/entry_survey.html:427
 msgid "BACK"
 msgstr ""
 
@@ -1307,7 +1310,9 @@ msgstr ""
 
 #: main/templates/main/entry_state_selection.html:20
 #: main/templates/main/entry_state_selection.html:21
-msgid "Select your state to get started."
+#, fuzzy
+#| msgid "Select your state to get started."
+msgid "Select your state."
 msgstr "Seleccione su estado para comenzar."
 
 #: main/templates/main/entry_survey.html:7
@@ -1511,57 +1516,19 @@ msgstr ""
 msgid "Please fill out at least one of the interest fields."
 msgstr ""
 
-#: main/templates/main/entry_survey.html:283
-#: main/templates/main/entry_survey.html:299
-#: main/templates/main/entry_survey.html:316
-#: main/templates/main/entry_survey.html:332
-msgid ""
-"Use these questions to think more about how you would describe your "
-"community..."
-msgstr ""
-
-#: main/templates/main/entry_survey.html:284
-msgid "Where are residents employed?"
-msgstr ""
-
-#: main/templates/main/entry_survey.html:285
-msgid "If there are environmental concerns in your community, what are they?"
-msgstr ""
-
-#: main/templates/main/entry_survey.html:286
-#, fuzzy
-#| msgid "Economic Interests"
-msgid "Examples of economic or environmental interests:"
-msgstr "Intereses Económicos"
-
-#: main/templates/main/entry_survey.html:286
-msgid ""
-"Tourism industry, agricultural workers, mining town, manufacturing center, "
-"polluted natural resource, unemployment problem, etc."
-msgstr ""
-
-#: main/templates/main/entry_survey.html:295
-#: main/templates/main/submission.html:136
+#: main/templates/main/entry_survey.html:281 main/templates/main/map.html:108
+#: main/templates/main/submission.html:126
+#: main/templates/main/submission.html:372
 msgid "Community Activities and Services"
 msgstr "Actividades y servicios comunitarios"
 
-#: main/templates/main/entry_survey.html:300
-msgid "Where do people in your community gather or socialize?"
-msgstr ""
-
-#: main/templates/main/entry_survey.html:301
+#: main/templates/main/entry_survey.html:285
 msgid ""
 "How and where does your community access services (healthcare, "
 "transportation, educational services, etc.)?"
 msgstr ""
 
-#: main/templates/main/entry_survey.html:302
-#, fuzzy
-#| msgid "Community Activities and Services"
-msgid "Examples of activities and services:"
-msgstr "Actividades y servicios comunitarios"
-
-#: main/templates/main/entry_survey.html:302
+#: main/templates/main/entry_survey.html:304
 msgid ""
 "Shopping areas, schools and universities, libraries, parks, lakes, rivers, "
 "places of worship, healthcare services, public transport, local nonprofit "
@@ -1578,13 +1545,22 @@ msgstr "¿Cual nombre podemos usar para identificar tu comunidad? (obligatorio)"
 msgid "If your community has a shared history, what is it?"
 msgstr ""
 
-#: main/templates/main/entry_survey.html:319
-#, fuzzy
-#| msgid "Cultural or Historical Interests"
-msgid "Examples of cultural or historical interests:"
-msgstr "Intereses culturales o históricos"
+#: main/templates/main/entry_survey.html:322
+msgid ""
+"\n"
+"                            <b>Use these questions to think more about how "
+"you would describe your community...</b><br>\n"
+"                            &emsp; - Where are residents employed?<br>\n"
+"                            &emsp; - If there are environmental concerns in "
+"your community, what are they?<br><br>\n"
+"                            <span class=\"blue-text\"><b>Examples of "
+"economic or environmental interests:</b> Tourism industry, agricultural "
+"workers, mining town, manufacturing center, polluted natural resource, "
+"unemployment problem, etc.</span>\n"
+"                            "
+msgstr ""
 
-#: main/templates/main/entry_survey.html:319
+#: main/templates/main/entry_survey.html:341
 msgid ""
 "Religious groups, ethnic groups, languages, age groups, immigration status, "
 "historic or arts districts, etc."
@@ -1604,36 +1580,17 @@ msgstr "¿Cual nombre podemos usar para identificar tu comunidad? (obligatorio)"
 msgid "Is there anything else you want to tell us about your community?"
 msgstr ""
 
-#: main/templates/main/entry_survey.html:336
-msgid "Examples of needs or concerns:"
-msgstr ""
-
-#: main/templates/main/entry_survey.html:336
-msgid ""
-"Keep community in the same district or separate into multiple districts, "
-"shared policy concerns, need for a social service, relationship to other "
-"nearby communities, issues with current district lines"
-msgstr ""
-
-#: main/templates/main/entry_survey.html:372
+#: main/templates/main/entry_survey.html:383
 msgid "Please include a community name."
 msgstr ""
 
-#: main/templates/main/entry_survey.html:384
+#: main/templates/main/entry_survey.html:395
 #, fuzzy
 #| msgid "Add Your Community"
 msgid "Name your community."
 msgstr "Añadir su comunidad"
 
-#: main/templates/main/entry_survey.html:389
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                            <p>\n"
-#| "                                Give your community of interest a name. "
-#| "This does not have to be the official name of your community.\n"
-#| "                            </p>\n"
-#| "                        "
+#: main/templates/main/entry_survey.html:399
 msgid ""
 "Give your community of interest a name. This does not have to be the "
 "official name of your community."
@@ -1642,19 +1599,13 @@ msgstr ""
 "                                            ¿Dónde la gente en sucomunidad "
 "se reúne o socializa? ¿Dónde obtiene su comunidad sus servicios?"
 
-#: main/templates/main/entry_survey.html:395
-#, fuzzy
-#| msgid "Show Examples"
-msgid "Examples"
-msgstr "Mostar ejemplos"
-
-#: main/templates/main/entry_survey.html:395
+#: main/templates/main/entry_survey.html:407
 msgid ""
 "Cherry Farmers Community, St. Peters Church Community, Riverside Fishing "
 "Community"
 msgstr ""
 
-#: main/templates/main/entry_survey.html:402
+#: main/templates/main/entry_survey.html:417
 #, fuzzy
 #| msgid "Draw a Community Map"
 msgid "Community Name:"
@@ -1783,18 +1734,55 @@ msgstr ""
 "con diseñadores de mapas para que lo tomen en cuenta al trazar nuevos "
 "distritos electorales."
 
-#: main/templates/main/index.html:94
+#: main/templates/main/index.html:99
 msgid ""
 "We are putting Representable in the hands of the communities that need it."
 msgstr ""
 "Estamos poniendo Representable en las manos de las comunidades que lo "
 "necesitan."
 
-#: main/templates/main/index.html:95
+#: main/templates/main/index.html:100
 msgid "Join us to help communities get the representation they deserve."
 msgstr ""
 "Únete a nosotros, y trabajemos para que las comunidades reciban la "
 "representación que merecen."
+
+#: main/templates/main/map.html:46
+#, fuzzy
+#| msgid "Share your Map"
+msgid "State Map"
+msgstr "Comparte y contribuye tu mapa"
+
+#: main/templates/main/map.html:57
+msgid "Data layers"
+msgstr ""
+
+#: main/templates/main/map.html:68
+#, fuzzy
+#| msgid "My Communities"
+msgid "Communities"
+msgstr "Mis Comunidades"
+
+#: main/templates/main/map.html:73 main/templates/main/review.html:49
+#: main/templates/main/submission.html:123
+#, fuzzy
+#| msgid "1. Your Identifying Information"
+msgid "Community Information"
+msgstr "1. Su información de identificación"
+
+#: main/templates/main/map.html:74
+msgid "Only Show"
+msgstr ""
+
+#: main/templates/main/map.html:123
+msgid "Show More"
+msgstr ""
+
+#: main/templates/main/map.html:135
+#, fuzzy
+#| msgid "Show Example"
+msgid "Show All"
+msgstr "Mostar ejemplos"
 
 #: main/templates/main/pages/about.html:8
 msgid "About Representable"
@@ -2039,12 +2027,6 @@ msgstr "Divulgación, Contenido"
 msgid "Engineering, Product"
 msgstr "Ingeniería, Producto"
 
-#: main/templates/main/review.html:49 main/templates/main/submission.html:123
-#, fuzzy
-#| msgid "1. Your Identifying Information"
-msgid "Community Information"
-msgstr "1. Su información de identificación"
-
 #: main/templates/main/review.html:50
 msgid "Action"
 msgstr ""
@@ -2090,6 +2072,108 @@ msgid ""
 "\n"
 "                Map downloads include the community information below.\n"
 "              "
+msgstr ""
+
+#: main/templates/main/submission.html:70
+msgid "What is GeoJSON?"
+msgstr ""
+
+#: main/templates/main/submission.html:76
+msgid ""
+"GeoJSON files are industry standard and usable with other mapping softwares "
+"like Maptitude for Redistricting, Dave's Redistricting App, ESRI, and more."
+msgstr ""
+
+#: main/templates/main/submission.html:168
+msgid "Submit to an organization in your state"
+msgstr ""
+
+#: main/templates/main/submission.html:170
+msgid ""
+"Many organizations in your state are collecting community maps. Submit yours "
+"to one of their collection drives."
+msgstr ""
+
+#: main/templates/main/submission.html:178
+msgid "Submit"
+msgstr ""
+
+#: main/templates/main/submission.html:183
+msgid "This community map has already been submitted to an organization"
+msgstr ""
+
+#: main/templates/main/submission.html:205
+#: main/templates/main/submission.html:212
+#: main/templates/main/submission.html:215
+msgid "Data Layers"
+msgstr ""
+
+#: main/templates/main/submission.html:221
+#: main/templates/main/submission.html:232
+#: main/templates/main/submission.html:235
+msgid "Demographics"
+msgstr ""
+
+#: main/templates/main/submission.html:244
+msgid "Loading PDF..."
+msgstr ""
+
+#: main/templates/main/submission.html:272
+msgid "Your community is ready to be viewed and downloaded. You have "
+msgstr ""
+
+#: main/templates/main/submission.html:272
+msgid "received an email with your community as a PDF file."
+msgstr ""
+
+#: main/templates/main/submission.html:273
+msgid "Make an impact with your map."
+msgstr ""
+
+#: main/templates/main/submission.html:283
+msgid ""
+"View your community on a computer to download as a PDF or geoJSON file. You "
+"can submit these files as public testimony or to a local redistricting "
+"organization."
+msgstr ""
+
+#: main/templates/main/submission.html:293
+msgid ""
+"\n"
+"                      If your state has a redistricting commission or "
+"accepts Communities of Interest, send a pdf of your community to submit as "
+"public testimony. If not, you can send it to a local redistricting "
+"organization or <a href=\"https://myreps.datamade.us/\" target=\"_blank\" "
+"rel=\"noopener noreferrer\">your legislator</a>.\n"
+"                      "
+msgstr ""
+
+#: main/templates/main/submission.html:297
+msgid "Export PDF"
+msgstr ""
+
+#: main/templates/main/submission.html:309
+msgid ""
+"If you would like to use your map to draw voting districts, you can upload "
+"the geoJSON file to mapping softwares such as Maptitude, Dave’s "
+"Redistricting App, or Districtr."
+msgstr ""
+
+#: main/templates/main/submission.html:331
+msgid ""
+"Send the map to your community members and encourage them to draw maps. When "
+"map drawers have more data from your community, they are more likely to draw "
+"fairer districts."
+msgstr ""
+
+#: main/templates/main/submission.html:342
+msgid "Resend Email"
+msgstr ""
+
+#: main/templates/main/submission.html:355
+msgid ""
+" This map was created at <a href=\"https://representable.org/"
+"\">Representable.org "
 msgstr ""
 
 #: main/templates/main/thanks.html:13
@@ -3723,9 +3807,6 @@ msgstr ""
 #~ "sugerencias\n"
 #~ "                                            por como la Comisión de "
 #~ "Redistritación en su estado pueden ayudar a abordar estas preocupaciones? "
-
-#~ msgid "Show Example"
-#~ msgstr "Mostar ejemplos"
 
 #~ msgid ""
 #~ "Our farmers extend over two counties and we hope you can put them "
