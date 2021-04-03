@@ -19,6 +19,15 @@
                           <div class="form-group">
                         {% for field in form %}
                           <div class="fieldWrapper">
+                            {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
                               {{ field.errors }}
                               {{ field.label_tag }} {{ field }}
                               {% if field.help_text %}
