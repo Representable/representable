@@ -306,6 +306,7 @@ class CreateMember(LoginRequiredMixin, OrgAdminRequiredMixin, FormView):
             us = User.objects.get(email=email)
         except User.DoesNotExist:
             # send back error message
+            list(messages.get_messages(self.request))
             messages.error(self.request, "User with the provided email does not exist")
             return render(self.request, "main/dashboard/partners/member_form.html", {'form':MemberForm})
 
@@ -319,6 +320,7 @@ class CreateMember(LoginRequiredMixin, OrgAdminRequiredMixin, FormView):
                 organization=form.instance.organization,
             )
             new_member.save()
+        list(messages.get_messages(self.request))
         messages.add_message(self.request, messages.SUCCESS, 'Admin added successfully!')
         self.success_url = reverse_lazy(
             "main:home_org", kwargs=form.instance.organization.get_url_kwargs()
