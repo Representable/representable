@@ -319,7 +319,7 @@ class CreateMember(LoginRequiredMixin, OrgAdminRequiredMixin, FormView):
                 organization=form.instance.organization,
             )
             new_member.save()
-
+        messages.add_message(self.request, messages.SUCCESS, 'Admin added successfully!')
         self.success_url = reverse_lazy(
             "main:home_org", kwargs=form.instance.organization.get_url_kwargs()
         )
