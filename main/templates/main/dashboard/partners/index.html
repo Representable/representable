@@ -3,7 +3,20 @@
 
 {% block content %}
 <div class="container">
-  <div class="row mt-5">
+  <div class="col-sm mt-4">
+    {% if messages %} 
+    <ul class="messages">
+      {% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+        <div class="alert alert-success">
+          <strong>Admin email added!</strong>
+        </div>
+        {% endif %}
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+  <div class="row mt-1">
     <div class="col-sm">
       <div class="card shadow-sm h-100">
         <div class="card-body">

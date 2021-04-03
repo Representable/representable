@@ -32,6 +32,7 @@ from .models import (
     Membership,
     User,
     Address,
+    State,
 )
 from .choices import STATES
 from django.contrib.gis.db import models
@@ -264,13 +265,16 @@ class DriveForm(ModelForm):
 class MemberForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(MemberForm, self).__init__(*args, **kwargs)
-        self.fields["member"].widget.attrs.update({"class": "form-control"})
+        member_email = forms.EmailField(max_length = 200)
+        self.fields["email"] = member_email
+        self.fields["email"].widget.attrs.update({"placeholder": "Admin Email", "class": "form-control"})
 
     class Meta:
         model = Membership
         fields = [
             "member",
         ]
+        exclude = ("member",)
 
 
 class RepresentableSignupForm(SignupForm):
@@ -288,3 +292,21 @@ class RepresentableLoginForm(LoginForm):
         self.fields["login"].label = "E-mail"
         self.fields["password"].label = "Password"
         del self.fields["login"].widget.attrs["autofocus"]
+
+class SubmissionAddDrive(forms.Form):
+    def upd(self, state):
+        """
+        Req: state must be a valid, uppercased, state abbreviation
+
+        Creates a dropdown of drives that satisfy the rules:
+            * Are in state
+            * Are active
+            * Are not private
+        """
+        all_drives = State.objects.get(abbr=state).get_drives()
+        drives_to_add = [d for d in all_drives if d.state==state and d.is_active==True and d.private==False]
+        choices = [(str(d.id), str(d.name) + ' - ' + str(d.organization)) for d in drives_to_add]
+        self.fields['Add a new drive'] = forms.ChoiceField(
+            choices=choices, 
+            widget=forms.Select(attrs={'class' : 'custom-select'}),
+        )

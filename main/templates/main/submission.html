@@ -28,7 +28,6 @@
 {% endblock %}
 {% block content %}
 <div class="container-fluid w-100">
-
   <div class="row row-wide light-green-bg pb-5">
     <div>
       <script type="text/javascript">
@@ -122,17 +121,7 @@
         <div class="card text-left border-0 w-100 rounded-lg mt-3">
           <div class="card-body">
             <h4 class="card-title header-text"><strong>{% trans "Community Information" %}</strong></h4>
-            <div class="accordion mt-4 map-info-item" id="economic-interests-accordion">
-                <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#economic-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
-                    {% trans "Economic or Environmental Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
-                </button>
-                <div id="economic-interests-resp" class="collapse pl-3 pb-1" aria-labelledby="economic-interests-accordion" data-parent="#economic-interests-accordion">
-                    <p class="collapse-in map-survey-response">
-                        {{c.economic_interests}}
-                    </p>
-                </div>
-            </div>
-            <div class="accordion map-info-item mt-3" id="mobile-map-activities-accordion">
+            <div class="accordion map-info-item mt-4" id="mobile-map-activities-accordion">
                 <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-activities-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                     {% trans "Community Activities and Services" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
                 </button>
@@ -152,6 +141,16 @@
                     </p>
                 </div>
             </div>
+            <div class="accordion map-info-item mt-3" id="economic-interests-accordion">
+                <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#economic-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                    {% trans "Economic or Environmental Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
+                </button>
+                <div id="economic-interests-resp" class="collapse pl-3 pb-1" aria-labelledby="economic-interests-accordion" data-parent="#economic-interests-accordion">
+                    <p class="collapse-in map-survey-response">
+                        {{c.economic_interests}}
+                    </p>
+                </div>
+            </div>
             <div class="accordion map-info-item mt-3 mb-3" id="mobile-map-other-interests-accordion">
                 <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-other-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                     {% trans "Community Needs and Concerns" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
@@ -162,6 +161,27 @@
                     </p>
                 </div>
             </div>
+          </div>
+        </div>
+        <div class="card text-left border-0 w-100 rounded-lg mt-3 mb-3 d-xl-block">
+          <div class="card-body">
+            <h5 class="card-title header-text"><strong>Submit to an organization in your state</strong></h5>
+            {% if show_form is True %}
+              <p class="header-text small">Many organizations in your state are collecting community maps. Submit yours to one of their collection drives.</p>
+              <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                {{ field }}
+                {% endfor %}
+                <div class="row justify-content-center pt-3">
+                  <div>
+                    <button type="submit" class="btn btn-primary">Submit</button>                    
+                  </div>
+                </div>
+              </form>
+            {% else %}
+              <p class="header-text small">This community map has already been submitted to an organization</p>
+            {% endif %}
           </div>
         </div>
       </div>

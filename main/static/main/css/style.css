@@ -214,6 +214,14 @@ form:invalid {
   width: 0%;
 }
 
+.social-media-logo {
+  opacity: 70%;
+}
+
+.social-media-logo:hover {
+  opacity: 40%;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .progress-bar, .progress-bar-vert {
     transition: none;
@@ -241,6 +249,11 @@ form:invalid {
 .warning-box {
   border: 1px solid red;
   font-size: 1rem;
+}
+
+#state-map-cois {
+  overflow: scroll;
+  max-height: 500px;
 }
 
 /*********************************************************************
@@ -1135,6 +1148,23 @@ Entry Mapping Page
 }
 .link-custom:hover {
   color: black;
+}
+
+.community-review-span:hover {
+  background-color: #dee2e6;
+  cursor: pointer;
+}
+
+.communities-menu {
+  max-height: 500px;
+  overflow: scroll;
+}
+
+@media screen and (min-width: 768px) {
+  .communities-menu {
+    max-height: 800px;
+    overflow: scroll;
+  }
 }
 
 /* landing page map */
@@ -2188,6 +2218,11 @@ height:25vh!important;
 
 #rtb a h2 {
   padding-top: 20px;
+}
+
+.custom-select {
+  color: #2a94f4;
+  border-color: #2a94f4;
 }
 
 /* Flips element vertically, in place*/
