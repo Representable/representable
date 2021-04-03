@@ -467,6 +467,14 @@ function addToggleableLayer(id, appendElement) {
       map.setLayoutProperty(txt + "-lines", "visibility", "none");
     } else {
       map.setLayoutProperty(txt + "-lines", "visibility", "visible");
+      // set all other layers to not visible, uncheck the display box for all other layers
+      for (var layerID in toggleableLayerIds) {
+        if (layerID != txt) {
+          map.setLayoutProperty(layerID + "-lines", "visibility", "none");
+          var button = document.getElementById(layerID);
+          button.checked = false;
+        }
+      }
     }
   };
   // in order to create the buttons
