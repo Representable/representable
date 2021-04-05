@@ -1,0 +1,138 @@
+{% extends 'main/base.html' %}
+{% load leaflet_tags %}
+{% load static %}
+{% load representable_extras %}
+
+
+{% block head %}
+{% leaflet_js %}
+{% leaflet_css %}
+<!-- https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ -->
+<!-- Mapbox GL JS -->
+<meta charset='utf-8' />
+<title>View Communities</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--  GeoCoder -->
+<meta name='robots' content='noindex, nofollow'>
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js'></script>
+<link rel='stylesheet'
+href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
+<!-- Add css again to take precedence over mapbox css. -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<!--  Custom CSS -->
+<link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+  <div class="row row-wide">
+    <div>
+      <script type="text/javascript">
+        var coidata = '{{ entries | escapejs }}';
+        var mapbox_user_name = "{{mapbox_user_name}}";
+        var state = "{{state}}";
+      </script>
+    </div>
+    <div class="col-md-4 col-wide">
+      <nav id='menu'>
+        <div class="sidenav">
+          <div class="accordion" id="accordionExample">
+            <div class="card">
+              <div class="my-1">
+                <h4 class="font-weight-light text-center my-2"> {{ state_name }} State Map </h4>
+              </div>
+              <div class="row justify-content-center">
+                <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/geo/ role="button" download="communities.geojson">Export All as GeoJSON</a>
+                <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/csv/ role="button" download="communities.csv">Export All as CSV</a>
+              </div>
+              <input class="m-2 p-2 rounded border border-secondary" id="search-comm" type="text" placeholder="Search communities...">
+              <div id="headingOne">
+                <button id="buttonOne"class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne"
+                aria-expanded="false" aria-controls="collapseOne" style="width: 100%">
+                Data layers <i id="arrowOne" class="fas fa-caret-down"></i></button>
+              </div>
+              <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="font-weight-light text-uppercase small" id="outline-menu">
+                </div>
+              </div>
+            </div>
+            <div class="items card">
+              <div id="headingThree">
+                <button id="buttonThree" class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseThree"
+                aria-expanded="true" aria-controls="collapseThree" style="width: 100%">
+                Communities <i id="arrowThree"class="fas fa-caret-down flipY-inplace"></i></button>
+              </div>
+              {% if communities %}
+              <table id="collapseThree" class="collapse show table table-hover">
+                {% for c in communities %}
+                <tr class="community-review-span" id={{c.entry_ID}}>
+                  <td>
+                    <span class="text-uppercase entry-name">
+                      {% with link_text="/submission/"|addstr:c.entry_ID %}
+                      <a href={{link_text}}>{{c.entry_name}}</a>
+                      {% endwith %}
+                    </span>
+                    <hr class="my-1">
+                    {% if c.organization and c.organization.name %}
+                    <span class="badge badge-pill badge-primary">{{c.organization}}</span>
+                    <br>
+                    {% endif %}
+                    {% if c.drive and c.drive.name %}
+                    <span class="badge badge-pill badge-secondary">{{c.drive}}</span>
+                    <br>
+                    {% endif %}
+                    <span class="font-weight-light comm-content">
+                      <span class="more-content">
+                        {% if c.cultural_interests %}
+                        <b><i class="fas fa-palette"></i> Cultural or Historical Interests</b><br>
+                        <span class="text-muted small">{{c.cultural_interests}}</span>
+                        <br>
+                        {% endif %}
+                        {% if c.comm_activities %}
+                        <b><i class="fas fa-hiking"></i> Community Activities and Services</b><br>
+                        <span class="text-muted small">{{c.comm_activities}}</span>
+                        <br>
+                        {% endif %}
+                        {% if c.economic_interests %}
+                        <b><i class="fas fa-comments-dollar"></i> Economic or Environmental Interests</b><br>
+                        <span class="text-muted small">{{c.economic_interests}}</span>
+                        <br>
+                        {% endif %}
+                        {% if c.other_considerations %}
+                        <b><i class="fas fa-users"></i> Community Needs and Concerns</b><br>
+                        <span class="text-muted small">{{c.other_considerations}}</span>
+                        <br>
+                        {% endif %}
+                      </span>
+                      <u><a class="small read-more small-link" role="button">Show More</a></u>
+                    </span>
+                  </td>
+                  <tr>
+                    {% endfor %}
+                  </table>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+        <div class="col-md-8 col-map col-wide">
+          <div id='map' class="map-visualization"></div>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+
+    {% block script %}
+    <!--  Has to be at the end after the HTML loads.-->
+    <script type="text/javascript">
+      mapboxgl.accessToken = "{{ mapbox_key }}";
+    </script>
+    <script type="text/javascript" src="{% static 'main/js/components/keys.js' %}"></script>
+    <script type="text/javascript" src="{% static 'main/js/map.js' %}"></script>
+    <script type="text/javascript" src="{% static 'main/js/components/states.js' %}"></script>
+    {% endblock %}

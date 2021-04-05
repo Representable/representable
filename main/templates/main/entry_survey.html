@@ -274,21 +274,6 @@
                 <!-- Form Errors END -->
                 <!-- Sections: -->
                 <!--  Economic -->
-                <button id="economic_interests_btn" class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#economic_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
-                    <h5 class="survey-sect-title">{% trans "Economic or Environmental Interests" %}<i class="fas fa-angle-down pl-3"></i></h5>
-                </button>
-                <div class="accordion" id="economic_interests_accordion">
-                    <div id="economic_interests_example" class="collapse" aria-labelledby="economic_interests_accordion" data-parent="#economic_interests_accordion">
-                        <p class="collapse-in ml-4 gray-text">
-                            <b>{% trans "Use these questions to think more about how you would describe your community..." %}</b><br>
-                            &emsp; - {% trans "Where are residents employed?" %}<br>
-                            &emsp; - {% trans "If there are environmental concerns in your community, what are they?" %}<br><br>
-                            <span class="blue-text"><b>{% trans "Examples of economic or environmental interests:" %}</b> {% trans "Tourism industry, agricultural workers, mining town, manufacturing center, polluted natural resource, unemployment problem, etc." %}</span>
-                        </p>
-                    </div>
-                </div>
-                <div class="sr-only">{{ comm_form.economic_interests.label_tag }}</div>
-                {{ comm_form.economic_interests|append_attr:"class:form-control survey-field" }}
                 <!-- Activities -->
                 <div class="accordion" id="comm_activities_accordion">
                     <button id="comm_activities_btn" class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#comm_activities_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
@@ -322,6 +307,25 @@
                 </div>
                 <div class="sr-only">{{ comm_form.cultural_interests.label_tag }}</div>
                 {{ comm_form.cultural_interests|append_attr:"class:form-control survey-field" }}
+
+                <div class="accordion" id="economic_interests_accordion">
+                    <button id="economic_interests_btn" class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#economic_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                        <h5 class="survey-sect-title">{% trans "Economic or Environmental Interests" %}<i class="fas fa-angle-down pl-3"></i></h5>
+                    </button>
+                    <div id="economic_interests_example" class="collapse" aria-labelledby="economic_interests_accordion" data-parent="#economic_interests_accordion">
+                        <p class="collapse-in ml-4 gray-text">
+                            {% blocktrans %}
+                            <b>Use these questions to think more about how you would describe your community...</b><br>
+                            &emsp; - Where are residents employed?<br>
+                            &emsp; - If there are environmental concerns in your community, what are they?<br><br>
+                            <span class="blue-text"><b>Examples of economic or environmental interests:</b> Tourism industry, agricultural workers, mining town, manufacturing center, polluted natural resource, unemployment problem, etc.</span>
+                            {% endblocktrans %}
+                        </p>
+                    </div>
+                </div>
+                <div class="sr-only">{{ comm_form.economic_interests.label_tag }}</div>
+                {{ comm_form.economic_interests|append_attr:"class:form-control survey-field" }}
+                
                 <!-- Other -->
                 <div class="accordion" id="other_interests_accordion">
                     <button id="other_interests_btn" class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#other_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
