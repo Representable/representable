@@ -804,23 +804,23 @@ msgstr ""
 
 #: main/templates/account/signup.html:12 main/templates/account/signup.html:43
 msgid "Sign Up"
-msgstr ""
+msgstr "Regístrate"
 
 #: main/templates/account/signup.html:46
 msgid "Already have an account? Log in."
-msgstr ""
+msgstr "¿Ya tienes una cuenta? Iniciar Sesión."
 
 #: main/templates/account/signup_login.html:15
 msgid "Let's have you sign up or log in before you start..."
-msgstr ""
+msgstr "Antes de comenzar a diseñar tu mapa..."
 
 #: main/templates/account/verification_sent.html:5
 msgid "Verify Your E-mail Address"
-msgstr ""
+msgstr "Verifica tu correo electrónico"
 
 #: main/templates/account/verification_sent.html:14
 msgid "Verify Email"
-msgstr ""
+msgstr "Verifica tu correo electrónico"
 
 #: main/templates/account/verification_sent.html:15
 msgid ""
@@ -831,15 +831,15 @@ msgstr ""
 
 #: main/templates/main/entry_address.html:10
 msgid "Tell us about yourself."
-msgstr ""
+msgstr "Cuéntanos sobre tí."
 
 #: main/templates/main/entry_address.html:13
 msgid "Please include your name."
-msgstr ""
+msgstr "Incluya su nombre."
 
 #: main/templates/main/entry_address.html:19
 msgid "Please include your entire address."
-msgstr ""
+msgstr "Incluya su dirección completa."
 
 #: main/templates/main/entry_address.html:26
 msgid "Why do we need your information?"
@@ -859,7 +859,17 @@ msgid ""
 "rel=\"noopener noreferrer\" href=\"%(url1)s\">Privacy</a>\n"
 "                        and <a target=\"_blank\" rel=\"noopener noreferrer\" "
 "href=\"%(url2)s\">Terms</a> pages. "
-msgstr ""
+msgstr "Tu privacidad personal es nuestra más alta prioridad. Reunimos información personall\n"
+"                        para verificar que eres una persona real. Si " 
+"escoge \n"
+"                        entregar esta presentación a un drive, los "
+"administradores del drive\n"
+"                        tendrán acceso a esta información. Lea más"
+"acerca de nuestro\n"
+"                         compromiso con la privacidad en nuestras páginas de <a target=\"_blank\" "
+"rel=\"noopener noreferrer\" href=\"%(url1)s\">Privacidad</a>\n"
+"                         y <a target=\"_blank\" rel=\"noopener noreferrer\" "
+"href=\"%(url2)s\">Términos de Uso</a>"
 
 #: main/templates/main/entry_address.html:61
 msgid "Your Name"
@@ -869,7 +879,7 @@ msgstr "Su nombre"
 #: main/templates/main/entry_survey.html:354
 #: main/templates/main/entry_survey.html:425
 msgid "NEXT"
-msgstr ""
+msgstr "Próximo"
 
 #: main/templates/main/entry_map.html:17
 msgid ""
@@ -880,8 +890,10 @@ msgid ""
 "                                "
 msgstr ""
 "\n"
-"                                            ¿Dónde la gente en sucomunidad "
-"se reúne o socializa? ¿Dónde obtiene su comunidad sus servicios?"
+"                                    <p>Busque un código postal, "
+"una dirección o un punto de referencia para comenzar. Luego dibuja "
+" tu comunidad haciendo click en las unidades del mapa.</strong></p>\n"
+"                                "
 
 #: main/templates/main/entry_map.html:20
 msgid ""
@@ -894,10 +906,18 @@ msgid ""
 "drawers to draw voting districts.</p>\n"
 "                                "
 msgstr ""
+"                                    <p>AAsegúrate que toda tu comunidad se  "
+"encuentre dentro de la zona resaltada, y que esta zona resaltada no tenga huecos. "
+"Las unidades son <a class=\"no-underline-link\" href=\"https://www.census.gov/"
+"programs-surveys/geography/about/glossary.html#par_textimage_4\" target="
+"\"_blank\"><strong>grupos de bloque del censo</strong></a>, y diseñadores de mapas "
+"los usan para trazar los distritos electorales.</p>\n"
+"                                "
+
 
 #: main/templates/main/entry_map.html:51 main/templates/main/entry_map.html:176
 msgid "How to draw my community?"
-msgstr "Mapear su comunidad"
+msgstr "¿Cómo dibujo a mi comunidad?"
 
 #: main/templates/main/entry_map.html:53
 msgid ""
@@ -908,14 +928,22 @@ msgid ""
 "                        "
 msgstr ""
 
+"\n"
+"                            Haz click con tu mouse para seleccionar unidades  "
+"en el mapa. Vuelve a hacer click para quitar tu selección. Ve este video para  "
+"aprender más.\n"
+"                        "
+
+
+
 #: main/templates/main/entry_map.html:66 main/templates/main/entry_map.html:191
 #: representable/templates/base.html:113
 msgid "FAQ"
-msgstr ""
+msgstr "Preguntas frecuentes"
 
 #: main/templates/main/entry_map.html:70 main/templates/main/entry_map.html:195
 msgid "What are the units?"
-msgstr ""
+msgstr "¿Qué son las unidades?"
 
 #: main/templates/main/entry_map.html:72
 msgid ""
@@ -924,10 +952,14 @@ msgid ""
 "groups</strong>, which are used by map drawers to draw voting districts.\n"
 "                                    "
 msgstr ""
+"\n"
+"                                        Las unidades son <strong>bloques de grupos "
+"del censo</strong>, los cuales son usados por diseñadores de mapas para trazar distritos electorales.\n"
+"                                    "
 
 #: main/templates/main/entry_map.html:77 main/templates/main/entry_map.html:202
 msgid "Why am I unable to save my map?"
-msgstr ""
+msgstr "¿Por qué no puedo guardar mi mapa?"
 
 #: main/templates/main/entry_map.html:79
 msgid ""
@@ -936,10 +968,13 @@ msgid ""
 "gaps. Communities of Interest must be contiguous.\n"
 "                                    "
 msgstr ""
+"\n"
+"                                        Asegúrate que tu selección no tenga huecos. Las comunidades de interés deben ser contiguas.\n"
+"                                    "
 
 #: main/templates/main/entry_map.html:84 main/templates/main/entry_map.html:209
 msgid "Can I map outside of my state?"
-msgstr ""
+msgstr "¿Puedo hacer un mapa afuera de mi estado?"
 
 #: main/templates/main/entry_map.html:86
 msgid ""
@@ -948,10 +983,13 @@ msgid ""
 "state, you need to add a new community within the other state.\n"
 "                                    "
 msgstr ""
+"\n"
+"                                        Para poder hacer un mapa fuera de tu estado, necesitas agregar una nueva comunidad dentro del otro estado.\n"
+"                                    "
 
 #: main/templates/main/entry_map.html:91 main/templates/main/entry_map.html:216
 msgid "How large should my community be?"
-msgstr ""
+msgstr "¿Qué tan grande debería ser mi comunidad?"
 
 #: main/templates/main/entry_map.html:93
 msgid ""
@@ -960,6 +998,9 @@ msgid ""
 "one unit or as large as 800 units.\n"
 "                                    "
 msgstr ""
+"\n"
+"                                        Puedes trazar comunidades de 1 unidad hasta 800 unidades.\n"
+"                                    "
 
 #: main/templates/main/entry_map.html:118
 #: main/templates/main/entry_map.html:244
@@ -991,7 +1032,7 @@ msgstr "Intereses culturales o históricos"
 #: main/templates/main/submission.html:146
 #: main/templates/main/submission.html:362
 msgid "Economic or Environmental Interests"
-msgstr "Intereses Económicos"
+msgstr "Intereses Económicos o Ambientales"
 
 #: main/templates/main/entry_map.html:148
 #: main/templates/main/entry_map.html:274
@@ -999,7 +1040,7 @@ msgstr "Intereses Económicos"
 #: main/templates/main/submission.html:156
 #: main/templates/main/submission.html:392
 msgid "Community Needs and Concerns"
-msgstr "Actividades y servicios comunitarios"
+msgstr "Necesidades y preocupaciones de la comunidad"
 
 #: main/templates/main/entry_map.html:178
 msgid ""
@@ -1035,7 +1076,7 @@ msgid ""
 "                                                "
 msgstr ""
 "\n"
-"                                            ¿Dónde la gente en sucomunidad "
+"                                            ¿Dónde la gente en su comunidad "
 "se reúne o socializa? ¿Dónde obtiene su comunidad sus servicios?"
 
 #: main/templates/main/entry_map.html:218
@@ -1046,7 +1087,7 @@ msgid ""
 "                                                "
 msgstr ""
 "\n"
-"                                            ¿Dónde la gente en sucomunidad "
+"                                            ¿Dónde la gente en su comunidad "
 "se reúne o socializa? ¿Dónde obtiene su comunidad sus servicios?"
 
 #: main/templates/main/entry_map.html:234
@@ -1196,12 +1237,6 @@ msgid ""
 msgstr ""
 
 #: main/templates/main/entry_privacy.html:86
-#, fuzzy
-#| msgid ""
-#| " Any saved communities are final. In order to edit a saved community you "
-#| "will need\n"
-#| "                                        to create a new community and "
-#| "delete the old one. "
 msgid ""
 " In order to edit a saved community you will need\n"
 "                    to create a new community and delete the old one. "
