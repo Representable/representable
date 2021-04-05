@@ -4,22 +4,22 @@ repos:
     hooks:
       - id: black
         language_version: python3.7
-#   - repo: https://github.com/prettier/prettier
-#     rev: "2.0.5" 
-#     hooks:
-#       - id: prettier
-#         name: prettier
-#         entry: prettier --write
-#         files: "\\.(\
-#           css|less|scss\
-#           |graphql|gql\
-#           |js|jsx\
-#           |json\
-#           |md|markdown|mdown|mkdn\
-#           |mdx\
-#           |ts|tsx\
-#           )$"
-#   - repo: https://github.com/pre-commit/pre-commit-hooks
-#     rev: v1.2.3
-#     hooks:
-#       - id: flake8
+  - repo: https://github.com/prettier/prettier
+    rev: "2.0.5" 
+    hooks:
+      - id: prettier
+        name: prettier
+        entry: prettier --write
+        files: "\\.(\
+          css|less|scss\
+          |graphql|gql\
+          |js|jsx\
+          |json\
+          |md|markdown|mdown|mkdn\
+          |mdx\
+          |ts|tsx\
+          )$"
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v1.2.3
+    hooks:
+      - id: flake8
