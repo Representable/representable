@@ -573,7 +573,15 @@ function toggleDataLayers() {
   $("#data-layer-col").toggleClass("d-none");
   $("#data-layer-card").toggleClass("d-none");
 }
-/*******************************************************************/
+
+/****************************************************************************/
+// public comment portal link, if in states.js
+if (publicCommentLinks[state]) {
+  $('#public-comment-link').prop("href", publicCommentLinks[state]);
+} else {
+  $('#public-comment-card').hide();
+}
+/****************************************************************************/
 // remove the last char in the string
 function removeLastChar(str) {
   return str.substring(0, str.length - 1);

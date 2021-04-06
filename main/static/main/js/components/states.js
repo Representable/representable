@@ -165,3 +165,6 @@ let statesLngLat = {
   'WV': [-80.1816905, 38.9201705],
   'WY': [-107.5545669, 43.000325]
 }
+let publicCommentLinks = {
+  'co': 'https://redistricting.colorado.gov/public_comments/new',
+}
