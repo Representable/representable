@@ -167,4 +167,5 @@ let statesLngLat = {
 }
 let publicCommentLinks = {
   'co': 'https://redistricting.colorado.gov/public_comments/new',
+  'tx': 'https://senate.texas.gov/redistrictingcomment/',
 }

@@ -78,6 +78,24 @@
                     </div>
                   </div>
                   <!-- ********************* -->
+                  <!-- PDF Export + Public comment Modal -->
+                  <div class="modal fade" id="pdf-comment-modal" tabindex="-1" role="dialog" aria-labelledby="pdf-comment-modalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel"><strong>Send your map to your state.</strong></h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          Congratulations, you have downloaded your map. Your state accepts communties of interest as public input. Visit the site below to submit your map.
+                          <a id="public-comment-link"><h5 class="blue-text">Go to public input portal <i class="far fa-arrow-alt-circle-right"></i></h5></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- ********************* -->
                   <div class="row">
                     {% if has_state %}
                       {% with link_text="/export/geojson/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
@@ -165,14 +183,14 @@
         </div>
         <div id="public-comment-card" class="card text-left border-0 w-100 rounded-lg mt-3 mb-3 d-xl-block">
           <div class="card-body">
-            <h5 class="card-title header-text"><strong>Submit to your state.</strong></h5>
+            <h5 class="card-title header-text"><strong>Send to your state.</strong></h5>
             <p>Your state accepts communties of interest as public input. Download your map and then visit this site.</p>
             <a id="public-comment-link"><h5 class="blue-text">Go to public input portal <i class="far fa-arrow-alt-circle-right"></i></h5></a>
           </div>
         </div>
         <div class="card text-left border-0 w-100 rounded-lg mt-3 mb-3 d-xl-block">
           <div class="card-body">
-            <h5 class="card-title header-text"><strong>Submit to an organization in your state</strong></h5>
+            <h5 class="card-title header-text"><strong>Submit to an organization.</strong></h5>
             {% if show_form is True %}
               <p class="header-text small">Many organizations in your state are collecting community maps. Submit yours to one of their collection drives.</p>
               <form method="post">

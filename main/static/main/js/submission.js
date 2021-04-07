@@ -601,3 +601,6 @@ $("[data-toggle=modal]").on("click", function (e) {
 $("#geojson-explain-modal").on("show.bs.modal", function () {
   $("#hidden-download-geojson")[0].click();
 });
+$("#pdf-comment-modal").on("show.bs.modal", function () {
+  $("#hidden-download-pdf")[0].click();
+});
