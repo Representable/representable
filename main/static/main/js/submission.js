@@ -281,6 +281,7 @@ map.on("load", function () {
     $("#thanksModal").modal("hide");
   });
   $("#pdf-button").on("click", function () {
+    $("#pdf-comment-modal").modal("show");
     exportPDF(1500);
   });
 
@@ -299,11 +300,8 @@ map.on("load", function () {
     // make the map look good for the PDF ! TODO: un-select other layers like census blocks (turn into functions)
     map.fitBounds(commBounds, { padding: 100 });
     // display loading popup
-    var instruction_box = document.getElementById("pdf-loading-box");
-    instruction_box.style.display = "block";
     setTimeout(function () {
       // loading popup disappears
-      instruction_box.style.display = "none";
       var doc = new jsPDF();
 
       var entryName = window.document.getElementById("pdfName");
@@ -600,7 +598,4 @@ $("[data-toggle=modal]").on("click", function (e) {
 });
 $("#geojson-explain-modal").on("show.bs.modal", function () {
   $("#hidden-download-geojson")[0].click();
-});
-$("#pdf-comment-modal").on("show.bs.modal", function () {
-  $("#hidden-download-pdf")[0].click();
 });

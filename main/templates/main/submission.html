@@ -79,18 +79,16 @@
                   </div>
                   <!-- ********************* -->
                   <!-- PDF Export + Public comment Modal -->
-                  <div class="modal fade" id="pdf-comment-modal" tabindex="-1" role="dialog" aria-labelledby="pdf-comment-modalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
+                  <div class="modal fade blue-modal" id="pdf-comment-modal" tabindex="-1" role="dialog" aria-labelledby="pdf-comment-modalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                       <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel"><strong>Send your map to your state.</strong></h5>
+                        <div class="modal-body px-md-5 text-left">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
-                        </div>
-                        <div class="modal-body">
-                          Congratulations, you have downloaded your map. Your state accepts communties of interest as public input. Visit the site below to submit your map.
-                          <a id="public-comment-link"><h5 class="blue-text">Go to public input portal <i class="far fa-arrow-alt-circle-right"></i></h5></a>
+                          <h5 class="mx-md-5 mt-md-5"><strong>Send your map to your state.</strong></h5>
+                          <p class="mx-md-5">Congratulations, you have downloaded your map. Your state accepts communties of interest as public input. Visit the site below to submit your map.</p>
+                          <a id="public-comment-link"><h5 class="blue-text mx-md-5 mb-md-5">Go to public input portal <i class="far fa-arrow-alt-circle-right"></i></h5></a>
                         </div>
                       </div>
                     </div>
@@ -265,9 +263,6 @@
           <div class="col-12 border-0 text-left">
             <div class="row vh-50">
               <div id='map' class="map-visualization p-0">
-                <div id="pdf-loading-box" class="map-popup-box">
-                  <p class="mb-0">Loading PDF...</p>
-                </div>
               </div>
             </div>
           </div>
