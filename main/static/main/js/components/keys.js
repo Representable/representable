@@ -24,7 +24,10 @@ var BOUNDARIES_COLORS = {
   "sta5": "rgb(128, 128, 0)", // olive
   "school": "rgb(70, 153, 144)", // teal
   "chi-ward": "rgb(0, 0, 117)", // navy
-  "chi-comm": "rgb(169, 169, 169)" // gray
+  "chi-comm": "rgb(169, 169, 169)", // gray
+  "tribal": "rgb(255,0,255)", // magenta
+  "nyc": "rgb(0, 0, 117)", // navy
+  "nyc_assembly": "rgb(169, 169, 169)" // gray
 }
 var BG_KEYS = {
   "albg": "300jwyj1",
@@ -82,4 +85,8 @@ var BG_KEYS = {
 var CHI_WARD_KEY = "179v2oeh";
 var CHI_COMM_KEY = "63nswxfc";
 var SCHOOL_DISTR_KEY = "1ezqvmlm";
+var TRIBAL_BOUND_KEY = "6jhw01g1";
+var NYC_COUNCIL_KEY = "8igk12p1";
+var NYC_STATE_ASSEMBLY_KEY = "61wjirls";
+
 var STATES_USING_NEW_BG = ["az", "mi", "nv", "nj", "nm", "nc", "pa", "ut", "va", "wa"];

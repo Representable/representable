@@ -19,35 +19,76 @@
 
   <div class="row mx-lg-5 px-md-5">
     <div class="col-sm-6">
-      {% autoescape off %}
-      {{ state_obj.content_news }}
-      {% endautoescape %}
-    </div>
-    <div class="col-6 d-none d-sm-block">
-      <div class="m-auto py-4 h-100">
-        <object type="image/svg+xml" class="w-75 mx-auto d-block h-100" data="{% static 'img/map-info.svg' %}" alt="image of map with information icon"></object>
+      <div class="col-12 p-3 light-blue-bg px-md-5 mb-4">
+          <a class="btn ws-normal btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" href="#collapseCriteria1" aria-expanded="false" aria-controls="collapseCriteria1">
+            <h5 class="dark-gray-text" style="width: fit-content;"><b>{% trans "What is redistricting?" %}<i class="fas fa-angle-down pl-lg-3 pl-1"></i></b></h5>
+          </a>
+        <div class="collapse" id="collapseCriteria1">
+          {% blocktrans %}
+          In 2021, voting district lines across the country will be redrawn to determine who represents the people of your state.
+          {% endblocktrans %}
+        </div>
       </div>
-    </div>
-  </div>
 
-  <div class="row mb-4 mx-lg-5 px-md-5">
-    <div class="col-12 p-4 light-blue-bg px-md-5">
-        <a class="btn ws-normal btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" href="#collapseCriteria" aria-expanded="false" aria-controls="collapseCriteria">
-          <h5 style="width: fit-content;">{{ state_obj.name }}'s {% trans "Redistricting Criteria" %} &#32;<i class="fas fa-angle-down pl-lg-3 pl-1"></i></h5>
-        </a>
-      <div class="collapse" id="collapseCriteria">
+      <div class="col-12 p-3 light-blue-bg px-md-5 mb-4">
+          <a class="btn ws-normal btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" href="#collapseCriteria2" aria-expanded="false" aria-controls="collapseCriteria2">
+            <h5 class="dark-gray-text" style="width: fit-content;"><b>{% trans "How does redistricing work in " %}{{ state_obj.name }}?<i class="fas fa-angle-down pl-lg-3 pl-1"></i></b></h5>
+          </a>
+        <div class="collapse" id="collapseCriteria2">
+          {% autoescape off %}
+          {{ state_obj.content_news }}
+          {% endautoescape %}
+        </div>
+      </div>
+
+      <div class="col-12 p-3 light-blue-bg px-md-5 mb-4">
+          <a class="btn ws-normal btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" href="#collapseCriteria3" aria-expanded="false" aria-controls="collapseCriteria3">
+            <h5 class="dark-gray-text" style="width: fit-content;"><b>{% trans "How can Representable help?" %}<i class="fas fa-angle-down pl-lg-3 pl-1"></i></b></h5>
+          </a>
+        <div class="collapse" id="collapseCriteria3">
+          {% blocktrans %}
+          Representable will help you tell mapmakers about your community interests and boundaries, so that they can fairly consider it when they draw new voting district lines.
+          {% endblocktrans %}
+        </div>
+      </div>
+
+      <div class="col-12 p-3 light-blue-bg px-md-5 mb-4">
+          <a class="btn ws-normal btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" href="#collapseCriteria4" aria-expanded="false" aria-controls="collapseCriteria4">
+            <h5 class="dark-gray-text" style="width: fit-content;"><b>{% blocktrans %}{{ state_obj.name }}'s redistricting criteria {% endblocktrans %}&#32;<i class="fas fa-angle-down pl-lg-3 pl-1"></i></b></h5>
+          </a>
+        <div class="collapse" id="collapseCriteria4">
           {% autoescape off %}
           {{ state_obj.content_criteria }}
           {% endautoescape %}
+        </div>
       </div>
     </div>
+
+
+    <div class="col-6 d-none d-sm-block">
+      <div class="m-auto py-4">
+        <object type="image/svg+xml" class="w-75 mx-auto d-block h-100" data="{% static 'img/map-info.svg' %}" alt="image of map with information icon"></object>
+        <h5><p class="text-center">
+          <a href="/map/{{state_obj.abbr}}" class="link-primary">
+            {% blocktrans %}
+            See community maps drawn in {{ state_obj.name }} here <i class="fas fa-arrow-circle-right"></i>
+            {% endblocktrans %}
+          </a>
+        </p></h5>
+      </div>
+    </div>
+
+
   </div>
+
   <div class="row mx-lg-5 px-md-5">
-    <div class="col-12 p-4 light-blue-bg px-md-5">
-      <h5>{% trans "Communities of Interest in " %} {{ state_obj.name }}</h5>
-      {% autoescape off %}
-      {{ state_obj.content_coi }}
-      {% endautoescape %}
+    <div class="col-sm-12">
+      <div class="col-12 p-4 light-blue-bg px-md-5">
+        <h5><b>{% trans "Communities of Interest in " %}{{ state_obj.name }}</b></h5>
+        {% autoescape off %}
+        {{ state_obj.content_coi }}
+        {% endautoescape %}
+      </div>
     </div>
   </div>
   <div class="row text-center">

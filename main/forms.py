@@ -265,13 +265,16 @@ class DriveForm(ModelForm):
 class MemberForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(MemberForm, self).__init__(*args, **kwargs)
-        self.fields["member"].widget.attrs.update({"class": "form-control"})
+        member_email = forms.EmailField(max_length = 200)
+        self.fields["email"] = member_email
+        self.fields["email"].widget.attrs.update({"placeholder": "Admin Email", "class": "form-control"})
 
     class Meta:
         model = Membership
         fields = [
             "member",
         ]
+        exclude = ("member",)
 
 
 class RepresentableSignupForm(SignupForm):
