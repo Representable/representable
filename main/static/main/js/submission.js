@@ -63,29 +63,51 @@ function newBoundariesLayer(name) {
     type: "vector",
     url: "mapbox://mapbox.boundaries-" + name + "-v3",
   });
+
   map.addLayer({
     id: name + "-lines",
     type: "line",
     source: name,
-    "source-layer":
+    "source-layer":   // ex.: boundaries_legislative_2
       "boundaries_" +
       BOUNDARIES_ABBREV[removeLastChar(name)] +
       "_" +
       name.slice(-1),
     layout: {
-      // visibility: "none",
-      visibility: "visible",
-
+      visibility: "none",
     },
     paint: {
       "line-color": "rgba(106,137,204,0.7)",
       "line-width": 3,
     },
-  },
-  insertBeforeLayer,
-    // TODO: add layer name here
-    // layer_names;
-  );
+  });
+
+
+  // don't add labels for postal code (redundant) and for block groups (annoying)
+  if (name != "pos4" && name != "sta5") {
+    map.addSource(name + "-points", {
+      type: "vector",
+      url: "mapbox://mapbox.boundaries-" + removeLastChar(name) + "Points-v3",
+    });
+  
+    // displays name in centroid of polygons
+    map.addLayer({
+      id: name + "-labels",
+      type: "symbol",
+      source: name + "-points",
+      "source-layer":   // ex.: boundaries_legislative_2
+        "points_" +
+        BOUNDARIES_ABBREV[removeLastChar(name)] +
+        "_" +
+        name.slice(-1),
+      layout: {
+        'text-field': ["get", "name"],
+        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+        visibility: "none",
+      },
+    });
+  }
+  
 }
 
 function sanitizePDF(x) {
@@ -97,7 +119,18 @@ function sanitizePDF(x) {
   return x;
 }
 
+// // create leg 2 lookup table
+// const PATH = '/Users/isabelzaller/Desktop/representable-boundaries/mapbox-boundaries-v3_2';
+// const lookupTable = require(PATH);
+
+// function createViz(lookupTable) {
+//   var lookupTableData = lookupTable.adm1.data;
+//   console.log(lookupTableData);
+// }
+
 map.on("load", function () {
+  // createViz(lookupTable);
+
   var layers = map.getStyle().layers;
   // Find the index of the first symbol layer in the map style
   // only necessary for making added layers appear "beneath" the existing layers (roads, place names, etc)
@@ -124,6 +157,19 @@ map.on("load", function () {
       "line-width": 2,
     },
   });
+
+  map.addLayer({
+    id: "school-districts-labels",
+    type: "symbol",
+    source: "school-districts",
+    "source-layer": "us_school_districts_points",
+    layout: {
+      visibility: "none",
+      'text-field': ["get", "name"],
+      'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+    },
+  });
+
   // ward + community areas for IL
   if (state === "il") {
     newSourceLayer("chi_wards", CHI_WARD_KEY);
@@ -141,6 +187,18 @@ map.on("load", function () {
         "line-width": 2,
       },
     });
+    // TODO: test
+    map.addLayer({
+      id: "chi-ward-labels",
+      type: "symbol",
+      source: "chi_wards",
+      "source-layer": "chi_wards",
+      layout: {
+        visibility: "none",
+        'text-field': ["get", "ward"],
+        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+      },
+    });
     map.addLayer({
       id: "chi-comm-lines",
       type: "line",
@@ -154,6 +212,18 @@ map.on("load", function () {
         "line-width": 2,
       },
     });
+    // TODO: test
+    map.addLayer({
+      id: "chi-comm-labels",
+      type: "symbol",
+      source: "chi_comm",
+      "source-layer": "chi_comm",
+      layout: {
+        visibility: "none",
+        'text-field': ["get", "community"],
+        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+      },
+    });
   }
   // leg2 : congressional district
   // leg3 : state senate district
@@ -163,7 +233,6 @@ map.on("load", function () {
   // pos4 : 5-digit postcode area
   // sta5 : block groups
   for (var key in BOUNDARIES_LAYERS) {
-    // TODO: change so that we also pass in labels(?)
     newBoundariesLayer(key);
   }
 
@@ -472,8 +541,14 @@ function addToggleableLayer(id, appendElement) {
 
     if (visibility === "visible") {
       map.setLayoutProperty(txt + "-lines", "visibility", "none");
+      if (txt != "pos4" && txt != "sta5") {
+        map.setLayoutProperty(txt + "-labels", "visibility", "none");
+      }
     } else {
       map.setLayoutProperty(txt + "-lines", "visibility", "visible");
+      if (txt != "pos4" && txt != "sta5") {
+        map.setLayoutProperty(txt + "-labels", "visibility", "visible");
+      }
     }
   };
   // in order to create the buttons

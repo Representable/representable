@@ -83,6 +83,9 @@ function newBoundariesLayer(name) {
       }
     }
   );
+
+  // TODO: insert label code here
+
 }
 
 var community_bounds = {};
@@ -117,6 +120,8 @@ map.on("load", function () {
       },
     }
   );
+  // TODO: insert label code here
+
   // ward + community areas for IL
   if (state === "il") {
     newSourceLayer("chi_wards", CHI_WARD_KEY);
@@ -137,6 +142,8 @@ map.on("load", function () {
         },
       }
     );
+    // TODO: insert label code here
+
     map.addLayer(
       {
         id: "chi-comm-lines",
@@ -153,6 +160,8 @@ map.on("load", function () {
         },
       }
     );
+    // TODO: insert label code here
+
   }
   // leg2 : congressional district
   // leg3 : state senate district
