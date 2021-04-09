@@ -708,7 +708,7 @@ msgstr ""
 
 #: main/templates/account/login.html:13
 msgid "Already have an account?"
-msgstr ""
+msgstr "¿Ya tienes una cuenta?"
 
 #: main/templates/account/login.html:14
 msgid "Log In"
@@ -716,7 +716,7 @@ msgstr "Iniciar sesión"
 
 #: main/templates/account/login.html:34
 msgid "Forgot Password?"
-msgstr ""
+msgstr "¿Olvidaste tu contraseña?"
 
 #: main/templates/account/login.html:36
 #, fuzzy
@@ -732,11 +732,11 @@ msgstr "Configuraciones"
 
 #: main/templates/account/logout.html:5 main/templates/account/logout.html:19
 msgid "Sign Out"
-msgstr ""
+msgstr "Cerrar sesión"
 
 #: main/templates/account/logout.html:11
 msgid "Are you sure you want to sign out?"
-msgstr ""
+msgstr "¿Estás seguro de que quieres cerrar sesión?"
 
 #: main/templates/account/password_change.html:6
 #: main/templates/account/password_change.html:19
@@ -927,7 +927,6 @@ msgid ""
 "learn more.\n"
 "                        "
 msgstr ""
-
 "\n"
 "                            Haz click con tu mouse para seleccionar unidades  "
 "en el mapa. Vuelve a hacer click para quitar tu selección. Ve este video para  "
@@ -1050,6 +1049,11 @@ msgid ""
 "video to learn more.\n"
 "                                    "
 msgstr ""
+"\n"
+"                            Haz click con tu mouse para seleccionar unidades  "
+"en el mapa. Vuelve a hacer click para quitar tu selección. Ve este video para  "
+"aprender más.\n"
+"                        "
 
 #: main/templates/main/entry_map.html:197
 msgid ""
@@ -1059,6 +1063,12 @@ msgid ""
 "voting districts.\n"
 "                                                "
 msgstr ""
+"\n"
+"Las unidades son <a class=\"no-underline-link\" href=\"https://www.census.gov/"
+"programs-surveys/geography/about/glossary.html#par_textimage_4\" target="
+"\"_blank\"><strong>grupos de bloque del censo</strong></a>, y diseñadores de mapas "
+"los usan para trazar los distritos electorales.</p>\n"
+"                                "
 
 #: main/templates/main/entry_map.html:204
 msgid ""
@@ -1067,6 +1077,9 @@ msgid ""
 "not contain gaps. Communities of Interest must be contiguous.\n"
 "                                                "
 msgstr ""
+"\n"
+"                                                    Asegúrate que tu selección no tenga huecos. Las comunidades de interés deben ser contiguas.\n"
+"       
 
 #: main/templates/main/entry_map.html:211
 msgid ""
@@ -1076,8 +1089,8 @@ msgid ""
 "                                                "
 msgstr ""
 "\n"
-"                                            ¿Dónde la gente en su comunidad "
-"se reúne o socializa? ¿Dónde obtiene su comunidad sus servicios?"
+"                                                     Para poder hacer un mapa fuera de tu estado, necesitas agregar una nueva comunidad dentro del otro estado.\n"
+"                                                "
 
 #: main/templates/main/entry_map.html:218
 msgid ""
@@ -1087,8 +1100,7 @@ msgid ""
 "                                                "
 msgstr ""
 "\n"
-"                                            ¿Dónde la gente en su comunidad "
-"se reúne o socializa? ¿Dónde obtiene su comunidad sus servicios?"
+"                                                    Puedes trazar comunidades de 1 unidad hasta 800 unidades.\n"
 
 #: main/templates/main/entry_map.html:234
 msgid ""
@@ -1096,10 +1108,13 @@ msgid ""
 "                                Community Information\n"
 "                            "
 msgstr ""
+"\n"
+"                                La Información Comunitaria\n"
+"                            "
 
 #: main/templates/main/entry_map.html:288
 msgid "Saving Community..."
-msgstr ""
+msgstr "Guardando Comunidad..."
 
 #: main/templates/main/entry_map.html:300
 msgid ""
@@ -1107,6 +1122,9 @@ msgid ""
 "                                    +\n"
 "                                "
 msgstr ""
+"\n"
+"                                    +\n"
+"                                "
 
 #: main/templates/main/entry_map.html:321
 #: main/templates/main/entry_map.html:325
@@ -1116,12 +1134,12 @@ msgstr ""
 #: main/templates/main/entry_survey.html:353
 #: main/templates/main/entry_survey.html:424
 msgid "BACK"
-msgstr ""
+msgstr "REGRESAR"
 
 #: main/templates/main/entry_map.html:322
 #: main/templates/main/entry_map.html:326
 msgid "SAVE"
-msgstr ""
+msgstr "GUARDAR"
 
 #: main/templates/main/entry_map.html:333
 msgid "Step-by-step guide"
@@ -1154,7 +1172,7 @@ msgid ""
 "Politicians have been splitting up or packing together communities into "
 "districts that silence their voices. Gathering communities of interest helps "
 "fight gerrymandering."
-msgstr ""
+msgstr "Los políticos han estado dividiendo y concentrando comunidades en distritos que silencian las voces de los miembros de esas comunidades. Esto evita que las comunidades elijan representantes que atiendan a sus necesidades. Reunir mapas de comunidades de interés nos ayuda a luchar contra el gerrymandering. Nosotros podemos proveer a los diseñadores de mapas con la información necesaria para que dibujen distritos que empoderen a las comunidades. "
 
 #: main/templates/main/entry_preview.html:33
 msgid "ADD MY COMMUNITY"
@@ -1166,10 +1184,13 @@ msgid ""
 "                <p id=\"backup_error_txt\" class=\"p-0 m-0\"></p>\n"
 "            "
 msgstr ""
+"\n"
+"                <p id=\"backup_error_txt\" class=\"p-0 m-0\"></p>\n"
+"            "
 
 #: main/templates/main/entry_privacy.html:20
 msgid "Please make sure to agree to the terms and conditions."
-msgstr ""
+msgstr "Asegúrese de aceptar los términos y condiciones."
 
 #: main/templates/main/entry_privacy.html:28
 msgid "Privacy and Terms of Use"
@@ -1235,6 +1256,9 @@ msgid ""
 "                    Submitted communities are final.\n"
 "                "
 msgstr ""
+"\n"
+"                    Las comunidades entregadas son definitivas.\n"
+"                "
 
 #: main/templates/main/entry_privacy.html:86
 msgid ""
@@ -1243,23 +1267,20 @@ msgid ""
 msgstr ""
 " Las comunidades guardadas son definitivas. Para editar una comunidad "
 "guardada se necesita\n"
-"                                        crear una comunidad nueva y eliminar "
+"                    crear una comunidad nueva y eliminar "
 "la antigua. "
 
 #: main/templates/main/entry_privacy.html:95
 msgid "You need to complete the recaptcha to submit this map."
-msgstr ""
+msgstr "Debe completar el recaptcha para enviar este mapa."
 
 #: main/templates/main/entry_privacy.html:107
 msgid "SUBMIT"
-msgstr ""
+msgstr "ENTREGAR"
 
 #: main/templates/main/entry_state_selection.html:20
 #: main/templates/main/entry_state_selection.html:21
-#, fuzzy
-#| msgid "Select your state to get started."
-msgid "Select your state."
-msgstr "Seleccione su estado para comenzar."
+
 
 #: main/templates/main/entry_survey.html:17
 msgid "Tell us about what unites your community."
@@ -1274,7 +1295,7 @@ msgstr "Ahora, compartirá información sobre lo que une a su comunidad. ¿Qué 
 #: main/templates/main/entry_survey.html:26
 #: main/templates/main/entry_survey.html:133
 msgid "What is a Community of Interest?"
-msgstr "2. Los intereses compartidos de tu comunidad"
+msgstr "¿Qué es una comunidad de interés?"
 
 #: main/templates/main/entry_survey.html:30
 msgid ""
@@ -1287,9 +1308,13 @@ msgid ""
 "drawing of fairer voting districts.\n"
 "                            </p>\n"
 "                        "
-msgstr "Una comunidad de interés es <strong>un área geográfica</strong> que comparte intereses <strong>culturales</strong>, <strong>históricos</strong> o <strong>económicos</strong>.
-Las comunidades de interés fomentan el trazado de distritos electorales más justos."
-
+msgstr ""
+"\n"
+"                            <p class=\"info-text txt-16\">\n"
+"                                Una comunidad de interés es <strong>un área geográfica</strong> que comparte intereses <strong>culturales</strong>, <strong>históricos</strong> o <strong>económicos</strong>.\n"
+"                                Las comunidades de interés fomentan el trazado de distritos electorales más justos.\n"
+"                            </p>\n"
+"                        "
 
 
 #: main/templates/main/entry_survey.html:39
@@ -1303,7 +1328,10 @@ msgid ""
 "                                                Your neighborhood, or an "
 "area you live in.\n"
 "                                            "
-msgstr "Tu vecindario o un área en la que vives."
+msgstr ""
+"\n"
+"                                                Tu vecindario o un área en la que vives.\n"
+"                                            "
 
 #: main/templates/main/entry_survey.html:78
 msgid ""
@@ -1311,7 +1339,10 @@ msgid ""
 "                                                The people you would like to "
 "choose representatives with.\n"
 "                                            "
-msgstr "Las personas con las que le gustaría elegir representantes."
+msgstr ""
+"\n"
+"                                                Las personas con las que le gustaría elegir representantes.\n"
+"                                            "
 
 #: main/templates/main/entry_survey.html:103
 msgid ""
@@ -1319,12 +1350,15 @@ msgid ""
 "                                                A local group that is "
 "brought together by a common interest.\n"
 "                                            "
-msgstr "Un grupo local que se une por un interés común."
+msgstr ""
+"\n"
+"                                                Un grupo local que se une por un interés común.\n"
+"                                            "
 
 #: main/templates/main/entry_survey.html:122
 #: main/templates/main/entry_survey.html:220
 msgid "START"
-msgstr "Empieza"
+msgstr "EMPIEZA"
 
 #: main/templates/main/entry_survey.html:137
 msgid ""
@@ -1339,14 +1373,12 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"                                        <p>\n"
-"                                             Para enviar su entrada en la "
-"comunidad, debe proporcionar una respuesta a <b>al menos una</b> de las "
-"siguientes preguntas.\n"
-"                                             Responda a todas las preguntas "
-"que se aplican, por favor.\n"
-"                                        </p>\n"
-"                                        "
+"                            <p class=\"info-text txt-16\">\n"
+"                                Una comunidad de interés es <strong>un área geográfica</strong> que comparte intereses <strong>culturales</strong>, <strong>históricos</strong> o <strong>económicos</strong>.\n"
+"                                Las comunidades de interés fomentan el trazado de distritos electorales más justos.\n"
+"                            </p>\n"
+"                        "
+
 
 #: main/templates/main/entry_survey.html:159
 msgid ""
@@ -1355,6 +1387,9 @@ msgid ""
 "choose representatives with.\n"
 "                                        "
 msgstr ""
+"\n"
+"                                            Las personas con las que le gustaría elegir representantes.\n"
+"                                        "
 
 #: main/templates/main/entry_survey.html:181
 msgid ""
@@ -1363,6 +1398,9 @@ msgid ""
 "you live in.\n"
 "                                        "
 msgstr ""
+"\n"
+"                                            Tu vecindario o un área en la que vives.\n"
+"                                        "
 
 #: main/templates/main/entry_survey.html:203
 msgid ""
@@ -1372,14 +1410,10 @@ msgid ""
 "                                        "
 msgstr ""
 "\n"
-"                                            ¿Dónde la gente en su comunidad "
-"se reúne o socializa? ¿Dónde obtiene su comunidad sus servicios?"
+"                                            Un grupo local que se une por un interés común.\n"
+"                                        "
 
 #: main/templates/main/entry_survey.html:232
-#, fuzzy
-#| msgid "2. Your Community's Shared Interests"
-msgid "What unites your Community of Interest?"
-msgstr "2. Los intereses compartidos de tu comunidad"
 
 #: main/templates/main/entry_survey.html:245                                     
 msgid ""
@@ -1394,19 +1428,18 @@ msgid ""
 "                "
 msgstr ""
 "\n"
-"                                        <p>\n"
-"                                             Para enviar su entrada en la "
-"comunidad, debe proporcionar una respuesta a <b>al menos una</b> de las "
-"siguientes preguntas.\n"
-"                                             Responda a todas las preguntas "
-"que se aplican, por favor.\n"
-"                                        </p>\n"
-"                                        "
+"                    <p>\n"
+"                      Responda al menos a una de las secciones siguientes. No hay respuestas equivocadas.<br>\n"
+"\n"
+"                      Haga clic en cada categoría para ver preguntas y ejemplos útiles.\n"
+"                    </p>\n"
+"                "
+
 
 #: main/templates/main/entry_survey.html:261
 #: main/templates/main/entry_survey.html:269
 msgid "Please fill out at least one of the interest fields."
-msgstr ""
+msgstr "Complete al menos una de las secciones de interés."
 
 #: main/templates/main/entry_survey.html:283
 msgid ""
@@ -1422,6 +1455,13 @@ msgid ""
 "unemployment problem, etc.</span>\n"
 "                            "
 msgstr ""
+"\n"
+"                            <b>Usa estas preguntas para pensar más en cómo describirías tu comunidad…</b><br>\n"
+"                            &emsp; - ¿Dónde trabajan los residentes?<br>\n"
+"                            &emsp; - Si hay preocupaciones ambientales en tu comunidad, ¿cuáles son?<br><br>\n"
+"                            <span class=\"blue-text\"><b>Ejemplos de Intereses Económicos o Ambientales:</b> La industria de turismo, agricultores, "
+"ciudad minera, centro de manufactura, recurso natural contaminado, problema de desempleo, etc.</span>\n"
+"                            "
 
 #: main/templates/main/entry_survey.html:297
 #: main/templates/main/submission.html:136
@@ -1443,6 +1483,12 @@ msgid ""
 "public transport, local nonprofit organizations, etc.</span>\n"
 "                          "
 msgstr ""
+"\n"
+"                          <b>Usa estas preguntas para pensar más en cómo describirías tu comunidad...</b><br>\n"
+"                          &emsp; - ¿Dónde se congregan para socializar en su comunidad?<br>\n"
+"                          &emsp; - ¿Cómo y dónde acceden servicios básicos (médicos, transportación, educación, etc.)?<br><br>\n"
+"                          <span class=\"blue-text\"><b>Ejemplos de actividades y servicios:</b> Zonas comerciales, escuelas y universidades, bibliotecas, parques, lagos, ríos, centros de culto, servicios de salud, transporte público, organizaciones locales sin fines de lucro, etc.</span>\n"
+"                          "
 
 #: main/templates/main/entry_survey.html:320
 msgid ""
@@ -1458,6 +1504,12 @@ msgid ""
 "groups, immigration status, historic or arts districts, etc. </span>\n"
 "                        "
 msgstr ""
+"\n"
+"                        <b>Usa estas preguntas para pensar más en cómo describirías tu comunidad...</b><br>\n"
+"                        &emsp; - ¿Cuáles son los lazos culturales de tu comunidad? <br>\n"
+"                        &emsp; - Si tu comunidad tiene una historia compartida, ¿cuál es?<br><br>\n"
+"                        <span class=\"blue-text\"><b>Ejemplos de intereses culturales o históricos:</b> Grupos religiosos, grupos étnicos, idiomas, grupos de edad, estatus migratorio, distritos históricos o artísticos, etc. </span>\n"
+"                        "
 
 #: main/templates/main/entry_survey.html:338
 msgid ""
@@ -1475,16 +1527,23 @@ msgid ""
 "to other nearby communities, issues with current district lines</span>\n"
 "                        "
 msgstr ""
+"\n"
+"                        <b>Usa estas preguntas para pensar más en cómo describirías tu comunidad...</b><br>\n"
+"                        &emsp; - ¿Qué deberían saber los políticos y diseñadores de mapas sobre tu comunidad?<br>\n"
+"                        &emsp; - ¿Cuáles son las necesidades de tu comunidad?<br>\n"
+"                        &emsp; - ¿Hay algo más que nos quieras contar sobre tu comunidad?<br><br>\n"
+"                        <span class=\"blue-text\"><b>Ejemplos de necesidades o preocupaciones:</b> Mantener a la comunidad en un mismo distrito o separarla en diferentes distritos, preocupaciones de políticas comunes, necesidad de un servicio social, relaciones con otras comunidades cercanas, problemas con distritos electorales presentes.</span>\n"
+"                        "
 
 #: main/templates/main/entry_survey.html:380
 msgid "Please include a community name."
-msgstr ""
+msgstr "Nombre de tu comunidad."
 
 #: main/templates/main/entry_survey.html:392
 #, fuzzy
 #| msgid "Add Your Community"
 msgid "Name your community."
-msgstr "Añadir su comunidad"
+msgstr "Nombre de tu comunidad."
 
 #: main/templates/main/entry_survey.html:396
 msgid ""
@@ -1496,8 +1555,11 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"                                            ¿Dónde la gente en sucomunidad "
-"se reúne o socializa? ¿Dónde obtiene su comunidad sus servicios?"
+"                            <p>\n"
+"                                
+Dale un nombre a tu comunidad de interés. Este nombre no tiene que ser el nombre oficial de tu comunidad.\n"
+"                            </p>\n"
+"                        "
 
 #: main/templates/main/entry_survey.html:404
 msgid ""
@@ -1509,14 +1571,16 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"                                            ¿Dónde la gente en sucomunidad "
-"se reúne o socializa? ¿Dónde obtiene su comunidad sus servicios?"
+"                            <p class=\"small\" style=\"color: #5996D2\">\n"
+"                                <strong>Ejemplos:</strong> Comunidad de Agricultores de Cereza, Comunidad de la Iglesia de San Pedro, Comunidad de Pesca Riverside\n"
+"                            </p>\n"
+"                        "
 
 #: main/templates/main/entry_survey.html:414
 #, fuzzy
 #| msgid "Draw a Community Map"
 msgid "Community Name:"
-msgstr "Dibujar un mapa de la comunidad"
+msgstr "Nombre de la comunidad:"
 
 #: main/templates/main/index.html:24
 msgid "Gerrymandering is silencing communities."
@@ -1553,7 +1617,7 @@ msgid ""
 "<b>Our mission</b> is to give communities a voice in drawing voting "
 "districts."
 msgstr ""
-"Nuestra misión es darle una voz a comunidades al dibujar distritos "
+"<b>Nuestra misión</b> es darle una voz a comunidades al dibujar distritos "
 "electorales."
 
 #: main/templates/main/index.html:52
