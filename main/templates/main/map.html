@@ -46,8 +46,10 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                 <h4 class="font-weight-light text-center my-2"> {{ state_name }} State Map </h4>
               </div>
               <div class="row justify-content-center">
-                <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/geo/ role="button" download="communities.geojson">Export All as GeoJSON</a>
-                <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/csv/ role="button" download="communities.csv">Export All as CSV</a>
+                <a id="map-geo-link" class="d-none" href="" download="communities.geojson"></a>
+                <a id="map-csv-link" class="d-none" href="" download="communities.csv"></a>
+                <button id="map-export-geo-btn" class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" onclick="exportCois('{{multi_export_link}}/geo/','geo')" role="button" download="communities.geojson">Export as GeoJSON</button>
+                <button id="map-export-csv-btn" class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" onclick="exportCois('{{multi_export_link}}/csv/','csv')" role="button" download="communities.csv">Export as CSV</button>
               </div>
               <div id="headingOne">
                 <button id="buttonOne"class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne"
