@@ -1,12 +1,13 @@
 {% extends "main/base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 <div class="container">
   <div class="row row-content">
     <div class="col-lg-9 mx-auto">
-      <h1 class="font-weight-light">Partners</h1>
-      <p>Find out more about the organizations using Representable.org to gather community data. Want to become a partner? Learn more <a href="{% url 'main:partner_welcome' %}">here!</p>
+      <h1 class="font-weight-light">{% trans "Partners" %}</h1>
+      <p>{% trans "Find out more about the organizations using Representable.org to gather community data. Want to become a partner? Learn more " %} <a href="{% url 'main:partner_welcome' %}">{% trans "here" %}</a>!</p>
       <div class="row">
         <div class="card-columns">
         {% for partner in object_list %}
@@ -29,9 +30,9 @@
 
               </p>
               <p> {{ partner.description }} </p>
-              <a class="btn btn-primary my-3" href="{% url 'main:partner_page' partner.slug %}" role="button">More Details</a>
+              <a class="btn btn-primary my-3" href="{% url 'main:partner_page' partner.slug %}" role="button">{% trans "More Details" %}</a>
               {% if partner.ext_link %}<a class="btn btn-primary" href="{{ partner.ext_link }}" role="button">
-                Partner Site <i class="fa fa-arrow-circle-right"></i></a>
+                {% trans "Partner Site" %} <i class="fa fa-arrow-circle-right"></i></a>
               {% endif %}
             </div>
           </div>

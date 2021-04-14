@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-07 20:01+0000\n"
+"POT-Creation-Date: 2021-04-14 02:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1045,7 +1045,8 @@ msgstr ""
 
 #: main/templates/main/entry_map.html:128
 #: main/templates/main/entry_map.html:254
-#: main/templates/main/entry_survey.html:297 main/templates/main/map.html:101
+#: main/templates/main/entry_survey.html:297 main/templates/main/map.html:103
+#: main/templates/main/partners/map.html:122 main/templates/main/review.html:74
 #: main/templates/main/submission.html:136
 #: main/templates/main/submission.html:382
 msgid "Cultural or Historical Interests"
@@ -1053,7 +1054,8 @@ msgstr "Intereses culturales o históricos"
 
 #: main/templates/main/entry_map.html:138
 #: main/templates/main/entry_map.html:264
-#: main/templates/main/entry_survey.html:313 main/templates/main/map.html:111
+#: main/templates/main/entry_survey.html:313 main/templates/main/map.html:113
+#: main/templates/main/partners/map.html:132 main/templates/main/review.html:84
 #: main/templates/main/submission.html:146
 #: main/templates/main/submission.html:362
 msgid "Economic or Environmental Interests"
@@ -1061,7 +1063,8 @@ msgstr "Intereses Económicos o Ambientales"
 
 #: main/templates/main/entry_map.html:148
 #: main/templates/main/entry_map.html:274
-#: main/templates/main/entry_survey.html:332 main/templates/main/map.html:116
+#: main/templates/main/entry_survey.html:332 main/templates/main/map.html:118
+#: main/templates/main/partners/map.html:137 main/templates/main/review.html:89
 #: main/templates/main/submission.html:156
 #: main/templates/main/submission.html:392
 msgid "Community Needs and Concerns"
@@ -1455,7 +1458,8 @@ msgstr ""
 msgid "Please fill out at least one of the interest fields."
 msgstr ""
 
-#: main/templates/main/entry_survey.html:280 main/templates/main/map.html:106
+#: main/templates/main/entry_survey.html:280 main/templates/main/map.html:108
+#: main/templates/main/partners/map.html:127 main/templates/main/review.html:79
 #: main/templates/main/submission.html:126
 #: main/templates/main/submission.html:372
 msgid "Community Activities and Services"
@@ -1735,38 +1739,45 @@ msgstr ""
 "Únete a nosotros, y trabajemos para que las comunidades reciban la "
 "representación que merecen."
 
+#: main/templates/main/map.html:13
+#, fuzzy
+#| msgid "My Communities"
+msgid "View Communities"
+msgstr "Mis Comunidades"
+
 #: main/templates/main/map.html:46
 #, fuzzy
 #| msgid "Share your Map"
 msgid "State Map"
 msgstr "Comparte y contribuye tu mapa"
 
-#: main/templates/main/map.html:55
+#: main/templates/main/map.html:57 main/templates/main/partners/map.html:62
 msgid "Data layers"
 msgstr ""
 
-#: main/templates/main/map.html:66
+#: main/templates/main/map.html:68 main/templates/main/partners/map.html:73
 #, fuzzy
 #| msgid "My Communities"
 msgid "Communities"
 msgstr "Mis Comunidades"
 
-#: main/templates/main/map.html:71 main/templates/main/review.html:49
+#: main/templates/main/map.html:73 main/templates/main/review.html:49
 #: main/templates/main/submission.html:123
 #, fuzzy
 #| msgid "1. Your Identifying Information"
 msgid "Community Information"
 msgstr "1. Su información de identificación"
 
-#: main/templates/main/map.html:72
+#: main/templates/main/map.html:74
 msgid "Only Show"
 msgstr ""
 
-#: main/templates/main/map.html:121
+#: main/templates/main/map.html:123 main/templates/main/partners/map.html:142
+#: main/templates/main/review.html:94
 msgid "Show More"
 msgstr ""
 
-#: main/templates/main/map.html:133
+#: main/templates/main/map.html:135
 #, fuzzy
 #| msgid "Show Example"
 msgid "Show All"
@@ -2015,12 +2026,201 @@ msgstr "Divulgación, Contenido"
 msgid "Engineering, Product"
 msgstr "Ingeniería, Producto"
 
+#: main/templates/main/partners/get_started.html:9
+#, fuzzy
+#| msgid "Partner with us"
+msgid "Partner With Us"
+msgstr "Asociarse con nosotros"
+
+#: main/templates/main/partners/get_started.html:11
+msgid ""
+"Welcome to Representable! Get started by creating an organization or "
+"requesting a demo below."
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:13
+#, fuzzy
+#| msgid "For organizations"
+msgid "Create Organization"
+msgstr "Para las organizaciones"
+
+#: main/templates/main/partners/get_started.html:20
+#, fuzzy
+#| msgid "For organizations"
+msgid "Create an Organization"
+msgstr "Para las organizaciones"
+
+#: main/templates/main/partners/get_started.html:21
+msgid "Include a brief description, link, and the state(s) you operate in."
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:23
+#, fuzzy
+#| msgid "Draw a Community Map"
+msgid "Start a Community Mapping Drive"
+msgstr "Dibujar un mapa de la comunidad"
+
+#: main/templates/main/partners/get_started.html:24
+msgid "Create a community mapping drive via the organization dashboard."
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:26
+#, fuzzy
+#| msgid "Share your Map"
+msgid "Share your Mapping Drive"
+msgstr "Comparte y contribuye tu mapa"
+
+#: main/templates/main/partners/get_started.html:27
+msgid ""
+"Share the link to your community mapping drive via email and social media to "
+"individuals in your state to start collecting submissions."
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:29
+msgid "Visualize a Map of Submissions"
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:30
+msgid ""
+"View a map of all the communities submitted to your organization together."
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:32
+msgid "Export Community Submissions"
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:33
+msgid ""
+"Download all the communities submitted to your organization as geoJSON for "
+"easy integration with district drawing and visualization tools."
+msgstr ""
+
+#: main/templates/main/partners/index.html:9
+#: representable/templates/base.html:105
+#, fuzzy
+#| msgid "Partner with us"
+msgid "Partners"
+msgstr "Asociarse con nosotros"
+
+#: main/templates/main/partners/index.html:10
+msgid ""
+"Find out more about the organizations using Representable.org to gather "
+"community data. Want to become a partner? Learn more "
+msgstr ""
+
+#: main/templates/main/partners/index.html:10
+#: main/templates/main/review.html:113
+msgid "here"
+msgstr ""
+
+#: main/templates/main/partners/index.html:33
+msgid "More Details"
+msgstr ""
+
+#: main/templates/main/partners/index.html:35
+#, fuzzy
+#| msgid "Partner with us"
+msgid "Partner Site"
+msgstr "Asociarse con nosotros"
+
+#: main/templates/main/partners/map.html:55
+msgid "Export All as GeoJSON"
+msgstr ""
+
+#: main/templates/main/partners/map.html:56
+msgid "Export All as CSV"
+msgstr ""
+
+#: main/templates/main/partners/map.html:94
+msgid "Hidden"
+msgstr ""
+
+#: main/templates/main/partners/map.html:98
+#, fuzzy
+#| msgid "Privacy"
+msgid "Private"
+msgstr "Privacidad"
+
+#: main/templates/main/partners/map.html:166
+#, fuzzy
+#| msgid "Add Your Community"
+msgid "Report this community"
+msgstr "Añadir su comunidad"
+
+#: main/templates/main/partners/map.html:173
+msgid ""
+"\n"
+"        If you feel this community is abusive, spam, low-effort, or doesn't "
+"live\n"
+"        up to our guidelines, send us a report.\n"
+"        "
+msgstr ""
+
+#: main/templates/main/partners/map.html:180
+msgid ""
+"\n"
+"        As an administrator of this organization, reporting this community "
+"will automatically hide it from\n"
+"        all non-administrators.\n"
+"        "
+msgstr ""
+
+#: main/templates/main/partners/map.html:189
+#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1646
+msgid "Email address"
+msgstr ""
+
+#: main/templates/main/partners/map.html:193
+msgid "Cancel"
+msgstr ""
+
+#: main/templates/main/partners/map.html:194
+msgid "Danger: </span>Send Report"
+msgstr ""
+
+#: main/templates/main/partners/map.html:206
+#, fuzzy
+#| msgid "Thank you for your submission!"
+msgid "Thank you for letting us know!"
+msgstr "¡Gracias por su envío!"
+
+#: main/templates/main/partners/map.html:212
+msgid "Your report was successfully submitted. Thank you."
+msgstr ""
+
+#: main/templates/main/partners/page.html:22
+#, fuzzy
+#| msgid "Partner with us"
+msgid "Return to Partners"
+msgstr "Asociarse con nosotros"
+
+#: main/templates/main/partners/page.html:23
+#, fuzzy
+#| msgid "For organizations"
+msgid "Link to organization map"
+msgstr "Para las organizaciones"
+
+#: main/templates/main/partners/page.html:25
+#, fuzzy
+#| msgid "Partner with us"
+msgid "Visit Partner Site"
+msgstr "Asociarse con nosotros"
+
+#: main/templates/main/review.html:43
+msgid "The community was already deleted."
+msgstr ""
+
 #: main/templates/main/review.html:50
 msgid "Action"
 msgstr ""
 
 #: main/templates/main/review.html:51
 msgid "Show"
+msgstr ""
+
+#: main/templates/main/review.html:101
+#: venv/lib/python3.7/site-packages/django/forms/formsets.py:375
+msgid "Delete"
 msgstr ""
 
 #: main/templates/main/review.html:112
@@ -2030,6 +2230,16 @@ msgstr ""
 #: main/templates/main/review.html:113
 msgid "Join us in the fight against gerrymandering."
 msgstr ""
+
+#: main/templates/main/review.html:113
+msgid "Click "
+msgstr ""
+
+#: main/templates/main/review.html:113
+#, fuzzy
+#| msgid "Add Your Community"
+msgid " to add your community."
+msgstr "Añadir su comunidad"
 
 #: main/templates/main/state.html:15
 msgid "Welcome to"
@@ -2050,7 +2260,7 @@ msgid ""
 msgstr ""
 
 #: main/templates/main/state.html:35
-msgid "How does redistricing work in "
+msgid "How does redistricing work in {{ state_obj.name }}"
 msgstr ""
 
 #: main/templates/main/state.html:46
@@ -2213,6 +2423,88 @@ msgstr "¡Gracias por su envío!"
 msgid "Please Verify Your Email"
 msgstr ""
 
+#: main/templates/main/thanks.html:22
+msgid ""
+"This tool is meant for non-partisan use by communities and their members to "
+"provide information to the Redistricting Commission."
+msgstr ""
+
+#: main/templates/main/thanks.html:23
+msgid ""
+"By adding your map to Representable.org you're not submitting a map to a "
+"redistricting commission. We will add information about submitting to the "
+"commission as soon as information becomes available in your state."
+msgstr ""
+
+#: main/templates/main/thanks.html:26
+msgid ""
+"Thank you for submitting your map. The next step is to verify your email. We "
+"resent an email verification link to your inbox."
+msgstr ""
+
+#: main/templates/main/thanks.html:27
+msgid ""
+"Account verification allows Representable.org and our partner organizations "
+"to submit credible maps to Redistricting Commisions ensuring that your entry "
+"has an impact in ending gerrymandering."
+msgstr ""
+
+#: main/templates/main/thanks.html:29
+msgid ""
+"In the meantime, you can export your community in GeoJSON or PDF format "
+"using the link below."
+msgstr ""
+
+#: main/templates/main/thanks.html:33
+#, fuzzy
+#| msgid "Add Your Community"
+msgid "View/Export Your Community"
+msgstr "Añadir su comunidad"
+
+#: main/templates/main/thanks.html:35 main/templates/main/thanks.html:38
+msgid "Your community map is now live here: "
+msgstr ""
+
+#: main/templates/main/thanks.html:39
+#, fuzzy
+#| msgid "Save Community"
+msgid "View Community"
+msgstr "Guarde comunidad"
+
+#: main/templates/main/thanks.html:45
+msgid "Map"
+msgstr ""
+
+#: main/templates/main/thanks.html:46
+msgid "View all communities submitted to {{drive_name}}"
+msgstr ""
+
+#: main/templates/main/thanks.html:52
+msgid "Do you have any feedback for us?"
+msgstr ""
+
+#: main/templates/main/thanks.html:53
+msgid ""
+"We are interested in your feedback. If you found a bug or have any "
+"suggestions for us, please send them to us by pressing on the button below."
+msgstr ""
+
+#: main/templates/main/thanks.html:54
+#, fuzzy
+#| msgid "Report Error/Send Feedback"
+msgid "Send Feedback"
+msgstr "Enviar comentarios"
+
+#: main/templates/main/thanks.html:57
+msgid "Having trouble with email verification?"
+msgstr ""
+
+#: main/templates/main/thanks.html:58
+msgid ""
+"We are here to help! Let us know if you didn't recieve an email verification "
+"link or want to provide feedback by contacting Team@Representable.org"
+msgstr ""
+
 #: main/views/main.py:246
 msgid "HELLO"
 msgstr ""
@@ -2238,12 +2530,6 @@ msgstr ""
 #| msgid "For organizations"
 msgid "My Organizations"
 msgstr "Para las organizaciones"
-
-#: representable/templates/base.html:105
-#, fuzzy
-#| msgid "Partner with us"
-msgid "Partners"
-msgstr "Asociarse con nosotros"
 
 #: representable/templates/base.html:110
 msgid "Learn More"
@@ -2671,10 +2957,6 @@ msgstr ""
 msgid "Duration"
 msgstr ""
 
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1646
-msgid "Email address"
-msgstr ""
-
 #: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1669
 msgid "File path"
 msgstr ""
@@ -2912,10 +3194,6 @@ msgstr[1] ""
 #: venv/lib/python3.7/site-packages/django/forms/formsets.py:371
 #: venv/lib/python3.7/site-packages/django/forms/formsets.py:373
 msgid "Order"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/formsets.py:375
-msgid "Delete"
 msgstr ""
 
 #: venv/lib/python3.7/site-packages/django/forms/models.py:751
@@ -3857,12 +4135,6 @@ msgstr ""
 #~ msgid "Video Tutorial"
 #~ msgstr "Tutorial de vídeo"
 
-#~ msgid "Report Error/Send Feedback"
-#~ msgstr "Enviar comentarios"
-
-#~ msgid "Save Community"
-#~ msgstr "Guarde comunidad"
-
 #~ msgid "For community members"
 #~ msgstr "Para los miembros de la comunidad."
 
@@ -3873,9 +4145,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Trabaja con nosotros para mapear comunidades a través de los Estados "
 #~ "Unidos."
-
-#~ msgid "Partner with us"
-#~ msgstr "Asociarse con nosotros"
 
 #, fuzzy
 #~| msgid "Use our data to protect communities during the map drawing process."

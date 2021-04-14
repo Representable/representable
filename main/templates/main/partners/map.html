@@ -2,6 +2,7 @@
 {% load leaflet_tags %}
 {% load static %}
 {% load representable_extras %}
+{% load i18n %}
 
 
 {% block head %}
@@ -51,14 +52,14 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                 {% endif %}
               </div>
               <div class="row justify-content-center">
-                <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/geo/ role="button" download="communities.geojson">Export All as GeoJSON</a>
-                <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/csv/ role="button" download="communities.csv">Export All as CSV</a>
+                <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/geo/ role="button" download="communities.geojson">{% trans "Export All as GeoJSON" %}</a>
+                <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/csv/ role="button" download="communities.csv">{% trans "Export All as CSV" %}</a>
               </div>
               <input class="m-2 p-2 rounded border border-secondary" id="search-comm" type="text" placeholder="Search communities...">
               <div id="headingOne">
                 <button class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne"
                 aria-expanded="false" aria-controls="collapseOne" style="width: 100%">
-                Data layers <i class="fas fa-caret-down"></i></button>
+                {% trans "Data layers" %} <i class="fas fa-caret-down"></i></button>
               </div>
               <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="font-weight-light text-uppercase small" id="outline-menu">
@@ -69,7 +70,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
               <div id="headingThree">
                 <button class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseThree"
                 aria-expanded="true" aria-controls="collapseThree" style="width: 100%">
-                Communities <i class="fas fa-caret-down"></i></button>
+                {% trans "Communities" %} <i class="fas fa-caret-down"></i></button>
               </div>
               {% if communities %}
               <table id="collapseThree" class="collapse show table table-hover">
@@ -90,11 +91,11 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                     {% endif %}
                     {% endif %}
                     {% if not c.admin_approved %}
-                      <span class="badge badge-pill badge-danger"> Hidden </span>
+                      <span class="badge badge-pill badge-danger"> {% trans "Hidden" %} </span>
                       <br>
                     {% endif %}
                     {% if c.private %}
-                      <span class="badge badge-pill badge-primary"> Private </span>
+                      <span class="badge badge-pill badge-primary"> {% trans "Private" %} </span>
                       <br>
                     {% endif %}
                     <span class="small text-muted">
@@ -118,27 +119,27 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                           {% endif %}
                         </span>
                         {% if c.cultural_interests %}
-                        <b><i class="fas fa-palette"></i> Cultural or Historical Interests</b><br>
+                        <b><i class="fas fa-palette"></i> {% trans "Cultural or Historical Interests" %}</b><br>
                         <span class="text-muted small">{{c.cultural_interests}}</span>
                         <br>
                         {% endif %}
                         {% if c.comm_activities %}
-                        <b><i class="fas fa-hiking"></i> Community Activities and Services</b><br>
+                        <b><i class="fas fa-hiking"></i> {% trans "Community Activities and Services" %}</b><br>
                         <span class="text-muted small">{{c.comm_activities}}</span>
                         <br>
                         {% endif %}
                         {% if c.economic_interests %}
-                        <b><i class="fas fa-comments-dollar"></i> Economic or Environmental Interests</b><br>
+                        <b><i class="fas fa-comments-dollar"></i> {% trans "Economic or Environmental Interests" %}</b><br>
                         <span class="text-muted small">{{c.economic_interests}}</span>
                         <br>
                         {% endif %}
                         {% if c.other_considerations %}
-                        <b><i class="fas fa-users"></i> Community Needs and Concerns</b><br>
+                        <b><i class="fas fa-users"></i> {% trans "Community Needs and Concerns" %}</b><br>
                         <span class="text-muted small">{{c.other_considerations}}</span>
                         <br>
                         {% endif %}
                       </span>
-                      <u><a class="small read-more small-link" role="button">Show More</a></u>
+                      <u><a class="small read-more small-link" role="button">{% trans "Show More" %}</a></u>
                     </span>
                   </td>
                   </tr>
@@ -162,31 +163,35 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Report this community</h5>
+        <h5 class="modal-title" id="exampleModalLabel">{% trans "Report this community" %}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <form role="form" id="reportForm" method="post" action="/report/"> {% csrf_token %}
       <div class="modal-body">
+        {% blocktrans %}
         If you feel this community is abusive, spam, low-effort, or doesn't live
         up to our guidelines, send us a report.
+        {% endblocktrans %}
         <br>
         {% if is_org_admin %}
         <br>
+        {% blocktrans%}
         As an administrator of this organization, reporting this community will automatically hide it from
         all non-administrators.
+        {% endblocktrans %}
         {% endif %}
         <input type="text" class="hidden" name="org_slug" id="org_slug" value={{organization.slug}}/>
         <input type="text" class="hidden" name="drive_slug" id="drive_slug" value={{drive_slug}}/>
         <input type="text" class="hidden" name="is_org_admin" id="is_org_admin" value={{is_org_admin}}/>
         <input type="text" class="hidden" name="cid" id="cid" value=""/>
-        <label for="email" {% if email.exists %} class="hidden" {% endif %}>Email address</label>
+        <label for="email" {% if email.exists %} class="hidden" {% endif %}>{% trans "Email address" %}</label>
         <input type="email" name="email" id="email" placeholder="Enter email" {% if email.exists %} class="hidden" value={{email.value}} {% endif %} required/>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-danger"> <span class="sr-only">Danger: </span>Send Report</button>
+        <button type="button" class="btn btn-light" data-dismiss="modal">{% trans "Cancel" %}</button>
+        <button type="submit" class="btn btn-danger"> <span class="sr-only">{% blocktrans %}Danger: </span>Send Report{% endblocktrans %}</button>
       </div>
       </form>
     </div>
@@ -198,13 +203,13 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Thank you for letting us know!</h5>
+        <h5 class="modal-title" id="exampleModalLabel">{% trans "Thank you for letting us know!" %}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        Your report was successfully submitted. Thank you.
+        {% trans "Your report was successfully submitted. Thank you." %}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="fixURL()">OK</button>
