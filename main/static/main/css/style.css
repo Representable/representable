@@ -662,7 +662,7 @@ footer {
 
 #loading-entry {
   position: fixed;
-  bottom: 40px;
+  bottom: 150px;
   left: 40px;
   z-index: 1010;
   display: none;
