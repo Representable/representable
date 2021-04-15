@@ -281,7 +281,7 @@ map.on("load", function () {
     $("#thanksModal").modal("hide");
   });
   $("#pdf-button").on("click", function () {
-    $("#pdf-comment-modal").modal("show");
+    if (state in publicCommentLinks) $("#pdf-comment-modal").modal("show");
     exportPDF(1500);
   });
 
@@ -574,7 +574,8 @@ function toggleDataLayers() {
 
 /****************************************************************************/
 // public comment portal link, if in states.js
-if (publicCommentLinks[state]) {
+if (state in publicCommentLinks) {
+  $('#public-comment-link-modal').prop("href", publicCommentLinks[state]);
   $('#public-comment-link').prop("href", publicCommentLinks[state]);
 } else {
   $('#public-comment-card').hide();
