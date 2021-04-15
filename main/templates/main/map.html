@@ -47,11 +47,13 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
               </div>
               <div class="row justify-content-center">
                 {% if user.is_authenticated %}
-                  <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/geo/ role="button" download="communities.geojson">Export All as GeoJSON</a>
-                  <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/csv/ role="button" download="communities.csv">Export All as CSV</a>
+                <a id="map-geo-link" class="d-none" href="" download="communities.geojson"></a>
+                <a id="map-csv-link" class="d-none" href="" download="communities.csv"></a>
+                <button id="map-export-geo-btn" class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" onclick="exportCois('{{multi_export_link}}/geo/','geo')" role="button" download="communities.geojson">Export as GeoJSON</button>
+                <button id="map-export-csv-btn" class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" onclick="exportCois('{{multi_export_link}}/csv/','csv')" role="button" download="communities.csv">Export as CSV</button>
                 {% else %}
-                  <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href='{% url "account_login" %}?next={{request.path}}' role="button">Export All as GeoJSON</a>
-                  <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href='{% url "account_login" %}?next={{request.path}}' role="button">Export All as CSV</a>
+                <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href='{% url "account_login" %}?next={{request.path}}' role="button">Export as GeoJSON</a>
+                <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href='{% url "account_login" %}?next={{request.path}}' role="button">Export as CSV</a>
                 {% endif %}
               </div>
               <div id="headingOne">

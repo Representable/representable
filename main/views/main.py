@@ -1156,49 +1156,53 @@ class EntryView(LoginRequiredMixin, View):
 class MultiExportView(TemplateView):
     template = "main/export.html"
 
-    def get(self, request, **kwargs):
-        print("checking authentication")
-        print(self.request.user.is_authenticated)
+    def post(self, request, *args, **kwargs):
         if not self.request.user.is_authenticated:
-            print("hello??")
             return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+        state = self.kwargs["abbr"]
+        cois = set(json.loads(request.POST['cois']))
+        state_obj = State.objects.get(abbr=state.upper())
+
+        if 'all' not in cois:
+            query = (
+                state_obj.submissions.filter(entry_ID__in=cois)
+                .defer("census_blocks_polygon_array", "user_polygon")
+                .prefetch_related("organization", "drive")
+            )
         else:
-            state = self.kwargs["abbr"]
-            state_obj = State.objects.get(abbr=state.upper())
             query = (
                 state_obj.submissions.all()
                 .defer("census_blocks_polygon_array", "user_polygon")
                 .prefetch_related("organization", "drive")
             )
 
-            if not query:
-                # TODO: if the query is empty, return something more appropriate
-                # than an empty geojson? - jf
+        if not query:
+            # TODO: if the query is empty, return something more appropriate
+            # than an empty geojson? - jf
 
-                return HttpResponse(
-                    geojson.dumps({}), content_type="application/json"
-                )
+            return HttpResponse(
+                geojson.dumps({}), content_type="application/json"
+            )
 
-            all_gj = []
-            for entry in query:
-                gj = make_geojson_for_state_map_page(request, entry)
-                all_gj.append(gj)
+        all_gj = []
+        for entry in query:
+            gj = make_geojson_for_state_map_page(request, entry)
+            all_gj.append(gj)
 
-            final = geojson.FeatureCollection(all_gj)
+        final = geojson.FeatureCollection(all_gj)
+        if kwargs["type"] == "geo":
+            print("********", "geo", "********")
+            response = HttpResponse(
+                geojson.dumps(final), content_type="application/json"
+            )
+        else:
+            print("********", "csv", "********")
+            dictform = json.loads(geojson.dumps(final))
+            df = pd.DataFrame()
+            for entry in dictform["features"]:
+                row_dict = entry["properties"].copy()
+                row_dict["geometry"] = str(entry["geometry"])
+                df = df.append(row_dict, ignore_index=True)
+            response = HttpResponse(df.to_csv(), content_type="text/csv")
 
-            if kwargs["type"] == "geo":
-                print("********", "geo", "********")
-                response = HttpResponse(
-                    geojson.dumps(final), content_type="application/json"
-                )
-            else:
-                print("********", "csv", "********")
-                dictform = json.loads(geojson.dumps(final))
-                df = pd.DataFrame()
-                for entry in dictform["features"]:
-                    row_dict = entry["properties"].copy()
-                    row_dict["geometry"] = str(entry["geometry"])
-                    df = df.append(row_dict, ignore_index=True)
-                response = HttpResponse(df.to_csv(), content_type="text/csv")
-
-            return response
+        return response
