@@ -282,7 +282,9 @@ class Glossary(TemplateView):
 
         glossaryterms = GlossaryDefinition.objects.all()
         return render(
-            request, self.template_name, {"glossaryterms": glossaryterms},
+            request,
+            self.template_name,
+            {"glossaryterms": glossaryterms},
         )
 
 
@@ -520,6 +522,7 @@ class Submission(View):
                     c = CommunityEntry.objects.get(entry_ID=m_uuid)
                     c.drive = d
                     c.organization = o
+                    c.admin_approved = True
                     c.save()
                     # print('success')
                 except Exception as e:
@@ -540,8 +543,10 @@ class Submission(View):
 
         if user_map.drive:
             folder_name = query[0].drive.slug
-            has_state = False
-            state = ""
+            # has_state = False
+            # state = ""
+            has_state = user_map.state != ""
+            state = user_map.state
         else:
             if "abbr" in self.kwargs:
                 folder_name = self.kwargs["abbr"]
@@ -1058,7 +1063,10 @@ class EntryView(LoginRequiredMixin, View):
                 abbr=self.kwargs["abbr"].upper()
             )
             if entryForm.organization:
-                if self.request.user.is_org_admin(entryForm.organization.id) or not drive.private:
+                if (
+                    self.request.user.is_org_admin(entryForm.organization.id)
+                    or not drive.private
+                ):
                     entryForm.admin_approved = True
                 else:
                     # check if user is on the allowlist
@@ -1156,14 +1164,23 @@ class EntryView(LoginRequiredMixin, View):
 class MultiExportView(TemplateView):
     template = "main/export.html"
 
-    def get(self, request, **kwargs):
+    def post(self, request, *args, **kwargs):
         state = self.kwargs["abbr"]
+        cois = set(json.loads(request.POST['cois']))
         state_obj = State.objects.get(abbr=state.upper())
-        query = (
-            state_obj.submissions.all()
-            .defer("census_blocks_polygon_array", "user_polygon")
-            .prefetch_related("organization", "drive")
-        )
+        
+        if 'all' not in cois:
+            query = (
+                state_obj.submissions.filter(entry_ID__in=cois)
+                .defer("census_blocks_polygon_array", "user_polygon")
+                .prefetch_related("organization", "drive")
+            )
+        else:
+            query = (
+                state_obj.submissions.all()
+                .defer("census_blocks_polygon_array", "user_polygon")
+                .prefetch_related("organization", "drive")
+            )
 
         if not query:
             # TODO: if the query is empty, return something more appropriate
@@ -1172,14 +1189,13 @@ class MultiExportView(TemplateView):
             return HttpResponse(
                 geojson.dumps({}), content_type="application/json"
             )
-
+        
         all_gj = []
         for entry in query:
             gj = make_geojson_for_state_map_page(request, entry)
             all_gj.append(gj)
 
         final = geojson.FeatureCollection(all_gj)
-
         if kwargs["type"] == "geo":
             print("********", "geo", "********")
             response = HttpResponse(

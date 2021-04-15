@@ -132,3 +132,5 @@ get-pip.py
 # dependencies
 node_modules
 /coverage
+include/python3.7m
+bin/wheel

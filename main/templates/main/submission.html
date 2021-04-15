@@ -33,7 +33,7 @@
       <script type="text/javascript">
         let a = '{{ entries | escapejs}}';
         var mapbox_user_name = "{{mapbox_user_name}}";
-        var state = '';
+        var state = '{{ state }}';
         var is_thanks = '{{ is_thanks }}'
         var comm_id = '{{ c.entry_ID }}'
       </script>
@@ -121,17 +121,7 @@
         <div class="card text-left border-0 w-100 rounded-lg mt-3">
           <div class="card-body">
             <h4 class="card-title header-text"><strong>{% trans "Community Information" %}</strong></h4>
-            <div class="accordion mt-4 map-info-item" id="economic-interests-accordion">
-                <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#economic-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
-                    {% trans "Economic or Environmental Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
-                </button>
-                <div id="economic-interests-resp" class="collapse pl-3 pb-1" aria-labelledby="economic-interests-accordion" data-parent="#economic-interests-accordion">
-                    <p class="collapse-in map-survey-response">
-                        {{c.economic_interests}}
-                    </p>
-                </div>
-            </div>
-            <div class="accordion map-info-item mt-3" id="mobile-map-activities-accordion">
+            <div class="accordion map-info-item mt-4" id="mobile-map-activities-accordion">
                 <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-activities-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                     {% trans "Community Activities and Services" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
                 </button>
@@ -148,6 +138,16 @@
                 <div id="mobile-map-cultural-interests-resp" class="collapse pl-3 pb-1" aria-labelledby="map_cultural_activities_accordion" data-parent="#mobile-map-cultural-interests-accordion">
                     <p class="collapse-in map-survey-response">
                         {{c.cultural_interests}}
+                    </p>
+                </div>
+            </div>
+            <div class="accordion map-info-item mt-3" id="economic-interests-accordion">
+                <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#economic-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                    {% trans "Economic or Environmental Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
+                </button>
+                <div id="economic-interests-resp" class="collapse pl-3 pb-1" aria-labelledby="economic-interests-accordion" data-parent="#economic-interests-accordion">
+                    <p class="collapse-in map-survey-response">
+                        {{c.economic_interests}}
                     </p>
                 </div>
             </div>

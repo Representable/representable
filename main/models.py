@@ -82,7 +82,7 @@ class Organization(models.Model):
         models.CharField(max_length=50, choices=STATES, blank=True),
         blank=False,
     )
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, max_length=128)
     members = models.ManyToManyField(User, through="Membership")
     verified = models.BooleanField(default=False)
 

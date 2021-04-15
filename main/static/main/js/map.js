@@ -86,7 +86,10 @@ function newBoundariesLayer(name) {
 }
 
 var community_bounds = {};
-
+var coidata;
+var shownCois = new Set(); // Tracks the ids of the cois that are selected to be "only show"
+var coidata_geojson_format;
+const mxzoom = 10, tol = 3.5;
 map.on("load", function () {
   var layers = map.getStyle().layers;
   // Find the index of the first symbol layer in the map style
@@ -117,6 +120,22 @@ map.on("load", function () {
       },
     }
   );
+  // tribal boundaries as a data layer
+  newSourceLayer("tribal-boundaries", TRIBAL_BOUND_KEY);
+  map.addLayer({
+    id: "tribal-boundaries-lines",
+    type: "line",
+    source: "tribal-boundaries",
+    "source-layer": "tl_2020_us_aiannh", //-7f7uk7
+    layout: {
+      visibility: "none",
+    },
+    paint: {
+      "line-color": BOUNDARIES_COLORS["tribal"],
+      "line-opacity": 0.7,
+      "line-width": 2,
+    },
+  });
   // ward + community areas for IL
   if (state === "il") {
     newSourceLayer("chi_wards", CHI_WARD_KEY);
@@ -154,6 +173,38 @@ map.on("load", function () {
       }
     );
   }
+  if (state === "ny") {
+    newSourceLayer("nyc-city-council", NYC_COUNCIL_KEY);
+    map.addLayer({
+      id: "nyc-city-council-lines",
+      type: "line",
+      source: "nyc-city-council",
+      "source-layer": "nyc_council-08swpg",
+      layout: {
+        visibility: "none",
+      },
+      paint: {
+        "line-color": BOUNDARIES_COLORS["nyc"],
+        "line-opacity": 0.7,
+        "line-width": 2,
+      },
+    });
+    newSourceLayer("nyc-state-assembly", NYC_STATE_ASSEMBLY_KEY);
+    map.addLayer({
+      id: "nyc-state-assembly-lines",
+      type: "line",
+      source: "nyc-state-assembly",
+      "source-layer": "nyc_state_assembly-5gr5zo",
+      layout: {
+        visibility: "none",
+      },
+      paint: {
+        "line-color": BOUNDARIES_COLORS["nyc_assembly"],
+        "line-opacity": 0.7,
+        "line-width": 2,
+      },
+    });
+  }
   // leg2 : congressional district
   // leg3 : state senate district
   // leg4 : state house district
@@ -168,7 +219,7 @@ map.on("load", function () {
   // draw all coi's in one layer
   coidata = JSON.parse(coidata.replace(/'/g, '"'));
 
-  var coidata_geojson_format = {
+  coidata_geojson_format = {
     'type': 'FeatureCollection',
     'features': []
   };
@@ -202,7 +253,6 @@ map.on("load", function () {
 
   // mxzoom(def 18 higher = more detail)
   // tol(def .375 higher = simpler geometry)
-  const mxzoom = 10, tol = 3.5;
 
   map.addSource('coi_all', {
       'type': 'geojson',
@@ -225,42 +275,48 @@ map.on("load", function () {
 
   // hover to highlight
   $(".community-review-span").hover(function() {
+      let highlight_id = this.id + "_boldline";
+      let highlight_id_fill = this.id + "_fill";
+      if (map.getLayer(highlight_id)) {
+        map.setLayoutProperty(highlight_id, "visibility", "visible")
+        map.setLayoutProperty(highlight_id_fill, "visibility", "visible")
+      } else {
+        map.addSource(highlight_id, {
+          'type': 'geojson',
+          'data': {
+            type: "Feature",
+            geometry: {
+              type: "Polygon",
+              coordinates: coidata[this.id],
+            },
+          },
+          'maxzoom': mxzoom, // def 18 higher = more detail
+          'tolerance': tol // def .375 higher = simpler geometry
+      });
+      map.addLayer({
+          'id': highlight_id_fill,
+          'type': 'fill',
+          'source': highlight_id,
+          'paint': {
+            'fill-color': 'rgb(110, 178, 181)',
+            'fill-opacity': 0.15
+          },
+      });
+      map.addLayer({
+          'id': highlight_id,
+          'type': 'line',
+          'source': highlight_id,
+          'paint': {
+            'line-color': '#808080',
+            'line-width': 2,
+          },
+      });
+    }
+  }, function () {
     let highlight_id = this.id + "_boldline";
     let highlight_id_fill = this.id + "_fill";
-    map.addSource(highlight_id, {
-        'type': 'geojson',
-        'data': {
-          type: "Feature",
-          geometry: {
-            type: "Polygon",
-            coordinates: coidata[this.id],
-          },
-        },
-        'maxzoom': mxzoom, // def 18 higher = more detail
-        'tolerance': tol // def .375 higher = simpler geometry
-    });
-    map.addLayer({
-        'id': highlight_id_fill,
-        'type': 'fill',
-        'source': highlight_id,
-        'paint': {
-          'fill-color': 'rgb(110, 178, 181)',
-          'fill-opacity': 0.15
-        },
-    });
-    map.addLayer({
-        'id': highlight_id,
-        'type': 'line',
-        'source': highlight_id,
-        'paint': {
-          'line-color': '#808080',
-          'line-width': 2,
-        },
-    });
-  }, function () {
-    map.removeLayer(this.id+"_boldline");
-    map.removeLayer(this.id+"_fill");
-    map.removeSource(this.id+"_boldline");
+    map.setLayoutProperty(highlight_id, "visibility", "none")
+    map.setLayoutProperty(highlight_id_fill, "visibility", "none")
   });
 
   // find what features are currently on view
@@ -332,10 +388,15 @@ document.querySelectorAll(".comm-content").forEach(function (p) {
 //create a button that toggles layers based on their IDs
 var toggleableLayerIds = JSON.parse(JSON.stringify(BOUNDARIES_LAYERS));
 toggleableLayerIds["school-districts"] = "School Districts";
+toggleableLayerIds["tribal-boundaries"] = "2010 Census Tribal Boundaries";
 // add selector for chicago wards + community areas if illinois
 if (state === "il") {
   toggleableLayerIds["chi-ward"] = "Chicago Wards";
   toggleableLayerIds["chi-comm"] = "Chicago Community Areas";
+}
+if (state === "ny") {
+  toggleableLayerIds["nyc-city-council"] = "New York City Council districts";
+  toggleableLayerIds["nyc-state-assembly"] = "New York City state assembly districts";
 }
 
 for (var id in toggleableLayerIds){
@@ -360,7 +421,15 @@ for (var id in toggleableLayerIds){
     if (visibility === "visible") {
       map.setLayoutProperty(txt + "-lines", "visibility", "none");
     } else {
+      // set all other layers to not visible, uncheck the display box for all other layers
       map.setLayoutProperty(txt + "-lines", "visibility", "visible");
+      for (var layerID in toggleableLayerIds) {
+        if (layerID != txt) {
+          map.setLayoutProperty(layerID + "-lines", "visibility", "none");
+          var button = document.getElementById(layerID);
+          button.checked = false;
+        }
+      }
     }
   };
   // in order to create the buttons
@@ -376,7 +445,77 @@ for (var id in toggleableLayerIds){
   var newline = document.createElement("br");
 };
 
+// Toggles the visibility of the selected community. If the coi_layer_fill layer (all the communities) is displayed, remove it and
+// display the selected community. If the last selected community community is hidden, display the coi_layer_fill layer.
+function toggleEntryVisibility(checkbox)  {
+  map.setLayoutProperty('coi_layer_fill', "visibility", "none");
+  if (checkbox.checked) {
+    shownCois.add(checkbox.value)
+    if (map.getLayer(checkbox.value)) {
+      map.setLayoutProperty(checkbox.value, "visibility", "visible");
+    } else {
+      map.addSource(checkbox.value, {
+          'type': 'geojson',
+          'data': {
+            type: "Feature",
+            geometry: {
+              type: "Polygon",
+              coordinates: coidata[checkbox.value],
+            },
+          },
+          'maxzoom': mxzoom,
+          'tolerance': tol
+      });
+    
+      map.addLayer({
+          'id': checkbox.value,
+          'type': 'fill',
+          'source': checkbox.value,
+          'paint': {
+              'fill-color': 'rgb(110, 178, 181)',
+              'fill-opacity': 0.15
+          },
+      });
+    }
+  }
+  else {
+    map.setLayoutProperty(checkbox.value, "visibility", "none");
+    shownCois.delete(checkbox.value)
+    if (shownCois.size == 0) map.setLayoutProperty('coi_layer_fill', "visibility", "visible");
+  }
+};
+
+// Uncheck all communities that are currently checked and display the total community layer
+function showAllCommunities() {
+  $(".map-checkbox:checkbox:checked").toArray().forEach(function(coiCheckbox) {
+    coiCheckbox.checked = false;
+    toggleEntryVisibility(coiCheckbox);
+  })
+  map.setLayoutProperty('coi_layer_fill', "visibility", "visible");
+}
+
+function exportCois(url, type) {
+  let coisToExport = shownCois.size > 0 ? shownCois : new Set(["all"]);
+  dataToSend = {
+      'cois': JSON.stringify(Array.from(coisToExport)),
+      csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').attr('value'),
+  }
+  $.ajax({
+          type: "POST",
+          url: url,
+          data: dataToSend,
+          success:function(response){ 
+            const blob = type == "geo" ? new Blob([JSON.stringify(response)], {type : 'application/json'}) : new Blob([response], {type : 'application/csv'})
+            const url = window.URL.createObjectURL(blob);
+            var link = type == "geo" ? document.getElementById("map-geo-link") : link = document.getElementById("map-csv-link")
+            link.href = url
+            link.click()
+            window.URL.revokeObjectURL(url);
+        }
+      });
+};
 /*******************************************************************/
+
 // remove the last char in the string
 function removeLastChar(str) {
   return str.substring(0, str.length - 1);
