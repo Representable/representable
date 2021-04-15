@@ -663,13 +663,13 @@ class Submission(View):
             * User is logged in
             * context['map_id'] points to a valid CommunityEntry
             * that CommunityEntry does not have a drive
-            * that CommunityEntry has an associated Address 
+            * that CommunityEntry has an associated Address
             * context['state'] exists and is a valid state
             * community was created by the user who is signed in - (Already true if no drive & logged in)
         """
         if(not auth):
             return False
-        try:        
+        try:
             entry = CommunityEntry.objects.get(entry_ID=entryid)
         except:
             return False
@@ -1153,47 +1153,52 @@ class EntryView(LoginRequiredMixin, View):
 
 # ******************************************************************************#
 
-
 class MultiExportView(TemplateView):
     template = "main/export.html"
 
     def get(self, request, **kwargs):
-        state = self.kwargs["abbr"]
-        state_obj = State.objects.get(abbr=state.upper())
-        query = (
-            state_obj.submissions.all()
-            .defer("census_blocks_polygon_array", "user_polygon")
-            .prefetch_related("organization", "drive")
-        )
-
-        if not query:
-            # TODO: if the query is empty, return something more appropriate
-            # than an empty geojson? - jf
-
-            return HttpResponse(
-                geojson.dumps({}), content_type="application/json"
-            )
-
-        all_gj = []
-        for entry in query:
-            gj = make_geojson_for_state_map_page(request, entry)
-            all_gj.append(gj)
-
-        final = geojson.FeatureCollection(all_gj)
-
-        if kwargs["type"] == "geo":
-            print("********", "geo", "********")
-            response = HttpResponse(
-                geojson.dumps(final), content_type="application/json"
-            )
+        print("checking authentication")
+        print(self.request.user.is_authenticated)
+        if not self.request.user.is_authenticated:
+            print("hello??")
+            return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
         else:
-            print("********", "csv", "********")
-            dictform = json.loads(geojson.dumps(final))
-            df = pd.DataFrame()
-            for entry in dictform["features"]:
-                row_dict = entry["properties"].copy()
-                row_dict["geometry"] = str(entry["geometry"])
-                df = df.append(row_dict, ignore_index=True)
-            response = HttpResponse(df.to_csv(), content_type="text/csv")
+            state = self.kwargs["abbr"]
+            state_obj = State.objects.get(abbr=state.upper())
+            query = (
+                state_obj.submissions.all()
+                .defer("census_blocks_polygon_array", "user_polygon")
+                .prefetch_related("organization", "drive")
+            )
 
-        return response
+            if not query:
+                # TODO: if the query is empty, return something more appropriate
+                # than an empty geojson? - jf
+
+                return HttpResponse(
+                    geojson.dumps({}), content_type="application/json"
+                )
+
+            all_gj = []
+            for entry in query:
+                gj = make_geojson_for_state_map_page(request, entry)
+                all_gj.append(gj)
+
+            final = geojson.FeatureCollection(all_gj)
+
+            if kwargs["type"] == "geo":
+                print("********", "geo", "********")
+                response = HttpResponse(
+                    geojson.dumps(final), content_type="application/json"
+                )
+            else:
+                print("********", "csv", "********")
+                dictform = json.loads(geojson.dumps(final))
+                df = pd.DataFrame()
+                for entry in dictform["features"]:
+                    row_dict = entry["properties"].copy()
+                    row_dict["geometry"] = str(entry["geometry"])
+                    df = df.append(row_dict, ignore_index=True)
+                response = HttpResponse(df.to_csv(), content_type="text/csv")
+
+            return response

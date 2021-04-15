@@ -46,8 +46,13 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                 <h4 class="font-weight-light text-center my-2"> {{ state_name }} State Map </h4>
               </div>
               <div class="row justify-content-center">
-                <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/geo/ role="button" download="communities.geojson">Export All as GeoJSON</a>
-                <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/csv/ role="button" download="communities.csv">Export All as CSV</a>
+                {% if user.is_authenticated %}
+                  <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/geo/ role="button" download="communities.geojson">Export All as GeoJSON</a>
+                  <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/csv/ role="button" download="communities.csv">Export All as CSV</a>
+                {% else %}
+                  <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href='{% url "account_login" %}?next={{request.path}}' role="button">Export All as GeoJSON</a>
+                  <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href='{% url "account_login" %}?next={{request.path}}' role="button">Export All as CSV</a>
+                {% endif %}
               </div>
               <div id="headingOne">
                 <button id="buttonOne"class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne"
@@ -70,7 +75,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                     <div class="row px-3">
                       <div class="col-8 col-xl-9">{% trans "Community Information" %}</div>
                       <div class="col-4 col-xl-3 text-xl-right text-center">{% trans "Only Show" %}</div>
-                    </div> 
+                    </div>
                     <hr>
                     {% comment %} <div class="row">
                       <div class="col-8 col-xl-10"></div>
