@@ -1,35 +1,36 @@
 {% extends "main/base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 <div class="container">
   <div class="row row-content">
     <div class="col-lg-6 text-center my-5 order-md-1">
-      <h1 class="font-weight-light"> Partner With Us</h1>
+      <h1 class="font-weight-light"> {% trans "Partner With Us" %}</h1>
       <p class="font-weight-light">
-        Welcome to Representable! Get started by creating an organization or requesting a demo below.
+        {% trans "Welcome to Representable! Get started by creating an organization or requesting a demo below." %}
       </p>
-      <a class="btn btn-primary" href="{% url 'main:create_org' %}" role="button">Create Organization</a>
+      <a class="btn btn-primary" href="{% url 'main:create_org' %}" role="button">{% trans "Create Organization" %}</a>
       <a class="btn btn-outline-primary" href="mailto:team@representable.org?subject=Representable%20Demo&body=Dear%20Representable%20Team%2C%0D%0A%0D%0AI'd%20like%20to%20request%20a%20product%20demo%20on%20behalf%20of%20______." role="button">Request Demo</a>
       <img class="img-fluid align-bottom" src="{% static 'img/illustration.svg' %}" alt="people drawing a map together"></img>
     </div>
     <div class="col-lg-6 order-md-2">
       <div class="card card-signin my-3">
         <div class="card-body">
-          <h5><span class="badge badge-primary">1</span> Create an Organization</h5>
-          <p>Include a brief description, link, and the state(s) you operate in.</p>
+          <h5><span class="badge badge-primary">1</span> {% trans "Create an Organization" %}</h5>
+          <p>{% trans "Include a brief description, link, and the state(s) you operate in." %}</p>
           <hr>
-          <h5><span class="badge badge-primary">2</span> Start a Community Mapping Drive</h5>
-          <p>Create a community mapping drive via the organization dashboard. </p>
+          <h5><span class="badge badge-primary">2</span> {% trans "Start a Community Mapping Drive" %}</h5>
+          <p>{% trans "Create a community mapping drive via the organization dashboard." %} </p>
           <hr>
-          <h5><span class="badge badge-primary">3</span> Share your Mapping Drive</h5>
-          <p>Share the link to your community mapping drive via email and social media to individuals in your state to start collecting submissions.</p>
+          <h5><span class="badge badge-primary">3</span> {% trans "Share your Mapping Drive" %}</h5>
+          <p>{% trans "Share the link to your community mapping drive via email and social media to individuals in your state to start collecting submissions." %}</p>
           <hr>
-          <h5><span class="badge badge-primary">4</span> Visualize a Map of Submissions</h5>
-          <p>View a map of all the communities submitted to your organization together.</p>
+          <h5><span class="badge badge-primary">4</span> {% trans "Visualize a Map of Submissions" %}</h5>
+          <p>{% trans "View a map of all the communities submitted to your organization together." %}</p>
           <hr>
-          <h5><span class="badge badge-primary">5</span> Export Community Submissions</h5>
-          <p>Download all the communities submitted to your organization as geoJSON for easy integration with district drawing and visualization tools.</p>
+          <h5><span class="badge badge-primary">5</span> {% trans "Export Community Submissions" %}</h5>
+          <p>{% trans "Download all the communities submitted to your organization as geoJSON for easy integration with district drawing and visualization tools." %}</p>
         </div>
       </div>
     </div>
