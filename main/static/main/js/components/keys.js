@@ -26,8 +26,9 @@ var BOUNDARIES_COLORS = {
   "chi-ward": "rgb(0, 0, 117)", // navy
   "chi-comm": "rgb(169, 169, 169)" // gray
 }
-var BLOCK_STATES = ["il"];
+var BLOCK_STATES = ["al", "il"];
 var BLOCK_KEYS = {
+  "alblock": "alblock",
   "ilblock": "d7hs49xn",
 }
 var BG_KEYS = {
@@ -87,3 +88,4 @@ var CHI_WARD_KEY = "179v2oeh";
 var CHI_COMM_KEY = "63nswxfc";
 var SCHOOL_DISTR_KEY = "1ezqvmlm";
 var STATES_USING_NEW_BG = ["az", "mi", "nv", "nj", "nm", "nc", "pa", "ut", "va", "wa"];
+var STATES_USING_OLD_BLOCKS = ["il", "ok"];

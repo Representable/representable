@@ -22,10 +22,13 @@
 // GEO Js file for handling map drawing.
 /* https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ */
 var unit_id = "GEOID";
-var layer_suffix = (BLOCK_STATES.includes(state) ? "block" : "bg");
-if (drawUsingBlocks === true) {
-  unit_id = "BLOCKID10";
-}
+var layer_suffix = "bg";
+var drawUsingBlocks = false;
+var block_id = "GEOID20";
+if (STATES_USING_OLD_BLOCKS.indexOf(state) >= 0) block_id = "BLOCKID10";
+// if (drawUsingBlocks === true) {
+//   unit_id = "BLOCKID10";
+// }
 // stack of filters (which block to highlight) and bounding boxes (for contiguity check)
 var filterStack = JSON.parse(sessionStorage.getItem("filterStack"));
 var bboxStack = JSON.parse(sessionStorage.getItem("bboxStack"));
@@ -52,8 +55,16 @@ function changeMappingUnit() {
     unit_id = "GEOID";
     layer_suffix = "bg";
     sessionStorage.clear();
-    map.setFilter(state + "-highlighted-block", ["in", "BLOCKID10", ""]);
+    // show or hide population display
+    if (STATES_USING_NEW_BG.indexOf(state) >= 0) {
+      $("#map-pop-btn").hide();
+    } else {
+      $("#map-pop-btn").show();
+    }
+    // clear selection
+    map.setFilter(state + "-highlighted-block", ["in", block_id, ""]);
     map.setFilter(state + "-highlighted-bg", ["in", "GEOID", ""]);
+
     mapHover();
   } else {
     map.setLayoutProperty(state + "-census-lines-block", "visibility", "visible");
@@ -63,39 +74,25 @@ function changeMappingUnit() {
     map.setLayoutProperty(state + "-census-shading-bg", "visibility", "none");
     map.setLayoutProperty(state + "-highlighted-bg", "visibility", "none");
     drawUsingBlocks = true;
-    unit_id = "BLOCKID10";
+    unit_id = block_id;
     layer_suffix = "block";
     sessionStorage.clear();
-    map.setFilter(state + "-highlighted-block", ["in", "BLOCKID10", ""]);
+    // show or hide population display
+    if (STATES_USING_OLD_BLOCKS.indexOf(state) == -1) {
+      $("#map-pop-btn").hide();
+    } else {
+      $("#map-pop-btn").show();
+    }
+    // clear selection
+    map.setFilter(state + "-highlighted-block", ["in", block_id, ""]);
     map.setFilter(state + "-highlighted-bg", ["in", "GEOID", ""]);
     mapHover();
   }
 }
 
-// change "Show Examples" to "Hide Examples" on click
-// TODO: change this to be updated for languages automatically, rather than manually
-function changeText(element) {
-  var target_id = element.getAttribute("data-target").replace("#","");
-  var targetVis = document.getElementById(target_id).classList.contains("show");
-  var txt = element.innerText;
-  if (!targetVis) {
-    if (txt == "Show Examples") {
-      element.innerText = "Hide Examples";
-    } else if (txt == "Mostar ejemplos") {
-      element.innerText = "Ocultar ejemplos";
-    }
-  } else {
-    if (txt == "Hide Examples") {
-      element.innerText = "Show Examples";
-    } else if (txt == "Ocultar ejemplos"){
-      element.innerText = "Mostar ejemplos";
-    }
-  }
-}
-
 // removes population from community info dropdown, if in a state using new census geographies
-if (STATES_USING_NEW_BG.indexOf(state) >= 0) {
-  $(".comm-pop-text").hide();
+if ((STATES_USING_NEW_BG.indexOf(state) >= 0 && !drawUsingBlocks) || (STATES_USING_OLD_BLOCKS.indexOf(state) == -1 && drawUsingBlocks)) {
+  $("#map-pop-btn").hide();
 }
 
 // changes page entry page from the survey start page to the first part of the survey
@@ -243,7 +240,6 @@ $('#map-bg-to-block-btn').on('click', function() {
   $("#map-bg-to-block-modal").modal('hide');
 });
 
-if (!BLOCK_STATES.includes(state)) $("#map-units-btn").hide();
 /**
  * "May not be needed": Lines tagged with this are meant to animate the load in between the progress bars on a mobile view. However
  * right now those bars have been left out so those lines can be deleted if the bars won't be put back in
@@ -686,7 +682,14 @@ function createCommPolygon() {
   });
   var multiPolySave;
   queryFeatures.forEach(function (feature) {
-    featureProp = (drawUsingBlocks ? feature.properties.BLOCKID10 : feature.properties.GEOID)
+    // get properties, depending on the feature type
+    if (drawUsingBlocks && block_id === "GEOID20") {
+      featureProp = feature.properties.GEOID20;
+    } else if (drawUsingBlocks && block_id === "BLOCKID10") {
+      featureProp = feature.properties.BLOCKID10;
+    } else {
+      featureProp = feature.properties.GEOID;
+    }
     if (polyFilter.includes(featureProp)) {
       if (multiPolySave === undefined) {
         multiPolySave = feature;
@@ -1245,14 +1248,12 @@ map.on("style.load", function () {
     map.resize();
   });
 
-  // this is where the census block groups are loaded, from a url to the mbtiles file uploaded to mapbox
-  // need to create layers for both blocks and block groups if state has functionality for both
-  if (BLOCK_STATES.includes(state)) {
-    newSourceLayer(state + "block", BLOCK_KEYS[state + "block"]);
-    newCensusShading(state, firstSymbolId, "block");
-    newCensusLines(state, "block");
-    newHighlightLayer(state, firstSymbolId, "block");
-  }
+  // block layers
+  newSourceLayer(state + "block", state + "block");
+  newCensusShading(state, firstSymbolId, "block");
+  newCensusLines(state, "block");
+  newHighlightLayer(state, firstSymbolId, "block");
+  // block group layers
   newSourceLayer(state + "bg", BG_KEYS[state + "bg"]);
   newCensusShading(state, firstSymbolId, "bg");
   newCensusLines(state, "bg");
@@ -1300,8 +1301,10 @@ map.on("style.load", function () {
     for (let i = 0; i < queryFeatures.length; i++) {
       var feature = queryFeatures[i];
       // push to highlight layer for visibility
-      // NOTE: for blocks, has to be BLOCKID10
-      if (drawUsingBlocks) {
+      // GEOID20 for blocks for all states using 2020 blocks (all except il, ok)
+      if (drawUsingBlocks && block_id === "GEOID20") {
+        features.push(feature.properties.GEOID20);
+      } else if (drawUsingBlocks && block_id === "BLOCKID10") {
         features.push(feature.properties.BLOCKID10);
         if (!(feature.properties.BLOCKID10 in blockPopCache)) {
           blockPopCache[feature.properties.BLOCKID10] = feature.properties.POP10;
