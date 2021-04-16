@@ -39,7 +39,7 @@
     </div>
 </div>
 
-<!-- Modal that pops up when the help button is clicked -->
+<!-- Modal that pops up when the help button is clicked on mobile -->
 <div id="map-help-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -168,7 +168,63 @@
 
                 <!-- Help Button and Dropdown -->
                 <div class="col-1 text-md-right align-middle d-none d-md-block">
-                    <button id="map-help-btn" class="btn btn-outline-primary btn-circle btn-md mapping-icon mapping-btn">?</button>
+                    <div id="map-help-dropdown" class="dropdown text-md-right">
+                        <button id="map-help-btn" class="btn btn-outline-primary btn-circle btn-md mapping-icon mapping-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">?</button>
+
+                        <div id="map-help-menu" class="dropdown-menu vw-md-75 vw-lg-50" aria-labelledby="map-help-btn">
+                            <div class="container pl-5 pr-5 pb-5 h-100">
+                                <div class="comm-info-text mt-2 mb-2">{% trans "How to draw my community?" %}</div>
+                                <p class="mb-3 small">
+                                    {% blocktrans %}
+                                        Select units on the map by clicking with your mouse. To deselect a unit, click it again. Watch the following video to learn more.
+                                    {% endblocktrans %}
+                                </p>
+
+                                <div class="m-3">
+                                    <div class="rounded embed-responsive embed-responsive-16by9">
+                                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/VPYXjOs9qAg" allowfullscreen></iframe>
+                                    </div>
+                                </div>
+
+                                <div class="rounded accordion map-info-item text-center mt-3" id="map_faq_accordion">
+                                    <button class="btn btn-link text-left comm-item-text pl-0 no-underline-link" type="button" data-target="#map_faq" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                                        {% trans "FAQ" %}<i class="fas fa-angle-down pl-3 pt-2 pb-2"></i>
+                                    </button>
+                                    <div id="map_faq" class="collapse text-center" aria-labelledby="map_faq_accordion" data-parent="#map_faq">
+                                        <div class="collapse-in map-survey-response d-inline-block text-left w-75">
+                                            <h5><strong>{% trans "What are the units?" %}</strong></h5>
+                                            <p>
+                                                {% blocktrans %}
+                                                    The units are <strong>census block groups</strong>, which are used by map drawers to draw voting districts.
+                                                {% endblocktrans %}
+                                            </p>
+
+                                            <h5><strong>{% trans "Why am I unable to save my map?" %}</strong></h5>
+                                            <p>
+                                                {% blocktrans %}
+                                                    Make sure that it does not contain gaps. Communities of Interest must be contiguous.
+                                                {% endblocktrans %}
+                                            </p>
+
+                                            <h5><strong>{% trans "Can I map outside of my state?" %}</strong></h5>
+                                            <p>
+                                                {% blocktrans %}
+                                                    In order to map outside of your state, you need to add a new community within the other state.
+                                                {% endblocktrans %}
+                                            </p>
+
+                                            <h5><strong>{% trans "How large should my community be?" %}</strong></h5>
+                                            <p>
+                                                {% blocktrans %}
+                                                    Your community can be as small as one unit or as large as 800 units.
+                                                {% endblocktrans %}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Community Button and Dropdown -->
