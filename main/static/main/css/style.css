@@ -967,11 +967,6 @@ Entry Mapping Page
   color: #fff !important;
 }
 
-#map-help-menu {
-  height: fit-content;
-  max-height: 800px;
-}
-
 .comm-info-text {
   color:#2A94F4;
   font-weight: bold;
@@ -1547,7 +1542,7 @@ textarea.survey-field:focus {
   color: #5996D2;
 }
 .light-blue-bg {
-  background: #DAEFFF 60%;
+  background: #F2FAFF 60%;
 }
 .light-green-bg {
   background-color: #F2FAFF;
