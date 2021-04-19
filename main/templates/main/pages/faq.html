@@ -12,7 +12,7 @@
         <h3 class="blue-text ml-3 mt-3">For Community Members</h3>
         {% for q in faqs_users %}
         <div class="col-12 my-2 light-blue-bg">
-          <button class="btn ws-normal btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" type="button" data-target="#faq-question-{{q.id}}" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+          <button class="btn ws-normal btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" type="button" data-target="#faq-question-{{q.id}}" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngleFaq(this)">
               <h6 class="mt-2 dropdown-toggle-angle word-break">{{ q.question|striptags }}<i class="fas fa-angle-down pl-3"></i></h6>
           </button>
           <div class="accordion" id="faq-question-{{q.id}}-accordion">
@@ -25,7 +25,7 @@
         <h3 class="blue-text ml-3 mt-3">For Organizations</h3>
         {% for q in faqs_orgs %}
         <div class="col-12 my-2 light-blue-bg">
-          <button class="btn ws-normal btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" type="button" data-target="#faq-question-{{q.id}}" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+          <button class="btn ws-normal btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" type="button" data-target="#faq-question-{{q.id}}" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngleFaq(this)">
               <h6 class="mt-2 dropdown-toggle-angle word-break">{{ q.question|striptags }}<i class="fas fa-angle-down pl-3"></i></h6>
           </button>
           <div class="accordion" id="faq-question-{{q.id}}-accordion">
