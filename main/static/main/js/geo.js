@@ -21,14 +21,18 @@
 
 // GEO Js file for handling map drawing.
 /* https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ */
-var unit_id = "GEOID";
+var bg_id = "GEOID";
+var block_id = "GEOID20";
+var unit_id = bg_id;
 var layer_suffix = "bg";
 var drawUsingBlocks = false;
-var block_id = "GEOID20";
-if (STATES_USING_OLD_BLOCKS.indexOf(state) >= 0) block_id = "BLOCKID10";
-// if (drawUsingBlocks === true) {
-//   unit_id = "BLOCKID10";
-// }
+var old_units = false;
+if (STATES_USING_OLD_UNITS.indexOf(state) >= 0) {
+  old_units = true;
+  block_id = "BLOCKID10";
+  bg_id = "GEOID10";
+  unit_id = bg_id;
+}
 // stack of filters (which block to highlight) and bounding boxes (for contiguity check)
 var filterStack = JSON.parse(sessionStorage.getItem("filterStack"));
 var bboxStack = JSON.parse(sessionStorage.getItem("bboxStack"));
@@ -52,18 +56,21 @@ function changeMappingUnit() {
     map.setLayoutProperty(state + "-census-shading-bg", "visibility", "visible");
     map.setLayoutProperty(state + "-highlighted-bg", "visibility", "visible");
     drawUsingBlocks = false;
-    unit_id = "GEOID";
     layer_suffix = "bg";
+    unit_id = bg_id;
+    //clear "cache" so that undo button still works as expected
     sessionStorage.clear();
+    filterStack = [];
+    bboxStack = [];
     // show or hide population display
-    if (STATES_USING_NEW_BG.indexOf(state) >= 0) {
-      $("#map-pop-btn").hide();
-    } else {
+    if (old_units) {
       $("#map-pop-btn").show();
+    } else {
+      $("#map-pop-btn").hide();
     }
     // clear selection
     map.setFilter(state + "-highlighted-block", ["in", block_id, ""]);
-    map.setFilter(state + "-highlighted-bg", ["in", "GEOID", ""]);
+    map.setFilter(state + "-highlighted-bg", ["in", bg_id, ""]);
 
     mapHover();
   } else {
@@ -74,24 +81,26 @@ function changeMappingUnit() {
     map.setLayoutProperty(state + "-census-shading-bg", "visibility", "none");
     map.setLayoutProperty(state + "-highlighted-bg", "visibility", "none");
     drawUsingBlocks = true;
-    unit_id = block_id;
     layer_suffix = "block";
+    unit_id = block_id;
+    //clear "cache" so that undo button still works as expected
     sessionStorage.clear();
-    // show or hide population display
-    if (STATES_USING_OLD_BLOCKS.indexOf(state) == -1) {
-      $("#map-pop-btn").hide();
-    } else {
+    filterStack = [];
+    bboxStack = [];    // show or hide population display
+    if (old_units) {
       $("#map-pop-btn").show();
+    } else {
+      $("#map-pop-btn").hide();
     }
     // clear selection
     map.setFilter(state + "-highlighted-block", ["in", block_id, ""]);
-    map.setFilter(state + "-highlighted-bg", ["in", "GEOID", ""]);
+    map.setFilter(state + "-highlighted-bg", ["in", bg_id, ""]);
     mapHover();
   }
 }
 
 // removes population from community info dropdown, if in a state using new census geographies
-if ((STATES_USING_NEW_BG.indexOf(state) >= 0 && !drawUsingBlocks) || (STATES_USING_OLD_BLOCKS.indexOf(state) == -1 && drawUsingBlocks)) {
+if (!old_units) {
   $("#map-pop-btn").hide();
 }
 
@@ -683,12 +692,10 @@ function createCommPolygon() {
   var multiPolySave;
   queryFeatures.forEach(function (feature) {
     // get properties, depending on the feature type
-    if (drawUsingBlocks && block_id === "GEOID20") {
-      featureProp = feature.properties.GEOID20;
-    } else if (drawUsingBlocks && block_id === "BLOCKID10") {
-      featureProp = feature.properties.BLOCKID10;
+    if (drawUsingBlocks) {
+      featureProp = feature.properties[block_id];
     } else {
-      featureProp = feature.properties.GEOID;
+      featureProp = feature.properties[bg_id];
     }
     if (polyFilter.includes(featureProp)) {
       if (multiPolySave === undefined) {
@@ -1254,7 +1261,7 @@ map.on("style.load", function () {
   newCensusLines(state, "block");
   newHighlightLayer(state, firstSymbolId, "block");
   // block group layers
-  newSourceLayer(state + "bg", BG_KEYS[state + "bg"]);
+  newSourceLayer(state + "bg", state + "bg");
   newCensusShading(state, firstSymbolId, "bg");
   newCensusLines(state, "bg");
   newHighlightLayer(state, firstSymbolId, "bg");
@@ -1302,15 +1309,14 @@ map.on("style.load", function () {
       var feature = queryFeatures[i];
       // push to highlight layer for visibility
       // GEOID20 for blocks for all states using 2020 blocks (all except il, ok)
-      if (drawUsingBlocks && block_id === "GEOID20") {
-        features.push(feature.properties.GEOID20);
-      } else if (drawUsingBlocks && block_id === "BLOCKID10") {
-        features.push(feature.properties.BLOCKID10);
-        if (!(feature.properties.BLOCKID10 in blockPopCache)) {
-          blockPopCache[feature.properties.BLOCKID10] = feature.properties.POP10;
+      if (drawUsingBlocks) {
+        features.push(feature.properties[block_id]);
+        if (old_units && !(feature.properties[block_id] in blockPopCache)) {
+          blockPopCache[feature.properties[block_id]] = feature.properties.POP10;
         }
-      } else {
-        features.push(feature.properties.GEOID);
+      }
+      else {
+        features.push(feature.properties[bg_id]);
       }
       if (features.length >= 1) {
         // polyCon : the turf polygon from coordinates
@@ -1397,10 +1403,9 @@ map.on("style.load", function () {
         "This community is too large. Please select a smaller area to continue."
       );
     }
-    // set as indicator that population is loading
-    if (STATES_USING_NEW_BG.indexOf(state) === -1) {
+    if (old_units) {
+      // set as indicator that population is loading
       $(".comm-pop").html("...");
-      // remove "in" and "GEOID" parts of filter, for population
       if (drawUsingBlocks) {
         var blockCommPop = 0;
         filter.forEach(function(feature) {
@@ -1410,16 +1415,17 @@ map.on("style.load", function () {
         });
         $(".comm-pop").html(blockCommPop);
       } else {
+        // remove "in" and "GEOID" parts of filter, for population
         getCommPop(cleanFilter(filter));
       }
-      if (isChanged) {
-        filterStack.push(currentFilter);
-        bboxStack.push(JSON.stringify(currentBbox));
-        sessionStorage.setItem("filterStack", JSON.stringify(filterStack));
-        sessionStorage.setItem("bboxStack", JSON.stringify(bboxStack));
-        sessionStorage.setItem("bgFilter", JSON.stringify(filter));
-        sessionStorage.setItem("selectBbox", JSON.stringify(selectBbox));
-      }
+    }
+    if (isChanged) {
+      filterStack.push(currentFilter);
+      bboxStack.push(JSON.stringify(currentBbox));
+      sessionStorage.setItem("filterStack", JSON.stringify(filterStack));
+      sessionStorage.setItem("bboxStack", JSON.stringify(bboxStack));
+      sessionStorage.setItem("bgFilter", JSON.stringify(filter));
+      sessionStorage.setItem("selectBbox", JSON.stringify(selectBbox));
     }
   });
   mapHover();
