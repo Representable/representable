@@ -231,7 +231,9 @@ map.on("load", function () {
       fit["_northEast"]["lng"]
     );
     var commBounds = new mapboxgl.LngLatBounds(southWest, northEast);
-    map.fitBounds(commBounds, { padding: 100 });
+    map.fitBounds(commBounds, {
+      padding: {top: 20, bottom:20, left: 50, right: 50}
+    });
     map.addLayer({
       id: obj,
       type: "fill",
@@ -297,7 +299,9 @@ map.on("load", function () {
   // TODO: add array of blockgroup ids, add population and other demographic info
   function exportPDF(delay) {
     // make the map look good for the PDF ! TODO: un-select other layers like census blocks (turn into functions)
-    map.fitBounds(commBounds, { padding: 100 });
+    map.fitBounds(commBounds, {
+      padding: {top: 20, bottom:20, left: 50, right: 50}
+    });
     // display loading popup
     var instruction_box = document.getElementById("pdf-loading-box");
     instruction_box.style.display = "block";
@@ -350,7 +354,9 @@ map.on("load", function () {
 
   function emailPDF() {
     // make the map look good for the PDF ! TODO: un-select other layers like census blocks (turn into functions)
-    map.fitBounds(commBounds, { padding: 100 });
+    map.fitBounds(commBounds, {
+      padding: {top: 20, bottom:20, left: 50, right: 50}
+    });
 
     // setup XMLH request
     var request = new XMLHttpRequest();
