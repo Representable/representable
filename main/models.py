@@ -82,7 +82,7 @@ class Organization(models.Model):
         models.CharField(max_length=50, choices=STATES, blank=True),
         blank=False,
     )
-    slug = models.SlugField(unique=True, max_length=128)
+    slug = models.SlugField(unique=True, max_length=50)
     members = models.ManyToManyField(User, through="Membership")
     verified = models.BooleanField(default=False)
 
@@ -95,7 +95,13 @@ class Organization(models.Model):
     def save(self, *args, **kwargs):
         # generate the slug once the first time the org is created
         if not self.slug:
-            self.slug = generate_unique_slug(Organization, self.name)
+            # change self.name to be less than 35 char, split at a space,
+            slug_slice = 35;
+            for idx, char in enumerate(self.name):
+                if char == ' ' and idx < 35:
+                    slug_slice = idx
+            slug_name = self.name[:slug_slice]
+            self.slug = generate_unique_slug(Organization, slug_name)
         super(Organization, self).save(*args, **kwargs)
 
     def get_url_kwargs(self):
