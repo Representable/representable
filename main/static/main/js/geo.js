@@ -147,14 +147,6 @@ function fillSurveyQuestions() {
   $("#mobile-map-other-interests-resp>p.collapse-in").text($("#id_other_considerations").val());
 }
 
-$('#map-help-menu').on('click', function (event) {
-  event.stopPropagation();
-});
-
-$('#map-help-menu').on('touchstart', function (event) {
-  event.stopPropagation();
-});
-
 $('#map-comm-menu').on('click', function (event) {
     event.stopPropagation();
 });
@@ -167,12 +159,12 @@ $("#mobile-map-help-btn").on("click", function() {
   $("#map-help-modal").modal();
 });
 
+$("#map-help-btn").on("click", function() {
+  $("#map-help-modal").modal();
+})
+
 $("#mobile-map-comm-btn").on("click", function() {
   $("#map-comm-modal").modal();
-});
-
-$('#map-help-dropdown').on('shown.bs.dropdown hidden.bs.dropdown', function() {
-  $("#map-help-btn").toggleClass("opened")
 });
 
 $('#map-comm-dropdown').on('shown.bs.dropdown hidden.bs.dropdown', function() {
@@ -181,6 +173,7 @@ $('#map-comm-dropdown').on('shown.bs.dropdown hidden.bs.dropdown', function() {
 
 $('#map-help-modal').on('shown.bs.modal hidden.bs.modal', function() {
   $("#mobile-map-help-btn").toggleClass("opened")
+  $("#map-help-btn").toggleClass("opened")
 });
 
 $('#map-comm-modal').on('shown.bs.modal hidden.bs.modal', function() {

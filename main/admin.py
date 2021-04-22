@@ -29,7 +29,7 @@ from django.utils.html import format_html
 from django import forms
 from ckeditor.widgets import CKEditorWidget
 
-from .models import State, Drive, FrequentlyAskedQuestion, GlossaryDefinition
+from .models import State, Drive, FrequentlyAskedQuestion, GlossaryDefinition, Organization
 
 
 class StateAdminForm(forms.ModelForm):
@@ -181,3 +181,5 @@ class CommunityAdmin(ImportExportModelAdmin):
 
 
 admin.site.register(CommunityEntry, CommunityAdmin)
+
+admin.site.register(Organization)
