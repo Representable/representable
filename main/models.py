@@ -167,9 +167,15 @@ class Drive(models.Model):
         ordering = ("description",)
 
     def save(self, *args, **kwargs):
-        # generate the slug once the first time the org is created
+        # generate the slug once the first time the drive is created
         if not self.slug:
-            self.slug = generate_unique_slug(Drive, self.name)
+            # change self.name to be less than 35 char, split at a space,
+            slug_slice = 35;
+            for idx, char in enumerate(self.name):
+                if char == ' ' and idx < 35:
+                    slug_slice = idx
+            slug_name = self.name[:slug_slice]
+            self.slug = generate_unique_slug(Drive, slug_name)
         super(Drive, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
