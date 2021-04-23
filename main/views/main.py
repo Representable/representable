@@ -631,19 +631,19 @@ class Submission(View):
             context["organization_slug"] = organization_slug
             context["drive_name"] = drive_name
 
-        if self.request.user.is_authenticated:
-            if user_map.organization:
-                context["is_org_admin"] = self.request.user.is_org_admin(
-                    user_map.organization_id
-                )
-            if self.request.user == user_map.user:
-                for a in Address.objects.filter(entry=user_map):
-                    context["street"] = a.street
-                    context["city"] = a.city + ", " + a.state + " " + a.zipcode
-                    context["is_community_author"] = (
-                        self.request.user == user_map.user
-                    )
-                    comm.user_name = user_map.user_name
+        # if self.request.user.is_authenticated:
+        #     if user_map.organization:
+        #         context["is_org_admin"] = self.request.user.is_org_admin(
+        #             user_map.organization_id
+        #         )
+        #     if self.request.user == user_map.user:
+        #         for a in Address.objects.filter(entry=user_map):
+        #             context["street"] = a.street
+        #             context["city"] = a.city + ", " + a.state + " " + a.zipcode
+        #             context["is_community_author"] = (
+        #                 self.request.user == user_map.user
+        #             )
+        #             comm.user_name = user_map.user_name
 
         show_form = self.should_show_form(state=context['state'], entryid=context['map_id'], auth=self.request.user.is_authenticated)
         context['show_form'] = show_form
@@ -663,17 +663,19 @@ class Submission(View):
             * User is logged in
             * context['map_id'] points to a valid CommunityEntry
             * that CommunityEntry does not have a drive
-            * that CommunityEntry has an associated Address 
+            * that CommunityEntry has an associated Address
             * context['state'] exists and is a valid state
-            * community was created by the user who is signed in - (Already true if no drive & logged in)
+            * community was created by the user who is signed in
         """
         if(not auth):
             return False
-        try:        
+        try:
             entry = CommunityEntry.objects.get(entry_ID=entryid)
         except:
             return False
         if(entry.drive != None):
+            return False
+        if(entry.user == self.request.user):
             return False
         try:
             Address.objects.get(entry=entry)
@@ -1161,7 +1163,7 @@ class MultiExportView(TemplateView):
         state = self.kwargs["abbr"]
         cois = set(json.loads(request.POST['cois']))
         state_obj = State.objects.get(abbr=state.upper())
-        
+
         if 'all' not in cois:
             query = (
                 state_obj.submissions.filter(entry_ID__in=cois)
@@ -1182,7 +1184,7 @@ class MultiExportView(TemplateView):
             return HttpResponse(
                 geojson.dumps({}), content_type="application/json"
             )
-        
+
         all_gj = []
         for entry in query:
             gj = make_geojson_for_state_map_page(request, entry)
