@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-26 04:02+0000\n"
+"POT-Creation-Date: 2021-04-26 08:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -825,6 +825,214 @@ msgid ""
 "within a few minutes."
 msgstr ""
 
+#: main/templates/main/dashboard/index.html:9
+msgid "Dashboard"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:19
+#, fuzzy
+#| msgid "My Organizations"
+msgid "Organizations"
+msgstr "Para las organizaciones"
+
+#: main/templates/main/dashboard/index.html:30
+msgid ""
+" You're currently not part of any organizations.\n"
+"                Ask someone to add you to their organization or create a new "
+"one below. "
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:35
+msgid "Create New"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:44
+msgid "Quick Links"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:48
+#: main/templates/main/partners/get_started.html:13
+msgid "Create Organization"
+msgstr "Para las organizaciones"
+
+#: main/templates/main/dashboard/index.html:49
+msgid "Create Entry"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:50
+#: representable/templates/base.html:256
+msgid "My Communities"
+msgstr "Mis Comunidades"
+
+#: main/templates/main/dashboard/index.html:61
+#: representable/templates/base.html:130
+#: representable/templates/base_nofooter.html:130
+msgid "Account Settings"
+msgstr "Configuraciones"
+
+#: main/templates/main/dashboard/index.html:64
+#: main/templates/main/dashboard/index.html:66
+#, fuzzy
+#| msgid "Forgot Password?"
+msgid "Reset password"
+msgstr "¿Olvidaste tu contraseña?"
+
+#: main/templates/main/dashboard/index.html:65
+msgid ""
+"Reset your password by pressing on the following button. You will receive an "
+"email with the appropiate instructions."
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:69
+#, fuzzy
+#| msgid "Tracking Settings"
+msgid "Cookie Settings"
+msgstr "Configuraciones"
+
+#: main/templates/main/dashboard/index.html:70
+msgid ""
+"We use Mixpanel and Google Analytics to collect anonymized information about "
+"users' website usage. We use this information to improve our website "
+"experience. You can control whether we have access to this information or "
+"not."
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:72
+msgid ""
+"\n"
+"              <p>Based on our records, you have <strong>opted in</strong> "
+"for anonymized information collection. To <strong>opt out</strong>, press on "
+"the button below.</p>\n"
+"              "
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:78
+msgid ""
+"\n"
+"              <p>Based on our records, you have <strong>opted out</strong> "
+"of anonymized information collection. To <strong>opt in</strong>, press on "
+"the button below.</p>\n"
+"              "
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:12
+#, fuzzy
+#| msgid "Thank you for letting us know!"
+msgid "Thank you for creating an organization!"
+msgstr "¡Gracias por su envío!"
+
+#: main/templates/main/dashboard/partners/thanks.html:15
+#, fuzzy
+#| msgid "Please include your name."
+msgid "Please verify your email."
+msgstr "Incluya su nombre."
+
+#: main/templates/main/dashboard/partners/thanks.html:19
+msgid "We are excited to work with you!"
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:20
+msgid ""
+"Check out our <a href=\"https://docs.google.com/document/"
+"d/1NJMUpZodlqo96xVASJzihpcfgWir18ifMaMD380zrXE/edit\">organization guide</a> "
+"to learn more about using Representable to gather community maps."
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:21
+msgid ""
+"Contact us at <a href=\"mailto:team@representable.org\"> team@representable."
+"org</a> with any questions. "
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:22
+msgid ""
+"Click the button below to go to the Organization Dashboard and get started "
+"by creating a community mapping drive. "
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:25
+msgid ""
+"Email verification will be necessary\n"
+"                        to access certain organization features on "
+"Representable. We have resent an email verification link to your inbox."
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:28
+#, fuzzy
+#| msgid "For Organizations"
+msgid "organization dashboard"
+msgstr "Para las organizaciones"
+
+#: main/templates/main/drives/index.html:5
+msgid "Drives"
+msgstr ""
+
+#: main/templates/main/drives/page.html:20 main/templates/main/index.html:24
+msgid "Gerrymandering is silencing communities."
+msgstr "El gerrymandering está silenciando a las comunidades"
+
+#: main/templates/main/drives/page.html:21
+#, fuzzy
+#| msgid ""
+#| " Make your voice heard with Representable <br> and put your community on "
+#| "the map. "
+msgid ""
+"Make your voice heard with Representable <br> and put your community on the "
+"map."
+msgstr "Haz que escuchen tu voz  \" <br> y pon tu comunidad en el mapa."
+
+#: main/templates/main/drives/page.html:26
+#: main/templates/main/pages/about.html:48
+msgid "What is Representable?"
+msgstr "¿Qué es Representable.org?"
+
+#: main/templates/main/drives/page.html:27
+#, fuzzy
+#| msgid ""
+#| "Representable allows people to draw communities of interest and share "
+#| "information about the interests and needs in those communities.\n"
+#| "            <br><br>Making this information available encourages "
+#| "mapmakers to take these communities into account during redistricting, in "
+#| "order to avoid gerrymandering and the “packing and cracking” of "
+#| "marginalized groups."
+msgid ""
+"Representable allows people to draw communities of interest and share "
+"information about the interests and needs in those communities.\n"
+"              <br><br>Making this information available encourages mapmakers "
+"to take these communities into account during redistricting, in order to "
+"avoid gerrymandering and the “packing and cracking” of marginalized groups. "
+"</p>"
+msgstr ""
+"Representable hace que las personas puedan dibujar sus comunidades de "
+"interés y que puedan compartir información sobre los intereses y necesidades "
+"de estas comunidades.\n"
+"            <br><brHacer que esta información esté disponible motiva a "
+"diseñadores de mapas a tomar las comunidades en cuenta durante la "
+"redistribución de distritos. Así, podemos evitar el gerrymandering y la "
+"agrupación ventajosa  de grupos marginalizados para un partido."
+
+#: main/templates/main/drives/page.html:52
+#, fuzzy
+#| msgid "Redistricting is coming."
+msgid "Redistricting in "
+msgstr "Redistritación está llegando."
+
+#: main/templates/main/drives/page.html:72
+#, fuzzy
+#| msgid "Redistricting is coming."
+msgid "Redistricting Criteria"
+msgstr "Redistritación está llegando."
+
+#: main/templates/main/drives/page.html:83 main/templates/main/state.html:87
+msgid "Communities of Interest in "
+msgstr "Las comunidades de interés pueden incluir ..."
+
+#: main/templates/main/drives/page.html:93
+#, fuzzy
+#| msgid "Draw a Community Map"
+msgid "Draw My Community"
+msgstr "Dibujar un mapa de la comunidad"
+
 #: main/templates/main/entry_address.html:7
 msgid "Step 1"
 msgstr ""
@@ -1613,10 +1821,6 @@ msgstr ""
 msgid "Community Name:"
 msgstr "Nombre de la comunidad:"
 
-#: main/templates/main/index.html:24
-msgid "Gerrymandering is silencing communities."
-msgstr "El gerrymandering está silenciando a las comunidades"
-
 #: main/templates/main/index.html:25
 msgid ""
 " Make your voice heard with Representable <br> and put your community on the "
@@ -1827,10 +2031,6 @@ msgstr ""
 "En 2021, los gobiernos estatales volverán a dibujar distritos legislativos "
 "estatales y del Congreso. Necesitamos pelear por los distritos más justos "
 "que respetan las preocupaciones de las comunidades."
-
-#: main/templates/main/pages/about.html:48
-msgid "What is Representable?"
-msgstr "¿Qué es Representable.org?"
 
 #: main/templates/main/pages/about.html:49
 msgid ""
@@ -2391,10 +2591,6 @@ msgid ""
 "requesting a demo below."
 msgstr ""
 
-#: main/templates/main/partners/get_started.html:13
-msgid "Create Organization"
-msgstr "Para las organizaciones"
-
 #: main/templates/main/partners/get_started.html:20
 msgid "Create an Organization"
 msgstr "Para las organizaciones"
@@ -2615,10 +2811,6 @@ msgid ""
 "\"fas fa-arrow-circle-right\"></i>\n"
 "            "
 msgstr ""
-
-#: main/templates/main/state.html:87
-msgid "Communities of Interest in "
-msgstr "Las comunidades de interés pueden incluir ..."
 
 #: main/templates/main/state.html:95 main/templates/main/state.html:96
 msgid "START MAPPING"
@@ -2861,11 +3053,6 @@ msgstr "Sobre"
 msgid "My Account"
 msgstr ""
 
-#: representable/templates/base.html:130
-#: representable/templates/base_nofooter.html:130
-msgid "Account Settings"
-msgstr "Configuraciones"
-
 #: representable/templates/base.html:131
 #: representable/templates/base_nofooter.html:131
 msgid "My communities"
@@ -2898,10 +3085,6 @@ msgstr "Añadir su comunidad"
 #: representable/templates/base.html:252
 msgid "Create a Partner Profile"
 msgstr ""
-
-#: representable/templates/base.html:256
-msgid "My Communities"
-msgstr "Mis Comunidades"
 
 #: representable/templates/base.html:274
 msgid "More questions? Reach out at"
@@ -4548,6 +4731,3 @@ msgstr ""
 
 #~ msgid "View All Maps"
 #~ msgstr "Ver los mapas"
-
-#~ msgid "Tracking Settings"
-#~ msgstr "Configuraciones"
