@@ -31,7 +31,7 @@ import geojson
 from django.shortcuts import get_object_or_404
 from geojson_rewind import rewind
 from django.core.serializers import serialize
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render
 from django.urls import reverse_lazy
 
@@ -66,7 +66,10 @@ class PartnerMap(TemplateView):
         entryPolyDict = dict()
 
         # get the org to which this map belongs
-        org = Organization.objects.get(slug=self.kwargs["slug"])
+        try:
+            org = Organization.objects.get(slug=self.kwargs["slug"])
+        except:
+            raise Http404
 
         # get the user
         user = self.request.user
@@ -78,7 +81,10 @@ class PartnerMap(TemplateView):
 
         # get the polygon from db and pass it on to html
         if self.kwargs["drive"]:
-            drive = Drive.objects.get(slug=self.kwargs["drive"])
+            try:
+                drive = Drive.objects.get(slug=self.kwargs["drive"])
+            except:
+                raise Http404
             query = drive.submissions.all().defer(
                 "census_blocks_polygon_array", "user_polygon",
             ).prefetch_related("organization")
