@@ -972,10 +972,7 @@ msgid "Gerrymandering is silencing communities."
 msgstr "El gerrymandering está silenciando a las comunidades"
 
 #: main/templates/main/drives/page.html:21
-#, fuzzy
-#| msgid ""
-#| " Make your voice heard with Representable <br> and put your community on "
-#| "the map. "
+
 msgid ""
 "Make your voice heard with Representable <br> and put your community on the "
 "map."
@@ -1035,7 +1032,7 @@ msgstr "Dibujar un mapa de la comunidad"
 
 #: main/templates/main/entry_address.html:7
 msgid "Step 1"
-msgstr ""
+msgstr "Paso 1"
 
 #: main/templates/main/entry_address.html:10
 msgid "Tell us about yourself."
@@ -1088,19 +1085,19 @@ msgstr "Su nombre"
 
 #: main/templates/main/entry_address.html:103
 msgid "Street"
-msgstr ""
+msgstr "Dirección"
 
 #: main/templates/main/entry_address.html:144
 msgid "City"
-msgstr ""
+msgstr "Ciudad"
 
 #: main/templates/main/entry_address.html:149
 msgid "State"
-msgstr "Comparte y contribuye tu mapa"
+msgstr "Estado"
 
 #: main/templates/main/entry_address.html:173
 msgid "Zipcode"
-msgstr ""
+msgstr "Código postal"
 
 #: main/templates/main/entry_address.html:180
 #: main/templates/main/entry_survey.html:335
@@ -1117,7 +1114,7 @@ msgid ""
 "                                "
 msgstr ""
 "\n"
-"                                    <p>Busque un código postal, una "
+"                                    <p><strong>Busque un código postal, una "
 "dirección o un punto de referencia para comenzar. Luego dibuja  tu comunidad "
 "haciendo click en las unidades del mapa.</strong></p>\n"
 "                                "
@@ -1133,7 +1130,7 @@ msgid ""
 "drawers to draw voting districts.</p>\n"
 "                                "
 msgstr ""
-"                                    <p>AAsegúrate que toda tu comunidad se  "
+"                                    <p>Asegúrate que toda tu comunidad se  "
 "encuentre dentro de la zona resaltada, y que esta zona resaltada no tenga "
 "huecos. Las unidades son <a class=\"no-underline-link\" href=\"https://www."
 "census.gov/programs-surveys/geography/about/glossary.html#par_textimage_4\" "
@@ -1232,7 +1229,7 @@ msgstr ""
 #: main/templates/main/entry_map.html:118
 #: main/templates/main/entry_map.html:188
 msgid "Communities Activities and Services"
-msgstr "Actividades y servicios comunitarios"
+msgstr "Actividades y Servicios Comunitarios"
 
 #: main/templates/main/entry_map.html:122
 #: main/templates/main/entry_map.html:132
@@ -1244,6 +1241,7 @@ msgid ""
 " Where do people in your community gather or socialize? <br>Where does your "
 "community get its services? "
 msgstr ""
+" ¿Dónde se congregan para socializar en su comunidad?" <br>¿Dónde acceden servicios básicos (médicos, transportación, educación, etc.)? "
 
 #: main/templates/main/entry_map.html:128
 #: main/templates/main/entry_map.html:198
@@ -1252,7 +1250,7 @@ msgstr ""
 #: main/templates/main/submission.html:136
 #: main/templates/main/submission.html:384
 msgid "Cultural or Historical Interests"
-msgstr "Intereses culturales o históricos"
+msgstr "Intereses Culturales o Históricos"
 
 #: main/templates/main/entry_map.html:138
 #: main/templates/main/entry_map.html:208
@@ -1270,7 +1268,7 @@ msgstr "Intereses Económicos o Ambientales"
 #: main/templates/main/submission.html:156
 #: main/templates/main/submission.html:394
 msgid "Community Needs and Concerns"
-msgstr "Necesidades y preocupaciones de la comunidad"
+msgstr "Necesidades y Preocupaciones de la Comunidad"
 
 #: main/templates/main/entry_map.html:178
 msgid ""
@@ -1317,11 +1315,11 @@ msgstr "Guía paso a paso "
 
 #: main/templates/main/entry_map.html:286
 msgid "You need to draw a community to submit the form."
-msgstr ""
+msgstr "Necesita dibujar una comunidad para enviar el formulario."
 
 #: main/templates/main/entry_preview.html:13
 msgid "Add your community to the map."
-msgstr "Añadir su comunidad"
+msgstr "Añadir su comunidad al mapa."
 
 #: main/templates/main/entry_preview.html:14
 msgid ""
@@ -1337,11 +1335,7 @@ msgstr "El gerrymandering"
 
 #: main/templates/main/entry_preview.html:20
 msgid "is silencing communities across the country."
-msgstr ""
-"está silenciando comunidades en todo el país. Los políticos han estado "
-"dividiendo y agrupando comunidades en distritos electorales que silencian "
-"sus voces. Reunir comunidades de interés ayuda a la lucha contra el "
-"gerrymandering."
+msgstr "está silenciando comunidades en todo el país."
 
 #: main/templates/main/entry_preview.html:21
 msgid ""
@@ -1350,11 +1344,8 @@ msgid ""
 "fight gerrymandering."
 msgstr ""
 "Los políticos han estado dividiendo y concentrando comunidades en distritos "
-"que silencian las voces de los miembros de esas comunidades. Esto evita que "
-"las comunidades elijan representantes que atiendan a sus necesidades. Reunir "
+"que silencian las voces de los miembros de esas comunidades. Reunir "
 "mapas de comunidades de interés nos ayuda a luchar contra el gerrymandering. "
-"Nosotros podemos proveer a los diseñadores de mapas con la información "
-"necesaria para que dibujen distritos que empoderen a las comunidades. "
 
 #: main/templates/main/entry_preview.html:33
 msgid "ADD MY COMMUNITY"
@@ -1464,11 +1455,11 @@ msgstr "ENTREGAR"
 #: main/templates/main/entry_state_selection.html:20
 #: main/templates/main/entry_state_selection.html:21
 msgid "Select your state."
-msgstr ""
+msgstr "Seleccione su estado."
 
 #: main/templates/main/entry_survey.html:7
 msgid "Step 2"
-msgstr ""
+msgstr "Paso 2"
 
 #: main/templates/main/entry_survey.html:17
 msgid "Tell us about what unites your community."
@@ -1656,20 +1647,22 @@ msgid ""
 "Use these questions to think more about how you would describe your "
 "community..."
 msgstr ""
+"Usa estas preguntas para pensar más en cómo describirías tu comunida..."
 
 #: main/templates/main/entry_survey.html:270
 msgid "Where do people in your community gather or socialize?"
-msgstr ""
+msgstr "¿Dónde se congregan para socializar en su comunidad?"
 
 #: main/templates/main/entry_survey.html:271
 msgid ""
 "How and where does your community access services (healthcare, "
 "transportation, educational services, etc.)?"
 msgstr ""
+"¿Cómo y dónde acceden servicios básicos (médicos, transportación, educación, etc.)?"
 
 #: main/templates/main/entry_survey.html:272
 msgid "Examples of activities and services:"
-msgstr "Actividades y servicios comunitarios"
+msgstr "Ejemplos de actividades y servicios:"
 
 #: main/templates/main/entry_survey.html:272
 msgid ""
@@ -1677,24 +1670,27 @@ msgid ""
 "places of worship, healthcare services, public transport, local nonprofit "
 "organizations, etc."
 msgstr ""
+"Zonas comerciales, escuelas y universidades, bibliotecas, parques, lagos, ríos, centros de culto, servicios de salud, transporte público, organizaciones locales sin fines de lucro, etc."
+
 
 #: main/templates/main/entry_survey.html:287
 msgid "What are the cultural bonds in your community?"
-msgstr "¿Cual nombre podemos usar para identificar tu comunidad? (obligatorio)"
+msgstr "¿Cuáles son los lazos culturales de tu comunidad?"
 
 #: main/templates/main/entry_survey.html:288
 msgid "If your community has a shared history, what is it?"
-msgstr ""
+msgstr "Si tu comunidad tiene una historia compartida, ¿cuál es?"
 
 #: main/templates/main/entry_survey.html:289
 msgid "Examples of cultural or historical interests:"
-msgstr "Intereses culturales o históricos"
+msgstr "Ejemplos de intereses culturales o históricos:"
 
 #: main/templates/main/entry_survey.html:289
 msgid ""
 "Religious groups, ethnic groups, languages, age groups, immigration status, "
 "historic or arts districts, etc."
 msgstr ""
+"Grupos religiosos, grupos étnicos, idiomas, grupos de edad, estatus migratorio, distritos históricos o artísticos, etc."
 
 #: main/templates/main/entry_survey.html:302
 msgid ""
@@ -1712,7 +1708,7 @@ msgid ""
 msgstr ""
 "\n"
 "                            <b>Usa estas preguntas para pensar más en cómo "
-"describirías tu comunidad…</b><br>\n"
+"describirías tu comunidad...</b><br>\n"
 "                            &emsp; - ¿Dónde trabajan los residentes?<br>\n"
 "                            &emsp; - Si hay preocupaciones ambientales en tu "
 "comunidad, ¿cuáles son?<br><br>\n"
@@ -1724,43 +1720,19 @@ msgstr ""
 
 #: main/templates/main/entry_survey.html:322
 msgid "What should politicians and/or map drawers know about your community?"
-msgstr ""
+msgstr "¿Qué deberían saber los políticos y diseñadores de mapas sobre tu comunidad?"
 
 #: main/templates/main/entry_survey.html:323
 msgid "What are the needs of your community?"
-msgstr "¿Cual nombre podemos usar para identificar tu comunidad? (obligatorio)"
+msgstr "¿Cuáles son las necesidades de tu comunidad?"
 
 #: main/templates/main/entry_survey.html:324
 msgid "Is there anything else you want to tell us about your community?"
-msgstr ""
-"\n"
-"                          <b>Usa estas preguntas para pensar más en cómo "
-"describirías tu comunidad...</b><br>\n"
-"                          &emsp; - ¿Dónde se congregan para socializar en su "
-"comunidad?<br>\n"
-"                          &emsp; - ¿Cómo y dónde acceden servicios básicos "
-"(médicos, transportación, educación, etc.)?<br><br>\n"
-"                          <span class=\"blue-text\"><b>Ejemplos de "
-"actividades y servicios:</b> Zonas comerciales, escuelas y universidades, "
-"bibliotecas, parques, lagos, ríos, centros de culto, servicios de salud, "
-"transporte público, organizaciones locales sin fines de lucro, etc.</span>\n"
-"                          "
+msgstr "¿Hay algo más que nos quieras contar sobre tu comunidad?"
 
 #: main/templates/main/entry_survey.html:325
 msgid "Examples of needs or concerns:"
-msgstr ""
-"\n"
-"                        <b>Usa estas preguntas para pensar más en cómo "
-"describirías tu comunidad...</b><br>\n"
-"                        &emsp; - ¿Cuáles son los lazos culturales de tu "
-"comunidad? <br>\n"
-"                        &emsp; - Si tu comunidad tiene una historia "
-"compartida, ¿cuál es?<br><br>\n"
-"                        <span class=\"blue-text\"><b>Ejemplos de intereses "
-"culturales o históricos:</b> Grupos religiosos, grupos étnicos, idiomas, "
-"grupos de edad, estatus migratorio, distritos históricos o artísticos, etc. "
-"</span>\n"
-"                        "
+msgstr "Ejemplos de necesidades o preocupaciones:"
 
 #: main/templates/main/entry_survey.html:325
 msgid ""
@@ -1768,21 +1740,8 @@ msgid ""
 "shared policy concerns, need for a social service, relationship to other "
 "nearby communities, issues with current district lines"
 msgstr ""
-"\n"
-"                        <b>Usa estas preguntas para pensar más en cómo "
-"describirías tu comunidad...</b><br>\n"
-"                        &emsp; - ¿Qué deberían saber los políticos y "
-"diseñadores de mapas sobre tu comunidad?<br>\n"
-"                        &emsp; - ¿Cuáles son las necesidades de tu comunidad?"
-"<br>\n"
-"                        &emsp; - ¿Hay algo más que nos quieras contar sobre "
-"tu comunidad?<br><br>\n"
-"                        <span class=\"blue-text\"><b>Ejemplos de necesidades "
-"o preocupaciones:</b> Mantener a la comunidad en un mismo distrito o "
-"separarla en diferentes distritos, preocupaciones de políticas comunes, "
-"necesidad de un servicio social, relaciones con otras comunidades cercanas, "
-"problemas con distritos electorales presentes.</span>\n"
-"                        "
+"Mantener a la comunidad en un mismo distrito o separarla en diferentes distritos, preocupaciones de políticas comunes, necesidad de un servicio social, relaciones con otras comunidades cercanas, problemas con distritos electorales presentes."
+
 
 #: main/templates/main/entry_survey.html:361
 msgid "Please include a community name."
@@ -1802,20 +1761,14 @@ msgstr ""
 
 #: main/templates/main/entry_survey.html:384
 msgid "Examples"
-msgstr "Mostar ejemplos"
+msgstr "Ejemplos"
 
 #: main/templates/main/entry_survey.html:384
 msgid ""
 "Cherry Farmers Community, St. Peters Church Community, Riverside Fishing "
 "Community"
-msgstr ""
-"\n"
-"                            <p class=\"small\" style=\"color: #5996D2\">\n"
-"                                <strong>Ejemplos:</strong> Comunidad de "
-"Agricultores de Cereza, Comunidad de la Iglesia de San Pedro, Comunidad de "
-"Pesca Riverside\n"
-"                            </p>\n"
-"                        "
+msgstr "Comunidad de Agricultores de Cereza, Comunidad de la Iglesia de San Pedro, Comunidad de Pesca Riverside"
+
 
 #: main/templates/main/entry_survey.html:391
 msgid "Community Name:"
@@ -1841,7 +1794,7 @@ msgid ""
 "community-of-interest data."
 msgstr ""
 "Muchas organizaciones se han asociado con Representable.org para recopilar "
-"datos comunitarios. ¡Empiece hoy!"
+"datos comunitarios."
 
 #: main/templates/main/index.html:36
 msgid "PARTNER WITH US"
@@ -1893,7 +1846,7 @@ msgstr ""
 
 #: main/templates/main/index.html:61
 msgid "We're fighting to make democracy more..."
-msgstr "Estamos luchando para hacer la democracia más…"
+msgstr "Estamos luchando para hacer la democracia más..."
 
 #: main/templates/main/index.html:64
 msgid "Transparent"
@@ -1959,11 +1912,11 @@ msgstr "Mis Comunidades"
 
 #: main/templates/main/map.html:46
 msgid "State Map"
-msgstr "Comparte y contribuye tu mapa"
+msgstr "Mapa del Estado"
 
 #: main/templates/main/map.html:57 main/templates/main/partners/map.html:62
 msgid "Data layers"
-msgstr ""
+msgstr "Capas de datos"
 
 #: main/templates/main/map.html:68 main/templates/main/partners/map.html:73
 msgid "Communities"
@@ -1972,16 +1925,16 @@ msgstr "Mis Comunidades"
 #: main/templates/main/map.html:73 main/templates/main/review.html:49
 #: main/templates/main/submission.html:123
 msgid "Community Information"
-msgstr "1. Su información de identificación"
+msgstr "Información de la comunidad"
 
 #: main/templates/main/map.html:74
 msgid "Only Show"
-msgstr ""
+msgstr "Solo mostrar"
 
 #: main/templates/main/map.html:123 main/templates/main/partners/map.html:142
 #: main/templates/main/review.html:94
 msgid "Show More"
-msgstr ""
+msgstr "Mostrar más"
 
 #: main/templates/main/map.html:135
 msgid "Show All"
@@ -2325,11 +2278,11 @@ msgstr ""
 #: representable/templates/base.html:115
 #: representable/templates/base_nofooter.html:115
 msgid "Resources"
-msgstr ""
+msgstr "Recursos"
 
 #: main/templates/main/pages/resources.html:17
 msgid "Educational Video"
-msgstr ""
+msgstr "Video educativo"
 
 #: main/templates/main/pages/resources.html:23
 msgid ""
@@ -2340,7 +2293,7 @@ msgstr ""
 
 #: main/templates/main/pages/resources.html:32
 msgid "Demo Videos"
-msgstr ""
+msgstr "Videos de demostración"
 
 #: main/templates/main/pages/resources.html:38
 msgid ""
@@ -2362,7 +2315,7 @@ msgstr ""
 
 #: main/templates/main/pages/resources.html:55
 msgid "VIEW & DOWNLOAD"
-msgstr ""
+msgstr "VER Y DESCARGAR"
 
 #: main/templates/main/pages/resources.html:65
 msgid "Organization Guide"
@@ -2381,7 +2334,7 @@ msgstr ""
 
 #: main/templates/main/pages/resources.html:83
 msgid "Community Mapping Event Powerpoint"
-msgstr "Dibujar un mapa de la comunidad"
+msgstr ""
 
 #: main/templates/main/pages/resources.html:89
 msgid ""
