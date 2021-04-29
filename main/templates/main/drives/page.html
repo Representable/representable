@@ -17,15 +17,15 @@
   <div class="row row-hero row-eq-height my-sm-5 ml-sm-5">
     <div class="col-lg-6 col-sm-12 col-md-6 mobile-padding-x mobile-padding-top pl-md-5">
       <div class="my-4 main-display-text-all">
-        <span class="d-block mb-3 font-large-mobile font-weight-bold dark-blue-text line-space-less pt-md-3">Gerrymandering is silencing communities.</span>
-        <span class="d-block h4 font-weight-light gray-text font-medium-mobile">Make your voice heard with Representable <br> and put your community on the map.</span>
+        <span class="d-block mb-3 font-large-mobile font-weight-bold dark-blue-text line-space-less pt-md-3">{% trans "Gerrymandering is silencing communities." %}</span>
+        <span class="d-block h4 font-weight-light gray-text font-medium-mobile">{% blocktrans %}Make your voice heard with Representable <br> and put your community on the map.{% endblocktrans %}</span>
       </div>
       <div class="row d-none d-lg-block mt-5">
         <div class="col-lg-12">
           <div class="alert alert-custom py-5 px-4">
-            <h4 class="text-center font-medium-mobile"> What is Representable?</h4>
-            <p class="py-4 font-weight-light font-small-mobile">Representable allows people to draw communities of interest and share information about the interests and needs in those communities.
-              <br><br>Making this information available encourages mapmakers to take these communities into account during redistricting, in order to avoid gerrymandering and the “packing and cracking” of marginalized groups. </p>
+            <h4 class="text-center font-medium-mobile"> {% trans "What is Representable?" %}</h4>
+            <p class="py-4 font-weight-light font-small-mobile">{% blocktrans %}Representable allows people to draw communities of interest and share information about the interests and needs in those communities.
+              <br><br>Making this information available encourages mapmakers to take these communities into account during redistricting, in order to avoid gerrymandering and the “packing and cracking” of marginalized groups. </p>{% endblocktrans %}
           </div>
         </div>
       </div>
@@ -49,7 +49,7 @@
 {% if state %}
 <div class="row">
   <div class="col m-5">
-    <h1 class="text-center font-weight-light">Redistricting in {{state.name}}</h1>
+    <h1 class="text-center font-weight-light">{% trans "Redistricting in " %}{{state.name}}</h1>
     <hr class="line-break">
   </div>
 </div>
@@ -69,7 +69,7 @@
 <div class="row mb-4 mx-lg-5 px-md-5">
   <div class="col-12 p-4 light-blue-bg">
       <a class="btn ws-normal btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" href="#collapseCriteria" aria-expanded="false" aria-controls="collapseCriteria">
-        <h5 style="width: fit-content;">{{ state.name }}'s Redistricting Criteria &#32;<i class="fas fa-angle-down pl-3"></i></h5>
+        <h5 style="width: fit-content;">{{ state.name }}'s {% trans "Redistricting Criteria" %} &#32;<i class="fas fa-angle-down pl-3"></i></h5>
       </a>
     <div class="collapse" id="collapseCriteria">
         {% autoescape off %}
@@ -80,7 +80,7 @@
 </div>
 <div class="row mx-lg-5 px-md-5">
   <div class="col-12 p-4 light-blue-bg px-md-5">
-    <h5>Communities of Interest in {{ state.name }}</h5>
+    <h5>{% trans "Communities of Interest in " %}{{ state.name }}</h5>
     {% autoescape off %}
     {{ state.content_coi }}
     {% endautoescape %}
@@ -90,7 +90,7 @@
 {% endif %}
 <div class="row">
   <div class="col text-center mb-4">
-    <a class="btn btn-primary btn-lg my-5 drive-new-entry" href="{% url 'main:entry' drive=object.slug %}{{object.state|lower}}" role="button">Draw My Community</a>
+    <a class="btn btn-primary btn-lg my-5 drive-new-entry" href="{% url 'main:entry' drive=object.slug %}{{object.state|lower}}" role="button">{% trans "Draw My Community" %}</a>
   </div>
 </div>
 </div>

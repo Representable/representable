@@ -9,23 +9,23 @@
             <div class="card card-signin my-5">
                 <div class="card-body">
                     <h1 class="font-weight-light text-center border-bottom pb-3">
-                      Thank you for creating an organization!
+                      {% trans "Thank you for creating an organization!" %}
 
                       {% if not verified %}
-                      <p> Please verify your email. </p>
+                      <p> {% trans "Please verify your email." %} </p>
                       {% endif %}
                     </h1>
                     <div class="py-2">
-                      <p class="text-center">We are excited to work with you!</p>
-                      <p><span class="badge badge-primary">1</span> Check out our <a href="https://docs.google.com/document/d/1NJMUpZodlqo96xVASJzihpcfgWir18ifMaMD380zrXE/edit">organization guide</a> to learn more about using Representable to gather community maps.</p>
-                      <p><span class="badge badge-primary">2</span> Contact us at <a href="mailto:team@representable.org"> team@representable.org</a> with any questions.</p>
-                      <p><span class="badge badge-primary">3</span> Click the button below to go to the Organization Dashboard and get started by creating a community mapping drive.</p>
+                      <p class="text-center">{% trans "We are excited to work with you!" %}</p>
+                      <p><span class="badge badge-primary">1</span> {% blocktrans %}Check out our <a href="https://docs.google.com/document/d/1NJMUpZodlqo96xVASJzihpcfgWir18ifMaMD380zrXE/edit">organization guide</a> to learn more about using Representable to gather community maps.{% endblocktrans %}</p>
+                      <p><span class="badge badge-primary">2</span> {% blocktrans %}Contact us at <a href="mailto:team@representable.org"> team@representable.org</a> with any questions. {% endblocktrans %}</p>
+                      <p><span class="badge badge-primary">3</span> {% blocktrans %}Click the button below to go to the Organization Dashboard and get started by creating a community mapping drive. {% endblocktrans %}</p>
                     </div>
                     {% if not verified %}
-                    <p class = "text-center"> Email verification will be necessary
-                        to access certain organization features on Representable. We have resent an email verification link to your inbox.</p>
+                    <p class = "text-center"> {% blocktrans %}Email verification will be necessary
+                        to access certain organization features on Representable. We have resent an email verification link to your inbox.{% endblocktrans %}</p>
                     {% endif %}
-                    <div class="text-center"> <a class="btn btn-primary btn-canvas font-weight-light text-uppercase" href="{% url 'main:home_org' view.kwargs.slug  view.kwargs.pk %}" role="button"><small>organization dashboard</small></a>
+                    <div class="text-center"> <a class="btn btn-primary btn-canvas font-weight-light text-uppercase" href="{% url 'main:home_org' view.kwargs.slug  view.kwargs.pk %}" role="button"><small>{% trans "organization dashboard" %}</small></a>
                     </div>
                 </div>
             </div>
