@@ -1531,8 +1531,6 @@ msgid ""
 msgstr ""
 
 #: main/templates/main/entry_survey.html:302
-#, fuzzy
-#| msgid "What name can we use to identify your community?"
 msgid "What are the cultural bonds in your community?"
 msgstr "¿Cual nombre podemos usar para identificar tu comunidad? (obligatorio)"
 
@@ -1541,8 +1539,6 @@ msgid "If your community has a shared history, what is it?"
 msgstr ""
 
 #: main/templates/main/entry_survey.html:304
-#, fuzzy
-#| msgid "Cultural or Historical Interests"
 msgid "Examples of cultural or historical interests:"
 msgstr "Intereses culturales o históricos"
 
@@ -1578,9 +1574,7 @@ msgstr ""
 msgid "What should politicians and/or map drawers know about your community?"
 msgstr ""
 
-#: main/templates/main/entry_survey.html:338
-#, fuzzy
-#| msgid "What name can we use to identify your community?"
+#: main/templates/main/entry_survey.html:33
 msgid "What are the needs of your community?"
 msgstr "¿Cual nombre podemos usar para identificar tu comunidad? (obligatorio)"
 
@@ -1666,8 +1660,6 @@ msgstr ""
 "                        "
 
 #: main/templates/main/entry_survey.html:406
-#, fuzzy
-#| msgid "Draw a Community Map"
 msgid "Community Name:"
 msgstr "Nombre de la comunidad:"
 
@@ -1808,14 +1800,10 @@ msgstr ""
 "representación que merecen."
 
 #: main/templates/main/map.html:13
-#, fuzzy
-#| msgid "My Communities"
 msgid "View Communities"
 msgstr "Mis Comunidades"
 
 #: main/templates/main/map.html:46
-#, fuzzy
-#| msgid "Share your Map"
 msgid "State Map"
 msgstr "Comparte y contribuye tu mapa"
 
@@ -1824,15 +1812,11 @@ msgid "Data layers"
 msgstr ""
 
 #: main/templates/main/map.html:68 main/templates/main/partners/map.html:73
-#, fuzzy
-#| msgid "My Communities"
 msgid "Communities"
 msgstr "Mis Comunidades"
 
 #: main/templates/main/map.html:73 main/templates/main/review.html:49
-#: main/templates/main/submission.html:123
-#, fuzzy
-#| msgid "1. Your Identifying Information"
+#: main/templates/main/submission.html:12
 msgid "Community Information"
 msgstr "1. Su información de identificación"
 
@@ -2095,8 +2079,6 @@ msgid "Engineering, Product"
 msgstr "Ingeniería, Producto"
 
 #: main/templates/main/partners/get_started.html:9
-#, fuzzy
-#| msgid "Partner with us"
 msgid "Partner With Us"
 msgstr "Asociarse con nosotros"
 
@@ -2107,14 +2089,10 @@ msgid ""
 msgstr ""
 
 #: main/templates/main/partners/get_started.html:13
-#, fuzzy
-#| msgid "For organizations"
 msgid "Create Organization"
 msgstr "Para las organizaciones"
 
 #: main/templates/main/partners/get_started.html:20
-#, fuzzy
-#| msgid "For organizations"
 msgid "Create an Organization"
 msgstr "Para las organizaciones"
 
@@ -2123,8 +2101,6 @@ msgid "Include a brief description, link, and the state(s) you operate in."
 msgstr ""
 
 #: main/templates/main/partners/get_started.html:23
-#, fuzzy
-#| msgid "Draw a Community Map"
 msgid "Start a Community Mapping Drive"
 msgstr "Dibujar un mapa de la comunidad"
 
@@ -2133,8 +2109,6 @@ msgid "Create a community mapping drive via the organization dashboard."
 msgstr ""
 
 #: main/templates/main/partners/get_started.html:26
-#, fuzzy
-#| msgid "Share your Map"
 msgid "Share your Mapping Drive"
 msgstr "Comparte y contribuye tu mapa"
 
