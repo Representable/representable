@@ -29,6 +29,11 @@ var BOUNDARIES_COLORS = {
   "nyc": "rgb(0, 0, 117)", // navy
   "nyc_assembly": "rgb(169, 169, 169)" // gray
 }
+var BLOCK_STATES = ["al", "il"];
+var BLOCK_KEYS = {
+  "alblock": "alblock",
+  "ilblock": "d7hs49xn",
+}
 var BG_KEYS = {
   "albg": "300jwyj1",
   "akbg": "6tvgdw55",
@@ -89,4 +94,4 @@ var TRIBAL_BOUND_KEY = "6jhw01g1";
 var NYC_COUNCIL_KEY = "8igk12p1";
 var NYC_STATE_ASSEMBLY_KEY = "61wjirls";
 
-var STATES_USING_NEW_BG = ["az", "mi", "nv", "nj", "nm", "nc", "pa", "ut", "va", "wa"];
+var STATES_USING_OLD_UNITS = ["il", "ok"];

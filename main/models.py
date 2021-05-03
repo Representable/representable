@@ -82,7 +82,7 @@ class Organization(models.Model):
         models.CharField(max_length=50, choices=STATES, blank=True),
         blank=False,
     )
-    slug = models.SlugField(unique=True, max_length=128)
+    slug = models.SlugField(unique=True, max_length=50)
     members = models.ManyToManyField(User, through="Membership")
     verified = models.BooleanField(default=False)
 
@@ -95,7 +95,13 @@ class Organization(models.Model):
     def save(self, *args, **kwargs):
         # generate the slug once the first time the org is created
         if not self.slug:
-            self.slug = generate_unique_slug(Organization, self.name)
+            # change self.name to be less than 35 char, split at a space,
+            slug_slice = 35;
+            for idx, char in enumerate(self.name):
+                if char == ' ' and idx < 35:
+                    slug_slice = idx
+            slug_name = self.name[:slug_slice]
+            self.slug = generate_unique_slug(Organization, slug_name)
         super(Organization, self).save(*args, **kwargs)
 
     def get_url_kwargs(self):
@@ -161,9 +167,15 @@ class Drive(models.Model):
         ordering = ("description",)
 
     def save(self, *args, **kwargs):
-        # generate the slug once the first time the org is created
+        # generate the slug once the first time the drive is created
         if not self.slug:
-            self.slug = generate_unique_slug(Drive, self.name)
+            # change self.name to be less than 35 char, split at a space,
+            slug_slice = 35;
+            for idx, char in enumerate(self.name):
+                if char == ' ' and idx < 35:
+                    slug_slice = idx
+            slug_name = self.name[:slug_slice]
+            self.slug = generate_unique_slug(Drive, slug_name)
         super(Drive, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -230,6 +242,21 @@ class BlockGroup(models.Model):
 
     census_id = models.CharField(max_length=12)
     year = models.IntegerField(default=2010)
+
+
+# ******************************************************************************#
+
+
+class CensusBlock(models.Model):
+    """
+    CensusBlock represents census blocks from a given year. These are the building blocks of COIs.
+    Fields included:
+     - census_id: the official block group id
+     - year: year of census (default - 2020, since those are the block's we'll be using)
+    """
+
+    census_id = models.CharField(max_length=15)
+    year = models.IntegerField(default=2020)
 
 
 # ******************************************************************************#
