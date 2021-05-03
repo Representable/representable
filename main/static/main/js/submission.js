@@ -281,6 +281,7 @@ map.on("load", function () {
     $("#thanksModal").modal("hide");
   });
   $("#pdf-button").on("click", function () {
+    if (state in publicCommentLinks) $("#pdf-comment-modal").modal("show");
     exportPDF(1500);
   });
 
@@ -299,11 +300,8 @@ map.on("load", function () {
     // make the map look good for the PDF ! TODO: un-select other layers like census blocks (turn into functions)
     map.fitBounds(commBounds, { padding: 100 });
     // display loading popup
-    var instruction_box = document.getElementById("pdf-loading-box");
-    instruction_box.style.display = "block";
     setTimeout(function () {
       // loading popup disappears
-      instruction_box.style.display = "none";
       var doc = new jsPDF();
 
       var entryName = window.document.getElementById("pdfName");
@@ -573,7 +571,16 @@ function toggleDataLayers() {
   $("#data-layer-col").toggleClass("d-none");
   $("#data-layer-card").toggleClass("d-none");
 }
-/*******************************************************************/
+
+/****************************************************************************/
+// public comment portal link, if in states.js
+if (state in publicCommentLinks) {
+  $('#public-comment-link-modal').prop("href", publicCommentLinks[state]);
+  $('#public-comment-link').prop("href", publicCommentLinks[state]);
+} else {
+  $('#public-comment-card').hide();
+}
+/****************************************************************************/
 // remove the last char in the string
 function removeLastChar(str) {
   return str.substring(0, str.length - 1);

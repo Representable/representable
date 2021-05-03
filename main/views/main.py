@@ -1165,15 +1165,16 @@ class EntryView(LoginRequiredMixin, View):
 
 # ******************************************************************************#
 
-
 class MultiExportView(TemplateView):
     template = "main/export.html"
 
     def post(self, request, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
         state = self.kwargs["abbr"]
         cois = set(json.loads(request.POST['cois']))
         state_obj = State.objects.get(abbr=state.upper())
-        
+
         if 'all' not in cois:
             query = (
                 state_obj.submissions.filter(entry_ID__in=cois)
@@ -1194,7 +1195,7 @@ class MultiExportView(TemplateView):
             return HttpResponse(
                 geojson.dumps({}), content_type="application/json"
             )
-        
+
         all_gj = []
         for entry in query:
             gj = make_geojson_for_state_map_page(request, entry)

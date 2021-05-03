@@ -904,14 +904,14 @@ Entry Mapping Page
   text-align: left;
 }
 
-#entry-map-modal .modal-content {
+.green-modal .modal-content {
   background-color: rgba(216, 241, 237, 0.9);
   border-radius: 20px;
   border: none;
   backdrop-filter: blur(4px); /* Note: backdrop-filter has minimal browser support */
 }
 
-.units-modal .modal-content {
+.blue-modal .modal-content {
   background-color: rgba(218, 239, 255, 0.85);
   border-radius: 20px;
   border: none;
