@@ -77,6 +77,7 @@ from ..models import (
     State,
     Signature,
     BlockGroup,
+    CensusBlock,
     FrequentlyAskedQuestion,
     GlossaryDefinition,
 )
@@ -802,10 +803,15 @@ class Map(TemplateView):
 
     def get_context_data(self, **kwargs):
         state = self.kwargs["state"].lower()
+        if not state:
+            raise Http404
 
         # the polygon coordinates
         entryPolyDict = dict()
-        state_obj = State.objects.get(abbr=state.upper())
+        try:
+            state_obj = State.objects.get(abbr=state.upper())
+        except:
+            raise Http404
         query = (
             state_obj.submissions.all()
             .defer("census_blocks_polygon_array", "user_polygon")
@@ -1003,10 +1009,16 @@ class EntryView(LoginRequiredMixin, View):
         # parse block groups and add to field
         comm_form.data._mutable = True
         block_groups = comm_form.data["block_groups"].split(",")
-        comm_form.data["block_groups"] = [
-            BlockGroup.objects.get_or_create(census_id=bg)[0].id
-            for bg in block_groups
-        ]
+        if len(block_groups[0]) > 12:
+            comm_form.data["block_groups"] = [
+                CensusBlock.objects.get_or_create(census_id=bg)[0].id
+                for bg in block_groups
+            ]
+        else:
+            comm_form.data["block_groups"] = [
+                BlockGroup.objects.get_or_create(census_id=bg)[0].id
+                for bg in block_groups
+            ]
         comm_form.data._mutable = False
         if comm_form.is_valid():
             recaptcha_response = request.POST.get("g-recaptcha-response")
@@ -1155,11 +1167,12 @@ class EntryView(LoginRequiredMixin, View):
 
 # ******************************************************************************#
 
-
 class MultiExportView(TemplateView):
     template = "main/export.html"
 
     def post(self, request, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
         state = self.kwargs["abbr"]
         cois = set(json.loads(request.POST['cois']))
         state_obj = State.objects.get(abbr=state.upper())
