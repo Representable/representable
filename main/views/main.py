@@ -800,10 +800,15 @@ class Map(TemplateView):
 
     def get_context_data(self, **kwargs):
         state = self.kwargs["state"].lower()
+        if not state:
+            raise Http404
 
         # the polygon coordinates
         entryPolyDict = dict()
-        state_obj = State.objects.get(abbr=state.upper())
+        try:
+            state_obj = State.objects.get(abbr=state.upper())
+        except:
+            raise Http404
         query = (
             state_obj.submissions.all()
             .defer("census_blocks_polygon_array", "user_polygon")
