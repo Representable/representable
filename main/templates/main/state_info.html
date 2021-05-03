@@ -1,0 +1,71 @@
+{% load i18n %}
+{% load static %}
+<div class="row mx-lg-5 px-md-5">
+  <div class="col-sm-6">
+    <div class="col-12 p-2 light-blue-bg p-md-4 mb-4">
+      <button class="btn btn-link bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria1" aria-expanded="false" aria-controls="collapseCriteria1" onclick="toggleAngle(this)">
+        <h5 class="dark-gray-text" style="width: fit-content;"><b>What is redistricting?</b><i class="fas fa-angle-down pl-3"></i></h5>
+      </button>
+
+      <div class="collapse" id="collapseCriteria1">
+        In 2021, voting district lines across the country will be redrawn to determine who represents the people of your state.
+      </div>
+    </div>
+
+    <div class="col-12 p-3 light-blue-bg p-md-4 mb-4">
+        <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria2" aria-expanded="false" aria-controls="collapseCriteria2" onclick="toggleAngle(this)">
+          <h5 class="dark-gray-text" style="width: fit-content;"><b>How does redistricting work in {{ state_obj.name }}?</b><i class="fas fa-angle-down pl-3"></i></h5>
+        </button>
+      <div class="collapse" id="collapseCriteria2">
+        {% autoescape off %}
+        {{ state_obj.content_news }}
+        {% endautoescape %}
+      </div>
+    </div>
+
+    <div class="col-12 p-3 light-blue-bg p-md-4 mb-4">
+        <button class="btn ws-normal btn-link bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria3" aria-expanded="false" aria-controls="collapseCriteria3" onclick="toggleAngle(this)">
+          <h5 class="dark-gray-text" style="width: fit-content;"><b>How can Representable help?<i class="fas fa-angle-down pl-3"></i></b></h5>
+        </button>
+      <div class="collapse" id="collapseCriteria3">
+        Representable will help you tell mapmakers about your community interests and boundaries, so that they can fairly consider it when they draw new voting district lines.
+      </div>
+    </div>
+
+    <div class="col-12 p-3 light-blue-bg p-md-4 mb-4">
+        <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria4" aria-expanded="false" aria-controls="collapseCriteria4" onclick="toggleAngle(this)">
+          <h5 class="dark-gray-text" style="width: fit-content;"><b>{{ state_obj.name }}'s redistricting criteria &#32;<i class="fas fa-angle-down pl-3"></i></b></h5>
+        </button>
+      <div class="collapse" id="collapseCriteria4">
+        {% autoescape off %}
+        {{ state_obj.content_criteria }}
+        {% endautoescape %}
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-6 d-none d-sm-block">
+    <div class="m-auto py-4">
+      <object type="image/svg+xml" class="w-75 mx-auto d-block h-100" data="{% static 'img/map-info.svg' %}" alt="image of map with information icon"></object>
+      <h5><p class="text-center">
+        <a href="/map/{{state_obj.abbr}}" class="link-primary">
+          See community maps drawn in {{ state_obj.name }} here <i class="fas fa-arrow-circle-right"></i>
+        </a>
+      </p></h5>
+    </div>
+  </div>
+
+
+</div>
+
+<div class="row mx-lg-5 px-md-5">
+  <div class="col-sm-12">
+    <div class="col-12 p-4 light-blue-bg p-md-4">
+      <h5><b>Communities of Interest in {{ state_obj.name }}</b></h5>
+      {% autoescape off %}
+      {{ state_obj.content_coi }}
+      {% endautoescape %}
+    </div>
+  </div>
+</div>
