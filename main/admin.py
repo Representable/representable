@@ -18,6 +18,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 from django.contrib import admin
+from django.contrib.admin import SimpleListFilter
 from django.contrib.auth.admin import UserAdmin
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
@@ -76,6 +77,8 @@ class StateAdmin(admin.ModelAdmin):
 admin.site.register(State, StateAdmin)
 
 admin.site.register(User, UserAdmin)
+
+admin.site.register(Drive)
 
 
 class ReportAdmin(admin.ModelAdmin):
@@ -172,11 +175,33 @@ class CommunityAdmin(ImportExportModelAdmin):
         "entry_name",
         "organization",
         "drive",
+        'get_services_length',
+        'get_economic_length',
+        'get_cultural_length',
+        'get_needs_length',
     )
     list_filter = (
         "drive",
         "organization",
     )
+
+    def get_services_length(self, obj):
+        return len(obj.comm_activities)
+    get_services_length.short_description = 'services length'
+    get_services_length.admin_order_field = 'length_services'
+    def get_economic_length(self, obj):
+        return len(obj.economic_interests)
+    get_economic_length.short_description = 'economic length'
+    get_economic_length.admin_order_field = 'length_economic'
+    def get_cultural_length(self, obj):
+        return len(obj.cultural_interests)
+    get_cultural_length.short_description = 'cultural length'
+    get_cultural_length.admin_order_field = 'length_cultural'
+    def get_needs_length(self, obj):
+        return len(obj.other_considerations)
+    get_needs_length.short_description = 'needs length'
+    get_needs_length.admin_order_field = 'length_needs'
+
     resource_class = CommunityResource
 
 

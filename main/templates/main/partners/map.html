@@ -52,8 +52,13 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                 {% endif %}
               </div>
               <div class="row justify-content-center">
-                <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/geo/ role="button" download="communities.geojson">{% trans "Export All as GeoJSON" %}</a>
-                <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/csv/ role="button" download="communities.csv">{% trans "Export All as CSV" %}</a>
+                {% if user.is_authenticated %}
+                  <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/geo/ role="button" download="communities.geojson">{% trans "Export All as GeoJSON" %}</a>
+                  <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/csv/ role="button" download="communities.csv">{% trans "Export All as CSV" %}</a>
+                {% else %}
+                  <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href='{% url "account_login" %}?next={{request.path}}' role="button">{% trans "Export All as GeoJSON" %}</a>
+                  <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href='{% url "account_login" %}?next={{request.path}}' role="button">{% trans "Export All as CSV" %}</a>
+                {% endif %}
               </div>
               <input class="m-2 p-2 rounded border border-secondary" id="search-comm" type="text" placeholder="Search communities...">
               <div id="headingOne">

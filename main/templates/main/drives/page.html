@@ -43,50 +43,13 @@
       {% endif %}
     </a> in {{drive.state}}</p>
     <hr class="line-break">
-    <p class="mx-lg-5">{{object.description}}</p>
+    {% if object.description %}
+      <p class="mx-lg-5 px-lg-5 pb-lg-4">{{object.description}}</p>
+    {% endif %}
   </div>
 </div>
 {% if state %}
-<div class="row">
-  <div class="col m-5">
-    <h1 class="text-center font-weight-light">{% trans "Redistricting in " %}{{state.name}}</h1>
-    <hr class="line-break">
-  </div>
-</div>
-<div class="row mx-lg-5 px-md-5">
-  <div class="col-sm-6">
-    {% autoescape off %}
-    {{ state.content_news }}
-    {% endautoescape %}
-  </div>
-  <div class="col-6 d-none d-sm-block">
-    <div class="m-auto py-4 h-100">
-      <object type="image/svg+xml" class="w-75 mx-auto d-block h-100" data="{% static 'img/map-info.svg' %}" alt="image of map with information icon"></object>
-    </div>
-  </div>
-</div>
-
-<div class="row mb-4 mx-lg-5 px-md-5">
-  <div class="col-12 p-4 light-blue-bg">
-      <a class="btn ws-normal btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" href="#collapseCriteria" aria-expanded="false" aria-controls="collapseCriteria">
-        <h5 style="width: fit-content;">{{ state.name }}'s {% trans "Redistricting Criteria" %} &#32;<i class="fas fa-angle-down pl-3"></i></h5>
-      </a>
-    <div class="collapse" id="collapseCriteria">
-        {% autoescape off %}
-        {{ state.content_criteria }}
-        {% endautoescape %}
-    </div>
-  </div>
-</div>
-<div class="row mx-lg-5 px-md-5">
-  <div class="col-12 p-4 light-blue-bg px-md-5">
-    <h5>{% trans "Communities of Interest in " %}{{ state.name }}</h5>
-    {% autoescape off %}
-    {{ state.content_coi }}
-    {% endautoescape %}
-  </div>
-</div>
-</div>
+  <div id="state-info">{% include '../state_info.html' with state_obj=state %}</div>
 {% endif %}
 <div class="row">
   <div class="col text-center mb-4">

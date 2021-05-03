@@ -17,7 +17,9 @@
     </div>
   </div>
 
-  <div class="row mx-lg-5 px-md-5">
+  <div id="state-info">{% include './state_info.html' %}</div>
+
+  <!-- <div class="row mx-lg-5 px-md-5">
     <div class="col-sm-6">
       <div class="col-12 p-3 light-blue-bg px-md-5 mb-4">
           <a class="btn ws-normal btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" href="#collapseCriteria1" aria-expanded="false" aria-controls="collapseCriteria1">
@@ -90,7 +92,7 @@
         {% endautoescape %}
       </div>
     </div>
-  </div>
+  </div> -->
   <div class="row text-center">
       <a class="mx-auto btn btn-outline-primary btn-lg btn-canvas my-5 d-none d-lg-block" href="{% url 'main:entry' %}{{state_obj.abbr|lower}}" role="button">{% trans "START MAPPING" %}</a>
       <a class="mx-auto btn btn-outline-primary btn-canvas my-5 d-lg-none" href="{% url 'main:entry' %}{{state_obj.abbr|lower}}" role="button">{% trans "START MAPPING" %}</a>
@@ -103,4 +105,3 @@
 {% block script %}
 <script type="text/javascript" src="{% static 'main/js/components/dropdown.js' %}"></script>
 {% endblock %}
-
