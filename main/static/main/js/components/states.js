@@ -165,3 +165,13 @@ let statesLngLat = {
   'WV': [-80.1816905, 38.9201705],
   'WY': [-107.5545669, 43.000325]
 }
+let publicCommentLinks = {
+  'co': 'https://redistricting.colorado.gov/public_comments/new',
+  'ma': 'https://malegislature.gov/Redistricting/Contact',
+  'mo': 'https://house.mo.gov/WitnessForm/Default.aspx?noticeid=5970',
+  'mt': 'https://leg.mt.gov/districting/2020-commission/redistricting-input/',
+  'nj': 'http://www.apportionmentcommission.org/ContactUs.asp',
+  'ok': 'https://www.okhouse.gov/Publications/RedistrictingContacts.aspx',
+  'tx': 'https://senate.texas.gov/redistrictingcomment/',
+  'wi': 'https://appengine.egov.com/apps/wi/peoplesmaps/writtencomment',
+}
