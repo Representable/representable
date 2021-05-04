@@ -571,6 +571,15 @@ body {
   .px-10 {
     padding: 10px;
   }
+  #map-units-btn {
+    right: 2% !important;
+    bottom: -6000% !important;
+  }
+
+  #map-pop-btn {
+    right: 2% !important;
+    bottom: -6000% !important;
+  }
 }
 /* EXCLUSIVELY FOR HOME PAGE rect */
 @media screen and (min-width:992px) and (max-width:1169px){
@@ -682,7 +691,7 @@ footer {
 
 #loading-entry {
   position: fixed;
-  bottom: 40px;
+  bottom: 150px;
   left: 40px;
   z-index: 1010;
   display: none;
@@ -924,8 +933,15 @@ Entry Mapping Page
   text-align: left;
 }
 
-#entry-map-modal .modal-content {
+.green-modal .modal-content {
   background-color: rgba(216, 241, 237, 0.9);
+  border-radius: 20px;
+  border: none;
+  backdrop-filter: blur(4px); /* Note: backdrop-filter has minimal browser support */
+}
+
+.blue-modal .modal-content {
+  background-color: rgba(218, 239, 255, 0.85);
   border-radius: 20px;
   border: none;
   backdrop-filter: blur(4px); /* Note: backdrop-filter has minimal browser support */
@@ -1059,6 +1075,21 @@ Entry Mapping Page
   /* transition: 2s; */
   transform-origin: left center;
   z-index: 1000;
+}
+
+#map-units-btn {
+  position: absolute;
+  z-index: 1;
+  left: 5%;
+  bottom: 0%;
+}
+
+#map-pop-btn {
+  position: absolute;
+  z-index: 1;
+  right: 5%;
+  bottom: 0%;
+  border: black;
 }
 
 .map-visualization {

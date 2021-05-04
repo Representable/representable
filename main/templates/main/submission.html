@@ -61,7 +61,6 @@
             </p>
             <div class="row">
               <div class="col text-center">
-                  <!-- ********************* -->
                   <!-- GeoJSON Explainer Modal -->
                   <div class="modal fade" id="geojson-explain-modal" tabindex="-1" role="dialog" aria-labelledby="geojson-explain-modalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -78,6 +77,23 @@
                       </div>
                     </div>
                   </div>
+                  <!-- ********************* -->
+                  <!-- PDF Export + Public comment Modal -->
+                  <div class="modal fade blue-modal" id="pdf-comment-modal" tabindex="-1" role="dialog" aria-labelledby="pdf-comment-modalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-body px-md-5 text-left">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                          <h4 class="mx-md-5 px-md-5 mt-md-5"><strong>Send your map to your state.</strong></h4>
+                          <p class="mx-md-5 px-md-5">Congratulations, you have downloaded your map. Your state accepts communties of interest as public input. Visit the site below to submit your map.</p>
+                          <a id="public-comment-link-modal"><h5 class="blue-text px-md-5 mx-md-5 mb-md-5">Go to public input portal <i class="far fa-arrow-alt-circle-right"></i></h5></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- ********************* -->
                   <div class="row">
                     {% if has_state %}
                       {% with link_text="/export/geojson/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
@@ -163,10 +179,16 @@
             </div>
           </div>
         </div>
-        {% if is_community_author %}
+        <div id="public-comment-card" class="card text-left border-0 w-100 rounded-lg mt-3 mb-3 d-l-block">
+          <div class="card-body">
+            <h5 class="card-title header-text"><strong>Send to your state.</strong></h5>
+            <p>Your state accepts communties of interest as public input. Download your map and then visit this site.</p>
+            <a id="public-comment-link"><h5 class="blue-text">Go to public input portal <i class="far fa-arrow-alt-circle-right"></i></h5></a>
+          </div>
+        </div>
         <div class="card text-left border-0 w-100 rounded-lg mt-3 mb-3 d-xl-block">
           <div class="card-body">
-            <h5 class="card-title header-text"><strong>Submit to an organization in your state</strong></h5>
+            <h5 class="card-title header-text"><strong>Submit to an organization.</strong></h5>
             {% if show_form is True %}
               <p class="header-text small">Many organizations in your state are collecting community maps. Submit yours to one of their collection drives.</p>
               <form method="post">
@@ -181,11 +203,10 @@
                 </div>
               </form>
             {% else %}
-              <p class="header-text small">This community map has already been submitted to an organization</p>
+              <p class="header-text small">This community map has already been submitted to an organization.</p>
             {% endif %}
           </div>
         </div>
-        {% endif %}
       </div>
     </div>
 
@@ -197,7 +218,7 @@
               <div class="card border-0 rounded-lg d-inline-block w-100 w-md-75">
                 <div class="card-body p-3">
                   <h3 class="card-title header-text"><strong>{{c.entry_name}}</strong></h3>
-                  <h6 class="info-text"><strong>{{c.drive.name}}</strong></h5>
+                  <h6 class="info-text"><strong>{{c.drive.name}}</strong></h6>
                 </div>
               </div>
             </div>
@@ -242,9 +263,6 @@
           <div class="col-12 border-0 text-left">
             <div class="row vh-50">
               <div id='map' class="map-visualization p-0">
-                <div id="pdf-loading-box" class="map-popup-box">
-                  <p class="mb-0">Loading PDF...</p>
-                </div>
               </div>
             </div>
           </div>
@@ -407,5 +425,6 @@
           mapboxgl.accessToken = "{{ mapbox_key }}";
         </script>
         <script type="text/javascript" src="{% static 'main/js/components/keys.js' %}"></script>
+        <script type="text/javascript" src="{% static 'main/js/components/states.js' %}"></script>
         <script type="text/javascript" src="{% static 'main/js/submission.js' %}"></script>
         {% endblock %}

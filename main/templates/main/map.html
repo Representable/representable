@@ -46,11 +46,17 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                 <h4 class="font-weight-light text-center my-2"> {{ state_name }} State Map </h4>
               </div>
               <div class="row justify-content-center">
+                {% if user.is_authenticated %}
                 <a id="map-geo-link" class="d-none" href="" download="communities.geojson"></a>
                 <a id="map-csv-link" class="d-none" href="" download="communities.csv"></a>
                 <button id="map-export-geo-btn" class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" onclick="exportCois('{{multi_export_link}}/geo/','geo')" role="button" download="communities.geojson">Export as GeoJSON</button>
                 <button id="map-export-csv-btn" class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" onclick="exportCois('{{multi_export_link}}/csv/','csv')" role="button" download="communities.csv">Export as CSV</button>
+                {% else %}
+                <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href='{% url "account_login" %}?next={{request.path}}' role="button">Export as GeoJSON</a>
+                <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href='{% url "account_login" %}?next={{request.path}}' role="button">Export as CSV</a>
+                {% endif %}
               </div>
+              <input class="m-2 p-2 rounded border border-secondary" id="search-comm" type="text" placeholder="Search communities...">
               <div id="headingOne">
                 <button id="buttonOne"class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne"
                 aria-expanded="false" aria-controls="collapseOne" style="width: 100%">
@@ -63,79 +69,79 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
             </div>
             <div class="items card">
               <div id="headingThree">
-                <button id="buttonThree" class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#coisCollapse"
-                aria-expanded="true" aria-controls="coisCollapse" style="width: 100%">
-                Communities <i id="arrowThree"class="fas fa-caret-down flipY-inplace"></i></button>
+                <button class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseThree"
+                aria-expanded="true" aria-controls="collapseThree" style="width: 100%">
+                Communities <i class="fas fa-caret-down"></i></button>
               </div>
               {% if communities %}
-                <div id="coisCollapse" class="collapse show container-fluid py-3 p-0">
-                    <div class="row px-3">
-                      <div class="col-8 col-xl-9">{% trans "Community Information" %}</div>
-                      <div class="col-4 col-xl-3 text-xl-right text-center">{% trans "Only Show" %}</div>
-                    </div> 
-                    <hr>
-                    {% comment %} <div class="row">
-                      <div class="col-8 col-xl-10"></div>
-                      <div class="col-4 col-xl-2 text-center">Show All</div>
-                    </div> {% endcomment %}
-                  <div id="state-map-cois">
-                    {% for c in communities %}
-                      <div class="row community-review-span py-3 px-3" id="{{c.entry_ID}}">
-                        <div class="col-8 col-xl-10">
-                          <span class="text-uppercase entry-name">
-                            {% with link_text="/submission/"|addstr:c.entry_ID %}
-                            <a href={{link_text}}>{{c.entry_name}}</a>
-                            {% endwith %}
+              <table id="collapseThree" class="collapse show table table-hover">
+                {% for c in communities %}
+                {% if c.drive.private is not True %}
+                  <tr class="community-review-span" id={{c.entry_ID}}>
+                    <td>
+                      <span class="text-uppercase entry-name">
+                        {% with link_text="/submission/"|addstr:c.entry_ID%}
+                        <a href={{link_text}}>{{c.entry_name}}</a>
+                        {% endwith %}
+                      </span>
+                      <hr class="my-1">
+                      {% if c.organization and c.organization.name %}
+                      <span class="badge badge-pill badge-primary">{{c.organization}}</span>
+                      <br>
+                      {% endif %}
+                      {% if c.drive and c.drive.name %}
+                      <span class="badge badge-pill badge-secondary">{{c.drive}}</span>
+                      <br>
+                      {% endif %}
+                      <span class="small text-muted">
+                      {% if is_org_admin %}
+                        {{ c.user_name }}
+                        {% if c.entry_ID in streets %}
+                        | {{streets|get_item:c.entry_ID}},
+                        {{cities|get_item:c.entry_ID}} <br>
+                        {% else %}
+                        <br>
+                        {% endif %}
+                      {% endif %}
+                      <a tabindex="0" class="small float-right mt-2" style="color:red" id="report" data-community-id={{c.id}} role="button" data-toggle="modal" data-target="#sendReport"> <span class="sr-only">Danger: </span>REPORT</a>
+                      </span>
+                      <span class="font-weight-light comm-content">
+                        <span class="more-content">
+                          <span class="small">
+                            {% if c.population > 0 %}
+                            <b>Population:</b> {{ c.population }}
+                            <br>
+                            {% endif %}
                           </span>
-                          <hr class="my-1">
-                          {% if c.organization and c.organization.name %}
-                          <span class="badge badge-pill badge-primary">{{c.organization}}</span>
+                          {% if c.cultural_interests %}
+                          <b><i class="fas fa-palette"></i> Cultural or Historical Interests</b><br>
+                          <span class="text-muted small">{{c.cultural_interests}}</span>
                           <br>
                           {% endif %}
-                          {% if c.drive and c.drive.name %}
-                          <span class="badge badge-pill badge-secondary">{{c.drive}}</span>
+                          {% if c.comm_activities %}
+                          <b><i class="fas fa-hiking"></i> Community Activities and Services</b><br>
+                          <span class="text-muted small">{{c.comm_activities}}</span>
                           <br>
                           {% endif %}
-                          <span class="font-weight-light comm-content">
-                            <span class="more-content">
-                              {% if c.cultural_interests %}
-                              <b><i class="fas fa-palette"></i> Cultural or Historical Interests</b><br>
-                              <span class="text-muted small">{{c.cultural_interests}}</span>
-                              <br>
-                              {% endif %}
-                              {% if c.comm_activities %}
-                              <b><i class="fas fa-hiking"></i> Community Activities and Services</b><br>
-                              <span class="text-muted small">{{c.comm_activities}}</span>
-                              <br>
-                              {% endif %}
-                              {% if c.economic_interests %}
-                              <b><i class="fas fa-comments-dollar"></i> Economic or Environmental Interests</b><br>
-                              <span class="text-muted small">{{c.economic_interests}}</span>
-                              <br>
-                              {% endif %}
-                              {% if c.other_considerations %}
-                              <b><i class="fas fa-users"></i> Community Needs and Concerns</b><br>
-                              <span class="text-muted small">{{c.other_considerations}}</span>
-                              <br>
-                              {% endif %}
-                            </span>
-                            <u><a class="small read-more small-link" role="button">Show More</a></u>
-                          </span>
-                        </div>
-                        <div class="col-4 col-xl-2 my-auto text-center">
-                          <input class="map-checkbox" type="checkbox" value="{{ c.entry_ID }}" onclick="toggleEntryVisibility(this)">
-                        </div>
-                      </div>
-                    {% endfor %}
-                  </div>
-                    <div class="row px-3">
-                      <div class="col-8 col-xl-9"></div>
-                      <div class="col-4 col-xl-3 text-center text-xl-right p-0">
-                        <button class="btn btn-link" role="button" onclick="showAllCommunities()">Show All</button>
-                      </div>
-                    </div>
-                </div>
-                {% endif %}
+                          {% if c.economic_interests %}
+                          <b><i class="fas fa-comments-dollar"></i> Economic or Environmental Interests</b><br>
+                          <span class="text-muted small">{{c.economic_interests}}</span>
+                          <br>
+                          {% endif %}
+                          {% if c.other_considerations %}
+                          <b><i class="fas fa-users"></i> Community Needs and Concerns</b><br>
+                          <span class="text-muted small">{{c.other_considerations}}</span>
+                          <br>
+                          {% endif %}
+                        </span>
+                        <u><a class="small read-more small-link" role="button">Show More</a></u>
+                      </span>
+                    </td>
+                    </tr>
+                  {% endif %}
+                  {% endfor %}
+                  </table>
+                  {% endif %}
                 </div>
               </div>
             </div>
