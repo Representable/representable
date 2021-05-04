@@ -79,6 +79,14 @@ form:invalid {
   background: #70C5EA;
 }
 
+.bg-2A94F4 {
+  background: #2A94F4;
+}
+
+.text-359DFB {
+  color: #359DFB;
+}
+
 .txt-16 {
   font-size: 1rem;
 }
@@ -254,6 +262,27 @@ form:invalid {
 #state-map-cois {
   overflow: scroll;
   max-height: 500px;
+}
+
+#partner-welcome-modal .modal-dialog .modal-content{
+  background-color: #DAEFFF;
+  opacity: .85;
+  border-radius: 50px;
+}
+
+.gray-btn {
+  color: #5B5B5B;
+  border-color: #5B5B5B;
+  background-color: transparent;
+}
+
+.gray-btn:hover {
+  background-color: #5B5B5B;
+  color: #ffffff;
+}
+
+.gray-btn:focus {
+  box-shadow: 0 0 0 0.25rem #5B5B5A;
 }
 
 /*********************************************************************
