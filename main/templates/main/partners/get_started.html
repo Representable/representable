@@ -1,39 +1,93 @@
 {% extends "main/base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 <div class="container">
   <div class="row row-content">
-    <div class="col-lg-6 text-center my-5 order-md-1">
-      <h1 class="font-weight-light"> Partner With Us</h1>
+    <div class="col-12 col-lg-7">
+      <h4 class="font-weight-light">{% trans "Join the national Representable community." %}</h4>
       <p class="font-weight-light">
-        Welcome to Representable! Get started by creating an organization or requesting a demo below.
+        {% blocktrans %}
+        Representable is growing a redistricting community with organizations across the country. Organization leaders can easily collect community maps with Representable and join redistricting efforts in their states.
+        {% endblocktrans %} 
       </p>
-      <a class="btn btn-primary" href="{% url 'main:create_org' %}" role="button">Create Organization</a>
-      <a class="btn btn-outline-primary" href="mailto:team@representable.org?subject=Representable%20Demo&body=Dear%20Representable%20Team%2C%0D%0A%0D%0AI'd%20like%20to%20request%20a%20product%20demo%20on%20behalf%20of%20______." role="button">Request Demo</a>
-      <img class="img-fluid align-bottom" src="{% static 'img/illustration.svg' %}" alt="people drawing a map together"></img>
+      <h5 class="font-weight-light">{% trans "How to use Representable as an organization?" %}</h5>
+      <p class="font-weight-light">
+        {% blocktrans %}
+        Check out our demo to see all of Representable’s features. 
+        {% endblocktrans %} 
+      </p>
+      <a class="no-underline-link" style="font-size: 20px;" target="_blank" href="https://www.youtube.com/watch?v=IOudTjAZeWU&ab_channel=Representable">Watch our demo <i class="fas fa-arrow-circle-right"></i></a>
     </div>
-    <div class="col-lg-6 order-md-2">
-      <div class="card card-signin my-3">
-        <div class="card-body">
-          <h5><span class="badge badge-primary">1</span> Create an Organization</h5>
-          <p>Include a brief description, link, and the state(s) you operate in.</p>
-          <hr>
-          <h5><span class="badge badge-primary">2</span> Start a Community Mapping Drive</h5>
-          <p>Create a community mapping drive via the organization dashboard. </p>
-          <hr>
-          <h5><span class="badge badge-primary">3</span> Share your Mapping Drive</h5>
-          <p>Share the link to your community mapping drive via email and social media to individuals in your state to start collecting submissions.</p>
-          <hr>
-          <h5><span class="badge badge-primary">4</span> Visualize a Map of Submissions</h5>
-          <p>View a map of all the communities submitted to your organization together.</p>
-          <hr>
-          <h5><span class="badge badge-primary">5</span> Export Community Submissions</h5>
-          <p>Download all the communities submitted to your organization as geoJSON for easy integration with district drawing and visualization tools.</p>
+    <div class="col-lg-5 d-none d-lg-block">
+      <img src="{% static 'img/network.svg' %}" alt="network of Representable organizations picture"></img>
+    </div>
+    <div class="col-12 mt-5 font-weight-light">
+      <div class="row">
+        <div class="col-12 col-xl-6 order-1 order-xl-0">
+          <div class="card shadow-sm">
+            <div class="card-body py-md-4 px-md-5">
+              <h5 class="text-center font-weight-light text-359DFB mb-4">{% trans "Join Representable as an Organization" %}</h5>
+              <p class="mb-4">
+                {% blocktrans %}
+                As the leader of an organization, you can collect community maps and download submissions. Joining Representable as an organization is free, and includes access to our redistricting toolkit. 
+                {% endblocktrans %}
+              </p>
+              <div class="text-center">
+                <a class="btn btn-lg btn-outline-primary d-none d-md-inline-block" href="{% url 'main:create_org' %}" role="button">{% trans "CREATE ORGANIZATION" %}</a>
+                <a class="btn btn-outline-primary d-md-none" href="{% url 'main:create_org' %}" role="button">{% trans "CREATE ORGANIZATION" %}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-1"></div>
+        <div class="col-12 col-xl-5 pl-4 pl-xl-0 mb-5 mb-xl-0 order-0 order-xl-1">
+          {% comment %} <a class="btn btn-outline-primary" href="mailto:team@representable.org?subject=Representable%20Demo&body=Dear%20Representable%20Team%2C%0D%0A%0D%0AI'd%20like%20to%20request%20a%20product%20demo%20on%20behalf%20of%20______." role="button">Request Demo</a> {% endcomment %}
+          <div class="row mb-3 mb-md-0">
+            <div class="col-2 col-md-1 p-0">
+              <div class="circle-xs bg-2A94F4">1</div>
+            </div>
+            <div class="col-10 col-md-11 p-0">
+              <h5 class="font-weight-light">{% trans "Create an Organization" %}</h5>
+              <p class="d-none d-md-block">{% trans "Include a brief description, link, and the state(s) you operate in." %}</p>
+            </div>
+          </div>
+          <div class="row mb-3 mb-md-0">
+            <div class="col-2 col-md-1 p-0">
+              <div class="circle-xs bg-2A94F4">2</div>
+            </div>
+            <div class="col-10 col-md-11 p-0">
+              <h5 class="font-weight-light">{% trans "Start a Community Mapping Drive" %}</h5>
+              <p class="d-none d-md-block">{% trans "Create a community mapping drive via the organization dashboard." %}</p>
+            </div>
+          </div>
+          <div class="row mb-3 mb-md-0">
+            <div class="col-2 col-md-1 p-0">
+              <div class="circle-xs bg-2A94F4">3</div>
+            </div>
+            <div class="col-10 col-md-11 p-0">
+              <h5 class="font-weight-light">{% trans "Collect Community Maps" %}</h5>
+              <p class="d-none d-md-block">{% trans "Share the link to your community mapping drive to individuals in your state to start collecting submissions." %}</p>
+            </div>
+          </div>
+          <div class="row mb-3 mb-md-0">
+            <div class="col-2 col-md-1 p-0">
+              <div class="circle-xs bg-2A94F4">4</div>
+            </div>
+            <div class="col-10 col-md-11 p-0">
+              <h5 class="font-weight-light">{% trans "Visualize and Export Community Maps" %}</h5>
+              <p class="d-none d-md-block">{% trans "View a map of all submitted communities, and download them to your organization as geoJSON for easy integration with district drawing and visualization tools." %}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
   </div>
 
+  {% endblock %}
+
+  {% block script %}
+      <script type="text/javascript" src="{% static 'main/js/organization_dashboard.js' %}"></script>
   {% endblock %}
