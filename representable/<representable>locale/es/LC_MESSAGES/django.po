@@ -958,10 +958,8 @@ msgid ""
 msgstr ""
 
 #: main/templates/main/dashboard/partners/thanks.html:28
-#, fuzzy
-#| msgid "For Organizations"
 msgid "organization dashboard"
-msgstr "Para las organizaciones"
+msgstr "tablero de la organizacion"
 
 #: main/templates/main/drives/index.html:5
 msgid "Drives"
@@ -984,14 +982,6 @@ msgid "What is Representable?"
 msgstr "¿Qué es Representable.org?"
 
 #: main/templates/main/drives/page.html:27
-#, fuzzy
-#| msgid ""
-#| "Representable allows people to draw communities of interest and share "
-#| "information about the interests and needs in those communities.\n"
-#| "            <br><br>Making this information available encourages "
-#| "mapmakers to take these communities into account during redistricting, in "
-#| "order to avoid gerrymandering and the “packing and cracking” of "
-#| "marginalized groups."
 msgid ""
 "Representable allows people to draw communities of interest and share "
 "information about the interests and needs in those communities.\n"
@@ -1009,26 +999,20 @@ msgstr ""
 "agrupación ventajosa  de grupos marginalizados para un partido."
 
 #: main/templates/main/drives/page.html:52
-#, fuzzy
-#| msgid "Redistricting is coming."
 msgid "Redistricting in "
-msgstr "Redistritación está llegando."
+msgstr "Redistritación en "
 
 #: main/templates/main/drives/page.html:72
-#, fuzzy
-#| msgid "Redistricting is coming."
 msgid "Redistricting Criteria"
-msgstr "Redistritación está llegando."
+msgstr "Criterios de Redistritación"
 
 #: main/templates/main/drives/page.html:83 main/templates/main/state.html:87
 msgid "Communities of Interest in "
-msgstr "Las comunidades de interés pueden incluir ..."
+msgstr "Las comunidades de interés en "
 
 #: main/templates/main/drives/page.html:93
-#, fuzzy
-#| msgid "Draw a Community Map"
 msgid "Draw My Community"
-msgstr "Dibujar un mapa de la comunidad"
+msgstr "Dibujar mi comunidad"
 
 #: main/templates/main/entry_address.html:7
 msgid "Step 1"
@@ -1130,6 +1114,7 @@ msgid ""
 "drawers to draw voting districts.</p>\n"
 "                                "
 msgstr ""
+"\n"
 "                                    <p>Asegúrate que toda tu comunidad se  "
 "encuentre dentro de la zona resaltada, y que esta zona resaltada no tenga "
 "huecos. Las unidades son <a class=\"no-underline-link\" href=\"https://www."
@@ -1241,7 +1226,8 @@ msgid ""
 " Where do people in your community gather or socialize? <br>Where does your "
 "community get its services? "
 msgstr ""
-" ¿Dónde se congregan para socializar en su comunidad?" <br>¿Dónde acceden servicios básicos (médicos, transportación, educación, etc.)? "
+" ¿Dónde se congregan para socializar en su comunidad?" 
+"<br>¿Dónde acceden servicios básicos (médicos, transportación, educación, etc.)? "
 
 #: main/templates/main/entry_map.html:128
 #: main/templates/main/entry_map.html:198

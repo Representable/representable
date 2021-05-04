@@ -1,5 +1,6 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <script type="text/javascript">
   mixpanel.track("State Page Loaded",
@@ -34,7 +35,7 @@
 
       <div class="col-12 p-3 light-blue-bg px-md-5 mb-4">
           <a class="btn ws-normal btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" href="#collapseCriteria2" aria-expanded="false" aria-controls="collapseCriteria2">
-            <h5 class="dark-gray-text" style="width: fit-content;"><b>{% trans "How does redistricing work in {{ state_obj.name }}"%}?<i class="fas fa-angle-down pl-lg-3 pl-1"></i></b></h5>
+            <h5 class="dark-gray-text" style="width: fit-content;"><b>{% trans "How does redistricing work in " %} {{ state_obj.name }}?<i class="fas fa-angle-down pl-lg-3 pl-1"></i></b></h5>
           </a>
         <div class="collapse" id="collapseCriteria2">
           {% autoescape off %}
@@ -56,7 +57,7 @@
 
       <div class="col-12 p-3 light-blue-bg px-md-5 mb-4">
           <a class="btn ws-normal btn-no-focus-outline bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" href="#collapseCriteria4" aria-expanded="false" aria-controls="collapseCriteria4">
-            <h5 class="dark-gray-text" style="width: fit-content;"><b>{% blocktrans %}{{ state_obj.name }}'s redistricting criteria {% endblocktrans %}&#32;<i class="fas fa-angle-down pl-lg-3 pl-1"></i></b></h5>
+            <h5 class="dark-gray-text" style="width: fit-content;"><b>{{ state_obj.name }}'s{% blocktrans %} redistricting criteria {% endblocktrans %}&#32;<i class="fas fa-angle-down pl-lg-3 pl-1"></i></b></h5>
           </a>
         <div class="collapse" id="collapseCriteria4">
           {% autoescape off %}
@@ -73,7 +74,7 @@
         <h5><p class="text-center">
           <a href="/map/{{state_obj.abbr}}" class="link-primary">
             {% blocktrans %}
-            See community maps drawn in {{ state_obj.name }} here <i class="fas fa-arrow-circle-right"></i>
+            See community maps drawn here <i class="fas fa-arrow-circle-right"></i>
             {% endblocktrans %}
           </a>
         </p></h5>
