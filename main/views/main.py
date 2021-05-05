@@ -129,9 +129,6 @@ from django.contrib.gis.geos import GEOSGeometry
 
 
 # ******************************************************************************#
-# language views
-
-# ******************************************************************************#
 
 # custom mixin redirects to signup page/tab rather than login
 class SignupRequiredMixin(AccessMixin):
@@ -699,20 +696,25 @@ def make_geojson(request, entry):
             "economic_interests",
             "comm_activities",
             "other_considerations",
-            "block_groups",
-            "census_blocks",
         ),
     )
     gj = geojson.loads(map_geojson)
     gj = rewind(gj)
     del gj["crs"]
     user_map = entry
+    # iterate over block_groups or census_blocks in order to get array of IDs
+    if user_map.block_groups.exists():
+        gj["features"][0]["properties"]["block_group_ids"] = [bg.census_id for bg in user_map.block_groups.all()]
+    elif user_map.census_blocks.exists():
+        gj["features"][0]["properties"]["census_block_ids"] = [block.census_id for block in user_map.census_blocks.all()]
+    # include organization and drive submitted to, if so
     if user_map.organization:
         gj["features"][0]["properties"][
             "organization"
         ] = user_map.organization.name
     if user_map.drive:
         gj["features"][0]["properties"]["drive"] = user_map.drive.name
+    # include address if user is authenticated + either author or org admin
     if request.user.is_authenticated:
         is_org_leader = user_map.organization and (
             request.user.is_org_admin(user_map.organization_id)
@@ -746,6 +748,12 @@ def make_geojson_for_state_map_page(request, entry):
     gj = rewind(gj)
     del gj["crs"]
     user_map = entry
+    # iterate over block_groups or census_blocks in order to get array of IDs
+    if user_map.block_groups.exists():
+        gj["features"][0]["properties"]["block_group_ids"] = [bg.census_id for bg in user_map.block_groups.all()]
+    elif user_map.census_blocks.exists():
+        gj["features"][0]["properties"]["census_block_ids"] = [block.census_id for block in user_map.census_blocks.all()]
+    # include organization and drive submitted to, if so
     if user_map.organization:
         gj["features"][0]["properties"][
             "organization"
@@ -895,6 +903,12 @@ def make_geojson_for_s3(entry):
     gj = rewind(gj)
     del gj["crs"]
     user_map = entry
+    # # iterate over block_groups or census_blocks in order to get array of IDs
+    # if user_map.block_groups.exists():
+    #     gj["features"][0]["properties"]["block_group_ids"] = [bg.census_id for bg in user_map.block_groups.all()]
+    # elif user_map.census_blocks.exists():
+    #     gj["features"][0]["properties"]["census_block_ids"] = [block.census_id for block in user_map.census_blocks.all()]
+    # # include organization and drive submitted to, if so
     if user_map.organization:
         gj["features"][0]["properties"][
             "organization"
@@ -1011,20 +1025,28 @@ class EntryView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
+        # for creation of BlockGroup and CensusBlock objects
+        STATES_USING_OLD_UNITS = ["il", "ok"]
+
         comm_form = self.community_form_class(request.POST, label_suffix="")
         addr_form = self.address_form_class(request.POST, label_suffix="")
         # parse block groups and add to field
         comm_form.data._mutable = True
         block_groups = comm_form.data["block_groups"].split(",")
         census_blocks = comm_form.data["census_blocks"].split(",")
+        # get the year of census units being used -- use for get_or_create function
+        state = self.kwargs["abbr"].lower()
+        year = 2020
+        if state in STATES_USING_OLD_UNITS:
+            year = 2010
         if len(census_blocks[0]) > 0:
             comm_form.data["census_blocks"] = [
-                CensusBlock.objects.get_or_create(census_id=block)[0].id
+                CensusBlock.objects.get_or_create(census_id=block, year=year)[0].id
                 for block in census_blocks
             ]
         else:
             comm_form.data["block_groups"] = [
-                BlockGroup.objects.get_or_create(census_id=bg)[0].id
+                BlockGroup.objects.get_or_create(census_id=bg, year=year)[0].id
                 for bg in block_groups
             ]
         comm_form.data._mutable = False
