@@ -820,10 +820,9 @@ class Map(TemplateView):
         # state map page --> drives in the state, entries without a drive but with a state
         drives = []
         authenticated = self.request.user.is_authenticated
-        print(authenticated)
         # get the polygon from db and pass it on to html
         for obj in query:
-            if obj.organization and not obj.admin_approved:
+            if obj.private or (obj.organization and not obj.admin_approved):
                 continue
             if (
                 obj.census_blocks_polygon == ""
