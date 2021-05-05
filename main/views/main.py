@@ -699,6 +699,8 @@ def make_geojson(request, entry):
             "economic_interests",
             "comm_activities",
             "other_considerations",
+            "block_groups",
+            "census_blocks",
         ),
     )
     gj = geojson.loads(map_geojson)
@@ -1014,10 +1016,11 @@ class EntryView(LoginRequiredMixin, View):
         # parse block groups and add to field
         comm_form.data._mutable = True
         block_groups = comm_form.data["block_groups"].split(",")
-        if len(block_groups[0]) > 12:
-            comm_form.data["block_groups"] = [
-                CensusBlock.objects.get_or_create(census_id=bg)[0].id
-                for bg in block_groups
+        census_blocks = comm_form.data["census_blocks"].split(",")
+        if len(census_blocks[0]) > 0:
+            comm_form.data["census_blocks"] = [
+                CensusBlock.objects.get_or_create(census_id=block)[0].id
+                for block in census_blocks
             ]
         else:
             comm_form.data["block_groups"] = [

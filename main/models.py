@@ -293,6 +293,8 @@ class CommunityEntry(models.Model):
      - user_polygon:  User polygon contains the polygon drawn by the user.
      - census_blocks_polygon_array: Array containing multiple polygons.
      - census_blocks_polygon: The union of the census block polygons.
+     - block_groups: ManytoMany of block group objects
+     - census_blocks: ManytoMany of census block objects
      - population: The population of the community entry, based on ACS data.
 
     """
@@ -332,6 +334,8 @@ class CommunityEntry(models.Model):
     )
 
     block_groups = models.ManyToManyField(BlockGroup, blank=True)
+
+    census_blocks = models.ManyToManyField(CensusBlock, blank=True)
 
     entry_name = models.CharField(
         max_length=100, blank=False, unique=False, default=""
