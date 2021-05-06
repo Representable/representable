@@ -373,41 +373,41 @@
           </div>
           <div class="d-none" id="pdfInfo">
             {% if c.economic_interests %}
-            <h6>
+            <h3>
               <br>
 
               Economic or Environmental Interests
-            </h6>
+            </h3>
             <small>
               {{c.economic_interests}}
             </small>
             {% endif %}
-            {% if c.economic_interests %}
-            <h6>
+            {% if c.comm_activities %}
+            <h3>
               <br>
 
               Community Activities and Services
-            </h6>
+            </h3>
             <small>
               {{c.comm_activities}}
             </small>
             {% endif %}
-            {% if c.economic_interests %}
-            <h6>
+            {% if c.cultural_interests %}
+            <h3>
               <br>
 
               Cultural or Historical Interests
-            </h6>
+            </h3>
             <small>
               {{c.cultural_interests}}
             </small>
             {% endif %}
-            {% if c.economic_interests %}
-            <h6>
+            {% if c.other_considerations %}
+            <h3>
               <br>
 
               Community Needs and Concerns
-            </h6>
+            </h3>
             <small>
               {{c.other_considerations}}
             </small>
