@@ -30,4 +30,5 @@ class DriveView(DetailView):
         drive = Drive.objects.get(slug=drive_slug)
         if (State.objects.filter(abbr=drive.state)):
             context["state"] = State.objects.filter(abbr=drive.state)[0]
+            context["page_type"] = "drive-page"
         return context
