@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-    <h2>Drives</h2>
+    <h2>{% trans "Drives" %}</h2>
     <ul>
         {% for drive in object_list %}
             <li><a href="{% url 'main:drive_page' drive.slug %}">{{ drive.name }}</a></li>

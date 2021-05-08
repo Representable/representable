@@ -1,5 +1,6 @@
 {% extends "main/base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 <div class="container">
@@ -18,10 +19,10 @@
         {% endfor %}
       </p>
       <p>{{object.description}}</p>
-      <a class="btn btn-secondary my-3" href="/partners" role="button">Return to Partners</a>
-      <a class="btn btn-primary my-3" href="{% url 'main:partner_map' object.slug %}" role="button">Link to organization map</a>
+      <a class="btn btn-secondary my-3" href="/partners" role="button">{% trans "Return to Partners" %}</a>
+      <a class="btn btn-primary my-3" href="{% url 'main:partner_map' object.slug %}" role="button">{% trans "Link to organization map" %}</a>
       {% if object.ext_link %}<a class="btn btn-primary" href="{{ object.ext_link }}" role="button">
-        Visit Partner Site <i class="fa fa-arrow-circle-right"></i></a>
+        {% trans "Visit Partner Site" %} <i class="fa fa-arrow-circle-right"></i></a>
       {% endif %}
     </div>
     </div>
