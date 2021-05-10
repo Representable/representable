@@ -143,6 +143,11 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                         <span class="text-muted small">{{c.other_considerations}}</span>
                         <br>
                         {% endif %}
+                        {% if c.custom_response %}
+                        <b><i class="fab fa-discourse"></i> {{c.drive.custom_question}} </b><br>
+                        <span class="text-muted small">{{c.custom_response}}</span>
+                        <br>
+                        {% endif %}
                       </span>
                       <u><a class="small read-more small-link" role="button">{% trans "Show More" %}</a></u>
                     </span>
