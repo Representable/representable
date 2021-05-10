@@ -699,6 +699,8 @@ def make_geojson(request, entry):
             "economic_interests",
             "comm_activities",
             "other_considerations",
+            "custom_response",
+            "population",
         ),
     )
     gj = geojson.loads(map_geojson)
@@ -738,6 +740,8 @@ def make_geojson_for_state_map_page(request, entry):
             "economic_interests",
             "comm_activities",
             "other_considerations",
+            "custom_response",
+            "population",
         ),
     )
     gj = geojson.loads(map_geojson)
@@ -887,6 +891,7 @@ def make_geojson_for_s3(entry):
             "economic_interests",
             "comm_activities",
             "other_considerations",
+            "custom_response",
             "population",
         ),
     )

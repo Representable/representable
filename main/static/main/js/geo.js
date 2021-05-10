@@ -541,14 +541,14 @@ function interestsValidated() {
   economic_interests_field.value = trim(economic_interests_field.value);
   comm_activities_field.value = trim(comm_activities_field.value);
   other_considerations_field.value = trim(other_considerations_field.value);
-  custom_response_field.value = trim(custom_response_field.value);
+  if (custom_response_field) custom_response_field.value = trim(custom_response_field.value);
 
   if (
     cultural_interests_field.value == "" &&
     economic_interests_field.value == "" &&
     comm_activities_field.value == "" &&
     other_considerations_field.value == "" &&
-    custom_response_field.value == ""
+    (custom_response_field && custom_response_field.value == "")
   ) {
     cultural_interests_field.classList.add("has_error");
     economic_interests_field.classList.add("has_error");

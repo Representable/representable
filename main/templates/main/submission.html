@@ -427,6 +427,16 @@
               {{c.other_considerations}}
             </small>
             {% endif %}
+            {% if c.custom_response %}
+            <h6>
+              <br>
+
+              {{ c.drive.custom_question }}
+            </h6>
+            <small>
+              {{c.custom_response}}
+            </small>
+            {% endif %}
           </div>
           {% if c.drive %}
           <div class="d-none" id="pdfOrg">{{c.organization}}</div>
