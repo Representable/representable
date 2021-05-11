@@ -966,6 +966,7 @@ class EntryView(LoginRequiredMixin, View):
         drive_name = ""
         drive_id = None
         drive_custom_question = ""
+        drive_custom_question_example = ""
         if kwargs["drive"]:
             has_drive = True
             drive_slug = self.kwargs["drive"]
