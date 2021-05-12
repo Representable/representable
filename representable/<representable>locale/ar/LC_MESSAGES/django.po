@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-26 03:52+0000\n"
+"POT-Creation-Date: 2021-05-08 07:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,620 +19,69 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: main/templates/account/email/debug_email_confirmation_message.txt:1
-#, python-format
-msgid ""
-"Hello from %(site_name)s!\n"
-"\n"
-"[THIS MESSAGE IS CUSTOM_BUILT FOR THE CONSOLE. THIS IS *NOT* WHAT THE USER "
-"WILL SEE IN PRODUCTION.]\n"
-"[Edit 'templates/account/email/email_confirmation_message.html' to edit the "
-"production message.]\n"
-"\n"
-"You're receiving this e-mail because %(user_display)s provided this e-mail "
-"address to connect their account.\n"
-"[Click link in terminal using CMD+Click.]\n"
-"To confirm this is correct, go to %(activate_url)s\n"
-msgstr ""
-
-#: main/templates/account/email/debug_email_confirmation_message.txt:10
-#, python-format
-msgid ""
-"Thank you from %(site_name)s!\n"
-"%(site_domain)s"
-msgstr ""
-
 #: main/templates/account/email/debug_email_confirmation_subject.txt:3
 #: main/templates/account/email/email_confirmation_subject.txt:3
 msgid "Please Confirm Your E-mail Address"
 msgstr ""
 
-#: main/templates/account/email/email_confirmation_message.html:1
-#, python-format
-msgid ""
-"\n"
-"<!doctype html>\n"
-"<html>\n"
-"  <head>\n"
-"    <meta name=\"viewport\" content=\"width=device-width\">\n"
-"    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n"
-"    <title>Email Confirmation</title>\n"
-"    <style>\n"
-"@media only screen and (max-width: 620px) {\n"
-"  table[class=body] h1 {\n"
-"    font-size: 28px !important;\n"
-"    margin-bottom: 10px !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] p,\n"
-"table[class=body] ul,\n"
-"table[class=body] ol,\n"
-"table[class=body] td,\n"
-"table[class=body] span,\n"
-"table[class=body] a {\n"
-"    font-size: 16px !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .wrapper,\n"
-"table[class=body] .article {\n"
-"    padding: 10px !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .content {\n"
-"    padding: 0 !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .container {\n"
-"    padding: 0 !important;\n"
-"    width: 100%% !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .main {\n"
-"    border-left-width: 0 !important;\n"
-"    border-radius: 0 !important;\n"
-"    border-right-width: 0 !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .btn table {\n"
-"    width: 100%% !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .btn a {\n"
-"    width: 100%% !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .img-responsive {\n"
-"    height: auto !important;\n"
-"    max-width: 100%% !important;\n"
-"    width: auto !important;\n"
-"  }\n"
-"}\n"
-"@media all {\n"
-"  .ExternalClass {\n"
-"    width: 100%%;\n"
-"  }\n"
-"\n"
-"  .ExternalClass,\n"
-".ExternalClass p,\n"
-".ExternalClass span,\n"
-".ExternalClass font,\n"
-".ExternalClass td,\n"
-".ExternalClass div {\n"
-"    line-height: 100%%;\n"
-"  }\n"
-"\n"
-"  .apple-link a {\n"
-"    color: inherit !important;\n"
-"    font-family: inherit !important;\n"
-"    font-size: inherit !important;\n"
-"    font-weight: inherit !important;\n"
-"    line-height: inherit !important;\n"
-"    text-decoration: none !important;\n"
-"  }\n"
-"\n"
-"  #MessageViewBody a {\n"
-"    color: inherit;\n"
-"    text-decoration: none;\n"
-"    font-size: inherit;\n"
-"    font-family: inherit;\n"
-"    font-weight: inherit;\n"
-"    line-height: inherit;\n"
-"  }\n"
-"\n"
-"  .btn-primary table td:hover {\n"
-"    background-color: #2176C2 !important;\n"
-"  }\n"
-"\n"
-"  .btn-primary a:hover {\n"
-"    background-color: #2176C2 !important;\n"
-"    border-color: #2176C2 !important;\n"
-"  }\n"
-"}\n"
-"</style>\n"
-"  </head>\n"
-"  <body class=\"\" style=\"background-color: #f6f6f6; font-family: sans-"
-"serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: "
-"1.4; margin: 0; padding: 0; -ms-text-size-adjust: 100%%; -webkit-text-size-"
-"adjust: 100%%;\">\n"
-"    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"body\" "
-"style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: "
-"0pt; width: 100%%; background-color: #f6f6f6;\">\n"
-"      <tr>\n"
-"        <td style=\"font-family: sans-serif; font-size: 14px; vertical-"
-"align: top;\">&nbsp;</td>\n"
-"        <td class=\"container\" style=\"font-family: sans-serif; font-size: "
-"14px; vertical-align: top; display: block; Margin: 0 auto; max-width: 580px; "
-"padding: 10px; width: 580px;\">\n"
-"          <div class=\"content\" style=\"box-sizing: border-box; display: "
-"block; Margin: 0 auto; max-width: 580px; padding: 10px;\">\n"
-"\n"
-"            <!-- START CENTERED WHITE CONTAINER -->\n"
-"            <span class=\"preheader\" style=\"color: transparent; display: "
-"none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; "
-"mso-hide: all; visibility: hidden; width: 0;\">Confirm your account email.</"
-"span>\n"
-"            <table class=\"main\" style=\"border-collapse: separate; mso-"
-"table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%%; background: #ffffff; "
-"border-radius: 3px;\">\n"
-"\n"
-"              <!-- START MAIN CONTENT AREA -->\n"
-"              <tr>\n"
-"                <td class=\"wrapper\" style=\"font-family: sans-serif; font-"
-"size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;\">\n"
-"                  <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
-"style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: "
-"0pt; width: 100%%;\">\n"
-"                    <tr>\n"
-"                      <td style=\"font-family: sans-serif; font-size: 14px; "
-"vertical-align: top;\">\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\">Welcome to "
-"Representable.org!</p>\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\">Click the button "
-"below to confirm your email address for your Representable.org account. If "
-"you didn't create an account with Representable.org you can safely delete "
-"the email.</p>\n"
-"                        <table border=\"0\" cellpadding=\"0\" cellspacing="
-"\"0\" class=\"btn btn-primary\" style=\"border-collapse: separate; mso-table-"
-"lspace: 0pt; mso-table-rspace: 0pt; width: 100%%; box-sizing: border-box;"
-"\">\n"
-"                          <tbody>\n"
-"                            <tr>\n"
-"                              <td align=\"left\" style=\"font-family: sans-"
-"serif; font-size: 14px; vertical-align: top; padding-bottom: 15px;\">\n"
-"                                <table border=\"0\" cellpadding=\"0\" "
-"cellspacing=\"0\" style=\"border-collapse: separate; mso-table-lspace: 0pt; "
-"mso-table-rspace: 0pt; width: auto;\">\n"
-"                                  <tbody>\n"
-"                                    <tr>\n"
-"                                      <td style=\"font-family: sans-serif; "
-"font-size: 14px; vertical-align: top; background-color: #3498db; border-"
-"radius: 5px; text-align: center;\"> <a href=\"%(activate_url)s\" target="
-"\"_blank\" style=\"display: inline-block; color: #ffffff; background-color: "
-"#2A94F4; border: solid 1px #2A94F4; border-radius: 5px; box-sizing: border-"
-"box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: "
-"bold; margin: 0; padding: 12px 25px; text-transform: capitalize; border-"
-"color: #3498db;\">Confirm Email</a> </td>\n"
-"                                    </tr>\n"
-"                                  </tbody>\n"
-"                                </table>\n"
-"                              </td>\n"
-"                            </tr>\n"
-"                          </tbody>\n"
-"                        </table>\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\">If the button doesn't "
-"work, copy and paste the following link in your browser:</p>\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\"><a href="
-"\"%(activate_url)s\">%(activate_url)s</a></p>\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\">The Representable.org "
-"Team</p>\n"
-"                      </td>\n"
-"                    </tr>\n"
-"                  </table>\n"
-"                </td>\n"
-"              </tr>\n"
-"\n"
-"            <!-- END MAIN CONTENT AREA -->\n"
-"            </table>\n"
-"\n"
-"            <!-- START FOOTER -->\n"
-"            <div class=\"footer\" style=\"clear: both; Margin-top: 10px; "
-"text-align: center; width: 100%%;\">\n"
-"              <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style="
-"\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; "
-"width: 100%%;\">\n"
-"                <tr>\n"
-"                  <td class=\"content-block\" style=\"font-family: sans-"
-"serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-"
-"size: 12px; color: #999999; text-align: center;\">\n"
-"                    <span class=\"apple-link\" style=\"color: #999999; font-"
-"size: 12px; text-align: center;\">Representable.org</span>\n"
-"                  </td>\n"
-"                </tr>\n"
-"              </table>\n"
-"            </div>\n"
-"            <!-- END FOOTER -->\n"
-"\n"
-"          <!-- END CENTERED WHITE CONTAINER -->\n"
-"          </div>\n"
-"        </td>\n"
-"        <td style=\"font-family: sans-serif; font-size: 14px; vertical-"
-"align: top;\">&nbsp;</td>\n"
-"      </tr>\n"
-"    </table>\n"
-"  </body>\n"
-"</html>\n"
+#: main/templates/account/email/email_confirmation_message.html:7
+msgid "Email Confirmation"
 msgstr ""
 
-#: main/templates/account/email/email_template_do_not_delete.html:1
-#, python-format
+#: main/templates/account/email/email_confirmation_message.html:118
+#: main/templates/account/email/email_template_do_not_delete.html:115
+#, fuzzy
+#| msgid "About Representable"
+msgid "Welcome to Representable.org!"
+msgstr "معلومات عن ربريسنتبل"
+
+#: main/templates/account/email/email_confirmation_message.html:119
+#: main/templates/account/email/email_template_do_not_delete.html:116
 msgid ""
-"\n"
-"<!doctype html>\n"
-"<html>\n"
-"  <head>\n"
-"    <meta name=\"viewport\" content=\"width=device-width\">\n"
-"    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n"
-"    <title>Simple Transactional Email</title>\n"
-"    <style>\n"
-"    /* -------------------------------------\n"
-"        INLINED WITH htmlemail.io/inline\n"
-"    ------------------------------------- */\n"
-"    /* -------------------------------------\n"
-"        RESPONSIVE AND MOBILE FRIENDLY STYLES\n"
-"    ------------------------------------- */\n"
-"    @media only screen and (max-width: 620px) {\n"
-"      table[class=body] h1 {\n"
-"        font-size: 28px !important;\n"
-"        margin-bottom: 10px !important;\n"
-"      }\n"
-"      table[class=body] p,\n"
-"            table[class=body] ul,\n"
-"            table[class=body] ol,\n"
-"            table[class=body] td,\n"
-"            table[class=body] span,\n"
-"            table[class=body] a {\n"
-"        font-size: 16px !important;\n"
-"      }\n"
-"      table[class=body] .wrapper,\n"
-"            table[class=body] .article {\n"
-"        padding: 10px !important;\n"
-"      }\n"
-"      table[class=body] .content {\n"
-"        padding: 0 !important;\n"
-"      }\n"
-"      table[class=body] .container {\n"
-"        padding: 0 !important;\n"
-"        width: 100%% !important;\n"
-"      }\n"
-"      table[class=body] .main {\n"
-"        border-left-width: 0 !important;\n"
-"        border-radius: 0 !important;\n"
-"        border-right-width: 0 !important;\n"
-"      }\n"
-"      table[class=body] .btn table {\n"
-"        width: 100%% !important;\n"
-"      }\n"
-"      table[class=body] .btn a {\n"
-"        width: 100%% !important;\n"
-"      }\n"
-"      table[class=body] .img-responsive {\n"
-"        height: auto !important;\n"
-"        max-width: 100%% !important;\n"
-"        width: auto !important;\n"
-"      }\n"
-"    }\n"
-"\n"
-"    /* -------------------------------------\n"
-"        PRESERVE THESE STYLES IN THE HEAD\n"
-"    ------------------------------------- */\n"
-"    @media all {\n"
-"      .ExternalClass {\n"
-"        width: 100%%;\n"
-"      }\n"
-"      .ExternalClass,\n"
-"            .ExternalClass p,\n"
-"            .ExternalClass span,\n"
-"            .ExternalClass font,\n"
-"            .ExternalClass td,\n"
-"            .ExternalClass div {\n"
-"        line-height: 100%%;\n"
-"      }\n"
-"      .apple-link a {\n"
-"        color: inherit !important;\n"
-"        font-family: inherit !important;\n"
-"        font-size: inherit !important;\n"
-"        font-weight: inherit !important;\n"
-"        line-height: inherit !important;\n"
-"        text-decoration: none !important;\n"
-"      }\n"
-"      #MessageViewBody a {\n"
-"        color: inherit;\n"
-"        text-decoration: none;\n"
-"        font-size: inherit;\n"
-"        font-family: inherit;\n"
-"        font-weight: inherit;\n"
-"        line-height: inherit;\n"
-"      }\n"
-"      .btn-primary table td:hover {\n"
-"        background-color: #34495e !important;\n"
-"      }\n"
-"      .btn-primary a:hover {\n"
-"        background-color: #34495e !important;\n"
-"        border-color: #34495e !important;\n"
-"      }\n"
-"    }\n"
-"    </style>\n"
-"  </head>\n"
-"  <body class=\"\" style=\"background-color: #f6f6f6; font-family: sans-"
-"serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: "
-"1.4; margin: 0; padding: 0; -ms-text-size-adjust: 100%%; -webkit-text-size-"
-"adjust: 100%%;\">\n"
-"    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"body\" "
-"style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: "
-"0pt; width: 100%%; background-color: #f6f6f6;\">\n"
-"      <tr>\n"
-"        <td style=\"font-family: sans-serif; font-size: 14px; vertical-"
-"align: top;\">&nbsp;</td>\n"
-"        <td class=\"container\" style=\"font-family: sans-serif; font-size: "
-"14px; vertical-align: top; display: block; Margin: 0 auto; max-width: 580px; "
-"padding: 10px; width: 580px;\">\n"
-"          <div class=\"content\" style=\"box-sizing: border-box; display: "
-"block; Margin: 0 auto; max-width: 580px; padding: 10px;\">\n"
-"\n"
-"            <!-- START CENTERED WHITE CONTAINER -->\n"
-"            <span class=\"preheader\" style=\"color: transparent; display: "
-"none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; "
-"mso-hide: all; visibility: hidden; width: 0;\">This is preheader text. Some "
-"clients will show this text as a preview.</span>\n"
-"            <table class=\"main\" style=\"border-collapse: separate; mso-"
-"table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%%; background: #ffffff; "
-"border-radius: 3px;\">\n"
-"\n"
-"              <!-- START MAIN CONTENT AREA -->\n"
-"              <tr>\n"
-"                <td class=\"wrapper\" style=\"font-family: sans-serif; font-"
-"size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;\">\n"
-"                  <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
-"style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: "
-"0pt; width: 100%%;\">\n"
-"                    <tr>\n"
-"                      <td style=\"font-family: sans-serif; font-size: 14px; "
-"vertical-align: top;\">\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\">Welcome to "
-"Representable.org!</p>\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\">Click the button "
-"below to confirm your email address for your Representable.org account. If "
-"you didn't create an account with Representable.org you can safely delete "
-"the email.</p>\n"
-"                        <table border=\"0\" cellpadding=\"0\" cellspacing="
-"\"0\" class=\"btn btn-primary\" style=\"border-collapse: separate; mso-table-"
-"lspace: 0pt; mso-table-rspace: 0pt; width: 100%%; box-sizing: border-box;"
-"\">\n"
-"                          <tbody>\n"
-"                            <tr>\n"
-"                              <td align=\"left\" style=\"font-family: sans-"
-"serif; font-size: 14px; vertical-align: top; padding-bottom: 15px;\">\n"
-"                                <table border=\"0\" cellpadding=\"0\" "
-"cellspacing=\"0\" style=\"border-collapse: separate; mso-table-lspace: 0pt; "
-"mso-table-rspace: 0pt; width: auto;\">\n"
-"                                  <tbody>\n"
-"                                    <tr>\n"
-"                                      <td style=\"font-family: sans-serif; "
-"font-size: 14px; vertical-align: top; background-color: #3498db; border-"
-"radius: 5px; text-align: center;\"> <a href=\"%(activate_url)s\" target="
-"\"_blank\" style=\"display: inline-block; color: #ffffff; background-color: "
-"#3498db; border: solid 1px #3498db; border-radius: 5px; box-sizing: border-"
-"box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: "
-"bold; margin: 0; padding: 12px 25px; text-transform: capitalize; border-"
-"color: #3498db;\">Confirm Email</a> </td>\n"
-"                                    </tr>\n"
-"                                  </tbody>\n"
-"                                </table>\n"
-"                              </td>\n"
-"                            </tr>\n"
-"                          </tbody>\n"
-"                        </table>\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\">If the button doesn't "
-"work, copy and paste the following link in your browser:</p>\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\"><a href="
-"\"%(activate_url)s\">%(activate_url)s</a></p>\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\">The Representable.org "
-"Team</p>\n"
-"                      </td>\n"
-"                    </tr>\n"
-"                  </table>\n"
-"                </td>\n"
-"              </tr>\n"
-"\n"
-"            <!-- END MAIN CONTENT AREA -->\n"
-"            </table>\n"
-"\n"
-"            <!-- START FOOTER -->\n"
-"            <div class=\"footer\" style=\"clear: both; Margin-top: 10px; "
-"text-align: center; width: 100%%;\">\n"
-"              <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style="
-"\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; "
-"width: 100%%;\">\n"
-"                <tr>\n"
-"                  <td class=\"content-block\" style=\"font-family: sans-"
-"serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-"
-"size: 12px; color: #999999; text-align: center;\">\n"
-"                    <span class=\"apple-link\" style=\"color: #999999; font-"
-"size: 12px; text-align: center;\">Representable.org</span>\n"
-"                  </td>\n"
-"                </tr>\n"
-"              </table>\n"
-"            </div>\n"
-"            <!-- END FOOTER -->\n"
-"\n"
-"          <!-- END CENTERED WHITE CONTAINER -->\n"
-"          </div>\n"
-"        </td>\n"
-"        <td style=\"font-family: sans-serif; font-size: 14px; vertical-"
-"align: top;\">&nbsp;</td>\n"
-"      </tr>\n"
-"    </table>\n"
-"  </body>\n"
-"</html>\n"
+"Click the button below to confirm your email address for your Representable."
+"org account. If you didn't create an account with Representable.org you can "
+"safely delete the email."
 msgstr ""
 
-#: main/templates/account/email/password_reset_key_message.html:1
-#, python-format
+#: main/templates/account/email/email_confirmation_message.html:135
+#: main/templates/account/email/email_template_do_not_delete.html:132
+#: main/templates/account/email/password_reset_key_message.html:137
 msgid ""
-"\n"
-"<!doctype html>\n"
-"<html>\n"
-"  <head>\n"
-"    <meta name=\"viewport\" content=\"width=device-width\">\n"
-"    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n"
-"    <title>Password Reset Email</title>\n"
-"    <style>\n"
-"@media only screen and (max-width: 620px) {\n"
-"  table[class=body] h1 {\n"
-"    font-size: 28px !important;\n"
-"    margin-bottom: 10px !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] p,\n"
-"table[class=body] ul,\n"
-"table[class=body] ol,\n"
-"table[class=body] td,\n"
-"table[class=body] span,\n"
-"table[class=body] a {\n"
-"    font-size: 16px !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .wrapper,\n"
-"table[class=body] .article {\n"
-"    padding: 10px !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .content {\n"
-"    padding: 0 !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .container {\n"
-"    padding: 0 !important;\n"
-"    width: 100%% !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .main {\n"
-"    border-left-width: 0 !important;\n"
-"    border-radius: 0 !important;\n"
-"    border-right-width: 0 !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .btn table {\n"
-"    width: 100%% !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .btn a {\n"
-"    width: 100%% !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .img-responsive {\n"
-"    height: auto !important;\n"
-"    max-width: 100%% !important;\n"
-"    width: auto !important;\n"
-"  }\n"
-"}\n"
-"@media all {\n"
-"  .ExternalClass {\n"
-"    width: 100%%;\n"
-"  }\n"
-"\n"
-"  .ExternalClass,\n"
-".ExternalClass p,\n"
-".ExternalClass span,\n"
-".ExternalClass font,\n"
-".ExternalClass td,\n"
-".ExternalClass div {\n"
-"    line-height: 100%%;\n"
-"  }\n"
-"\n"
-"  .apple-link a {\n"
-"    color: inherit !important;\n"
-"    font-family: inherit !important;\n"
-"    font-size: inherit !important;\n"
-"    font-weight: inherit !important;\n"
-"    line-height: inherit !important;\n"
-"    text-decoration: none !important;\n"
-"  }\n"
-"\n"
-"  #MessageViewBody a {\n"
-"    color: inherit;\n"
-"    text-decoration: none;\n"
-"    font-size: inherit;\n"
-"    font-family: inherit;\n"
-"    font-weight: inherit;\n"
-"    line-height: inherit;\n"
-"  }\n"
-"\n"
-"  .btn-primary table td:hover {\n"
-"    background-color: #2176C2 !important;\n"
-"  }\n"
-"\n"
-"  .btn-primary a:hover {\n"
-"    background-color: #2176C2 !important;\n"
-"    border-color: #2176C2 !important;\n"
-"  }\n"
-"}\n"
-"</style>\n"
-"  </head>\n"
-"  <body class=\"\" style=\"background-color: #f6f6f6; font-family: sans-"
-"serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: "
-"1.4; margin: 0; padding: 0; -ms-text-size-adjust: 100%%; -webkit-text-size-"
-"adjust: 100%%;\">\n"
-"    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"body\" "
-"style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: "
-"0pt; width: 100%%; background-color: #f6f6f6;\">\n"
-"      <tr>\n"
-"        <td style=\"font-family: sans-serif; font-size: 14px; vertical-"
-"align: top;\">&nbsp;</td>\n"
-"        <td class=\"container\" style=\"font-family: sans-serif; font-size: "
-"14px; vertical-align: top; display: block; Margin: 0 auto; max-width: 580px; "
-"padding: 10px; width: 580px;\">\n"
-"          <div class=\"content\" style=\"box-sizing: border-box; display: "
-"block; Margin: 0 auto; max-width: 580px; padding: 10px;\">\n"
-"\n"
-"            <!-- START CENTERED WHITE CONTAINER -->\n"
-"            <span class=\"preheader\" style=\"color: transparent; display: "
-"none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; "
-"mso-hide: all; visibility: hidden; width: 0;\">Reset your password.</span>\n"
-"            <table class=\"main\" style=\"border-collapse: separate; mso-"
-"table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%%; background: #ffffff; "
-"border-radius: 3px;\">\n"
-"\n"
-"              <!-- START MAIN CONTENT AREA -->\n"
-"              <tr>\n"
-"                <td class=\"wrapper\" style=\"font-family: sans-serif; font-"
-"size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;\">\n"
-"                  <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
-"style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: "
-"0pt; width: 100%%;\">\n"
-"                    <tr>\n"
-"                      <td style=\"font-family: sans-serif; font-size: 14px; "
-"vertical-align: top;\">\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\">Hello from "
-"Representable.org!</p>\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\">You're receiving this "
-"e-mail because you or someone else has requested a password for your user "
-"account.\n"
-"                            It can be safely ignored if you did not request "
-"a password reset. Click the link below to reset your password.</p>"
+"If the button doesn't work, copy and paste the following link in your "
+"browser:"
 msgstr ""
+
+#: main/templates/account/email/email_confirmation_message.html:137
+#: main/templates/account/email/email_template_do_not_delete.html:134
+#, fuzzy
+#| msgid "About Representable"
+msgid "The Representable.org Team"
+msgstr "معلومات عن ربريسنتبل"
+
+#: main/templates/account/email/email_confirmation_message.html:152
+#, fuzzy
+#| msgid "About Representable"
+msgid "Representable.org"
+msgstr "معلومات عن ربريسنتبل"
+
+#: main/templates/account/email/email_template_do_not_delete.html:106
+msgid "This is preheader text. Some clients will show this text as a preview."
+msgstr ""
+
+#: main/templates/account/email/email_template_do_not_delete.html:124
+#: main/templates/account/email/password_reset_key_message.html:129
+msgid "Confirm Email"
+msgstr ""
+
+#: main/templates/account/email/password_reset_key_message.html:7
+msgid "Password Reset Email"
+msgstr ""
+
+#: main/templates/account/email/password_reset_key_message.html:118
+#, fuzzy
+#| msgid "About Representable"
+msgid "Hello from Representable.org!"
+msgstr "معلومات عن ربريسنتبل"
 
 #: main/templates/account/email/password_reset_key_message.html:140
 #, python-format
@@ -641,44 +90,7 @@ msgstr ""
 
 #: main/templates/account/email/password_reset_key_message.html:142
 #, python-format
-msgid ""
-"Thank you for using %(site_name)s!</p>\n"
-"                      </td>\n"
-"                    </tr>\n"
-"                  </table>\n"
-"                </td>\n"
-"              </tr>\n"
-"\n"
-"            <!-- END MAIN CONTENT AREA -->\n"
-"            </table>\n"
-"\n"
-"            <!-- START FOOTER -->\n"
-"            <div class=\"footer\" style=\"clear: both; Margin-top: 10px; "
-"text-align: center; width: 100%%;\">\n"
-"              <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style="
-"\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; "
-"width: 100%%;\">\n"
-"                <tr>\n"
-"                  <td class=\"content-block\" style=\"font-family: sans-"
-"serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-"
-"size: 12px; color: #999999; text-align: center;\">\n"
-"                    <span class=\"apple-link\" style=\"color: #999999; font-"
-"size: 12px; text-align: center;\">Representable.org</span>\n"
-"                  </td>\n"
-"                </tr>\n"
-"              </table>\n"
-"            </div>\n"
-"            <!-- END FOOTER -->\n"
-"\n"
-"          <!-- END CENTERED WHITE CONTAINER -->\n"
-"          </div>\n"
-"        </td>\n"
-"        <td style=\"font-family: sans-serif; font-size: 14px; vertical-"
-"align: top;\">&nbsp;</td>\n"
-"      </tr>\n"
-"    </table>\n"
-"  </body>\n"
-"</html>\n"
+msgid "Thank you for using %(current_site.name)s!"
 msgstr ""
 
 #: main/templates/account/email/password_reset_key_subject.txt:3
@@ -833,6 +245,180 @@ msgid ""
 "within a few minutes."
 msgstr ""
 
+#: main/templates/main/dashboard/index.html:10
+msgid "Dashboard"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:20
+#, fuzzy
+#| msgid "For organizations"
+msgid "Organizations"
+msgstr "للمنظمات"
+
+#: main/templates/main/dashboard/index.html:31
+msgid ""
+" You're currently not part of any organizations.\n"
+"                Ask someone to add you to their organization or create a new "
+"one below. "
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:36
+msgid "Create New"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:45
+msgid "Quick Links"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:49
+#, fuzzy
+#| msgid "For organizations"
+msgid "Create Organization"
+msgstr "للمنظمات"
+
+#: main/templates/main/dashboard/index.html:50
+msgid "Create Entry"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:51
+#: representable/templates/base.html:266
+msgid "My Communities"
+msgstr "مجتمعاتي"
+
+#: main/templates/main/dashboard/index.html:62
+#: representable/templates/base.html:130
+#: representable/templates/base_nofooter.html:130
+msgid "Account Settings"
+msgstr "إعدادات التتبع"
+
+#: main/templates/main/dashboard/index.html:65
+#: main/templates/main/dashboard/index.html:67
+msgid "Reset password"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:66
+msgid ""
+"Reset your password by pressing on the following button. You will receive an "
+"email with the appropiate instructions."
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:70
+#, fuzzy
+#| msgid "Account Settings"
+msgid "Cookie Settings"
+msgstr "إعدادات التتبع"
+
+#: main/templates/main/dashboard/index.html:71
+msgid ""
+"We use Mixpanel and Google Analytics to collect anonymized information about "
+"users' website usage. We use this information to improve our website "
+"experience. You can control whether we have access to this information or "
+"not."
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:73
+msgid ""
+"\n"
+"              <p>Based on our records, you have <strong>opted in</strong> "
+"for anonymized information collection. To <strong>opt out</strong>, press on "
+"the button below.</p>\n"
+"              "
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:79
+msgid ""
+"\n"
+"              <p>Based on our records, you have <strong>opted out</strong> "
+"of anonymized information collection. To <strong>opt in</strong>, press on "
+"the button below.</p>\n"
+"              "
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:12
+#, fuzzy
+#| msgid "Are you the leader of an organization?"
+msgid "Thank you for creating an organization!"
+msgstr "هل أنت قائد منظمة"
+
+#: main/templates/main/dashboard/partners/thanks.html:15
+msgid "Please verify your email."
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:19
+msgid "We are excited to work with you!"
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:20
+msgid ""
+"Check out our <a href=\"https://docs.google.com/document/"
+"d/1NJMUpZodlqo96xVASJzihpcfgWir18ifMaMD380zrXE/edit\">organization guide</a> "
+"to learn more about using Representable to gather community maps."
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:21
+msgid ""
+"Contact us at <a href=\"mailto:team@representable.org\"> team@representable."
+"org</a> with any questions. "
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:22
+msgid ""
+"Click the button below to go to the Organization Dashboard and get started "
+"by creating a community mapping drive. "
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:25
+msgid ""
+"Email verification will be necessary\n"
+"                        to access certain organization features on "
+"Representable. We have resent an email verification link to your inbox."
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:28
+#, fuzzy
+#| msgid "For organizations"
+msgid "organization dashboard"
+msgstr "للمنظمات"
+
+#: main/templates/main/drives/index.html:5
+msgid "Drives"
+msgstr ""
+
+#: main/templates/main/drives/page.html:20 main/templates/main/index.html:24
+msgid "Gerrymandering is silencing communities."
+msgstr ""
+
+#: main/templates/main/drives/page.html:21
+#, fuzzy
+#| msgid ""
+#| "Many organizations have partnered with Representable.org to collect "
+#| "community-of-interest data."
+msgid ""
+"Make your voice heard with Representable <br> and put your community on the "
+"map."
+msgstr "تتشارك كثير من المنظمات مع رَبْريسانْتَبُل لجمع بيانات عن مجتمعات المصلحة "
+
+#: main/templates/main/drives/page.html:26
+#: main/templates/main/pages/about.html:48
+msgid "What is Representable?"
+msgstr "ما هو ربريسنتبل؟"
+
+#: main/templates/main/drives/page.html:27
+msgid ""
+"Representable allows people to draw communities of interest and share "
+"information about the interests and needs in those communities.\n"
+"              <br><br>Making this information available encourages mapmakers "
+"to take these communities into account during redistricting, in order to "
+"avoid gerrymandering and the “packing and cracking” of marginalized groups. "
+"</p>"
+msgstr ""
+
+#: main/templates/main/drives/page.html:56
+#, fuzzy
+#| msgid "Draw a Community Map"
+msgid "Draw My Community"
+msgstr "ارسم خريطة محلية"
+
 #: main/templates/main/entry_address.html:7
 msgid "Step 1"
 msgstr ""
@@ -916,13 +502,14 @@ msgid ""
 "                                "
 msgstr ""
 
-#: main/templates/main/entry_map.html:51
+#: main/templates/main/entry_map.html:107
+#: main/templates/main/entry_map.html:231
 #, fuzzy
 #| msgid "Add your community"
 msgid "How to draw my community?"
 msgstr "أضف مجتمعك"
 
-#: main/templates/main/entry_map.html:53
+#: main/templates/main/entry_map.html:109
 msgid ""
 "\n"
 "                            Select units on the map by clicking with your "
@@ -931,16 +518,18 @@ msgid ""
 "                        "
 msgstr ""
 
-#: main/templates/main/entry_map.html:66 representable/templates/base.html:113
+#: main/templates/main/entry_map.html:122
+#: main/templates/main/entry_map.html:246 representable/templates/base.html:113
 #: representable/templates/base_nofooter.html:113
 msgid "FAQ"
 msgstr ""
 
-#: main/templates/main/entry_map.html:70
+#: main/templates/main/entry_map.html:126
+#: main/templates/main/entry_map.html:250
 msgid "What are the units?"
 msgstr ""
 
-#: main/templates/main/entry_map.html:72
+#: main/templates/main/entry_map.html:128
 msgid ""
 "\n"
 "                                        The units are <strong>census block "
@@ -948,11 +537,12 @@ msgid ""
 "                                    "
 msgstr ""
 
-#: main/templates/main/entry_map.html:77
+#: main/templates/main/entry_map.html:133
+#: main/templates/main/entry_map.html:257
 msgid "Why am I unable to save my map?"
 msgstr ""
 
-#: main/templates/main/entry_map.html:79
+#: main/templates/main/entry_map.html:135
 msgid ""
 "\n"
 "                                        Make sure that it does not contain "
@@ -960,11 +550,12 @@ msgid ""
 "                                    "
 msgstr ""
 
-#: main/templates/main/entry_map.html:84
+#: main/templates/main/entry_map.html:140
+#: main/templates/main/entry_map.html:264
 msgid "Can I map outside of my state?"
 msgstr ""
 
-#: main/templates/main/entry_map.html:86
+#: main/templates/main/entry_map.html:142
 msgid ""
 "\n"
 "                                        In order to map outside of your "
@@ -972,11 +563,12 @@ msgid ""
 "                                    "
 msgstr ""
 
-#: main/templates/main/entry_map.html:91
+#: main/templates/main/entry_map.html:147
+#: main/templates/main/entry_map.html:271
 msgid "How large should my community be?"
 msgstr ""
 
-#: main/templates/main/entry_map.html:93
+#: main/templates/main/entry_map.html:149
 msgid ""
 "\n"
 "                                        Your community can be as small as "
@@ -984,87 +576,124 @@ msgid ""
 "                                    "
 msgstr ""
 
-#: main/templates/main/entry_map.html:118
-#: main/templates/main/entry_map.html:188
+#: main/templates/main/entry_map.html:173
+#: main/templates/main/entry_map.html:298
 msgid "Communities Activities and Services"
 msgstr ""
 
-#: main/templates/main/entry_map.html:122
-#: main/templates/main/entry_map.html:132
-#: main/templates/main/entry_map.html:152
-#: main/templates/main/entry_map.html:192
-#: main/templates/main/entry_map.html:202
-#: main/templates/main/entry_map.html:222
+#: main/templates/main/entry_map.html:177
+#: main/templates/main/entry_map.html:187
+#: main/templates/main/entry_map.html:207
+#: main/templates/main/entry_map.html:302
+#: main/templates/main/entry_map.html:312
+#: main/templates/main/entry_map.html:332
 msgid ""
 " Where do people in your community gather or socialize? <br>Where does your "
 "community get its services? "
 msgstr ""
 
-#: main/templates/main/entry_map.html:128
-#: main/templates/main/entry_map.html:198
-#: main/templates/main/entry_survey.html:282 main/templates/main/map.html:103
-#: main/templates/main/partners/map.html:122 main/templates/main/review.html:74
-#: main/templates/main/submission.html:136
-#: main/templates/main/submission.html:384
+#: main/templates/main/entry_map.html:183
+#: main/templates/main/entry_map.html:308
+#: main/templates/main/entry_survey.html:282 main/templates/main/map.html:129
+#: main/templates/main/partners/map.html:127 main/templates/main/review.html:74
+#: main/templates/main/submission.html:152
+#: main/templates/main/submission.html:402
 msgid "Cultural or Historical Interests"
 msgstr ""
 
-#: main/templates/main/entry_map.html:138
-#: main/templates/main/entry_map.html:208
-#: main/templates/main/entry_survey.html:298 main/templates/main/map.html:113
-#: main/templates/main/partners/map.html:132 main/templates/main/review.html:84
-#: main/templates/main/submission.html:146
-#: main/templates/main/submission.html:364
+#: main/templates/main/entry_map.html:193
+#: main/templates/main/entry_map.html:318
+#: main/templates/main/entry_survey.html:298 main/templates/main/map.html:139
+#: main/templates/main/partners/map.html:137 main/templates/main/review.html:84
+#: main/templates/main/submission.html:162
+#: main/templates/main/submission.html:382
 msgid "Economic or Environmental Interests"
 msgstr ""
 
-#: main/templates/main/entry_map.html:148
-#: main/templates/main/entry_map.html:218
-#: main/templates/main/entry_survey.html:317 main/templates/main/map.html:118
-#: main/templates/main/partners/map.html:137 main/templates/main/review.html:89
-#: main/templates/main/submission.html:156
-#: main/templates/main/submission.html:394
+#: main/templates/main/entry_map.html:203
+#: main/templates/main/entry_map.html:328
+#: main/templates/main/entry_survey.html:317 main/templates/main/map.html:144
+#: main/templates/main/partners/map.html:142 main/templates/main/review.html:89
+#: main/templates/main/submission.html:172
+#: main/templates/main/submission.html:412
 msgid "Community Needs and Concerns"
 msgstr ""
 
-#: main/templates/main/entry_map.html:178
+#: main/templates/main/entry_map.html:233
 msgid ""
 "\n"
-"                                Community Information\n"
+"                                        Select units on the map by clicking "
+"with your mouse. To deselect a unit, click it again. Watch the following "
+"video to learn more.\n"
+"                                    "
+msgstr ""
+
+#: main/templates/main/entry_map.html:252
+msgid ""
+"\n"
+"                                                    The units are "
+"<strong>census block groups</strong>, which are used by map drawers to draw "
+"voting districts.\n"
+"                                                "
+msgstr ""
+
+#: main/templates/main/entry_map.html:259
+msgid ""
+"\n"
+"                                                    Make sure that it does "
+"not contain gaps. Communities of Interest must be contiguous.\n"
+"                                                "
+msgstr ""
+
+#: main/templates/main/entry_map.html:266
+msgid ""
+"\n"
+"                                                    In order to map outside "
+"of your state, you need to add a new community within the other state.\n"
+"                                                "
+msgstr ""
+
+#: main/templates/main/entry_map.html:273
+msgid ""
+"\n"
+"                                                    Your community can be as "
+"small as one unit or as large as 800 units.\n"
+"                                                "
+msgstr ""
+
+#: main/templates/main/entry_map.html:289
+msgid ""
+"\n"
+"                                Your Community Info\n"
 "                            "
 msgstr ""
 
-#: main/templates/main/entry_map.html:232
+#: main/templates/main/entry_map.html:342
 msgid "Saving Community..."
 msgstr ""
 
-#: main/templates/main/entry_map.html:244
+#: main/templates/main/entry_map.html:354
 msgid ""
 "\n"
 "                                    +\n"
 "                                "
 msgstr ""
 
-#: main/templates/main/entry_map.html:265
-#: main/templates/main/entry_map.html:269
-#: main/templates/main/entry_privacy.html:106
-#: main/templates/main/entry_survey.html:103
-#: main/templates/main/entry_survey.html:204
-#: main/templates/main/entry_survey.html:334
-#: main/templates/main/entry_survey.html:401
-msgid "BACK"
+#: main/templates/main/entry_map.html:375
+#: main/templates/main/entry_map.html:379
+msgid "EDIT INFO"
 msgstr ""
 
-#: main/templates/main/entry_map.html:266
-#: main/templates/main/entry_map.html:270
+#: main/templates/main/entry_map.html:376
+#: main/templates/main/entry_map.html:380
 msgid "SAVE"
 msgstr ""
 
-#: main/templates/main/entry_map.html:277
+#: main/templates/main/entry_map.html:397
 msgid "Step-by-step guide"
 msgstr ""
 
-#: main/templates/main/entry_map.html:286
+#: main/templates/main/entry_map.html:406
 msgid "You need to draw a community to submit the form."
 msgstr ""
 
@@ -1161,6 +790,14 @@ msgstr ""
 
 #: main/templates/main/entry_privacy.html:95
 msgid "You need to complete the recaptcha to submit this map."
+msgstr ""
+
+#: main/templates/main/entry_privacy.html:106
+#: main/templates/main/entry_survey.html:103
+#: main/templates/main/entry_survey.html:204
+#: main/templates/main/entry_survey.html:334
+#: main/templates/main/entry_survey.html:401
+msgid "BACK"
 msgstr ""
 
 #: main/templates/main/entry_privacy.html:107
@@ -1299,10 +936,10 @@ msgstr ""
 msgid "Please fill out at least one of the interest fields."
 msgstr ""
 
-#: main/templates/main/entry_survey.html:265 main/templates/main/map.html:108
-#: main/templates/main/partners/map.html:127 main/templates/main/review.html:79
-#: main/templates/main/submission.html:126
-#: main/templates/main/submission.html:374
+#: main/templates/main/entry_survey.html:265 main/templates/main/map.html:134
+#: main/templates/main/partners/map.html:132 main/templates/main/review.html:79
+#: main/templates/main/submission.html:142
+#: main/templates/main/submission.html:392
 msgid "Community Activities and Services"
 msgstr ""
 
@@ -1425,10 +1062,6 @@ msgstr ""
 msgid "Community Name:"
 msgstr "ارسم خريطة محلية"
 
-#: main/templates/main/index.html:24
-msgid "Gerrymandering is silencing communities."
-msgstr ""
-
 #: main/templates/main/index.html:25
 msgid ""
 " Make your voice heard with Representable <br> and put your community on the "
@@ -1544,31 +1177,22 @@ msgstr "مجتمعاتي"
 msgid "State Map"
 msgstr ""
 
-#: main/templates/main/map.html:57 main/templates/main/partners/map.html:62
+#: main/templates/main/map.html:63 main/templates/main/partners/map.html:67
 msgid "Data layers"
 msgstr ""
 
-#: main/templates/main/map.html:68 main/templates/main/partners/map.html:73
+#: main/templates/main/map.html:74 main/templates/main/partners/map.html:78
 #, fuzzy
 #| msgid "My Communities"
 msgid "Communities"
 msgstr "مجتمعاتي"
 
-#: main/templates/main/map.html:73 main/templates/main/review.html:49
-#: main/templates/main/submission.html:123
-msgid "Community Information"
-msgstr ""
-
-#: main/templates/main/map.html:74
-msgid "Only Show"
-msgstr ""
-
-#: main/templates/main/map.html:123 main/templates/main/partners/map.html:142
+#: main/templates/main/map.html:149 main/templates/main/partners/map.html:147
 #: main/templates/main/review.html:94
 msgid "Show More"
 msgstr ""
 
-#: main/templates/main/map.html:135
+#: main/templates/main/map.html:161
 msgid "Show All"
 msgstr ""
 
@@ -1621,10 +1245,6 @@ msgstr ""
 "في السنة ٢٠٢١, حكومات الولايات سوف ترسم دوائر انتخابية الكونغرس وتشريعية "
 "الولايات من جديد.يجب علينا أن نجاهد من أجل دوائر الانتخابية النزيهة  "
 "تحترماهتمامات مجتمعات"
-
-#: main/templates/main/pages/about.html:48
-msgid "What is Representable?"
-msgstr "ما هو ربريسنتبل؟"
 
 #: main/templates/main/pages/about.html:49
 msgid ""
@@ -1853,7 +1473,7 @@ msgid "More Information"
 msgstr "للمنظمات"
 
 #: main/templates/main/pages/privacy.html:5
-#: representable/templates/base.html:265
+#: representable/templates/base.html:275
 msgid "Privacy"
 msgstr "خصوصية"
 
@@ -2020,7 +1640,7 @@ msgid ""
 "engagement in conversation about the construction of electoral districts."
 msgstr ""
 
-#: main/templates/main/pages/terms.html:5 representable/templates/base.html:268
+#: main/templates/main/pages/terms.html:5 representable/templates/base.html:278
 msgid "Terms"
 msgstr "شروط الإستخدام"
 
@@ -2183,69 +1803,96 @@ msgstr ""
 
 #: main/templates/main/partners/get_started.html:9
 #, fuzzy
-#| msgid "Partner with us"
-msgid "Partner With Us"
-msgstr "شريك معنا"
+#| msgid "Learn how to use Representable to draw your community."
+msgid "Join the national Representable community."
+msgstr "تعرف على كيفية استخدام رَبْريسانْتَبُل لرسم مجتمعك"
 
 #: main/templates/main/partners/get_started.html:11
 msgid ""
-"Welcome to Representable! Get started by creating an organization or "
-"requesting a demo below."
+"\n"
+"        Representable is growing a redistricting community with "
+"organizations across the country. Organization leaders can easily collect "
+"community maps with Representable and join redistricting efforts in their "
+"states.\n"
+"        "
 msgstr ""
 
-#: main/templates/main/partners/get_started.html:13
+#: main/templates/main/partners/get_started.html:15
+#, fuzzy
+#| msgid "Learn how to use Representable to draw your community."
+msgid "How to use Representable as an organization?"
+msgstr "تعرف على كيفية استخدام رَبْريسانْتَبُل لرسم مجتمعك"
+
+#: main/templates/main/partners/get_started.html:17
+msgid ""
+"\n"
+"        Check out our demo to see all of Representable’s features. \n"
+"        "
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:31
 #, fuzzy
 #| msgid "For organizations"
-msgid "Create Organization"
+msgid "Join Representable as an Organization"
 msgstr "للمنظمات"
 
-#: main/templates/main/partners/get_started.html:20
+#: main/templates/main/partners/get_started.html:33
+msgid ""
+"\n"
+"                As the leader of an organization, you can collect community "
+"maps and download submissions. Joining Representable as an organization is "
+"free, and includes access to our redistricting toolkit. \n"
+"                "
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:38
+#: main/templates/main/partners/get_started.html:39
+msgid "CREATE ORGANIZATION"
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:51
 #, fuzzy
 #| msgid "For organizations"
 msgid "Create an Organization"
 msgstr "للمنظمات"
 
-#: main/templates/main/partners/get_started.html:21
+#: main/templates/main/partners/get_started.html:52
 msgid "Include a brief description, link, and the state(s) you operate in."
 msgstr ""
 
-#: main/templates/main/partners/get_started.html:23
+#: main/templates/main/partners/get_started.html:60
 #, fuzzy
 #| msgid "Draw a Community Map"
 msgid "Start a Community Mapping Drive"
 msgstr "ارسم خريطة محلية"
 
-#: main/templates/main/partners/get_started.html:24
+#: main/templates/main/partners/get_started.html:61
 msgid "Create a community mapping drive via the organization dashboard."
 msgstr ""
 
-#: main/templates/main/partners/get_started.html:26
-msgid "Share your Mapping Drive"
-msgstr ""
+#: main/templates/main/partners/get_started.html:69
+#, fuzzy
+#| msgid "Draw a Community Map"
+msgid "Collect Community Maps"
+msgstr "ارسم خريطة محلية"
 
-#: main/templates/main/partners/get_started.html:27
+#: main/templates/main/partners/get_started.html:70
 msgid ""
-"Share the link to your community mapping drive via email and social media to "
-"individuals in your state to start collecting submissions."
+"Share the link to your community mapping drive to individuals in your state "
+"to start collecting submissions."
 msgstr ""
 
-#: main/templates/main/partners/get_started.html:29
-msgid "Visualize a Map of Submissions"
-msgstr ""
+#: main/templates/main/partners/get_started.html:78
+#, fuzzy
+#| msgid "Visualize and Export"
+msgid "Visualize and Export Community Maps"
+msgstr "تصوّر وصدّر"
 
-#: main/templates/main/partners/get_started.html:30
+#: main/templates/main/partners/get_started.html:79
 msgid ""
-"View a map of all the communities submitted to your organization together."
-msgstr ""
-
-#: main/templates/main/partners/get_started.html:32
-msgid "Export Community Submissions"
-msgstr ""
-
-#: main/templates/main/partners/get_started.html:33
-msgid ""
-"Download all the communities submitted to your organization as geoJSON for "
-"easy integration with district drawing and visualization tools."
+"View a map of all submitted communities, and download them to your "
+"organization as geoJSON for easy integration with district drawing and "
+"visualization tools."
 msgstr ""
 
 #: main/templates/main/partners/index.html:9
@@ -2275,31 +1922,33 @@ msgstr ""
 msgid "Partner Site"
 msgstr "شريك معنا"
 
-#: main/templates/main/partners/map.html:55
+#: main/templates/main/partners/map.html:56
+#: main/templates/main/partners/map.html:59
 msgid "Export All as GeoJSON"
 msgstr ""
 
-#: main/templates/main/partners/map.html:56
+#: main/templates/main/partners/map.html:57
+#: main/templates/main/partners/map.html:60
 msgid "Export All as CSV"
 msgstr ""
 
-#: main/templates/main/partners/map.html:94
+#: main/templates/main/partners/map.html:99
 msgid "Hidden"
 msgstr ""
 
-#: main/templates/main/partners/map.html:98
+#: main/templates/main/partners/map.html:103
 #, fuzzy
 #| msgid "Privacy"
 msgid "Private"
 msgstr "خصوصية"
 
-#: main/templates/main/partners/map.html:166
+#: main/templates/main/partners/map.html:171
 #, fuzzy
 #| msgid "Add your community"
 msgid "Report this community"
 msgstr "أضف مجتمعك"
 
-#: main/templates/main/partners/map.html:173
+#: main/templates/main/partners/map.html:178
 msgid ""
 "\n"
 "        If you feel this community is abusive, spam, low-effort, or doesn't "
@@ -2308,7 +1957,7 @@ msgid ""
 "        "
 msgstr ""
 
-#: main/templates/main/partners/map.html:180
+#: main/templates/main/partners/map.html:185
 msgid ""
 "\n"
 "        As an administrator of this organization, reporting this community "
@@ -2317,24 +1966,23 @@ msgid ""
 "        "
 msgstr ""
 
-#: main/templates/main/partners/map.html:189
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1646
+#: main/templates/main/partners/map.html:194
 msgid "Email address"
 msgstr ""
 
-#: main/templates/main/partners/map.html:193
+#: main/templates/main/partners/map.html:198
 msgid "Cancel"
 msgstr ""
 
-#: main/templates/main/partners/map.html:194
+#: main/templates/main/partners/map.html:199
 msgid "Danger: </span>Send Report"
 msgstr ""
 
-#: main/templates/main/partners/map.html:206
+#: main/templates/main/partners/map.html:211
 msgid "Thank you for letting us know!"
 msgstr ""
 
-#: main/templates/main/partners/map.html:212
+#: main/templates/main/partners/map.html:217
 msgid "Your report was successfully submitted. Thank you."
 msgstr ""
 
@@ -2360,6 +2008,10 @@ msgstr "شريك معنا"
 msgid "The community was already deleted."
 msgstr ""
 
+#: main/templates/main/review.html:49 main/templates/main/submission.html:139
+msgid "Community Information"
+msgstr ""
+
 #: main/templates/main/review.html:50
 msgid "Action"
 msgstr ""
@@ -2369,7 +2021,6 @@ msgid "Show"
 msgstr ""
 
 #: main/templates/main/review.html:101
-#: venv/lib/python3.7/site-packages/django/forms/formsets.py:375
 msgid "Delete"
 msgstr ""
 
@@ -2391,15 +2042,15 @@ msgstr ""
 msgid " to add your community."
 msgstr "أضف مجتمعك"
 
-#: main/templates/main/state.html:15
+#: main/templates/main/state.html:16
 msgid "Welcome to"
 msgstr ""
 
-#: main/templates/main/state.html:24
+#: main/templates/main/state.html:27 main/templates/main/state_info.html:7
 msgid "What is redistricting?"
 msgstr ""
 
-#: main/templates/main/state.html:27
+#: main/templates/main/state.html:30
 msgid ""
 "\n"
 "          In 2021, voting district lines across the country will be redrawn "
@@ -2407,17 +2058,17 @@ msgid ""
 "          "
 msgstr ""
 
-#: main/templates/main/state.html:35
-msgid "How does redistricing work in {{ state_obj.name }}"
+#: main/templates/main/state.html:38
+msgid "How does redistricing work in "
 msgstr ""
 
-#: main/templates/main/state.html:46
+#: main/templates/main/state.html:49 main/templates/main/state_info.html:28
 #, fuzzy
 #| msgid "Representable will help..."
 msgid "How can Representable help?"
 msgstr "رَبْريسانْتَبُل سوف يساعد في..."
 
-#: main/templates/main/state.html:49
+#: main/templates/main/state.html:52
 msgid ""
 "\n"
 "          Representable will help you tell mapmakers about your community "
@@ -2426,29 +2077,52 @@ msgid ""
 "          "
 msgstr ""
 
-#: main/templates/main/state.html:57
-#, python-format
-msgid "%(state_obj.name)s's redistricting criteria "
-msgstr ""
+#: main/templates/main/state.html:60
+#, fuzzy
+#| msgid "Redistricting is coming."
+msgid " redistricting criteria "
+msgstr "إعادة التقسيم قادم."
 
-#: main/templates/main/state.html:73
-#, python-format
+#: main/templates/main/state.html:76
 msgid ""
 "\n"
-"            See community maps drawn in %(state_obj.name)s here <i class="
-"\"fas fa-arrow-circle-right\"></i>\n"
+"            See community maps drawn here <i class=\"fas fa-arrow-circle-"
+"right\"></i>\n"
 "            "
 msgstr ""
 
-#: main/templates/main/state.html:87
+#: main/templates/main/state.html:90 main/templates/main/state_info.html:65
 #, fuzzy
 #| msgid "Put your community on the map."
 msgid "Communities of Interest in "
 msgstr "ضع مجتمعك على الخريطة"
 
-#: main/templates/main/state.html:95 main/templates/main/state.html:96
+#: main/templates/main/state.html:98 main/templates/main/state.html:99
 msgid "START MAPPING"
 msgstr ""
+
+#: main/templates/main/state_info.html:11
+msgid ""
+"In 2021, voting district lines across the country will be redrawn to "
+"determine who represents the people of your state."
+msgstr ""
+
+#: main/templates/main/state_info.html:17
+msgid "How does redistricting work in "
+msgstr ""
+
+#: main/templates/main/state_info.html:31
+msgid ""
+"Representable will help you tell mapmakers about your community interests "
+"and boundaries, so that they can fairly consider it when they draw new "
+"voting district lines."
+msgstr ""
+
+#: main/templates/main/state_info.html:37
+#, fuzzy
+#| msgid "Redistricting is coming."
+msgid " redistricting criteria"
+msgstr "إعادة التقسيم قادم."
 
 #: main/templates/main/submission.html:56
 msgid "Download this map"
@@ -2461,70 +2135,66 @@ msgid ""
 "              "
 msgstr ""
 
-#: main/templates/main/submission.html:70
+#: main/templates/main/submission.html:69
 msgid "What is GeoJSON?"
 msgstr ""
 
-#: main/templates/main/submission.html:76
+#: main/templates/main/submission.html:75
 msgid ""
 "GeoJSON files are industry standard and usable with other mapping softwares "
 "like Maptitude for Redistricting, Dave's Redistricting App, ESRI, and more."
 msgstr ""
 
-#: main/templates/main/submission.html:169
+#: main/templates/main/submission.html:191
 msgid "Submit to an organization in your state"
 msgstr ""
 
-#: main/templates/main/submission.html:171
+#: main/templates/main/submission.html:193
 msgid ""
 "Many organizations in your state are collecting community maps. Submit yours "
 "to one of their collection drives."
 msgstr ""
 
-#: main/templates/main/submission.html:179
+#: main/templates/main/submission.html:201
 msgid "Submit"
 msgstr ""
 
-#: main/templates/main/submission.html:184
+#: main/templates/main/submission.html:206
 msgid "This community map has already been submitted to an organization"
 msgstr ""
 
-#: main/templates/main/submission.html:207
-#: main/templates/main/submission.html:214
-#: main/templates/main/submission.html:217
+#: main/templates/main/submission.html:228
+#: main/templates/main/submission.html:235
+#: main/templates/main/submission.html:238
 msgid "Data Layers"
 msgstr ""
 
-#: main/templates/main/submission.html:223
-#: main/templates/main/submission.html:234
-#: main/templates/main/submission.html:237
+#: main/templates/main/submission.html:244
+#: main/templates/main/submission.html:255
+#: main/templates/main/submission.html:258
 msgid "Demographics"
 msgstr ""
 
-#: main/templates/main/submission.html:246
-msgid "Loading PDF..."
-msgstr ""
-
-#: main/templates/main/submission.html:274
+#: main/templates/main/submission.html:292
 msgid "Your community is ready to be viewed and downloaded. You have "
 msgstr ""
 
-#: main/templates/main/submission.html:274
+#: main/templates/main/submission.html:292
 msgid "received an email with your community as a PDF file."
 msgstr ""
 
-#: main/templates/main/submission.html:275
+#: main/templates/main/submission.html:293
 msgid "Make an impact with your map."
 msgstr ""
 
-#: main/templates/main/submission.html:285
+#: main/templates/main/submission.html:303
 msgid ""
 "View your community on a computer to download as a PDF or geoJSON file. You "
 "can submit these files as public testimony or to a local redistricting "
 "organization."
 msgstr ""
 
-#: main/templates/main/submission.html:295
+#: main/templates/main/submission.html:313
 msgid ""
 "\n"
 "                      If your state has a redistricting commission or "
@@ -2535,29 +2205,29 @@ msgid ""
 "                      "
 msgstr ""
 
-#: main/templates/main/submission.html:299
+#: main/templates/main/submission.html:317
 msgid "Export PDF"
 msgstr ""
 
-#: main/templates/main/submission.html:311
+#: main/templates/main/submission.html:329
 msgid ""
 "If you would like to use your map to draw voting districts, you can upload "
 "the geoJSON file to mapping softwares such as Maptitude, Dave’s "
 "Redistricting App, or Districtr."
 msgstr ""
 
-#: main/templates/main/submission.html:333
+#: main/templates/main/submission.html:351
 msgid ""
 "Send the map to your community members and encourage them to draw maps. When "
 "map drawers have more data from your community, they are more likely to draw "
 "fairer districts."
 msgstr ""
 
-#: main/templates/main/submission.html:344
+#: main/templates/main/submission.html:362
 msgid "Resend Email"
 msgstr ""
 
-#: main/templates/main/submission.html:357
+#: main/templates/main/submission.html:375
 msgid ""
 " This map was created at <a href=\"https://representable.org/"
 "\">Representable.org "
@@ -2653,26 +2323,6 @@ msgid ""
 "link or want to provide feedback by contacting Team@Representable.org"
 msgstr ""
 
-#: main/views/main.py:246
-msgid "HELLO"
-msgstr ""
-
-#: representable/settings/base.py:184
-msgid "English"
-msgstr ""
-
-#: representable/settings/base.py:185
-msgid "Spanish"
-msgstr ""
-
-#: representable/settings/base.py:186
-msgid "Arabic"
-msgstr ""
-
-#: representable/settings/base.py:187
-msgid "French"
-msgstr ""
-
 #: representable/templates/base.html:81
 #: representable/templates/base_nofooter.html:81
 #, fuzzy
@@ -2694,11 +2344,6 @@ msgstr "معلومات عنا"
 #: representable/templates/base_nofooter.html:127
 msgid "My Account"
 msgstr "حسابي"
-
-#: representable/templates/base.html:130
-#: representable/templates/base_nofooter.html:130
-msgid "Account Settings"
-msgstr "إعدادات التتبع"
 
 #: representable/templates/base.html:131
 #: representable/templates/base_nofooter.html:131
@@ -2725,25 +2370,17 @@ msgstr "تسجيل دخول"
 msgid "Sign up"
 msgstr "سجل"
 
-#: representable/templates/base.html:249
+#: representable/templates/base.html:259
 msgid "Add Your Community"
 msgstr "أضف مجتمعك"
 
-#: representable/templates/base.html:252
+#: representable/templates/base.html:262
 msgid "Create a Partner Profile"
 msgstr "أخلق ملف تعريف الشريك"
 
-#: representable/templates/base.html:256
-msgid "My Communities"
-msgstr "مجتمعاتي"
-
-#: representable/templates/base.html:274
+#: representable/templates/base.html:284
 msgid "More questions? Reach out at"
 msgstr "مزيد الأسئلة؟ تواصلوا بنا على"
-
-#: venv/lib/python3.7/site-packages/ckeditor_uploader/forms.py:8
-msgid "Search files"
-msgstr ""
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:5
 msgid "Select an image to embed"
@@ -2790,1136 +2427,6 @@ msgstr ""
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:151
 msgid "&lsaquo; Prev"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/crispy_forms/tests/test_form_helper.py:140
-#: venv/lib/python3.7/site-packages/crispy_forms/tests/test_form_helper.py:150
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:53
-msgid "This field is required."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/crispy_forms/tests/test_layout.py:355
-msgid "i18n text"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/crispy_forms/tests/test_layout.py:357
-msgid "i18n legend"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/crispy_forms/tests/test_layout_objects.py:127
-#: venv/lib/python3.7/site-packages/django/core/validators.py:31
-msgid "Enter a valid value."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/contrib/messages/apps.py:7
-msgid "Messages"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/contrib/sitemaps/apps.py:7
-msgid "Site Maps"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/contrib/staticfiles/apps.py:9
-msgid "Static Files"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/contrib/syndication/apps.py:7
-msgid "Syndication"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/core/paginator.py:45
-msgid "That page number is not an integer"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/core/paginator.py:47
-msgid "That page number is less than 1"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/core/paginator.py:52
-msgid "That page contains no results"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/core/validators.py:102
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:658
-msgid "Enter a valid URL."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/core/validators.py:154
-msgid "Enter a valid integer."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/core/validators.py:165
-msgid "Enter a valid email address."
-msgstr ""
-
-#. Translators: "letters" means latin letters: a-z and A-Z.
-#: venv/lib/python3.7/site-packages/django/core/validators.py:239
-msgid ""
-"Enter a valid 'slug' consisting of letters, numbers, underscores or hyphens."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/core/validators.py:246
-msgid ""
-"Enter a valid 'slug' consisting of Unicode letters, numbers, underscores, or "
-"hyphens."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/core/validators.py:255
-#: venv/lib/python3.7/site-packages/django/core/validators.py:275
-msgid "Enter a valid IPv4 address."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/core/validators.py:260
-#: venv/lib/python3.7/site-packages/django/core/validators.py:276
-msgid "Enter a valid IPv6 address."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/core/validators.py:270
-#: venv/lib/python3.7/site-packages/django/core/validators.py:274
-msgid "Enter a valid IPv4 or IPv6 address."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/core/validators.py:304
-msgid "Enter only digits separated by commas."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/core/validators.py:310
-#, python-format
-msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/core/validators.py:342
-#, python-format
-msgid "Ensure this value is less than or equal to %(limit_value)s."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/core/validators.py:351
-#, python-format
-msgid "Ensure this value is greater than or equal to %(limit_value)s."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/core/validators.py:361
-#, python-format
-msgid ""
-"Ensure this value has at least %(limit_value)d character (it has "
-"%(show_value)d)."
-msgid_plural ""
-"Ensure this value has at least %(limit_value)d characters (it has "
-"%(show_value)d)."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.7/site-packages/django/core/validators.py:376
-#, python-format
-msgid ""
-"Ensure this value has at most %(limit_value)d character (it has "
-"%(show_value)d)."
-msgid_plural ""
-"Ensure this value has at most %(limit_value)d characters (it has "
-"%(show_value)d)."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.7/site-packages/django/core/validators.py:395
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:290
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:325
-msgid "Enter a number."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/core/validators.py:397
-#, python-format
-msgid "Ensure that there are no more than %(max)s digit in total."
-msgid_plural "Ensure that there are no more than %(max)s digits in total."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.7/site-packages/django/core/validators.py:402
-#, python-format
-msgid "Ensure that there are no more than %(max)s decimal place."
-msgid_plural "Ensure that there are no more than %(max)s decimal places."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.7/site-packages/django/core/validators.py:407
-#, python-format
-msgid ""
-"Ensure that there are no more than %(max)s digit before the decimal point."
-msgid_plural ""
-"Ensure that there are no more than %(max)s digits before the decimal point."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.7/site-packages/django/core/validators.py:469
-#, python-format
-msgid ""
-"File extension '%(extension)s' is not allowed. Allowed extensions are: "
-"'%(allowed_extensions)s'."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/core/validators.py:521
-msgid "Null characters are not allowed."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/base.py:1162
-#: venv/lib/python3.7/site-packages/django/forms/models.py:756
-msgid "and"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/base.py:1164
-#, python-format
-msgid "%(model_name)s with this %(field_labels)s already exists."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:104
-#, python-format
-msgid "Value %(value)r is not a valid choice."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:105
-msgid "This field cannot be null."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:106
-msgid "This field cannot be blank."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:107
-#, python-format
-msgid "%(model_name)s with this %(field_label)s already exists."
-msgstr ""
-
-#. Translators: The 'lookup_type' is one of 'date', 'year' or 'month'.
-#. Eg: "Title must be unique for pub_date year"
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:111
-#, python-format
-msgid ""
-"%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:128
-#, python-format
-msgid "Field of type: %(field_type)s"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:905
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1772
-msgid "Integer"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:909
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1770
-#, python-format
-msgid "'%(value)s' value must be an integer."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:984
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1850
-msgid "Big (8 byte) integer"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:996
-#, python-format
-msgid "'%(value)s' value must be either True or False."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:997
-#, python-format
-msgid "'%(value)s' value must be either True, False, or None."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:999
-msgid "Boolean (Either True or False)"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1040
-#, python-format
-msgid "String (up to %(max_length)s)"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1104
-msgid "Comma-separated integers"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1153
-#, python-format
-msgid ""
-"'%(value)s' value has an invalid date format. It must be in YYYY-MM-DD "
-"format."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1155
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1298
-#, python-format
-msgid ""
-"'%(value)s' value has the correct format (YYYY-MM-DD) but it is an invalid "
-"date."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1158
-msgid "Date (without time)"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1296
-#, python-format
-msgid ""
-"'%(value)s' value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[."
-"uuuuuu]][TZ] format."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1300
-#, python-format
-msgid ""
-"'%(value)s' value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
-"[TZ]) but it is an invalid date/time."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1304
-msgid "Date (with time)"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1452
-#, python-format
-msgid "'%(value)s' value must be a decimal number."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1454
-msgid "Decimal number"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1593
-#, python-format
-msgid ""
-"'%(value)s' value has an invalid format. It must be in [DD] [HH:[MM:]]ss[."
-"uuuuuu] format."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1596
-msgid "Duration"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1669
-msgid "File path"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1735
-#, python-format
-msgid "'%(value)s' value must be a float."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1737
-msgid "Floating point number"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1866
-msgid "IPv4 address"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1897
-msgid "IP address"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1977
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1978
-#, python-format
-msgid "'%(value)s' value must be either None, True or False."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1980
-msgid "Boolean (Either True, False or None)"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2015
-msgid "Positive integer"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2028
-msgid "Positive small integer"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2042
-#, python-format
-msgid "Slug (up to %(max_length)s)"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2074
-msgid "Small integer"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2081
-msgid "Text"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2109
-#, python-format
-msgid ""
-"'%(value)s' value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
-"format."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2111
-#, python-format
-msgid ""
-"'%(value)s' value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
-"invalid time."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2114
-msgid "Time"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2240
-msgid "URL"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2262
-msgid "Raw binary data"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2312
-#, python-format
-msgid "'%(value)s' is not a valid UUID."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2314
-msgid "Universally unique identifier"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/files.py:221
-msgid "File"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/files.py:360
-msgid "Image"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/related.py:778
-#, python-format
-msgid "%(model)s instance with %(field)s %(value)r does not exist."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/related.py:780
-msgid "Foreign Key (type determined by related field)"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/related.py:1007
-msgid "One-to-one relationship"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/related.py:1057
-#, python-format
-msgid "%(from)s-%(to)s relationship"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/related.py:1058
-#, python-format
-msgid "%(from)s-%(to)s relationships"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/db/models/fields/related.py:1100
-msgid "Many-to-many relationship"
-msgstr ""
-
-#. Translators: If found as last label character, these punctuation
-#. characters will prevent the default label_suffix to be appended to the label
-#: venv/lib/python3.7/site-packages/django/forms/boundfield.py:146
-msgid ":?.!"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:245
-msgid "Enter a whole number."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:396
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:1126
-msgid "Enter a valid date."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:420
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:1127
-msgid "Enter a valid time."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:442
-msgid "Enter a valid date/time."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:471
-msgid "Enter a valid duration."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:472
-#, python-brace-format
-msgid "The number of days must be between {min_days} and {max_days}."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:532
-msgid "No file was submitted. Check the encoding type on the form."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:533
-msgid "No file was submitted."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:534
-msgid "The submitted file is empty."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:536
-#, python-format
-msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
-msgid_plural ""
-"Ensure this filename has at most %(max)d characters (it has %(length)d)."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:539
-msgid "Please either submit a file or check the clear checkbox, not both."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:600
-msgid ""
-"Upload a valid image. The file you uploaded was either not an image or a "
-"corrupted image."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:762
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:852
-#: venv/lib/python3.7/site-packages/django/forms/models.py:1270
-#, python-format
-msgid "Select a valid choice. %(value)s is not one of the available choices."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:853
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:968
-#: venv/lib/python3.7/site-packages/django/forms/models.py:1269
-msgid "Enter a list of values."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:969
-msgid "Enter a complete value."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/fields.py:1185
-msgid "Enter a valid UUID."
-msgstr ""
-
-#. Translators: This is the default suffix added to form field labels
-#: venv/lib/python3.7/site-packages/django/forms/forms.py:86
-msgid ":"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/forms.py:212
-#, python-format
-msgid "(Hidden field %(name)s) %(error)s"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/formsets.py:91
-msgid "ManagementForm data is missing or has been tampered with"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/formsets.py:338
-#, python-format
-msgid "Please submit %d or fewer forms."
-msgid_plural "Please submit %d or fewer forms."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.7/site-packages/django/forms/formsets.py:345
-#, python-format
-msgid "Please submit %d or more forms."
-msgid_plural "Please submit %d or more forms."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.7/site-packages/django/forms/formsets.py:371
-#: venv/lib/python3.7/site-packages/django/forms/formsets.py:373
-msgid "Order"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/models.py:751
-#, python-format
-msgid "Please correct the duplicate data for %(field)s."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/models.py:755
-#, python-format
-msgid "Please correct the duplicate data for %(field)s, which must be unique."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/models.py:761
-#, python-format
-msgid ""
-"Please correct the duplicate data for %(field_name)s which must be unique "
-"for the %(lookup)s in %(date_field)s."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/models.py:770
-msgid "Please correct the duplicate values below."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/models.py:1091
-msgid "The inline value did not match the parent instance."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/models.py:1158
-msgid "Select a valid choice. That choice is not one of the available choices."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/models.py:1272
-#, python-format
-msgid "\"%(pk)s\" is not a valid value."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/utils.py:162
-#, python-format
-msgid ""
-"%(datetime)s couldn't be interpreted in time zone %(current_timezone)s; it "
-"may be ambiguous or it may not exist."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/widgets.py:395
-msgid "Clear"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/widgets.py:396
-msgid "Currently"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/widgets.py:397
-msgid "Change"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/widgets.py:709
-msgid "Unknown"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/widgets.py:710
-msgid "Yes"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/forms/widgets.py:711
-msgid "No"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/template/defaultfilters.py:788
-msgid "yes,no,maybe"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/template/defaultfilters.py:817
-#: venv/lib/python3.7/site-packages/django/template/defaultfilters.py:834
-#, python-format
-msgid "%(size)d byte"
-msgid_plural "%(size)d bytes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.7/site-packages/django/template/defaultfilters.py:836
-#, python-format
-msgid "%s KB"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/template/defaultfilters.py:838
-#, python-format
-msgid "%s MB"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/template/defaultfilters.py:840
-#, python-format
-msgid "%s GB"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/template/defaultfilters.py:842
-#, python-format
-msgid "%s TB"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/template/defaultfilters.py:844
-#, python-format
-msgid "%s PB"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dateformat.py:62
-msgid "p.m."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dateformat.py:63
-msgid "a.m."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dateformat.py:68
-msgid "PM"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dateformat.py:69
-msgid "AM"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dateformat.py:150
-msgid "midnight"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dateformat.py:152
-msgid "noon"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:6
-msgid "Monday"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:6
-msgid "Tuesday"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:6
-msgid "Wednesday"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:6
-msgid "Thursday"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:6
-msgid "Friday"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:7
-msgid "Saturday"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:7
-msgid "Sunday"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:10
-msgid "Mon"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:10
-msgid "Tue"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:10
-msgid "Wed"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:10
-msgid "Thu"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:10
-msgid "Fri"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:11
-msgid "Sat"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:11
-msgid "Sun"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:14
-msgid "January"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:14
-msgid "February"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:14
-msgid "March"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:14
-msgid "April"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:14
-msgid "May"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:14
-msgid "June"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:15
-msgid "July"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:15
-msgid "August"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:15
-msgid "September"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:15
-msgid "October"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:15
-msgid "November"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:16
-msgid "December"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:19
-msgid "jan"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:19
-msgid "feb"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:19
-msgid "mar"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:19
-msgid "apr"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:19
-msgid "may"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:19
-msgid "jun"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:20
-msgid "jul"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:20
-msgid "aug"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:20
-msgid "sep"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:20
-msgid "oct"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:20
-msgid "nov"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:20
-msgid "dec"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:23
-msgctxt "abbrev. month"
-msgid "Jan."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:24
-msgctxt "abbrev. month"
-msgid "Feb."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:25
-msgctxt "abbrev. month"
-msgid "March"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:26
-msgctxt "abbrev. month"
-msgid "April"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:27
-msgctxt "abbrev. month"
-msgid "May"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:28
-msgctxt "abbrev. month"
-msgid "June"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:29
-msgctxt "abbrev. month"
-msgid "July"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:30
-msgctxt "abbrev. month"
-msgid "Aug."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:31
-msgctxt "abbrev. month"
-msgid "Sept."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:32
-msgctxt "abbrev. month"
-msgid "Oct."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:33
-msgctxt "abbrev. month"
-msgid "Nov."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:34
-msgctxt "abbrev. month"
-msgid "Dec."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:37
-msgctxt "alt. month"
-msgid "January"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:38
-msgctxt "alt. month"
-msgid "February"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:39
-msgctxt "alt. month"
-msgid "March"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:40
-msgctxt "alt. month"
-msgid "April"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:41
-msgctxt "alt. month"
-msgid "May"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:42
-msgctxt "alt. month"
-msgid "June"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:43
-msgctxt "alt. month"
-msgid "July"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:44
-msgctxt "alt. month"
-msgid "August"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:45
-msgctxt "alt. month"
-msgid "September"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:46
-msgctxt "alt. month"
-msgid "October"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:47
-msgctxt "alt. month"
-msgid "November"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/dates.py:48
-msgctxt "alt. month"
-msgid "December"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/ipv6.py:8
-msgid "This is not a valid IPv6 address."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/text.py:67
-#, python-format
-msgctxt "String to return when truncating text"
-msgid "%(truncated_text)s…"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/text.py:233
-msgid "or"
-msgstr ""
-
-#. Translators: This string is used as a separator between list elements
-#: venv/lib/python3.7/site-packages/django/utils/text.py:252
-#: venv/lib/python3.7/site-packages/django/utils/timesince.py:83
-msgid ", "
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/utils/timesince.py:9
-#, python-format
-msgid "%d year"
-msgid_plural "%d years"
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.7/site-packages/django/utils/timesince.py:10
-#, python-format
-msgid "%d month"
-msgid_plural "%d months"
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.7/site-packages/django/utils/timesince.py:11
-#, python-format
-msgid "%d week"
-msgid_plural "%d weeks"
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.7/site-packages/django/utils/timesince.py:12
-#, python-format
-msgid "%d day"
-msgid_plural "%d days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.7/site-packages/django/utils/timesince.py:13
-#, python-format
-msgid "%d hour"
-msgid_plural "%d hours"
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.7/site-packages/django/utils/timesince.py:14
-#, python-format
-msgid "%d minute"
-msgid_plural "%d minutes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.7/site-packages/django/utils/timesince.py:72
-msgid "0 minutes"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/views/csrf.py:110
-msgid "Forbidden"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/views/csrf.py:111
-msgid "CSRF verification failed. Request aborted."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/views/csrf.py:115
-msgid ""
-"You are seeing this message because this HTTPS site requires a 'Referer "
-"header' to be sent by your Web browser, but none was sent. This header is "
-"required for security reasons, to ensure that your browser is not being "
-"hijacked by third parties."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/views/csrf.py:120
-msgid ""
-"If you have configured your browser to disable 'Referer' headers, please re-"
-"enable them, at least for this site, or for HTTPS connections, or for 'same-"
-"origin' requests."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/views/csrf.py:124
-msgid ""
-"If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or "
-"including the 'Referrer-Policy: no-referrer' header, please remove them. The "
-"CSRF protection requires the 'Referer' header to do strict referer checking. "
-"If you're concerned about privacy, use alternatives like <a rel=\"noreferrer"
-"\" ...> for links to third-party sites."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/views/csrf.py:132
-msgid ""
-"You are seeing this message because this site requires a CSRF cookie when "
-"submitting forms. This cookie is required for security reasons, to ensure "
-"that your browser is not being hijacked by third parties."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/views/csrf.py:137
-msgid ""
-"If you have configured your browser to disable cookies, please re-enable "
-"them, at least for this site, or for 'same-origin' requests."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/views/csrf.py:142
-msgid "More information is available with DEBUG=True."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/views/generic/dates.py:41
-msgid "No year specified"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/views/generic/dates.py:61
-#: venv/lib/python3.7/site-packages/django/views/generic/dates.py:111
-#: venv/lib/python3.7/site-packages/django/views/generic/dates.py:208
-msgid "Date out of range"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/views/generic/dates.py:90
-msgid "No month specified"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/views/generic/dates.py:142
-msgid "No day specified"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/views/generic/dates.py:188
-msgid "No week specified"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/views/generic/dates.py:338
-#: venv/lib/python3.7/site-packages/django/views/generic/dates.py:367
-#, python-format
-msgid "No %(verbose_name_plural)s available"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/views/generic/dates.py:589
-#, python-format
-msgid ""
-"Future %(verbose_name_plural)s not available because %(class_name)s."
-"allow_future is False."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/views/generic/dates.py:623
-#, python-format
-msgid "Invalid date string '%(datestr)s' given format '%(format)s'"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/views/generic/detail.py:54
-#, python-format
-msgid "No %(verbose_name)s found matching the query"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/views/generic/list.py:67
-msgid "Page is not 'last', nor can it be converted to an int."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/views/generic/list.py:72
-#, python-format
-msgid "Invalid page (%(page_number)s): %(message)s"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/views/generic/list.py:154
-#, python-format
-msgid "Empty list and '%(class_name)s.allow_empty' is False."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/views/static.py:40
-msgid "Directory indexes are not allowed here."
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/views/static.py:42
-#, python-format
-msgid "\"%(path)s\" does not exist"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/django/views/static.py:80
-#, python-format
-msgid "Index of %(directory)s"
 msgstr ""
 
 #: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:6
@@ -3970,153 +2477,10 @@ msgstr ""
 msgid "Connect, get help, or contribute"
 msgstr ""
 
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:313
-msgid "usage: "
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:821
-msgid ".__call__() not defined"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1105
-#, python-format
-msgid "unknown parser %r (choices: %s)"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1146
-#, python-format
-msgid "argument \"-\" with mode %r"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1349
-#, python-format
-msgid "cannot merge actions - two groups are named %r"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1387
-msgid "'required' is an invalid argument for positionals"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1407
-#, python-format
-msgid "invalid option string %r: must start with a character %r"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1428
-#, python-format
-msgid "dest= is required for options like %r"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1445
-#, python-format
-msgid "invalid conflict_resolution value: %r"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1463
-#, python-format
-msgid "conflicting option string(s): %s"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1526
-msgid "mutually exclusive arguments must be optional"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1596
-msgid "positional arguments"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1597
-msgid "optional arguments"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1615
-msgid "show this help message and exit"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1621
-msgid "show program's version number and exit"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1653
-msgid "cannot have multiple subparser arguments"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1705
-#, python-format
-msgid "unrecognized arguments: %s"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1802
-#, python-format
-msgid "not allowed with argument %s"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1848
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1862
-#, python-format
-msgid "ignored explicit argument %r"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1952
-msgid "too few arguments"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1959
-#, python-format
-msgid "argument %s is required"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1973
-#, python-format
-msgid "one of the arguments %s is required"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:2019
-msgid "expected one argument"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:2020
-msgid "expected at most one argument"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:2021
-msgid "expected at least one argument"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:2023
-#, python-format
-msgid "expected %s argument(s)"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:2080
-#, python-format
-msgid "ambiguous option: %s could match %s"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:2142
-#, python-format
-msgid "unexpected option string: %s"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:2243
-#, python-format
-msgid "%r is not callable"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:2259
-#, python-format
-msgid "invalid %s value: %r"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:2269
-#, python-format
-msgid "invalid choice: %r (choose from %s)"
-msgstr ""
-
-#: venv/lib/python3.7/site-packages/gunicorn/argparse_compat.py:2362
-#, python-format
-msgid "%s: error: %s\n"
-msgstr ""
+#, fuzzy
+#~| msgid "Partner with us"
+#~ msgid "Partner With Us"
+#~ msgstr "شريك معنا"
 
 #, fuzzy
 #~| msgid "Get Started"
@@ -4131,9 +2495,6 @@ msgstr ""
 
 #~ msgid "Blog"
 #~ msgstr "مدونة"
-
-#~ msgid "Learn how to use Representable to draw your community."
-#~ msgstr "تعرف على كيفية استخدام رَبْريسانْتَبُل لرسم مجتمعك"
 
 #~ msgid "Work with us to map communities across the United States."
 #~ msgstr "اعمل معنا لرسم خرائط مجتمعات في جميع أنحاء الولايات المتحدة."
