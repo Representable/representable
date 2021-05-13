@@ -14,12 +14,8 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-12 col-lg-8">
-                                {% blocktrans %}
-                                    <p><strong>Search for a zipcode, address, or landmark to start. Then draw your community by clicking units on the map.</strong></p>
-                                {% endblocktrans %}
-                                {% blocktrans %}
-                                    <p>Make sure that all your community is contained within the highlighted units, and that it does not contain gaps. The units are <a class="no-underline-link" href="https://www.census.gov/programs-surveys/geography/about/glossary.html#par_textimage_4" target="_blank"><strong>census block groups</strong></a>, which are used by map drawers to draw voting districts.</p>
-                                {% endblocktrans %}
+                                {% blocktrans trimmed %}<p><strong>Search for a zipcode, address, or landmark to start. Then draw your community by clicking units on the map.</strong></p>{% endblocktrans %}
+                                {% blocktrans trimmed %}<p>Make sure that all your community is contained within the highlighted units, and that it does not contain gaps. The units are <a class="no-underline-link" href="https://www.census.gov/programs-surveys/geography/about/glossary.html#par_textimage_4" target="_blank"><strong>census block groups</strong></a>, which are used by map drawers to draw voting districts.</p>{% endblocktrans %}
                             </div>
                             <div class="col-md-12 col-lg-4 my-auto order-first order-lg-last text-center pb-3">
                                 <img src="{% static 'img/gifs/representablegif.gif' %}" alt="" class="w-75 w-md-50 w-lg-100">
@@ -51,13 +47,13 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col">
-                              <h2>Change your mapping units.</h2>
+                              <h2>{% trans "Change your mapping units." %}</h2>
                               <br>
-                              <p>Currently, you are mapping with <b>census block groups</b>. These units are used by map drawers to draw voting districts. </p>
-                              <p>If you would like to map your community with smaller units, you can switch to <b>census blocks</b>. Census blocks are small units that make up census block groups. </p>
-                              <p class="text-danger">If you switch the units now, your current selection will be erased. </p>
+                              <p>{% blocktrans trimmed %}Currently, you are mapping with <b>census block groups</b>. These units are used by map drawers to draw voting districts.{% endblocktrans %}</p>
+                              <p>{% blocktrans trimmed %}If you would like to map your community with smaller units, you can switch to <b>census blocks</b>. Census blocks are small units that make up census block groups.{% endblocktrans %}</p>
+                              <p class="text-danger">{% trans "If you switch the units now, your current selection will be erased." %}</p>
                               <br>
-                              <button id="map-bg-to-block-btn" type="button" class="btn btn-outline-gray btn-lg no-underline-link entry-nav-btn mr-4">Switch to smaller units</button>
+                              <button id="map-bg-to-block-btn" type="button" class="btn btn-outline-gray btn-lg no-underline-link entry-nav-btn mr-4">{% trans "Switch to smaller units" %}</button>
                             </div>
                         </div>
                     </div>
@@ -79,13 +75,13 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col">
-                              <h2>Change your mapping units.</h2>
+                              <h2>{% trans "Change your mapping units." %}</h2>
                               <br>
-                              <p>Currently, you are mapping with <b>census blocks</b>. These units are used by map drawers to draw voting districts. </p>
-                              <p>If you would like to map your community with larger units, you can switch to <b>census block groups</b>. Census block groups are large units comprised of census blocks. </p>
-                              <p class="text-danger">If you switch the units now, your current selection will be erased. </p>
+                              <p>{% blocktrans trimmed %}Currently, you are mapping with <b>census blocks</b>. These units are used by map drawers to draw voting districts.{% endblocktrans %}</p>
+                              <p>{% blocktrans trimmed %}If you would like to map your community with larger units, you can switch to <b>census block groups</b>. Census block groups are large units comprised of census blocks.{% endblocktrans %}</p>
+                              <p class="text-danger">{% trans "If you switch the units now, your current selection will be erased." %}</p>
                               <br>
-                              <button id="map-block-to-bg-btn" type="button" class="btn btn-outline-gray btn-lg no-underline-link entry-nav-btn mr-4">Switch to larger units</button>
+                              <button id="map-block-to-bg-btn" type="button" class="btn btn-outline-gray btn-lg no-underline-link entry-nav-btn mr-4">{% trans "Switch to larger units" %}</button>
                             </div>
                         </div>
                     </div>
@@ -106,9 +102,7 @@
                 <div class="container h-100 p-4">
                     <div class="comm-info-text mt-2 mb-2">{% trans "How to draw my community?" %}</div>
                     <p class="mb-3 small">
-                        {% blocktrans %}
-                            Select units on the map by clicking with your mouse. To deselect a unit, click it again. Watch the following video to learn more.
-                        {% endblocktrans %}
+                        {% blocktrans trimmed %}Select units on the map by clicking with your mouse. To deselect a unit, click it again. Watch the following video to learn more.{% endblocktrans %}
                     </p>
 
                     <div class="m-3">
@@ -125,30 +119,22 @@
                             <div class="collapse-in map-survey-response d-inline-block text-left w-75">
                                 <h6><strong>{% trans "What are the units?" %}</strong></h6>
                                 <p>
-                                    {% blocktrans %}
-                                        The units are <strong>census block groups</strong>, which are used by map drawers to draw voting districts.
-                                    {% endblocktrans %}
+                                    {% blocktrans trimmed %}The units are <strong>census block groups</strong>, which are used by map drawers to draw voting districts.{% endblocktrans %}
                                 </p>
 
                                 <h6><strong>{% trans "Why am I unable to save my map?" %}</strong></h6>
                                 <p>
-                                    {% blocktrans %}
-                                        Make sure that it does not contain gaps. Communities of Interest must be contiguous.
-                                    {% endblocktrans %}
+                                    {% blocktrans trimmed %}Make sure that it does not contain gaps. Communities of Interest must be contiguous.{% endblocktrans %}
                                 </p>
 
                                 <h6><strong>{% trans "Can I map outside of my state?" %}</strong></h6>
                                 <p>
-                                    {% blocktrans %}
-                                        In order to map outside of your state, you need to add a new community within the other state.
-                                    {% endblocktrans %}
+                                    {% blocktrans trimmed %}In order to map outside of your state, you need to add a new community within the other state.{% endblocktrans %}
                                 </p>
 
                                 <h6><strong>{% trans "How large should my community be?" %}</strong></h6>
                                 <p>
-                                    {% blocktrans %}
-                                        Your community can be as small as one unit or as large as 800 units.
-                                    {% endblocktrans %}
+                                    {% blocktrans trimmed %}Your community can be as small as one unit or as large as 800 units.{% endblocktrans %}
                                 </p>
                             </div>
                         </div>
@@ -167,15 +153,13 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
 
-                <h6 id="modal-comm-name" class="dropdown-header comm-info-text w-75 pt-5">Community Name:</h6>
+                <h6 id="modal-comm-name" class="dropdown-header comm-info-text w-75 pt-5">{% trans "Community Name" %}:</h6>
                 <div class="accordion map-info-item ml-4 mr-4 mt-3" id="mobile-map-activities-accordion">
                     <button class="btn btn-link text-left comm-item-text pl-2 no-underline-link" type="button" data-target="#mobile-map-activities-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                         {% trans "Communities Activities and Services" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
                     </button>
                     <div id="mobile-map-activities-resp" class="collapse pl-2 pb-1" aria-labelledby="mobile-map-activities-accordion" data-parent="#mobile-map-activities-accordion">
-                        <p class="collapse-in map-survey-response">
-                            {% blocktrans %} Where do people in your community gather or socialize? <br>Where does your community get its services? {% endblocktrans %}
-                        </p>
+                        <p class="collapse-in map-survey-response"></p>
                     </div>
                 </div>
                 <div class="accordion map-info-item ml-4 mr-4 mt-3" id="mobile-map-cultural-interests-accordion">
@@ -183,9 +167,7 @@
                         {% trans "Cultural or Historical Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
                     </button>
                     <div id="mobile-map-cultural-interests-resp" class="collapse pl-2 pb-1" aria-labelledby="map_cultural_activities_accordion" data-parent="#mobile-map-cultural-interests-accordion">
-                        <p class="collapse-in map-survey-response">
-                            {% blocktrans %} Where do people in your community gather or socialize? <br>Where does your community get its services? {% endblocktrans %}
-                        </p>
+                        <p class="collapse-in map-survey-response"></p>
                     </div>
                 </div>
                 <div class="accordion ml-4 mr-4 mt-1 map-info-item" id="mobile-map-economic-interests-accordion">
@@ -193,9 +175,7 @@
                         {% trans "Economic or Environmental Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
                     </button>
                     <div id="mobile-map-economic-interests-resp" class="collapse pl-2 pb-1" aria-labelledby="mobile-map-economic-interests-accordion" data-parent="#mobile-map-economic-interests-accordion">
-                        <p class="collapse-in map-survey-response">
-                            Where do people in your community gather or socialize? Where does your community get its services?
-                        </p>
+                        <p class="collapse-in map-survey-response"></p>
                     </div>
                 </div>
                 <div class="accordion map-info-item ml-4 mr-4 mt-3 mb-5" id="mobile-map-other-interests-accordion">
@@ -203,9 +183,7 @@
                         {% trans "Community Needs and Concerns" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
                     </button>
                     <div id="mobile-map-other-interests-resp" class="collapse pl-2 pb-1" aria-labelledby="mobile-map-other-interests-accordion" data-parent="#mobile-map-other-interests-accordion">
-                        <p class="collapse-in map-survey-response">
-                            {% blocktrans %} Where do people in your community gather or socialize? <br>Where does your community get its services? {% endblocktrans %}
-                        </p>
+                        <p class="collapse-in map-survey-response"></p>
                     </div>
                 </div>
             </div>
@@ -230,9 +208,7 @@
                             <div class="container pl-5 pr-5 pb-5 h-100">
                                 <div class="comm-info-text mt-2 mb-2">{% trans "How to draw my community?" %}</div>
                                 <p class="mb-3 small">
-                                    {% blocktrans %}
-                                        Select units on the map by clicking with your mouse. To deselect a unit, click it again. Watch the following video to learn more.
-                                    {% endblocktrans %}
+                                    {% blocktrans trimmed %}Select units on the map by clicking with your mouse. To deselect a unit, click it again. Watch the following video to learn more.{% endblocktrans %}
                                 </p>
 
                                 <div class="m-3">
@@ -249,30 +225,22 @@
                                         <div class="collapse-in map-survey-response d-inline-block text-left w-75">
                                             <h5><strong>{% trans "What are the units?" %}</strong></h5>
                                             <p>
-                                                {% blocktrans %}
-                                                    The units are <strong>census block groups</strong>, which are used by map drawers to draw voting districts.
-                                                {% endblocktrans %}
+                                                {% blocktrans trimmed %}The units are <strong>census block groups</strong>, which are used by map drawers to draw voting districts.{% endblocktrans %}
                                             </p>
 
                                             <h5><strong>{% trans "Why am I unable to save my map?" %}</strong></h5>
                                             <p>
-                                                {% blocktrans %}
-                                                    Make sure that it does not contain gaps. Communities of Interest must be contiguous.
-                                                {% endblocktrans %}
+                                                {% blocktrans trimmed %}Make sure that it does not contain gaps. Communities of Interest must be contiguous.{% endblocktrans %}
                                             </p>
 
                                             <h5><strong>{% trans "Can I map outside of my state?" %}</strong></h5>
                                             <p>
-                                                {% blocktrans %}
-                                                    In order to map outside of your state, you need to add a new community within the other state.
-                                                {% endblocktrans %}
+                                                {% blocktrans trimmed %}In order to map outside of your state, you need to add a new community within the other state.{% endblocktrans %}
                                             </p>
 
                                             <h5><strong>{% trans "How large should my community be?" %}</strong></h5>
                                             <p>
-                                                {% blocktrans %}
-                                                    Your community can be as small as one unit or as large as 800 units.
-                                                {% endblocktrans %}
+                                                {% blocktrans trimmed %}Your community can be as small as one unit or as large as 800 units.{% endblocktrans %}
                                             </p>
                                         </div>
                                     </div>
@@ -286,21 +254,17 @@
                 <div id="map-comm-info" class="col-1 col-md-4 col-lg-3 col-xl-2 d-md-block">
                     <div id="map-comm-dropdown" class="dropdown text-md-left">
                         <button class="btn btn-primary d-none d-md-inline-block mapping-icon mapping-btn" data-toggle="dropdown" style="border-radius: .5rem;" id="map-comm-btn" aria-haspopup="true" aria-expanded="false">
-                            {% blocktrans %}
-                                Your Community Info
-                            {% endblocktrans %}
+                            {% blocktrans trimmed %}Your Community Info{% endblocktrans %}
                         </button>
 
                         <div id="map-comm-menu" class="dropdown-menu" aria-labelledby="map-comm-btn">
-                            <h6 id="dropdown-comm-name" class="dropdown-header comm-info-text">Community Name:</h6>
+                            <h6 id="dropdown-comm-name" class="dropdown-header comm-info-text">{% trans "Community Name" %}:</h6>
                             <div class="dropdown-item accordion map-info-item ml-4 mr-4 mt-1" id="map-activities-accordion">
                                 <button class="btn btn-link text-left comm-item-text pl-0 no-underline-link" type="button" data-target="#map-activities-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                                     {% trans "Communities Activities and Services" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
                                 </button>
                                 <div id="map-activities-resp" class="collapse" aria-labelledby="map-activities-accordion" data-parent="#map-activities-accordion">
-                                    <p class="collapse-in map-survey-response">
-                                        {% blocktrans %} Where do people in your community gather or socialize? <br>Where does your community get its services? {% endblocktrans %}
-                                    </p>
+                                    <p class="collapse-in map-survey-response"></p>
                                 </div>
                             </div>
                             <div class="dropdown-item accordion map-info-item ml-4 mr-4 mt-3" id="map-cultural-interests-accordion">
@@ -308,9 +272,7 @@
                                     {% trans "Cultural or Historical Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
                                 </button>
                                 <div id="map-cultural-interests-resp" class="collapse" aria-labelledby="map_cultural_activities_accordion" data-parent="#map-cultural-interests-accordion">
-                                    <p class="collapse-in map-survey-response">
-                                        {% blocktrans %} Where do people in your community gather or socialize? <br>Where does your community get its services? {% endblocktrans %}
-                                    </p>
+                                    <p class="collapse-in map-survey-response"></p>
                                 </div>
                             </div>
                             <div class="dropdown-item accordion map-info-item ml-4 mr-4 mt-3" id="map-economic-interests-accordion">
@@ -318,9 +280,7 @@
                                     {% trans "Economic or Environmental Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
                                 </button>
                                 <div id="map-economic-interests-resp" class="collapse" aria-labelledby="comm_activities_accordion" data-parent="#map-economic-interests-resp">
-                                    <p class="collapse-in map-survey-response">
-                                        Where do people in your community gather or socialize? Where does your community get its services?
-                                    </p>
+                                    <p class="collapse-in map-survey-response"></p>
                                 </div>
                             </div>
                             <div class="dropdown-item accordion map-info-item ml-4 mr-4 mt-3 mb-3" id="map-other-interests-accordion">
@@ -328,9 +288,7 @@
                                     {% trans "Community Needs and Concerns" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
                                 </button>
                                 <div id="map-other-interests-resp" class="collapse" aria-labelledby="map-other-interests-accordion" data-parent="#map-other-interests-accordion">
-                                    <p class="collapse-in map-survey-response">
-                                        {% blocktrans %} Where do people in your community gather or socialize? <br>Where does your community get its services? {% endblocktrans %}
-                                    </p>
+                                    <p class="collapse-in map-survey-response"></p>
                                 </div>
                             </div>
                         </div>
@@ -351,9 +309,7 @@
                         </div>
                         <div class="col-12 text-center pl-0 pt-2">
                             <button id="mobile-map-comm-btn" class="btn btn-primary mapping-icon mapping-btn" style="border-radius: .5rem;" data-toggle="dropdown" style="border-radius: .5rem;" id="map-comm-btn" aria-haspopup="true" aria-expanded="false">
-                                {% blocktrans %}
-                                    +
-                                {% endblocktrans %}
+                            +
                             </button>
                         </div>
                     </div>
@@ -382,12 +338,12 @@
             </div>
             <div class="row">
               <button type="button" class="btn btn-primary mapping-icon mapping-btn py-2 m-1"  style="border-radius: .5rem;" id="map-units-btn" aria-haspopup="true" aria-expanded="false">
-                  Want different units?
+                  {% trans "Want different units?" %}
               </button>
             </div>
             <div class="row">
               <div class="mapping-icon white-bg px-3 py-2 m-1" style="border-radius: .5rem;" id="map-pop-btn" aria-haspopup="true" aria-expanded="false">
-                <span class="comm-pop-text"> Population: <span class="font-weight-bold comm-pop">0</span></span>
+                <span class="comm-pop-text"> {% trans "Population" %}: <span class="font-weight-bold comm-pop">0</span></span>
               </div>
             </div>
         </div>

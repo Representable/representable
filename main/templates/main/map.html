@@ -76,7 +76,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
               {% if communities %}
               <table id="collapseThree" class="collapse show table table-hover">
                 {% for c in communities %}
-                {% if c.drive.private is not True %}
+                  {% if c.drive.private is not True %}
                   <tr class="community-review-span" id="{{c.entry_ID}}">
                     <td>
                       <span class="text-uppercase entry-name">

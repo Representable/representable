@@ -175,7 +175,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
       </div>
       <form role="form" id="reportForm" method="post" action="/report/"> {% csrf_token %}
       <div class="modal-body">
-        {% blocktrans %}
+        {% blocktrans trimmed %}
         If you feel this community is abusive, spam, low-effort, or doesn't live
         up to our guidelines, send us a report.
         {% endblocktrans %}
@@ -196,7 +196,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-light" data-dismiss="modal">{% trans "Cancel" %}</button>
-        <button type="submit" class="btn btn-danger"> <span class="sr-only">{% blocktrans %}Danger: </span>Send Report{% endblocktrans %}</button>
+        <button type="submit" class="btn btn-danger"> <span class="sr-only">{% blocktrans trimmed %}Danger: </span>Send Report{% endblocktrans %}</button>
       </div>
       </form>
     </div>

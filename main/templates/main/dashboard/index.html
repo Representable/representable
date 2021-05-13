@@ -28,7 +28,7 @@
               </li>
               {% endfor %}
               {% else %}
-              <p class="my-3">{% blocktrans %} You're currently not part of any organizations.
+              <p class="my-3">{% blocktrans trimmed %} You're currently not part of any organizations.
                 Ask someone to add you to their organization or create a new one below. {% endblocktrans %}</p>
               {% endif %}
             </ul>
@@ -70,13 +70,13 @@
             <h6>{% trans "Cookie Settings" %}</h6>
             <p>{% trans "We use Mixpanel and Google Analytics to collect anonymized information about users' website usage. We use this information to improve our website experience. You can control whether we have access to this information or not." %}</p>
             <div id="consent-settings-opt-in">
-              {% blocktrans %}
+              {% blocktrans trimmed %}
               <p>Based on our records, you have <strong>opted in</strong> for anonymized information collection. To <strong>opt out</strong>, press on the button below.</p>
               {% endblocktrans %}
               <button onclick="setConsentFalse();" class="btn btn-outline-primary my-1">Opt Out</button>
             </div>
             <div id="consent-settings-opt-out">
-              {% blocktrans %}
+              {% blocktrans trimmed %}
               <p>Based on our records, you have <strong>opted out</strong> of anonymized information collection. To <strong>opt in</strong>, press on the button below.</p>
               {% endblocktrans %}
               <button onclick="setConsentTrue();" class="btn btn-outline-primary my-1">Opt In</button>
