@@ -42,7 +42,7 @@ if (dane_cty) {
   unit_id = "WARD_FIPS";
   state = "dane";
   layer_suffix="wards";
-  initialZoom = 9;
+  initialZoom = 10;
 }
 // stack of filters (which block to highlight) and bounding boxes (for contiguity check)
 var filterStack = JSON.parse(sessionStorage.getItem("filterStack"));
