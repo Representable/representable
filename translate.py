@@ -117,7 +117,7 @@ def _output_to_doc(lang_code, pofile, service, translate_all):
     # Retrieve the document with the table for the purpose of having access to the indexes of the table cells
     document = service.documents().get(documentId=AVAILABLE_DOCS[lang_code]).execute()
 
-    # Populate the table rows
+    # Populate the table rows and cells
     table_rows = document['body']['content'][2]['table']['tableRows']
     for row, entry in itertools.zip_longest(reversed(table_rows), reversed(pofile)):
         sec_column_text = entry.msgstr if entry else lang_code.name
@@ -272,12 +272,12 @@ def _validate_arguments(argv):
     [arg.lower() for arg in argv]
     
     if not LangCode.has_value(argv[1]):
-        raise ValueError("The language code you entered is not valid or not supported yet. The available language codes are {}".format([langcode.value for langcode in AVAILABLE_DOCS]))
+        raise ValueError("The language code you entered is not valid or not supported yet. The available language codes are {}.\n{}".format([langcode.value for langcode in AVAILABLE_DOCS], _explain_input()))
     else:
         argv[1] = LangCode(argv[1])
 
     if not Function.has_value(argv[2]):
-        raise ValueError("You must pass in the parameter 'in' to input translations or 'out' to output translations.")
+        raise ValueError("You must pass in the parameter 'in' to input translations or 'out' to output translations.\n{}".format(_explain_input()))
     else:
         argv[2] = Function(argv[2])
 
@@ -286,7 +286,7 @@ def _validate_arguments(argv):
         return argv[1], argv[2], argv[3], argv[4]
 
     if not Scope.has_value(argv[3]):
-        raise RuntimeWarning("'{}' is not a valid parameter for the scope. Going with the default value 'nt'".format(argv[3]))
+        raise RuntimeWarning("'{}' is not a valid parameter for the scope. Going with the default value 'nt'.\n{}".format(argv[3], _explain_input()))
         argv[3] = Scope.NEEDS_TRANSLATION
     else:
         argv[3] = Scope(argv[3])
@@ -296,29 +296,36 @@ def _validate_arguments(argv):
         return argv[1], argv[2], argv[3], argv[4]
 
     if not Location.has_value(argv[4]):
-        raise RuntimeWarning("'{}' is not a valid parameter for the scope. Going with the default value 'doc'".format(argv[4]))
+        raise RuntimeWarning("'{}' is not a valid parameter for the scope. Going with the default value 'doc'.\n{}".format(argv[4], _explain_input()))
         argv[4] = Location.DOC
     else:
         argv[4] = Location(argv[4])
 
     return argv[1], argv[2], argv[3], argv[4]
 
-'''
-    argv[1] (REQUIRED) : the language code
-              hmn - Hmong, es - Spanish, ar - Arabic
+def _explain_input():
+    return "Run using 'python translate.py [language code (Required)] [function (Required)] [scope] [location]'\nRun 'python translate.py --help' for more info"
 
-    argv[2] (REQUIRED): the function to perform
-              in - Input translations
-              out - Output msgids to be translated
+def _help():
+    return  '''
+                argv[1] (REQUIRED) : the language code
+                        hmn - Hmong, es - Spanish, ar - Arabic
 
-    argv[3] : scope of the function
-              nt (DEFAULT) - output or input translations for only the msgids that need translations (they are fuzzy or untranslated) 
-              all - output all msgids to be translated or input translations for all msgids
+                argv[2] (REQUIRED): the function to perform
+                        in - Input translations
+                        out - Output msgids to be translated
 
-    argv[4] : Output/Input to/from Doc or Text file
-              doc (DEFAULT) - output or input translations to the google doc for the specified language
-              txt - output or input translations to the text file for the specified language. If inputting, the text file must be in the same
-                      directory as this script
-'''
+                argv[3] : scope of the function
+                        nt (DEFAULT) - output or input translations for only the msgids that need translations (they are fuzzy or untranslated) 
+                        all - output all msgids to be translated or input translations for all msgids
+
+                argv[4] : Output/Input to/from Doc or Text file
+                        doc (DEFAULT) - output or input translations to the google doc for the specified language
+                        txt - output or input translations to the text file for the specified language. If inputting, the text file must be in the same
+                                directory as this script
+            '''
 if __name__ == "__main__":
-    main(sys.argv)
+    if sys.argv[1] == "--help":
+        print(_help())
+    else:
+        main(sys.argv)
