@@ -245,11 +245,11 @@ class BlockGroup(models.Model):
     BlockGroup represents census block groups from a given year. These are the building blocks of COIs.
     Fields included:
      - census_id: the official block group id
-     - year: year of census (default - 2010, though this should be changed when 2020 blocks come out)
+     - year: year of census (default - 2020, with an exception for states using 2010 units)
     """
 
     census_id = models.CharField(max_length=12)
-    year = models.IntegerField(default=2010)
+    year = models.IntegerField(default=2020)
 
 
 # ******************************************************************************#
@@ -260,7 +260,7 @@ class CensusBlock(models.Model):
     CensusBlock represents census blocks from a given year. These are the building blocks of COIs.
     Fields included:
      - census_id: the official block group id
-     - year: year of census (default - 2020, since those are the block's we'll be using)
+     - year: year of census (default - 2020, with an exception for states using 2010 units)
     """
 
     census_id = models.CharField(max_length=15)
@@ -301,6 +301,8 @@ class CommunityEntry(models.Model):
      - user_polygon:  User polygon contains the polygon drawn by the user -- deprecated
      - census_blocks_polygon_array: Array containing multiple polygons.
      - census_blocks_polygon: The union of the census block polygons.
+     - block_groups: ManytoMany of block group objects
+     - census_blocks: ManytoMany of census block objects
      - population: The population of the community entry, based on ACS data.
      - block_groups: relates the community entry to block groups and their census id
      - state_obj: foreign key relation to the state this community was drawn in
@@ -350,6 +352,8 @@ class CommunityEntry(models.Model):
     )
 
     block_groups = models.ManyToManyField(BlockGroup, blank=True)
+
+    census_blocks = models.ManyToManyField(CensusBlock, blank=True)
 
     entry_name = models.CharField(
         max_length=100, blank=False, unique=False, default=""
