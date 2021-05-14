@@ -645,11 +645,12 @@ class Submission(View):
         #                 self.request.user == user_map.user
         #             )
         #             comm.user_name = user_map.user_name
-
         show_form = self.should_show_form(state=context['state'], entryid=context['map_id'], auth=self.request.user.is_authenticated)
         context['show_form'] = show_form
         if(show_form == True):
             context['form'] = SubmissionAddDrive()
+            state = State.objects.filter(abbr=context['state'].upper())
+            context['form_empty'] = len(state[0].get_drives()) == 0
             context['form'].upd(state=context['state'].upper())
 
         return render(request, self.template_name, context)
@@ -676,7 +677,7 @@ class Submission(View):
             return False
         if(entry.drive != None):
             return False
-        if(entry.user == self.request.user):
+        if(entry.user != self.request.user):
             return False
         try:
             Address.objects.get(entry=entry)
@@ -1006,6 +1007,7 @@ class EntryView(LoginRequiredMixin, View):
             "state": abbr,
             "address_required": address_required,
             "state_obj": State.objects.get(abbr=abbr.upper()),
+            "page_type": "entry" # For the base template to check and remove footer
         }
         return render(request, self.template_name, context)
 

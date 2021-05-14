@@ -1617,7 +1617,7 @@ textarea.survey-field:focus {
   background-color: #FFFFFF;
 }
 .content-blue-bg {
-  background: rgba(242, 250, 255, 0.5);
+  background-color: rgba(242, 250, 255, 0.5);
 }
 .btn-outline-gray {
   background-color: transparent;
