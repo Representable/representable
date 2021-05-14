@@ -697,6 +697,8 @@ def make_geojson(request, entry):
             "economic_interests",
             "comm_activities",
             "other_considerations",
+            "custom_response",
+            "population",
         ),
     )
     gj = geojson.loads(map_geojson)
@@ -743,6 +745,8 @@ def make_geojson_for_state_map_page(request, entry):
             "economic_interests",
             "comm_activities",
             "other_considerations",
+            "custom_response",
+            "population",
         ),
     )
     gj = geojson.loads(map_geojson)
@@ -897,6 +901,7 @@ def make_geojson_for_s3(entry):
             "economic_interests",
             "comm_activities",
             "other_considerations",
+            "custom_response",
             "population",
         ),
     )
@@ -977,6 +982,8 @@ class EntryView(LoginRequiredMixin, View):
         drive_name = ""
         drive_slug = ""
         drive_id = None
+        drive_custom_question = ""
+        drive_custom_question_example = ""
         if kwargs["drive"]:
             has_drive = True
             drive_slug = self.kwargs["drive"]
@@ -989,6 +996,8 @@ class EntryView(LoginRequiredMixin, View):
 
             drive_name = drive.name
             drive_id = drive.id
+            drive_custom_question = drive.custom_question
+            drive_custom_question_example = drive.custom_question_example
             organization = drive.organization
             organization_name = organization.name
             organization_id = organization.id
@@ -1020,6 +1029,8 @@ class EntryView(LoginRequiredMixin, View):
             "organization_id": organization_id,
             "drive_name": drive_name,
             "drive_id": drive_id,
+            "drive_custom_question": drive_custom_question,
+            "drive_custom_question_example": drive_custom_question_example,
             "drive_slug": drive_slug,
             "state": abbr,
             "address_required": address_required,

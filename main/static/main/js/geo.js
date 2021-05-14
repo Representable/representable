@@ -534,6 +534,10 @@ $("#id_other_considerations").on("click", function(e) {
   }
 });
 
+if (drive_custom_question_example) {
+  $('#id_custom_response').attr("placeholder", "ex. " + drive_custom_question_example);
+}
+
 function interestsValidated() {
   var flag = true;
   var cultural_interests_field = document.getElementById(
@@ -546,22 +550,26 @@ function interestsValidated() {
   var other_considerations_field = document.getElementById(
     "id_other_considerations"
   );
+  var custom_response_field = document.getElementById("id_custom_response");
 
   cultural_interests_field.value = trim(cultural_interests_field.value);
   economic_interests_field.value = trim(economic_interests_field.value);
   comm_activities_field.value = trim(comm_activities_field.value);
   other_considerations_field.value = trim(other_considerations_field.value);
+  if (custom_response_field) custom_response_field.value = trim(custom_response_field.value);
 
   if (
     cultural_interests_field.value == "" &&
     economic_interests_field.value == "" &&
     comm_activities_field.value == "" &&
-    other_considerations_field.value == ""
+    other_considerations_field.value == "" &&
+    (custom_response_field && custom_response_field.value == "")
   ) {
     cultural_interests_field.classList.add("has_error");
     economic_interests_field.classList.add("has_error");
     comm_activities_field.classList.add("has_error");
     other_considerations_field.classList.add("has_error");
+    custom_response_field.classList.add("has_error");
     var interests_alert = document.getElementById("need_one_interest");
     interests_alert.classList.remove("d-none");
     flag = false;

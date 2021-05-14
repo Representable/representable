@@ -177,6 +177,18 @@
                     </p>
                 </div>
             </div>
+            {% if c.drive and c.drive.custom_question %}
+            <div class="accordion map-info-item mt-3 mb-3" id="mobile-map-custom-accordion">
+                <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-custom-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                    <div class="text-wrap" style="white-space: normal">{{c.drive.custom_question}}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i></div>
+                </button>
+                <div id="mobile-map-custom-resp" class="collapse pl-3 pb-1" aria-labelledby="mobile-map-custom-accordion" data-parent="#mobile-map-custom-accordion">
+                    <p class="collapse-in map-survey-response">
+                        {{c.custom_response}}
+                    </p>
+                </div>
+            </div>
+            {% endif %}
           </div>
         </div>
         <div id="public-comment-card" class="card text-left border-0 w-100 rounded-lg mt-3 mb-3 d-l-block">
@@ -413,6 +425,16 @@
             </h6>
             <small>
               {{c.other_considerations}}
+            </small>
+            {% endif %}
+            {% if c.custom_response %}
+            <h6>
+              <br>
+
+              {{ c.drive.custom_question }}
+            </h6>
+            <small>
+              {{c.custom_response}}
             </small>
             {% endif %}
           </div>

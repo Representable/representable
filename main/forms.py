@@ -116,6 +116,9 @@ class CommunityForm(ModelForm):
             "other_considerations": forms.Textarea(
                 attrs={"rows": 3, "maxlength": 500, "placeholder": "ex. My farming community extends over two counties and we hope you can put the community together in a single State Senate district."}
             ),
+            "custom_response": forms.Textarea(
+                attrs={"rows": 3, "maxlength": 500, "placeholder": ""}
+            ),
             "user_name": forms.TextInput(
                 attrs={"maxlength": 500}
             ),
@@ -127,6 +130,7 @@ class CommunityForm(ModelForm):
             "cultural_interests": "Input your community's cultural or historical interests: ",
             "comm_activities": "Input your community's activities and services: ",
             "other_considerations": "Input your community's other interests and concerns: ",
+            "custom_response": "Input your response to this mapping drive's custom question: ",
             "entry_name": "Input your community's name: ",
         }
 
@@ -141,11 +145,13 @@ class CommunityForm(ModelForm):
         economic_interests = self.cleaned_data.get("economic_interests")
         comm_activities = self.cleaned_data.get("comm_activities")
         other_considerations = self.cleaned_data.get("other_considerations")
+        custom_response = self.cleaned_data.get("custom_response")
         if (
             cultural_interests == ""
             and economic_interests == ""
             and comm_activities == ""
             and other_considerations == ""
+            and custom_response == ""
         ):
             errors["cultural_interests"] = "Blank interest fields."
         if errors:
