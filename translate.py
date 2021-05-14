@@ -49,6 +49,12 @@ AVAILABLE_DOCS = {
     LangCode.ARABIC: "1Busdjt7pEGMlVZyr9eUhiL8wz_N7Y9NFYtRgwMX2MlM"
 }
 
+# Ignore translating occurrences from these files. Outputted from Django so users will never see
+IGNORE_OCCURRENCES = {
+    "venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html",
+    "venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html"
+}
+
 SCOPES = ['https://www.googleapis.com/auth/documents']
 
 def get_google_creds():
@@ -71,6 +77,15 @@ def get_google_creds():
             token.write(creds.to_json())
 
     return creds
+
+def _contains_only_ignored_occurrences(entry):
+    if not entry:
+        return False
+    for occurrence in entry.occurrences:
+        if occurrence[0] not in IGNORE_OCCURRENCES:
+            return False
+    
+    return True
 
 ##################### For use with Google Docs ############################
 def _output_to_doc(lang_code, pofile, service, translate_all):
@@ -104,7 +119,7 @@ def _output_to_doc(lang_code, pofile, service, translate_all):
     # Add an empty table with the necessary number of rows
     initial_requests.append({
         'insertTable': {
-            'rows': pofile_length + 1,
+            'rows': pofile_length + 1, # enough rows for all translations + the header row
             'columns': 2,
             'endOfSegmentLocation': {
                 'segmentId': ''
@@ -122,7 +137,10 @@ def _output_to_doc(lang_code, pofile, service, translate_all):
     for row, entry in itertools.zip_longest(reversed(table_rows), reversed(pofile)):
         sec_column_text = entry.msgstr if entry else lang_code.name
         first_column_text = entry.msgid if entry else "ENGLISH (DO NOT EDIT THIS COLUMN!!!)"
-        if sec_column_text and not translate_all or sec_column_text in LangCode.__members__:
+
+        if _contains_only_ignored_occurrences(entry):
+            sec_column_text = "(IGNORE)"
+        if sec_column_text and not translate_all or sec_column_text in LangCode.__members__ or sec_column_text == "(IGNORE)":
             pop_table_requests.append(   
                 {
                     'insertText': {
@@ -221,12 +239,16 @@ def input_needed_translations_txt(lang_code, pofile, pofile_path):
 def output_all_msgids_txt(lang_code, pofile):
     with open("{}_translations.txt".format(lang_code.value), 'w') as transdoc:
         for entry in pofile:
+            if _contains_only_ignored_occurrences(entry):
+                continue
             json.dump({entry.msgid:entry.msgstr}, transdoc)
             transdoc.write("\n\n")
 
 def output_needs_translation_txt(lang_code, pofile):
-    with open("{}_translation.txt".format(lang_code.value), 'w') as transdoc:
+    with open("{}_translations.txt".format(lang_code.value), 'w') as transdoc:
         for entry in pofile.untranslated_entries() + pofile.fuzzy_entries():
+            if _contains_only_ignored_occurrences(entry):
+                continue
             json.dump({entry.msgid:""}, transdoc)
             transdoc.write("\n\n")
 
@@ -288,7 +310,7 @@ def _validate_arguments(argv):
         return argv[1], argv[2], argv[3], argv[4]
 
     if not Scope.has_value(argv[3]):
-        raise RuntimeWarning("'{}' is not a valid parameter for the scope. Going with the default value 'nt'.\n{}".format(argv[3], _explain_input()))
+        print("WARNING: '{}' is not a valid parameter for the scope. Using the default value 'nt'.\n{}".format(argv[3], _explain_input()))
         argv[3] = Scope.NEEDS_TRANSLATION
     else:
         argv[3] = Scope(argv[3])
@@ -298,7 +320,7 @@ def _validate_arguments(argv):
         return argv[1], argv[2], argv[3], argv[4]
 
     if not Location.has_value(argv[4]):
-        raise RuntimeWarning("'{}' is not a valid parameter for the scope. Going with the default value 'doc'.\n{}".format(argv[4], _explain_input()))
+        print("WARNING: '{}' is not a valid parameter for the scope. Using the default value 'doc'.\n{}".format(argv[4], _explain_input()))
         argv[4] = Location.DOC
     else:
         argv[4] = Location(argv[4])
