@@ -725,7 +725,8 @@ function createCommPolygon() {
   // clean up polyFilter -- this is the array of GEOID to be stored
   polyFilter.splice(0, 1);
   polyFilter.splice(0, 1);
-  document.getElementById("id_block_groups").value = polyFilter;
+  drawUsingBlocks ? document.getElementById("id_census_blocks").value = polyFilter : document.getElementById("id_block_groups").value = polyFilter;
+
   // load in the Population
   var pop = sessionStorage.getItem("pop");
   document.getElementById("id_population").value = pop;
@@ -1603,11 +1604,11 @@ function triggerSuccessMessage() {
   sessionStorage.setItem("map_drawn_successfully", true);
 }
 
-function updateFormFields(census_blocks_polygon_array) {
+function updateFormFields(census_blocks_polygon) {
   // Update form fields
   document.getElementById(
     "id_census_blocks_polygon"
-  ).value = census_blocks_polygon_array;
+  ).value = census_blocks_polygon;
   // "census_blocks_polygon" gets saved in the post() function in django
 }
 
