@@ -96,6 +96,7 @@ class CommunityForm(ModelForm):
             "census_blocks_polygon_array": forms.HiddenInput(),
             "census_blocks_polygon": forms.HiddenInput(),
             "block_groups": forms.HiddenInput(),
+            "census_blocks": forms.HiddenInput(),
             "population": forms.HiddenInput(),
             "entry_name": forms.Textarea(
                 attrs={"placeholder": "ex. University of Texas Students", "maxlength": 100, "rows": 1}
@@ -307,6 +308,6 @@ class SubmissionAddDrive(forms.Form):
         drives_to_add = [d for d in all_drives if d.state==state and d.is_active==True and d.private==False]
         choices = [(str(d.id), str(d.name) + ' - ' + str(d.organization)) for d in drives_to_add]
         self.fields['Add a new drive'] = forms.ChoiceField(
-            choices=choices, 
+            choices=choices,
             widget=forms.Select(attrs={'class' : 'custom-select'}),
         )
