@@ -106,7 +106,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                     <span class="small text-muted">
                     {% if is_org_admin %}
                       {{ c.user_name }}
-                      {% if c.entry_ID in streets %}
+                      {% if streets|get_item:c.entry_ID %}
                       | {{streets|get_item:c.entry_ID}},
                       {{cities|get_item:c.entry_ID}} <br>
                       {% else %}
@@ -141,6 +141,11 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                         {% if c.other_considerations %}
                         <b><i class="fas fa-users"></i> {% trans "Community Needs and Concerns" %}</b><br>
                         <span class="text-muted small">{{c.other_considerations}}</span>
+                        <br>
+                        {% endif %}
+                        {% if c.custom_response %}
+                        <b><i class="fab fa-discourse"></i> {{c.drive.custom_question}} </b><br>
+                        <span class="text-muted small">{{c.custom_response}}</span>
                         <br>
                         {% endif %}
                       </span>

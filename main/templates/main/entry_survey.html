@@ -307,7 +307,7 @@
                 </div>
                 <div class="sr-only">{{ comm_form.economic_interests.label_tag }}</div>
                 {{ comm_form.economic_interests|append_attr:"class:form-control survey-field" }}
-                
+
                 <!-- Other -->
                 <div class="accordion" id="other_interests_accordion">
                     <button id="other_interests_btn" class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#other_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
@@ -325,6 +325,18 @@
                 </div>
                 <div class="sr-only">{{ comm_form.other_considerations.label_tag }}</div>
                 {{ comm_form.other_considerations|append_attr:"class:form-control survey-field" }}
+
+                <!-- custom question -->
+                  <!-- <button id="other_interests_btn" class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#other_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                      <h5 class="survey-sect-title">{% trans "Community Needs and Concerns" %}<i class="fas fa-angle-down pl-3"></i></h5>
+                  </button> -->
+                {% if has_drive and drive_custom_question %}
+                  <p class="my-4 ml-1 gray-text">
+                    <b>{{ drive_custom_question }}</b><br>
+                  </p>
+                  <div class="sr-only">{{ comm_form.custom_response.label_tag }}</div>
+                  {{ comm_form.custom_response|append_attr:"class:form-control survey-field" }}
+                {% endif %}
             </div>
             <div class="row pt-5">
                 <div class="col text-center">

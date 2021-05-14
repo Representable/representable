@@ -177,6 +177,18 @@
                     </p>
                 </div>
             </div>
+            {% if c.drive and c.drive.custom_question %}
+            <div class="accordion map-info-item mt-3 mb-3" id="mobile-map-custom-accordion">
+                <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-custom-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                    <div class="text-wrap" style="white-space: normal">{{c.drive.custom_question}}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i></div>
+                </button>
+                <div id="mobile-map-custom-resp" class="collapse pl-3 pb-1" aria-labelledby="mobile-map-custom-accordion" data-parent="#mobile-map-custom-accordion">
+                    <p class="collapse-in map-survey-response">
+                        {{c.custom_response}}
+                    </p>
+                </div>
+            </div>
+            {% endif %}
           </div>
         </div>
         <div id="public-comment-card" class="card text-left border-0 w-100 rounded-lg mt-3 mb-3 d-l-block">
@@ -186,11 +198,12 @@
             <a id="public-comment-link"><h5 class="blue-text">Go to public input portal <i class="far fa-arrow-alt-circle-right"></i></h5></a>
           </div>
         </div>
+        {% if show_form is True and not form_empty %}
         <div class="card text-left border-0 w-100 rounded-lg mt-3 mb-3 d-xl-block">
           <div class="card-body">
-            <h5 class="card-title header-text"><strong>{% trans "Submit to an organization in your state" %}</strong></h5>
-            {% if show_form is True %}
-              <p class="header-text small">{% trans "Many organizations in your state are collecting community maps. Submit yours to one of their collection drives." %}</p>
+            <h5 class="card-title header-text"><strong>Submit to an organization.</strong></h5>
+            {% if c.drive is not True %}
+              <p class="header-text small">Many organizations in your state are collecting community maps. Submit yours to one of their collection drives.</p>
               <form method="post">
                 {% csrf_token %}
                 {% for field in form %}
@@ -198,7 +211,7 @@
                 {% endfor %}
                 <div class="row justify-content-center pt-3">
                   <div>
-                    <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>                    
+                    <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
                   </div>
                 </div>
               </form>
@@ -207,6 +220,7 @@
             {% endif %}
           </div>
         </div>
+        {% endif %}
       </div>
     </div>
 
@@ -246,6 +260,8 @@
                         {% if c.population > 0 %}
                         <b>Population:</b> {{ c.population }}
                         <br>
+                        {% else %}
+                        <b>Demographic information will become available with the release of 2020 Census data by the US Census Bureau.</b>
                         {% endif %}
                   </div>
                 </div>
@@ -376,43 +392,49 @@
           </div>
           <div class="d-none" id="pdfInfo">
             {% if c.economic_interests %}
-            <h6>
+            <h3>
               <br>
-
               {% trans "Economic or Environmental Interests" %}
             </h6>
             <small>
               {{c.economic_interests}}
             </small>
             {% endif %}
-            {% if c.economic_interests %}
-            <h6>
+            {% if c.comm_activities %}
+            <h3>
               <br>
-
               {% trans "Community Activities and Services" %}
             </h6>
             <small>
               {{c.comm_activities}}
             </small>
             {% endif %}
-            {% if c.economic_interests %}
-            <h6>
+            {% if c.cultural_interests %}
+            <h3>
               <br>
-
               {% trans "Cultural or Historical Interests" %}
             </h6>
             <small>
               {{c.cultural_interests}}
             </small>
             {% endif %}
-            {% if c.economic_interests %}
-            <h6>
+            {% if c.other_considerations %}
+            <h3>
               <br>
-
               {% trans "Community Needs and Concerns" %}
             </h6>
             <small>
               {{c.other_considerations}}
+            </small>
+            {% endif %}
+            {% if c.custom_response %}
+            <h6>
+              <br>
+
+              {{ c.drive.custom_question }}
+            </h6>
+            <small>
+              {{c.custom_response}}
             </small>
             {% endif %}
           </div>
@@ -420,7 +442,7 @@
           <div class="d-none" id="pdfOrg">{{c.organization}}</div>
           <div class="d-none" id="pdfDrive">{{c.drive}}</div>
           {% endif %}
-        {% endblock %}
+{% endblock %}
 
         {% block script %}
         <!--  Has to be at the end after the HTML loads.-->

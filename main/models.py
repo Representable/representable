@@ -146,6 +146,8 @@ class Drive(models.Model):
     - is_active: is the drive active
     - private: is the drive private
     - require_user_addresses: does the drive require users to include an address
+    - custom_question: custom question to be asked as part of the survey process
+    - custom_question_example: example custom question response for survey placeholder text
     """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -161,6 +163,12 @@ class Drive(models.Model):
     private = models.BooleanField(default=False)
     require_user_addresses = models.BooleanField(
         default=True, blank=True, null=True
+    )
+    custom_question = models.TextField(
+        max_length=255, blank=True, unique=False, default=""
+    )
+    custom_question_example = models.TextField(
+        max_length=255, blank=True, unique=False, default=""
     )
 
     class Meta:
@@ -237,11 +245,11 @@ class BlockGroup(models.Model):
     BlockGroup represents census block groups from a given year. These are the building blocks of COIs.
     Fields included:
      - census_id: the official block group id
-     - year: year of census (default - 2010, though this should be changed when 2020 blocks come out)
+     - year: year of census (default - 2020, with an exception for states using 2010 units)
     """
 
     census_id = models.CharField(max_length=12)
-    year = models.IntegerField(default=2010)
+    year = models.IntegerField(default=2020)
 
 
 # ******************************************************************************#
@@ -252,7 +260,7 @@ class CensusBlock(models.Model):
     CensusBlock represents census blocks from a given year. These are the building blocks of COIs.
     Fields included:
      - census_id: the official block group id
-     - year: year of census (default - 2020, since those are the block's we'll be using)
+     - year: year of census (default - 2020, with an exception for states using 2010 units)
     """
 
     census_id = models.CharField(max_length=15)
@@ -290,10 +298,22 @@ class CommunityEntry(models.Model):
      - entry_ID: Randomly Generated via uuid.uuid4.
      - organization: The organization that the user is submitting the entry to
      - drive: The drive that the user is submitting the entry to
-     - user_polygon:  User polygon contains the polygon drawn by the user.
+     - user_polygon:  User polygon contains the polygon drawn by the user -- deprecated
      - census_blocks_polygon_array: Array containing multiple polygons.
      - census_blocks_polygon: The union of the census block polygons.
+     - block_groups: ManytoMany of block group objects
+     - census_blocks: ManytoMany of census block objects
      - population: The population of the community entry, based on ACS data.
+     - block_groups: relates the community entry to block groups and their census id
+     - state_obj: foreign key relation to the state this community was drawn in
+     - state: abbreviation of the state_obj state name
+     - entry_reason: possibly deprecated? TODO: look into
+     - entry_name: the name of the community
+     - cultural_interests: cultural and historical interests question response
+     - economic_interests: economic and environmental interests question response
+     - comm_activities: community activities and services question response
+     - other_considerations: community needs and concerns questions response
+     - custom_response: response to custom question, if included in a drive
 
     """
 
@@ -333,6 +353,8 @@ class CommunityEntry(models.Model):
 
     block_groups = models.ManyToManyField(BlockGroup, blank=True)
 
+    census_blocks = models.ManyToManyField(CensusBlock, blank=True)
+
     entry_name = models.CharField(
         max_length=100, blank=False, unique=False, default=""
     )
@@ -352,6 +374,9 @@ class CommunityEntry(models.Model):
         max_length=500, blank=True, unique=False, default=""
     )
     other_considerations = models.TextField(
+        max_length=500, blank=True, unique=False, default=""
+    )
+    custom_response = models.TextField(
         max_length=500, blank=True, unique=False, default=""
     )
     # make this foreign key relation
