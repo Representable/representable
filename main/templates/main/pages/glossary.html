@@ -1,12 +1,13 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <div class="container-fluid content-blue-bg">
   <div class="row row-content mx-lg-5 px-lg-5">
     <div class="col mx-lg-5 px-lg-5">
       <div class="row light-blue-bg mx-lg-4 px-lg-5">
         <div class="col-12">
-          <div class="h1 my-4 ml-3">Redistricting Glossary</div>
+          <div class="h1 my-4 ml-3">{% trans "Redistricting Glossary" %}</div>
         </div>
       </div>
       <div class="mb-3 white-bg mx-lg-5">
@@ -25,7 +26,7 @@
         <div class="col-1"></div>
         <div class="col-10 light-blue-bg small">
           <div class="mx-3 blue-text">
-            <p class="my-3"><b>More Information</b></p>
+            <p class="my-3"><b>{% trans "More Information" %}</b></p>
             <p class="text-break" style="overflow-wrap: break-word">https://www.ncsl.org/research/redistricting/the-redistricting-lexicon-glossary.aspx <br>“What is the 2020 Census?”, US Department of Commerce, <br>https://2020census.gov/en/what-is-2020-census.html<br>https://www.ncsl.org/research/redistricting/the-redistricting-lexicon-glossary.aspx</p>
           </div>
         </div>

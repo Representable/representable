@@ -40,7 +40,7 @@
     <div class="col-md-6 col-wide mb-3">
         {% if query_error %}
         <div class="alert alert-warning" role="alert">
-          The community was already deleted.
+          {% trans "The community was already deleted." %}
         </div>
         {% endif %}
         {% if communities %}
@@ -71,34 +71,34 @@
               <span class="font-weight-light comm-content">
                 <span class="more-content">
                   {% if c.cultural_interests %}
-                  <b><i class="fas fa-palette"></i> Cultural or Historical Interests</b><br>
+                  <b><i class="fas fa-palette"></i> {% trans "Cultural or Historical Interests" %}</b><br>
                   <span class="text-muted small">{{c.cultural_interests}}</span>
                   <br>
                   {% endif %}
                   {% if c.comm_activities %}
-                  <b><i class="fas fa-hiking"></i> Community Activities and Services</b><br>
+                  <b><i class="fas fa-hiking"></i> {% trans "Community Activities and Services" %}</b><br>
                   <span class="text-muted small">{{c.comm_activities}}</span>
                   <br>
                   {% endif %}
                   {% if c.economic_interests %}
-                  <b><i class="fas fa-comments-dollar"></i> Economic or Environmental Interests</b><br>
+                  <b><i class="fas fa-comments-dollar"></i> {% trans "Economic or Environmental Interests" %}</b><br>
                   <span class="text-muted small">{{c.economic_interests}}</span>
                   <br>
                   {% endif %}
                   {% if c.other_considerations %}
-                  <b><i class="fas fa-users"></i> Community Needs and Concerns</b><br>
+                  <b><i class="fas fa-users"></i> {% trans "Community Needs and Concerns" %}</b><br>
                   <span class="text-muted small">{{c.other_considerations}}</span>
                   <br>
                   {% endif %}
                 </span>
-                <u><a class="small read-more small-link">Show More</a></u>
+                <u><a class="small read-more small-link">{% trans "Show More" %}</a></u>
               </span>
             </div>
             <div class="col-3 col-lg-2 text-center my-auto">
               <form method="post" action="">{% csrf_token %}
                 {{ form }}
                 <input type="hidden" name="c_id" value="{{ c }}">
-                <button type="submit" class="btn btn-danger" name="Delete">Delete</button>
+                <button type="submit" class="btn btn-danger" name="Delete">{% trans "Delete" %}</button>
               </form>
             </div>
             <div class="col-2 text-center my-auto">
@@ -110,7 +110,7 @@
         {% else %}
         <div class="jumbotron">
           <h3 class="font-weight-light">{% trans "No entries!" %}</h3>
-          <p class="font-weight-light">{% trans "Join us in the fight against gerrymandering." %} Click <a href="{% url 'main:entry_preview' %}">here</a> to add your community.</p>
+          <p class="font-weight-light">{% trans "Join us in the fight against gerrymandering." %} {% trans "Click " %} <a href="{% url 'main:entry_preview' %}">{% trans "here" %}</a> {% trans " to add your community." %}</p>
         </div>
         {% endif %}
       </div>

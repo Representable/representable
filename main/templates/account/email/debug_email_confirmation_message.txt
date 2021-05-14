@@ -1,4 +1,4 @@
-{% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Hello from {{ site_name }}!
+{% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}Hello from {{ current_site.name }}!
 
 [THIS MESSAGE IS CUSTOM_BUILT FOR THE CONSOLE. THIS IS *NOT* WHAT THE USER WILL SEE IN PRODUCTION.]
 [Edit 'templates/account/email/email_confirmation_message.html' to edit the production message.]
@@ -6,7 +6,6 @@
 You're receiving this e-mail because {{ user_display }} provided this e-mail address to connect their account.
 [Click link in terminal using CMD+Click.]
 To confirm this is correct, go to {{ activate_url }}
-{% endblocktrans %}
-{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Thank you from {{ site_name }}!
-{{ site_domain }}{% endblocktrans %}
+Thank you from {{ current_site.name }}!
+{{ current_site.name }}
 {% endautoescape %}

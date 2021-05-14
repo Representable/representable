@@ -1,4 +1,4 @@
-{% extends 'main/base_nofooter.html' %}
+{% extends 'main/base.html' %}
 {% load leaflet_tags %}
 {% load static %}
 {% load widget_tweaks %}
@@ -34,6 +34,8 @@
     var drive_id = "{{drive_id}}";
     var organization_id = "{{organization_id}}";
     var drive_name = "{{drive_name}}";
+    var drive_custom_question_example = "{{drive_custom_question_example}}";
+    var drive_slug = "{{drive_slug}}";
     var organization_name = "{{organization_name}}";
     var state = "{{state}}";
     var address_required = "{{address_required}}";

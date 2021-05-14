@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-08 01:21+0000\n"
+"POT-Creation-Date: 2021-05-08 07:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,1975 +19,69 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: env/lib/python3.7/site-packages/ckeditor_uploader/forms.py:8
-msgid "Search files"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:5
-msgid "Select an image to embed"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:27
-msgid "Browse for the image you want, then click 'Embed Image' to continue..."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:29
-msgid ""
-"No images found. Upload images using the 'Image Button' dialog's 'Upload' "
-"tab."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:50
-msgid "Images in: "
-msgstr ""
-
-#: env/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:62
-#: env/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:80
-msgid "Embed Image"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:146
-msgid "Play Slideshow"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:147
-msgid "Pause Slideshow"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:148
-msgid "&lsaquo; Previous Photo"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:149
-msgid "Next Photo &rsaquo;"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:150
-msgid "Next &rsaquo;"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:151
-msgid "&lsaquo; Prev"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/crispy_forms/tests/test_form_helper.py:140
-#: env/lib/python3.7/site-packages/crispy_forms/tests/test_form_helper.py:150
-#: env/lib/python3.7/site-packages/django/forms/fields.py:53
-msgid "This field is required."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/crispy_forms/tests/test_layout.py:355
-msgid "i18n text"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/crispy_forms/tests/test_layout.py:357
-msgid "i18n legend"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/crispy_forms/tests/test_layout_objects.py:127
-#: env/lib/python3.7/site-packages/django/core/validators.py:31
-msgid "Enter a valid value."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/contrib/messages/apps.py:7
-msgid "Messages"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/contrib/sitemaps/apps.py:7
-msgid "Site Maps"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/contrib/staticfiles/apps.py:9
-msgid "Static Files"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/contrib/syndication/apps.py:7
-msgid "Syndication"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/core/paginator.py:45
-msgid "That page number is not an integer"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/core/paginator.py:47
-msgid "That page number is less than 1"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/core/paginator.py:52
-msgid "That page contains no results"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/core/validators.py:102
-#: env/lib/python3.7/site-packages/django/forms/fields.py:658
-msgid "Enter a valid URL."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/core/validators.py:154
-msgid "Enter a valid integer."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/core/validators.py:165
-msgid "Enter a valid email address."
-msgstr ""
-
-#. Translators: "letters" means latin letters: a-z and A-Z.
-#: env/lib/python3.7/site-packages/django/core/validators.py:239
-msgid ""
-"Enter a valid 'slug' consisting of letters, numbers, underscores or hyphens."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/core/validators.py:246
-msgid ""
-"Enter a valid 'slug' consisting of Unicode letters, numbers, underscores, or "
-"hyphens."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/core/validators.py:255
-#: env/lib/python3.7/site-packages/django/core/validators.py:275
-msgid "Enter a valid IPv4 address."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/core/validators.py:260
-#: env/lib/python3.7/site-packages/django/core/validators.py:276
-msgid "Enter a valid IPv6 address."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/core/validators.py:270
-#: env/lib/python3.7/site-packages/django/core/validators.py:274
-msgid "Enter a valid IPv4 or IPv6 address."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/core/validators.py:304
-msgid "Enter only digits separated by commas."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/core/validators.py:310
-#, python-format
-msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/core/validators.py:342
-#, python-format
-msgid "Ensure this value is less than or equal to %(limit_value)s."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/core/validators.py:351
-#, python-format
-msgid "Ensure this value is greater than or equal to %(limit_value)s."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/core/validators.py:361
-#, python-format
-msgid ""
-"Ensure this value has at least %(limit_value)d character (it has "
-"%(show_value)d)."
-msgid_plural ""
-"Ensure this value has at least %(limit_value)d characters (it has "
-"%(show_value)d)."
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.7/site-packages/django/core/validators.py:376
-#, python-format
-msgid ""
-"Ensure this value has at most %(limit_value)d character (it has "
-"%(show_value)d)."
-msgid_plural ""
-"Ensure this value has at most %(limit_value)d characters (it has "
-"%(show_value)d)."
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.7/site-packages/django/core/validators.py:395
-#: env/lib/python3.7/site-packages/django/forms/fields.py:290
-#: env/lib/python3.7/site-packages/django/forms/fields.py:325
-msgid "Enter a number."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/core/validators.py:397
-#, python-format
-msgid "Ensure that there are no more than %(max)s digit in total."
-msgid_plural "Ensure that there are no more than %(max)s digits in total."
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.7/site-packages/django/core/validators.py:402
-#, python-format
-msgid "Ensure that there are no more than %(max)s decimal place."
-msgid_plural "Ensure that there are no more than %(max)s decimal places."
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.7/site-packages/django/core/validators.py:407
-#, python-format
-msgid ""
-"Ensure that there are no more than %(max)s digit before the decimal point."
-msgid_plural ""
-"Ensure that there are no more than %(max)s digits before the decimal point."
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.7/site-packages/django/core/validators.py:469
-#, python-format
-msgid ""
-"File extension '%(extension)s' is not allowed. Allowed extensions are: "
-"'%(allowed_extensions)s'."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/core/validators.py:521
-msgid "Null characters are not allowed."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/base.py:1162
-#: env/lib/python3.7/site-packages/django/forms/models.py:756
-msgid "and"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/base.py:1164
-#, python-format
-msgid "%(model_name)s with this %(field_labels)s already exists."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:104
-#, python-format
-msgid "Value %(value)r is not a valid choice."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:105
-msgid "This field cannot be null."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:106
-msgid "This field cannot be blank."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:107
-#, python-format
-msgid "%(model_name)s with this %(field_label)s already exists."
-msgstr ""
-
-#. Translators: The 'lookup_type' is one of 'date', 'year' or 'month'.
-#. Eg: "Title must be unique for pub_date year"
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:111
-#, python-format
-msgid ""
-"%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:128
-#, python-format
-msgid "Field of type: %(field_type)s"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:905
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1772
-msgid "Integer"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:909
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1770
-#, python-format
-msgid "'%(value)s' value must be an integer."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:984
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1850
-msgid "Big (8 byte) integer"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:996
-#, python-format
-msgid "'%(value)s' value must be either True or False."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:997
-#, python-format
-msgid "'%(value)s' value must be either True, False, or None."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:999
-msgid "Boolean (Either True or False)"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1040
-#, python-format
-msgid "String (up to %(max_length)s)"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1104
-msgid "Comma-separated integers"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1153
-#, python-format
-msgid ""
-"'%(value)s' value has an invalid date format. It must be in YYYY-MM-DD "
-"format."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1155
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1298
-#, python-format
-msgid ""
-"'%(value)s' value has the correct format (YYYY-MM-DD) but it is an invalid "
-"date."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1158
-msgid "Date (without time)"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1296
-#, python-format
-msgid ""
-"'%(value)s' value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[."
-"uuuuuu]][TZ] format."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1300
-#, python-format
-msgid ""
-"'%(value)s' value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
-"[TZ]) but it is an invalid date/time."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1304
-msgid "Date (with time)"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1452
-#, python-format
-msgid "'%(value)s' value must be a decimal number."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1454
-msgid "Decimal number"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1593
-#, python-format
-msgid ""
-"'%(value)s' value has an invalid format. It must be in [DD] [HH:[MM:]]ss[."
-"uuuuuu] format."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1596
-msgid "Duration"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1646
-msgid "Email address"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1669
-msgid "File path"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1735
-#, python-format
-msgid "'%(value)s' value must be a float."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1737
-msgid "Floating point number"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1866
-msgid "IPv4 address"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1897
-msgid "IP address"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1977
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1978
-#, python-format
-msgid "'%(value)s' value must be either None, True or False."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:1980
-msgid "Boolean (Either True, False or None)"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2015
-msgid "Positive integer"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2028
-msgid "Positive small integer"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2042
-#, python-format
-msgid "Slug (up to %(max_length)s)"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2074
-msgid "Small integer"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2081
-msgid "Text"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2109
-#, python-format
-msgid ""
-"'%(value)s' value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
-"format."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2111
-#, python-format
-msgid ""
-"'%(value)s' value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
-"invalid time."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2114
-msgid "Time"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2240
-msgid "URL"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2262
-msgid "Raw binary data"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2312
-#, python-format
-msgid "'%(value)s' is not a valid UUID."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/__init__.py:2314
-msgid "Universally unique identifier"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/files.py:221
-msgid "File"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/files.py:360
-msgid "Image"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/related.py:778
-#, python-format
-msgid "%(model)s instance with %(field)s %(value)r does not exist."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/related.py:780
-msgid "Foreign Key (type determined by related field)"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/related.py:1007
-msgid "One-to-one relationship"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/related.py:1057
-#, python-format
-msgid "%(from)s-%(to)s relationship"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/related.py:1058
-#, python-format
-msgid "%(from)s-%(to)s relationships"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/db/models/fields/related.py:1100
-msgid "Many-to-many relationship"
-msgstr ""
-
-#. Translators: If found as last label character, these punctuation
-#. characters will prevent the default label_suffix to be appended to the label
-#: env/lib/python3.7/site-packages/django/forms/boundfield.py:146
-msgid ":?.!"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/fields.py:245
-msgid "Enter a whole number."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/fields.py:396
-#: env/lib/python3.7/site-packages/django/forms/fields.py:1126
-msgid "Enter a valid date."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/fields.py:420
-#: env/lib/python3.7/site-packages/django/forms/fields.py:1127
-msgid "Enter a valid time."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/fields.py:442
-msgid "Enter a valid date/time."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/fields.py:471
-msgid "Enter a valid duration."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/fields.py:472
-#, python-brace-format
-msgid "The number of days must be between {min_days} and {max_days}."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/fields.py:532
-msgid "No file was submitted. Check the encoding type on the form."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/fields.py:533
-msgid "No file was submitted."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/fields.py:534
-msgid "The submitted file is empty."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/fields.py:536
-#, python-format
-msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
-msgid_plural ""
-"Ensure this filename has at most %(max)d characters (it has %(length)d)."
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.7/site-packages/django/forms/fields.py:539
-msgid "Please either submit a file or check the clear checkbox, not both."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/fields.py:600
-msgid ""
-"Upload a valid image. The file you uploaded was either not an image or a "
-"corrupted image."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/fields.py:762
-#: env/lib/python3.7/site-packages/django/forms/fields.py:852
-#: env/lib/python3.7/site-packages/django/forms/models.py:1270
-#, python-format
-msgid "Select a valid choice. %(value)s is not one of the available choices."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/fields.py:853
-#: env/lib/python3.7/site-packages/django/forms/fields.py:968
-#: env/lib/python3.7/site-packages/django/forms/models.py:1269
-msgid "Enter a list of values."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/fields.py:969
-msgid "Enter a complete value."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/fields.py:1185
-msgid "Enter a valid UUID."
-msgstr ""
-
-#. Translators: This is the default suffix added to form field labels
-#: env/lib/python3.7/site-packages/django/forms/forms.py:86
-msgid ":"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/forms.py:212
-#, python-format
-msgid "(Hidden field %(name)s) %(error)s"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/formsets.py:91
-msgid "ManagementForm data is missing or has been tampered with"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/formsets.py:338
-#, python-format
-msgid "Please submit %d or fewer forms."
-msgid_plural "Please submit %d or fewer forms."
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.7/site-packages/django/forms/formsets.py:345
-#, python-format
-msgid "Please submit %d or more forms."
-msgid_plural "Please submit %d or more forms."
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.7/site-packages/django/forms/formsets.py:371
-#: env/lib/python3.7/site-packages/django/forms/formsets.py:373
-msgid "Order"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/formsets.py:375
-msgid "Delete"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/models.py:751
-#, python-format
-msgid "Please correct the duplicate data for %(field)s."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/models.py:755
-#, python-format
-msgid "Please correct the duplicate data for %(field)s, which must be unique."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/models.py:761
-#, python-format
-msgid ""
-"Please correct the duplicate data for %(field_name)s which must be unique "
-"for the %(lookup)s in %(date_field)s."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/models.py:770
-msgid "Please correct the duplicate values below."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/models.py:1091
-msgid "The inline value did not match the parent instance."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/models.py:1158
-msgid "Select a valid choice. That choice is not one of the available choices."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/models.py:1272
-#, python-format
-msgid "\"%(pk)s\" is not a valid value."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/utils.py:162
-#, python-format
-msgid ""
-"%(datetime)s couldn't be interpreted in time zone %(current_timezone)s; it "
-"may be ambiguous or it may not exist."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/widgets.py:395
-msgid "Clear"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/widgets.py:396
-msgid "Currently"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/widgets.py:397
-msgid "Change"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/widgets.py:709
-msgid "Unknown"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/widgets.py:710
-msgid "Yes"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/forms/widgets.py:711
-msgid "No"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/template/defaultfilters.py:788
-msgid "yes,no,maybe"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/template/defaultfilters.py:817
-#: env/lib/python3.7/site-packages/django/template/defaultfilters.py:834
-#, python-format
-msgid "%(size)d byte"
-msgid_plural "%(size)d bytes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.7/site-packages/django/template/defaultfilters.py:836
-#, python-format
-msgid "%s KB"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/template/defaultfilters.py:838
-#, python-format
-msgid "%s MB"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/template/defaultfilters.py:840
-#, python-format
-msgid "%s GB"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/template/defaultfilters.py:842
-#, python-format
-msgid "%s TB"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/template/defaultfilters.py:844
-#, python-format
-msgid "%s PB"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dateformat.py:62
-msgid "p.m."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dateformat.py:63
-msgid "a.m."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dateformat.py:68
-msgid "PM"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dateformat.py:69
-msgid "AM"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dateformat.py:150
-msgid "midnight"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dateformat.py:152
-msgid "noon"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:6
-msgid "Monday"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:6
-msgid "Tuesday"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:6
-msgid "Wednesday"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:6
-msgid "Thursday"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:6
-msgid "Friday"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:7
-msgid "Saturday"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:7
-msgid "Sunday"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:10
-msgid "Mon"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:10
-msgid "Tue"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:10
-msgid "Wed"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:10
-msgid "Thu"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:10
-msgid "Fri"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:11
-msgid "Sat"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:11
-msgid "Sun"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:14
-msgid "January"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:14
-msgid "February"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:14
-msgid "March"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:14
-msgid "April"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:14
-msgid "May"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:14
-msgid "June"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:15
-msgid "July"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:15
-msgid "August"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:15
-msgid "September"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:15
-msgid "October"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:15
-msgid "November"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:16
-msgid "December"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:19
-msgid "jan"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:19
-msgid "feb"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:19
-msgid "mar"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:19
-msgid "apr"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:19
-msgid "may"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:19
-msgid "jun"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:20
-msgid "jul"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:20
-msgid "aug"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:20
-msgid "sep"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:20
-msgid "oct"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:20
-msgid "nov"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:20
-msgid "dec"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:23
-msgctxt "abbrev. month"
-msgid "Jan."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:24
-msgctxt "abbrev. month"
-msgid "Feb."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:25
-msgctxt "abbrev. month"
-msgid "March"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:26
-msgctxt "abbrev. month"
-msgid "April"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:27
-msgctxt "abbrev. month"
-msgid "May"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:28
-msgctxt "abbrev. month"
-msgid "June"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:29
-msgctxt "abbrev. month"
-msgid "July"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:30
-msgctxt "abbrev. month"
-msgid "Aug."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:31
-msgctxt "abbrev. month"
-msgid "Sept."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:32
-msgctxt "abbrev. month"
-msgid "Oct."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:33
-msgctxt "abbrev. month"
-msgid "Nov."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:34
-msgctxt "abbrev. month"
-msgid "Dec."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:37
-msgctxt "alt. month"
-msgid "January"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:38
-msgctxt "alt. month"
-msgid "February"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:39
-msgctxt "alt. month"
-msgid "March"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:40
-msgctxt "alt. month"
-msgid "April"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:41
-msgctxt "alt. month"
-msgid "May"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:42
-msgctxt "alt. month"
-msgid "June"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:43
-msgctxt "alt. month"
-msgid "July"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:44
-msgctxt "alt. month"
-msgid "August"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:45
-msgctxt "alt. month"
-msgid "September"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:46
-msgctxt "alt. month"
-msgid "October"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:47
-msgctxt "alt. month"
-msgid "November"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/dates.py:48
-msgctxt "alt. month"
-msgid "December"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/ipv6.py:8
-msgid "This is not a valid IPv6 address."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/text.py:67
-#, python-format
-msgctxt "String to return when truncating text"
-msgid "%(truncated_text)s…"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/text.py:233
-msgid "or"
-msgstr ""
-
-#. Translators: This string is used as a separator between list elements
-#: env/lib/python3.7/site-packages/django/utils/text.py:252
-#: env/lib/python3.7/site-packages/django/utils/timesince.py:83
-msgid ", "
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/utils/timesince.py:9
-#, python-format
-msgid "%d year"
-msgid_plural "%d years"
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.7/site-packages/django/utils/timesince.py:10
-#, python-format
-msgid "%d month"
-msgid_plural "%d months"
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.7/site-packages/django/utils/timesince.py:11
-#, python-format
-msgid "%d week"
-msgid_plural "%d weeks"
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.7/site-packages/django/utils/timesince.py:12
-#, python-format
-msgid "%d day"
-msgid_plural "%d days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.7/site-packages/django/utils/timesince.py:13
-#, python-format
-msgid "%d hour"
-msgid_plural "%d hours"
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.7/site-packages/django/utils/timesince.py:14
-#, python-format
-msgid "%d minute"
-msgid_plural "%d minutes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: env/lib/python3.7/site-packages/django/utils/timesince.py:72
-msgid "0 minutes"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/csrf.py:110
-msgid "Forbidden"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/csrf.py:111
-msgid "CSRF verification failed. Request aborted."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/csrf.py:115
-msgid ""
-"You are seeing this message because this HTTPS site requires a 'Referer "
-"header' to be sent by your Web browser, but none was sent. This header is "
-"required for security reasons, to ensure that your browser is not being "
-"hijacked by third parties."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/csrf.py:120
-msgid ""
-"If you have configured your browser to disable 'Referer' headers, please re-"
-"enable them, at least for this site, or for HTTPS connections, or for 'same-"
-"origin' requests."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/csrf.py:124
-msgid ""
-"If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or "
-"including the 'Referrer-Policy: no-referrer' header, please remove them. The "
-"CSRF protection requires the 'Referer' header to do strict referer checking. "
-"If you're concerned about privacy, use alternatives like <a rel=\"noreferrer"
-"\" ...> for links to third-party sites."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/csrf.py:132
-msgid ""
-"You are seeing this message because this site requires a CSRF cookie when "
-"submitting forms. This cookie is required for security reasons, to ensure "
-"that your browser is not being hijacked by third parties."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/csrf.py:137
-msgid ""
-"If you have configured your browser to disable cookies, please re-enable "
-"them, at least for this site, or for 'same-origin' requests."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/csrf.py:142
-msgid "More information is available with DEBUG=True."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/generic/dates.py:41
-msgid "No year specified"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/generic/dates.py:61
-#: env/lib/python3.7/site-packages/django/views/generic/dates.py:111
-#: env/lib/python3.7/site-packages/django/views/generic/dates.py:208
-msgid "Date out of range"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/generic/dates.py:90
-msgid "No month specified"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/generic/dates.py:142
-msgid "No day specified"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/generic/dates.py:188
-msgid "No week specified"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/generic/dates.py:338
-#: env/lib/python3.7/site-packages/django/views/generic/dates.py:367
-#, python-format
-msgid "No %(verbose_name_plural)s available"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/generic/dates.py:589
-#, python-format
-msgid ""
-"Future %(verbose_name_plural)s not available because %(class_name)s."
-"allow_future is False."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/generic/dates.py:623
-#, python-format
-msgid "Invalid date string '%(datestr)s' given format '%(format)s'"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/generic/detail.py:54
-#, python-format
-msgid "No %(verbose_name)s found matching the query"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/generic/list.py:67
-msgid "Page is not 'last', nor can it be converted to an int."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/generic/list.py:72
-#, python-format
-msgid "Invalid page (%(page_number)s): %(message)s"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/generic/list.py:154
-#, python-format
-msgid "Empty list and '%(class_name)s.allow_empty' is False."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/static.py:40
-msgid "Directory indexes are not allowed here."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/static.py:42
-#, python-format
-msgid "\"%(path)s\" does not exist"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/static.py:80
-#, python-format
-msgid "Index of %(directory)s"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:6
-msgid "Django: the Web framework for perfectionists with deadlines."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:345
-#, python-format
-msgid ""
-"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:367
-msgid "The install worked successfully! Congratulations!"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:368
-#, python-format
-msgid ""
-"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
-"%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
-"\">DEBUG=True</a> is in your settings file and you have not configured any "
-"URLs."
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:383
-msgid "Django Documentation"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:384
-msgid "Topics, references, &amp; how-to's"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:395
-msgid "Tutorial: A Polling App"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:396
-msgid "Get started with Django"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:407
-msgid "Django Community"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:408
-msgid "Connect, get help, or contribute"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:313
-msgid "usage: "
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:821
-msgid ".__call__() not defined"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1146
-#, python-format
-msgid "argument \"-\" with mode %r"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1349
-#, python-format
-msgid "cannot merge actions - two groups are named %r"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1387
-msgid "'required' is an invalid argument for positionals"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1428
-#, python-format
-msgid "dest= is required for options like %r"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1445
-#, python-format
-msgid "invalid conflict_resolution value: %r"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1463
-#, python-format
-msgid "conflicting option string(s): %s"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1526
-msgid "mutually exclusive arguments must be optional"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1596
-msgid "positional arguments"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1597
-msgid "optional arguments"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1615
-msgid "show this help message and exit"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1621
-msgid "show program's version number and exit"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1653
-msgid "cannot have multiple subparser arguments"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1705
-#, python-format
-msgid "unrecognized arguments: %s"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1802
-#, python-format
-msgid "not allowed with argument %s"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1848
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1862
-#, python-format
-msgid "ignored explicit argument %r"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1952
-msgid "too few arguments"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1959
-#, python-format
-msgid "argument %s is required"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:1973
-#, python-format
-msgid "one of the arguments %s is required"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:2019
-msgid "expected one argument"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:2020
-msgid "expected at most one argument"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:2021
-msgid "expected at least one argument"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:2023
-#, python-format
-msgid "expected %s argument(s)"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:2142
-#, python-format
-msgid "unexpected option string: %s"
-msgstr ""
-
-#: env/lib/python3.7/site-packages/gunicorn/argparse_compat.py:2243
-#, python-format
-msgid "%r is not callable"
-msgstr ""
-
-#: main/templates/account/email/debug_email_confirmation_message.txt:1
-#, python-format
-msgid ""
-"Hello from %(site_name)s!\n"
-"\n"
-"[THIS MESSAGE IS CUSTOM_BUILT FOR THE CONSOLE. THIS IS *NOT* WHAT THE USER "
-"WILL SEE IN PRODUCTION.]\n"
-"[Edit 'templates/account/email/email_confirmation_message.html' to edit the "
-"production message.]\n"
-"\n"
-"You're receiving this e-mail because %(user_display)s provided this e-mail "
-"address to connect their account.\n"
-"[Click link in terminal using CMD+Click.]\n"
-"To confirm this is correct, go to %(activate_url)s\n"
-msgstr ""
-
-#: main/templates/account/email/debug_email_confirmation_message.txt:10
-#, python-format
-msgid ""
-"Thank you from %(site_name)s!\n"
-"%(site_domain)s"
-msgstr ""
-
 #: main/templates/account/email/debug_email_confirmation_subject.txt:3
 #: main/templates/account/email/email_confirmation_subject.txt:3
 msgid "Please Confirm Your E-mail Address"
 msgstr ""
 
-#: main/templates/account/email/email_confirmation_message.html:1
-#, python-format
-msgid ""
-"\n"
-"<!doctype html>\n"
-"<html>\n"
-"  <head>\n"
-"    <meta name=\"viewport\" content=\"width=device-width\">\n"
-"    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n"
-"    <title>Email Confirmation</title>\n"
-"    <style>\n"
-"@media only screen and (max-width: 620px) {\n"
-"  table[class=body] h1 {\n"
-"    font-size: 28px !important;\n"
-"    margin-bottom: 10px !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] p,\n"
-"table[class=body] ul,\n"
-"table[class=body] ol,\n"
-"table[class=body] td,\n"
-"table[class=body] span,\n"
-"table[class=body] a {\n"
-"    font-size: 16px !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .wrapper,\n"
-"table[class=body] .article {\n"
-"    padding: 10px !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .content {\n"
-"    padding: 0 !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .container {\n"
-"    padding: 0 !important;\n"
-"    width: 100%% !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .main {\n"
-"    border-left-width: 0 !important;\n"
-"    border-radius: 0 !important;\n"
-"    border-right-width: 0 !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .btn table {\n"
-"    width: 100%% !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .btn a {\n"
-"    width: 100%% !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .img-responsive {\n"
-"    height: auto !important;\n"
-"    max-width: 100%% !important;\n"
-"    width: auto !important;\n"
-"  }\n"
-"}\n"
-"@media all {\n"
-"  .ExternalClass {\n"
-"    width: 100%%;\n"
-"  }\n"
-"\n"
-"  .ExternalClass,\n"
-".ExternalClass p,\n"
-".ExternalClass span,\n"
-".ExternalClass font,\n"
-".ExternalClass td,\n"
-".ExternalClass div {\n"
-"    line-height: 100%%;\n"
-"  }\n"
-"\n"
-"  .apple-link a {\n"
-"    color: inherit !important;\n"
-"    font-family: inherit !important;\n"
-"    font-size: inherit !important;\n"
-"    font-weight: inherit !important;\n"
-"    line-height: inherit !important;\n"
-"    text-decoration: none !important;\n"
-"  }\n"
-"\n"
-"  #MessageViewBody a {\n"
-"    color: inherit;\n"
-"    text-decoration: none;\n"
-"    font-size: inherit;\n"
-"    font-family: inherit;\n"
-"    font-weight: inherit;\n"
-"    line-height: inherit;\n"
-"  }\n"
-"\n"
-"  .btn-primary table td:hover {\n"
-"    background-color: #2176C2 !important;\n"
-"  }\n"
-"\n"
-"  .btn-primary a:hover {\n"
-"    background-color: #2176C2 !important;\n"
-"    border-color: #2176C2 !important;\n"
-"  }\n"
-"}\n"
-"</style>\n"
-"  </head>\n"
-"  <body class=\"\" style=\"background-color: #f6f6f6; font-family: sans-"
-"serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: "
-"1.4; margin: 0; padding: 0; -ms-text-size-adjust: 100%%; -webkit-text-size-"
-"adjust: 100%%;\">\n"
-"    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"body\" "
-"style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: "
-"0pt; width: 100%%; background-color: #f6f6f6;\">\n"
-"      <tr>\n"
-"        <td style=\"font-family: sans-serif; font-size: 14px; vertical-"
-"align: top;\">&nbsp;</td>\n"
-"        <td class=\"container\" style=\"font-family: sans-serif; font-size: "
-"14px; vertical-align: top; display: block; Margin: 0 auto; max-width: 580px; "
-"padding: 10px; width: 580px;\">\n"
-"          <div class=\"content\" style=\"box-sizing: border-box; display: "
-"block; Margin: 0 auto; max-width: 580px; padding: 10px;\">\n"
-"\n"
-"            <!-- START CENTERED WHITE CONTAINER -->\n"
-"            <span class=\"preheader\" style=\"color: transparent; display: "
-"none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; "
-"mso-hide: all; visibility: hidden; width: 0;\">Confirm your account email.</"
-"span>\n"
-"            <table class=\"main\" style=\"border-collapse: separate; mso-"
-"table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%%; background: #ffffff; "
-"border-radius: 3px;\">\n"
-"\n"
-"              <!-- START MAIN CONTENT AREA -->\n"
-"              <tr>\n"
-"                <td class=\"wrapper\" style=\"font-family: sans-serif; font-"
-"size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;\">\n"
-"                  <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
-"style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: "
-"0pt; width: 100%%;\">\n"
-"                    <tr>\n"
-"                      <td style=\"font-family: sans-serif; font-size: 14px; "
-"vertical-align: top;\">\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\">Welcome to "
-"Representable.org!</p>\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\">Click the button "
-"below to confirm your email address for your Representable.org account. If "
-"you didn't create an account with Representable.org you can safely delete "
-"the email.</p>\n"
-"                        <table border=\"0\" cellpadding=\"0\" cellspacing="
-"\"0\" class=\"btn btn-primary\" style=\"border-collapse: separate; mso-table-"
-"lspace: 0pt; mso-table-rspace: 0pt; width: 100%%; box-sizing: border-box;"
-"\">\n"
-"                          <tbody>\n"
-"                            <tr>\n"
-"                              <td align=\"left\" style=\"font-family: sans-"
-"serif; font-size: 14px; vertical-align: top; padding-bottom: 15px;\">\n"
-"                                <table border=\"0\" cellpadding=\"0\" "
-"cellspacing=\"0\" style=\"border-collapse: separate; mso-table-lspace: 0pt; "
-"mso-table-rspace: 0pt; width: auto;\">\n"
-"                                  <tbody>\n"
-"                                    <tr>\n"
-"                                      <td style=\"font-family: sans-serif; "
-"font-size: 14px; vertical-align: top; background-color: #3498db; border-"
-"radius: 5px; text-align: center;\"> <a href=\"%(activate_url)s\" target="
-"\"_blank\" style=\"display: inline-block; color: #ffffff; background-color: "
-"#2A94F4; border: solid 1px #2A94F4; border-radius: 5px; box-sizing: border-"
-"box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: "
-"bold; margin: 0; padding: 12px 25px; text-transform: capitalize; border-"
-"color: #3498db;\">Confirm Email</a> </td>\n"
-"                                    </tr>\n"
-"                                  </tbody>\n"
-"                                </table>\n"
-"                              </td>\n"
-"                            </tr>\n"
-"                          </tbody>\n"
-"                        </table>\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\">If the button doesn't "
-"work, copy and paste the following link in your browser:</p>\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\"><a href="
-"\"%(activate_url)s\">%(activate_url)s</a></p>\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\">The Representable.org "
-"Team</p>\n"
-"                      </td>\n"
-"                    </tr>\n"
-"                  </table>\n"
-"                </td>\n"
-"              </tr>\n"
-"\n"
-"            <!-- END MAIN CONTENT AREA -->\n"
-"            </table>\n"
-"\n"
-"            <!-- START FOOTER -->\n"
-"            <div class=\"footer\" style=\"clear: both; Margin-top: 10px; "
-"text-align: center; width: 100%%;\">\n"
-"              <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style="
-"\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; "
-"width: 100%%;\">\n"
-"                <tr>\n"
-"                  <td class=\"content-block\" style=\"font-family: sans-"
-"serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-"
-"size: 12px; color: #999999; text-align: center;\">\n"
-"                    <span class=\"apple-link\" style=\"color: #999999; font-"
-"size: 12px; text-align: center;\">Representable.org</span>\n"
-"                  </td>\n"
-"                </tr>\n"
-"              </table>\n"
-"            </div>\n"
-"            <!-- END FOOTER -->\n"
-"\n"
-"          <!-- END CENTERED WHITE CONTAINER -->\n"
-"          </div>\n"
-"        </td>\n"
-"        <td style=\"font-family: sans-serif; font-size: 14px; vertical-"
-"align: top;\">&nbsp;</td>\n"
-"      </tr>\n"
-"    </table>\n"
-"  </body>\n"
-"</html>\n"
+#: main/templates/account/email/email_confirmation_message.html:7
+msgid "Email Confirmation"
 msgstr ""
 
-#: main/templates/account/email/email_template_do_not_delete.html:1
-#, python-format
+#: main/templates/account/email/email_confirmation_message.html:118
+#: main/templates/account/email/email_template_do_not_delete.html:115
+#, fuzzy
+#| msgid "About Representable"
+msgid "Welcome to Representable.org!"
+msgstr "معلومات عن ربريسنتبل"
+
+#: main/templates/account/email/email_confirmation_message.html:119
+#: main/templates/account/email/email_template_do_not_delete.html:116
 msgid ""
-"\n"
-"<!doctype html>\n"
-"<html>\n"
-"  <head>\n"
-"    <meta name=\"viewport\" content=\"width=device-width\">\n"
-"    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n"
-"    <title>Simple Transactional Email</title>\n"
-"    <style>\n"
-"    /* -------------------------------------\n"
-"        INLINED WITH htmlemail.io/inline\n"
-"    ------------------------------------- */\n"
-"    /* -------------------------------------\n"
-"        RESPONSIVE AND MOBILE FRIENDLY STYLES\n"
-"    ------------------------------------- */\n"
-"    @media only screen and (max-width: 620px) {\n"
-"      table[class=body] h1 {\n"
-"        font-size: 28px !important;\n"
-"        margin-bottom: 10px !important;\n"
-"      }\n"
-"      table[class=body] p,\n"
-"            table[class=body] ul,\n"
-"            table[class=body] ol,\n"
-"            table[class=body] td,\n"
-"            table[class=body] span,\n"
-"            table[class=body] a {\n"
-"        font-size: 16px !important;\n"
-"      }\n"
-"      table[class=body] .wrapper,\n"
-"            table[class=body] .article {\n"
-"        padding: 10px !important;\n"
-"      }\n"
-"      table[class=body] .content {\n"
-"        padding: 0 !important;\n"
-"      }\n"
-"      table[class=body] .container {\n"
-"        padding: 0 !important;\n"
-"        width: 100%% !important;\n"
-"      }\n"
-"      table[class=body] .main {\n"
-"        border-left-width: 0 !important;\n"
-"        border-radius: 0 !important;\n"
-"        border-right-width: 0 !important;\n"
-"      }\n"
-"      table[class=body] .btn table {\n"
-"        width: 100%% !important;\n"
-"      }\n"
-"      table[class=body] .btn a {\n"
-"        width: 100%% !important;\n"
-"      }\n"
-"      table[class=body] .img-responsive {\n"
-"        height: auto !important;\n"
-"        max-width: 100%% !important;\n"
-"        width: auto !important;\n"
-"      }\n"
-"    }\n"
-"\n"
-"    /* -------------------------------------\n"
-"        PRESERVE THESE STYLES IN THE HEAD\n"
-"    ------------------------------------- */\n"
-"    @media all {\n"
-"      .ExternalClass {\n"
-"        width: 100%%;\n"
-"      }\n"
-"      .ExternalClass,\n"
-"            .ExternalClass p,\n"
-"            .ExternalClass span,\n"
-"            .ExternalClass font,\n"
-"            .ExternalClass td,\n"
-"            .ExternalClass div {\n"
-"        line-height: 100%%;\n"
-"      }\n"
-"      .apple-link a {\n"
-"        color: inherit !important;\n"
-"        font-family: inherit !important;\n"
-"        font-size: inherit !important;\n"
-"        font-weight: inherit !important;\n"
-"        line-height: inherit !important;\n"
-"        text-decoration: none !important;\n"
-"      }\n"
-"      #MessageViewBody a {\n"
-"        color: inherit;\n"
-"        text-decoration: none;\n"
-"        font-size: inherit;\n"
-"        font-family: inherit;\n"
-"        font-weight: inherit;\n"
-"        line-height: inherit;\n"
-"      }\n"
-"      .btn-primary table td:hover {\n"
-"        background-color: #34495e !important;\n"
-"      }\n"
-"      .btn-primary a:hover {\n"
-"        background-color: #34495e !important;\n"
-"        border-color: #34495e !important;\n"
-"      }\n"
-"    }\n"
-"    </style>\n"
-"  </head>\n"
-"  <body class=\"\" style=\"background-color: #f6f6f6; font-family: sans-"
-"serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: "
-"1.4; margin: 0; padding: 0; -ms-text-size-adjust: 100%%; -webkit-text-size-"
-"adjust: 100%%;\">\n"
-"    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"body\" "
-"style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: "
-"0pt; width: 100%%; background-color: #f6f6f6;\">\n"
-"      <tr>\n"
-"        <td style=\"font-family: sans-serif; font-size: 14px; vertical-"
-"align: top;\">&nbsp;</td>\n"
-"        <td class=\"container\" style=\"font-family: sans-serif; font-size: "
-"14px; vertical-align: top; display: block; Margin: 0 auto; max-width: 580px; "
-"padding: 10px; width: 580px;\">\n"
-"          <div class=\"content\" style=\"box-sizing: border-box; display: "
-"block; Margin: 0 auto; max-width: 580px; padding: 10px;\">\n"
-"\n"
-"            <!-- START CENTERED WHITE CONTAINER -->\n"
-"            <span class=\"preheader\" style=\"color: transparent; display: "
-"none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; "
-"mso-hide: all; visibility: hidden; width: 0;\">This is preheader text. Some "
-"clients will show this text as a preview.</span>\n"
-"            <table class=\"main\" style=\"border-collapse: separate; mso-"
-"table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%%; background: #ffffff; "
-"border-radius: 3px;\">\n"
-"\n"
-"              <!-- START MAIN CONTENT AREA -->\n"
-"              <tr>\n"
-"                <td class=\"wrapper\" style=\"font-family: sans-serif; font-"
-"size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;\">\n"
-"                  <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
-"style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: "
-"0pt; width: 100%%;\">\n"
-"                    <tr>\n"
-"                      <td style=\"font-family: sans-serif; font-size: 14px; "
-"vertical-align: top;\">\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\">Welcome to "
-"Representable.org!</p>\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\">Click the button "
-"below to confirm your email address for your Representable.org account. If "
-"you didn't create an account with Representable.org you can safely delete "
-"the email.</p>\n"
-"                        <table border=\"0\" cellpadding=\"0\" cellspacing="
-"\"0\" class=\"btn btn-primary\" style=\"border-collapse: separate; mso-table-"
-"lspace: 0pt; mso-table-rspace: 0pt; width: 100%%; box-sizing: border-box;"
-"\">\n"
-"                          <tbody>\n"
-"                            <tr>\n"
-"                              <td align=\"left\" style=\"font-family: sans-"
-"serif; font-size: 14px; vertical-align: top; padding-bottom: 15px;\">\n"
-"                                <table border=\"0\" cellpadding=\"0\" "
-"cellspacing=\"0\" style=\"border-collapse: separate; mso-table-lspace: 0pt; "
-"mso-table-rspace: 0pt; width: auto;\">\n"
-"                                  <tbody>\n"
-"                                    <tr>\n"
-"                                      <td style=\"font-family: sans-serif; "
-"font-size: 14px; vertical-align: top; background-color: #3498db; border-"
-"radius: 5px; text-align: center;\"> <a href=\"%(activate_url)s\" target="
-"\"_blank\" style=\"display: inline-block; color: #ffffff; background-color: "
-"#3498db; border: solid 1px #3498db; border-radius: 5px; box-sizing: border-"
-"box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: "
-"bold; margin: 0; padding: 12px 25px; text-transform: capitalize; border-"
-"color: #3498db;\">Confirm Email</a> </td>\n"
-"                                    </tr>\n"
-"                                  </tbody>\n"
-"                                </table>\n"
-"                              </td>\n"
-"                            </tr>\n"
-"                          </tbody>\n"
-"                        </table>\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\">If the button doesn't "
-"work, copy and paste the following link in your browser:</p>\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\"><a href="
-"\"%(activate_url)s\">%(activate_url)s</a></p>\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\">The Representable.org "
-"Team</p>\n"
-"                      </td>\n"
-"                    </tr>\n"
-"                  </table>\n"
-"                </td>\n"
-"              </tr>\n"
-"\n"
-"            <!-- END MAIN CONTENT AREA -->\n"
-"            </table>\n"
-"\n"
-"            <!-- START FOOTER -->\n"
-"            <div class=\"footer\" style=\"clear: both; Margin-top: 10px; "
-"text-align: center; width: 100%%;\">\n"
-"              <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style="
-"\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; "
-"width: 100%%;\">\n"
-"                <tr>\n"
-"                  <td class=\"content-block\" style=\"font-family: sans-"
-"serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-"
-"size: 12px; color: #999999; text-align: center;\">\n"
-"                    <span class=\"apple-link\" style=\"color: #999999; font-"
-"size: 12px; text-align: center;\">Representable.org</span>\n"
-"                  </td>\n"
-"                </tr>\n"
-"              </table>\n"
-"            </div>\n"
-"            <!-- END FOOTER -->\n"
-"\n"
-"          <!-- END CENTERED WHITE CONTAINER -->\n"
-"          </div>\n"
-"        </td>\n"
-"        <td style=\"font-family: sans-serif; font-size: 14px; vertical-"
-"align: top;\">&nbsp;</td>\n"
-"      </tr>\n"
-"    </table>\n"
-"  </body>\n"
-"</html>\n"
+"Click the button below to confirm your email address for your Representable."
+"org account. If you didn't create an account with Representable.org you can "
+"safely delete the email."
 msgstr ""
 
-#: main/templates/account/email/password_reset_key_message.html:1
-#, python-format
+#: main/templates/account/email/email_confirmation_message.html:135
+#: main/templates/account/email/email_template_do_not_delete.html:132
+#: main/templates/account/email/password_reset_key_message.html:137
 msgid ""
-"\n"
-"<!doctype html>\n"
-"<html>\n"
-"  <head>\n"
-"    <meta name=\"viewport\" content=\"width=device-width\">\n"
-"    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n"
-"    <title>Password Reset Email</title>\n"
-"    <style>\n"
-"@media only screen and (max-width: 620px) {\n"
-"  table[class=body] h1 {\n"
-"    font-size: 28px !important;\n"
-"    margin-bottom: 10px !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] p,\n"
-"table[class=body] ul,\n"
-"table[class=body] ol,\n"
-"table[class=body] td,\n"
-"table[class=body] span,\n"
-"table[class=body] a {\n"
-"    font-size: 16px !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .wrapper,\n"
-"table[class=body] .article {\n"
-"    padding: 10px !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .content {\n"
-"    padding: 0 !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .container {\n"
-"    padding: 0 !important;\n"
-"    width: 100%% !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .main {\n"
-"    border-left-width: 0 !important;\n"
-"    border-radius: 0 !important;\n"
-"    border-right-width: 0 !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .btn table {\n"
-"    width: 100%% !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .btn a {\n"
-"    width: 100%% !important;\n"
-"  }\n"
-"\n"
-"  table[class=body] .img-responsive {\n"
-"    height: auto !important;\n"
-"    max-width: 100%% !important;\n"
-"    width: auto !important;\n"
-"  }\n"
-"}\n"
-"@media all {\n"
-"  .ExternalClass {\n"
-"    width: 100%%;\n"
-"  }\n"
-"\n"
-"  .ExternalClass,\n"
-".ExternalClass p,\n"
-".ExternalClass span,\n"
-".ExternalClass font,\n"
-".ExternalClass td,\n"
-".ExternalClass div {\n"
-"    line-height: 100%%;\n"
-"  }\n"
-"\n"
-"  .apple-link a {\n"
-"    color: inherit !important;\n"
-"    font-family: inherit !important;\n"
-"    font-size: inherit !important;\n"
-"    font-weight: inherit !important;\n"
-"    line-height: inherit !important;\n"
-"    text-decoration: none !important;\n"
-"  }\n"
-"\n"
-"  #MessageViewBody a {\n"
-"    color: inherit;\n"
-"    text-decoration: none;\n"
-"    font-size: inherit;\n"
-"    font-family: inherit;\n"
-"    font-weight: inherit;\n"
-"    line-height: inherit;\n"
-"  }\n"
-"\n"
-"  .btn-primary table td:hover {\n"
-"    background-color: #2176C2 !important;\n"
-"  }\n"
-"\n"
-"  .btn-primary a:hover {\n"
-"    background-color: #2176C2 !important;\n"
-"    border-color: #2176C2 !important;\n"
-"  }\n"
-"}\n"
-"</style>\n"
-"  </head>\n"
-"  <body class=\"\" style=\"background-color: #f6f6f6; font-family: sans-"
-"serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: "
-"1.4; margin: 0; padding: 0; -ms-text-size-adjust: 100%%; -webkit-text-size-"
-"adjust: 100%%;\">\n"
-"    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"body\" "
-"style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: "
-"0pt; width: 100%%; background-color: #f6f6f6;\">\n"
-"      <tr>\n"
-"        <td style=\"font-family: sans-serif; font-size: 14px; vertical-"
-"align: top;\">&nbsp;</td>\n"
-"        <td class=\"container\" style=\"font-family: sans-serif; font-size: "
-"14px; vertical-align: top; display: block; Margin: 0 auto; max-width: 580px; "
-"padding: 10px; width: 580px;\">\n"
-"          <div class=\"content\" style=\"box-sizing: border-box; display: "
-"block; Margin: 0 auto; max-width: 580px; padding: 10px;\">\n"
-"\n"
-"            <!-- START CENTERED WHITE CONTAINER -->\n"
-"            <span class=\"preheader\" style=\"color: transparent; display: "
-"none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; "
-"mso-hide: all; visibility: hidden; width: 0;\">Reset your password.</span>\n"
-"            <table class=\"main\" style=\"border-collapse: separate; mso-"
-"table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%%; background: #ffffff; "
-"border-radius: 3px;\">\n"
-"\n"
-"              <!-- START MAIN CONTENT AREA -->\n"
-"              <tr>\n"
-"                <td class=\"wrapper\" style=\"font-family: sans-serif; font-"
-"size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;\">\n"
-"                  <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
-"style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: "
-"0pt; width: 100%%;\">\n"
-"                    <tr>\n"
-"                      <td style=\"font-family: sans-serif; font-size: 14px; "
-"vertical-align: top;\">\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\">Hello from "
-"Representable.org!</p>\n"
-"                        <p style=\"font-family: sans-serif; font-size: 14px; "
-"font-weight: normal; margin: 0; Margin-bottom: 15px;\">You're receiving this "
-"e-mail because you or someone else has requested a password for your user "
-"account.\n"
-"                            It can be safely ignored if you did not request "
-"a password reset. Click the link below to reset your password.</p>"
+"If the button doesn't work, copy and paste the following link in your "
+"browser:"
 msgstr ""
+
+#: main/templates/account/email/email_confirmation_message.html:137
+#: main/templates/account/email/email_template_do_not_delete.html:134
+#, fuzzy
+#| msgid "About Representable"
+msgid "The Representable.org Team"
+msgstr "معلومات عن ربريسنتبل"
+
+#: main/templates/account/email/email_confirmation_message.html:152
+#, fuzzy
+#| msgid "About Representable"
+msgid "Representable.org"
+msgstr "معلومات عن ربريسنتبل"
+
+#: main/templates/account/email/email_template_do_not_delete.html:106
+msgid "This is preheader text. Some clients will show this text as a preview."
+msgstr ""
+
+#: main/templates/account/email/email_template_do_not_delete.html:124
+#: main/templates/account/email/password_reset_key_message.html:129
+msgid "Confirm Email"
+msgstr ""
+
+#: main/templates/account/email/password_reset_key_message.html:7
+msgid "Password Reset Email"
+msgstr ""
+
+#: main/templates/account/email/password_reset_key_message.html:118
+#, fuzzy
+#| msgid "About Representable"
+msgid "Hello from Representable.org!"
+msgstr "معلومات عن ربريسنتبل"
 
 #: main/templates/account/email/password_reset_key_message.html:140
 #, python-format
@@ -1996,44 +90,7 @@ msgstr ""
 
 #: main/templates/account/email/password_reset_key_message.html:142
 #, python-format
-msgid ""
-"Thank you for using %(site_name)s!</p>\n"
-"                      </td>\n"
-"                    </tr>\n"
-"                  </table>\n"
-"                </td>\n"
-"              </tr>\n"
-"\n"
-"            <!-- END MAIN CONTENT AREA -->\n"
-"            </table>\n"
-"\n"
-"            <!-- START FOOTER -->\n"
-"            <div class=\"footer\" style=\"clear: both; Margin-top: 10px; "
-"text-align: center; width: 100%%;\">\n"
-"              <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style="
-"\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; "
-"width: 100%%;\">\n"
-"                <tr>\n"
-"                  <td class=\"content-block\" style=\"font-family: sans-"
-"serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; font-"
-"size: 12px; color: #999999; text-align: center;\">\n"
-"                    <span class=\"apple-link\" style=\"color: #999999; font-"
-"size: 12px; text-align: center;\">Representable.org</span>\n"
-"                  </td>\n"
-"                </tr>\n"
-"              </table>\n"
-"            </div>\n"
-"            <!-- END FOOTER -->\n"
-"\n"
-"          <!-- END CENTERED WHITE CONTAINER -->\n"
-"          </div>\n"
-"        </td>\n"
-"        <td style=\"font-family: sans-serif; font-size: 14px; vertical-"
-"align: top;\">&nbsp;</td>\n"
-"      </tr>\n"
-"    </table>\n"
-"  </body>\n"
-"</html>\n"
+msgid "Thank you for using %(current_site.name)s!"
 msgstr ""
 
 #: main/templates/account/email/password_reset_key_subject.txt:3
@@ -2188,6 +245,184 @@ msgid ""
 "within a few minutes."
 msgstr ""
 
+#: main/templates/main/dashboard/index.html:10
+msgid "Dashboard"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:20
+#, fuzzy
+#| msgid "For organizations"
+msgid "Organizations"
+msgstr "للمنظمات"
+
+#: main/templates/main/dashboard/index.html:31
+msgid ""
+" You're currently not part of any organizations.\n"
+"                Ask someone to add you to their organization or create a new "
+"one below. "
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:36
+msgid "Create New"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:45
+msgid "Quick Links"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:49
+#, fuzzy
+#| msgid "For organizations"
+msgid "Create Organization"
+msgstr "للمنظمات"
+
+#: main/templates/main/dashboard/index.html:50
+msgid "Create Entry"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:51
+#: representable/templates/base.html:266
+msgid "My Communities"
+msgstr "مجتمعاتي"
+
+#: main/templates/main/dashboard/index.html:62
+#: representable/templates/base.html:130
+#: representable/templates/base_nofooter.html:130
+msgid "Account Settings"
+msgstr "إعدادات التتبع"
+
+#: main/templates/main/dashboard/index.html:65
+#: main/templates/main/dashboard/index.html:67
+msgid "Reset password"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:66
+msgid ""
+"Reset your password by pressing on the following button. You will receive an "
+"email with the appropiate instructions."
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:70
+#, fuzzy
+#| msgid "Account Settings"
+msgid "Cookie Settings"
+msgstr "إعدادات التتبع"
+
+#: main/templates/main/dashboard/index.html:71
+msgid ""
+"We use Mixpanel and Google Analytics to collect anonymized information about "
+"users' website usage. We use this information to improve our website "
+"experience. You can control whether we have access to this information or "
+"not."
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:73
+msgid ""
+"\n"
+"              <p>Based on our records, you have <strong>opted in</strong> "
+"for anonymized information collection. To <strong>opt out</strong>, press on "
+"the button below.</p>\n"
+"              "
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:79
+msgid ""
+"\n"
+"              <p>Based on our records, you have <strong>opted out</strong> "
+"of anonymized information collection. To <strong>opt in</strong>, press on "
+"the button below.</p>\n"
+"              "
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:12
+#, fuzzy
+#| msgid "Are you the leader of an organization?"
+msgid "Thank you for creating an organization!"
+msgstr "هل أنت قائد منظمة"
+
+#: main/templates/main/dashboard/partners/thanks.html:15
+msgid "Please verify your email."
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:19
+msgid "We are excited to work with you!"
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:20
+msgid ""
+"Check out our <a href=\"https://docs.google.com/document/"
+"d/1NJMUpZodlqo96xVASJzihpcfgWir18ifMaMD380zrXE/edit\">organization guide</a> "
+"to learn more about using Representable to gather community maps."
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:21
+msgid ""
+"Contact us at <a href=\"mailto:team@representable.org\"> team@representable."
+"org</a> with any questions. "
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:22
+msgid ""
+"Click the button below to go to the Organization Dashboard and get started "
+"by creating a community mapping drive. "
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:25
+msgid ""
+"Email verification will be necessary\n"
+"                        to access certain organization features on "
+"Representable. We have resent an email verification link to your inbox."
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:28
+#, fuzzy
+#| msgid "For organizations"
+msgid "organization dashboard"
+msgstr "للمنظمات"
+
+#: main/templates/main/drives/index.html:5
+msgid "Drives"
+msgstr ""
+
+#: main/templates/main/drives/page.html:20 main/templates/main/index.html:24
+msgid "Gerrymandering is silencing communities."
+msgstr ""
+
+#: main/templates/main/drives/page.html:21
+#, fuzzy
+#| msgid ""
+#| "Many organizations have partnered with Representable.org to collect "
+#| "community-of-interest data."
+msgid ""
+"Make your voice heard with Representable <br> and put your community on the "
+"map."
+msgstr "تتشارك كثير من المنظمات مع رَبْريسانْتَبُل لجمع بيانات عن مجتمعات المصلحة "
+
+#: main/templates/main/drives/page.html:26
+#: main/templates/main/pages/about.html:48
+msgid "What is Representable?"
+msgstr "ما هو ربريسنتبل؟"
+
+#: main/templates/main/drives/page.html:27
+msgid ""
+"Representable allows people to draw communities of interest and share "
+"information about the interests and needs in those communities.\n"
+"              <br><br>Making this information available encourages mapmakers "
+"to take these communities into account during redistricting, in order to "
+"avoid gerrymandering and the “packing and cracking” of marginalized groups. "
+"</p>"
+msgstr ""
+
+#: main/templates/main/drives/page.html:56
+#, fuzzy
+#| msgid "Draw a Community Map"
+msgid "Draw My Community"
+msgstr "ارسم خريطة محلية"
+
+#: main/templates/main/entry_address.html:7
+msgid "Step 1"
+msgstr ""
+
 #: main/templates/main/entry_address.html:10
 msgid "Tell us about yourself."
 msgstr ""
@@ -2224,40 +459,57 @@ msgstr ""
 msgid "Your Name"
 msgstr ""
 
+#: main/templates/main/entry_address.html:103
+msgid "Street"
+msgstr ""
+
+#: main/templates/main/entry_address.html:144
+msgid "City"
+msgstr ""
+
+#: main/templates/main/entry_address.html:149
+msgid "State"
+msgstr ""
+
+#: main/templates/main/entry_address.html:173
+msgid "Zipcode"
+msgstr ""
+
 #: main/templates/main/entry_address.html:180
-#: main/templates/main/entry_survey.html:348
-#: main/templates/main/entry_survey.html:419
+#: main/templates/main/entry_survey.html:335
+#: main/templates/main/entry_survey.html:402
 msgid "NEXT"
 msgstr ""
 
-#: main/templates/main/entry_map.html:13
+#: main/templates/main/entry_map.html:17
 msgid ""
 "\n"
-"                        <p><strong>Search for a zipcode, address, or "
-"landmark to start. Then draw your community by clicking units on the map.</"
-"strong></p>\n"
-"                    "
+"                                    <p><strong>Search for a zipcode, "
+"address, or landmark to start. Then draw your community by clicking units on "
+"the map.</strong></p>\n"
+"                                "
 msgstr ""
 
-#: main/templates/main/entry_map.html:16
+#: main/templates/main/entry_map.html:20
 msgid ""
 "\n"
-"                        <p>Make sure that all your community is contained "
-"within the highlighted units, and that it does not contain gaps. The units "
-"are <a class=\"no-underline-link\" href=\"https://www.census.gov/programs-"
-"surveys/geography/about/glossary.html#par_textimage_4\" target=\"_blank"
-"\"><strong>census block groups</strong></a>, which are used by map drawers "
-"to draw voting districts.</p>\n"
-"                    "
+"                                    <p>Make sure that all your community is "
+"contained within the highlighted units, and that it does not contain gaps. "
+"The units are <a class=\"no-underline-link\" href=\"https://www.census.gov/"
+"programs-surveys/geography/about/glossary.html#par_textimage_4\" target="
+"\"_blank\"><strong>census block groups</strong></a>, which are used by map "
+"drawers to draw voting districts.</p>\n"
+"                                "
 msgstr ""
 
-#: main/templates/main/entry_map.html:41 main/templates/main/entry_map.html:166
+#: main/templates/main/entry_map.html:107
+#: main/templates/main/entry_map.html:231
 #, fuzzy
 #| msgid "Add your community"
 msgid "How to draw my community?"
 msgstr "أضف مجتمعك"
 
-#: main/templates/main/entry_map.html:43
+#: main/templates/main/entry_map.html:109
 msgid ""
 "\n"
 "                            Select units on the map by clicking with your "
@@ -2266,15 +518,18 @@ msgid ""
 "                        "
 msgstr ""
 
-#: main/templates/main/entry_map.html:56 main/templates/main/entry_map.html:181
+#: main/templates/main/entry_map.html:122
+#: main/templates/main/entry_map.html:246 representable/templates/base.html:113
+#: representable/templates/base_nofooter.html:113
 msgid "FAQ"
 msgstr ""
 
-#: main/templates/main/entry_map.html:60 main/templates/main/entry_map.html:185
+#: main/templates/main/entry_map.html:126
+#: main/templates/main/entry_map.html:250
 msgid "What are the units?"
 msgstr ""
 
-#: main/templates/main/entry_map.html:62
+#: main/templates/main/entry_map.html:128
 msgid ""
 "\n"
 "                                        The units are <strong>census block "
@@ -2282,11 +537,12 @@ msgid ""
 "                                    "
 msgstr ""
 
-#: main/templates/main/entry_map.html:67 main/templates/main/entry_map.html:192
+#: main/templates/main/entry_map.html:133
+#: main/templates/main/entry_map.html:257
 msgid "Why am I unable to save my map?"
 msgstr ""
 
-#: main/templates/main/entry_map.html:69
+#: main/templates/main/entry_map.html:135
 msgid ""
 "\n"
 "                                        Make sure that it does not contain "
@@ -2294,11 +550,12 @@ msgid ""
 "                                    "
 msgstr ""
 
-#: main/templates/main/entry_map.html:74 main/templates/main/entry_map.html:199
+#: main/templates/main/entry_map.html:140
+#: main/templates/main/entry_map.html:264
 msgid "Can I map outside of my state?"
 msgstr ""
 
-#: main/templates/main/entry_map.html:76
+#: main/templates/main/entry_map.html:142
 msgid ""
 "\n"
 "                                        In order to map outside of your "
@@ -2306,11 +563,12 @@ msgid ""
 "                                    "
 msgstr ""
 
-#: main/templates/main/entry_map.html:81 main/templates/main/entry_map.html:206
+#: main/templates/main/entry_map.html:147
+#: main/templates/main/entry_map.html:271
 msgid "How large should my community be?"
 msgstr ""
 
-#: main/templates/main/entry_map.html:83
+#: main/templates/main/entry_map.html:149
 msgid ""
 "\n"
 "                                        Your community can be as small as "
@@ -2318,41 +576,50 @@ msgid ""
 "                                    "
 msgstr ""
 
-#: main/templates/main/entry_map.html:108
-#: main/templates/main/entry_map.html:234
-msgid "Economic and Environmental Interests"
-msgstr ""
-
-#: main/templates/main/entry_map.html:118
-#: main/templates/main/entry_map.html:244
+#: main/templates/main/entry_map.html:173
+#: main/templates/main/entry_map.html:298
 msgid "Communities Activities and Services"
 msgstr ""
 
-#: main/templates/main/entry_map.html:122
-#: main/templates/main/entry_map.html:132
-#: main/templates/main/entry_map.html:142
-#: main/templates/main/entry_map.html:248
-#: main/templates/main/entry_map.html:258
-#: main/templates/main/entry_map.html:268
+#: main/templates/main/entry_map.html:177
+#: main/templates/main/entry_map.html:187
+#: main/templates/main/entry_map.html:207
+#: main/templates/main/entry_map.html:302
+#: main/templates/main/entry_map.html:312
+#: main/templates/main/entry_map.html:332
 msgid ""
 " Where do people in your community gather or socialize? <br>Where does your "
 "community get its services? "
 msgstr ""
 
-#: main/templates/main/entry_map.html:128
-#: main/templates/main/entry_map.html:254
-#: main/templates/main/entry_survey.html:310
-#: main/templates/main/submission.html:147
+#: main/templates/main/entry_map.html:183
+#: main/templates/main/entry_map.html:308
+#: main/templates/main/entry_survey.html:282 main/templates/main/map.html:129
+#: main/templates/main/partners/map.html:127 main/templates/main/review.html:74
+#: main/templates/main/submission.html:152
+#: main/templates/main/submission.html:402
 msgid "Cultural or Historical Interests"
 msgstr ""
 
-#: main/templates/main/entry_map.html:138
-#: main/templates/main/entry_map.html:264
-#: main/templates/main/submission.html:157
-msgid "Other Interests and Concerns"
+#: main/templates/main/entry_map.html:193
+#: main/templates/main/entry_map.html:318
+#: main/templates/main/entry_survey.html:298 main/templates/main/map.html:139
+#: main/templates/main/partners/map.html:137 main/templates/main/review.html:84
+#: main/templates/main/submission.html:162
+#: main/templates/main/submission.html:382
+msgid "Economic or Environmental Interests"
 msgstr ""
 
-#: main/templates/main/entry_map.html:168
+#: main/templates/main/entry_map.html:203
+#: main/templates/main/entry_map.html:328
+#: main/templates/main/entry_survey.html:317 main/templates/main/map.html:144
+#: main/templates/main/partners/map.html:142 main/templates/main/review.html:89
+#: main/templates/main/submission.html:172
+#: main/templates/main/submission.html:412
+msgid "Community Needs and Concerns"
+msgstr ""
+
+#: main/templates/main/entry_map.html:233
 msgid ""
 "\n"
 "                                        Select units on the map by clicking "
@@ -2361,7 +628,7 @@ msgid ""
 "                                    "
 msgstr ""
 
-#: main/templates/main/entry_map.html:187
+#: main/templates/main/entry_map.html:252
 msgid ""
 "\n"
 "                                                    The units are "
@@ -2370,7 +637,7 @@ msgid ""
 "                                                "
 msgstr ""
 
-#: main/templates/main/entry_map.html:194
+#: main/templates/main/entry_map.html:259
 msgid ""
 "\n"
 "                                                    Make sure that it does "
@@ -2378,7 +645,7 @@ msgid ""
 "                                                "
 msgstr ""
 
-#: main/templates/main/entry_map.html:201
+#: main/templates/main/entry_map.html:266
 msgid ""
 "\n"
 "                                                    In order to map outside "
@@ -2386,7 +653,7 @@ msgid ""
 "                                                "
 msgstr ""
 
-#: main/templates/main/entry_map.html:208
+#: main/templates/main/entry_map.html:273
 msgid ""
 "\n"
 "                                                    Your community can be as "
@@ -2394,40 +661,39 @@ msgid ""
 "                                                "
 msgstr ""
 
-#: main/templates/main/entry_map.html:224
+#: main/templates/main/entry_map.html:289
 msgid ""
 "\n"
-"                                Community Information\n"
+"                                Your Community Info\n"
 "                            "
 msgstr ""
 
-#: main/templates/main/entry_map.html:284
+#: main/templates/main/entry_map.html:342
+msgid "Saving Community..."
+msgstr ""
+
+#: main/templates/main/entry_map.html:354
 msgid ""
 "\n"
 "                                    +\n"
 "                                "
 msgstr ""
 
-#: main/templates/main/entry_map.html:305
-#: main/templates/main/entry_map.html:309
-#: main/templates/main/entry_privacy.html:106
-#: main/templates/main/entry_survey.html:119
-#: main/templates/main/entry_survey.html:213
-#: main/templates/main/entry_survey.html:347
-#: main/templates/main/entry_survey.html:418
-msgid "BACK"
+#: main/templates/main/entry_map.html:375
+#: main/templates/main/entry_map.html:379
+msgid "EDIT INFO"
 msgstr ""
 
-#: main/templates/main/entry_map.html:306
-#: main/templates/main/entry_map.html:310
+#: main/templates/main/entry_map.html:376
+#: main/templates/main/entry_map.html:380
 msgid "SAVE"
 msgstr ""
 
-#: main/templates/main/entry_map.html:317
+#: main/templates/main/entry_map.html:397
 msgid "Step-by-step guide"
 msgstr ""
 
-#: main/templates/main/entry_map.html:326
+#: main/templates/main/entry_map.html:406
 msgid "You need to draw a community to submit the form."
 msgstr ""
 
@@ -2441,19 +707,23 @@ msgid ""
 "officials to take your community’s concerns into account."
 msgstr ""
 
-#: main/templates/main/entry_preview.html:19
+#: main/templates/main/entry_preview.html:20
 msgid "Gerrymandering"
 msgstr ""
 
-#: main/templates/main/entry_preview.html:19
+#: main/templates/main/entry_preview.html:20
 msgid "is silencing communities across the country."
 msgstr ""
 
-#: main/templates/main/entry_preview.html:20
+#: main/templates/main/entry_preview.html:21
 msgid ""
 "Politicians have been splitting up or packing together communities into "
 "districts that silence their voices. Gathering communities of interest helps "
 "fight gerrymandering."
+msgstr ""
+
+#: main/templates/main/entry_preview.html:33
+msgid "ADD MY COMMUNITY"
 msgstr ""
 
 #: main/templates/main/entry_privacy.html:12
@@ -2522,18 +792,28 @@ msgstr ""
 msgid "You need to complete the recaptcha to submit this map."
 msgstr ""
 
+#: main/templates/main/entry_privacy.html:106
+#: main/templates/main/entry_survey.html:103
+#: main/templates/main/entry_survey.html:204
+#: main/templates/main/entry_survey.html:334
+#: main/templates/main/entry_survey.html:401
+msgid "BACK"
+msgstr ""
+
 #: main/templates/main/entry_privacy.html:107
 msgid "SUBMIT"
 msgstr ""
 
-#: main/templates/main/entry_privacy.html:113
-msgid "Saving Community..."
-msgstr ""
-
 #: main/templates/main/entry_state_selection.html:20
 #: main/templates/main/entry_state_selection.html:21
-msgid "Select your state to get started."
+#, fuzzy
+#| msgid "Select your state to get started."
+msgid "Select your state."
 msgstr "إختر ولايتك لبدء."
+
+#: main/templates/main/entry_survey.html:7
+msgid "Step 2"
+msgstr ""
 
 #: main/templates/main/entry_survey.html:17
 msgid "Tell us about what unites your community."
@@ -2546,25 +826,23 @@ msgid ""
 msgstr ""
 
 #: main/templates/main/entry_survey.html:26
-#: main/templates/main/entry_survey.html:131
+#: main/templates/main/entry_survey.html:115
 msgid "What is a Community of Interest?"
 msgstr ""
 
-#: main/templates/main/entry_survey.html:30
+#: main/templates/main/entry_survey.html:31
 msgid ""
 "\n"
-"                            <p>\n"
-"                                A Community of Interest is a "
-"<strong>geographic area</strong> that shares <strong>cultural</strong>, "
-"<strong>historical</strong>, or <strong>economic</strong> interests.\n"
-"                                Communities of Interest encourage the "
-"drawing of fairer voting districts.\n"
-"                            </p>\n"
-"                        "
+"                            A Community of Interest is a <strong>geographic "
+"area</strong> that shares <strong>cultural</strong>, <strong>historical</"
+"strong>, or <strong>economic</strong> interests.\n"
+"                            Communities of Interest encourage the drawing of "
+"fairer voting districts.\n"
+"                            "
 msgstr ""
 
 #: main/templates/main/entry_survey.html:39
-#: main/templates/main/entry_survey.html:144
+#: main/templates/main/entry_survey.html:128
 msgid "Communities of Interest can include..."
 msgstr ""
 
@@ -2576,7 +854,7 @@ msgid ""
 "                                            "
 msgstr ""
 
-#: main/templates/main/entry_survey.html:78
+#: main/templates/main/entry_survey.html:72
 msgid ""
 "\n"
 "                                                The people you would like to "
@@ -2584,7 +862,7 @@ msgid ""
 "                                            "
 msgstr ""
 
-#: main/templates/main/entry_survey.html:101
+#: main/templates/main/entry_survey.html:91
 msgid ""
 "\n"
 "                                                A local group that is "
@@ -2592,24 +870,23 @@ msgid ""
 "                                            "
 msgstr ""
 
-#: main/templates/main/entry_survey.html:120
+#: main/templates/main/entry_survey.html:104
+#: main/templates/main/entry_survey.html:205
 msgid "START"
 msgstr ""
 
-#: main/templates/main/entry_survey.html:135
+#: main/templates/main/entry_survey.html:120
 msgid ""
 "\n"
-"                            <p>\n"
-"                                A Community of Interest is a geographic area "
+"                            A Community of Interest is a geographic area "
 "that shares <strong>cultural</strong>, <strong>historical</strong>, or "
 "<strong>economic</strong> interests.\n"
-"                                Communities of Interest encourage the "
-"drawing of fairer voting districts.\n"
-"                            </p>\n"
-"                        "
+"                            Communities of Interest encourage the drawing of "
+"fairer voting districts.\n"
+"                            "
 msgstr ""
 
-#: main/templates/main/entry_survey.html:155
+#: main/templates/main/entry_survey.html:141
 msgid ""
 "\n"
 "                                            The people you would like to "
@@ -2617,7 +894,7 @@ msgid ""
 "                                        "
 msgstr ""
 
-#: main/templates/main/entry_survey.html:175
+#: main/templates/main/entry_survey.html:164
 msgid ""
 "\n"
 "                                            Your neighborhood, or an area "
@@ -2625,50 +902,95 @@ msgid ""
 "                                        "
 msgstr ""
 
-#: main/templates/main/entry_survey.html:197
+#: main/templates/main/entry_survey.html:187
 msgid ""
 "\n"
-"                                            AA local group that is brought "
+"                                            A local group that is brought "
 "together by a common interest.\n"
 "                                        "
 msgstr ""
 
-#: main/templates/main/entry_survey.html:214
-#, fuzzy
-#| msgid "Get Started"
-msgid "Start"
-msgstr "البدء"
-
-#: main/templates/main/entry_survey.html:226
+#: main/templates/main/entry_survey.html:217
 #, fuzzy
 #| msgid "Put your community on the map."
 msgid "What unites your Community of Interest?"
 msgstr "ضع مجتمعك على الخريطة"
 
-#: main/templates/main/entry_survey.html:239
-msgid ""
-"\n"
-"                    <p>\n"
-"                      Respond to <b>at least one</b> of the sections below. "
-"There are no wrong answers.<br>\n"
-"\n"
-"                      Click on each category to see helpful questions and "
-"examples.\n"
-"                    </p>\n"
-"                "
+#: main/templates/main/entry_survey.html:221
+msgid "Community of Interest Definition in "
 msgstr ""
 
-#: main/templates/main/entry_survey.html:255
-#: main/templates/main/entry_survey.html:263
+#: main/templates/main/entry_survey.html:231
+msgid ""
+"\n"
+"                    Respond to <b>at least one</b> of the sections below. "
+"There are no wrong answers.<br>\n"
+"\n"
+"                    Click on each category to see helpful questions and "
+"examples.\n"
+"                    "
+msgstr ""
+
+#: main/templates/main/entry_survey.html:246
+#: main/templates/main/entry_survey.html:254
 msgid "Please fill out at least one of the interest fields."
 msgstr ""
 
-#: main/templates/main/entry_survey.html:272
-#: main/templates/main/submission.html:127
-msgid "Economic or Environmental Interests"
+#: main/templates/main/entry_survey.html:265 main/templates/main/map.html:134
+#: main/templates/main/partners/map.html:132 main/templates/main/review.html:79
+#: main/templates/main/submission.html:142
+#: main/templates/main/submission.html:392
+msgid "Community Activities and Services"
 msgstr ""
 
-#: main/templates/main/entry_survey.html:277
+#: main/templates/main/entry_survey.html:269
+#: main/templates/main/entry_survey.html:286
+#: main/templates/main/entry_survey.html:321
+msgid ""
+"Use these questions to think more about how you would describe your "
+"community..."
+msgstr ""
+
+#: main/templates/main/entry_survey.html:270
+msgid "Where do people in your community gather or socialize?"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:271
+msgid ""
+"How and where does your community access services (healthcare, "
+"transportation, educational services, etc.)?"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:272
+msgid "Examples of activities and services:"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:272
+msgid ""
+"Shopping areas, schools and universities, libraries, parks, lakes, rivers, "
+"places of worship, healthcare services, public transport, local nonprofit "
+"organizations, etc."
+msgstr ""
+
+#: main/templates/main/entry_survey.html:287
+msgid "What are the cultural bonds in your community?"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:288
+msgid "If your community has a shared history, what is it?"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:289
+msgid "Examples of cultural or historical interests:"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:289
+msgid ""
+"Religious groups, ethnic groups, languages, age groups, immigration status, "
+"historic or arts districts, etc."
+msgstr ""
+
+#: main/templates/main/entry_survey.html:302
 msgid ""
 "\n"
 "                            <b>Use these questions to think more about how "
@@ -2683,107 +1005,67 @@ msgid ""
 "                            "
 msgstr ""
 
-#: main/templates/main/entry_survey.html:291
-#: main/templates/main/submission.html:137
-msgid "Community Activities and Services"
+#: main/templates/main/entry_survey.html:322
+msgid "What should politicians and/or map drawers know about your community?"
 msgstr ""
 
-#: main/templates/main/entry_survey.html:295
+#: main/templates/main/entry_survey.html:323
+#, fuzzy
+#| msgid "Put your community on the map."
+msgid "What are the needs of your community?"
+msgstr "ضع مجتمعك على الخريطة"
+
+#: main/templates/main/entry_survey.html:324
+msgid "Is there anything else you want to tell us about your community?"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:325
+msgid "Examples of needs or concerns:"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:325
 msgid ""
-"\n"
-"                          <b>Use these questions to think more about how you "
-"would describe your community...</b><br>\n"
-"                          &emsp; - Where do people in your community gather "
-"or socialize? <br>\n"
-"                          &emsp; - How and where does your community access "
-"services (healthcare, transportation, educational services, etc.)?<br><br>\n"
-"                          <span class=\"blue-text\"><b>Examples of "
-"activities and services:</b> Shopping areas, schools and universities, "
-"libraries, parks, lakes, rivers, places of worship, healthcare services, "
-"public transport, local nonprofit organizations, etc.</span>\n"
-"                          "
+"Keep community in the same district or separate into multiple districts, "
+"shared policy concerns, need for a social service, relationship to other "
+"nearby communities, issues with current district lines"
 msgstr ""
 
-#: main/templates/main/entry_survey.html:314
-msgid ""
-"\n"
-"                        <b>Use these questions to think more about how you "
-"would describe your community...</b><br>\n"
-"                        &emsp; - What are the cultural bonds in your "
-"community? <br>\n"
-"                        &emsp; - If your community has a shared history, "
-"what is it?<br><br>\n"
-"                        <span class=\"blue-text\"><b>Examples of cultural or "
-"historical interests:</b> Religious groups, ethnic groups, languages, age "
-"groups, immigration status, historic or arts districts, etc. </span>\n"
-"                        "
-msgstr ""
-
-#: main/templates/main/entry_survey.html:328
-msgid "Community Needs and Concerns"
-msgstr ""
-
-#: main/templates/main/entry_survey.html:332
-msgid ""
-"\n"
-"                        <b>Use these questions to think more about how you "
-"would describe your community...</b><br>\n"
-"                        &emsp; - What should politicians and/or map drawers "
-"know about your community?<br>\n"
-"                        &emsp; - What are the needs of your community?<br>\n"
-"                        &emsp; - Is there anything else you want to tell us "
-"about your community? <br><br>\n"
-"                        <span class=\"blue-text\"><b>Examples of needs or "
-"concerns:</b> Keep community in the same district or separate into multiple "
-"districts, shared policy concerns, need for a social service, relationship "
-"to other nearby communities, issues with current district lines</span>\n"
-"                        "
-msgstr ""
-
-#: main/templates/main/entry_survey.html:374
+#: main/templates/main/entry_survey.html:361
 msgid "Please include a community name."
 msgstr ""
 
-#: main/templates/main/entry_survey.html:386
+#: main/templates/main/entry_survey.html:373
 #, fuzzy
 #| msgid "Add your community"
 msgid "Name your community."
 msgstr "أضف مجتمعك"
 
-#: main/templates/main/entry_survey.html:390
+#: main/templates/main/entry_survey.html:378
 msgid ""
-"\n"
-"                            <p>\n"
-"                                Give your community of interest a name. This "
-"does not have to be the official name of your community.\n"
-"                            </p>\n"
-"                        "
+"Give your community of interest a name. This does not have to be the "
+"official name of your community."
 msgstr ""
 
-#: main/templates/main/entry_survey.html:398
-msgid ""
-"\n"
-"                            <p class=\"small\" style=\"color: #5996D2\">\n"
-"                                <strong>Examples:</strong> Cherry Farmers "
-"Community, St. Peters Church Community, Riverside Fishing Community\n"
-"                            </p>\n"
-"                        "
+#: main/templates/main/entry_survey.html:384
+msgid "Examples"
 msgstr ""
 
-#: main/templates/main/entry_survey.html:408
+#: main/templates/main/entry_survey.html:384
+msgid ""
+"Cherry Farmers Community, St. Peters Church Community, Riverside Fishing "
+"Community"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:391
 #, fuzzy
 #| msgid "Draw a Community Map"
 msgid "Community Name:"
 msgstr "ارسم خريطة محلية"
 
-#: main/templates/main/index.html:24
-msgid "Gerrymandering is silencing communities."
-msgstr ""
-
 #: main/templates/main/index.html:25
 msgid ""
-" Make your voice heard with Representable\" <br> and put your community on "
-"the map. "
+" Make your voice heard with Representable <br> and put your community on the "
+"map. "
 msgstr ""
 
 #: main/templates/main/index.html:27
@@ -2803,6 +1085,116 @@ msgstr "تتشارك كثير من المنظمات مع رَبْريسانْت�
 #: main/templates/main/index.html:36
 msgid "PARTNER WITH US"
 msgstr "شريك معنا"
+
+#: main/templates/main/index.html:51
+msgid ""
+"<b>Our mission</b> is to give communities a voice in drawing voting "
+"districts."
+msgstr ""
+
+#: main/templates/main/index.html:52
+msgid ""
+"Representable allows people to draw communities of interest and share "
+"information about the interests and needs in those communities.\n"
+"            <br><br>Making this information available encourages mapmakers "
+"to take these communities into account during redistricting, in order to "
+"avoid gerrymandering and the “packing and cracking” of marginalized groups."
+msgstr ""
+
+#: main/templates/main/index.html:59
+msgid "<b>Gerrymandering</b> is threatening democracy."
+msgstr ""
+
+#: main/templates/main/index.html:60
+msgid ""
+"Politicians have been splitting up and packing together communities into "
+"districts that silence the voices of community members. This prevents "
+"communities from electing representatives that listen to their needs. "
+"Gathering communities of interest maps helps fight gerrymandering. We can "
+"provide map drawers with the information they need to draw districts that "
+"empower communities."
+msgstr ""
+
+#: main/templates/main/index.html:61
+msgid "We're fighting to make democracy more..."
+msgstr ""
+
+#: main/templates/main/index.html:64
+msgid "Transparent"
+msgstr ""
+
+#: main/templates/main/index.html:67
+msgid "Inclusive"
+msgstr ""
+
+#: main/templates/main/index.html:70
+msgid "Accessible"
+msgstr ""
+
+#: main/templates/main/index.html:76 main/templates/main/pages/about.html:96
+msgid "Answer Questions"
+msgstr "اردد أسئلة"
+
+#: main/templates/main/index.html:77
+msgid "that help you identify what bonds your community together."
+msgstr ""
+
+#: main/templates/main/index.html:81 main/templates/main/pages/about.html:109
+msgid "Draw a Community Map"
+msgstr "ارسم خريطة محلية"
+
+#: main/templates/main/index.html:82
+msgid ""
+"by choosing units that make up your community. Use landmarks to draw your "
+"map."
+msgstr ""
+
+#: main/templates/main/index.html:86
+msgid "Share your Map"
+msgstr ""
+
+#: main/templates/main/index.html:87
+msgid ""
+"as public input for map makers to use when drawing new voting districts."
+msgstr ""
+
+#: main/templates/main/index.html:99
+msgid ""
+"We are putting Representable in the hands of the communities that need it."
+msgstr ""
+
+#: main/templates/main/index.html:100
+msgid "Join us to help communities get the representation they deserve."
+msgstr ""
+
+#: main/templates/main/map.html:13
+#, fuzzy
+#| msgid "My Communities"
+msgid "View Communities"
+msgstr "مجتمعاتي"
+
+#: main/templates/main/map.html:46
+msgid "State Map"
+msgstr ""
+
+#: main/templates/main/map.html:63 main/templates/main/partners/map.html:67
+msgid "Data layers"
+msgstr ""
+
+#: main/templates/main/map.html:74 main/templates/main/partners/map.html:78
+#, fuzzy
+#| msgid "My Communities"
+msgid "Communities"
+msgstr "مجتمعاتي"
+
+#: main/templates/main/map.html:149 main/templates/main/partners/map.html:147
+#: main/templates/main/review.html:94
+msgid "Show More"
+msgstr ""
+
+#: main/templates/main/map.html:161
+msgid "Show All"
+msgstr ""
 
 #: main/templates/main/pages/about.html:8
 msgid "About Representable"
@@ -2853,10 +1245,6 @@ msgstr ""
 "في السنة ٢٠٢١, حكومات الولايات سوف ترسم دوائر انتخابية الكونغرس وتشريعية "
 "الولايات من جديد.يجب علينا أن نجاهد من أجل دوائر الانتخابية النزيهة  "
 "تحترماهتمامات مجتمعات"
-
-#: main/templates/main/pages/about.html:48
-msgid "What is Representable?"
-msgstr "ما هو ربريسنتبل؟"
 
 #: main/templates/main/pages/about.html:49
 msgid ""
@@ -2945,19 +1333,11 @@ msgstr "دعم صحفيين ومحللين مع بيانات لتقييم خرا
 msgid "HOW IT WORKS?"
 msgstr "كيف يعمل؟"
 
-#: main/templates/main/pages/about.html:96
-msgid "Answer Questions"
-msgstr "اردد أسئلة"
-
 #: main/templates/main/pages/about.html:101
 msgid ""
 "Thought-provoking questions built based on policy and legal definitions of "
 "COIs."
 msgstr "أسئلة مثير للتفكير مبنيا على سياسة وتعريفات قانونية مجتمعاتالمصلحة"
-
-#: main/templates/main/pages/about.html:109
-msgid "Draw a Community Map"
-msgstr "ارسم خريطة محلية"
 
 #: main/templates/main/pages/about.html:114
 msgid "Use landmarks, zoom, and navigation for an easy drawing experience."
@@ -2992,33 +1372,36 @@ msgid "Head of Design"
 msgstr "رئيس التصميم"
 
 #: main/templates/main/pages/about.html:144
-msgid "Head of Software Architecture"
-msgstr "رئيس هندسة البرمجيات"
-
-#: main/templates/main/pages/about.html:145
-msgid "Head of Data and Mapping"
-msgstr "رئيس البيانات ورسم الخرائط"
-
-#: main/templates/main/pages/about.html:146
 msgid "Strategy Coordinator"
 msgstr "منسق إستراتيجية"
 
-#: main/templates/main/pages/about.html:147
+#: main/templates/main/pages/about.html:145
 msgid "Outreach Coordinator"
 msgstr "منسق توعية"
 
-#: main/templates/main/pages/about.html:148
-#: main/templates/main/pages/about.html:149
+#: main/templates/main/pages/about.html:146
+#: main/templates/main/pages/about.html:147
 #, fuzzy
 #| msgid "Head of Engineering"
 msgid "Software Engineer"
 msgstr "رئيس الهندسة"
 
-#: main/templates/main/pages/about.html:151
+#: main/templates/main/pages/about.html:148
+#: main/templates/main/pages/about.html:149
+#, fuzzy
+#| msgid "Head of Engineering"
+msgid "Data Engineer"
+msgstr "رئيس الهندسة"
+
+#: main/templates/main/pages/about.html:150
+msgid "Media and Communications Coordinator"
+msgstr ""
+
+#: main/templates/main/pages/about.html:152
 msgid "Our Founding Team"
 msgstr "فريقنا الأصل"
 
-#: main/templates/main/pages/about.html:154
+#: main/templates/main/pages/about.html:155
 msgid ""
 "Representable began in February 2019 as a final project for the Princeton "
 "course COS333: Advanced Programming Techniques."
@@ -3026,36 +1409,828 @@ msgstr ""
 "أنشئ رَبْريسانْتَبُل في شباط ٢٠١٩ كمشروع نهائي لصف في جامعةبرينستون, COS333: "
 "تقنيات البرمجة المتقدمة"
 
-#: main/templates/main/pages/about.html:155
-#: main/templates/main/pages/about.html:158
+#: main/templates/main/pages/about.html:156
+#: main/templates/main/pages/about.html:159
 msgid "Engineering, Full-Stack"
 msgstr "هندسة"
 
-#: main/templates/main/pages/about.html:156
+#: main/templates/main/pages/about.html:157
 msgid "Engineering, Mapping"
 msgstr "هندسة"
 
-#: main/templates/main/pages/about.html:157
+#: main/templates/main/pages/about.html:158
 msgid "Outreach, Content"
 msgstr "منسق توعية"
 
-#: main/templates/main/pages/about.html:159
+#: main/templates/main/pages/about.html:160
 msgid "Engineering, Product"
 msgstr "هندسة"
 
-#: main/templates/main/submission.html:57
+#: main/templates/main/pages/blog.html:4
+#, fuzzy
+#| msgid "About Representable"
+msgid "Representable Blog"
+msgstr "معلومات عن ربريسنتبل"
+
+#: main/templates/main/pages/blog.html:10
+msgid "Communities of Interest. Stories of Representation."
+msgstr ""
+
+#: main/templates/main/pages/faq.html:11
+msgid "Check out our most frequently asked questions below."
+msgstr ""
+
+#: main/templates/main/pages/faq.html:13
+#, fuzzy
+#| msgid "For community members"
+msgid "For Community Members"
+msgstr "لأفراد المجتمع"
+
+#: main/templates/main/pages/faq.html:26
+#, fuzzy
+#| msgid "For organizations"
+msgid "For Organizations"
+msgstr "للمنظمات"
+
+#: main/templates/main/pages/faq.html:39
+#, fuzzy
+#| msgid "More questions? Reach out at"
+msgid "Have more questions? Email us at "
+msgstr "مزيد الأسئلة؟ تواصلوا بنا على"
+
+#: main/templates/main/pages/glossary.html:10
+#: representable/templates/base.html:114
+#: representable/templates/base_nofooter.html:114
+#, fuzzy
+#| msgid "Redistricting is coming."
+msgid "Redistricting Glossary"
+msgstr "إعادة التقسيم قادم."
+
+#: main/templates/main/pages/glossary.html:29
+#, fuzzy
+#| msgid "For organizations"
+msgid "More Information"
+msgstr "للمنظمات"
+
+#: main/templates/main/pages/privacy.html:5
+#: representable/templates/base.html:275
+msgid "Privacy"
+msgstr "خصوصية"
+
+#: main/templates/main/pages/privacy.html:7
+msgid ""
+"\n"
+"<p>Your privacy is our highest priority. We gather your identifying "
+"information to verify that you are a real person. We will not publicly share "
+"anyone's individual personal information, such as name, address, or email.</"
+"p>\n"
+"<p>If you choose to submit an entry to an organization, the organization "
+"will receive your identifying information in order to verify that you are a "
+"real person. This aspect will be communicated to you before you save an "
+"entry.</p>\n"
+"<p>We rely on third-party services (Mixpanel and Google Analytics) to better "
+"understand our users' anonymous behavior on the website. This allows us to "
+"understand how we can improve Representable.org by finding any hidden "
+"friction points. We don't share any personal information with these services."
+"</a>\n"
+"<p>Our implementation of third-party tracking services respects your "
+"browser's <a href=\"https://allaboutdnt.com/\">Do Not Track</a> settings.\n"
+"We also give users the option to opt in or opt out of tracking at any point. "
+"Users can update their preferences on their account dashboard page (if "
+"logged in).\n"
+"By default, we enable Google Analytics to count website visitors (which only "
+"uses first-party cookies), but this behavior is disabled by opting out. "
+"Mixpanel is only enabled by opting in.</p>\n"
+"<p>It is Representable's policy to respect your privacy regarding any "
+"information we may collect from you across our website, <a href=\"http://"
+"representable.org\">representable.org</a>, and other sites we own and "
+"operate.</p>\n"
+"<p>We only ask for personal information when we truly need it to provide a "
+"service to you. We collect it by fair and lawful means, with your knowledge "
+"and consent. We also let you know why we’re collecting it and how it will be "
+"used.</p>\n"
+"<p>The information we collect from our users may be used for research by our "
+"team or by our partners at Princeton University.  Such information will be "
+"retained in an anonymous form and in accordance with this policy's other "
+"provisions.  If you do not wish for your information to be used in research, "
+"please contact us.</p>\n"
+"<p>We only retain collected information for as long as necessary to provide "
+"you with your requested service and, in an anonymized, aggregated form, for "
+"research purposes. What data we store, we’ll protect within commercially "
+"acceptable means to prevent loss and theft, as well as unauthorized access, "
+"disclosure, copying, use or modification.</p>\n"
+"<p>We don’t share any personally identifying information publicly or with "
+"third-parties, except when explicit permission is given during a \"community"
+"\" submission or when required to by law.</p>\n"
+"<p>Our website may link to external sites that are not operated by us. "
+"Please be aware that we have no control over the content and practices of "
+"these sites, and cannot accept responsibility or liability for their "
+"respective privacy policies.\n"
+"</p>\n"
+"<p>You are free to refuse our request for your personal information, with "
+"the understanding that we may be unable to provide you with some of your "
+"desired services.</p>\n"
+"<p>Your continued use of our website will be regarded as acceptance of our "
+"practices around privacy and personal information. If you have any questions "
+"about how we handle user data and personal information, feel free to contact "
+"us.</p>\n"
+"<p>This policy is effective as of July 14, 2020.</p>\n"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:10
+#: representable/templates/base.html:115
+#: representable/templates/base_nofooter.html:115
+msgid "Resources"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:17
+msgid "Educational Video"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:23
+msgid ""
+"This video is a text-based educational tool meant to inform users about the "
+"redistricting process, dangers of gerrymandering, and the effectiveness of "
+"Communities of Interest which can be mapped easily on Representable.org."
+msgstr ""
+
+#: main/templates/main/pages/resources.html:32
+msgid "Demo Videos"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:38
+msgid ""
+"These video walkthroughs are key to navigating Representable from both the "
+"perspective of a user and an organization, complete with tips for easily "
+"mapping your community and collecting communities of interest."
+msgstr ""
+
+#: main/templates/main/pages/resources.html:47
+msgid "One Pager"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:53
+msgid ""
+"This infographic provides a short overview of redistricting, gerrymandering, "
+"and how Representable can be used to address this issue using communities of "
+"interest. "
+msgstr ""
+
+#: main/templates/main/pages/resources.html:55
+msgid "VIEW & DOWNLOAD"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:65
+#, fuzzy
+#| msgid "For organizations"
+msgid "Organization Guide"
+msgstr "للمنظمات"
+
+#: main/templates/main/pages/resources.html:71
+msgid ""
+"This guide is the primary reference point for organizations to find "
+"information about the tool, community mapping drives, our educational "
+"materials, FAQs, and more!"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:73
+msgid "READ MORE"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:83
+msgid "Community Mapping Event Powerpoint"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:89
+msgid ""
+"This powerpoint can be used to run online mapping events with your "
+"community. Guide people through the process of identifying their community’s "
+"needs and mapping their COI."
+msgstr ""
+
+#: main/templates/main/pages/resources.html:91
+msgid "DOWNLOAD"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:101
+msgid "Additional Resources"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:102
+msgid "Princeton Gerrymandering Project"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:103
+msgid ""
+"Through nonpartisan analysis, the Princeton Gerrymandering Project bridges "
+"the gap between mathematics and the law to achieve fair representation "
+"through redistricting reform. "
+msgstr ""
+
+#: main/templates/main/pages/resources.html:105
+msgid "GeoCivics Redistricting Materials"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:106
+msgid ""
+"GeoCivics provides a suite of state-based resources to develop skills and "
+"knowledge for discussing the apportionment and redistricting process in the "
+"United States. These resources prepare and support students, teachers, and "
+"community members with interactive tools and geospatial data, leading to "
+"engagement in conversation about the construction of electoral districts."
+msgstr ""
+
+#: main/templates/main/pages/terms.html:5 representable/templates/base.html:278
+msgid "Terms"
+msgstr "شروط الإستخدام"
+
+#: main/templates/main/pages/terms.html:7
+#, fuzzy
+#| msgid "Terms"
+msgid "1. Terms"
+msgstr "شروط الإستخدام"
+
+#: main/templates/main/pages/terms.html:8
+msgid ""
+"By accessing the website at <a href=\"https://representable.org\">http://"
+"representable.org</a>, you are agreeing to be bound by these terms of "
+"service, all applicable laws and regulations, and agree that you are "
+"responsible for compliance with\n"
+"        any applicable local laws. If you do not agree with any of these "
+"terms, you are prohibited from using or accessing this site. The materials "
+"contained in this website are protected by applicable copyright and "
+"trademark law."
+msgstr ""
+
+#: main/templates/main/pages/terms.html:10
+msgid "2. Use License"
+msgstr ""
+
+#: main/templates/main/pages/terms.html:12
+msgid ""
+"\n"
+"        <li>Permission is granted to temporarily download one copy of the "
+"materials (information or software) on Representable's website for personal, "
+"non-commercial transitory viewing only. This is the grant of a license, not "
+"a transfer of title,\n"
+"          and under this license you may not:\n"
+"          <ol type=\"i\">\n"
+"            <li>modify or copy the materials;</li>\n"
+"            <li>use the materials for any commercial purpose, or for any "
+"public display (commercial or non-commercial);</li>\n"
+"            <li>attempt to decompile or reverse engineer any software "
+"contained on Representable's website;</li>\n"
+"            <li>remove any copyright or other proprietary notations from the "
+"materials; or</li>\n"
+"            <li>transfer the materials to another person or \"mirror\" the "
+"materials on any other server.</li>\n"
+"          </ol>\n"
+"        </li>\n"
+"        "
+msgstr ""
+
+#: main/templates/main/pages/terms.html:24
+msgid ""
+"\n"
+"        <li>This license shall automatically terminate if you violate any of "
+"these restrictions and may be terminated by Representable at any time. Upon "
+"terminating your viewing of these materials or upon the termination of this "
+"license, you must\n"
+"          destroy any downloaded materials in your possession whether in "
+"electronic or printed format.</li>\n"
+"        "
+msgstr ""
+
+#: main/templates/main/pages/terms.html:29
+msgid "3. Disclaimer"
+msgstr ""
+
+#: main/templates/main/pages/terms.html:31
+msgid ""
+"\n"
+"        <li>The materials on Representable's website are provided on an 'as "
+"is' basis. Representable makes no warranties, expressed or implied, and "
+"hereby disclaims and negates all other warranties including, without "
+"limitation, implied warranties or\n"
+"          conditions of merchantability, fitness for a particular purpose, "
+"or non-infringement of intellectual property or other violation of rights.</"
+"li>\n"
+"        "
+msgstr ""
+
+#: main/templates/main/pages/terms.html:35
+msgid ""
+"\n"
+"        <li>Further, Representable does not warrant or make any "
+"representations concerning the accuracy, likely results, or reliability of "
+"the use of the materials on its website or otherwise relating to such "
+"materials or on any sites linked to this\n"
+"          site.</li>\n"
+"        "
+msgstr ""
+
+#: main/templates/main/pages/terms.html:40
+msgid "4. Limitations"
+msgstr ""
+
+#: main/templates/main/pages/terms.html:41
+msgid ""
+"\n"
+"      <p>In no event shall Representable or its suppliers be liable for any "
+"damages (including, without limitation, damages for loss of data or profit, "
+"or due to business interruption) arising out of the use or inability to use "
+"the materials on\n"
+"        Representable's website, even if Representable or a Representable "
+"authorized representative has been notified orally or in writing of the "
+"possibility of such damage. Because some jurisdictions do not allow "
+"limitations on implied warranties,\n"
+"        or limitations of liability for consequential or incidental damages, "
+"these limitations may not apply to you.</p>\n"
+"      "
+msgstr ""
+
+#: main/templates/main/pages/terms.html:46
+msgid "5. Accuracy of materials"
+msgstr ""
+
+#: main/templates/main/pages/terms.html:47
+msgid ""
+"\n"
+"      <p>The materials appearing on Representable's website could include "
+"technical, typographical, or photographic errors. Representable does not "
+"warrant that any of the materials on its website are accurate, complete or "
+"current. Representable may\n"
+"        make changes to the materials contained on its website at any time "
+"without notice. However Representable does not make any commitment to update "
+"the materials.</p>\n"
+"      "
+msgstr ""
+
+#: main/templates/main/pages/terms.html:51
+msgid "6. Links"
+msgstr ""
+
+#: main/templates/main/pages/terms.html:52
+msgid ""
+"Representable has not reviewed all of the sites linked to its website and is "
+"not responsible for the contents of any such linked site. The inclusion of "
+"any link does not imply endorsement by Representable of the site. Use of any "
+"such linked\n"
+"        website is at the user's own risk."
+msgstr ""
+
+#: main/templates/main/pages/terms.html:54
+msgid "7. Modifications"
+msgstr ""
+
+#: main/templates/main/pages/terms.html:55
+msgid ""
+"Representable may revise these terms of service for its website at any time "
+"without notice. By using this website you are agreeing to be bound by the "
+"then current version of these terms of service."
+msgstr ""
+
+#: main/templates/main/pages/terms.html:56
+msgid "8. Governing Law"
+msgstr ""
+
+#: main/templates/main/pages/terms.html:57
+msgid ""
+"These terms and conditions are governed by and construed in accordance with "
+"the laws of New Jersey and you irrevocably submit to the exclusive "
+"jurisdiction of the courts in that State or location."
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:9
+#, fuzzy
+#| msgid "Learn how to use Representable to draw your community."
+msgid "Join the national Representable community."
+msgstr "تعرف على كيفية استخدام رَبْريسانْتَبُل لرسم مجتمعك"
+
+#: main/templates/main/partners/get_started.html:11
+msgid ""
+"\n"
+"        Representable is growing a redistricting community with "
+"organizations across the country. Organization leaders can easily collect "
+"community maps with Representable and join redistricting efforts in their "
+"states.\n"
+"        "
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:15
+#, fuzzy
+#| msgid "Learn how to use Representable to draw your community."
+msgid "How to use Representable as an organization?"
+msgstr "تعرف على كيفية استخدام رَبْريسانْتَبُل لرسم مجتمعك"
+
+#: main/templates/main/partners/get_started.html:17
+msgid ""
+"\n"
+"        Check out our demo to see all of Representable’s features. \n"
+"        "
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:31
+#, fuzzy
+#| msgid "For organizations"
+msgid "Join Representable as an Organization"
+msgstr "للمنظمات"
+
+#: main/templates/main/partners/get_started.html:33
+msgid ""
+"\n"
+"                As the leader of an organization, you can collect community "
+"maps and download submissions. Joining Representable as an organization is "
+"free, and includes access to our redistricting toolkit. \n"
+"                "
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:38
+#: main/templates/main/partners/get_started.html:39
+msgid "CREATE ORGANIZATION"
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:51
+#, fuzzy
+#| msgid "For organizations"
+msgid "Create an Organization"
+msgstr "للمنظمات"
+
+#: main/templates/main/partners/get_started.html:52
+msgid "Include a brief description, link, and the state(s) you operate in."
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:60
+#, fuzzy
+#| msgid "Draw a Community Map"
+msgid "Start a Community Mapping Drive"
+msgstr "ارسم خريطة محلية"
+
+#: main/templates/main/partners/get_started.html:61
+msgid "Create a community mapping drive via the organization dashboard."
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:69
+#, fuzzy
+#| msgid "Draw a Community Map"
+msgid "Collect Community Maps"
+msgstr "ارسم خريطة محلية"
+
+#: main/templates/main/partners/get_started.html:70
+msgid ""
+"Share the link to your community mapping drive to individuals in your state "
+"to start collecting submissions."
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:78
+#, fuzzy
+#| msgid "Visualize and Export"
+msgid "Visualize and Export Community Maps"
+msgstr "تصوّر وصدّر"
+
+#: main/templates/main/partners/get_started.html:79
+msgid ""
+"View a map of all submitted communities, and download them to your "
+"organization as geoJSON for easy integration with district drawing and "
+"visualization tools."
+msgstr ""
+
+#: main/templates/main/partners/index.html:9
+#: representable/templates/base.html:105
+#: representable/templates/base_nofooter.html:105
+msgid "Partners"
+msgstr "شريك معنا"
+
+#: main/templates/main/partners/index.html:10
+msgid ""
+"Find out more about the organizations using Representable.org to gather "
+"community data. Want to become a partner? Learn more "
+msgstr ""
+
+#: main/templates/main/partners/index.html:10
+#: main/templates/main/review.html:113
+msgid "here"
+msgstr ""
+
+#: main/templates/main/partners/index.html:33
+msgid "More Details"
+msgstr ""
+
+#: main/templates/main/partners/index.html:35
+#, fuzzy
+#| msgid "Partner with us"
+msgid "Partner Site"
+msgstr "شريك معنا"
+
+#: main/templates/main/partners/map.html:56
+#: main/templates/main/partners/map.html:59
+msgid "Export All as GeoJSON"
+msgstr ""
+
+#: main/templates/main/partners/map.html:57
+#: main/templates/main/partners/map.html:60
+msgid "Export All as CSV"
+msgstr ""
+
+#: main/templates/main/partners/map.html:99
+msgid "Hidden"
+msgstr ""
+
+#: main/templates/main/partners/map.html:103
+#, fuzzy
+#| msgid "Privacy"
+msgid "Private"
+msgstr "خصوصية"
+
+#: main/templates/main/partners/map.html:171
+#, fuzzy
+#| msgid "Add your community"
+msgid "Report this community"
+msgstr "أضف مجتمعك"
+
+#: main/templates/main/partners/map.html:178
+msgid ""
+"\n"
+"        If you feel this community is abusive, spam, low-effort, or doesn't "
+"live\n"
+"        up to our guidelines, send us a report.\n"
+"        "
+msgstr ""
+
+#: main/templates/main/partners/map.html:185
+msgid ""
+"\n"
+"        As an administrator of this organization, reporting this community "
+"will automatically hide it from\n"
+"        all non-administrators.\n"
+"        "
+msgstr ""
+
+#: main/templates/main/partners/map.html:194
+msgid "Email address"
+msgstr ""
+
+#: main/templates/main/partners/map.html:198
+msgid "Cancel"
+msgstr ""
+
+#: main/templates/main/partners/map.html:199
+msgid "Danger: </span>Send Report"
+msgstr ""
+
+#: main/templates/main/partners/map.html:211
+msgid "Thank you for letting us know!"
+msgstr ""
+
+#: main/templates/main/partners/map.html:217
+msgid "Your report was successfully submitted. Thank you."
+msgstr ""
+
+#: main/templates/main/partners/page.html:22
+#, fuzzy
+#| msgid "Partners"
+msgid "Return to Partners"
+msgstr "شريك معنا"
+
+#: main/templates/main/partners/page.html:23
+#, fuzzy
+#| msgid "For organizations"
+msgid "Link to organization map"
+msgstr "للمنظمات"
+
+#: main/templates/main/partners/page.html:25
+#, fuzzy
+#| msgid "Partner with us"
+msgid "Visit Partner Site"
+msgstr "شريك معنا"
+
+#: main/templates/main/review.html:43
+msgid "The community was already deleted."
+msgstr ""
+
+#: main/templates/main/review.html:49 main/templates/main/submission.html:139
+msgid "Community Information"
+msgstr ""
+
+#: main/templates/main/review.html:50
+msgid "Action"
+msgstr ""
+
+#: main/templates/main/review.html:51
+msgid "Show"
+msgstr ""
+
+#: main/templates/main/review.html:101
+msgid "Delete"
+msgstr ""
+
+#: main/templates/main/review.html:112
+msgid "No entries!"
+msgstr ""
+
+#: main/templates/main/review.html:113
+msgid "Join us in the fight against gerrymandering."
+msgstr ""
+
+#: main/templates/main/review.html:113
+msgid "Click "
+msgstr ""
+
+#: main/templates/main/review.html:113
+#, fuzzy
+#| msgid "Add your community"
+msgid " to add your community."
+msgstr "أضف مجتمعك"
+
+#: main/templates/main/state.html:16
+msgid "Welcome to"
+msgstr ""
+
+#: main/templates/main/state.html:27 main/templates/main/state_info.html:7
+msgid "What is redistricting?"
+msgstr ""
+
+#: main/templates/main/state.html:30
+msgid ""
+"\n"
+"          In 2021, voting district lines across the country will be redrawn "
+"to determine who represents the people of your state.\n"
+"          "
+msgstr ""
+
+#: main/templates/main/state.html:38
+msgid "How does redistricing work in "
+msgstr ""
+
+#: main/templates/main/state.html:49 main/templates/main/state_info.html:28
+#, fuzzy
+#| msgid "Representable will help..."
+msgid "How can Representable help?"
+msgstr "رَبْريسانْتَبُل سوف يساعد في..."
+
+#: main/templates/main/state.html:52
+msgid ""
+"\n"
+"          Representable will help you tell mapmakers about your community "
+"interests and boundaries, so that they can fairly consider it when they draw "
+"new voting district lines.\n"
+"          "
+msgstr ""
+
+#: main/templates/main/state.html:60
+#, fuzzy
+#| msgid "Redistricting is coming."
+msgid " redistricting criteria "
+msgstr "إعادة التقسيم قادم."
+
+#: main/templates/main/state.html:76
+msgid ""
+"\n"
+"            See community maps drawn here <i class=\"fas fa-arrow-circle-"
+"right\"></i>\n"
+"            "
+msgstr ""
+
+#: main/templates/main/state.html:90 main/templates/main/state_info.html:65
+#, fuzzy
+#| msgid "Put your community on the map."
+msgid "Communities of Interest in "
+msgstr "ضع مجتمعك على الخريطة"
+
+#: main/templates/main/state.html:98 main/templates/main/state.html:99
+msgid "START MAPPING"
+msgstr ""
+
+#: main/templates/main/state_info.html:11
+msgid ""
+"In 2021, voting district lines across the country will be redrawn to "
+"determine who represents the people of your state."
+msgstr ""
+
+#: main/templates/main/state_info.html:17
+msgid "How does redistricting work in "
+msgstr ""
+
+#: main/templates/main/state_info.html:31
+msgid ""
+"Representable will help you tell mapmakers about your community interests "
+"and boundaries, so that they can fairly consider it when they draw new "
+"voting district lines."
+msgstr ""
+
+#: main/templates/main/state_info.html:37
+#, fuzzy
+#| msgid "Redistricting is coming."
+msgid " redistricting criteria"
+msgstr "إعادة التقسيم قادم."
+
+#: main/templates/main/submission.html:56
 msgid "Download this map"
 msgstr ""
 
-#: main/templates/main/submission.html:59
+#: main/templates/main/submission.html:58
 msgid ""
 "\n"
 "                Map downloads include the community information below.\n"
 "              "
 msgstr ""
 
-#: main/templates/main/submission.html:124
-msgid "Community Information"
+#: main/templates/main/submission.html:69
+msgid "What is GeoJSON?"
+msgstr ""
+
+#: main/templates/main/submission.html:75
+msgid ""
+"GeoJSON files are industry standard and usable with other mapping softwares "
+"like Maptitude for Redistricting, Dave's Redistricting App, ESRI, and more."
+msgstr ""
+
+#: main/templates/main/submission.html:191
+msgid "Submit to an organization in your state"
+msgstr ""
+
+#: main/templates/main/submission.html:193
+msgid ""
+"Many organizations in your state are collecting community maps. Submit yours "
+"to one of their collection drives."
+msgstr ""
+
+#: main/templates/main/submission.html:201
+msgid "Submit"
+msgstr ""
+
+#: main/templates/main/submission.html:206
+msgid "This community map has already been submitted to an organization"
+msgstr ""
+
+#: main/templates/main/submission.html:228
+#: main/templates/main/submission.html:235
+#: main/templates/main/submission.html:238
+msgid "Data Layers"
+msgstr ""
+
+#: main/templates/main/submission.html:244
+#: main/templates/main/submission.html:255
+#: main/templates/main/submission.html:258
+msgid "Demographics"
+msgstr ""
+
+#: main/templates/main/submission.html:292
+msgid "Your community is ready to be viewed and downloaded. You have "
+msgstr ""
+
+#: main/templates/main/submission.html:292
+msgid "received an email with your community as a PDF file."
+msgstr ""
+
+#: main/templates/main/submission.html:293
+msgid "Make an impact with your map."
+msgstr ""
+
+#: main/templates/main/submission.html:303
+msgid ""
+"View your community on a computer to download as a PDF or geoJSON file. You "
+"can submit these files as public testimony or to a local redistricting "
+"organization."
+msgstr ""
+
+#: main/templates/main/submission.html:313
+msgid ""
+"\n"
+"                      If your state has a redistricting commission or "
+"accepts Communities of Interest, send a pdf of your community to submit as "
+"public testimony. If not, you can send it to a local redistricting "
+"organization or <a href=\"https://myreps.datamade.us/\" target=\"_blank\" "
+"rel=\"noopener noreferrer\">your legislator</a>.\n"
+"                      "
+msgstr ""
+
+#: main/templates/main/submission.html:317
+msgid "Export PDF"
+msgstr ""
+
+#: main/templates/main/submission.html:329
+msgid ""
+"If you would like to use your map to draw voting districts, you can upload "
+"the geoJSON file to mapping softwares such as Maptitude, Dave’s "
+"Redistricting App, or Districtr."
+msgstr ""
+
+#: main/templates/main/submission.html:351
+msgid ""
+"Send the map to your community members and encourage them to draw maps. When "
+"map drawers have more data from your community, they are more likely to draw "
+"fairer districts."
+msgstr ""
+
+#: main/templates/main/submission.html:362
+msgid "Resend Email"
+msgstr ""
+
+#: main/templates/main/submission.html:375
+msgid ""
+" This map was created at <a href=\"https://representable.org/"
+"\">Representable.org "
 msgstr ""
 
 #: main/templates/main/thanks.html:13
@@ -3066,107 +2241,263 @@ msgstr ""
 msgid "Please Verify Your Email"
 msgstr ""
 
-#: main/views/main.py:245
-msgid "HELLO"
+#: main/templates/main/thanks.html:22
+msgid ""
+"This tool is meant for non-partisan use by communities and their members to "
+"provide information to the Redistricting Commission."
 msgstr ""
 
-#: representable/settings/base.py:184
-msgid "English"
+#: main/templates/main/thanks.html:23
+msgid ""
+"By adding your map to Representable.org you're not submitting a map to a "
+"redistricting commission. We will add information about submitting to the "
+"commission as soon as information becomes available in your state."
 msgstr ""
 
-#: representable/settings/base.py:185
-msgid "Spanish"
+#: main/templates/main/thanks.html:26
+msgid ""
+"Thank you for submitting your map. The next step is to verify your email. We "
+"resent an email verification link to your inbox."
 msgstr ""
 
-#: representable/settings/base.py:186
-msgid "Arabic"
+#: main/templates/main/thanks.html:27
+msgid ""
+"Account verification allows Representable.org and our partner organizations "
+"to submit credible maps to Redistricting Commisions ensuring that your entry "
+"has an impact in ending gerrymandering."
 msgstr ""
 
-#: representable/settings/base.py:187
-msgid "French"
+#: main/templates/main/thanks.html:29
+msgid ""
+"In the meantime, you can export your community in GeoJSON or PDF format "
+"using the link below."
 msgstr ""
 
-#: representable/templates/base.html:103
-msgid "Partners"
-msgstr "شريك معنا"
+#: main/templates/main/thanks.html:33
+#, fuzzy
+#| msgid "Add Your Community"
+msgid "View/Export Your Community"
+msgstr "أضف مجتمعك"
 
-#: representable/templates/base.html:117
+#: main/templates/main/thanks.html:35 main/templates/main/thanks.html:38
+msgid "Your community map is now live here: "
+msgstr ""
+
+#: main/templates/main/thanks.html:39
+#, fuzzy
+#| msgid "Add community"
+msgid "View Community"
+msgstr "أضف مجتمع"
+
+#: main/templates/main/thanks.html:45
+msgid "Map"
+msgstr ""
+
+#: main/templates/main/thanks.html:46
+msgid "View all communities submitted to {{drive_name}}"
+msgstr ""
+
+#: main/templates/main/thanks.html:52
+msgid "Do you have any feedback for us?"
+msgstr ""
+
+#: main/templates/main/thanks.html:53
+msgid ""
+"We are interested in your feedback. If you found a bug or have any "
+"suggestions for us, please send them to us by pressing on the button below."
+msgstr ""
+
+#: main/templates/main/thanks.html:54
+#, fuzzy
+#| msgid "Report Error/Send Feedback"
+msgid "Send Feedback"
+msgstr "أرسل تعليقاتك"
+
+#: main/templates/main/thanks.html:57
+msgid "Having trouble with email verification?"
+msgstr ""
+
+#: main/templates/main/thanks.html:58
+msgid ""
+"We are here to help! Let us know if you didn't recieve an email verification "
+"link or want to provide feedback by contacting Team@Representable.org"
+msgstr ""
+
+#: representable/templates/base.html:81
+#: representable/templates/base_nofooter.html:81
+#, fuzzy
+#| msgid "For organizations"
+msgid "My Organizations"
+msgstr "للمنظمات"
+
+#: representable/templates/base.html:110
+#: representable/templates/base_nofooter.html:110
+msgid "Learn More"
+msgstr ""
+
+#: representable/templates/base.html:120
+#: representable/templates/base_nofooter.html:120
 msgid "About"
 msgstr "معلومات عنا"
 
-#: representable/templates/base.html:123
-msgid "Blog"
-msgstr "مدونة"
-
-#: representable/templates/base.html:130
+#: representable/templates/base.html:127
+#: representable/templates/base_nofooter.html:127
 msgid "My Account"
 msgstr "حسابي"
 
-#: representable/templates/base.html:133
-msgid "Account Settings"
-msgstr "إعدادات التتبع"
-
-#: representable/templates/base.html:134
+#: representable/templates/base.html:131
+#: representable/templates/base_nofooter.html:131
 msgid "My communities"
 msgstr "مجتمعاتي"
 
-#: representable/templates/base.html:135
+#: representable/templates/base.html:132
+#: representable/templates/base_nofooter.html:132
 msgid "Logout"
 msgstr "تسجيل خروج"
 
-#: representable/templates/base.html:140
+#: representable/templates/base.html:137
+#: representable/templates/base_nofooter.html:137
 msgid "Add community"
 msgstr "أضف مجتمع"
 
-#: representable/templates/base.html:146
+#: representable/templates/base.html:143
+#: representable/templates/base_nofooter.html:143
 msgid "Log in"
 msgstr "تسجيل دخول"
 
-#: representable/templates/base.html:151
+#: representable/templates/base.html:148
+#: representable/templates/base_nofooter.html:148
 msgid "Sign up"
 msgstr "سجل"
 
-#: representable/templates/base.html:252
+#: representable/templates/base.html:259
 msgid "Add Your Community"
 msgstr "أضف مجتمعك"
 
-#: representable/templates/base.html:255
+#: representable/templates/base.html:262
 msgid "Create a Partner Profile"
 msgstr "أخلق ملف تعريف الشريك"
 
-#: representable/templates/base.html:259
-msgid "My Communities"
-msgstr "مجتمعاتي"
-
-#: representable/templates/base.html:268
-msgid "Privacy"
-msgstr "خصوصية"
-
-#: representable/templates/base.html:271
-msgid "Terms"
-msgstr "شروط الإستخدام"
-
-#: representable/templates/base.html:277
+#: representable/templates/base.html:284
 msgid "More questions? Reach out at"
 msgstr "مزيد الأسئلة؟ تواصلوا بنا على"
 
-#~ msgid "Report Error/Send Feedback"
-#~ msgstr "أرسل تعليقاتك"
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:5
+msgid "Select an image to embed"
+msgstr ""
 
-#~ msgid "For community members"
-#~ msgstr "لأفراد المجتمع"
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:27
+msgid "Browse for the image you want, then click 'Embed Image' to continue..."
+msgstr ""
 
-#~ msgid "Learn how to use Representable to draw your community."
-#~ msgstr "تعرف على كيفية استخدام رَبْريسانْتَبُل لرسم مجتمعك"
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:29
+msgid ""
+"No images found. Upload images using the 'Image Button' dialog's 'Upload' "
+"tab."
+msgstr ""
 
-#~ msgid "For organizations"
-#~ msgstr "للمنظمات"
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:50
+msgid "Images in: "
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:62
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:80
+msgid "Embed Image"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:146
+msgid "Play Slideshow"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:147
+msgid "Pause Slideshow"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:148
+msgid "&lsaquo; Previous Photo"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:149
+msgid "Next Photo &rsaquo;"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:150
+msgid "Next &rsaquo;"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:151
+msgid "&lsaquo; Prev"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:6
+msgid "Django: the Web framework for perfectionists with deadlines."
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:345
+#, python-format
+msgid ""
+"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:367
+msgid "The install worked successfully! Congratulations!"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:368
+#, python-format
+msgid ""
+"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
+"\">DEBUG=True</a> is in your settings file and you have not configured any "
+"URLs."
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:383
+msgid "Django Documentation"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:384
+msgid "Topics, references, &amp; how-to's"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:395
+msgid "Tutorial: A Polling App"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:396
+msgid "Get started with Django"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:407
+msgid "Django Community"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:408
+msgid "Connect, get help, or contribute"
+msgstr ""
+
+#, fuzzy
+#~| msgid "Partner with us"
+#~ msgid "Partner With Us"
+#~ msgstr "شريك معنا"
+
+#, fuzzy
+#~| msgid "Get Started"
+#~ msgid "Start"
+#~ msgstr "البدء"
+
+#~ msgid "Head of Software Architecture"
+#~ msgstr "رئيس هندسة البرمجيات"
+
+#~ msgid "Head of Data and Mapping"
+#~ msgstr "رئيس البيانات ورسم الخرائط"
+
+#~ msgid "Blog"
+#~ msgstr "مدونة"
 
 #~ msgid "Work with us to map communities across the United States."
 #~ msgstr "اعمل معنا لرسم خرائط مجتمعات في جميع أنحاء الولايات المتحدة."
-
-#~ msgid "Partner with us"
-#~ msgstr "شريك معنا"
 
 #~ msgid "For mapmakers"
 #~ msgstr "لصانعي الخرائط"
