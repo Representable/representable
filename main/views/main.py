@@ -1007,6 +1007,7 @@ class EntryView(LoginRequiredMixin, View):
             "state": abbr,
             "address_required": address_required,
             "state_obj": State.objects.get(abbr=abbr.upper()),
+            "page_type": "entry" # For the base template to check and remove footer
         }
         return render(request, self.template_name, context)
 
