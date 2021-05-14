@@ -975,6 +975,7 @@ class EntryView(LoginRequiredMixin, View):
         organization_name = ""
         organization_id = None
         drive_name = ""
+        drive_slug = ""
         drive_id = None
         if kwargs["drive"]:
             has_drive = True
@@ -1019,6 +1020,7 @@ class EntryView(LoginRequiredMixin, View):
             "organization_id": organization_id,
             "drive_name": drive_name,
             "drive_id": drive_id,
+            "drive_slug": drive_slug,
             "state": abbr,
             "address_required": address_required,
             "state_obj": State.objects.get(abbr=abbr.upper()),
