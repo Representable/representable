@@ -1065,7 +1065,12 @@ class EntryView(LoginRequiredMixin, View):
                 for bg in block_groups
             ]
         comm_form.data._mutable = False
+        # print("post editing of ids")
+        # print(comm_form.is_valid())
+        # print(comm_form.errors)
+        # print(type(comm_form.data["block_groups"]))
         if comm_form.is_valid():
+            print("is this working?")
             recaptcha_response = request.POST.get("g-recaptcha-response")
             url = "https://www.google.com/recaptcha/api/siteverify"
             values = {
@@ -1159,6 +1164,8 @@ class EntryView(LoginRequiredMixin, View):
             del finalres["admin_approved"]
 
             string_to_hash = str(finalres)
+            print("finalres")
+            print(finalres)
 
             addres = dict()
             if addr_form.is_valid():
