@@ -133,9 +133,18 @@
                     </ul>
                 </li>
                 <li class="nav-item mx-auto">
-                    <a class="btn btn-outline-primary m-2" href="{% url 'main:entry_preview' %}">
-                        {% trans "Add community" %}
-                    </a>
+                    {% if page_type == "drive-page" %}
+                        {% comment %} <a class="btn btn-outline-primary m-2" href="{% url 'main:entry' drive=object.slug %}{{object.state|lower}}">
+                            {% trans "Add community" %}
+                        </a> {% endcomment %}
+                        <a class="btn btn-outline-primary m-2" href="#drive-get-started-btn">
+                            {% trans "Add community" %}
+                        </a> 
+                    {% else %}
+                        <a class="btn btn-outline-primary m-2" href="{% url 'main:entry_preview' %}">
+                            {% trans "Add community" %}
+                        </a>
+                    {% endif %}
                 </li>
                 {% else %}
                 <li class="nav-item mx-auto">
@@ -244,6 +253,9 @@
     {% endblock %}
 
 </body>
+{% if page_type == "entry" %}
+
+{% else %}
 <footer class="pt-4 mb-md-5 pt-md-5 border-top">
     <div class="container">
         <div class="row">
@@ -284,5 +296,6 @@
         </div>
     </div>
 </footer>
+{% endif %}
 
 </html>

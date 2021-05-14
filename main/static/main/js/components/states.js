@@ -168,6 +168,7 @@ let statesLngLat = {
 let publicCommentLinks = {
   'co': 'https://redistricting.colorado.gov/public_comments/new',
   'ma': 'https://malegislature.gov/Redistricting/Contact',
+  'mi': 'https://www.michigan-mapping.org/#submit',
   'mo': 'https://house.mo.gov/WitnessForm/Default.aspx?noticeid=5970',
   'mt': 'https://leg.mt.gov/districting/2020-commission/redistricting-input/',
   'nj': 'http://www.apportionmentcommission.org/ContactUs.asp',

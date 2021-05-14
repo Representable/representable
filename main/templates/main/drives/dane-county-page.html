@@ -1,0 +1,89 @@
+{% load static %}
+{% load i18n %}
+
+<div class="col">
+    <div class="row mb-4">
+        <div class="col-12 col-lg-4 mb-3 mb-xl-0 text-center">
+            <img height="200px" src="{% static 'img/DaneCountySeal.png' %}" alt="Dane County's Seal"> </img>
+        </div>
+        <div class="col-12 col-lg-8 p-xl-0">
+            <h4 class="gray-text mb-3 text-center text-md-left"><strong>{% trans "Tell Us About Your Community" %}</strong></h4>
+            <p>
+            {% blocktrans %}
+            We are working to make sure the Dane County Board of Supervisers accurately reflects the people and communities it represents.
+            As part of that process, we are interested in learning what you think makes up your "community of interest."
+            <br><br>
+            Who do you consider your neighbors? What other people, businesses, schools, churches or other organizations do you interact with on a regular basis?
+            What places do you visit or travel to in the course of your day or week?
+            What issues, values, or concerns bind you and your community together? Join us to help make sure your elected officials truly "represent" you and your community.
+            {% endblocktrans %}
+            </p>
+        </div>
+    </div>
+    <div class="row text-center text-md-left px-3 p-xl-0 my-3 my-xl-5">
+        <h4 class="gray-text"><b>Redistricting in Dane County and Wisconsin</b></h4>
+    </div>
+    <div class="row p-lg-3 p-xl-0">
+        <div class="col-12 col-lg-5 order-1 order-lg-0">
+            <div class="row">
+                <div class="col-12 p-3 light-blue-bg mb-4">
+                    <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria2" aria-expanded="false" aria-controls="collapseCriteria2" onclick="toggleAngle(this)">
+                        <h5 class="dark-gray-text"><b>Redistricting News</b><i class="fas fa-angle-down pl-3"></i></h5>
+                    </button>
+                    <div class="collapse" id="collapseCriteria2">
+                        {% blocktrans %}
+                        Wisconsin law requires county boards to redraw their supervisory district lines after each U.S. Decennial Census. 
+                        The law also requires that electoral districts are equal in population, and keep municipalities intact.  
+                        For the first time ever, Dane County has appointed a nonpartisan, independent Redistricting Commission to guide and direct thatprocess.  
+                        This will help ensure that supervisory districts are drawn impartially, without regard to politics.
+                        {% endblocktrans %}
+                    </div>
+                </div>
+
+                <div class="col-12 p-3 light-blue-bg mb-4">
+                    <button class="btn ws-normal btn-link bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria3" aria-expanded="false" aria-controls="collapseCriteria3" onclick="toggleAngle(this)">
+                        <h5 class="dark-gray-text"><b>How can Representable help?</b><i class="fas fa-angle-down pl-3"></i></h5>
+                    </button>
+                    <div class="collapse" id="collapseCriteria3">
+                        {% blocktrans %}
+                        Representable will help you tell the Dane County Redistricting Commission about your community and visualize a map of its boundaries. 
+                        Then, line-drawers can fairly consideryour community when they draw new voting district lines.
+                        {% endblocktrans %}
+                    </div>
+                </div>
+
+                <div class="col-12 p-3 light-blue-bg mb-4">
+                    <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria4" aria-expanded="false" aria-controls="collapseCriteria4" onclick="toggleAngle(this)">
+                        <h5 class="dark-gray-text"><b>Dane County's redistricting <br class="d-xl-none"> criteria</b><i class="fas fa-angle-down pl-3"></i></h5>
+                    </button>
+                    <div class="collapse" id="collapseCriteria4">
+                        In order of priority:<br>
+                        <p class="pl-2">
+                        a) Each district should represent the same population size, be contiguous, and compact;<br>
+                        b) Minimize the number of municipal boundaries crossed;<br>
+                        c) Ensure fair and effective representation of the diverse ethnic and racial population in Dane County;<br>
+                        d) Take into consideration geography and natural boundaries such as rivers and lakes;<br>
+                        e) Keep intact neighborhoods and communities of interest and association, whether historical, racial, economic, ethnic, religious, or other;<br>
+                        f) Districts shall be drawn without regard to incumbency.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-0 col-lg-1"></div>
+        <div class="d-none d-lg-block col-lg-4 order-0 order-lg-1 mb-3 mb-xl-0 text-center">
+            <img height="250px" src="{% static 'img/map-info.svg' %}" alt="hads with a map"></img>
+        </div>
+    </div>
+    <div class="row p-5 light-blue-bg mb-5">
+        <h4 class="gray-text"><strong>{% trans "Communities of Interest in Dane County" %}</strong></h4>
+        <p>
+        {% blocktrans %}
+        Dane County's ordinance requires that: <br><br><em>"District lines shall keep intact neighborhoods and communities with established ties of common interest and
+        association whether historical, racial, economic, ethnic, religious or other."</em><br><br>
+        Communities as described above don't always fall neatly into existing, easily mapped areas such as municipal boundaries, school districts, census block groups,
+        or neighborhood associations. The Redistricting Commission needs your help to make sure your community is adequately represented.
+        {% endblocktrans %}
+        </p>
+    </div>
+</div>

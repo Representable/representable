@@ -186,11 +186,12 @@
             <a id="public-comment-link"><h5 class="blue-text">Go to public input portal <i class="far fa-arrow-alt-circle-right"></i></h5></a>
           </div>
         </div>
+        {% if show_form is True and not form_empty %}
         <div class="card text-left border-0 w-100 rounded-lg mt-3 mb-3 d-xl-block">
           <div class="card-body">
-            <h5 class="card-title header-text"><strong>{% trans "Submit to an organization in your state" %}</strong></h5>
-            {% if show_form is True %}
-              <p class="header-text small">{% trans "Many organizations in your state are collecting community maps. Submit yours to one of their collection drives." %}</p>
+            <h5 class="card-title header-text"><strong>Submit to an organization.</strong></h5>
+            {% if c.drive is not True %}
+              <p class="header-text small">Many organizations in your state are collecting community maps. Submit yours to one of their collection drives.</p>
               <form method="post">
                 {% csrf_token %}
                 {% for field in form %}
@@ -198,7 +199,7 @@
                 {% endfor %}
                 <div class="row justify-content-center pt-3">
                   <div>
-                    <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>                    
+                    <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
                   </div>
                 </div>
               </form>
@@ -207,6 +208,7 @@
             {% endif %}
           </div>
         </div>
+        {% endif %}
       </div>
     </div>
 
@@ -376,39 +378,35 @@
           </div>
           <div class="d-none" id="pdfInfo">
             {% if c.economic_interests %}
-            <h6>
+            <h3>
               <br>
-
               {% trans "Economic or Environmental Interests" %}
             </h6>
             <small>
               {{c.economic_interests}}
             </small>
             {% endif %}
-            {% if c.economic_interests %}
-            <h6>
+            {% if c.comm_activities %}
+            <h3>
               <br>
-
               {% trans "Community Activities and Services" %}
             </h6>
             <small>
               {{c.comm_activities}}
             </small>
             {% endif %}
-            {% if c.economic_interests %}
-            <h6>
+            {% if c.cultural_interests %}
+            <h3>
               <br>
-
               {% trans "Cultural or Historical Interests" %}
             </h6>
             <small>
               {{c.cultural_interests}}
             </small>
             {% endif %}
-            {% if c.economic_interests %}
-            <h6>
+            {% if c.other_considerations %}
+            <h3>
               <br>
-
               {% trans "Community Needs and Concerns" %}
             </h6>
             <small>
@@ -420,7 +418,7 @@
           <div class="d-none" id="pdfOrg">{{c.organization}}</div>
           <div class="d-none" id="pdfDrive">{{c.drive}}</div>
           {% endif %}
-        {% endblock %}
+{% endblock %}
 
         {% block script %}
         <!--  Has to be at the end after the HTML loads.-->
