@@ -148,7 +148,7 @@ def _output_to_doc(lang_code, pofile, service, translate_all):
     result = service.documents().batchUpdate(documentId=AVAILABLE_DOCS[lang_code], body={'requests': pop_table_requests}).execute()
     print("{} phrases outputted".format(pofile_length))
 
-def _get_translations_from_doc(service):
+def _get_translations_from_doc(lang_code, service):
     translations = {}
     document = service.documents().get(documentId=AVAILABLE_DOCS[lang_code]).execute()
     table_rows = document['body']['content'][2]['table']['tableRows']
@@ -157,16 +157,18 @@ def _get_translations_from_doc(service):
         doc_msgstr = row['tableCells'][1]["content"][0]["paragraph"]["elements"][0]["textRun"]["content"]
         translations[doc_msgid.replace("\n", "")] = doc_msgstr.replace("\n", "")
 
+    return translations
+
 def output_all_msgids(lang_code, pofile, service):
     _output_to_doc(lang_code, pofile, service, False)
 
 def output_needs_translation(lang_code, pofile, service):
     _output_to_doc(lang_code, pofile.untranslated_entries() + pofile.fuzzy_entries(), service, True)
 
-def input_needed_translations(pofile, pofile_path, service):
+def input_needed_translations(lang_code, pofile, pofile_path, service):
     prior_percent_translated = pofile.percent_translated()
     prior_num_needs_translations = len(pofile.untranslated_entries() + pofile.fuzzy_entries())
-    translations = _get_translations_from_doc(service)
+    translations = _get_translations_from_doc(lang_code, service)
 
     for entry in pofile.untranslated_entries() + pofile.fuzzy_entries():
         entry.msgstr = translations.get(entry.msgid, entry.msgstr)
