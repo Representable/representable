@@ -980,6 +980,7 @@ class EntryView(LoginRequiredMixin, View):
         organization_name = ""
         organization_id = None
         drive_name = ""
+        drive_slug = ""
         drive_id = None
         drive_custom_question = ""
         drive_custom_question_example = ""
@@ -1030,6 +1031,7 @@ class EntryView(LoginRequiredMixin, View):
             "drive_id": drive_id,
             "drive_custom_question": drive_custom_question,
             "drive_custom_question_example": drive_custom_question_example,
+            "drive_slug": drive_slug,
             "state": abbr,
             "address_required": address_required,
             "state_obj": State.objects.get(abbr=abbr.upper()),

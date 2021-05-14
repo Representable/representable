@@ -163,7 +163,8 @@ let statesLngLat = {
   'WA': [-120.7401, 47.7511],
   'WI': [-89.8267049, 44.7862968],
   'WV': [-80.1816905, 38.9201705],
-  'WY': [-107.5545669, 43.000325]
+  'WY': [-107.5545669, 43.000325],
+  'DANE': [-89.4012, 43.0731],
 }
 let publicCommentLinks = {
   'co': 'https://redistricting.colorado.gov/public_comments/new',
