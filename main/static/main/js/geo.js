@@ -21,17 +21,27 @@
 
 // GEO Js file for handling map drawing.
 /* https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ */
-var bg_id = "GEOID";
-var block_id = "GEOID20";
-var unit_id = bg_id;
-var layer_suffix = "bg";
-var drawUsingBlocks = false;
-var old_units = false;
+var bg_id = "GEOID"; // census FIPS code for block group
+var block_id = "GEOID20"; // census FIPS code for block
+var unit_id = bg_id; // abstracted - current unit
+var layer_suffix = "bg"; // suffix for created unit
+var drawUsingBlocks = false; // are we using blocks block groups currently?
+var old_units = false; // does this state use 2010 census units or 2020?
+var dane_cty = false; // is this a customized building block drive for dane county?
+if (drive_slug == "tell-us-about-your") dane_cty = true;
+var initialZoom = 6; // initial zoom level for first showing map - higher is closer
 if (STATES_USING_OLD_UNITS.indexOf(state) >= 0) {
   old_units = true;
   block_id = "BLOCKID10";
   bg_id = "GEOID10";
   unit_id = bg_id;
+}
+if (dane_cty) {
+  bg_id = "WARD_FIPS";
+  unit_id = "WARD_FIPS";
+  state = "dane";
+  layer_suffix="wards";
+  initialZoom = 10;
 }
 // stack of filters (which block to highlight) and bounding boxes (for contiguity check)
 var filterStack = JSON.parse(sessionStorage.getItem("filterStack"));
@@ -241,6 +251,10 @@ $('#map-bg-to-block-btn').on('click', function() {
   changeMappingUnit();
   $("#map-bg-to-block-modal").modal('hide');
 });
+
+if (dane_cty) {
+  $('#map-units-btn').hide();
+}
 
 /**
  * "May not be needed": Lines tagged with this are meant to animate the load in between the progress bars on a mobile view. However
@@ -519,6 +533,10 @@ $("#id_other_considerations").on("click", function(e) {
   }
 });
 
+if (drive_custom_question_example) {
+  $('#id_custom_response').attr("placeholder", "ex. " + drive_custom_question_example);
+}
+
 function interestsValidated() {
   var flag = true;
   var cultural_interests_field = document.getElementById(
@@ -531,22 +549,26 @@ function interestsValidated() {
   var other_considerations_field = document.getElementById(
     "id_other_considerations"
   );
+  var custom_response_field = document.getElementById("id_custom_response");
 
   cultural_interests_field.value = trim(cultural_interests_field.value);
   economic_interests_field.value = trim(economic_interests_field.value);
   comm_activities_field.value = trim(comm_activities_field.value);
   other_considerations_field.value = trim(other_considerations_field.value);
+  if (custom_response_field) custom_response_field.value = trim(custom_response_field.value);
 
   if (
     cultural_interests_field.value == "" &&
     economic_interests_field.value == "" &&
     comm_activities_field.value == "" &&
-    other_considerations_field.value == ""
+    other_considerations_field.value == "" &&
+    (custom_response_field && custom_response_field.value == "")
   ) {
     cultural_interests_field.classList.add("has_error");
     economic_interests_field.classList.add("has_error");
     comm_activities_field.classList.add("has_error");
     other_considerations_field.classList.add("has_error");
+    custom_response_field.classList.add("has_error");
     var interests_alert = document.getElementById("need_one_interest");
     interests_alert.classList.remove("d-none");
     flag = false;
@@ -710,7 +732,10 @@ function createCommPolygon() {
   // clean up polyFilter -- this is the array of GEOID to be stored
   polyFilter.splice(0, 1);
   polyFilter.splice(0, 1);
-  document.getElementById("id_block_groups").value = polyFilter;
+  // if (!dane_cty) {
+  //   drawUsingBlocks ? document.getElementById("id_census_blocks").value = polyFilter : document.getElementById("id_block_groups").value = polyFilter;
+  // }
+  // console.log(document.getElementById("id_block_groups").value)
   // load in the Population
   var pop = sessionStorage.getItem("pop");
   document.getElementById("id_population").value = pop;
@@ -1248,20 +1273,31 @@ map.on("style.load", function () {
     map.resize();
   });
 
-  // block layers
-  newSourceLayer(state + "block", state + "block");
-  newCensusShading(state, firstSymbolId, "block");
-  newCensusLines(state, "block");
-  newHighlightLayer(state, firstSymbolId, "block");
-  // block group layers
-  newSourceLayer(state + "bg", state + "bg");
-  newCensusShading(state, firstSymbolId, "bg");
-  newCensusLines(state, "bg");
-  newHighlightLayer(state, firstSymbolId, "bg");
+  // if dane county, generate the various layers using custom function
+  if (dane_cty) {
+    newSourceLayer("danewards", "danewards");
+    newCensusShading("dane", firstSymbolId, "wards");
+    newCensusLines("dane", "wards");
+    newHighlightLayer("dane", firstSymbolId, "wards");
+    map.setLayoutProperty("dane-census-lines-wards", "visibility", "visible");
+    map.setLayoutProperty("dane-census-shading-wards", "visibility", "visible");
+    map.setLayoutProperty("dane-highlighted-wards", "visibility", "visible");
+  } else {
+    // block layers
+    newSourceLayer(state + "block", state + "block");
+    newCensusShading(state, firstSymbolId, "block");
+    newCensusLines(state, "block");
+    newHighlightLayer(state, firstSymbolId, "block");
+    // block group layers
+    newSourceLayer(state + "bg", state + "bg");
+    newCensusShading(state, firstSymbolId, "bg");
+    newCensusLines(state, "bg");
+    newHighlightLayer(state, firstSymbolId, "bg");
+  }
   showMap();
   map.flyTo({
     center: statesLngLat[state.toUpperCase()],
-    zoom: 6,
+    zoom: initialZoom,
     essential: true, // this animation is considered essential with respect to prefers-reduced-motion
   });
   map.setLayoutProperty(state + "-census-lines-" + layer_suffix, "visibility", "visible");
@@ -1280,7 +1316,6 @@ map.on("style.load", function () {
   // feature state for the feature under the mouse.
   var bgID = null;
   var features = [];
-  var stateCensus = state + "-census-shading-" + layer_suffix;
   var blockPopCache = {};
 
   // when selecting or erasing
@@ -1429,7 +1464,8 @@ function mapHover() {
   // feature state for the feature under the mouse.
   var bgID = null;
   var features = [];
-  stateCensus = state + "-census-shading-" + layer_suffix;
+  var stateCensus = state + "-census-shading-" + layer_suffix;
+  if (dane_cty) stateCensus = "dane-census-shading-wards";
   // if touch screen, disable.
   if (!is_touch_device()) {
     map.on("mousemove", stateCensus, function (e) {
@@ -1577,11 +1613,11 @@ function triggerSuccessMessage() {
   sessionStorage.setItem("map_drawn_successfully", true);
 }
 
-function updateFormFields(census_blocks_polygon_array) {
+function updateFormFields(census_blocks_polygon) {
   // Update form fields
   document.getElementById(
     "id_census_blocks_polygon"
-  ).value = census_blocks_polygon_array;
+  ).value = census_blocks_polygon;
   // "census_blocks_polygon" gets saved in the post() function in django
 }
 
