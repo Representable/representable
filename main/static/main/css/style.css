@@ -261,7 +261,7 @@ form:invalid {
 
 #state-map-cois {
   overflow: scroll;
-  max-height: 500px;
+  max-height: 800px;
 }
 
 #partner-welcome-modal .modal-dialog .modal-content{
