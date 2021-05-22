@@ -37,7 +37,6 @@ if (STATES_USING_OLD_UNITS.indexOf(state) >= 0) {
   unit_id = bg_id;
 }
 if (dane_cty) {
-  old_units = false;
   bg_id = "WARD_FIPS";
   unit_id = "WARD_FIPS";
   state = "dane";
@@ -733,8 +732,10 @@ function createCommPolygon() {
   // clean up polyFilter -- this is the array of GEOID to be stored
   polyFilter.splice(0, 1);
   polyFilter.splice(0, 1);
-  drawUsingBlocks ? document.getElementById("id_census_blocks").value = polyFilter : document.getElementById("id_block_groups").value = polyFilter;
-
+  // if (!dane_cty) {
+  //   drawUsingBlocks ? document.getElementById("id_census_blocks").value = polyFilter : document.getElementById("id_block_groups").value = polyFilter;
+  // }
+  // console.log(document.getElementById("id_block_groups").value)
   // load in the Population
   var pop = sessionStorage.getItem("pop");
   document.getElementById("id_population").value = pop;
