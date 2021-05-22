@@ -514,6 +514,14 @@ function exportCois(url, type) {
         }
       });
 };
+
+function showAllCommunities() {
+  $(".map-checkbox:checkbox:checked").toArray().forEach(function(coiCheckbox) {
+    coiCheckbox.checked = false;
+    toggleEntryVisibility(coiCheckbox);
+    map.setLayoutProperty('coi_layer_fill', "visibility", "visible");
+  })
+}
 /*******************************************************************/
 
 // remove the last char in the string
