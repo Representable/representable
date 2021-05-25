@@ -130,6 +130,18 @@ from django.contrib.gis.geos import GEOSGeometry
 
 # ******************************************************************************#
 
+
+def block_group_polygons(request):
+    file_ = open(os.path.join(settings.BASE_DIR, 'staticfiles/ndbg.geojson'))
+    data = json.load(file_)
+    # data = {
+    #     'name': 'Vitor',
+    #     'location': 'Finland',
+    #     'is_active': True,
+    #     'count': 28
+    # }
+    return JsonResponse(data)
+
 # custom mixin redirects to signup page/tab rather than login
 class SignupRequiredMixin(AccessMixin):
     """Verify that the current user is authenticated."""
