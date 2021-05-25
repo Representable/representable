@@ -700,26 +700,45 @@ function createCommPolygon() {
     triggerMissingPolygonError();
     return false;
   }
-  // now query the features and build the polygon to be saved
-  var queryFeatures = map.queryRenderedFeatures({
-    layers: [state + "-census-shading-" + layer_suffix],
-  });
+
   var multiPolySave;
-  queryFeatures.forEach(function (feature) {
-    // get properties, depending on the feature type
-    if (drawUsingBlocks) {
-      featureProp = feature.properties[block_id];
-    } else {
-      featureProp = feature.properties[bg_id];
-    }
-    if (polyFilter.includes(featureProp)) {
-      if (multiPolySave === undefined) {
-        multiPolySave = feature;
-      } else {
-        multiPolySave = turf.union(multiPolySave, feature);
+
+  console.log('to be saved:', polyFilter);
+  for(var i = 2; i < polyFilter.length; i++){
+    console.log(polyFilter[i]);
+    blockGroupPolygons.features.forEach((e) => {
+      if(e.properties[polyFilter[1]] == polyFilter[i]){
+        console.log(e);
+        if (multiPolySave === undefined) {
+          multiPolySave = e;
+        } else {
+          multiPolySave = turf.union(multiPolySave, e);
+        }
       }
-    }
-  });
+    });
+  }
+
+
+
+  // now query the features and build the polygon to be saved
+  // var queryFeatures = map.queryRenderedFeatures({
+  //   layers: [state + "-census-shading-" + layer_suffix],
+  // });
+  // queryFeatures.forEach(function (feature) {
+  //   // get properties, depending on the feature type
+  //   if (drawUsingBlocks) {
+  //     featureProp = feature.properties[block_id];
+  //   } else {
+  //     featureProp = feature.properties[bg_id];
+  //   }
+  //   if (polyFilter.includes(featureProp)) {
+  //     if (multiPolySave === undefined) {
+  //       multiPolySave = feature;
+  //     } else {
+  //       multiPolySave = turf.union(multiPolySave, feature);
+  //     }
+  //   }
+  // });
 
   // for display purposes -- this is the final multipolygon!!
   // TODO: implement community entry model change -> store only outer coordinates (like code in map.js)
@@ -1249,9 +1268,16 @@ function newHighlightLayer(state, firstSymbolId, suffix) {
 // the drawing radius for select tool
 var drawRadius = 0;
 var isStateChanged = false;
+var blockGroupPolygons = null;
 /* After the map style has loaded on the page, add a source layer and default
 styling for a single point. */
 map.on("style.load", function () {
+  fetch('/block_group_polygons/')
+    .then(response => response.json())
+    .then(data => {
+      blockGroupPolygons = data;
+      console.log(blockGroupPolygons);
+    });  
   var layers = map.getStyle().layers;
   // Find the index of the first symbol layer in the map style
   // this is so that added layers go under the symbols on the map
