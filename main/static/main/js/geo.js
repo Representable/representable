@@ -706,16 +706,13 @@ function createCommPolygon() {
   console.log('to be saved:', polyFilter);
   for(var i = 2; i < polyFilter.length; i++){
     console.log(polyFilter[i]);
-    blockGroupPolygons.features.forEach((e) => {
-      if(e.properties[polyFilter[1]] == polyFilter[i]){
-        console.log(e);
-        if (multiPolySave === undefined) {
-          multiPolySave = e;
-        } else {
-          multiPolySave = turf.union(multiPolySave, e);
-        }
-      }
-    });
+    var ftr = blockGroupPolygons[polyFilter[i]].feature_obj;
+    console.log(ftr);
+    if (multiPolySave === undefined) {
+      multiPolySave = ftr;
+    } else {
+      multiPolySave = turf.union(multiPolySave, ftr);
+    }
   }
 
 
