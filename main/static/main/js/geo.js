@@ -1261,11 +1261,18 @@ function newHighlightLayer(state, firstSymbolId, suffix) {
   );
 }
 
+
+
+function isContiguous(active_ids) {
+  console.log(active_ids.size);
+}
+isContiguous(activeIDs);
 /******************************************************************************/
 // the drawing radius for select tool
 var drawRadius = 0;
 var isStateChanged = false;
 var blockGroupPolygons = null;
+var activeIDs = new Set();
 /* After the map style has loaded on the page, add a source layer and default
 styling for a single point. */
 map.on("style.load", function () {
@@ -1392,6 +1399,8 @@ map.on("style.load", function () {
         // push current filter MINUS the selected area
         if (!features.includes(feature)) filter.push(feature);
       });
+      console.log('**remove if added', features);
+      features.forEach((e) => activeIDs.delete(e));
       arraysEqual(filter, currentFilter)
         ? (isChanged = false)
         : (isChanged = true);
@@ -1412,6 +1421,8 @@ map.on("style.load", function () {
         }
       }
     } else {
+      console.log('** try to add', features);
+      features.forEach((e) => activeIDs.add(e));
       // this is select mode
       // check if previous selectBbox overlaps with current selectBbox
       if (selectBbox === null || selectBbox.length === 0) {
