@@ -1280,7 +1280,6 @@ function isContiguous(active_ids) {
   return visited.size == active_ids.size;
   setTimeout(5000)
 }
-isContiguous(activeIDs);
 /******************************************************************************/
 // the drawing radius for select tool
 var drawRadius = 0;
