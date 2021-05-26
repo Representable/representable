@@ -1261,10 +1261,24 @@ function newHighlightLayer(state, firstSymbolId, suffix) {
   );
 }
 
-
-
 function isContiguous(active_ids) {
-  console.log(active_ids.size);
+  if(active_ids.size == 0)
+    return true;
+  let visited = new Set();
+  let stack = [];
+  stack.push(active_ids.values().next().value);
+  visited.add(stack[0]);
+
+  while(stack.length > 0){
+    blockGroupPolygons[stack.pop()].adj_geoids.forEach((id) => {
+      if(active_ids.has(id) && !visited.has(id)){
+        stack.push(id);
+        visited.add(id);
+      }
+    });
+  }
+  return visited.size == active_ids.size;
+  setTimeout(5000)
 }
 isContiguous(activeIDs);
 /******************************************************************************/
@@ -1401,6 +1415,8 @@ map.on("style.load", function () {
       });
       console.log('**remove if added', features);
       features.forEach((e) => activeIDs.delete(e));
+      console.log(isContiguous(activeIDs));
+
       arraysEqual(filter, currentFilter)
         ? (isChanged = false)
         : (isChanged = true);
@@ -1423,6 +1439,8 @@ map.on("style.load", function () {
     } else {
       console.log('** try to add', features);
       features.forEach((e) => activeIDs.add(e));
+      console.log(isContiguous(activeIDs));
+
       // this is select mode
       // check if previous selectBbox overlaps with current selectBbox
       if (selectBbox === null || selectBbox.length === 0) {
