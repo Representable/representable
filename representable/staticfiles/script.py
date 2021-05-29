@@ -3,18 +3,19 @@ from turfpy.transformation import union
 from turfpy.measurement import bbox_polygon, bbox
 from geojson import Feature, Polygon, FeatureCollection
 
-with open('ndbg.geojson') as infile:
+with open('ndblock.geojson') as infile:
   data = json.load(infile)
 
 unique_ids = set()
 for i in range(0, len(data['features'])):
-	unique_ids.add(data['features'][i]['properties']['GEOID'])
+	unique_ids.add(data['features'][i]['properties']['GEOID20'])
 assert len(data['features']) == len(unique_ids), 'GEOIDs are not unique'
+print(len(data['features']))
 
 info = dict()
 
 for i in range(0, len(data['features'])): 
-	my_geoid = data['features'][i]['properties']['GEOID']
+	my_geoid = data['features'][i]['properties']['GEOID20']
 	my_ftr = Feature(geometry=data['features'][i]['geometry'])
 	my_box = bbox_polygon(bbox(my_ftr))
 	info[my_geoid] = {
@@ -46,5 +47,5 @@ for my_geoid in info.keys():
 			print(progress)
 			progress -= 1
 
-with open('precompute-ndbg.json', 'w') as outfile:
+with open('precompute-ndblock.json', 'w') as outfile:
 	json.dump(info, outfile)
