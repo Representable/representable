@@ -20,6 +20,7 @@
 
 STATES = (
     ("AL", "Alabama"),
+    ("AK", "Alaska"),
     ("AZ", "Arizona"),
     ("AR", "Arkansas"),
     ("CA", "California"),
@@ -29,6 +30,7 @@ STATES = (
     ("DC", "District of Columbia"),
     ("FL", "Florida"),
     ("GA", "Georgia"),
+    ("HI", "Hawaii"),
     ("ID", "Idaho"),
     ("IL", "Illinois"),
     ("IN", "Indiana"),
@@ -68,6 +70,4 @@ STATES = (
     ("WV", "West Virginia"),
     ("WI", "Wisconsin"),
     ("WY", "Wyoming"),
-    ("AK", "Alaska"),
-    ("HI", "Hawaii"),
 )
