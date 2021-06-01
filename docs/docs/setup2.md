@@ -33,4 +33,6 @@ Our primary communication is via the Princeton Gerrymandering Project slack, som
 I recommend starring the drive folder, so it's easy to find in the future!
 
 ### Representable email
-We have it set up so that emails sent to team@representable.org are automatically forwarded to our personal emails. This is done through Namecheap, under Domains and Email Forwarding. You should be set up for this as well!
+We have it set up so that emails sent to team@representable.org are automatically forwarded to our personal emails. This is done through cloudflare apps. You should be set up for this as well!
+Link:
+https://app.eforw.com 
