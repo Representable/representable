@@ -132,7 +132,7 @@ from django.contrib.gis.geos import GEOSGeometry
 
 
 def block_group_polygons(request):
-    file_ = open(os.path.join(settings.BASE_DIR, 'staticfiles/precompute-ndbg.json'))
+    file_ = open(os.path.join(settings.BASE_DIR, 'staticfiles/precompute-ndbg-short.json'))
     data = json.load(file_)
     return JsonResponse(data)
 

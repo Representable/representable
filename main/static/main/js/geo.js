@@ -609,11 +609,19 @@ $("#surveyP2ToMap_button").on("click", function(e) {
 })
 
 $("#mapToPrivacy").on("click", function(e) {
+
+  console.log('zoom called');
+
   zoomToCommunity();
-  createCommSuccess = createCommPolygon();
+  setTimeout(() => {
+
+    console.log('create called');
+
+    createCommSuccess = createCommPolygon();
+  }, 1000);
   // loading icon
   $("#loading-entry").css("display", "block");
-  $("#loading-entry").delay(2000).fadeOut(2000);
+  $("#loading-entry").delay(2500).fadeOut(2500);
   setTimeout(function() {
     if (createCommSuccess) {
       e.preventDefault();
@@ -621,7 +629,7 @@ $("#mapToPrivacy").on("click", function(e) {
       $('#map-card').removeClass("has_error");
       automaticScrollToTop();
     }
-  }, 2000);
+  }, 2500);
 })
 
 $("#mapToPrivacyMobile").on("click", function(e) {
@@ -700,42 +708,39 @@ function createCommPolygon() {
     triggerMissingPolygonError();
     return false;
   }
-
-  var multiPolySave;
-
-  console.log('to be saved:', polyFilter);
-  for(var i = 2; i < polyFilter.length; i++){
-    console.log(polyFilter[i]);
-    var ftr = blockGroupPolygons[polyFilter[i]].feature_obj;
-    console.log(ftr);
-    if (multiPolySave === undefined) {
-      multiPolySave = ftr;
-    } else {
-      multiPolySave = turf.union(multiPolySave, ftr);
-    }
-  }
-
-
-
   // now query the features and build the polygon to be saved
-  // var queryFeatures = map.queryRenderedFeatures({
-  //   layers: [state + "-census-shading-" + layer_suffix],
-  // });
-  // queryFeatures.forEach(function (feature) {
-  //   // get properties, depending on the feature type
-  //   if (drawUsingBlocks) {
-  //     featureProp = feature.properties[block_id];
-  //   } else {
-  //     featureProp = feature.properties[bg_id];
-  //   }
-  //   if (polyFilter.includes(featureProp)) {
-  //     if (multiPolySave === undefined) {
-  //       multiPolySave = feature;
-  //     } else {
-  //       multiPolySave = turf.union(multiPolySave, feature);
-  //     }
-  //   }
-  // });
+  var queryFeatures = map.queryRenderedFeatures({
+    layers: [state + "-census-shading-" + layer_suffix],
+  });
+  var multiPolySave;
+  queryFeatures.forEach(function (feature) {
+    // get properties, depending on the feature type
+    if (drawUsingBlocks) {
+      featureProp = feature.properties[block_id];
+    } else {
+      featureProp = feature.properties[bg_id];
+    }
+    if (polyFilter.includes(featureProp)) {
+      if (multiPolySave === undefined) {
+        multiPolySave = feature;
+      } else {
+        multiPolySave = turf.union(multiPolySave, feature);
+      }
+    }
+  });
+
+  map.addLayer({
+    'id': Math.random().toString().substring(),
+    'type': 'line',
+    'source': {
+      'type': 'geojson',
+      'data': multiPolySave.geometry,
+    },
+    'paint': {
+      'line-color': '#000',
+      'line-width': 3
+    }
+  });
 
   // for display purposes -- this is the final multipolygon!!
   // TODO: implement community entry model change -> store only outer coordinates (like code in map.js)
@@ -763,7 +768,40 @@ function zoomToCommunity() {
   var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
   if (selectBbox === null || selectBbox.length === 0) return;
   var bbox = turf.bbox(selectBbox);
-  map.fitBounds(bbox, { padding: 300, duration: 0 });
+
+  console.log(bbox);
+  map.addLayer({
+    'id': Math.random().toString().substring(),
+    'type': 'line',
+    'source': {
+      'type': 'geojson',
+      'data': turf.bboxPolygon(bbox).geometry,
+    },
+    'paint': {
+      'line-color': '#eb4034',
+      'line-width': 3
+    }
+  });
+
+  bbox[0] -= 1.12;
+  bbox[1] -= 0.65;
+  bbox[2] += 1.12;
+  bbox[3] += 0.65;
+
+  console.log(bbox);
+  map.addLayer({
+    'id': Math.random().toString().substring(),
+    'type': 'line',
+    'source': {
+      'type': 'geojson',
+      'data': turf.bboxPolygon(bbox).geometry,
+    },
+    'paint': {
+      'line-color': '#eb4034',
+      'line-width': 3
+    }
+  });
+  map.fitBounds(bbox, { duration: 0 });
 }
 /****************************************************************************/
 
@@ -867,7 +905,7 @@ var map = new mapboxgl.Map({
   center: [-96.7026, 40.8136], // starting position - Lincoln, NE :)
   zoom: 3, // starting zoom -- higher is closer
   maxZoom: 14, // camelCase. There's no official documentation for this smh :/
-  minZoom: 7,
+  minZoom: 6.5,
 });
 
 map.on('load', function() {
@@ -1260,7 +1298,6 @@ function newHighlightLayer(state, firstSymbolId, suffix) {
     firstSymbolId
   );
 }
-
 function isContiguous(active_ids) {
   if(active_ids.size == 0)
     return true;
@@ -1278,7 +1315,6 @@ function isContiguous(active_ids) {
     });
   }
   return visited.size == active_ids.size;
-  setTimeout(5000)
 }
 /******************************************************************************/
 // the drawing radius for select tool
@@ -1412,9 +1448,11 @@ map.on("style.load", function () {
         // push current filter MINUS the selected area
         if (!features.includes(feature)) filter.push(feature);
       });
+
       console.log('**remove if added', features);
       features.forEach((e) => activeIDs.delete(e));
       console.log(isContiguous(activeIDs));
+
 
       arraysEqual(filter, currentFilter)
         ? (isChanged = false)
