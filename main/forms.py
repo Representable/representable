@@ -338,7 +338,9 @@ class SubmissionAddDrive(forms.Form):
         drives_to_add = [
             d
             for d in all_drives
-            if d.state == state and d.is_active and not d.private
+            if d.state == state
+            and d.is_active
+            and not d.private  # changed this line
         ]
         choices = [
             (str(d.id), str(d.name) + " - " + str(d.organization))
