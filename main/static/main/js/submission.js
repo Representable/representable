@@ -735,11 +735,12 @@ function addToggleableLayer(id, appendElement) {
       if (txt != "pos4" && txt != "sta5") {
         map.setLayoutProperty(txt + "-labels", "visibility", "visible");
       // set all other layers to not visible, uncheck the display box for all other layers
-      for (var layerID in toggleableLayerIds) {
-        if (layerID != txt) {
-          map.setLayoutProperty(layerID + "-lines", "visibility", "none");
-          var button = document.getElementById(layerID);
-          button.checked = false;
+        for (var layerID in toggleableLayerIds) {
+          if (layerID != txt) {
+            map.setLayoutProperty(layerID + "-lines", "visibility", "none");
+            var button = document.getElementById(layerID);
+            button.checked = false;
+          }
         }
       }
     }
