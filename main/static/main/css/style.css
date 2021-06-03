@@ -79,6 +79,14 @@ form:invalid {
   background: #70C5EA;
 }
 
+.bg-2A94F4 {
+  background: #2A94F4;
+}
+
+.text-359DFB {
+  color: #359DFB;
+}
+
 .txt-16 {
   font-size: 1rem;
 }
@@ -249,6 +257,32 @@ form:invalid {
 .warning-box {
   border: 1px solid red;
   font-size: 1rem;
+}
+
+#state-map-cois {
+  overflow: scroll;
+  max-height: 800px;
+}
+
+#partner-welcome-modal .modal-dialog .modal-content{
+  background-color: #DAEFFF;
+  opacity: .85;
+  border-radius: 50px;
+}
+
+.gray-btn {
+  color: #5B5B5B;
+  border-color: #5B5B5B;
+  background-color: transparent;
+}
+
+.gray-btn:hover {
+  background-color: #5B5B5B;
+  color: #ffffff;
+}
+
+.gray-btn:focus {
+  box-shadow: 0 0 0 0.25rem #5B5B5A;
 }
 
 /*********************************************************************
@@ -537,6 +571,15 @@ body {
   .px-10 {
     padding: 10px;
   }
+  #map-units-btn {
+    right: 2% !important;
+    bottom: -6000% !important;
+  }
+
+  #map-pop-btn {
+    right: 2% !important;
+    bottom: -6000% !important;
+  }
 }
 /* EXCLUSIVELY FOR HOME PAGE rect */
 @media screen and (min-width:992px) and (max-width:1169px){
@@ -648,7 +691,7 @@ footer {
 
 #loading-entry {
   position: fixed;
-  bottom: 40px;
+  bottom: 150px;
   left: 40px;
   z-index: 1010;
   display: none;
@@ -890,8 +933,15 @@ Entry Mapping Page
   text-align: left;
 }
 
-#entry-map-modal .modal-content {
+.green-modal .modal-content {
   background-color: rgba(216, 241, 237, 0.9);
+  border-radius: 20px;
+  border: none;
+  backdrop-filter: blur(4px); /* Note: backdrop-filter has minimal browser support */
+}
+
+.blue-modal .modal-content {
+  background-color: rgba(218, 239, 255, 0.85);
   border-radius: 20px;
   border: none;
   backdrop-filter: blur(4px); /* Note: backdrop-filter has minimal browser support */
@@ -962,11 +1012,6 @@ Entry Mapping Page
   color: #fff !important;
 }
 
-#map-help-menu {
-  height: fit-content;
-  max-height: 800px;
-}
-
 .comm-info-text {
   color:#2A94F4;
   font-weight: bold;
@@ -1030,6 +1075,21 @@ Entry Mapping Page
   /* transition: 2s; */
   transform-origin: left center;
   z-index: 1000;
+}
+
+#map-units-btn {
+  position: absolute;
+  z-index: 1;
+  left: 5%;
+  bottom: 0%;
+}
+
+#map-pop-btn {
+  position: absolute;
+  z-index: 1;
+  right: 5%;
+  bottom: 0%;
+  border: black;
 }
 
 .map-visualization {
@@ -1542,7 +1602,7 @@ textarea.survey-field:focus {
   color: #5996D2;
 }
 .light-blue-bg {
-  background: #DAEFFF 60%;
+  background: #F2FAFF 60%;
 }
 .light-green-bg {
   background-color: #F2FAFF;
@@ -1557,7 +1617,7 @@ textarea.survey-field:focus {
   background-color: #FFFFFF;
 }
 .content-blue-bg {
-  background: rgba(242, 250, 255, 0.5);
+  background-color: rgba(242, 250, 255, 0.5);
 }
 .btn-outline-gray {
   background-color: transparent;

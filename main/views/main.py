@@ -77,6 +77,7 @@ from ..models import (
     State,
     Signature,
     BlockGroup,
+    CensusBlock,
     FrequentlyAskedQuestion,
     GlossaryDefinition,
 )
@@ -129,9 +130,6 @@ from django.contrib.gis.geos import Point, Polygon, MultiPolygon
 from django.contrib.gis.db.models import Union
 from django.contrib.gis.geos import GEOSGeometry
 
-
-# ******************************************************************************#
-# language views
 
 # ******************************************************************************#
 
@@ -284,7 +282,9 @@ class Glossary(TemplateView):
 
         glossaryterms = GlossaryDefinition.objects.all()
         return render(
-            request, self.template_name, {"glossaryterms": glossaryterms},
+            request,
+            self.template_name,
+            {"glossaryterms": glossaryterms},
         )
 
 
@@ -522,6 +522,7 @@ class Submission(View):
                     c = CommunityEntry.objects.get(entry_ID=m_uuid)
                     c.drive = d
                     c.organization = o
+                    c.admin_approved = True
                     c.save()
                     # print('success')
                 except Exception as e:
@@ -542,8 +543,10 @@ class Submission(View):
 
         if user_map.drive:
             folder_name = query[0].drive.slug
-            has_state = False
-            state = ""
+            # has_state = False
+            # state = ""
+            has_state = user_map.state != ""
+            state = user_map.state
         else:
             if "abbr" in self.kwargs:
                 folder_name = self.kwargs["abbr"]
@@ -629,24 +632,25 @@ class Submission(View):
             context["organization_slug"] = organization_slug
             context["drive_name"] = drive_name
 
-        if self.request.user.is_authenticated:
-            if user_map.organization:
-                context["is_org_admin"] = self.request.user.is_org_admin(
-                    user_map.organization_id
-                )
-            if self.request.user == user_map.user:
-                for a in Address.objects.filter(entry=user_map):
-                    context["street"] = a.street
-                    context["city"] = a.city + ", " + a.state + " " + a.zipcode
-                    context["is_community_author"] = (
-                        self.request.user == user_map.user
-                    )
-                    comm.user_name = user_map.user_name
-
+        # if self.request.user.is_authenticated:
+        #     if user_map.organization:
+        #         context["is_org_admin"] = self.request.user.is_org_admin(
+        #             user_map.organization_id
+        #         )
+        #     if self.request.user == user_map.user:
+        #         for a in Address.objects.filter(entry=user_map):
+        #             context["street"] = a.street
+        #             context["city"] = a.city + ", " + a.state + " " + a.zipcode
+        #             context["is_community_author"] = (
+        #                 self.request.user == user_map.user
+        #             )
+        #             comm.user_name = user_map.user_name
         show_form = self.should_show_form(state=context['state'], entryid=context['map_id'], auth=self.request.user.is_authenticated)
         context['show_form'] = show_form
         if(show_form == True):
             context['form'] = SubmissionAddDrive()
+            state = State.objects.filter(abbr=context['state'].upper())
+            context['form_empty'] = len(state[0].get_drives()) == 0
             context['form'].upd(state=context['state'].upper())
 
         return render(request, self.template_name, context)
@@ -661,17 +665,19 @@ class Submission(View):
             * User is logged in
             * context['map_id'] points to a valid CommunityEntry
             * that CommunityEntry does not have a drive
-            * that CommunityEntry has an associated Address 
+            * that CommunityEntry has an associated Address
             * context['state'] exists and is a valid state
-            * community was created by the user who is signed in - (Already true if no drive & logged in)
+            * community was created by the user who is signed in
         """
         if(not auth):
             return False
-        try:        
+        try:
             entry = CommunityEntry.objects.get(entry_ID=entryid)
         except:
             return False
         if(entry.drive != None):
+            return False
+        if(entry.user != self.request.user):
             return False
         try:
             Address.objects.get(entry=entry)
@@ -694,18 +700,27 @@ def make_geojson(request, entry):
             "economic_interests",
             "comm_activities",
             "other_considerations",
+            "custom_response",
+            "population",
         ),
     )
     gj = geojson.loads(map_geojson)
     gj = rewind(gj)
     del gj["crs"]
     user_map = entry
+    # iterate over block_groups or census_blocks in order to get array of IDs
+    if user_map.block_groups.exists():
+        gj["features"][0]["properties"]["block_group_ids"] = [bg.census_id for bg in user_map.block_groups.all()]
+    elif user_map.census_blocks.exists():
+        gj["features"][0]["properties"]["census_block_ids"] = [block.census_id for block in user_map.census_blocks.all()]
+    # include organization and drive submitted to, if so
     if user_map.organization:
         gj["features"][0]["properties"][
             "organization"
         ] = user_map.organization.name
     if user_map.drive:
         gj["features"][0]["properties"]["drive"] = user_map.drive.name
+    # include address if user is authenticated + either author or org admin
     if request.user.is_authenticated:
         is_org_leader = user_map.organization and (
             request.user.is_org_admin(user_map.organization_id)
@@ -733,12 +748,20 @@ def make_geojson_for_state_map_page(request, entry):
             "economic_interests",
             "comm_activities",
             "other_considerations",
+            "custom_response",
+            "population",
         ),
     )
     gj = geojson.loads(map_geojson)
     gj = rewind(gj)
     del gj["crs"]
     user_map = entry
+    # iterate over block_groups or census_blocks in order to get array of IDs
+    if user_map.block_groups.exists():
+        gj["features"][0]["properties"]["block_group_ids"] = [bg.census_id for bg in user_map.block_groups.all()]
+    elif user_map.census_blocks.exists():
+        gj["features"][0]["properties"]["census_block_ids"] = [block.census_id for block in user_map.census_blocks.all()]
+    # include organization and drive submitted to, if so
     if user_map.organization:
         gj["features"][0]["properties"][
             "organization"
@@ -798,10 +821,15 @@ class Map(TemplateView):
 
     def get_context_data(self, **kwargs):
         state = self.kwargs["state"].lower()
+        if not state:
+            raise Http404
 
         # the polygon coordinates
         entryPolyDict = dict()
-        state_obj = State.objects.get(abbr=state.upper())
+        try:
+            state_obj = State.objects.get(abbr=state.upper())
+        except:
+            raise Http404
         query = (
             state_obj.submissions.all()
             .defer("census_blocks_polygon_array", "user_polygon")
@@ -810,10 +838,9 @@ class Map(TemplateView):
         # state map page --> drives in the state, entries without a drive but with a state
         drives = []
         authenticated = self.request.user.is_authenticated
-        print(authenticated)
         # get the polygon from db and pass it on to html
         for obj in query:
-            if obj.organization and not obj.admin_approved:
+            if obj.private or (obj.organization and not obj.admin_approved):
                 continue
             if (
                 obj.census_blocks_polygon == ""
@@ -877,6 +904,7 @@ def make_geojson_for_s3(entry):
             "economic_interests",
             "comm_activities",
             "other_considerations",
+            "custom_response",
             "population",
         ),
     )
@@ -884,6 +912,12 @@ def make_geojson_for_s3(entry):
     gj = rewind(gj)
     del gj["crs"]
     user_map = entry
+    # # iterate over block_groups or census_blocks in order to get array of IDs
+    # if user_map.block_groups.exists():
+    #     gj["features"][0]["properties"]["block_group_ids"] = [bg.census_id for bg in user_map.block_groups.all()]
+    # elif user_map.census_blocks.exists():
+    #     gj["features"][0]["properties"]["census_block_ids"] = [block.census_id for block in user_map.census_blocks.all()]
+    # # include organization and drive submitted to, if so
     if user_map.organization:
         gj["features"][0]["properties"][
             "organization"
@@ -949,13 +983,24 @@ class EntryView(LoginRequiredMixin, View):
         organization_name = ""
         organization_id = None
         drive_name = ""
+        drive_slug = ""
         drive_id = None
+        drive_custom_question = ""
+        drive_custom_question_example = ""
         if kwargs["drive"]:
             has_drive = True
             drive_slug = self.kwargs["drive"]
-            drive = Drive.objects.get(slug=drive_slug)
+            try:
+                drive = Drive.objects.get(slug=drive_slug)
+            except:
+                raise Http404
+            if abbr.upper() != drive.state:
+                return redirect("/entry/drive/" + drive.slug + "/" + drive.state.lower())
+
             drive_name = drive.name
             drive_id = drive.id
+            drive_custom_question = drive.custom_question
+            drive_custom_question_example = drive.custom_question_example
             organization = drive.organization
             organization_name = organization.name
             organization_id = organization.id
@@ -987,24 +1032,48 @@ class EntryView(LoginRequiredMixin, View):
             "organization_id": organization_id,
             "drive_name": drive_name,
             "drive_id": drive_id,
+            "drive_custom_question": drive_custom_question,
+            "drive_custom_question_example": drive_custom_question_example,
+            "drive_slug": drive_slug,
             "state": abbr,
             "address_required": address_required,
             "state_obj": State.objects.get(abbr=abbr.upper()),
+            "page_type": "entry" # For the base template to check and remove footer
         }
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
+        # for creation of BlockGroup and CensusBlock objects
+        STATES_USING_OLD_UNITS = ["il", "ok"]
+
         comm_form = self.community_form_class(request.POST, label_suffix="")
         addr_form = self.address_form_class(request.POST, label_suffix="")
         # parse block groups and add to field
         comm_form.data._mutable = True
         block_groups = comm_form.data["block_groups"].split(",")
-        comm_form.data["block_groups"] = [
-            BlockGroup.objects.get_or_create(census_id=bg)[0].id
-            for bg in block_groups
-        ]
+        census_blocks = comm_form.data["census_blocks"].split(",")
+        # get the year of census units being used -- use for get_or_create function
+        state = self.kwargs["abbr"].lower()
+        year = 2020
+        if state in STATES_USING_OLD_UNITS:
+            year = 2010
+        if len(census_blocks[0]) > 0:
+            comm_form.data["census_blocks"] = [
+                CensusBlock.objects.get_or_create(census_id=block, year=year)[0].id
+                for block in census_blocks
+            ]
+        else:
+            comm_form.data["block_groups"] = [
+                BlockGroup.objects.get_or_create(census_id=bg, year=year)[0].id
+                for bg in block_groups
+            ]
         comm_form.data._mutable = False
+        # print("post editing of ids")
+        # print(comm_form.is_valid())
+        # print(comm_form.errors)
+        # print(type(comm_form.data["block_groups"]))
         if comm_form.is_valid():
+            print("is this working?")
             recaptcha_response = request.POST.get("g-recaptcha-response")
             url = "https://www.google.com/recaptcha/api/siteverify"
             values = {
@@ -1056,7 +1125,10 @@ class EntryView(LoginRequiredMixin, View):
                 abbr=self.kwargs["abbr"].upper()
             )
             if entryForm.organization:
-                if self.request.user.is_org_admin(entryForm.organization.id) or not drive.private:
+                if (
+                    self.request.user.is_org_admin(entryForm.organization.id)
+                    or not drive.private
+                ):
                     entryForm.admin_approved = True
                 else:
                     # check if user is on the allowlist
@@ -1097,6 +1169,8 @@ class EntryView(LoginRequiredMixin, View):
             del finalres["admin_approved"]
 
             string_to_hash = str(finalres)
+            print("finalres")
+            print(finalres)
 
             addres = dict()
             if addr_form.is_valid():
@@ -1150,18 +1224,28 @@ class EntryView(LoginRequiredMixin, View):
 
 # ******************************************************************************#
 
-
 class MultiExportView(TemplateView):
     template = "main/export.html"
 
-    def get(self, request, **kwargs):
+    def post(self, request, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
         state = self.kwargs["abbr"]
+        cois = set(json.loads(request.POST['cois']))
         state_obj = State.objects.get(abbr=state.upper())
-        query = (
-            state_obj.submissions.all()
-            .defer("census_blocks_polygon_array", "user_polygon")
-            .prefetch_related("organization", "drive")
-        )
+
+        if 'all' not in cois:
+            query = (
+                state_obj.submissions.filter(entry_ID__in=cois)
+                .defer("census_blocks_polygon_array", "user_polygon")
+                .prefetch_related("organization", "drive")
+            )
+        else:
+            query = (
+                state_obj.submissions.all()
+                .defer("census_blocks_polygon_array", "user_polygon")
+                .prefetch_related("organization", "drive")
+            )
 
         if not query:
             # TODO: if the query is empty, return something more appropriate
@@ -1177,7 +1261,6 @@ class MultiExportView(TemplateView):
             all_gj.append(gj)
 
         final = geojson.FeatureCollection(all_gj)
-
         if kwargs["type"] == "geo":
             print("********", "geo", "********")
             response = HttpResponse(

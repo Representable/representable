@@ -4,7 +4,7 @@
 <div class="pl-xl-4 pr-xl-4 pb-5">
     <div class="entry-step row mb-2">
         <div class="col">
-            Step 2
+            {% trans "Step 2" %}
         </div>
     </div>
     <div id="entry-survey-start" class="">
@@ -27,12 +27,12 @@
                     </div>
 
                     <div id="entry-coi-def" class="row m-0 mb-2">
-                        {% blocktrans %}
-                            <p class="info-text txt-16">
-                                A Community of Interest is a <strong>geographic area</strong> that shares <strong>cultural</strong>, <strong>historical</strong>, or <strong>economic</strong> interests.
-                                Communities of Interest encourage the drawing of fairer voting districts.
-                            </p>
-                        {% endblocktrans %}
+                        <p class="info-text txt-16">
+                            {% blocktrans %}
+                            A Community of Interest is a <strong>geographic area</strong> that shares <strong>cultural</strong>, <strong>historical</strong>, or <strong>economic</strong> interests.
+                            Communities of Interest encourage the drawing of fairer voting districts.
+                            {% endblocktrans %}
+                        </p>
                     </div>
 
                     <div class="row m-0" style="color: #3C8EB0; font-size: .85rem">
@@ -54,12 +54,6 @@
                                                 Your neighborhood, or an area you live in.
                                             {% endblocktrans %}
                                         </div>
-
-                                        <div class="col-lg-12 text-center survey-start-pic">
-                                            <div class="">
-                                                <object type="image/svg+xml" class="w-25" data="{% static 'img/voting.svg' %}" alt="image of clipart of voting"></object>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -79,12 +73,6 @@
                                                 The people you would like to choose representatives with.
                                             {% endblocktrans %}
                                         </div>
-
-                                        <div class="col-lg-12 text-center survey-start-pic">
-                                            <div class="">
-                                                <object type="image/svg+xml" class="w-25" data="{% static 'img/city_icon-2.svg' %}" alt="image of clipart buildings"></object>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -103,12 +91,6 @@
                                             {% blocktrans %}
                                                 A local group that is brought together by a common interest.
                                             {% endblocktrans %}
-                                        </div>
-
-                                        <div class="col-lg-12 text-center survey-start-pic">
-                                            <div class="">
-                                                <object type="image/svg+xml" class="w-25" data="{% static 'img/community_input.svg' %}" alt="image of silhouette people talking"></object>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -134,12 +116,12 @@
                     </div>
 
                     <div id="entry-coi-def" class="row m-0 mb-2">
-                        {% blocktrans %}
-                            <p class="info-text txt-16">
-                                A Community of Interest is a geographic area that shares <strong>cultural</strong>, <strong>historical</strong>, or <strong>economic</strong> interests.
-                                Communities of Interest encourage the drawing of fairer voting districts.
-                            </p>
-                        {% endblocktrans %}
+                        <p class="info-text txt-16">
+                            {% blocktrans %}
+                            A Community of Interest is a geographic area that shares <strong>cultural</strong>, <strong>historical</strong>, or <strong>economic</strong> interests.
+                            Communities of Interest encourage the drawing of fairer voting districts.
+                            {% endblocktrans %}
+                        </p>
                     </div>
 
                     <div class="m-0 text-center" style="color: #3C8EB0; font-size: .85rem">
@@ -161,11 +143,11 @@
                                         {% endblocktrans %}
                                     </div>
                                 </div>
-                                <div class="col-3 text-center p-0">
+                                {% comment %} <div class="col-3 text-center p-0">
                                     <div class="">
                                         <object type="image/svg+xml" class="w-50 w-md-25" data="{% static 'img/voting.svg' %}" alt="image of clipart of voting"></object>
                                     </div>
-                                </div>
+                                </div> {% endcomment %}
                             </div>
                         </div>
 
@@ -183,11 +165,11 @@
                                         {% endblocktrans %}
                                     </div>
                                 </div>
-                                <div class="col-3 text-center p-0">
+                                {% comment %} <div class="col-3 text-center p-0">
                                     <div class="">
                                         <object type="image/svg+xml" class="w-50 w-md-25" data="{% static 'img/city_icon-2.svg' %}" alt="image of clipart buildings"></object>
                                     </div>
-                                </div>
+                                </div> {% endcomment %}
                             </div>
                         </div>
 
@@ -205,11 +187,11 @@
                                         {% endblocktrans %}
                                     </div>
                                 </div>
-                                <div class="col-3 text-center p-0">
+                                {% comment %} <div class="col-3 text-center p-0">
                                     <div class="">
                                         <object type="image/svg+xml" class="w-50 w-md-25" data="{% static 'img/community_input.svg' %}" alt="image of silhouette people talking"></object>
                                     </div>
-                                </div>
+                                </div> {% endcomment %}
                             </div>
                         </div>
                     </div>
@@ -233,7 +215,7 @@
             </div>
             <div class="py-3 px-4 light-blue-bg opacity-4 mt-2">
                 <button class="btn btn-link ws-normal btn-no-focus-outline bg-transparent text-left my-0 p-0 no-underline-link" aria-expanded="false" aria-controls="collapseCriteria" onclick="toggleAngle(this)" type="button">
-                <h5 style="width: fit-content; color: initial;">Community of Interest Definition in {{ state_obj.name }} &#32;<i class="fas fa-angle-down pl-3"></i></h5>
+                <h5 style="width: fit-content; color: initial;">{% trans "Community of Interest Definition in " %} {{ state_obj.name }} &#32;<i class="fas fa-angle-down pl-3"></i></h5>
                 </button>
                 <div class="collapse mt-2" id="collapseCriteria">
                     {% autoescape off %}
@@ -242,13 +224,13 @@
                 </div>
             </div>
             <div class="survey-instruction mt-2">
-                {% blocktrans %}
-                    <p>
-                      Respond to <b>at least one</b> of the sections below. There are no wrong answers.<br>
+                <p>
+                    {% blocktrans %}
+                    Respond to <b>at least one</b> of the sections below. There are no wrong answers.<br>
 
-                      Click on each category to see helpful questions and examples.
-                    </p>
-                {% endblocktrans %}
+                    Click on each category to see helpful questions and examples.
+                    {% endblocktrans %}
+                </p>
             </div>
             <div class="">
                 <!-- Form Errors -->
@@ -274,7 +256,6 @@
                 <!-- Form Errors END -->
                 <!-- Sections: -->
                 <!--  Economic -->
-
                 <!-- Activities -->
                 <div class="accordion" id="comm_activities_accordion">
                     <button id="comm_activities_btn" class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#comm_activities_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
@@ -282,12 +263,10 @@
                     </button>
                     <div id="comm_activities_example" class="collapse" aria-labelledby="comm_activities_accordion" data-parent="#comm_activities_accordion">
                         <p class="collapse-in ml-4 gray-text">
-                          {% blocktrans %}
-                          <b>Use these questions to think more about how you would describe your community...</b><br>
-                          &emsp; - Where do people in your community gather or socialize? <br>
-                          &emsp; - How and where does your community access services (healthcare, transportation, educational services, etc.)?<br><br>
-                          <span class="blue-text"><b>Examples of activities and services:</b> Shopping areas, schools and universities, libraries, parks, lakes, rivers, places of worship, healthcare services, public transport, local nonprofit organizations, etc.</span>
-                          {% endblocktrans %}
+                          <b>{% trans "Use these questions to think more about how you would describe your community..." %}</b><br>
+                          &emsp; - {% trans "Where do people in your community gather or socialize?" %} <br>
+                          &emsp; - {% trans "How and where does your community access services (healthcare, transportation, educational services, etc.)?" %}<br><br>
+                          <span class="blue-text"><b>{% trans "Examples of activities and services:" %}</b> {% trans "Shopping areas, schools and universities, libraries, parks, lakes, rivers, places of worship, healthcare services, public transport, local nonprofit organizations, etc." %}</span>
                         </p>
                     </div>
                 </div>
@@ -301,12 +280,10 @@
                     </button>
                     <div id="cultural_interests_example" class="collapse" aria-labelledby="cultural_interests_accordion" data-parent="#cultural_interests_accordion">
                       <p class="collapse-in ml-4 gray-text">
-                        {% blocktrans %}
-                        <b>Use these questions to think more about how you would describe your community...</b><br>
-                        &emsp; - What are the cultural bonds in your community? <br>
-                        &emsp; - If your community has a shared history, what is it?<br><br>
-                        <span class="blue-text"><b>Examples of cultural or historical interests:</b> Religious groups, ethnic groups, languages, age groups, immigration status, historic or arts districts, etc. </span>
-                        {% endblocktrans %}
+                        <b>{% trans "Use these questions to think more about how you would describe your community..." %}</b><br>
+                        &emsp; - {% trans "What are the cultural bonds in your community?" %} <br>
+                        &emsp; - {% trans "If your community has a shared history, what is it?" %}<br><br>
+                        <span class="blue-text"><b>{% trans "Examples of cultural or historical interests: " %}</b>{% trans "Religious groups, ethnic groups, languages, age groups, immigration status, historic or arts districts, etc."%} </span>
                       </p>
                     </div>
                 </div>
@@ -330,7 +307,7 @@
                 </div>
                 <div class="sr-only">{{ comm_form.economic_interests.label_tag }}</div>
                 {{ comm_form.economic_interests|append_attr:"class:form-control survey-field" }}
-                
+
                 <!-- Other -->
                 <div class="accordion" id="other_interests_accordion">
                     <button id="other_interests_btn" class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#other_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
@@ -338,18 +315,28 @@
                     </button>
                     <div id="other_interests_example" class="collapse" aria-labelledby="other_interests_accordion" data-parent="#other_interests_accordion">
                       <p class="collapse-in ml-4 gray-text">
-                        {% blocktrans %}
-                        <b>Use these questions to think more about how you would describe your community...</b><br>
-                        &emsp; - What should politicians and/or map drawers know about your community?<br>
-                        &emsp; - What are the needs of your community?<br>
-                        &emsp; - Is there anything else you want to tell us about your community? <br><br>
-                        <span class="blue-text"><b>Examples of needs or concerns:</b> Keep community in the same district or separate into multiple districts, shared policy concerns, need for a social service, relationship to other nearby communities, issues with current district lines</span>
-                        {% endblocktrans %}
+                        <b>{% trans "Use these questions to think more about how you would describe your community..." %}</b><br>
+                        &emsp; - {% trans "What should politicians and/or map drawers know about your community?" %}<br>
+                        &emsp; - {% trans "What are the needs of your community?" %}<br>
+                        &emsp; - {% trans "Is there anything else you want to tell us about your community?" %}<br><br>
+                        <span class="blue-text"><b>{% trans "Examples of needs or concerns:" %}</b>{% trans "Keep community in the same district or separate into multiple districts, shared policy concerns, need for a social service, relationship to other nearby communities, issues with current district lines" %}</span>
                       </p>
                     </div>
                 </div>
                 <div class="sr-only">{{ comm_form.other_considerations.label_tag }}</div>
                 {{ comm_form.other_considerations|append_attr:"class:form-control survey-field" }}
+
+                <!-- custom question -->
+                  <!-- <button id="other_interests_btn" class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#other_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                      <h5 class="survey-sect-title">{% trans "Community Needs and Concerns" %}<i class="fas fa-angle-down pl-3"></i></h5>
+                  </button> -->
+                {% if has_drive and drive_custom_question %}
+                  <p class="my-4 ml-1 gray-text">
+                    <b>{{ drive_custom_question }}</b><br>
+                  </p>
+                  <div class="sr-only">{{ comm_form.custom_response.label_tag }}</div>
+                  {{ comm_form.custom_response|append_attr:"class:form-control survey-field" }}
+                {% endif %}
             </div>
             <div class="row pt-5">
                 <div class="col text-center">
@@ -396,19 +383,15 @@
                     </div>
 
                     <div class="row m-0 info-text">
-                        {% blocktrans %}
-                            <p>
-                                Give your community of interest a name. This does not have to be the official name of your community.
-                            </p>
-                        {% endblocktrans %}
+                        <p>
+                            {% trans "Give your community of interest a name. This does not have to be the official name of your community." %}
+                        </p>
                     </div>
 
                     <div class="row m-0 pt-3 info-text">
-                        {% blocktrans %}
-                            <p class="small" style="color: #5996D2">
-                                <strong>Examples:</strong> Cherry Farmers Community, St. Peters Church Community, Riverside Fishing Community
-                            </p>
-                        {% endblocktrans %}
+                        <p class="small" style="color: #5996D2">
+                            <strong>{% trans "Examples" %}:</strong> {% trans "Cherry Farmers Community, St. Peters Church Community, Riverside Fishing Community" %}
+                        </p>
                     </div>
                 </div>
             </div>

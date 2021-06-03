@@ -1,0 +1,2447 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-08 07:07+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural= (n != 1);\n"
+
+#: main/templates/account/email/debug_email_confirmation_subject.txt:3
+#: main/templates/account/email/email_confirmation_subject.txt:3
+msgid "Please Confirm Your E-mail Address"
+msgstr ""
+
+#: main/templates/account/email/email_confirmation_message.html:7
+msgid "Email Confirmation"
+msgstr ""
+
+#: main/templates/account/email/email_confirmation_message.html:118
+#: main/templates/account/email/email_template_do_not_delete.html:115
+#, fuzzy
+#| msgid "About Representable"
+msgid "Welcome to Representable.org!"
+msgstr "Hais Txog Representable"
+
+#: main/templates/account/email/email_confirmation_message.html:119
+#: main/templates/account/email/email_template_do_not_delete.html:116
+msgid ""
+"Click the button below to confirm your email address for your Representable."
+"org account. If you didn't create an account with Representable.org you can "
+"safely delete the email."
+msgstr ""
+
+#: main/templates/account/email/email_confirmation_message.html:135
+#: main/templates/account/email/email_template_do_not_delete.html:132
+#: main/templates/account/email/password_reset_key_message.html:137
+msgid ""
+"If the button doesn't work, copy and paste the following link in your "
+"browser:"
+msgstr ""
+
+#: main/templates/account/email/email_confirmation_message.html:137
+#: main/templates/account/email/email_template_do_not_delete.html:134
+#, fuzzy
+#| msgid "What is Representable?"
+msgid "The Representable.org Team"
+msgstr "Representable yog dab tsi?"
+
+#: main/templates/account/email/email_confirmation_message.html:152
+#, fuzzy
+#| msgid "About Representable"
+msgid "Representable.org"
+msgstr "Hais Txog Representable"
+
+#: main/templates/account/email/email_template_do_not_delete.html:106
+msgid "This is preheader text. Some clients will show this text as a preview."
+msgstr ""
+
+#: main/templates/account/email/email_template_do_not_delete.html:124
+#: main/templates/account/email/password_reset_key_message.html:129
+msgid "Confirm Email"
+msgstr ""
+
+#: main/templates/account/email/password_reset_key_message.html:7
+msgid "Password Reset Email"
+msgstr ""
+
+#: main/templates/account/email/password_reset_key_message.html:118
+#, fuzzy
+#| msgid "About Representable"
+msgid "Hello from Representable.org!"
+msgstr "Hais Txog Representable"
+
+#: main/templates/account/email/password_reset_key_message.html:140
+#, python-format
+msgid "In case you forgot, your username is %(username)s."
+msgstr ""
+
+#: main/templates/account/email/password_reset_key_message.html:142
+#, python-format
+msgid "Thank you for using %(current_site.name)s!"
+msgstr ""
+
+#: main/templates/account/email/password_reset_key_subject.txt:3
+msgid "Password Reset E-mail"
+msgstr ""
+
+#: main/templates/account/email_confirm.html:6
+#: main/templates/account/email_confirm.html:14
+msgid "Confirm E-mail Address"
+msgstr ""
+
+#: main/templates/account/email_confirm.html:18
+#, python-format
+msgid ""
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
+"address for user %(user_display)s."
+msgstr ""
+
+#: main/templates/account/email_confirm.html:22
+msgid "Finish Sign Up"
+msgstr ""
+
+#: main/templates/account/email_confirm.html:31
+#, python-format
+msgid ""
+"This e-mail confirmation link expired or is invalid. Please <a href="
+"\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+msgstr ""
+
+#: main/templates/account/login.html:13
+msgid "Already have an account?"
+msgstr "Twb muaj ib tus as khauj lawm?"
+
+#: main/templates/account/login.html:14
+msgid "Log In"
+msgstr ""
+
+#: main/templates/account/login.html:34
+msgid "Forgot Password?"
+msgstr ""
+
+#: main/templates/account/login.html:36
+msgid "log in"
+msgstr ""
+
+#: main/templates/account/login.html:39
+msgid "No Account? Sign up."
+msgstr ""
+
+#: main/templates/account/logout.html:5 main/templates/account/logout.html:19
+msgid "Sign Out"
+msgstr ""
+
+#: main/templates/account/logout.html:11
+msgid "Are you sure you want to sign out?"
+msgstr ""
+
+#: main/templates/account/password_change.html:6
+#: main/templates/account/password_change.html:19
+#: main/templates/account/password_reset_from_key.html:4
+#: main/templates/account/password_reset_from_key.html:13
+#: main/templates/account/password_reset_from_key.html:23
+#: main/templates/account/password_reset_from_key_done.html:4
+#: main/templates/account/password_set.html:6
+msgid "Change Password"
+msgstr ""
+
+#: main/templates/account/password_change.html:15
+#: main/templates/account/password_reset.html:14
+#: main/templates/account/password_reset_from_key_done.html:12
+#: main/templates/account/password_set.html:15
+msgid "Change your password"
+msgstr ""
+
+#: main/templates/account/password_reset.html:15
+msgid ""
+"Forgot your password? Enter your e-mail address below, and we'll send you an "
+"e-mail allowing you to reset it."
+msgstr ""
+
+#: main/templates/account/password_reset.html:33
+msgid "Reset My Password"
+msgstr ""
+
+#: main/templates/account/password_reset_done.html:6
+#: main/templates/account/password_reset_done.html:14
+msgid "Password Reset"
+msgstr ""
+
+#: main/templates/account/password_reset_done.html:20
+msgid ""
+"We have sent you an e-mail.</p>\n"
+"                <p class=\"text-center\">Please contact us at <a href="
+"\"mailto:team@representable.org\">team@representable.org</a> if you do not "
+"receive it within a few minutes."
+msgstr ""
+
+#: main/templates/account/password_reset_from_key.html:13
+msgid "Bad Token"
+msgstr ""
+
+#: main/templates/account/password_reset_from_key.html:17
+#, python-format
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
+"a>."
+msgstr ""
+
+#: main/templates/account/password_reset_from_key.html:23
+msgid "change password"
+msgstr ""
+
+#: main/templates/account/password_reset_from_key.html:26
+msgid "Your password is now changed."
+msgstr ""
+
+#: main/templates/account/password_set.html:20
+msgid "Set Password"
+msgstr ""
+
+#: main/templates/account/signup.html:12 main/templates/account/signup.html:43
+msgid "Sign Up"
+msgstr ""
+
+#: main/templates/account/signup.html:46
+msgid "Already have an account? Log in."
+msgstr ""
+
+#: main/templates/account/signup_login.html:15
+msgid "Let's have you sign up or log in before you start..."
+msgstr ""
+
+#: main/templates/account/verification_sent.html:5
+msgid "Verify Your E-mail Address"
+msgstr ""
+
+#: main/templates/account/verification_sent.html:14
+msgid "Verify Email"
+msgstr ""
+
+#: main/templates/account/verification_sent.html:15
+msgid ""
+"We have sent an e-mail to you for verification. Follow the link provided to "
+"finalize the signup process. Please contact us if you do not receive it "
+"within a few minutes."
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:10
+msgid "Dashboard"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:20
+msgid "Organizations"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:31
+msgid ""
+" You're currently not part of any organizations.\n"
+"                Ask someone to add you to their organization or create a new "
+"one below. "
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:36
+msgid "Create New"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:45
+msgid "Quick Links"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:49
+msgid "Create Organization"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:50
+msgid "Create Entry"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:51
+#: representable/templates/base.html:266
+msgid "My Communities"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:62
+#: representable/templates/base.html:130
+#: representable/templates/base_nofooter.html:130
+msgid "Account Settings"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:65
+#: main/templates/main/dashboard/index.html:67
+msgid "Reset password"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:66
+msgid ""
+"Reset your password by pressing on the following button. You will receive an "
+"email with the appropiate instructions."
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:70
+msgid "Cookie Settings"
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:71
+msgid ""
+"We use Mixpanel and Google Analytics to collect anonymized information about "
+"users' website usage. We use this information to improve our website "
+"experience. You can control whether we have access to this information or "
+"not."
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:73
+msgid ""
+"\n"
+"              <p>Based on our records, you have <strong>opted in</strong> "
+"for anonymized information collection. To <strong>opt out</strong>, press on "
+"the button below.</p>\n"
+"              "
+msgstr ""
+
+#: main/templates/main/dashboard/index.html:79
+msgid ""
+"\n"
+"              <p>Based on our records, you have <strong>opted out</strong> "
+"of anonymized information collection. To <strong>opt in</strong>, press on "
+"the button below.</p>\n"
+"              "
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:12
+#, fuzzy
+#| msgid "Are you the leader of an organization?"
+msgid "Thank you for creating an organization!"
+msgstr "Koj puas yog tus thawj coj ntawm ib lub koom haum?"
+
+#: main/templates/main/dashboard/partners/thanks.html:15
+msgid "Please verify your email."
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:19
+msgid "We are excited to work with you!"
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:20
+msgid ""
+"Check out our <a href=\"https://docs.google.com/document/"
+"d/1NJMUpZodlqo96xVASJzihpcfgWir18ifMaMD380zrXE/edit\">organization guide</a> "
+"to learn more about using Representable to gather community maps."
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:21
+msgid ""
+"Contact us at <a href=\"mailto:team@representable.org\"> team@representable."
+"org</a> with any questions. "
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:22
+msgid ""
+"Click the button below to go to the Organization Dashboard and get started "
+"by creating a community mapping drive. "
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:25
+msgid ""
+"Email verification will be necessary\n"
+"                        to access certain organization features on "
+"Representable. We have resent an email verification link to your inbox."
+msgstr ""
+
+#: main/templates/main/dashboard/partners/thanks.html:28
+msgid "organization dashboard"
+msgstr ""
+
+#: main/templates/main/drives/index.html:5
+msgid "Drives"
+msgstr ""
+
+#: main/templates/main/drives/page.html:20 main/templates/main/index.html:24
+msgid "Gerrymandering is silencing communities."
+msgstr "Gerrymandering tab tom ua kom cov zej zog txhob hais tawm."
+
+#: main/templates/main/drives/page.html:21
+#, fuzzy
+#| msgid ""
+#| " Make your voice heard with Representable <br> and put your community on "
+#| "the map. "
+msgid ""
+"Make your voice heard with Representable <br> and put your community on the "
+"map."
+msgstr ""
+"Ua kom koj lub suab tau txais kev hnov ​​thiab tso koj lub zej zog hauv daim "
+"duab qhia chaw."
+
+#: main/templates/main/drives/page.html:26
+#: main/templates/main/pages/about.html:48
+msgid "What is Representable?"
+msgstr "Representable yog dab tsi?"
+
+#: main/templates/main/drives/page.html:27
+#, fuzzy
+#| msgid ""
+#| "Representable allows people to draw communities of interest and share "
+#| "information about the interests and needs in those communities.\n"
+#| "            <br><br>Making this information available encourages "
+#| "mapmakers to take these communities into account during redistricting, in "
+#| "order to avoid gerrymandering and the “packing and cracking” of "
+#| "marginalized groups."
+msgid ""
+"Representable allows people to draw communities of interest and share "
+"information about the interests and needs in those communities.\n"
+"              <br><br>Making this information available encourages mapmakers "
+"to take these communities into account during redistricting, in order to "
+"avoid gerrymandering and the “packing and cracking” of marginalized groups. "
+"</p>"
+msgstr ""
+"Kev ua tus neeg sawv cev ua rau cov neeg tuaj yeem kos duab qhia chaw hauv "
+"cov zej zog ntawm kev txaus siab thiab qhia cov ntaub ntawv txog cov kev "
+"txaus siab thiab kev xav tau hauv cov zej zog.\n"
+"            <br><br>Kev ua cov ntaub ntawv no kom txhawb nqa cov kws tsim "
+"daim duab qhia chaw kom cov zej zog muaj kev koom tes nrog thaum lub sij "
+"hawm rov faib cheeb tsam dua, txhawm rau zam kev tiv thaiv thiab \"kev ntim "
+"thiab tawg\" ntawm cov pab pawg uas tsis muaj feem."
+
+#: main/templates/main/drives/page.html:56
+#, fuzzy
+#| msgid "Draw a Community Map"
+msgid "Draw My Community"
+msgstr "Kos Daim Duab Qhia Chaw Hauv Zej Zog"
+
+#: main/templates/main/entry_address.html:7
+msgid "Step 1"
+msgstr ""
+
+#: main/templates/main/entry_address.html:10
+msgid "Tell us about yourself."
+msgstr ""
+
+#: main/templates/main/entry_address.html:13
+msgid "Please include your name."
+msgstr ""
+
+#: main/templates/main/entry_address.html:19
+msgid "Please include your entire address."
+msgstr ""
+
+#: main/templates/main/entry_address.html:26
+msgid "Why do we need your information?"
+msgstr ""
+
+#: main/templates/main/entry_address.html:33
+#, python-format
+msgid ""
+" Your personal privacy is our highest priority. We gather personal\n"
+"                        information to verify that you are a real person. If "
+"you choose to\n"
+"                        submit this entry to an organization, the "
+"administrators of the organization\n"
+"                        will have access to this information. Learn more "
+"about our\n"
+"                        commitment to privacy on our <a target=\"_blank\" "
+"rel=\"noopener noreferrer\" href=\"%(url1)s\">Privacy</a>\n"
+"                        and <a target=\"_blank\" rel=\"noopener noreferrer\" "
+"href=\"%(url2)s\">Terms</a> pages. "
+msgstr ""
+
+#: main/templates/main/entry_address.html:61
+msgid "Your Name"
+msgstr ""
+
+#: main/templates/main/entry_address.html:103
+msgid "Street"
+msgstr ""
+
+#: main/templates/main/entry_address.html:144
+msgid "City"
+msgstr ""
+
+#: main/templates/main/entry_address.html:149
+msgid "State"
+msgstr ""
+
+#: main/templates/main/entry_address.html:173
+msgid "Zipcode"
+msgstr ""
+
+#: main/templates/main/entry_address.html:180
+#: main/templates/main/entry_survey.html:335
+#: main/templates/main/entry_survey.html:402
+msgid "NEXT"
+msgstr ""
+
+#: main/templates/main/entry_map.html:17
+msgid ""
+"\n"
+"                                    <p><strong>Search for a zipcode, "
+"address, or landmark to start. Then draw your community by clicking units on "
+"the map.</strong></p>\n"
+"                                "
+msgstr ""
+
+#: main/templates/main/entry_map.html:20
+msgid ""
+"\n"
+"                                    <p>Make sure that all your community is "
+"contained within the highlighted units, and that it does not contain gaps. "
+"The units are <a class=\"no-underline-link\" href=\"https://www.census.gov/"
+"programs-surveys/geography/about/glossary.html#par_textimage_4\" target="
+"\"_blank\"><strong>census block groups</strong></a>, which are used by map "
+"drawers to draw voting districts.</p>\n"
+"                                "
+msgstr ""
+
+#: main/templates/main/entry_map.html:107
+#: main/templates/main/entry_map.html:231
+msgid "How to draw my community?"
+msgstr ""
+
+#: main/templates/main/entry_map.html:109
+msgid ""
+"\n"
+"                            Select units on the map by clicking with your "
+"mouse. To deselect a unit, click it again. Watch the following video to "
+"learn more.\n"
+"                        "
+msgstr ""
+
+#: main/templates/main/entry_map.html:122
+#: main/templates/main/entry_map.html:246 representable/templates/base.html:113
+#: representable/templates/base_nofooter.html:113
+msgid "FAQ"
+msgstr ""
+
+#: main/templates/main/entry_map.html:126
+#: main/templates/main/entry_map.html:250
+msgid "What are the units?"
+msgstr ""
+
+#: main/templates/main/entry_map.html:128
+msgid ""
+"\n"
+"                                        The units are <strong>census block "
+"groups</strong>, which are used by map drawers to draw voting districts.\n"
+"                                    "
+msgstr ""
+
+#: main/templates/main/entry_map.html:133
+#: main/templates/main/entry_map.html:257
+msgid "Why am I unable to save my map?"
+msgstr ""
+
+#: main/templates/main/entry_map.html:135
+msgid ""
+"\n"
+"                                        Make sure that it does not contain "
+"gaps. Communities of Interest must be contiguous.\n"
+"                                    "
+msgstr ""
+
+#: main/templates/main/entry_map.html:140
+#: main/templates/main/entry_map.html:264
+msgid "Can I map outside of my state?"
+msgstr ""
+
+#: main/templates/main/entry_map.html:142
+msgid ""
+"\n"
+"                                        In order to map outside of your "
+"state, you need to add a new community within the other state.\n"
+"                                    "
+msgstr ""
+
+#: main/templates/main/entry_map.html:147
+#: main/templates/main/entry_map.html:271
+msgid "How large should my community be?"
+msgstr ""
+
+#: main/templates/main/entry_map.html:149
+msgid ""
+"\n"
+"                                        Your community can be as small as "
+"one unit or as large as 800 units.\n"
+"                                    "
+msgstr ""
+
+#: main/templates/main/entry_map.html:173
+#: main/templates/main/entry_map.html:298
+msgid "Communities Activities and Services"
+msgstr ""
+
+#: main/templates/main/entry_map.html:177
+#: main/templates/main/entry_map.html:187
+#: main/templates/main/entry_map.html:207
+#: main/templates/main/entry_map.html:302
+#: main/templates/main/entry_map.html:312
+#: main/templates/main/entry_map.html:332
+msgid ""
+" Where do people in your community gather or socialize? <br>Where does your "
+"community get its services? "
+msgstr ""
+
+#: main/templates/main/entry_map.html:183
+#: main/templates/main/entry_map.html:308
+#: main/templates/main/entry_survey.html:282 main/templates/main/map.html:129
+#: main/templates/main/partners/map.html:127 main/templates/main/review.html:74
+#: main/templates/main/submission.html:152
+#: main/templates/main/submission.html:402
+msgid "Cultural or Historical Interests"
+msgstr ""
+
+#: main/templates/main/entry_map.html:193
+#: main/templates/main/entry_map.html:318
+#: main/templates/main/entry_survey.html:298 main/templates/main/map.html:139
+#: main/templates/main/partners/map.html:137 main/templates/main/review.html:84
+#: main/templates/main/submission.html:162
+#: main/templates/main/submission.html:382
+msgid "Economic or Environmental Interests"
+msgstr ""
+
+#: main/templates/main/entry_map.html:203
+#: main/templates/main/entry_map.html:328
+#: main/templates/main/entry_survey.html:317 main/templates/main/map.html:144
+#: main/templates/main/partners/map.html:142 main/templates/main/review.html:89
+#: main/templates/main/submission.html:172
+#: main/templates/main/submission.html:412
+msgid "Community Needs and Concerns"
+msgstr ""
+
+#: main/templates/main/entry_map.html:233
+msgid ""
+"\n"
+"                                        Select units on the map by clicking "
+"with your mouse. To deselect a unit, click it again. Watch the following "
+"video to learn more.\n"
+"                                    "
+msgstr ""
+
+#: main/templates/main/entry_map.html:252
+msgid ""
+"\n"
+"                                                    The units are "
+"<strong>census block groups</strong>, which are used by map drawers to draw "
+"voting districts.\n"
+"                                                "
+msgstr ""
+
+#: main/templates/main/entry_map.html:259
+msgid ""
+"\n"
+"                                                    Make sure that it does "
+"not contain gaps. Communities of Interest must be contiguous.\n"
+"                                                "
+msgstr ""
+
+#: main/templates/main/entry_map.html:266
+msgid ""
+"\n"
+"                                                    In order to map outside "
+"of your state, you need to add a new community within the other state.\n"
+"                                                "
+msgstr ""
+
+#: main/templates/main/entry_map.html:273
+msgid ""
+"\n"
+"                                                    Your community can be as "
+"small as one unit or as large as 800 units.\n"
+"                                                "
+msgstr ""
+
+#: main/templates/main/entry_map.html:289
+msgid ""
+"\n"
+"                                Your Community Info\n"
+"                            "
+msgstr ""
+
+#: main/templates/main/entry_map.html:342
+msgid "Saving Community..."
+msgstr ""
+
+#: main/templates/main/entry_map.html:354
+msgid ""
+"\n"
+"                                    +\n"
+"                                "
+msgstr ""
+
+#: main/templates/main/entry_map.html:375
+#: main/templates/main/entry_map.html:379
+msgid "EDIT INFO"
+msgstr ""
+
+#: main/templates/main/entry_map.html:376
+#: main/templates/main/entry_map.html:380
+msgid "SAVE"
+msgstr ""
+
+#: main/templates/main/entry_map.html:397
+msgid "Step-by-step guide"
+msgstr ""
+
+#: main/templates/main/entry_map.html:406
+msgid "You need to draw a community to submit the form."
+msgstr ""
+
+#: main/templates/main/entry_preview.html:13
+msgid "Add your community to the map."
+msgstr "Ntxiv koj cov zej zog rau daim duab kos qhia chaw."
+
+#: main/templates/main/entry_preview.html:14
+msgid ""
+"Mapping your community and identifying its shared interests allows public "
+"officials to take your community’s concerns into account."
+msgstr ""
+"Kos duab qhia chaw koj lub zej zog thiab kev txheeb xyuas cov kev sib koom "
+"siab uas ua rau cov thawj coj pej xeem los saib xyuas koj cov kev txhawj "
+"xeeb hauv zej zog."
+
+#: main/templates/main/entry_preview.html:20
+msgid "Gerrymandering"
+msgstr "Gerrymandering"
+
+#: main/templates/main/entry_preview.html:20
+msgid "is silencing communities across the country."
+msgstr "yog ua kom cov zej zog txhob hais tawm thoob plaws hauv lub teb chaws."
+
+#: main/templates/main/entry_preview.html:21
+msgid ""
+"Politicians have been splitting up or packing together communities into "
+"districts that silence their voices. Gathering communities of interest helps "
+"fight gerrymandering."
+msgstr ""
+"Cov neeg kas moos tau faib los sis sau cov zej zog ua ke mus rau hauv cov "
+"nroog uas tsis hnov lawv cov suab.Kev sib sau cov zej zog ntawm kev txaus "
+"siab pab tawm tsam nrog kev tsis ncaj ncees."
+
+#: main/templates/main/entry_preview.html:33
+msgid "ADD MY COMMUNITY"
+msgstr ""
+
+#: main/templates/main/entry_privacy.html:12
+msgid ""
+"\n"
+"                <p id=\"backup_error_txt\" class=\"p-0 m-0\"></p>\n"
+"            "
+msgstr ""
+
+#: main/templates/main/entry_privacy.html:20
+msgid "Please make sure to agree to the terms and conditions."
+msgstr ""
+
+#: main/templates/main/entry_privacy.html:28
+msgid "Privacy and Terms of Use"
+msgstr ""
+
+#: main/templates/main/entry_privacy.html:36
+msgid ""
+"We gather your identifying information to verify that you are a real "
+"person.\n"
+"            We will not publicly share anyone's individual personal "
+"information, such as name, address, or email. Your privacy is our highest "
+"priority.\n"
+"            "
+msgstr ""
+
+#: main/templates/main/entry_privacy.html:52
+#, python-format
+msgid ""
+" Click here to indicate that you have read and agree to the\n"
+"                    <a target=\"_blank\" rel=\"noopener noreferrer\" href="
+"%(url2)s>Terms of Use</a> and\n"
+"                    <a target=\"_blank\" rel=\"noopener noreferrer\" href="
+"\"%(url1)s\">Privacy Policy</a>.\n"
+"                    <small class=\"text-danger\">*</small>\n"
+"                    "
+msgstr ""
+
+#: main/templates/main/entry_privacy.html:68
+#, python-format
+msgid ""
+" Click here to indicate that you have read and agree to the\n"
+"                    <a target=\"_blank\" rel=\"noopener noreferrer\" href="
+"%(url2)s>Terms of Use</a> and\n"
+"                    <a target=\"_blank\" rel=\"noopener noreferrer\" href="
+"\"%(url1)s\">Privacy Policy</a>.\n"
+"                    <small class=\"text-required\">*</small>\n"
+"                    "
+msgstr ""
+
+#: main/templates/main/entry_privacy.html:80
+msgid ""
+"\n"
+"                    Submitted communities are final.\n"
+"                "
+msgstr ""
+
+#: main/templates/main/entry_privacy.html:86
+msgid ""
+" In order to edit a saved community you will need\n"
+"                    to create a new community and delete the old one. "
+msgstr ""
+
+#: main/templates/main/entry_privacy.html:95
+msgid "You need to complete the recaptcha to submit this map."
+msgstr ""
+
+#: main/templates/main/entry_privacy.html:106
+#: main/templates/main/entry_survey.html:103
+#: main/templates/main/entry_survey.html:204
+#: main/templates/main/entry_survey.html:334
+#: main/templates/main/entry_survey.html:401
+msgid "BACK"
+msgstr ""
+
+#: main/templates/main/entry_privacy.html:107
+msgid "SUBMIT"
+msgstr ""
+
+#: main/templates/main/entry_state_selection.html:20
+#: main/templates/main/entry_state_selection.html:21
+msgid "Select your state."
+msgstr "Xaiv lub xeev los pib."
+
+#: main/templates/main/entry_survey.html:7
+msgid "Step 2"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:17
+msgid "Tell us about what unites your community."
+msgstr ""
+
+#: main/templates/main/entry_survey.html:20
+msgid ""
+"Next, you will share information about what brings your community together. "
+"What do you think is important for politicians to know about your community?"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:26
+#: main/templates/main/entry_survey.html:115
+msgid "What is a Community of Interest?"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:31
+msgid ""
+"\n"
+"                            A Community of Interest is a <strong>geographic "
+"area</strong> that shares <strong>cultural</strong>, <strong>historical</"
+"strong>, or <strong>economic</strong> interests.\n"
+"                            Communities of Interest encourage the drawing of "
+"fairer voting districts.\n"
+"                            "
+msgstr ""
+
+#: main/templates/main/entry_survey.html:39
+#: main/templates/main/entry_survey.html:128
+msgid "Communities of Interest can include..."
+msgstr ""
+
+#: main/templates/main/entry_survey.html:53
+msgid ""
+"\n"
+"                                                Your neighborhood, or an "
+"area you live in.\n"
+"                                            "
+msgstr ""
+
+#: main/templates/main/entry_survey.html:72
+msgid ""
+"\n"
+"                                                The people you would like to "
+"choose representatives with.\n"
+"                                            "
+msgstr ""
+
+#: main/templates/main/entry_survey.html:91
+msgid ""
+"\n"
+"                                                A local group that is "
+"brought together by a common interest.\n"
+"                                            "
+msgstr ""
+
+#: main/templates/main/entry_survey.html:104
+#: main/templates/main/entry_survey.html:205
+msgid "START"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:120
+msgid ""
+"\n"
+"                            A Community of Interest is a geographic area "
+"that shares <strong>cultural</strong>, <strong>historical</strong>, or "
+"<strong>economic</strong> interests.\n"
+"                            Communities of Interest encourage the drawing of "
+"fairer voting districts.\n"
+"                            "
+msgstr ""
+
+#: main/templates/main/entry_survey.html:141
+msgid ""
+"\n"
+"                                            The people you would like to "
+"choose representatives with.\n"
+"                                        "
+msgstr ""
+
+#: main/templates/main/entry_survey.html:164
+msgid ""
+"\n"
+"                                            Your neighborhood, or an area "
+"you live in.\n"
+"                                        "
+msgstr ""
+
+#: main/templates/main/entry_survey.html:187
+msgid ""
+"\n"
+"                                            A local group that is brought "
+"together by a common interest.\n"
+"                                        "
+msgstr ""
+
+#: main/templates/main/entry_survey.html:217
+msgid "What unites your Community of Interest?"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:221
+msgid "Community of Interest Definition in "
+msgstr ""
+
+#: main/templates/main/entry_survey.html:231
+msgid ""
+"\n"
+"                    Respond to <b>at least one</b> of the sections below. "
+"There are no wrong answers.<br>\n"
+"\n"
+"                    Click on each category to see helpful questions and "
+"examples.\n"
+"                    "
+msgstr ""
+
+#: main/templates/main/entry_survey.html:246
+#: main/templates/main/entry_survey.html:254
+msgid "Please fill out at least one of the interest fields."
+msgstr ""
+
+#: main/templates/main/entry_survey.html:265 main/templates/main/map.html:134
+#: main/templates/main/partners/map.html:132 main/templates/main/review.html:79
+#: main/templates/main/submission.html:142
+#: main/templates/main/submission.html:392
+msgid "Community Activities and Services"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:269
+#: main/templates/main/entry_survey.html:286
+#: main/templates/main/entry_survey.html:321
+msgid ""
+"Use these questions to think more about how you would describe your "
+"community..."
+msgstr ""
+
+#: main/templates/main/entry_survey.html:270
+msgid "Where do people in your community gather or socialize?"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:271
+msgid ""
+"How and where does your community access services (healthcare, "
+"transportation, educational services, etc.)?"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:272
+msgid "Examples of activities and services:"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:272
+msgid ""
+"Shopping areas, schools and universities, libraries, parks, lakes, rivers, "
+"places of worship, healthcare services, public transport, local nonprofit "
+"organizations, etc."
+msgstr ""
+
+#: main/templates/main/entry_survey.html:287
+msgid "What are the cultural bonds in your community?"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:288
+msgid "If your community has a shared history, what is it?"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:289
+msgid "Examples of cultural or historical interests:"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:289
+msgid ""
+"Religious groups, ethnic groups, languages, age groups, immigration status, "
+"historic or arts districts, etc."
+msgstr ""
+
+#: main/templates/main/entry_survey.html:302
+msgid ""
+"\n"
+"                            <b>Use these questions to think more about how "
+"you would describe your community...</b><br>\n"
+"                            &emsp; - Where are residents employed?<br>\n"
+"                            &emsp; - If there are environmental concerns in "
+"your community, what are they?<br><br>\n"
+"                            <span class=\"blue-text\"><b>Examples of "
+"economic or environmental interests:</b> Tourism industry, agricultural "
+"workers, mining town, manufacturing center, polluted natural resource, "
+"unemployment problem, etc.</span>\n"
+"                            "
+msgstr ""
+
+#: main/templates/main/entry_survey.html:322
+msgid "What should politicians and/or map drawers know about your community?"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:323
+msgid "What are the needs of your community?"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:324
+msgid "Is there anything else you want to tell us about your community?"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:325
+msgid "Examples of needs or concerns:"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:325
+msgid ""
+"Keep community in the same district or separate into multiple districts, "
+"shared policy concerns, need for a social service, relationship to other "
+"nearby communities, issues with current district lines"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:361
+msgid "Please include a community name."
+msgstr ""
+
+#: main/templates/main/entry_survey.html:373
+msgid "Name your community."
+msgstr ""
+
+#: main/templates/main/entry_survey.html:378
+msgid ""
+"Give your community of interest a name. This does not have to be the "
+"official name of your community."
+msgstr ""
+
+#: main/templates/main/entry_survey.html:384
+msgid "Examples"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:384
+msgid ""
+"Cherry Farmers Community, St. Peters Church Community, Riverside Fishing "
+"Community"
+msgstr ""
+
+#: main/templates/main/entry_survey.html:391
+msgid "Community Name:"
+msgstr ""
+
+#: main/templates/main/index.html:25
+msgid ""
+" Make your voice heard with Representable <br> and put your community on the "
+"map. "
+msgstr ""
+"Ua kom koj lub suab tau txais kev hnov ​​thiab tso koj lub zej zog hauv daim "
+"duab qhia chaw."
+
+#: main/templates/main/index.html:27
+msgid "GET STARTED"
+msgstr "Los Pib"
+
+#: main/templates/main/index.html:34
+msgid "Are you the leader of an organization?"
+msgstr "Koj puas yog tus thawj coj ntawm ib lub koom haum?"
+
+#: main/templates/main/index.html:35
+msgid ""
+"Many organizations have partnered with Representable.org to collect "
+"community-of-interest data."
+msgstr ""
+"Ntau lub koom haum muaj kev koom tes nrog Representable.org kom tau txais "
+"txiaj ntsig cov zej zog-ntawm cov paj ntaub ntawv."
+
+#: main/templates/main/index.html:36
+msgid "PARTNER WITH US"
+msgstr "Tus koom tes nrog peb "
+
+#: main/templates/main/index.html:51
+msgid ""
+"<b>Our mission</b> is to give communities a voice in drawing voting "
+"districts."
+msgstr ""
+"Peb lub hom phiaj yog los muab cov zej zog lub suab rau qhov kev xaiv tsa "
+"kos duab qhia cheeb tsam."
+
+#: main/templates/main/index.html:52
+msgid ""
+"Representable allows people to draw communities of interest and share "
+"information about the interests and needs in those communities.\n"
+"            <br><br>Making this information available encourages mapmakers "
+"to take these communities into account during redistricting, in order to "
+"avoid gerrymandering and the “packing and cracking” of marginalized groups."
+msgstr ""
+"Kev ua tus neeg sawv cev ua rau cov neeg tuaj yeem kos duab qhia chaw hauv "
+"cov zej zog ntawm kev txaus siab thiab qhia cov ntaub ntawv txog cov kev "
+"txaus siab thiab kev xav tau hauv cov zej zog.\n"
+"            <br><br>Kev ua cov ntaub ntawv no kom txhawb nqa cov kws tsim "
+"daim duab qhia chaw kom cov zej zog muaj kev koom tes nrog thaum lub sij "
+"hawm rov faib cheeb tsam dua, txhawm rau zam kev tiv thaiv thiab \"kev ntim "
+"thiab tawg\" ntawm cov pab pawg uas tsis muaj feem."
+
+#: main/templates/main/index.html:59
+msgid "<b>Gerrymandering</b> is threatening democracy."
+msgstr "<b>Gerrymandering yog</b> hem thawj rau kev ywj pheej."
+
+#: main/templates/main/index.html:60
+msgid ""
+"Politicians have been splitting up and packing together communities into "
+"districts that silence the voices of community members. This prevents "
+"communities from electing representatives that listen to their needs. "
+"Gathering communities of interest maps helps fight gerrymandering. We can "
+"provide map drawers with the information they need to draw districts that "
+"empower communities."
+msgstr ""
+"Cov neeg kas moos tau faib thiab sau cov zej zog ua ke mus rau hauv cov "
+"nroog uas ua kom cov suab tsis txaus siab ntawm cov neeg hauv zej zog.Qhov "
+"kev tiv thaiv cov zej zog no los ntawm kev xaiv cov sawv cev uas mloog lawv "
+"cov kev xav tau.Kev sib sau ua ke cov zej zog ntawm daim duab qhia chaw pab "
+"sib ntaus gerrymandering.Peb tuaj yeem muab cov duab kos qhia chaw nrog cov "
+"ntaub ntawv lawv xav tau los kos cov cheeb tsam uas txhawb zog rau cov zej "
+"zog. "
+
+#: main/templates/main/index.html:61
+msgid "We're fighting to make democracy more..."
+msgstr "Peb tabtom tawm tsam los ua kev ywj pheej ntau dua…"
+
+#: main/templates/main/index.html:64
+msgid "Transparent"
+msgstr "Muaj Kev Ncaj Ncees"
+
+#: main/templates/main/index.html:67
+msgid "Inclusive"
+msgstr "Kev Koom Tes"
+
+#: main/templates/main/index.html:70
+msgid "Accessible"
+msgstr "Kev Siv Tau"
+
+#: main/templates/main/index.html:76 main/templates/main/pages/about.html:96
+msgid "Answer Questions"
+msgstr "Teb Cov Lus Nug"
+
+#: main/templates/main/index.html:77
+msgid "that help you identify what bonds your community together."
+msgstr ""
+
+#: main/templates/main/index.html:81 main/templates/main/pages/about.html:109
+msgid "Draw a Community Map"
+msgstr "Kos Daim Duab Qhia Chaw Hauv Zej Zog"
+
+#: main/templates/main/index.html:82
+msgid ""
+"by choosing units that make up your community. Use landmarks to draw your "
+"map."
+msgstr ""
+
+#: main/templates/main/index.html:86
+msgid "Share your Map"
+msgstr ""
+
+#: main/templates/main/index.html:87
+msgid ""
+"as public input for map makers to use when drawing new voting districts."
+msgstr ""
+
+#: main/templates/main/index.html:99
+msgid ""
+"We are putting Representable in the hands of the communities that need it."
+msgstr "Peb tso Representable rau zej zog txhais tes uas xav tau nws."
+
+#: main/templates/main/index.html:100
+msgid "Join us to help communities get the representation they deserve."
+msgstr ""
+"Koom nrog peb los pab cov zej zog kom tau txais cov sawv cev uas lawv tsim "
+"nyog tau."
+
+#: main/templates/main/map.html:13
+msgid "View Communities"
+msgstr ""
+
+#: main/templates/main/map.html:46
+msgid "State Map"
+msgstr ""
+
+#: main/templates/main/map.html:63 main/templates/main/partners/map.html:67
+msgid "Data layers"
+msgstr ""
+
+#: main/templates/main/map.html:74 main/templates/main/partners/map.html:78
+msgid "Communities"
+msgstr ""
+
+#: main/templates/main/map.html:149 main/templates/main/partners/map.html:147
+#: main/templates/main/review.html:94
+msgid "Show More"
+msgstr ""
+
+#: main/templates/main/map.html:161
+msgid "Show All"
+msgstr ""
+
+#: main/templates/main/pages/about.html:8
+msgid "About Representable"
+msgstr "Hais Txog Representable"
+
+#: main/templates/main/pages/about.html:12
+msgid ""
+"\n"
+"        <span class=\"d-block display-3\">We want to give communities a "
+"<span class=\"light-blue-text\">voice</span> in drawing districts.</span>\n"
+"        "
+msgstr ""
+"\n"
+"        <span class=\"d-block display-3\">Peb xav tau cov zej zog kev koom "
+"tes hauv cov kev kos duab cov cheeb tsam.</span>\n"
+"        "
+
+#: main/templates/main/pages/about.html:18
+msgid ""
+"\n"
+"        <span class=\"display-4 d-block\">We want to give communities a "
+"<span class=\"light-blue-text\">voice</span> in drawing districts.</span>\n"
+"        "
+msgstr ""
+"\n"
+"        <span class=\"display-4 d-block\">Peb xav tau cov zej zog kev koom "
+"tes hauv cov kev kos duab cov cheeb tsam.</span>\n"
+"        "
+
+#: main/templates/main/pages/about.html:34
+#: main/templates/main/pages/about.html:38
+msgid "Redistricting is coming."
+msgstr "Qhov kev faib ciam cheeb tsam tshiab yuav los txog sai no."
+
+#: main/templates/main/pages/about.html:40
+msgid ""
+"In 2021, state governments will redraw Congressional and state legislative "
+"districts. We need to fight for fairer districts which respect the concerns "
+"of communities."
+msgstr ""
+"Nyob hauv xyoo 2021, tsoom fwv hauv xeev yuav rov rho ccheeb tsam Xab Phas "
+"thiab lub xeev cov chaw tsim kev cai lij choj.Peb yuav tsum tawm tsam rau "
+"cov kev ncaj ncees dua hauv cheeb tsam uas hwm cov kev txhawj xeeb ntawm cov "
+"zej zog"
+
+#: main/templates/main/pages/about.html:49
+msgid ""
+"Representable is a free, open-source tool for creating maps for Communities "
+"of Interest (COI) — groups of individuals who share common social and "
+"economic interests, who are likely to have similar political concerns. "
+"Currently, over half of states have legal requirements to respect COIs, but "
+"before Representable, no tools existed to get COIs to mapmakers."
+msgstr ""
+"Representable yog ib qho pub dawb, qhib qhov cuab yeej rau kev tsim cov duab "
+"qhia rau Cov Zej Zog Kev Txaus Siab (COI) — pab pawg ntawm cov tib neeg uas "
+"muaj kev cuam tshuam nrog kev sib raug zoo thiab nyiaj txiag, uas yuav muaj "
+"kev txhawj xeeb txog kev tswj hwm kom zoo sib xws.Tam sim no, ntau tshaj li "
+"ib nrab ntawm cov xeev muaj cov cai yuav tsum tau ua raws li COIs, tab sis "
+"ua ntej Representable, tsis muaj ib qho cuab yeej dab tsi tau txais COI rau "
+"cov kws tsim daim duab qhia chaw."
+
+#: main/templates/main/pages/about.html:51
+msgid ""
+"\n"
+"We work closely with organizations to gather community maps along with "
+"information about the shared interests of the community. This data can then "
+"be used by map drawers, journalists, analysts, and activists to create and "
+"evaluate proposed district maps. Our goal is to democratize public "
+"testimony, inform map drawers, and encourage map analysis. Learn more about "
+"how Representable fights gerrymandering in the <a href=\"https://docs.google."
+"com/document/d/1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc/edit?usp=sharing"
+"\">Official Education Guide.</a></p>\n"
+"        "
+msgstr ""
+"\n"
+"Peb koom tes ua hauj lwm nrog cov koom haum txhawm rau sau cov duab qhia "
+"chaw nyob hauv zej zog nrog rau cov ntaub ntawv hais txog cov txiaj ntsig "
+"ntawm kev sib koom tes lub zej zog.Cov ntaub ntawv no tuaj yeem siv los "
+"ntawm cov kws duab kos dawb qhia chaw, cov neeg sau xov xwm, cov kws tshuaj "
+"ntsuam, thiab cov neeg ua hauj lwm los tsim thiab ntsuam xyuas hauv cheeb "
+"tsam cov duab kos qhia chaw uas tau qhia.Peb lub hom phiaj yog tsim kho kom "
+"cov lus pov thawj ntawm pej xeem, qhia cov kws tsim duab qhia chaw, thiab "
+"txhawb nqa kev tshuaj xyuas daim duab qhia chaw.<a href=\"https://docs."
+"google.com/document/d/1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc/edit?"
+"usp=sharingKawm\">paub ntau ntxiv txog tias Representable yuav tiv thaiv "
+"tawm tsam hauv Daim Ntawv Qhia Kev Kawm.</a></p>\n"
+"        "
+
+#: main/templates/main/pages/about.html:56
+msgid ""
+"\n"
+"Representable is built in partnership with the <a href=\"http://gerrymander."
+"princeton.edu/\">Princeton Gerrymandering Project</a> and supported by <a "
+"href=\"https://schmidtfutures.com/\">Schmidt Futures.</a></p>\n"
+"        "
+msgstr ""
+
+#: main/templates/main/pages/about.html:59
+msgid "Representable will help..."
+msgstr "Representable yuav pab..."
+
+#: main/templates/main/pages/about.html:66
+msgid "Democratize Public Testimony"
+msgstr "Kev Qhia Rau Pej Xeem Rau Cov Lus Ywj Pheej"
+
+#: main/templates/main/pages/about.html:67
+msgid ""
+"Enable any individual to submit maps with their community information and "
+"share them."
+msgstr ""
+"Pab kom txhua tus neeg xa cov phiaj duab nrog lawv cov lus qhia hauv zej zog "
+"thiab qhia rau lawv."
+
+#: main/templates/main/pages/about.html:72
+msgid "Inform Map Drawers"
+msgstr "Qhia Cov Kws Kos Duab Qhia Chaw"
+
+#: main/templates/main/pages/about.html:73
+msgid ""
+"Deliver COI data to map drawers, using a digital format that is easy to "
+"analyze."
+msgstr ""
+"Xa cov ntaub ntawv COI rau cov kws kos duab qhia chaw, siv cov qauv dis gis "
+"toj (digital) uas yooj yim rau kev tshuaj xyuas."
+
+#: main/templates/main/pages/about.html:78
+msgid "Encourage Map Analysis"
+msgstr "Txhawb Nqa Kev Tshuaj Xyuas Daim Duab Qhia Chaw"
+
+#: main/templates/main/pages/about.html:79
+msgid "Support journalists and analysts with data to evaluate proposed maps."
+msgstr ""
+"Txhawb nqa cov neeg sau xov xwm thiab cov kws tshuaj ntsuam nrog cov ntaub "
+"ntawv rau kev ntsuam xyuas daim duab qhia chaw tau qhia."
+
+#: main/templates/main/pages/about.html:89
+msgid "HOW IT WORKS?"
+msgstr "Nws ua hauj lwm li cas?"
+
+#: main/templates/main/pages/about.html:101
+msgid ""
+"Thought-provoking questions built based on policy and legal definitions of "
+"COIs."
+msgstr ""
+"Cov lus nug txhawb kom teb los ntawm cov cai thiab cov ntsiab lus hauv txoj "
+"cai ntawm COIs."
+
+#: main/templates/main/pages/about.html:114
+msgid "Use landmarks, zoom, and navigation for an easy drawing experience."
+msgstr ""
+"Siv cov cim ntawm thaj chaw, ua kom loj, thiab qhia kev rau ib qho kev kos "
+"duab yooj yim."
+
+#: main/templates/main/pages/about.html:122
+msgid "Visualize and Export"
+msgstr "Ua Kom Pom Duab thiab Xa Tawm"
+
+#: main/templates/main/pages/about.html:127
+msgid ""
+"Export as GeoJSON or PDF file. Our data is interoperable with other mapping "
+"softwares."
+msgstr ""
+"Xa tawm ua GeoJSON los sis daim ntawv PDF.Peb cov ntaub ntawv cuam tshuam "
+"nrog lwm cov software daim phiaj qhia chaw."
+
+#: main/templates/main/pages/about.html:138
+msgid "Our Team"
+msgstr "Peb Pab Pawg"
+
+#: main/templates/main/pages/about.html:141
+msgid "Executive Director"
+msgstr "Tus Thawj Tswj Xyuas"
+
+#: main/templates/main/pages/about.html:142
+msgid "Head of Engineering"
+msgstr "Tus Thawj Coj Feem Hauj Lwm Kev Tsim"
+
+#: main/templates/main/pages/about.html:143
+msgid "Head of Design"
+msgstr "Tus Thawj Coj Feem Hauj Lwm Tsim Qauv"
+
+#: main/templates/main/pages/about.html:144
+msgid "Strategy Coordinator"
+msgstr "Tus Lis Hauj Lwm Saib Xyuas Kev Tawm Tswv Yim"
+
+#: main/templates/main/pages/about.html:145
+msgid "Outreach Coordinator"
+msgstr "Tus Lis Hauj Lwm Saib Xyuas Kev Tshaj Tawm"
+
+#: main/templates/main/pages/about.html:146
+#: main/templates/main/pages/about.html:147
+msgid "Software Engineer"
+msgstr ""
+
+#: main/templates/main/pages/about.html:148
+#: main/templates/main/pages/about.html:149
+msgid "Data Engineer"
+msgstr ""
+
+#: main/templates/main/pages/about.html:150
+msgid "Media and Communications Coordinator"
+msgstr ""
+
+#: main/templates/main/pages/about.html:152
+msgid "Our Founding Team"
+msgstr ""
+
+#: main/templates/main/pages/about.html:155
+msgid ""
+"Representable began in February 2019 as a final project for the Princeton "
+"course COS333: Advanced Programming Techniques."
+msgstr ""
+
+#: main/templates/main/pages/about.html:156
+#: main/templates/main/pages/about.html:159
+msgid "Engineering, Full-Stack"
+msgstr ""
+
+#: main/templates/main/pages/about.html:157
+msgid "Engineering, Mapping"
+msgstr ""
+
+#: main/templates/main/pages/about.html:158
+msgid "Outreach, Content"
+msgstr ""
+
+#: main/templates/main/pages/about.html:160
+msgid "Engineering, Product"
+msgstr ""
+
+#: main/templates/main/pages/blog.html:4
+#, fuzzy
+#| msgid "About Representable"
+msgid "Representable Blog"
+msgstr "Hais Txog Representable"
+
+#: main/templates/main/pages/blog.html:10
+msgid "Communities of Interest. Stories of Representation."
+msgstr ""
+
+#: main/templates/main/pages/faq.html:11
+msgid "Check out our most frequently asked questions below."
+msgstr ""
+
+#: main/templates/main/pages/faq.html:13
+#, fuzzy
+#| msgid "Draw a Community Map"
+msgid "For Community Members"
+msgstr "Kos Daim Duab Qhia Chaw Hauv Zej Zog"
+
+#: main/templates/main/pages/faq.html:26
+msgid "For Organizations"
+msgstr ""
+
+#: main/templates/main/pages/faq.html:39
+msgid "Have more questions? Email us at "
+msgstr ""
+
+#: main/templates/main/pages/glossary.html:10
+#: representable/templates/base.html:114
+#: representable/templates/base_nofooter.html:114
+msgid "Redistricting Glossary"
+msgstr ""
+
+#: main/templates/main/pages/glossary.html:29
+msgid "More Information"
+msgstr ""
+
+#: main/templates/main/pages/privacy.html:5
+#: representable/templates/base.html:275
+msgid "Privacy"
+msgstr ""
+
+#: main/templates/main/pages/privacy.html:7
+msgid ""
+"\n"
+"<p>Your privacy is our highest priority. We gather your identifying "
+"information to verify that you are a real person. We will not publicly share "
+"anyone's individual personal information, such as name, address, or email.</"
+"p>\n"
+"<p>If you choose to submit an entry to an organization, the organization "
+"will receive your identifying information in order to verify that you are a "
+"real person. This aspect will be communicated to you before you save an "
+"entry.</p>\n"
+"<p>We rely on third-party services (Mixpanel and Google Analytics) to better "
+"understand our users' anonymous behavior on the website. This allows us to "
+"understand how we can improve Representable.org by finding any hidden "
+"friction points. We don't share any personal information with these services."
+"</a>\n"
+"<p>Our implementation of third-party tracking services respects your "
+"browser's <a href=\"https://allaboutdnt.com/\">Do Not Track</a> settings.\n"
+"We also give users the option to opt in or opt out of tracking at any point. "
+"Users can update their preferences on their account dashboard page (if "
+"logged in).\n"
+"By default, we enable Google Analytics to count website visitors (which only "
+"uses first-party cookies), but this behavior is disabled by opting out. "
+"Mixpanel is only enabled by opting in.</p>\n"
+"<p>It is Representable's policy to respect your privacy regarding any "
+"information we may collect from you across our website, <a href=\"http://"
+"representable.org\">representable.org</a>, and other sites we own and "
+"operate.</p>\n"
+"<p>We only ask for personal information when we truly need it to provide a "
+"service to you. We collect it by fair and lawful means, with your knowledge "
+"and consent. We also let you know why we’re collecting it and how it will be "
+"used.</p>\n"
+"<p>The information we collect from our users may be used for research by our "
+"team or by our partners at Princeton University.  Such information will be "
+"retained in an anonymous form and in accordance with this policy's other "
+"provisions.  If you do not wish for your information to be used in research, "
+"please contact us.</p>\n"
+"<p>We only retain collected information for as long as necessary to provide "
+"you with your requested service and, in an anonymized, aggregated form, for "
+"research purposes. What data we store, we’ll protect within commercially "
+"acceptable means to prevent loss and theft, as well as unauthorized access, "
+"disclosure, copying, use or modification.</p>\n"
+"<p>We don’t share any personally identifying information publicly or with "
+"third-parties, except when explicit permission is given during a \"community"
+"\" submission or when required to by law.</p>\n"
+"<p>Our website may link to external sites that are not operated by us. "
+"Please be aware that we have no control over the content and practices of "
+"these sites, and cannot accept responsibility or liability for their "
+"respective privacy policies.\n"
+"</p>\n"
+"<p>You are free to refuse our request for your personal information, with "
+"the understanding that we may be unable to provide you with some of your "
+"desired services.</p>\n"
+"<p>Your continued use of our website will be regarded as acceptance of our "
+"practices around privacy and personal information. If you have any questions "
+"about how we handle user data and personal information, feel free to contact "
+"us.</p>\n"
+"<p>This policy is effective as of July 14, 2020.</p>\n"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:10
+#: representable/templates/base.html:115
+#: representable/templates/base_nofooter.html:115
+msgid "Resources"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:17
+msgid "Educational Video"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:23
+msgid ""
+"This video is a text-based educational tool meant to inform users about the "
+"redistricting process, dangers of gerrymandering, and the effectiveness of "
+"Communities of Interest which can be mapped easily on Representable.org."
+msgstr ""
+
+#: main/templates/main/pages/resources.html:32
+msgid "Demo Videos"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:38
+msgid ""
+"These video walkthroughs are key to navigating Representable from both the "
+"perspective of a user and an organization, complete with tips for easily "
+"mapping your community and collecting communities of interest."
+msgstr ""
+
+#: main/templates/main/pages/resources.html:47
+msgid "One Pager"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:53
+msgid ""
+"This infographic provides a short overview of redistricting, gerrymandering, "
+"and how Representable can be used to address this issue using communities of "
+"interest. "
+msgstr ""
+
+#: main/templates/main/pages/resources.html:55
+msgid "VIEW & DOWNLOAD"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:65
+msgid "Organization Guide"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:71
+msgid ""
+"This guide is the primary reference point for organizations to find "
+"information about the tool, community mapping drives, our educational "
+"materials, FAQs, and more!"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:73
+msgid "READ MORE"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:83
+msgid "Community Mapping Event Powerpoint"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:89
+msgid ""
+"This powerpoint can be used to run online mapping events with your "
+"community. Guide people through the process of identifying their community’s "
+"needs and mapping their COI."
+msgstr ""
+
+#: main/templates/main/pages/resources.html:91
+msgid "DOWNLOAD"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:101
+msgid "Additional Resources"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:102
+#, fuzzy
+#| msgid "Gerrymandering"
+msgid "Princeton Gerrymandering Project"
+msgstr "Gerrymandering"
+
+#: main/templates/main/pages/resources.html:103
+msgid ""
+"Through nonpartisan analysis, the Princeton Gerrymandering Project bridges "
+"the gap between mathematics and the law to achieve fair representation "
+"through redistricting reform. "
+msgstr ""
+
+#: main/templates/main/pages/resources.html:105
+msgid "GeoCivics Redistricting Materials"
+msgstr ""
+
+#: main/templates/main/pages/resources.html:106
+msgid ""
+"GeoCivics provides a suite of state-based resources to develop skills and "
+"knowledge for discussing the apportionment and redistricting process in the "
+"United States. These resources prepare and support students, teachers, and "
+"community members with interactive tools and geospatial data, leading to "
+"engagement in conversation about the construction of electoral districts."
+msgstr ""
+
+#: main/templates/main/pages/terms.html:5 representable/templates/base.html:278
+msgid "Terms"
+msgstr ""
+
+#: main/templates/main/pages/terms.html:7
+msgid "1. Terms"
+msgstr ""
+
+#: main/templates/main/pages/terms.html:8
+msgid ""
+"By accessing the website at <a href=\"https://representable.org\">http://"
+"representable.org</a>, you are agreeing to be bound by these terms of "
+"service, all applicable laws and regulations, and agree that you are "
+"responsible for compliance with\n"
+"        any applicable local laws. If you do not agree with any of these "
+"terms, you are prohibited from using or accessing this site. The materials "
+"contained in this website are protected by applicable copyright and "
+"trademark law."
+msgstr ""
+
+#: main/templates/main/pages/terms.html:10
+msgid "2. Use License"
+msgstr ""
+
+#: main/templates/main/pages/terms.html:12
+msgid ""
+"\n"
+"        <li>Permission is granted to temporarily download one copy of the "
+"materials (information or software) on Representable's website for personal, "
+"non-commercial transitory viewing only. This is the grant of a license, not "
+"a transfer of title,\n"
+"          and under this license you may not:\n"
+"          <ol type=\"i\">\n"
+"            <li>modify or copy the materials;</li>\n"
+"            <li>use the materials for any commercial purpose, or for any "
+"public display (commercial or non-commercial);</li>\n"
+"            <li>attempt to decompile or reverse engineer any software "
+"contained on Representable's website;</li>\n"
+"            <li>remove any copyright or other proprietary notations from the "
+"materials; or</li>\n"
+"            <li>transfer the materials to another person or \"mirror\" the "
+"materials on any other server.</li>\n"
+"          </ol>\n"
+"        </li>\n"
+"        "
+msgstr ""
+
+#: main/templates/main/pages/terms.html:24
+msgid ""
+"\n"
+"        <li>This license shall automatically terminate if you violate any of "
+"these restrictions and may be terminated by Representable at any time. Upon "
+"terminating your viewing of these materials or upon the termination of this "
+"license, you must\n"
+"          destroy any downloaded materials in your possession whether in "
+"electronic or printed format.</li>\n"
+"        "
+msgstr ""
+
+#: main/templates/main/pages/terms.html:29
+msgid "3. Disclaimer"
+msgstr ""
+
+#: main/templates/main/pages/terms.html:31
+msgid ""
+"\n"
+"        <li>The materials on Representable's website are provided on an 'as "
+"is' basis. Representable makes no warranties, expressed or implied, and "
+"hereby disclaims and negates all other warranties including, without "
+"limitation, implied warranties or\n"
+"          conditions of merchantability, fitness for a particular purpose, "
+"or non-infringement of intellectual property or other violation of rights.</"
+"li>\n"
+"        "
+msgstr ""
+
+#: main/templates/main/pages/terms.html:35
+msgid ""
+"\n"
+"        <li>Further, Representable does not warrant or make any "
+"representations concerning the accuracy, likely results, or reliability of "
+"the use of the materials on its website or otherwise relating to such "
+"materials or on any sites linked to this\n"
+"          site.</li>\n"
+"        "
+msgstr ""
+
+#: main/templates/main/pages/terms.html:40
+msgid "4. Limitations"
+msgstr ""
+
+#: main/templates/main/pages/terms.html:41
+msgid ""
+"\n"
+"      <p>In no event shall Representable or its suppliers be liable for any "
+"damages (including, without limitation, damages for loss of data or profit, "
+"or due to business interruption) arising out of the use or inability to use "
+"the materials on\n"
+"        Representable's website, even if Representable or a Representable "
+"authorized representative has been notified orally or in writing of the "
+"possibility of such damage. Because some jurisdictions do not allow "
+"limitations on implied warranties,\n"
+"        or limitations of liability for consequential or incidental damages, "
+"these limitations may not apply to you.</p>\n"
+"      "
+msgstr ""
+
+#: main/templates/main/pages/terms.html:46
+msgid "5. Accuracy of materials"
+msgstr ""
+
+#: main/templates/main/pages/terms.html:47
+msgid ""
+"\n"
+"      <p>The materials appearing on Representable's website could include "
+"technical, typographical, or photographic errors. Representable does not "
+"warrant that any of the materials on its website are accurate, complete or "
+"current. Representable may\n"
+"        make changes to the materials contained on its website at any time "
+"without notice. However Representable does not make any commitment to update "
+"the materials.</p>\n"
+"      "
+msgstr ""
+
+#: main/templates/main/pages/terms.html:51
+msgid "6. Links"
+msgstr ""
+
+#: main/templates/main/pages/terms.html:52
+msgid ""
+"Representable has not reviewed all of the sites linked to its website and is "
+"not responsible for the contents of any such linked site. The inclusion of "
+"any link does not imply endorsement by Representable of the site. Use of any "
+"such linked\n"
+"        website is at the user's own risk."
+msgstr ""
+
+#: main/templates/main/pages/terms.html:54
+msgid "7. Modifications"
+msgstr ""
+
+#: main/templates/main/pages/terms.html:55
+msgid ""
+"Representable may revise these terms of service for its website at any time "
+"without notice. By using this website you are agreeing to be bound by the "
+"then current version of these terms of service."
+msgstr ""
+
+#: main/templates/main/pages/terms.html:56
+msgid "8. Governing Law"
+msgstr ""
+
+#: main/templates/main/pages/terms.html:57
+msgid ""
+"These terms and conditions are governed by and construed in accordance with "
+"the laws of New Jersey and you irrevocably submit to the exclusive "
+"jurisdiction of the courts in that State or location."
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:9
+msgid "Join the national Representable community."
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:11
+msgid ""
+"\n"
+"        Representable is growing a redistricting community with "
+"organizations across the country. Organization leaders can easily collect "
+"community maps with Representable and join redistricting efforts in their "
+"states.\n"
+"        "
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:15
+msgid "How to use Representable as an organization?"
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:17
+msgid ""
+"\n"
+"        Check out our demo to see all of Representable’s features. \n"
+"        "
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:31
+msgid "Join Representable as an Organization"
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:33
+msgid ""
+"\n"
+"                As the leader of an organization, you can collect community "
+"maps and download submissions. Joining Representable as an organization is "
+"free, and includes access to our redistricting toolkit. \n"
+"                "
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:38
+#: main/templates/main/partners/get_started.html:39
+msgid "CREATE ORGANIZATION"
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:51
+msgid "Create an Organization"
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:52
+msgid "Include a brief description, link, and the state(s) you operate in."
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:60
+msgid "Start a Community Mapping Drive"
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:61
+msgid "Create a community mapping drive via the organization dashboard."
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:69
+msgid "Collect Community Maps"
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:70
+msgid ""
+"Share the link to your community mapping drive to individuals in your state "
+"to start collecting submissions."
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:78
+msgid "Visualize and Export Community Maps"
+msgstr ""
+
+#: main/templates/main/partners/get_started.html:79
+msgid ""
+"View a map of all submitted communities, and download them to your "
+"organization as geoJSON for easy integration with district drawing and "
+"visualization tools."
+msgstr ""
+
+#: main/templates/main/partners/index.html:9
+#: representable/templates/base.html:105
+#: representable/templates/base_nofooter.html:105
+msgid "Partners"
+msgstr ""
+
+#: main/templates/main/partners/index.html:10
+msgid ""
+"Find out more about the organizations using Representable.org to gather "
+"community data. Want to become a partner? Learn more "
+msgstr ""
+
+#: main/templates/main/partners/index.html:10
+#: main/templates/main/review.html:113
+msgid "here"
+msgstr ""
+
+#: main/templates/main/partners/index.html:33
+msgid "More Details"
+msgstr ""
+
+#: main/templates/main/partners/index.html:35
+msgid "Partner Site"
+msgstr ""
+
+#: main/templates/main/partners/map.html:56
+#: main/templates/main/partners/map.html:59
+msgid "Export All as GeoJSON"
+msgstr ""
+
+#: main/templates/main/partners/map.html:57
+#: main/templates/main/partners/map.html:60
+msgid "Export All as CSV"
+msgstr ""
+
+#: main/templates/main/partners/map.html:99
+msgid "Hidden"
+msgstr ""
+
+#: main/templates/main/partners/map.html:103
+msgid "Private"
+msgstr ""
+
+#: main/templates/main/partners/map.html:171
+msgid "Report this community"
+msgstr ""
+
+#: main/templates/main/partners/map.html:178
+msgid ""
+"\n"
+"        If you feel this community is abusive, spam, low-effort, or doesn't "
+"live\n"
+"        up to our guidelines, send us a report.\n"
+"        "
+msgstr ""
+
+#: main/templates/main/partners/map.html:185
+msgid ""
+"\n"
+"        As an administrator of this organization, reporting this community "
+"will automatically hide it from\n"
+"        all non-administrators.\n"
+"        "
+msgstr ""
+
+#: main/templates/main/partners/map.html:194
+msgid "Email address"
+msgstr ""
+
+#: main/templates/main/partners/map.html:198
+msgid "Cancel"
+msgstr ""
+
+#: main/templates/main/partners/map.html:199
+msgid "Danger: </span>Send Report"
+msgstr ""
+
+#: main/templates/main/partners/map.html:211
+msgid "Thank you for letting us know!"
+msgstr ""
+
+#: main/templates/main/partners/map.html:217
+msgid "Your report was successfully submitted. Thank you."
+msgstr ""
+
+#: main/templates/main/partners/page.html:22
+msgid "Return to Partners"
+msgstr ""
+
+#: main/templates/main/partners/page.html:23
+msgid "Link to organization map"
+msgstr ""
+
+#: main/templates/main/partners/page.html:25
+msgid "Visit Partner Site"
+msgstr ""
+
+#: main/templates/main/review.html:43
+msgid "The community was already deleted."
+msgstr ""
+
+#: main/templates/main/review.html:49 main/templates/main/submission.html:139
+msgid "Community Information"
+msgstr ""
+
+#: main/templates/main/review.html:50
+msgid "Action"
+msgstr ""
+
+#: main/templates/main/review.html:51
+msgid "Show"
+msgstr ""
+
+#: main/templates/main/review.html:101
+msgid "Delete"
+msgstr ""
+
+#: main/templates/main/review.html:112
+msgid "No entries!"
+msgstr ""
+
+#: main/templates/main/review.html:113
+msgid "Join us in the fight against gerrymandering."
+msgstr ""
+
+#: main/templates/main/review.html:113
+msgid "Click "
+msgstr ""
+
+#: main/templates/main/review.html:113
+#, fuzzy
+#| msgid "Add your community to the map."
+msgid " to add your community."
+msgstr "Ntxiv koj cov zej zog rau daim duab kos qhia chaw."
+
+#: main/templates/main/state.html:16
+msgid "Welcome to"
+msgstr ""
+
+#: main/templates/main/state.html:27 main/templates/main/state_info.html:7
+msgid "What is redistricting?"
+msgstr ""
+
+#: main/templates/main/state.html:30
+msgid ""
+"\n"
+"          In 2021, voting district lines across the country will be redrawn "
+"to determine who represents the people of your state.\n"
+"          "
+msgstr ""
+
+#: main/templates/main/state.html:38
+msgid "How does redistricing work in "
+msgstr ""
+
+#: main/templates/main/state.html:49 main/templates/main/state_info.html:28
+#, fuzzy
+#| msgid "Representable will help..."
+msgid "How can Representable help?"
+msgstr "Representable yuav pab..."
+
+#: main/templates/main/state.html:52
+msgid ""
+"\n"
+"          Representable will help you tell mapmakers about your community "
+"interests and boundaries, so that they can fairly consider it when they draw "
+"new voting district lines.\n"
+"          "
+msgstr ""
+
+#: main/templates/main/state.html:60
+#, fuzzy
+#| msgid "Redistricting is coming."
+msgid " redistricting criteria "
+msgstr "Qhov kev faib ciam cheeb tsam tshiab yuav los txog sai no."
+
+#: main/templates/main/state.html:76
+msgid ""
+"\n"
+"            See community maps drawn here <i class=\"fas fa-arrow-circle-"
+"right\"></i>\n"
+"            "
+msgstr ""
+
+#: main/templates/main/state.html:90 main/templates/main/state_info.html:65
+msgid "Communities of Interest in "
+msgstr ""
+
+#: main/templates/main/state.html:98 main/templates/main/state.html:99
+msgid "START MAPPING"
+msgstr ""
+
+#: main/templates/main/state_info.html:11
+msgid ""
+"In 2021, voting district lines across the country will be redrawn to "
+"determine who represents the people of your state."
+msgstr ""
+
+#: main/templates/main/state_info.html:17
+msgid "How does redistricting work in "
+msgstr ""
+
+#: main/templates/main/state_info.html:31
+msgid ""
+"Representable will help you tell mapmakers about your community interests "
+"and boundaries, so that they can fairly consider it when they draw new "
+"voting district lines."
+msgstr ""
+
+#: main/templates/main/state_info.html:37
+#, fuzzy
+#| msgid "Redistricting is coming."
+msgid " redistricting criteria"
+msgstr "Qhov kev faib ciam cheeb tsam tshiab yuav los txog sai no."
+
+#: main/templates/main/submission.html:56
+msgid "Download this map"
+msgstr ""
+
+#: main/templates/main/submission.html:58
+msgid ""
+"\n"
+"                Map downloads include the community information below.\n"
+"              "
+msgstr ""
+
+#: main/templates/main/submission.html:69
+msgid "What is GeoJSON?"
+msgstr ""
+
+#: main/templates/main/submission.html:75
+msgid ""
+"GeoJSON files are industry standard and usable with other mapping softwares "
+"like Maptitude for Redistricting, Dave's Redistricting App, ESRI, and more."
+msgstr ""
+
+#: main/templates/main/submission.html:191
+msgid "Submit to an organization in your state"
+msgstr ""
+
+#: main/templates/main/submission.html:193
+msgid ""
+"Many organizations in your state are collecting community maps. Submit yours "
+"to one of their collection drives."
+msgstr ""
+
+#: main/templates/main/submission.html:201
+msgid "Submit"
+msgstr ""
+
+#: main/templates/main/submission.html:206
+msgid "This community map has already been submitted to an organization"
+msgstr ""
+
+#: main/templates/main/submission.html:228
+#: main/templates/main/submission.html:235
+#: main/templates/main/submission.html:238
+msgid "Data Layers"
+msgstr ""
+
+#: main/templates/main/submission.html:244
+#: main/templates/main/submission.html:255
+#: main/templates/main/submission.html:258
+msgid "Demographics"
+msgstr ""
+
+#: main/templates/main/submission.html:292
+msgid "Your community is ready to be viewed and downloaded. You have "
+msgstr ""
+
+#: main/templates/main/submission.html:292
+msgid "received an email with your community as a PDF file."
+msgstr ""
+
+#: main/templates/main/submission.html:293
+msgid "Make an impact with your map."
+msgstr ""
+
+#: main/templates/main/submission.html:303
+msgid ""
+"View your community on a computer to download as a PDF or geoJSON file. You "
+"can submit these files as public testimony or to a local redistricting "
+"organization."
+msgstr ""
+
+#: main/templates/main/submission.html:313
+msgid ""
+"\n"
+"                      If your state has a redistricting commission or "
+"accepts Communities of Interest, send a pdf of your community to submit as "
+"public testimony. If not, you can send it to a local redistricting "
+"organization or <a href=\"https://myreps.datamade.us/\" target=\"_blank\" "
+"rel=\"noopener noreferrer\">your legislator</a>.\n"
+"                      "
+msgstr ""
+
+#: main/templates/main/submission.html:317
+msgid "Export PDF"
+msgstr ""
+
+#: main/templates/main/submission.html:329
+msgid ""
+"If you would like to use your map to draw voting districts, you can upload "
+"the geoJSON file to mapping softwares such as Maptitude, Dave’s "
+"Redistricting App, or Districtr."
+msgstr ""
+
+#: main/templates/main/submission.html:351
+msgid ""
+"Send the map to your community members and encourage them to draw maps. When "
+"map drawers have more data from your community, they are more likely to draw "
+"fairer districts."
+msgstr ""
+
+#: main/templates/main/submission.html:362
+msgid "Resend Email"
+msgstr ""
+
+#: main/templates/main/submission.html:375
+msgid ""
+" This map was created at <a href=\"https://representable.org/"
+"\">Representable.org "
+msgstr ""
+
+#: main/templates/main/thanks.html:13
+msgid "Thank you for your submission!"
+msgstr ""
+
+#: main/templates/main/thanks.html:16
+msgid "Please Verify Your Email"
+msgstr ""
+
+#: main/templates/main/thanks.html:22
+msgid ""
+"This tool is meant for non-partisan use by communities and their members to "
+"provide information to the Redistricting Commission."
+msgstr ""
+
+#: main/templates/main/thanks.html:23
+msgid ""
+"By adding your map to Representable.org you're not submitting a map to a "
+"redistricting commission. We will add information about submitting to the "
+"commission as soon as information becomes available in your state."
+msgstr ""
+
+#: main/templates/main/thanks.html:26
+msgid ""
+"Thank you for submitting your map. The next step is to verify your email. We "
+"resent an email verification link to your inbox."
+msgstr ""
+
+#: main/templates/main/thanks.html:27
+msgid ""
+"Account verification allows Representable.org and our partner organizations "
+"to submit credible maps to Redistricting Commisions ensuring that your entry "
+"has an impact in ending gerrymandering."
+msgstr ""
+
+#: main/templates/main/thanks.html:29
+msgid ""
+"In the meantime, you can export your community in GeoJSON or PDF format "
+"using the link below."
+msgstr ""
+
+#: main/templates/main/thanks.html:33
+msgid "View/Export Your Community"
+msgstr ""
+
+#: main/templates/main/thanks.html:35 main/templates/main/thanks.html:38
+msgid "Your community map is now live here: "
+msgstr ""
+
+#: main/templates/main/thanks.html:39
+#, fuzzy
+#| msgid "Draw a Community Map"
+msgid "View Community"
+msgstr "Kos Daim Duab Qhia Chaw Hauv Zej Zog"
+
+#: main/templates/main/thanks.html:45
+msgid "Map"
+msgstr ""
+
+#: main/templates/main/thanks.html:46
+msgid "View all communities submitted to {{drive_name}}"
+msgstr ""
+
+#: main/templates/main/thanks.html:52
+msgid "Do you have any feedback for us?"
+msgstr ""
+
+#: main/templates/main/thanks.html:53
+msgid ""
+"We are interested in your feedback. If you found a bug or have any "
+"suggestions for us, please send them to us by pressing on the button below."
+msgstr ""
+
+#: main/templates/main/thanks.html:54
+msgid "Send Feedback"
+msgstr ""
+
+#: main/templates/main/thanks.html:57
+msgid "Having trouble with email verification?"
+msgstr ""
+
+#: main/templates/main/thanks.html:58
+msgid ""
+"We are here to help! Let us know if you didn't recieve an email verification "
+"link or want to provide feedback by contacting Team@Representable.org"
+msgstr ""
+
+#: representable/templates/base.html:81
+#: representable/templates/base_nofooter.html:81
+msgid "My Organizations"
+msgstr ""
+
+#: representable/templates/base.html:110
+#: representable/templates/base_nofooter.html:110
+msgid "Learn More"
+msgstr ""
+
+#: representable/templates/base.html:120
+#: representable/templates/base_nofooter.html:120
+msgid "About"
+msgstr ""
+
+#: representable/templates/base.html:127
+#: representable/templates/base_nofooter.html:127
+msgid "My Account"
+msgstr ""
+
+#: representable/templates/base.html:131
+#: representable/templates/base_nofooter.html:131
+msgid "My communities"
+msgstr ""
+
+#: representable/templates/base.html:132
+#: representable/templates/base_nofooter.html:132
+msgid "Logout"
+msgstr ""
+
+#: representable/templates/base.html:137
+#: representable/templates/base_nofooter.html:137
+msgid "Add community"
+msgstr ""
+
+#: representable/templates/base.html:143
+#: representable/templates/base_nofooter.html:143
+msgid "Log in"
+msgstr ""
+
+#: representable/templates/base.html:148
+#: representable/templates/base_nofooter.html:148
+msgid "Sign up"
+msgstr ""
+
+#: representable/templates/base.html:259
+msgid "Add Your Community"
+msgstr ""
+
+#: representable/templates/base.html:262
+msgid "Create a Partner Profile"
+msgstr ""
+
+#: representable/templates/base.html:284
+msgid "More questions? Reach out at"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:5
+msgid "Select an image to embed"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:27
+msgid "Browse for the image you want, then click 'Embed Image' to continue..."
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:29
+msgid ""
+"No images found. Upload images using the 'Image Button' dialog's 'Upload' "
+"tab."
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:50
+msgid "Images in: "
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:62
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:80
+msgid "Embed Image"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:146
+msgid "Play Slideshow"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:147
+msgid "Pause Slideshow"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:148
+msgid "&lsaquo; Previous Photo"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:149
+msgid "Next Photo &rsaquo;"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:150
+msgid "Next &rsaquo;"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:151
+msgid "&lsaquo; Prev"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:6
+msgid "Django: the Web framework for perfectionists with deadlines."
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:345
+#, python-format
+msgid ""
+"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:367
+msgid "The install worked successfully! Congratulations!"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:368
+#, python-format
+msgid ""
+"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
+"\">DEBUG=True</a> is in your settings file and you have not configured any "
+"URLs."
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:383
+msgid "Django Documentation"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:384
+msgid "Topics, references, &amp; how-to's"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:395
+msgid "Tutorial: A Polling App"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:396
+msgid "Get started with Django"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:407
+msgid "Django Community"
+msgstr ""
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:408
+msgid "Connect, get help, or contribute"
+msgstr ""

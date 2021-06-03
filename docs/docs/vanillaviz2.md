@@ -29,10 +29,10 @@ make install
 ```
 curl -L -O {URL}/{file-name}.zip
 unzip {file-name}.zip
-ogr2ogr -f GeoJSON {file-name}.geojson {file-name}.shp
+ogr2ogr -f GeoJSON -t_srs crs:84 {file-name}.geojson {file-name}.shp
 ```
 
-4. Convert to mbtiles (much smaller!) -ai & -aN create unique ids for use in filter on entry page. Use the same name for the mbtiles as the geojson file to reduce confusion, you'll need this when adding the `source-layer` in mapbox gl js: `tippecanoe -o {file-name}.mbtiles -ai -aN -ab {file-name}.geojson`
+4. Convert to mbtiles (much smaller!) -ai & -aN create unique ids for use in filter on entry page. Use the same name for the mbtiles as the geojson file to reduce confusion, you'll need this when adding the `source-layer` in mapbox gl js: `tippecanoe -z13 -o {file-name}.mbtiles -ai -aN -ab {file-name}.geojson`
 5. Install mapbox cli, if uploading through the CLI. Typically, it's easier to upload through the mapbox GUI: `pip install mapboxcli`
 6. Export mapbox token (ask Kyle if you need it, different from mapbox key): `export MAPBOX_ACCESS_TOKEN={TOKEN}`
 7. upload the file: `mapbox upload mapbox_user_name.{name} {file-name}.geojson` it's also possible to do this through mapbox studio with an easy to use GUI

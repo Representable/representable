@@ -3,7 +3,7 @@
 {% load static %}
 
 <!-- Modal -->
-<div id="entry-map-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+<div id="entry-map-modal" class="modal fade green-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
@@ -30,6 +30,62 @@
                         <div class="row">
                             <div class="col text-center">
                                 <div id="modal-geocoder" class="geocoder my-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal for census block groups -> census blocks -->
+<div id="map-bg-to-block-modal" class="modal fade blue-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content px-lg-5 gray-text">
+            <div class="modal-body">
+                <button type="button" class="close p-2" aria-label="Close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="mx-3 my-5">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col">
+                              <h2>Change your mapping units.</h2>
+                              <br>
+                              <p>Currently, you are mapping with <b>census block groups</b>. These units are used by map drawers to draw voting districts. </p>
+                              <p>If you would like to map your community with smaller units, you can switch to <b>census blocks</b>. Census blocks are small units that make up census block groups. </p>
+                              <p class="text-danger">If you switch the units now, your current selection will be erased. </p>
+                              <br>
+                              <button id="map-bg-to-block-btn" type="button" class="btn btn-outline-gray btn-lg no-underline-link entry-nav-btn mr-4">Switch to smaller units</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal for census blocks -> census block groups -->
+<div id="map-block-to-bg-modal" class="modal fade units-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content px-lg-5 gray-text">
+            <div class="modal-body">
+                <button type="button" class="close p-2" aria-label="Close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="mx-3 my-5">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col">
+                              <h2>Change your mapping units.</h2>
+                              <br>
+                              <p>Currently, you are mapping with <b>census blocks</b>. These units are used by map drawers to draw voting districts. </p>
+                              <p>If you would like to map your community with larger units, you can switch to <b>census block groups</b>. Census block groups are large units comprised of census blocks. </p>
+                              <p class="text-danger">If you switch the units now, your current selection will be erased. </p>
+                              <br>
+                              <button id="map-block-to-bg-btn" type="button" class="btn btn-outline-gray btn-lg no-underline-link entry-nav-btn mr-4">Switch to larger units</button>
                             </div>
                         </div>
                     </div>
@@ -112,7 +168,6 @@
                 </button>
 
                 <h6 id="modal-comm-name" class="dropdown-header comm-info-text w-75 pt-5">Community Name:</h6>
-                <p class="ml-4 comm-item-text comm-pop-text"> Community Population: <span class="font-weight-normal comm-pop">0</span></p>
                 <div class="accordion map-info-item ml-4 mr-4 mt-3" id="mobile-map-activities-accordion">
                     <button class="btn btn-link text-left comm-item-text pl-2 no-underline-link" type="button" data-target="#mobile-map-activities-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                         {% trans "Communities Activities and Services" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
@@ -169,7 +224,7 @@
                 <!-- Help Button and Dropdown -->
                 <div class="col-1 text-md-right align-middle d-none d-md-block">
                     <div id="map-help-dropdown" class="dropdown text-md-right">
-                        <button id="map-help-btn" class="btn btn-outline-primary btn-circle btn-md mapping-icon mapping-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">?</button>
+                        <button id="map-help-btn" class="btn btn-outline-primary btn-circle btn-md mapping-icon mapping-btn"><b>?</b></button>
 
                         <div id="map-help-menu" class="dropdown-menu vw-md-75 vw-lg-50" aria-labelledby="map-help-btn">
                             <div class="container pl-5 pr-5 pb-5 h-100">
@@ -232,13 +287,12 @@
                     <div id="map-comm-dropdown" class="dropdown text-md-left">
                         <button class="btn btn-primary d-none d-md-inline-block mapping-icon mapping-btn" data-toggle="dropdown" style="border-radius: .5rem;" id="map-comm-btn" aria-haspopup="true" aria-expanded="false">
                             {% blocktrans %}
-                                Community Information
+                                Your Community Info
                             {% endblocktrans %}
                         </button>
 
                         <div id="map-comm-menu" class="dropdown-menu" aria-labelledby="map-comm-btn">
-                            <h6 id="dropdown-comm-name" class="dropdown-header comm-info-text">University of Texas Students:</h6>
-                            <p class="ml-4 comm-item-text comm-pop-text"> Community Population: <span class="font-weight-normal comm-pop">0</span></p>
+                            <h6 id="dropdown-comm-name" class="dropdown-header comm-info-text">Community Name:</h6>
                             <div class="dropdown-item accordion map-info-item ml-4 mr-4 mt-1" id="map-activities-accordion">
                                 <button class="btn btn-link text-left comm-item-text pl-0 no-underline-link" type="button" data-target="#map-activities-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                                     {% trans "Communities Activities and Services" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
@@ -318,13 +372,23 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col text-center d-none d-lg-block">
-                    <button id="mapToSurveyP2" class="btn btn-primary btn-lg no-underline-link entry-nav-btn mr-4 mapping-icon"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
+                    <button id="mapToSurveyP2" class="btn btn-outline-primary btn-lg no-underline-link entry-nav-btn mr-4 mapping-icon white-bg"><i class="fas fa-angle-left pr-2"></i>{% trans "EDIT INFO" %}</button>
                     <button id="mapToPrivacy" class="btn btn-primary btn-lg no-underline-link entry-nav-btn ml-4 mapping-icon">{% trans "SAVE" %}<i class="fas fa-angle-right pl-2"></i></button>
                 </div>
                 <div class="col text-center d-lg-none">
-                    <button id="mapToSurveyP2Mobile" class="btn btn-primary no-underline-link entry-nav-btn mr-4 mapping-icon"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
+                    <button id="mapToSurveyP2Mobile" class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4 mapping-icon white-bg"><i class="fas fa-angle-left pr-2"></i>{% trans "EDIT INFO" %}</button>
                     <button id="mapToPrivacyMobile" class="btn btn-primary no-underline-link entry-nav-btn ml-4 mapping-icon">{% trans "SAVE" %}<i class="fas fa-angle-right pl-2"></i></button>
                 </div>
+            </div>
+            <div class="row">
+              <button type="button" class="btn btn-primary mapping-icon mapping-btn py-2 m-1"  style="border-radius: .5rem;" id="map-units-btn" aria-haspopup="true" aria-expanded="false">
+                  Want different units?
+              </button>
+            </div>
+            <div class="row">
+              <div class="mapping-icon white-bg px-3 py-2 m-1" style="border-radius: .5rem;" id="map-pop-btn" aria-haspopup="true" aria-expanded="false">
+                <span class="comm-pop-text"> Population: <span class="font-weight-bold comm-pop">0</span></span>
+              </div>
             </div>
         </div>
     </div>

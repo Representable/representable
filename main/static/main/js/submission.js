@@ -298,6 +298,21 @@ map.on("load", function () {
     },
   });
 
+  // tribal boundaries as a data layer
+  newSourceLayer("tribal-boundaries", TRIBAL_BOUND_KEY);
+  map.addLayer({
+    id: "tribal-boundaries-lines",
+    type: "line",
+    source: "tribal-boundaries",
+    "source-layer": "tl_2020_us_aiannh", //-7f7uk7
+    layout: {
+      visibility: "none",
+    },
+    paint: {
+      "line-color": "rgba(106,137,204,0.7)",
+      "line-width": 2,
+    },
+  });
   // ward + community areas for IL
   if (state === "il") {
     newSourceLayer("chi_wards", CHI_WARD_KEY);
@@ -351,6 +366,36 @@ map.on("load", function () {
       },
     });
   }
+  if (state === "ny") {
+    newSourceLayer("nyc-city-council", NYC_COUNCIL_KEY);
+    map.addLayer({
+      id: "nyc-city-council-lines",
+      type: "line",
+      source: "nyc-city-council",
+      "source-layer": "nyc_council-08swpg",
+      layout: {
+        visibility: "none",
+      },
+      paint: {
+        "line-color": "rgba(106,137,204,0.7)",
+        "line-width": 2,
+      },
+    });
+    newSourceLayer("nyc-state-assembly", NYC_STATE_ASSEMBLY_KEY);
+    map.addLayer({
+      id: "nyc-state-assembly-lines",
+      type: "line",
+      source: "nyc-state-assembly",
+      "source-layer": "nyc_state_assembly-5gr5zo",
+      layout: {
+        visibility: "none",
+      },
+      paint: {
+        "line-color": "rgba(106,137,204,0.7)",
+        "line-width": 2,
+      },
+    });
+  }
   // leg2 : congressional district
   // leg3 : state senate district
   // leg4 : state house district
@@ -388,7 +433,9 @@ map.on("load", function () {
       fit["_northEast"]["lng"]
     );
     var commBounds = new mapboxgl.LngLatBounds(southWest, northEast);
-    map.fitBounds(commBounds, { padding: 100 });
+    map.fitBounds(commBounds, {
+      padding: {top: 20, bottom:20, left: 50, right: 50}
+    });
     map.addLayer({
       id: obj,
       type: "fill",
@@ -438,6 +485,7 @@ map.on("load", function () {
     $("#thanksModal").modal("hide");
   });
   $("#pdf-button").on("click", function () {
+    if (state in publicCommentLinks) $("#pdf-comment-modal").modal("show");
     exportPDF(1500);
   });
 
@@ -454,13 +502,13 @@ map.on("load", function () {
   // TODO: add array of blockgroup ids, add population and other demographic info
   function exportPDF(delay) {
     // make the map look good for the PDF ! TODO: un-select other layers like census blocks (turn into functions)
-    map.fitBounds(commBounds, { padding: 100 });
+    map.fitBounds(commBounds, {
+      padding: {top: 20, bottom:20, left: 50, right: 50},
+      duration: 0
+    });
     // display loading popup
-    var instruction_box = document.getElementById("pdf-loading-box");
-    instruction_box.style.display = "block";
     setTimeout(function () {
       // loading popup disappears
-      instruction_box.style.display = "none";
       var doc = new jsPDF();
 
       var entryName = window.document.getElementById("pdfName");
@@ -495,7 +543,8 @@ map.on("load", function () {
       doc.setFontSize(24);
       doc.text(20, 20, "Community Information");
       // entry fields
-      var entryInfo = window.document.getElementById("pdfInfo");
+      var entryInfo = $("#pdfInfo").prop('outerHTML');
+      entryInfo = entryInfo.replace(/[^\x00-\x7F]/g, "");
       doc.fromHTML(entryInfo, 20, 25, {
         width: 180,
       });
@@ -507,7 +556,10 @@ map.on("load", function () {
 
   function emailPDF() {
     // make the map look good for the PDF ! TODO: un-select other layers like census blocks (turn into functions)
-    map.fitBounds(commBounds, { padding: 100 });
+    map.fitBounds(commBounds, {
+      padding: {top: 20, bottom:20, left: 50, right: 50},
+      duration: 0
+    });
 
     // setup XMLH request
     var request = new XMLHttpRequest();
@@ -604,13 +656,18 @@ map.on("load", function () {
   };
 });
 
-// create a button that toggles layers based on their IDs
+//create a button that toggles layers based on their IDs
 var toggleableLayerIds = JSON.parse(JSON.stringify(BOUNDARIES_LAYERS));
 toggleableLayerIds["school-districts"] = "School Districts";
+toggleableLayerIds["tribal-boundaries"] = "2010 Census Tribal Boundaries";
 // add selector for chicago wards + community areas if illinois
 if (state === "il") {
   toggleableLayerIds["chi-ward"] = "Chicago Wards";
   toggleableLayerIds["chi-comm"] = "Chicago Community Areas";
+}
+if (state === "ny") {
+  toggleableLayerIds["nyc-city-council"] = "New York City Council districts";
+  toggleableLayerIds["nyc-state-assembly"] = "New York City state assembly districts";
 }
 
 // Create toggle switches
@@ -677,6 +734,13 @@ function addToggleableLayer(id, appendElement) {
 
       if (txt != "pos4" && txt != "sta5") {
         map.setLayoutProperty(txt + "-labels", "visibility", "visible");
+      // set all other layers to not visible, uncheck the display box for all other layers
+      for (var layerID in toggleableLayerIds) {
+        if (layerID != txt) {
+          map.setLayoutProperty(layerID + "-lines", "visibility", "none");
+          var button = document.getElementById(layerID);
+          button.checked = false;
+        }
       }
     }
   };
@@ -726,7 +790,16 @@ function toggleDataLayers() {
   $("#data-layer-col").toggleClass("d-none");
   $("#data-layer-card").toggleClass("d-none");
 }
-/*******************************************************************/
+
+/****************************************************************************/
+// public comment portal link, if in states.js
+if (state in publicCommentLinks) {
+  $('#public-comment-link-modal').prop("href", publicCommentLinks[state]);
+  $('#public-comment-link').prop("href", publicCommentLinks[state]);
+} else {
+  $('#public-comment-card').hide();
+}
+/****************************************************************************/
 // remove the last char in the string
 function removeLastChar(str) {
   return str.substring(0, str.length - 1);

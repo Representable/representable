@@ -96,6 +96,7 @@ class CommunityForm(ModelForm):
             "census_blocks_polygon_array": forms.HiddenInput(),
             "census_blocks_polygon": forms.HiddenInput(),
             "block_groups": forms.HiddenInput(),
+            "census_blocks": forms.HiddenInput(),
             "population": forms.HiddenInput(),
             "entry_name": forms.Textarea(
                 attrs={"placeholder": "ex. University of Texas Students", "maxlength": 100, "rows": 1}
@@ -115,6 +116,9 @@ class CommunityForm(ModelForm):
             "other_considerations": forms.Textarea(
                 attrs={"rows": 3, "maxlength": 500, "placeholder": "ex. My farming community extends over two counties and we hope you can put the community together in a single State Senate district."}
             ),
+            "custom_response": forms.Textarea(
+                attrs={"rows": 3, "maxlength": 500, "placeholder": ""}
+            ),
             "user_name": forms.TextInput(
                 attrs={"maxlength": 500}
             ),
@@ -126,6 +130,7 @@ class CommunityForm(ModelForm):
             "cultural_interests": "Input your community's cultural or historical interests: ",
             "comm_activities": "Input your community's activities and services: ",
             "other_considerations": "Input your community's other interests and concerns: ",
+            "custom_response": "Input your response to this mapping drive's custom question: ",
             "entry_name": "Input your community's name: ",
         }
 
@@ -140,11 +145,13 @@ class CommunityForm(ModelForm):
         economic_interests = self.cleaned_data.get("economic_interests")
         comm_activities = self.cleaned_data.get("comm_activities")
         other_considerations = self.cleaned_data.get("other_considerations")
+        custom_response = self.cleaned_data.get("custom_response")
         if (
             cultural_interests == ""
             and economic_interests == ""
             and comm_activities == ""
             and other_considerations == ""
+            and custom_response == ""
         ):
             errors["cultural_interests"] = "Blank interest fields."
         if errors:
@@ -265,13 +272,16 @@ class DriveForm(ModelForm):
 class MemberForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(MemberForm, self).__init__(*args, **kwargs)
-        self.fields["member"].widget.attrs.update({"class": "form-control"})
+        member_email = forms.EmailField(max_length = 200)
+        self.fields["email"] = member_email
+        self.fields["email"].widget.attrs.update({"placeholder": "Admin Email", "class": "form-control"})
 
     class Meta:
         model = Membership
         fields = [
             "member",
         ]
+        exclude = ("member",)
 
 
 class RepresentableSignupForm(SignupForm):
@@ -304,6 +314,6 @@ class SubmissionAddDrive(forms.Form):
         drives_to_add = [d for d in all_drives if d.state==state and d.is_active==True and d.private==False]
         choices = [(str(d.id), str(d.name) + ' - ' + str(d.organization)) for d in drives_to_add]
         self.fields['Add a new drive'] = forms.ChoiceField(
-            choices=choices, 
+            choices=choices,
             widget=forms.Select(attrs={'class' : 'custom-select'}),
         )

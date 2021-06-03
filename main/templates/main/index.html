@@ -22,7 +22,7 @@
       <div class="my-4 main-display-text-all">
         <div id="home-page-rect-mobile"></div>
         <span class="d-block mb-3 font-large-mobile font-weight-bold dark-blue-text line-space-less pt-md-3">{% trans "Gerrymandering is silencing communities." %}</span>
-        <span class="d-block h4 font-weight-light gray-text font-medium-mobile">{% blocktrans %} Make your voice heard with Representable" <br> and put your community on the map. {% endblocktrans %}</span>
+        <span class="d-block h4 font-weight-light gray-text font-medium-mobile">{% blocktrans %} Make your voice heard with Representable <br> and put your community on the map. {% endblocktrans %}</span>
       </div>
       <a id="get-started-btn" class="text-center font-medium-mobile btn btn-primary btn-lg py-3 px-lg-5 px-4 mb-lg-5 mt-2" href="{% url 'main:entry_preview' %}"  role="button">{% trans "GET STARTED" %}</a>
       <div class="row d-none d-lg-block mt-5">
@@ -103,7 +103,7 @@
         </div>
         <div class="col-lg-1"></div>
       </div>
-      <div class="row mt-5 pt-5">
+      <div class="row m-5 p-5">
         <div class="col-3"></div>
         <div class="col-2 text-right">
           <a href="https://www.facebook.com/Representable.org/" target="_blank"><img class="social-media-logo mx-auto w-md-50 w-lg-25" src="{% static 'img/facebook-grey-logo.svg' %}" alt="Representable's Facebook page linked from Facebook logo"></img></a>
@@ -115,6 +115,16 @@
           <a href="https://twitter.com/representable_" target="_blank"><img class="social-media-logo mx-auto w-md-50 w-lg-25" src="{% static 'img/twitter-grey-logo.svg' %}" alt="Representable's Twitter page linked from Twitter logo"></img></a>
         </div>
         <div class="col-3"></div>
+      </div>
+      <div class="row text-center">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 text-center">
+          <h4 class="font-medium-mobile">Our Partners</h4>
+          <hr class="line-break">
+          <!-- image of partner organization logos -->
+          <img class="card-img-top img-fluid m-2mx-auto mb-md-4" src="{% static 'img/partner-logos.png' %}" alt="logos of organizations that partner with representable"></img>
+        </div>
+        <div class="col-md-2"></div>
       </div>
     </div>
 </div>
