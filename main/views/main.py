@@ -118,6 +118,9 @@ import pandas as pd
 
 from django.conf import settings
 
+import ssl
+
+
 
 # ******************************************************************************#
 
@@ -1012,7 +1015,9 @@ class EntryView(LoginRequiredMixin, View):
             data = data.encode("ascii")
 
             req = urllib.request.Request(url, data)
-            response = urlopen(req)
+            gcontext = ssl.SSLContext()
+            response = urlopen(req, context=gcontext)
+            # response = urlopen(req)
             result = json.load(response)
             """ End reCAPTCHA validation """
             if not result["success"]:

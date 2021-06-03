@@ -1,5 +1,9 @@
 $(document).ready(function () {});
 
+// // GLOBAL VARIABLES
+// let data = {};
+// let polyLayerName;
+
 // if thanks page, show modal
 if (is_thanks === "True") {
   $("#thanksModal").modal("show");
@@ -54,9 +58,42 @@ if (!window.matchMedia("only screen and (max-width: 760px)").matches) {
 function newSourceLayer(name, mbCode) {
   map.addSource(name, {
     type: "vector",
-    url: "mapbox://" + mapbox_user_name + "." + mbCode,
+    url: "mapbox://mapbox." + mapbox_user_name + "." + mbCode,
   });
 }
+
+// function newDataSourceLayer(name, mbCode) {
+//   map.addSource(name, {
+//     type: "geojson",
+//     data: "mapbox://" + mapbox_user_name + "." + mbCode,
+//   });
+// }
+
+var popup = new mapboxgl.Popup({
+  closeButton: false,
+  closeOnClick: false
+});
+
+function addPopupHover(location, layer, fields) {
+  var identifiedFeatures = map.queryRenderedFeatures(location.point, layer);
+  /*console.log(identifiedFeatures);*/
+  popup.remove();
+  if (identifiedFeatures != '') {
+    var popupText = "";
+    // for (let feature of identifiedFeatures) {
+    //   popupText += "<strong>" + feature + ":</strong> " + "<" + "br" + ">"
+    // }
+    for (i = 0; i < fields.length; i++) {
+      popupText += "<strong>" + fields[i] + ":</strong> " + identifiedFeatures[0].properties[fields[i]] + "<" + "br" + ">"
+    };
+    popup.setLngLat(location.lngLat)
+      .setHTML(popupText)
+      .addTo(map);
+  }
+}
+
+
+
 // add a new mapbox boundaries source + layer
 function newBoundariesLayer(name) {
   map.addSource(name, {
@@ -68,7 +105,7 @@ function newBoundariesLayer(name) {
     id: name + "-lines",
     type: "line",
     source: name,
-    "source-layer":   // ex.: boundaries_legislative_2
+    "source-layer":
       "boundaries_" +
       BOUNDARIES_ABBREV[removeLastChar(name)] +
       "_" +
@@ -82,32 +119,141 @@ function newBoundariesLayer(name) {
     },
   });
 
+  map.addSource(name + "-features", {
+    type: "vector",
+    url: "mapbox://" + mapbox_user_name + "." + DATA_KEYS[name],
+  });
 
-  // don't add labels for postal code (redundant) and for block groups (annoying)
-  if (name != "pos4" && name != "sta5") {
-    map.addSource(name + "-points", {
-      type: "vector",
-      url: "mapbox://mapbox.boundaries-" + removeLastChar(name) + "Points-v3",
-    });
+  map.addLayer({
+    id: name + "-labels",
+    type: "symbol",
+    source: name + "-features",
+    "source-layer": SOURCE_LAYERS[name],
+    layout: {
+      visibility: "none",
+      'text-field': ["get", "name"]
+    },
+    paint: {
+      'text-color': 'rgba(0, 0, 0, 1)'
+    }
+  });
+
+  // TODO: add new source for labels
+
+  map.addLayer({
+    id: name + "-fills",
+    type: "fill",
+    source: name,
+    // "source-layer": SOURCE_LAYERS[name],
+    "source-layer":
+      "boundaries_" +
+      BOUNDARIES_ABBREV[removeLastChar(name)] +
+      "_" +
+      name.slice(-1),
+    layout: {
+      visibility: "none"
+    },
+    'paint': {
+      'fill-color': 'rgba(106,137,204,0.7)',
+      'fill-opacity': [
+        'case',
+        ['boolean', ['feature-state', 'hover'], false],
+        0.5,
+        0
+      ]
+    }
+  }, name + "-labels");
+  // });
+
+
+
+  // new:
+  // newSourceLayer(name + "-features", DATA_KEYS[name])
+
+
+
+
+
+  // // don't add labels for postal code (redundant) and for block groups (annoying)
+  // if (name != "pos4" && name != "sta5") {
+  //   map.addSource(name + "-points", {
+  //     type: "vector",
+  //     url: "mapbox://mapbox.boundaries-" + removeLastChar(name) + "Points-v3",
+  //   });
   
-    // displays name in centroid of polygons
-    map.addLayer({
-      id: name + "-labels",
-      type: "symbol",
-      source: name + "-points",
-      "source-layer":   // ex.: boundaries_legislative_2
-        "points_" +
-        BOUNDARIES_ABBREV[removeLastChar(name)] +
-        "_" +
-        name.slice(-1),
-      layout: {
-        'text-field': ["get", "name"],
-        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-        visibility: "none",
-      },
-    });
-  }
+  //   // displays name in centroid of polygons
+  //   map.addLayer({
+  //     id: name + "-labels",
+  //     type: "symbol",
+  //     source: name + "-points",
+  //     "source-layer":   // ex.: boundaries_legislative_2
+  //       "points_" +
+  //       BOUNDARIES_ABBREV[removeLastChar(name)] +
+  //       "_" +
+  //       name.slice(-1),
+  //     layout: {
+  //       'text-field': ["get", "name"],
+  //       visibility: "none",
+  //     },
+  //   });
+  // }
   
+
+  map.on('mousemove', name + '-fills', function(e) {
+    addPopupHover(e, name + '-labels', ["name", "bounds"]);
+
+    // addPopupHover(e, name + '-fills', ["name", "feature_id"]);
+    // identifyFeatures(e, name + '-labels', ["name", "join-attributes"]);
+    // identifyFeatures(e, name, ["id"]);
+    // identifyFeatures(e, name + '-features', ["iso_3166_1"]);
+    if (e.features.length > 0) {
+      if (hoveredStateId !== null) {
+        map.setFeatureState(
+          { source: name,
+            sourceLayer: 
+              "boundaries_" +
+              BOUNDARIES_ABBREV[removeLastChar(name)] +
+              "_" +
+              name.slice(-1),
+            id: hoveredStateId },
+          { hover: false }
+        );
+      }
+      hoveredStateId = e.features[0].id;
+      map.setFeatureState(
+        { source: name,
+          sourceLayer: 
+            "boundaries_" +
+            BOUNDARIES_ABBREV[removeLastChar(name)] +
+            "_" +
+            name.slice(-1),
+          id: hoveredStateId },
+        { hover: true }
+      );
+    }
+  });
+
+  map.on('mouseleave', name + '-fills', function(e) {
+    popup.remove();
+    if (hoveredStateId !== null) {
+      map.setFeatureState(
+        { source: name,
+          sourceLayer: 
+            "boundaries_" +
+            BOUNDARIES_ABBREV[removeLastChar(name)] +
+            "_" +
+            name.slice(-1),
+          id: hoveredStateId },
+        { hover: false }
+      );
+    }
+    hoveredStateId = null;
+  });
+  
+  // map.on('click', function(e) {
+  //   identifyFeatures(e, name + '-points', ["name"])
+  // });
+
 }
 
 function sanitizePDF(x) {
@@ -119,29 +265,12 @@ function sanitizePDF(x) {
   return x;
 }
 
-// // create leg 2 lookup table
-// const PATH = '/Users/isabelzaller/Desktop/representable-boundaries/mapbox-boundaries-v3_2';
-// const lookupTable = require(PATH);
-
-// function createViz(lookupTable) {
-//   var lookupTableData = lookupTable.adm1.data;
-//   console.log(lookupTableData);
-// }
+var hoveredStateId = null;
 
 map.on("load", function () {
-  // createViz(lookupTable);
 
-  var layers = map.getStyle().layers;
-  // Find the index of the first symbol layer in the map style
-  // only necessary for making added layers appear "beneath" the existing layers (roads, place names, etc)
-  // var firstSymbolId;
-  // for (var i = 0; i < layers.length; i++) {
-  //   if (layers[i].type === "symbol" && layers[i] !== "road") {
-  //     firstSymbolId = layers[i].id;
-  //     break;
-  //   }
-  // }
   /****************************************************************************/
+
   // school districts as a data layer
   newSourceLayer("school-districts", SCHOOL_DISTR_KEY);
   map.addLayer({
@@ -166,7 +295,6 @@ map.on("load", function () {
     layout: {
       visibility: "none",
       'text-field': ["get", "name"],
-      'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
     },
   });
 
@@ -196,7 +324,6 @@ map.on("load", function () {
       layout: {
         visibility: "none",
         'text-field': ["get", "ward"],
-        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
       },
     });
     map.addLayer({
@@ -221,7 +348,6 @@ map.on("load", function () {
       layout: {
         visibility: "none",
         'text-field': ["get", "community"],
-        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
       },
     });
   }
@@ -541,11 +667,14 @@ function addToggleableLayer(id, appendElement) {
 
     if (visibility === "visible") {
       map.setLayoutProperty(txt + "-lines", "visibility", "none");
+      map.setLayoutProperty(txt + "-fills", "visibility", "none");
       if (txt != "pos4" && txt != "sta5") {
         map.setLayoutProperty(txt + "-labels", "visibility", "none");
       }
     } else {
       map.setLayoutProperty(txt + "-lines", "visibility", "visible");
+      map.setLayoutProperty(txt + "-fills", "visibility", "visible");
+
       if (txt != "pos4" && txt != "sta5") {
         map.setLayoutProperty(txt + "-labels", "visibility", "visible");
       }
