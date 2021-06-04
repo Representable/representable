@@ -134,3 +134,12 @@ node_modules
 /coverage
 include/python3.7m
 bin/wheel
+
+# Google Authentication
+google_credentials.json
+google_token.json
+
+# Translation text outputs
+*translations.txt
+*untranslated.txt
+*tanslation.txt

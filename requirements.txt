@@ -31,6 +31,12 @@ future==0.18.2
 geojson==2.4.1
 geojson-rewind==0.2.0
 gunicorn==19.9.0
+google-api-core==1.26.3
+google-api-python-client==2.4.0
+google-auth==1.30.0
+google-auth-httplib2==0.1.0
+google-auth-oauthlib==0.4.4
+googleapis-common-protos==1.53.0
 html5lib==1.1
 idna==2.8
 isort==4.3.21
@@ -48,6 +54,7 @@ oauthlib==3.0.1
 odfpy==1.4.1
 openpyxl==3.0.5
 pandas==1.1.5
+polib==1.1.1
 Pillow==8.1.1
 psycopg2==2.7.6
 psycopg2-binary==2.7.7
