@@ -178,9 +178,11 @@ def _get_translations_from_doc(lang_code, service):
     return translations
 
 def output_all_msgids(lang_code, pofile, service):
+    run_makemessages(lang_code)
     _output_to_doc(lang_code, pofile, service, False)
 
 def output_needs_translation(lang_code, pofile, service):
+    run_makemessages(lang_code)
     _output_to_doc(lang_code, pofile.untranslated_entries() + pofile.fuzzy_entries(), service, True)
 
 def input_needed_translations(lang_code, pofile, pofile_path, service):
@@ -192,6 +194,7 @@ def input_needed_translations(lang_code, pofile, pofile_path, service):
         entry.msgstr = translations.get(entry.msgid, entry.msgstr)
     
     pofile.save(pofile_path)
+    run_compilemessages(lang_code)
     print("{difference} more translations added".format(difference=prior_num_needs_translations - len(pofile.untranslated_entries() + pofile.fuzzy_entries())))
     print("Percent translated went from: {prior}% to {current}%".format(prior=prior_percent_translated, current=pofile.percent_translated()))
 
@@ -203,6 +206,7 @@ def input_all_translations(pofile, pofile_path, service):
         entry.msgstr = translations.get(entry.msgid, entry.msgstr)
     
     pofile.save(pofile_path)
+    run_compilemessages(lang_code)
     print("Percent translated went from: {prior}% to {current}%".format(prior=prior_percent_translated, current=pofile.percent_translated()))
 
 
@@ -224,9 +228,10 @@ def input_needed_translations_txt(lang_code, pofile, pofile_path):
         entry.msgstr = translations.get(entry.msgid, entry.msgstr)
     
     pofile.save(pofile_path)
+    run_compilemessages(lang_code)
     print("Percent translated went from: {prior}% to {current}%".format(prior=prior_percent_translated, current=pofile.percent_translated()))
 
-def input_needed_translations_txt(lang_code, pofile, pofile_path):
+def input_all_translations_txt(lang_code, pofile, pofile_path):
     prior_percent_translated = pofile.percent_translated()
     translations = _get_translations_from_txt(lang_code)
     
@@ -234,6 +239,7 @@ def input_needed_translations_txt(lang_code, pofile, pofile_path):
         entry.msgstr = translations.get(entry.msgid, entry.msgstr)
     
     pofile.save(pofile_path)
+    run_compilemessages(lang_code)
     print("Percent translated went from: {prior}% to {current}%".format(prior=prior_percent_translated, current=pofile.percent_translated()))
 
 def output_all_msgids_txt(lang_code, pofile):
@@ -251,6 +257,14 @@ def output_needs_translation_txt(lang_code, pofile):
                 continue
             json.dump({entry.msgid:""}, transdoc)
             transdoc.write("\n\n")
+
+####################### Django Messages Functions #############################
+def run_makemessages(lang_code):
+    os.system("python manage.py makemessages -l {lang} -e html,txt".format(lang=lang_code.value))
+
+def run_compilemessages(lang_code):
+    os.system("python manage.py compilemessages -l {lang}".format(lang=lang_code.value))
+
 
 def main(argv):
     lang_code, function, scope, location = _validate_arguments(argv)
