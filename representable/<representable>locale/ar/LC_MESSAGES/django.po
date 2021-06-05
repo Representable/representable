@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -16,32 +16,32 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #: main/templates/account/email/debug_email_confirmation_subject.txt:3
 #: main/templates/account/email/email_confirmation_subject.txt:3
 msgid "Please Confirm Your E-mail Address"
-msgstr ""
+msgstr "يرجى تأكيد عنوان بريدك الإلكتروني"
 
 #: main/templates/account/email/email_confirmation_message.html:7
 msgid "Email Confirmation"
-msgstr ""
+msgstr "تأكيد البريد الإلكتروني"
 
 #: main/templates/account/email/email_confirmation_message.html:118
 #: main/templates/account/email/email_template_do_not_delete.html:115
-#, fuzzy
-#| msgid "About Representable"
 msgid "Welcome to Representable.org!"
-msgstr "معلومات عن ربريسنتبل"
+msgstr "مرحبًا بك في Representable.org."
 
 #: main/templates/account/email/email_confirmation_message.html:119
 #: main/templates/account/email/email_template_do_not_delete.html:116
 msgid ""
-"Click the button below to confirm your email address for your Representable."
-"org account. If you didn't create an account with Representable.org you can "
-"safely delete the email."
+"Click the button below to confirm your email address for your "
+"Representable.org account. If you didn't create an account with "
+"Representable.org you can safely delete the email."
 msgstr ""
+"انقر على الزر أدناه لتأكيد عنوان بريدك الإلكتروني الذي ستسجل به حسابك على "
+"Representable.org. إذا لم تكن أنشأت حسابًا على Representable.org فيمكنك حذف "
+"البريد الإلكتروني بأمان."
 
 #: main/templates/account/email/email_confirmation_message.html:135
 #: main/templates/account/email/email_template_do_not_delete.html:132
@@ -49,58 +49,54 @@ msgstr ""
 msgid ""
 "If the button doesn't work, copy and paste the following link in your "
 "browser:"
-msgstr ""
+msgstr "إذا لم يعمل الزر، قم بنسخ ولصق الرابط التالي في متصفحك:"
 
 #: main/templates/account/email/email_confirmation_message.html:137
 #: main/templates/account/email/email_template_do_not_delete.html:134
-#, fuzzy
-#| msgid "About Representable"
 msgid "The Representable.org Team"
-msgstr "معلومات عن ربريسنتبل"
+msgstr "فريق عمل Representable.org"
 
 #: main/templates/account/email/email_confirmation_message.html:152
-#, fuzzy
-#| msgid "About Representable"
 msgid "Representable.org"
-msgstr "معلومات عن ربريسنتبل"
+msgstr "Representable.org"
 
 #: main/templates/account/email/email_template_do_not_delete.html:106
 msgid "This is preheader text. Some clients will show this text as a preview."
 msgstr ""
+"هذا النص نص معاينة مسبقة. بعض العملاء سيظهر لديهم هذا النص على أنه معاينة "
+"تمهيدية."
 
 #: main/templates/account/email/email_template_do_not_delete.html:124
 #: main/templates/account/email/password_reset_key_message.html:129
 msgid "Confirm Email"
-msgstr ""
+msgstr "تأكيد البريد الإلكتروني"
 
 #: main/templates/account/email/password_reset_key_message.html:7
 msgid "Password Reset Email"
-msgstr ""
+msgstr "البريد الإلكتروني لإعادة تعيين كلمة المرور"
 
 #: main/templates/account/email/password_reset_key_message.html:118
-#, fuzzy
-#| msgid "About Representable"
 msgid "Hello from Representable.org!"
-msgstr "معلومات عن ربريسنتبل"
+msgstr "موقع Representable.org يرحب بكم."
 
 #: main/templates/account/email/password_reset_key_message.html:140
 #, python-format
 msgid "In case you forgot, your username is %(username)s."
-msgstr ""
+msgstr "في حال أنك نسيت، اسم المستخدم الخاص بك هو %(username)s."
 
 #: main/templates/account/email/password_reset_key_message.html:142
 #, python-format
 msgid "Thank you for using %(current_site.name)s!"
-msgstr ""
+msgstr "شكرًا لك على استخدامك %(current_site.name)s."
 
 #: main/templates/account/email/password_reset_key_subject.txt:3
 msgid "Password Reset E-mail"
-msgstr ""
+msgstr "البريد الإلكتروني لإعادة تعيين كلمة المرور"
 
 #: main/templates/account/email_confirm.html:6
 #: main/templates/account/email_confirm.html:14
 msgid "Confirm E-mail Address"
-msgstr ""
+msgstr "تأكيد عنوان البريد الإلكتروني"
 
 #: main/templates/account/email_confirm.html:18
 #, python-format
@@ -108,51 +104,49 @@ msgid ""
 "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
 "address for user %(user_display)s."
 msgstr ""
+"يرجى التأكيد بأن <a href=\"mailto:%(email)s\">%(email)s</a> هو عنوان البريد "
+"الإلكتروني للمستخدم %(user_display)s."
 
 #: main/templates/account/email_confirm.html:22
 msgid "Finish Sign Up"
-msgstr ""
+msgstr "إنهاء التسجيل"
 
 #: main/templates/account/email_confirm.html:31
 #, python-format
 msgid ""
-"This e-mail confirmation link expired or is invalid. Please <a href="
-"\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+"This e-mail confirmation link expired or is invalid. Please <a "
+"href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
 msgstr ""
+"هذا الرابط الخاص بتأكيد البريد الإلكتروني منتهي الصلاحية أو غير صالح. يرجى "
+"<a href=\"%(email_url)s\">إصدار طلب جديد لتأكيد البريد الإلكتروني</a>."
 
 #: main/templates/account/login.html:13
 msgid "Already have an account?"
-msgstr ""
+msgstr "هل لديك حساب موجود؟"
 
 #: main/templates/account/login.html:14
-#, fuzzy
-#| msgid "Log in"
 msgid "Log In"
-msgstr "تسجيل دخول"
+msgstr "تسجيل الدخول"
 
 #: main/templates/account/login.html:34
 msgid "Forgot Password?"
-msgstr ""
+msgstr "هل نسيت كلمة المرور؟"
 
 #: main/templates/account/login.html:36
-#, fuzzy
-#| msgid "Log in"
 msgid "log in"
-msgstr "تسجيل دخول"
+msgstr "تسجيل الدخول"
 
 #: main/templates/account/login.html:39
-#, fuzzy
-#| msgid "Account Settings"
 msgid "No Account? Sign up."
-msgstr "إعدادات التتبع"
+msgstr "ليس لديك حساب؟ التسجيل."
 
 #: main/templates/account/logout.html:5 main/templates/account/logout.html:19
 msgid "Sign Out"
-msgstr ""
+msgstr "تسجيل الخروج"
 
 #: main/templates/account/logout.html:11
 msgid "Are you sure you want to sign out?"
-msgstr ""
+msgstr "هل أنت متأكد أنك تريد تسجيل الخروج؟"
 
 #: main/templates/account/password_change.html:6
 #: main/templates/account/password_change.html:19
@@ -162,29 +156,31 @@ msgstr ""
 #: main/templates/account/password_reset_from_key_done.html:4
 #: main/templates/account/password_set.html:6
 msgid "Change Password"
-msgstr ""
+msgstr "تغيير كلمة المرور"
 
 #: main/templates/account/password_change.html:15
 #: main/templates/account/password_reset.html:14
 #: main/templates/account/password_reset_from_key_done.html:12
 #: main/templates/account/password_set.html:15
 msgid "Change your password"
-msgstr ""
+msgstr "تغيير كلمة مرورك"
 
 #: main/templates/account/password_reset.html:15
 msgid ""
-"Forgot your password? Enter your e-mail address below, and we'll send you an "
-"e-mail allowing you to reset it."
+"Forgot your password? Enter your e-mail address below, and we'll send you an"
+" e-mail allowing you to reset it."
 msgstr ""
+"هل نسيت كلمة مرورك؟ أدخل عنوان بريدك الإلكتروني أدناه، وسنرسل إليك رسالة "
+"إلكترونية للسماح لك بإعادة تعيينها."
 
 #: main/templates/account/password_reset.html:33
 msgid "Reset My Password"
-msgstr ""
+msgstr "إعادة تعيين كلمة مروري"
 
 #: main/templates/account/password_reset_done.html:6
 #: main/templates/account/password_reset_done.html:14
 msgid "Password Reset"
-msgstr ""
+msgstr "إعادة تعيين كلمة المرور"
 
 #: main/templates/account/password_reset_done.html:20
 msgid ""
@@ -192,50 +188,57 @@ msgid ""
 "at <a href=\"mailto:team@representable.org\">team@representable.org</a> if "
 "you do not receive it within a few minutes."
 msgstr ""
+"لقد أرسلنا إليك بريدًا إلكترونيًا.</p> <p class=\"text-center\"> يرجى "
+"الاتصال بنا على <a "
+"href=\"mailto:team@representable.org\">team@representable.org</a> إذا لم "
+"تستلم الرسالة خلال دقائق."
 
 #: main/templates/account/password_reset_from_key.html:13
 msgid "Bad Token"
-msgstr ""
+msgstr "رمز خطأ"
 
 #: main/templates/account/password_reset_from_key.html:17
 #, python-format
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
-"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
-"a>."
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
+"reset</a>."
 msgstr ""
+"رابط إعادة تعيين كلمة المرور كان غير صالح، ربما لأنه سبق استخدامه من قبل.  "
+"يرجى القيام بطلب <a href=\"%(passwd_reset_url)s\"> جديد لإعادة تعيين كلمة "
+"المرور</a>."
 
 #: main/templates/account/password_reset_from_key.html:23
 msgid "change password"
-msgstr ""
+msgstr "تغيير كلمة المرور"
 
 #: main/templates/account/password_reset_from_key.html:26
 msgid "Your password is now changed."
-msgstr ""
+msgstr "تم تغيير كلمة مرورك."
 
 #: main/templates/account/password_set.html:20
 msgid "Set Password"
-msgstr ""
+msgstr "تعيين كلمة المرور"
 
 #: main/templates/account/signup.html:12 main/templates/account/signup.html:43
 msgid "Sign Up"
-msgstr ""
+msgstr "التسجيل"
 
 #: main/templates/account/signup.html:46
 msgid "Already have an account? Log in."
-msgstr ""
+msgstr "هل لديك حساب موجود؟ تسجيل الدخول."
 
 #: main/templates/account/signup_login.html:15
 msgid "Let's have you sign up or log in before you start..."
-msgstr ""
+msgstr "لنقم بتسجيلك أو تسجيل دخولك قبل أن تبدأ..."
 
 #: main/templates/account/verification_sent.html:5
 msgid "Verify Your E-mail Address"
-msgstr ""
+msgstr "التحقق من عنوان بريدك الإلكتروني"
 
 #: main/templates/account/verification_sent.html:14
 msgid "Verify Email"
-msgstr ""
+msgstr "التحقق من البريد الإلكتروني"
 
 #: main/templates/account/verification_sent.html:15
 msgid ""
@@ -243,40 +246,40 @@ msgid ""
 "finalize the signup process. Please contact us if you do not receive it "
 "within a few minutes."
 msgstr ""
+"لقد أرسلنا إليك رسالة للتحقق من بريدك الإلكتروني. أدخل على الرابط الظاهر "
+"لإنهاء خطوات التسجيل. يرجى الاتصال بنا إذا لم تستلم الرسالة خلال دقائق."
 
 #: main/templates/main/dashboard/index.html:10
 msgid "Dashboard"
-msgstr ""
+msgstr "لوحة البيانات Dashboard"
 
 #: main/templates/main/dashboard/index.html:20
-#, fuzzy
-#| msgid "For organizations"
 msgid "Organizations"
-msgstr "للمنظمات"
+msgstr "المنظمات"
 
 #: main/templates/main/dashboard/index.html:31
 msgid ""
 "You're currently not part of any organizations. Ask someone to add you to "
 "their organization or create a new one below."
 msgstr ""
+"أنت حاليًا لست مشتركًا بأي منظمة. أطلب من أحد الأشخاص أن يضيفك إلى منظمته أو"
+" قم بإنشاء منظمة جديدة أدناه."
 
 #: main/templates/main/dashboard/index.html:36
 msgid "Create New"
-msgstr ""
+msgstr "إنشاء منظمة جديدة"
 
 #: main/templates/main/dashboard/index.html:45
 msgid "Quick Links"
-msgstr ""
+msgstr "روابط سريعة"
 
 #: main/templates/main/dashboard/index.html:49
-#, fuzzy
-#| msgid "For organizations"
 msgid "Create Organization"
-msgstr "للمنظمات"
+msgstr "إنشاء منظمة"
 
 #: main/templates/main/dashboard/index.html:50
 msgid "Create Entry"
-msgstr ""
+msgstr "إنشاء بيانات"
 
 #: main/templates/main/dashboard/index.html:51
 #: representable/templates/base.html:279
@@ -291,27 +294,30 @@ msgstr "إعدادات التتبع"
 #: main/templates/main/dashboard/index.html:65
 #: main/templates/main/dashboard/index.html:67
 msgid "Reset password"
-msgstr ""
+msgstr "إعادة تعيين كلمة المرور"
 
 #: main/templates/main/dashboard/index.html:66
 msgid ""
-"Reset your password by pressing on the following button. You will receive an "
-"email with the appropiate instructions."
+"Reset your password by pressing on the following button. You will receive an"
+" email with the appropiate instructions."
 msgstr ""
+"أعد تعيين كلمة مرورك بالنقر على الزر التالي. سوف تستلم بريدًا إلكترونيًا "
+"يحتوي على التعليمات اللازمة."
 
 #: main/templates/main/dashboard/index.html:70
-#, fuzzy
-#| msgid "Account Settings"
 msgid "Cookie Settings"
-msgstr "إعدادات التتبع"
+msgstr "إعدادات ملفات تعريف الارتباط"
 
 #: main/templates/main/dashboard/index.html:71
 msgid ""
-"We use Mixpanel and Google Analytics to collect anonymized information about "
-"users' website usage. We use this information to improve our website "
+"We use Mixpanel and Google Analytics to collect anonymized information about"
+" users' website usage. We use this information to improve our website "
 "experience. You can control whether we have access to this information or "
 "not."
 msgstr ""
+"نحن نستخدم Mixpanel و Google Analytics لجمع المعلومات مجهولة الهوية بشأن "
+"تجربة المستخدمين للموقع الإلكتروني. ونستخدم هذه المعلومات لتحسين تجربة "
+"استخدام موقعنا. يمكنك التحكم فيما إذا أردت أم لم ترد إعطائنا هذه المعلومات."
 
 #: main/templates/main/dashboard/index.html:73
 msgid ""
@@ -319,6 +325,9 @@ msgid ""
 "information collection. To <strong>opt out</strong>, press on the button "
 "below.</p>"
 msgstr ""
+"<p>وفقًا لبياناتنا، أنت <strong>اخترت الاشتراك</strong> في إعطاء المعلومات "
+"دون تحديد الهوية. لخيار <strong>إلغاء الاشتراك</strong>، انقر على الزر "
+"أدناه.</p>"
 
 #: main/templates/main/dashboard/index.html:79
 msgid ""
@@ -326,57 +335,64 @@ msgid ""
 "information collection. To <strong>opt in</strong>, press on the button "
 "below.</p>"
 msgstr ""
+"<p>وفقًا لبياناتنا، أنت <strong>اخترت إلغاء الاشتراك</strong> في إعطاء "
+"المعلومات دون تحديد الهوية. لخيار <strong>الاشتراك</strong>، انقر على الزر "
+"أدناه.</p>"
 
 #: main/templates/main/dashboard/partners/thanks.html:12
-#, fuzzy
-#| msgid "Are you the leader of an organization?"
 msgid "Thank you for creating an organization!"
-msgstr "هل أنت قائد منظمة"
+msgstr "شكرًا لك على إنشاء المنظمة."
 
 #: main/templates/main/dashboard/partners/thanks.html:15
 msgid "Please verify your email."
-msgstr ""
+msgstr "يرجى التحقق من بريدك الإلكتروني."
 
 #: main/templates/main/dashboard/partners/thanks.html:19
 msgid "We are excited to work with you!"
-msgstr ""
+msgstr "يسرنا ويسعدنا العمل معك."
 
 #: main/templates/main/dashboard/partners/thanks.html:20
 msgid ""
-"Check out our <a href=\"https://docs.google.com/document/"
-"d/1NJMUpZodlqo96xVASJzihpcfgWir18ifMaMD380zrXE/edit\">organization guide</a> "
-"to learn more about using Representable to gather community maps."
+"Check out our <a "
+"href=\"https://docs.google.com/document/d/1NJMUpZodlqo96xVASJzihpcfgWir18ifMaMD380zrXE/edit\">organization"
+" guide</a> to learn more about using Representable to gather community maps."
 msgstr ""
+"اطلع على دليلنا التنظيمي <a "
+"href=\"https://docs.google.com/document/d/1NJMUpZodlqo96xVASJzihpcfgWir18ifMaMD380zrXE/edit\">organization"
+" guide</a> لمعرفة المزيد عن استخدام Representable في جمع خرائط المجتمعات "
+"المحلية."
 
 #: main/templates/main/dashboard/partners/thanks.html:21
 msgid ""
-"Contact us at <a href=\"mailto:team@representable.org\"> team@representable."
-"org</a> with any questions."
+"Contact us at <a href=\"mailto:team@representable.org\"> "
+"team@representable.org</a> with any questions."
 msgstr ""
+"اتصل بنا عبر <a href=\"mailto:team@representable.org\"> "
+"team@representable.org</a> لأي استفسارات."
 
 #: main/templates/main/dashboard/partners/thanks.html:22
 msgid ""
 "Click the button below to go to the Organization Dashboard and get started "
 "by creating a community mapping drive."
 msgstr ""
+"انقر على الزر أدناه للدخول إلى لوحة بيانات المنظمة (Organization Dashboard) "
+"وابدأ بإنشاء محرك رسم خرائط المجتمعات المحلية."
 
 #: main/templates/main/dashboard/partners/thanks.html:25
 msgid ""
-"Email verification will be necessary to access certain organization features "
-"on Representable. We have resent an email verification link to your inbox."
+"Email verification will be necessary to access certain organization features"
+" on Representable. We have resent an email verification link to your inbox."
 msgstr ""
+"التحقق من البريد الإلكتروني خطوة ضرورية للوصول إلى مزايا معينة للمنظمة على "
+"Representable. لقد أعدنا إرسال رابط التحقق من البريد الإلكتروني إليك."
 
 #: main/templates/main/dashboard/partners/thanks.html:28
-#, fuzzy
-#| msgid "For organizations"
 msgid "organization dashboard"
-msgstr "للمنظمات"
+msgstr "لوحة بيانات المنظمة"
 
 #: main/templates/main/drives/dane-county-page.html:10
-#, fuzzy
-#| msgid "Add Your Community"
 msgid "Tell Us About Your Community"
-msgstr "أضف مجتمعك"
+msgstr "أخبرنا عن مجتمعك"
 
 #: main/templates/main/drives/dane-county-page.html:12
 msgid ""
@@ -384,23 +400,37 @@ msgid ""
 "reflects the people and communities it represents. As part of that process, "
 "we are interested in learning what you think makes up your \"community of "
 "interest.\" <br><br> Who do you consider your neighbors? What other people, "
-"businesses, schools, churches or other organizations do you interact with on "
-"a regular basis? What places do you visit or travel to in the course of your "
-"day or week? What issues, values, or concerns bind you and your community "
-"together? Join us to help make sure your elected officials truly \"represent"
-"\" you and your community."
+"businesses, schools, churches or other organizations do you interact with on"
+" a regular basis? What places do you visit or travel to in the course of "
+"your day or week? What issues, values, or concerns bind you and your "
+"community together? Join us to help make sure your elected officials truly "
+"\"represent\" you and your community."
 msgstr ""
+"نحن نعمل على التأكد من أن مجلس مسؤولي مقاطعة \"داين\" يعبر عن الناس "
+"والمجتمعات التي يمثلها بشكل دقيق. وكجزء من هذه العملية، نحن نود أن نعرف ما "
+"الأمور التي في رأيك تشكل \"المجتمع ذا المصالح المشتركة\" الذي تنتمي إليه. "
+"<br><br> ومن هم الناس الذين تعتبرهم جيرانك؟ ومن هم السكان الآخرون والمؤسسات "
+"التجارية والمدارس والكنائس والمنظمات الأخرى التي تتعامل معها باستمرار؟ وما "
+"الأماكن التي تزورها أو تذهب إليها خلال يومك أو طوال الأسبوع؟ وما هي القضايا "
+"أو القيم أو الشواغل التي تربطك بمجتمعك المحلي؟ انضم إلينا للمساعدة في أن "
+"نضمن أن المسؤولين المنتخبين منكم هم من \"يمثلونك\" حقًا أنت ومجتمعك."
 
 #: main/templates/main/drives/dane-county-page.html:32
 msgid ""
 "Wisconsin law requires county boards to redraw their supervisory district "
-"lines after each U.S. Decennial Census. The law also requires that electoral "
-"districts are equal in population, and keep municipalities intact. For the "
+"lines after each U.S. Decennial Census. The law also requires that electoral"
+" districts are equal in population, and keep municipalities intact. For the "
 "first time ever, Dane County has appointed a nonpartisan, independent "
 "Redistricting Commission to guide and direct that process. This will help "
 "ensure that supervisory districts are drawn impartially, without regard to "
 "politics."
 msgstr ""
+"يُلزم قانون ويسكونسن مجالس المقاطعات بإعادة ترسيم خطوط الدوائر الإشرافية بعد"
+" كل تعداد سكاني عشري في الولايات المتحدة. كما ينص القانون على تساوي الدوائر "
+"الانتخابية في عدد السكان والحفاظ على ترابط ووحدة كل بلدية من البلديات. "
+"وللمرة الأولى في التاريخ، قامت مقاطعة \"داين\" بتعيين لجنة مستقلة غير حزبية "
+"لإعادة تقسيم الدوائر دورها إرشاد وتوجيه عملية الترسيم. وهذا سيساعد في ضمان "
+"ترسيم الدوائر الانتخابية بنزاهة ودون أي اعتبارات سياسية."
 
 #: main/templates/main/drives/dane-county-page.html:44
 msgid ""
@@ -409,52 +439,60 @@ msgid ""
 "drawers can fairly consider your community when they draw new voting "
 "district lines."
 msgstr ""
+"سيقوم Representable بمساعدتك في إيصال معلوماتك عن مجتمعك إلى \"لجنة إعادة "
+"تقسيم دوائر مقاطعة داين\" ووضع تصور لخريطة حدودها. وعندئذ يستطيع مسؤولو "
+"ترسيم الدوائر أخذ مجتمعك في الاعتبار بشكل عادل عند قيامهم بترسيم الحدود "
+"الجديدة للدوائر الانتخابية."
 
 #: main/templates/main/drives/dane-county-page.html:51
 msgid "Dane County's redistricting <br class=\"d-xl-none\"> criteria"
-msgstr ""
+msgstr "معايير <br class=\"d-xl-none\"> إعادة تقسيم دوائر مقاطعة \"داين\""
 
 #: main/templates/main/drives/dane-county-page.html:54
 msgid "In order of priority"
-msgstr ""
+msgstr "مرتبة حسب الأولوية"
 
 #: main/templates/main/drives/dane-county-page.html:56
 msgid ""
 "Each district should represent the same population size, be contiguous, and "
 "compact;"
 msgstr ""
+"يجب أن تمثل كل دائرة نفس عدد السكان وأن تكون متصلة جغرافيًا ومتلاصقة "
+"الأراضي."
 
 #: main/templates/main/drives/dane-county-page.html:57
 msgid "Minimize the number of municipal boundaries crossed;"
-msgstr ""
+msgstr "تقليل عدد حدود البلديات المتقاطعة إلى أدنى حد."
 
 #: main/templates/main/drives/dane-county-page.html:58
 msgid ""
 "Ensure fair and effective representation of the diverse ethnic and racial "
 "population in Dane County;"
 msgstr ""
+"ضمان التمثيل العادل والفعال للسكان من مختلف الخلفيات العرقية والإثنية في "
+"مقاطعة \"داين\"."
 
 #: main/templates/main/drives/dane-county-page.html:59
 msgid ""
 "Take into consideration geography and natural boundaries such as rivers and "
 "lakes;"
-msgstr ""
+msgstr "الأخذ في الاعتبار الحدود الجغرافية والطبيعية مثل الأنهار والبحيرات."
 
 #: main/templates/main/drives/dane-county-page.html:60
 msgid ""
 "Keep intact neighborhoods and communities of interest and association, "
 "whether historical, racial, economic, ethnic, religious, or other;"
 msgstr ""
+"الحفاظ على ترابط ووحدة الأحياء والمجتمعات ذات المصالح المشتركة والمترابطة، "
+"سواء تاريخيًا أو عرقيًا أو اقتصاديًا أو أصليًا أو دينيًا أو غير ذلك."
 
 #: main/templates/main/drives/dane-county-page.html:61
 msgid "Districts shall be drawn without regard to incumbency."
-msgstr ""
+msgstr "يتم ترسيم الدوائر بغض النظر عن المناصب المشغولة."
 
 #: main/templates/main/drives/dane-county-page.html:73
-#, fuzzy
-#| msgid "Put your community on the map."
 msgid "Communities of Interest in Dane County"
-msgstr "ضع مجتمعك على الخريطة"
+msgstr "المجتمعات ذات المصالح المشتركة في مقاطعة داين"
 
 #: main/templates/main/drives/dane-county-page.html:75
 msgid ""
@@ -464,27 +502,31 @@ msgid ""
 "religious or other.\"</em><br><br> Communities as described above don't "
 "always fall neatly into existing, easily mapped areas such as municipal "
 "boundaries, school districts, census block groups, or neighborhood "
-"associations. The Redistricting Commission needs your help to make sure your "
-"community is adequately represented."
+"associations. The Redistricting Commission needs your help to make sure your"
+" community is adequately represented."
 msgstr ""
+"تنص قوانين مقاطعة \"داين\" على: <br><br><em>\"أن يُحافَظ في ترسيم الدوائر "
+"على وحدة الأحياء والمجتمعات ذات الروابط الراسخة من المصالح المشتركة "
+"والمترابطة سواء تاريخيًا أو عرقيًا أو اقتصاديًا أو أصليًا أو دينيًا أو غير "
+"ذلك.\"</em><br><br> والمجتمعات على النحو المبين فيما سبق لا تندرج دائمًا "
+"بشكل منتظم ضمن مناطق موجودة سهلة التقسيم مثل الحدود البلدية أو الدوائر "
+"التعليمية أو مجموعات الكتل التعدادية السكانية أو اتحادات الأحياء السكنية. "
+"ولذلك تحتاج لجنة إعادة التقسيم إلى مساعدتكم لضمان التمثيل الملائم "
+"لمجتمعاتكم."
 
 #: main/templates/main/drives/index.html:5
 msgid "Drives"
-msgstr ""
+msgstr "المحركات"
 
 #: main/templates/main/drives/page.html:20 main/templates/main/index.html:24
 msgid "Gerrymandering is silencing communities."
-msgstr ""
+msgstr "التلاعب في حدود الدوائر يكمم أصوات الناس."
 
 #: main/templates/main/drives/page.html:21 main/templates/main/index.html:25
-#, fuzzy
-#| msgid ""
-#| "Many organizations have partnered with Representable.org to collect "
-#| "community-of-interest data."
 msgid ""
 "Make your voice heard with Representable <br> and put your community on the "
 "map."
-msgstr "تتشارك كثير من المنظمات مع رَبْريسانْتَبُل لجمع بيانات عن مجتمعات المصلحة "
+msgstr "عبر عن صوتك باستخدام Representable <br> وضَع مجتمعك على الخريطة."
 
 #: main/templates/main/drives/page.html:27
 #: main/templates/main/pages/about.html:48
@@ -495,34 +537,39 @@ msgstr "ما هو ربريسنتبل؟"
 msgid ""
 "Representable allows people to draw communities of interest and share "
 "information about the interests and needs in those communities. "
-"<br><br>Making this information available encourages mapmakers to take these "
-"communities into account during redistricting, in order to avoid "
+"<br><br>Making this information available encourages mapmakers to take these"
+" communities into account during redistricting, in order to avoid "
 "gerrymandering and the “packing and cracking” of marginalized groups. </p>"
 msgstr ""
+"يقوم Representable بتمكين المواطنين من ترسيم المجتمعات ذات المصالح المشتركة "
+"ومشاركة المعلومات عن مصالح واحتياجات هذه المجتمعات. <br><br>فتوفير هذه "
+"المعلومات يشجع مسؤولي رسم الخرائط على أخذ هذه المجتمعات في الاعتبار أثناء "
+"إعادة الترسيم لتجنب التلاعب في حدود الدوائر و \"ضم وتفريق\" أصوات الفئات "
+"المهمشة. </p>"
 
 #: main/templates/main/drives/page.html:50
 msgid "Organized by "
-msgstr ""
+msgstr "نظمت بواسطة "
 
 #: main/templates/main/entry_address.html:7
 msgid "Step 1"
-msgstr ""
+msgstr "الخطوة 1"
 
 #: main/templates/main/entry_address.html:10
 msgid "Tell us about yourself."
-msgstr ""
+msgstr "أخبرنا عن نفسك."
 
 #: main/templates/main/entry_address.html:13
 msgid "Please include your name."
-msgstr ""
+msgstr "يرجى ذكر اسمك."
 
 #: main/templates/main/entry_address.html:19
 msgid "Please include your entire address."
-msgstr ""
+msgstr "يرجى ذكر عنوانك بالكامل."
 
 #: main/templates/main/entry_address.html:26
 msgid "Why do we need your information?"
-msgstr ""
+msgstr "لماذا نحتاج إلى بياناتك؟"
 
 #: main/templates/main/entry_address.html:33
 #, python-format
@@ -531,64 +578,78 @@ msgid ""
 "information to verify that you are a real person. If you choose to submit "
 "this entry to an organization, the administrators of the organization will "
 "have access to this information. Learn more about our commitment to privacy "
-"on our <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"%(url1)s"
-"\">Privacy</a> and <a target=\"_blank\" rel=\"noopener noreferrer\" href="
-"\"%(url2)s\">Terms</a> pages."
+"on our <a target=\"_blank\" rel=\"noopener noreferrer\" "
+"href=\"%(url1)s\">Privacy</a> and <a target=\"_blank\" rel=\"noopener "
+"noreferrer\" href=\"%(url2)s\">Terms</a> pages."
 msgstr ""
+"خصوصيتك على رأس أولوياتنا. نحن نجمع المعلومات الشخصية لكي نتحقق من أنك شخص "
+"حقيقي. إذا اخترت أن تقدم هذه البيانات إلى إحدى المنظمات، سيستطيع مديرو "
+"المنظمة الاطلاع على هذه المعلومات. اعرف المزيد عن التزامنا بالخصوصية على "
+"صفحاتنا <a target=\"_blank\" rel=\"noopener noreferrer\" "
+"href=\"%(url1)s\">Privacy</a> and <a target=\"_blank\" rel=\"noopener "
+"noreferrer\" href=\"%(url2)s\">Terms</a> لشروط الخصوصية."
 
 #: main/templates/main/entry_address.html:61
 msgid "Your Name"
-msgstr ""
+msgstr "اسمك"
 
 #: main/templates/main/entry_address.html:103
 msgid "Street"
-msgstr ""
+msgstr "الشارع"
 
 #: main/templates/main/entry_address.html:144
 msgid "City"
-msgstr ""
+msgstr "المدينة"
 
 #: main/templates/main/entry_address.html:149
 msgid "State"
-msgstr ""
+msgstr "الولاية"
 
 #: main/templates/main/entry_address.html:173
 msgid "Zipcode"
-msgstr ""
+msgstr "الكود البريدي"
 
 #: main/templates/main/entry_address.html:180
 #: main/templates/main/entry_survey.html:347
 #: main/templates/main/entry_survey.html:414
 msgid "NEXT"
-msgstr ""
+msgstr "التالي"
 
 #: main/templates/main/entry_map.html:17
 msgid ""
 "<p><strong>Search for a zipcode, address, or landmark to start. Then draw "
 "your community by clicking units on the map.</strong></p>"
 msgstr ""
+"<p><strong>ابحث عن الكود البريدي أو العنوان أو معلم بارز للبدء. ثم شارك في "
+"ترسيم حدود مجتمعك بالنقر على الوحدات الظاهرة على الخريطة.</strong></p>"
 
 #: main/templates/main/entry_map.html:18
 msgid ""
 "<p>Make sure that all your community is contained within the highlighted "
 "units, and that it does not contain gaps. The units are <a class=\"no-"
-"underline-link\" href=\"https://www.census.gov/programs-surveys/geography/"
-"about/glossary.html#par_textimage_4\" target=\"_blank\"><strong>census block "
-"groups</strong></a>, which are used by map drawers to draw voting districts."
-"</p>"
+"underline-link\" href=\"https://www.census.gov/programs-"
+"surveys/geography/about/glossary.html#par_textimage_4\" "
+"target=\"_blank\"><strong>census block groups</strong></a>, which are used "
+"by map drawers to draw voting districts.</p>"
 msgstr ""
+"<p>تأكد من أن مجتمعك بأكمله موجود داخل الوحدات المظللة وأنه لا تتخلله أي "
+"فجوات. الوحدات هي <a class=\"no-underline-link\" "
+"href=\"https://www.census.gov/programs-"
+"surveys/geography/about/glossary.html#par_textimage_4\" "
+"target=\"_blank\"><strong>مجموعات الكتل التعدادية السكانية</strong></a>، "
+"التي يستخدمها مسؤولو رسم الخرائط لرسم الدوائر الانتخابية.</p>"
 
 #: main/templates/main/entry_map.html:50 main/templates/main/entry_map.html:78
-#, fuzzy
-#| msgid "Add your community"
 msgid "Change your mapping units."
-msgstr "أضف مجتمعك"
+msgstr "غير وحدات رسم خريطتك."
 
 #: main/templates/main/entry_map.html:52
 msgid ""
 "Currently, you are mapping with <b>census block groups</b>. These units are "
 "used by map drawers to draw voting districts."
 msgstr ""
+"حاليًا أنت ترسم الخرائط باستخدام <b>مجموعات الكتل التعدادية السكانية</b>. "
+"وهذه الوحدات يستخدمها مسؤولو رسم الخرائط لرسم الدوائر الانتخابية."
 
 #: main/templates/main/entry_map.html:53
 msgid ""
@@ -596,38 +657,44 @@ msgid ""
 "to <b>census blocks</b>. Census blocks are small units that make up census "
 "block groups."
 msgstr ""
+"إذا أردت رسم خريطة مجتمعك بوحدات أصغر، يمكنك التحول إلى <b>الكتل التعدادية "
+"السكانية</b>. الكتل التعدادية السكانية وحدات صغيرة تشكل مجموعات الكتل "
+"التعدادية السكانية."
 
 #: main/templates/main/entry_map.html:54 main/templates/main/entry_map.html:82
 msgid "If you switch the units now, your current selection will be erased."
-msgstr ""
+msgstr "إذا حولت الوحدات الآن، سيُحذف اختيارك الحالي."
 
 #: main/templates/main/entry_map.html:56
 msgid "Switch to smaller units"
-msgstr ""
+msgstr "التحول إلى الوحدات الصغيرة"
 
 #: main/templates/main/entry_map.html:80
 msgid ""
 "Currently, you are mapping with <b>census blocks</b>. These units are used "
 "by map drawers to draw voting districts."
 msgstr ""
+"حاليًا أنت ترسم الخرائط باستخدام <b>الكتل التعدادية السكانية</b>. وهذه "
+"الوحدات يستخدمها مسؤولو رسم الخرائط لرسم الدوائر الانتخابية."
 
 #: main/templates/main/entry_map.html:81
 msgid ""
-"If you would like to map your community with larger units, you can switch to "
-"<b>census block groups</b>. Census block groups are large units comprised of "
-"census blocks."
+"If you would like to map your community with larger units, you can switch to"
+" <b>census block groups</b>. Census block groups are large units comprised "
+"of census blocks."
 msgstr ""
+"إذا أردت رسم خريطة مجتمعك بوحدات أكبر، يمكنك التحول إلى <b>مجموعات الكتل "
+"التعدادية السكانية</b>. مجموعات الكتل التعدادية السكانية وحدات كبيرة تتكون "
+"من كتل تعدادية سكانية."
 
 #: main/templates/main/entry_map.html:84
 msgid "Switch to larger units"
-msgstr ""
+msgstr "التحول إلى الوحدات الكبيرة"
 
 #: main/templates/main/entry_map.html:103
 #: main/templates/main/entry_map.html:209
-#, fuzzy
-#| msgid "Add your community"
 msgid "How to draw my community?"
-msgstr "أضف مجتمعك"
+msgstr "كيف أرسم خريطة مجتمعي؟"
 
 #: main/templates/main/entry_map.html:105
 #: main/templates/main/entry_map.html:211
@@ -635,16 +702,19 @@ msgid ""
 "Select units on the map by clicking with your mouse. To deselect a unit, "
 "click it again. Watch the following video to learn more."
 msgstr ""
+"اختر الوحدات من على الخريطة من خلال النقر بالماوس. لإلغاء اختيار الوحدة، "
+"انقر عليها مرة أخرى. شاهد الفيديو التالي لمعرفة المزيد."
 
 #: main/templates/main/entry_map.html:116
-#: main/templates/main/entry_map.html:222 representable/templates/base.html:113
+#: main/templates/main/entry_map.html:222
+#: representable/templates/base.html:113
 msgid "FAQ"
-msgstr ""
+msgstr "الأسئلة الشائعة"
 
 #: main/templates/main/entry_map.html:120
 #: main/templates/main/entry_map.html:226
 msgid "What are the units?"
-msgstr ""
+msgstr "ماذا يقصد بالوحدات؟"
 
 #: main/templates/main/entry_map.html:122
 #: main/templates/main/entry_map.html:228
@@ -652,11 +722,13 @@ msgid ""
 "The units are <strong>census block groups</strong>, which are used by map "
 "drawers to draw voting districts."
 msgstr ""
+"هذه الوحدات عبارة عن <strong>مجموعات كتل تعدادية سكانية</strong> يستخدمها "
+"مسؤولو رسم الخرائط لترسيم الدوائر الانتخابية."
 
 #: main/templates/main/entry_map.html:125
 #: main/templates/main/entry_map.html:231
 msgid "Why am I unable to save my map?"
-msgstr ""
+msgstr "لماذا لا يمكنني حفظ خريطتي؟"
 
 #: main/templates/main/entry_map.html:127
 #: main/templates/main/entry_map.html:233
@@ -664,11 +736,13 @@ msgid ""
 "Make sure that it does not contain gaps. Communities of Interest must be "
 "contiguous."
 msgstr ""
+"تأكد من أن الخريطة لا تتخللها فجوات. فالمجتمع ذو المصالح المشتركة لا بد أن "
+"يكون متصل الأراضي."
 
 #: main/templates/main/entry_map.html:130
 #: main/templates/main/entry_map.html:236
 msgid "Can I map outside of my state?"
-msgstr ""
+msgstr "هل يمكنني ترسيم الخرائط خارج ولايتي؟"
 
 #: main/templates/main/entry_map.html:132
 #: main/templates/main/entry_map.html:238
@@ -676,92 +750,90 @@ msgid ""
 "In order to map outside of your state, you need to add a new community "
 "within the other state."
 msgstr ""
+"لترسيم خرائط الدوائر خارج ولايتك، عليك أن تضيف مجتمعًا محليًا جديدًا داخل "
+"الولاية الأخرى."
 
 #: main/templates/main/entry_map.html:135
 #: main/templates/main/entry_map.html:241
 msgid "How large should my community be?"
-msgstr ""
+msgstr "ما الحجم الذي ينبغي أن يكون عليه مجتمعي المحلي؟"
 
 #: main/templates/main/entry_map.html:137
 #: main/templates/main/entry_map.html:243
 msgid "Your community can be as small as one unit or as large as 800 units."
-msgstr ""
+msgstr "يتراوح حجم المجتمع ما بين وحدة واحدة و800 وحدة."
 
 #: main/templates/main/entry_map.html:156
 #: main/templates/main/entry_map.html:261
-#, fuzzy
-#| msgid "Draw a Community Map"
 msgid "Community Name"
-msgstr "ارسم خريطة محلية"
+msgstr "اسم المجتمع المحلي"
 
 #: main/templates/main/entry_map.html:159
 #: main/templates/main/entry_map.html:264
 msgid "Communities Activities and Services"
-msgstr ""
+msgstr "أنشطة وخدمات المجتمعات المحلية"
 
 #: main/templates/main/entry_map.html:167
 #: main/templates/main/entry_map.html:272
 #: main/templates/main/entry_survey.html:282 main/templates/main/map.html:129
-#: main/templates/main/partners/map.html:127 main/templates/main/review.html:74
-#: main/templates/main/submission.html:152
+#: main/templates/main/partners/map.html:127
+#: main/templates/main/review.html:74 main/templates/main/submission.html:152
 #: main/templates/main/submission.html:415
 msgid "Cultural or Historical Interests"
-msgstr ""
+msgstr "المصالح الثقافية أو التاريخية"
 
 #: main/templates/main/entry_map.html:175
 #: main/templates/main/entry_map.html:280
 #: main/templates/main/entry_survey.html:298 main/templates/main/map.html:139
-#: main/templates/main/partners/map.html:137 main/templates/main/review.html:84
-#: main/templates/main/submission.html:162
+#: main/templates/main/partners/map.html:137
+#: main/templates/main/review.html:84 main/templates/main/submission.html:162
 #: main/templates/main/submission.html:397
 msgid "Economic or Environmental Interests"
-msgstr ""
+msgstr "المصالح الاقتصادية أو البيئية"
 
 #: main/templates/main/entry_map.html:183
 #: main/templates/main/entry_map.html:288
 #: main/templates/main/entry_survey.html:317
 #: main/templates/main/entry_survey.html:334 main/templates/main/map.html:144
-#: main/templates/main/partners/map.html:142 main/templates/main/review.html:89
-#: main/templates/main/submission.html:172
+#: main/templates/main/partners/map.html:142
+#: main/templates/main/review.html:89 main/templates/main/submission.html:172
 #: main/templates/main/submission.html:424
 msgid "Community Needs and Concerns"
-msgstr ""
+msgstr "احتياجات وشواغل المجتمع المحلي"
 
 #: main/templates/main/entry_map.html:257
-#, fuzzy
-#| msgid "Add Your Community"
 msgid "Your Community Info"
-msgstr "أضف مجتمعك"
+msgstr "معلومات مجتمعك"
 
 #: main/templates/main/entry_map.html:300
 msgid "Saving Community..."
-msgstr ""
+msgstr "حفظ المجتمع المحلي..."
 
 #: main/templates/main/entry_map.html:331
 #: main/templates/main/entry_map.html:335
 msgid "EDIT INFO"
-msgstr ""
+msgstr "تعديل البيانات"
 
 #: main/templates/main/entry_map.html:332
 #: main/templates/main/entry_map.html:336
 msgid "SAVE"
-msgstr ""
+msgstr "حفظ"
 
 #: main/templates/main/entry_map.html:341
 msgid "Want different units?"
-msgstr ""
+msgstr "هل تريد وحدات مختلفة؟"
 
 #: main/templates/main/entry_map.html:346
 msgid "Population"
-msgstr ""
+msgstr "السكان"
 
 #: main/templates/main/entry_map.html:353
 msgid "Step-by-step guide"
-msgstr ""
+msgstr "دليل الخطوات المفصل"
 
 #: main/templates/main/entry_map.html:362
 msgid "You need to draw a community to submit the form."
-msgstr ""
+msgstr "يجب أن ترسم حدود مجتمع محلي لتقديم الاستمارة."
 
 #: main/templates/main/entry_preview.html:13
 msgid "Add your community to the map."
@@ -772,57 +844,69 @@ msgid ""
 "Mapping your community and identifying its shared interests allows public "
 "officials to take your community’s concerns into account."
 msgstr ""
+"ترسيم حدود مجتمعك وتحديد مصالحه المشتركة يسمح لمسؤولي الجهات العامة بأخذ "
+"مصالح المجتمع في الاعتبار."
 
 #: main/templates/main/entry_preview.html:20
 msgid "Gerrymandering"
-msgstr ""
+msgstr "التلاعب في حدود الدوائر"
 
 #: main/templates/main/entry_preview.html:20
 msgid "is silencing communities across the country."
-msgstr ""
+msgstr "يكمم أصوات الناس في كل أنحاء البلد."
 
 #: main/templates/main/entry_preview.html:21
 msgid ""
 "Politicians have been splitting up or packing together communities into "
-"districts that silence their voices. Gathering communities of interest helps "
-"fight gerrymandering."
+"districts that silence their voices. Gathering communities of interest helps"
+" fight gerrymandering."
 msgstr ""
+"فالسياسيون يقومون بتقسيم المجتمعات المحلية أو ضمها معًا بما يشكل دوائر تكمم "
+"أصوات الناس فيها. ولذلك يساعد ضم المجتمعات ذات المصالح المشتركة في محاربة "
+"التلاعب بحدود الدوائر."
 
 #: main/templates/main/entry_preview.html:33
 msgid "ADD MY COMMUNITY"
-msgstr ""
+msgstr "إضافة مجتمعي المحلي"
 
 #: main/templates/main/entry_privacy.html:12
 msgid "<p id=\"backup_error_txt\" class=\"p-0 m-0\"></p>"
-msgstr ""
+msgstr "<p id=\"backup_error_txt\" class=\"p-0 m-0\"></p>"
 
 #: main/templates/main/entry_privacy.html:20
 msgid "Please make sure to agree to the terms and conditions."
-msgstr ""
+msgstr "يرجى التأكد من الموافقة على الشروط والأحكام."
 
 #: main/templates/main/entry_privacy.html:28
 msgid "Privacy and Terms of Use"
-msgstr ""
+msgstr "الخصوصية وشروط الاستخدام"
 
 #: main/templates/main/entry_privacy.html:36
 msgid ""
-"We gather your identifying information to verify that you are a real person. "
-"We will not publicly share anyone's individual personal information, such as "
-"name, address, or email. Your privacy is our highest priority."
+"We gather your identifying information to verify that you are a real person."
+" We will not publicly share anyone's individual personal information, such "
+"as name, address, or email. Your privacy is our highest priority."
 msgstr ""
+"نحن نجمع معلوماتك الشخصية لكي نتحقق من أنك شخص حقيقي. ونحن لن نفصح علنًا عن "
+"المعلومات الشخصية لأي أحد، كالاسم أو العنوان أو البريد الإلكتروني. خصوصيتك "
+"تأتي على رأس أولوياتنا."
 
 #: main/templates/main/entry_privacy.html:52
 #: main/templates/main/entry_privacy.html:68
 #, python-format
 msgid ""
-"Click here to indicate that you have read and agree to the <a target=\"_blank"
-"\" rel=\"noopener noreferrer\" href=%(url2)s>Terms of Use</a> and <a target="
-"\"_blank\" rel=\"noopener noreferrer\" href=\"%(url1)s\">Privacy Policy</a>."
+"Click here to indicate that you have read and agree to the <a "
+"target=\"_blank\" rel=\"noopener noreferrer\" href=%(url2)s>Terms of Use</a>"
+" and <a target=\"_blank\" rel=\"noopener noreferrer\" "
+"href=\"%(url1)s\">Privacy Policy</a>."
 msgstr ""
+"اضغط هنا لتؤكد أنك قرأت وتوافق على <a target=\"_blank\" rel=\"noopener "
+"noreferrer\" href=%(url2)s>شروط الاستخدام</a> و <a target=\"_blank\" "
+"rel=\"noopener noreferrer\" href=\"%(url1)s\">سياسة الخصوصية</a>."
 
 #: main/templates/main/entry_privacy.html:80
 msgid "Submitted communities are final and public."
-msgstr ""
+msgstr "المجتمعات التي تُرسم وتُقدم ستكون نهائية وعلنية."
 
 #: main/templates/main/entry_privacy.html:86
 msgid ""
@@ -830,10 +914,13 @@ msgid ""
 "and delete the old one. Your community map, name, and testimony will be "
 "publicly visible on Representable.org"
 msgstr ""
+"لتعديل مجتمع تم حفظه، عليك أن تنشئ مجتمعًا جديدًا وتحذف القديم. ستظهر "
+"الخريطة التي ترسمها للمجتمع المحلي واسمك وشهادتك علنًا على موقع "
+"Representable.org."
 
 #: main/templates/main/entry_privacy.html:96
 msgid "You need to complete the recaptcha to submit this map."
-msgstr ""
+msgstr "يجب عليك استكمال رمز التحقق (recaptcha) لإرسال هذه الخريطة."
 
 #: main/templates/main/entry_privacy.html:107
 #: main/templates/main/entry_survey.html:103
@@ -841,106 +928,114 @@ msgstr ""
 #: main/templates/main/entry_survey.html:346
 #: main/templates/main/entry_survey.html:413
 msgid "BACK"
-msgstr ""
+msgstr "السابق"
 
 #: main/templates/main/entry_privacy.html:108
 msgid "SUBMIT"
-msgstr ""
+msgstr "إرسال"
 
 #: main/templates/main/entry_state_selection.html:20
 #: main/templates/main/entry_state_selection.html:21
-#, fuzzy
-#| msgid "Select your state to get started."
 msgid "Select your state."
-msgstr "إختر ولايتك لبدء."
+msgstr "اختر ولايتك."
 
 #: main/templates/main/entry_survey.html:7
 msgid "Step 2"
-msgstr ""
+msgstr "الخطوة 2"
 
 #: main/templates/main/entry_survey.html:17
 msgid "Tell us about what unites your community."
-msgstr ""
+msgstr "أخبرنا عن الأمور التي توحد مجتمعك."
 
 #: main/templates/main/entry_survey.html:20
 msgid ""
 "Next, you will share information about what brings your community together. "
 "What do you think is important for politicians to know about your community?"
 msgstr ""
+"بعد ذلك ستقدم معلومات بشأن الأشياء التي تجمع مجتمعك المحلي. ما الأشياء "
+"المهمة التي يجب أن يعرفها السياسيون عن مجتمعك في رأيك؟"
 
 #: main/templates/main/entry_survey.html:26
 #: main/templates/main/entry_survey.html:115
 msgid "What is a Community of Interest?"
-msgstr ""
+msgstr "ماذا يقصد بالمجتمع ذي المصالح المشتركة؟"
 
 #: main/templates/main/entry_survey.html:31
 msgid ""
 "A Community of Interest is a <strong>geographic area</strong> that shares "
-"<strong>cultural</strong>, <strong>historical</strong>, or <strong>economic</"
-"strong> interests. Communities of Interest encourage the drawing of fairer "
-"voting districts."
+"<strong>cultural</strong>, <strong>historical</strong>, or "
+"<strong>economic</strong> interests. Communities of Interest encourage the "
+"drawing of fairer voting districts."
 msgstr ""
+"المجتمع ذو المصالح المشتركة هو<strong>منطقة جغرافية</strong> تجمع سكانها "
+"مصالح <strong>ثقافية</strong> أو <strong>تاريخية</strong> أو "
+"<strong>اقتصادية</strong> مشتركة. والمجتمعات ذات المصالح المشتركة تشجع "
+"الترسيم العادل للدوائر الانتخابية."
 
 #: main/templates/main/entry_survey.html:39
 #: main/templates/main/entry_survey.html:128
 msgid "Communities of Interest can include..."
-msgstr ""
+msgstr "ويمكن أن تشمل المجتمعات ذات المصالح المشتركة الآتي..."
 
 #: main/templates/main/entry_survey.html:53
 #: main/templates/main/entry_survey.html:164
 msgid "Your neighborhood, or an area you live in."
-msgstr ""
+msgstr "حيك السكني، أو المنطقة التي تعيش فيها."
 
 #: main/templates/main/entry_survey.html:72
 #: main/templates/main/entry_survey.html:141
 msgid "The people you would like to choose representatives with."
-msgstr ""
+msgstr "الناس الذين تود أن تختار معهم من يمثلكم."
 
 #: main/templates/main/entry_survey.html:91
 #: main/templates/main/entry_survey.html:187
 msgid "A local group that is brought together by a common interest."
-msgstr ""
+msgstr "جماعة محلية تجمعها مصالح مشتركة."
 
 #: main/templates/main/entry_survey.html:104
 #: main/templates/main/entry_survey.html:205
 msgid "START"
-msgstr ""
+msgstr "ابدأ"
 
 #: main/templates/main/entry_survey.html:120
 msgid ""
-"A Community of Interest is a geographic area that shares <strong>cultural</"
-"strong>, <strong>historical</strong>, or <strong>economic</strong> "
-"interests. Communities of Interest encourage the drawing of fairer voting "
-"districts."
+"A Community of Interest is a geographic area that shares "
+"<strong>cultural</strong>, <strong>historical</strong>, or "
+"<strong>economic</strong> interests. Communities of Interest encourage the "
+"drawing of fairer voting districts."
 msgstr ""
+"المجتمع ذو المصالح المشتركة هو منطقة جغرافية تجمع سكانها مصالح "
+"<strong>ثقافية</strong> أو <strong>تاريخية</strong> أو "
+"<strong>اقتصادية</strong> مشتركة. والمجتمعات ذات المصالح المشتركة تشجع "
+"الترسيم العادل للدوائر الانتخابية."
 
 #: main/templates/main/entry_survey.html:217
-#, fuzzy
-#| msgid "Put your community on the map."
 msgid "What unites your Community of Interest?"
-msgstr "ضع مجتمعك على الخريطة"
+msgstr "ما الأشياء التي توحد مجتمعك ذا المصالح المشتركة؟"
 
 #: main/templates/main/entry_survey.html:221
 msgid "Community of Interest Definition in "
-msgstr ""
+msgstr "تعريف المجتمع ذي المصالح المشتركة في "
 
 #: main/templates/main/entry_survey.html:231
 msgid ""
 "Respond to <b>at least one</b> of the sections below. There are no wrong "
 "answers.<br> Click on each category to see helpful questions and examples."
 msgstr ""
+"أجب عن بند <b>واحد على الأقل</b> من البنود أدناه. ليست هناك إجابات "
+"خاطئة.<br> انقر على كل فئة للاطلاع على أسئلة وأمثلة مفيدة."
 
 #: main/templates/main/entry_survey.html:246
 #: main/templates/main/entry_survey.html:254
 msgid "Please fill out at least one of the interest fields."
-msgstr ""
+msgstr "يرجى ملء خانة واحدة على الأقل من خانات المصالح."
 
 #: main/templates/main/entry_survey.html:265 main/templates/main/map.html:134
-#: main/templates/main/partners/map.html:132 main/templates/main/review.html:79
-#: main/templates/main/submission.html:142
+#: main/templates/main/partners/map.html:132
+#: main/templates/main/review.html:79 main/templates/main/submission.html:142
 #: main/templates/main/submission.html:406
 msgid "Community Activities and Services"
-msgstr ""
+msgstr "أنشطة وخدمات المجتمعات المحلية"
 
 #: main/templates/main/entry_survey.html:269
 #: main/templates/main/entry_survey.html:286
@@ -948,21 +1043,23 @@ msgstr ""
 msgid ""
 "Use these questions to think more about how you would describe your "
 "community..."
-msgstr ""
+msgstr "استخدم هذه الأسئلة للتفكير بشكل أوسع في كيفية وصفك لمجتمعك المحلي..."
 
 #: main/templates/main/entry_survey.html:270
 msgid "Where do people in your community gather or socialize?"
-msgstr ""
+msgstr "أين يجتمع الناس في مجتمعك المحلي أو يختلطون اجتماعيًا؟"
 
 #: main/templates/main/entry_survey.html:271
 msgid ""
 "How and where does your community access services (healthcare, "
 "transportation, educational services, etc.)?"
 msgstr ""
+"كيف يحصل أفراد مجتمعك المحلي ومن أين يحصلون على الخدمات (الرعاية الصحية، "
+"النقل، التعليم، إلخ)؟"
 
 #: main/templates/main/entry_survey.html:272
 msgid "Examples of activities and services:"
-msgstr ""
+msgstr "أمثلة للأنشطة والخدمات:"
 
 #: main/templates/main/entry_survey.html:272
 msgid ""
@@ -970,52 +1067,63 @@ msgid ""
 "places of worship, healthcare services, public transport, local nonprofit "
 "organizations, etc."
 msgstr ""
+"مناطق التسوق، المدارس والجامعات، المكتبات، الحدائق، البحيرات، الأنهار، دور "
+"العبادة، خدمات الرعاية الصحية، النقل العام، المنظمات غير الربحية المحلية، "
+"إلخ."
 
 #: main/templates/main/entry_survey.html:287
 msgid "What are the cultural bonds in your community?"
-msgstr ""
+msgstr "ما هي الروابط الثقافية في مجتمعك؟"
 
 #: main/templates/main/entry_survey.html:288
 msgid "If your community has a shared history, what is it?"
-msgstr ""
+msgstr "إذا كان لمنطقتك تاريخ مشترك، فما هو؟"
 
 #: main/templates/main/entry_survey.html:289
 msgid "Examples of cultural or historical interests:"
-msgstr ""
+msgstr "أمثلة للروابط الثقافية أو التاريخية:"
 
 #: main/templates/main/entry_survey.html:289
 msgid ""
 "Religious groups, ethnic groups, languages, age groups, immigration status, "
 "historic or arts districts, etc."
 msgstr ""
+"الطوائف الدينية، الطوائف العرقية، اللغات، الفئات العمرية، أوضاع الهجرة، "
+"الأحياء التاريخية أو أحياء الفنون، إلخ."
 
 #: main/templates/main/entry_survey.html:302
 msgid ""
 "<b>Use these questions to think more about how you would describe your "
 "community...</b><br> &emsp; - Where are residents employed?<br> &emsp; - If "
 "there are environmental concerns in your community, what are they?<br><br> "
-"<span class=\"blue-text\"><b>Examples of economic or environmental interests:"
-"</b> Tourism industry, agricultural workers, mining town, manufacturing "
-"center, polluted natural resource, unemployment problem, etc.</span>"
+"<span class=\"blue-text\"><b>Examples of economic or environmental "
+"interests:</b> Tourism industry, agricultural workers, mining town, "
+"manufacturing center, polluted natural resource, unemployment problem, "
+"etc.</span>"
 msgstr ""
+"<b>استخدم هذه الأسئلة للتفكير بشكل أوسع في كيفية وصفك لمجتمعك "
+"المحلي...</b><br> &emsp; - أين يعمل السكان؟<br> &emsp; - إذا كانت هناك مشاكل"
+" بيئية في مجتمعك، فما هي؟<br><br> <span class=\"blue-text\"><b>أمثلة للمصالح"
+" الاقتصادية أو البيئية:</b> النشاط السياحي، العمالة الزراعية، بلدات التعدين،"
+" المراكز الصناعية، الموارد الطبيعية الملوثة، مشكلة البطالة، إلخ.</span>"
 
 #: main/templates/main/entry_survey.html:322
 msgid "What should politicians and/or map drawers know about your community?"
 msgstr ""
+"ما الأشياء المهمة التي يجب أن يعرفها السياسيون ومسؤولو رسم الخرائط عن "
+"مجتمعك؟"
 
 #: main/templates/main/entry_survey.html:323
-#, fuzzy
-#| msgid "Put your community on the map."
 msgid "What are the needs of your community?"
-msgstr "ضع مجتمعك على الخريطة"
+msgstr "ما هي احتياجات مجتمعك؟"
 
 #: main/templates/main/entry_survey.html:324
 msgid "Is there anything else you want to tell us about your community?"
-msgstr ""
+msgstr "هل هناك شيء آخر تود أن تخبرنا به عن مجتمعك؟"
 
 #: main/templates/main/entry_survey.html:325
 msgid "Examples of needs or concerns:"
-msgstr ""
+msgstr "أمثلة للاحتياجات أو الشواغل:"
 
 #: main/templates/main/entry_survey.html:325
 msgid ""
@@ -1023,42 +1131,45 @@ msgid ""
 "shared policy concerns, need for a social service, relationship to other "
 "nearby communities, issues with current district lines"
 msgstr ""
+"إبقاء المجتمع داخل نفس الدائرة أو تقسيمه بين عدة دوائر، الشواغل المشتركة "
+"بشأن السياسات، الحاجة إلى الخدمات الاجتماعية، العلاقة مع المجتمعات الأخرى "
+"المجاورة، مشاكل الحدود الحالية للدوائر"
 
 #: main/templates/main/entry_survey.html:373
 msgid "Please include a community name."
-msgstr ""
+msgstr "يرجى ذكر اسم المجتمع المحلي."
 
 #: main/templates/main/entry_survey.html:385
-#, fuzzy
-#| msgid "Add your community"
 msgid "Name your community."
-msgstr "أضف مجتمعك"
+msgstr "اذكر اسم مجتمعك."
 
 #: main/templates/main/entry_survey.html:390
 msgid ""
 "Give your community of interest a name. This does not have to be the "
 "official name of your community."
 msgstr ""
+"إعط اسمًا لمجتمعك ذي المصالح المشتركة. هذا الاسم لا يجب أن يكون بالضرورة "
+"الاسم الرسمي لمجتمعك."
 
 #: main/templates/main/entry_survey.html:396
 msgid "Examples"
-msgstr ""
+msgstr "أمثلة"
 
 #: main/templates/main/entry_survey.html:396
 msgid ""
 "Cherry Farmers Community, St. Peters Church Community, Riverside Fishing "
 "Community"
 msgstr ""
+"Cherry Farmers Community أو St. Peters Church Community أو Riverside Fishing"
+" Community"
 
 #: main/templates/main/entry_survey.html:403
-#, fuzzy
-#| msgid "Draw a Community Map"
 msgid "Community Name:"
-msgstr "ارسم خريطة محلية"
+msgstr "اسم المجتمع المحلي:"
 
 #: main/templates/main/index.html:27
 msgid "GET STARTED"
-msgstr ""
+msgstr "ابدأ"
 
 #: main/templates/main/index.html:34
 msgid "Are you the leader of an organization?"
@@ -1068,7 +1179,8 @@ msgstr "هل أنت قائد منظمة"
 msgid ""
 "Many organizations have partnered with Representable.org to collect "
 "community-of-interest data."
-msgstr "تتشارك كثير من المنظمات مع رَبْريسانْتَبُل لجمع بيانات عن مجتمعات المصلحة "
+msgstr ""
+"تتشارك كثير من المنظمات مع رَبْريسانْتَبُل لجمع بيانات عن مجتمعات المصلحة "
 
 #: main/templates/main/index.html:36
 msgid "PARTNER WITH US"
@@ -1079,19 +1191,26 @@ msgid ""
 "<b>Our mission</b> is to give communities a voice in drawing voting "
 "districts."
 msgstr ""
+"<b>مهمتنا</b> هي منح المجتمعات المحلية فرصة التعبير عن آرائهم في ترسيم "
+"الدوائر الانتخابية."
 
 #: main/templates/main/index.html:52
 msgid ""
 "Representable allows people to draw communities of interest and share "
 "information about the interests and needs in those communities. "
-"<br><br>Making this information available encourages mapmakers to take these "
-"communities into account during redistricting, in order to avoid "
+"<br><br>Making this information available encourages mapmakers to take these"
+" communities into account during redistricting, in order to avoid "
 "gerrymandering and the “packing and cracking” of marginalized groups."
 msgstr ""
+"يقوم Representable بتمكين المواطنين من ترسيم المجتمعات ذات المصالح المشتركة "
+"ومشاركة المعلومات عن مصالح واحتياجات هذه المجتمعات. <br><br>فتوفير هذه "
+"المعلومات يشجع مسؤولي رسم الخرائط على أخذ هذه المجتمعات في الاعتبار أثناء "
+"إعادة الترسيم لتجنب التلاعب في حدود الدوائر و \"ضم وتفريق\" أصوات الفئات "
+"المهمشة."
 
 #: main/templates/main/index.html:59
 msgid "<b>Gerrymandering</b> is threatening democracy."
-msgstr ""
+msgstr "<b>التلاعب بحدود الدوائر</b> يهدد الديمقراطية."
 
 #: main/templates/main/index.html:60
 msgid ""
@@ -1102,22 +1221,27 @@ msgid ""
 "provide map drawers with the information they need to draw districts that "
 "empower communities."
 msgstr ""
+"فالسياسيون يقومون بتقسيم المجتمعات المحلية أو ضمها معًا بما يشكل دوائر تكمم "
+"أصوات الناس في هذه المجتمعات. وهذا يحرم المجتمعات من انتخاب الممثلين الذين "
+"يستمعون إلى احتياجاتهم. لذلك يساعد جمع خرائط المجتمعات ذات المصالح المشتركة "
+"في محاربة التلاعب بحدود الدوائر. حيث يمكننا إعطاء مسؤولي رسم الخرائط ما "
+"يحتاجونه من معلومات لترسيم الدوائر بما يحقق تمكين المجتمعات المحلية."
 
 #: main/templates/main/index.html:61
 msgid "We're fighting to make democracy more..."
-msgstr ""
+msgstr "نحن نكافح لجعل الديمقراطية أكثر..."
 
 #: main/templates/main/index.html:64
 msgid "Transparent"
-msgstr ""
+msgstr "شفافية"
 
 #: main/templates/main/index.html:67
 msgid "Inclusive"
-msgstr ""
+msgstr "شمولًا"
 
 #: main/templates/main/index.html:70
 msgid "Accessible"
-msgstr ""
+msgstr "انتشارًا"
 
 #: main/templates/main/index.html:76 main/templates/main/pages/about.html:96
 msgid "Answer Questions"
@@ -1125,7 +1249,7 @@ msgstr "اردد أسئلة"
 
 #: main/templates/main/index.html:77
 msgid "that help you identify what bonds your community together."
-msgstr ""
+msgstr "التي تساعدك على تحديد الأمور التي تجمع أفراد مجتمعك."
 
 #: main/templates/main/index.html:81 main/templates/main/pages/about.html:109
 msgid "Draw a Community Map"
@@ -1136,91 +1260,72 @@ msgid ""
 "by choosing units that make up your community. Use landmarks to draw your "
 "map."
 msgstr ""
+"من خلال اختيار الوحدات التي تشكل مجتمعك. استخدم المعالم البارزة لرسم خريطتك."
 
 #: main/templates/main/index.html:86
 msgid "Share your Map"
-msgstr ""
+msgstr "شارك خريطتك"
 
 #: main/templates/main/index.html:87
 msgid ""
 "as public input for map makers to use when drawing new voting districts."
 msgstr ""
+"في صورة بيانات علنية عامة يستخدمها مسؤولو رسم الخرائط في ترسيم الدوائر "
+"الانتخابية الجديدة."
 
 #: main/templates/main/index.html:99
 msgid ""
 "We are putting Representable in the hands of the communities that need it."
-msgstr ""
+msgstr "نحن نقدم Representable لتستفيد منه المجتمعات المحلية التي تحتاج إليه."
 
 #: main/templates/main/index.html:100
 msgid "Join us to help communities get the representation they deserve."
-msgstr ""
+msgstr "انضم إلينا لمساعدة المجتمعات في نيل التمثيل الذي تستحقه."
 
 #: main/templates/main/map.html:13
-#, fuzzy
-#| msgid "My Communities"
 msgid "View Communities"
-msgstr "مجتمعاتي"
+msgstr "إظهار المجتمعات المحلية"
 
 #: main/templates/main/map.html:46
 msgid "State Map"
-msgstr ""
+msgstr "خريطة الولاية"
 
 #: main/templates/main/map.html:63 main/templates/main/partners/map.html:67
 msgid "Data layers"
-msgstr ""
+msgstr "طبقات البيانات"
 
 #: main/templates/main/map.html:74 main/templates/main/partners/map.html:78
-#, fuzzy
-#| msgid "My Communities"
 msgid "Communities"
-msgstr "مجتمعاتي"
+msgstr "المجتمعات المحلية"
 
 #: main/templates/main/map.html:149 main/templates/main/partners/map.html:152
 #: main/templates/main/review.html:94
 msgid "Show More"
-msgstr ""
+msgstr "إظهار المزيد"
 
 #: main/templates/main/map.html:162
 msgid "Show All"
-msgstr ""
+msgstr "إظهار الكل"
 
 #: main/templates/main/pages/about.html:8
 msgid "About Representable"
 msgstr "معلومات عن ربريسنتبل"
 
 #: main/templates/main/pages/about.html:12
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "        <span class=\"d-block display-3\">We want to give communities a "
-#| "<span class=\"light-blue-text\">voice</span> in drawing districts.</"
-#| "span>\n"
-#| "        "
 msgid ""
-"<span class=\"d-block display-3\">We want to give communities a <span class="
-"\"light-blue-text\">voice</span> in drawing districts.</span>"
+"<span class=\"d-block display-3\">We want to give communities a <span "
+"class=\"light-blue-text\">voice</span> in drawing districts.</span>"
 msgstr ""
-"\n"
-"        <span class=\"d-block display-3\"> نريد إعطاء مجتمعات <span class="
-"\"light-blue-text\">صوتا</span>في رسم حدود الدوائر الانتخابية.</span>\n"
-"        "
+"<span class=\"d-block display-3\">نحن نريد أن نمنح المجتمعات فرصة التعبير "
+"<span class=\"light-blue-text\">عن أصواتها</span> في تقسيم الدوائر</span>"
 
 #: main/templates/main/pages/about.html:18
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "        <span class=\"d-block display-3\">We want to give communities a "
-#| "<span class=\"light-blue-text\">voice</span> in drawing districts.</"
-#| "span>\n"
-#| "        "
 msgid ""
-"<span class=\"display-4 d-block\">We want to give communities a <span class="
-"\"light-blue-text\">voice</span> in drawing districts.</span>"
+"<span class=\"display-4 d-block\">We want to give communities a <span "
+"class=\"light-blue-text\">voice</span> in drawing districts.</span>"
 msgstr ""
-"\n"
-"        <span class=\"d-block display-3\"> نريد إعطاء مجتمعات <span class="
-"\"light-blue-text\">صوتا</span>في رسم حدود الدوائر الانتخابية.</span>\n"
-"        "
+"<span class=\"display-4 d-block\">نحن نريد أن نمنح المجتمعات فرصة التعبير "
+"<span class=\"light-blue-text\">عن أصواتها</span>في تقسيم الدوائر.</span>"
 
 #: main/templates/main/pages/about.html:34
 #: main/templates/main/pages/about.html:38
@@ -1245,64 +1350,43 @@ msgid ""
 "Currently, over half of states have legal requirements to respect COIs, but "
 "before Representable, no tools existed to get COIs to mapmakers."
 msgstr ""
-"رَبْريسانْتَبُل  أداة مجانية ومفتوح المصدر لإنشاء خرائط ل مجتمعات المصلحة (مم)-- "
-"جماعات الأفراد الذين يتشاركونمصالح اجتماعية واقتصادية مشتركة, والذين من "
-"المحتمل أنيكون لديهم  شواغل سياسية متشابهة. في الوقت الحاضر أغلبيةالولايات "
-"لديها شروط القانونية لاحترام مم ولكن قبلرَبْريسانْتَبُل لم يكن هناك أي أداة للربط "
-"مم بصانعي الخرائط"
+"رَبْريسانْتَبُل  أداة مجانية ومفتوح المصدر لإنشاء خرائط ل مجتمعات المصلحة "
+"(مم)-- جماعات الأفراد الذين يتشاركونمصالح اجتماعية واقتصادية مشتركة, والذين "
+"من المحتمل أنيكون لديهم  شواغل سياسية متشابهة. في الوقت الحاضر "
+"أغلبيةالولايات لديها شروط القانونية لاحترام مم ولكن قبلرَبْريسانْتَبُل لم "
+"يكن هناك أي أداة للربط مم بصانعي الخرائط"
 
 #: main/templates/main/pages/about.html:51
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "We work closely with organizations to gather community maps along with "
-#| "information about the shared interests of the community. This data can "
-#| "then be used by map drawers, journalists, analysts, and activists to "
-#| "create and evaluate proposed district maps. Our goal is to democratize "
-#| "public testimony, inform map drawers, and encourage map analysis. Learn "
-#| "more about how Representable fights gerrymandering in the <a href="
-#| "\"https://docs.google.com/document/"
-#| "d/1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc/edit?usp=sharing"
-#| "\">Official Education Guide.</a></p>\n"
-#| "        "
 msgid ""
 "We work closely with organizations to gather community maps along with "
 "information about the shared interests of the community. This data can then "
 "be used by map drawers, journalists, analysts, and activists to create and "
 "evaluate proposed district maps. Our goal is to democratize public "
 "testimony, inform map drawers, and encourage map analysis. Learn more about "
-"how Representable fights gerrymandering in the <a href=\"https://docs.google."
-"com/document/d/1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc/edit?usp=sharing"
-"\">Official Education Guide.</a></p>"
+"how Representable fights gerrymandering in the <a "
+"href=\"https://docs.google.com/document/d/1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc/edit?usp=sharing\">Official"
+" Education Guide.</a></p>"
 msgstr ""
-"\n"
-"نعمل عن كثب مع المنظمات لجمع خرائط المجتمع بالإضافة إلى معلومات حول اهتمامات "
-"المجتمع المشتركة. بعد ذلك صناعي الخرائط وصحفيون ومحللون وناشطون يستطيعون أن "
-"يستخدم هذه البيانات لإنشاء وتقييم خرائط الدوائر الانتخابية المقترحة. نهدف "
-"إضفاء الطابع الديمقراطي على شهادة العامة, إعلام صانعي الخرائط, وتشجيع تحليل "
-"الخرائط. تعلّم أكثر عن كيف رَبْريسانْتَبُل يكافح الجيريمانديرية, أوالانتخابية, في "
-"دليل التعليم الرسمي<a href=\"https://docs.google.com/document/"
-"d/1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc/edit?usp=sharing\">تلاعب "
-"بالدوائر.</a></p>\n"
-"        "
+"نحن نعمل عن كثب مع المنظمات لجمع خرائط المجتمعات المحلية إضافة إلى معلومات "
+"المصالح المشتركة لكل مجتمع. ومن ثم يمكن استخدام هذه البيانات بواسطة مسؤولي "
+"رسم الخرائط والصحافيين والمحللين والنشطاء لإنشاء وتقييم خرائط الدوائر "
+"المقترحة. فهدفنا هو إرساء الديمقراطية بإدلاء الشهادات العامة وتزويد مسؤولي "
+"رسم الخرائط بالمعلومات وتشجيع تحليل الخرائط. اعرف المزيد عن كيفية قيام "
+"Representable بمكافحة التلاعب بالدوائر الانتخابية من <a "
+"href=\"https://docs.google.com/document/d/1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc/edit?usp=sharing\">الدليل"
+" التثقيفي الرسمي.</a></p>"
 
 #: main/templates/main/pages/about.html:56
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "Representable is built in partnership with the <a href=\"http://"
-#| "gerrymander.princeton.edu/\">Princeton Gerrymandering Project</a> and "
-#| "supported by <a href=\"https://schmidtfutures.com/\">Schmidt Futures.</"
-#| "a></p>\n"
-#| "        "
 msgid ""
-"Representable is built in partnership with the <a href=\"http://gerrymander."
-"princeton.edu/\">Princeton Gerrymandering Project</a> and supported by <a "
-"href=\"https://schmidtfutures.com/\">Schmidt Futures.</a></p>"
+"Representable is built in partnership with the <a "
+"href=\"http://gerrymander.princeton.edu/\">Princeton Gerrymandering "
+"Project</a> and supported by <a href=\"https://schmidtfutures.com/\">Schmidt"
+" Futures.</a></p>"
 msgstr ""
-"\n"
-"رَبْريسانْتَبُل يتشارك مع المشروع ضد تلاعب بالدوائر الانتخابية فيبرينستون بالدعم "
-"شميدت فيوتشرز        "
+"تأسس Representable بالشراكة مع <a "
+"href=\"http://gerrymander.princeton.edu/\">مشروع برينستون لمحاربة التلاعب "
+"بحدود الدوائر</a> وبدعم من <a href=\"https://schmidtfutures.com/\">Schmidt "
+"Futures.</a></p>"
 
 #: main/templates/main/pages/about.html:59
 msgid "Representable will help..."
@@ -1389,21 +1473,17 @@ msgstr "منسق توعية"
 
 #: main/templates/main/pages/about.html:146
 #: main/templates/main/pages/about.html:147
-#, fuzzy
-#| msgid "Head of Engineering"
 msgid "Software Engineer"
-msgstr "رئيس الهندسة"
+msgstr "مهندس البرمجيات"
 
 #: main/templates/main/pages/about.html:148
 #: main/templates/main/pages/about.html:149
-#, fuzzy
-#| msgid "Head of Engineering"
 msgid "Data Engineer"
-msgstr "رئيس الهندسة"
+msgstr "مهندس البيانات"
 
 #: main/templates/main/pages/about.html:150
 msgid "Media and Communications Coordinator"
-msgstr ""
+msgstr "منسق الإعلام والاتصالات"
 
 #: main/templates/main/pages/about.html:152
 msgid "Our Founding Team"
@@ -1414,8 +1494,8 @@ msgid ""
 "Representable began in February 2019 as a final project for the Princeton "
 "course COS333: Advanced Programming Techniques."
 msgstr ""
-"أنشئ رَبْريسانْتَبُل في شباط ٢٠١٩ كمشروع نهائي لصف في جامعةبرينستون, COS333: "
-"تقنيات البرمجة المتقدمة"
+"أنشئ رَبْريسانْتَبُل في شباط ٢٠١٩ كمشروع نهائي لصف في جامعةبرينستون, COS333:"
+" تقنيات البرمجة المتقدمة"
 
 #: main/templates/main/pages/about.html:156
 #: main/templates/main/pages/about.html:159
@@ -1435,49 +1515,37 @@ msgid "Engineering, Product"
 msgstr "هندسة"
 
 #: main/templates/main/pages/blog.html:4
-#, fuzzy
-#| msgid "About Representable"
 msgid "Representable Blog"
-msgstr "معلومات عن ربريسنتبل"
+msgstr "مدونة Representable"
 
 #: main/templates/main/pages/blog.html:10
 msgid "Communities of Interest. Stories of Representation."
-msgstr ""
+msgstr "المجتمعات ذات المصالح المشتركة. قصص عن التمثيل."
 
 #: main/templates/main/pages/faq.html:11
 msgid "Check out our most frequently asked questions below."
-msgstr ""
+msgstr "اطلع على أسئلتنا الشائعة أدناه."
 
 #: main/templates/main/pages/faq.html:13
-#, fuzzy
-#| msgid "For community members"
 msgid "For Community Members"
-msgstr "لأفراد المجتمع"
+msgstr "خاص بأفراد المجتمع"
 
 #: main/templates/main/pages/faq.html:26
-#, fuzzy
-#| msgid "For organizations"
 msgid "For Organizations"
-msgstr "للمنظمات"
+msgstr "خاص بالمنظمات"
 
 #: main/templates/main/pages/faq.html:39
-#, fuzzy
-#| msgid "More questions? Reach out at"
 msgid "Have more questions? Email us at "
-msgstr "مزيد الأسئلة؟ تواصلوا بنا على"
+msgstr "هل لديك أسئلة أخرى؟ راسلنا على البريد الإلكتروني "
 
 #: main/templates/main/pages/glossary.html:10
 #: representable/templates/base.html:114
-#, fuzzy
-#| msgid "Redistricting is coming."
 msgid "Redistricting Glossary"
-msgstr "إعادة التقسيم قادم."
+msgstr "مسرد إعادة ترسيم الدوائر"
 
 #: main/templates/main/pages/glossary.html:29
-#, fuzzy
-#| msgid "For organizations"
 msgid "More Information"
-msgstr "للمنظمات"
+msgstr "المزيد من المعلومات"
 
 #: main/templates/main/pages/privacy.html:5
 #: representable/templates/base.html:288
@@ -1487,60 +1555,101 @@ msgstr "خصوصية"
 #: main/templates/main/pages/privacy.html:7
 msgid ""
 "<p>Your privacy is our highest priority. We gather your identifying "
-"information to verify that you are a real person. We will not publicly share "
-"anyone's individual personal information, such as name, address, or email.</"
-"p> <p>If you choose to submit an entry to an organization, the organization "
-"will receive your identifying information in order to verify that you are a "
-"real person. This aspect will be communicated to you before you save an "
-"entry.</p> <p>We rely on third-party services (Mixpanel and Google "
-"Analytics) to better understand our users' anonymous behavior on the "
+"information to verify that you are a real person. We will not publicly share"
+" anyone's individual personal information, such as name, address, or "
+"email.</p> <p>If you choose to submit an entry to an organization, the "
+"organization will receive your identifying information in order to verify "
+"that you are a real person. This aspect will be communicated to you before "
+"you save an entry.</p> <p>We rely on third-party services (Mixpanel and "
+"Google Analytics) to better understand our users' anonymous behavior on the "
 "website. This allows us to understand how we can improve Representable.org "
 "by finding any hidden friction points. We don't share any personal "
 "information with these services.</a> <p>Our implementation of third-party "
-"tracking services respects your browser's <a href=\"https://allaboutdnt.com/"
-"\">Do Not Track</a> settings. We also give users the option to opt in or opt "
-"out of tracking at any point. Users can update their preferences on their "
-"account dashboard page (if logged in). By default, we enable Google "
-"Analytics to count website visitors (which only uses first-party cookies), "
-"but this behavior is disabled by opting out. Mixpanel is only enabled by "
-"opting in.</p> <p>It is Representable's policy to respect your privacy "
-"regarding any information we may collect from you across our website, <a "
+"tracking services respects your browser's <a "
+"href=\"https://allaboutdnt.com/\">Do Not Track</a> settings. We also give "
+"users the option to opt in or opt out of tracking at any point. Users can "
+"update their preferences on their account dashboard page (if logged in). By "
+"default, we enable Google Analytics to count website visitors (which only "
+"uses first-party cookies), but this behavior is disabled by opting out. "
+"Mixpanel is only enabled by opting in.</p> <p>It is Representable's policy "
+"to respect your privacy regarding any information we may collect from you "
+"across our website, <a "
 "href=\"http://representable.org\">representable.org</a>, and other sites we "
 "own and operate.</p> <p>We only ask for personal information when we truly "
-"need it to provide a service to you. We collect it by fair and lawful means, "
-"with your knowledge and consent. We also let you know why we’re collecting "
-"it and how it will be used.</p> <p>The information we collect from our users "
-"may be used for research by our team or by our partners at Princeton "
+"need it to provide a service to you. We collect it by fair and lawful means,"
+" with your knowledge and consent. We also let you know why we’re collecting "
+"it and how it will be used.</p> <p>The information we collect from our users"
+" may be used for research by our team or by our partners at Princeton "
 "University.  Such information will be retained in an anonymous form and in "
-"accordance with this policy's other provisions.  If you do not wish for your "
-"information to be used in research, please contact us.</p> <p>We only retain "
-"collected information for as long as necessary to provide you with your "
-"requested service and, in an anonymized, aggregated form, for research "
+"accordance with this policy's other provisions.  If you do not wish for your"
+" information to be used in research, please contact us.</p> <p>We only "
+"retain collected information for as long as necessary to provide you with "
+"your requested service and, in an anonymized, aggregated form, for research "
 "purposes. What data we store, we’ll protect within commercially acceptable "
-"means to prevent loss and theft, as well as unauthorized access, disclosure, "
-"copying, use or modification.</p> <p>We don’t share any personally "
-"identifying information publicly or with third-parties, except when explicit "
-"permission is given during a \"community\" submission or when required to by "
-"law.</p> <p>Our website may link to external sites that are not operated by "
-"us. Please be aware that we have no control over the content and practices "
-"of these sites, and cannot accept responsibility or liability for their "
-"respective privacy policies. </p> <p>You are free to refuse our request for "
-"your personal information, with the understanding that we may be unable to "
-"provide you with some of your desired services.</p> <p>Your continued use of "
-"our website will be regarded as acceptance of our practices around privacy "
-"and personal information. If you have any questions about how we handle user "
-"data and personal information, feel free to contact us.</p> <p>This policy "
-"is effective as of July 14, 2020.</p>"
+"means to prevent loss and theft, as well as unauthorized access, disclosure,"
+" copying, use or modification.</p> <p>We don’t share any personally "
+"identifying information publicly or with third-parties, except when explicit"
+" permission is given during a \"community\" submission or when required to "
+"by law.</p> <p>Our website may link to external sites that are not operated "
+"by us. Please be aware that we have no control over the content and "
+"practices of these sites, and cannot accept responsibility or liability for "
+"their respective privacy policies. </p> <p>You are free to refuse our "
+"request for your personal information, with the understanding that we may be"
+" unable to provide you with some of your desired services.</p> <p>Your "
+"continued use of our website will be regarded as acceptance of our practices"
+" around privacy and personal information. If you have any questions about "
+"how we handle user data and personal information, feel free to contact "
+"us.</p> <p>This policy is effective as of July 14, 2020.</p>"
 msgstr ""
+"<p>خصوصيتك تأتي على رأس أولوياتنا. نحن نجمع معلوماتك الشخصية لكي نتحقق من "
+"أنك شخص حقيقي. ونحن لن نفصح علنًا عن المعلومات الشخصية لأي أحد، كالاسم أو "
+"العنوان أو البريد الإلكتروني.</p> <p>إذا اخترت أن تقدم بيانات لإحدى "
+"المنظمات، فسوف تتلقى المنظمة بياناتك الشخصية لكي تتحقق من أنك شخص حقيقي. "
+"وسيتم إخطارك بهذا الإجراء قبل أن تقوم بحفظ البيانات.</p> <p>يرجى العلم أننا "
+"نستعين بخدمات الغير (Mixpanel و Google Analytics) لتعريفنا بالمزيد عن السلوك"
+" غير المحدد للهوية لمستخدمي موقعنا. وهذا يمكننا من فهم كيفية تحسين "
+"Representable.org من خلال اكتشاف أي معوقات خفية. نحن لا نفصح عن أي معلومات "
+"شخصية لهذه الخدمات.</a> <p>فنحن في تنفيذنا لخدمات التعقب المقدمة من الغير "
+"نحترم إعدادات عدم التعقب <a href=\"https://allaboutdnt.com/\">Do Not "
+"Track</a> على متصفحك. كما نسمح للمستخدمين باختيار التعقب أو إلغائه في أي "
+"وقت. حيث يمكن للمستخدم تغيير خياراته على صفحة لوحة بيانات حسابه (إذا كان "
+"مسجل الدخول). فنحن نمكن Google Analytics من حساب عدد زوار الموقع تلقائيًا "
+"(في استخدام ملفات تعريف الارتباط للطرف الأول فقط)، ولكن هذا الإجراء يتم "
+"إلغاؤه من خلال اختيار الإلغاء. أما Mixpanel فلا يمكن تفعيله إلا باختيار "
+"التفعيل.</p> <p>فسياسة Representable هي احترام خصوصيتكم في شأن أي معلومات "
+"نجمعها منكم في أنحاء موقعنا، <a "
+"href=\"http://representable.org\">representable.org</a> والمواقع الأخرى التي"
+" نمتلكها ونديرها.</p> <p>فنحن لا نطلب المعلومات الشخصية إلا إذا كنا حقًا في "
+"حاجة إليها لتقديم الخدمات إليك. ونحن نجمعها بوسائل عادلة ومشروعة وبمعرفتك "
+"وموافقتك. كما أننا نبلغك بسبب جمعنا للمعلومات وكيفية استخدامنا لها.</p> "
+"<p>فالمعلومات التي نجمعها من مستخدمي موقعنا قد تستخدم للأبحاث من قبل فريق "
+"عملنا أو شركائنا في جامعة \"برينستون\".  تُحفظ هذه المعلومات بصورة غير محددة"
+" للهوية ووفقًا للأحكام الأخرى لهذه السياسة.  فإذا رغبت في عدم استخدام "
+"معلوماتك الشخصية في الأبحاث، فيرجى الاتصال بنا.</p> <p>نحن لا نحتفظ "
+"بالمعلومات المجموعة إلا للمدة اللازمة لتقديم خدماتك التي تطلبها وبصورة "
+"جماعية غير محددة للهوية، وللأغراض البحثية. فأي بيانات نخزنها لدينا نحميها "
+"بوسائل تجارية مقبولة للحيلولة دون فقدانها أو سرقتها، فضلًا عن عدم التصريح "
+"بالاطلاع عليها أو إفصاحها أو نسخها أو استخدامها أو تعديلها.</p> <p>نحن لا "
+"نفصح عن أي معلومات شخصية محددة للهوية علنًا أو للغير، إلا بعد الحصول على "
+"موافقة صريحة أثناء إرسال \"المجتمع المحلي\" أو إذا استوجب إفصاحها بموجب "
+"القانون.</p> <p>كما أن موقعنا قد يتضمن روابط لمواقع خارجية لا نديرها. فيرجى "
+"العلم أننا لا نتحكم بمحتوى وممارسات هذه المواقع، ولا يمكننا قبول تحمل "
+"المسؤولية والالتزام تجاه سياسات الخصوصية الخاصة بكل منها. </p> <p>أنت لك "
+"الحرية في رفض طلبنا بجمع معلوماتك الشخصية، ولكن عليك أن تفهم أننا بذلك قد لا"
+" نستطيع تقديم بعض خدماتنا التي تطلبها.</p> <p>واستمرار استخدامك لموقعنا "
+"سيعتبر قبولًا منك لسياساتنا الخاصة بالخصوصية والمعلومات الشخصية. إذا كانت "
+"لديك أي أسئلة عن كيفية تعاملنا مع بيانات المستخدم ومعلوماته الشخصية، لا "
+"تتردد في الاتصال بنا.</p> <p>يسري مفعول هذه السياسة اعتبارًا من 14 يوليو، "
+"2020.</p>"
 
 #: main/templates/main/pages/resources.html:10
 #: representable/templates/base.html:115
 msgid "Resources"
-msgstr ""
+msgstr "الموارد"
 
 #: main/templates/main/pages/resources.html:17
 msgid "Educational Video"
-msgstr ""
+msgstr "فيديو تثقيفي"
 
 #: main/templates/main/pages/resources.html:23
 msgid ""
@@ -1548,10 +1657,13 @@ msgid ""
 "redistricting process, dangers of gerrymandering, and the effectiveness of "
 "Communities of Interest which can be mapped easily on Representable.org."
 msgstr ""
+"هذا الفيديو أداة تثقيفية مدعومة بالنص مقدم لتعريف المستخدمين بعملية إعادة "
+"ترسيم الدوائر ومخاطر التلاعب بحدودها وفاعلية المجتمعات ذات المصالح المشتركة "
+"التي يمكن ترسيمها بسهولة على Representable.org."
 
 #: main/templates/main/pages/resources.html:32
 msgid "Demo Videos"
-msgstr ""
+msgstr "فيديوهات توضيحية"
 
 #: main/templates/main/pages/resources.html:38
 msgid ""
@@ -1559,27 +1671,31 @@ msgid ""
 "perspective of a user and an organization, complete with tips for easily "
 "mapping your community and collecting communities of interest."
 msgstr ""
+"هذه الفيديوهات التوضيحية هي أدلة لتصفح موقع Representable من منظور كل من "
+"المستخدم والمنظمة، وتختتم بإرشادات عن كيفية ترسيم خريطة مجتمعك بسهولة وجمع "
+"المجتمعات ذات المصالح المشتركة."
 
 #: main/templates/main/pages/resources.html:47
 msgid "One Pager"
-msgstr ""
+msgstr "نشرات الصفحة الواحدة"
 
 #: main/templates/main/pages/resources.html:53
 msgid ""
-"This infographic provides a short overview of redistricting, gerrymandering, "
-"and how Representable can be used to address this issue using communities of "
-"interest."
+"This infographic provides a short overview of redistricting, gerrymandering,"
+" and how Representable can be used to address this issue using communities "
+"of interest."
 msgstr ""
+"يقدم هذا الإنفوجرافيك نظرة موجزة على إعادة ترسيم الدوائر والتلاعب بحدود "
+"الدوائر وكيف يمكن أن يستخدم Representable في معالجة هذه المسألة باستخدام "
+"المجتمعات ذات المصالح المشتركة."
 
 #: main/templates/main/pages/resources.html:55
 msgid "VIEW & DOWNLOAD"
-msgstr ""
+msgstr "إظهار وتنزيل"
 
 #: main/templates/main/pages/resources.html:65
-#, fuzzy
-#| msgid "For organizations"
 msgid "Organization Guide"
-msgstr "للمنظمات"
+msgstr "دليل المنظمات"
 
 #: main/templates/main/pages/resources.html:71
 msgid ""
@@ -1587,33 +1703,39 @@ msgid ""
 "information about the tool, community mapping drives, our educational "
 "materials, FAQs, and more!"
 msgstr ""
+"هذا الدليل مرجع رئيسي للمنظمات يمكّنها من إيجاد المعلومات بشأن الأداة "
+"ومحركات رسم خرائط المجتمعات المحلية وموادنا التثقيفية والأسئلة الشائعة، "
+"والمزيد."
 
 #: main/templates/main/pages/resources.html:73
 msgid "READ MORE"
-msgstr ""
+msgstr "قراءة المزيد"
 
 #: main/templates/main/pages/resources.html:83
 msgid "Community Mapping Event Powerpoint"
-msgstr ""
+msgstr "عرض باوربوينت لفاعليات ترسيم خرائط المجتمعات المحلية"
 
 #: main/templates/main/pages/resources.html:89
 msgid ""
 "This powerpoint can be used to run online mapping events with your "
-"community. Guide people through the process of identifying their community’s "
-"needs and mapping their COI."
+"community. Guide people through the process of identifying their community’s"
+" needs and mapping their COI."
 msgstr ""
+"يمكن استخدام هذا العرض لإدارة فاعليات ترسيم الخرائط على الإنترنت بمشاركة "
+"مجتمعك المحلي. يمكنك إرشاد الناس في مسار عملية تحديد احتياجات مجتمعاتهم ورسم"
+" خرائطها وتحديد مجتمعاتهم ذات المصالح المشتركة."
 
 #: main/templates/main/pages/resources.html:91
 msgid "DOWNLOAD"
-msgstr ""
+msgstr "تنزيل"
 
 #: main/templates/main/pages/resources.html:101
 msgid "Additional Resources"
-msgstr ""
+msgstr "موارد أخرى"
 
 #: main/templates/main/pages/resources.html:102
 msgid "Princeton Gerrymandering Project"
-msgstr ""
+msgstr "مشروع \"برينستون\" لمحاربة التلاعب بحدود الدوائر"
 
 #: main/templates/main/pages/resources.html:103
 msgid ""
@@ -1621,10 +1743,13 @@ msgid ""
 "the gap between mathematics and the law to achieve fair representation "
 "through redistricting reform."
 msgstr ""
+"يهدف \"مشروع برينستون لمحاربة التلاعب بحدود الدوائر\" اعتمادًا على التحليل "
+"غير الحزبي إلى سد الفجوة بين الأرقام والقانون سعيًا لتحقيق التمثيل العادل من"
+" خلال الإصلاح بإعادة ترسيم الدوائر."
 
 #: main/templates/main/pages/resources.html:105
 msgid "GeoCivics Redistricting Materials"
-msgstr ""
+msgstr "مواد إعادة ترسيم الدوائر من GeoCivics"
 
 #: main/templates/main/pages/resources.html:106
 msgid ""
@@ -1634,31 +1759,42 @@ msgid ""
 "community members with interactive tools and geospatial data, leading to "
 "engagement in conversation about the construction of electoral districts."
 msgstr ""
+"تقدم GeoCivics مجموعة من الموارد الحكومية بالولايات ترمي إلى تطوير المهارات "
+"والخبرات لمناقشة التقسيم وعملية إعادة ترسيم الدوائر في الولايات المتحدة. "
+"وهذه الموارد تجهز وتدعم الطلاب والمعلمين وسكان المجتمع بأدوات تفاعلية "
+"وبيانات جغرافية مكانية تساعد في إشراكهم في الحوار بشأن إنشاء الدوائر "
+"الانتخابية."
 
-#: main/templates/main/pages/terms.html:5 representable/templates/base.html:291
+#: main/templates/main/pages/terms.html:5
+#: representable/templates/base.html:291
 msgid "Terms"
 msgstr "شروط الإستخدام"
 
 #: main/templates/main/pages/terms.html:7
-#, fuzzy
-#| msgid "Terms"
 msgid "1. Terms"
-msgstr "شروط الإستخدام"
+msgstr "1- الشروط"
 
 #: main/templates/main/pages/terms.html:8
 msgid ""
-"By accessing the website at <a href=\"https://representable.org\">http://"
-"representable.org</a>, you are agreeing to be bound by these terms of "
-"service, all applicable laws and regulations, and agree that you are "
-"responsible for compliance with any applicable local laws. If you do not "
-"agree with any of these terms, you are prohibited from using or accessing "
-"this site. The materials contained in this website are protected by "
-"applicable copyright and trademark law."
+"By accessing the website at <a "
+"href=\"https://representable.org\">http://representable.org</a>, you are "
+"agreeing to be bound by these terms of service, all applicable laws and "
+"regulations, and agree that you are responsible for compliance with any "
+"applicable local laws. If you do not agree with any of these terms, you are "
+"prohibited from using or accessing this site. The materials contained in "
+"this website are protected by applicable copyright and trademark law."
 msgstr ""
+"دخولك على الموقع <a "
+"href=\"https://representable.org\">http://representable.org</a> يعني أنك "
+"توافق على الالتزام بشروط الخدمة المذكورة وبجميع القوانين واللوائح المعمول "
+"بها وأنك تقر بأنك مسؤول عن الامتثال لأي قوانين محلية معمول بها. فإذا كنت غير"
+" موافق على أي شرط من هذه الشروط، فيحظر عليك استخدام هذا الموقع أو الدخول "
+"إليه. المواد الموجودة في هذا الموقع مكفولة بحماية قانون حقوق النشر والعلامات"
+" التجارية المعمول به."
 
 #: main/templates/main/pages/terms.html:10
 msgid "2. Use License"
-msgstr ""
+msgstr "2- ترخيص الاستخدام"
 
 #: main/templates/main/pages/terms.html:12
 msgid ""
@@ -1667,12 +1803,22 @@ msgid ""
 "commercial transitory viewing only. This is the grant of a license, not a "
 "transfer of title, and under this license you may not: <ol type=\"i\"> "
 "<li>modify or copy the materials;</li> <li>use the materials for any "
-"commercial purpose, or for any public display (commercial or non-commercial);"
-"</li> <li>attempt to decompile or reverse engineer any software contained on "
-"Representable's website;</li> <li>remove any copyright or other proprietary "
-"notations from the materials; or</li> <li>transfer the materials to another "
-"person or \"mirror\" the materials on any other server.</li> </ol> </li>"
+"commercial purpose, or for any public display (commercial or non-"
+"commercial);</li> <li>attempt to decompile or reverse engineer any software "
+"contained on Representable's website;</li> <li>remove any copyright or other"
+" proprietary notations from the materials; or</li> <li>transfer the "
+"materials to another person or \"mirror\" the materials on any other "
+"server.</li> </ol> </li>"
 msgstr ""
+"<li>يُمنح التصريح المؤقت بتنزيل نسخة واحدة من المواد (المعلومات أو "
+"البرمجيات) الموجودة على موقع Representable للاطلاع الشخصي غير التجاري المؤقت"
+" فقط. هذا التصريح يمنح للترخيص وليس نقلًا لحق للملكية، وبموجب هذه الرخصة لا "
+"يجوز لك أي مما يلي: <ol type=\"i\"> <li>تعديل أو نسخ المواد</li> <li>أو "
+"استخدام المواد لأي غرض تجاري أو للعرض العام (سواء تجاري أم غير تجاري)</li> "
+"<li>أو محاولة فك أي برمجيات من على موقع Representable أو عكس هندستها</li> "
+"<li>أو إزالة أي تأشير من تأشيرات حقوق التأليف والنشر أو الملكية</li> <li>أو "
+"تحويل المواد إلى شخص آخر أو \"نسخ\" صورة مطابقة منها على أي خادم آخر.</li> "
+"</ol> </li>"
 
 #: main/templates/main/pages/terms.html:25
 msgid ""
@@ -1682,10 +1828,14 @@ msgid ""
 "license, you must destroy any downloaded materials in your possession "
 "whether in electronic or printed format."
 msgstr ""
+"يُفسخ هذا الترخيص تلقائيًا في حالة مخالفتك لأي شرط من هذه الشروط، ويجوز "
+"إنهاء الترخيص من طرف Representable في أي وقت. وبعد إنهاء اطلاعك على هذه "
+"المواد أو بعد إنهاء هذا الترخيص يجب عليك إتلاف أي مواد قمت بتنزيلها وفي "
+"حوزتك سواء كانت إلكترونية أو ورقية."
 
 #: main/templates/main/pages/terms.html:31
 msgid "3. Disclaimer"
-msgstr ""
+msgstr "3- إخلاء مسؤولية"
 
 #: main/templates/main/pages/terms.html:34
 msgid ""
@@ -1696,6 +1846,11 @@ msgid ""
 "particular purpose, or non-infringement of intellectual property or other "
 "violation of rights."
 msgstr ""
+"المواد الموجودة على موقع Representable مقدمة على أساس أنها مواد \"على "
+"حالتها\". وإن Representable لا يقدم أي ضمانات، سواء صريحة أو ضمنية، ويخلي "
+"مسؤوليته ويتبرأ من أي ضمانات أخرى والتي تشمل دون أن تقتصر على الضمانات "
+"الضمنية أو الشروط الخاصة بالرواج أو الملاءمة لغرض معين أو عدم انتهاك الملكية"
+" الفكرية أو انتهاك لأي حقوق أخرى."
 
 #: main/templates/main/pages/terms.html:40
 msgid ""
@@ -1704,10 +1859,13 @@ msgid ""
 "materials on its website or otherwise relating to such materials or on any "
 "sites linked to this site."
 msgstr ""
+"علاوة على ذلك، لا يضمن Representable ولا يتعهد بأي شيء يتعلق بدقة المواد "
+"الموجودة على الموقع أو أي شيء يتعلق بهذه المواد أو النتائج المحتملة منها أو "
+"موثوقية استخدامها على الموقع أو على أي مواقع أخرى متصلة روابطها به."
 
 #: main/templates/main/pages/terms.html:46
 msgid "4. Limitations"
-msgstr ""
+msgstr "4- الحدود المقيدة"
 
 #: main/templates/main/pages/terms.html:48
 msgid ""
@@ -1716,14 +1874,22 @@ msgid ""
 "to business interruption) arising out of the use or inability to use the "
 "materials on Representable's website, even if Representable or a "
 "Representable authorized representative has been notified orally or in "
-"writing of the possibility of such damage. Because some jurisdictions do not "
-"allow limitations on implied warranties, or limitations of liability for "
+"writing of the possibility of such damage. Because some jurisdictions do not"
+" allow limitations on implied warranties, or limitations of liability for "
 "consequential or incidental damages, these limitations may not apply to you."
 msgstr ""
+"لا يتحمل Representable أو موردوه بأي حال من الأحوال المسؤولية عن أي تعويضات "
+"(ومنها على سبيل المثال لا الحصر تعويضات فقدان البيانات أو خسارة الربح أو "
+"تعويضات تعطيل الأعمال) تنتج عن استخدام المواد الموجودة على موقع "
+"Representable أو عدم القدرة على استخدامها، حتى وإن تم إعلان Representable أو"
+" ممثله المفوض شفهيًا أو كتابيًا باحتمالية تلك التعويضات. وبسبب أن بعض النظم "
+"القضائية لا تسمح تحت ولايتها بالحدود المقيدة للضمانات الضمنية أو حدود "
+"المسؤولية عن الأضرار المترتبة أو العارضة، فهذه الحدود المقيدة قد لا تنطبق "
+"عليك."
 
 #: main/templates/main/pages/terms.html:54
 msgid "5. Accuracy of materials"
-msgstr ""
+msgstr "5- دقة المواد"
 
 #: main/templates/main/pages/terms.html:56
 msgid ""
@@ -1734,22 +1900,31 @@ msgid ""
 "any time without notice. However Representable does not make any commitment "
 "to update the materials."
 msgstr ""
+"قد يشوب المواد الموجودة على موقع Representable أخطاء فنية أو مطبعية أو "
+"تصويرية. لذلك لا يضمن Representable دقة أي مواد موجودة على الموقع أو كمالها "
+"أو حداثتها. كما أن Representable قد يجري تغييرات على المواد الموجودة على "
+"موقعه في أي وقت دون إشعار مسبق. ومع ذلك لا يتعهد Representable بأي التزام "
+"بتحديث المواد."
 
 #: main/templates/main/pages/terms.html:61
 msgid "6. Links"
-msgstr ""
+msgstr "6- الروابط"
 
 #: main/templates/main/pages/terms.html:62
 msgid ""
-"Representable has not reviewed all of the sites linked to its website and is "
-"not responsible for the contents of any such linked site. The inclusion of "
-"any link does not imply endorsement by Representable of the site. Use of any "
-"such linked website is at the user's own risk."
+"Representable has not reviewed all of the sites linked to its website and is"
+" not responsible for the contents of any such linked site. The inclusion of "
+"any link does not imply endorsement by Representable of the site. Use of any"
+" such linked website is at the user's own risk."
 msgstr ""
+"لم يراجع موقع Representable جميع المواقع المربوطة به ولا يتحمل المسؤولية عن "
+"محتوى أي موقع من تلك المواقع. فوجود أي رابط لا يعني إقرار Representable "
+"بمصداقية هذا الموقع. لذلك يتحمل المستخدم وحده مسؤولية استخدام أي رابط لتلك "
+"المواقع."
 
 #: main/templates/main/pages/terms.html:64
 msgid "7. Modifications"
-msgstr ""
+msgstr "7- التعديلات"
 
 #: main/templates/main/pages/terms.html:65
 msgid ""
@@ -1757,10 +1932,13 @@ msgid ""
 "without notice. By using this website you are agreeing to be bound by the "
 "then current version of these terms of service."
 msgstr ""
+"يجوز لموقع Representable تعديل شروط الخدمة الخاصة به في أي وقت دون إشعار "
+"مسبق. واستخدامك لهذا الموقع يعني موافقتك على الالتزام بالنسخة السارية أثناء "
+"استخدامك من هذه الشروط."
 
 #: main/templates/main/pages/terms.html:66
 msgid "8. Governing Law"
-msgstr ""
+msgstr "8- القانون المنظم"
 
 #: main/templates/main/pages/terms.html:67
 msgid ""
@@ -1768,35 +1946,35 @@ msgid ""
 "the laws of New Jersey and you irrevocably submit to the exclusive "
 "jurisdiction of the courts in that State or location."
 msgstr ""
+"تُنظم هذه الشروط والأحكام وتُفسر وفقًا لقوانين ولاية \"نيو جيرزي\" ويخضع "
+"المستخدم خضوعًا قاطعًا للولاية القضائية الحصرية لمحاكم تلك الولاية أو ذلك "
+"المكان."
 
 #: main/templates/main/partners/get_started.html:9
-#, fuzzy
-#| msgid "Learn how to use Representable to draw your community."
 msgid "Join the national Representable community."
-msgstr "تعرف على كيفية استخدام رَبْريسانْتَبُل لرسم مجتمعك"
+msgstr "انضم إلى مجتمع Representable الوطني."
 
 #: main/templates/main/partners/get_started.html:11
 msgid ""
-"Representable is growing a redistricting community with organizations across "
-"the country. Organization leaders can easily collect community maps with "
+"Representable is growing a redistricting community with organizations across"
+" the country. Organization leaders can easily collect community maps with "
 "Representable and join redistricting efforts in their states."
 msgstr ""
+"تقوم رابطة Representable بتشكيل مجتمع لإعادة ترسيم الدوائر تكونه منظمات من "
+"كل أنحاء البلد. حيث يمكن لقادة المنظمات جمع خرائط المجتمعات المحلية بسهولة "
+"باستخدام Representable والانضمام إلى جهود إعادة الترسيم في ولايتهم."
 
 #: main/templates/main/partners/get_started.html:15
-#, fuzzy
-#| msgid "Learn how to use Representable to draw your community."
 msgid "How to use Representable as an organization?"
-msgstr "تعرف على كيفية استخدام رَبْريسانْتَبُل لرسم مجتمعك"
+msgstr "كيف يمكن أن تستخدم المنظمات موقع Representable؟"
 
 #: main/templates/main/partners/get_started.html:17
 msgid "Check out our demo to see all of Representable’s features."
-msgstr ""
+msgstr "شاهد عرضنا التوضيحي لرؤية جميع مزايا Representable."
 
 #: main/templates/main/partners/get_started.html:31
-#, fuzzy
-#| msgid "For organizations"
 msgid "Join Representable as an Organization"
-msgstr "للمنظمات"
+msgstr "انضم إلى Representable كمنظمة"
 
 #: main/templates/main/partners/get_started.html:33
 msgid ""
@@ -1804,49 +1982,46 @@ msgid ""
 "download submissions. Joining Representable as an organization is free, and "
 "includes access to our redistricting toolkit."
 msgstr ""
+"بصفتك قائد المنظمة، يمكنك جمع خرائط المجتمعات وتنزيل المشاركات المقدمة. "
+"انضمام المنظمات إلى Representable مجاني ويشمل إتاحة الحصول على مجموعة أدوات "
+"إعادة الترسيم الخاصة بنا."
 
 #: main/templates/main/partners/get_started.html:38
 #: main/templates/main/partners/get_started.html:39
 msgid "CREATE ORGANIZATION"
-msgstr ""
+msgstr "إنشاء منظمة"
 
 #: main/templates/main/partners/get_started.html:51
-#, fuzzy
-#| msgid "For organizations"
 msgid "Create an Organization"
-msgstr "للمنظمات"
+msgstr "قم بإنشاء منظمة"
 
 #: main/templates/main/partners/get_started.html:52
 msgid "Include a brief description, link, and the state(s) you operate in."
-msgstr ""
+msgstr "اكتب وصفًا مختصرًا ورابطًا والولاية أو الولايات التي تعمل فيها."
 
 #: main/templates/main/partners/get_started.html:60
-#, fuzzy
-#| msgid "Draw a Community Map"
 msgid "Start a Community Mapping Drive"
-msgstr "ارسم خريطة محلية"
+msgstr "أنشئ محرك رسم خرائط المجتمعات المحلية"
 
 #: main/templates/main/partners/get_started.html:61
 msgid "Create a community mapping drive via the organization dashboard."
-msgstr ""
+msgstr "أنشئ محرك رسم خرائط المجتمعات المحلية عبر لوحة بيانات المنظمة."
 
 #: main/templates/main/partners/get_started.html:69
-#, fuzzy
-#| msgid "Draw a Community Map"
 msgid "Collect Community Maps"
-msgstr "ارسم خريطة محلية"
+msgstr "اجمع خرائط المجتمعات"
 
 #: main/templates/main/partners/get_started.html:70
 msgid ""
 "Share the link to your community mapping drive to individuals in your state "
 "to start collecting submissions."
 msgstr ""
+"شارك الرابط الخاص بمحرك رسم خرائط المجتمعات المحلية مع أفراد المجتمعات "
+"بولايتك للبدء في جمع المشاركات."
 
 #: main/templates/main/partners/get_started.html:78
-#, fuzzy
-#| msgid "Visualize and Export"
 msgid "Visualize and Export Community Maps"
-msgstr "تصوّر وصدّر"
+msgstr "أظهر خرائط المجتمعات وقم بتصديرها"
 
 #: main/templates/main/partners/get_started.html:79
 msgid ""
@@ -1854,6 +2029,8 @@ msgid ""
 "organization as geoJSON for easy integration with district drawing and "
 "visualization tools."
 msgstr ""
+"قم بإظهار خريطة جميع المجتمعات المحلية المقدمة، وقم بتنزيلها على منظمتك "
+"بصيغة geoJSON لسهولة الدمج مع أدوات ترسيم الدوائر والتصوير المرئي."
 
 #: main/templates/main/partners/index.html:9
 #: representable/templates/base.html:105
@@ -1865,154 +2042,150 @@ msgid ""
 "Find out more about the organizations using Representable.org to gather "
 "community data. Want to become a partner? Learn more "
 msgstr ""
+"اعرف المزيد عن المنظمات التي تستخدم Representable.org لجمع بيانات المجتمعات."
+" هل تود أن تصبح شريكًا؟ اعرف المزيد "
 
 #: main/templates/main/partners/index.html:10
 msgid "here"
-msgstr ""
+msgstr "من هنا"
 
 #: main/templates/main/partners/index.html:33
 msgid "More Details"
-msgstr ""
+msgstr "المزيد من التفاصيل"
 
 #: main/templates/main/partners/index.html:35
-#, fuzzy
-#| msgid "Partner with us"
 msgid "Partner Site"
-msgstr "شريك معنا"
+msgstr "موقع الشريك"
 
 #: main/templates/main/partners/map.html:56
 #: main/templates/main/partners/map.html:59
 msgid "Export All as GeoJSON"
-msgstr ""
+msgstr "تصدير الكل بصيغة GeoJSON"
 
 #: main/templates/main/partners/map.html:57
 #: main/templates/main/partners/map.html:60
 msgid "Export All as CSV"
-msgstr ""
+msgstr "تصدير الكل بصيغة CSV"
 
 #: main/templates/main/partners/map.html:99
 msgid "Hidden"
-msgstr ""
+msgstr "مخفي"
 
 #: main/templates/main/partners/map.html:103
-#, fuzzy
-#| msgid "Privacy"
 msgid "Private"
-msgstr "خصوصية"
+msgstr "خاص"
 
 #: main/templates/main/partners/map.html:176
-#, fuzzy
-#| msgid "Add your community"
 msgid "Report this community"
-msgstr "أضف مجتمعك"
+msgstr "أبلغ عن هذا المجتمع"
 
 #: main/templates/main/partners/map.html:183
 msgid ""
 "If you feel this community is abusive, spam, low-effort, or doesn't live up "
 "to our guidelines, send us a report."
 msgstr ""
+"إذا شعرت أن هذا المجتمع تعسفي أو غير مرغوب فيه أو ضعيف المجهود أو لا يتقيد "
+"بمبادئنا التوجيهية، فقم بإبلاغنا."
 
 #: main/templates/main/partners/map.html:190
 msgid ""
 "As an administrator of this organization, reporting this community will "
 "automatically hide it from all non-administrators."
 msgstr ""
+"بصفتك مدير هذه المنظمة، فإن الإبلاغ عن هذا المجتمع سيؤدي إلى إخفائه تلقائيًا"
+" عن جميع الأفراد غير المديرين."
 
 #: main/templates/main/partners/map.html:199
 msgid "Email address"
-msgstr ""
+msgstr "عنوان البريد الإلكتروني"
 
 #: main/templates/main/partners/map.html:203
 msgid "Cancel"
-msgstr ""
+msgstr "إلغاء"
 
 #: main/templates/main/partners/map.html:204
 msgid "Danger: </span>Send Report"
-msgstr ""
+msgstr "خطر: </span>إرسال بلاغ"
 
 #: main/templates/main/partners/map.html:216
 msgid "Thank you for letting us know!"
-msgstr ""
+msgstr "شكرًا لك على إبلاغنا."
 
 #: main/templates/main/partners/map.html:222
 msgid "Your report was successfully submitted. Thank you."
-msgstr ""
+msgstr "تم إرسال بلاغك بنجاح. شكرًا لك."
 
 #: main/templates/main/partners/page.html:22
-#, fuzzy
-#| msgid "Partners"
 msgid "Return to Partners"
-msgstr "شريك معنا"
+msgstr "العودة إلى الشركاء"
 
 #: main/templates/main/partners/page.html:23
-#, fuzzy
-#| msgid "For organizations"
 msgid "Link to organization map"
-msgstr "للمنظمات"
+msgstr "الربط بخريطة المنظمة"
 
 #: main/templates/main/partners/page.html:25
-#, fuzzy
-#| msgid "Partner with us"
 msgid "Visit Partner Site"
-msgstr "شريك معنا"
+msgstr "زيارة موقع الشريك"
 
 #: main/templates/main/review.html:43
 msgid "The community was already deleted."
-msgstr ""
+msgstr "تم حذف المجتمع."
 
 #: main/templates/main/review.html:49 main/templates/main/submission.html:139
 msgid "Community Information"
-msgstr ""
+msgstr "معلومات المجتمع"
 
 #: main/templates/main/review.html:50
 msgid "Action"
-msgstr ""
+msgstr "إجراء"
 
 #: main/templates/main/review.html:51
 msgid "Show"
-msgstr ""
+msgstr "إظهار"
 
 #: main/templates/main/review.html:101
 msgid "Delete"
-msgstr ""
+msgstr "حذف"
 
 #: main/templates/main/review.html:112
 msgid "No entries!"
-msgstr ""
+msgstr "لا توجد بيانات."
 
 #: main/templates/main/review.html:113
 msgid ""
-"Join us in the fight against gerrymandering. Click <a href=\"/entry_preview"
-"\">here</a> to add your community."
+"Join us in the fight against gerrymandering. Click <a "
+"href=\"/entry_preview\">here</a> to add your community."
 msgstr ""
+"انضم إلينا لمحاربة التلاعب بحدود الدوائر الانتخابية. انقر <a "
+"href=\"/entry_preview\">هنا</a> لإضافة مجتمعك."
 
 #: main/templates/main/state.html:16
 msgid "Welcome to"
-msgstr ""
+msgstr "مرحبًا بك في"
 
 #: main/templates/main/state.html:23 main/templates/main/state.html:24
 msgid "START MAPPING"
-msgstr ""
+msgstr "ابدأ رسم الخريطة"
 
 #: main/templates/main/state_info.html:7
 msgid "What is redistricting?"
-msgstr ""
+msgstr "ماذا يقصد بإعادة ترسيم الدوائر؟"
 
 #: main/templates/main/state_info.html:11
 msgid ""
 "In 2021, voting district lines across the country will be redrawn to "
 "determine who represents the people of your state."
 msgstr ""
+"في عام 2021 سيعاد ترسيم حدود الدوائر الانتخابية في كل أنحاء البلد ليتسنى "
+"انتخاب من يمثلون الناس في ولايتك."
 
 #: main/templates/main/state_info.html:17
 msgid "How does redistricting work in "
-msgstr ""
+msgstr "كيف تجرى إعادة ترسيم الدوائر في "
 
 #: main/templates/main/state_info.html:28
-#, fuzzy
-#| msgid "Representable will help..."
 msgid "How can Representable help?"
-msgstr "رَبْريسانْتَبُل سوف يساعد في..."
+msgstr "كيف يمكن لموقع Representable أن يقدم المساعدة؟"
 
 #: main/templates/main/state_info.html:31
 msgid ""
@@ -2020,68 +2193,69 @@ msgid ""
 "and boundaries, so that they can fairly consider it when they draw new "
 "voting district lines."
 msgstr ""
+"سيساعدك Representable في إبلاغ مسؤولي رسم الخرائط بالمجتمعات ذات المصالح "
+"المشتركة وحدودها، حتى يتسنى لهم أخذها في الاعتبار بإنصاف عند قيامهم بترسيم "
+"الحدود الجديدة للدوائر الانتخابية."
 
 #: main/templates/main/state_info.html:37
-#, fuzzy
-#| msgid "Redistricting is coming."
 msgid "redistricting criteria"
-msgstr "إعادة التقسيم قادم."
+msgstr "معايير إعادة ترسيم الدوائر"
 
 #: main/templates/main/state_info.html:65
-#, fuzzy
-#| msgid "Put your community on the map."
 msgid "Communities of Interest in "
-msgstr "ضع مجتمعك على الخريطة"
+msgstr "المجتمعات ذات المصالح المشتركة في "
 
 #: main/templates/main/submission.html:56
 msgid "Download this map"
-msgstr ""
+msgstr "تنزيل هذه الخريطة"
 
 #: main/templates/main/submission.html:58
 msgid "Map downloads include the community information below."
-msgstr ""
+msgstr "تنزيلات الخرائط تشمل معلومات المجتمعات أدناه."
 
 #: main/templates/main/submission.html:69
 msgid "What is GeoJSON?"
-msgstr ""
+msgstr "ما المقصود بصيغة GeoJSON؟"
 
 #: main/templates/main/submission.html:75
 msgid ""
 "GeoJSON files are industry standard and usable with other mapping softwares "
 "like Maptitude for Redistricting, Dave's Redistricting App, ESRI, and more."
 msgstr ""
+"ملفات GeoJSON هي تنسيق قطاعي تستخدم مع البرمجيات الأخرى لرسم الخرائط مثل "
+"Maptitude for Redistricting و Dave's Redistricting App و ESRI وغيرها."
 
 #: main/templates/main/submission.html:214
 msgid "Submit"
-msgstr ""
+msgstr "إرسال"
 
 #: main/templates/main/submission.html:219
 msgid "This community map has already been submitted to an organization"
-msgstr ""
+msgstr "تم إرسال هذه الخريطة بالفعل إلى إحدى المنظمات"
 
 #: main/templates/main/submission.html:242
 #: main/templates/main/submission.html:249
 #: main/templates/main/submission.html:252
 msgid "Data Layers"
-msgstr ""
+msgstr "طبقات البيانات"
 
 #: main/templates/main/submission.html:258
 #: main/templates/main/submission.html:271
 #: main/templates/main/submission.html:274
 msgid "Demographics"
-msgstr ""
+msgstr "الخصائص السكانية"
 
 #: main/templates/main/submission.html:308
 msgid "Your community is ready to be viewed and downloaded. You have "
-msgstr ""
+msgstr "مجتمعك جاهز للإظهار والتنزيل. لقد أرسلنا "
 
 #: main/templates/main/submission.html:308
 msgid "received an email with your community as a PDF file."
-msgstr ""
+msgstr "إليك رسالة إلكترونية تحتوي على مجتمعك بصيغة ملف PDF."
 
 #: main/templates/main/submission.html:309
 msgid "Make an impact with your map."
-msgstr ""
+msgstr "يمكنك إحداث أثر إيجابي بخريطتك."
 
 #: main/templates/main/submission.html:319
 msgid ""
@@ -2089,19 +2263,26 @@ msgid ""
 "can submit these files as public testimony or to a local redistricting "
 "organization."
 msgstr ""
+"افتح خريطتك على حاسوب لتنزيلها بصيغة PDF أو ملف geoJSON. يمكنك تقديم هذه "
+"الملفات كشهادة علنية عامة أو إلى منظمة إعادة ترسيم محلية."
 
 #: main/templates/main/submission.html:329
 msgid ""
 "If your state has a redistricting commission or accepts Communities of "
 "Interest, send a pdf of your community to submit as public testimony. If "
-"not, you can send it to a local redistricting organization or <a href="
-"\"https://myreps.datamade.us/\" target=\"_blank\" rel=\"noopener noreferrer"
-"\">your legislator</a>."
+"not, you can send it to a local redistricting organization or <a "
+"href=\"https://myreps.datamade.us/\" target=\"_blank\" rel=\"noopener "
+"noreferrer\">your legislator</a>."
 msgstr ""
+"إذا كان لدى ولايتك لجنة إعادة ترسيم أو كانت الولاية تقبل المجتمعات ذات "
+"المصالح المشتركة، فأرسل ملف PDF يحتوي على مجتمعك لتقديمه كشهادة علنية عامة. "
+"إذا لم يكن لديها ذلك، يمكنك إرسالها إلى منظمة إعادة ترسيم محلية أو <a "
+"href=\"https://myreps.datamade.us/\" target=\"_blank\" rel=\"noopener "
+"noreferrer\">الجهة التشريعية في منطقتك</a>."
 
 #: main/templates/main/submission.html:333
 msgid "Export PDF"
-msgstr ""
+msgstr "تصدير PDF"
 
 #: main/templates/main/submission.html:345
 msgid ""
@@ -2109,37 +2290,46 @@ msgid ""
 "the geoJSON file to mapping softwares such as Maptitude, Dave’s "
 "Redistricting App, or Districtr."
 msgstr ""
+"إذا أردت استخدام خريطتك في ترسيم الدوائر الانتخابية، يمكنك تحميل ملف geoJSON"
+" إلى برمجيات رسم الخرائط مثل Maptitude أو Dave’s Redistricting App أو "
+"Districtr."
 
 #: main/templates/main/submission.html:367
 msgid ""
-"Send the map to your community members and encourage them to draw maps. When "
-"map drawers have more data from your community, they are more likely to draw "
-"fairer districts."
+"Send the map to your community members and encourage them to draw maps. When"
+" map drawers have more data from your community, they are more likely to "
+"draw fairer districts."
 msgstr ""
+"أرسل خريطتك إلى أفراد مجتمعك وشجعهم على رسم خرائطهم. فكلما حصل مسؤولو رسم "
+"الخرائط على المزيد من البيانات، استطاعوا ترسيم الدوائر بصورة أكثر عدلًا."
 
 #: main/templates/main/submission.html:378
 msgid "Resend Email"
-msgstr ""
+msgstr "إعادة إرسال البريد الإلكتروني"
 
 #: main/templates/main/submission.html:391
 msgid ""
-"This map was created at <a href=\"https://representable.org/\">Representable."
-"org"
+"This map was created at <a "
+"href=\"https://representable.org/\">Representable.org"
 msgstr ""
+"أنشئت هذه الخريطة على <a "
+"href=\"https://representable.org/\">Representable.org"
 
 #: main/templates/main/thanks.html:13
 msgid "Thank you for your submission!"
-msgstr ""
+msgstr "شكرًا لك على تقديم بياناتك."
 
 #: main/templates/main/thanks.html:16
 msgid "Please Verify Your Email"
-msgstr ""
+msgstr "يرجى تأكيد بريدك الإلكتروني"
 
 #: main/templates/main/thanks.html:22
 msgid ""
 "This tool is meant for non-partisan use by communities and their members to "
 "provide information to the Redistricting Commission."
 msgstr ""
+"هذه الأداة مخصصة للاستخدام غير الحزبي من قبل المجتمعات وأفرادها لتقديم "
+"المعلومات إلى لجنة إعادة ترسيم الدوائر."
 
 #: main/templates/main/thanks.html:23
 msgid ""
@@ -2147,85 +2337,92 @@ msgid ""
 "redistricting commission. We will add information about submitting to the "
 "commission as soon as information becomes available in your state."
 msgstr ""
+"إضافة خريطتك إلى Representable.org تعني أنك لا تقدم الخريطة إلى لجنة إعادة "
+"الترسيم. ونحن سنضيف المعلومات الخاصة بالبيانات المقدمة إلى اللجنة فور إتاحة "
+"المعلومات في ولايتك."
 
 #: main/templates/main/thanks.html:26
 msgid ""
-"Thank you for submitting your map. The next step is to verify your email. We "
-"resent an email verification link to your inbox."
+"Thank you for submitting your map. The next step is to verify your email. We"
+" resent an email verification link to your inbox."
 msgstr ""
+"شكرًا لك على تقديم خريطتك. الخطوة التالية هي تأكيد بريدك الإلكتروني. لقد "
+"أعدنا إرسال رابط التحقق من البريد الإلكتروني إليك."
 
 #: main/templates/main/thanks.html:27
 msgid ""
 "Account verification allows Representable.org and our partner organizations "
-"to submit credible maps to Redistricting Commisions ensuring that your entry "
-"has an impact in ending gerrymandering."
+"to submit credible maps to Redistricting Commisions ensuring that your entry"
+" has an impact in ending gerrymandering."
 msgstr ""
+"التحقق من الحساب يسمح لموقع Representable.org وشركائنا من المنظمات بتقديم "
+"خرائط حقيقية إلى لجنة إعادة الترسيم مما يضمن أن يكون لبياناتك أثر في القضاء "
+"على التلاعب بحدود الدوائر الانتخابية."
 
 #: main/templates/main/thanks.html:29
 msgid ""
 "In the meantime, you can export your community in GeoJSON or PDF format "
 "using the link below."
 msgstr ""
+"في الوقت نفسه يمكنك تصدير خريطة مجتمعك بصيغة GeoJSON أو PDF باستخدام الرابط "
+"التالي."
 
 #: main/templates/main/thanks.html:33
-#, fuzzy
-#| msgid "Add Your Community"
 msgid "View/Export Your Community"
-msgstr "أضف مجتمعك"
+msgstr "إظهار/تصدير مجتمعك"
 
 #: main/templates/main/thanks.html:35 main/templates/main/thanks.html:38
 msgid "Your community map is now live here: "
-msgstr ""
+msgstr "ستظهر خريطة مجتمعك الآن مباشرة هنا: "
 
 #: main/templates/main/thanks.html:39
-#, fuzzy
-#| msgid "Add community"
 msgid "View Community"
-msgstr "أضف مجتمع"
+msgstr "إظهار المجتمع"
 
 #: main/templates/main/thanks.html:45
 msgid "Map"
-msgstr ""
+msgstr "الخريطة"
 
 #: main/templates/main/thanks.html:46
 msgid "View all communities submitted to {{drive_name}}"
-msgstr ""
+msgstr "إظهار جميع خرائط المجتمعات المقدمة إلى {{drive_name}}"
 
 #: main/templates/main/thanks.html:52
 msgid "Do you have any feedback for us?"
-msgstr ""
+msgstr "هل لديك أي تعقيبات لنا؟"
 
 #: main/templates/main/thanks.html:53
 msgid ""
 "We are interested in your feedback. If you found a bug or have any "
 "suggestions for us, please send them to us by pressing on the button below."
 msgstr ""
+"نحن يهمنا رأيك. فإذا رأيت خللًا أو كانت لديك أي اقتراحات لنا، يرجى إرسالها "
+"إلينا بالنقر على الزر أدناه."
 
 #: main/templates/main/thanks.html:54
-#, fuzzy
-#| msgid "Report Error/Send Feedback"
 msgid "Send Feedback"
-msgstr "أرسل تعليقاتك"
+msgstr "أرسل آراءك"
 
 #: main/templates/main/thanks.html:57
 msgid "Having trouble with email verification?"
-msgstr ""
+msgstr "هل تواجه مشكلة في التحقق من البريد الإلكتروني؟"
 
 #: main/templates/main/thanks.html:58
 msgid ""
-"We are here to help! Let us know if you didn't recieve an email verification "
-"link or want to provide feedback by contacting Team@Representable.org"
+"We are here to help! Let us know if you didn't recieve an email verification"
+" link or want to provide feedback by contacting Team@Representable.org"
 msgstr ""
+"نحن مستعدون لمساعدتك. أبلغنا إذا لم تكن قد تلقيت رابط التحقق من البريد "
+"الإلكتروني أو إذا أردت أن تبلغنا بآرائك من خلال التواصل على "
+"Team@Representable.org"
 
 #: representable/templates/base.html:81
-#, fuzzy
-#| msgid "For organizations"
 msgid "My Organizations"
-msgstr "للمنظمات"
+msgstr "منظماتي"
 
 #: representable/templates/base.html:110
 msgid "Learn More"
-msgstr ""
+msgstr "اعرف المزيد"
 
 #: representable/templates/base.html:120
 msgid "About"
@@ -2269,54 +2466,55 @@ msgstr "مزيد الأسئلة؟ تواصلوا بنا على"
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:5
 msgid "Select an image to embed"
-msgstr ""
+msgstr "اختر صورة لتضمينها"
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:27
 msgid "Browse for the image you want, then click 'Embed Image' to continue..."
-msgstr ""
+msgstr "تصفح لإيجاد الصورة التي تريدها، ثم انقر على \"تضمين الصورة\" للاستمرار..."
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:29
 msgid ""
 "No images found. Upload images using the 'Image Button' dialog's 'Upload' "
 "tab."
 msgstr ""
+"لا توجد صور. تحميل الصور باستخدام تبويب 'Image Button' dialog's 'Upload'."
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:50
 msgid "Images in: "
-msgstr ""
+msgstr "الصور في: "
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:62
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:80
 msgid "Embed Image"
-msgstr ""
+msgstr "تضمين الصورة"
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:146
 msgid "Play Slideshow"
-msgstr ""
+msgstr "شغل عرض الصور"
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:147
 msgid "Pause Slideshow"
-msgstr ""
+msgstr "إيقاف عرض الصور"
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:148
 msgid "&lsaquo; Previous Photo"
-msgstr ""
+msgstr "&lsaquo; الصورة السابقة"
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:149
 msgid "Next Photo &rsaquo;"
-msgstr ""
+msgstr "الصورة التالية &rsaquo;"
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:150
 msgid "Next &rsaquo;"
-msgstr ""
+msgstr "التالي &rsaquo;"
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:151
 msgid "&lsaquo; Prev"
-msgstr ""
+msgstr "&lsaquo; السابق"
 
 #: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:6
 msgid "Django: the Web framework for perfectionists with deadlines."
-msgstr ""
+msgstr "Django: الإطار الشبكي لناشدي الكمال في التسليم بالمواعيد المحددة."
 
 #: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:345
 #, python-format
@@ -2324,40 +2522,47 @@ msgid ""
 "View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
 "target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
 msgstr ""
+"اطلع على <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\""
+" target=\"_blank\" rel=\"noopener\">مذكرات الإصدار</a> لبرنامج Django "
+"%(version)s"
 
 #: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:367
 msgid "The install worked successfully! Congratulations!"
-msgstr ""
+msgstr "تم التثبيت بنجاح. تهانينا!"
 
 #: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:368
 #, python-format
 msgid ""
-"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
-"%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
-"\">DEBUG=True</a> is in your settings file and you have not configured any "
-"URLs."
+"You are seeing this page because <a "
+"href=\"https://docs.djangoproject.com/en/%(version)s/ref/settings/#debug\" "
+"target=\"_blank\" rel=\"noopener\">DEBUG=True</a> is in your settings file "
+"and you have not configured any URLs."
 msgstr ""
+"أنت ترى هذه الصفحة لأن <a "
+"href=\"https://docs.djangoproject.com/en/%(version)s/ref/settings/#debug\" "
+"target=\"_blank\" rel=\"noopener\">DEBUG=True</a> في ملف إعداداتك ولم تقم "
+"بتكوين أي عناوين URLs."
 
 #: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:383
 msgid "Django Documentation"
-msgstr ""
+msgstr "توثيق Django"
 
 #: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:384
 msgid "Topics, references, &amp; how-to's"
-msgstr ""
+msgstr "المواضيع، المراجع، &amp; الأدلة الإرشادية"
 
 #: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:395
 msgid "Tutorial: A Polling App"
-msgstr ""
+msgstr "شرح توجيهي: تطبيق اقتراع"
 
 #: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:396
 msgid "Get started with Django"
-msgstr ""
+msgstr "ابدأ مع Django"
 
 #: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:407
 msgid "Django Community"
-msgstr ""
+msgstr "مجتمع Django"
 
 #: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:408
 msgid "Connect, get help, or contribute"
-msgstr ""
+msgstr "تواصل، تلقى المساعدة، ساهم"
