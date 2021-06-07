@@ -856,7 +856,6 @@ var map = new mapboxgl.Map({
   style: "mapbox://styles/districter-team/ckdfv8riy0uf51hqu1g7qjrha", //hosted style id
   center: [-96.7026, 40.8136], // starting position - Lincoln, NE :)
   zoom: 3, // starting zoom -- higher is closer
-  maxZoom: 14, // camelCase. There's no official documentation for this smh :/
   minZoom: 7,
 });
 
@@ -880,14 +879,20 @@ var geocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
   country: "us",
   mapboxgl: mapboxgl,
-  placeholder: "Search Location"
+  placeholder: "Search Location",
+  flyTo: {
+    maxZoom: 14, // If you want your result not to go further than a specific zoom
+  }
 });
 
 var modalGeocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
   country: "us",
   mapboxgl: mapboxgl,
-  placeholder: "Search Location"
+  placeholder: "Search Location",
+  flyTo: {
+    maxZoom: 14, // If you want your result not to go further than a specific zoom
+  }
 });
 
 document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
