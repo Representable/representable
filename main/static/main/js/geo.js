@@ -68,6 +68,8 @@ function changeMappingUnit() {
     drawUsingBlocks = false;
     layer_suffix = "bg";
     unit_id = bg_id;
+    // change button name for this case -- TODO: languages?
+    $("#map-units-btn").text("Use smaller units");
     //clear "cache" so that undo button still works as expected
     sessionStorage.clear();
     filterStack = [];
@@ -93,6 +95,8 @@ function changeMappingUnit() {
     drawUsingBlocks = true;
     layer_suffix = "block";
     unit_id = block_id;
+    // change button name for this case -- TODO: languages?
+    $("#map-units-btn").text("Use larger units");
     //clear "cache" so that undo button still works as expected
     sessionStorage.clear();
     filterStack = [];
@@ -241,6 +245,8 @@ $('#map-comm-modal').on('shown.bs.modal hidden.bs.modal', function() {
 $('#map-units-btn').on('click', function() {
   drawUsingBlocks ? $("#map-block-to-bg-modal").modal() : $("#map-bg-to-block-modal").modal()
 });
+
+if (drawUsingBlocks)  $("#map-units-btn").text("Use larger units");
 
 $('#map-block-to-bg-btn').on('click', function() {
   changeMappingUnit();
