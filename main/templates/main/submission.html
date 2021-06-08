@@ -55,7 +55,7 @@
           <div class="card-body">
             <h5 class="card-title header-text"><strong>{% trans "Download this map" %}</strong></h5>
             <p class="header-text small">
-              {% blocktrans %}
+              {% blocktrans trimmed %}
                 Map downloads include the community information below.
               {% endblocktrans %}
             </p>
@@ -326,7 +326,7 @@
                       <img class="mx-auto w-125 h-100" src="{% static 'img/thanks-email.svg' %}" alt="email icon"> </img>
                     </div>
                     <div class="col-lg-7">
-                      {% blocktrans %}
+                      {% blocktrans trimmed %}
                       If your state has a redistricting commission or accepts Communities of Interest, send a pdf of your community to submit as public testimony. If not, you can send it to a local redistricting organization or <a href="https://myreps.datamade.us/" target="_blank" rel="noopener noreferrer">your legislator</a>.
                       {% endblocktrans %}
                       <br>
@@ -388,7 +388,7 @@
             </div>
           </div>
           <div class="d-none" id="pdfCreatedWith">
-            <small class="text-muted">{% blocktrans %} This map was created at <a href="https://representable.org/">Representable.org {% endblocktrans %}</a></small>
+            <small class="text-muted">{% blocktrans trimmed %} This map was created at <a href="https://representable.org/">Representable.org {% endblocktrans %}</a></small>
           </div>
           <div class="d-none" id="pdfInfo">
             {% if c.economic_interests %}

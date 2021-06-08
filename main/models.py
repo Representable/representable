@@ -96,9 +96,9 @@ class Organization(models.Model):
         # generate the slug once the first time the org is created
         if not self.slug:
             # change self.name to be less than 35 char, split at a space,
-            slug_slice = 35;
+            slug_slice = 35
             for idx, char in enumerate(self.name):
-                if char == ' ' and idx < 35:
+                if char == " " and idx < 35:
                     slug_slice = idx
             slug_name = self.name[:slug_slice]
             self.slug = generate_unique_slug(Organization, slug_name)
@@ -178,9 +178,9 @@ class Drive(models.Model):
         # generate the slug once the first time the drive is created
         if not self.slug:
             # change self.name to be less than 35 char, split at a space,
-            slug_slice = 35;
+            slug_slice = 35
             for idx, char in enumerate(self.name):
-                if char == ' ' and idx < 35:
+                if char == " " and idx < 35:
                     slug_slice = idx
             slug_name = self.name[:slug_slice]
             self.slug = generate_unique_slug(Drive, slug_name)
@@ -268,6 +268,7 @@ class CensusBlock(models.Model):
 
 
 # ******************************************************************************#
+
 
 class State(models.Model):
 
@@ -365,19 +366,19 @@ class CommunityEntry(models.Model):
         max_length=500, blank=False, unique=False, default=""
     )
     cultural_interests = models.TextField(
-        max_length=500, blank=True, unique=False, default=""
+        max_length=700, blank=True, unique=False, default=""
     )
     economic_interests = models.TextField(
-        max_length=500, blank=True, unique=False, default=""
+        max_length=700, blank=True, unique=False, default=""
     )
     comm_activities = models.TextField(
-        max_length=500, blank=True, unique=False, default=""
+        max_length=700, blank=True, unique=False, default=""
     )
     other_considerations = models.TextField(
-        max_length=500, blank=True, unique=False, default=""
+        max_length=700, blank=True, unique=False, default=""
     )
     custom_response = models.TextField(
-        max_length=500, blank=True, unique=False, default=""
+        max_length=700, blank=True, unique=False, default=""
     )
     # make this foreign key relation
     state_obj = models.ForeignKey(
@@ -385,7 +386,7 @@ class CommunityEntry(models.Model):
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
-        related_name="submissions"
+        related_name="submissions",
     )
     state = models.CharField(
         max_length=10, blank=True, unique=False, default=""
@@ -437,22 +438,20 @@ class Signature(models.Model):
     hash = models.CharField(max_length=64, blank=True)
 
 
-
-
 # ******************************************************************************#
 
 
 class FrequentlyAskedQuestion(models.Model):
 
     FAQ_TYPE_CHOICES = [
-        ('USER', 'User'),
-        ('ORGANIZATION', 'Organization'),
+        ("USER", "User"),
+        ("ORGANIZATION", "Organization"),
     ]
 
     type = models.CharField(
         max_length=12,
         choices=FAQ_TYPE_CHOICES,
-        default='USER',
+        default="USER",
     )
 
     question = RichTextField()
@@ -470,7 +469,9 @@ class GlossaryDefinition(models.Model):
     term = models.CharField(
         max_length=100, blank=False, unique=True, default=""
     )
-    definition = models.CharField(max_length=1000, blank=False, unique=True, default="")
+    definition = models.CharField(
+        max_length=1000, blank=False, unique=True, default=""
+    )
 
     class Meta:
         db_table = "glossary"

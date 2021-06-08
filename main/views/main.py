@@ -614,8 +614,8 @@ class Submission(View):
             ):
                 context["verified"] = True
 
-            else:
-
+            elif(self.request.user.is_authenticated):
+                
                 user_email_confirmation = EmailConfirmationHMAC(
                     email_address=user_email_address
                 )

@@ -1,11 +1,11 @@
 repos:
   - repo: https://github.com/ambv/black
-    rev: stable
+    rev: 21.5b2
     hooks:
       - id: black
         language_version: python3.7
   - repo: https://github.com/prettier/prettier
-    rev: "2.0.5" 
+    rev: "2.3.0" 
     hooks:
       - id: prettier
         name: prettier
