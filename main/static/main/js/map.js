@@ -205,6 +205,40 @@ map.on("load", function () {
       },
     });
   }
+
+  // add precinct lines and fill
+  if (HAS_PRECINCTS.indexOf(state) != -1) {
+    newSourceLayer("smaller_combined_precincts", PRECINCTS_KEY);
+    map.addLayer({
+      id: "smaller_combined_precincts-lines",
+      type: "line",
+      source: "smaller_combined_precincts",
+      "source-layer": "smaller_combined_precincts",
+      layout: {
+        visibility: "none",
+      },
+      paint: {
+        "line-color": BOUNDARIES_COLORS["nyc"],
+        "line-opacity": 0.7,
+        "line-width": 2,
+      },
+    });
+    map.addLayer({
+      // copied from openprecincts colors
+      id: "smaller_combined_precincts-fill",
+      type: "fill",
+      source: "smaller_combined_precincts",
+      "source-layer": "smaller_combined_precincts",
+      layout: {
+        visibility: "none",
+      },
+      paint: {
+        "fill-outline-color": "rgb(0,0,0)",
+        "fill-opacity": 0.5,
+      },
+    });
+  }
+
   // leg2 : congressional district
   // leg3 : state senate district
   // leg4 : state house district
@@ -398,6 +432,9 @@ if (state === "ny") {
   toggleableLayerIds["nyc-city-council"] = "New York City Council districts";
   toggleableLayerIds["nyc-state-assembly"] = "New York City state assembly districts";
 }
+if (HAS_PRECINCTS.indexOf(state) != -1) {
+  toggleableLayerIds["smaller_combined_precincts"] = "Precinct boundaries";
+}
 
 for (var id in toggleableLayerIds){
 
@@ -444,6 +481,92 @@ for (var id in toggleableLayerIds){
   layers.appendChild(div);
   var newline = document.createElement("br");
 };
+
+// adds elections to next dropdown
+var stateElections = {};
+if (HAS_PRECINCTS.indexOf(state) != -1) stateElections = STATE_ELECTIONS[state];
+for (var idx in stateElections) {
+  id = stateElections[idx];
+  var link = document.createElement("input");
+
+  link.value = id;
+  link.id = id;
+  link.type = "checkbox";
+  link.className = "switch_1";
+  link.checked = false;
+
+  link.onchange = function (e) {
+    var txt = "smaller_combined_precincts-fill";
+    // var clickedLayers = [];
+    // clickedLayers.push(txt + "-lines");
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (this.checked === false) {
+      map.setLayoutProperty(txt, "visibility", "none");
+    } else {
+      map.setLayoutProperty(txt, "visibility", "visible");
+      var demProp = this.id + "D";
+      var repProp = this.id + "R";
+      var state_layer = STATE_FILES[state];
+      // set all other layers to not visible, uncheck the display box for all other layers
+      var computedColor = [
+        "interpolate-lab", // perceptual color space interpolation
+        ["linear"],
+        [
+          "to-number",
+          [
+            "/",
+            ["to-number", ["get", demProp]],
+            // [">", ["number", ["get", demProp], -1], 0],
+            [
+              "+",
+              ["to-number", ["get", demProp]],
+              // [">", ["number", ["get", demProp], -1], 0],
+              ["to-number", ["get", repProp]],
+              // [">", ["number", ["get", repProp], -1], 0],
+            ],
+          ],
+        ],
+        -1,
+        "white",
+        0,
+        "red",
+        0.5,
+        "white", // note that, unlike functions, the "stops" are flat, not wrapped in two-element arrays
+        1,
+        "blue",
+        1.0001,
+        "white",
+      ];
+      map.setFilter(txt, ["==", ["get", "layer"], state_layer]);
+      map.setPaintProperty(txt, "fill-color", computedColor);
+
+      for (var idx2 in stateElections) {
+        otherElection = stateElections[idx2];
+        if (otherElection != this.id) {
+          var button = document.getElementById(otherElection);
+          button.checked = false;
+        }
+      }
+      // if (property.demProp===NULL) {
+      //   map.setLayoutProperty(txt, "visibility", "none");
+      // }
+    }
+  };
+
+  // in order to create the buttons
+  var div = document.createElement("div");
+  div.className = "switch_box box_1";
+  var label = document.createElement("label");
+  label.setAttribute("for", id);
+  label.textContent = ELECTION_NAMES[id];
+  var elections = document.getElementById("election-menu");
+  div.appendChild(link);
+  div.appendChild(label);
+  elections.appendChild(div);
+  var newline = document.createElement("br");
+}
 
 // Toggles the visibility of the selected community. If the coi_layer_fill layer (all the communities) is displayed, remove it and
 // display the selected community. If the last selected community community is hidden, display the coi_layer_fill layer.
@@ -543,6 +666,9 @@ $(document).ready(function(){
 /* Flips arrows on the dropdown menus upon clicking */
 $("#buttonOne").click(function() {
   $("#arrowOne").toggleClass('flipY-inplace');
+});
+$("#buttonTwo").click(function () {
+  $("#arrowTwo").toggleClass("flipY-inplace");
 });
 $("#buttonThree").click(function() {
   $("#arrowThree").toggleClass('flipY-inplace');
