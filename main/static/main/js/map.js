@@ -466,7 +466,7 @@ function toggleEntryVisibility(checkbox)  {
           'maxzoom': mxzoom,
           'tolerance': tol
       });
-    
+
       map.addLayer({
           'id': checkbox.value,
           'type': 'fill',
@@ -504,7 +504,7 @@ function exportCois(url, type) {
           type: "POST",
           url: url,
           data: dataToSend,
-          success:function(response){ 
+          success:function(response){
             const blob = type == "geo" ? new Blob([JSON.stringify(response)], {type : 'application/json'}) : new Blob([response], {type : 'application/csv'})
             const url = window.URL.createObjectURL(blob);
             var link = type == "geo" ? document.getElementById("map-geo-link") : link = document.getElementById("map-csv-link")
@@ -533,7 +533,7 @@ function removeLastChar(str) {
 $(document).ready(function(){
   $("#search-comm").on("keyup", function() {
     var value = $(this).val().toLowerCase();
-    $("#collapseThree tr").filter(function() {
+    $("#map-cois .row").filter(function() {
       var innerText = $(this).text().toLowerCase().replace("show more", "").replace("show less", "").replace("report", "");
       $(this).toggle(innerText.indexOf(value) > -1)
     });
