@@ -86,6 +86,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                     </div> {% endcomment %}
                   <div id="map-cois">
                     {% for c in communities %}
+                     {% if not c.private %}
                       <div class="row community-review-span py-3 px-3" id="{{c.entry_ID}}">
                         <div class="col-8 col-xl-10">
                           <span class="text-uppercase entry-name">
@@ -138,6 +139,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                           <input class="map-checkbox" type="checkbox" value="{{ c.entry_ID }}" onclick="toggleEntryVisibility(this)">
                         </div>
                       </div>
+                      {% endif %}
                     {% endfor %}
                   </div>
                     <div class="row px-3">
