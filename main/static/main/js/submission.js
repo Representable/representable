@@ -194,6 +194,40 @@ map.on("load", function () {
       },
     });
   }
+
+  // add precinct lines and fill
+  if (HAS_PRECINCTS.indexOf(state) != -1) {
+    newSourceLayer("smaller_combined_precincts", PRECINCTS_KEY);
+    map.addLayer({
+      id: "smaller_combined_precincts-lines",
+      type: "line",
+      source: "smaller_combined_precincts",
+      "source-layer": "smaller_combined_precincts",
+      layout: {
+        visibility: "none",
+      },
+      paint: {
+        "line-color": BOUNDARIES_COLORS["nyc"],
+        "line-opacity": 0.7,
+        "line-width": 2,
+      },
+    });
+    map.addLayer({
+      // copied from openprecincts colors
+      id: "smaller_combined_precincts-fill",
+      type: "fill",
+      source: "smaller_combined_precincts",
+      "source-layer": "smaller_combined_precincts",
+      layout: {
+        visibility: "none",
+      },
+      paint: {
+        "fill-outline-color": "rgb(0,0,0)",
+        "fill-opacity": 0.5,
+      },
+    });
+  }
+
   // leg2 : congressional district
   // leg3 : state senate district
   // leg4 : state house district
@@ -468,6 +502,10 @@ if (state === "ny") {
   toggleableLayerIds["nyc-state-assembly"] = "New York City state assembly districts";
 }
 
+if (HAS_PRECINCTS.indexOf(state) != -1) {
+  toggleableLayerIds["smaller_combined_precincts"] = "Precinct boundaries";
+}
+
 // Create toggle switches
 var layers = document.getElementById("outline-menu");
 var addContainer = document.createElement("div");
@@ -547,6 +585,120 @@ function addToggleableLayer(id, appendElement) {
   var newline = document.createElement("br");
 }
 
+// Create toggle switches for elections
+var elections = document.getElementById("election-menu");
+var addContainer = document.createElement("div");
+addContainer.classList.add("container-fluid", "w-100");
+elections.appendChild(addContainer);
+
+var electionsContainer = elections.children[0];
+var addRow = document.createElement("div");
+addRow.classList.add("row", "row-wide");
+electionsContainer.appendChild(addRow);
+
+var electionsRow = electionsContainer.children[0];
+var addCol1 = document.createElement("div");
+addCol1.classList.add("col-12", "col-md-6", "m-0", "p-0");
+var addCol2 = document.createElement("div");
+addCol2.classList.add("col-12", "col-md-6", "m-0", "p-0");
+
+electionsRow.appendChild(addCol1);
+electionsRow.appendChild(addCol2);
+
+var electionCol1 = electionsRow.children[0];
+var electionCol2 = electionsRow.children[1];
+
+count = 0;
+// adds elections to next dropdown
+var stateElections = {};
+if (HAS_PRECINCTS.indexOf(state) != -1) stateElections = STATE_ELECTIONS[state];
+for (var idx in stateElections) {
+  id = stateElections[idx];
+  var link = document.createElement("input");
+
+  link.value = id;
+  link.id = id;
+  link.type = "checkbox";
+  link.className = "switch_1";
+  link.checked = false;
+
+  link.onchange = function (e) {
+    var txt = "smaller_combined_precincts-fill";
+    // var clickedLayers = [];
+    // clickedLayers.push(txt + "-lines");
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (this.checked === false) {
+      map.setLayoutProperty(txt, "visibility", "none");
+    } else {
+      map.setLayoutProperty(txt, "visibility", "visible");
+      var demProp = this.id + "D";
+      var repProp = this.id + "R";
+      var state_layer = STATE_FILES[state];
+      // set all other layers to not visible, uncheck the display box for all other layers
+      var computedColor = [
+        "interpolate-lab", // perceptual color space interpolation
+        ["linear"],
+        [
+          "to-number",
+          [
+            "/",
+            ["to-number", ["get", demProp]],
+            // [">", ["number", ["get", demProp], -1], 0],
+            [
+              "+",
+              ["to-number", ["get", demProp]],
+              // [">", ["number", ["get", demProp], -1], 0],
+              ["to-number", ["get", repProp]],
+              // [">", ["number", ["get", repProp], -1], 0],
+            ],
+          ],
+        ],
+        0,
+        "red",
+        0.5,
+        "white", // note that, unlike functions, the "stops" are flat, not wrapped in two-element arrays
+        1,
+        "blue",
+      ];
+      map.setFilter(txt, ["==", ["get", "layer"], state_layer]);
+      map.setPaintProperty(txt, "fill-color", computedColor);
+
+      for (var idx2 in stateElections) {
+        otherElection = stateElections[idx2];
+        if (otherElection != this.id) {
+          var button = document.getElementById(otherElection);
+          button.checked = false;
+        }
+      }
+      // if (property.demProp===NULL) {
+      //   map.setLayoutProperty(txt, "visibility", "none");
+      // }
+    }
+  };
+
+  // in order to create the buttons
+  var dest;
+  if (count % 2 == 0) {
+    dest = electionCol1;
+  } else {
+    dest = electionCol2;
+  }
+  count++;
+
+  var div = document.createElement("div");
+  div.className = "switch_box box_1 mb-3";
+  var label = document.createElement("label");
+  label.setAttribute("for", id);
+  label.textContent = ELECTION_NAMES[id];
+  div.appendChild(link);
+  div.appendChild(label);
+  dest.appendChild(div);
+  var newline = document.createElement("br");
+}
+
+
 $("#data-layer-btn").on("click", function () {
   toggleDataLayers();
 });
@@ -571,6 +723,18 @@ $("#demographics-card div.card-body h5.card-title").on("click", function () {
   toggleDemographics();
 });
 
+$("#election-btn").on("click", function () {
+  toggleElections();
+});
+
+$("#mobile-election-btn").on("click", function () {
+  toggleElections();
+});
+
+$("#election-card div.card-body h5.card-title").on("click", function () {
+  toggleElections();
+});
+
 function toggleDemographics() {
   $("#demographics-col").toggleClass("d-none");
   $("#demographics-card").toggleClass("d-none");
@@ -579,6 +743,11 @@ function toggleDemographics() {
 function toggleDataLayers() {
   $("#data-layer-col").toggleClass("d-none");
   $("#data-layer-card").toggleClass("d-none");
+}
+
+function toggleElections() {
+  $("#election-col").toggleClass("d-none");
+  $("#election-card").toggleClass("d-none");
 }
 
 /****************************************************************************/
