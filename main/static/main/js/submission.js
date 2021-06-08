@@ -223,7 +223,7 @@ map.on("load", function () {
       },
       paint: {
         "fill-outline-color": "rgb(0,0,0)",
-        "fill-opacity": 0.5,
+        "fill-opacity": 0.35,
       },
     });
   }
