@@ -234,7 +234,7 @@ map.on("load", function () {
       },
       paint: {
         "fill-outline-color": "rgb(0,0,0)",
-        "fill-opacity": 0.5,
+        "fill-opacity": 0.3,
       },
     });
   }
@@ -504,8 +504,10 @@ for (var idx in stateElections) {
 
     if (this.checked === false) {
       map.setLayoutProperty(txt, "visibility", "none");
+      map.setPaintProperty("coi_layer_fill", "fill-opacity", .15);
     } else {
       map.setLayoutProperty(txt, "visibility", "visible");
+      map.setPaintProperty("coi_layer_fill", "fill-opacity", .5);
       var demProp = this.id + "D";
       var repProp = this.id + "R";
       var state_layer = STATE_FILES[state];
