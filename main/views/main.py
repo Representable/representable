@@ -116,6 +116,7 @@ from itertools import islice
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 import pandas as pd
+import requests
 
 from django.conf import settings
 
@@ -130,11 +131,12 @@ from django.contrib.gis.geos import GEOSGeometry
 
 # ******************************************************************************#
 
-
-def block_group_polygons(request):
-    file_ = open(os.path.join(settings.BASE_DIR, 'staticfiles/precompute-ndbg-short.json'))
-    data = json.load(file_)
-    return JsonResponse(data)
+def block_group_polygons(request, abbr):
+    try:
+        file_ = requests.get('https://dev-precomputed-blockgroups.s3.us-east-2.amazonaws.com/adj-n-bounds-'+abbr+'.json')
+        return JsonResponse(file_.json())
+    except Exception as e:
+        raise Http404
 
 # custom mixin redirects to signup page/tab rather than login
 class SignupRequiredMixin(AccessMixin):

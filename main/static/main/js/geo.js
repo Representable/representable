@@ -609,14 +609,10 @@ $("#surveyP2ToMap_button").on("click", function(e) {
 })
 
 $("#mapToPrivacy").on("click", function(e) {
-
   console.log('zoom called');
-
   zoomToCommunity();
   setTimeout(() => {
-
     console.log('create called');
-
     createCommSuccess = createCommPolygon();
   }, 1000);
   // loading icon
@@ -633,11 +629,15 @@ $("#mapToPrivacy").on("click", function(e) {
 })
 
 $("#mapToPrivacyMobile").on("click", function(e) {
+  console.log('zoom called');
   zoomToCommunity();
-  createCommSuccess = createCommPolygon();
+  setTimeout(() => {
+    console.log('create called');
+    createCommSuccess = createCommPolygon();
+  }, 1000);
   // loading icon
   $("#loading-entry").css("display", "block");
-  $("#loading-entry").delay(2000).fadeOut(2000);
+  $("#loading-entry").delay(2500).fadeOut(2500);
   setTimeout(function() {
     if (createCommSuccess) {
       e.preventDefault();
@@ -645,7 +645,7 @@ $("#mapToPrivacyMobile").on("click", function(e) {
       $('#map-card').removeClass("has_error");
       automaticScrollToTop();
     }
-  }, 2000);
+  }, 2500);
 })
 
 $("#mapToSurveyP2").click(mapToSurveyP2);
@@ -769,39 +769,55 @@ function zoomToCommunity() {
   if (selectBbox === null || selectBbox.length === 0) return;
   var bbox = turf.bbox(selectBbox);
 
-  console.log(bbox);
-  map.addLayer({
-    'id': Math.random().toString().substring(),
-    'type': 'line',
-    'source': {
-      'type': 'geojson',
-      'data': turf.bboxPolygon(bbox).geometry,
-    },
-    'paint': {
-      'line-color': '#eb4034',
-      'line-width': 3
-    }
-  });
+  if(blockGroupPolygons != null && !drawUsingBlocks) {
+    console.log(bbox);
+    map.addLayer({
+      'id': Math.random().toString().substring(),
+      'type': 'line',
+      'source': {
+        'type': 'geojson',
+        'data': turf.bboxPolygon(bbox).geometry,
+      },
+      'paint': {
+        'line-color': '#eb4034',
+        'line-width': 3
+      }
+    });
 
-  bbox[0] -= 1.12;
-  bbox[1] -= 0.65;
-  bbox[2] += 1.12;
-  bbox[3] += 0.65;
-
-  console.log(bbox);
-  map.addLayer({
-    'id': Math.random().toString().substring(),
-    'type': 'line',
-    'source': {
-      'type': 'geojson',
-      'data': turf.bboxPolygon(bbox).geometry,
-    },
-    'paint': {
-      'line-color': '#eb4034',
-      'line-width': 3
+    polyFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
+    let bbox_adjustment = undefined;
+    for(var i = 2; i < polyFilter.length; i++) {
+      if(bbox_adjustment === undefined) {
+        bbox_adjustment = blockGroupPolygons[polyFilter[i]].bbox_dims;
+      } else {
+        bbox_adjustment[0] = Math.max(bbox_adjustment[0], blockGroupPolygons[polyFilter[i]].bbox_dims[0]);
+        bbox_adjustment[1] = Math.max(bbox_adjustment[1], blockGroupPolygons[polyFilter[i]].bbox_dims[1]);
+      }
+      blockGroupPolygons[polyFilter[i]].bbox_dims[0];
+      blockGroupPolygons[polyFilter[i]].bbox_dims[1];
     }
-  });
-  map.fitBounds(bbox, { duration: 0 });
+    bbox[0] -= bbox_adjustment[0];
+    bbox[1] -= bbox_adjustment[1];
+    bbox[2] += bbox_adjustment[0];
+    bbox[3] += bbox_adjustment[1];
+
+    console.log(bbox);
+    map.addLayer({
+      'id': Math.random().toString().substring(),
+      'type': 'line',
+      'source': {
+        'type': 'geojson',
+        'data': turf.bboxPolygon(bbox).geometry,
+      },
+      'paint': {
+        'line-color': '#eb4034',
+        'line-width': 3
+      }
+    });
+    map.fitBounds(bbox, { duration: 0 });
+  } else {
+    map.fitBounds(bbox, { duration: 0, padding: 300 });
+  }
 }
 /****************************************************************************/
 
@@ -1298,7 +1314,8 @@ function newHighlightLayer(state, firstSymbolId, suffix) {
     firstSymbolId
   );
 }
-function isContiguous(active_ids) {
+function isContiguous(idFilter) {
+  var active_ids = new Set(idFilter.slice(2));
   if(active_ids.size == 0)
     return true;
   let visited = new Set();
@@ -1325,12 +1342,25 @@ var activeIDs = new Set();
 /* After the map style has loaded on the page, add a source layer and default
 styling for a single point. */
 map.on("style.load", function () {
-  fetch('/block_group_polygons/')
-    .then(response => response.json())
+  fetch('/block_group_polygons/' + state.toLowerCase() + 'bg/')
+    .then(response => {
+      if (response.ok) {
+        return response.json()
+      } else if(response.status === 404) {
+        return Promise.reject('error 404')
+      } else {
+        return Promise.reject('some other error: ' + response.status)
+      }
+    })
     .then(data => {
       blockGroupPolygons = data;
-      console.log(blockGroupPolygons);
-    });  
+      console.log('data loaded successfully');
+    })
+    .catch(error => {
+      blockGroupPolygons = null;
+      console.log('error while loading data,', error);
+    });
+
   var layers = map.getStyle().layers;
   // Find the index of the first symbol layer in the map style
   // this is so that added layers go under the symbols on the map
@@ -1448,12 +1478,6 @@ map.on("style.load", function () {
         // push current filter MINUS the selected area
         if (!features.includes(feature)) filter.push(feature);
       });
-
-      console.log('**remove if added', features);
-      features.forEach((e) => activeIDs.delete(e));
-      console.log(isContiguous(activeIDs));
-
-
       arraysEqual(filter, currentFilter)
         ? (isChanged = false)
         : (isChanged = true);
@@ -1466,18 +1490,16 @@ map.on("style.load", function () {
         }
         else {
           selectBbox = turf.difference(selectBbox, currentBbox);
-          if (selectBbox != null && turf.getType(selectBbox) == "MultiPolygon") {
-            showWarningMessage(
-              "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
-            );
+          if(blockGroupPolygons == null || drawUsingBlocks) {
+            if (selectBbox != null && turf.getType(selectBbox) == "MultiPolygon") {
+              showWarningMessage(
+                "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
+              );
+            }   
           }
         }
       }
     } else {
-      console.log('** try to add', features);
-      features.forEach((e) => activeIDs.add(e));
-      console.log(isContiguous(activeIDs));
-
       // this is select mode
       // check if previous selectBbox overlaps with current selectBbox
       if (selectBbox === null || selectBbox.length === 0) {
@@ -1486,13 +1508,15 @@ map.on("style.load", function () {
         hideWarningMessage();
       } else {
         isChanged = true;
-        if (
-          turf.booleanDisjoint(currentBbox, selectBbox) &&
-          !isEmptyFilter(currentFilter)
-        ) {
-          showWarningMessage(
-            "WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
-          );
+        if (blockGroupPolygons == null || drawUsingBlocks) {
+          if (
+            turf.booleanDisjoint(currentBbox, selectBbox) &&
+            !isEmptyFilter(currentFilter)
+          ) {
+            showWarningMessage(
+              "WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
+            );
+          }
         }
         selectBbox = turf.union(currentBbox, selectBbox);
       }
@@ -1512,6 +1536,14 @@ map.on("style.load", function () {
         }
       });
     }
+
+    if (blockGroupPolygons != null && !drawUsingBlocks) {
+      if(isContiguous(filter))
+        hideWarningMessage();
+      else
+        showWarningMessage("WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org.");
+    }
+    
     // check size of community - 800 block groups or 2400 blocks
     if ((!drawUsingBlocks && filter.length < 802) || (drawUsingBlocks && filter.length < 2402)) {
       map.setFilter(state + "-highlighted-" + layer_suffix, filter);

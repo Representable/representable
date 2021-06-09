@@ -35,7 +35,7 @@ urlpatterns = [
         name="account_signup",
     ),
     path(
-        'block_group_polygons/',
+        'block_group_polygons/<str:abbr>/',
         views.main.block_group_polygons,
         name='block_group_polygons',
     ),
