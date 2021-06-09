@@ -1019,7 +1019,6 @@ msgid "Community of Interest Definition in "
 msgstr "Las comunidades de interés pueden incluir ..."
 
 #: main/templates/main/entry_survey.html:231
-
 msgid ""
 "Respond to <b>at least one</b> of the sections below. There are no wrong "
 "answers.<br> Click on each category to see helpful questions and examples."
@@ -1396,13 +1395,7 @@ msgid ""
 "href=\"https://docs.google.com/document/d/1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc/edit?usp=sharing\">Official"
 " Education Guide.</a></p>"
 msgstr ""
-"Trabajamos codo a codo con organizaciones para reunir mapas comunitarios e "
-"información sobre los intereses compartidos de la comunidad. Esta "
-"información puede ser utilizada por cartógrafos, periodistas, analistas y "
-"activistas para crear y evaluar los mapas distritales propuestos. Nuestra "
-"meta es democratizar el testimonio público, guiar a los cartógrafos y "
-"potenciar el análisis de los mapas. Conozca más sobre cómo Representable "
-"lucha contra el g"
+"Trabajamos codo a codo con organizaciones para reunir mapas comunitarios e información sobre los intereses compartidos de la comunidad. Esta información puede ser utilizada por cartógrafos, periodistas, analistas y activistas para crear y evaluar los mapas distritales propuestos. Nuestra meta es democratizar el testimonio público, guiar a los cartógrafos y potenciar el análisis de los mapas. Conozca más sobre cómo Representable lucha contra el gerrymandering en la <a href=\"https://docs.google.com/document/d/1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc/edit?usp=sharing\"> Guía Oficial de Educación.</a></p>"
 
 #: main/templates/main/pages/about.html:56
 msgid ""
@@ -1411,8 +1404,7 @@ msgid ""
 "Project</a> and supported by <a href=\"https://schmidtfutures.com/\">Schmidt"
 " Futures.</a></p>"
 msgstr ""
-"Representable es desarrollado en asociación con el <a "
-"href=\"http://gerrymander.princeton.edu/\">Proyecto "
+"Representable es desarrollado en asociación con el <a href=\"http://gerrymander.princeton.edu/\">Proyecto Gerrymandering de Princeton</a> y cuenta con el apoyo de <a href=\"https://schmidtfutures.com/\">Schmidt Futures.</a></p>"
 
 #: main/templates/main/pages/about.html:59
 msgid "Representable will help..."
