@@ -68,6 +68,8 @@ function changeMappingUnit() {
     drawUsingBlocks = false;
     layer_suffix = "bg";
     unit_id = bg_id;
+    // change button name for this case -- TODO: languages?
+    $("#map-units-btn").text("Use smaller units");
     //clear "cache" so that undo button still works as expected
     sessionStorage.clear();
     filterStack = [];
@@ -93,6 +95,8 @@ function changeMappingUnit() {
     drawUsingBlocks = true;
     layer_suffix = "block";
     unit_id = block_id;
+    // change button name for this case -- TODO: languages?
+    $("#map-units-btn").text("Use larger units");
     //clear "cache" so that undo button still works as expected
     sessionStorage.clear();
     filterStack = [];
@@ -241,6 +245,8 @@ $('#map-comm-modal').on('shown.bs.modal hidden.bs.modal', function() {
 $('#map-units-btn').on('click', function() {
   drawUsingBlocks ? $("#map-block-to-bg-modal").modal() : $("#map-bg-to-block-modal").modal()
 });
+
+if (drawUsingBlocks)  $("#map-units-btn").text("Use larger units");
 
 $('#map-block-to-bg-btn').on('click', function() {
   changeMappingUnit();
@@ -850,7 +856,6 @@ var map = new mapboxgl.Map({
   style: "mapbox://styles/districter-team/ckdfv8riy0uf51hqu1g7qjrha", //hosted style id
   center: [-96.7026, 40.8136], // starting position - Lincoln, NE :)
   zoom: 3, // starting zoom -- higher is closer
-  maxZoom: 14, // camelCase. There's no official documentation for this smh :/
   minZoom: 7,
 });
 
@@ -874,14 +879,20 @@ var geocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
   country: "us",
   mapboxgl: mapboxgl,
-  placeholder: "Search Location"
+  placeholder: "Search Location",
+  flyTo: {
+    maxZoom: 14, // If you want your result not to go further than a specific zoom
+  }
 });
 
 var modalGeocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
   country: "us",
   mapboxgl: mapboxgl,
-  placeholder: "Search Location"
+  placeholder: "Search Location",
+  flyTo: {
+    maxZoom: 14, // If you want your result not to go further than a specific zoom
+  }
 });
 
 document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
