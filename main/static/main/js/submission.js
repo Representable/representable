@@ -1,8 +1,15 @@
 $(document).ready(function () {});
 
 // // GLOBAL VARIABLES
-// let data = {};
-// let polyLayerName;
+// import data from '../feature-lookup-tables/mapbox-boundaries-adm2-v3_2.json';
+// console.log(data);
+// import * as adm2 from '../feature-lookup-tables/mapbox-boundariexs-adm2-v3_2.json';
+
+// factory(require('../feature-lookup-tables/mapbox-boundariexs-adm2-v3_2.json'));
+// var lookupTableData = adm2.data;
+// console.log(lookupTableData);
+// const data = JSON.parse(adm2);
+// console.log(ADM2);
 
 // if thanks page, show modal
 if (is_thanks === "True") {
@@ -74,22 +81,36 @@ var popup = new mapboxgl.Popup({
   closeOnClick: false
 });
 
-function getNameFromID(featureID) {
 
-  return;
+function getPopupText(featureID, name) {
+  if (name === "adm2") {
+    return ADM2[featureID]["name"];
+  }
+  if (name === "leg2") {
+    return LEG2[featureID]["name"];
+  }
+  if (name === "leg3") {
+    return LEG3[featureID]["name"];
+  }
+  if (name === "leg4") {
+    return LEG4[featureID]["name"];
+  }
+  if (name === "pos4") {
+    return POS4[featureID]["zipcode"];
+  }
 }
 
-function addPopupHover(location, layer, fields) {
-  var identifiedFeatures = map.queryRenderedFeatures(location.point, layer);
+
+function addPopupHover(location, name) {
+  var identifiedFeatures = map.queryRenderedFeatures(location.point, name + "-fills");
   /*console.log(identifiedFeatures);*/
   popup.remove();
   if (identifiedFeatures != '') {
     var featureID = identifiedFeatures[0].id;
     // query name by feature ID in lookup table
     if (featureID !== undefined) {
-      var popupText = "";
-      popupText += identifiedFeatures[0].id;
-  
+      console.log(name)
+      var popupText = getPopupText(featureID, name);
       popup.setLngLat(location.lngLat)
         .setHTML(popupText)
         .addTo(map);
@@ -186,7 +207,7 @@ function newBoundariesLayer(name) {
   // modify fill layers to add name to be stored w the feature??
 
   map.on('mousemove', name + '-fills', function(e) {
-    addPopupHover(e, name + '-fills', ["name", "id"]);
+    addPopupHover(e, name);
 
     // addPopupHover(e, name + '-fills', ["name", "feature_id"]);
     // identifyFeatures(e, name + '-labels', ["name", "join-attributes"]);
