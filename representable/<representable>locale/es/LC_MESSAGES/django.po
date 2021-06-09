@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-27 02:06+0000\n"
+"POT-Creation-Date: 2021-05-08 07:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,27 +20,28 @@ msgstr ""
 #: main/templates/account/email/debug_email_confirmation_subject.txt:3
 #: main/templates/account/email/email_confirmation_subject.txt:3
 msgid "Please Confirm Your E-mail Address"
-msgstr "Confirme su correo electrónico"
+msgstr ""
 
 #: main/templates/account/email/email_confirmation_message.html:7
+#, fuzzy
+#| msgid "Community Information"
 msgid "Email Confirmation"
-msgstr "Confirmación de correo electrónico"
+msgstr "Información de la comunidad"
 
 #: main/templates/account/email/email_confirmation_message.html:118
 #: main/templates/account/email/email_template_do_not_delete.html:115
+#, fuzzy
+#| msgid "About Representable"
 msgid "Welcome to Representable.org!"
-msgstr "¡Bienvenido a Representable.org!"
+msgstr "Sobre Representable"
 
 #: main/templates/account/email/email_confirmation_message.html:119
 #: main/templates/account/email/email_template_do_not_delete.html:116
 msgid ""
-"Click the button below to confirm your email address for your "
-"Representable.org account. If you didn't create an account with "
-"Representable.org you can safely delete the email."
+"Click the button below to confirm your email address for your Representable."
+"org account. If you didn't create an account with Representable.org you can "
+"safely delete the email."
 msgstr ""
-"Haga clic en el botón de abajo para confirmar su correo electrónico para su "
-"cuenta de Representable.org Si no creó una cuenta de Representable.org, "
-"puede eliminar el correo de manera segura."
 
 #: main/templates/account/email/email_confirmation_message.html:135
 #: main/templates/account/email/email_template_do_not_delete.html:132
@@ -49,53 +50,58 @@ msgid ""
 "If the button doesn't work, copy and paste the following link in your "
 "browser:"
 msgstr ""
-"Si el botón no funciona, copie y pegue el siguiente link en su buscador:"
 
 #: main/templates/account/email/email_confirmation_message.html:137
 #: main/templates/account/email/email_template_do_not_delete.html:134
+#, fuzzy
+#| msgid "Representable Blog"
 msgid "The Representable.org Team"
-msgstr "El equipo de Representable.org"
+msgstr "Sobre Representable"
 
 #: main/templates/account/email/email_confirmation_message.html:152
+#, fuzzy
+#| msgid "Representable Blog"
 msgid "Representable.org"
-msgstr "Representable.org"
+msgstr "Sobre Representable"
 
 #: main/templates/account/email/email_template_do_not_delete.html:106
 msgid "This is preheader text. Some clients will show this text as a preview."
 msgstr ""
-"Este es el pre-encabezado. Algunos clientes mostrarán este texto como vista "
-"previa."
 
 #: main/templates/account/email/email_template_do_not_delete.html:124
 #: main/templates/account/email/password_reset_key_message.html:129
 msgid "Confirm Email"
-msgstr "Confirmar correo electrónico"
+msgstr ""
 
 #: main/templates/account/email/password_reset_key_message.html:7
 msgid "Password Reset Email"
-msgstr "Correo electrónico para restablecer contraseña"
+msgstr ""
 
 #: main/templates/account/email/password_reset_key_message.html:118
+#, fuzzy
+#| msgid "Representable Blog"
 msgid "Hello from Representable.org!"
-msgstr "¡Saludos desde Representable.org!"
+msgstr "Sobre Representable"
 
 #: main/templates/account/email/password_reset_key_message.html:140
 #, python-format
 msgid "In case you forgot, your username is %(username)s."
-msgstr "En caso lo olvide, su nombre de usuario es %(username)s."
+msgstr ""
 
 #: main/templates/account/email/password_reset_key_message.html:142
+#, fuzzy, python-format
+#| msgid "Thank you for letting us know!"
 msgid "Thank you for using %(current_site.name)s!"
-msgstr "¡Gracias por utilizar %(current_site.name)!"
+msgstr "¡Gracias por su envío!"
 
 #: main/templates/account/email/password_reset_key_subject.txt:3
 msgid "Password Reset E-mail"
-msgstr "Correo electrónico para restablecer contraseña"
+msgstr ""
 
 #: main/templates/account/email_confirm.html:6
 #: main/templates/account/email_confirm.html:14
 msgid "Confirm E-mail Address"
-msgstr "Confirmar correo electrónico"
+msgstr ""
 
 #: main/templates/account/email_confirm.html:18
 #, python-format
@@ -103,22 +109,17 @@ msgid ""
 "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
 "address for user %(user_display)s."
 msgstr ""
-"Confirma que <a href=\"mailto:%(email)s\">%(email)s</a> es el correo "
-"electrónico del usuario %(user_display)s."
 
 #: main/templates/account/email_confirm.html:22
 msgid "Finish Sign Up"
-msgstr "Finalizar registro"
+msgstr ""
 
 #: main/templates/account/email_confirm.html:31
 #, python-format
 msgid ""
-"This e-mail confirmation link expired or is invalid. Please <a "
-"href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+"This e-mail confirmation link expired or is invalid. Please <a href="
+"\"%(email_url)s\">issue a new e-mail confirmation request</a>."
 msgstr ""
-"El enlace para confimación de correo electrónico expiró o no es válido. Por "
-"favor, <a href=\"%(email_url)s\"> solicite una nueva confirmación de correo "
-"electrónico."
 
 #: main/templates/account/login.html:13
 msgid "Already have an account?"
@@ -156,68 +157,61 @@ msgstr "¿Estás seguro de que quieres cerrar sesión?"
 #: main/templates/account/password_reset_from_key_done.html:4
 #: main/templates/account/password_set.html:6
 msgid "Change Password"
-msgstr "Cambiar contraseña"
+msgstr ""
 
 #: main/templates/account/password_change.html:15
 #: main/templates/account/password_reset.html:14
 #: main/templates/account/password_reset_from_key_done.html:12
 #: main/templates/account/password_set.html:15
 msgid "Change your password"
-msgstr "Cambie su contraseña"
+msgstr ""
 
 #: main/templates/account/password_reset.html:15
 msgid ""
-"Forgot your password? Enter your e-mail address below, and we'll send you an"
-" e-mail allowing you to reset it."
+"Forgot your password? Enter your e-mail address below, and we'll send you an "
+"e-mail allowing you to reset it."
 msgstr ""
-"¿Olvidó su contraseña? Ingrese su correo electrónico y le enviaremos un "
-"mensaje para que pueda restablecerla."
 
 #: main/templates/account/password_reset.html:33
 msgid "Reset My Password"
-msgstr "Restablecer mi contraseña"
+msgstr ""
 
 #: main/templates/account/password_reset_done.html:6
 #: main/templates/account/password_reset_done.html:14
 msgid "Password Reset"
-msgstr "Restablecer contraseña"
+msgstr ""
 
 #: main/templates/account/password_reset_done.html:20
 msgid ""
-"We have sent you an e-mail.</p> <p class=\"text-center\">Please contact us "
-"at <a href=\"mailto:team@representable.org\">team@representable.org</a> if "
-"you do not receive it within a few minutes."
+"We have sent you an e-mail.</p>\n"
+"                <p class=\"text-center\">Please contact us at <a href="
+"\"mailto:team@representable.org\">team@representable.org</a> if you do not "
+"receive it within a few minutes."
 msgstr ""
-"Le enviamos un correo electrónico.</p> <p class=\"text-center\"> Contáctenos"
-" a <a href=\"mailto:team@representable.org\">team@representable.org</a> si "
-"no lo recibe en unos minutos."
 
 #: main/templates/account/password_reset_from_key.html:13
 msgid "Bad Token"
-msgstr "Token incorrecto"
+msgstr ""
 
 #: main/templates/account/password_reset_from_key.html:17
 #, python-format
 msgid ""
 "The password reset link was invalid, possibly because it has already been "
-"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
-"reset</a>."
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
+"a>."
 msgstr ""
-"El enlace para restablecer la contraseña no es válido, posiblemente ya haya "
-"sido utilizado.  Solicite un nuevo enlace <a "
-"href=\"%(passwd_reset_url)s\">para restablecer la contraseña</a>."
 
 #: main/templates/account/password_reset_from_key.html:23
 msgid "change password"
-msgstr "cambiar contraseña"
+msgstr ""
 
 #: main/templates/account/password_reset_from_key.html:26
 msgid "Your password is now changed."
-msgstr "Su contraseña ha sido cambiada."
+msgstr ""
 
 #: main/templates/account/password_set.html:20
 msgid "Set Password"
-msgstr "Configurar contraseña"
+msgstr ""
 
 #: main/templates/account/signup.html:12 main/templates/account/signup.html:43
 msgid "Sign Up"
@@ -245,33 +239,31 @@ msgid ""
 "finalize the signup process. Please contact us if you do not receive it "
 "within a few minutes."
 msgstr ""
-"Le enviamos un correo electrónico de verificación. Haga clic en el enlace "
-"enviado para finalizar el proceso de registro. Contáctenos si no lo recibe "
-"en unos minutos."
 
 #: main/templates/main/dashboard/index.html:10
 msgid "Dashboard"
-msgstr "Tablero"
+msgstr ""
 
 #: main/templates/main/dashboard/index.html:20
+#, fuzzy
+#| msgid "My Organizations"
 msgid "Organizations"
-msgstr "Organizaciones."
+msgstr "Para las organizaciones"
 
 #: main/templates/main/dashboard/index.html:31
 msgid ""
-"You're currently not part of any organizations. Ask someone to add you to "
-"their organization or create a new one below."
+" You're currently not part of any organizations.\n"
+"                Ask someone to add you to their organization or create a new "
+"one below. "
 msgstr ""
-"Actualmente no es parte de ninguna organización. Pídale a alguien que lo "
-"agregue a su organización o cree una nueva organización debajo."
 
 #: main/templates/main/dashboard/index.html:36
 msgid "Create New"
-msgstr "Crear nueva"
+msgstr ""
 
 #: main/templates/main/dashboard/index.html:45
 msgid "Quick Links"
-msgstr "Enlaces rápidos"
+msgstr ""
 
 #: main/templates/main/dashboard/index.html:49
 msgid "Create Organization"
@@ -279,274 +271,149 @@ msgstr "Para las organizaciones"
 
 #: main/templates/main/dashboard/index.html:50
 msgid "Create Entry"
-msgstr "Crear entrada"
+msgstr ""
 
 #: main/templates/main/dashboard/index.html:51
-#: representable/templates/base.html:279
+#: representable/templates/base.html:266
 msgid "My Communities"
 msgstr "Mis Comunidades"
 
 #: main/templates/main/dashboard/index.html:62
 #: representable/templates/base.html:130
+#: representable/templates/base_nofooter.html:130
 msgid "Account Settings"
 msgstr "Configuraciones"
 
 #: main/templates/main/dashboard/index.html:65
 #: main/templates/main/dashboard/index.html:67
+#, fuzzy
+#| msgid "Forgot Password?"
 msgid "Reset password"
-msgstr "Restablecer contraseña"
+msgstr "¿Olvidaste tu contraseña?"
 
 #: main/templates/main/dashboard/index.html:66
 msgid ""
-"Reset your password by pressing on the following button. You will receive an"
-" email with the appropriate instructions."
+"Reset your password by pressing on the following button. You will receive an "
+"email with the appropiate instructions."
 msgstr ""
-"Restablezca su contraseña haciendo clic en el botón. Recibirá un correo "
-"electrónico con las instrucciones pertinentes."
 
 #: main/templates/main/dashboard/index.html:70
+#, fuzzy
+#| msgid "Tracking Settings"
 msgid "Cookie Settings"
-msgstr "Configuración de Cookies"
+msgstr "Configuraciones"
 
 #: main/templates/main/dashboard/index.html:71
 msgid ""
-"We use Mixpanel and Google Analytics to collect anonymized information about"
-" users' website usage. We use this information to improve our website "
+"We use Mixpanel and Google Analytics to collect anonymized information about "
+"users' website usage. We use this information to improve our website "
 "experience. You can control whether we have access to this information or "
 "not."
 msgstr ""
-"Utilizamos Mixpanel y Google Analytics para reunir información de forma "
-"anónima sobre el uso del sitio web por parte del usuario. Utilizamos esta "
-"información para mejorar la experiencia en nuestro sitio web. Puede "
-"controlar si tenemos o no acceso a esta información."
 
 #: main/templates/main/dashboard/index.html:73
 msgid ""
-"<p>Based on our records, you have <strong>opted in</strong> for anonymized "
-"information collection. To <strong>opt out</strong>, press on the button "
-"below.</p>"
+"\n"
+"              <p>Based on our records, you have <strong>opted in</strong> "
+"for anonymized information collection. To <strong>opt out</strong>, press on "
+"the button below.</p>\n"
+"              "
 msgstr ""
-"<p>Según nuestros registros, <strong>acepta</strong> brindar información de "
-"forma anónima. Para <strong>no aceptar</strong>, presione el botón de "
-"abajo.</p>"
 
 #: main/templates/main/dashboard/index.html:79
 msgid ""
-"<p>Based on our records, you have <strong>opted out</strong> of anonymized "
-"information collection. To <strong>opt in</strong>, press on the button "
-"below.</p>"
+"\n"
+"              <p>Based on our records, you have <strong>opted out</strong> "
+"of anonymized information collection. To <strong>opt in</strong>, press on "
+"the button below.</p>\n"
+"              "
 msgstr ""
-"<p>Según nuestros registros, <strong>no acepta</strong> brindar la "
-"información de forma anónima. Para <strong>aceptar</strong>, presione el "
-"botón de abajo.</p>"
 
-#: main/templates/main/dashboard/partners/thanks.html:13
+#: main/templates/main/dashboard/partners/thanks.html:12
+#, fuzzy
+#| msgid "Thank you for letting us know!"
 msgid "Thank you for creating an organization!"
-msgstr "¡Gracias por crear una organización!"
+msgstr "¡Gracias por su envío!"
 
-#: main/templates/main/dashboard/partners/thanks.html:16
+#: main/templates/main/dashboard/partners/thanks.html:15
+#, fuzzy
+#| msgid "Please include your name."
 msgid "Please verify your email."
-msgstr "Verifique su correo electrónico."
+msgstr "Incluya su nombre."
+
+#: main/templates/main/dashboard/partners/thanks.html:19
+msgid "We are excited to work with you!"
+msgstr ""
 
 #: main/templates/main/dashboard/partners/thanks.html:20
-msgid "We are excited to work with you!"
-msgstr "¡Estamos muy felices de trabajar con usted!"
+msgid ""
+"Check out our <a href=\"https://docs.google.com/document/"
+"d/1NJMUpZodlqo96xVASJzihpcfgWir18ifMaMD380zrXE/edit\">organization guide</a> "
+"to learn more about using Representable to gather community maps."
+msgstr ""
 
 #: main/templates/main/dashboard/partners/thanks.html:21
 msgid ""
-"Check out our <a "
-"href=\"https://docs.google.com/document/d/1NJMUpZodlqo96xVASJzihpcfgWir18ifMaMD380zrXE/edit\">organization"
-" guide</a> to learn more about using Representable to gather community maps."
+"Contact us at <a href=\"mailto:team@representable.org\"> team@representable."
+"org</a> with any questions. "
 msgstr ""
-"Lea nuestra <a "
-"href=\"https://docs.google.com/document/d/1NJMUpZodlqo96xVASJzihpcfgWir18ifMaMD380zrXE/edit\">guía"
-" para organizaciones</a> para aprender más sobre cómo utilizar Representable"
-" para reunir mapas comunitarios."
 
 #: main/templates/main/dashboard/partners/thanks.html:22
 msgid ""
-"Contact us at <a href=\"mailto:team@representable.org\"> "
-"team@representable.org</a> with any questions."
-msgstr ""
-"Contáctenos a <a href=\"mailto:team@representable.org\"> "
-"team@representable.org</a> si tiene alguna consulta."
-
-#: main/templates/main/dashboard/partners/thanks.html:23
-msgid ""
 "Click the button below to go to the Organization Dashboard and get started "
-"by creating a community mapping drive."
+"by creating a community mapping drive. "
 msgstr ""
-"Haga clic en el botón de abajo para acceder al Tablero de Organización, y "
-"empiece a crear un mapa comunitario."
 
-#: main/templates/main/dashboard/partners/thanks.html:26
+#: main/templates/main/dashboard/partners/thanks.html:25
 msgid ""
-"Email verification will be necessary to access certain organization features"
-" on Representable. We have resent an email verification link to your inbox."
+"Email verification will be necessary\n"
+"                        to access certain organization features on "
+"Representable. We have resent an email verification link to your inbox."
 msgstr ""
-"Las verificaciones de correo electrónico son necesarias para acceder a "
-"ciertas características de organización en Representable. Le reenviamos un "
-"enlace de verificación de correo electrónico a su bandeja de entrada."
 
-#: main/templates/main/dashboard/partners/thanks.html:29
+#: main/templates/main/dashboard/partners/thanks.html:28
 msgid "organization dashboard"
 msgstr "tablero de la organizacion"
 
-#: main/templates/main/drives/dane-county-page.html:10
-msgid "Tell Us About Your Community"
-msgstr "Cuéntenos sobre su comunidad"
-
-#: main/templates/main/drives/dane-county-page.html:12
-msgid ""
-"We are working to make sure the Dane County Board of Supervisors accurately "
-"reflects the people and communities it represents. As part of that process, "
-"we are interested in learning what you think makes up your \"community of "
-"interest.\" <br><br> Who do you consider your neighbors? What other people, "
-"businesses, schools, churches or other organizations do you interact with on"
-" a regular basis? What places do you visit or travel to in the course of "
-"your day or week? What issues, values, or concerns bind you and your "
-"community together? Join us to help make sure your elected officials truly "
-"\"represent\" you and your community."
-msgstr ""
-
-#: main/templates/main/drives/dane-county-page.html:32
-msgid ""
-"Wisconsin law requires county boards to redraw their supervisory district "
-"lines after each U.S. Decennial Census. The law also requires that electoral"
-" districts are equal in population, and keep municipalities intact. For the "
-"first time ever, Dane County has appointed a nonpartisan, independent "
-"Redistricting Commission to guide and direct that process. This will help "
-"ensure that supervisory districts are drawn impartially, without regard to "
-"politics."
-msgstr ""
-"La ley de Wisconsin requiere que las juntas de los condados rediseñen el "
-"trazado de los distritos supervisores luego de cada censo decenal en Estados"
-" Unidos. La ley también requiere que los distritos electorales tengan la "
-"misma cantidad de habitantes y que mantenga intactos los municipios. Por "
-"primera vez, el Condado de Dane designó una Comisión Reorganizadora de "
-"Distritos neutral para guiar y dirigir el proceso. Esto asegurará que los "
-"distritos supervisores sean trazados imparcialmente, sin opinión política."
-
-#: main/templates/main/drives/dane-county-page.html:44
-msgid ""
-"Representable will help you tell the Dane County Redistricting Commission "
-"about your community and visualize a map of its boundaries. Then, line-"
-"drawers can fairly consider your community when they draw new voting "
-"district lines."
-msgstr ""
-"Representable le ayudará a informar a la Comisión Reorganizadora de "
-"Distritos del Condado de Dane sobre su comunidad y a visualizar un mapa de "
-"sus límites. Luego, los cartógrafos podrán tener en cuenta a su comunidad "
-"cuando delimiten los nuevos distritos de votación."
-
-#: main/templates/main/drives/dane-county-page.html:51
-msgid "Dane County's redistricting <br class=\"d-xl-none\"> criteria"
-msgstr ""
-"<br class=\"d-xl-none\">Criterio de reorganización distrital del Condado de "
-"Dane"
-
-#: main/templates/main/drives/dane-county-page.html:54
-msgid "In order of priority"
-msgstr "En orden de prioridad"
-
-#: main/templates/main/drives/dane-county-page.html:56
-msgid ""
-"Each district should represent the same population size, be contiguous, and "
-"compact;"
-msgstr ""
-"Cada distrito deberá representar una población de igual tamaño, contigua y "
-"compacta."
-
-#: main/templates/main/drives/dane-county-page.html:57
-msgid "Minimize the number of municipal boundaries crossed;"
-msgstr "Minimizar la cantidad de límites municipales cruzados."
-
-#: main/templates/main/drives/dane-county-page.html:58
-msgid ""
-"Ensure fair and effective representation of the diverse ethnic and racial "
-"population in Dane County;"
-msgstr ""
-"Asegurar la representación justa y efectiva de las diversas poblaciones "
-"étnicas y raciales en el Condado de Dane."
-
-#: main/templates/main/drives/dane-county-page.html:59
-msgid ""
-"Take into consideration geography and natural boundaries such as rivers and "
-"lakes;"
-msgstr "Considerar los límites geográficos y naturales, como ríos y lagos."
-
-#: main/templates/main/drives/dane-county-page.html:60
-msgid ""
-"Keep intact neighborhoods and communities of interest and association, "
-"whether historical, racial, economic, ethnic, religious, or other;"
-msgstr ""
-"Conservar barrios y comunidades de interés y asociación, ya sean históricas,"
-" raciales, económicas, étnicas, religiosas u otras."
-
-#: main/templates/main/drives/dane-county-page.html:61
-msgid "Districts shall be drawn without regard to incumbency."
-msgstr "Los distritos serán dibujados sin considerar el mandato."
-
-#: main/templates/main/drives/dane-county-page.html:73
-msgid "Communities of Interest in Dane County"
-msgstr "Comunidades de Interés en el Condado de Dane"
-
-#: main/templates/main/drives/dane-county-page.html:75
-msgid ""
-"Dane County's ordinance requires that: <br><br><em>\"District lines shall "
-"keep intact neighborhoods and communities with established ties of common "
-"interest and association whether historical, racial, economic, ethnic, "
-"religious or other.\"</em><br><br> Communities as described above don't "
-"always fall neatly into existing, easily mapped areas such as municipal "
-"boundaries, school districts, census block groups, or neighborhood "
-"associations. The Redistricting Commission needs your help to make sure your"
-" community is adequately represented."
-msgstr ""
-"La ordenanza del Condado de Dane requiere que <br><br><em> “Las líneas "
-"distritales deben mantener intactos los barrios y comunidades con lazos de "
-"interés común y asociación, ya sean históricas, raciales, económicas, "
-"étnicas, religiosas u otras.”</em><br><br> Las comunidades antes descritas "
-"no siempre son parte de áreas existentes y delimitadas, como límites "
-"municipales, distritos escolares, grupos de bloques censales o asociaciones "
-"vecinales. La Comisión de Reorganización necesita su ayuda para asegurar que"
-" su comunidad sea representada correctamente."
-
 #: main/templates/main/drives/index.html:5
 msgid "Drives"
-msgstr "Campañas"
+msgstr ""
 
 #: main/templates/main/drives/page.html:20 main/templates/main/index.html:24
 msgid "Gerrymandering is silencing communities."
 msgstr "El gerrymandering está silenciando a las comunidades"
 
-#: main/templates/main/drives/page.html:21 main/templates/main/index.html:25
+#: main/templates/main/drives/page.html:21
 msgid ""
 "Make your voice heard with Representable <br> and put your community on the "
 "map."
 msgstr "Haz que escuchen tu voz  \" <br> y pon tu comunidad en el mapa."
 
-#: main/templates/main/drives/page.html:27
+#: main/templates/main/drives/page.html:26
 #: main/templates/main/pages/about.html:48
 msgid "What is Representable?"
 msgstr "¿Qué es Representable.org?"
 
-#: main/templates/main/drives/page.html:29
+#: main/templates/main/drives/page.html:27
 msgid ""
 "Representable allows people to draw communities of interest and share "
-"information about the interests and needs in those communities. "
-"<br><br>Making this information available encourages mapmakers to take these"
-" communities into account during redistricting, in order to avoid "
-"gerrymandering and the “packing and cracking” of marginalized groups. </p>"
+"information about the interests and needs in those communities.\n"
+"              <br><br>Making this information available encourages mapmakers "
+"to take these communities into account during redistricting, in order to "
+"avoid gerrymandering and the “packing and cracking” of marginalized groups. "
+"</p>"
 msgstr ""
-"Representable permite a las personas delimitar sus comunidades de interés, y"
-" compartir la información sobre los intereses y necesidades en esas "
-"comunidades. <br><br> Al disponer de esta información, los cartógrafos "
-"podrán tener en cuenta a las comunidades en el proceso de reorganización "
-"distrital para evitar el "
+"Representable hace que las personas puedan dibujar sus comunidades de "
+"interés y que puedan compartir información sobre los intereses y necesidades "
+"de estas comunidades.\n"
+"            <br><brHacer que esta información esté disponible motiva a "
+"diseñadores de mapas a tomar las comunidades en cuenta durante la "
+"redistribución de distritos. Así, podemos evitar el gerrymandering y la "
+"agrupación ventajosa  de grupos marginalizados para un partido."
 
-#: main/templates/main/drives/page.html:50
-msgid "Organized by "
-msgstr "Organizado por "
+#: main/templates/main/drives/page.html:56
+msgid "Draw My Community"
+msgstr "Dibujar mi comunidad"
 
 #: main/templates/main/entry_address.html:7
 msgid "Step 1"
@@ -569,22 +436,33 @@ msgid "Why do we need your information?"
 msgstr "¿Por qué necesitamos su información?"
 
 #: main/templates/main/entry_address.html:33
+#, python-format
 msgid ""
-"Your personal privacy is our highest priority. We gather personal "
-"information to verify that you are a real person. If you choose to submit "
-"this entry to an organization, the administrators of the organization will "
-"have access to this information. Learn more about our commitment to privacy "
-"on our <a target=\"_blank\" rel=\"noopener noreferrer\" "
-"href=\"%(url1)s\">Privacy</a> and <a target=\"_blank\" rel=\"noopener "
-"noreferrer\" href=\"%(url2)s\">Terms</a> pages."
+" Your personal privacy is our highest priority. We gather personal\n"
+"                        information to verify that you are a real person. If "
+"you choose to\n"
+"                        submit this entry to an organization, the "
+"administrators of the organization\n"
+"                        will have access to this information. Learn more "
+"about our\n"
+"                        commitment to privacy on our <a target=\"_blank\" "
+"rel=\"noopener noreferrer\" href=\"%(url1)s\">Privacy</a>\n"
+"                        and <a target=\"_blank\" rel=\"noopener noreferrer\" "
+"href=\"%(url2)s\">Terms</a> pages. "
 msgstr ""
-"Su privacidad es nuestra máxima prioridad. Reunimos información personal "
-"para verificar que sea una persona real. Si elige presentar esta solicitud a"
-" una organización, los administradores de la misma tendrán acceso a esta "
-"información. Para leer más sobre nuestro compromiso con la privacidad, "
-"visite nuestras páginas de <a target=\"_blank\" rel=\"noopener noreferrer\" "
-"href=\"%(url1)s\">Condiciones</a> y <a target=\"_blank\" rel=\"noopener "
-"noreferrer\" href=\"%(url2)s\">Privacidad</a>."
+"Tu privacidad personal es nuestra más alta prioridad. Reunimos información "
+"personall\n"
+"                        para verificar que eres una persona real. Si "
+"escoge \n"
+"                        entregar esta presentación a un drive, los "
+"administradores del drive\n"
+"                        tendrán acceso a esta información. Lea másacerca de "
+"nuestro\n"
+"                         compromiso con la privacidad en nuestras páginas de "
+"<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"%(url1)s"
+"\">Privacidad</a>\n"
+"                         y <a target=\"_blank\" rel=\"noopener noreferrer\" "
+"href=\"%(url2)s\">Términos de Uso</a>"
 
 #: main/templates/main/entry_address.html:61
 msgid "Your Name"
@@ -607,232 +485,294 @@ msgid "Zipcode"
 msgstr "Código postal"
 
 #: main/templates/main/entry_address.html:180
-#: main/templates/main/entry_survey.html:347
-#: main/templates/main/entry_survey.html:414
+#: main/templates/main/entry_survey.html:335
+#: main/templates/main/entry_survey.html:402
 msgid "NEXT"
 msgstr "Próximo"
 
 #: main/templates/main/entry_map.html:17
 msgid ""
-"<p><strong>Search for a zipcode, address, or landmark to start. Then draw "
-"your community by clicking units on the map.</strong></p>"
+"\n"
+"                                    <p><strong>Search for a zipcode, "
+"address, or landmark to start. Then draw your community by clicking units on "
+"the map.</strong></p>\n"
+"                                "
 msgstr ""
-"<p><strong>Busque su código postal, dirección o punto de referencia para "
-"empezar. Luego, delimite su comunidad haciendo clic en las unidades del "
-"mapa.</strong></p>"
+"\n"
+"                                    <p><strong>Busque un código postal, una "
+"dirección o un punto de referencia para comenzar. Luego dibuja  tu comunidad "
+"haciendo click en las unidades del mapa.</strong></p>\n"
+"                                "
 
-#: main/templates/main/entry_map.html:18
+#: main/templates/main/entry_map.html:20
 msgid ""
-"<p>Make sure that all your community is contained within the highlighted "
-"units, and that it does not contain gaps. The units are <a class=\"no-"
-"underline-link\" href=\"https://www.census.gov/programs-"
-"surveys/geography/about/glossary.html#par_textimage_4\" "
-"target=\"_blank\"><strong>census block groups</strong></a>, which are used "
-"by map drawers to draw voting districts.</p>"
+"\n"
+"                                    <p>Make sure that all your community is "
+"contained within the highlighted units, and that it does not contain gaps. "
+"The units are <a class=\"no-underline-link\" href=\"https://www.census.gov/"
+"programs-surveys/geography/about/glossary.html#par_textimage_4\" target="
+"\"_blank\"><strong>census block groups</strong></a>, which are used by map "
+"drawers to draw voting districts.</p>\n"
+"                                "
 msgstr ""
-"<p>Asegúrese de que toda su comunidad esté dentro de las unidades "
-"resaltadas, y que no existan vacíos. Las unidades son <a class=\"no-"
-"underline-link\" href=\"https://www.census.gov/programs-"
-"surveys/geography/about/glossary.html#par_textimage_4\" "
-"target=\"_blank\"><strong>grupos de bloques censales</strong></a> que "
-"utilizan los cartógrafos para delimitar los distritos de votación."
+"\n"
+"                                    <p>Asegúrate que toda tu comunidad se  "
+"encuentre dentro de la zona resaltada, y que esta zona resaltada no tenga "
+"huecos. Las unidades son <a class=\"no-underline-link\" href=\"https://www."
+"census.gov/programs-surveys/geography/about/glossary.html#par_textimage_4\" "
+"target=\"_blank\"><strong>grupos de bloque del censo</strong></a>, y "
+"diseñadores de mapas los usan para trazar los distritos electorales.</p>\n"
+"                                "
 
-#: main/templates/main/entry_map.html:50 main/templates/main/entry_map.html:78
-msgid "Change your mapping units."
-msgstr "Cambie las unidades del mapa."
-
-#: main/templates/main/entry_map.html:52
-msgid ""
-"Currently, you are mapping with <b>census block groups</b>. These units are "
-"used by map drawers to draw voting districts."
-msgstr ""
-"Actualmente, está diseñando con <b>grupos de bloques censales</b>. Los "
-"cartógrafos utilizan estas unidades para delimitar los distritos de "
-"votación."
-
-#: main/templates/main/entry_map.html:53
-msgid ""
-"If you would like to map your community with smaller units, you can switch "
-"to <b>census blocks</b>. Census blocks are small units that make up census "
-"block groups."
-msgstr ""
-"Si quisiera diseñar su comunidad con unidades más pequeñas, puede cambiar a "
-"<b> bloques censales</b>. Los bloques censales son unidades pequeñas que "
-"conforman grupos de bloques censales."
-
-#: main/templates/main/entry_map.html:54 main/templates/main/entry_map.html:82
-msgid "If you switch the units now, your current selection will be erased."
-msgstr "Si cambia las unidades, su selección actual se borrará."
-
-#: main/templates/main/entry_map.html:56
-msgid "Switch to smaller units"
-msgstr "Cambiar a unidades más pequeñas."
-
-#: main/templates/main/entry_map.html:80
-msgid ""
-"Currently, you are mapping with <b>census blocks</b>. These units are used "
-"by map drawers to draw voting districts."
-msgstr ""
-"Actualmente, está diseñando con <b>bloques censales</b>. Los cartógrafos "
-"utilizan estas unidades para delimitar los distritos de votación."
-
-#: main/templates/main/entry_map.html:81
-msgid ""
-"If you would like to map your community with larger units, you can switch to"
-" <b>census block groups</b>. Census block groups are large units comprised "
-"of census blocks."
-msgstr ""
-"Si quisiera diseñar su comunidad con unidades más grandes, puede cambiar "
-"a<b> grupos de bloques censales</b>. Los grupos de bloques censales son "
-"unidades grandes conformados por bloques censales."
-
-#: main/templates/main/entry_map.html:84
-msgid "Switch to larger units"
-msgstr "Cambiar a unidades más grandes."
-
-#: main/templates/main/entry_map.html:103
-#: main/templates/main/entry_map.html:209
+#: main/templates/main/entry_map.html:107
+#: main/templates/main/entry_map.html:231
 msgid "How to draw my community?"
 msgstr "¿Cómo dibujo a mi comunidad?"
 
-#: main/templates/main/entry_map.html:105
-#: main/templates/main/entry_map.html:211
+#: main/templates/main/entry_map.html:109
 msgid ""
-"Select units on the map by clicking with your mouse. To deselect a unit, "
-"click it again. Watch the following video to learn more."
+"\n"
+"                            Select units on the map by clicking with your "
+"mouse. To deselect a unit, click it again. Watch the following video to "
+"learn more.\n"
+"                        "
 msgstr ""
-"Haga clic para seleccionar las unidades en el mapa. Para deseleccionar una "
-"unidad, haga clic nuevamente. Mire los siguientes videos para aprender más."
+"\n"
+"                            Haz click con tu mouse para seleccionar "
+"unidades  en el mapa. Vuelve a hacer click para quitar tu selección. Ve este "
+"video para  aprender más.\n"
+"                        "
 
-#: main/templates/main/entry_map.html:116
-#: main/templates/main/entry_map.html:222
-#: representable/templates/base.html:113
+#: main/templates/main/entry_map.html:122
+#: main/templates/main/entry_map.html:246 representable/templates/base.html:113
+#: representable/templates/base_nofooter.html:113
 msgid "FAQ"
 msgstr "Preguntas frecuentes"
 
-#: main/templates/main/entry_map.html:120
-#: main/templates/main/entry_map.html:226
+#: main/templates/main/entry_map.html:126
+#: main/templates/main/entry_map.html:250
 msgid "What are the units?"
 msgstr "¿Qué son las unidades?"
 
-#: main/templates/main/entry_map.html:122
-#: main/templates/main/entry_map.html:228
+#: main/templates/main/entry_map.html:128
 msgid ""
-"The units are <strong>census block groups</strong>, which are used by map "
-"drawers to draw voting districts."
+"\n"
+"                                        The units are <strong>census block "
+"groups</strong>, which are used by map drawers to draw voting districts.\n"
+"                                    "
 msgstr ""
-"Las unidades son <strong>grupos de bloques censales</strong> que utilizan "
-"los cartógrafos para delimitar los distritos de votación."
+"\n"
+"                                        Las unidades son <strong>bloques de "
+"grupos del censo</strong>, los cuales son usados por diseñadores de mapas "
+"para trazar distritos electorales.\n"
+"                                    "
 
-#: main/templates/main/entry_map.html:125
-#: main/templates/main/entry_map.html:231
+#: main/templates/main/entry_map.html:133
+#: main/templates/main/entry_map.html:257
 msgid "Why am I unable to save my map?"
 msgstr "¿Por qué no puedo guardar mi mapa?"
 
-#: main/templates/main/entry_map.html:127
-#: main/templates/main/entry_map.html:233
+#: main/templates/main/entry_map.html:135
 msgid ""
-"Make sure that it does not contain gaps. Communities of Interest must be "
-"contiguous."
+"\n"
+"                                        Make sure that it does not contain "
+"gaps. Communities of Interest must be contiguous.\n"
+"                                    "
 msgstr ""
-"Asegúrese de que no existan vacíos. Las Comunidades de Interés deben ser "
-"limítrofes."
+"\n"
+"                                        Asegúrate que tu selección no tenga "
+"huecos. Las comunidades de interés deben ser contiguas.\n"
+"                                    "
 
-#: main/templates/main/entry_map.html:130
-#: main/templates/main/entry_map.html:236
+#: main/templates/main/entry_map.html:140
+#: main/templates/main/entry_map.html:264
 msgid "Can I map outside of my state?"
 msgstr "¿Puedo hacer un mapa afuera de mi estado?"
 
-#: main/templates/main/entry_map.html:132
-#: main/templates/main/entry_map.html:238
+#: main/templates/main/entry_map.html:142
 msgid ""
-"In order to map outside of your state, you need to add a new community "
-"within the other state."
+"\n"
+"                                        In order to map outside of your "
+"state, you need to add a new community within the other state.\n"
+"                                    "
 msgstr ""
-"Para diseñar mapas fuera de su estado, debe agregar una comunidad nueva "
-"dentro del otro estado."
+"\n"
+"                                        Para poder hacer un mapa fuera de tu "
+"estado, necesitas agregar una nueva comunidad dentro del otro estado.\n"
+"                                    "
 
-#: main/templates/main/entry_map.html:135
-#: main/templates/main/entry_map.html:241
+#: main/templates/main/entry_map.html:147
+#: main/templates/main/entry_map.html:271
 msgid "How large should my community be?"
 msgstr "¿Qué tan grande debería ser mi comunidad?"
 
-#: main/templates/main/entry_map.html:137
-#: main/templates/main/entry_map.html:243
-msgid "Your community can be as small as one unit or as large as 800 units."
+#: main/templates/main/entry_map.html:149
+msgid ""
+"\n"
+"                                        Your community can be as small as "
+"one unit or as large as 800 units.\n"
+"                                    "
 msgstr ""
-"Su comunidad puede ser tan pequeña como una unidad o tan grande como 800 "
-"unidades."
+"\n"
+"                                        Puedes trazar comunidades de 1 "
+"unidad hasta 800 unidades.\n"
+"                                    "
 
-#: main/templates/main/entry_map.html:156
-#: main/templates/main/entry_map.html:261
-msgid "Community Name"
-msgstr "Nombre de la Comunidad"
-
-#: main/templates/main/entry_map.html:159
-#: main/templates/main/entry_map.html:264
+#: main/templates/main/entry_map.html:173
+#: main/templates/main/entry_map.html:298
 msgid "Communities Activities and Services"
 msgstr "Actividades y Servicios Comunitarios"
 
-#: main/templates/main/entry_map.html:167
-#: main/templates/main/entry_map.html:272
-#: main/templates/main/entry_survey.html:282 main/templates/main/map.html:109
-#: main/templates/main/partners/map.html:127
-#: main/templates/main/review.html:74 main/templates/main/submission.html:152
-#: main/templates/main/submission.html:415
+#: main/templates/main/entry_map.html:177
+#: main/templates/main/entry_map.html:187
+#: main/templates/main/entry_map.html:207
+#: main/templates/main/entry_map.html:302
+#: main/templates/main/entry_map.html:312
+#: main/templates/main/entry_map.html:332
+msgid ""
+" Where do people in your community gather or socialize? <br>Where does your "
+"community get its services? "
+msgstr ""
+" ¿Dónde se congregan para socializar en su comunidad?<br>¿Dónde acceden "
+"servicios básicos (médicos, transportación, educación, etc.)? "
+
+#: main/templates/main/entry_map.html:183
+#: main/templates/main/entry_map.html:308
+#: main/templates/main/entry_survey.html:282 main/templates/main/map.html:129
+#: main/templates/main/partners/map.html:127 main/templates/main/review.html:74
+#: main/templates/main/submission.html:152
+#: main/templates/main/submission.html:402
 msgid "Cultural or Historical Interests"
 msgstr "Intereses Culturales o Históricos"
 
-#: main/templates/main/entry_map.html:175
-#: main/templates/main/entry_map.html:280
-#: main/templates/main/entry_survey.html:298 main/templates/main/map.html:119
-#: main/templates/main/partners/map.html:137
-#: main/templates/main/review.html:84 main/templates/main/submission.html:162
-#: main/templates/main/submission.html:397
+#: main/templates/main/entry_map.html:193
+#: main/templates/main/entry_map.html:318
+#: main/templates/main/entry_survey.html:298 main/templates/main/map.html:139
+#: main/templates/main/partners/map.html:137 main/templates/main/review.html:84
+#: main/templates/main/submission.html:162
+#: main/templates/main/submission.html:382
 msgid "Economic or Environmental Interests"
 msgstr "Intereses Económicos o Ambientales"
 
-#: main/templates/main/entry_map.html:183
-#: main/templates/main/entry_map.html:288
-#: main/templates/main/entry_survey.html:317
-#: main/templates/main/entry_survey.html:334 main/templates/main/map.html:124
-#: main/templates/main/partners/map.html:142
-#: main/templates/main/review.html:89 main/templates/main/submission.html:172
-#: main/templates/main/submission.html:424
+#: main/templates/main/entry_map.html:203
+#: main/templates/main/entry_map.html:328
+#: main/templates/main/entry_survey.html:317 main/templates/main/map.html:144
+#: main/templates/main/partners/map.html:142 main/templates/main/review.html:89
+#: main/templates/main/submission.html:172
+#: main/templates/main/submission.html:412
 msgid "Community Needs and Concerns"
 msgstr "Necesidades y Preocupaciones de la Comunidad"
 
-#: main/templates/main/entry_map.html:257
-msgid "Your Community Info"
-msgstr "Información de la Comunidad"
+#: main/templates/main/entry_map.html:233
+msgid ""
+"\n"
+"                                        Select units on the map by clicking "
+"with your mouse. To deselect a unit, click it again. Watch the following "
+"video to learn more.\n"
+"                                    "
+msgstr ""
+"\n"
+"                            Haz click con tu mouse para seleccionar "
+"unidades  en el mapa. Vuelve a hacer click para quitar tu selección. Ve este "
+"video para  aprender más.\n"
+"                        "
 
-#: main/templates/main/entry_map.html:300
+#: main/templates/main/entry_map.html:252
+msgid ""
+"\n"
+"                                                    The units are "
+"<strong>census block groups</strong>, which are used by map drawers to draw "
+"voting districts.\n"
+"                                                "
+msgstr ""
+"\n"
+"Las unidades son <a class=\"no-underline-link\" href=\"https://www.census."
+"gov/programs-surveys/geography/about/glossary.html#par_textimage_4\" target="
+"\"_blank\"><strong>grupos de bloque del censo</strong></a>, y diseñadores de "
+"mapas los usan para trazar los distritos electorales.</p>\n"
+"                                "
+
+#: main/templates/main/entry_map.html:259
+msgid ""
+"\n"
+"                                                    Make sure that it does "
+"not contain gaps. Communities of Interest must be contiguous.\n"
+"                                                "
+msgstr ""
+"\n"
+"                                                    Asegúrate que tu "
+"selección no tenga huecos. Las comunidades de interés deben ser contiguas.\n"
+"                                                "
+
+#: main/templates/main/entry_map.html:266
+msgid ""
+"\n"
+"                                                    In order to map outside "
+"of your state, you need to add a new community within the other state.\n"
+"                                                "
+msgstr ""
+"\n"
+"                                                     Para poder hacer un "
+"mapa fuera de tu estado, necesitas agregar una nueva comunidad dentro del "
+"otro estado.\n"
+"                                                "
+
+#: main/templates/main/entry_map.html:273
+msgid ""
+"\n"
+"                                                    Your community can be as "
+"small as one unit or as large as 800 units.\n"
+"                                                "
+msgstr ""
+"\n"
+"                                                    Puedes trazar "
+"comunidades de 1 unidad hasta 800 unidades.\n"
+"                                                "
+
+#: main/templates/main/entry_map.html:289
+#, fuzzy
+#| msgid ""
+#| "\n"
+#| "                                Community Information\n"
+#| "                            "
+msgid ""
+"\n"
+"                                Your Community Info\n"
+"                            "
+msgstr ""
+"\n"
+"                                La Información Comunitaria\n"
+"                            "
+
+#: main/templates/main/entry_map.html:342
 msgid "Saving Community..."
 msgstr "Guardando Comunidad..."
 
-#: main/templates/main/entry_map.html:331
-#: main/templates/main/entry_map.html:335
-msgid "EDIT INFO"
-msgstr "EDITAR INFORMACIÓN"
+#: main/templates/main/entry_map.html:354
+msgid ""
+"\n"
+"                                    +\n"
+"                                "
+msgstr ""
+"\n"
+"                                    +\n"
+"                                "
 
-#: main/templates/main/entry_map.html:332
-#: main/templates/main/entry_map.html:336
+#: main/templates/main/entry_map.html:375
+#: main/templates/main/entry_map.html:379
+msgid "EDIT INFO"
+msgstr ""
+
+#: main/templates/main/entry_map.html:376
+#: main/templates/main/entry_map.html:380
 msgid "SAVE"
 msgstr "GUARDAR"
 
-#: main/templates/main/entry_map.html:341
-msgid "Want different units?"
-msgstr "¿Desea unidades diferentes?"
-
-#: main/templates/main/entry_map.html:346
-msgid "Population"
-msgstr "Población"
-
-#: main/templates/main/entry_map.html:353
+#: main/templates/main/entry_map.html:397
 msgid "Step-by-step guide"
 msgstr "Guía paso a paso "
 
-#: main/templates/main/entry_map.html:362
+#: main/templates/main/entry_map.html:406
 msgid "You need to draw a community to submit the form."
 msgstr "Necesita dibujar una comunidad para enviar el formulario."
 
@@ -859,20 +799,26 @@ msgstr "está silenciando comunidades en todo el país."
 #: main/templates/main/entry_preview.html:21
 msgid ""
 "Politicians have been splitting up or packing together communities into "
-"districts that silence their voices. Gathering communities of interest helps"
-" fight gerrymandering."
+"districts that silence their voices. Gathering communities of interest helps "
+"fight gerrymandering."
 msgstr ""
 "Los políticos han estado dividiendo y concentrando comunidades en distritos "
-"que silencian las voces de los miembros de esas comunidades. Reunir mapas de"
-" comunidades de interés nos ayuda a luchar contra el gerrymandering. "
+"que silencian las voces de los miembros de esas comunidades. Reunir mapas de "
+"comunidades de interés nos ayuda a luchar contra el gerrymandering. "
 
 #: main/templates/main/entry_preview.html:33
 msgid "ADD MY COMMUNITY"
 msgstr "Añadir mi comunidad"
 
 #: main/templates/main/entry_privacy.html:12
-msgid "<p id=\"backup_error_txt\" class=\"p-0 m-0\"></p>"
-msgstr "<p id=\"backup_error_txt\" class=\"p-0 m-0\"></p>"
+msgid ""
+"\n"
+"                <p id=\"backup_error_txt\" class=\"p-0 m-0\"></p>\n"
+"            "
+msgstr ""
+"\n"
+"                <p id=\"backup_error_txt\" class=\"p-0 m-0\"></p>\n"
+"            "
 
 #: main/templates/main/entry_privacy.html:20
 msgid "Please make sure to agree to the terms and conditions."
@@ -884,54 +830,92 @@ msgstr "Privacidad y Condiciones de Uso"
 
 #: main/templates/main/entry_privacy.html:36
 msgid ""
-"We gather your identifying information to verify that you are a real person."
-" We will not publicly share anyone's individual personal information, such "
-"as name, address, or email. Your privacy is our highest priority."
+"We gather your identifying information to verify that you are a real "
+"person.\n"
+"            We will not publicly share anyone's individual personal "
+"information, such as name, address, or email. Your privacy is our highest "
+"priority.\n"
+"            "
 msgstr ""
-"Reunimos información personal para verificar que sea una persona real. No "
-"publicaremos la información personal de nadie, como nombre, dirección o "
-"correo electrónico. Su privacidad es nuestra máxima prioridad."
+"Su privacidad es nuestra máxima prioridad. Recogemos su información de "
+"identificación para verificar\n"
+"                                            que eres una persona real. No "
+"compartiremos públicamente la información personal individual de nadie,\n"
+"                                            como nombre, dirección, o correo "
+"electrónico. "
 
 #: main/templates/main/entry_privacy.html:52
-#: main/templates/main/entry_privacy.html:68
+#, python-format
 msgid ""
-"Click here to indicate that you have read and agree to the <a "
-"target=\"_blank\" rel=\"noopener noreferrer\" href=%(url2)s>Terms of Use</a>"
-" and <a target=\"_blank\" rel=\"noopener noreferrer\" "
-"href=\"%(url1)s\">Privacy Policy</a>."
+" Click here to indicate that you have read and agree to the\n"
+"                    <a target=\"_blank\" rel=\"noopener noreferrer\" href="
+"%(url2)s>Terms of Use</a> and\n"
+"                    <a target=\"_blank\" rel=\"noopener noreferrer\" href="
+"\"%(url1)s\">Privacy Policy</a>.\n"
+"                    <small class=\"text-danger\">*</small>\n"
+"                    "
 msgstr ""
-"Haga clic aquí para indicar que ha leído y acepta los <a target=\"_blank\" "
-"rel=\"noopener noreferrer\" href=%(url2)s>Término de Uso</a> y las <a "
-"target=\"_blank\" rel=\"noopener noreferrer\" href=\"%(url1)s\">Políticas de"
-" Privacidad</a>."
+" Haga clic aquí para indicar que ha leído y está de acuerdo con los \n"
+"                                                <a target=\"_blank\" rel="
+"\"noopener noreferrer\" href=%(url1)s>Términos de Uso</a> y la\n"
+"                                                <a target=\"_blank\" rel="
+"\"noopener noreferrer\" href=\"%(url2)s\">política de privacidad</a>.\n"
+"                                                <small class=\"text-danger"
+"\">(Required)</small>\n"
+"                                                "
+
+#: main/templates/main/entry_privacy.html:68
+#, python-format
+msgid ""
+" Click here to indicate that you have read and agree to the\n"
+"                    <a target=\"_blank\" rel=\"noopener noreferrer\" href="
+"%(url2)s>Terms of Use</a> and\n"
+"                    <a target=\"_blank\" rel=\"noopener noreferrer\" href="
+"\"%(url1)s\">Privacy Policy</a>.\n"
+"                    <small class=\"text-required\">*</small>\n"
+"                    "
+msgstr ""
+" Haga clic aquí para indicar que ha leído y está de acuerdo con los \n"
+"                                                <a target=\"_blank\" rel="
+"\"noopener noreferrer\" href=%(url1)s>Términos de Uso</a> y la\n"
+"                                                <a target=\"_blank\" rel="
+"\"noopener noreferrer\" href=\"%(url2)s\">política de privacidad</a>.\n"
+"                                                <small class=\"text-danger"
+"\">(Required)</small>\n"
+"                                                "
 
 #: main/templates/main/entry_privacy.html:80
-msgid "Submitted communities are final and public."
-msgstr "Las comunidades presentadas son finales y públicas."
+msgid ""
+"\n"
+"                    Submitted communities are final.\n"
+"                "
+msgstr ""
+"\n"
+"                    Las comunidades entregadas son definitivas.\n"
+"                "
 
 #: main/templates/main/entry_privacy.html:86
 msgid ""
-"In order to edit a saved community you will need to create a new community "
-"and delete the old one. Your community map, name, and testimony will be "
-"publicly visible on Representable.org"
+" In order to edit a saved community you will need\n"
+"                    to create a new community and delete the old one. "
 msgstr ""
-"Para editar una comunidad guardada, deberá crear una nueva comunidad y "
-"eliminar la anterior. El mapa de la comunidad, nombre y testimonio serán "
-"visibles al público en Representable.org"
+" Las comunidades guardadas son definitivas. Para editar una comunidad "
+"guardada se necesita\n"
+"                    crear una comunidad nueva y eliminar la antigua. "
 
-#: main/templates/main/entry_privacy.html:96
+#: main/templates/main/entry_privacy.html:95
 msgid "You need to complete the recaptcha to submit this map."
 msgstr "Debe completar el recaptcha para enviar este mapa."
 
-#: main/templates/main/entry_privacy.html:107
+#: main/templates/main/entry_privacy.html:106
 #: main/templates/main/entry_survey.html:103
 #: main/templates/main/entry_survey.html:204
-#: main/templates/main/entry_survey.html:346
-#: main/templates/main/entry_survey.html:413
+#: main/templates/main/entry_survey.html:334
+#: main/templates/main/entry_survey.html:401
 msgid "BACK"
 msgstr "REGRESAR"
 
-#: main/templates/main/entry_privacy.html:108
+#: main/templates/main/entry_privacy.html:107
 msgid "SUBMIT"
 msgstr "ENTREGAR"
 
@@ -963,15 +947,23 @@ msgstr "¿Qué es una comunidad de interés?"
 
 #: main/templates/main/entry_survey.html:31
 msgid ""
-"A Community of Interest is a <strong>geographic area</strong> that shares "
-"<strong>cultural</strong>, <strong>historical</strong>, or "
-"<strong>economic</strong> interests. Communities of Interest encourage the "
-"drawing of fairer voting districts."
+"\n"
+"                            A Community of Interest is a <strong>geographic "
+"area</strong> that shares <strong>cultural</strong>, <strong>historical</"
+"strong>, or <strong>economic</strong> interests.\n"
+"                            Communities of Interest encourage the drawing of "
+"fairer voting districts.\n"
+"                            "
 msgstr ""
-"Una Comunidad de Interés es un <strong>área geográfica</strong> que comparte"
-" intereses <strong>culturales</strong>, <strong>históricos</strong> o "
-"<strong>económicos</strong>. Las Comunidades de Interés fomentan la creación"
-" de distritos de votación más justos."
+"\n"
+"                            <p class=\"info-text txt-16\">\n"
+"                                Una comunidad de interés es <strong>un área "
+"geográfica</strong> que comparte intereses <strong>culturales</strong>, "
+"<strong>históricos</strong> o <strong>económicos</strong>.\n"
+"                                Las comunidades de interés fomentan el "
+"trazado de distritos electorales más justos.\n"
+"                            </p>\n"
+"                        "
 
 #: main/templates/main/entry_survey.html:39
 #: main/templates/main/entry_survey.html:128
@@ -979,19 +971,40 @@ msgid "Communities of Interest can include..."
 msgstr "Las comunidades de interés pueden incluir ..."
 
 #: main/templates/main/entry_survey.html:53
-#: main/templates/main/entry_survey.html:164
-msgid "Your neighborhood, or an area you live in."
-msgstr "Su vecindario, o el área donde vive."
+msgid ""
+"\n"
+"                                                Your neighborhood, or an "
+"area you live in.\n"
+"                                            "
+msgstr ""
+"\n"
+"                                                Tu vecindario o un área en "
+"la que vives.\n"
+"                                            "
 
 #: main/templates/main/entry_survey.html:72
-#: main/templates/main/entry_survey.html:141
-msgid "The people you would like to choose representatives with."
-msgstr "Las personas con las que le gustaría elegir representantes."
+msgid ""
+"\n"
+"                                                The people you would like to "
+"choose representatives with.\n"
+"                                            "
+msgstr ""
+"\n"
+"                                                Las personas con las que le "
+"gustaría elegir representantes.\n"
+"                                            "
 
 #: main/templates/main/entry_survey.html:91
-#: main/templates/main/entry_survey.html:187
-msgid "A local group that is brought together by a common interest."
-msgstr "Un grupo local que se une por un interés común."
+msgid ""
+"\n"
+"                                                A local group that is "
+"brought together by a common interest.\n"
+"                                            "
+msgstr ""
+"\n"
+"                                                Un grupo local que se une "
+"por un interés común.\n"
+"                                            "
 
 #: main/templates/main/entry_survey.html:104
 #: main/templates/main/entry_survey.html:205
@@ -1000,15 +1013,59 @@ msgstr "EMPIEZA"
 
 #: main/templates/main/entry_survey.html:120
 msgid ""
-"A Community of Interest is a geographic area that shares "
-"<strong>cultural</strong>, <strong>historical</strong>, or "
-"<strong>economic</strong> interests. Communities of Interest encourage the "
-"drawing of fairer voting districts."
+"\n"
+"                            A Community of Interest is a geographic area "
+"that shares <strong>cultural</strong>, <strong>historical</strong>, or "
+"<strong>economic</strong> interests.\n"
+"                            Communities of Interest encourage the drawing of "
+"fairer voting districts.\n"
+"                            "
 msgstr ""
-"Una Comunidad de Interés es un <strong>área geográfica</strong> que comparte"
-" intereses <strong>culturales</strong>, <strong>históricos</strong> o "
-"<strong>económicos</strong>. Las Comunidades de Interés fomentan la creación"
-" de distritos de votación más justos."
+"\n"
+"                            <p class=\"info-text txt-16\">\n"
+"                                Una comunidad de interés es <strong>un área "
+"geográfica</strong> que comparte intereses <strong>culturales</strong>, "
+"<strong>históricos</strong> o <strong>económicos</strong>.\n"
+"                                Las comunidades de interés fomentan el "
+"trazado de distritos electorales más justos.\n"
+"                            </p>\n"
+"                        "
+
+#: main/templates/main/entry_survey.html:141
+msgid ""
+"\n"
+"                                            The people you would like to "
+"choose representatives with.\n"
+"                                        "
+msgstr ""
+"\n"
+"                                            Las personas con las que le "
+"gustaría elegir representantes.\n"
+"                                        "
+
+#: main/templates/main/entry_survey.html:164
+msgid ""
+"\n"
+"                                            Your neighborhood, or an area "
+"you live in.\n"
+"                                        "
+msgstr ""
+"\n"
+"                                            Tu vecindario o un área en la "
+"que vives.\n"
+"                                        "
+
+#: main/templates/main/entry_survey.html:187
+msgid ""
+"\n"
+"                                            A local group that is brought "
+"together by a common interest.\n"
+"                                        "
+msgstr ""
+"\n"
+"                                            Un grupo local que se une por un "
+"interés común.\n"
+"                                        "
 
 #: main/templates/main/entry_survey.html:217
 msgid "What unites your Community of Interest?"
@@ -1019,24 +1076,34 @@ msgid "Community of Interest Definition in "
 msgstr "Las comunidades de interés pueden incluir ..."
 
 #: main/templates/main/entry_survey.html:231
-
 msgid ""
-"Respond to <b>at least one</b> of the sections below. There are no wrong "
-"answers.<br> Click on each category to see helpful questions and examples."
+"\n"
+"                    Respond to <b>at least one</b> of the sections below. "
+"There are no wrong answers.<br>\n"
+"\n"
+"                    Click on each category to see helpful questions and "
+"examples.\n"
+"                    "
 msgstr ""
-"Responda <b>al menos una</b> de las siguientes secciones. No hay respuestas "
-"equivocadas. <br> Haga clic en cada categoría para leer preguntas y ejemplos"
-" útiles."
+"\n"
+"                    <p>\n"
+"                      Responda al menos a una de las secciones siguientes. "
+"No hay respuestas equivocadas.<br>\n"
+"\n"
+"                      Haga clic en cada categoría para ver preguntas y "
+"ejemplos útiles.\n"
+"                    </p>\n"
+"                "
 
 #: main/templates/main/entry_survey.html:246
 #: main/templates/main/entry_survey.html:254
 msgid "Please fill out at least one of the interest fields."
 msgstr "Complete al menos una de las secciones de interés."
 
-#: main/templates/main/entry_survey.html:265 main/templates/main/map.html:114
-#: main/templates/main/partners/map.html:132
-#: main/templates/main/review.html:79 main/templates/main/submission.html:142
-#: main/templates/main/submission.html:406
+#: main/templates/main/entry_survey.html:265 main/templates/main/map.html:134
+#: main/templates/main/partners/map.html:132 main/templates/main/review.html:79
+#: main/templates/main/submission.html:142
+#: main/templates/main/submission.html:392
 msgid "Community Activities and Services"
 msgstr "Actividades y servicios comunitarios"
 
@@ -1058,8 +1125,8 @@ msgid ""
 "How and where does your community access services (healthcare, "
 "transportation, educational services, etc.)?"
 msgstr ""
-"¿Cómo y dónde acceden servicios básicos (médicos, transportación, educación,"
-" etc.)?"
+"¿Cómo y dónde acceden servicios básicos (médicos, transportación, educación, "
+"etc.)?"
 
 #: main/templates/main/entry_survey.html:272
 msgid "Examples of activities and services:"
@@ -1084,8 +1151,8 @@ msgid "If your community has a shared history, what is it?"
 msgstr "Si tu comunidad tiene una historia compartida, ¿cuál es?"
 
 #: main/templates/main/entry_survey.html:289
-msgid "Examples of cultural or historical interests: "
-msgstr "Ejemplos de intereses culturales o históricos: "
+msgid "Examples of cultural or historical interests:"
+msgstr "Ejemplos de intereses culturales o históricos:"
 
 #: main/templates/main/entry_survey.html:289
 msgid ""
@@ -1097,21 +1164,29 @@ msgstr ""
 
 #: main/templates/main/entry_survey.html:302
 msgid ""
-"<b>Use these questions to think more about how you would describe your "
-"community...</b><br> &emsp; - Where are residents employed?<br> &emsp; - If "
-"there are environmental concerns in your community, what are they?<br><br> "
-"<span class=\"blue-text\"><b>Examples of economic or environmental "
-"interests:</b> Tourism industry, agricultural workers, mining town, "
-"manufacturing center, polluted natural resource, unemployment problem, "
-"etc.</span>"
+"\n"
+"                            <b>Use these questions to think more about how "
+"you would describe your community...</b><br>\n"
+"                            &emsp; - Where are residents employed?<br>\n"
+"                            &emsp; - If there are environmental concerns in "
+"your community, what are they?<br><br>\n"
+"                            <span class=\"blue-text\"><b>Examples of "
+"economic or environmental interests:</b> Tourism industry, agricultural "
+"workers, mining town, manufacturing center, polluted natural resource, "
+"unemployment problem, etc.</span>\n"
+"                            "
 msgstr ""
-"Utilice estas preguntas para pensar más sobre cómo describiría a su "
-"comunidad... </b><br> &emsp; - ¿Dónde trabajan los residentes? <br> &emsp; -"
-" Si hay preocupaciones ambientales en su comunidad, ¿cuáles son? <br><br> "
-"<span class=\"blue-text\"><b>Ejemplos de intereses económicos o ambientales:"
-" </b> Industria turística, trabajadores agrícolas, ciudades mineras, centros"
-" de fabricación, recursos naturales contaminados, problemas de desempleo, "
-"etc.</span>"
+"\n"
+"                            <b>Usa estas preguntas para pensar más en cómo "
+"describirías tu comunidad...</b><br>\n"
+"                            &emsp; - ¿Dónde trabajan los residentes?<br>\n"
+"                            &emsp; - Si hay preocupaciones ambientales en tu "
+"comunidad, ¿cuáles son?<br><br>\n"
+"                            <span class=\"blue-text\"><b>Ejemplos de "
+"Intereses Económicos o Ambientales:</b> La industria de turismo, "
+"agricultores, ciudad minera, centro de manufactura, recurso natural "
+"contaminado, problema de desempleo, etc.</span>\n"
+"                            "
 
 #: main/templates/main/entry_survey.html:322
 msgid "What should politicians and/or map drawers know about your community?"
@@ -1141,15 +1216,15 @@ msgstr ""
 "social, relaciones con otras comunidades cercanas, problemas con distritos "
 "electorales presentes."
 
-#: main/templates/main/entry_survey.html:373
+#: main/templates/main/entry_survey.html:361
 msgid "Please include a community name."
 msgstr "Nombre de tu comunidad."
 
-#: main/templates/main/entry_survey.html:385
+#: main/templates/main/entry_survey.html:373
 msgid "Name your community."
 msgstr "Nombre de tu comunidad."
 
-#: main/templates/main/entry_survey.html:390
+#: main/templates/main/entry_survey.html:378
 msgid ""
 "Give your community of interest a name. This does not have to be the "
 "official name of your community."
@@ -1157,11 +1232,11 @@ msgstr ""
 "Dale un nombre a tu comunidad de interés. Este nombre no tiene que ser el "
 "nombre oficial de tu comunidad."
 
-#: main/templates/main/entry_survey.html:396
+#: main/templates/main/entry_survey.html:384
 msgid "Examples"
 msgstr "Ejemplos"
 
-#: main/templates/main/entry_survey.html:396
+#: main/templates/main/entry_survey.html:384
 msgid ""
 "Cherry Farmers Community, St. Peters Church Community, Riverside Fishing "
 "Community"
@@ -1169,9 +1244,15 @@ msgstr ""
 "Comunidad de Agricultores de Cereza, Comunidad de la Iglesia de San Pedro, "
 "Comunidad de Pesca Riverside"
 
-#: main/templates/main/entry_survey.html:403
+#: main/templates/main/entry_survey.html:391
 msgid "Community Name:"
 msgstr "Nombre de la comunidad:"
+
+#: main/templates/main/index.html:25
+msgid ""
+" Make your voice heard with Representable <br> and put your community on the "
+"map. "
+msgstr "Haz que escuchen tu voz  \" <br> y pon tu comunidad en el mapa."
 
 #: main/templates/main/index.html:27
 msgid "GET STARTED"
@@ -1204,16 +1285,18 @@ msgstr ""
 #: main/templates/main/index.html:52
 msgid ""
 "Representable allows people to draw communities of interest and share "
-"information about the interests and needs in those communities. "
-"<br><br>Making this information available encourages mapmakers to take these"
-" communities into account during redistricting, in order to avoid "
-"gerrymandering and the “packing and cracking” of marginalized groups."
+"information about the interests and needs in those communities.\n"
+"            <br><br>Making this information available encourages mapmakers "
+"to take these communities into account during redistricting, in order to "
+"avoid gerrymandering and the “packing and cracking” of marginalized groups."
 msgstr ""
-"Representable permite que las personas diseñen sus comunidades de interés y "
-"compartan la información sobre dichos intereses y necesidades en estas "
-"comunidades. <br><br> Hacer que esta información esté disponible ayuda a los"
-" cartógrafos a tener en cuenta estas comunidades a la hora de reorganizar "
-"los distritos, para evitar el "
+"Representable hace que las personas puedan dibujar sus comunidades de "
+"interés y que puedan compartir información sobre los intereses y necesidades "
+"de estas comunidades.\n"
+"            <br><brHacer que esta información esté disponible motiva a "
+"diseñadores de mapas a tomar las comunidades en cuenta durante la "
+"redistribución de distritos. Así, podemos evitar el gerrymandering y la "
+"agrupación ventajosa  de grupos marginalizados para un partido."
 
 #: main/templates/main/index.html:59
 msgid "<b>Gerrymandering</b> is threatening democracy."
@@ -1230,11 +1313,10 @@ msgid ""
 msgstr ""
 "Los políticos han estado dividiendo y concentrando comunidades en distritos "
 "que silencian las voces de los miembros de esas comunidades. Esto evita que "
-"las comunidades elijan representantes que atiendan a sus necesidades. Reunir"
-" mapas de comunidades de interés nos ayuda a luchar contra el "
-"gerrymandering. Nosotros podemos proveer a los diseñadores de mapas con la "
-"información necesaria para que dibujen distritos que empoderen a las "
-"comunidades."
+"las comunidades elijan representantes que atiendan a sus necesidades. Reunir "
+"mapas de comunidades de interés nos ayuda a luchar contra el gerrymandering. "
+"Nosotros podemos proveer a los diseñadores de mapas con la información "
+"necesaria para que dibujen distritos que empoderen a las comunidades."
 
 #: main/templates/main/index.html:61
 msgid "We're fighting to make democracy more..."
@@ -1314,21 +1396,12 @@ msgstr "Capas de datos"
 msgid "Communities"
 msgstr "Mis Comunidades"
 
-#: main/templates/main/map.html:79 main/templates/main/review.html:49
-#: main/templates/main/submission.html:139
-msgid "Community Information"
-msgstr "Información de la comunidad"
-
-#: main/templates/main/map.html:80
-msgid "Only Show"
-msgstr "Solo mostrar"
-
-#: main/templates/main/map.html:129 main/templates/main/partners/map.html:152
+#: main/templates/main/map.html:149 main/templates/main/partners/map.html:147
 #: main/templates/main/review.html:94
 msgid "Show More"
 msgstr "Mostrar más"
 
-#: main/templates/main/map.html:141
+#: main/templates/main/map.html:161
 msgid "Show All"
 msgstr "Mostar ejemplos"
 
@@ -1338,21 +1411,29 @@ msgstr "Sobre Representable"
 
 #: main/templates/main/pages/about.html:12
 msgid ""
-"<span class=\"d-block display-3\">We want to give communities a <span "
-"class=\"light-blue-text\">voice</span> in drawing districts.</span>"
+"\n"
+"        <span class=\"d-block display-3\">We want to give communities a "
+"<span class=\"light-blue-text\">voice</span> in drawing districts.</span>\n"
+"        "
 msgstr ""
-"<span class=\"d-block display-3\">Queremos darle a las comunidades <span "
-"class=\"light-blue-text\">una voz</span> en la delimitación de los "
-"distritos.</span>"
+"\n"
+"        <span class=\"d-block display-3\">Nosotros queremos dar las "
+"comunidades un <span class=\"light-blue-text\">voz</span> en dibujando los "
+"distritos.</span>\n"
+"        "
 
 #: main/templates/main/pages/about.html:18
 msgid ""
-"<span class=\"display-4 d-block\">We want to give communities a <span "
-"class=\"light-blue-text\">voice</span> in drawing districts.</span>"
+"\n"
+"        <span class=\"display-4 d-block\">We want to give communities a "
+"<span class=\"light-blue-text\">voice</span> in drawing districts.</span>\n"
+"        "
 msgstr ""
-"<span class=\"display-4 d-block\">Queremos darle a las comunidades  <span "
-"class=\"light-blue-text\">una voz</span> en la delimitación de los "
-"distritos.</span>"
+"\n"
+"        <span class=\"d-block display-3\">Nosotros queremos dar las "
+"comunidades un <span class=\"light-blue-text\">voz</span> en dibujando los "
+"distritos.</span>\n"
+"        "
 
 #: main/templates/main/pages/about.html:34
 #: main/templates/main/pages/about.html:38
@@ -1387,32 +1468,42 @@ msgstr ""
 
 #: main/templates/main/pages/about.html:51
 msgid ""
+"\n"
 "We work closely with organizations to gather community maps along with "
 "information about the shared interests of the community. This data can then "
 "be used by map drawers, journalists, analysts, and activists to create and "
 "evaluate proposed district maps. Our goal is to democratize public "
 "testimony, inform map drawers, and encourage map analysis. Learn more about "
-"how Representable fights gerrymandering in the <a "
-"href=\"https://docs.google.com/document/d/1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc/edit?usp=sharing\">Official"
-" Education Guide.</a></p>"
+"how Representable fights gerrymandering in the <a href=\"https://docs.google."
+"com/document/d/1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc/edit?usp=sharing"
+"\">Official Education Guide.</a></p>\n"
+"        "
 msgstr ""
-"Trabajamos codo a codo con organizaciones para reunir mapas comunitarios e "
-"información sobre los intereses compartidos de la comunidad. Esta "
-"información puede ser utilizada por cartógrafos, periodistas, analistas y "
-"activistas para crear y evaluar los mapas distritales propuestos. Nuestra "
-"meta es democratizar el testimonio público, guiar a los cartógrafos y "
-"potenciar el análisis de los mapas. Conozca más sobre cómo Representable "
-"lucha contra el g"
+"\n"
+"Trabajamos estrechamente con organizaciones para reunir mapas comunitarios "
+"junto con información sobre los intereses compartidos de la comunidad. Estos "
+"datos se pueden usar para dibujantes de mapa, periodistas, analistas, y "
+"activistas para crear y evaluar mapas de distrito propuestos. Nuestra meta "
+"es democratizar el testimonio público, informar a los dibujantes de mapa, y "
+"fomentar análisis de mapas. Aprende más sobre cómo Representable lucha "
+"contra gerrymandering en la <a href=\"https://docs.google.com/document/"
+"d/1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc/edit?usp=sharing\">Guía "
+"Oficial de Elecciones.</a></p>\n"
+"        "
 
 #: main/templates/main/pages/about.html:56
 msgid ""
-"Representable is built in partnership with the <a "
-"href=\"http://gerrymander.princeton.edu/\">Princeton Gerrymandering "
-"Project</a> and supported by <a href=\"https://schmidtfutures.com/\">Schmidt"
-" Futures.</a></p>"
+"\n"
+"Representable is built in partnership with the <a href=\"http://gerrymander."
+"princeton.edu/\">Princeton Gerrymandering Project</a> and supported by <a "
+"href=\"https://schmidtfutures.com/\">Schmidt Futures.</a></p>\n"
+"        "
 msgstr ""
-"Representable es desarrollado en asociación con el <a "
-"href=\"http://gerrymander.princeton.edu/\">Proyecto "
+"\n"
+"Representable está construido con <a href=\"http://gerrymander.princeton.edu/"
+"\">Princeton Gerrymandering Project</a> y cuenta con el apoyo de <a href="
+"\"https://schmidtfutures.com/\">Schmidt Futures.</a></p>\n"
+"        "
 
 #: main/templates/main/pages/about.html:59
 msgid "Representable will help..."
@@ -1518,7 +1609,7 @@ msgstr "Jefe de ingeniería"
 
 #: main/templates/main/pages/about.html:150
 msgid "Media and Communications Coordinator"
-msgstr "Coordinador de Prensa y Comunicación"
+msgstr ""
 
 #: main/templates/main/pages/about.html:152
 msgid "Our Founding Team"
@@ -1559,7 +1650,7 @@ msgstr "Las comunidades de interés pueden incluir ..."
 
 #: main/templates/main/pages/faq.html:11
 msgid "Check out our most frequently asked questions below."
-msgstr "Lea las preguntas que nos hacen con frecuencia abajo."
+msgstr ""
 
 #: main/templates/main/pages/faq.html:13
 msgid "For Community Members"
@@ -1575,6 +1666,7 @@ msgstr "¿Más preguntas? Comuníquese con"
 
 #: main/templates/main/pages/glossary.html:10
 #: representable/templates/base.html:114
+#: representable/templates/base_nofooter.html:114
 msgid "Redistricting Glossary"
 msgstr "Redistritación está llegando."
 
@@ -1583,112 +1675,73 @@ msgid "More Information"
 msgstr "1. Su información de identificación"
 
 #: main/templates/main/pages/privacy.html:5
-#: representable/templates/base.html:288
+#: representable/templates/base.html:275
 msgid "Privacy"
 msgstr "Privacidad"
 
 #: main/templates/main/pages/privacy.html:7
 msgid ""
+"\n"
 "<p>Your privacy is our highest priority. We gather your identifying "
-"information to verify that you are a real person. We will not publicly share"
-" anyone's individual personal information, such as name, address, or "
-"email.</p> <p>If you choose to submit an entry to an organization, the "
-"organization will receive your identifying information in order to verify "
-"that you are a real person. This aspect will be communicated to you before "
-"you save an entry.</p> <p>We rely on third-party services (Mixpanel and "
-"Google Analytics) to better understand our users' anonymous behavior on the "
-"website. This allows us to understand how we can improve Representable.org "
-"by finding any hidden friction points. We don't share any personal "
-"information with these services.</a> <p>Our implementation of third-party "
-"tracking services respects your browser's <a "
-"href=\"https://allaboutdnt.com/\">Do Not Track</a> settings. We also give "
-"users the option to opt in or opt out of tracking at any point. Users can "
-"update their preferences on their account dashboard page (if logged in). By "
-"default, we enable Google Analytics to count website visitors (which only "
+"information to verify that you are a real person. We will not publicly share "
+"anyone's individual personal information, such as name, address, or email.</"
+"p>\n"
+"<p>If you choose to submit an entry to an organization, the organization "
+"will receive your identifying information in order to verify that you are a "
+"real person. This aspect will be communicated to you before you save an "
+"entry.</p>\n"
+"<p>We rely on third-party services (Mixpanel and Google Analytics) to better "
+"understand our users' anonymous behavior on the website. This allows us to "
+"understand how we can improve Representable.org by finding any hidden "
+"friction points. We don't share any personal information with these services."
+"</a>\n"
+"<p>Our implementation of third-party tracking services respects your "
+"browser's <a href=\"https://allaboutdnt.com/\">Do Not Track</a> settings.\n"
+"We also give users the option to opt in or opt out of tracking at any point. "
+"Users can update their preferences on their account dashboard page (if "
+"logged in).\n"
+"By default, we enable Google Analytics to count website visitors (which only "
 "uses first-party cookies), but this behavior is disabled by opting out. "
-"Mixpanel is only enabled by opting in.</p> <p>It is Representable's policy "
-"to respect your privacy regarding any information we may collect from you "
-"across our website, <a "
-"href=\"http://representable.org\">representable.org</a>, and other sites we "
-"own and operate.</p> <p>We only ask for personal information when we truly "
-"need it to provide a service to you. We collect it by fair and lawful means,"
-" with your knowledge and consent. We also let you know why we’re collecting "
-"it and how it will be used.</p> <p>The information we collect from our users"
-" may be used for research by our team or by our partners at Princeton "
-"University.  Such information will be retained in an anonymous form and in "
-"accordance with this policy's other provisions.  If you do not wish for your"
-" information to be used in research, please contact us.</p> <p>We only "
-"retain collected information for as long as necessary to provide you with "
-"your requested service and, in an anonymized, aggregated form, for research "
-"purposes. What data we store, we’ll protect within commercially acceptable "
-"means to prevent loss and theft, as well as unauthorized access, disclosure,"
-" copying, use or modification.</p> <p>We don’t share any personally "
-"identifying information publicly or with third-parties, except when explicit"
-" permission is given during a \"community\" submission or when required to "
-"by law.</p> <p>Our website may link to external sites that are not operated "
-"by us. Please be aware that we have no control over the content and "
-"practices of these sites, and cannot accept responsibility or liability for "
-"their respective privacy policies. </p> <p>You are free to refuse our "
-"request for your personal information, with the understanding that we may be"
-" unable to provide you with some of your desired services.</p> <p>Your "
-"continued use of our website will be regarded as acceptance of our practices"
-" around privacy and personal information. If you have any questions about "
-"how we handle user data and personal information, feel free to contact "
-"us.</p> <p>This policy is effective as of July 14, 2020.</p>"
+"Mixpanel is only enabled by opting in.</p>\n"
+"<p>It is Representable's policy to respect your privacy regarding any "
+"information we may collect from you across our website, <a href=\"http://"
+"representable.org\">representable.org</a>, and other sites we own and "
+"operate.</p>\n"
+"<p>We only ask for personal information when we truly need it to provide a "
+"service to you. We collect it by fair and lawful means, with your knowledge "
+"and consent. We also let you know why we’re collecting it and how it will be "
+"used.</p>\n"
+"<p>The information we collect from our users may be used for research by our "
+"team or by our partners at Princeton University.  Such information will be "
+"retained in an anonymous form and in accordance with this policy's other "
+"provisions.  If you do not wish for your information to be used in research, "
+"please contact us.</p>\n"
+"<p>We only retain collected information for as long as necessary to provide "
+"you with your requested service and, in an anonymized, aggregated form, for "
+"research purposes. What data we store, we’ll protect within commercially "
+"acceptable means to prevent loss and theft, as well as unauthorized access, "
+"disclosure, copying, use or modification.</p>\n"
+"<p>We don’t share any personally identifying information publicly or with "
+"third-parties, except when explicit permission is given during a \"community"
+"\" submission or when required to by law.</p>\n"
+"<p>Our website may link to external sites that are not operated by us. "
+"Please be aware that we have no control over the content and practices of "
+"these sites, and cannot accept responsibility or liability for their "
+"respective privacy policies.\n"
+"</p>\n"
+"<p>You are free to refuse our request for your personal information, with "
+"the understanding that we may be unable to provide you with some of your "
+"desired services.</p>\n"
+"<p>Your continued use of our website will be regarded as acceptance of our "
+"practices around privacy and personal information. If you have any questions "
+"about how we handle user data and personal information, feel free to contact "
+"us.</p>\n"
+"<p>This policy is effective as of July 14, 2020.</p>\n"
 msgstr ""
-"<p>Su privacidad es nuestra máxima prioridad. Reunimos información personal "
-"para verificar que sea una persona real. No publicaremos la información "
-"personal de nadie, como nombre, dirección o correo electrónico. </p><p> Si "
-"decide presentar una solicitud a una organización, recibirán su información "
-"de identificación para verificar que usted es una persona real. Le "
-"comunicaremos esto antes de que guarde la información ingresada.</p><p> "
-"Utilizamos servicios tercerizados (Mixpanel y Google Analytics) para "
-"comprender mejor el comportamiento anónimo de nuestros usuarios en el sitio "
-"web. Esto nos permite entender cómo podemos mejorar Representable.org a "
-"través de la evaluación de puntos de fricción ocultos. No compartimos "
-"información personal con estos servicios.</a> <p>La implementación de "
-"servicios de rastreo tercerizados respeta la configuración de<a "
-"href=\"https://allaboutdnt.com/\"> No Molestar</a> su buscador. También "
-"brindamos a los usuarios la opción de inclusión/exclusión voluntaria del "
-"rastreo en cualquier momento. Los usuarios pueden actualizar sus "
-"preferencias en la página de tablero de su cuenta (si han iniciado sesión). "
-"Por defecto, habilitamos Google Analytics para contabilizar las visitas en "
-"el sitio web (que solo utiliza cookies de origen), pero puede ser "
-"deshabilitado con la opción de exclusión. Mixpanel solo se habilita con la "
-"opción de inclusión.</p><p> La política de Representable es respetar su "
-"privacidad sobre la información que pudiéramos reunir a través de nuestro "
-"sitio web, <a href=\"http://representable.org\">representable.org</a>, y "
-"otros sitios web que poseemos y operamos. </p> <p>Solo solicitamos "
-"información personal cuando realmente la necesitamos para brindarle un "
-"servicio. La recolectamos de manera justa y legal, con su conocimiento y "
-"consentimiento. Además, le informamos cómo será utilizada y por qué la "
-"estamos recolectando. </p> <p> La información que recolectamos de nuestros "
-"usuarios podría ser utilizada por nuestro equipo o nuestros colaboradores en"
-" la Universidad de Princeton con fines de investigación.  Dicha información "
-"será almacenada de forma anónima y de acuerdo con todas las disposiciones de"
-" esta política.  Si no desea que utilicemos su información con propósitos de"
-" investigación, contáctenos. </p><p> Solo almacenamos la información "
-"recolectada el tiempo necesario para brindarle el servicio que nos solicite,"
-" y de forma anónima y conjunta, solo con propósitos de investigación. La "
-"información que almacenamos, está protegida de forma comercialmente "
-"aceptable para prevenir robos, pérdidas, accesos no autorizados, "
-"divulgaciones, copias, usos o modificaciones.</p> </p>No compartimos ninguna"
-" información personal identificatoria de forma pública ni con terceros, "
-"excepto cuando hay una autorización explícita en una presentación en "
-"“comunidad” o cuando sea requerido por la ley.</p> <p> Nuestro sitio web "
-"puede conectar con sitios externos, que no son operados por nuestro equipo. "
-"Tome en cuenta que no tenemos control sobre el contenido y las prácticas en "
-"estos sitios, y no podemos aceptar responsabilidad por sus respectivas "
-"políticas de privacidad. </p><p> Tiene derecho a rechazar nuestro pedido de "
-"información personal, con conocimiento de que tal vez no podamos brindarle "
-"alguno de los servicios que desea.</p> <p>Su uso continuo de nuestro sitio "
-"web será interpretado como aceptación de nuestras prácticas con respecto a "
-"la información personal y privacidad. Si tiene dudas sobre el manejo de la "
-"información personal, contáctenos.</p> <p> Esta política es efectiva a "
-"partir del 14 de julio de 2020.</p>"
 
 #: main/templates/main/pages/resources.html:10
 #: representable/templates/base.html:115
+#: representable/templates/base_nofooter.html:115
 msgid "Resources"
 msgstr "Recursos"
 
@@ -1702,9 +1755,6 @@ msgid ""
 "redistricting process, dangers of gerrymandering, and the effectiveness of "
 "Communities of Interest which can be mapped easily on Representable.org."
 msgstr ""
-"Este video es una herramienta educativa basada en un texto para informar a "
-"los usuarios sobre el proceso de reorganización distrital, los peligros del "
-"g"
 
 #: main/templates/main/pages/resources.html:32
 msgid "Demo Videos"
@@ -1716,21 +1766,17 @@ msgid ""
 "perspective of a user and an organization, complete with tips for easily "
 "mapping your community and collecting communities of interest."
 msgstr ""
-"El recorrido de este video es clave para aprender a navegar Representable "
-"desde la perspectiva de un usuario y de una organización. Cuenta con "
-"consejos para delimitar fácilmente su comunidad y recolectar comunidades de "
-"interés."
 
 #: main/templates/main/pages/resources.html:47
 msgid "One Pager"
-msgstr "Documentos de una página"
+msgstr ""
 
 #: main/templates/main/pages/resources.html:53
 msgid ""
-"This infographic provides a short overview of redistricting, gerrymandering,"
-" and how Representable can be used to address this issue using communities "
-"of interest."
-msgstr "Esta infografía brinda un resumen de la reorganización distrital, el "
+"This infographic provides a short overview of redistricting, gerrymandering, "
+"and how Representable can be used to address this issue using communities of "
+"interest. "
+msgstr ""
 
 #: main/templates/main/pages/resources.html:55
 msgid "VIEW & DOWNLOAD"
@@ -1746,35 +1792,29 @@ msgid ""
 "information about the tool, community mapping drives, our educational "
 "materials, FAQs, and more!"
 msgstr ""
-"Esta guía es el punto de referencia principal para que las organizaciones "
-"descubran información sobre las herramientas, campañas de diseño de mapas, "
-"nuestro material educativo, preguntas frecuentes y más."
 
 #: main/templates/main/pages/resources.html:73
 msgid "READ MORE"
-msgstr "LEER MÁS"
+msgstr ""
 
 #: main/templates/main/pages/resources.html:83
 msgid "Community Mapping Event Powerpoint"
-msgstr "Presentación sobre el diseño de mapas comunitarios"
+msgstr ""
 
 #: main/templates/main/pages/resources.html:89
 msgid ""
 "This powerpoint can be used to run online mapping events with your "
-"community. Guide people through the process of identifying their community’s"
-" needs and mapping their COI."
+"community. Guide people through the process of identifying their community’s "
+"needs and mapping their COI."
 msgstr ""
-"Esta presentación puede utilizarse para organizar eventos virtuales para "
-"diseñar mapas con su comunidad. Ayuda a las personas a identificar las "
-"necesidades de su comunidad y a delimitar sus Comunidades de Interés."
 
 #: main/templates/main/pages/resources.html:91
 msgid "DOWNLOAD"
-msgstr "DESCARGAR"
+msgstr ""
 
 #: main/templates/main/pages/resources.html:101
 msgid "Additional Resources"
-msgstr "Recursos Adicionales"
+msgstr ""
 
 #: main/templates/main/pages/resources.html:102
 msgid "Princeton Gerrymandering Project"
@@ -1784,12 +1824,12 @@ msgstr "El gerrymandering"
 msgid ""
 "Through nonpartisan analysis, the Princeton Gerrymandering Project bridges "
 "the gap between mathematics and the law to achieve fair representation "
-"through redistricting reform."
-msgstr "A través de análisis apartidarios, el Proyecto de "
+"through redistricting reform. "
+msgstr ""
 
 #: main/templates/main/pages/resources.html:105
 msgid "GeoCivics Redistricting Materials"
-msgstr "Materiales de GeoCivics para la reorganización distrital"
+msgstr ""
 
 #: main/templates/main/pages/resources.html:106
 msgid ""
@@ -1799,16 +1839,8 @@ msgid ""
 "community members with interactive tools and geospatial data, leading to "
 "engagement in conversation about the construction of electoral districts."
 msgstr ""
-"GeoCivis brinda un conjunto de recursos estatales para el desarrollo de "
-"habilidades y conocimientos que ayuden a debatir sobre el proceso de "
-"prorrateo y reorganización distrital en los Estados Unidos. Estos recursos "
-"capacitan y ayudan a estudiantes, docentes y miembros de la comunidad "
-"mediante herramientas interactivas e información geográfica, para lograr que"
-" participen de la conversación sobre la construcción de los distritos "
-"electorales."
 
-#: main/templates/main/pages/terms.html:5
-#: representable/templates/base.html:291
+#: main/templates/main/pages/terms.html:5 representable/templates/base.html:278
 msgid "Terms"
 msgstr "Condiciones"
 
@@ -1818,229 +1850,203 @@ msgstr "Condiciones"
 
 #: main/templates/main/pages/terms.html:8
 msgid ""
-"By accessing the website at <a "
-"href=\"https://representable.org\">http://representable.org</a>, you are "
-"agreeing to be bound by these terms of service, all applicable laws and "
-"regulations, and agree that you are responsible for compliance with any "
-"applicable local laws. If you do not agree with any of these terms, you are "
-"prohibited from using or accessing this site. The materials contained in "
-"this website are protected by applicable copyright and trademark law."
+"By accessing the website at <a href=\"https://representable.org\">http://"
+"representable.org</a>, you are agreeing to be bound by these terms of "
+"service, all applicable laws and regulations, and agree that you are "
+"responsible for compliance with\n"
+"        any applicable local laws. If you do not agree with any of these "
+"terms, you are prohibited from using or accessing this site. The materials "
+"contained in this website are protected by applicable copyright and "
+"trademark law."
 msgstr ""
-"Al acceder al sitio web <a "
-"href=\"https://representable.org\">http://representable.org</a> acepta los "
-"términos del servicio, todas las leyes y regulaciones correspondientes, y "
-"acepta ser responsable del cumplimiento de las leyes locales. Al rechazar "
-"alguno de estos términos, tiene prohibido utilizar o acceder a este sitio. "
-"El material incluido en este sitio web está protegido por leyes de derechos "
-"de autor y marcas."
 
 #: main/templates/main/pages/terms.html:10
 msgid "2. Use License"
-msgstr "2. Uso de la Licencia"
+msgstr ""
 
 #: main/templates/main/pages/terms.html:12
 msgid ""
-"<li>Permission is granted to temporarily download one copy of the materials "
-"(information or software) on Representable's website for personal, non-"
-"commercial transitory viewing only. This is the grant of a license, not a "
-"transfer of title, and under this license you may not: <ol type=\"i\"> "
-"<li>modify or copy the materials;</li> <li>use the materials for any "
-"commercial purpose, or for any public display (commercial or non-"
-"commercial);</li> <li>attempt to decompile or reverse engineer any software "
-"contained on Representable's website;</li> <li>remove any copyright or other"
-" proprietary notations from the materials; or</li> <li>transfer the "
-"materials to another person or \"mirror\" the materials on any other "
-"server.</li> </ol> </li>"
+"\n"
+"        <li>Permission is granted to temporarily download one copy of the "
+"materials (information or software) on Representable's website for personal, "
+"non-commercial transitory viewing only. This is the grant of a license, not "
+"a transfer of title,\n"
+"          and under this license you may not:\n"
+"          <ol type=\"i\">\n"
+"            <li>modify or copy the materials;</li>\n"
+"            <li>use the materials for any commercial purpose, or for any "
+"public display (commercial or non-commercial);</li>\n"
+"            <li>attempt to decompile or reverse engineer any software "
+"contained on Representable's website;</li>\n"
+"            <li>remove any copyright or other proprietary notations from the "
+"materials; or</li>\n"
+"            <li>transfer the materials to another person or \"mirror\" the "
+"materials on any other server.</li>\n"
+"          </ol>\n"
+"        </li>\n"
+"        "
 msgstr ""
-"<li>Se concede permiso para descargar temporalmente una copia del material "
-"(información o programas) en el sitio web de Representable para lectura "
-"personal, no comercial transitoria. Esta es la concesión de una licencia, no"
-" una transferencia de título, y bajo esta licencia no podrá: <ol type=\"i\">"
-" <li>modificar o copiar el material, </li> <li>utilizar el material para "
-"propósitos comerciales o demostraciones públicas de ningún tipo (comercial o"
-" no comercial), </li> <li>intentar descompliar o utilizar técnicas de "
-"ingeniería inversa en cualquier programa incluido en el sitio web de "
-"Representable,</li> <li>eliminar derechos de autor u otras patentes del "
-"material, o</li> <li>transferir el material a otra persona o copiar el "
-"material a otro servidor.</li> </ol> </li>"
 
-#: main/templates/main/pages/terms.html:25
+#: main/templates/main/pages/terms.html:24
 msgid ""
-"This license shall automatically terminate if you violate any of these "
-"restrictions and may be terminated by Representable at any time. Upon "
+"\n"
+"        <li>This license shall automatically terminate if you violate any of "
+"these restrictions and may be terminated by Representable at any time. Upon "
 "terminating your viewing of these materials or upon the termination of this "
-"license, you must destroy any downloaded materials in your possession "
-"whether in electronic or printed format."
+"license, you must\n"
+"          destroy any downloaded materials in your possession whether in "
+"electronic or printed format.</li>\n"
+"        "
 msgstr ""
-"La licencia se cancelará automáticamente si viola alguna de estas "
-"restricciones y puede ser cancelada por Representable en cualquier momento. "
-"Al finalizar la lectura del material o al finalizarse la licencia, debe "
-"destruir todo el material que haya descargado, digital o impreso."
+
+#: main/templates/main/pages/terms.html:29
+msgid "3. Disclaimer"
+msgstr ""
 
 #: main/templates/main/pages/terms.html:31
-msgid "3. Disclaimer"
-msgstr "3. Descargo de responsabilidad"
-
-#: main/templates/main/pages/terms.html:34
 msgid ""
-"The materials on Representable's website are provided on an 'as is' basis. "
-"Representable makes no warranties, expressed or implied, and hereby "
-"disclaims and negates all other warranties including, without limitation, "
-"implied warranties or conditions of merchantability, fitness for a "
-"particular purpose, or non-infringement of intellectual property or other "
-"violation of rights."
+"\n"
+"        <li>The materials on Representable's website are provided on an 'as "
+"is' basis. Representable makes no warranties, expressed or implied, and "
+"hereby disclaims and negates all other warranties including, without "
+"limitation, implied warranties or\n"
+"          conditions of merchantability, fitness for a particular purpose, "
+"or non-infringement of intellectual property or other violation of rights.</"
+"li>\n"
+"        "
 msgstr ""
-"El material en el sitio web de Representable se brindan tal como está. "
-"Representables no ofrece ninguna garantía, de forma expresa o implícita, y "
-"por la presente se abstiene de otorgar garantías, incluyendo, entre otras, "
-"garantías o condiciones implícitas de comerciabilidad, aptitud para un "
-"propósito específico, o no infracción de la propiedad intelectual u otra "
-"violación de derechos."
+
+#: main/templates/main/pages/terms.html:35
+msgid ""
+"\n"
+"        <li>Further, Representable does not warrant or make any "
+"representations concerning the accuracy, likely results, or reliability of "
+"the use of the materials on its website or otherwise relating to such "
+"materials or on any sites linked to this\n"
+"          site.</li>\n"
+"        "
+msgstr ""
 
 #: main/templates/main/pages/terms.html:40
-msgid ""
-"Further, Representable does not warrant or make any representations "
-"concerning the accuracy, likely results, or reliability of the use of the "
-"materials on its website or otherwise relating to such materials or on any "
-"sites linked to this site."
+msgid "4. Limitations"
 msgstr ""
-"Asimismo, Respresentable no garantiza ni representa la exactitud, resultados"
-" posibles o veracidad del uso del material en su sitio web, ni relacionando "
-"dicho material o cualquier sitio web enlazado a este sitio."
+
+#: main/templates/main/pages/terms.html:41
+msgid ""
+"\n"
+"      <p>In no event shall Representable or its suppliers be liable for any "
+"damages (including, without limitation, damages for loss of data or profit, "
+"or due to business interruption) arising out of the use or inability to use "
+"the materials on\n"
+"        Representable's website, even if Representable or a Representable "
+"authorized representative has been notified orally or in writing of the "
+"possibility of such damage. Because some jurisdictions do not allow "
+"limitations on implied warranties,\n"
+"        or limitations of liability for consequential or incidental damages, "
+"these limitations may not apply to you.</p>\n"
+"      "
+msgstr ""
 
 #: main/templates/main/pages/terms.html:46
-msgid "4. Limitations"
-msgstr "4. Limitaciones"
-
-#: main/templates/main/pages/terms.html:48
-msgid ""
-"In no event shall Representable or its suppliers be liable for any damages "
-"(including, without limitation, damages for loss of data or profit, or due "
-"to business interruption) arising out of the use or inability to use the "
-"materials on Representable's website, even if Representable or a "
-"Representable authorized representative has been notified orally or in "
-"writing of the possibility of such damage. Because some jurisdictions do not"
-" allow limitations on implied warranties, or limitations of liability for "
-"consequential or incidental damages, these limitations may not apply to you."
+msgid "5. Accuracy of materials"
 msgstr ""
-"En ningún caso, Representable o sus proveedores será responsable por daños "
-"(incluyendo, entre otros, daños por pérdida de información o ganancia, o "
-"interrupción comercial) que puedan surgir por el uso o uso indebido del "
-"material en el sitio web de Representable, incluso si Representable o los "
-"representantes autorizados de Representable fueran notificados oralmente o "
-"por escrito de la posibilidad de dicho daño. Debido a que algunas "
-"jurisdicciones no aceptan limitaciones en garantías implícitas, o "
-"limitaciones de responsabilidad por daños consecuentes o indirectos, estas "
-"limitaciones pueden no ser válidas para usted."
+
+#: main/templates/main/pages/terms.html:47
+msgid ""
+"\n"
+"      <p>The materials appearing on Representable's website could include "
+"technical, typographical, or photographic errors. Representable does not "
+"warrant that any of the materials on its website are accurate, complete or "
+"current. Representable may\n"
+"        make changes to the materials contained on its website at any time "
+"without notice. However Representable does not make any commitment to update "
+"the materials.</p>\n"
+"      "
+msgstr ""
+
+#: main/templates/main/pages/terms.html:51
+msgid "6. Links"
+msgstr ""
+
+#: main/templates/main/pages/terms.html:52
+msgid ""
+"Representable has not reviewed all of the sites linked to its website and is "
+"not responsible for the contents of any such linked site. The inclusion of "
+"any link does not imply endorsement by Representable of the site. Use of any "
+"such linked\n"
+"        website is at the user's own risk."
+msgstr ""
 
 #: main/templates/main/pages/terms.html:54
-msgid "5. Accuracy of materials"
-msgstr "5. Veracidad del Material"
-
-#: main/templates/main/pages/terms.html:56
-msgid ""
-"The materials appearing on Representable's website could include technical, "
-"typographical, or photographic errors. Representable does not warrant that "
-"any of the materials on its website are accurate, complete or current. "
-"Representable may make changes to the materials contained on its website at "
-"any time without notice. However Representable does not make any commitment "
-"to update the materials."
-msgstr ""
-"El material disponible en el sitio web de Representable podría incluir "
-"errores técnicos, tipográficos o fotográficos. Representable no garantiza "
-"que el material en su sitio web sea preciso, esté completo o vigente. "
-"Representable puede modificar el material de su sitio web en cualquier "
-"momento y sin aviso. Sin embargo, Representable no se compromete a "
-"actualizar dicho material."
-
-#: main/templates/main/pages/terms.html:61
-msgid "6. Links"
-msgstr "6. Enlaces"
-
-#: main/templates/main/pages/terms.html:62
-msgid ""
-"Representable has not reviewed all of the sites linked to its website and is"
-" not responsible for the contents of any such linked site. The inclusion of "
-"any link does not imply endorsement by Representable of the site. Use of any"
-" such linked website is at the user's own risk."
-msgstr ""
-"Representable no revisa todos los sitios web enlazados a su sitio, y no es "
-"responsable por el contenido de dichos sitios. Representable no avala ningún"
-" sitio, aunque incluya sus enlaces. El acceso a cualquiera de dichos enlaces"
-" es responsabilidad del usuario."
-
-#: main/templates/main/pages/terms.html:64
 msgid "7. Modifications"
-msgstr "7. Modificaciones"
+msgstr ""
 
-#: main/templates/main/pages/terms.html:65
+#: main/templates/main/pages/terms.html:55
 msgid ""
 "Representable may revise these terms of service for its website at any time "
 "without notice. By using this website you are agreeing to be bound by the "
 "then current version of these terms of service."
 msgstr ""
-"Representable puede modificar el material de su sitio web en cualquier "
-"momento y sin aviso. Al acceder a este sitio web acepta la versión de los "
-"términos del servicio en vigencia."
 
-#: main/templates/main/pages/terms.html:66
+#: main/templates/main/pages/terms.html:56
 msgid "8. Governing Law"
-msgstr "8. Ley Vigente"
+msgstr ""
 
-#: main/templates/main/pages/terms.html:67
+#: main/templates/main/pages/terms.html:57
 msgid ""
 "These terms and conditions are governed by and construed in accordance with "
 "the laws of New Jersey and you irrevocably submit to the exclusive "
 "jurisdiction of the courts in that State or location."
 msgstr ""
-"Estos términos y condiciones son vigentes e interpretados de acuerdo con las"
-" leyes de Nueva Jersey, y usted se somete irrevocablemente a la jurisdicción"
-" exclusiva de los tribunales de dicho Estado o ubicación."
 
 #: main/templates/main/partners/get_started.html:9
+#, fuzzy
+#| msgid "Learn how to use Representable to draw your community."
 msgid "Join the national Representable community."
-msgstr "Únase a la comunidad nacional de Representable."
+msgstr "Aprenda a usar Representable para dibujar su comunidad."
 
 #: main/templates/main/partners/get_started.html:11
 msgid ""
-"Representable is growing a redistricting community with organizations across"
-" the country. Organization leaders can easily collect community maps with "
-"Representable and join redistricting efforts in their states."
+"\n"
+"        Representable is growing a redistricting community with "
+"organizations across the country. Organization leaders can easily collect "
+"community maps with Representable and join redistricting efforts in their "
+"states.\n"
+"        "
 msgstr ""
-"Representable está construyendo, junto con organizaciones en todo el país, "
-"una comunidad de reorganización distrital. Los líderes de la organización "
-"recopilan fácilmente los mapas comunitarios con Representable y se unen a "
-"los esfuerzos de reorganización distrital en sus estados."
 
 #: main/templates/main/partners/get_started.html:15
+#, fuzzy
+#| msgid "Learn how to use Representable to draw your community."
 msgid "How to use Representable as an organization?"
-msgstr "¿Cómo usar Representable como una organización?"
+msgstr "Aprenda a usar Representable para dibujar su comunidad."
 
 #: main/templates/main/partners/get_started.html:17
-msgid "Check out our demo to see all of Representable’s features."
+msgid ""
+"\n"
+"        Check out our demo to see all of Representable’s features. \n"
+"        "
 msgstr ""
-"Dele un vistazo a nuestra demostración para ver todas las funciones de "
-"Representable."
 
 #: main/templates/main/partners/get_started.html:31
+#, fuzzy
+#| msgid "Create an Organization"
 msgid "Join Representable as an Organization"
-msgstr "Únase a Representable como una organización"
+msgstr "Para las organizaciones"
 
 #: main/templates/main/partners/get_started.html:33
 msgid ""
-"As the leader of an organization, you can collect community maps and "
-"download submissions. Joining Representable as an organization is free, and "
-"includes access to our redistricting toolkit."
+"\n"
+"                As the leader of an organization, you can collect community "
+"maps and download submissions. Joining Representable as an organization is "
+"free, and includes access to our redistricting toolkit. \n"
+"                "
 msgstr ""
-"Como líder de una organización, puede recopilar mapas comunitarios y "
-"descargar presentaciones. Unirse a Representable como una organización es "
-"gratuito, e incluye acceso a nuestras herramientas para la reorganización "
-"distrital."
 
 #: main/templates/main/partners/get_started.html:38
 #: main/templates/main/partners/get_started.html:39
 msgid "CREATE ORGANIZATION"
-msgstr "CREAR ORGANIZACIÓN"
+msgstr ""
 
 #: main/templates/main/partners/get_started.html:51
 msgid "Create an Organization"
@@ -2049,7 +2055,6 @@ msgstr "Para las organizaciones"
 #: main/templates/main/partners/get_started.html:52
 msgid "Include a brief description, link, and the state(s) you operate in."
 msgstr ""
-"Incluye una breve descripción, enlace y estado(s) en los que usted trabaja."
 
 #: main/templates/main/partners/get_started.html:60
 msgid "Start a Community Mapping Drive"
@@ -2058,23 +2063,24 @@ msgstr "Dibujar un mapa de la comunidad"
 #: main/templates/main/partners/get_started.html:61
 msgid "Create a community mapping drive via the organization dashboard."
 msgstr ""
-"Crear una campaña de mapa comuntario con nuestro tablero de organización."
 
 #: main/templates/main/partners/get_started.html:69
+#, fuzzy
+#| msgid "Draw a Community Map"
 msgid "Collect Community Maps"
-msgstr "Recopile mapas comunitarios"
+msgstr "Dibujar un mapa de la comunidad"
 
 #: main/templates/main/partners/get_started.html:70
 msgid ""
 "Share the link to your community mapping drive to individuals in your state "
 "to start collecting submissions."
 msgstr ""
-"Comparta el enlace a su campaña de mapa comunitario para que los individuos "
-"de su estado comiencen a sumarse."
 
 #: main/templates/main/partners/get_started.html:78
+#, fuzzy
+#| msgid "Visualize and Export"
 msgid "Visualize and Export Community Maps"
-msgstr "Visualice y exporte mapas comunitarios"
+msgstr "Visualizar y exportar"
 
 #: main/templates/main/partners/get_started.html:79
 msgid ""
@@ -2082,12 +2088,10 @@ msgid ""
 "organization as geoJSON for easy integration with district drawing and "
 "visualization tools."
 msgstr ""
-"Visualice un mapa con todas las comunidades presentadas, y descárguelas a su"
-" organización en formato GeoJSON para una integración sencilla, con "
-"delimitaciones distritales y herramientas de visualización"
 
 #: main/templates/main/partners/index.html:9
 #: representable/templates/base.html:105
+#: representable/templates/base_nofooter.html:105
 msgid "Partners"
 msgstr "Asociarse con nosotros"
 
@@ -2096,16 +2100,15 @@ msgid ""
 "Find out more about the organizations using Representable.org to gather "
 "community data. Want to become a partner? Learn more "
 msgstr ""
-"Conozca más sobre las organizaciones utilizando Representable.org para "
-"reunir información comunitaria. ¿Desea asociarse? Mostrar más "
 
 #: main/templates/main/partners/index.html:10
+#: main/templates/main/review.html:113
 msgid "here"
-msgstr "aquí."
+msgstr ""
 
 #: main/templates/main/partners/index.html:33
 msgid "More Details"
-msgstr "Más Detalles"
+msgstr ""
 
 #: main/templates/main/partners/index.html:35
 msgid "Partner Site"
@@ -2114,60 +2117,62 @@ msgstr "Asociarse con nosotros"
 #: main/templates/main/partners/map.html:56
 #: main/templates/main/partners/map.html:59
 msgid "Export All as GeoJSON"
-msgstr "Exportar todo como GeoJSON"
+msgstr ""
 
 #: main/templates/main/partners/map.html:57
 #: main/templates/main/partners/map.html:60
 msgid "Export All as CSV"
-msgstr "Exportar todo como CSV"
+msgstr ""
 
 #: main/templates/main/partners/map.html:99
 msgid "Hidden"
-msgstr "Oculto"
+msgstr ""
 
 #: main/templates/main/partners/map.html:103
 msgid "Private"
 msgstr "Privacidad"
 
-#: main/templates/main/partners/map.html:176
+#: main/templates/main/partners/map.html:171
 msgid "Report this community"
 msgstr "Añadir su comunidad"
 
-#: main/templates/main/partners/map.html:183
+#: main/templates/main/partners/map.html:178
 msgid ""
-"If you feel this community is abusive, spam, low-effort, or doesn't live up "
-"to our guidelines, send us a report."
+"\n"
+"        If you feel this community is abusive, spam, low-effort, or doesn't "
+"live\n"
+"        up to our guidelines, send us a report.\n"
+"        "
 msgstr ""
-"Si cree que esta comunidad es ofensiva, spam, de bajo esfuerzo o no sigue "
-"nuestros lineamientos generales, envíenos un reporte."
 
-#: main/templates/main/partners/map.html:190
+#: main/templates/main/partners/map.html:185
 msgid ""
-"As an administrator of this organization, reporting this community will "
-"automatically hide it from all non-administrators."
+"\n"
+"        As an administrator of this organization, reporting this community "
+"will automatically hide it from\n"
+"        all non-administrators.\n"
+"        "
 msgstr ""
-"Como administrador de esta organización, al reportar esta comunidad la "
-"ocultará automáticamente de todos los que no son administradores."
+
+#: main/templates/main/partners/map.html:194
+msgid "Email address"
+msgstr ""
+
+#: main/templates/main/partners/map.html:198
+msgid "Cancel"
+msgstr ""
 
 #: main/templates/main/partners/map.html:199
-msgid "Email address"
-msgstr "Correo electrónico"
-
-#: main/templates/main/partners/map.html:203
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: main/templates/main/partners/map.html:204
 msgid "Danger: </span>Send Report"
-msgstr "Peligro: </span>Enviar reporte"
+msgstr ""
 
-#: main/templates/main/partners/map.html:216
+#: main/templates/main/partners/map.html:211
 msgid "Thank you for letting us know!"
 msgstr "¡Gracias por su envío!"
 
-#: main/templates/main/partners/map.html:222
+#: main/templates/main/partners/map.html:217
 msgid "Your report was successfully submitted. Thank you."
-msgstr "Su reporte se ha presentado correctamente. Gracias"
+msgstr ""
 
 #: main/templates/main/partners/page.html:22
 msgid "Return to Partners"
@@ -2183,57 +2188,108 @@ msgstr "Asociarse con nosotros"
 
 #: main/templates/main/review.html:43
 msgid "The community was already deleted."
-msgstr "La comunidad ya fue eliminada."
+msgstr ""
+
+#: main/templates/main/review.html:49 main/templates/main/submission.html:139
+msgid "Community Information"
+msgstr "Información de la comunidad"
 
 #: main/templates/main/review.html:50
 msgid "Action"
-msgstr "Acción"
+msgstr ""
 
 #: main/templates/main/review.html:51
 msgid "Show"
-msgstr "Mostrar"
+msgstr ""
 
 #: main/templates/main/review.html:101
 msgid "Delete"
-msgstr "Eliminar"
+msgstr ""
 
 #: main/templates/main/review.html:112
 msgid "No entries!"
-msgstr "¡Sin publicaciones!"
+msgstr ""
 
 #: main/templates/main/review.html:113
-msgid ""
-"Join us in the fight against gerrymandering. Click <a "
-"href=\"/entry_preview\">here</a> to add your community."
-msgstr "Únase a nosotros en la lucha contra el "
+msgid "Join us in the fight against gerrymandering."
+msgstr ""
+
+#: main/templates/main/review.html:113
+msgid "Click "
+msgstr ""
+
+#: main/templates/main/review.html:113
+msgid " to add your community."
+msgstr "Añadir su comunidad"
 
 #: main/templates/main/state.html:16
 msgid "Welcome to"
-msgstr "Bienvenido a"
+msgstr ""
 
-#: main/templates/main/state.html:23 main/templates/main/state.html:24
-msgid "START MAPPING"
-msgstr "COMENZAR"
-
-#: main/templates/main/state_info.html:7
+#: main/templates/main/state.html:27 main/templates/main/state_info.html:7
 msgid "What is redistricting?"
 msgstr "¿Qué es Representable.org?"
+
+#: main/templates/main/state.html:30
+msgid ""
+"\n"
+"          In 2021, voting district lines across the country will be redrawn "
+"to determine who represents the people of your state.\n"
+"          "
+msgstr ""
+
+#: main/templates/main/state.html:38
+#, fuzzy
+#| msgid "Redistricting in "
+msgid "How does redistricing work in "
+msgstr "Redistritación en "
+
+#: main/templates/main/state.html:49 main/templates/main/state_info.html:28
+msgid "How can Representable help?"
+msgstr "Representable ayudará..."
+
+#: main/templates/main/state.html:52
+msgid ""
+"\n"
+"          Representable will help you tell mapmakers about your community "
+"interests and boundaries, so that they can fairly consider it when they draw "
+"new voting district lines.\n"
+"          "
+msgstr ""
+
+#: main/templates/main/state.html:60
+#, fuzzy
+#| msgid "Redistricting Criteria"
+msgid " redistricting criteria "
+msgstr "Criterios de Redistritación"
+
+#: main/templates/main/state.html:76
+msgid ""
+"\n"
+"            See community maps drawn here <i class=\"fas fa-arrow-circle-"
+"right\"></i>\n"
+"            "
+msgstr ""
+
+#: main/templates/main/state.html:90 main/templates/main/state_info.html:65
+msgid "Communities of Interest in "
+msgstr "Las comunidades de interés en "
+
+#: main/templates/main/state.html:98 main/templates/main/state.html:99
+msgid "START MAPPING"
+msgstr ""
 
 #: main/templates/main/state_info.html:11
 msgid ""
 "In 2021, voting district lines across the country will be redrawn to "
 "determine who represents the people of your state."
 msgstr ""
-"En 2021, se actualizarán los límites de los distritos de votación del país "
-"para determinar quién representa a las personas de su estado."
 
 #: main/templates/main/state_info.html:17
+#, fuzzy
+#| msgid "Redistricting in "
 msgid "How does redistricting work in "
-msgstr "¿Cómo funciona la reorganización distrital? "
-
-#: main/templates/main/state_info.html:28
-msgid "How can Representable help?"
-msgstr "Representable ayudará..."
+msgstr "Redistritación en "
 
 #: main/templates/main/state_info.html:31
 msgid ""
@@ -2241,131 +2297,121 @@ msgid ""
 "and boundaries, so that they can fairly consider it when they draw new "
 "voting district lines."
 msgstr ""
-"Representable le ayudará a informar a los cartógragos sobre los límites e "
-"intereses de su comunidad, para que puedan tenerlos en cuenta cuando "
-"delimiten los nuevos distritos de votación."
 
 #: main/templates/main/state_info.html:37
-msgid "redistricting criteria"
-msgstr "Criterios de reorganización distrital"
-
-#: main/templates/main/state_info.html:65
-msgid "Communities of Interest in "
-msgstr "Las comunidades de interés en "
+#, fuzzy
+#| msgid "Redistricting Criteria"
+msgid " redistricting criteria"
+msgstr "Criterios de Redistritación"
 
 #: main/templates/main/submission.html:56
 msgid "Download this map"
-msgstr "Descargar este mapa"
+msgstr ""
 
 #: main/templates/main/submission.html:58
-msgid "Map downloads include the community information below."
-msgstr "La descarga de mapas incluye la información de la comunidad."
+msgid ""
+"\n"
+"                Map downloads include the community information below.\n"
+"              "
+msgstr ""
 
 #: main/templates/main/submission.html:69
 msgid "What is GeoJSON?"
-msgstr "¿Qué es GeoJSON?"
+msgstr ""
 
 #: main/templates/main/submission.html:75
 msgid ""
 "GeoJSON files are industry standard and usable with other mapping softwares "
 "like Maptitude for Redistricting, Dave's Redistricting App, ESRI, and more."
 msgstr ""
-"Los archivos GeoJSON son un estándar industrial y son compatibles con otros "
-"programas cartográficos, como Maptitude for Redistricting, Dave's "
-"Redistricting APP, ESRI y muchos más."
 
-#: main/templates/main/submission.html:214
+#: main/templates/main/submission.html:191
+msgid "Submit to an organization in your state"
+msgstr ""
+
+#: main/templates/main/submission.html:193
+msgid ""
+"Many organizations in your state are collecting community maps. Submit yours "
+"to one of their collection drives."
+msgstr ""
+
+#: main/templates/main/submission.html:201
 msgid "Submit"
-msgstr "Enviar"
+msgstr ""
 
-#: main/templates/main/submission.html:219
+#: main/templates/main/submission.html:206
 msgid "This community map has already been submitted to an organization"
-msgstr "Este mapa comunitario ya se ha enviado a una organización."
+msgstr ""
 
-#: main/templates/main/submission.html:242
-#: main/templates/main/submission.html:249
-#: main/templates/main/submission.html:252
+#: main/templates/main/submission.html:228
+#: main/templates/main/submission.html:235
+#: main/templates/main/submission.html:238
 msgid "Data Layers"
-msgstr "Capa de Datos"
+msgstr ""
 
+#: main/templates/main/submission.html:244
+#: main/templates/main/submission.html:255
 #: main/templates/main/submission.html:258
-#: main/templates/main/submission.html:271
-#: main/templates/main/submission.html:274
 msgid "Demographics"
-msgstr "Demografía"
+msgstr ""
 
-#: main/templates/main/submission.html:308
+#: main/templates/main/submission.html:292
 msgid "Your community is ready to be viewed and downloaded. You have "
-msgstr "Su comunidad está lista para ser visualizada y descargada. Ha "
+msgstr ""
 
-#: main/templates/main/submission.html:308
+#: main/templates/main/submission.html:292
 msgid "received an email with your community as a PDF file."
-msgstr "recibido un correo electrónico con su comunidad con archivo PDF."
+msgstr ""
 
-#: main/templates/main/submission.html:309
+#: main/templates/main/submission.html:293
 msgid "Make an impact with your map."
-msgstr "Genere un impacto con su mapa"
+msgstr ""
 
-#: main/templates/main/submission.html:319
+#: main/templates/main/submission.html:303
 msgid ""
 "View your community on a computer to download as a PDF or geoJSON file. You "
 "can submit these files as public testimony or to a local redistricting "
 "organization."
 msgstr ""
-"Visualice su comunidad en una computadora y descárgala como archivo PDF o "
-"GeoJSON. Puede presentar estos archivos como testimonio público o a una "
-"organización local de reorganización distrital."
+
+#: main/templates/main/submission.html:313
+msgid ""
+"\n"
+"                      If your state has a redistricting commission or "
+"accepts Communities of Interest, send a pdf of your community to submit as "
+"public testimony. If not, you can send it to a local redistricting "
+"organization or <a href=\"https://myreps.datamade.us/\" target=\"_blank\" "
+"rel=\"noopener noreferrer\">your legislator</a>.\n"
+"                      "
+msgstr ""
+
+#: main/templates/main/submission.html:317
+msgid "Export PDF"
+msgstr ""
 
 #: main/templates/main/submission.html:329
-msgid ""
-"If your state has a redistricting commission or accepts Communities of "
-"Interest, send a pdf of your community to submit as public testimony. If "
-"not, you can send it to a local redistricting organization or <a "
-"href=\"https://myreps.datamade.us/\" target=\"_blank\" rel=\"noopener "
-"noreferrer\">your legislator</a>."
-msgstr ""
-"Si su estado tiene una comisión de reorganización distrital o acepta "
-"Comunidades de Interés, envíe un archivo PDF de su comunidad para "
-"presentarlo como testimonio público. De lo contrario, puede enviarlo a una "
-"organización local de reorganización distrital o a <a "
-"href=\"https://myreps.datamade.us/\" target=\"_blank\" rel=\"noopener "
-"noreferrer\">su legislador</a>."
-
-#: main/templates/main/submission.html:333
-msgid "Export PDF"
-msgstr "Exportar como PDF"
-
-#: main/templates/main/submission.html:345
 msgid ""
 "If you would like to use your map to draw voting districts, you can upload "
 "the geoJSON file to mapping softwares such as Maptitude, Dave’s "
 "Redistricting App, or Districtr."
 msgstr ""
-"Si desea utilizar su mapa para delimitar los distritos de votación, puede "
-"cargar su archivo GeoJSON a programas cartográficos, como Maptitude, Dave’s "
-"Redistricting App o Districtr."
 
-#: main/templates/main/submission.html:367
+#: main/templates/main/submission.html:351
 msgid ""
-"Send the map to your community members and encourage them to draw maps. When"
-" map drawers have more data from your community, they are more likely to "
-"draw fairer districts."
+"Send the map to your community members and encourage them to draw maps. When "
+"map drawers have more data from your community, they are more likely to draw "
+"fairer districts."
 msgstr ""
-"Envíe el mapa a los miembros de su comunidad e invítelos a diseñar mapas "
-"Cuando los cartógrafos tienen más información de su comunidad, es más "
-"probable que diseñen distritos más justos."
 
-#: main/templates/main/submission.html:378
+#: main/templates/main/submission.html:362
 msgid "Resend Email"
-msgstr "Reenviar correo electrónico"
-
-#: main/templates/main/submission.html:391
-msgid ""
-"This map was created at <a "
-"href=\"https://representable.org/\">Representable.org"
 msgstr ""
-"Este mapa fue creado en <a "
-"href=\"https://representable.org/\">Representable.org"
+
+#: main/templates/main/submission.html:375
+msgid ""
+" This map was created at <a href=\"https://representable.org/"
+"\">Representable.org "
+msgstr ""
 
 #: main/templates/main/thanks.html:13
 msgid "Thank you for your submission!"
@@ -2373,15 +2419,13 @@ msgstr "¡Gracias por su envío!"
 
 #: main/templates/main/thanks.html:16
 msgid "Please Verify Your Email"
-msgstr "Verifique su correo electrónico."
+msgstr ""
 
 #: main/templates/main/thanks.html:22
 msgid ""
 "This tool is meant for non-partisan use by communities and their members to "
 "provide information to the Redistricting Commission."
 msgstr ""
-"Esta herramienta está diseñada para uso apartidario por parte de comunidades"
-" y sus miembros, para brindarle información a la Comisión de Reorganización."
 
 #: main/templates/main/thanks.html:23
 msgid ""
@@ -2389,36 +2433,25 @@ msgid ""
 "redistricting commission. We will add information about submitting to the "
 "commission as soon as information becomes available in your state."
 msgstr ""
-"Al añadir su mapa a Representable.org, no estás presentando un mapa a la "
-"comisión de reorganización. Agregaremos información sobre cómo presentar los"
-" mapas a la comisión tan pronto como esté disponible en su estado."
 
 #: main/templates/main/thanks.html:26
 msgid ""
-"Thank you for submitting your map. The next step is to verify your email. We"
-" resent an email verification link to your inbox."
+"Thank you for submitting your map. The next step is to verify your email. We "
+"resent an email verification link to your inbox."
 msgstr ""
-"¡Gracias por enviar su mapa! El siguiente paso es verificar su correo "
-"electrónico. Le reenviamos un link para verificación de correo electrónico a"
-" su bandeja de entrada."
 
 #: main/templates/main/thanks.html:27
 msgid ""
 "Account verification allows Representable.org and our partner organizations "
-"to submit credible maps to Redistricting Commisions ensuring that your entry"
-" has an impact in ending gerrymandering."
+"to submit credible maps to Redistricting Commisions ensuring that your entry "
+"has an impact in ending gerrymandering."
 msgstr ""
-"La verificación de cuentas le permite a Representable.org y nuestras "
-"organizaciones asociadas poder enviar mapas confiables a la Comisión de "
-"Reorganización y asegurarnos que su aporte ayude a terminar con el g"
 
 #: main/templates/main/thanks.html:29
 msgid ""
 "In the meantime, you can export your community in GeoJSON or PDF format "
 "using the link below."
 msgstr ""
-"Mientras tanto, puede exportar su comunidad en formato GeoJSON o PDF usando "
-"el siguiente enlace."
 
 #: main/templates/main/thanks.html:33
 msgid "View/Export Your Community"
@@ -2426,7 +2459,7 @@ msgstr "Añadir su comunidad"
 
 #: main/templates/main/thanks.html:35 main/templates/main/thanks.html:38
 msgid "Your community map is now live here: "
-msgstr "El mapa de su comunidad está en vivo aquí: "
+msgstr ""
 
 #: main/templates/main/thanks.html:39
 msgid "View Community"
@@ -2434,23 +2467,21 @@ msgstr "Guarde comunidad"
 
 #: main/templates/main/thanks.html:45
 msgid "Map"
-msgstr "Mapa"
+msgstr ""
 
 #: main/templates/main/thanks.html:46
 msgid "View all communities submitted to {{drive_name}}"
-msgstr "Ver todas las comunidades presentadas a {{drive_name}}"
+msgstr ""
 
 #: main/templates/main/thanks.html:52
 msgid "Do you have any feedback for us?"
-msgstr "¿Tiene algún comentarios que quiera compartir con nosotros?"
+msgstr ""
 
 #: main/templates/main/thanks.html:53
 msgid ""
 "We are interested in your feedback. If you found a bug or have any "
 "suggestions for us, please send them to us by pressing on the button below."
 msgstr ""
-"Nos interesa su opinión. Si encontró un error o tiene alguna sugerencia, "
-"envíela presionando el botón de abajo."
 
 #: main/templates/main/thanks.html:54
 msgid "Send Feedback"
@@ -2458,115 +2489,121 @@ msgstr "Enviar comentarios"
 
 #: main/templates/main/thanks.html:57
 msgid "Having trouble with email verification?"
-msgstr "¿Tiene problemas para verificar su correo electrónico?"
+msgstr ""
 
 #: main/templates/main/thanks.html:58
 msgid ""
-"We are here to help! Let us know if you didn't receive an email verification"
-" link or want to provide feedback by contacting Team@Representable.org"
+"We are here to help! Let us know if you didn't recieve an email verification "
+"link or want to provide feedback by contacting Team@Representable.org"
 msgstr ""
-"¡Estamos aquí para ayudarlo! Si no recibió un enlace de verificación de "
-"correo electrónico o si desea brindarnos comentarios, comuníquese con "
-"Team@Representable.org"
 
 #: representable/templates/base.html:81
+#: representable/templates/base_nofooter.html:81
 msgid "My Organizations"
 msgstr "Para las organizaciones"
 
 #: representable/templates/base.html:110
+#: representable/templates/base_nofooter.html:110
 msgid "Learn More"
-msgstr "Mostrar más"
+msgstr ""
 
 #: representable/templates/base.html:120
+#: representable/templates/base_nofooter.html:120
 msgid "About"
 msgstr "Sobre"
 
 #: representable/templates/base.html:127
+#: representable/templates/base_nofooter.html:127
 msgid "My Account"
-msgstr "Mi cuenta"
+msgstr ""
 
 #: representable/templates/base.html:131
+#: representable/templates/base_nofooter.html:131
 msgid "My communities"
 msgstr "Mis Comunidades"
 
 #: representable/templates/base.html:132
+#: representable/templates/base_nofooter.html:132
 msgid "Logout"
-msgstr "Cerrar sesión"
+msgstr ""
 
-#: representable/templates/base.html:142 representable/templates/base.html:146
+#: representable/templates/base.html:137
+#: representable/templates/base_nofooter.html:137
 msgid "Add community"
 msgstr "Agregar comunidad"
 
-#: representable/templates/base.html:153
+#: representable/templates/base.html:143
+#: representable/templates/base_nofooter.html:143
 msgid "Log in"
 msgstr "Iniciar sesión"
 
-#: representable/templates/base.html:158
+#: representable/templates/base.html:148
+#: representable/templates/base_nofooter.html:148
 msgid "Sign up"
 msgstr "Regístrate"
 
-#: representable/templates/base.html:272
+#: representable/templates/base.html:259
 msgid "Add Your Community"
 msgstr "Añadir su comunidad"
 
-#: representable/templates/base.html:275
+#: representable/templates/base.html:262
 msgid "Create a Partner Profile"
-msgstr "Crear perfil de asociado"
+msgstr ""
 
-#: representable/templates/base.html:297
+#: representable/templates/base.html:284
 msgid "More questions? Reach out at"
 msgstr "¿Más preguntas? Comuníquese con"
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:5
 msgid "Select an image to embed"
-msgstr "(IGNORE)"
+msgstr ""
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:27
 msgid "Browse for the image you want, then click 'Embed Image' to continue..."
-msgstr "(IGNORE)"
+msgstr ""
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:29
 msgid ""
 "No images found. Upload images using the 'Image Button' dialog's 'Upload' "
 "tab."
-msgstr "(IGNORE)"
+msgstr ""
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:50
 msgid "Images in: "
-msgstr "(IGNORE)"
+msgstr ""
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:62
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:80
 msgid "Embed Image"
-msgstr "(IGNORE)"
+msgstr ""
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:146
 msgid "Play Slideshow"
-msgstr "(IGNORE)"
+msgstr ""
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:147
 msgid "Pause Slideshow"
-msgstr "(IGNORE)"
+msgstr ""
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:148
 msgid "&lsaquo; Previous Photo"
-msgstr "(IGNORE)"
+msgstr ""
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:149
 msgid "Next Photo &rsaquo;"
-msgstr "(IGNORE)"
+msgstr ""
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:150
 msgid "Next &rsaquo;"
-msgstr "(IGNORE)"
+msgstr ""
 
 #: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:151
 msgid "&lsaquo; Prev"
-msgstr "(IGNORE)"
+msgstr ""
 
 #: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:6
 msgid "Django: the Web framework for perfectionists with deadlines."
-msgstr "(IGNORE)"
+msgstr ""
 
 #: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:345
 #, python-format
@@ -2574,42 +2611,250 @@ msgid ""
 "View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
 "target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
 msgstr ""
-"(IGNORE) <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\""
 
 #: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:367
 msgid "The install worked successfully! Congratulations!"
-msgstr "(IGNORE)"
+msgstr ""
 
 #: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:368
 #, python-format
 msgid ""
-"You are seeing this page because <a "
-"href=\"https://docs.djangoproject.com/en/%(version)s/ref/settings/#debug\" "
-"target=\"_blank\" rel=\"noopener\">DEBUG=True</a> is in your settings file "
-"and you have not configured any URLs."
+"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
+"\">DEBUG=True</a> is in your settings file and you have not configured any "
+"URLs."
 msgstr ""
-"(IGNORE) <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\""
 
 #: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:383
 msgid "Django Documentation"
-msgstr "(IGNORE)"
+msgstr ""
 
 #: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:384
 msgid "Topics, references, &amp; how-to's"
-msgstr "(IGNORE)"
+msgstr ""
 
 #: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:395
 msgid "Tutorial: A Polling App"
-msgstr "(IGNORE)"
+msgstr ""
 
 #: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:396
 msgid "Get started with Django"
-msgstr "(IGNORE)"
+msgstr ""
 
 #: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:407
 msgid "Django Community"
-msgstr "(IGNORE)"
+msgstr ""
 
 #: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:408
 msgid "Connect, get help, or contribute"
-msgstr "(IGNORE)"
+msgstr ""
+
+#~ msgid "Only Show"
+#~ msgstr "Solo mostrar"
+
+#~ msgid "Partner With Us"
+#~ msgstr "Asociarse con nosotros"
+
+#~ msgid "Share your Mapping Drive"
+#~ msgstr "Comparte y contribuye tu mapa"
+
+#~ msgid ""
+#~ "\n"
+#~ "                            <p class=\"info-text txt-16\">\n"
+#~ "                                A Community of Interest is a "
+#~ "<strong>geographic area</strong> that shares <strong>cultural</strong>, "
+#~ "<strong>historical</strong>, or <strong>economic</strong> interests.\n"
+#~ "                                Communities of Interest encourage the "
+#~ "drawing of fairer voting districts.\n"
+#~ "                            </p>\n"
+#~ "                        "
+#~ msgstr ""
+#~ "\n"
+#~ "                            <p class=\"info-text txt-16\">\n"
+#~ "                                Una comunidad de interés es <strong>un "
+#~ "área geográfica</strong> que comparte intereses <strong>culturales</"
+#~ "strong>, <strong>históricos</strong> o <strong>económicos</strong>.\n"
+#~ "                                Las comunidades de interés fomentan el "
+#~ "trazado de distritos electorales más justos.\n"
+#~ "                            </p>\n"
+#~ "                        "
+
+#~ msgid ""
+#~ "\n"
+#~ "                            <p class=\"small\" style=\"color: #5996D2\">\n"
+#~ "                                <strong>Examples:</strong> Cherry Farmers "
+#~ "Community, St. Peters Church Community, Riverside Fishing Community\n"
+#~ "                            </p>\n"
+#~ "                        "
+#~ msgstr ""
+#~ "\n"
+#~ "                                            ¿Dónde la gente en "
+#~ "sucomunidad se reúne o socializa? ¿Dónde obtiene su comunidad sus "
+#~ "servicios?"
+
+#, fuzzy
+#~| msgid "Economic Interests"
+#~ msgid "Economic and Environmental Interests"
+#~ msgstr "Intereses Económicos"
+
+#~ msgid "Other Interests and Concerns"
+#~ msgstr "Otros intereses y preocupados "
+
+#, fuzzy
+#~| msgid "Get Started"
+#~ msgid "Start"
+#~ msgstr "Empezar"
+
+#~ msgid "Head of Software Architecture"
+#~ msgstr "Jefe de arquitectura de software"
+
+#~ msgid "Head of Data and Mapping"
+#~ msgstr "Jefe de datos y mapeo"
+
+#~ msgid ""
+#~ "Together, we can fight for your representation. Draw your community today "
+#~ "and make your voice heard."
+#~ msgstr ""
+#~ "Estamos creando mapas de comunidades para luchar por tu representación. "
+#~ "Añade su comunidad al mapa hoy mismo y haz que tu voz sea escuchada."
+
+#~ msgid ""
+#~ "\n"
+#~ "                                Make your voice heard! Fill out the form "
+#~ "below and draw a map to add your community to Representable.org.\n"
+#~ "                                <br>\n"
+#~ "                                Follow the instructions in each section "
+#~ "to get started.\n"
+#~ "                                "
+#~ msgstr ""
+#~ "\n"
+#~ "                                Rellene el siguiente formulario y dibuje "
+#~ "un mapa para\n"
+#~ "                                añadir su comunidad a Representable.org\n"
+#~ "                                y haz que tu voz se escuche.\n"
+#~ "                                <br>\n"
+#~ "                                Siga las instrucciones de cada sección "
+#~ "para comenzar."
+
+#~ msgid "(Required)"
+#~ msgstr "(obligatorio)"
+
+#~ msgid "Your Address"
+#~ msgstr "Su dirección (obligatorio)"
+
+#~ msgid ""
+#~ "Is there a shared economy in the geographic area of your community? How "
+#~ "and where are residents employed? Are there shared environmental concerns "
+#~ "such as landfills or water quality?"
+#~ msgstr ""
+#~ "¿Hay una economía compartida en la zona geográfica de su comunidad? ¿Cómo "
+#~ "y dónde están empleados los residentes? ¿Hay preocupaciones ambientales "
+#~ "compartidas como vertederos o la calidad de agua?"
+
+#~ msgid ""
+#~ " Tech firms and their employees, tourism, agriculture such as the cherry "
+#~ "growers,\n"
+#~ "                                                    shipping and "
+#~ "transportation hubs, manufacturing centers, natural resources, university "
+#~ "towns,\n"
+#~ "                                                    unemployment issues, "
+#~ "waterfront communities, business associations. "
+#~ msgstr ""
+#~ "Empresas tecnologías y sus empleados, turismo, agricultura como los "
+#~ "cultivadores de cerezas,\n"
+#~ "                                                    centros de envío y "
+#~ "transporte, centros de fabricación, recursos naturales, ciudades "
+#~ "universitarias,\n"
+#~ "                                                    problemas de "
+#~ "desempleo, comunidades frente al mar, asociaciones empresariales."
+
+#~ msgid ""
+#~ " Shopping areas, schools and colleges, parks and recreation areas,\n"
+#~ "                                                    lakes and water ways, "
+#~ "healthcare services, and other activities and services that\n"
+#~ "                                                    help define your "
+#~ "community.\" "
+#~ msgstr ""
+#~ " Zonas comerciales, escuelas y colegios, parques y áreas recreativas,\n"
+#~ "                                                    lagos y vías de agua, "
+#~ "servicios de salud, y otras actividades y servicios que\n"
+#~ "                                                    ayudan a definir su "
+#~ "comunidad.\" "
+
+#~ msgid ""
+#~ " What fosters a sense of belonging in your community?\n"
+#~ "                                            What common beliefs or values "
+#~ "exist? "
+#~ msgstr ""
+#~ " ¿Lo que fomenta un sentido de pertenencia en tu comunidad?\n"
+#~ "                                            ¿Qué valores comunes o "
+#~ "creencias existen? "
+
+#~ msgid ""
+#~ " Age groups, religious groups, arts and cultural centers, languages, "
+#~ "immigration status,\n"
+#~ "                                                    ethnic groups such as "
+#~ "Detroit’s Mexican Town or Dearborn’s Middle Eastern community,\n"
+#~ "                                                    historic settlements "
+#~ "such as Leland’s Fishtown. "
+#~ msgstr ""
+#~ " Grupos de edad, grupos religiosos, centros artísticos y culturales, "
+#~ "idiomas, estatus de inmigración,\n"
+#~ "                                                    grupos étnicos como "
+#~ "Mexicantown en Detroit o la comunidad de Oriente Medio de Dearborn,\n"
+#~ "                                                    asentamientos "
+#~ "históricos como Fishtown de Leland."
+
+#~ msgid ""
+#~ " What other interests does your community care about? Do you have any "
+#~ "suggestions\n"
+#~ "                                            for how the redistricting "
+#~ "commission in your state could help address these concerns? "
+#~ msgstr ""
+#~ " ¿Qué otros intereses le importan a su comunidad? ¿Tiene cualquier "
+#~ "sugerencias\n"
+#~ "                                            por como la Comisión de "
+#~ "Redistritación en su estado pueden ayudar a abordar estas preocupaciones? "
+
+#~ msgid ""
+#~ "Our farmers extend over two counties and we hope you can put them "
+#~ "together in a single State Senate district."
+#~ msgstr ""
+#~ "Nuestros agricultores se extienden en dos países y esperamos que pueda "
+#~ "ponerlos juntos en un distrito de un solo estado."
+
+#~ msgid "4. Draw Your Community"
+#~ msgstr "4. Dibujar su comunidad"
+
+#~ msgid ""
+#~ "Search for a location, such as address, city, or zipcode to begin drawing "
+#~ "your community."
+#~ msgstr ""
+#~ "Buscar una ubicación, como dirección, ciudad, o código postal para "
+#~ "comenzar a dibujar su comunidad."
+
+#~ msgid "Video Tutorial"
+#~ msgstr "Tutorial de vídeo"
+
+#~ msgid "Work with us to map communities across the United States."
+#~ msgstr ""
+#~ "Trabaja con nosotros para mapear comunidades a través de los Estados "
+#~ "Unidos."
+
+#, fuzzy
+#~| msgid "Use our data to protect communities during the map drawing process."
+#~ msgid ""
+#~ "Use Representable data to protect communities during the map drawing "
+#~ "process."
+#~ msgstr ""
+#~ "Utilice nuestros datos para proteger comunidades durante el proceso de "
+#~ "dibujo del mapa."
+
+#~ msgid "Coming soon!"
+#~ msgstr "¡Pronto!"
+
+#~ msgid "For redistricters"
+#~ msgstr "Para redistadores"
+
+#~ msgid "View All Maps"
+#~ msgstr "Ver los mapas"

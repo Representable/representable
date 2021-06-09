@@ -110,7 +110,7 @@
         {% else %}
         <div class="jumbotron">
           <h3 class="font-weight-light">{% trans "No entries!" %}</h3>
-          <p class="font-weight-light">{% blocktrans trimmed %}Join us in the fight against gerrymandering. Click <a href="/entry_preview">here</a> to add your community.{% endblocktrans %}</p>
+          <p class="font-weight-light">{% trans "Join us in the fight against gerrymandering." %} {% trans "Click " %} <a href="{% url 'main:entry_preview' %}">{% trans "here" %}</a> {% trans " to add your community." %}</p>
         </div>
         {% endif %}
       </div>

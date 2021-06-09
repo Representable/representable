@@ -34,7 +34,7 @@
 
     <div class="col-12 p-3 light-blue-bg p-md-4 mb-4">
         <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria4" aria-expanded="false" aria-controls="collapseCriteria4" onclick="toggleAngle(this)">
-          <h5 class="dark-gray-text" style="width: fit-content;"><b>{{ state_obj.name }}'s {% trans "redistricting criteria" %} &#32;<i class="fas fa-angle-down pl-3"></i></b></h5>
+          <h5 class="dark-gray-text" style="width: fit-content;"><b>{{ state_obj.name }}'s {% trans " redistricting criteria" %} &#32;<i class="fas fa-angle-down pl-3"></i></b></h5>
         </button>
       <div class="collapse" id="collapseCriteria4">
         {% autoescape off %}
@@ -50,9 +50,7 @@
       <object type="image/svg+xml" class="w-75 mx-auto d-block h-100" data="{% static 'img/map-info.svg' %}" alt="image of map with information icon"></object>
       <h5><p class="text-center">
         <a href="/map/{{state_obj.abbr}}" class="link-primary">
-          {% blocktrans trimmed %}
-          See community maps drawn in
-          {% endblocktrans %} {{ state_obj.name }} <i class="fas fa-arrow-circle-right"></i>
+          See community maps drawn in {{ state_obj.name }} here <i class="fas fa-arrow-circle-right"></i>
         </a>
       </p></h5>
     </div>

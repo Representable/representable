@@ -9,7 +9,7 @@
 <div class="row row-equal-cols">
     <div class="col">
         <div id="backup_error" class="alert alert-danger alert-dismissible fade show form-error d-none" role="alert">
-            {% blocktrans trimmed %}
+            {% blocktrans %}
                 <p id="backup_error_txt" class="p-0 m-0"></p>
             {% endblocktrans %}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -33,7 +33,7 @@
         <br>
 
         <p class="info-text">
-            {% blocktrans trimmed %}We gather your identifying information to verify that you are a real person.
+            {% blocktrans %}We gather your identifying information to verify that you are a real person.
             We will not publicly share anyone's individual personal information, such as name, address, or email. Your privacy is our highest priority.
             {% endblocktrans %}
             {% if has_drive %}
@@ -49,11 +49,11 @@
                     {% url 'main:privacy' as url1%}
                     {% url 'main:terms' as url2%}
 
-                    {% blocktrans trimmed %}Click here to indicate that you have read and agree to the
+                    {% blocktrans %} Click here to indicate that you have read and agree to the
                     <a target="_blank" rel="noopener noreferrer" href={{url2}}>Terms of Use</a> and
                     <a target="_blank" rel="noopener noreferrer" href="{{url1}}">Privacy Policy</a>.
-                    {% endblocktrans %}
                     <small class="text-danger">*</small>
+                    {% endblocktrans %}
                 </label>
             </div>
 
@@ -65,11 +65,11 @@
                     {% url 'main:privacy' as url1%}
                     {% url 'main:terms' as url2%}
 
-                    {% blocktrans trimmed %}Click here to indicate that you have read and agree to the
+                    {% blocktrans %} Click here to indicate that you have read and agree to the
                     <a target="_blank" rel="noopener noreferrer" href={{url2}}>Terms of Use</a> and
                     <a target="_blank" rel="noopener noreferrer" href="{{url1}}">Privacy Policy</a>.
-                    {% endblocktrans %}
                     <small class="text-required">*</small>
+                    {% endblocktrans %}
                 </label>
             </div>
         </div>
@@ -77,13 +77,13 @@
         <div class="row w-xl-50 mx-auto rounded" style="background-color: #DAEFFF;">
             <div class="m-4">
                 <p><strong class="header-text">
-                {% blocktrans trimmed %}
+                {% blocktrans %}
                     Submitted communities are final and public.
                 {% endblocktrans %}
                 </strong></p>
 
                 <p class="info-text">
-                    {% blocktrans trimmed %} In order to edit a saved community you will need
+                    {% blocktrans %} In order to edit a saved community you will need
                     to create a new community and delete the old one. Your community map, name,
                     and testimony will be publicly visible on Representable.org {% endblocktrans %}
                 </p>

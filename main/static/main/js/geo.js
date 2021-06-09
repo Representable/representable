@@ -562,13 +562,13 @@ function interestsValidated() {
     economic_interests_field.value == "" &&
     comm_activities_field.value == "" &&
     other_considerations_field.value == "" &&
-    (!custom_response_field || custom_response_field.value == "")
+    (custom_response_field && custom_response_field.value == "")
   ) {
     cultural_interests_field.classList.add("has_error");
     economic_interests_field.classList.add("has_error");
     comm_activities_field.classList.add("has_error");
     other_considerations_field.classList.add("has_error");
-    if (custom_response_field) custom_response_field.classList.add("has_error");
+    custom_response_field.classList.add("has_error");
     var interests_alert = document.getElementById("need_one_interest");
     interests_alert.classList.remove("d-none");
     flag = false;
