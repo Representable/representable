@@ -198,9 +198,9 @@ def input_needed_translations(lang_code, pofile, pofile_path, service):
     print("{difference} more translations added".format(difference=prior_num_needs_translations - len(pofile.untranslated_entries() + pofile.fuzzy_entries())))
     print("Percent translated went from: {prior}% to {current}%".format(prior=prior_percent_translated, current=pofile.percent_translated()))
 
-def input_all_translations(pofile, pofile_path, service):
+def input_all_translations(lang_code, pofile, pofile_path, service):
     prior_percent_translated = pofile.percent_translated()
-    translations = _get_translations_from_doc(service)
+    translations = _get_translations_from_doc(lang_code, service)
 
     for entry in pofile:
         entry.msgstr = translations.get(entry.msgid, entry.msgstr)
