@@ -74,21 +74,26 @@ var popup = new mapboxgl.Popup({
   closeOnClick: false
 });
 
+function getNameFromID(featureID) {
+
+  return;
+}
+
 function addPopupHover(location, layer, fields) {
   var identifiedFeatures = map.queryRenderedFeatures(location.point, layer);
   /*console.log(identifiedFeatures);*/
   popup.remove();
   if (identifiedFeatures != '') {
-    var popupText = "";
-    // for (let feature of identifiedFeatures) {
-    //   popupText += "<strong>" + feature + ":</strong> " + "<" + "br" + ">"
-    // }
-    for (i = 0; i < fields.length; i++) {
-      popupText += "<strong>" + fields[i] + ":</strong> " + identifiedFeatures[0].properties[fields[i]] + "<" + "br" + ">"
-    };
-    popup.setLngLat(location.lngLat)
-      .setHTML(popupText)
-      .addTo(map);
+    var featureID = identifiedFeatures[0].id;
+    // query name by feature ID in lookup table
+    if (featureID !== undefined) {
+      var popupText = "";
+      popupText += identifiedFeatures[0].id;
+  
+      popup.setLngLat(location.lngLat)
+        .setHTML(popupText)
+        .addTo(map);
+    }
   }
 }
 
@@ -119,27 +124,6 @@ function newBoundariesLayer(name) {
     },
   });
 
-  map.addSource(name + "-features", {
-    type: "vector",
-    url: "mapbox://" + mapbox_user_name + "." + DATA_KEYS[name],
-  });
-
-  map.addLayer({
-    id: name + "-labels",
-    type: "symbol",
-    source: name + "-features",
-    "source-layer": SOURCE_LAYERS[name],
-    layout: {
-      visibility: "none",
-      'text-field': ["get", "name"]
-    },
-    paint: {
-      'text-color': 'rgba(0, 0, 0, 1)'
-    }
-  });
-
-  // TODO: add new source for labels
-
   map.addLayer({
     id: name + "-fills",
     type: "fill",
@@ -162,8 +146,7 @@ function newBoundariesLayer(name) {
         0
       ]
     }
-  }, name + "-labels");
-  // });
+  });
 
 
 
@@ -198,9 +181,12 @@ function newBoundariesLayer(name) {
   //   });
   // }
   
+  // hmmm...
+  // possible workflow:
+  // modify fill layers to add name to be stored w the feature??
 
   map.on('mousemove', name + '-fills', function(e) {
-    addPopupHover(e, name + '-labels', ["name", "bounds"]);
+    addPopupHover(e, name + '-fills', ["name", "id"]);
 
     // addPopupHover(e, name + '-fills', ["name", "feature_id"]);
     // identifyFeatures(e, name + '-labels', ["name", "join-attributes"]);
