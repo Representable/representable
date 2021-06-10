@@ -974,29 +974,37 @@ Entry Mapping Page
 #mapToPrivacy {
   position: absolute;
   z-index: 1;
-  right: 34.8%;
+  right: 30%;
   bottom: 20%;
+  max-width: 18%;
+  white-space: normal;
 }
 
 #mapToSurveyP2 {
   position: absolute;
   z-index: 1;
-  left: 34.8%;
+  left: 30%;
   bottom: 20%;
+  max-width: 18%;
+  white-space: normal;
 }
 
 #mapToPrivacyMobile {
   position: absolute;
   z-index: 1;
-  right: 22%;
+  right: 15%;
   bottom: 20%;
+  max-width: 35%;
+  white-space: normal;
 }
 
 #mapToSurveyP2Mobile {
   position: absolute;
   z-index: 1;
-  left: 22%;
+  left: 15%;
   bottom: 20%;
+  max-width: 35%;
+  white-space: normal;
 }
 
 #mobile-map-help-btn:not(.opened),
