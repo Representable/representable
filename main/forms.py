@@ -24,12 +24,14 @@ from django_select2.forms import (
     Select2MultipleWidget,
     Select2Widget,
     ModelSelect2Widget,
+    ModelSelect2TagWidget,
 )
 from .models import (
     CommunityEntry,
     Organization,
     Drive,
     Membership,
+    Tag,
     User,
     Address,
     State,
@@ -39,7 +41,27 @@ from django.contrib.gis.db import models
 from django.contrib.gis.measure import Area
 
 # https://django-select2.readthedocs.io/en/latest/django_select2.html
-
+class TagSelect2Widget(ModelSelect2TagWidget):
+    model = Tag
+    search_fields = ["name__icontains"]
+    queryset = model.objects.all()
+    # Check if tag name is in the db already. If not, add it.
+    def value_from_datadict(self, data, files, name):
+        values = super().value_from_datadict(data, files, name)
+        cleaned_values = []
+        names = []
+        for val in values:
+            # Do any names in the db match this value?
+            qs = self.queryset.filter(**{"name__exact": str(val)})
+            # Add the names to 'names'
+            newNames = set(getattr(entry, "name") for entry in qs)
+            for name in newNames:
+                names.append(str(name))
+        for val in values:
+            if str(val) not in names:
+                val = self.queryset.create(name=str(val)).name
+            cleaned_values.append(str(val))
+        return cleaned_values
 
 class AddressForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -91,6 +113,11 @@ class CommunityForm(ModelForm):
             error_messages={"required": "Census blocks polygon missing."}
         )
         widgets = {
+            "tags": TagSelect2Widget(
+                attrs={
+                    "placeholder": "E.g. FlintWaterCrisis, KoreaTown, etc."
+                }
+            ),
             "user": forms.HiddenInput(),
             "entry_ID": forms.HiddenInput(),
             "census_blocks_polygon_array": forms.HiddenInput(),
@@ -125,6 +152,7 @@ class CommunityForm(ModelForm):
             "user_polygon": forms.HiddenInput(),
         }
         label = {
+            "tags": "Input tags for your community: ",
             "user_name": "Input your full name: ",
             "economic_interests": "Input your community's economic interests: ",
             "cultural_interests": "Input your community's cultural or historical interests: ",
@@ -298,7 +326,8 @@ class RepresentableLoginForm(LoginForm):
             del field.widget.attrs["placeholder"]
         self.fields["login"].label = "E-mail"
         self.fields["password"].label = "Password"
-        del self.fields["login"].widget.attrs["autofocus"]
+        if "autofocus" in self.fields["login"].widget.attrs:
+            del self.fields["login"].widget.attrs["autofocus"]
 
 class SubmissionAddDrive(forms.Form):
     def upd(self, state):

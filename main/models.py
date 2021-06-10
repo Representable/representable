@@ -62,6 +62,21 @@ class User(AbstractUser):
 # ******************************************************************************#
 
 
+class Tag(models.Model):
+    """
+    Referenced https://docs.djangoproject.com/en/2.2/topics/forms/modelforms/#a-full-example
+    The tag table stores tags associated with different entries.
+    """
+    name = models.CharField(max_length=100, primary_key=True)
+    class Meta:
+        ordering = ("name",)
+    def __str__(self):
+        return self.name
+
+
+# ******************************************************************************#
+
+
 class Organization(models.Model):
     """
     Organization represents organizations with a user
@@ -314,7 +329,7 @@ class CommunityEntry(models.Model):
      - comm_activities: community activities and services question response
      - other_considerations: community needs and concerns questions response
      - custom_response: response to custom question, if included in a drive
-
+     - tags: any terms the user used to tag their community
     """
 
     user = models.ForeignKey(
@@ -395,6 +410,7 @@ class CommunityEntry(models.Model):
     admin_approved = models.BooleanField(default=True)
     private = models.BooleanField(default=False, null=True)
     population = models.IntegerField(blank=True, null=True, default=0)
+    tags = models.ManyToManyField(Tag, blank=True)
 
     def __str__(self):
         return str(self.entry_ID)

@@ -25,6 +25,10 @@ from representable.settings.base import MAPBOX_KEY
 app_name = "main"
 urlpatterns = [
     path(
+        "select2/",
+        include("django_select2.urls")
+    ),
+    path(
         "accounts/login/",
         views.main.RepresentableLoginView.as_view(),
         name="account_login",

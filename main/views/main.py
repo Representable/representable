@@ -1071,6 +1071,8 @@ class EntryView(LoginRequiredMixin, View):
         # print(type(comm_form.data["block_groups"]))
         if comm_form.is_valid():
             print("is this working?")
+            # get tags
+            tag_name_qs = comm_form.cleaned_data["tags"].values("name")
             recaptcha_response = request.POST.get("g-recaptcha-response")
             url = "https://www.google.com/recaptcha/api/siteverify"
             values = {
@@ -1182,6 +1184,10 @@ class EntryView(LoginRequiredMixin, View):
                 del addres["id"]
                 finalres.update(addres)
                 string_to_hash = str(finalres)
+
+            for tag_name in tag_name_qs:
+                tag = Tag.objects.get(name=str(tag_name["name"]))
+                entryForm.tags.add(tag)
 
             digest = hmac.new(
                 bytes(os.environ.get("AUDIT_SECRET"), encoding="utf8"),
