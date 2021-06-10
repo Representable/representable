@@ -20,7 +20,7 @@ def scrape(fn, identifier):
             length = len(feature_data["names"]["en"])
             selected_data = {"name": feature_data["names"]["en"][length - 1]}
         elif identifier == "leg2":
-            selected_data = {"name": feature_data["name"]}
+            selected_data = {"name": feature_data["name"], "state_code": first2(feature_data["unit_code"])}
         elif identifier == "leg3":
             selected_data = {"name": feature_data["name"], "state_code": first2(feature_data["unit_code"])}
         elif identifier == "leg4":

@@ -87,13 +87,13 @@ function getPopupText(featureID, name) {
     return ADM2[featureID]["name"];
   }
   if (name === "leg2") {
-    return LEG2[featureID]["name"];
+    return STATE_ANSI[LEG2[featureID]["state_code"]]["abbrev"] + " " + LEG2[featureID]["name"];
   }
   if (name === "leg3") {
-    return LEG3[featureID]["name"];
+    return STATE_ANSI[LEG3[featureID]["state_code"]]["abbrev"] + " " + LEG3[featureID]["name"];
   }
   if (name === "leg4") {
-    return LEG4[featureID]["name"];
+    return STATE_ANSI[LEG4[featureID]["state_code"]]["abbrev"] + " " + LEG4[featureID]["name"];
   }
   if (name === "pos4") {
     return POS4[featureID]["zipcode"];
