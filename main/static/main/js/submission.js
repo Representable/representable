@@ -1,16 +1,5 @@
 $(document).ready(function () {});
 
-// // GLOBAL VARIABLES
-// import data from '../feature-lookup-tables/mapbox-boundaries-adm2-v3_2.json';
-// console.log(data);
-// import * as adm2 from '../feature-lookup-tables/mapbox-boundariexs-adm2-v3_2.json';
-
-// factory(require('../feature-lookup-tables/mapbox-boundariexs-adm2-v3_2.json'));
-// var lookupTableData = adm2.data;
-// console.log(lookupTableData);
-// const data = JSON.parse(adm2);
-// console.log(ADM2);
-
 // if thanks page, show modal
 if (is_thanks === "True") {
   $("#thanksModal").modal("show");
@@ -83,17 +72,24 @@ var popup = new mapboxgl.Popup({
 
 
 function getPopupText(featureID, name) {
+  console.log(featureID);
   if (name === "adm2") {
     return ADM2[featureID]["name"];
   }
   if (name === "leg2") {
-    return STATE_ANSI[LEG2[featureID]["state_code"]]["abbrev"] + " " + LEG2[featureID]["name"];
+    let data = LEG2[featureID];
+    let key = data["state_code"];
+    return STATE_ANSI[key]["abbrev"] + " " + LEG2[featureID]["name"];
   }
   if (name === "leg3") {
-    return STATE_ANSI[LEG3[featureID]["state_code"]]["abbrev"] + " " + LEG3[featureID]["name"];
+    let data = LEG3[featureID];
+    let key = data["state_code"];
+    return STATE_ANSI[key]["abbrev"] + " " + LEG3[featureID]["name"];
   }
   if (name === "leg4") {
-    return STATE_ANSI[LEG4[featureID]["state_code"]]["abbrev"] + " " + LEG4[featureID]["name"];
+    let data = LEG4[featureID];
+    let key = data["state_code"];
+    return STATE_ANSI[key]["abbrev"] + " " + LEG4[featureID]["name"];
   }
   if (name === "pos4") {
     return POS4[featureID]["zipcode"];
@@ -103,13 +99,11 @@ function getPopupText(featureID, name) {
 
 function addPopupHover(location, name) {
   var identifiedFeatures = map.queryRenderedFeatures(location.point, name + "-fills");
-  /*console.log(identifiedFeatures);*/
   popup.remove();
   if (identifiedFeatures != '') {
     var featureID = identifiedFeatures[0].id;
     // query name by feature ID in lookup table
     if (featureID !== undefined) {
-      console.log(name)
       var popupText = getPopupText(featureID, name);
       popup.setLngLat(location.lngLat)
         .setHTML(popupText)
@@ -169,50 +163,8 @@ function newBoundariesLayer(name) {
     }
   });
 
-
-
-  // new:
-  // newSourceLayer(name + "-features", DATA_KEYS[name])
-
-
-
-
-
-  // // don't add labels for postal code (redundant) and for block groups (annoying)
-  // if (name != "pos4" && name != "sta5") {
-  //   map.addSource(name + "-points", {
-  //     type: "vector",
-  //     url: "mapbox://mapbox.boundaries-" + removeLastChar(name) + "Points-v3",
-  //   });
-  
-  //   // displays name in centroid of polygons
-  //   map.addLayer({
-  //     id: name + "-labels",
-  //     type: "symbol",
-  //     source: name + "-points",
-  //     "source-layer":   // ex.: boundaries_legislative_2
-  //       "points_" +
-  //       BOUNDARIES_ABBREV[removeLastChar(name)] +
-  //       "_" +
-  //       name.slice(-1),
-  //     layout: {
-  //       'text-field': ["get", "name"],
-  //       visibility: "none",
-  //     },
-  //   });
-  // }
-  
-  // hmmm...
-  // possible workflow:
-  // modify fill layers to add name to be stored w the feature??
-
   map.on('mousemove', name + '-fills', function(e) {
     addPopupHover(e, name);
-
-    // addPopupHover(e, name + '-fills', ["name", "feature_id"]);
-    // identifyFeatures(e, name + '-labels', ["name", "join-attributes"]);
-    // identifyFeatures(e, name, ["id"]);
-    // identifyFeatures(e, name + '-features', ["iso_3166_1"]);
     if (e.features.length > 0) {
       if (hoveredStateId !== null) {
         map.setFeatureState(
@@ -732,16 +684,11 @@ function addToggleableLayer(id, appendElement) {
     if (visibility === "visible") {
       map.setLayoutProperty(txt + "-lines", "visibility", "none");
       map.setLayoutProperty(txt + "-fills", "visibility", "none");
-      if (txt != "pos4" && txt != "sta5") {
-        map.setLayoutProperty(txt + "-labels", "visibility", "none");
-      }
     } else {
       map.setLayoutProperty(txt + "-lines", "visibility", "visible");
       map.setLayoutProperty(txt + "-fills", "visibility", "visible");
 
-      if (txt != "pos4" && txt != "sta5") {
-        map.setLayoutProperty(txt + "-labels", "visibility", "visible");
-      // set all other layers to not visible, uncheck the display box for all other layers
+      // if (txt != "pos4" && txt != "sta5") {
         for (var layerID in toggleableLayerIds) {
           if (layerID != txt) {
             map.setLayoutProperty(layerID + "-lines", "visibility", "none");
@@ -749,7 +696,7 @@ function addToggleableLayer(id, appendElement) {
             button.checked = false;
           }
         }
-      }
+      // }
     }
   };
   // in order to create the buttons

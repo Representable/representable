@@ -1,5 +1,14 @@
 ## we want to only get "feature_id", "name", and "names"
 
+# run using:
+## python lookup-table-scraper.py 
+##   mapbox-boundaries-adm2-v3_2.json 
+##   mapbox-boundaries-leg2-v3_2.json 
+##   mapbox-boundaries-leg3-v3_2.json 
+##   mapbox-boundaries-leg4-v3_2.json 
+##   mapbox-boundaries-pos4-v3_2.json
+
+
 import argparse
 import json
 
