@@ -609,3 +609,21 @@ $("[data-toggle=modal]").on("click", function (e) {
 $("#geojson-explain-modal").on("show.bs.modal", function () {
   $("#hidden-download-geojson")[0].click();
 });
+
+// copies link to page to the clipboard
+// from: https://stackoverflow.com/questions/49618618/copy-current-url-to-clipboard
+function copyPageLink() {
+  var dummy = document.createElement('input'),
+      text = window.location.href;
+
+  document.body.appendChild(dummy);
+  dummy.value = text;
+  dummy.select();
+  document.execCommand('copy');
+  document.body.removeChild(dummy);
+
+  // set text to say "copied!" for feedback mechanism that the copying worked
+  var copyText = document.getElementById("copy-link-text");
+  copyText.innerHTML = "Copied!";
+  setTimeout(function () { copyText.innerHTML = 'Or <a href="#" onclick="copyPageLink();event.preventDefault();">copy the link</a> to this page to share.' }, 2000);
+}
