@@ -58,13 +58,6 @@ function newSourceLayer(name, mbCode) {
   });
 }
 
-// function newDataSourceLayer(name, mbCode) {
-//   map.addSource(name, {
-//     type: "geojson",
-//     data: "mapbox://" + mapbox_user_name + "." + mbCode,
-//   });
-// }
-
 var popup = new mapboxgl.Popup({
   closeButton: false,
   closeOnClick: false
@@ -246,16 +239,17 @@ map.on("load", function () {
     },
   });
 
-  map.addLayer({
-    id: "school-districts-labels",
-    type: "symbol",
-    source: "school-districts",
-    "source-layer": "us_school_districts_points",
-    layout: {
-      visibility: "none",
-      'text-field': ["get", "name"],
-    },
-  });
+  // TODO: change to fill
+  // map.addLayer({
+  //   id: "school-districts-fills",
+  //   type: "symbol",
+  //   source: "school-districts",
+  //   "source-layer": "us_school_districts_points",
+  //   layout: {
+  //     visibility: "none",
+  //     'text-field': ["get", "name"],
+  //   },
+  // });
 
   // tribal boundaries as a data layer
   newSourceLayer("tribal-boundaries", TRIBAL_BOUND_KEY);
@@ -289,17 +283,18 @@ map.on("load", function () {
         "line-width": 2,
       },
     });
-    // TODO: test
-    map.addLayer({
-      id: "chi-ward-labels",
-      type: "symbol",
-      source: "chi_wards",
-      "source-layer": "chi_wards",
-      layout: {
-        visibility: "none",
-        'text-field': ["get", "ward"],
-      },
-    });
+  // TODO: change to fill
+    // map.addLayer({
+    //   id: "chi-ward-labels",
+    //   type: "symbol",
+    //   source: "chi_wards",
+    //   "source-layer": "chi_wards",
+    //   layout: {
+    //     visibility: "none",
+    //     'text-field': ["get", "ward"],
+    //   },
+    // });
+
     map.addLayer({
       id: "chi-comm-lines",
       type: "line",
@@ -313,17 +308,18 @@ map.on("load", function () {
         "line-width": 2,
       },
     });
-    // TODO: test
-    map.addLayer({
-      id: "chi-comm-labels",
-      type: "symbol",
-      source: "chi_comm",
-      "source-layer": "chi_comm",
-      layout: {
-        visibility: "none",
-        'text-field': ["get", "community"],
-      },
-    });
+
+  // TODO: change to fill
+    // map.addLayer({
+    //   id: "chi-comm-labels",
+    //   type: "symbol",
+    //   source: "chi_comm",
+    //   "source-layer": "chi_comm",
+    //   layout: {
+    //     visibility: "none",
+    //     'text-field': ["get", "community"],
+    //   },
+    // });
   }
   if (state === "ny") {
     newSourceLayer("nyc-city-council", NYC_COUNCIL_KEY);
@@ -354,6 +350,7 @@ map.on("load", function () {
         "line-width": 2,
       },
     });
+    // TODO: add fills for state assembly and city council (?)
   }
   // leg2 : congressional district
   // leg3 : state senate district

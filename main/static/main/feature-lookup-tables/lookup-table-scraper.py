@@ -1,6 +1,8 @@
 ## we want to only get "feature_id", "name", and "names"
 
 # run using:
+## cd main/static/main/feature-lookup-tables
+
 ## python lookup-table-scraper.py 
 ##   mapbox-boundaries-adm2-v3_2.json 
 ##   mapbox-boundaries-leg2-v3_2.json 
