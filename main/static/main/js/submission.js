@@ -611,7 +611,13 @@ var electionCol2 = electionsRow.children[1];
 count = 0;
 // adds elections to next dropdown
 var stateElections = {};
-if (HAS_PRECINCTS.indexOf(state) != -1) stateElections = STATE_ELECTIONS[state];
+var elec_text = document.getElementById('election-text');
+if (HAS_PRECINCTS.indexOf(state) != -1) {
+  stateElections = STATE_ELECTIONS[state];
+}
+else {
+  elec_text.innerHTML = "<b>Election data is not yet available for this state.</b>";
+}
 for (var idx in stateElections) {
   id = stateElections[idx];
   var link = document.createElement("input");
