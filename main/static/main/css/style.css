@@ -1075,6 +1075,8 @@ Entry Mapping Page
   /* transition: 2s; */
   transform-origin: left center;
   z-index: 1000;
+  max-width: 100%;
+  white-space: normal;
 }
 
 #map-units-btn {
