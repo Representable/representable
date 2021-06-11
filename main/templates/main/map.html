@@ -66,8 +66,18 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                 <div class="font-weight-light text-uppercase small" id="outline-menu">
                 </div>
               </div>
+              <div id="headingTwo">
+                <button id="buttonTwo"class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseTwo"
+                aria-expanded="false" aria-controls="collapseTwo" style="width: 100%">
+                {% trans "Election Data" %} <i id="arrowTwo" class="fas fa-caret-down"></i></button>
+              </div>
+              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="font-weight-light text-uppercase small" id="election-menu">
+                  <div class="font-weight-light text-uppercase small mb-3" id="no-election-text"></div>
+                </div>
+              </div>
             </div>
-            <div class="items card">
+            <div class="items"> 
               <div id="headingThree">
                 <button id="buttonThree" class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#coisCollapse"
                 aria-expanded="true" aria-controls="coisCollapse" style="width: 100%">
