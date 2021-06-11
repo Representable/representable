@@ -325,7 +325,7 @@ class ReportView(View):
     def post(self, request, **kwargs):
         cid = request.POST["cid"]
         email = request.POST["email"]
-        is_org_admin = request.POST["is_org_admin"]
+        is_org_admin = request.POST["is_org_admin"].replace("/", "")
 
         org_slug = request.POST["org_slug"].replace("/", "")
         drive_slug = request.POST["drive_slug"].replace("/", "")
