@@ -2299,6 +2299,10 @@ height:25vh!important;
   transform: scale(1, -1);
 }
 
+.btn.no-underline-link.bg-transparent {
+  border-radius: 0px;
+}
+
 /* Makes buttons on submission page equal widths */
 #election-btn, #mobile-election-btn, #data-layer-btn, 
 #mobile-data-layer-btn, #demographics-btn, 
@@ -2306,6 +2310,3 @@ height:25vh!important;
   width: 215px;
 }
 
-/* #election-text {
-  display: none;
-} */
