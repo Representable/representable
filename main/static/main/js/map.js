@@ -308,6 +308,20 @@ map.on("load", function () {
           'fill-opacity': 0.15
       },
   });
+  map.addLayer({
+    id: "coi_line",
+    type: "line",
+    source: 'coi_all',
+    layout: {
+      visibility: "none",
+      "line-join": "round",
+      "line-cap": "round",
+    },
+    paint: {
+      "line-color": "rgba(0, 0, 0,0.2)",
+      "line-width": 2,
+    },
+  });
 
   // console.log('finsihed layers');
 
@@ -509,9 +523,11 @@ for (var idx in stateElections) {
     if (this.checked === false) {
       map.setLayoutProperty(txt, "visibility", "none");
       map.setPaintProperty("coi_layer_fill", "fill-opacity", .15);
+      map.setLayoutProperty("coi_line", "visibility", "none");
     } else {
       map.setLayoutProperty(txt, "visibility", "visible");
-      map.setPaintProperty("coi_layer_fill", "fill-opacity", .5);
+      map.setPaintProperty("coi_layer_fill", "fill-opacity", .4);
+      map.setLayoutProperty("coi_line", "visibility", "visible");
       var demProp = this.id + "D";
       var repProp = this.id + "R";
       var state_layer = STATE_FILES[state];
