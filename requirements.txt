@@ -9,7 +9,7 @@ Click==7.0
 defusedxml==0.5.0
 diff-match-patch==20200713
 dj-database-url==0.5.0
-Django==2.2.20
+Django==2.2.24
 django-allauth==0.39.1
 django-appconf==1.0.3
 django-bmemcached==0.2.4
@@ -55,7 +55,7 @@ odfpy==1.4.1
 openpyxl==3.0.5
 pandas==1.1.5
 polib==1.1.1
-Pillow==8.1.1
+Pillow==8.2.0
 psycopg2==2.7.6
 psycopg2-binary==2.7.7
 pycodestyle==2.5.0
@@ -85,7 +85,7 @@ text-unidecode==1.2
 typed-ast==1.4.0
 typing==3.6.6
 uhashring==1.1
-urllib3==1.24.2
+urllib3==1.26.5
 virtualenv==16.4.3
 webencodings==0.5.1
 Werkzeug==0.15.4
