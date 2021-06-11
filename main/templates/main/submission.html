@@ -132,6 +132,9 @@
                   <!-- ********************* -->
               </div>
             </div>
+            <p id="copy-link-text" class="header-text small mt-4 mb-0">
+              Or <a href="#" onclick="copyPageLink();event.preventDefault();">copy the link</a> to this page to share.
+            </p>
           </div>
         </div>
         <div class="card text-left border-0 w-100 rounded-lg mt-3">
@@ -253,6 +256,24 @@
                 </div>
               </div>
 
+              <div id="election-card" class="col-12 col-lg-8 card border-0 rounded-lg p-0 d-none mr-2 mb-3 mr-xl-3">
+                <div class="card-body pb-0">
+                  <h5 class="card-title filter-header header-text pb-2"><strong>{% trans "Election Data" %}<i class="fas fa-minus ml-2 filter-sign"></i></strong></h5>
+                  <div class="font-weight-light text-uppercase small mb-3" id="election-menu">
+                    <div id="election-text"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="election-col" class="col-5 col-sm-6 col-md-4 col-lg-3 p-0 mb-3 filter-col mr-5 mr-md-2 mr-xl-5">
+                <div class="d-none d-md-block">
+                  <button id="election-btn" class="btn filter-btn btn-lg rounded m-0 bottom">{% trans "Election Data" %} <i class="fas fa-plus ml-2 filter-sign"></i></button>
+                </div>
+                <div class="d-md-none">
+                  <button id="mobile-election-btn" class="btn filter-btn rounded m-0 w-100">{% trans "Election Data" %} <i class="fas fa-plus ml-2 filter-sign"></i></button>
+                </div>
+              </div>
+
               <div id="demographics-card" class="col-12 col-lg-8 card border-0 rounded-lg p-0 d-none mr-2 mb-3">
                 <div class="card-body pb-0">
                   <h5 class="card-title filter-header header-text pb-2"><strong>{% trans "Demographics" %}<i class="fas fa-minus ml-2 filter-sign"></i></strong></h5>
@@ -261,7 +282,7 @@
                         <b>Population:</b> {{ c.population }}
                         <br>
                         {% else %}
-                        <b>Demographic information will become available with the release of 2020 Census data by the US Census Bureau.</b>
+                        <b>{% trans "Demographic information will become available with the release of 2020 Census data by the US Census Bureau." %}</b>
                         {% endif %}
                   </div>
                 </div>
