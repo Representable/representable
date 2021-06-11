@@ -2287,3 +2287,7 @@ height:25vh!important;
   -webkit-transform: scale(1, -1);
   transform: scale(1, -1);
 }
+
+.btn.no-underline-link.bg-transparent {
+  border-radius: 0px;
+}
