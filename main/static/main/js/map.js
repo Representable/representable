@@ -238,6 +238,10 @@ map.on("load", function () {
       },
     });
   }
+  else {
+    var txt_box = document.getElementById("no-election-text");
+    txt_box.innerHTML = "<b>Election data is not yet available for this state.</b>"
+  }
 
   // leg2 : congressional district
   // leg3 : state senate district
