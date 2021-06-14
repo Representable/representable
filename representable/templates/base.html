@@ -139,7 +139,7 @@
                         </a> {% endcomment %}
                         <a class="btn btn-outline-primary m-2" href="#drive-get-started-btn">
                             {% trans "Add community" %}
-                        </a> 
+                        </a>
                     {% else %}
                         <a class="btn btn-outline-primary m-2" href="{% url 'main:entry_preview' %}">
                             {% trans "Add community" %}
@@ -251,6 +251,8 @@
     </script>
     {% block script %}
     {% endblock %}
+
+    {{ form.media.js }}
 
 </body>
 {% if page_type == "entry" %}

@@ -113,11 +113,6 @@ class CommunityForm(ModelForm):
             error_messages={"required": "Census blocks polygon missing."}
         )
         widgets = {
-            "tags": TagSelect2Widget(
-                attrs={
-                    "placeholder": "E.g. FlintWaterCrisis, KoreaTown, etc."
-                }
-            ),
             "user": forms.HiddenInput(),
             "entry_ID": forms.HiddenInput(),
             "census_blocks_polygon_array": forms.HiddenInput(),
@@ -146,19 +141,24 @@ class CommunityForm(ModelForm):
             "custom_response": forms.Textarea(
                 attrs={"rows": 3, "maxlength": 500, "placeholder": ""}
             ),
+            "tags": TagSelect2Widget(
+                attrs={
+                    "placeholder": "E.g. FlintWaterCrisis, KoreaTown, etc."
+                }
+            ),
             "user_name": forms.TextInput(
                 attrs={"maxlength": 500}
             ),
             "user_polygon": forms.HiddenInput(),
         }
         label = {
-            "tags": "Input tags for your community: ",
             "user_name": "Input your full name: ",
             "economic_interests": "Input your community's economic interests: ",
             "cultural_interests": "Input your community's cultural or historical interests: ",
             "comm_activities": "Input your community's activities and services: ",
             "other_considerations": "Input your community's other interests and concerns: ",
             "custom_response": "Input your response to this mapping drive's custom question: ",
+            "tags": "Input tags for your community: ",
             "entry_name": "Input your community's name: ",
         }
 

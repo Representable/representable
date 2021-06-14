@@ -252,6 +252,8 @@ $('#map-bg-to-block-btn').on('click', function() {
   $("#map-bg-to-block-modal").modal('hide');
 });
 
+// $('.django-select2').djangoSelect2();
+
 if (dane_cty) {
   $('#map-units-btn').hide();
 }

@@ -162,9 +162,10 @@
     <div id="entry_map" class="d-none">{% include './entry_map.html' %}</div>
 
 </form>
+{{ form.media.js }}
+
     {% endblock %}
     {% block script %}
-    {{ form.media.js }}
     <script type="text/javascript">
         mapboxgl.accessToken = "{{ mapbox_key }}";
     </script>

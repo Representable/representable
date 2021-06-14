@@ -339,7 +339,8 @@
                 {% endif %}
                 <!-- {# Tags Field} -->
                 <div class="field-wrap mt-3">
-                    {{ comm_form.tags.label_tag }}
+                    <div class="sr-only">{{ comm_form.tags.label_tag }}</div>
+                    <p>Enter in your community tags here:</p>
                     {% if comm_form.tags.errors %}
                     <div class="form-error">
                         {{ comm_form.tags.errors }}

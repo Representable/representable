@@ -225,6 +225,9 @@ if "REDIS_URL" in os.environ:
         "select2": {
             "BACKEND": "redis_cache.RedisCache",
             "LOCATION": os.environ.get("HEROKU_REDIS_NAVY_URL"),
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            }
         },
     }
     # Set the cache backend to select2
