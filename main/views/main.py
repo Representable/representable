@@ -80,7 +80,12 @@ from ..models import (
     CensusBlock,
     FrequentlyAskedQuestion,
     GlossaryDefinition,
+    Report,
 )
+from .. admin import (
+    ReportAdmin,
+)
+from django.utils.html import format_html
 from ..choices import STATES
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
@@ -858,7 +863,7 @@ class Map(TemplateView):
         )
         # state map page --> drives in the state, entries without a drive but with a state
         drives = []
-        # authenticated = self.request.user.is_authenticated
+        authenticated = self.request.user.is_authenticated
         # get the polygon from db and pass it on to html
         for obj in query:
             if obj.private or (obj.organization and not obj.admin_approved):
@@ -1094,7 +1099,7 @@ class EntryView(LoginRequiredMixin, View):
             ]
 
         def flagText(text):
-            API_KEY = "AIzaSyCnDOga8PBQeXnJRN9o8ggTBzK698ZxuVk"
+            API_KEY = os.environ.get("PERSPECTIVE_API_KEY")
 
             client = discovery.build(
                 "commentanalyzer",
@@ -1136,14 +1141,6 @@ class EntryView(LoginRequiredMixin, View):
                 ):
                     return True
             return False
-
-            if (
-                flagText(comm_form.data["cultural_interests"])
-                or flagText(comm_form.data["economic_interests"])
-                or flagText(comm_form.data["comm_activities"])
-                or flagText(comm_form.data["other_considerations"])
-            ):
-                comm_form.data["private"] = True
 
         comm_form.data._mutable = False
         # print("post editing of ids")
@@ -1245,8 +1242,23 @@ class EntryView(LoginRequiredMixin, View):
             del finalres["admin_approved"]
 
             string_to_hash = str(finalres)
-            print("finalres")
+            print("finalres: ")
             print(finalres)
+
+            if (
+                flagText(comm_form.data["entry_name"])
+                or flagText(comm_form.data["user_name"])
+                or flagText(comm_form.data["cultural_interests"]+" ")
+                or flagText(comm_form.data["economic_interests"]+" ")
+                or flagText(comm_form.data["comm_activities"]+" ")
+                or flagText(comm_form.data["other_considerations"]+" ")
+            ):
+                link = reverse(
+                    "admin:main_communityentry_change", args=[finalres["entry_ID"]]
+                )  # model name has to be lowercase
+                # ltc = format_html('<a href="{}">{}</a>', link, comm_form.data["entry_name"])
+                Report.objects.create(community_id = finalres["id"], email = "AUTOMATIC PROFANITY CHECKER")
+                print(finalres["entry_ID"]+" failed!")
 
             addres = dict()
             if addr_form.is_valid():
