@@ -82,7 +82,7 @@ from ..models import (
     GlossaryDefinition,
     Report,
 )
-from .. admin import (
+from ..admin import (
     ReportAdmin,
 )
 from django.utils.html import format_html
@@ -1197,6 +1197,17 @@ class EntryView(LoginRequiredMixin, View):
             entryForm.state_obj = State.objects.get(
                 abbr=self.kwargs["abbr"].upper()
             )
+            if (
+                flagText(comm_form.data["entry_name"])
+                or flagText(comm_form.data["user_name"])
+                or flagText(comm_form.data["cultural_interests"] + " ")
+                or flagText(comm_form.data["economic_interests"] + " ")
+                or flagText(comm_form.data["comm_activities"] + " ")
+                or flagText(comm_form.data["other_considerations"] + " ")
+            ):
+                entryForm.admin_approved = False
+            else:
+                entryForm.admin_approved = True
             if entryForm.organization:
                 if (
                     self.request.user.is_org_admin(entryForm.organization.id)
@@ -1245,20 +1256,25 @@ class EntryView(LoginRequiredMixin, View):
             print("finalres: ")
             print(finalres)
 
+
             if (
                 flagText(comm_form.data["entry_name"])
                 or flagText(comm_form.data["user_name"])
-                or flagText(comm_form.data["cultural_interests"]+" ")
-                or flagText(comm_form.data["economic_interests"]+" ")
-                or flagText(comm_form.data["comm_activities"]+" ")
-                or flagText(comm_form.data["other_considerations"]+" ")
+                or flagText(comm_form.data["cultural_interests"] + " ")
+                or flagText(comm_form.data["economic_interests"] + " ")
+                or flagText(comm_form.data["comm_activities"] + " ")
+                or flagText(comm_form.data["other_considerations"] + " ")
             ):
                 link = reverse(
-                    "admin:main_communityentry_change", args=[finalres["entry_ID"]]
+                    "admin:main_communityentry_change",
+                    args=[finalres["entry_ID"]],
                 )  # model name has to be lowercase
                 # ltc = format_html('<a href="{}">{}</a>', link, comm_form.data["entry_name"])
-                Report.objects.create(community_id = finalres["id"], email = "AUTOMATIC PROFANITY CHECKER")
-                print(finalres["entry_ID"]+" failed!")
+                Report.objects.create(
+                    community_id=finalres["id"],
+                    email="AUTOMATIC PROFANITY CHECKER",
+                )
+                print(finalres["entry_ID"] + " failed!")
 
             addres = dict()
             if addr_form.is_valid():
