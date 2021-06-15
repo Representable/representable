@@ -615,7 +615,7 @@ class Submission(View):
                 context["verified"] = True
 
             elif(self.request.user.is_authenticated):
-                
+
                 user_email_confirmation = EmailConfirmationHMAC(
                     email_address=user_email_address
                 )
@@ -831,6 +831,7 @@ class Map(TemplateView):
             state_obj.submissions.all()
             .defer("census_blocks_polygon_array", "user_polygon")
             .prefetch_related("organization", "drive")
+            .order_by("-created_at")
         )
         # state map page --> drives in the state, entries without a drive but with a state
         drives = []
