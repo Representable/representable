@@ -156,56 +156,6 @@ function newBoundariesLayer(name) {
     }
   });
 
-  map.on('mousemove', name + '-fills', function(e) {
-    addPopupHover(e, name);
-    if (e.features.length > 0) {
-      if (hoveredStateId !== null) {
-        map.setFeatureState(
-          { source: name,
-            sourceLayer: 
-              "boundaries_" +
-              BOUNDARIES_ABBREV[removeLastChar(name)] +
-              "_" +
-              name.slice(-1),
-            id: hoveredStateId },
-          { hover: false }
-        );
-      }
-      hoveredStateId = e.features[0].id;
-      map.setFeatureState(
-        { source: name,
-          sourceLayer: 
-            "boundaries_" +
-            BOUNDARIES_ABBREV[removeLastChar(name)] +
-            "_" +
-            name.slice(-1),
-          id: hoveredStateId },
-        { hover: true }
-      );
-    }
-  });
-
-  map.on('mouseleave', name + '-fills', function(e) {
-    popup.remove();
-    if (hoveredStateId !== null) {
-      map.setFeatureState(
-        { source: name,
-          sourceLayer: 
-            "boundaries_" +
-            BOUNDARIES_ABBREV[removeLastChar(name)] +
-            "_" +
-            name.slice(-1),
-          id: hoveredStateId },
-        { hover: false }
-      );
-    }
-    hoveredStateId = null;
-  });
-  
-  // map.on('click', function(e) {
-  //   identifyFeatures(e, name + '-points', ["name"])
-  // });
-
 }
 
 function sanitizePDF(x) {
@@ -242,7 +192,7 @@ map.on("load", function () {
   // TODO: change to fill
   // map.addLayer({
   //   id: "school-districts-fills",
-  //   type: "symbol",
+  //   type: "fill",
   //   source: "school-districts",
   //   "source-layer": "us_school_districts_points",
   //   layout: {
@@ -678,22 +628,75 @@ function addToggleableLayer(id, appendElement) {
 
     var visibility = map.getLayoutProperty(txt + "-lines", "visibility");
 
-    if (visibility === "visible") {
+    if (visibility === "visible") { // checked to unchecked
       map.setLayoutProperty(txt + "-lines", "visibility", "none");
       map.setLayoutProperty(txt + "-fills", "visibility", "none");
-    } else {
+      hoveredStateId = null;
+      popup.remove();
+    } else { // unchecked to checked
+
+      // remove all previous layers and popups from the map
+      for (var layerID in toggleableLayerIds) {
+       if (layerID != txt) {
+          map.setLayoutProperty(layerID + "-lines", "visibility", "none");
+          map.setLayoutProperty(txt + "-fills", "visibility", "none");
+          var button = document.getElementById(layerID);
+          button.checked = false;
+          hoveredStateId = null;
+          popup.remove();
+        }
+      }
+
+      // make new layer visible
       map.setLayoutProperty(txt + "-lines", "visibility", "visible");
       map.setLayoutProperty(txt + "-fills", "visibility", "visible");
 
-      // if (txt != "pos4" && txt != "sta5") {
-        for (var layerID in toggleableLayerIds) {
-          if (layerID != txt) {
-            map.setLayoutProperty(layerID + "-lines", "visibility", "none");
-            var button = document.getElementById(layerID);
-            button.checked = false;
+      // add popup and fill
+      map.on('mousemove', txt + '-fills', function(e) {
+        addPopupHover(e, txt);
+        if (e.features.length > 0) {
+          if (hoveredStateId !== null) {
+            map.setFeatureState(
+              { source: txt,
+                sourceLayer: 
+                  "boundaries_" +
+                  BOUNDARIES_ABBREV[removeLastChar(txt)] +
+                  "_" +
+                  txt.slice(-1),
+                id: hoveredStateId },
+              { hover: false }
+            );
           }
+          hoveredStateId = e.features[0].id;
+          map.setFeatureState(
+            { source: txt,
+              sourceLayer: 
+                "boundaries_" +
+                BOUNDARIES_ABBREV[removeLastChar(txt)] +
+                "_" +
+                txt.slice(-1),
+              id: hoveredStateId },
+            { hover: true }
+          );
         }
-      // }
+      });
+    
+      map.on('mouseleave', txt + '-fills', function(e) {
+        popup.remove();
+        if (hoveredStateId !== null) {
+          map.setFeatureState(
+            { source: txt,
+              sourceLayer: 
+                "boundaries_" +
+                BOUNDARIES_ABBREV[removeLastChar(txt)] +
+                "_" +
+                txt.slice(-1),
+              id: hoveredStateId },
+            { hover: false }
+          );
+        }
+        hoveredStateId = null;
+      });
     }
   };
   // in order to create the buttons
