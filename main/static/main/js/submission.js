@@ -173,14 +173,42 @@ map.on("load", function () {
   /****************************************************************************/
 
   // school districts as a data layer
+  //FIXME: display???
   newSourceLayer("school-districts", SCHOOL_DISTR_KEY);
   createLineLayer("school-districts-lines", "school-districts", "us_school_districts");
-  createFillLayer("school-districts-fills", "school-districts", "us_school_districts");
+  // createFillLayer("school-districts-fills", "school-districts", "us_school_districts");
+  // map.addLayer({
+  //   id: "school-districts-lines",
+  //   type: "line",
+  //   source: "school-districts",
+  //   "source-layer": "us_school_districts",
+  //   layout: {
+  //     visibility: "none",
+  //   },
+  //   paint: {
+  //     "line-color": "rgba(106,137,204,0.7)",
+  //     "line-width": 2,
+  //   },
+  // });
 
+  // FIXME: display???
   // tribal boundaries as a data layer
   newSourceLayer("tribal-boundaries", TRIBAL_BOUND_KEY);
   createLineLayer("tribal-boundaries-lines", "tribal-boundaries", "tl_2020_us_aiannh");
-  createFillLayer("tribal-boundaries-fills", "tribal-boundaries", "tl_2020_us_aiannh");
+  // map.addLayer({
+  //   id: "tribal-boundaries-lines",
+  //   type: "line",
+  //   source: "tribal-boundaries",
+  //   "source-layer": "tl_2020_us_aiannh", //-7f7uk7
+  //   layout: {
+  //     visibility: "none",
+  //   },
+  //   paint: {
+  //     "line-color": "rgba(106,137,204,0.7)",
+  //     "line-width": 2,
+  //   },
+  // });
+  // createFillLayer("tribal-boundaries-fills", "tribal-boundaries", "tl_2020_us_aiannh");
 
   // ward + community areas for IL
   if (state === "il") {
@@ -603,13 +631,7 @@ function addToggleableLayer(id, appendElement) {
     }
 
     if (visible != null && visible != "sta5") {
-      var sourceLayer = null;
-      if (visible === "leg2" || visible === "leg3" || visible === "leg4" || visible === "adm2" || visible === "pos4") {
-        sourceLayer = "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(visible)] + "_" + visible.slice(-1);
-      } else if (visible === "school-districts") {
-        sourceLayer = ""
-      }
-      sourceLayer = SOURCE_LAYER_NAMES[visible];
+      var sourceLayer = SOURCE_LAYER_NAMES[visible];
 
       map.on('mousemove', visible + '-fills', function(e) {
         if (FILL_MAP[visible]) {
