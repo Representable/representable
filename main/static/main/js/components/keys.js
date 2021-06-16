@@ -76,10 +76,10 @@ var SOURCE_LAYER_NAMES = {
   "sta5" : "boundaries_stats_5",
   "school-districts" : "us_school_districts_points",
   "tribal-boundaries" : "tl_2020_us_aiannh",
-  // "chi-ward" : 
-  // "chi-comm" : 
-  // "nyc-city-council" : 
-  // "nyc-state-assembly" : 
+  "chi-ward" : "chi_wards",
+  "chi-comm" : "chi_comm",
+  "nyc-city-council" : "nyc_council-08swp",
+  "nyc-state-assembly" : "nyc_state_assembly-5gr5zo"
 }
 
 var FILL_MAP = {

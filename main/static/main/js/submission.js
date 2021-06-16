@@ -114,7 +114,6 @@ function newBoundariesLayer(name) {
     type: "vector",
     url: "mapbox://mapbox.boundaries-" + name + "-v3",
   });
-  console.log(name);
   createLineLayer(name + "-lines", name, "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1));
   if (name !== "sta5") {
     createFillLayer(name + "-fills", name, "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1));
@@ -167,7 +166,6 @@ function createLineLayer(lineLayerName, source, sourceLayer) {
       "line-width": 3,
     },
   });
-  console.log(sourceLayer)
 }
 
 map.on("load", function () {
@@ -177,19 +175,6 @@ map.on("load", function () {
   // school districts as a data layer
   newSourceLayer("school-districts", SCHOOL_DISTR_KEY);
   createLineLayer("school-districts-lines", "school-districts", "us_school_districts");
-  // map.addLayer({
-  //   id: "school-districts-lines",
-  //   type: "line",
-  //   source: "school-districts",
-  //   "source-layer": "us_school_districts",
-  //   layout: {
-  //     visibility: "none",
-  //   },
-  //   paint: {
-  //     "line-color": "rgba(106,137,204,0.7)",
-  //     "line-width": 2,
-  //   },
-  // });
   createFillLayer("school-districts-fills", "school-districts", "us_school_districts");
 
   // tribal boundaries as a data layer
@@ -200,65 +185,15 @@ map.on("load", function () {
   // ward + community areas for IL
   if (state === "il") {
     newSourceLayer("chi_wards", CHI_WARD_KEY);
-    newSourceLayer("chi_comm", CHI_COMM_KEY);
-    // map.addLayer({
-    //   id: "chi-ward-lines",
-    //   type: "line",
-    //   source: "chi_wards",
-    //   "source-layer": "chi_wards",
-    //   layout: {
-    //     visibility: "none",
-    //   },
-    //   paint: {
-    //     "line-color": "rgba(106,137,204,0.7)",
-    //     "line-width": 2,
-    //   },
-    // });
     createLineLayer("chi-ward-lines", "chi_wards", "chi_wards");
     createFillLayer("chi-ward-fills", "chi_wards", "chi_wards");
-    
-    // map.addLayer({
-    //   id: "chi-comm-lines",
-    //   type: "line",
-    //   source: "chi_comm",
-    //   "source-layer": "chi_comm",
-    //   layout: {
-    //     visibility: "none",
-    //   },
-    //   paint: {
-    //     "line-color": "rgba(106,137,204,0.7)",
-    //     "line-width": 2,
-    //   },
-    // });
+
+    newSourceLayer("chi_comm", CHI_COMM_KEY);
     createLineLayer("chi-comm-lines", "chi_comm", "chi_comm");
     createFillLayer("chi-comm-fills", "chi_comm", "chi_comm");
-
-    // map.addLayer({
-    //   id: "chi-comm-labels",
-    //   type: "symbol",
-    //   source: "chi_comm",
-    //   "source-layer": "chi_comm",
-    //   layout: {
-    //     visibility: "none",
-    //     'text-field': ["get", "community"],
-    //   },
-    // });
   }
   if (state === "ny") {
     newSourceLayer("nyc-city-council", NYC_COUNCIL_KEY);
-    // map.addLayer({
-    //   id: "nyc-city-council-lines",
-    //   type: "line",
-    //   source: "nyc-city-council",
-    //   "source-layer": "nyc_council-08swpg",
-    //   layout: {
-    //     visibility: "none",
-    //   },
-    //   paint: {
-    //     "line-color": "rgba(106,137,204,0.7)",
-    //     "line-width": 2,
-    //   },
-    // });
     createLineLayer("nyc-city-council-lines", "nyc-city-council", "nyc_council-08swpg");
     createFillLayer("nyc-city-council-fills", "nyc-city-council", "nyc_council-08swpg");
 
@@ -608,14 +543,13 @@ function addToggleableLayer(id, appendElement) {
       popup.remove();
       visible = null;
     } else { // unchecked to checked
-      // remove all previous layers and popups from the map
       hoveredStateId = null;
       popup.remove();
 
       for (var layerID in toggleableLayerIds) {
        if (layerID != txt) {
           map.setLayoutProperty(layerID + "-lines", "visibility", "none");
-          if (FILL_MAP[txt]) {
+          if (FILL_MAP[layerID]) {
             map.setLayoutProperty(layerID + "-fills", "visibility", "none");
           }
           var button = document.getElementById(layerID);
