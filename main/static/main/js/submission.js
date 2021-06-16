@@ -56,7 +56,7 @@ if (!window.matchMedia("only screen and (max-width: 760px)").matches) {
 function newSourceLayer(name, mbCode) {
   map.addSource(name, {
     type: "vector",
-    url: "mapbox://mapbox." + mapbox_user_name + "." + mbCode,
+    url: "mapbox://" + mapbox_user_name + "." + mbCode,
   });
 }
 
@@ -116,7 +116,7 @@ function newBoundariesLayer(name) {
   });
   createLineLayer(name + "-lines", name, "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1));
   if (name !== "sta5") {
-    createFillLayer(name + "-fills", name, "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1));
+    createHoverLayer(name + "-fills", name, "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1));
   }
 }
 
@@ -131,7 +131,7 @@ function sanitizePDF(x) {
 
 var hoveredStateId = null;
 
-function createFillLayer(fillLayerName, source, sourceLayer) {
+function createHoverLayer(fillLayerName, source, sourceLayer) {
   map.addLayer({
     id: fillLayerName,
     type: "fill",
@@ -152,7 +152,7 @@ function createFillLayer(fillLayerName, source, sourceLayer) {
   });
 }
 
-function createLineLayer(lineLayerName, source, sourceLayer) {
+function createLineLayer(lineLayerName, source, sourceLayer, line_color="rgba(106,137,204,0.7)", line_width=3, line_opacity=1) {
   map.addLayer({
     id: lineLayerName,
     type: "line",
@@ -162,8 +162,26 @@ function createLineLayer(lineLayerName, source, sourceLayer) {
       visibility: "none",
     },
     paint: {
-      "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 3,
+      "line-color": line_color,
+      "line-width": line_width,
+      "line-opacity": line_opacity,
+    },
+  });
+}
+
+function createElectionLayer(layerName, source, sourceLayer) {
+  map.addLayer({
+    // copied from openprecincts colors
+    id: layerName,
+    type: "fill",
+    source: source,
+    "source-layer": sourceLayer,
+    layout: {
+      visibility: "none",
+    },
+    paint: {
+      "fill-outline-color": "rgb(0,0,0)",
+      "fill-opacity": 0.35,
     },
   });
 }
@@ -173,94 +191,40 @@ map.on("load", function () {
   /****************************************************************************/
 
   // school districts as a data layer
-  //FIXME: display???
   newSourceLayer("school-districts", SCHOOL_DISTR_KEY);
   createLineLayer("school-districts-lines", "school-districts", "us_school_districts");
-  // createFillLayer("school-districts-fills", "school-districts", "us_school_districts");
-  // map.addLayer({
-  //   id: "school-districts-lines",
-  //   type: "line",
-  //   source: "school-districts",
-  //   "source-layer": "us_school_districts",
-  //   layout: {
-  //     visibility: "none",
-  //   },
-  //   paint: {
-  //     "line-color": "rgba(106,137,204,0.7)",
-  //     "line-width": 2,
-  //   },
-  // });
+  createHoverLayer("school-districts-fills", "school-districts", "us_school_districts");
 
-  // FIXME: display???
   // tribal boundaries as a data layer
   newSourceLayer("tribal-boundaries", TRIBAL_BOUND_KEY);
   createLineLayer("tribal-boundaries-lines", "tribal-boundaries", "tl_2020_us_aiannh");
-  // map.addLayer({
-  //   id: "tribal-boundaries-lines",
-  //   type: "line",
-  //   source: "tribal-boundaries",
-  //   "source-layer": "tl_2020_us_aiannh", //-7f7uk7
-  //   layout: {
-  //     visibility: "none",
-  //   },
-  //   paint: {
-  //     "line-color": "rgba(106,137,204,0.7)",
-  //     "line-width": 2,
-  //   },
-  // });
-  // createFillLayer("tribal-boundaries-fills", "tribal-boundaries", "tl_2020_us_aiannh");
+  createHoverLayer("tribal-boundaries-fills", "tribal-boundaries", "tl_2020_us_aiannh");
 
   // ward + community areas for IL
   if (state === "il") {
     newSourceLayer("chi_wards", CHI_WARD_KEY);
     createLineLayer("chi-ward-lines", "chi_wards", "chi_wards");
-    createFillLayer("chi-ward-fills", "chi_wards", "chi_wards");
+    createHoverLayer("chi-ward-fills", "chi_wards", "chi_wards");
 
     newSourceLayer("chi_comm", CHI_COMM_KEY);
     createLineLayer("chi-comm-lines", "chi_comm", "chi_comm");
-    createFillLayer("chi-comm-fills", "chi_comm", "chi_comm");
+    createHoverLayer("chi-comm-fills", "chi_comm", "chi_comm");
   }
   if (state === "ny") {
     newSourceLayer("nyc-city-council", NYC_COUNCIL_KEY);
     createLineLayer("nyc-city-council-lines", "nyc-city-council", "nyc_council-08swpg");
-    createFillLayer("nyc-city-council-fills", "nyc-city-council", "nyc_council-08swpg");
+    createHoverLayer("nyc-city-council-fills", "nyc-city-council", "nyc_council-08swpg");
 
     newSourceLayer("nyc-state-assembly", NYC_STATE_ASSEMBLY_KEY);
     createLineLayer("nyc-state-assembly-lines", "nyc-state-assembly", "nyc_state_assembly-5gr5zo");
-    createFillLayer("nyc-state-assembly-fills", "nyc-state-assembly", "nyc_state_assembly-5gr5zo");
+    createHoverLayer("nyc-state-assembly-fills", "nyc-state-assembly", "nyc_state_assembly-5gr5zo");
   }
 
   // add precinct lines and fill
   if (HAS_PRECINCTS.indexOf(state) != -1) {
     newSourceLayer("smaller_combined_precincts", PRECINCTS_KEY);
-    map.addLayer({
-      id: "smaller_combined_precincts-lines",
-      type: "line",
-      source: "smaller_combined_precincts",
-      "source-layer": "smaller_combined_precincts",
-      layout: {
-        visibility: "none",
-      },
-      paint: {
-        "line-color": BOUNDARIES_COLORS["nyc"],
-        "line-opacity": 0.7,
-        "line-width": 2,
-      },
-    });
-    map.addLayer({
-      // copied from openprecincts colors
-      id: "smaller_combined_precincts-fill",
-      type: "fill",
-      source: "smaller_combined_precincts",
-      "source-layer": "smaller_combined_precincts",
-      layout: {
-        visibility: "none",
-      },
-      paint: {
-        "fill-outline-color": "rgb(0,0,0)",
-        "fill-opacity": 0.35,
-      },
-    });
+    createLineLayer("smaller_combined_precincts-lines", "smaller_combined_precincts", "smaller_combined_precincts", line_color=BOUNDARIES_COLORS["nyc"], line_width=2, line_opacity=0.7)
+    createElectionLayer("smaller_combined_precincts-fill", "smaller_combined_precincts", "smaller_combined_precincts");
   }
 
   // leg2 : congressional district
