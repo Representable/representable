@@ -1,5 +1,7 @@
 $(document).ready(function () {});
 
+var visible = null;
+
 // if thanks page, show modal
 if (is_thanks === "True") {
   $("#thanksModal").modal("show");
@@ -65,9 +67,10 @@ var popup = new mapboxgl.Popup({
 
 
 function getPopupText(featureID, name) {
-  console.log(featureID);
   if (name === "adm2") {
-    return ADM2[featureID]["name"];
+    let data = ADM2[featureID];
+    let key = data["state_code"];
+    return ADM2[featureID]["name"] + " County, " + STATE_ANSI[key]["abbrev"];
   }
   if (name === "leg2") {
     let data = LEG2[featureID];
@@ -90,14 +93,14 @@ function getPopupText(featureID, name) {
 }
 
 
-function addPopupHover(location, name) {
-  var identifiedFeatures = map.queryRenderedFeatures(location.point, name + "-fills");
+function addPopupHover(location, txt) {
+  var identifiedFeatures = map.queryRenderedFeatures(location.point, txt + "-fills");
   popup.remove();
   if (identifiedFeatures != '') {
     var featureID = identifiedFeatures[0].id;
-    // query name by feature ID in lookup table
+    // query txt by feature ID in lookup table
     if (featureID !== undefined) {
-      var popupText = getPopupText(featureID, name);
+      var popupText = getPopupText(featureID, txt);
       popup.setLngLat(location.lngLat)
         .setHTML(popupText)
         .addTo(map);
@@ -105,57 +108,17 @@ function addPopupHover(location, name) {
   }
 }
 
-
-
 // add a new mapbox boundaries source + layer
 function newBoundariesLayer(name) {
   map.addSource(name, {
     type: "vector",
     url: "mapbox://mapbox.boundaries-" + name + "-v3",
   });
-
-  map.addLayer({
-    id: name + "-lines",
-    type: "line",
-    source: name,
-    "source-layer":
-      "boundaries_" +
-      BOUNDARIES_ABBREV[removeLastChar(name)] +
-      "_" +
-      name.slice(-1),
-    layout: {
-      visibility: "none",
-    },
-    paint: {
-      "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 3,
-    },
-  });
-
-  map.addLayer({
-    id: name + "-fills",
-    type: "fill",
-    source: name,
-    // "source-layer": SOURCE_LAYERS[name],
-    "source-layer":
-      "boundaries_" +
-      BOUNDARIES_ABBREV[removeLastChar(name)] +
-      "_" +
-      name.slice(-1),
-    layout: {
-      visibility: "none"
-    },
-    'paint': {
-      'fill-color': 'rgba(106,137,204,0.7)',
-      'fill-opacity': [
-        'case',
-        ['boolean', ['feature-state', 'hover'], false],
-        0.5,
-        0
-      ]
-    }
-  });
-
+  console.log(name);
+  createLineLayer(name + "-lines", name, "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1));
+  if (name !== "sta5") {
+    createFillLayer(name + "-fills", name, "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1));
+  }
 }
 
 function sanitizePDF(x) {
@@ -169,97 +132,107 @@ function sanitizePDF(x) {
 
 var hoveredStateId = null;
 
+function createFillLayer(fillLayerName, source, sourceLayer) {
+  map.addLayer({
+    id: fillLayerName,
+    type: "fill",
+    source: source,
+    "source-layer": sourceLayer,
+    layout: {
+      visibility: "none"
+    },
+    'paint': {
+      'fill-color': 'rgba(106,137,204,0.7)',
+      'fill-opacity': [
+        'case',
+        ['boolean', ['feature-state', 'hover'], false],
+        0.5,
+        0
+      ]
+    }
+  });
+}
+
+function createLineLayer(lineLayerName, source, sourceLayer) {
+  map.addLayer({
+    id: lineLayerName,
+    type: "line",
+    source: source,
+    "source-layer": sourceLayer,
+    layout: {
+      visibility: "none",
+    },
+    paint: {
+      "line-color": "rgba(106,137,204,0.7)",
+      "line-width": 3,
+    },
+  });
+  console.log(sourceLayer)
+}
+
 map.on("load", function () {
 
   /****************************************************************************/
 
   // school districts as a data layer
   newSourceLayer("school-districts", SCHOOL_DISTR_KEY);
-  map.addLayer({
-    id: "school-districts-lines",
-    type: "line",
-    source: "school-districts",
-    "source-layer": "us_school_districts",
-    layout: {
-      visibility: "none",
-    },
-    paint: {
-      "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 2,
-    },
-  });
-
-  // TODO: change to fill
+  createLineLayer("school-districts-lines", "school-districts", "us_school_districts");
   // map.addLayer({
-  //   id: "school-districts-fills",
-  //   type: "fill",
+  //   id: "school-districts-lines",
+  //   type: "line",
   //   source: "school-districts",
-  //   "source-layer": "us_school_districts_points",
+  //   "source-layer": "us_school_districts",
   //   layout: {
   //     visibility: "none",
-  //     'text-field': ["get", "name"],
+  //   },
+  //   paint: {
+  //     "line-color": "rgba(106,137,204,0.7)",
+  //     "line-width": 2,
   //   },
   // });
+  createFillLayer("school-districts-fills", "school-districts", "us_school_districts");
 
   // tribal boundaries as a data layer
   newSourceLayer("tribal-boundaries", TRIBAL_BOUND_KEY);
-  map.addLayer({
-    id: "tribal-boundaries-lines",
-    type: "line",
-    source: "tribal-boundaries",
-    "source-layer": "tl_2020_us_aiannh", //-7f7uk7
-    layout: {
-      visibility: "none",
-    },
-    paint: {
-      "line-color": "rgba(106,137,204,0.7)",
-      "line-width": 2,
-    },
-  });
+  createLineLayer("tribal-boundaries-lines", "tribal-boundaries", "tl_2020_us_aiannh");
+  createFillLayer("tribal-boundaries-fills", "tribal-boundaries", "tl_2020_us_aiannh");
+
   // ward + community areas for IL
   if (state === "il") {
     newSourceLayer("chi_wards", CHI_WARD_KEY);
     newSourceLayer("chi_comm", CHI_COMM_KEY);
-    map.addLayer({
-      id: "chi-ward-lines",
-      type: "line",
-      source: "chi_wards",
-      "source-layer": "chi_wards",
-      layout: {
-        visibility: "none",
-      },
-      paint: {
-        "line-color": "rgba(106,137,204,0.7)",
-        "line-width": 2,
-      },
-    });
-  // TODO: change to fill
     // map.addLayer({
-    //   id: "chi-ward-labels",
-    //   type: "symbol",
+    //   id: "chi-ward-lines",
+    //   type: "line",
     //   source: "chi_wards",
     //   "source-layer": "chi_wards",
     //   layout: {
     //     visibility: "none",
-    //     'text-field': ["get", "ward"],
+    //   },
+    //   paint: {
+    //     "line-color": "rgba(106,137,204,0.7)",
+    //     "line-width": 2,
     //   },
     // });
+    createLineLayer("chi-ward-lines", "chi_wards", "chi_wards");
+    createFillLayer("chi-ward-fills", "chi_wards", "chi_wards");
+    
+    // map.addLayer({
+    //   id: "chi-comm-lines",
+    //   type: "line",
+    //   source: "chi_comm",
+    //   "source-layer": "chi_comm",
+    //   layout: {
+    //     visibility: "none",
+    //   },
+    //   paint: {
+    //     "line-color": "rgba(106,137,204,0.7)",
+    //     "line-width": 2,
+    //   },
+    // });
+    createLineLayer("chi-comm-lines", "chi_comm", "chi_comm");
+    createFillLayer("chi-comm-fills", "chi_comm", "chi_comm");
 
-    map.addLayer({
-      id: "chi-comm-lines",
-      type: "line",
-      source: "chi_comm",
-      "source-layer": "chi_comm",
-      layout: {
-        visibility: "none",
-      },
-      paint: {
-        "line-color": "rgba(106,137,204,0.7)",
-        "line-width": 2,
-      },
-    });
-
-  // TODO: change to fill
     // map.addLayer({
     //   id: "chi-comm-labels",
     //   type: "symbol",
@@ -273,34 +246,25 @@ map.on("load", function () {
   }
   if (state === "ny") {
     newSourceLayer("nyc-city-council", NYC_COUNCIL_KEY);
-    map.addLayer({
-      id: "nyc-city-council-lines",
-      type: "line",
-      source: "nyc-city-council",
-      "source-layer": "nyc_council-08swpg",
-      layout: {
-        visibility: "none",
-      },
-      paint: {
-        "line-color": "rgba(106,137,204,0.7)",
-        "line-width": 2,
-      },
-    });
+    // map.addLayer({
+    //   id: "nyc-city-council-lines",
+    //   type: "line",
+    //   source: "nyc-city-council",
+    //   "source-layer": "nyc_council-08swpg",
+    //   layout: {
+    //     visibility: "none",
+    //   },
+    //   paint: {
+    //     "line-color": "rgba(106,137,204,0.7)",
+    //     "line-width": 2,
+    //   },
+    // });
+    createLineLayer("nyc-city-council-lines", "nyc-city-council", "nyc_council-08swpg");
+    createFillLayer("nyc-city-council-fills", "nyc-city-council", "nyc_council-08swpg");
+
     newSourceLayer("nyc-state-assembly", NYC_STATE_ASSEMBLY_KEY);
-    map.addLayer({
-      id: "nyc-state-assembly-lines",
-      type: "line",
-      source: "nyc-state-assembly",
-      "source-layer": "nyc_state_assembly-5gr5zo",
-      layout: {
-        visibility: "none",
-      },
-      paint: {
-        "line-color": "rgba(106,137,204,0.7)",
-        "line-width": 2,
-      },
-    });
-    // TODO: add fills for state assembly and city council (?)
+    createLineLayer("nyc-state-assembly-lines", "nyc-state-assembly", "nyc_state_assembly-5gr5zo");
+    createFillLayer("nyc-state-assembly-fills", "nyc-state-assembly", "nyc_state_assembly-5gr5zo");
   }
   // leg2 : congressional district
   // leg3 : state senate district
@@ -312,7 +276,7 @@ map.on("load", function () {
   for (var key in BOUNDARIES_LAYERS) {
     newBoundariesLayer(key);
   }
-
+  
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
   var dest = [];
@@ -610,6 +574,16 @@ for (var id in toggleableLayerIds) {
   count++;
 }
 
+function updateFeatureState(source, sourceLayer, hoveredStateId, hover) {
+  map.setFeatureState(
+    { source: source,
+      sourceLayer: 
+        sourceLayer,
+      id: hoveredStateId },
+    { hover: hover }
+  );
+}
+
 function addToggleableLayer(id, appendElement) {
   var link = document.createElement("input");
 
@@ -621,83 +595,72 @@ function addToggleableLayer(id, appendElement) {
 
   link.onchange = function (e) {
     var txt = this.id;
-    // var clickedLayers = [];
-    // clickedLayers.push(txt + "-lines");
     e.preventDefault();
     e.stopPropagation();
 
     var visibility = map.getLayoutProperty(txt + "-lines", "visibility");
-
     if (visibility === "visible") { // checked to unchecked
       map.setLayoutProperty(txt + "-lines", "visibility", "none");
-      map.setLayoutProperty(txt + "-fills", "visibility", "none");
+      if (FILL_MAP[txt]) {
+        map.setLayoutProperty(txt + "-fills", "visibility", "none");
+      }
       hoveredStateId = null;
       popup.remove();
+      visible = null;
     } else { // unchecked to checked
-
       // remove all previous layers and popups from the map
+      hoveredStateId = null;
+      popup.remove();
+
       for (var layerID in toggleableLayerIds) {
        if (layerID != txt) {
           map.setLayoutProperty(layerID + "-lines", "visibility", "none");
-          map.setLayoutProperty(txt + "-fills", "visibility", "none");
+          if (FILL_MAP[txt]) {
+            map.setLayoutProperty(layerID + "-fills", "visibility", "none");
+          }
           var button = document.getElementById(layerID);
           button.checked = false;
-          hoveredStateId = null;
-          popup.remove();
         }
       }
-
-      // make new layer visible
       map.setLayoutProperty(txt + "-lines", "visibility", "visible");
-      map.setLayoutProperty(txt + "-fills", "visibility", "visible");
+      if (FILL_MAP[txt]) {
+        map.setLayoutProperty(txt + "-fills", "visibility", "visible");
+        visible = txt;
+      }
+      
+    }
 
-      // add popup and fill
-      map.on('mousemove', txt + '-fills', function(e) {
-        addPopupHover(e, txt);
-        if (e.features.length > 0) {
-          if (hoveredStateId !== null) {
-            map.setFeatureState(
-              { source: txt,
-                sourceLayer: 
-                  "boundaries_" +
-                  BOUNDARIES_ABBREV[removeLastChar(txt)] +
-                  "_" +
-                  txt.slice(-1),
-                id: hoveredStateId },
-              { hover: false }
-            );
+    if (visible != null && visible != "sta5") {
+      var sourceLayer = null;
+      if (visible === "leg2" || visible === "leg3" || visible === "leg4" || visible === "adm2" || visible === "pos4") {
+        sourceLayer = "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(visible)] + "_" + visible.slice(-1);
+      } else if (visible === "school-districts") {
+        sourceLayer = ""
+      }
+      sourceLayer = SOURCE_LAYER_NAMES[visible];
+
+      map.on('mousemove', visible + '-fills', function(e) {
+        if (FILL_MAP[visible]) {
+          addPopupHover(e, visible);
+          if (e.features.length > 0) {
+            if (hoveredStateId !== null) {
+              updateFeatureState(visible, sourceLayer, hoveredStateId, false);
+            }
+            hoveredStateId = e.features[0].id;
+            updateFeatureState(visible, sourceLayer, hoveredStateId, true);
           }
-          hoveredStateId = e.features[0].id;
-          map.setFeatureState(
-            { source: txt,
-              sourceLayer: 
-                "boundaries_" +
-                BOUNDARIES_ABBREV[removeLastChar(txt)] +
-                "_" +
-                txt.slice(-1),
-              id: hoveredStateId },
-            { hover: true }
-          );
         }
       });
     
-      map.on('mouseleave', txt + '-fills', function(e) {
+      map.on('mouseleave', visible + '-fills', function(e) {
         popup.remove();
         if (hoveredStateId !== null) {
-          map.setFeatureState(
-            { source: txt,
-              sourceLayer: 
-                "boundaries_" +
-                BOUNDARIES_ABBREV[removeLastChar(txt)] +
-                "_" +
-                txt.slice(-1),
-              id: hoveredStateId },
-            { hover: false }
-          );
+          updateFeatureState(visible, sourceLayer, hoveredStateId, false);
         }
         hoveredStateId = null;
       });
     }
+
   };
   // in order to create the buttons
   var div = document.createElement("div");

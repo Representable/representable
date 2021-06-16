@@ -1,15 +1,9 @@
 ## we want to only get "feature_id", "name", and "names"
 
 # run using:
-## cd main/static/main/feature-lookup-tables
+# cd main/static/main/feature-lookup-tables
 
-## python lookup-table-scraper.py 
-##   mapbox-boundaries-adm2-v3_2.json 
-##   mapbox-boundaries-leg2-v3_2.json 
-##   mapbox-boundaries-leg3-v3_2.json 
-##   mapbox-boundaries-leg4-v3_2.json 
-##   mapbox-boundaries-pos4-v3_2.json
-
+# python lookup-table-scraper.py mapbox-boundaries-adm2-v3_2.json mapbox-boundaries-leg2-v3_2.json mapbox-boundaries-leg3-v3_2.json mapbox-boundaries-leg4-v3_2.json mapbox-boundaries-pos4-v3_2.json
 
 import argparse
 import json
@@ -28,8 +22,7 @@ def scrape(fn, identifier):
     for fe in features:
         feature_data = data[identifier]["data"]["all"][fe]  ## get data for one feature
         if identifier == "adm2":
-            length = len(feature_data["names"]["en"])
-            selected_data = {"name": feature_data["names"]["en"][length - 1]}
+            selected_data = {"name": feature_data["name"], "state_code": first2(feature_data["unit_code"])}
         elif identifier == "leg2":
             selected_data = {"name": feature_data["name"], "state_code": first2(feature_data["unit_code"])}
         elif identifier == "leg3":

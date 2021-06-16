@@ -66,3 +66,33 @@ var NYC_COUNCIL_KEY = "8igk12p1";
 var NYC_STATE_ASSEMBLY_KEY = "61wjirls";
 
 var STATES_USING_OLD_UNITS = ["il", "ok"];
+
+var SOURCE_LAYER_NAMES = {
+  "leg2" : "boundaries_legislative_2",
+  "leg3" : "boundaries_legislative_3",
+  "leg4" : "boundaries_legislative_4",
+  "adm2" : "boundaries_admin_2",
+  "pos4" : "boundaries_postal_4",
+  "sta5" : "boundaries_stats_5",
+  "school-districts" : "us_school_districts_points",
+  "tribal-boundaries" : "tl_2020_us_aiannh",
+  // "chi-ward" : 
+  // "chi-comm" : 
+  // "nyc-city-council" : 
+  // "nyc-state-assembly" : 
+}
+
+var FILL_MAP = {
+  "leg2" : true,
+  "leg3" : true,
+  "leg4" : true,
+  "adm2" : true,
+  "pos4" : true,
+  "sta5" : false,
+  "school-districts" : false,
+  "tribal-boundaries" : false,
+  "chi-ward" : false,
+  "chi-comm" : false,
+  "nyc-city-council" : false,
+  "nyc-state-assembly" : false
+}
