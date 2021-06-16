@@ -20,7 +20,7 @@
             <form id="account-confirm-form" method="post" action="{% url 'account_confirm_email' confirmation.key %}">
             {% csrf_token %}
                 <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">{% trans "Finish Sign Up" %}</button>
-                <p class="card-text text-center my-3 align-text-bottom"><i class="fas fa-lock m-1 text-primary"></i>Making an account helps us protect legitimate submissions.</p>
+                <p class="card-text text-center my-3 align-text-bottom"><i class="fas fa-lock m-1 text-primary"></i>{% trans "Making an account helps us protect legitimate submissions." %}</p>
             </form>
 
             {% else %}
@@ -28,7 +28,7 @@
             
             {% url 'account_email' as email_url %}
 
-            <p>{% blocktrans %}This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url }}">issue a new e-mail confirmation request</a>.{% endblocktrans %}</p>
+            <p>{% blocktrans trimmed %}This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url }}">issue a new e-mail confirmation request</a>.{% endblocktrans %}</p>
             {% endif %}
           </div>
         </div>

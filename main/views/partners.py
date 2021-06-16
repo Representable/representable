@@ -87,12 +87,13 @@ class PartnerMap(TemplateView):
                 raise Http404
             query = drive.submissions.all().defer(
                 "census_blocks_polygon_array", "user_polygon",
-            ).prefetch_related("organization")
+            ).prefetch_related("organization").order_by("-created_at")
+
         else:
             drive = None
             query = org.submissions.all().defer(
                 "census_blocks_polygon_array", "user_polygon"
-            ).prefetch_related("drive")
+            ).prefetch_related("drive").order_by("-created_at")
 
         # address information if admin/user drew the comms
         streets = {}
@@ -325,7 +326,7 @@ class ReportView(View):
     def post(self, request, **kwargs):
         cid = request.POST["cid"]
         email = request.POST["email"]
-        is_org_admin = request.POST["is_org_admin"]
+        is_org_admin = request.POST["is_org_admin"].replace("/", "")
 
         org_slug = request.POST["org_slug"].replace("/", "")
         drive_slug = request.POST["drive_slug"].replace("/", "")

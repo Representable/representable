@@ -175,5 +175,6 @@ let publicCommentLinks = {
   'nj': 'http://www.apportionmentcommission.org/ContactUs.asp',
   'ok': 'https://www.okhouse.gov/Publications/RedistrictingContacts.aspx',
   'tx': 'https://senate.texas.gov/redistrictingcomment/',
+  'wa': 'https://www.redistricting.wa.gov/submit-public-testimony',
   'wi': 'https://appengine.egov.com/apps/wi/peoplesmaps/writtencomment',
 }
