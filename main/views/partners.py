@@ -98,6 +98,8 @@ class PartnerMap(TemplateView):
         streets = {}
         cities = {}
         for obj in query:
+            if not is_admin and not obj.admin_approved:
+                continue
             if not obj.census_blocks_polygon and obj.user_polygon:
                 s = "".join(obj.user_polygon.geojson)
             elif obj.census_blocks_polygon:
