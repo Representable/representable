@@ -118,6 +118,8 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                             <span class="font-weight-light comm-content">
                               <span class="more-content">
                                 <span class="small">
+                                  <span class="text-muted">{{ c.created_at|date:"DATE_FORMAT" }}</span>
+                                  <br>
                                   {% if c.population > 0 %}
                                   <b>Population:</b> {{ c.population }}
                                   <br>

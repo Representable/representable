@@ -83,6 +83,9 @@ function newBoundariesLayer(name) {
       }
     }
   );
+
+  // TODO: insert label code here
+
 }
 
 var community_bounds = {};
@@ -120,6 +123,8 @@ map.on("load", function () {
       },
     }
   );
+  // TODO: insert label code here
+
   // tribal boundaries as a data layer
   newSourceLayer("tribal-boundaries", TRIBAL_BOUND_KEY);
   map.addLayer({
@@ -156,6 +161,8 @@ map.on("load", function () {
         },
       }
     );
+    // TODO: insert label code here
+
     map.addLayer(
       {
         id: "chi-comm-lines",
@@ -172,6 +179,8 @@ map.on("load", function () {
         },
       }
     );
+    // TODO: insert label code here
+
   }
   if (state === "ny") {
     newSourceLayer("nyc-city-council", NYC_COUNCIL_KEY);
