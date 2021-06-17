@@ -869,7 +869,7 @@ class Map(TemplateView):
         authenticated = self.request.user.is_authenticated
         # get the polygon from db and pass it on to html
         for obj in query:
-            if obj.private or (obj.organization and not obj.admin_approved):
+            if obj.private or (not obj.admin_approved):
                 continue
             if (
                 obj.census_blocks_polygon == ""
