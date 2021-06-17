@@ -77,7 +77,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                 </div>
               </div>
             </div>
-            <div class="items"> 
+            <div class="items">
               <div id="headingThree">
                 <button id="buttonThree" class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#coisCollapse"
                 aria-expanded="true" aria-controls="coisCollapse" style="width: 100%">
@@ -97,8 +97,8 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                   <div id="map-cois">
                     {% for c in communities %}
                      {% if not c.private %}
-                     <!-- this has to be nested because django template language doesn't accept parentheticals -->
-                      {% if c.drive and c.admin_approved or not c.drive %}
+                     <!-- all communities that aren't admin approved will be hidden (fails profanity check) -->
+                      {% if c.admin_approved %}
                         <div class="row community-review-span py-3 px-3" id="{{c.entry_ID}}">
                           <div class="col-8 col-xl-10">
                             <span class="text-uppercase entry-name">
@@ -118,6 +118,8 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                             <span class="font-weight-light comm-content">
                               <span class="more-content">
                                 <span class="small">
+                                  <span class="text-muted">{{ c.created_at|date:"DATE_FORMAT" }}</span>
+                                  <br>
                                   {% if c.population > 0 %}
                                   <b>Population:</b> {{ c.population }}
                                   <br>

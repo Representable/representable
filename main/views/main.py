@@ -80,7 +80,12 @@ from ..models import (
     CensusBlock,
     FrequentlyAskedQuestion,
     GlossaryDefinition,
+    Report,
 )
+from ..admin import (
+    ReportAdmin,
+)
+from django.utils.html import format_html
 from ..choices import STATES
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
@@ -119,6 +124,9 @@ import pandas as pd
 
 from django.conf import settings
 
+import ssl
+
+
 
 # ******************************************************************************#
 
@@ -129,6 +137,9 @@ from django.contrib.gis.geos import GEOSGeometry
 
 
 # ******************************************************************************#
+
+from googleapiclient import discovery
+
 
 # custom mixin redirects to signup page/tab rather than login
 class SignupRequiredMixin(AccessMixin):
@@ -485,6 +496,7 @@ def SendPlainEmail(request):
     email.send()
     return HttpResponse("Sent")
 
+
 class Submission(View):
     template_name = "main/submission.html"
 
@@ -505,16 +517,22 @@ class Submission(View):
             else:
                 state = user_map.state
 
-        show_form = self.should_show_form(state=state, entryid=m_uuid, auth=self.request.user.is_authenticated)
+        show_form = self.should_show_form(
+            state=state,
+            entryid=m_uuid,
+            auth=self.request.user.is_authenticated,
+        )
         # print(show_form, form_info)
 
-        if(show_form == True):
+        if show_form:
             form = SubmissionAddDrive(request.POST)
             form.upd(state=state.upper())
             if form.is_valid():
                 # print('form is valid', m_uuid, form.cleaned_data['Add a new drive'])
                 try:
-                    d = Drive.objects.get(id=form.cleaned_data['Add a new drive'])
+                    d = Drive.objects.get(
+                        id=form.cleaned_data["Add a new drive"]
+                    )
                     o = d.organization
                     c = CommunityEntry.objects.get(entry_ID=m_uuid)
                     c.drive = d
@@ -523,7 +541,7 @@ class Submission(View):
                     c.save()
                     # print('success')
                 except Exception as e:
-                    print('fail', e)
+                    print("fail", e)
 
         return HttpResponseRedirect(request.path)
 
@@ -614,8 +632,7 @@ class Submission(View):
             ):
                 context["verified"] = True
 
-            elif(self.request.user.is_authenticated):
-                
+            elif self.request.user.is_authenticated:
                 user_email_confirmation = EmailConfirmationHMAC(
                     email_address=user_email_address
                 )
@@ -642,15 +659,20 @@ class Submission(View):
         #                 self.request.user == user_map.user
         #             )
         #             comm.user_name = user_map.user_name
-        show_form = self.should_show_form(state=context['state'], entryid=context['map_id'], auth=self.request.user.is_authenticated)
-        context['show_form'] = show_form
-        if(show_form == True):
-            context['form'] = SubmissionAddDrive()
-            state = State.objects.filter(abbr=context['state'].upper())
-            context['form_empty'] = len(state[0].get_drives()) == 0
-            context['form'].upd(state=context['state'].upper())
+        show_form = self.should_show_form(
+            state=context["state"],
+            entryid=context["map_id"],
+            auth=self.request.user.is_authenticated,
+        )
+        context["show_form"] = show_form
+        if show_form:
+            context["form"] = SubmissionAddDrive()
+            state = State.objects.filter(abbr=context["state"].upper())
+            context["form_empty"] = len(state[0].get_drives()) == 0
+            context["form"].upd(state=context["state"].upper())
 
         return render(request, self.template_name, context)
+
     def should_show_form(self, state, entryid, auth):
         """
         Req: state = a potential state field, map_id = a potential CommEntryID, auth = whether user is authenticated
@@ -666,15 +688,15 @@ class Submission(View):
             * context['state'] exists and is a valid state
             * community was created by the user who is signed in
         """
-        if(not auth):
+        if not auth:
             return False
         try:
             entry = CommunityEntry.objects.get(entry_ID=entryid)
         except:
             return False
-        if(entry.drive != None):
+        if entry.drive is not None:
             return False
-        if(entry.user != self.request.user):
+        if entry.user != self.request.user:
             return False
         try:
             Address.objects.get(entry=entry)
@@ -685,6 +707,7 @@ class Submission(View):
         except:
             return False
         return True
+
 
 def make_geojson(request, entry):
     map_geojson = serialize(
@@ -707,9 +730,13 @@ def make_geojson(request, entry):
     user_map = entry
     # iterate over block_groups or census_blocks in order to get array of IDs
     if user_map.block_groups.exists():
-        gj["features"][0]["properties"]["block_group_ids"] = [bg.census_id for bg in user_map.block_groups.all()]
+        gj["features"][0]["properties"]["block_group_ids"] = [
+            bg.census_id for bg in user_map.block_groups.all()
+        ]
     elif user_map.census_blocks.exists():
-        gj["features"][0]["properties"]["census_block_ids"] = [block.census_id for block in user_map.census_blocks.all()]
+        gj["features"][0]["properties"]["census_block_ids"] = [
+            block.census_id for block in user_map.census_blocks.all()
+        ]
     # include organization and drive submitted to, if so
     if user_map.organization:
         gj["features"][0]["properties"][
@@ -755,9 +782,13 @@ def make_geojson_for_state_map_page(request, entry):
     user_map = entry
     # iterate over block_groups or census_blocks in order to get array of IDs
     if user_map.block_groups.exists():
-        gj["features"][0]["properties"]["block_group_ids"] = [bg.census_id for bg in user_map.block_groups.all()]
+        gj["features"][0]["properties"]["block_group_ids"] = [
+            bg.census_id for bg in user_map.block_groups.all()
+        ]
     elif user_map.census_blocks.exists():
-        gj["features"][0]["properties"]["census_block_ids"] = [block.census_id for block in user_map.census_blocks.all()]
+        gj["features"][0]["properties"]["census_block_ids"] = [
+            block.census_id for block in user_map.census_blocks.all()
+        ]
     # include organization and drive submitted to, if so
     if user_map.organization:
         gj["features"][0]["properties"][
@@ -831,13 +862,14 @@ class Map(TemplateView):
             state_obj.submissions.all()
             .defer("census_blocks_polygon_array", "user_polygon")
             .prefetch_related("organization", "drive")
+            .order_by("-created_at")
         )
         # state map page --> drives in the state, entries without a drive but with a state
         drives = []
         authenticated = self.request.user.is_authenticated
         # get the polygon from db and pass it on to html
         for obj in query:
-            if obj.private or (obj.organization and not obj.admin_approved):
+            if obj.private or (not obj.admin_approved):
                 continue
             if (
                 obj.census_blocks_polygon == ""
@@ -992,7 +1024,9 @@ class EntryView(LoginRequiredMixin, View):
             except:
                 raise Http404
             if abbr.upper() != drive.state:
-                return redirect("/entry/drive/" + drive.slug + "/" + drive.state.lower())
+                return redirect(
+                    "/entry/drive/" + drive.slug + "/" + drive.state.lower()
+                )
 
             drive_name = drive.name
             drive_id = drive.id
@@ -1035,7 +1069,7 @@ class EntryView(LoginRequiredMixin, View):
             "state": abbr,
             "address_required": address_required,
             "state_obj": State.objects.get(abbr=abbr.upper()),
-            "page_type": "entry" # For the base template to check and remove footer
+            "page_type": "entry",  # For the base template to check and remove footer
         }
         return render(request, self.template_name, context)
 
@@ -1056,7 +1090,9 @@ class EntryView(LoginRequiredMixin, View):
             year = 2010
         if len(census_blocks[0]) > 0:
             comm_form.data["census_blocks"] = [
-                CensusBlock.objects.get_or_create(census_id=block, year=year)[0].id
+                CensusBlock.objects.get_or_create(census_id=block, year=year)[
+                    0
+                ].id
                 for block in census_blocks
             ]
         else:
@@ -1064,6 +1100,51 @@ class EntryView(LoginRequiredMixin, View):
                 BlockGroup.objects.get_or_create(census_id=bg, year=year)[0].id
                 for bg in block_groups
             ]
+
+        def flagText(text):
+            API_KEY = os.environ.get("PERSPECTIVE_API_KEY")
+
+            client = discovery.build(
+                "commentanalyzer",
+                "v1alpha1",
+                developerKey=API_KEY,
+                discoveryServiceUrl="https://commentanalyzer.googleapis.com/$discovery/rest?version=v1alpha1",
+                static_discovery=False,
+            )
+
+            # API uses many different metrics to get toxicity. these were the best i found, and i closely
+            # experimented with good thresholds for tolerance. changing these values changes the entire filter
+            # note that IDENTITY_ATTACK is quite low, leading to some false-positives. however, any higher
+            # value for that leads to some false-negatives, especially if people try to game the system with
+            # special characters
+            attributeThresholds = [
+                ("TOXICITY", 0.75),
+                ("IDENTITY_ATTACK", 0.4),
+                ("INSULT", 0.5),
+                ("PROFANITY", 0.75),
+                ("THREAT", 0.9),
+            ]
+
+            for attributeThreshold in attributeThresholds:
+                attribute = attributeThreshold[0]
+                threshold = attributeThreshold[1]
+                analyze_request = {
+                    "comment": {"text": text},
+                    "languages": ["en"],
+                    "requestedAttributes": {attributeThreshold[0]: {}},
+                }
+                response = (
+                    client.comments().analyze(body=analyze_request).execute()
+                )
+                if (
+                    response["attributeScores"][attribute]["summaryScore"][
+                        "value"
+                    ]
+                    >= threshold
+                ):
+                    return True
+            return False
+
         comm_form.data._mutable = False
         # print("post editing of ids")
         # print(comm_form.is_valid())
@@ -1081,7 +1162,9 @@ class EntryView(LoginRequiredMixin, View):
             data = data.encode("ascii")
 
             req = urllib.request.Request(url, data)
-            response = urlopen(req)
+            gcontext = ssl.SSLContext()
+            response = urlopen(req, context=gcontext)
+            # response = urlopen(req)
             result = json.load(response)
             """ End reCAPTCHA validation """
             if not result["success"]:
@@ -1119,6 +1202,17 @@ class EntryView(LoginRequiredMixin, View):
             entryForm.state_obj = State.objects.get(
                 abbr=self.kwargs["abbr"].upper()
             )
+            if (
+                flagText(comm_form.data["entry_name"])
+                or flagText(comm_form.data["user_name"])
+                or flagText(comm_form.data["cultural_interests"] + " ")
+                or flagText(comm_form.data["economic_interests"] + " ")
+                or flagText(comm_form.data["comm_activities"] + " ")
+                or flagText(comm_form.data["other_considerations"] + " ")
+            ):
+                entryForm.admin_approved = False
+            else:
+                entryForm.admin_approved = True
             if entryForm.organization:
                 if (
                     self.request.user.is_org_admin(entryForm.organization.id)
@@ -1164,8 +1258,28 @@ class EntryView(LoginRequiredMixin, View):
             del finalres["admin_approved"]
 
             string_to_hash = str(finalres)
-            print("finalres")
+            print("finalres: ")
             print(finalres)
+
+
+            if (
+                flagText(comm_form.data["entry_name"])
+                or flagText(comm_form.data["user_name"])
+                or flagText(comm_form.data["cultural_interests"] + " ")
+                or flagText(comm_form.data["economic_interests"] + " ")
+                or flagText(comm_form.data["comm_activities"] + " ")
+                or flagText(comm_form.data["other_considerations"] + " ")
+            ):
+                link = reverse(
+                    "admin:main_communityentry_change",
+                    args=[finalres["entry_ID"]],
+                )  # model name has to be lowercase
+                # ltc = format_html('<a href="{}">{}</a>', link, comm_form.data["entry_name"])
+                Report.objects.create(
+                    community_id=finalres["id"],
+                    email="AUTOMATIC PROFANITY CHECKER",
+                )
+                print(finalres["entry_ID"] + " failed!")
 
             addres = dict()
             if addr_form.is_valid():
@@ -1219,17 +1333,20 @@ class EntryView(LoginRequiredMixin, View):
 
 # ******************************************************************************#
 
+
 class MultiExportView(TemplateView):
     template = "main/export.html"
 
     def post(self, request, *args, **kwargs):
         if not self.request.user.is_authenticated:
-            return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+            return HttpResponseRedirect(
+                "%s?next=%s" % (settings.LOGIN_URL, request.path)
+            )
         state = self.kwargs["abbr"]
-        cois = set(json.loads(request.POST['cois']))
+        cois = set(json.loads(request.POST["cois"]))
         state_obj = State.objects.get(abbr=state.upper())
 
-        if 'all' not in cois:
+        if "all" not in cois:
             query = (
                 state_obj.submissions.filter(entry_ID__in=cois)
                 .defer("census_blocks_polygon_array", "user_polygon")
