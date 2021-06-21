@@ -556,12 +556,16 @@ class Submission(View):
         # query will have length 1 or database is invalid
         user_map = query[0]
 
+        # THIS IS ALL FOR TESTING - TODO: DELETE
         gj = make_geojson(request, user_map)
         print("-----block groups in geojson------")
-        print(gj["properties"]["block_group_ids"])
+        print(gj["properties"]["census_block_ids"])
         print("---data---")
         data = dict()
-        data['BLOCKID'] = gj['properties']['block_group_ids']
+        if 'block_group_ids' in gj['properties']:
+            data['BLOCKID'] = gj['properties']['block_group_ids']
+        else:
+            data['BLOCKID'] = gj['properties']['census_block_ids']
         data['DISTRICT'] = [0] * len(data['BLOCKID'])
         print(data)
         comm_csv = pd.DataFrame(data).to_csv(index=False)
@@ -845,7 +849,10 @@ class ExportView(TemplateView):
         if "csv" in request.path:
             # this is the new code -- turns geojson into csv for export
             data = dict()
-            data['BLOCKID'] = gj['properties']['block_group_ids']
+            if 'block_group_ids' in gj['properties']:
+                data['BLOCKID'] = gj['properties']['block_group_ids']
+            else:
+                data['BLOCKID'] = gj['properties']['census_block_ids']
             data['DISTRICT'] = [0] * len(data['BLOCKID'])
             comm_csv = pd.DataFrame(data).to_csv(index=False)
             response = HttpResponse(comm_csv, content_type="text/csv")
@@ -1095,8 +1102,6 @@ class EntryView(LoginRequiredMixin, View):
         # parse block groups and add to field
         comm_form.data._mutable = True
         block_groups = comm_form.data["block_groups"].split(",")
-        print("------block groups------")
-        print(block_groups)
         census_blocks = comm_form.data["census_blocks"].split(",")
         # get the year of census units being used -- use for get_or_create function
         state = self.kwargs["abbr"].lower()
@@ -1113,8 +1118,6 @@ class EntryView(LoginRequiredMixin, View):
                 BlockGroup.objects.get_or_create(census_id=bg, year=year)[0].id
                 for bg in block_groups
             ]
-            print("data!")
-            print(comm_form.data["block_groups"])
 
         def flagText(text):
             API_KEY = os.environ.get("PERSPECTIVE_API_KEY")
@@ -1161,12 +1164,7 @@ class EntryView(LoginRequiredMixin, View):
             return False
 
         comm_form.data._mutable = False
-        # print("post editing of ids")
-        # print(comm_form.is_valid())
-        # print(comm_form.errors)
-        # print(type(comm_form.data["block_groups"]))
         if comm_form.is_valid():
-            print("is this working?")
             recaptcha_response = request.POST.get("g-recaptcha-response")
             url = "https://www.google.com/recaptcha/api/siteverify"
             values = {
