@@ -294,11 +294,16 @@ class MultiExportView(TemplateView):
             print('********', 'csv', '********')
             dictform = json.loads(geojson.dumps(final))
             df = pandas.DataFrame()
-            for entry in dictform['features']:
-                row_dict = entry['properties'].copy()
-                row_dict['geometry'] = str(entry['geometry'])
-                df = df.append(row_dict, ignore_index=True)
-            response = HttpResponse(df.to_csv(), content_type="text/csv")
+            for i, entry in enumerate(dictform["features"]):
+                row_dict = dict()
+                if 'block_group_ids' in entry['properties']:
+                    row_dict['BLOCKID'] = entry['properties']['block_group_ids']
+                else:
+                    row_dict['BLOCKID'] = entry['properties']['census_block_ids']
+                row_dict['DISTRICT'] = [i] * len(row_dict['BLOCKID'])
+                df = df.append(pandas.DataFrame(row_dict))
+                print(df)
+            response = HttpResponse(df.to_csv(index=False), content_type="text/csv")
 
         return response
 

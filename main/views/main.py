@@ -559,7 +559,7 @@ class Submission(View):
         # THIS IS ALL FOR TESTING - TODO: DELETE
         gj = make_geojson(request, user_map)
         print("-----block groups in geojson------")
-        print(gj["properties"]["census_block_ids"])
+        # print(gj["properties"]["census_block_ids"])
         print("---data---")
         data = dict()
         if 'block_group_ids' in gj['properties']:
@@ -1392,13 +1392,18 @@ class MultiExportView(TemplateView):
                 geojson.dumps(final), content_type="application/json"
             )
         else:
-            print("********", "csv", "********")
+            print('********', 'csv', '********')
             dictform = json.loads(geojson.dumps(final))
             df = pd.DataFrame()
-            for entry in dictform["features"]:
-                row_dict = entry["properties"].copy()
-                row_dict["geometry"] = str(entry["geometry"])
-                df = df.append(row_dict, ignore_index=True)
-            response = HttpResponse(df.to_csv(), content_type="text/csv")
+            for i, entry in enumerate(dictform["features"]):
+                row_dict = dict()
+                if 'block_group_ids' in entry['properties']:
+                    row_dict['BLOCKID'] = entry['properties']['block_group_ids']
+                else:
+                    row_dict['BLOCKID'] = entry['properties']['census_block_ids']
+                row_dict['DISTRICT'] = [i] * len(row_dict['BLOCKID'])
+                df = df.append(pd.DataFrame(row_dict))
+                print(df)
+            response = HttpResponse(df.to_csv(index=False), content_type="text/csv")
 
         return response
