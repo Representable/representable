@@ -556,6 +556,17 @@ class Submission(View):
         # query will have length 1 or database is invalid
         user_map = query[0]
 
+        gj = make_geojson(request, user_map)
+        print("-----block groups in geojson------")
+        print(gj["properties"]["block_group_ids"])
+        print("---data---")
+        data = dict()
+        data['BLOCKID'] = gj['properties']['block_group_ids']
+        data['DISTRICT'] = [0] * len(data['BLOCKID'])
+        print(data)
+        comm_csv = pd.DataFrame(data).to_csv(index=False)
+        print(comm_csv)
+
         if user_map.drive:
             folder_name = query[0].drive.slug
             # has_state = False
@@ -833,8 +844,10 @@ class ExportView(TemplateView):
         gs = geojson.dumps(gj)
         if "csv" in request.path:
             # this is the new code -- turns geojson into csv for export
-            df = pd.json_normalize(gj)
-            comm_csv = df.to_csv()
+            data = dict()
+            data['BLOCKID'] = gj['properties']['block_group_ids']
+            data['DISTRICT'] = [0] * len(data['BLOCKID'])
+            comm_csv = pd.DataFrame(data).to_csv(index=False)
             response = HttpResponse(comm_csv, content_type="text/csv")
         else:
             response = HttpResponse(gs, content_type="application/json")
@@ -1082,6 +1095,8 @@ class EntryView(LoginRequiredMixin, View):
         # parse block groups and add to field
         comm_form.data._mutable = True
         block_groups = comm_form.data["block_groups"].split(",")
+        print("------block groups------")
+        print(block_groups)
         census_blocks = comm_form.data["census_blocks"].split(",")
         # get the year of census units being used -- use for get_or_create function
         state = self.kwargs["abbr"].lower()
@@ -1090,9 +1105,7 @@ class EntryView(LoginRequiredMixin, View):
             year = 2010
         if len(census_blocks[0]) > 0:
             comm_form.data["census_blocks"] = [
-                CensusBlock.objects.get_or_create(census_id=block, year=year)[
-                    0
-                ].id
+                CensusBlock.objects.get_or_create(census_id=block, year=year)[0].id
                 for block in census_blocks
             ]
         else:
@@ -1100,6 +1113,8 @@ class EntryView(LoginRequiredMixin, View):
                 BlockGroup.objects.get_or_create(census_id=bg, year=year)[0].id
                 for bg in block_groups
             ]
+            print("data!")
+            print(comm_form.data["block_groups"])
 
         def flagText(text):
             API_KEY = os.environ.get("PERSPECTIVE_API_KEY")
