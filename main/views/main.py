@@ -556,21 +556,6 @@ class Submission(View):
         # query will have length 1 or database is invalid
         user_map = query[0]
 
-        # THIS IS ALL FOR TESTING - TODO: DELETE
-        gj = make_geojson(request, user_map)
-        print("-----block groups in geojson------")
-        # print(gj["properties"]["census_block_ids"])
-        print("---data---")
-        data = dict()
-        if 'block_group_ids' in gj['properties']:
-            data['BLOCKID'] = gj['properties']['block_group_ids']
-        else:
-            data['BLOCKID'] = gj['properties']['census_block_ids']
-        data['DISTRICT'] = [0] * len(data['BLOCKID'])
-        print(data)
-        comm_csv = pd.DataFrame(data).to_csv(index=False)
-        print(comm_csv)
-
         if user_map.drive:
             folder_name = query[0].drive.slug
             # has_state = False
@@ -1403,7 +1388,6 @@ class MultiExportView(TemplateView):
                     row_dict['BLOCKID'] = entry['properties']['census_block_ids']
                 row_dict['DISTRICT'] = [i] * len(row_dict['BLOCKID'])
                 df = df.append(pd.DataFrame(row_dict))
-                print(df)
             response = HttpResponse(df.to_csv(index=False), content_type="text/csv")
 
         return response

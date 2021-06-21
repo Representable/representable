@@ -302,7 +302,6 @@ class MultiExportView(TemplateView):
                     row_dict['BLOCKID'] = entry['properties']['census_block_ids']
                 row_dict['DISTRICT'] = [i] * len(row_dict['BLOCKID'])
                 df = df.append(pandas.DataFrame(row_dict))
-                print(df)
             response = HttpResponse(df.to_csv(index=False), content_type="text/csv")
 
         return response
