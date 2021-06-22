@@ -4,41 +4,10 @@
 /*------------------------------------------------------------------------*/
 
 
-/*------------------------------------------------------------------------*/
-/* JS file from mapbox site -- display a polygon */
-/* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
-var map = new mapboxgl.Map({
-    container: "map", // container id
-    style: "mapbox://styles/districter-team/ckdfv8riy0uf51hqu1g7qjrha", //color of the map -- dark-v10 or light-v9
-    center: [-96.7026, 40.8136], // starting position - Lincoln, Nebraska (middle of country lol)
-    zoom: 3, // starting zoom -- higher is closer
-    preserveDrawingBuffer: true,
-});
-  
-// geocoder used for a search bar -- within the map itself
-var geocoder = new MapboxGeocoder({
-    accessToken: mapboxgl.accessToken,
-    country: "us",
-    mapboxgl: mapboxgl,
-});
-map.addControl(geocoder, "top-right");
 
-map.addControl(
-    new mapboxgl.GeolocateControl({
-        positionOptions: {
-            enableHighAccuracy: true,
-        },
-        trackUserLocation: true,
-    })
-);
-
-// Only add zoom buttons to medium and large screen devices (non-mobile)
-if (!window.matchMedia("only screen and (max-width: 760px)").matches) {
-    map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
-}
 
 // add a new source layer
-function newSourceLayer(name, mbCode) {
+function newSourceLayer(map, name, mbCode) {
     map.addSource(name, {
       type: "vector",
       url: "mapbox://" + mapbox_user_name + "." + mbCode,
@@ -77,7 +46,7 @@ function getPopupText(featureID, name) {
 }
   
   
-function addPopupHover(location, txt) {
+function addPopupHover(map, location, txt) {
     var identifiedFeatures = map.queryRenderedFeatures(location.point, txt + "-fills");
     popup.remove();
     if (identifiedFeatures != '') {
@@ -93,20 +62,20 @@ function addPopupHover(location, txt) {
 }
   
 // add a new mapbox boundaries source + layer
-function newBoundariesLayer(name) {
+function newBoundariesLayer(map, name) {
     map.addSource(name, {
       type: "vector",
       url: "mapbox://mapbox.boundaries-" + name + "-v3",
     });
-    createLineLayer(name + "-lines", name, "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1));
+    createLineLayer(map, name + "-lines", name, "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1));
     if (name !== "sta5") {
-      createHoverLayer(name + "-fills", name, "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1));
+      createHoverLayer(map, name + "-fills", name, "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1));
     }
 }
 
 var hoveredStateId = null;
 
-function createHoverLayer(fillLayerName, source, sourceLayer) {
+function createHoverLayer(map, fillLayerName, source, sourceLayer) {
   map.addLayer({
     id: fillLayerName,
     type: "fill",
@@ -127,7 +96,7 @@ function createHoverLayer(fillLayerName, source, sourceLayer) {
   });
 }
 
-function createLineLayer(lineLayerName, source, sourceLayer, line_color="rgba(106,137,204,0.7)", line_width=3, line_opacity=1) {
+function createLineLayer(map, lineLayerName, source, sourceLayer, line_color="rgba(106,137,204,0.7)", line_width=3, line_opacity=1) {
   map.addLayer({
     id: lineLayerName,
     type: "line",
@@ -144,7 +113,7 @@ function createLineLayer(lineLayerName, source, sourceLayer, line_color="rgba(10
   });
 }
 
-function createElectionLayer(layerName, source, sourceLayer) {
+function createElectionLayer(map, layerName, source, sourceLayer) {
   map.addLayer({
     // copied from openprecincts colors
     id: layerName,
@@ -161,46 +130,47 @@ function createElectionLayer(layerName, source, sourceLayer) {
   });
 }
 
-function addAllLayers() {
+function addAllLayers(map, document, pageName) {
     // school districts as a data layer
-    newSourceLayer("school-districts", SCHOOL_DISTR_KEY);
-    createLineLayer("school-districts-lines", "school-districts", "us_school_districts");
-    createHoverLayer("school-districts-fills", "school-districts", "us_school_districts");
+    newSourceLayer(map, "school-districts", SCHOOL_DISTR_KEY);
+    createLineLayer(map, "school-districts-lines", "school-districts", "us_school_districts");
+    createHoverLayer(map, "school-districts-fills", "school-districts", "us_school_districts");
 
     // tribal boundaries as a data layer
-    newSourceLayer("tribal-boundaries", TRIBAL_BOUND_KEY);
-    createLineLayer("tribal-boundaries-lines", "tribal-boundaries", "tl_2020_us_aiannh");
-    createHoverLayer("tribal-boundaries-fills", "tribal-boundaries", "tl_2020_us_aiannh");
+    newSourceLayer(map, "tribal-boundaries", TRIBAL_BOUND_KEY);
+    createLineLayer(map, "tribal-boundaries-lines", "tribal-boundaries", "tl_2020_us_aiannh");
+    createHoverLayer(map, "tribal-boundaries-fills", "tribal-boundaries", "tl_2020_us_aiannh");
 
     // ward + community areas for IL
     if (state === "il") {
-        newSourceLayer("chi_wards", CHI_WARD_KEY);
-        createLineLayer("chi-ward-lines", "chi_wards", "chi_wards");
-        createHoverLayer("chi-ward-fills", "chi_wards", "chi_wards");
+        newSourceLayer(map, "chi_wards", CHI_WARD_KEY);
+        createLineLayer(map, "chi-ward-lines", "chi_wards", "chi_wards");
+        createHoverLayer(map, "chi-ward-fills", "chi_wards", "chi_wards");
 
-        newSourceLayer("chi_comm", CHI_COMM_KEY);
-        createLineLayer("chi-comm-lines", "chi_comm", "chi_comm");
-        createHoverLayer("chi-comm-fills", "chi_comm", "chi_comm");
+        newSourceLayer(map, "chi_comm", CHI_COMM_KEY);
+        createLineLayer(map, "chi-comm-lines", "chi_comm", "chi_comm");
+        createHoverLayer(map, "chi-comm-fills", "chi_comm", "chi_comm");
     }
     if (state === "ny") {
-        newSourceLayer("nyc-city-council", NYC_COUNCIL_KEY);
-        createLineLayer("nyc-city-council-lines", "nyc-city-council", "nyc_council-08swpg");
-        createHoverLayer("nyc-city-council-fills", "nyc-city-council", "nyc_council-08swpg");
+        newSourceLayer(map, "nyc-city-council", NYC_COUNCIL_KEY);
+        createLineLayer(map, "nyc-city-council-lines", "nyc-city-council", "nyc_council-08swpg");
+        createHoverLayer(map, "nyc-city-council-fills", "nyc-city-council", "nyc_council-08swpg");
 
-        newSourceLayer("nyc-state-assembly", NYC_STATE_ASSEMBLY_KEY);
-        createLineLayer("nyc-state-assembly-lines", "nyc-state-assembly", "nyc_state_assembly-5gr5zo");
-        createHoverLayer("nyc-state-assembly-fills", "nyc-state-assembly", "nyc_state_assembly-5gr5zo");
+        newSourceLayer(map, "nyc-state-assembly", NYC_STATE_ASSEMBLY_KEY);
+        createLineLayer(map, "nyc-state-assembly-lines", "nyc-state-assembly", "nyc_state_assembly-5gr5zo");
+        createHoverLayer(map, "nyc-state-assembly-fills", "nyc-state-assembly", "nyc_state_assembly-5gr5zo");
     }
 
     // add precinct lines and fill
     if (HAS_PRECINCTS.indexOf(state) != -1) {
-        newSourceLayer("smaller_combined_precincts", PRECINCTS_KEY);
-        createLineLayer("smaller_combined_precincts-lines", "smaller_combined_precincts", "smaller_combined_precincts", line_color=BOUNDARIES_COLORS["nyc"], line_width=2, line_opacity=0.7)
-        createElectionLayer("smaller_combined_precincts-fill", "smaller_combined_precincts", "smaller_combined_precincts");
-    } else {
+        newSourceLayer(map, "smaller_combined_precincts", PRECINCTS_KEY);
+        createLineLayer(map, "smaller_combined_precincts-lines", "smaller_combined_precincts", "smaller_combined_precincts", line_color=BOUNDARIES_COLORS["nyc"], line_width=2, line_opacity=0.7)
+        createElectionLayer(map, "smaller_combined_precincts-fill", "smaller_combined_precincts", "smaller_combined_precincts");
+    } else if (pageName === "map") {
         var txt_box = document.getElementById("no-election-text");
         txt_box.innerHTML = "<b>Election data is not yet available for this state.</b>"
     }
+    
 
     // leg2 : congressional district
     // leg3 : state senate district
@@ -210,13 +180,13 @@ function addAllLayers() {
     // pos4 : 5-digit postcode area
     // sta5 : block groups
     for (var key in BOUNDARIES_LAYERS) {
-        newBoundariesLayer(key);
+        newBoundariesLayer(map, key);
     }
 }
 
 
-
-function addElectionSwitches(pageName, document) {
+// TODO: based on client page, put switches in one or two columns
+function addDataSwitches(map, pageName, document) {
     // Create toggle switches
     var layers = document.getElementById("outline-menu");
     var addContainer = document.createElement("div");
@@ -233,104 +203,102 @@ function addElectionSwitches(pageName, document) {
     addCol1.classList.add("col-12", "col-md-6", "m-0", "p-0");
     var addCol2 = document.createElement("div");
     addCol2.classList.add("col-12", "col-md-6", "m-0", "p-0");
-
     layersRow.appendChild(addCol1);
     layersRow.appendChild(addCol2);
-
+    
     var layersCol1 = layersRow.children[0];
     var layersCol2 = layersRow.children[1];
-
+    
     var count = 0;
     // Append the switches
     for (var id in toggleableLayerIds) {
-    if (count % 2 == 0) {
-        addToggleableLayer(id, layersCol1);
-    } else {
-        addToggleableLayer(id, layersCol2);
+        if (count % 2 == 0) {
+            addToggleableLayer(id, layersCol1);
+        } else {
+            addToggleableLayer(id, layersCol2);
+        }
+        count++;
     }
-    count++;
-    }
+    
 
     function updateFeatureState(source, sourceLayer, hoveredStateId, hover) {
-    map.setFeatureState(
-        { source: source,
-        sourceLayer: 
+        map.setFeatureState({ 
+            source: source,
+            sourceLayer: 
             sourceLayer,
-        id: hoveredStateId },
-        { hover: hover }
-    );
+            id: hoveredStateId },
+            { hover: hover }
+        );
     }
 
     function addToggleableLayer(id, appendElement) {
-    var link = document.createElement("input");
+        var link = document.createElement("input");
 
-    link.value = id;
-    link.id = id;
-    link.type = "checkbox";
-    link.className = "switch_1";
-    link.checked = false;
+        link.value = id;
+        link.id = id;
+        link.type = "checkbox";
+        link.className = "switch_1";
+        link.checked = false;
 
-    link.onchange = function (e) {
-        var txt = this.id;
-        e.preventDefault();
-        e.stopPropagation();
+        link.onchange = function (e) {
+            var txt = this.id;
+            e.preventDefault();
+            e.stopPropagation();
 
-        var visibility = map.getLayoutProperty(txt + "-lines", "visibility");
-        if (visibility === "visible") { // checked to unchecked
-        map.setLayoutProperty(txt + "-lines", "visibility", "none");
-        if (FILL_MAP[txt]) {
-            map.setLayoutProperty(txt + "-fills", "visibility", "none");
-        }
-        hoveredStateId = null;
-        popup.remove();
-        visible = null;
-        } else { // unchecked to checked
-        hoveredStateId = null;
-        popup.remove();
+            var visibility = map.getLayoutProperty(txt + "-lines", "visibility");
+            if (visibility === "visible") { // checked to unchecked
+                map.setLayoutProperty(txt + "-lines", "visibility", "none");
+                if (FILL_MAP[txt]) {
+                    map.setLayoutProperty(txt + "-fills", "visibility", "none");
+                }
+                hoveredStateId = null;
+                popup.remove();
+                visible = null;
+            } else { // unchecked to checked
+                hoveredStateId = null;
+                popup.remove();
 
-        for (var layerID in toggleableLayerIds) {
-        if (layerID != txt) {
-            map.setLayoutProperty(layerID + "-lines", "visibility", "none");
-            if (FILL_MAP[layerID]) {
-                map.setLayoutProperty(layerID + "-fills", "visibility", "none");
+                for (var layerID in toggleableLayerIds) {
+                if (layerID != txt) {
+                    map.setLayoutProperty(layerID + "-lines", "visibility", "none");
+                    if (FILL_MAP[layerID]) {
+                        map.setLayoutProperty(layerID + "-fills", "visibility", "none");
+                    }
+                    var button = document.getElementById(layerID);
+                    button.checked = false;
+                }
             }
-            var button = document.getElementById(layerID);
-            button.checked = false;
+            map.setLayoutProperty(txt + "-lines", "visibility", "visible");
+            if (FILL_MAP[txt]) {
+                map.setLayoutProperty(txt + "-fills", "visibility", "visible");
+                visible = txt;
             }
-        }
-        map.setLayoutProperty(txt + "-lines", "visibility", "visible");
-        if (FILL_MAP[txt]) {
-            map.setLayoutProperty(txt + "-fills", "visibility", "visible");
-            visible = txt;
-        }
-        
         }
 
         if (visible != null && visible != "sta5") {
-        var sourceLayer = SOURCE_LAYER_NAMES[visible];
+            var sourceLayer = SOURCE_LAYER_NAMES[visible];
 
-        map.on('mousemove', visible + '-fills', function(e) {
-            if (FILL_MAP[visible]) {
-            addPopupHover(e, visible);
-            if (e.features.length > 0) {
-                if (hoveredStateId !== null) {
-                updateFeatureState(visible, sourceLayer, hoveredStateId, false);
+            map.on('mousemove', visible + '-fills', function(e) {
+                if (FILL_MAP[visible]) {
+                    addPopupHover(map, e, visible);
+                    if (e.features.length > 0) {
+                        if (hoveredStateId !== null) {
+                            updateFeatureState(visible, sourceLayer, hoveredStateId, false);
+                        }
+                        hoveredStateId = e.features[0].id;
+                        updateFeatureState(visible, sourceLayer, hoveredStateId, true);
+                    }
                 }
-                hoveredStateId = e.features[0].id;
-                updateFeatureState(visible, sourceLayer, hoveredStateId, true);
-            }
-            }
-        });
-        
-        map.on('mouseleave', visible + '-fills', function(e) {
-            popup.remove();
-            if (hoveredStateId !== null) {
-            updateFeatureState(visible, sourceLayer, hoveredStateId, false);
-            }
-            hoveredStateId = null;
-        });
+            });
+            
+            map.on('mouseleave', visible + '-fills', function(e) {
+                popup.remove();
+                if (hoveredStateId !== null) {
+                    updateFeatureState(visible, sourceLayer, hoveredStateId, false);
+                }
+                hoveredStateId = null;
+            });
         }
-
     };
     // in order to create the buttons
     var div = document.createElement("div");
@@ -346,7 +314,30 @@ function addElectionSwitches(pageName, document) {
     }
 }
 
-function addDataSwitches(pageName, document) {
+function addElectionSwitches(map, pageName, document) {
     
 }
 
+function getToggleableLayerIds(state) {
+    var toggleableLayerIds = JSON.parse(JSON.stringify(BOUNDARIES_LAYERS));
+    toggleableLayerIds["school-districts"] = "School Districts";
+    toggleableLayerIds["tribal-boundaries"] = "2010 Census Tribal Boundaries";
+    // add selector for chicago wards + community areas if illinois
+    if (state === "il") {
+    toggleableLayerIds["chi-ward"] = "Chicago Wards";
+    toggleableLayerIds["chi-comm"] = "Chicago Community Areas";
+    }
+    if (state === "ny") {
+    toggleableLayerIds["nyc-city-council"] = "New York City Council districts";
+    toggleableLayerIds["nyc-state-assembly"] = "New York City state assembly districts";
+    }
+    if (HAS_PRECINCTS.indexOf(state) != -1) {
+    toggleableLayerIds["smaller_combined_precincts"] = "Precinct boundaries";
+    }
+    return toggleableLayerIds;
+}
+
+// remove the last char in the string
+function removeLastChar(str) {
+    return str.substring(0, str.length - 1);
+  }

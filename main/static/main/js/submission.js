@@ -20,37 +20,37 @@ function toggleAngle(e) {
 // /*------------------------------------------------------------------------*/
 // /* JS file from mapbox site -- display a polygon */
 // /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
-// var map = new mapboxgl.Map({
-//   container: "map", // container id
-//   style: "mapbox://styles/districter-team/ckdfv8riy0uf51hqu1g7qjrha", //color of the map -- dark-v10 or light-v9
-//   center: [-96.7026, 40.8136], // starting position - Lincoln, Nebraska (middle of country lol)
-//   zoom: 3, // starting zoom -- higher is closer
-//   preserveDrawingBuffer: true,
-// });
+var map = new mapboxgl.Map({
+  container: "map", // container id
+  style: "mapbox://styles/districter-team/ckdfv8riy0uf51hqu1g7qjrha", //color of the map -- dark-v10 or light-v9
+  center: [-96.7026, 40.8136], // starting position - Lincoln, Nebraska (middle of country lol)
+  zoom: 3, // starting zoom -- higher is closer
+  preserveDrawingBuffer: true,
+});
 
-// // geocoder used for a search bar -- within the map itself
-// var geocoder = new MapboxGeocoder({
-//   accessToken: mapboxgl.accessToken,
-//   country: "us",
-//   mapboxgl: mapboxgl,
-// });
-// map.addControl(geocoder, "top-right");
+// geocoder used for a search bar -- within the map itself
+var geocoder = new MapboxGeocoder({
+  accessToken: mapboxgl.accessToken,
+  country: "us",
+  mapboxgl: mapboxgl,
+});
+map.addControl(geocoder, "top-right");
 
 // Add geolocate control to the map. -- this zooms in on the user's current location when pressed
 // Q: is it too confusing ? like the symbol doesn't exactly tell you what it does
-// map.addControl(
-//   new mapboxgl.GeolocateControl({
-//     positionOptions: {
-//       enableHighAccuracy: true,
-//     },
-//     trackUserLocation: true,
-//   })
-// );
+map.addControl(
+  new mapboxgl.GeolocateControl({
+    positionOptions: {
+      enableHighAccuracy: true,
+    },
+    trackUserLocation: true,
+  })
+);
 
-// // Only add zoom buttons to medium and large screen devices (non-mobile)
-// if (!window.matchMedia("only screen and (max-width: 760px)").matches) {
-//   map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
-// }
+// Only add zoom buttons to medium and large screen devices (non-mobile)
+if (!window.matchMedia("only screen and (max-width: 760px)").matches) {
+  map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
+}
 
 // // add a new source layer
 // function newSourceLayer(name, mbCode) {
@@ -189,7 +189,7 @@ function sanitizePDF(x) {
 map.on("load", function () {
 
   /****************************************************************************/
-  addAllLayers();
+  addAllLayers(map, document, "submission");
   // // school districts as a data layer
   // newSourceLayer("school-districts", SCHOOL_DISTR_KEY);
   // createLineLayer("school-districts-lines", "school-districts", "us_school_districts");
@@ -488,24 +488,25 @@ map.on("load", function () {
 });
 
 //create a button that toggles layers based on their IDs
-var toggleableLayerIds = JSON.parse(JSON.stringify(BOUNDARIES_LAYERS));
-toggleableLayerIds["school-districts"] = "School Districts";
-toggleableLayerIds["tribal-boundaries"] = "2010 Census Tribal Boundaries";
-// add selector for chicago wards + community areas if illinois
-if (state === "il") {
-  toggleableLayerIds["chi-ward"] = "Chicago Wards";
-  toggleableLayerIds["chi-comm"] = "Chicago Community Areas";
-}
-if (state === "ny") {
-  toggleableLayerIds["nyc-city-council"] = "New York City Council districts";
-  toggleableLayerIds["nyc-state-assembly"] = "New York City state assembly districts";
-}
+// var toggleableLayerIds = JSON.parse(JSON.stringify(BOUNDARIES_LAYERS));
+// toggleableLayerIds["school-districts"] = "School Districts";
+// toggleableLayerIds["tribal-boundaries"] = "2010 Census Tribal Boundaries";
+// // add selector for chicago wards + community areas if illinois
+// if (state === "il") {
+//   toggleableLayerIds["chi-ward"] = "Chicago Wards";
+//   toggleableLayerIds["chi-comm"] = "Chicago Community Areas";
+// }
+// if (state === "ny") {
+//   toggleableLayerIds["nyc-city-council"] = "New York City Council districts";
+//   toggleableLayerIds["nyc-state-assembly"] = "New York City state assembly districts";
+// }
 
-if (HAS_PRECINCTS.indexOf(state) != -1) {
-  toggleableLayerIds["smaller_combined_precincts"] = "Precinct boundaries";
-}
+// if (HAS_PRECINCTS.indexOf(state) != -1) {
+//   toggleableLayerIds["smaller_combined_precincts"] = "Precinct boundaries";
+// }
 
-addDataSwitches("submission", document)
+var toggleableLayerIds = getToggleableLayerIds(state);
+addDataSwitches(map, "submission", document)
 // // Create toggle switches
 // var layers = document.getElementById("outline-menu");
 // var addContainer = document.createElement("div");
@@ -814,10 +815,10 @@ if (state in publicCommentLinks) {
   $('#public-comment-card').hide();
 }
 /****************************************************************************/
-// remove the last char in the string
-function removeLastChar(str) {
-  return str.substring(0, str.length - 1);
-}
+// // remove the last char in the string
+// function removeLastChar(str) {
+//   return str.substring(0, str.length - 1);
+// }
 
 // Links "What GeoJSON is?" Modal and download for GeoJSON into one event
 $("[data-toggle=modal]").on("click", function (e) {
