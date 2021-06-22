@@ -20,73 +20,73 @@
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
-var map = new mapboxgl.Map({
-  container: "map", // container id
-  style: "mapbox://styles/mapbox/light-v9", //color of the map -- dark-v10 or light-v9 or streets-v11
-  center: [-96.7026, 40.8136], // starting position - Lincoln, Nebraska (middle of country lol)
-  zoom: 3, // starting zoom -- higher is closer
-});
+// var map = new mapboxgl.Map({
+//   container: "map", // container id
+//   style: "mapbox://styles/mapbox/light-v9", //color of the map -- dark-v10 or light-v9 or streets-v11
+//   center: [-96.7026, 40.8136], // starting position - Lincoln, Nebraska (middle of country lol)
+//   zoom: 3, // starting zoom -- higher is closer
+// });
 
-// geocoder used for a search bar -- within the map itself
-var geocoder = new MapboxGeocoder({
-  accessToken: mapboxgl.accessToken,
-  country: "us",
-  mapboxgl: mapboxgl,
-});
-map.addControl(geocoder, "top-right");
+// // geocoder used for a search bar -- within the map itself
+// var geocoder = new MapboxGeocoder({
+//   accessToken: mapboxgl.accessToken,
+//   country: "us",
+//   mapboxgl: mapboxgl,
+// });
+// map.addControl(geocoder, "top-right");
 
 state = state.toLowerCase();
 
 // Add geolocate control to the map. -- this zooms in on the user's current location when pressed
 // Q: is it too confusing ? like the symbol doesn't exactly tell you what it does
-map.addControl(
-  new mapboxgl.GeolocateControl({
-    positionOptions: {
-      enableHighAccuracy: true,
-    },
-    trackUserLocation: true,
-  })
-);
+// map.addControl(
+//   new mapboxgl.GeolocateControl({
+//     positionOptions: {
+//       enableHighAccuracy: true,
+//     },
+//     trackUserLocation: true,
+//   })
+// );
 
-// Add zoom control for non-mobile devices
-if (!window.matchMedia("only screen and (max-width: 760px)").matches) {
-  map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
-}
+// // Add zoom control for non-mobile devices
+// if (!window.matchMedia("only screen and (max-width: 760px)").matches) {
+//   map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
+// }
 
-// add a new source layer
-function newSourceLayer(name, mbCode) {
-  map.addSource(name, {
-    type: "vector",
-    url: "mapbox://" + mapbox_user_name + "." + mbCode,
-  });
-}
+// // add a new source layer
+// function newSourceLayer(name, mbCode) {
+//   map.addSource(name, {
+//     type: "vector",
+//     url: "mapbox://" + mapbox_user_name + "." + mbCode,
+//   });
+// }
 
-// add a new mapbox boundaries source + layer
-function newBoundariesLayer(name) {
-  map.addSource(name, {
-    type: "vector",
-    url: "mapbox://mapbox.boundaries-" + name + "-v3"
-  });
-  map.addLayer(
-    {
-      id: name + "-lines",
-      type: "line",
-      source: name,
-      "source-layer": "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1),
-      layout: {
-        visibility: "none"
-      },
-      paint: {
-        "line-color": BOUNDARIES_COLORS[name],
-        "line-opacity": 0.7,
-        "line-width": 2,
-      }
-    }
-  );
+// // add a new mapbox boundaries source + layer
+// function newBoundariesLayer(name) {
+//   map.addSource(name, {
+//     type: "vector",
+//     url: "mapbox://mapbox.boundaries-" + name + "-v3"
+//   });
+//   map.addLayer(
+//     {
+//       id: name + "-lines",
+//       type: "line",
+//       source: name,
+//       "source-layer": "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1),
+//       layout: {
+//         visibility: "none"
+//       },
+//       paint: {
+//         "line-color": BOUNDARIES_COLORS[name],
+//         "line-opacity": 0.7,
+//         "line-width": 2,
+//       }
+//     }
+//   );
 
   // TODO: insert label code here
 
-}
+// }
 
 var community_bounds = {};
 var coidata;
@@ -105,164 +105,165 @@ map.on("load", function () {
   //   }
   // }
   /****************************************************************************/
-  // school districts as a data layer
-  newSourceLayer("school-districts", SCHOOL_DISTR_KEY);
-  map.addLayer(
-    {
-      id: "school-districts-lines",
-      type: "line",
-      source: "school-districts",
-      "source-layer": "us_school_districts",
-      layout: {
-        visibility: "none",
-      },
-      paint: {
-        "line-color": BOUNDARIES_COLORS["school"],
-        "line-opacity": 0.7,
-        "line-width": 2,
-      },
-    }
-  );
-  // TODO: insert label code here
+  // // school districts as a data layer
+  // newSourceLayer("school-districts", SCHOOL_DISTR_KEY);
+  // map.addLayer(
+  //   {
+  //     id: "school-districts-lines",
+  //     type: "line",
+  //     source: "school-districts",
+  //     "source-layer": "us_school_districts",
+  //     layout: {
+  //       visibility: "none",
+  //     },
+  //     paint: {
+  //       "line-color": BOUNDARIES_COLORS["school"],
+  //       "line-opacity": 0.7,
+  //       "line-width": 2,
+  //     },
+  //   }
+  // );
+  // // TODO: insert label code here
 
-  // tribal boundaries as a data layer
-  newSourceLayer("tribal-boundaries", TRIBAL_BOUND_KEY);
-  map.addLayer({
-    id: "tribal-boundaries-lines",
-    type: "line",
-    source: "tribal-boundaries",
-    "source-layer": "tl_2020_us_aiannh", //-7f7uk7
-    layout: {
-      visibility: "none",
-    },
-    paint: {
-      "line-color": BOUNDARIES_COLORS["tribal"],
-      "line-opacity": 0.7,
-      "line-width": 2,
-    },
-  });
-  // ward + community areas for IL
-  if (state === "il") {
-    newSourceLayer("chi_wards", CHI_WARD_KEY);
-    newSourceLayer("chi_comm", CHI_COMM_KEY);
-    map.addLayer(
-      {
-        id: "chi-ward-lines",
-        type: "line",
-        source: "chi_wards",
-        "source-layer": "chi_wards",
-        layout: {
-          visibility: "none",
-        },
-        paint: {
-          "line-color": BOUNDARIES_COLORS["chi-ward"],
-          "line-opacity": 0.7,
-          "line-width": 2,
-        },
-      }
-    );
-    // TODO: insert label code here
+  // // tribal boundaries as a data layer
+  // newSourceLayer("tribal-boundaries", TRIBAL_BOUND_KEY);
+  // map.addLayer({
+  //   id: "tribal-boundaries-lines",
+  //   type: "line",
+  //   source: "tribal-boundaries",
+  //   "source-layer": "tl_2020_us_aiannh", //-7f7uk7
+  //   layout: {
+  //     visibility: "none",
+  //   },
+  //   paint: {
+  //     "line-color": BOUNDARIES_COLORS["tribal"],
+  //     "line-opacity": 0.7,
+  //     "line-width": 2,
+  //   },
+  // });
+  // // ward + community areas for IL
+  // if (state === "il") {
+  //   newSourceLayer("chi_wards", CHI_WARD_KEY);
+  //   newSourceLayer("chi_comm", CHI_COMM_KEY);
+  //   map.addLayer(
+  //     {
+  //       id: "chi-ward-lines",
+  //       type: "line",
+  //       source: "chi_wards",
+  //       "source-layer": "chi_wards",
+  //       layout: {
+  //         visibility: "none",
+  //       },
+  //       paint: {
+  //         "line-color": BOUNDARIES_COLORS["chi-ward"],
+  //         "line-opacity": 0.7,
+  //         "line-width": 2,
+  //       },
+  //     }
+  //   );
+  //   // TODO: insert label code here
 
-    map.addLayer(
-      {
-        id: "chi-comm-lines",
-        type: "line",
-        source: "chi_comm",
-        "source-layer": "chi_comm",
-        layout: {
-          visibility: "none",
-        },
-        paint: {
-          "line-color": BOUNDARIES_COLORS["chi-comm"],
-          "line-opacity": 0.7,
-          "line-width": 2,
-        },
-      }
-    );
-    // TODO: insert label code here
+  //   map.addLayer(
+  //     {
+  //       id: "chi-comm-lines",
+  //       type: "line",
+  //       source: "chi_comm",
+  //       "source-layer": "chi_comm",
+  //       layout: {
+  //         visibility: "none",
+  //       },
+  //       paint: {
+  //         "line-color": BOUNDARIES_COLORS["chi-comm"],
+  //         "line-opacity": 0.7,
+  //         "line-width": 2,
+  //       },
+  //     }
+  //   );
+  //   // TODO: insert label code here
 
-  }
-  if (state === "ny") {
-    newSourceLayer("nyc-city-council", NYC_COUNCIL_KEY);
-    map.addLayer({
-      id: "nyc-city-council-lines",
-      type: "line",
-      source: "nyc-city-council",
-      "source-layer": "nyc_council-08swpg",
-      layout: {
-        visibility: "none",
-      },
-      paint: {
-        "line-color": BOUNDARIES_COLORS["nyc"],
-        "line-opacity": 0.7,
-        "line-width": 2,
-      },
-    });
-    newSourceLayer("nyc-state-assembly", NYC_STATE_ASSEMBLY_KEY);
-    map.addLayer({
-      id: "nyc-state-assembly-lines",
-      type: "line",
-      source: "nyc-state-assembly",
-      "source-layer": "nyc_state_assembly-5gr5zo",
-      layout: {
-        visibility: "none",
-      },
-      paint: {
-        "line-color": BOUNDARIES_COLORS["nyc_assembly"],
-        "line-opacity": 0.7,
-        "line-width": 2,
-      },
-    });
-  }
+  // }
+  // if (state === "ny") {
+  //   newSourceLayer("nyc-city-council", NYC_COUNCIL_KEY);
+  //   map.addLayer({
+  //     id: "nyc-city-council-lines",
+  //     type: "line",
+  //     source: "nyc-city-council",
+  //     "source-layer": "nyc_council-08swpg",
+  //     layout: {
+  //       visibility: "none",
+  //     },
+  //     paint: {
+  //       "line-color": BOUNDARIES_COLORS["nyc"],
+  //       "line-opacity": 0.7,
+  //       "line-width": 2,
+  //     },
+  //   });
+  //   newSourceLayer("nyc-state-assembly", NYC_STATE_ASSEMBLY_KEY);
+  //   map.addLayer({
+  //     id: "nyc-state-assembly-lines",
+  //     type: "line",
+  //     source: "nyc-state-assembly",
+  //     "source-layer": "nyc_state_assembly-5gr5zo",
+  //     layout: {
+  //       visibility: "none",
+  //     },
+  //     paint: {
+  //       "line-color": BOUNDARIES_COLORS["nyc_assembly"],
+  //       "line-opacity": 0.7,
+  //       "line-width": 2,
+  //     },
+  //   });
+  // }
 
-  // add precinct lines and fill
-  if (HAS_PRECINCTS.indexOf(state) != -1) {
-    newSourceLayer("smaller_combined_precincts", PRECINCTS_KEY);
-    map.addLayer({
-      id: "smaller_combined_precincts-lines",
-      type: "line",
-      source: "smaller_combined_precincts",
-      "source-layer": "smaller_combined_precincts",
-      layout: {
-        visibility: "none",
-      },
-      paint: {
-        "line-color": BOUNDARIES_COLORS["nyc"],
-        "line-opacity": 0.7,
-        "line-width": 2,
-      },
-    });
-    map.addLayer({
-      // copied from openprecincts colors
-      id: "smaller_combined_precincts-fill",
-      type: "fill",
-      source: "smaller_combined_precincts",
-      "source-layer": "smaller_combined_precincts",
-      layout: {
-        visibility: "none",
-      },
-      paint: {
-        "fill-outline-color": "rgb(0,0,0)",
-        "fill-opacity": 0.3,
-      },
-    });
-  }
-  else {
-    var txt_box = document.getElementById("no-election-text");
-    txt_box.innerHTML = "<b>Election data is not yet available for this state.</b>"
-  }
+  // // add precinct lines and fill
+  // if (HAS_PRECINCTS.indexOf(state) != -1) {
+  //   newSourceLayer("smaller_combined_precincts", PRECINCTS_KEY);
+  //   map.addLayer({
+  //     id: "smaller_combined_precincts-lines",
+  //     type: "line",
+  //     source: "smaller_combined_precincts",
+  //     "source-layer": "smaller_combined_precincts",
+  //     layout: {
+  //       visibility: "none",
+  //     },
+  //     paint: {
+  //       "line-color": BOUNDARIES_COLORS["nyc"],
+  //       "line-opacity": 0.7,
+  //       "line-width": 2,
+  //     },
+  //   });
+  //   map.addLayer({
+  //     // copied from openprecincts colors
+  //     id: "smaller_combined_precincts-fill",
+  //     type: "fill",
+  //     source: "smaller_combined_precincts",
+  //     "source-layer": "smaller_combined_precincts",
+  //     layout: {
+  //       visibility: "none",
+  //     },
+  //     paint: {
+  //       "fill-outline-color": "rgb(0,0,0)",
+  //       "fill-opacity": 0.3,
+  //     },
+  //   });
+  // }
+  // else {
+  //   var txt_box = document.getElementById("no-election-text");
+  //   txt_box.innerHTML = "<b>Election data is not yet available for this state.</b>"
+  // }
 
-  // leg2 : congressional district
-  // leg3 : state senate district
-  // leg4 : state house district
-  // adm2 : counties
-  // loc4 : neighborhoods
-  // pos4 : 5-digit postcode area
-  // sta5 : block groups
-  for (var key in BOUNDARIES_LAYERS) {
-    newBoundariesLayer(key);
-  }
+  // // leg2 : congressional district
+  // // leg3 : state senate district
+  // // leg4 : state house district
+  // // adm2 : counties
+  // // loc4 : neighborhoods
+  // // pos4 : 5-digit postcode area
+  // // sta5 : block groups
+  // for (var key in BOUNDARIES_LAYERS) {
+  //   newBoundariesLayer(key);
+  // }
 
+  addAllLayers();
   // draw all coi's in one layer
   coidata = JSON.parse(coidata.replace(/'/g, '"'));
 
@@ -502,7 +503,7 @@ for (var id in toggleableLayerIds){
   var label = document.createElement("label");
   label.setAttribute("for", id);
   label.textContent = toggleableLayerIds[id];
-  var layers = document.getElementById("outline-menu");
+  // var layers = document.getElementById("outline-menu");
   div.appendChild(link);
   div.appendChild(label);
   layers.appendChild(div);

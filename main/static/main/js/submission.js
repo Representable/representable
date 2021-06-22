@@ -17,108 +17,108 @@ function toggleAngle(e) {
   }
 }
 
-/*------------------------------------------------------------------------*/
-/* JS file from mapbox site -- display a polygon */
-/* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
-var map = new mapboxgl.Map({
-  container: "map", // container id
-  style: "mapbox://styles/districter-team/ckdfv8riy0uf51hqu1g7qjrha", //color of the map -- dark-v10 or light-v9
-  center: [-96.7026, 40.8136], // starting position - Lincoln, Nebraska (middle of country lol)
-  zoom: 3, // starting zoom -- higher is closer
-  preserveDrawingBuffer: true,
-});
+// /*------------------------------------------------------------------------*/
+// /* JS file from mapbox site -- display a polygon */
+// /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
+// var map = new mapboxgl.Map({
+//   container: "map", // container id
+//   style: "mapbox://styles/districter-team/ckdfv8riy0uf51hqu1g7qjrha", //color of the map -- dark-v10 or light-v9
+//   center: [-96.7026, 40.8136], // starting position - Lincoln, Nebraska (middle of country lol)
+//   zoom: 3, // starting zoom -- higher is closer
+//   preserveDrawingBuffer: true,
+// });
 
-// geocoder used for a search bar -- within the map itself
-var geocoder = new MapboxGeocoder({
-  accessToken: mapboxgl.accessToken,
-  country: "us",
-  mapboxgl: mapboxgl,
-});
-map.addControl(geocoder, "top-right");
+// // geocoder used for a search bar -- within the map itself
+// var geocoder = new MapboxGeocoder({
+//   accessToken: mapboxgl.accessToken,
+//   country: "us",
+//   mapboxgl: mapboxgl,
+// });
+// map.addControl(geocoder, "top-right");
 
 // Add geolocate control to the map. -- this zooms in on the user's current location when pressed
 // Q: is it too confusing ? like the symbol doesn't exactly tell you what it does
-map.addControl(
-  new mapboxgl.GeolocateControl({
-    positionOptions: {
-      enableHighAccuracy: true,
-    },
-    trackUserLocation: true,
-  })
-);
+// map.addControl(
+//   new mapboxgl.GeolocateControl({
+//     positionOptions: {
+//       enableHighAccuracy: true,
+//     },
+//     trackUserLocation: true,
+//   })
+// );
 
-// Only add zoom buttons to medium and large screen devices (non-mobile)
-if (!window.matchMedia("only screen and (max-width: 760px)").matches) {
-  map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
-}
+// // Only add zoom buttons to medium and large screen devices (non-mobile)
+// if (!window.matchMedia("only screen and (max-width: 760px)").matches) {
+//   map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
+// }
 
-// add a new source layer
-function newSourceLayer(name, mbCode) {
-  map.addSource(name, {
-    type: "vector",
-    url: "mapbox://" + mapbox_user_name + "." + mbCode,
-  });
-}
+// // add a new source layer
+// function newSourceLayer(name, mbCode) {
+//   map.addSource(name, {
+//     type: "vector",
+//     url: "mapbox://" + mapbox_user_name + "." + mbCode,
+//   });
+// }
 
-var popup = new mapboxgl.Popup({
-  closeButton: false,
-  closeOnClick: false
-});
-
-
-function getPopupText(featureID, name) {
-  if (name === "adm2") {
-    let data = ADM2[featureID];
-    let key = data["state_code"];
-    return ADM2[featureID]["name"] + " County, " + STATE_ANSI[key]["abbrev"];
-  }
-  if (name === "leg2") {
-    let data = LEG2[featureID];
-    let key = data["state_code"];
-    return STATE_ANSI[key]["abbrev"] + " " + LEG2[featureID]["name"];
-  }
-  if (name === "leg3") {
-    let data = LEG3[featureID];
-    let key = data["state_code"];
-    return STATE_ANSI[key]["abbrev"] + " " + LEG3[featureID]["name"];
-  }
-  if (name === "leg4") {
-    let data = LEG4[featureID];
-    let key = data["state_code"];
-    return STATE_ANSI[key]["abbrev"] + " " + LEG4[featureID]["name"];
-  }
-  if (name === "pos4") {
-    return POS4[featureID]["zipcode"];
-  }
-}
+// var popup = new mapboxgl.Popup({
+//   closeButton: false,
+//   closeOnClick: false
+// });
 
 
-function addPopupHover(location, txt) {
-  var identifiedFeatures = map.queryRenderedFeatures(location.point, txt + "-fills");
-  popup.remove();
-  if (identifiedFeatures != '') {
-    var featureID = identifiedFeatures[0].id;
-    // query txt by feature ID in lookup table
-    if (featureID !== undefined) {
-      var popupText = getPopupText(featureID, txt);
-      popup.setLngLat(location.lngLat)
-        .setHTML(popupText)
-        .addTo(map);
-    }
-  }
-}
+// function getPopupText(featureID, name) {
+//   if (name === "adm2") {
+//     let data = ADM2[featureID];
+//     let key = data["state_code"];
+//     return ADM2[featureID]["name"] + " County, " + STATE_ANSI[key]["abbrev"];
+//   }
+//   if (name === "leg2") {
+//     let data = LEG2[featureID];
+//     let key = data["state_code"];
+//     return STATE_ANSI[key]["abbrev"] + " " + LEG2[featureID]["name"];
+//   }
+//   if (name === "leg3") {
+//     let data = LEG3[featureID];
+//     let key = data["state_code"];
+//     return STATE_ANSI[key]["abbrev"] + " " + LEG3[featureID]["name"];
+//   }
+//   if (name === "leg4") {
+//     let data = LEG4[featureID];
+//     let key = data["state_code"];
+//     return STATE_ANSI[key]["abbrev"] + " " + LEG4[featureID]["name"];
+//   }
+//   if (name === "pos4") {
+//     return POS4[featureID]["zipcode"];
+//   }
+// }
 
-// add a new mapbox boundaries source + layer
-function newBoundariesLayer(name) {
-  map.addSource(name, {
-    type: "vector",
-    url: "mapbox://mapbox.boundaries-" + name + "-v3",
-  });
-  createLineLayer(name + "-lines", name, "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1));
-  if (name !== "sta5") {
-    createHoverLayer(name + "-fills", name, "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1));
-  }
-}
+
+// function addPopupHover(location, txt) {
+//   var identifiedFeatures = map.queryRenderedFeatures(location.point, txt + "-fills");
+//   popup.remove();
+//   if (identifiedFeatures != '') {
+//     var featureID = identifiedFeatures[0].id;
+//     // query txt by feature ID in lookup table
+//     if (featureID !== undefined) {
+//       var popupText = getPopupText(featureID, txt);
+//       popup.setLngLat(location.lngLat)
+//         .setHTML(popupText)
+//         .addTo(map);
+//     }
+//   }
+// }
+
+// // add a new mapbox boundaries source + layer
+// function newBoundariesLayer(name) {
+//   map.addSource(name, {
+//     type: "vector",
+//     url: "mapbox://mapbox.boundaries-" + name + "-v3",
+//   });
+//   createLineLayer(name + "-lines", name, "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1));
+//   if (name !== "sta5") {
+//     createHoverLayer(name + "-fills", name, "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1));
+//   }
+// }
 
 function sanitizePDF(x) {
   x = x.replace(/ /g, "_");
@@ -129,114 +129,114 @@ function sanitizePDF(x) {
   return x;
 }
 
-var hoveredStateId = null;
+// var hoveredStateId = null;
 
-function createHoverLayer(fillLayerName, source, sourceLayer) {
-  map.addLayer({
-    id: fillLayerName,
-    type: "fill",
-    source: source,
-    "source-layer": sourceLayer,
-    layout: {
-      visibility: "none"
-    },
-    'paint': {
-      'fill-color': 'rgba(106,137,204,0.7)',
-      'fill-opacity': [
-        'case',
-        ['boolean', ['feature-state', 'hover'], false],
-        0.5,
-        0
-      ]
-    }
-  });
-}
+// function createHoverLayer(fillLayerName, source, sourceLayer) {
+//   map.addLayer({
+//     id: fillLayerName,
+//     type: "fill",
+//     source: source,
+//     "source-layer": sourceLayer,
+//     layout: {
+//       visibility: "none"
+//     },
+//     'paint': {
+//       'fill-color': 'rgba(106,137,204,0.7)',
+//       'fill-opacity': [
+//         'case',
+//         ['boolean', ['feature-state', 'hover'], false],
+//         0.5,
+//         0
+//       ]
+//     }
+//   });
+// }
 
-function createLineLayer(lineLayerName, source, sourceLayer, line_color="rgba(106,137,204,0.7)", line_width=3, line_opacity=1) {
-  map.addLayer({
-    id: lineLayerName,
-    type: "line",
-    source: source,
-    "source-layer": sourceLayer,
-    layout: {
-      visibility: "none",
-    },
-    paint: {
-      "line-color": line_color,
-      "line-width": line_width,
-      "line-opacity": line_opacity,
-    },
-  });
-}
+// function createLineLayer(lineLayerName, source, sourceLayer, line_color="rgba(106,137,204,0.7)", line_width=3, line_opacity=1) {
+//   map.addLayer({
+//     id: lineLayerName,
+//     type: "line",
+//     source: source,
+//     "source-layer": sourceLayer,
+//     layout: {
+//       visibility: "none",
+//     },
+//     paint: {
+//       "line-color": line_color,
+//       "line-width": line_width,
+//       "line-opacity": line_opacity,
+//     },
+//   });
+// }
 
-function createElectionLayer(layerName, source, sourceLayer) {
-  map.addLayer({
-    // copied from openprecincts colors
-    id: layerName,
-    type: "fill",
-    source: source,
-    "source-layer": sourceLayer,
-    layout: {
-      visibility: "none",
-    },
-    paint: {
-      "fill-outline-color": "rgb(0,0,0)",
-      "fill-opacity": 0.35,
-    },
-  });
-}
+// function createElectionLayer(layerName, source, sourceLayer) {
+//   map.addLayer({
+//     // copied from openprecincts colors
+//     id: layerName,
+//     type: "fill",
+//     source: source,
+//     "source-layer": sourceLayer,
+//     layout: {
+//       visibility: "none",
+//     },
+//     paint: {
+//       "fill-outline-color": "rgb(0,0,0)",
+//       "fill-opacity": 0.35,
+//     },
+//   });
+// }
 
 map.on("load", function () {
 
   /****************************************************************************/
+  addAllLayers();
+  // // school districts as a data layer
+  // newSourceLayer("school-districts", SCHOOL_DISTR_KEY);
+  // createLineLayer("school-districts-lines", "school-districts", "us_school_districts");
+  // createHoverLayer("school-districts-fills", "school-districts", "us_school_districts");
 
-  // school districts as a data layer
-  newSourceLayer("school-districts", SCHOOL_DISTR_KEY);
-  createLineLayer("school-districts-lines", "school-districts", "us_school_districts");
-  createHoverLayer("school-districts-fills", "school-districts", "us_school_districts");
+  // // tribal boundaries as a data layer
+  // newSourceLayer("tribal-boundaries", TRIBAL_BOUND_KEY);
+  // createLineLayer("tribal-boundaries-lines", "tribal-boundaries", "tl_2020_us_aiannh");
+  // createHoverLayer("tribal-boundaries-fills", "tribal-boundaries", "tl_2020_us_aiannh");
 
-  // tribal boundaries as a data layer
-  newSourceLayer("tribal-boundaries", TRIBAL_BOUND_KEY);
-  createLineLayer("tribal-boundaries-lines", "tribal-boundaries", "tl_2020_us_aiannh");
-  createHoverLayer("tribal-boundaries-fills", "tribal-boundaries", "tl_2020_us_aiannh");
+  // // ward + community areas for IL
+  // if (state === "il") {
+  //   newSourceLayer("chi_wards", CHI_WARD_KEY);
+  //   createLineLayer("chi-ward-lines", "chi_wards", "chi_wards");
+  //   createHoverLayer("chi-ward-fills", "chi_wards", "chi_wards");
 
-  // ward + community areas for IL
-  if (state === "il") {
-    newSourceLayer("chi_wards", CHI_WARD_KEY);
-    createLineLayer("chi-ward-lines", "chi_wards", "chi_wards");
-    createHoverLayer("chi-ward-fills", "chi_wards", "chi_wards");
+  //   newSourceLayer("chi_comm", CHI_COMM_KEY);
+  //   createLineLayer("chi-comm-lines", "chi_comm", "chi_comm");
+  //   createHoverLayer("chi-comm-fills", "chi_comm", "chi_comm");
+  // }
+  // if (state === "ny") {
+  //   newSourceLayer("nyc-city-council", NYC_COUNCIL_KEY);
+  //   createLineLayer("nyc-city-council-lines", "nyc-city-council", "nyc_council-08swpg");
+  //   createHoverLayer("nyc-city-council-fills", "nyc-city-council", "nyc_council-08swpg");
 
-    newSourceLayer("chi_comm", CHI_COMM_KEY);
-    createLineLayer("chi-comm-lines", "chi_comm", "chi_comm");
-    createHoverLayer("chi-comm-fills", "chi_comm", "chi_comm");
-  }
-  if (state === "ny") {
-    newSourceLayer("nyc-city-council", NYC_COUNCIL_KEY);
-    createLineLayer("nyc-city-council-lines", "nyc-city-council", "nyc_council-08swpg");
-    createHoverLayer("nyc-city-council-fills", "nyc-city-council", "nyc_council-08swpg");
+  //   newSourceLayer("nyc-state-assembly", NYC_STATE_ASSEMBLY_KEY);
+  //   createLineLayer("nyc-state-assembly-lines", "nyc-state-assembly", "nyc_state_assembly-5gr5zo");
+  //   createHoverLayer("nyc-state-assembly-fills", "nyc-state-assembly", "nyc_state_assembly-5gr5zo");
+  // }
 
-    newSourceLayer("nyc-state-assembly", NYC_STATE_ASSEMBLY_KEY);
-    createLineLayer("nyc-state-assembly-lines", "nyc-state-assembly", "nyc_state_assembly-5gr5zo");
-    createHoverLayer("nyc-state-assembly-fills", "nyc-state-assembly", "nyc_state_assembly-5gr5zo");
-  }
+  // // add precinct lines and fill
+  // if (HAS_PRECINCTS.indexOf(state) != -1) {
+  //   newSourceLayer("smaller_combined_precincts", PRECINCTS_KEY);
+  //   createLineLayer("smaller_combined_precincts-lines", "smaller_combined_precincts", "smaller_combined_precincts", line_color=BOUNDARIES_COLORS["nyc"], line_width=2, line_opacity=0.7)
+  //   createElectionLayer("smaller_combined_precincts-fill", "smaller_combined_precincts", "smaller_combined_precincts");
+  // }
 
-  // add precinct lines and fill
-  if (HAS_PRECINCTS.indexOf(state) != -1) {
-    newSourceLayer("smaller_combined_precincts", PRECINCTS_KEY);
-    createLineLayer("smaller_combined_precincts-lines", "smaller_combined_precincts", "smaller_combined_precincts", line_color=BOUNDARIES_COLORS["nyc"], line_width=2, line_opacity=0.7)
-    createElectionLayer("smaller_combined_precincts-fill", "smaller_combined_precincts", "smaller_combined_precincts");
-  }
-
-  // leg2 : congressional district
-  // leg3 : state senate district
-  // leg4 : state house district
-  // adm2 : counties
-  // loc4 : neighborhoods
-  // pos4 : 5-digit postcode area
-  // sta5 : block groups
-  for (var key in BOUNDARIES_LAYERS) {
-    newBoundariesLayer(key);
-  }
+  // // leg2 : congressional district
+  // // leg3 : state senate district
+  // // leg4 : state house district
+  // // adm2 : counties
+  // // loc4 : neighborhoods
+  // // pos4 : 5-digit postcode area
+  // // sta5 : block groups
+  // for (var key in BOUNDARIES_LAYERS) {
+  //   newBoundariesLayer(key);
+  // }
   
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
@@ -505,133 +505,134 @@ if (HAS_PRECINCTS.indexOf(state) != -1) {
   toggleableLayerIds["smaller_combined_precincts"] = "Precinct boundaries";
 }
 
-// Create toggle switches
-var layers = document.getElementById("outline-menu");
-var addContainer = document.createElement("div");
-addContainer.classList.add("container-fluid", "w-100");
-layers.appendChild(addContainer);
+addDataSwitches("submission", document)
+// // Create toggle switches
+// var layers = document.getElementById("outline-menu");
+// var addContainer = document.createElement("div");
+// addContainer.classList.add("container-fluid", "w-100");
+// layers.appendChild(addContainer);
 
-var layersContainer = layers.children[0];
-var addRow = document.createElement("div");
-addRow.classList.add("row", "row-wide");
-layersContainer.appendChild(addRow);
+// var layersContainer = layers.children[0];
+// var addRow = document.createElement("div");
+// addRow.classList.add("row", "row-wide");
+// layersContainer.appendChild(addRow);
 
-var layersRow = layersContainer.children[0];
-var addCol1 = document.createElement("div");
-addCol1.classList.add("col-12", "col-md-6", "m-0", "p-0");
-var addCol2 = document.createElement("div");
-addCol2.classList.add("col-12", "col-md-6", "m-0", "p-0");
+// var layersRow = layersContainer.children[0];
+// var addCol1 = document.createElement("div");
+// addCol1.classList.add("col-12", "col-md-6", "m-0", "p-0");
+// var addCol2 = document.createElement("div");
+// addCol2.classList.add("col-12", "col-md-6", "m-0", "p-0");
 
-layersRow.appendChild(addCol1);
-layersRow.appendChild(addCol2);
+// layersRow.appendChild(addCol1);
+// layersRow.appendChild(addCol2);
 
-var layersCol1 = layersRow.children[0];
-var layersCol2 = layersRow.children[1];
+// var layersCol1 = layersRow.children[0];
+// var layersCol2 = layersRow.children[1];
 
-var count = 0;
-// Append the switches
-for (var id in toggleableLayerIds) {
-  if (count % 2 == 0) {
-    addToggleableLayer(id, layersCol1);
-  } else {
-    addToggleableLayer(id, layersCol2);
-  }
-  count++;
-}
+// var count = 0;
+// // Append the switches
+// for (var id in toggleableLayerIds) {
+//   if (count % 2 == 0) {
+//     addToggleableLayer(id, layersCol1);
+//   } else {
+//     addToggleableLayer(id, layersCol2);
+//   }
+//   count++;
+// }
 
-function updateFeatureState(source, sourceLayer, hoveredStateId, hover) {
-  map.setFeatureState(
-    { source: source,
-      sourceLayer: 
-        sourceLayer,
-      id: hoveredStateId },
-    { hover: hover }
-  );
-}
+// function updateFeatureState(source, sourceLayer, hoveredStateId, hover) {
+//   map.setFeatureState(
+//     { source: source,
+//       sourceLayer: 
+//         sourceLayer,
+//       id: hoveredStateId },
+//     { hover: hover }
+//   );
+// }
 
-function addToggleableLayer(id, appendElement) {
-  var link = document.createElement("input");
+// function addToggleableLayer(id, appendElement) {
+//   var link = document.createElement("input");
 
-  link.value = id;
-  link.id = id;
-  link.type = "checkbox";
-  link.className = "switch_1";
-  link.checked = false;
+//   link.value = id;
+//   link.id = id;
+//   link.type = "checkbox";
+//   link.className = "switch_1";
+//   link.checked = false;
 
-  link.onchange = function (e) {
-    var txt = this.id;
-    e.preventDefault();
-    e.stopPropagation();
+//   link.onchange = function (e) {
+//     var txt = this.id;
+//     e.preventDefault();
+//     e.stopPropagation();
 
-    var visibility = map.getLayoutProperty(txt + "-lines", "visibility");
-    if (visibility === "visible") { // checked to unchecked
-      map.setLayoutProperty(txt + "-lines", "visibility", "none");
-      if (FILL_MAP[txt]) {
-        map.setLayoutProperty(txt + "-fills", "visibility", "none");
-      }
-      hoveredStateId = null;
-      popup.remove();
-      visible = null;
-    } else { // unchecked to checked
-      hoveredStateId = null;
-      popup.remove();
+//     var visibility = map.getLayoutProperty(txt + "-lines", "visibility");
+//     if (visibility === "visible") { // checked to unchecked
+//       map.setLayoutProperty(txt + "-lines", "visibility", "none");
+//       if (FILL_MAP[txt]) {
+//         map.setLayoutProperty(txt + "-fills", "visibility", "none");
+//       }
+//       hoveredStateId = null;
+//       popup.remove();
+//       visible = null;
+//     } else { // unchecked to checked
+//       hoveredStateId = null;
+//       popup.remove();
 
-      for (var layerID in toggleableLayerIds) {
-       if (layerID != txt) {
-          map.setLayoutProperty(layerID + "-lines", "visibility", "none");
-          if (FILL_MAP[layerID]) {
-            map.setLayoutProperty(layerID + "-fills", "visibility", "none");
-          }
-          var button = document.getElementById(layerID);
-          button.checked = false;
-        }
-      }
-      map.setLayoutProperty(txt + "-lines", "visibility", "visible");
-      if (FILL_MAP[txt]) {
-        map.setLayoutProperty(txt + "-fills", "visibility", "visible");
-        visible = txt;
-      }
+//       for (var layerID in toggleableLayerIds) {
+//        if (layerID != txt) {
+//           map.setLayoutProperty(layerID + "-lines", "visibility", "none");
+//           if (FILL_MAP[layerID]) {
+//             map.setLayoutProperty(layerID + "-fills", "visibility", "none");
+//           }
+//           var button = document.getElementById(layerID);
+//           button.checked = false;
+//         }
+//       }
+//       map.setLayoutProperty(txt + "-lines", "visibility", "visible");
+//       if (FILL_MAP[txt]) {
+//         map.setLayoutProperty(txt + "-fills", "visibility", "visible");
+//         visible = txt;
+//       }
       
-    }
+//     }
 
-    if (visible != null && visible != "sta5") {
-      var sourceLayer = SOURCE_LAYER_NAMES[visible];
+//     if (visible != null && visible != "sta5") {
+//       var sourceLayer = SOURCE_LAYER_NAMES[visible];
 
-      map.on('mousemove', visible + '-fills', function(e) {
-        if (FILL_MAP[visible]) {
-          addPopupHover(e, visible);
-          if (e.features.length > 0) {
-            if (hoveredStateId !== null) {
-              updateFeatureState(visible, sourceLayer, hoveredStateId, false);
-            }
-            hoveredStateId = e.features[0].id;
-            updateFeatureState(visible, sourceLayer, hoveredStateId, true);
-          }
-        }
-      });
+//       map.on('mousemove', visible + '-fills', function(e) {
+//         if (FILL_MAP[visible]) {
+//           addPopupHover(e, visible);
+//           if (e.features.length > 0) {
+//             if (hoveredStateId !== null) {
+//               updateFeatureState(visible, sourceLayer, hoveredStateId, false);
+//             }
+//             hoveredStateId = e.features[0].id;
+//             updateFeatureState(visible, sourceLayer, hoveredStateId, true);
+//           }
+//         }
+//       });
     
-      map.on('mouseleave', visible + '-fills', function(e) {
-        popup.remove();
-        if (hoveredStateId !== null) {
-          updateFeatureState(visible, sourceLayer, hoveredStateId, false);
-        }
-        hoveredStateId = null;
-      });
-    }
+//       map.on('mouseleave', visible + '-fills', function(e) {
+//         popup.remove();
+//         if (hoveredStateId !== null) {
+//           updateFeatureState(visible, sourceLayer, hoveredStateId, false);
+//         }
+//         hoveredStateId = null;
+//       });
+//     }
 
-  };
-  // in order to create the buttons
-  var div = document.createElement("div");
-  div.className = "switch_box box_1 mb-3";
-  var label = document.createElement("label");
-  label.setAttribute("for", id);
-  label.textContent = toggleableLayerIds[id];
-  // var layers = document.getElementById("outline-menu");
-  div.appendChild(link);
-  div.appendChild(label);
-  appendElement.appendChild(div);
-  var newline = document.createElement("br");
-}
+//   };
+//   // in order to create the buttons
+//   var div = document.createElement("div");
+//   div.className = "switch_box box_1 mb-3";
+//   var label = document.createElement("label");
+//   label.setAttribute("for", id);
+//   label.textContent = toggleableLayerIds[id];
+//   // var layers = document.getElementById("outline-menu");
+//   div.appendChild(link);
+//   div.appendChild(label);
+//   appendElement.appendChild(div);
+//   var newline = document.createElement("br");
+// }
 
 // Create toggle switches for elections
 var elections = document.getElementById("election-menu");
