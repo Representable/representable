@@ -738,6 +738,7 @@ function createCommPolygon() {
   // clean up polyFilter -- this is the array of GEOID to be stored
   polyFilter.splice(0, 1);
   polyFilter.splice(0, 1);
+  // TODO: add census blocks for dane county by matching municipal wards to blocks
   if (!dane_cty) {
     drawUsingBlocks ? document.getElementById("id_census_blocks").value = polyFilter : document.getElementById("id_block_groups").value = polyFilter;
   }
