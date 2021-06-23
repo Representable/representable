@@ -284,107 +284,107 @@ addDataSwitches(map, "map", document);
 //     }
 //   };
 //   // in order to create the buttons
+  // var div = document.createElement("div");
+  // div.className = "switch_box box_1";
+  // var label = document.createElement("label");
+  // label.setAttribute("for", id);
+  // label.textContent = toggleableLayerIds[id];
+  // // var layers = document.getElementById("outline-menu");
+  // div.appendChild(link);
+  // div.appendChild(label);
+  // layers.appendChild(div);
+  // var newline = document.createElement("br");
+// };
+addElections(map, document, "map");
+// // adds elections to next dropdown
+// var stateElections = {};
+// if (HAS_PRECINCTS.indexOf(state) != -1) stateElections = STATE_ELECTIONS[state];
+// for (var idx in stateElections) {
+//   id = stateElections[idx];
+//   var link = document.createElement("input");
+
+//   link.value = id;
+//   link.id = id;
+//   link.type = "checkbox";
+//   link.className = "switch_1";
+//   link.checked = false;
+
+//   link.onchange = function (e) {
+//     var txt = "smaller_combined_precincts-fill";
+//     // var clickedLayers = [];
+//     // clickedLayers.push(txt + "-lines");
+//     e.preventDefault();
+//     e.stopPropagation();
+
+//     if (this.checked === false) {
+//       map.setLayoutProperty(txt, "visibility", "none");
+//       map.setPaintProperty("coi_layer_fill", "fill-opacity", .15);
+//       map.setLayoutProperty("coi_line", "visibility", "none");
+//     } else {
+//       map.setLayoutProperty(txt, "visibility", "visible");
+//       map.setPaintProperty("coi_layer_fill", "fill-opacity", .4);
+//       map.setLayoutProperty("coi_line", "visibility", "visible");
+//       var demProp = this.id + "D";
+//       var repProp = this.id + "R";
+//       var state_layer = STATE_FILES[state];
+//       // set all other layers to not visible, uncheck the display box for all other layers
+//       var computedColor = [
+//         "interpolate-lab", // perceptual color space interpolation
+//         ["linear"],
+//         [
+//           "to-number",
+//           [
+//             "/",
+//             ["to-number", ["get", demProp]],
+//             // [">", ["number", ["get", demProp], -1], 0],
+//             [
+//               "+",
+//               ["to-number", ["get", demProp]],
+//               // [">", ["number", ["get", demProp], -1], 0],
+//               ["to-number", ["get", repProp]],
+//               // [">", ["number", ["get", repProp], -1], 0],
+//             ],
+//           ],
+//         ],
+//         -1,
+//         "white",
+//         0,
+//         "red",
+//         0.5,
+//         "white", // note that, unlike functions, the "stops" are flat, not wrapped in two-element arrays
+//         1,
+//         "blue",
+//         1.0001,
+//         "white",
+//       ];
+//       map.setFilter(txt, ["==", ["get", "layer"], state_layer]);
+//       map.setPaintProperty(txt, "fill-color", computedColor);
+
+//       for (var idx2 in stateElections) {
+//         otherElection = stateElections[idx2];
+//         if (otherElection != this.id) {
+//           var button = document.getElementById(otherElection);
+//           button.checked = false;
+//         }
+//       }
+//       // if (property.demProp===NULL) {
+//       //   map.setLayoutProperty(txt, "visibility", "none");
+//       // }
+//     }
+//   };
+
+//   // in order to create the buttons
 //   var div = document.createElement("div");
 //   div.className = "switch_box box_1";
 //   var label = document.createElement("label");
 //   label.setAttribute("for", id);
-//   label.textContent = toggleableLayerIds[id];
-//   // var layers = document.getElementById("outline-menu");
+//   label.textContent = ELECTION_NAMES[id];
+//   var elections = document.getElementById("election-menu");
 //   div.appendChild(link);
 //   div.appendChild(label);
-//   layers.appendChild(div);
+//   elections.appendChild(div);
 //   var newline = document.createElement("br");
-// };
-
-// adds elections to next dropdown
-var stateElections = {};
-if (HAS_PRECINCTS.indexOf(state) != -1) stateElections = STATE_ELECTIONS[state];
-for (var idx in stateElections) {
-  id = stateElections[idx];
-  var link = document.createElement("input");
-
-  link.value = id;
-  link.id = id;
-  link.type = "checkbox";
-  link.className = "switch_1";
-  link.checked = false;
-
-  link.onchange = function (e) {
-    var txt = "smaller_combined_precincts-fill";
-    // var clickedLayers = [];
-    // clickedLayers.push(txt + "-lines");
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (this.checked === false) {
-      map.setLayoutProperty(txt, "visibility", "none");
-      map.setPaintProperty("coi_layer_fill", "fill-opacity", .15);
-      map.setLayoutProperty("coi_line", "visibility", "none");
-    } else {
-      map.setLayoutProperty(txt, "visibility", "visible");
-      map.setPaintProperty("coi_layer_fill", "fill-opacity", .4);
-      map.setLayoutProperty("coi_line", "visibility", "visible");
-      var demProp = this.id + "D";
-      var repProp = this.id + "R";
-      var state_layer = STATE_FILES[state];
-      // set all other layers to not visible, uncheck the display box for all other layers
-      var computedColor = [
-        "interpolate-lab", // perceptual color space interpolation
-        ["linear"],
-        [
-          "to-number",
-          [
-            "/",
-            ["to-number", ["get", demProp]],
-            // [">", ["number", ["get", demProp], -1], 0],
-            [
-              "+",
-              ["to-number", ["get", demProp]],
-              // [">", ["number", ["get", demProp], -1], 0],
-              ["to-number", ["get", repProp]],
-              // [">", ["number", ["get", repProp], -1], 0],
-            ],
-          ],
-        ],
-        -1,
-        "white",
-        0,
-        "red",
-        0.5,
-        "white", // note that, unlike functions, the "stops" are flat, not wrapped in two-element arrays
-        1,
-        "blue",
-        1.0001,
-        "white",
-      ];
-      map.setFilter(txt, ["==", ["get", "layer"], state_layer]);
-      map.setPaintProperty(txt, "fill-color", computedColor);
-
-      for (var idx2 in stateElections) {
-        otherElection = stateElections[idx2];
-        if (otherElection != this.id) {
-          var button = document.getElementById(otherElection);
-          button.checked = false;
-        }
-      }
-      // if (property.demProp===NULL) {
-      //   map.setLayoutProperty(txt, "visibility", "none");
-      // }
-    }
-  };
-
-  // in order to create the buttons
-  var div = document.createElement("div");
-  div.className = "switch_box box_1";
-  var label = document.createElement("label");
-  label.setAttribute("for", id);
-  label.textContent = ELECTION_NAMES[id];
-  var elections = document.getElementById("election-menu");
-  div.appendChild(link);
-  div.appendChild(label);
-  elections.appendChild(div);
-  var newline = document.createElement("br");
-}
+// }
 
 // Toggles the visibility of the selected community. If the coi_layer_fill layer (all the communities) is displayed, remove it and
 // display the selected community. If the last selected community community is hidden, display the coi_layer_fill layer.
