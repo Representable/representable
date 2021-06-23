@@ -133,8 +133,9 @@ from django.contrib.gis.geos import GEOSGeometry
 
 def block_group_polygons(request, abbr):
     try:
-        file_ = requests.get('https://dev-precomputed-blockgroups.s3.us-east-2.amazonaws.com/adj-n-bounds-'+abbr+'.json')
-        return JsonResponse(file_.json())
+        s3 = boto3.resource('s3')
+        obj = s3.Object('dev-precomputed-blockgroups', 'adj-n-bounds-'+abbr+'.json')
+        return JsonResponse(json.loads(obj.get()['Body'].read()))
     except Exception as e:
         raise Http404
 
