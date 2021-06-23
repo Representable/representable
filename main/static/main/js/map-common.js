@@ -185,8 +185,7 @@ function addAllLayers(map, document, pageName) {
 }
 
 
-// TODO: based on client page, put switches in one or two columns
-function addDataSwitches(map, pageName, document) {
+function addDataSwitches(map, document, pageName, visible) {
     // Create toggle switches
     var layers = document.getElementById("outline-menu");
     var addContainer = document.createElement("div");
@@ -440,7 +439,10 @@ function addElections(map, document, pageName) {
     
 
     var div = document.createElement("div");
-    div.className = "switch_box box_1 mb-3";
+    div.className = "switch_box box_1";
+    if (pageName === "submission") {
+      div.classList.add("mb-3");
+    }
     var label = document.createElement("label");
     label.setAttribute("for", id);
     label.textContent = ELECTION_NAMES[id];
