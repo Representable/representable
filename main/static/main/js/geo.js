@@ -609,10 +609,8 @@ $("#surveyP2ToMap_button").on("click", function(e) {
 })
 
 $("#mapToPrivacy").on("click", function(e) {
-  console.log('zoom called');
   zoomToCommunity();
   setTimeout(() => {
-    console.log('create called');
     createCommSuccess = createCommPolygon();
   }, 1000);
   // loading icon
@@ -629,10 +627,8 @@ $("#mapToPrivacy").on("click", function(e) {
 })
 
 $("#mapToPrivacyMobile").on("click", function(e) {
-  console.log('zoom called');
   zoomToCommunity();
   setTimeout(() => {
-    console.log('create called');
     createCommSuccess = createCommPolygon();
   }, 1000);
   // loading icon
@@ -770,7 +766,6 @@ function zoomToCommunity() {
   var bbox = turf.bbox(selectBbox);
 
   if(blockGroupPolygons != null && !drawUsingBlocks) {
-    console.log(bbox);
     map.addLayer({
       'id': Math.random().toString().substring(),
       'type': 'line',
@@ -801,7 +796,6 @@ function zoomToCommunity() {
     bbox[2] += bbox_adjustment[0];
     bbox[3] += bbox_adjustment[1];
 
-    console.log(bbox);
     map.addLayer({
       'id': Math.random().toString().substring(),
       'type': 'line',
@@ -1338,7 +1332,6 @@ function isContiguous(idFilter) {
 var drawRadius = 0;
 var isStateChanged = false;
 var blockGroupPolygons = null;
-var activeIDs = new Set();
 /* After the map style has loaded on the page, add a source layer and default
 styling for a single point. */
 map.on("style.load", function () {
@@ -1537,13 +1530,13 @@ map.on("style.load", function () {
       });
     }
 
-    if (blockGroupPolygons != null && !drawUsingBlocks) {
-      if(isContiguous(filter))
-        hideWarningMessage();
-      else
-        showWarningMessage("WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org.");
-    }
-    
+    // if (blockGroupPolygons != null && !drawUsingBlocks) {
+    //   if(isContiguous(filter))
+    //     hideWarningMessage();
+    //   else
+    //     showWarningMessage("WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org.");
+    // }
+
     // check size of community - 800 block groups or 2400 blocks
     if ((!drawUsingBlocks && filter.length < 802) || (drawUsingBlocks && filter.length < 2402)) {
       map.setFilter(state + "-highlighted-" + layer_suffix, filter);
