@@ -34,7 +34,7 @@ from .models import (
     Address,
     State,
 )
-from .choices import STATES
+from .choices import STATES, UNITS
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Area
 
@@ -189,7 +189,7 @@ class DeletionForm(ModelForm):
 class OrganizationForm(ModelForm):
     class Meta:
         model = Organization
-        fields = ["name", "description", "ext_link", "states"]
+        fields = ["name", "description", "ext_link", "states", "government"]
         labels = {
             "name": "Organization Name",
             "ext_link": "Link to Organization Website",
@@ -213,6 +213,9 @@ class OrganizationForm(ModelForm):
             "states": forms.Select(
                 choices=STATES,
                 attrs={"data-placeholder": "Select States"},
+            ),
+            "government": forms.CheckboxInput(
+                attrs={"class": "form-check-input"}
             ),
         }
 
@@ -263,7 +266,19 @@ class DriveForm(ModelForm):
 
     class Meta:
         model = Drive
-        fields = ["name", "description", "state", "require_user_addresses"]
+        fields = [
+            "name",
+            "description",
+            "state",
+            "require_user_addresses",
+            "redist_title",
+            "redist_info",
+            "criteria_title",
+            "criteria_info",
+            "coi_def_title",
+            "coi_def_info",
+            "units",
+        ]
         labels = {
             "name": "Drive Title",
             "ext_link": "Link to Organization Website",
@@ -286,6 +301,45 @@ class DriveForm(ModelForm):
             ),
             "require_user_addresses": forms.CheckboxInput(
                 attrs={"class": "form-check-input"}
+            ),
+            "redist_title": forms.TextInput(
+                attrs={
+                    "placeholder": "ex. Redistricting in [State/City]",
+                    "class": "form-control",
+                }
+            ),
+            "redist_info": forms.Textarea(
+                attrs={
+                    "placeholder": "ex. Description of how redistricting works in your state or city.",
+                    "class": "form-control",
+                }
+            ),
+            "criteria_title": forms.TextInput(
+                attrs={
+                    "placeholder": "ex. [State/City] Redistricting Criteria",
+                    "class": "form-control",
+                }
+            ),
+            "criteria_info": forms.Textarea(
+                attrs={
+                    "placeholder": "ex. A list of redistricting criteria in your state or city.",
+                    "class": "form-control",
+                }
+            ),
+            "coi_def_title": forms.TextInput(
+                attrs={
+                    "placeholder": "ex. Communities of Interest in [State/City]",
+                    "class": "form-control",
+                }
+            ),
+            "coi_def_info": forms.Textarea(
+                attrs={
+                    "placeholder": "ex. The definition of Communities of Interest in your state or city.",
+                    "class": "form-control",
+                }
+            ),
+            "units": forms.Select(
+                choices=UNITS, attrs={"class": "form-control"}
             ),
         }
 

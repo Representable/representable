@@ -71,3 +71,8 @@ STATES = (
     ("WI", "Wisconsin"),
     ("WY", "Wyoming"),
 )
+
+UNITS = (
+    ("B", "Census Blocks"),
+    ("BG", "Census Block Groups"),
+)
