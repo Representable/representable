@@ -771,7 +771,7 @@ function zoomToCommunity() {
   if (selectBbox === null || selectBbox.length === 0) return;
   var bbox = turf.bbox(selectBbox);
 
-  if(blockGroupPolygons != null && !drawUsingBlocks) {
+  if(blockGroupPolygons != null && unit_id === bg_id) {
     // map.addLayer({
     //   'id': Math.random().toString().substring(),
     //   'type': 'line',
@@ -1499,7 +1499,7 @@ map.on("style.load", function () {
         }
         else {
           selectBbox = turf.difference(selectBbox, currentBbox);
-          if(blockGroupPolygons == null || drawUsingBlocks) {
+          if(blockGroupPolygons == null || unit_id != bg_id) {
             if (selectBbox != null && turf.getType(selectBbox) == "MultiPolygon") {
               showWarningMessage(
                 "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
@@ -1517,7 +1517,7 @@ map.on("style.load", function () {
         hideWarningMessage();
       } else {
         isChanged = true;
-        if (blockGroupPolygons == null || drawUsingBlocks) {
+        if (blockGroupPolygons == null || unit_id != bg_id) {
           if (
             turf.booleanDisjoint(currentBbox, selectBbox) &&
             !isEmptyFilter(currentFilter)
@@ -1546,10 +1546,10 @@ map.on("style.load", function () {
       });
     }
 
-    if (blockGroupPolygons != null && !drawUsingBlocks) {
-      setTimeout(() => {
-        checkIsContiguous(filter);
-      }, 150);
+    if (blockGroupPolygons != null && unit_id === bg_id) {
+      // console.time('contiguitycheck')
+      checkIsContiguous(filter);
+      // console.timeEnd('contiguitycheck')
     }
 
     // check size of community - 800 block groups or 2400 blocks
