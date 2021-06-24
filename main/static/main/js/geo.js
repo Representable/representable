@@ -42,6 +42,8 @@ if (dane_cty) {
   state = "dane";
   layer_suffix="wards";
   initialZoom = 10;
+  // set units link on modal to be municipal wards
+  $("#units-link").html("<strong>municipal wards</strong>")
 }
 // stack of filters (which block to highlight) and bounding boxes (for contiguity check)
 var filterStack = JSON.parse(sessionStorage.getItem("filterStack"));
