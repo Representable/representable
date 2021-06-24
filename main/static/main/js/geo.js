@@ -917,6 +917,7 @@ modalGeocoder.on('result', function () {
 /* Creating custom draw buttons */
 class DropdownButton {
   onAdd(map) {
+    // TODO: change based on design from olivia - make more playful in shape
     var dropdown_control = document.createElement("button");
     dropdown_control.href = "#";
     dropdown_control.type = "button";

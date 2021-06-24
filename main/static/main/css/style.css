@@ -1425,14 +1425,14 @@ Entry Form Management
 }
 
 .survey-field {
-  background: #DAEFFF;
+  background: #F2FAFF 80%;
   opacity: 0.8;
   border: none;
   outline: none;
 }
 
 .survey-field:focus {
-  background: #DAEFFF;
+  background: #F2FAFF 80%;
   border: none;
   outline: none;
 }
@@ -2304,9 +2304,8 @@ height:25vh!important;
 }
 
 /* Makes buttons on submission page equal widths */
-#election-btn, #mobile-election-btn, #data-layer-btn, 
-#mobile-data-layer-btn, #demographics-btn, 
+#election-btn, #mobile-election-btn, #data-layer-btn,
+#mobile-data-layer-btn, #demographics-btn,
 #mobile-demographics-btn {
   width: 215px;
 }
-

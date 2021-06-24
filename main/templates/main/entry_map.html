@@ -101,7 +101,7 @@
                 </button>
                 <div class="container h-100 p-4">
                     <div class="comm-info-text mt-2 mb-2">{% trans "How to draw my community?" %}</div>
-                    <p class="mb-3 small">
+                    <p class="mb-3">
                         {% blocktrans trimmed %}Select units on the map by clicking with your mouse. To deselect a unit, click it again. Watch the following video to learn more.{% endblocktrans %}
                     </p>
 
@@ -206,8 +206,9 @@
 
                         <div id="map-help-menu" class="dropdown-menu vw-md-75 vw-lg-50" aria-labelledby="map-help-btn">
                             <div class="container pl-5 pr-5 pb-5 h-100">
+                              <!-- TODO: update based on design with FAQ on right side -->
                                 <div class="comm-info-text mt-2 mb-2">{% trans "How to draw my community?" %}</div>
-                                <p class="mb-3 small">
+                                <p class="mb-3">
                                     {% blocktrans trimmed %}Select units on the map by clicking with your mouse. To deselect a unit, click it again. Watch the following video to learn more.{% endblocktrans %}
                                 </p>
 
@@ -257,6 +258,7 @@
                             {% blocktrans trimmed %}Your Community Info{% endblocktrans %}
                         </button>
 
+                        <!-- TODO: make modal wider!!! -->
                         <div id="map-comm-menu" class="dropdown-menu" aria-labelledby="map-comm-btn">
                             <h6 id="dropdown-comm-name" class="dropdown-header comm-info-text">{% trans "Community Name" %}:</h6>
                             <div class="dropdown-item accordion map-info-item ml-4 mr-4 mt-1" id="map-activities-accordion">
