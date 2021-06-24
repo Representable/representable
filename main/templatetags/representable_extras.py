@@ -18,3 +18,7 @@ def set_export_name(organization, drive):
         return drive.replace(" ", "_")
     else:
         return organization.replace(" ", "_")
+
+@register.filter
+def replace_spaces(arg1):
+    return arg1.replace(" ", "_")
