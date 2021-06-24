@@ -18,7 +18,7 @@
     <div class="col-lg-7 col-12 pl-md-5">
       <div class="my-4 main-display-text-all">
         <span class="d-block mb-3 font-large-mobile font-weight-bold dark-blue-text line-space-less pt-md-3">{% trans "Gerrymandering is silencing communities." %}</span>
-        <span class="d-block h4 font-weight-light gray-text font-medium-mobile">{% blocktrans %}Make your voice heard with Representable <br> and put your community on the map.{% endblocktrans %}</span>
+        <span class="d-block h4 font-weight-light gray-text font-medium-mobile">{% blocktrans trimmed %}Make your voice heard with Representable <br> and put your community on the map.{% endblocktrans %}</span>
       </div>
       {% if object.slug != "tell-us-about-your" %}
         <div class="row d-none d-lg-block mt-5">
@@ -26,7 +26,7 @@
             <div class="alert alert-custom py-5 px-4">
               <h4 class="text-center font-medium-mobile"> {% trans "What is Representable?" %}</h4>
               <p class="py-4 font-weight-light font-small-mobile">
-                {% blocktrans %}
+                {% blocktrans trimmed %}
                 Representable allows people to draw communities of interest and share information about the interests and needs in those communities.
                 <br><br>Making this information available encourages mapmakers to take these communities into account during redistricting, in order to avoid gerrymandering and the “packing and cracking” of marginalized groups. </p>
                 {% endblocktrans %}

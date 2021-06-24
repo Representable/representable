@@ -55,7 +55,7 @@
           <div class="card-body">
             <h5 class="card-title header-text"><strong>{% trans "Download this map" %}</strong></h5>
             <p class="header-text small">
-              {% blocktrans %}
+              {% blocktrans trimmed %}
                 Map downloads include the community information below.
               {% endblocktrans %}
             </p>
@@ -132,6 +132,9 @@
                   <!-- ********************* -->
               </div>
             </div>
+            <p id="copy-link-text" class="header-text small mt-4 mb-0">
+              Or <a href="#" onclick="copyPageLink();event.preventDefault();">copy the link</a> to this page to share.
+            </p>
           </div>
         </div>
         <div class="card text-left border-0 w-100 rounded-lg mt-3">
@@ -244,12 +247,30 @@
                 </div>
               </div>
 
-              <div id="data-layer-col" class="col-5 col-sm-6 col-md-4 col-lg-3 p-0 mb-3 filter-col mr-5 mr-md-2 mr-xl-5">
+              <div id="data-layer-col" class="col p-0 mb-3 filter-col mr-5 mr-md-2 mr-xl-5">
                 <div class="d-none d-md-block">
-                  <button id="data-layer-btn" class="btn filter-btn btn-lg rounded m-0 bottom">{% trans "Data Layers" %} <i class="fas fa-plus ml-2 filter-sign"></i></button>
+                  <button id="data-layer-btn" class="btn filter-btn btn-lg rounded m-0 ws-normal w-100 px-2">{% trans "Data Layers" %} <i class="fas fa-plus ml-2 filter-sign"></i></button>
                 </div>
                 <div class="d-md-none">
                   <button id="mobile-data-layer-btn" class="btn filter-btn rounded m-0 w-100">{% trans "Data Layers" %} <i class="fas fa-plus ml-2 filter-sign"></i></button>
+                </div>
+              </div>
+
+              <div id="election-card" class="col-12 col-lg-8 card border-0 rounded-lg p-0 d-none mr-2 mb-3 mr-xl-3">
+                <div class="card-body pb-0">
+                  <h5 class="card-title filter-header header-text pb-2"><strong>{% trans "Election Data" %}<i class="fas fa-minus ml-2 filter-sign"></i></strong></h5>
+                  <div class="font-weight-light text-uppercase small mb-3" id="election-menu">
+                    <div id="election-text"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="election-col" class="col p-0 mb-3 filter-col mr-5 mr-md-2 mr-xl-5">
+                <div class="d-none d-md-block">
+                  <button id="election-btn" class="btn filter-btn btn-lg rounded m-0 ws-normal w-100 px-2">{% trans "Election Data" %} <i class="fas fa-plus ml-2 filter-sign"></i></button>
+                </div>
+                <div class="d-md-none">
+                  <button id="mobile-election-btn" class="btn filter-btn rounded m-0 w-100">{% trans "Election Data" %} <i class="fas fa-plus ml-2 filter-sign"></i></button>
                 </div>
               </div>
 
@@ -261,14 +282,14 @@
                         <b>Population:</b> {{ c.population }}
                         <br>
                         {% else %}
-                        <b>Demographic information will become available with the release of 2020 Census data by the US Census Bureau.</b>
+                        <b>{% trans "Demographic information will become available with the release of 2020 Census data by the US Census Bureau." %}</b>
                         {% endif %}
                   </div>
                 </div>
               </div>
-              <div id="demographics-col" class="col-5 col-sm-6 col-md-4 col-lg-3 p-0 mb-3 filter-col mr-md-2">
+              <div id="demographics-col" class="col p-0 mb-3 filter-col mr-md-2">
                 <div class="d-none d-md-block">
-                  <button id="demographics-btn" class="btn filter-btn btn-lg rounded m-0 bottom">{% trans "Demographics" %} <i class="fas fa-plus ml-2 filter-sign"></i></button>
+                  <button id="demographics-btn" class="btn filter-btn btn-lg rounded m-0 ws-normal w-100 px-2">{% trans "Demographics" %} <i class="fas fa-plus ml-2 filter-sign"></i></button>
                 </div>
                 <div class="d-md-none">
                   <button id="mobile-demographics-btn" class="btn filter-btn rounded m-0 w-100">{% trans "Demographics" %} <i class="fas fa-plus ml-2 filter-sign"></i></button>
@@ -326,7 +347,7 @@
                       <img class="mx-auto w-125 h-100" src="{% static 'img/thanks-email.svg' %}" alt="email icon"> </img>
                     </div>
                     <div class="col-lg-7">
-                      {% blocktrans %}
+                      {% blocktrans trimmed %}
                       If your state has a redistricting commission or accepts Communities of Interest, send a pdf of your community to submit as public testimony. If not, you can send it to a local redistricting organization or <a href="https://myreps.datamade.us/" target="_blank" rel="noopener noreferrer">your legislator</a>.
                       {% endblocktrans %}
                       <br>
@@ -388,7 +409,7 @@
             </div>
           </div>
           <div class="d-none" id="pdfCreatedWith">
-            <small class="text-muted">{% blocktrans %} This map was created at <a href="https://representable.org/">Representable.org {% endblocktrans %}</a></small>
+            <small class="text-muted">{% blocktrans trimmed %} This map was created at <a href="https://representable.org/">Representable.org {% endblocktrans %}</a></small>
           </div>
           <div class="d-none" id="pdfInfo">
             {% if c.economic_interests %}
@@ -450,6 +471,8 @@
           mapboxgl.accessToken = "{{ mapbox_key }}";
         </script>
         <script type="text/javascript" src="{% static 'main/js/components/keys.js' %}"></script>
+        <script type="text/javascript" src="{% static 'main/feature-lookup-tables/feature-lookup-tables.js'%}"></script>
+        <script type="text/javascript" src="{% static 'main/feature-lookup-tables/state-codes.js'%}"></script>
         <script type="text/javascript" src="{% static 'main/js/components/states.js' %}"></script>
         <script type="text/javascript" src="{% static 'main/js/submission.js' %}"></script>
         {% endblock %}
