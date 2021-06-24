@@ -725,18 +725,18 @@ function createCommPolygon() {
     }
   });
 
-  map.addLayer({
-    'id': Math.random().toString().substring(),
-    'type': 'line',
-    'source': {
-      'type': 'geojson',
-      'data': multiPolySave.geometry,
-    },
-    'paint': {
-      'line-color': '#000',
-      'line-width': 3
-    }
-  });
+  // map.addLayer({
+  //   'id': Math.random().toString().substring(),
+  //   'type': 'line',
+  //   'source': {
+  //     'type': 'geojson',
+  //     'data': multiPolySave.geometry,
+  //   },
+  //   'paint': {
+  //     'line-color': '#000',
+  //     'line-width': 3
+  //   }
+  // });
 
   // for display purposes -- this is the final multipolygon!!
   // TODO: implement community entry model change -> store only outer coordinates (like code in map.js)
@@ -766,18 +766,18 @@ function zoomToCommunity() {
   var bbox = turf.bbox(selectBbox);
 
   if(blockGroupPolygons != null && !drawUsingBlocks) {
-    map.addLayer({
-      'id': Math.random().toString().substring(),
-      'type': 'line',
-      'source': {
-        'type': 'geojson',
-        'data': turf.bboxPolygon(bbox).geometry,
-      },
-      'paint': {
-        'line-color': '#eb4034',
-        'line-width': 3
-      }
-    });
+    // map.addLayer({
+    //   'id': Math.random().toString().substring(),
+    //   'type': 'line',
+    //   'source': {
+    //     'type': 'geojson',
+    //     'data': turf.bboxPolygon(bbox).geometry,
+    //   },
+    //   'paint': {
+    //     'line-color': '#eb4034',
+    //     'line-width': 3
+    //   }
+    // });
 
     polyFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
     let bbox_adjustment = undefined;
@@ -796,18 +796,18 @@ function zoomToCommunity() {
     bbox[2] += bbox_adjustment[0];
     bbox[3] += bbox_adjustment[1];
 
-    map.addLayer({
-      'id': Math.random().toString().substring(),
-      'type': 'line',
-      'source': {
-        'type': 'geojson',
-        'data': turf.bboxPolygon(bbox).geometry,
-      },
-      'paint': {
-        'line-color': '#eb4034',
-        'line-width': 3
-      }
-    });
+    // map.addLayer({
+    //   'id': Math.random().toString().substring(),
+    //   'type': 'line',
+    //   'source': {
+    //     'type': 'geojson',
+    //     'data': turf.bboxPolygon(bbox).geometry,
+    //   },
+    //   'paint': {
+    //     'line-color': '#eb4034',
+    //     'line-width': 3
+    //   }
+    // });
     map.fitBounds(bbox, { duration: 0 });
   } else {
     map.fitBounds(bbox, { duration: 0, padding: 300 });
@@ -1308,7 +1308,8 @@ function newHighlightLayer(state, firstSymbolId, suffix) {
     firstSymbolId
   );
 }
-function isContiguous(idFilter) {
+
+function checkIsContiguous(idFilter) {
   var active_ids = new Set(idFilter.slice(2));
   if(active_ids.size == 0)
     return true;
@@ -1325,7 +1326,11 @@ function isContiguous(idFilter) {
       }
     });
   }
-  return visited.size == active_ids.size;
+
+  if(visited.size == active_ids.size)
+    hideWarningMessage();
+  else
+    showWarningMessage("WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org.");
 }
 /******************************************************************************/
 // the drawing radius for select tool
@@ -1488,7 +1493,7 @@ map.on("style.load", function () {
               showWarningMessage(
                 "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
               );
-            }   
+            }
           }
         }
       }
@@ -1530,12 +1535,11 @@ map.on("style.load", function () {
       });
     }
 
-    // if (blockGroupPolygons != null && !drawUsingBlocks) {
-    //   if(isContiguous(filter))
-    //     hideWarningMessage();
-    //   else
-    //     showWarningMessage("WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org.");
-    // }
+    if (blockGroupPolygons != null && !drawUsingBlocks) {
+      setTimeout(() => {
+        checkIsContiguous(filter);
+      }, 150);
+    }
 
     // check size of community - 800 block groups or 2400 blocks
     if ((!drawUsingBlocks && filter.length < 802) || (drawUsingBlocks && filter.length < 2402)) {
