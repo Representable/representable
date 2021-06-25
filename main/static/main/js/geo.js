@@ -711,6 +711,7 @@ function createCommPolygon() {
     layers: [state + "-census-shading-" + layer_suffix],
   });
   var multiPolySave;
+  var dane_cty_blocks = [];
   queryFeatures.forEach(function (feature) {
     // get properties, depending on the feature type
     if (drawUsingBlocks) {
@@ -719,6 +720,14 @@ function createCommPolygon() {
       featureProp = feature.properties[bg_id];
     }
     if (polyFilter.includes(featureProp)) {
+      // if dane county, add feature.properties.geoids to an array
+      if (dane_cty) {
+        geoids = feature.properties["GEOIDS"].replace(/'/g, '"');
+        geoids_array = JSON.parse(geoids);
+        for (i = 0; i < geoids_array.length; i++) {
+          dane_cty_blocks.push(parseInt(geoids_array[i]));
+        }
+      }
       if (multiPolySave === undefined) {
         multiPolySave = feature;
       } else {
@@ -738,12 +747,15 @@ function createCommPolygon() {
   // clean up polyFilter -- this is the array of GEOID to be stored
   polyFilter.splice(0, 1);
   polyFilter.splice(0, 1);
-  // TODO: add census blocks for dane county by matching municipal wards to blocks
+
+  // supply the list of block group or census block ids for addition/creation as manytomany in db
   if (!dane_cty) {
     drawUsingBlocks ? document.getElementById("id_census_blocks").value = polyFilter : document.getElementById("id_block_groups").value = polyFilter;
+  } else {
+    document.getElementById("id_census_blocks").value = dane_cty_blocks;
   }
-  console.log(document.getElementById("id_block_groups").value)
-  // load in the Population
+  // console.log(document.getElementById("id_census_blocks").value)
+  // load in the Population, if exists
   var pop = sessionStorage.getItem("pop");
   document.getElementById("id_population").value = pop;
   return true;
