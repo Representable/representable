@@ -86,9 +86,9 @@
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
-                          <h4 class="mx-md-5 px-md-5 mt-md-5"><strong>Send your map to your state.</strong></h4>
-                          <p class="mx-md-5 px-md-5">Congratulations, you have downloaded your map. Your state accepts communties of interest as public input. Visit the site below to submit your map.</p>
-                          <a id="public-comment-link-modal"><h5 class="blue-text px-md-5 mx-md-5 mb-md-5">Go to public input portal <i class="far fa-arrow-alt-circle-right"></i></h5></a>
+                          <h4 class="mx-md-5 px-md-5 mt-md-5"><strong>{% trans "Send your map to your state." %}</strong></h4>
+                          <p class="mx-md-5 px-md-5">{% trans "Congratulations, you have downloaded your map. Your state accepts communities of interest as public input. Visit the site below to submit your map." %}</p>
+                          <a id="public-comment-link-modal"><h5 class="blue-text px-md-5 mx-md-5 mb-md-5">{% trans "Go to public input portal" %} <i class="far fa-arrow-alt-circle-right"></i></h5></a>
                         </div>
                       </div>
                     </div>
@@ -133,7 +133,9 @@
               </div>
             </div>
             <p id="copy-link-text" class="header-text small mt-4 mb-0">
+              {% blocktrans trimmed %}
               Or <a href="#" onclick="copyPageLink();event.preventDefault();">copy the link</a> to this page to share.
+              {% endblocktrans %}
             </p>
           </div>
         </div>
@@ -196,17 +198,17 @@
         </div>
         <div id="public-comment-card" class="card text-left border-0 w-100 rounded-lg mt-3 mb-3 d-l-block">
           <div class="card-body">
-            <h5 class="card-title header-text"><strong>Send to your state.</strong></h5>
-            <p>Your state accepts communties of interest as public input. Download your map and then visit this site.</p>
-            <a id="public-comment-link"><h5 class="blue-text">Go to public input portal <i class="far fa-arrow-alt-circle-right"></i></h5></a>
+            <h5 class="card-title header-text"><strong>{% trans "Send to your state." %}</strong></h5>
+            <p>{% blocktrans trimmed %}Your state accepts communities of interest as public input. Download your map and then visit this site.{% endblocktrans %}</p>
+            <a id="public-comment-link"><h5 class="blue-text">{% trans "Go to public input portal" %} <i class="far fa-arrow-alt-circle-right"></i></h5></a>
           </div>
         </div>
         {% if show_form is True and not form_empty %}
         <div class="card text-left border-0 w-100 rounded-lg mt-3 mb-3 d-xl-block">
           <div class="card-body">
-            <h5 class="card-title header-text"><strong>Submit to an organization.</strong></h5>
+            <h5 class="card-title header-text"><strong>{% trans "Submit to an organization." %}</strong></h5>
             {% if c.drive is not True %}
-              <p class="header-text small">Many organizations in your state are collecting community maps. Submit yours to one of their collection drives.</p>
+              <p class="header-text small">{% blocktrans trimmed %}Many organizations in your state are collecting community maps. Submit yours to one of their collection drives.{% endblocktrans %}</p>
               <form method="post">
                 {% csrf_token %}
                 {% for field in form %}

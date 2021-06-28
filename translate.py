@@ -178,11 +178,9 @@ def _get_translations_from_doc(lang_code, service):
     return translations
 
 def output_all_msgids(lang_code, pofile, service):
-    run_makemessages(lang_code)
     _output_to_doc(lang_code, pofile, service, False)
 
 def output_needs_translation(lang_code, pofile, service):
-    run_makemessages(lang_code)
     _output_to_doc(lang_code, pofile.untranslated_entries() + pofile.fuzzy_entries(), service, True)
 
 def input_needed_translations(lang_code, pofile, pofile_path, service):
@@ -273,6 +271,9 @@ def main(argv):
         creds = get_google_creds()
         service = build('docs', 'v1', credentials=creds)
 
+    if function == Function.OUTPUT:
+        run_makemessages(lang_code)
+    
     pofile_path = "./representable/<representable>locale/{}/LC_MESSAGES/django.po".format(lang_code.value)
     pofile = polib.pofile(pofile_path)
 
