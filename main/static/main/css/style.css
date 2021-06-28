@@ -1148,6 +1148,10 @@ Entry Mapping Page
   .row-content {
     padding: 40px 40px 25px 40px;
   }
+
+  .modal-xl {
+    max-width: 80%;
+  }
 }
 
 @media (min-width: 576px) {
@@ -1557,6 +1561,9 @@ textarea.survey-field:focus {
 @media only screen and (min-width: 1025px) {
   #survey-qs-p2 {
     width: 85%;
+  }
+  .map-survey-response {
+    max-height: 80%;
   }
 }
 
