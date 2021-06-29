@@ -838,8 +838,10 @@ class ExportView(TemplateView):
             data = dict()
             if 'block_group_ids' in gj['properties']:
                 data['BLOCKID'] = gj['properties']['block_group_ids']
-            else:
+            elif 'census_block_ids' in gj['properties']:
                 data['BLOCKID'] = gj['properties']['census_block_ids']
+            else:
+                data['BLOCKID'] = 0
             data['DISTRICT'] = [1] * len(data['BLOCKID'])
             comm_csv = pd.DataFrame(data).to_csv(index=False)
             response = HttpResponse(content_type='application/zip')
@@ -1407,8 +1409,10 @@ class MultiExportView(TemplateView):
                 row_dict = dict()
                 if 'block_group_ids' in entry['properties']:
                     row_dict['BLOCKID'] = entry['properties']['block_group_ids']
-                else:
+                elif 'census_block_ids' in entry['properties']:
                     row_dict['BLOCKID'] = entry['properties']['census_block_ids']
+                else:
+                    break
                 row_dict['DISTRICT'] = [i + 1] * len(row_dict['BLOCKID'])
                 df = df.append(pd.DataFrame(row_dict))
             response = HttpResponse(df.to_csv(index=False), content_type="text/csv")
