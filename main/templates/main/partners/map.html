@@ -53,10 +53,17 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
               </div>
               <div class="row justify-content-center">
                 {% if user.is_authenticated %}
-                  {% with export_name=organization|set_export_name:drive %}
-                  <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/geo/ role="button" download="{{export_name}}_communities.geojson">{% trans "Export All as GeoJSON" %}</a>
-                  <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/csv/ role="button" download="{{export_name}}_communities.csv">{% trans "Export All as CSV" %}</a>
-                  {% endwith %}
+                  {% if drive %}
+                    {% with export_name=organization|set_export_name:drive %}
+                    <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/geo/ role="button" download="{{export_name}}_communities.geojson">{% trans "Export All as GeoJSON" %}</a>
+                    <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/csv/ role="button" download="{{export_name}}_communities.csv">{% trans "Export All as CSV" %}</a>
+                    {% endwith %}
+                  {% else %}
+                    {% with export_name=organization %}
+                    <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/geo/ role="button" download="{{export_name}}_communities.geojson">{% trans "Export All as GeoJSON" %}</a>
+                    <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/csv/ role="button" download="{{export_name}}_communities.csv">{% trans "Export All as CSV" %}</a>
+                    {% endwith %}
+                  {% endif %}
                 {% else %}
                   <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href='{% url "account_login" %}?next={{request.path}}' role="button">{% trans "Export All as GeoJSON" %}</a>
                   <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href='{% url "account_login" %}?next={{request.path}}' role="button">{% trans "Export All as CSV" %}</a>
