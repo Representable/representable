@@ -99,7 +99,7 @@
                       {% with link_text="/export/geojson/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
                       <div class="col-12 col-md-4">
                         <a class="btn btn-primary w-50 w-md-75 w-xl-100 mb-3 mb-md-0" data-toggle="modal" href="#" data-target="#geojson-explain-modal" rel="nofollow" download>GeoJSON</a>
-                        <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
+                        <a href={{link_text}} download="{{c.human_readable_name}}.zip" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
                       </div>
                       <!-- ********************* -->
                       <div class="col-12 col-md-4">
@@ -108,14 +108,14 @@
                       {% endwith %}
                       {% with link_text="/export/csv/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
                       <div class="col-12 col-md-4">
-                        <a class="btn btn-primary w-50 w-md-75 w-xl-100" href={{link_text}} role="button" download="community_{{c.entry_ID}}.csv">CSV</a>
+                        <a class="btn btn-primary w-50 w-md-75 w-xl-100" href={{link_text}} role="button" download="{{c.human_readable_name}}.zip">CSV</a>
                       </div>
                       {% endwith %}
                     {% else %}
                       {% with link_text="/export/geojson/?map_id="|addstr:c.entry_ID %}
                       <div class="col-12 col-md-4">
                         <a class="btn btn-primary w-50 w-md-75 w-xl-100 mb-3 mb-md-0" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>GeoJSON</a>
-                        <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
+                        <a href={{link_text}} download="{{c.human_readable_name}}.zip" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
                       </div>
                       <!-- ********************* -->
                       <div class="col-12 col-md-4">
@@ -124,7 +124,7 @@
                       {% endwith %}
                       {% with link_text="/export/csv"|add:"/?map_id="|addstr:c.entry_ID %}
                       <div class="col-12 col-md-4">
-                        <a class="btn btn-primary w-50 w-md-75 w-xl-100" href={{link_text}} role="button" download="community_{{c.entry_ID}}.csv">CSV</a>
+                        <a class="btn btn-primary w-50 w-md-75 w-xl-100" href={{link_text}} role="button" download="{{c.human_readable_name}}.zip">CSV</a>
                       </div>
                       {% endwith %}
                     {% endif %}
