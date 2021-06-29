@@ -286,19 +286,36 @@ class MultiExportView(TemplateView):
             all_gj.append(gj)
 
         final = geojson.FeatureCollection(all_gj)
+        # TODO: make sure name of export file matches to actual export
+        export_name = state_obj.name.replace(" ", "_") + "_communities"
 
         if(kwargs['type'] == 'geo'):
             print('********', 'geo', '********')
-            response = HttpResponse(geojson.dumps(final), content_type="application/json")
+            # create a zip file that includes geojson + readme explaining the file format and including questions from survey page
+            response = HttpResponse(content_type='application/zip')
+            with zipfile.ZipFile(response, "w") as z:
+                with z.open("%s.geojson" % export_name, "w") as c:
+                    c.write(geojson.dumps(final).encode("utf-8"))
+                z.write(STATIC_ROOT + '/main/readme/README_geojson.txt', arcname="README_geojson.txt")
+            response['Content-Disposition'] = 'attachment; filename="%s".zip' % export_name
         else:
             print('********', 'csv', '********')
             dictform = json.loads(geojson.dumps(final))
             df = pandas.DataFrame()
-            for entry in dictform['features']:
-                row_dict = entry['properties'].copy()
-                row_dict['geometry'] = str(entry['geometry'])
-                df = df.append(row_dict, ignore_index=True)
-            response = HttpResponse(df.to_csv(), content_type="text/csv")
+            for i, entry in enumerate(dictform["features"]):
+                row_dict = dict()
+                if 'block_group_ids' in entry['properties']:
+                    row_dict['BLOCKID'] = entry['properties']['block_group_ids']
+                else:
+                    row_dict['BLOCKID'] = entry['properties']['census_block_ids']
+                row_dict['DISTRICT'] = [i] * len(row_dict['BLOCKID'])
+                df = df.append(pandas.DataFrame(row_dict))
+            comm_csv = df.to_csv(index=False)
+            response = HttpResponse(content_type='application/zip')
+            with zipfile.ZipFile(response, "w") as z:
+                z.writestr('%s.csv' % export_name, comm_csv)
+                z.write(STATIC_ROOT + '/main/readme/README_csv.txt', arcname="README_csv.txt")
+            response['Content-Disposition'] = 'attachment; filename=%s.zip' % export_name
 
         return response
 
