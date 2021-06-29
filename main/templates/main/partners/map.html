@@ -59,7 +59,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                     <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/csv/ role="button" download="{{export_name}}_communities.csv">{% trans "Export All as CSV" %}</a>
                     {% endwith %}
                   {% else %}
-                    {% with export_name=organization %}
+                    {% with export_name=organization|replace_spaces %}
                     <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/geo/ role="button" download="{{export_name}}_communities.geojson">{% trans "Export All as GeoJSON" %}</a>
                     <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href={{multi_export_link}}/csv/ role="button" download="{{export_name}}_communities.csv">{% trans "Export All as CSV" %}</a>
                     {% endwith %}

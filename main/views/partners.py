@@ -21,6 +21,8 @@ from django.views.generic import (
 # import boto3
 # import botocore
 import pandas
+import zipfile
+from representable.settings.base import STATIC_ROOT
 from django.contrib.gis import geos
 from django.contrib.gis.geos import GEOSGeometry, MultiPolygon, Polygon
 
@@ -286,8 +288,13 @@ class MultiExportView(TemplateView):
             all_gj.append(gj)
 
         final = geojson.FeatureCollection(all_gj)
-        # TODO: make sure name of export file matches to actual export
-        export_name = state_obj.name.replace(" ", "_") + "_communities"
+        # setting name of exported file
+        if drive:
+            drive_obj = Drive.objects.get(slug=drive)
+            export_name = drive_obj.name.replace(" ", "_") + "_communities"
+        else:
+            org_obj = Organization.objects.get(slug=org)
+            export_name = org_obj.name.replace(" ", "_") + "_communities"
 
         if(kwargs['type'] == 'geo'):
             print('********', 'geo', '********')
@@ -297,7 +304,7 @@ class MultiExportView(TemplateView):
                 with z.open("%s.geojson" % export_name, "w") as c:
                     c.write(geojson.dumps(final).encode("utf-8"))
                 z.write(STATIC_ROOT + '/main/readme/README_geojson.txt', arcname="README_geojson.txt")
-            response['Content-Disposition'] = 'attachment; filename="%s".zip' % export_name
+            response['Content-Disposition'] = 'attachment; filename=%s.zip' % export_name
         else:
             print('********', 'csv', '********')
             dictform = json.loads(geojson.dumps(final))
@@ -306,9 +313,11 @@ class MultiExportView(TemplateView):
                 row_dict = dict()
                 if 'block_group_ids' in entry['properties']:
                     row_dict['BLOCKID'] = entry['properties']['block_group_ids']
-                else:
+                elif 'census_block_ids' in entry['properties']:
                     row_dict['BLOCKID'] = entry['properties']['census_block_ids']
-                row_dict['DISTRICT'] = [i] * len(row_dict['BLOCKID'])
+                else:
+                    break
+                row_dict['DISTRICT'] = [i + 1] * len(row_dict['BLOCKID'])
                 df = df.append(pandas.DataFrame(row_dict))
             comm_csv = df.to_csv(index=False)
             response = HttpResponse(content_type='application/zip')
