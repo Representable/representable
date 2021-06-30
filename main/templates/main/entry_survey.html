@@ -338,6 +338,13 @@
                   <div class="sr-only">{{ comm_form.custom_response.label_tag }}</div>
                   {{ comm_form.custom_response|append_attr:"class:form-control survey-field" }}
                 {% endif %}
+
+                <p class="my-4 ml-1 gray-text">
+                  <b>What are the main topics relevant to your community?</b><br>
+                </p>
+                <div class="sr-only">{{ comm_form.tags.label_tag }}</div>
+                {{ comm_form.tags|append_attr:"class:form-control survey-field" }}
+
             </div>
             <div class="row pt-5">
                 <div class="col text-center">

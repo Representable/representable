@@ -341,6 +341,27 @@ function startSurvey() {
   $("#entry-survey-start").addClass("d-none");
   $("#survey-qs-p1").removeClass("d-none");
   $("#2to3").addClass("h-50");
+  // TODO: update so that these are objects, then they will show up
+  // move this outside this function and load in existing tags from server
+  // tags = ["climate", "housing", "economic", "environment"];
+  //
+  // var tagnames = new Bloodhound({
+  //   datumTokenizer: Bloodhound.tokenizers.whitespace,
+  //   queryTokenizer: Bloodhound.tokenizers.whitespace,
+  //   local: tags,
+  // });
+  tagnames.initialize();
+  $('#id_tags').tagsinput({
+    maxTags: 3,
+    maxChars: 8,
+    trimValue: true,
+    // typeaheadjs: {
+    //   name: 'tagnames',
+    //   source: tagnames.ttAdapter(),
+    // }
+  });
+
+  $('.bootstrap-tagsinput').addClass(['form-control', 'survey-field']);
   automaticScrollToTop();
 }
 
@@ -362,6 +383,7 @@ function surveyP2ToP1() {
   $("#survey-qs-p2").addClass("d-none");
   $("#survey-qs-p1").removeClass("d-none");
   $("#2to3").addClass("h-50").removeClass("h-75");
+  $('.bootstrap-tagsinput').addClass(['form-control', 'survey-field']);
   automaticScrollToTop();
 }
 

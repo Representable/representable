@@ -1328,6 +1328,29 @@ Entry Mapping Page
   color: #00c6a7;
 }
 
+/* styling tags portion of form field */
+.bootstrap-tagsinput .tag {
+    color: black;
+    background: transparent;
+    border-radius: 3rem;
+    border: solid #000;
+    border-width: 2px;
+    padding: .375rem .75rem;
+    display: inline-block;
+}
+.bootstrap-tagsinput {
+    box-shadow: none;
+    height: calc(3.25rem + 2px);
+}
+.bootstrap-tagsinput input {
+  margin-top: .7rem;
+  margin-left: .45rem;
+}
+.bootstrap-tagsinput .tag [data-role="remove"]:after {
+  color: gray;
+  vertical-align: 8%;
+}
+
 /* Optional: Style the caret down icon */
 .fa-caret-down {
   float: right;
