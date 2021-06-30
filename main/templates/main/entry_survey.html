@@ -213,8 +213,9 @@
             <div class="entry-header">
                 <strong>{% trans "What unites your Community of Interest?" %}</strong>
             </div>
+            <!-- TODO : change padding to be 1px less on the left -->
             <div class="py-3 px-4 light-blue-bg opacity-4 mt-2">
-                <button class="btn btn-link ws-normal btn-no-focus-outline bg-transparent text-left my-0 p-0 no-underline-link" aria-expanded="false" aria-controls="collapseCriteria" onclick="toggleAngle(this)" type="button">
+                <button class="btn btn-link ws-normal btn-no-focus-outline bg-transparent text-left my-0 p-0 no-underline-link border-0" aria-expanded="false" aria-controls="collapseCriteria" onclick="toggleAngle(this)" type="button">
                 <h5 style="width: fit-content; color: initial;">{% trans "Community of Interest Definition in " %} {{ state_obj.name }} &#32;<i class="fas fa-angle-down pl-3"></i></h5>
                 </button>
                 <div class="collapse mt-2" id="collapseCriteria">
@@ -319,7 +320,7 @@
                         &emsp; - {% trans "What should politicians and/or map drawers know about your community?" %}<br>
                         &emsp; - {% trans "What are the needs of your community?" %}<br>
                         &emsp; - {% trans "Is there anything else you want to tell us about your community?" %}<br><br>
-                        <span class="blue-text"><b>{% trans "Examples of needs or concerns:" %}</b>{% trans "Keep community in the same district or separate into multiple districts, shared policy concerns, need for a social service, relationship to other nearby communities, issues with current district lines" %}</span>
+                        <span class="blue-text"><b>{% trans "Examples of needs or concerns: " %}</b>{% trans "Keep community in the same district or separate into multiple districts, shared policy concerns, need for a social service, relationship to other nearby communities, issues with current district lines" %}</span>
                       </p>
                     </div>
                 </div>
@@ -389,7 +390,7 @@
                     </div>
 
                     <div class="row m-0 pt-3 info-text">
-                        <p class="small" style="color: #5996D2">
+                        <p class="" style="color: #5996D2">
                             <strong>{% trans "Examples" %}:</strong> {% trans "Cherry Farmers Community, St. Peters Church Community, Riverside Fishing Community" %}
                         </p>
                     </div>

@@ -42,6 +42,8 @@ if (dane_cty) {
   state = "dane";
   layer_suffix="wards";
   initialZoom = 10;
+  // set units link on modal to be municipal wards
+  $("#units-link").html("<strong>municipal wards</strong>")
 }
 // stack of filters (which block to highlight) and bounding boxes (for contiguity check)
 var filterStack = JSON.parse(sessionStorage.getItem("filterStack"));
@@ -715,6 +717,7 @@ function createCommPolygon() {
     layers: [state + "-census-shading-" + layer_suffix],
   });
   var multiPolySave;
+  var dane_cty_blocks = [];
   queryFeatures.forEach(function (feature) {
     // get properties, depending on the feature type
     if (drawUsingBlocks) {
@@ -723,6 +726,14 @@ function createCommPolygon() {
       featureProp = feature.properties[bg_id];
     }
     if (polyFilter.includes(featureProp)) {
+      // if dane county, add feature.properties.geoids to an array
+      if (dane_cty) {
+        geoids = feature.properties["GEOIDS"].replace(/'/g, '"');
+        geoids_array = JSON.parse(geoids);
+        for (i = 0; i < geoids_array.length; i++) {
+          dane_cty_blocks.push(parseInt(geoids_array[i]));
+        }
+      }
       if (multiPolySave === undefined) {
         multiPolySave = feature;
       } else {
@@ -755,11 +766,15 @@ function createCommPolygon() {
   // clean up polyFilter -- this is the array of GEOID to be stored
   polyFilter.splice(0, 1);
   polyFilter.splice(0, 1);
-  // if (!dane_cty) {
-  //   drawUsingBlocks ? document.getElementById("id_census_blocks").value = polyFilter : document.getElementById("id_block_groups").value = polyFilter;
-  // }
-  // console.log(document.getElementById("id_block_groups").value)
-  // load in the Population
+
+  // supply the list of block group or census block ids for addition/creation as manytomany in db
+  if (!dane_cty) {
+    drawUsingBlocks ? document.getElementById("id_census_blocks").value = polyFilter : document.getElementById("id_block_groups").value = polyFilter;
+  } else {
+    document.getElementById("id_census_blocks").value = dane_cty_blocks;
+  }
+  // console.log(document.getElementById("id_census_blocks").value)
+  // load in the Population, if exists
   var pop = sessionStorage.getItem("pop");
   document.getElementById("id_population").value = pop;
   return true;
@@ -979,6 +994,7 @@ modalGeocoder.on('result', function () {
 /* Creating custom draw buttons */
 class DropdownButton {
   onAdd(map) {
+    // TODO: change based on design from olivia - make more playful in shape
     var dropdown_control = document.createElement("button");
     dropdown_control.href = "#";
     dropdown_control.type = "button";
@@ -987,7 +1003,7 @@ class DropdownButton {
     dropdown_control.classList.add("active");
     dropdown_control.id = "map-dropdown-id";
     dropdown_control.style.display = "block";
-    dropdown_control.innerHTML = '<i class="fas fa-cog"></i>'; //&emsp;<i class="fas fa-caret-down"></i>
+    dropdown_control.innerHTML = '<i class="fas fa-paint-brush"></i> Selection Size'; //&emsp;<i class="fas fa-caret-down"></i>
 
     this._map = map;
     this._container = document.createElement("div");
@@ -1012,11 +1028,11 @@ class SelectRadiusButton {
     radius_control.type = "button";
     radius_control.backgroundImg = "";
 
-    radius_control.classList.add("active");
+    radius_control.classList.add("active", "nohover");
     radius_control.id = "map-radius-control-id";
     radius_control.style.display = "none";
     radius_control.innerHTML =
-      '<form><label for="radius-control" class="sr-only">Choose a selection size: </label><input type="range" min="0" max="50" value="0" class="custom-range" id="radius-control"><p style="margin: 0;">Selection Tool Size</p></form>';
+      '<form><label for="radius-control" class="sr-only">Choose a selection size: </label><input type="range" min="0" max="50" value="0" class="custom-range" style="width:75%;" id="radius-control"></form>';
     this._map = map;
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group draw-group";
@@ -1061,7 +1077,7 @@ class DrawButton {
     draw_button.classList.add("active");
     draw_button.id = "map-draw-button-id";
     draw_button.style.display = "none";
-    draw_button.innerHTML = "<i class='fas fa-pencil-alt'></i> Draw";
+    draw_button.innerHTML = '<i class="fas fa-paint-brush"></i> Draw';
     this._map = map;
     return draw_button;
   }
@@ -1085,7 +1101,7 @@ class EraserButton {
     eraser_button.classList.add("active");
     eraser_button.id = "map-eraser-button-id";
     eraser_button.style.display = "none";
-    eraser_button.innerHTML = "<i class='fas fa-eraser'></i> Eraser";
+    eraser_button.innerHTML = "<i class='fas fa-eraser'></i> Erase";
     this._map = map;
     return eraser_button;
   }
@@ -1171,7 +1187,7 @@ class ClearMapButton {
     clear_button.classList.add("active");
     clear_button.id = "map-clear-button-id";
     clear_button.style.display = "none";
-    clear_button.innerHTML = "<i class='fas fa-trash-alt'></i> Clear Selection";
+    clear_button.innerHTML = "<i class='fas fa-trash-alt'></i> Clear Map";
     this._map = map;
     clear_button.addEventListener("click", function (event) {
       // check for empty map -- raise warning message if so
@@ -1214,10 +1230,12 @@ var basicMode = true;
 dropdownButton.addEventListener("click", function (e) {
   if (mapClearButton.style.display === "none") {
     dropdownButton.innerHTML =
-      '<i class="fas fa-cog"></i> Settings <i class="fas fa-caret-up"></i>';
+      '<i class="fas fa-paint-brush"></i> Selection Size <i class="fas fa-caret-up"></i>';
     basicMode = false;
+    dropdownButton.classList.add("nohover");
   } else {
-    dropdownButton.innerHTML = '<i class="fas fa-cog">';
+    dropdownButton.innerHTML = '<i class="fas fa-paint-brush"></i> Selection Size';
+    dropdownButton.classList.remove("nohover");
     if (drawRadius === 0) basicMode = true;
   }
   var children = drawControls.children;
