@@ -117,6 +117,7 @@ import base64
 from django.template import loader
 import shapely.wkt
 import reverse_geocoder as rg
+from taggit.models import Tag
 from state_abbrev import us_state_abbrev
 from django.contrib.auth.models import Group
 from itertools import islice
@@ -1028,6 +1029,11 @@ class EntryView(LoginRequiredMixin, View):
         has_token = False
         if kwargs["token"]:
             has_token = True
+
+        # all tags already in db for tagging typeahead
+        # TODO: fix this to be all tags in just name: text format
+        all_tags = serialize("json", Tag.objects.all())
+        print(all_tags)
 
         address_required = True
         has_drive = False
