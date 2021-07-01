@@ -1295,7 +1295,9 @@ class EntryView(LoginRequiredMixin, View):
                 )
                 del addres["id"]
                 finalres.update(addres)
+                print("polygon: " + finalres["census_blocks_polygon"])
                 string_to_hash = str(finalres)
+                print("string_to_hash: " + string_to_hash)
 
             digest = hmac.new(
                 bytes(os.environ.get("AUDIT_SECRET"), encoding="utf8"),
