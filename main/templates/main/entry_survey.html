@@ -350,6 +350,16 @@
                 </div>
                 <div class="sr-only">{{ comm_form.tags.label_tag }}</div>
                 {{ comm_form.tags|append_attr:"class:form-control survey-field" }}
+                <div class="accordion" id="add_tag_accordion">
+                    <button class="btn btn-link text-left pl-0" style="text-decoration:underline;" type="button" data-toggle="collapse" data-target="#add_tag_example" aria-expanded="false" aria-controls="collapseOne">
+                    <small>{% trans "Don't see your topic?" %}</small>
+                    </button>
+                    <div id="add_tag_example" class="collapse" aria-labelledby="add_tag_accordion" data-parent="#add_tag_accordion">
+                        <p class="collapse-in ml-0 small">
+                            {% blocktrans trimmed %} Try typing a term similar to what you have in mind. If you still have a tag you want to add that isn't available, contact our team with your tag request by emailing <a href="mailto:team@representable.org">team@representable.org</a>. {% endblocktrans%}
+                        </p>
+                    </div>
+                </div>
 
             </div>
             <div class="row pt-5">

@@ -340,9 +340,10 @@ function surveyStartToAddress() {
 // move this outside this function and load in existing tags from server
 tags_repl = tags.replaceAll('&#x27;', '"');
 tagslist = JSON.parse(tags_repl);
+console.log(tagslist);
 
 var tagnames = new Bloodhound({
-  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
   queryTokenizer: Bloodhound.tokenizers.whitespace,
   local: tagslist,
 });
@@ -350,8 +351,10 @@ tagnames.initialize();
 
 // for each top-tag class, add an onclick function which adds that tag to the tagsinput (if possible)
 // if not possible, display an error message -- you cannot add more than five tags to your community.
+var tagTopId = 999;
 $(".tag-top").on('click', function(){
-   $('#id_tags').tagsinput('add', $(this).text());
+   $('#id_tags').tagsinput('add', {'value': tagTopId, 'text': $(this).text()});
+   tagTopId++;
 });
 
 $('#id_tags').on('itemAdded', function(event) {
@@ -379,12 +382,13 @@ function startSurvey() {
   $("#2to3").addClass("h-50");
   $('#id_tags').tagsinput({
     maxTags: 5,
-    maxChars: 18,
+    maxChars: 22,
     trimValue: true,
+    itemValue: "value",
+    itemText: "text",
     typeaheadjs: {
       name: 'tagnames',
-      displayKey: 'name',
-      valueKey: 'name',
+      displayKey: 'text',
       source: tagnames.ttAdapter(),
     }
   });

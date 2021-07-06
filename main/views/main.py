@@ -1035,7 +1035,7 @@ class EntryView(LoginRequiredMixin, View):
         all_tags = Tag.objects.all()
         tags_arr = []
         for i, c in enumerate(all_tags):
-            tags_arr.append({"name": c.name})
+            tags_arr.append({"value": i, "text": c.name})
         top_tags_query = CommunityEntry.tags.most_common()[:15]
         top_tags = []
         for i, c in enumerate(top_tags_query):
