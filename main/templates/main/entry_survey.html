@@ -341,7 +341,13 @@
 
                 <p class="my-4 ml-1 gray-text">
                   <b>What are the main topics relevant to your community?</b><br>
+                  <span class="small text-muted">Add up to five tags that describe your community.</span>
                 </p>
+                <div class="mb-4">
+                  {% for tag in top_tags %}
+                  <button type="button" class="btn btn-outline-secondary tag-top mb-2">{{ tag }}</button>
+                  {% endfor %}
+                </div>
                 <div class="sr-only">{{ comm_form.tags.label_tag }}</div>
                 {{ comm_form.tags|append_attr:"class:form-control survey-field" }}
 

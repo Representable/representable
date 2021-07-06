@@ -1031,9 +1031,15 @@ class EntryView(LoginRequiredMixin, View):
             has_token = True
 
         # all tags already in db for tagging typeahead
-        # TODO: fix this to be all tags in just name: text format
-        all_tags = serialize("json", Tag.objects.all())
-        print(all_tags)
+        # also the top 15 tags as options to select
+        all_tags = Tag.objects.all()
+        tags_arr = []
+        for i, c in enumerate(all_tags):
+            tags_arr.append({"name": c.name})
+        top_tags_query = CommunityEntry.tags.most_common()[:15]
+        top_tags = []
+        for i, c in enumerate(top_tags_query):
+            top_tags.append(c.name)
 
         address_required = True
         has_drive = False
@@ -1098,6 +1104,8 @@ class EntryView(LoginRequiredMixin, View):
             "address_required": address_required,
             "state_obj": State.objects.get(abbr=abbr.upper()),
             "page_type": "entry",  # For the base template to check and remove footer
+            "tags": tags_arr,
+            "top_tags": top_tags,
         }
         return render(request, self.template_name, context)
 

@@ -338,14 +338,38 @@ function surveyStartToAddress() {
 
 // TODO: update so that these are objects, then they will show up
 // move this outside this function and load in existing tags from server
-tags = ["climate", "housing", "economic", "environment"];
+tags_repl = tags.replaceAll('&#x27;', '"');
+tagslist = JSON.parse(tags_repl);
 
 var tagnames = new Bloodhound({
-  datumTokenizer: Bloodhound.tokenizers.whitespace,
+  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
   queryTokenizer: Bloodhound.tokenizers.whitespace,
-  local: tags,
+  local: tagslist,
 });
 tagnames.initialize();
+
+// for each top-tag class, add an onclick function which adds that tag to the tagsinput (if possible)
+// if not possible, display an error message -- you cannot add more than five tags to your community.
+$(".tag-top").on('click', function(){
+   $('#id_tags').tagsinput('add', $(this).text());
+});
+
+$('#id_tags').on('itemAdded', function(event) {
+  // if this is the fifth tag, gray out the buttons
+  if ($('.bootstrap-tagsinput-max').length > 0) {
+    $(".tag-top").addClass('disabled');
+  }
+  $('.bootstrap-tagsinput input').addClass('m-0');
+  $('.bootstrap-tagsinput input').attr('placeholder', '');
+});
+
+$('#id_tags').on('itemRemoved', function(event) {
+  // if this is the fifth tag, gray out the buttons
+  if ($('.bootstrap-tagsinput-max').length === 0) {
+    $(".tag-top").removeClass('disabled');
+  }
+  if ($(this).val().length === 0) $('.bootstrap-tagsinput input').removeClass('m-0');
+});
 
 
 // changes page entry page from the survey start page to the first part of the survey
@@ -354,11 +378,13 @@ function startSurvey() {
   $("#survey-qs-p1").removeClass("d-none");
   $("#2to3").addClass("h-50");
   $('#id_tags').tagsinput({
-    maxTags: 3,
-    maxChars: 8,
+    maxTags: 5,
+    maxChars: 18,
     trimValue: true,
     typeaheadjs: {
       name: 'tagnames',
+      displayKey: 'name',
+      valueKey: 'name',
       source: tagnames.ttAdapter(),
     }
   });
