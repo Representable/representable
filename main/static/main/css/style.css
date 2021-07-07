@@ -916,6 +916,11 @@ Entry Mapping Page
   margin: 1rem 1rem 0 0;
 }
 
+.mapboxgl-ctrl-group {
+  border-radius: 10px;
+  background: rgba(247, 247, 247, 1);
+}
+
 .mapboxgl-ctrl-geocoder .geocoder-icon-search {
   top: 15px;
 }
@@ -923,6 +928,14 @@ Entry Mapping Page
 .mapboxgl-ctrl-geocoder input[type='text'] {
   font-size: 1rem;
   height: 50px;
+}
+
+#map-radius-control-id {
+  border: 0;
+}
+
+.nohover:hover {
+  background-color: rgba(0, 0, 0, 0) !important;
 }
 
 #modal-geocoder .mapboxgl-ctrl-geocoder {
@@ -954,6 +967,7 @@ Entry Mapping Page
 
 #map-comm-menu {
   top: 10px !important;
+  width: max-content;
 }
 
 #map-top-row {
@@ -1023,7 +1037,7 @@ Entry Mapping Page
 .comm-info-text {
   color:#2A94F4;
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
 }
 
 .comm-item-text {
@@ -1036,7 +1050,7 @@ Entry Mapping Page
 .map-survey-response {
   color: #1b7a9f;
   font-weight: normal;
-  max-height: 200px;
+  max-height: 290px;
   overflow: scroll;
 }
 
@@ -1069,6 +1083,7 @@ Entry Mapping Page
   background-color: #DAEFFF;
   opacity: 0.9;
   width: auto;
+  height: 93%;
   white-space: unset;
 }
 
@@ -1132,6 +1147,10 @@ Entry Mapping Page
 
   .row-content {
     padding: 40px 40px 25px 40px;
+  }
+
+  .modal-xl {
+    max-width: 80%;
   }
 }
 
@@ -1425,14 +1444,14 @@ Entry Form Management
 }
 
 .survey-field {
-  background: #DAEFFF;
+  background: #F2FAFF 80%;
   opacity: 0.8;
   border: none;
   outline: none;
 }
 
 .survey-field:focus {
-  background: #DAEFFF;
+  background: #F2FAFF 80%;
   border: none;
   outline: none;
 }
@@ -1542,6 +1561,9 @@ textarea.survey-field:focus {
 @media only screen and (min-width: 1025px) {
   #survey-qs-p2 {
     width: 85%;
+  }
+  .map-survey-response {
+    max-height: 80%;
   }
 }
 
@@ -2304,9 +2326,8 @@ height:25vh!important;
 }
 
 /* Makes buttons on submission page equal widths */
-#election-btn, #mobile-election-btn, #data-layer-btn, 
-#mobile-data-layer-btn, #demographics-btn, 
+#election-btn, #mobile-election-btn, #data-layer-btn,
+#mobile-data-layer-btn, #demographics-btn,
 #mobile-demographics-btn {
   width: 215px;
 }
-
