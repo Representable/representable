@@ -127,7 +127,6 @@ from django.conf import settings
 import ssl
 
 
-
 # ******************************************************************************#
 
 # must be imported after other models
@@ -1246,9 +1245,7 @@ class EntryView(LoginRequiredMixin, View):
                     for field in entryForm._meta.fields
                 ]
             )
-            finalres["census_blocks_polygon"] = str(
-                entryForm.census_blocks_polygon
-            )
+            finalres["census_blocks_polygon"] = shapely.wkt.dumps(shapely.wkt.loads(str(entryForm.census_blocks_polygon)[10:]), rounding_precision=10)
             finalres["user"] = entryForm.user.email
             if entryForm.organization:
                 finalres["organization"] = entryForm.organization.name
@@ -1260,7 +1257,6 @@ class EntryView(LoginRequiredMixin, View):
             string_to_hash = str(finalres)
             print("finalres: ")
             print(finalres)
-
 
             if (
                 flagText(comm_form.data["entry_name"])

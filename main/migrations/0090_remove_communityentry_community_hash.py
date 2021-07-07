@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0089_auto_20210629_2238'),
+        ("main", "0089_auto_20210629_2238"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='communityentry',
-            name='community_hash',
+            model_name="communityentry",
+            name="community_hash",
         ),
     ]

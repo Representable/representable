@@ -6,17 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0087_communityentry_test'),
+        ("main", "0087_communityentry_test"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='communityentry',
-            name='test',
+            model_name="communityentry",
+            name="test",
         ),
         migrations.AddField(
-            model_name='communityentry',
-            name='community_hash',
-            field=models.CharField(default='', max_length=256),
+            model_name="communityentry",
+            name="community_hash",
+            field=models.CharField(default="", max_length=256),
         ),
     ]
