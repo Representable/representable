@@ -340,7 +340,6 @@ function surveyStartToAddress() {
 // move this outside this function and load in existing tags from server
 tags_repl = tags.replaceAll('&#x27;', '"');
 tagslist = JSON.parse(tags_repl);
-console.log(tagslist);
 
 var tagnames = new Bloodhound({
   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),

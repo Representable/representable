@@ -829,7 +829,6 @@ class ExportView(TemplateView):
                 folder_name = query.drive.slug
             else:
                 folder_name = query.state
-        print(folder_name)
 
         gj = make_geojson(request, query)
 
