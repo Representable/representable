@@ -20,6 +20,8 @@
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
+var visible = null;
+
 var map = new mapboxgl.Map({
   container: "map", // container id
   style: "mapbox://styles/mapbox/light-v9", //color of the map -- dark-v10 or light-v9 or streets-v11
@@ -53,216 +55,15 @@ if (!window.matchMedia("only screen and (max-width: 760px)").matches) {
   map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
 }
 
-// add a new source layer
-function newSourceLayer(name, mbCode) {
-  map.addSource(name, {
-    type: "vector",
-    url: "mapbox://" + mapbox_user_name + "." + mbCode,
-  });
-}
-
-// add a new mapbox boundaries source + layer
-function newBoundariesLayer(name) {
-  map.addSource(name, {
-    type: "vector",
-    url: "mapbox://mapbox.boundaries-" + name + "-v3"
-  });
-  map.addLayer(
-    {
-      id: name + "-lines",
-      type: "line",
-      source: name,
-      "source-layer": "boundaries_" + BOUNDARIES_ABBREV[removeLastChar(name)] + "_" + name.slice(-1),
-      layout: {
-        visibility: "none"
-      },
-      paint: {
-        "line-color": BOUNDARIES_COLORS[name],
-        "line-opacity": 0.7,
-        "line-width": 2,
-      }
-    }
-  );
-
-  // TODO: insert label code here
-
-}
-
 var community_bounds = {};
 var coidata;
 var shownCois = new Set(); // Tracks the ids of the cois that are selected to be "only show"
 var coidata_geojson_format;
 const mxzoom = 10, tol = 3.5;
+
 map.on("load", function () {
   var layers = map.getStyle().layers;
-  // Find the index of the first symbol layer in the map style
-  // only necessary for making added layers appear "beneath" the existing layers (roads, place names, etc)
-  // var firstSymbolId;
-  // for (var i = 0; i < layers.length; i++) {
-  //   if (layers[i].type === "symbol" && layers[i] !== "road") {
-  //     firstSymbolId = layers[i].id;
-  //     break;
-  //   }
-  // }
-  /****************************************************************************/
-  // school districts as a data layer
-  newSourceLayer("school-districts", SCHOOL_DISTR_KEY);
-  map.addLayer(
-    {
-      id: "school-districts-lines",
-      type: "line",
-      source: "school-districts",
-      "source-layer": "us_school_districts",
-      layout: {
-        visibility: "none",
-      },
-      paint: {
-        "line-color": BOUNDARIES_COLORS["school"],
-        "line-opacity": 0.7,
-        "line-width": 2,
-      },
-    }
-  );
-  // TODO: insert label code here
-
-  // tribal boundaries as a data layer
-  newSourceLayer("tribal-boundaries", TRIBAL_BOUND_KEY);
-  map.addLayer({
-    id: "tribal-boundaries-lines",
-    type: "line",
-    source: "tribal-boundaries",
-    "source-layer": "tl_2020_us_aiannh", //-7f7uk7
-    layout: {
-      visibility: "none",
-    },
-    paint: {
-      "line-color": BOUNDARIES_COLORS["tribal"],
-      "line-opacity": 0.7,
-      "line-width": 2,
-    },
-  });
-  // ward + community areas for IL
-  if (state === "il") {
-    newSourceLayer("chi_wards", CHI_WARD_KEY);
-    newSourceLayer("chi_comm", CHI_COMM_KEY);
-    map.addLayer(
-      {
-        id: "chi-ward-lines",
-        type: "line",
-        source: "chi_wards",
-        "source-layer": "chi_wards",
-        layout: {
-          visibility: "none",
-        },
-        paint: {
-          "line-color": BOUNDARIES_COLORS["chi-ward"],
-          "line-opacity": 0.7,
-          "line-width": 2,
-        },
-      }
-    );
-    // TODO: insert label code here
-
-    map.addLayer(
-      {
-        id: "chi-comm-lines",
-        type: "line",
-        source: "chi_comm",
-        "source-layer": "chi_comm",
-        layout: {
-          visibility: "none",
-        },
-        paint: {
-          "line-color": BOUNDARIES_COLORS["chi-comm"],
-          "line-opacity": 0.7,
-          "line-width": 2,
-        },
-      }
-    );
-    // TODO: insert label code here
-
-  }
-  if (state === "ny") {
-    newSourceLayer("nyc-city-council", NYC_COUNCIL_KEY);
-    map.addLayer({
-      id: "nyc-city-council-lines",
-      type: "line",
-      source: "nyc-city-council",
-      "source-layer": "nyc_council-08swpg",
-      layout: {
-        visibility: "none",
-      },
-      paint: {
-        "line-color": BOUNDARIES_COLORS["nyc"],
-        "line-opacity": 0.7,
-        "line-width": 2,
-      },
-    });
-    newSourceLayer("nyc-state-assembly", NYC_STATE_ASSEMBLY_KEY);
-    map.addLayer({
-      id: "nyc-state-assembly-lines",
-      type: "line",
-      source: "nyc-state-assembly",
-      "source-layer": "nyc_state_assembly-5gr5zo",
-      layout: {
-        visibility: "none",
-      },
-      paint: {
-        "line-color": BOUNDARIES_COLORS["nyc_assembly"],
-        "line-opacity": 0.7,
-        "line-width": 2,
-      },
-    });
-  }
-
-  // add precinct lines and fill
-  if (HAS_PRECINCTS.indexOf(state) != -1) {
-    newSourceLayer("smaller_combined_precincts", PRECINCTS_KEY);
-    map.addLayer({
-      id: "smaller_combined_precincts-lines",
-      type: "line",
-      source: "smaller_combined_precincts",
-      "source-layer": "smaller_combined_precincts",
-      layout: {
-        visibility: "none",
-      },
-      paint: {
-        "line-color": BOUNDARIES_COLORS["nyc"],
-        "line-opacity": 0.7,
-        "line-width": 2,
-      },
-    });
-    map.addLayer({
-      // copied from openprecincts colors
-      id: "smaller_combined_precincts-fill",
-      type: "fill",
-      source: "smaller_combined_precincts",
-      "source-layer": "smaller_combined_precincts",
-      layout: {
-        visibility: "none",
-      },
-      paint: {
-        "fill-outline-color": "rgb(0,0,0)",
-        "fill-opacity": 0.3,
-      },
-    });
-  }
-  else {
-    var txt_box = document.getElementById("no-election-text");
-    txt_box.innerHTML = "<b>Election data is not yet available for this state.</b>"
-  }
-
-  // leg2 : congressional district
-  // leg3 : state senate district
-  // leg4 : state house district
-  // adm2 : counties
-  // loc4 : neighborhoods
-  // pos4 : 5-digit postcode area
-  // sta5 : block groups
-  for (var key in BOUNDARIES_LAYERS) {
-    newBoundariesLayer(key);
-  }
-
+  addAllLayers(map, document, "map");
   // draw all coi's in one layer
   coidata = JSON.parse(coidata.replace(/'/g, '"'));
 
@@ -446,158 +247,11 @@ document.querySelectorAll(".comm-content").forEach(function (p) {
   });
 });
 
-//create a button that toggles layers based on their IDs
-var toggleableLayerIds = JSON.parse(JSON.stringify(BOUNDARIES_LAYERS));
-toggleableLayerIds["school-districts"] = "School Districts";
-toggleableLayerIds["tribal-boundaries"] = "2010 Census Tribal Boundaries";
-// add selector for chicago wards + community areas if illinois
-if (state === "il") {
-  toggleableLayerIds["chi-ward"] = "Chicago Wards";
-  toggleableLayerIds["chi-comm"] = "Chicago Community Areas";
-}
-if (state === "ny") {
-  toggleableLayerIds["nyc-city-council"] = "New York City Council districts";
-  toggleableLayerIds["nyc-state-assembly"] = "New York City state assembly districts";
-}
-if (HAS_PRECINCTS.indexOf(state) != -1) {
-  toggleableLayerIds["smaller_combined_precincts"] = "Precinct boundaries";
-}
 
-for (var id in toggleableLayerIds){
+var toggleableLayerIds = getToggleableLayerIds(state);
+addDataSwitches(map, document, "map", visible);
+addElections(map, document, "map");
 
-  var link = document.createElement("input");
-
-  link.value = id;
-  link.id = id;
-  link.type = "checkbox";
-  link.className = "switch_1";
-  link.checked = false;
-
-  link.onchange = function (e) {
-    var txt = this.id;
-    // var clickedLayers = [];
-    // clickedLayers.push(txt + "-lines");
-    e.preventDefault();
-    e.stopPropagation();
-
-    var visibility = map.getLayoutProperty(txt + "-lines", "visibility");
-
-    if (visibility === "visible") {
-      map.setLayoutProperty(txt + "-lines", "visibility", "none");
-    } else {
-      // set all other layers to not visible, uncheck the display box for all other layers
-      map.setLayoutProperty(txt + "-lines", "visibility", "visible");
-      for (var layerID in toggleableLayerIds) {
-        if (layerID != txt) {
-          map.setLayoutProperty(layerID + "-lines", "visibility", "none");
-          var button = document.getElementById(layerID);
-          button.checked = false;
-        }
-      }
-    }
-  };
-  // in order to create the buttons
-  var div = document.createElement("div");
-  div.className = "switch_box box_1";
-  var label = document.createElement("label");
-  label.setAttribute("for", id);
-  label.textContent = toggleableLayerIds[id];
-  var layers = document.getElementById("outline-menu");
-  div.appendChild(link);
-  div.appendChild(label);
-  layers.appendChild(div);
-  var newline = document.createElement("br");
-};
-
-// adds elections to next dropdown
-var stateElections = {};
-if (HAS_PRECINCTS.indexOf(state) != -1) stateElections = STATE_ELECTIONS[state];
-for (var idx in stateElections) {
-  id = stateElections[idx];
-  var link = document.createElement("input");
-
-  link.value = id;
-  link.id = id;
-  link.type = "checkbox";
-  link.className = "switch_1";
-  link.checked = false;
-
-  link.onchange = function (e) {
-    var txt = "smaller_combined_precincts-fill";
-    // var clickedLayers = [];
-    // clickedLayers.push(txt + "-lines");
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (this.checked === false) {
-      map.setLayoutProperty(txt, "visibility", "none");
-      map.setPaintProperty("coi_layer_fill", "fill-opacity", .15);
-      map.setLayoutProperty("coi_line", "visibility", "none");
-    } else {
-      map.setLayoutProperty(txt, "visibility", "visible");
-      map.setPaintProperty("coi_layer_fill", "fill-opacity", .4);
-      map.setLayoutProperty("coi_line", "visibility", "visible");
-      var demProp = this.id + "D";
-      var repProp = this.id + "R";
-      var state_layer = STATE_FILES[state];
-      // set all other layers to not visible, uncheck the display box for all other layers
-      var computedColor = [
-        "interpolate-lab", // perceptual color space interpolation
-        ["linear"],
-        [
-          "to-number",
-          [
-            "/",
-            ["to-number", ["get", demProp]],
-            // [">", ["number", ["get", demProp], -1], 0],
-            [
-              "+",
-              ["to-number", ["get", demProp]],
-              // [">", ["number", ["get", demProp], -1], 0],
-              ["to-number", ["get", repProp]],
-              // [">", ["number", ["get", repProp], -1], 0],
-            ],
-          ],
-        ],
-        -1,
-        "white",
-        0,
-        "red",
-        0.5,
-        "white", // note that, unlike functions, the "stops" are flat, not wrapped in two-element arrays
-        1,
-        "blue",
-        1.0001,
-        "white",
-      ];
-      map.setFilter(txt, ["==", ["get", "layer"], state_layer]);
-      map.setPaintProperty(txt, "fill-color", computedColor);
-
-      for (var idx2 in stateElections) {
-        otherElection = stateElections[idx2];
-        if (otherElection != this.id) {
-          var button = document.getElementById(otherElection);
-          button.checked = false;
-        }
-      }
-      // if (property.demProp===NULL) {
-      //   map.setLayoutProperty(txt, "visibility", "none");
-      // }
-    }
-  };
-
-  // in order to create the buttons
-  var div = document.createElement("div");
-  div.className = "switch_box box_1";
-  var label = document.createElement("label");
-  label.setAttribute("for", id);
-  label.textContent = ELECTION_NAMES[id];
-  var elections = document.getElementById("election-menu");
-  div.appendChild(link);
-  div.appendChild(label);
-  elections.appendChild(div);
-  var newline = document.createElement("br");
-}
 
 // Toggles the visibility of the selected community. If the coi_layer_fill layer (all the communities) is displayed, remove it and
 // display the selected community. If the last selected community community is hidden, display the coi_layer_fill layer.
@@ -677,11 +331,6 @@ function showAllCommunities() {
   })
 }
 /*******************************************************************/
-
-// remove the last char in the string
-function removeLastChar(str) {
-  return str.substring(0, str.length - 1);
-}
 
 // search bar filtering Communities
 $(document).ready(function(){

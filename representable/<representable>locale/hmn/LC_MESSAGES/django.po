@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-14 02:28+0000\n"
+"POT-Creation-Date: 2021-06-27 20:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -114,6 +114,11 @@ msgstr ""
 #: main/templates/account/email_confirm.html:22
 msgid "Finish Sign Up"
 msgstr "Tiav Txoj Kev Sau Npe Nkag Lawm"
+
+#: main/templates/account/email_confirm.html:23
+#: main/templates/account/signup.html:39
+msgid "Making an account helps us protect legitimate submissions."
+msgstr ""
 
 #: main/templates/account/email_confirm.html:31
 #, python-format
@@ -308,8 +313,10 @@ msgstr "Hloov tus password"
 #: main/templates/main/dashboard/index.html:66
 msgid ""
 "Reset your password by pressing on the following button. You will receive an"
-" email with the appropiate instructions."
+" email with the appropriate instructions."
 msgstr ""
+"Hloov koj tus password dua yam nyem rau cov pob nram qab no.Koj yuav tau "
+"txais ib tsab email nrog rau cov lus qhia yam tsim nyog."
 
 #: main/templates/main/dashboard/index.html:70
 msgid "Cookie Settings"
@@ -350,19 +357,19 @@ msgstr ""
 "lawm.Txhawm rau <strong>xaiv qhib siv</strong>, nyem rau lub pob nram qab "
 "no.</p>"
 
-#: main/templates/main/dashboard/partners/thanks.html:12
+#: main/templates/main/dashboard/partners/thanks.html:13
 msgid "Thank you for creating an organization!"
 msgstr "Ua tsaug rau kev tsim lub koom haum!"
 
-#: main/templates/main/dashboard/partners/thanks.html:15
+#: main/templates/main/dashboard/partners/thanks.html:16
 msgid "Please verify your email."
 msgstr "Thov lees xyuas kom paub tseeb koj tus email."
 
-#: main/templates/main/dashboard/partners/thanks.html:19
+#: main/templates/main/dashboard/partners/thanks.html:20
 msgid "We are excited to work with you!"
 msgstr "Peb zoo siab heev uas tau ua hauv lwm nrog koj!"
 
-#: main/templates/main/dashboard/partners/thanks.html:20
+#: main/templates/main/dashboard/partners/thanks.html:21
 msgid ""
 "Check out our <a "
 "href=\"https://docs.google.com/document/d/1NJMUpZodlqo96xVASJzihpcfgWir18ifMaMD380zrXE/edit\">organization"
@@ -374,7 +381,7 @@ msgstr ""
 "txoj kev siv lub vev xaib Representable txhawm rau los sau cov daim phiaj "
 "qhia chaw ntawm lub zej zos ua ke."
 
-#: main/templates/main/dashboard/partners/thanks.html:21
+#: main/templates/main/dashboard/partners/thanks.html:22
 msgid ""
 "Contact us at <a href=\"mailto:team@representable.org\"> "
 "team@representable.org</a> with any questions."
@@ -382,7 +389,7 @@ msgstr ""
 "Tiv tauj rau peb ntawm <a href=\"mailto:team@representable.org\"> "
 "team@representable.org</a> yog muaj lus nug dab tsi."
 
-#: main/templates/main/dashboard/partners/thanks.html:22
+#: main/templates/main/dashboard/partners/thanks.html:23
 msgid ""
 "Click the button below to go to the Organization Dashboard and get started "
 "by creating a community mapping drive."
@@ -391,7 +398,7 @@ msgstr ""
 "Koom Haum thiab txais kev pib los ntawm txoj kev tsim lub chaw khaws txoj "
 "kev teev daim phiaj qhia chaw ntawm lub zej zos."
 
-#: main/templates/main/dashboard/partners/thanks.html:25
+#: main/templates/main/dashboard/partners/thanks.html:26
 msgid ""
 "Email verification will be necessary to access certain organization features"
 " on Representable. We have resent an email verification link to your inbox."
@@ -401,17 +408,17 @@ msgstr ""
 "Representable.Peb tau rov xa tus link txuas ntawm tsab email lees xyuas kom "
 "paub tseeb rau koj lub npov xa ntawv nkag lawm."
 
-#: main/templates/main/dashboard/partners/thanks.html:28
+#: main/templates/main/dashboard/partners/thanks.html:29
 msgid "organization dashboard"
 msgstr "phab dashboard ntawm lub koom haum"
 
 #: main/templates/main/drives/dane-county-page.html:10
-msgid "Tell Us About Your Community"
-msgstr "Qhia Peb Txog Koj Lub Zej Zos"
+msgid "Tell Us About Your Community!"
+msgstr "Qhia Peb Txog Koj Lub Zej Zos!"
 
 #: main/templates/main/drives/dane-county-page.html:12
 msgid ""
-"We are working to make sure the Dane County Board of Supervisers accurately "
+"We are working to make sure the Dane County Board of Supervisors accurately "
 "reflects the people and communities it represents. As part of that process, "
 "we are interested in learning what you think makes up your \"community of "
 "interest.\" <br><br> Who do you consider your neighbors? What other people, "
@@ -436,7 +443,19 @@ msgstr ""
 "seb cov neeg ua hauj lwm ntawm tsoom fwv uas koj tau xaiv puas los \"sawv "
 "cev tam\" koj thiab koj lub zej zos tiag."
 
-#: main/templates/main/drives/dane-county-page.html:32
+#: main/templates/main/drives/dane-county-page.html:23
+#, fuzzy
+#| msgid "Redistricting is coming."
+msgid "Redistricting in Dane County and Wisconsin"
+msgstr ""
+
+#: main/templates/main/drives/dane-county-page.html:30
+#, fuzzy
+#| msgid "Redistricting Glossary"
+msgid "Redistricting News"
+msgstr ""
+
+#: main/templates/main/drives/dane-county-page.html:33
 msgid ""
 "Wisconsin law requires county boards to redraw their supervisory district "
 "lines after each U.S. Decennial Census. The law also requires that electoral"
@@ -459,7 +478,12 @@ msgstr ""
 "ciam mus yam ncaj nruab nrab ntug, yam tsis txhob nce rau cov kev siv hwj "
 "chim kev ua nom."
 
-#: main/templates/main/drives/dane-county-page.html:44
+#: main/templates/main/drives/dane-county-page.html:42
+#: main/templates/main/state_info.html:28
+msgid "How can Representable help?"
+msgstr "Representable yuav tuaj yeem pab tau li cas?"
+
+#: main/templates/main/drives/dane-county-page.html:45
 msgid ""
 "Representable will help you tell the Dane County Redistricting Commission "
 "about your community and visualize a map of its boundaries. Then, line-"
@@ -473,17 +497,17 @@ msgstr ""
 " koj lub zej zos tau yam ncaj ncees thaum lawv kos cov kab ciam ntawm koog "
 "cheeb tsam pov npav tshiab."
 
-#: main/templates/main/drives/dane-county-page.html:51
+#: main/templates/main/drives/dane-county-page.html:52
 msgid "Dane County's redistricting <br class=\"d-xl-none\"> criteria"
 msgstr ""
 "Cov qauv kev rov faib cais koog cheeb tshiab <br class=\"d-xl-none\"> ntawm "
 "Lub Cheeb Nroog Dane"
 
-#: main/templates/main/drives/dane-county-page.html:54
+#: main/templates/main/drives/dane-county-page.html:55
 msgid "In order of priority"
 msgstr "Raws txheej txheem ntawm kev muaj cai tau xub thawj"
 
-#: main/templates/main/drives/dane-county-page.html:56
+#: main/templates/main/drives/dane-county-page.html:57
 msgid ""
 "Each district should represent the same population size, be contiguous, and "
 "compact;"
@@ -491,12 +515,12 @@ msgstr ""
 "Txhua koog cheeb tsam yuav tsum sawv cev tam kom muaj cov pej xeem neeg sib "
 "npaug zos, uas sib txuas ze, thiab luv yam tseem ntsiab;"
 
-#: main/templates/main/drives/dane-county-page.html:57
+#: main/templates/main/drives/dane-county-page.html:58
 msgid "Minimize the number of municipal boundaries crossed;"
 msgstr ""
 "Txo qhov ntau ntawm cov ciam lub tuam ceeb nroog hla mus los kom tsawg;"
 
-#: main/templates/main/drives/dane-county-page.html:58
+#: main/templates/main/drives/dane-county-page.html:59
 msgid ""
 "Ensure fair and effective representation of the diverse ethnic and racial "
 "population in Dane County;"
@@ -505,7 +529,7 @@ msgstr ""
 "txoj kev sawv cev tam ntawm cov pej xeem neeg uas muaj ntau pawg haiv neeg "
 "tsawg thiab ntau haiv neeg hauv Lub Cheeb Nroog Dane;"
 
-#: main/templates/main/drives/dane-county-page.html:59
+#: main/templates/main/drives/dane-county-page.html:60
 msgid ""
 "Take into consideration geography and natural boundaries such as rivers and "
 "lakes;"
@@ -513,7 +537,7 @@ msgstr ""
 "Siv rau hauv kev txiav txim siab txog cov ciam fab teb chaws thiab hav zoov "
 "hav tsuag xws li tej niam dej thiab tej pas dej teev;"
 
-#: main/templates/main/drives/dane-county-page.html:60
+#: main/templates/main/drives/dane-county-page.html:61
 msgid ""
 "Keep intact neighborhoods and communities of interest and association, "
 "whether historical, racial, economic, ethnic, religious, or other;"
@@ -522,17 +546,17 @@ msgstr ""
 "kev txaus siab nyiam thiab cov koom haum, xws li raws keeb kawm, haiv neeg, "
 "kev lag luam, haiv neeg tsawg, fab dab qhuas kev ntseeg, los sis lwm yam;"
 
-#: main/templates/main/drives/dane-county-page.html:61
+#: main/templates/main/drives/dane-county-page.html:62
 msgid "Districts shall be drawn without regard to incumbency."
 msgstr ""
 "Cov koog cheeb tsam yog tsum raug kos tu ciam yam tsis yog nce rau ntawm tus"
 " neeg tseem zaum lub rooj nom."
 
-#: main/templates/main/drives/dane-county-page.html:73
+#: main/templates/main/drives/dane-county-page.html:74
 msgid "Communities of Interest in Dane County"
 msgstr "Cov Zej Zos Uas Muaj Kev Txaus Siab hauv Lub Cheeb Nroog Dane"
 
-#: main/templates/main/drives/dane-county-page.html:75
+#: main/templates/main/drives/dane-county-page.html:76
 msgid ""
 "Dane County's ordinance requires that: <br><br><em>\"District lines shall "
 "keep intact neighborhoods and communities with established ties of common "
@@ -668,22 +692,23 @@ msgstr ""
 "ntawm nias rau chav nyob hauv daim phiaj qhia chaw.</strong></p>"
 
 #: main/templates/main/entry_map.html:18
+#, fuzzy
+#| msgid ""
+#| "<p>Make sure that all your community is contained within the highlighted "
+#| "units, and that it does not contain gaps. The units are <a class=\"no-"
+#| "underline-link\" href=\"https://www.census.gov/programs-"
+#| "surveys/geography/about/glossary.html#par_textimage_4\" "
+#| "target=\"_blank\"><strong>census block groups</strong></a>, which are used "
+#| "by map drawers to draw voting districts.</p>"
 msgid ""
 "<p>Make sure that all your community is contained within the highlighted "
-"units, and that it does not contain gaps. The units are <a class=\"no-"
-"underline-link\" href=\"https://www.census.gov/programs-"
-"surveys/geography/about/glossary.html#par_textimage_4\" "
-"target=\"_blank\"><strong>census block groups</strong></a>, which are used "
-"by map drawers to draw voting districts.</p>"
-msgstr ""
-"<p>Xyuas kom tseeb tias tag nrho koj lub zej zos yog nyob rau hauv cov feem "
-"chaw kem uas raug taw cim lawm, thiab nws yuav tsis muaj ncua khoob.Cov feem"
-" chaw kem ntawd yog <a class=\"no-underline-link\" "
+"units, and that it does not contain gaps. The units are <span id=\"units-"
+"link\"><a class=\"no-underline-link\" "
 "href=\"https://www.census.gov/programs-"
 "surveys/geography/about/glossary.html#par_textimage_4\" "
-"target=\"_blank\"><strong>cov pab pawg tswj xyuas chaw kem raws kev txheeb "
-"suav pej xeem</strong></a>, uas raug siv los ntawm cov kws kos daim phiaj "
-"qhia chaw los kos cov koog cheeb tsam pov npav.</p>"
+"target=\"_blank\"><strong>census block groups</strong></a></span>, which are"
+" used by map drawers to draw voting districts.</p>"
+msgstr ""
 
 #: main/templates/main/entry_map.html:50 main/templates/main/entry_map.html:78
 msgid "Change your mapping units."
@@ -832,29 +857,29 @@ msgstr "Cov Hauj Lwm thiab Cov Kev Pab Cuam Hauv Zej Zog"
 
 #: main/templates/main/entry_map.html:167
 #: main/templates/main/entry_map.html:272
-#: main/templates/main/entry_survey.html:282 main/templates/main/map.html:129
-#: main/templates/main/partners/map.html:127
-#: main/templates/main/review.html:74 main/templates/main/submission.html:152
-#: main/templates/main/submission.html:415
+#: main/templates/main/entry_survey.html:282 main/templates/main/map.html:130
+#: main/templates/main/partners/map.html:140
+#: main/templates/main/review.html:74 main/templates/main/submission.html:157
+#: main/templates/main/submission.html:438
 msgid "Cultural or Historical Interests"
 msgstr "Cov Kev Tshawb Fawb Txog Keeb Kwm los sis Keeb Kwm"
 
 #: main/templates/main/entry_map.html:175
 #: main/templates/main/entry_map.html:280
-#: main/templates/main/entry_survey.html:298 main/templates/main/map.html:139
-#: main/templates/main/partners/map.html:137
-#: main/templates/main/review.html:84 main/templates/main/submission.html:162
-#: main/templates/main/submission.html:397
+#: main/templates/main/entry_survey.html:298 main/templates/main/map.html:140
+#: main/templates/main/partners/map.html:150
+#: main/templates/main/review.html:84 main/templates/main/submission.html:167
+#: main/templates/main/submission.html:420
 msgid "Economic or Environmental Interests"
 msgstr "Cov Kev Txaus Siab Txog Kev Lag Luam los sis Ib Puag Ncig"
 
 #: main/templates/main/entry_map.html:183
 #: main/templates/main/entry_map.html:288
 #: main/templates/main/entry_survey.html:317
-#: main/templates/main/entry_survey.html:334 main/templates/main/map.html:144
-#: main/templates/main/partners/map.html:142
-#: main/templates/main/review.html:89 main/templates/main/submission.html:172
-#: main/templates/main/submission.html:424
+#: main/templates/main/entry_survey.html:334 main/templates/main/map.html:145
+#: main/templates/main/partners/map.html:155
+#: main/templates/main/review.html:89 main/templates/main/submission.html:177
+#: main/templates/main/submission.html:447
 msgid "Community Needs and Concerns"
 msgstr "Kev Xav Tau Hauv Zej Zog thiab Cov Kev Txhawj Xeeb"
 
@@ -875,10 +900,6 @@ msgstr "NTAUB NTAWV HLOOV KHO"
 #: main/templates/main/entry_map.html:336
 msgid "SAVE"
 msgstr "KHAWS CIA"
-
-#: main/templates/main/entry_map.html:341
-msgid "Want different units?"
-msgstr "Puas xav tau lwm cov feem chaw kem?"
 
 #: main/templates/main/entry_map.html:346
 msgid "Population"
@@ -971,7 +992,6 @@ msgstr ""
 #| msgid "Submitted communities are final."
 msgid "Submitted communities are final and public."
 msgstr ""
-"Cov zej zos uas tau xa yog zeeg kawg thiab yog rau zej tsoom sawv daws."
 
 #: main/templates/main/entry_privacy.html:86
 msgid ""
@@ -1102,10 +1122,10 @@ msgstr ""
 msgid "Please fill out at least one of the interest fields."
 msgstr "Thov sau yam tsawg kawg ib qhov ntawm cov feem txaus siab."
 
-#: main/templates/main/entry_survey.html:265 main/templates/main/map.html:134
-#: main/templates/main/partners/map.html:132
-#: main/templates/main/review.html:79 main/templates/main/submission.html:142
-#: main/templates/main/submission.html:406
+#: main/templates/main/entry_survey.html:265 main/templates/main/map.html:135
+#: main/templates/main/partners/map.html:145
+#: main/templates/main/review.html:79 main/templates/main/submission.html:147
+#: main/templates/main/submission.html:429
 msgid "Community Activities and Services"
 msgstr "Cov Hauj Lwm thiab Cov Kev Pab Cuam Hauv Zej Zog"
 
@@ -1154,8 +1174,10 @@ msgid "If your community has a shared history, what is it?"
 msgstr "Yog tias koj lub zej zog muaj keeb kwm sib koom, nws yog dab tsi?"
 
 #: main/templates/main/entry_survey.html:289
-msgid "Examples of cultural or historical interests:"
-msgstr "Cov piv txwv ntawm kab lis kev cai los yog keeb kwm kev txaus siab:"
+#, fuzzy
+#| msgid "Examples of cultural or historical interests:"
+msgid "Examples of cultural or historical interests: "
+msgstr ""
 
 #: main/templates/main/entry_survey.html:289
 msgid ""
@@ -1381,16 +1403,33 @@ msgstr "Daim Phiaj Qhia Chaw Ntawm Lub Xeev"
 msgid "Data layers"
 msgstr "Txheej Txheem Ntaub Ntawv"
 
-#: main/templates/main/map.html:74 main/templates/main/partners/map.html:78
+#: main/templates/main/map.html:72 main/templates/main/submission.html:263
+#: main/templates/main/submission.html:272
+#: main/templates/main/submission.html:275
+msgid "Election Data"
+msgstr ""
+
+#: main/templates/main/map.html:84 main/templates/main/partners/map.html:78
 msgid "Communities"
 msgstr "Cov Zej Zos"
 
-#: main/templates/main/map.html:149 main/templates/main/partners/map.html:152
+#: main/templates/main/map.html:89 main/templates/main/partners/map.html:83
+#: main/templates/main/review.html:49 main/templates/main/submission.html:144
+msgid "Community Information"
+msgstr "Cov Ntaub Ntawv Qhia Txog Zej Zos"
+
+#: main/templates/main/map.html:90 main/templates/main/partners/map.html:84
+#, fuzzy
+#| msgid "Show"
+msgid "Only Show"
+msgstr ""
+
+#: main/templates/main/map.html:150 main/templates/main/partners/map.html:160
 #: main/templates/main/review.html:94
 msgid "Show More"
 msgstr "Tso Kom Pom Ntau Ntxiv"
 
-#: main/templates/main/map.html:162
+#: main/templates/main/map.html:164 main/templates/main/partners/map.html:173
 msgid "Show All"
 msgstr "Tso Kom Pom Tag Nrho"
 
@@ -1571,11 +1610,13 @@ msgid "Strategy Coordinator"
 msgstr "Tus Lis Hauj Lwm Saib Xyuas Kev Tawm Tswv Yim"
 
 #: main/templates/main/pages/about.html:145
+#: main/templates/main/pages/about.html:152
 msgid "Outreach Coordinator"
 msgstr "Tus Lis Hauj Lwm Saib Xyuas Kev Tshaj Tawm"
 
 #: main/templates/main/pages/about.html:146
 #: main/templates/main/pages/about.html:147
+#: main/templates/main/pages/about.html:151
 msgid "Software Engineer"
 msgstr "Tus Kws Tsim Lub Software"
 
@@ -1588,11 +1629,11 @@ msgstr "Tus Kws Tsim Cov Ntaub Ntawv Data"
 msgid "Media and Communications Coordinator"
 msgstr "Tus Kws Cev Lus Fab Sam Thiaj Xov Xwm thiab Cov Kev Sib Txuas Lus"
 
-#: main/templates/main/pages/about.html:152
+#: main/templates/main/pages/about.html:154
 msgid "Our Founding Team"
 msgstr "Peb Pab Pawg Tsim"
 
-#: main/templates/main/pages/about.html:155
+#: main/templates/main/pages/about.html:157
 msgid ""
 "Representable began in February 2019 as a final project for the Princeton "
 "course COS333: Advanced Programming Techniques."
@@ -1601,20 +1642,20 @@ msgstr ""
 "yog tes dej num zeeg kawg rau Princeton fab ncauj kev kawm COS333: Cov Tev "
 "Niv Kev Sau Program Qib Siab."
 
-#: main/templates/main/pages/about.html:156
-#: main/templates/main/pages/about.html:159
+#: main/templates/main/pages/about.html:158
+#: main/templates/main/pages/about.html:161
 msgid "Engineering, Full-Stack"
 msgstr "Kev Tsim Qauv, Txhua-Fab"
 
-#: main/templates/main/pages/about.html:157
+#: main/templates/main/pages/about.html:159
 msgid "Engineering, Mapping"
 msgstr "Kev Tsim Qauv, Txoj Kev Teev Daim Phiaj Qhia Chaw"
 
-#: main/templates/main/pages/about.html:158
+#: main/templates/main/pages/about.html:160
 msgid "Outreach, Content"
 msgstr "Kev Ntuav Tawm, Lub Ntsiab Lus"
 
-#: main/templates/main/pages/about.html:160
+#: main/templates/main/pages/about.html:162
 msgid "Engineering, Product"
 msgstr "Kev Tsim Qauv, Khoom Tsim Tawm"
 
@@ -2271,19 +2312,19 @@ msgstr "Xa Txhua Yam Mus ua GeoJSON"
 msgid "Export All as CSV"
 msgstr "Xa Txhua Yam Mus ua CSV"
 
-#: main/templates/main/partners/map.html:99
+#: main/templates/main/partners/map.html:110
 msgid "Hidden"
 msgstr "Zais Cai"
 
-#: main/templates/main/partners/map.html:103
+#: main/templates/main/partners/map.html:114
 msgid "Private"
 msgstr "Ntiag Tug"
 
-#: main/templates/main/partners/map.html:176
+#: main/templates/main/partners/map.html:194
 msgid "Report this community"
 msgstr "Tshaj qhia lub zej zos no"
 
-#: main/templates/main/partners/map.html:183
+#: main/templates/main/partners/map.html:201
 msgid ""
 "If you feel this community is abusive, spam, low-effort, or doesn't live up "
 "to our guidelines, send us a report."
@@ -2292,7 +2333,7 @@ msgstr ""
 "nqi, txhawb pab tsawg, los sis tsis ua raws peb cov qauv, xa kev tshaj qhia "
 "rau peb."
 
-#: main/templates/main/partners/map.html:190
+#: main/templates/main/partners/map.html:208
 msgid ""
 "As an administrator of this organization, reporting this community will "
 "automatically hide it from all non-administrators."
@@ -2301,23 +2342,23 @@ msgstr ""
 "lub zej zos no yuav raug zais nws cai los sis txhua cov neeg uas tsis yog "
 "neeg tswj hwm."
 
-#: main/templates/main/partners/map.html:199
+#: main/templates/main/partners/map.html:217
 msgid "Email address"
 msgstr "Chaw Nyob Email"
 
-#: main/templates/main/partners/map.html:203
+#: main/templates/main/partners/map.html:221
 msgid "Cancel"
 msgstr "Rho tawm"
 
-#: main/templates/main/partners/map.html:204
+#: main/templates/main/partners/map.html:222
 msgid "Danger: </span>Send Report"
 msgstr "Kev Phom Sij: </span>Xa Kev Tshaj Qhia"
 
-#: main/templates/main/partners/map.html:216
+#: main/templates/main/partners/map.html:234
 msgid "Thank you for letting us know!"
 msgstr "Ua tsaug uas cia rau peb los paub txog!"
 
-#: main/templates/main/partners/map.html:222
+#: main/templates/main/partners/map.html:240
 msgid "Your report was successfully submitted. Thank you."
 msgstr "Koj txoj kev tshaj qhia yuav raug xa yam tiav log.Ua tsaug."
 
@@ -2336,10 +2377,6 @@ msgstr "Mus Saib Lub Vev Xaib Ntawm Tus Khub Koom Tes"
 #: main/templates/main/review.html:43
 msgid "The community was already deleted."
 msgstr "Lub zej zos ntawd twb raug tshem tawm lawm."
-
-#: main/templates/main/review.html:49 main/templates/main/submission.html:139
-msgid "Community Information"
-msgstr "Cov Ntaub Ntawv Qhia Txog Zej Zos"
 
 #: main/templates/main/review.html:50
 msgid "Action"
@@ -2391,10 +2428,6 @@ msgstr ""
 msgid "How does redistricting work in "
 msgstr "Txoj kev rov faib ciam dua ua hauj lwm li cas nyob hauv"
 
-#: main/templates/main/state_info.html:28
-msgid "How can Representable help?"
-msgstr "Representable yuav tuaj yeem pab tau li cas?"
-
 #: main/templates/main/state_info.html:31
 msgid ""
 "Representable will help you tell mapmakers about your community interests "
@@ -2410,7 +2443,11 @@ msgstr ""
 msgid "redistricting criteria"
 msgstr "Txoj Qhov Tseem Ceeb Ntawm Kev Rov Faib Ciam Dua"
 
-#: main/templates/main/state_info.html:65
+#: main/templates/main/state_info.html:53
+msgid "See community maps drawn in"
+msgstr ""
+
+#: main/templates/main/state_info.html:67
 msgid "Communities of Interest in "
 msgstr "Cov Zej Zog Muaj Kev Txaus Siab nyob rau hauv"
 
@@ -2438,41 +2475,95 @@ msgstr ""
 "Dave Lub App Txoj Kev Rov Faib Cais Koog Cheeb Tshiab, ESRI, thiab ntau yam "
 "ntxiv."
 
-#: main/templates/main/submission.html:214
+#: main/templates/main/submission.html:89
+#, fuzzy
+#| msgid "Select your state."
+msgid "Send your map to your state."
+msgstr ""
+
+#: main/templates/main/submission.html:90
+msgid ""
+"Congratulations, you have downloaded your map. Your state accepts "
+"communities of interest as public input. Visit the site below to submit your"
+" map."
+msgstr ""
+
+#: main/templates/main/submission.html:91
+#: main/templates/main/submission.html:203
+msgid "Go to public input portal"
+msgstr ""
+
+#: main/templates/main/submission.html:136
+msgid ""
+"Or <a href=\"#\" onclick=\"copyPageLink();event.preventDefault();\">copy the"
+" link</a> to this page to share."
+msgstr ""
+
+#: main/templates/main/submission.html:201
+#, fuzzy
+#| msgid "Select your state."
+msgid "Send to your state."
+msgstr ""
+
+#: main/templates/main/submission.html:202
+msgid ""
+"Your state accepts communities of interest as public input. Download your "
+"map and then visit this site."
+msgstr ""
+
+#: main/templates/main/submission.html:209
+#, fuzzy
+#| msgid "Link to organization map"
+msgid "Submit to an organization."
+msgstr ""
+
+#: main/templates/main/submission.html:211
+msgid ""
+"Many organizations in your state are collecting community maps. Submit yours"
+" to one of their collection drives."
+msgstr ""
+
+#: main/templates/main/submission.html:219
 msgid "Submit"
 msgstr "Xa"
 
-#: main/templates/main/submission.html:219
+#: main/templates/main/submission.html:224
 msgid "This community map has already been submitted to an organization"
 msgstr ""
 "Daim phiaj qhia chaw ntawm lub zej zos no twb tau raug xa rau lub koom haum "
 "lawm"
 
-#: main/templates/main/submission.html:242
-#: main/templates/main/submission.html:249
-#: main/templates/main/submission.html:252
+#: main/templates/main/submission.html:247
+#: main/templates/main/submission.html:254
+#: main/templates/main/submission.html:257
 msgid "Data Layers"
 msgstr "Txheej Txheem Ntaub Ntawv"
 
-#: main/templates/main/submission.html:258
-#: main/templates/main/submission.html:271
-#: main/templates/main/submission.html:274
+#: main/templates/main/submission.html:281
+#: main/templates/main/submission.html:294
+#: main/templates/main/submission.html:297
 msgid "Demographics"
 msgstr "Cov Ntaub Ntawv Qhia Txog Pej Xeem"
 
-#: main/templates/main/submission.html:308
+#: main/templates/main/submission.html:287
+msgid ""
+"Demographic information will become available with the release of 2020 "
+"Census data by the US Census Bureau."
+msgstr ""
+
+#: main/templates/main/submission.html:331
 msgid "Your community is ready to be viewed and downloaded. You have "
 msgstr "Koj lub zej zog yog tau npaj txhij los saib thiab rub tawm."
 
-#: main/templates/main/submission.html:308
+#: main/templates/main/submission.html:331
 msgid "received an email with your community as a PDF file."
 msgstr "Koj tau txais tsab email nrog koj lub zej zog ua ntawv pdf."
 
-#: main/templates/main/submission.html:309
+#: main/templates/main/submission.html:332
 msgid "Make an impact with your map."
 msgstr "Ua rau muaj feem nrog koj daim duab qhia chaw."
 
-#: main/templates/main/submission.html:319
+#: main/templates/main/submission.html:342
 msgid ""
 "View your community on a computer to download as a PDF or geoJSON file. You "
 "can submit these files as public testimony or to a local redistricting "
@@ -2483,7 +2574,7 @@ msgstr ""
 "tsoom los sis xa mus rau lub koom haum rov faib cais koog cheeb tshiab ntawm"
 " cheeb tsam zej zos."
 
-#: main/templates/main/submission.html:329
+#: main/templates/main/submission.html:352
 msgid ""
 "If your state has a redistricting commission or accepts Communities of "
 "Interest, send a pdf of your community to submit as public testimony. If "
@@ -2497,11 +2588,11 @@ msgstr ""
 " mus rau ib lub koom haum hauv koj lub xeev uas ua hauj lwm ntawm kev rov "
 "faib ciam dua."
 
-#: main/templates/main/submission.html:333
+#: main/templates/main/submission.html:356
 msgid "Export PDF"
 msgstr "Xa tawm ua PDF"
 
-#: main/templates/main/submission.html:345
+#: main/templates/main/submission.html:368
 msgid ""
 "If you would like to use your map to draw voting districts, you can upload "
 "the geoJSON file to mapping softwares such as Maptitude, Dave’s "
@@ -2512,7 +2603,7 @@ msgstr ""
 "qhia chaw xws li District Builder, Dave's Redistricting App, los sis "
 "Districtr."
 
-#: main/templates/main/submission.html:367
+#: main/templates/main/submission.html:390
 msgid ""
 "Send the map to your community members and encourage them to draw maps. When"
 " map drawers have more data from your community, they are more likely to "
@@ -2522,11 +2613,11 @@ msgstr ""
 "duab qhia chaw.Thaum daim duab qhia kev teeb txheeb muaj ntaub ntawv ntau "
 "los ntawm koj lub zej zog, lawv muaj peev xwm xaiv cov tsev kawm ncaj ncees."
 
-#: main/templates/main/submission.html:378
+#: main/templates/main/submission.html:401
 msgid "Resend Email"
 msgstr "Rov qab xa email"
 
-#: main/templates/main/submission.html:391
+#: main/templates/main/submission.html:414
 msgid ""
 "This map was created at <a "
 "href=\"https://representable.org/\">Representable.org"
@@ -2636,13 +2727,14 @@ msgid "Having trouble with email verification?"
 msgstr "Puas muaj teeb meem ntawm tab email lees xyuas kom paub tseeb?"
 
 #: main/templates/main/thanks.html:58
+#, fuzzy
+#| msgid ""
+#| "We are here to help! Let us know if you didn't recieve an email verification"
+#| " link or want to provide feedback by contacting Team@Representable.org"
 msgid ""
-"We are here to help! Let us know if you didn't recieve an email verification"
+"We are here to help! Let us know if you didn't receive an email verification"
 " link or want to provide feedback by contacting Team@Representable.org"
 msgstr ""
-"Peb nyob rawv ntawm no los pab koj! Qhia rau peb paub yog tias koj tsis tau "
-"txais tus link txuas ntawm tsab email lees xyuas kom paub tseeb los sis xav "
-"muab tawm tswv yim pab yam tiv tauj rau Team@Representable.org"
 
 #: representable/templates/base.html:81
 msgid "My Organizations"
