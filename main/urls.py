@@ -34,6 +34,11 @@ urlpatterns = [
         views.main.RepresentableSignupView.as_view(),
         name="account_signup",
     ),
+    path(
+        'block_group_polygons/<str:abbr>/',
+        views.main.block_group_polygons,
+        name='block_group_polygons',
+    ),
     path("", views.main.Index.as_view(), name="index"),
     path(
         "entry_preview/",
