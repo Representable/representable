@@ -255,7 +255,7 @@ form:invalid {
 
 .org-card-btn {
   position: absolute;
-  bottom: 10px;
+  bottom: 15px;
   margin-left: auto;
   margin-right: auto;
   left: 0;
@@ -773,7 +773,6 @@ color scheme. See readme.md*/
 
 .btn {
   border-radius: 3rem;
-
 }
 
 .btn-no-focus-outline:focus, .btn-no-focus-outline:active {
