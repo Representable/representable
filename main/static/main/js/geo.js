@@ -381,7 +381,7 @@ function startSurvey() {
   $("#2to3").addClass("h-50");
   $('#id_tags').tagsinput({
     maxTags: 5,
-    maxChars: 22,
+    maxChars: 30,
     trimValue: true,
     itemValue: "value",
     itemText: "text",

@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand, CommandError
 from main.models import CommunityEntry
 from django.contrib.auth import get_user_model
 
-tags_arr = ["climate", "pollution", "gentrification", "religion", "agriculture", "sea level rise", "factory", "race", "tourism", "roads", "parks"]
+tags_arr = ["climate", "pollution", "gentrification", "religion", "agriculture", "sea level rise", "factory", "race", "tourism", "roads", "parks", "infrastructure", "military", "schools", "universities", "transportation", "LGBT+", "internet", "natural disasters", "food", "mining", "oil and gas", "historical", "tech", "renewable resources", "ranching", "libraries", "housing", "healthcare", "Indigenous", "immigration", "seasonal employment", "voting rights", "Covid-19", "diversity", "marijuana", "taxes", "welfare", "incarceration", "mental health", "policing", "nuclear", "unemployment", "homelessness", "crime", "gun control", "gun rights", "reproductive rights", "education", "farming", "entertainment", "young", "old", "pets", "environment"]
 
 class Command(BaseCommand):
 
