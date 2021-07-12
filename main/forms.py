@@ -189,10 +189,12 @@ class DeletionForm(ModelForm):
 class OrganizationForm(ModelForm):
     class Meta:
         model = Organization
-        fields = ["name", "description", "ext_link", "states", "government"]
+        fields = ["name", "description", "ext_link", "states", "government", "logo"]
         labels = {
             "name": "Organization Name",
             "ext_link": "Link to Organization Website",
+            "logo": "Optional organization Logo",
+            "government": "My organization is a government or jurisdiction",
         }
         widgets = {
             "name": forms.TextInput(
@@ -215,7 +217,9 @@ class OrganizationForm(ModelForm):
                 attrs={"data-placeholder": "Select States"},
             ),
             "government": forms.CheckboxInput(
-                attrs={"class": "form-check-input"}
+                attrs={
+                    "class": "form-check-input",
+                }
             ),
         }
 
@@ -223,10 +227,11 @@ class OrganizationForm(ModelForm):
 class EditOrganizationForm(ModelForm):
     class Meta:
         model = Organization
-        fields = ["name", "description", "ext_link"]
+        fields = ["name", "description", "ext_link", "logo"]
         labels = {
             "name": "Organization Name",
             "ext_link": "Link to Organization Website",
+            "logo": "Optional organization Logo",
         }
         widgets = {
             "name": forms.TextInput(
@@ -257,12 +262,27 @@ class AllowlistForm(ModelForm):
 
 
 class DriveForm(ModelForm):
-    def __init__(self, org_states, *args, **kwargs):
+    def __init__(self, org_states, gov, *args, **kwargs):
         super(DriveForm, self).__init__(*args, **kwargs)
         choices = [state for state in STATES if state[0] in org_states]
         self.fields["state"].widget = forms.Select(
             choices=choices, attrs={"class": "form-control"}
         )
+        optional_fields = [
+            "redist_title",
+            "redist_info",
+            "criteria_title",
+            "criteria_info",
+            "coi_def_title",
+            "coi_def_info",
+        ]
+        if not gov:
+            self.auto_id = False
+            for f in optional_fields:
+                self.fields[f].widget = forms.HiddenInput()
+                self.fields[f].label = ''
+        for f in optional_fields:
+            # self.fields[f].label_suffix = "_opt"
 
     class Meta:
         model = Drive
@@ -282,6 +302,16 @@ class DriveForm(ModelForm):
         labels = {
             "name": "Drive Title",
             "ext_link": "Link to Organization Website",
+            "units": "Mapping Units",
+            "description": "Description",
+            "state": "State",
+            "require_user_addresses": "Require user addresses",
+            "redist_title": "Redistricting title",
+            "redist_info": "Redistricting information",
+            "criteria_title": "Criteria title",
+            "criteria_info": "Criteria information",
+            "coi_def_title": "COI definition title",
+            "coi_def_info": "COI definition information",
         }
         widgets = {
             "name": forms.TextInput(

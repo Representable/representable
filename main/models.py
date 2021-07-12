@@ -87,8 +87,9 @@ class Organization(models.Model):
     slug = models.SlugField(unique=True, max_length=50)
     members = models.ManyToManyField(User, through="Membership")
     verified = models.BooleanField(default=False)
-    government = models.BooleanField(default=False)
+    government = models.BooleanField(default=False, blank=True, null=True)
     # logo = models.ImageField(_(""), upload_to=None, height_field=None, width_field=None, max_length=None)
+    logo = models.ImageField(upload_to='images/', null=True, blank=True, verbose_name="")
 
     class Meta:
         ordering = ("description",)
@@ -530,3 +531,4 @@ class Report(models.Model):
 
 
 # ******************************************************************************#
+

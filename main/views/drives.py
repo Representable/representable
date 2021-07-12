@@ -1,6 +1,7 @@
 from ..models import (
     Drive,
-    State
+    State,
+    # Image
 )
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -11,6 +12,8 @@ from django.views.generic import (
     DetailView,
 )
 
+# from django.shortcuts import render
+# # from ..forms import ImageForm
 
 class IndexView(ListView):
     model = Drive
@@ -32,3 +35,18 @@ class DriveView(DetailView):
             context["state"] = State.objects.filter(abbr=drive.state)[0]
             context["page_type"] = "drive-page"
         return context
+
+
+# def showimage(request):
+#     lastimage= Image.objects.last()
+#     imagefile= lastimage.imagefile
+
+#     form= ImageForm(request.POST or None, request.FILES or None)
+#     if form.is_valid():
+#         form.save()
+  
+#     context= {'imagefile': imagefile,
+#               'form': form
+#               }   
+      
+#     return render(request, 'Blog/images.html', context)

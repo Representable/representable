@@ -14,7 +14,7 @@
                     <h5 class="card-title text-center">
                         Create an Organization
                       </h5>
-                      <form role="form" id="CreateOrg" method="post">{% csrf_token %}
+                      <form role="form" id="CreateOrg" method="post" enctype="multipart/form-data">{% csrf_token %}
 
                           <div class="form-group">
                         {% for field in form %}
@@ -29,6 +29,7 @@
                       </div>
                       <div style="display: inline-block;">
                           <button id="save" form="CreateOrg" type="submit" class="btn btn-primary" value="Submit">Submit</button>
+                          {% comment %} value="Upload" {% endcomment %}
                       </div>
                       </form>
                 </div>
