@@ -61,11 +61,11 @@
                   <i class="fas fa-home org-icon text-2A94F4"></i>
                 </div>
                 <div class="col-12 col-xl-10 pl-xl-2">
-                  {% trans "Gather submissions for this drive! Share this link with people you'd like to contribute" %}: <a href="{% url 'main:partner_map' object.slug %}">https://representable.org{% url 'main:partner_map' object.slug %}</a> 
+                  {% trans "Gather submissions for this drive! Share this link with people you'd like to contribute" %}: <a href="{% url 'main:drive_page' object.slug %}">representable.org{% url 'main:drive_page' object.slug %}</a>
                 </div>
               </div>
               <div class="text-center org-card-btn">
-                <button class="btn btn-primary" role="button" onclick="copyLinkToClipboard('https://representable.org{% url 'main:partner_map' object.slug %}')">{% trans "COPY LINK" %}</button>
+                <button class="btn btn-primary" role="button" onclick="copyLinkToClipboard('https://representable.org{% url 'main:drive_page' object.slug %}')">{% trans "COPY LINK" %}</button>
               </div>
             </div>
           </div>
