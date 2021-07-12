@@ -338,7 +338,7 @@ function surveyStartToAddress() {
 
 // TODO: update so that these are objects, then they will show up
 // move this outside this function and load in existing tags from server
-tags_repl = tags.replaceAll('&#x27;', '"');
+tags_repl = tags.replaceAll("'", '"');
 tagslist = JSON.parse(tags_repl);
 
 var tagnames = new Bloodhound({
