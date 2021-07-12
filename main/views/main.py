@@ -1153,23 +1153,14 @@ class EntryView(LoginRequiredMixin, View):
                 ("THREAT", 0.9),
             ]
 
-            for attributeThreshold in attributeThresholds:
-                attribute = attributeThreshold[0]
-                threshold = attributeThreshold[1]
-                analyze_request = {
-                    "comment": {"text": text},
-                    "languages": ["en"],
-                    "requestedAttributes": {attributeThreshold[0]: {}},
-                }
-                response = (
-                    client.comments().analyze(body=analyze_request).execute()
-                )
-                if (
-                    response["attributeScores"][attribute]["summaryScore"][
-                        "value"
-                    ]
-                    >= threshold
-                ):
+            analyze_request = {
+                'comment': {'text': text},
+                'languages': ['en'],
+                'requestedAttributes': {'TOXICITY': {}, 'IDENTITY_ATTACK': {}, 'INSULT': {}, 'PROFANITY': {}, 'THREAT': {}},
+            }
+            response = client.comments().analyze(body=analyze_request).execute()
+            for (attribute, threshold) in attributeThresholds :
+                if response["attributeScores"][attribute]["summaryScore"]["value"] >= threshold :
                     return True
             return False
 
