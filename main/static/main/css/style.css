@@ -42,6 +42,11 @@ form:invalid {
   border: 1px solid red !important;
 }
 
+.scrollable {
+  max-height: 100px;
+  overflow: scroll;
+}
+
 .text-required {
   color: #ff726f;
 }
@@ -85,6 +90,10 @@ form:invalid {
 
 .text-359DFB {
   color: #359DFB;
+}
+
+.text-2A94F4 {
+  color: #2A94F4;
 }
 
 .txt-16 {
@@ -236,6 +245,26 @@ form:invalid {
   }
 }
 
+.org-icon {
+  font-size: 2rem;
+}
+
+.org-card {
+  min-height: 200px;
+}
+
+.org-card-btn {
+  position: absolute;
+  bottom: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}
+
+.org-dash-drive-group {
+  max-height: 275px;
+}
 /* .progress-bar.complete:hover {
   height: 100% !important;
 } */
@@ -1616,6 +1645,10 @@ textarea.survey-field:focus {
 
 .dark-gray-text {
   color: #3f3f3f;
+}
+
+.text-5996D2 {
+  color: #5996D2;
 }
 
 .gray-text {
