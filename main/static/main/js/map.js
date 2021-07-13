@@ -21,6 +21,7 @@
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
 var visible = null;
+var search_while_moving = false;
 
 var map = new mapboxgl.Map({
   container: "map", // container id
@@ -49,6 +50,42 @@ map.addControl(
     trackUserLocation: true,
   })
 );
+
+// button to search while moving map
+$("#map-page-search-btn").click(function() {
+  search_while_moving = !search_while_moving;
+  console.log(search_while_moving);
+  // find what features are currently on view
+  // multiple features are gathered that have the same source (or have the same source with 'line' added on)
+
+  if (search_while_moving) {
+    map.on("moveend", function () {
+      var displayed_ids = [];
+      var features = map.queryRenderedFeatures();
+      console.log("print inside the function");
+      console.log(features);
+      for (var i = 0; i < features.length; i++) {
+        if ('properties' in features[i]) {
+          var prop_id = features[i].properties.id;
+          if (prop_id) displayed_ids.push(prop_id);
+        }
+      }
+      console.log(displayed_ids);
+      // only display those on the map
+      var comms_count = 0;
+      $(".community-review-span").each(function(i, obj) {
+        if ($.inArray(obj.id, displayed_ids) !== -1) {
+          $(obj).show();
+          comms_count++;
+        } else {
+          $(obj).hide();
+        }
+      });
+      // update community counter at bottom of page
+      $("#comms_count").html(comms_count);
+    });
+  }
+});
 
 // Add zoom control for non-mobile devices
 if (!window.matchMedia("only screen and (max-width: 760px)").matches) {
@@ -94,8 +131,11 @@ map.on("load", function () {
       'type': 'Feature',
       'geometry': {
           'type': 'Polygon',
-          'coordinates': final
-      }
+          'coordinates': final,
+      },
+      'properties': {
+          'id': coi_id,
+      },
     });
   }
 
@@ -108,6 +148,7 @@ map.on("load", function () {
       'maxzoom': mxzoom,
       'tolerance': tol
   });
+  console.log(coidata_geojson_format);
 
   map.addLayer({
       'id': 'coi_layer_fill',
@@ -180,40 +221,6 @@ map.on("load", function () {
     map.setLayoutProperty(highlight_id, "visibility", "none")
     map.setLayoutProperty(highlight_id_fill, "visibility", "none")
   });
-
-  // find what features are currently on view
-  // multiple features are gathered that have the same source (or have the same source with 'line' added on)
-
-  // if (state === "") {
-  //   map.on("moveend", function () {
-  //     var sources = [];
-  //     var features = map.queryRenderedFeatures();
-  //     console.log("print inside the function")
-  //     for (var i = 0; i < features.length; i++) {
-  //       var source = features[i].source;
-  //       if (
-  //         source !== "composite" &&
-  //         !source.includes("line") &&
-  //         !source.includes("census") &&
-  //         !source.includes("lower") &&
-  //         !source.includes("upper")
-  //       ) {
-  //         if (!sources.includes(source)) {
-  //           sources.push(source);
-  //         }
-  //       }
-  //     }
-  //     // only display those on the map
-  //     $(".community-review-span").each(function(i, obj) {
-  //       if ($.inArray(obj.id, sources) !== -1) {
-  //         $(obj).show();
-  //       } else {
-  //         $(obj).hide();
-  //       }
-  //     });
-  //   });
-  // }
-
 
   // loading icon
   $(".loader").delay(500).fadeOut(500);
