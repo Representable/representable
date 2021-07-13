@@ -22,6 +22,7 @@
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
 var visible = null;
 var search_while_moving = false;
+var comms_count_total = $("#comms_count").html();
 
 var map = new mapboxgl.Map({
   container: "map", // container id
@@ -51,39 +52,44 @@ map.addControl(
   })
 );
 
+// upon moving the map, queries the rendered features and only displays the currently visible ones
+function searchMove() {
+  var displayed_ids = [];
+  var features = map.queryRenderedFeatures();
+  for (var i = 0; i < features.length; i++) {
+    if ('properties' in features[i]) {
+      var prop_id = features[i].properties.id;
+      if (prop_id) displayed_ids.push(prop_id);
+    }
+  }
+  // only display those on the map
+  var comms_count = 0;
+  $(".community-review-span").each(function(i, obj) {
+    if ($.inArray(obj.id, displayed_ids) !== -1) {
+      $(obj).show();
+      comms_count++;
+    } else {
+      $(obj).hide();
+    }
+  });
+  // update community counter at bottom of page
+  $("#comms_count").html(comms_count);
+}
+
 // button to search while moving map
 $("#map-page-search-btn").click(function() {
   search_while_moving = !search_while_moving;
   console.log(search_while_moving);
-  // find what features are currently on view
-  // multiple features are gathered that have the same source (or have the same source with 'line' added on)
-
   if (search_while_moving) {
-    map.on("moveend", function () {
-      var displayed_ids = [];
-      var features = map.queryRenderedFeatures();
-      console.log("print inside the function");
-      console.log(features);
-      for (var i = 0; i < features.length; i++) {
-        if ('properties' in features[i]) {
-          var prop_id = features[i].properties.id;
-          if (prop_id) displayed_ids.push(prop_id);
-        }
-      }
-      console.log(displayed_ids);
-      // only display those on the map
-      var comms_count = 0;
-      $(".community-review-span").each(function(i, obj) {
-        if ($.inArray(obj.id, displayed_ids) !== -1) {
-          $(obj).show();
-          comms_count++;
-        } else {
-          $(obj).hide();
-        }
-      });
-      // update community counter at bottom of page
-      $("#comms_count").html(comms_count);
+    map.on("moveend", searchMove);
+  } else {
+    map.off("moveend", searchMove);
+    // show all on sidebar
+    $(".community-review-span").each(function(i, obj) {
+      $(obj).show();
     });
+    // update community counter at bottom of page
+    $("#comms_count").html(comms_count_total);
   }
 });
 
