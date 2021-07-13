@@ -47,10 +47,10 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
               </div>
               <div class="row justify-content-center">
                 {% if user.is_authenticated %}
-                <a id="map-geo-link" class="d-none" href="" download="communities.geojson"></a>
-                <a id="map-csv-link" class="d-none" href="" download="communities.csv"></a>
-                <button id="map-export-geo-btn" class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" onclick="exportCois('{{multi_export_link}}/geo/','geo')" role="button" download="communities.geojson">Export as GeoJSON</button>
-                <button id="map-export-csv-btn" class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" onclick="exportCois('{{multi_export_link}}/csv/','csv')" role="button" download="communities.csv">Export as CSV</button>
+                <a id="map-geo-link" class="d-none" href="" download="{{state_name|replace_spaces}}_communities.geojson"></a>
+                <a id="map-csv-link" class="d-none" href="" download="{{state_name|replace_spaces}}_communities.csv"></a>
+                <button id="map-export-geo-btn" class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" onclick="exportCois('{{multi_export_link}}/geo/','geo')" role="button" download="{{state_name|replace_spaces}}_communities.geojson">Export as GeoJSON</button>
+                <button id="map-export-csv-btn" class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" onclick="exportCois('{{multi_export_link}}/csv/','csv')" role="button" download="{{state_name|replace_spaces}}_communities.csv">Export as CSV</button>
                 {% else %}
                 <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href='{% url "account_login" %}?next={{request.path}}' role="button">Export as GeoJSON</a>
                 <a class="mb-2 btn btn-outline-primary btn-canvas mx-auto d-none d-sm-block" href='{% url "account_login" %}?next={{request.path}}' role="button">Export as CSV</a>
@@ -183,6 +183,9 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
       mapboxgl.accessToken = "{{ mapbox_key }}";
     </script>
     <script type="text/javascript" src="{% static 'main/js/components/keys.js' %}"></script>
+    <script type="text/javascript" src="{% static 'main/feature-lookup-tables/feature-lookup-tables.js'%}"></script>
+    <script type="text/javascript" src="{% static 'main/feature-lookup-tables/state-codes.js'%}"></script>
+    <script type="text/javascript" src="{% static 'main/js/map-common.js' %}"></script>
     <script type="text/javascript" src="{% static 'main/js/map.js' %}"></script>
     <script type="text/javascript" src="{% static 'main/js/components/states.js' %}"></script>
     {% endblock %}

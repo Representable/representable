@@ -435,6 +435,9 @@ class CommunityEntry(models.Model):
     private = models.BooleanField(default=False, null=True)
     population = models.IntegerField(blank=True, null=True, default=0)
 
+    def human_readable_name(self):
+        return self.entry_name.replace(' ', '_')
+
     def __str__(self):
         return str(self.entry_ID)
 
@@ -527,6 +530,10 @@ class Report(models.Model):
 
     def unapprove(self):
         self.community.admin_approved = False
+        self.community.save()
+    
+    def approve(self):
+        self.community.admin_approved = True
         self.community.save()
 
 

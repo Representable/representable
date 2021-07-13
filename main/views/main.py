@@ -20,6 +20,7 @@
 import asyncio
 import boto3
 import urllib
+import zipfile
 from urllib.request import urlopen
 from django.contrib import messages
 from django.http import (
@@ -95,6 +96,7 @@ from django.utils.translation import (
     get_language,
 )
 from django.urls import reverse, reverse_lazy
+from representable.settings.base import STATIC_ROOT
 
 # from django.utils.translation import (
 #     LANGUAGE_SESSION_KEY,
@@ -121,6 +123,7 @@ from itertools import islice
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 import pandas as pd
+import requests
 
 from django.conf import settings
 
@@ -140,6 +143,13 @@ from django.contrib.gis.geos import GEOSGeometry
 
 from googleapiclient import discovery
 
+def block_group_polygons(request, abbr):
+    try:
+        s3 = boto3.resource('s3')
+        obj = s3.Object('dev-precomputed-blockgroups', 'adj-n-bounds-'+abbr+'.json')
+        return JsonResponse(json.loads(obj.get()['Body'].read()))
+    except Exception as e:
+        raise Http404
 
 # custom mixin redirects to signup page/tab rather than login
 class SignupRequiredMixin(AccessMixin):
@@ -830,14 +840,31 @@ class ExportView(TemplateView):
 
         gj = make_geojson(request, query)
 
-        gs = geojson.dumps(gj)
+        export_name = query.entry_name.replace(" ", "_")
         if "csv" in request.path:
             # this is the new code -- turns geojson into csv for export
-            df = pd.json_normalize(gj)
-            comm_csv = df.to_csv()
-            response = HttpResponse(comm_csv, content_type="text/csv")
+            data = dict()
+            if 'block_group_ids' in gj['properties']:
+                data['BLOCKID'] = gj['properties']['block_group_ids']
+            elif 'census_block_ids' in gj['properties']:
+                data['BLOCKID'] = gj['properties']['census_block_ids']
+            else:
+                data['BLOCKID'] = 0
+            data['DISTRICT'] = [1] * len(data['BLOCKID'])
+            comm_csv = pd.DataFrame(data).to_csv(index=False)
+            response = HttpResponse(content_type='application/zip')
+            with zipfile.ZipFile(response, "w") as z:
+                z.writestr('%s.csv' % export_name, comm_csv)
+                z.write(STATIC_ROOT + '/main/readme/README_csv.txt', arcname="README_csv.txt")
+            response['Content-Disposition'] = 'attachment; filename=%s.zip' % export_name
         else:
-            response = HttpResponse(gs, content_type="application/json")
+            # create a zip file that includes geojson + readme explaining the file format and including questions from survey page
+            response = HttpResponse(content_type='application/zip')
+            with zipfile.ZipFile(response, "w") as z:
+                with z.open("%s.geojson" % export_name, "w") as c:
+                    c.write(geojson.dumps(gj).encode("utf-8"))
+                z.write(STATIC_ROOT + '/main/readme/README_geojson.txt', arcname="README_geojson.txt")
+            response['Content-Disposition'] = 'attachment; filename=%s.zip' % export_name
         return response
 
 
@@ -887,6 +914,9 @@ class Map(TemplateView):
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
             entryPolyDict[obj.entry_ID] = struct.coordinates
+
+            export_name = state_obj.name.replace(" ", "_") + "_communities"
+            print(export_name)
 
         context = {
             "state": state,
@@ -1090,9 +1120,7 @@ class EntryView(LoginRequiredMixin, View):
             year = 2010
         if len(census_blocks[0]) > 0:
             comm_form.data["census_blocks"] = [
-                CensusBlock.objects.get_or_create(census_id=block, year=year)[
-                    0
-                ].id
+                CensusBlock.objects.get_or_create(census_id=block, year=year)[0].id
                 for block in census_blocks
             ]
         else:
@@ -1119,39 +1147,25 @@ class EntryView(LoginRequiredMixin, View):
             # special characters
             attributeThresholds = [
                 ("TOXICITY", 0.75),
-                ("IDENTITY_ATTACK", 0.4),
+                ("IDENTITY_ATTACK", 0.5),
                 ("INSULT", 0.5),
                 ("PROFANITY", 0.75),
                 ("THREAT", 0.9),
             ]
 
-            for attributeThreshold in attributeThresholds:
-                attribute = attributeThreshold[0]
-                threshold = attributeThreshold[1]
-                analyze_request = {
-                    "comment": {"text": text},
-                    "languages": ["en"],
-                    "requestedAttributes": {attributeThreshold[0]: {}},
-                }
-                response = (
-                    client.comments().analyze(body=analyze_request).execute()
-                )
-                if (
-                    response["attributeScores"][attribute]["summaryScore"][
-                        "value"
-                    ]
-                    >= threshold
-                ):
+            analyze_request = {
+                'comment': {'text': text},
+                'languages': ['en'],
+                'requestedAttributes': {'TOXICITY': {}, 'IDENTITY_ATTACK': {}, 'INSULT': {}, 'PROFANITY': {}, 'THREAT': {}},
+            }
+            response = client.comments().analyze(body=analyze_request).execute()
+            for (attribute, threshold) in attributeThresholds :
+                if response["attributeScores"][attribute]["summaryScore"]["value"] >= threshold :
                     return True
             return False
 
         comm_form.data._mutable = False
-        # print("post editing of ids")
-        # print(comm_form.is_valid())
-        # print(comm_form.errors)
-        # print(type(comm_form.data["block_groups"]))
         if comm_form.is_valid():
-            print("is this working?")
             recaptcha_response = request.POST.get("g-recaptcha-response")
             url = "https://www.google.com/recaptcha/api/siteverify"
             values = {
@@ -1373,19 +1387,37 @@ class MultiExportView(TemplateView):
             all_gj.append(gj)
 
         final = geojson.FeatureCollection(all_gj)
+        export_name = state_obj.name.replace(" ", "_") + "_communities"
+
         if kwargs["type"] == "geo":
             print("********", "geo", "********")
             response = HttpResponse(
                 geojson.dumps(final), content_type="application/json"
             )
+            # create a zip file that includes geojson + readme explaining the file format and including questions from survey page
+            # with zipfile.ZipFile(response, "w") as z:
+            #     with z.open("%s.geojson" % export_name, "w") as c:
+            #         c.write(geojson.dumps(final).encode("utf-8"))
+            #     z.write(STATIC_ROOT + '/main/readme/README_geojson.txt', arcname="README_geojson.txt")
+            # response['Content-Disposition'] = 'attachment; filename=%s.zip' % export_name
         else:
-            print("********", "csv", "********")
+            print('********', 'csv', '********')
             dictform = json.loads(geojson.dumps(final))
             df = pd.DataFrame()
-            for entry in dictform["features"]:
-                row_dict = entry["properties"].copy()
-                row_dict["geometry"] = str(entry["geometry"])
-                df = df.append(row_dict, ignore_index=True)
-            response = HttpResponse(df.to_csv(), content_type="text/csv")
-
+            for i, entry in enumerate(dictform["features"]):
+                row_dict = dict()
+                if 'block_group_ids' in entry['properties']:
+                    row_dict['BLOCKID'] = entry['properties']['block_group_ids']
+                elif 'census_block_ids' in entry['properties']:
+                    row_dict['BLOCKID'] = entry['properties']['census_block_ids']
+                else:
+                    break
+                row_dict['DISTRICT'] = [i + 1] * len(row_dict['BLOCKID'])
+                df = df.append(pd.DataFrame(row_dict))
+            response = HttpResponse(df.to_csv(index=False), content_type="text/csv")
+            # response = HttpResponse(content_type='application/zip')
+            # with zipfile.ZipFile(response, "w") as z:
+            #     z.writestr('%s.csv' % export_name, comm_csv)
+            #     z.write(STATIC_ROOT + '/main/readme/README_csv.txt', arcname="README_csv.txt")
+            # response['Content-Disposition'] = 'attachment; filename=%s.zip' % export_name
         return response

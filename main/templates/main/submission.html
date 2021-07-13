@@ -86,9 +86,109 @@
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
-                          <h4 class="mx-md-5 px-md-5 mt-md-5"><strong>Send your map to your state.</strong></h4>
-                          <p class="mx-md-5 px-md-5">Congratulations, you have downloaded your map. Your state accepts communties of interest as public input. Visit the site below to submit your map.</p>
-                          <a id="public-comment-link-modal"><h5 class="blue-text px-md-5 mx-md-5 mb-md-5">Go to public input portal <i class="far fa-arrow-alt-circle-right"></i></h5></a>
+                          <h4 class="mx-md-5 px-md-5 mt-md-5"><strong>{% trans "Send your map to your state." %}</strong></h4>
+                          <p class="mx-md-5 px-md-5">{% trans "Congratulations, you have downloaded your map. Your state accepts communities of interest as public input. Visit the site below to submit your map." %}</p>
+                          <a id="public-comment-link-modal"><h5 class="blue-text px-md-5 mx-md-5 mb-md-5">{% trans "Go to public input portal" %} <i class="far fa-arrow-alt-circle-right"></i></h5></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- ********************* -->
+                  <!-- Community info modal -->
+                  <div class="modal fade blue-modal" id="submission-info-modal" tabindex="-1" role="dialog" aria-labelledby="submission-info-modalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-body px-md-5 text-left">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                          <h4 class="mx-lg-5 px-lg-5 mt-md-5"><strong>{% trans "Your Community Information" %}</strong></h4>
+                          <p class="mx-lg-5 px-lg-5">{% trans "When drawing a map with Representable, you are asked a series of questions in different categories. We've repeated the questions below." %}</p>
+                          <!-- Sections: -->
+                          <!-- Activities -->
+                          <div class="accordion" id="comm_activities_accordion">
+                              <button id="comm_activities_btn" class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#comm_activities_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                                  <h5 class="survey-sect-title">{% trans "Community Activities and Services" %}<i class="fas fa-angle-down pl-3"></i></h5>
+                              </button>
+                              <div id="comm_activities_example" class="collapse" aria-labelledby="comm_activities_accordion" data-parent="#comm_activities_accordion">
+                                  <p class="collapse-in ml-4 gray-text">
+                                    <b>{% trans "Use these questions to think more about how you would describe your community..." %}</b><br>
+                                    &emsp; - {% trans "Where do people in your community gather or socialize?" %} <br>
+                                    &emsp; - {% trans "How and where does your community access services (healthcare, transportation, educational services, etc.)?" %}<br><br>
+                                    <span class="blue-text"><b>{% trans "Examples of activities and services:" %}</b> {% trans "Shopping areas, schools and universities, libraries, parks, lakes, rivers, places of worship, healthcare services, public transport, local nonprofit organizations, etc." %}</span>
+                                  </p>
+                                  {% if c.comm_activities %}
+                                    <p class="collapse-in ml-4"><b>{% trans "Your response: " %}</b> {{c.comm_activities}}</p>
+                                  {% endif %}
+                              </div>
+
+                          </div>
+
+                          <!-- Cultural -->
+                          <div class="accordion" id="cultural_interests_accordion">
+                              <button id="cultural_interests_btn" class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#cultural_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                                  <h5 class="survey-sect-title">{% trans "Cultural or Historical Interests" %}<i class="fas fa-angle-down pl-3"></i></h5>
+                              </button>
+                              <div id="cultural_interests_example" class="collapse" aria-labelledby="cultural_interests_accordion" data-parent="#cultural_interests_accordion">
+                                <p class="collapse-in ml-4 gray-text">
+                                  <b>{% trans "Use these questions to think more about how you would describe your community..." %}</b><br>
+                                  &emsp; - {% trans "What are the cultural bonds in your community?" %} <br>
+                                  &emsp; - {% trans "If your community has a shared history, what is it?" %}<br><br>
+                                  <span class="blue-text"><b>{% trans "Examples of cultural or historical interests: " %}</b>{% trans "Religious groups, ethnic groups, languages, age groups, immigration status, historic or arts districts, etc."%} </span>
+                                </p>
+                                {% if c.cultural_interests %}
+                                  <p class="collapse-in ml-4"><b>{% trans "Your response: " %}</b> {{c.cultural_interests}}</p>
+                                {% endif %}
+                              </div>
+                          </div>
+                          <!--  Economic -->
+                          <div class="accordion" id="economic_interests_accordion">
+                              <button id="economic_interests_btn" class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#economic_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                                  <h5 class="survey-sect-title">{% trans "Economic or Environmental Interests" %}<i class="fas fa-angle-down pl-3"></i></h5>
+                              </button>
+                              <div id="economic_interests_example" class="collapse" aria-labelledby="economic_interests_accordion" data-parent="#economic_interests_accordion">
+                                  <p class="collapse-in ml-4 gray-text">
+                                      {% blocktrans trimmed %}
+                                      <b>Use these questions to think more about how you would describe your community...</b><br>
+                                      &emsp; - Where are residents employed?<br>
+                                      &emsp; - If there are environmental concerns in your community, what are they?<br><br>
+                                      <span class="blue-text"><b>Examples of economic or environmental interests:</b> Tourism industry, agricultural workers, mining town, manufacturing center, polluted natural resource, unemployment problem, etc.</span>
+                                      {% endblocktrans %}
+                                  </p>
+                                  {% if c.economic_interests %}
+                                    <p class="collapse-in ml-4"><b>{% trans "Your response: " %}</b> {{c.economic_interests}}</p>
+                                  {% endif %}
+                              </div>
+                          </div>
+
+                          <!-- Other -->
+                          <div class="accordion" id="other_interests_accordion">
+                              <button id="other_interests_btn" class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#other_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                                  <h5 class="survey-sect-title">{% trans "Community Needs and Concerns" %}<i class="fas fa-angle-down pl-3"></i></h5>
+                              </button>
+                              <div id="other_interests_example" class="collapse" aria-labelledby="other_interests_accordion" data-parent="#other_interests_accordion">
+                                <p class="collapse-in ml-4 gray-text">
+                                  <b>{% trans "Use these questions to think more about how you would describe your community..." %}</b><br>
+                                  &emsp; - {% trans "What should politicians and/or map drawers know about your community?" %}<br>
+                                  &emsp; - {% trans "What are the needs of your community?" %}<br>
+                                  &emsp; - {% trans "Is there anything else you want to tell us about your community?" %}<br><br>
+                                  <span class="blue-text"><b>{% trans "Examples of needs or concerns: " %}</b>{% trans "Keep community in the same district or separate into multiple districts, shared policy concerns, need for a social service, relationship to other nearby communities, issues with current district lines" %}</span>
+                                </p>
+                                {% if c.other_considerations %}
+                                  <p class="collapse-in ml-4"><b>{% trans "Your response: " %}</b> {{c.other_considerations}}</p>
+                                {% endif %}
+                              </div>
+                          </div>
+
+                          <!-- custom question -->
+                          {% if c.drive and c.drive.custom_question %}
+                            <p class="my-4 ml-1 gray-text">
+                              <b>{{ c.drive.custom_question }}</b><br>
+                            </p>
+                            {% if c.custom_response %}
+                              <p class="collapse-in ml-4"><b>{% trans "Your response: " %}</b> {{c.custom_response}}</p>
+                            {% endif %}
+                          {% endif %}
                         </div>
                       </div>
                     </div>
@@ -99,7 +199,7 @@
                       {% with link_text="/export/geojson/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
                       <div class="col-12 col-md-4">
                         <a class="btn btn-primary w-50 w-md-75 w-xl-100 mb-3 mb-md-0" data-toggle="modal" href="#" data-target="#geojson-explain-modal" rel="nofollow" download>GeoJSON</a>
-                        <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
+                        <a href={{link_text}} download="{{c.human_readable_name}}.zip" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
                       </div>
                       <!-- ********************* -->
                       <div class="col-12 col-md-4">
@@ -108,14 +208,14 @@
                       {% endwith %}
                       {% with link_text="/export/csv/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
                       <div class="col-12 col-md-4">
-                        <a class="btn btn-primary w-50 w-md-75 w-xl-100" href={{link_text}} role="button" download="community_{{c.entry_ID}}.csv">CSV</a>
+                        <a class="btn btn-primary w-50 w-md-75 w-xl-100" href={{link_text}} role="button" download="{{c.human_readable_name}}.zip">CSV</a>
                       </div>
                       {% endwith %}
                     {% else %}
                       {% with link_text="/export/geojson/?map_id="|addstr:c.entry_ID %}
                       <div class="col-12 col-md-4">
                         <a class="btn btn-primary w-50 w-md-75 w-xl-100 mb-3 mb-md-0" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>GeoJSON</a>
-                        <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
+                        <a href={{link_text}} download="{{c.human_readable_name}}.zip" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
                       </div>
                       <!-- ********************* -->
                       <div class="col-12 col-md-4">
@@ -124,7 +224,7 @@
                       {% endwith %}
                       {% with link_text="/export/csv"|add:"/?map_id="|addstr:c.entry_ID %}
                       <div class="col-12 col-md-4">
-                        <a class="btn btn-primary w-50 w-md-75 w-xl-100" href={{link_text}} role="button" download="community_{{c.entry_ID}}.csv">CSV</a>
+                        <a class="btn btn-primary w-50 w-md-75 w-xl-100" href={{link_text}} role="button" download="{{c.human_readable_name}}.zip">CSV</a>
                       </div>
                       {% endwith %}
                     {% endif %}
@@ -133,13 +233,15 @@
               </div>
             </div>
             <p id="copy-link-text" class="header-text small mt-4 mb-0">
+              {% blocktrans trimmed %}
               Or <a href="#" onclick="copyPageLink();event.preventDefault();">copy the link</a> to this page to share.
+              {% endblocktrans %}
             </p>
           </div>
         </div>
         <div class="card text-left border-0 w-100 rounded-lg mt-3">
           <div class="card-body">
-            <h4 class="card-title header-text"><strong>{% trans "Community Information" %}</strong></h4>
+            <h4 class="card-title header-text"><strong>{% trans "Community Information" %}</strong> <button class="btn btn-link no-underline-link p-0" type="button" data-toggle="modal" data-target="#submission-info-modal" rel="nofollow"><i class="far fa-question-circle small text-muted"></i></a></h4>
             <div class="accordion map-info-item mt-4" id="mobile-map-activities-accordion">
                 <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-activities-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                     {% trans "Community Activities and Services" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
@@ -196,17 +298,17 @@
         </div>
         <div id="public-comment-card" class="card text-left border-0 w-100 rounded-lg mt-3 mb-3 d-l-block">
           <div class="card-body">
-            <h5 class="card-title header-text"><strong>Send to your state.</strong></h5>
-            <p>Your state accepts communties of interest as public input. Download your map and then visit this site.</p>
-            <a id="public-comment-link"><h5 class="blue-text">Go to public input portal <i class="far fa-arrow-alt-circle-right"></i></h5></a>
+            <h5 class="card-title header-text"><strong>{% trans "Send to your state." %}</strong></h5>
+            <p>{% blocktrans trimmed %}Your state accepts communities of interest as public input. Download your map and then visit this site.{% endblocktrans %}</p>
+            <a id="public-comment-link"><h5 class="blue-text">{% trans "Go to public input portal" %} <i class="far fa-arrow-alt-circle-right"></i></h5></a>
           </div>
         </div>
         {% if show_form is True and not form_empty %}
         <div class="card text-left border-0 w-100 rounded-lg mt-3 mb-3 d-xl-block">
           <div class="card-body">
-            <h5 class="card-title header-text"><strong>Submit to an organization.</strong></h5>
+            <h5 class="card-title header-text"><strong>{% trans "Submit to an organization." %}</strong></h5>
             {% if c.drive is not True %}
-              <p class="header-text small">Many organizations in your state are collecting community maps. Submit yours to one of their collection drives.</p>
+              <p class="header-text small">{% blocktrans trimmed %}Many organizations in your state are collecting community maps. Submit yours to one of their collection drives.{% endblocktrans %}</p>
               <form method="post">
                 {% csrf_token %}
                 {% for field in form %}
@@ -474,5 +576,6 @@
         <script type="text/javascript" src="{% static 'main/feature-lookup-tables/feature-lookup-tables.js'%}"></script>
         <script type="text/javascript" src="{% static 'main/feature-lookup-tables/state-codes.js'%}"></script>
         <script type="text/javascript" src="{% static 'main/js/components/states.js' %}"></script>
+        <script type="text/javascript" src="{% static 'main/js/map-common.js' %}"></script>
         <script type="text/javascript" src="{% static 'main/js/submission.js' %}"></script>
         {% endblock %}
