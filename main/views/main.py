@@ -1147,7 +1147,7 @@ class EntryView(LoginRequiredMixin, View):
             # special characters
             attributeThresholds = [
                 ("TOXICITY", 0.75),
-                ("IDENTITY_ATTACK", 0.4),
+                ("IDENTITY_ATTACK", 0.5),
                 ("INSULT", 0.5),
                 ("PROFANITY", 0.75),
                 ("THREAT", 0.9),
