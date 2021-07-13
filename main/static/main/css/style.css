@@ -611,16 +611,16 @@ body {
   }
 }
 /* EXCLUSIVELY FOR HOME PAGE rect */
-@media screen and (min-width:992px) and (max-width:1169px){
+@media screen and (min-width:1151px) and (max-width:1261px){
   #home-page-rect {
-    height: 275% !important;
+    height: 190% !important;
   }
 }
 
 #home-page-rect {
   position: absolute;
   width: 250%;
-  height: 300%;
+  height: 225%;
   left: -10%;
   bottom: 110%;
 
