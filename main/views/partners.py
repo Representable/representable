@@ -21,6 +21,8 @@ from django.views.generic import (
 # import boto3
 # import botocore
 import pandas
+import zipfile
+from representable.settings.base import STATIC_ROOT
 from django.contrib.gis import geos
 from django.contrib.gis.geos import GEOSGeometry, MultiPolygon, Polygon
 
@@ -31,7 +33,7 @@ import geojson
 from django.shortcuts import get_object_or_404
 from geojson_rewind import rewind
 from django.core.serializers import serialize
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render
 from django.urls import reverse_lazy
 
@@ -66,7 +68,10 @@ class PartnerMap(TemplateView):
         entryPolyDict = dict()
 
         # get the org to which this map belongs
-        org = Organization.objects.get(slug=self.kwargs["slug"])
+        try:
+            org = Organization.objects.get(slug=self.kwargs["slug"])
+        except:
+            raise Http404
 
         # get the user
         user = self.request.user
@@ -78,20 +83,26 @@ class PartnerMap(TemplateView):
 
         # get the polygon from db and pass it on to html
         if self.kwargs["drive"]:
-            drive = Drive.objects.get(slug=self.kwargs["drive"])
+            try:
+                drive = Drive.objects.get(slug=self.kwargs["drive"])
+            except:
+                raise Http404
             query = drive.submissions.all().defer(
                 "census_blocks_polygon_array", "user_polygon",
-            ).prefetch_related("organization")
+            ).prefetch_related("organization").order_by("-created_at")
+
         else:
             drive = None
             query = org.submissions.all().defer(
                 "census_blocks_polygon_array", "user_polygon"
-            ).prefetch_related("drive")
+            ).prefetch_related("drive").order_by("-created_at")
 
         # address information if admin/user drew the comms
         streets = {}
         cities = {}
         for obj in query:
+            if not is_admin and not obj.admin_approved:
+                continue
             if not obj.census_blocks_polygon and obj.user_polygon:
                 s = "".join(obj.user_polygon.geojson)
             elif obj.census_blocks_polygon:
@@ -277,19 +288,43 @@ class MultiExportView(TemplateView):
             all_gj.append(gj)
 
         final = geojson.FeatureCollection(all_gj)
+        # setting name of exported file
+        if drive:
+            drive_obj = Drive.objects.get(slug=drive)
+            export_name = drive_obj.name.replace(" ", "_") + "_communities"
+        else:
+            org_obj = Organization.objects.get(slug=org)
+            export_name = org_obj.name.replace(" ", "_") + "_communities"
 
         if(kwargs['type'] == 'geo'):
             print('********', 'geo', '********')
-            response = HttpResponse(geojson.dumps(final), content_type="application/json")
+            # create a zip file that includes geojson + readme explaining the file format and including questions from survey page
+            response = HttpResponse(content_type='application/zip')
+            with zipfile.ZipFile(response, "w") as z:
+                with z.open("%s.geojson" % export_name, "w") as c:
+                    c.write(geojson.dumps(final).encode("utf-8"))
+                z.write(STATIC_ROOT + '/main/readme/README_geojson.txt', arcname="README_geojson.txt")
+            response['Content-Disposition'] = 'attachment; filename=%s.zip' % export_name
         else:
             print('********', 'csv', '********')
             dictform = json.loads(geojson.dumps(final))
             df = pandas.DataFrame()
-            for entry in dictform['features']:
-                row_dict = entry['properties'].copy()
-                row_dict['geometry'] = str(entry['geometry'])
-                df = df.append(row_dict, ignore_index=True)
-            response = HttpResponse(df.to_csv(), content_type="text/csv")
+            for i, entry in enumerate(dictform["features"]):
+                row_dict = dict()
+                if 'block_group_ids' in entry['properties']:
+                    row_dict['BLOCKID'] = entry['properties']['block_group_ids']
+                elif 'census_block_ids' in entry['properties']:
+                    row_dict['BLOCKID'] = entry['properties']['census_block_ids']
+                else:
+                    break
+                row_dict['DISTRICT'] = [i + 1] * len(row_dict['BLOCKID'])
+                df = df.append(pandas.DataFrame(row_dict))
+            comm_csv = df.to_csv(index=False)
+            response = HttpResponse(content_type='application/zip')
+            with zipfile.ZipFile(response, "w") as z:
+                z.writestr('%s.csv' % export_name, comm_csv)
+                z.write(STATIC_ROOT + '/main/readme/README_csv.txt', arcname="README_csv.txt")
+            response['Content-Disposition'] = 'attachment; filename=%s.zip' % export_name
 
         return response
 
@@ -319,7 +354,7 @@ class ReportView(View):
     def post(self, request, **kwargs):
         cid = request.POST["cid"]
         email = request.POST["email"]
-        is_org_admin = request.POST["is_org_admin"]
+        is_org_admin = request.POST["is_org_admin"].replace("/", "")
 
         org_slug = request.POST["org_slug"].replace("/", "")
         drive_slug = request.POST["drive_slug"].replace("/", "")

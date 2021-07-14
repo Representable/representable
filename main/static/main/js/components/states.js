@@ -163,5 +163,18 @@ let statesLngLat = {
   'WA': [-120.7401, 47.7511],
   'WI': [-89.8267049, 44.7862968],
   'WV': [-80.1816905, 38.9201705],
-  'WY': [-107.5545669, 43.000325]
+  'WY': [-107.5545669, 43.000325],
+  'DANE': [-89.4012, 43.0731],
+}
+let publicCommentLinks = {
+  'co': 'https://redistricting.colorado.gov/public_comments/new',
+  'ma': 'https://malegislature.gov/Redistricting/Contact',
+  'mi': 'https://www.michigan-mapping.org/#submit',
+  'mo': 'https://house.mo.gov/WitnessForm/Default.aspx?noticeid=5970',
+  'mt': 'https://leg.mt.gov/districting/2020-commission/redistricting-input/',
+  'nj': 'http://www.apportionmentcommission.org/ContactUs.asp',
+  'ok': 'https://www.okhouse.gov/Publications/RedistrictingContacts.aspx',
+  'tx': 'https://senate.texas.gov/redistrictingcomment/',
+  'wa': 'https://www.redistricting.wa.gov/submit-public-testimony',
+  'wi': 'https://appengine.egov.com/apps/wi/peoplesmaps/writtencomment',
 }

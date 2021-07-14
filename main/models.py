@@ -82,7 +82,7 @@ class Organization(models.Model):
         models.CharField(max_length=50, choices=STATES, blank=True),
         blank=False,
     )
-    slug = models.SlugField(unique=True, max_length=128)
+    slug = models.SlugField(unique=True, max_length=50)
     members = models.ManyToManyField(User, through="Membership")
     verified = models.BooleanField(default=False)
 
@@ -95,7 +95,13 @@ class Organization(models.Model):
     def save(self, *args, **kwargs):
         # generate the slug once the first time the org is created
         if not self.slug:
-            self.slug = generate_unique_slug(Organization, self.name)
+            # change self.name to be less than 35 char, split at a space,
+            slug_slice = 35
+            for idx, char in enumerate(self.name):
+                if char == " " and idx < 35:
+                    slug_slice = idx
+            slug_name = self.name[:slug_slice]
+            self.slug = generate_unique_slug(Organization, slug_name)
         super(Organization, self).save(*args, **kwargs)
 
     def get_url_kwargs(self):
@@ -140,6 +146,8 @@ class Drive(models.Model):
     - is_active: is the drive active
     - private: is the drive private
     - require_user_addresses: does the drive require users to include an address
+    - custom_question: custom question to be asked as part of the survey process
+    - custom_question_example: example custom question response for survey placeholder text
     """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -156,14 +164,26 @@ class Drive(models.Model):
     require_user_addresses = models.BooleanField(
         default=True, blank=True, null=True
     )
+    custom_question = models.TextField(
+        max_length=255, blank=True, unique=False, default=""
+    )
+    custom_question_example = models.TextField(
+        max_length=255, blank=True, unique=False, default=""
+    )
 
     class Meta:
         ordering = ("description",)
 
     def save(self, *args, **kwargs):
-        # generate the slug once the first time the org is created
+        # generate the slug once the first time the drive is created
         if not self.slug:
-            self.slug = generate_unique_slug(Drive, self.name)
+            # change self.name to be less than 35 char, split at a space,
+            slug_slice = 35
+            for idx, char in enumerate(self.name):
+                if char == " " and idx < 35:
+                    slug_slice = idx
+            slug_name = self.name[:slug_slice]
+            self.slug = generate_unique_slug(Drive, slug_name)
         super(Drive, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -225,14 +245,30 @@ class BlockGroup(models.Model):
     BlockGroup represents census block groups from a given year. These are the building blocks of COIs.
     Fields included:
      - census_id: the official block group id
-     - year: year of census (default - 2010, though this should be changed when 2020 blocks come out)
+     - year: year of census (default - 2020, with an exception for states using 2010 units)
     """
 
     census_id = models.CharField(max_length=12)
-    year = models.IntegerField(default=2010)
+    year = models.IntegerField(default=2020)
 
 
 # ******************************************************************************#
+
+
+class CensusBlock(models.Model):
+    """
+    CensusBlock represents census blocks from a given year. These are the building blocks of COIs.
+    Fields included:
+     - census_id: the official block group id
+     - year: year of census (default - 2020, with an exception for states using 2010 units)
+    """
+
+    census_id = models.CharField(max_length=15)
+    year = models.IntegerField(default=2020)
+
+
+# ******************************************************************************#
+
 
 class State(models.Model):
 
@@ -263,10 +299,22 @@ class CommunityEntry(models.Model):
      - entry_ID: Randomly Generated via uuid.uuid4.
      - organization: The organization that the user is submitting the entry to
      - drive: The drive that the user is submitting the entry to
-     - user_polygon:  User polygon contains the polygon drawn by the user.
+     - user_polygon:  User polygon contains the polygon drawn by the user -- deprecated
      - census_blocks_polygon_array: Array containing multiple polygons.
      - census_blocks_polygon: The union of the census block polygons.
+     - block_groups: ManytoMany of block group objects
+     - census_blocks: ManytoMany of census block objects
      - population: The population of the community entry, based on ACS data.
+     - block_groups: relates the community entry to block groups and their census id
+     - state_obj: foreign key relation to the state this community was drawn in
+     - state: abbreviation of the state_obj state name
+     - entry_reason: possibly deprecated? TODO: look into
+     - entry_name: the name of the community
+     - cultural_interests: cultural and historical interests question response
+     - economic_interests: economic and environmental interests question response
+     - comm_activities: community activities and services question response
+     - other_considerations: community needs and concerns questions response
+     - custom_response: response to custom question, if included in a drive
 
     """
 
@@ -306,6 +354,8 @@ class CommunityEntry(models.Model):
 
     block_groups = models.ManyToManyField(BlockGroup, blank=True)
 
+    census_blocks = models.ManyToManyField(CensusBlock, blank=True)
+
     entry_name = models.CharField(
         max_length=100, blank=False, unique=False, default=""
     )
@@ -316,16 +366,19 @@ class CommunityEntry(models.Model):
         max_length=500, blank=False, unique=False, default=""
     )
     cultural_interests = models.TextField(
-        max_length=500, blank=True, unique=False, default=""
+        max_length=700, blank=True, unique=False, default=""
     )
     economic_interests = models.TextField(
-        max_length=500, blank=True, unique=False, default=""
+        max_length=700, blank=True, unique=False, default=""
     )
     comm_activities = models.TextField(
-        max_length=500, blank=True, unique=False, default=""
+        max_length=700, blank=True, unique=False, default=""
     )
     other_considerations = models.TextField(
-        max_length=500, blank=True, unique=False, default=""
+        max_length=700, blank=True, unique=False, default=""
+    )
+    custom_response = models.TextField(
+        max_length=700, blank=True, unique=False, default=""
     )
     # make this foreign key relation
     state_obj = models.ForeignKey(
@@ -333,7 +386,7 @@ class CommunityEntry(models.Model):
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
-        related_name="submissions"
+        related_name="submissions",
     )
     state = models.CharField(
         max_length=10, blank=True, unique=False, default=""
@@ -343,6 +396,9 @@ class CommunityEntry(models.Model):
     admin_approved = models.BooleanField(default=True)
     private = models.BooleanField(default=False, null=True)
     population = models.IntegerField(blank=True, null=True, default=0)
+
+    def human_readable_name(self):
+        return self.entry_name.replace(' ', '_')
 
     def __str__(self):
         return str(self.entry_ID)
@@ -385,22 +441,20 @@ class Signature(models.Model):
     hash = models.CharField(max_length=64, blank=True)
 
 
-
-
 # ******************************************************************************#
 
 
 class FrequentlyAskedQuestion(models.Model):
 
     FAQ_TYPE_CHOICES = [
-        ('USER', 'User'),
-        ('ORGANIZATION', 'Organization'),
+        ("USER", "User"),
+        ("ORGANIZATION", "Organization"),
     ]
 
     type = models.CharField(
         max_length=12,
         choices=FAQ_TYPE_CHOICES,
-        default='USER',
+        default="USER",
     )
 
     question = RichTextField()
@@ -418,7 +472,9 @@ class GlossaryDefinition(models.Model):
     term = models.CharField(
         max_length=100, blank=False, unique=True, default=""
     )
-    definition = models.CharField(max_length=1000, blank=False, unique=True, default="")
+    definition = models.CharField(
+        max_length=1000, blank=False, unique=True, default=""
+    )
 
     class Meta:
         db_table = "glossary"
@@ -436,6 +492,10 @@ class Report(models.Model):
 
     def unapprove(self):
         self.community.admin_approved = False
+        self.community.save()
+    
+    def approve(self):
+        self.community.admin_approved = True
         self.community.save()
 
 

@@ -21,7 +21,31 @@
 
 // GEO Js file for handling map drawing.
 /* https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ */
-// Polygon Drawn By User
+var bg_id = "GEOID"; // census FIPS code for block group
+var block_id = "GEOID20"; // census FIPS code for block
+var unit_id = bg_id; // abstracted - current unit
+var layer_suffix = "bg"; // suffix for created unit
+var drawUsingBlocks = false; // are we using blocks block groups currently?
+var old_units = false; // does this state use 2010 census units or 2020?
+var dane_cty = false; // is this a customized building block drive for dane county?
+if (drive_slug == "tell-us-about-your") dane_cty = true;
+var initialZoom = 6; // initial zoom level for first showing map - higher is closer
+if (STATES_USING_OLD_UNITS.indexOf(state) >= 0) {
+  old_units = true;
+  block_id = "BLOCKID10";
+  bg_id = "GEOID10";
+  unit_id = bg_id;
+}
+if (dane_cty) {
+  bg_id = "WARD_FIPS";
+  unit_id = "WARD_FIPS";
+  state = "dane";
+  layer_suffix="wards";
+  initialZoom = 10;
+  // set units link on modal to be municipal wards
+  $("#units-link").html("<strong>municipal wards</strong>")
+}
+// stack of filters (which block to highlight) and bounding boxes (for contiguity check)
 var filterStack = JSON.parse(sessionStorage.getItem("filterStack"));
 var bboxStack = JSON.parse(sessionStorage.getItem("bboxStack"));
 if (filterStack === null) filterStack = [];
@@ -30,30 +54,70 @@ if (bboxStack === null) bboxStack = [];
 var pop = sessionStorage.getItem("pop");
 if (pop !== null) $(".comm-pop").html(pop);
 
-// change "Show Examples" to "Hide Examples" on click
-// TODO: change this to be updated for languages automatically, rather than manually
-function changeText(element) {
-  var target_id = element.getAttribute("data-target").replace("#","");
-  var targetVis = document.getElementById(target_id).classList.contains("show");
-  var txt = element.innerText;
-  if (!targetVis) {
-    if (txt == "Show Examples") {
-      element.innerText = "Hide Examples";
-    } else if (txt == "Mostar ejemplos") {
-      element.innerText = "Ocultar ejemplos";
+//switch from blocks to blockgroups and vice versa for drawing map
+function changeMappingUnit() {
+  // remove layers: lines + shading
+  // add in other layers (make visible)
+  // change variables for selecting units
+  // clear cache and sessionStorage stuff
+  if (drawUsingBlocks) {
+    map.setLayoutProperty(state + "-census-lines-block", "visibility", "none");
+    map.setLayoutProperty(state + "-census-shading-block", "visibility", "none");
+    map.setLayoutProperty(state + "-highlighted-block", "visibility", "none");
+    map.setLayoutProperty(state + "-census-lines-bg", "visibility", "visible");
+    map.setLayoutProperty(state + "-census-shading-bg", "visibility", "visible");
+    map.setLayoutProperty(state + "-highlighted-bg", "visibility", "visible");
+    drawUsingBlocks = false;
+    layer_suffix = "bg";
+    unit_id = bg_id;
+    // change button name for this case -- TODO: languages?
+    $("#map-units-btn").text("Use smaller units");
+    //clear "cache" so that undo button still works as expected
+    sessionStorage.clear();
+    filterStack = [];
+    bboxStack = [];
+    // show or hide population display
+    if (old_units) {
+      $("#map-pop-btn").show();
+    } else {
+      $("#map-pop-btn").hide();
     }
+    // clear selection
+    map.setFilter(state + "-highlighted-block", ["in", block_id, ""]);
+    map.setFilter(state + "-highlighted-bg", ["in", bg_id, ""]);
+
+    mapHover();
   } else {
-    if (txt == "Hide Examples") {
-      element.innerText = "Show Examples";
-    } else if (txt == "Ocultar ejemplos"){
-      element.innerText = "Mostar ejemplos";
+    map.setLayoutProperty(state + "-census-lines-block", "visibility", "visible");
+    map.setLayoutProperty(state + "-census-shading-block", "visibility", "visible");
+    map.setLayoutProperty(state + "-highlighted-block", "visibility", "visible");
+    map.setLayoutProperty(state + "-census-lines-bg", "visibility", "none");
+    map.setLayoutProperty(state + "-census-shading-bg", "visibility", "none");
+    map.setLayoutProperty(state + "-highlighted-bg", "visibility", "none");
+    drawUsingBlocks = true;
+    layer_suffix = "block";
+    unit_id = block_id;
+    // change button name for this case -- TODO: languages?
+    $("#map-units-btn").text("Use larger units");
+    //clear "cache" so that undo button still works as expected
+    sessionStorage.clear();
+    filterStack = [];
+    bboxStack = [];    // show or hide population display
+    if (old_units) {
+      $("#map-pop-btn").show();
+    } else {
+      $("#map-pop-btn").hide();
     }
+    // clear selection
+    map.setFilter(state + "-highlighted-block", ["in", block_id, ""]);
+    map.setFilter(state + "-highlighted-bg", ["in", bg_id, ""]);
+    mapHover();
   }
 }
 
 // removes population from community info dropdown, if in a state using new census geographies
-if (STATES_USING_NEW_BG.indexOf(state) >= 0) {
-  $(".comm-pop-text").hide();
+if (!old_units) {
+  $("#map-pop-btn").hide();
 }
 
 // changes page entry page from the survey start page to the first part of the survey
@@ -109,7 +173,7 @@ function parseReverseGeo(geoData) {
 function isEmptyFilter(filter) {
   var isEmpty = true;
   filter.forEach(function (feature) {
-    if (feature !== "in" && feature !== "GEOID" && feature !== "") {
+    if (feature !== "in" && feature !== unit_id && feature !== "") {
       isEmpty = false;
       return;
     }
@@ -179,6 +243,26 @@ $('#map-help-modal').on('shown.bs.modal hidden.bs.modal', function() {
 $('#map-comm-modal').on('shown.bs.modal hidden.bs.modal', function() {
   $("#mobile-map-comm-btn").toggleClass("opened")
 });
+
+$('#map-units-btn').on('click', function() {
+  drawUsingBlocks ? $("#map-block-to-bg-modal").modal() : $("#map-bg-to-block-modal").modal()
+});
+
+if (drawUsingBlocks)  $("#map-units-btn").text("Use larger units");
+
+$('#map-block-to-bg-btn').on('click', function() {
+  changeMappingUnit();
+  $("#map-block-to-bg-modal").modal('hide');
+});
+
+$('#map-bg-to-block-btn').on('click', function() {
+  changeMappingUnit();
+  $("#map-bg-to-block-modal").modal('hide');
+});
+
+if (dane_cty) {
+  $('#map-units-btn').hide();
+}
 
 /**
  * "May not be needed": Lines tagged with this are meant to animate the load in between the progress bars on a mobile view. However
@@ -457,6 +541,10 @@ $("#id_other_considerations").on("click", function(e) {
   }
 });
 
+if (drive_custom_question_example) {
+  $('#id_custom_response').attr("placeholder", "ex. " + drive_custom_question_example);
+}
+
 function interestsValidated() {
   var flag = true;
   var cultural_interests_field = document.getElementById(
@@ -469,22 +557,26 @@ function interestsValidated() {
   var other_considerations_field = document.getElementById(
     "id_other_considerations"
   );
+  var custom_response_field = document.getElementById("id_custom_response");
 
   cultural_interests_field.value = trim(cultural_interests_field.value);
   economic_interests_field.value = trim(economic_interests_field.value);
   comm_activities_field.value = trim(comm_activities_field.value);
   other_considerations_field.value = trim(other_considerations_field.value);
+  if (custom_response_field) custom_response_field.value = trim(custom_response_field.value);
 
   if (
     cultural_interests_field.value == "" &&
     economic_interests_field.value == "" &&
     comm_activities_field.value == "" &&
-    other_considerations_field.value == ""
+    other_considerations_field.value == "" &&
+    (!custom_response_field || custom_response_field.value == "")
   ) {
     cultural_interests_field.classList.add("has_error");
     economic_interests_field.classList.add("has_error");
     comm_activities_field.classList.add("has_error");
     other_considerations_field.classList.add("has_error");
+    if (custom_response_field) custom_response_field.classList.add("has_error");
     var interests_alert = document.getElementById("need_one_interest");
     interests_alert.classList.remove("d-none");
     flag = false;
@@ -526,10 +618,12 @@ $("#surveyP2ToMap_button").on("click", function(e) {
 
 $("#mapToPrivacy").on("click", function(e) {
   zoomToCommunity();
-  createCommSuccess = createCommPolygon();
+  setTimeout(() => {
+    createCommSuccess = createCommPolygon();
+  }, 1000);
   // loading icon
   $("#loading-entry").css("display", "block");
-  $("#loading-entry").delay(2000).fadeOut(2000);
+  $("#loading-entry").delay(2500).fadeOut(2500);
   setTimeout(function() {
     if (createCommSuccess) {
       e.preventDefault();
@@ -537,15 +631,17 @@ $("#mapToPrivacy").on("click", function(e) {
       $('#map-card').removeClass("has_error");
       automaticScrollToTop();
     }
-  }, 2000);
+  }, 2500);
 })
 
 $("#mapToPrivacyMobile").on("click", function(e) {
   zoomToCommunity();
-  createCommSuccess = createCommPolygon();
+  setTimeout(() => {
+    createCommSuccess = createCommPolygon();
+  }, 1000);
   // loading icon
   $("#loading-entry").css("display", "block");
-  $("#loading-entry").delay(2000).fadeOut(2000);
+  $("#loading-entry").delay(2500).fadeOut(2500);
   setTimeout(function() {
     if (createCommSuccess) {
       e.preventDefault();
@@ -553,7 +649,7 @@ $("#mapToPrivacyMobile").on("click", function(e) {
       $('#map-card').removeClass("has_error");
       automaticScrollToTop();
     }
-  }, 2000);
+  }, 2500);
 })
 
 $("#mapToSurveyP2").click(mapToSurveyP2);
@@ -618,11 +714,26 @@ function createCommPolygon() {
   }
   // now query the features and build the polygon to be saved
   var queryFeatures = map.queryRenderedFeatures({
-    layers: [state + "-census-shading"],
+    layers: [state + "-census-shading-" + layer_suffix],
   });
   var multiPolySave;
+  var dane_cty_blocks = [];
   queryFeatures.forEach(function (feature) {
-    if (polyFilter.includes(feature.properties.GEOID)) {
+    // get properties, depending on the feature type
+    if (drawUsingBlocks) {
+      featureProp = feature.properties[block_id];
+    } else {
+      featureProp = feature.properties[bg_id];
+    }
+    if (polyFilter.includes(featureProp)) {
+      // if dane county, add feature.properties.geoids to an array
+      if (dane_cty) {
+        geoids = feature.properties["GEOIDS"].replace(/'/g, '"');
+        geoids_array = JSON.parse(geoids);
+        for (i = 0; i < geoids_array.length; i++) {
+          dane_cty_blocks.push(parseInt(geoids_array[i]));
+        }
+      }
       if (multiPolySave === undefined) {
         multiPolySave = feature;
       } else {
@@ -630,6 +741,19 @@ function createCommPolygon() {
       }
     }
   });
+
+  // map.addLayer({
+  //   'id': Math.random().toString().substring(),
+  //   'type': 'line',
+  //   'source': {
+  //     'type': 'geojson',
+  //     'data': multiPolySave.geometry,
+  //   },
+  //   'paint': {
+  //     'line-color': '#000',
+  //     'line-width': 3
+  //   }
+  // });
 
   // for display purposes -- this is the final multipolygon!!
   // TODO: implement community entry model change -> store only outer coordinates (like code in map.js)
@@ -642,8 +766,15 @@ function createCommPolygon() {
   // clean up polyFilter -- this is the array of GEOID to be stored
   polyFilter.splice(0, 1);
   polyFilter.splice(0, 1);
-  document.getElementById("id_block_groups").value = polyFilter;
-  // load in the Population
+
+  // supply the list of block group or census block ids for addition/creation as manytomany in db
+  if (!dane_cty) {
+    drawUsingBlocks ? document.getElementById("id_census_blocks").value = polyFilter : document.getElementById("id_block_groups").value = polyFilter;
+  } else {
+    document.getElementById("id_census_blocks").value = dane_cty_blocks;
+  }
+  // console.log(document.getElementById("id_census_blocks").value)
+  // load in the Population, if exists
   var pop = sessionStorage.getItem("pop");
   document.getElementById("id_population").value = pop;
   return true;
@@ -654,7 +785,54 @@ function zoomToCommunity() {
   var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
   if (selectBbox === null || selectBbox.length === 0) return;
   var bbox = turf.bbox(selectBbox);
-  map.fitBounds(bbox, { padding: 300, duration: 0 });
+
+  if(blockGroupPolygons != null && unit_id === bg_id) {
+    // map.addLayer({
+    //   'id': Math.random().toString().substring(),
+    //   'type': 'line',
+    //   'source': {
+    //     'type': 'geojson',
+    //     'data': turf.bboxPolygon(bbox).geometry,
+    //   },
+    //   'paint': {
+    //     'line-color': '#eb4034',
+    //     'line-width': 3
+    //   }
+    // });
+
+    polyFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
+    let bbox_adjustment = undefined;
+    for(var i = 2; i < polyFilter.length; i++) {
+      if(bbox_adjustment === undefined) {
+        bbox_adjustment = blockGroupPolygons[polyFilter[i]].bbox_dims;
+      } else {
+        bbox_adjustment[0] = Math.max(bbox_adjustment[0], blockGroupPolygons[polyFilter[i]].bbox_dims[0]);
+        bbox_adjustment[1] = Math.max(bbox_adjustment[1], blockGroupPolygons[polyFilter[i]].bbox_dims[1]);
+      }
+      blockGroupPolygons[polyFilter[i]].bbox_dims[0];
+      blockGroupPolygons[polyFilter[i]].bbox_dims[1];
+    }
+    bbox[0] -= bbox_adjustment[0];
+    bbox[1] -= bbox_adjustment[1];
+    bbox[2] += bbox_adjustment[0];
+    bbox[3] += bbox_adjustment[1];
+
+    // map.addLayer({
+    //   'id': Math.random().toString().substring(),
+    //   'type': 'line',
+    //   'source': {
+    //     'type': 'geojson',
+    //     'data': turf.bboxPolygon(bbox).geometry,
+    //   },
+    //   'paint': {
+    //     'line-color': '#eb4034',
+    //     'line-width': 3
+    //   }
+    // });
+    map.fitBounds(bbox, { duration: 0 });
+  } else {
+    map.fitBounds(bbox, { duration: 0, padding: 300 });
+  }
 }
 /****************************************************************************/
 
@@ -757,8 +935,7 @@ var map = new mapboxgl.Map({
   style: "mapbox://styles/districter-team/ckdfv8riy0uf51hqu1g7qjrha", //hosted style id
   center: [-96.7026, 40.8136], // starting position - Lincoln, NE :)
   zoom: 3, // starting zoom -- higher is closer
-  maxZoom: 14, // camelCase. There's no official documentation for this smh :/
-  minZoom: 7,
+  minZoom: 6.5,
 });
 
 map.on('load', function() {
@@ -781,14 +958,20 @@ var geocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
   country: "us",
   mapboxgl: mapboxgl,
-  placeholder: "Search Location"
+  placeholder: "Search Location",
+  flyTo: {
+    maxZoom: 14, // If you want your result not to go further than a specific zoom
+  }
 });
 
 var modalGeocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
   country: "us",
   mapboxgl: mapboxgl,
-  placeholder: "Search Location"
+  placeholder: "Search Location",
+  flyTo: {
+    maxZoom: 14, // If you want your result not to go further than a specific zoom
+  }
 });
 
 document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
@@ -811,6 +994,7 @@ modalGeocoder.on('result', function () {
 /* Creating custom draw buttons */
 class DropdownButton {
   onAdd(map) {
+    // TODO: change based on design from olivia - make more playful in shape
     var dropdown_control = document.createElement("button");
     dropdown_control.href = "#";
     dropdown_control.type = "button";
@@ -819,7 +1003,7 @@ class DropdownButton {
     dropdown_control.classList.add("active");
     dropdown_control.id = "map-dropdown-id";
     dropdown_control.style.display = "block";
-    dropdown_control.innerHTML = '<i class="fas fa-cog"></i>'; //&emsp;<i class="fas fa-caret-down"></i>
+    dropdown_control.innerHTML = '<i class="fas fa-paint-brush"></i> Selection Size'; //&emsp;<i class="fas fa-caret-down"></i>
 
     this._map = map;
     this._container = document.createElement("div");
@@ -844,11 +1028,11 @@ class SelectRadiusButton {
     radius_control.type = "button";
     radius_control.backgroundImg = "";
 
-    radius_control.classList.add("active");
+    radius_control.classList.add("active", "nohover");
     radius_control.id = "map-radius-control-id";
     radius_control.style.display = "none";
     radius_control.innerHTML =
-      '<form><label for="radius-control" class="sr-only">Choose a selection size: </label><input type="range" min="0" max="50" value="0" class="custom-range" id="radius-control"><p style="margin: 0;">Selection Tool Size</p></form>';
+      '<form><label for="radius-control" class="sr-only">Choose a selection size: </label><input type="range" min="0" max="50" value="0" class="custom-range" style="width:75%;" id="radius-control"></form>';
     this._map = map;
     this._container = document.createElement("div");
     this._container.className = "mapboxgl-ctrl mapboxgl-ctrl-group draw-group";
@@ -893,7 +1077,7 @@ class DrawButton {
     draw_button.classList.add("active");
     draw_button.id = "map-draw-button-id";
     draw_button.style.display = "none";
-    draw_button.innerHTML = "<i class='fas fa-pencil-alt'></i> Draw";
+    draw_button.innerHTML = '<i class="fas fa-paint-brush"></i> Draw';
     this._map = map;
     return draw_button;
   }
@@ -917,7 +1101,7 @@ class EraserButton {
     eraser_button.classList.add("active");
     eraser_button.id = "map-eraser-button-id";
     eraser_button.style.display = "none";
-    eraser_button.innerHTML = "<i class='fas fa-eraser'></i> Eraser";
+    eraser_button.innerHTML = "<i class='fas fa-eraser'></i> Erase";
     this._map = map;
     return eraser_button;
   }
@@ -975,7 +1159,7 @@ class UndoButton {
         } else {
           sessionStorage.setItem("selectBbox", undoBbox);
         }
-        map.setFilter(state + "-bg-highlighted", undoFilter);
+        map.setFilter(state + "-highlighted-" + layer_suffix, undoFilter);
         sessionStorage.setItem("bgFilter", JSON.stringify(undoFilter));
         sessionStorage.setItem("filterStack", JSON.stringify(filterStack));
         sessionStorage.setItem("bboxStack", JSON.stringify(bboxStack));
@@ -1003,7 +1187,7 @@ class ClearMapButton {
     clear_button.classList.add("active");
     clear_button.id = "map-clear-button-id";
     clear_button.style.display = "none";
-    clear_button.innerHTML = "<i class='fas fa-trash-alt'></i> Clear Selection";
+    clear_button.innerHTML = "<i class='fas fa-trash-alt'></i> Clear Map";
     this._map = map;
     clear_button.addEventListener("click", function (event) {
       // check for empty map -- raise warning message if so
@@ -1017,7 +1201,7 @@ class ClearMapButton {
       );
       if (isConfirmed) {
         $(".comm-pop").html(0);
-        map.setFilter(state + "-bg-highlighted", ["in", "GEOID"]);
+        map.setFilter(state + "-highlighted-" + layer_suffix, ["in", unit_id]);
         var undoBbox = sessionStorage.getItem("selectBbox");
         filterStack.push(undoFilter);
         bboxStack.push(undoBbox);
@@ -1046,10 +1230,12 @@ var basicMode = true;
 dropdownButton.addEventListener("click", function (e) {
   if (mapClearButton.style.display === "none") {
     dropdownButton.innerHTML =
-      '<i class="fas fa-cog"></i> Settings <i class="fas fa-caret-up"></i>';
+      '<i class="fas fa-paint-brush"></i> Selection Size <i class="fas fa-caret-up"></i>';
     basicMode = false;
+    dropdownButton.classList.add("nohover");
   } else {
-    dropdownButton.innerHTML = '<i class="fas fa-cog">';
+    dropdownButton.innerHTML = '<i class="fas fa-paint-brush"></i> Selection Size';
+    dropdownButton.classList.remove("nohover");
     if (drawRadius === 0) basicMode = true;
   }
   var children = drawControls.children;
@@ -1096,12 +1282,12 @@ function newSourceLayer(name, mbCode) {
   });
 }
 // census block data - lines only, always visible
-function newCensusLines(state) {
+function newCensusLines(state, suffix) {
   map.addLayer({
-    id: state + "-census-lines",
+    id: state + "-census-lines-" + suffix,
     type: "line",
-    source: state + "bg",
-    "source-layer": state + "bg",
+    source: state + suffix,
+    "source-layer": state + suffix,
     layout: {
       visibility: "none",
     },
@@ -1113,13 +1299,13 @@ function newCensusLines(state) {
 }
 
 // add a new layer of census block data (transparent layer)
-function newCensusShading(state, firstSymbolId) {
+function newCensusShading(state, firstSymbolId, suffix) {
   map.addLayer(
     {
-      id: state + "-census-shading",
+      id: state + "-census-shading-" + suffix,
       type: "fill",
-      source: state + "bg",
-      "source-layer": state + "bg",
+      source: state + suffix,
+      "source-layer": state + suffix,
       paint: {
         "fill-outline-color": "#000000",
         "fill-color": "#000000",
@@ -1134,31 +1320,74 @@ function newCensusShading(state, firstSymbolId) {
     firstSymbolId
   );
 }
-function newHighlightLayer(state, firstSymbolId) {
+function newHighlightLayer(state, firstSymbolId, suffix) {
   map.addLayer(
     {
-      id: state + "-bg-highlighted",
+      id: state + "-highlighted-" + suffix ,
       type: "fill",
-      source: state + "bg",
-      "source-layer": state + "bg",
+      source: state + suffix,
+      "source-layer": state + suffix,
       paint: {
         "fill-outline-color": "#1e3799",
         "fill-color": "#4a69bd",
         "fill-opacity": 0.4,
       },
-      filter: ["in", "GEOID", ""],
+      filter: ["in", unit_id, ""],
     },
     firstSymbolId
   );
 }
 
+function checkIsContiguous(idFilter) {
+  var active_ids = new Set(idFilter.slice(2));
+  if(active_ids.size == 0)
+    return true;
+  let visited = new Set();
+  let stack = [];
+  stack.push(active_ids.values().next().value);
+  visited.add(stack[0]);
+
+  while(stack.length > 0){
+    blockGroupPolygons[stack.pop()].adj_geoids.forEach((id) => {
+      if(active_ids.has(id) && !visited.has(id)){
+        stack.push(id);
+        visited.add(id);
+      }
+    });
+  }
+
+  if(visited.size == active_ids.size)
+    hideWarningMessage();
+  else
+    showWarningMessage("WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org.");
+}
 /******************************************************************************/
 // the drawing radius for select tool
 var drawRadius = 0;
 var isStateChanged = false;
+var blockGroupPolygons = null;
 /* After the map style has loaded on the page, add a source layer and default
 styling for a single point. */
 map.on("style.load", function () {
+  fetch('/block_group_polygons/' + state.toLowerCase() + 'bg/')
+    .then(response => {
+      if (response.ok) {
+        return response.json()
+      } else if(response.status === 404) {
+        return Promise.reject('error 404')
+      } else {
+        return Promise.reject('some other error: ' + response.status)
+      }
+    })
+    .then(data => {
+      blockGroupPolygons = data;
+      console.log('data loaded successfully');
+    })
+    .catch(error => {
+      blockGroupPolygons = null;
+      console.log('error while loading data,', error);
+    });
+
   var layers = map.getStyle().layers;
   // Find the index of the first symbol layer in the map style
   // this is so that added layers go under the symbols on the map
@@ -1180,18 +1409,36 @@ map.on("style.load", function () {
     map.resize();
   });
 
-  // this is where the census block groups are loaded, from a url to the mbtiles file uploaded to mapbox
-  newSourceLayer(state + "bg", BG_KEYS[state + "bg"]);
-  newCensusShading(state, firstSymbolId);
-  newCensusLines(state);
-  newHighlightLayer(state);
+  // if dane county, generate the various layers using custom function
+  if (dane_cty) {
+    newSourceLayer("danewards", "danewards");
+    newCensusShading("dane", firstSymbolId, "wards");
+    newCensusLines("dane", "wards");
+    newHighlightLayer("dane", firstSymbolId, "wards");
+    map.setLayoutProperty("dane-census-lines-wards", "visibility", "visible");
+    map.setLayoutProperty("dane-census-shading-wards", "visibility", "visible");
+    map.setLayoutProperty("dane-highlighted-wards", "visibility", "visible");
+  } else {
+    // block layers
+    newSourceLayer(state + "block", state + "block");
+    newCensusShading(state, firstSymbolId, "block");
+    newCensusLines(state, "block");
+    newHighlightLayer(state, firstSymbolId, "block");
+    // block group layers
+    newSourceLayer(state + "bg", state + "bg");
+    newCensusShading(state, firstSymbolId, "bg");
+    newCensusLines(state, "bg");
+    newHighlightLayer(state, firstSymbolId, "bg");
+  }
   showMap();
   map.flyTo({
     center: statesLngLat[state.toUpperCase()],
-    zoom: 6,
+    zoom: initialZoom,
     essential: true, // this animation is considered essential with respect to prefers-reduced-motion
   });
-  map.setLayoutProperty(state + "-census-lines", "visibility", "visible");
+  map.setLayoutProperty(state + "-census-lines-" + layer_suffix, "visibility", "visible");
+  map.setLayoutProperty(state + "-census-shading-" + layer_suffix, "visibility", "visible");
+  map.setLayoutProperty(state + "-highlighted-" + layer_suffix, "visibility", "visible");
   // check if someone has entered in a new state in the same session
   var prev_state = sessionStorage.getItem("prev_state");
   if (prev_state !== null && state !== prev_state) {
@@ -1205,7 +1452,7 @@ map.on("style.load", function () {
   // feature state for the feature under the mouse.
   var bgID = null;
   var features = [];
-  var stateCensus = state + "-census-shading";
+  var blockPopCache = {};
 
   // when selecting or erasing
   map.on("click", function (e) {
@@ -1215,7 +1462,7 @@ map.on("style.load", function () {
       [e.point.x + drawRadius, e.point.y + drawRadius],
     ];
     var queryFeatures = map.queryRenderedFeatures(bbox, {
-      layers: [state + "-census-shading"],
+      layers: [state + "-census-shading-" + layer_suffix],
     });
     // if no features are found - probably selected an invalid area (outside state) or some other error occurred
     if (queryFeatures.length == 0) return;
@@ -1225,7 +1472,16 @@ map.on("style.load", function () {
     for (let i = 0; i < queryFeatures.length; i++) {
       var feature = queryFeatures[i];
       // push to highlight layer for visibility
-      features.push(feature.properties.GEOID);
+      // GEOID20 for blocks for all states using 2020 blocks (all except il, ok)
+      if (drawUsingBlocks) {
+        features.push(feature.properties[block_id]);
+        if (old_units && !(feature.properties[block_id] in blockPopCache)) {
+          blockPopCache[feature.properties[block_id]] = feature.properties.POP10;
+        }
+      }
+      else {
+        features.push(feature.properties[bg_id]);
+      }
       if (features.length >= 1) {
         // polyCon : the turf polygon from coordinates
         var polyCon = turf.bbox(feature.geometry);
@@ -1241,7 +1497,7 @@ map.on("style.load", function () {
     var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
 
     var filter = [];
-    var currentFilter = map.getFilter(state + "-bg-highlighted");
+    var currentFilter = map.getFilter(state + "-highlighted-" + layer_suffix);
     var isBasicErase = basicMode && currentFilter.includes(features[0]);
     // todo: bug where you can select non-contiguous areas on basicMode
     if ((eraseMode && !basicMode) || isBasicErase) {
@@ -1261,10 +1517,12 @@ map.on("style.load", function () {
         }
         else {
           selectBbox = turf.difference(selectBbox, currentBbox);
-          if (selectBbox != null && turf.getType(selectBbox) == "MultiPolygon") {
-            showWarningMessage(
-              "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
-            );
+          if(blockGroupPolygons == null || unit_id != bg_id) {
+            if (selectBbox != null && turf.getType(selectBbox) == "MultiPolygon") {
+              showWarningMessage(
+                "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
+              );
+            }
           }
         }
       }
@@ -1277,13 +1535,15 @@ map.on("style.load", function () {
         hideWarningMessage();
       } else {
         isChanged = true;
-        if (
-          turf.booleanDisjoint(currentBbox, selectBbox) &&
-          !isEmptyFilter(currentFilter)
-        ) {
-          showWarningMessage(
-            "WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
-          );
+        if (blockGroupPolygons == null || unit_id != bg_id) {
+          if (
+            turf.booleanDisjoint(currentBbox, selectBbox) &&
+            !isEmptyFilter(currentFilter)
+          ) {
+            showWarningMessage(
+              "WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
+            );
+          }
         }
         selectBbox = turf.union(currentBbox, selectBbox);
       }
@@ -1294,28 +1554,45 @@ map.on("style.load", function () {
           memo.push(feature);
           return memo;
         },
-        ["in", "GEOID"]
+        ["in", unit_id]
       );
 
       currentFilter.forEach(function (feature) {
-        if (feature !== "in" && feature !== "GEOID" && feature !== "" && !filter.includes(feature)) {
+        if (feature !== "in" && feature !== unit_id && feature !== "" && !filter.includes(feature)) {
           filter.push(feature);
         }
       });
     }
-    // check size of community
-    if (filter.length < 802) {
-      map.setFilter(state + "-bg-highlighted", filter);
+
+    if (blockGroupPolygons != null && unit_id === bg_id) {
+      // console.time('contiguitycheck')
+      checkIsContiguous(filter);
+      // console.timeEnd('contiguitycheck')
+    }
+
+    // check size of community - 800 block groups or 2400 blocks
+    if ((!drawUsingBlocks && filter.length < 802) || (drawUsingBlocks && filter.length < 2402)) {
+      map.setFilter(state + "-highlighted-" + layer_suffix, filter);
     } else {
       showWarningMessage(
         "This community is too large. Please select a smaller area to continue."
       );
     }
-    // set as indicator that population is loading
-    if (STATES_USING_NEW_BG.indexOf(state) === -1) {
+    if (old_units) {
+      // set as indicator that population is loading
       $(".comm-pop").html("...");
-      // remove "in" and "GEOID" parts of filter, for population
-      getCommPop(cleanFilter(filter));
+      if (drawUsingBlocks) {
+        var blockCommPop = 0;
+        filter.forEach(function(feature) {
+          if (feature in blockPopCache) {
+            blockCommPop += blockPopCache[feature];
+          }
+        });
+        $(".comm-pop").html(blockCommPop);
+      } else {
+        // remove "in" and "GEOID" parts of filter, for population
+        getCommPop(cleanFilter(filter));
+      }
     }
     if (isChanged) {
       filterStack.push(currentFilter);
@@ -1326,12 +1603,16 @@ map.on("style.load", function () {
       sessionStorage.setItem("selectBbox", JSON.stringify(selectBbox));
     }
   });
+  mapHover();
+});
 
+function mapHover() {
   // When the user moves their mouse over the census shading layer, we'll update the
   // feature state for the feature under the mouse.
   var bgID = null;
   var features = [];
-  stateCensus = state + "-census-shading";
+  var stateCensus = state + "-census-shading-" + layer_suffix;
+  if (dane_cty) stateCensus = "dane-census-shading-wards";
   // if touch screen, disable.
   if (!is_touch_device()) {
     map.on("mousemove", stateCensus, function (e) {
@@ -1343,9 +1624,9 @@ map.on("style.load", function () {
           [e.point.x + drawRadius, e.point.y + drawRadius],
         ];
         var hoverFeatures = map.queryRenderedFeatures(bbox, {
-          layers: [state + "-census-shading"],
+          layers: [state + "-census-shading-" + layer_suffix],
         });
-        stateBG = state + "bg";
+        stateBG = state + layer_suffix;
         features.forEach(function (feature) {
           bgID = feature.id;
           map.setFeatureState(
@@ -1369,7 +1650,7 @@ map.on("style.load", function () {
     // previously hovered feature.
     map.on("mouseleave", stateCensus, function () {
       if (bgID) {
-        stateBG = state + "bg";
+        stateBG = state + layer_suffix;
         map.setFeatureState(
           { source: stateBG, sourceLayer: stateBG, id: bgID },
           { hover: false }
@@ -1378,7 +1659,7 @@ map.on("style.load", function () {
       bgID = null;
     });
   }
-});
+}
 
 // reloading the page (like when the form fails validation)
 // this is still a lil fuzzy
@@ -1395,7 +1676,7 @@ map.on("render", function (e) {
     bgPoly !== "null"
   ) {
     // re-display the polygon
-    map.setFilter(state + "-bg-highlighted", JSON.parse(bgPoly));
+    map.setFilter(state + "-highlighted-" + layer_suffix, JSON.parse(bgPoly));
     var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
     if (selectBbox.length !== 0 && !isStateChanged) {
       map.flyTo({
@@ -1470,32 +1751,20 @@ function triggerSuccessMessage() {
   // Remove all map alert messages.
   cleanAlerts();
 
-  let newAlert = document.createElement("div");
-  newAlert.innerHTML =
-    '<div id="map-success-message" class="alert alert-success alert-dismissible fade show map-alert" role="alert">\
-  <strong>Congratulations!</strong> Your map looks great.\
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">\
-  <span aria-hidden="true">&times;</span>\
-  </button>\
-  </div>';
-  // document.getElementById("map-error-alerts").appendChild(newAlert);
-  var map_drawn_flag = sessionStorage.getItem("map_drawn_successfully");
-  if (map_drawn_flag == "false") {
-    mixpanel.track("Map Drawing Successful", {
-      drive_id: drive_id,
-      drive_name: drive_name,
-      organization_id: organization_id,
-      organization_name: organization_name,
-    });
-    sessionStorage.setItem("map_drawn_successfully", true);
-  }
+  mixpanel.track("Map Drawing Successful", {
+    drive_id: drive_id,
+    drive_name: drive_name,
+    organization_id: organization_id,
+    organization_name: organization_name,
+  });
+  sessionStorage.setItem("map_drawn_successfully", true);
 }
 
-function updateFormFields(census_blocks_polygon_array) {
+function updateFormFields(census_blocks_polygon) {
   // Update form fields
   document.getElementById(
     "id_census_blocks_polygon"
-  ).value = census_blocks_polygon_array;
+  ).value = census_blocks_polygon;
   // "census_blocks_polygon" gets saved in the post() function in django
 }
 
@@ -1552,7 +1821,7 @@ function arraysEqual(a, b) {
 
 /***************************************************************************/
 
-var bgPopCache = {};
+var popCache = {};
 // get the population for a community from filter
 // TODO: load this in automatically as part of the tilesets for immediate lookup?
 function getCommPop(filter) {
@@ -1560,9 +1829,9 @@ function getCommPop(filter) {
   var pop = 0;
   var ctr = 0;
   filter.forEach(function(feature){
-    if (feature in bgPopCache) {
+    if (feature in popCache) {
       ctr++;
-      pop += bgPopCache[feature];
+      pop += popCache[feature];
       if (ctr === filter.length) {
         $(".comm-pop").html(pop);
         sessionStorage.setItem("pop", pop);
@@ -1571,18 +1840,21 @@ function getCommPop(filter) {
       getBGPop(feature, function(bgPop) {
         ctr++;
         pop += parseInt(bgPop);
-        bgPopCache[feature] = parseInt(bgPop);
+        popCache[feature] = parseInt(bgPop);
         if (ctr === filter.length) {
           $(".comm-pop").html(pop);
           sessionStorage.setItem("pop", pop);
         }
-      })
+      });
     }
   });
 }
 
+/****************************************************************************/
+
 // query the ACS api in order to get blockgroup population data!
 // geoid chars 0-2:state, 2-5:county, 5-11:tract, 12:block group
+// TODO: fix this for just blocks
 function getBGPop(geoid, callback) {
   var req = new XMLHttpRequest();
   req.open('GET', 'https://api.census.gov/data/2018/acs/acs5?get=B01003_001E&for=block%20group:' + geoid.substring(11) + '&in=state:' + geoid.substring(0,2) + '%20county:' + geoid.substring(2, 5) + '%20tract:' + geoid.substring(5, 11) + '&key=' + census_key, true);

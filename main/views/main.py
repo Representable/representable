@@ -20,6 +20,7 @@
 import asyncio
 import boto3
 import urllib
+import zipfile
 from urllib.request import urlopen
 from django.contrib import messages
 from django.http import (
@@ -78,9 +79,15 @@ from ..models import (
     State,
     Signature,
     BlockGroup,
+    CensusBlock,
     FrequentlyAskedQuestion,
     GlossaryDefinition,
+    Report,
 )
+from ..admin import (
+    ReportAdmin,
+)
+from django.utils.html import format_html
 from ..choices import STATES
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
@@ -90,6 +97,7 @@ from django.utils.translation import (
     get_language,
 )
 from django.urls import reverse, reverse_lazy
+from representable.settings.base import STATIC_ROOT
 
 # from django.utils.translation import (
 #     LANGUAGE_SESSION_KEY,
@@ -116,8 +124,12 @@ from itertools import islice
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 import pandas as pd
+import requests
 
 from django.conf import settings
+
+import ssl
+
 
 
 # ******************************************************************************#
@@ -129,9 +141,16 @@ from django.contrib.gis.geos import GEOSGeometry
 
 
 # ******************************************************************************#
-# language views
 
-# ******************************************************************************#
+from googleapiclient import discovery
+
+def block_group_polygons(request, abbr):
+    try:
+        s3 = boto3.resource('s3')
+        obj = s3.Object('dev-precomputed-blockgroups', 'adj-n-bounds-'+abbr+'.json')
+        return JsonResponse(json.loads(obj.get()['Body'].read()))
+    except Exception as e:
+        raise Http404
 
 # custom mixin redirects to signup page/tab rather than login
 class SignupRequiredMixin(AccessMixin):
@@ -496,6 +515,7 @@ def SendPlainEmail(request):
     email.send()
     return HttpResponse("Sent")
 
+
 class Submission(View):
     template_name = "main/submission.html"
 
@@ -516,16 +536,22 @@ class Submission(View):
             else:
                 state = user_map.state
 
-        show_form = self.should_show_form(state=state, entryid=m_uuid, auth=self.request.user.is_authenticated)
+        show_form = self.should_show_form(
+            state=state,
+            entryid=m_uuid,
+            auth=self.request.user.is_authenticated,
+        )
         # print(show_form, form_info)
 
-        if(show_form == True):
+        if show_form:
             form = SubmissionAddDrive(request.POST)
             form.upd(state=state.upper())
             if form.is_valid():
                 # print('form is valid', m_uuid, form.cleaned_data['Add a new drive'])
                 try:
-                    d = Drive.objects.get(id=form.cleaned_data['Add a new drive'])
+                    d = Drive.objects.get(
+                        id=form.cleaned_data["Add a new drive"]
+                    )
                     o = d.organization
                     c = CommunityEntry.objects.get(entry_ID=m_uuid)
                     c.drive = d
@@ -534,7 +560,7 @@ class Submission(View):
                     c.save()
                     # print('success')
                 except Exception as e:
-                    print('fail', e)
+                    print("fail", e)
 
         return HttpResponseRedirect(request.path)
 
@@ -625,8 +651,7 @@ class Submission(View):
             ):
                 context["verified"] = True
 
-            else:
-
+            elif self.request.user.is_authenticated:
                 user_email_confirmation = EmailConfirmationHMAC(
                     email_address=user_email_address
                 )
@@ -640,27 +665,33 @@ class Submission(View):
             context["organization_slug"] = organization_slug
             context["drive_name"] = drive_name
 
-        if self.request.user.is_authenticated:
-            if user_map.organization:
-                context["is_org_admin"] = self.request.user.is_org_admin(
-                    user_map.organization_id
-                )
-            if self.request.user == user_map.user:
-                for a in Address.objects.filter(entry=user_map):
-                    context["street"] = a.street
-                    context["city"] = a.city + ", " + a.state + " " + a.zipcode
-                    context["is_community_author"] = (
-                        self.request.user == user_map.user
-                    )
-                    comm.user_name = user_map.user_name
-
-        show_form = self.should_show_form(state=context['state'], entryid=context['map_id'], auth=self.request.user.is_authenticated)
-        context['show_form'] = show_form
-        if(show_form == True):
-            context['form'] = SubmissionAddDrive()
-            context['form'].upd(state=context['state'].upper())
+        # if self.request.user.is_authenticated:
+        #     if user_map.organization:
+        #         context["is_org_admin"] = self.request.user.is_org_admin(
+        #             user_map.organization_id
+        #         )
+        #     if self.request.user == user_map.user:
+        #         for a in Address.objects.filter(entry=user_map):
+        #             context["street"] = a.street
+        #             context["city"] = a.city + ", " + a.state + " " + a.zipcode
+        #             context["is_community_author"] = (
+        #                 self.request.user == user_map.user
+        #             )
+        #             comm.user_name = user_map.user_name
+        show_form = self.should_show_form(
+            state=context["state"],
+            entryid=context["map_id"],
+            auth=self.request.user.is_authenticated,
+        )
+        context["show_form"] = show_form
+        if show_form:
+            context["form"] = SubmissionAddDrive()
+            state = State.objects.filter(abbr=context["state"].upper())
+            context["form_empty"] = len(state[0].get_drives()) == 0
+            context["form"].upd(state=context["state"].upper())
 
         return render(request, self.template_name, context)
+
     def should_show_form(self, state, entryid, auth):
         """
         Req: state = a potential state field, map_id = a potential CommEntryID, auth = whether user is authenticated
@@ -672,17 +703,19 @@ class Submission(View):
             * User is logged in
             * context['map_id'] points to a valid CommunityEntry
             * that CommunityEntry does not have a drive
-            * that CommunityEntry has an associated Address 
+            * that CommunityEntry has an associated Address
             * context['state'] exists and is a valid state
-            * community was created by the user who is signed in - (Already true if no drive & logged in)
+            * community was created by the user who is signed in
         """
-        if(not auth):
+        if not auth:
             return False
-        try:        
+        try:
             entry = CommunityEntry.objects.get(entry_ID=entryid)
         except:
             return False
-        if(entry.drive != None):
+        if entry.drive is not None:
+            return False
+        if entry.user != self.request.user:
             return False
         try:
             Address.objects.get(entry=entry)
@@ -693,6 +726,7 @@ class Submission(View):
         except:
             return False
         return True
+
 
 def make_geojson(request, entry):
     map_geojson = serialize(
@@ -705,18 +739,31 @@ def make_geojson(request, entry):
             "economic_interests",
             "comm_activities",
             "other_considerations",
+            "custom_response",
+            "population",
         ),
     )
     gj = geojson.loads(map_geojson)
     gj = rewind(gj)
     del gj["crs"]
     user_map = entry
+    # iterate over block_groups or census_blocks in order to get array of IDs
+    if user_map.block_groups.exists():
+        gj["features"][0]["properties"]["block_group_ids"] = [
+            bg.census_id for bg in user_map.block_groups.all()
+        ]
+    elif user_map.census_blocks.exists():
+        gj["features"][0]["properties"]["census_block_ids"] = [
+            block.census_id for block in user_map.census_blocks.all()
+        ]
+    # include organization and drive submitted to, if so
     if user_map.organization:
         gj["features"][0]["properties"][
             "organization"
         ] = user_map.organization.name
     if user_map.drive:
         gj["features"][0]["properties"]["drive"] = user_map.drive.name
+    # include address if user is authenticated + either author or org admin
     if request.user.is_authenticated:
         is_org_leader = user_map.organization and (
             request.user.is_org_admin(user_map.organization_id)
@@ -744,12 +791,24 @@ def make_geojson_for_state_map_page(request, entry):
             "economic_interests",
             "comm_activities",
             "other_considerations",
+            "custom_response",
+            "population",
         ),
     )
     gj = geojson.loads(map_geojson)
     gj = rewind(gj)
     del gj["crs"]
     user_map = entry
+    # iterate over block_groups or census_blocks in order to get array of IDs
+    if user_map.block_groups.exists():
+        gj["features"][0]["properties"]["block_group_ids"] = [
+            bg.census_id for bg in user_map.block_groups.all()
+        ]
+    elif user_map.census_blocks.exists():
+        gj["features"][0]["properties"]["census_block_ids"] = [
+            block.census_id for block in user_map.census_blocks.all()
+        ]
+    # include organization and drive submitted to, if so
     if user_map.organization:
         gj["features"][0]["properties"][
             "organization"
@@ -790,14 +849,31 @@ class ExportView(TemplateView):
 
         gj = make_geojson(request, query)
 
-        gs = geojson.dumps(gj)
+        export_name = query.entry_name.replace(" ", "_")
         if "csv" in request.path:
             # this is the new code -- turns geojson into csv for export
-            df = pd.json_normalize(gj)
-            comm_csv = df.to_csv()
-            response = HttpResponse(comm_csv, content_type="text/csv")
+            data = dict()
+            if 'block_group_ids' in gj['properties']:
+                data['BLOCKID'] = gj['properties']['block_group_ids']
+            elif 'census_block_ids' in gj['properties']:
+                data['BLOCKID'] = gj['properties']['census_block_ids']
+            else:
+                data['BLOCKID'] = 0
+            data['DISTRICT'] = [1] * len(data['BLOCKID'])
+            comm_csv = pd.DataFrame(data).to_csv(index=False)
+            response = HttpResponse(content_type='application/zip')
+            with zipfile.ZipFile(response, "w") as z:
+                z.writestr('%s.csv' % export_name, comm_csv)
+                z.write(STATIC_ROOT + '/main/readme/README_csv.txt', arcname="README_csv.txt")
+            response['Content-Disposition'] = 'attachment; filename=%s.zip' % export_name
         else:
-            response = HttpResponse(gs, content_type="application/json")
+            # create a zip file that includes geojson + readme explaining the file format and including questions from survey page
+            response = HttpResponse(content_type='application/zip')
+            with zipfile.ZipFile(response, "w") as z:
+                with z.open("%s.geojson" % export_name, "w") as c:
+                    c.write(geojson.dumps(gj).encode("utf-8"))
+                z.write(STATIC_ROOT + '/main/readme/README_geojson.txt', arcname="README_geojson.txt")
+            response['Content-Disposition'] = 'attachment; filename=%s.zip' % export_name
         return response
 
 
@@ -809,22 +885,27 @@ class Map(TemplateView):
 
     def get_context_data(self, **kwargs):
         state = self.kwargs["state"].lower()
+        if not state:
+            raise Http404
 
         # the polygon coordinates
         entryPolyDict = dict()
-        state_obj = State.objects.get(abbr=state.upper())
+        try:
+            state_obj = State.objects.get(abbr=state.upper())
+        except:
+            raise Http404
         query = (
             state_obj.submissions.all()
             .defer("census_blocks_polygon_array", "user_polygon")
             .prefetch_related("organization", "drive")
+            .order_by("-created_at")
         )
         # state map page --> drives in the state, entries without a drive but with a state
         drives = []
         authenticated = self.request.user.is_authenticated
-        print(authenticated)
         # get the polygon from db and pass it on to html
         for obj in query:
-            if obj.organization and not obj.admin_approved:
+            if obj.private or (not obj.admin_approved):
                 continue
             if (
                 obj.census_blocks_polygon == ""
@@ -842,6 +923,9 @@ class Map(TemplateView):
             # at this point all the elements of the array are coordinates of the polygons
             struct = geojson.loads(s)
             entryPolyDict[obj.entry_ID] = struct.coordinates
+
+            export_name = state_obj.name.replace(" ", "_") + "_communities"
+            print(export_name)
 
         context = {
             "state": state,
@@ -888,6 +972,7 @@ def make_geojson_for_s3(entry):
             "economic_interests",
             "comm_activities",
             "other_considerations",
+            "custom_response",
             "population",
         ),
     )
@@ -895,6 +980,12 @@ def make_geojson_for_s3(entry):
     gj = rewind(gj)
     del gj["crs"]
     user_map = entry
+    # # iterate over block_groups or census_blocks in order to get array of IDs
+    # if user_map.block_groups.exists():
+    #     gj["features"][0]["properties"]["block_group_ids"] = [bg.census_id for bg in user_map.block_groups.all()]
+    # elif user_map.census_blocks.exists():
+    #     gj["features"][0]["properties"]["census_block_ids"] = [block.census_id for block in user_map.census_blocks.all()]
+    # # include organization and drive submitted to, if so
     if user_map.organization:
         gj["features"][0]["properties"][
             "organization"
@@ -960,13 +1051,26 @@ class EntryView(LoginRequiredMixin, View):
         organization_name = ""
         organization_id = None
         drive_name = ""
+        drive_slug = ""
         drive_id = None
+        drive_custom_question = ""
+        drive_custom_question_example = ""
         if kwargs["drive"]:
             has_drive = True
             drive_slug = self.kwargs["drive"]
-            drive = Drive.objects.get(slug=drive_slug)
+            try:
+                drive = Drive.objects.get(slug=drive_slug)
+            except:
+                raise Http404
+            if abbr.upper() != drive.state:
+                return redirect(
+                    "/entry/drive/" + drive.slug + "/" + drive.state.lower()
+                )
+
             drive_name = drive.name
             drive_id = drive.id
+            drive_custom_question = drive.custom_question
+            drive_custom_question_example = drive.custom_question_example
             organization = drive.organization
             organization_name = organization.name
             organization_id = organization.id
@@ -998,22 +1102,77 @@ class EntryView(LoginRequiredMixin, View):
             "organization_id": organization_id,
             "drive_name": drive_name,
             "drive_id": drive_id,
+            "drive_custom_question": drive_custom_question,
+            "drive_custom_question_example": drive_custom_question_example,
+            "drive_slug": drive_slug,
             "state": abbr,
             "address_required": address_required,
             "state_obj": State.objects.get(abbr=abbr.upper()),
+            "page_type": "entry",  # For the base template to check and remove footer
         }
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
+        # for creation of BlockGroup and CensusBlock objects
+        STATES_USING_OLD_UNITS = ["il", "ok"]
+
         comm_form = self.community_form_class(request.POST, label_suffix="")
         addr_form = self.address_form_class(request.POST, label_suffix="")
         # parse block groups and add to field
         comm_form.data._mutable = True
         block_groups = comm_form.data["block_groups"].split(",")
-        comm_form.data["block_groups"] = [
-            BlockGroup.objects.get_or_create(census_id=bg)[0].id
-            for bg in block_groups
-        ]
+        census_blocks = comm_form.data["census_blocks"].split(",")
+        # get the year of census units being used -- use for get_or_create function
+        state = self.kwargs["abbr"].lower()
+        year = 2020
+        if state in STATES_USING_OLD_UNITS:
+            year = 2010
+        if len(census_blocks[0]) > 0:
+            comm_form.data["census_blocks"] = [
+                CensusBlock.objects.get_or_create(census_id=block, year=year)[0].id
+                for block in census_blocks
+            ]
+        else:
+            comm_form.data["block_groups"] = [
+                BlockGroup.objects.get_or_create(census_id=bg, year=year)[0].id
+                for bg in block_groups
+            ]
+
+        def flagText(text):
+            API_KEY = os.environ.get("PERSPECTIVE_API_KEY")
+
+            client = discovery.build(
+                "commentanalyzer",
+                "v1alpha1",
+                developerKey=API_KEY,
+                discoveryServiceUrl="https://commentanalyzer.googleapis.com/$discovery/rest?version=v1alpha1",
+                static_discovery=False,
+            )
+
+            # API uses many different metrics to get toxicity. these were the best i found, and i closely
+            # experimented with good thresholds for tolerance. changing these values changes the entire filter
+            # note that IDENTITY_ATTACK is quite low, leading to some false-positives. however, any higher
+            # value for that leads to some false-negatives, especially if people try to game the system with
+            # special characters
+            attributeThresholds = [
+                ("TOXICITY", 0.75),
+                ("IDENTITY_ATTACK", 0.5),
+                ("INSULT", 0.5),
+                ("PROFANITY", 0.75),
+                ("THREAT", 0.9),
+            ]
+
+            analyze_request = {
+                'comment': {'text': text},
+                'languages': ['en'],
+                'requestedAttributes': {'TOXICITY': {}, 'IDENTITY_ATTACK': {}, 'INSULT': {}, 'PROFANITY': {}, 'THREAT': {}},
+            }
+            response = client.comments().analyze(body=analyze_request).execute()
+            for (attribute, threshold) in attributeThresholds :
+                if response["attributeScores"][attribute]["summaryScore"]["value"] >= threshold :
+                    return True
+            return False
+
         comm_form.data._mutable = False
         if comm_form.is_valid():
             recaptcha_response = request.POST.get("g-recaptcha-response")
@@ -1026,7 +1185,9 @@ class EntryView(LoginRequiredMixin, View):
             data = data.encode("ascii")
 
             req = urllib.request.Request(url, data)
-            response = urlopen(req)
+            gcontext = ssl.SSLContext()
+            response = urlopen(req, context=gcontext)
+            # response = urlopen(req)
             result = json.load(response)
             """ End reCAPTCHA validation """
             if not result["success"]:
@@ -1064,6 +1225,17 @@ class EntryView(LoginRequiredMixin, View):
             entryForm.state_obj = State.objects.get(
                 abbr=self.kwargs["abbr"].upper()
             )
+            if (
+                flagText(comm_form.data["entry_name"])
+                or flagText(comm_form.data["user_name"])
+                or flagText(comm_form.data["cultural_interests"] + " ")
+                or flagText(comm_form.data["economic_interests"] + " ")
+                or flagText(comm_form.data["comm_activities"] + " ")
+                or flagText(comm_form.data["other_considerations"] + " ")
+            ):
+                entryForm.admin_approved = False
+            else:
+                entryForm.admin_approved = True
             if entryForm.organization:
                 if (
                     self.request.user.is_org_admin(entryForm.organization.id)
@@ -1109,6 +1281,28 @@ class EntryView(LoginRequiredMixin, View):
             del finalres["admin_approved"]
 
             string_to_hash = str(finalres)
+            print("finalres: ")
+            print(finalres)
+
+
+            if (
+                flagText(comm_form.data["entry_name"])
+                or flagText(comm_form.data["user_name"])
+                or flagText(comm_form.data["cultural_interests"] + " ")
+                or flagText(comm_form.data["economic_interests"] + " ")
+                or flagText(comm_form.data["comm_activities"] + " ")
+                or flagText(comm_form.data["other_considerations"] + " ")
+            ):
+                link = reverse(
+                    "admin:main_communityentry_change",
+                    args=[finalres["entry_ID"]],
+                )  # model name has to be lowercase
+                # ltc = format_html('<a href="{}">{}</a>', link, comm_form.data["entry_name"])
+                Report.objects.create(
+                    community_id=finalres["id"],
+                    email="AUTOMATIC PROFANITY CHECKER",
+                )
+                print(finalres["entry_ID"] + " failed!")
 
             addres = dict()
             if addr_form.is_valid():
@@ -1167,11 +1361,15 @@ class MultiExportView(TemplateView):
     template = "main/export.html"
 
     def post(self, request, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return HttpResponseRedirect(
+                "%s?next=%s" % (settings.LOGIN_URL, request.path)
+            )
         state = self.kwargs["abbr"]
-        cois = set(json.loads(request.POST['cois']))
+        cois = set(json.loads(request.POST["cois"]))
         state_obj = State.objects.get(abbr=state.upper())
-        
-        if 'all' not in cois:
+
+        if "all" not in cois:
             query = (
                 state_obj.submissions.filter(entry_ID__in=cois)
                 .defer("census_blocks_polygon_array", "user_polygon")
@@ -1191,26 +1389,44 @@ class MultiExportView(TemplateView):
             return HttpResponse(
                 geojson.dumps({}), content_type="application/json"
             )
-        
+
         all_gj = []
         for entry in query:
             gj = make_geojson_for_state_map_page(request, entry)
             all_gj.append(gj)
 
         final = geojson.FeatureCollection(all_gj)
+        export_name = state_obj.name.replace(" ", "_") + "_communities"
+
         if kwargs["type"] == "geo":
             print("********", "geo", "********")
             response = HttpResponse(
                 geojson.dumps(final), content_type="application/json"
             )
+            # create a zip file that includes geojson + readme explaining the file format and including questions from survey page
+            # with zipfile.ZipFile(response, "w") as z:
+            #     with z.open("%s.geojson" % export_name, "w") as c:
+            #         c.write(geojson.dumps(final).encode("utf-8"))
+            #     z.write(STATIC_ROOT + '/main/readme/README_geojson.txt', arcname="README_geojson.txt")
+            # response['Content-Disposition'] = 'attachment; filename=%s.zip' % export_name
         else:
-            print("********", "csv", "********")
+            print('********', 'csv', '********')
             dictform = json.loads(geojson.dumps(final))
             df = pd.DataFrame()
-            for entry in dictform["features"]:
-                row_dict = entry["properties"].copy()
-                row_dict["geometry"] = str(entry["geometry"])
-                df = df.append(row_dict, ignore_index=True)
-            response = HttpResponse(df.to_csv(), content_type="text/csv")
-
+            for i, entry in enumerate(dictform["features"]):
+                row_dict = dict()
+                if 'block_group_ids' in entry['properties']:
+                    row_dict['BLOCKID'] = entry['properties']['block_group_ids']
+                elif 'census_block_ids' in entry['properties']:
+                    row_dict['BLOCKID'] = entry['properties']['census_block_ids']
+                else:
+                    break
+                row_dict['DISTRICT'] = [i + 1] * len(row_dict['BLOCKID'])
+                df = df.append(pd.DataFrame(row_dict))
+            response = HttpResponse(df.to_csv(index=False), content_type="text/csv")
+            # response = HttpResponse(content_type='application/zip')
+            # with zipfile.ZipFile(response, "w") as z:
+            #     z.writestr('%s.csv' % export_name, comm_csv)
+            #     z.write(STATIC_ROOT + '/main/readme/README_csv.txt', arcname="README_csv.txt")
+            # response['Content-Disposition'] = 'attachment; filename=%s.zip' % export_name
         return response

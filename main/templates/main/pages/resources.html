@@ -1,25 +1,26 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 <div class="container-fluid content-blue-bg">
   <div class="row row-content mx-lg-5 px-lg-5">
     <div class="col mx-lg-5 px-lg-5">
       <div class="row light-blue-bg mx-lg-4 px-lg-5">
         <div class="col-12">
-          <div class="h1 my-4 ml-3">Resources</div>
+          <div class="h1 my-4 ml-3">{% trans "Resources" %}</div>
         </div>
       </div>
       <div class="mb-3 white-bg mx-lg-5">
           <div class="row">
             <div class="col-1"></div>
             <div class="col-10 mt-3 white-bg">
-              <h6 class="mb-3"><b>Educational Video</b></h6>
+              <h6 class="mb-3"><b>{% trans "Educational Video" %}</b></h6>
               <div class="row">
                 <div class="col-md-6">
                   <iframe width="80%" height="148" src="https://www.youtube.com/embed/vUbZoyCCR44" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 <div class="col-md-6 mt-3 mt-md-0">
-                  This video is a text-based educational tool meant to inform users about the redistricting process, dangers of gerrymandering, and the effectiveness of Communities of Interest which can be mapped easily on Representable.org.
+                  {% blocktrans trimmed %}This video is a text-based educational tool meant to inform users about the redistricting process, dangers of gerrymandering, and the effectiveness of Communities of Interest which can be mapped easily on Representable.org.{% endblocktrans %}
                 </div>
               </div>
             </div>
@@ -28,13 +29,13 @@
           <div class="row">
             <div class="col-1"></div>
             <div class="col-10 mt-3 white-bg">
-              <h6 class="mb-3"><b>Demo Videos</b></h6>
+              <h6 class="mb-3"><b>{% trans "Demo Videos" %}</b></h6>
               <div class="row">
                 <div class="col-md-6">
-                  <iframe width="80%" height="148" src="https://www.youtube.com/embed/i4Sb8a6Ihzo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                  <iframe width="80%" height="148" src="https://www.youtube.com/embed/NLNMYZOxaoU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 <div class="col-md-6 mt-3 mt-md-0">
-                  These video walkthroughs are key to navigating Representable from both the perspective of a user and an organization, complete with tips for easily mapping your community and collecting communities of interest.
+                  {% blocktrans trimmed %}These video walkthroughs are key to navigating Representable from both the perspective of a user and an organization, complete with tips for easily mapping your community and collecting communities of interest.{% endblocktrans %}
                 </div>
                 </div>
             </div>
@@ -43,15 +44,15 @@
           <div class="row">
             <div class="col-1"></div>
             <div class="col-10 mt-3 white-bg">
-              <h6 class="mb-3"><b>One Pager</b></h6>
+              <h6 class="mb-3"><b>{% trans "One Pager" %}</b></h6>
               <div class="row">
                 <div class="col-md-6">
                   <img height="196" src="{% static 'img/one-pager.png' %}" alt="representable infographic preview"></img>
                 </div>
                 <div class="col-md-6 mt-3 mt-md-0">
-                  This infographic provides a short overview of redistricting, gerrymandering, and how Representable can be used to address this issue using communities of interest.
+                  {% blocktrans trimmed %}This infographic provides a short overview of redistricting, gerrymandering, and how Representable can be used to address this issue using communities of interest. {% endblocktrans %}
                   <br><a target="_blank" class="btn btn-outline-primary px-4 my-4" href="https://drive.google.com/file/d/132yv4mG9BqH12x3qVvexOFkkTlBmmmEf/view?usp=sharing">
-                      VIEW & DOWNLOAD
+                      {% trans "VIEW & DOWNLOAD" %}
                   </a>
                 </div>
               </div>
@@ -61,15 +62,15 @@
           <div class="row">
             <div class="col-1"></div>
             <div class="col-10 mt-3 white-bg">
-              <h6 class="mb-3"><b>Organization Guide</b></h6>
+              <h6 class="mb-3"><b>{% trans "Organization Guide" %}</b></h6>
               <div class="row">
                 <div class="col-md-6">
                   <img width="100%" src="{% static 'img/org-guide.png' %}" alt="representable organization guide preview"></img>
                 </div>
                 <div class="col-md-6 mt-3 mt-md-0">
-                  This guide is the primary reference point for organizations to find information about the tool, community mapping drives, our educational materials, FAQs, and more!
+                  {% blocktrans trimmed %}This guide is the primary reference point for organizations to find information about the tool, community mapping drives, our educational materials, FAQs, and more!{% endblocktrans %}
                   <br><a target="_blank" class="btn btn-outline-primary px-4 my-4" href="https://docs.google.com/document/d/19IyZA1XFp0A__kv65onPS8zkggX_nAl-WvtyItJGLpQ/edit?usp=sharing">
-                      READ MORE
+                      {% trans "READ MORE" %}
                   </a>
                 </div>
               </div>
@@ -79,15 +80,15 @@
           <div class="row">
             <div class="col-1"></div>
             <div class="col-10 mt-3 white-bg">
-              <h6 class="mb-3"><b>Community Mapping Event Powerpoint</b></h6>
+              <h6 class="mb-3"><b>{% trans "Community Mapping Event Powerpoint" %}</b></h6>
               <div class="row">
                 <div class="col-md-6">
                   <img width="100%" src="{% static 'img/webinar-deck.png' %}" alt="representable webinar deck preview"></img>
                 </div>
                 <div class="col-md-6 mt-3 mt-md-0">
-                  This powerpoint can be used to run online mapping events with your community. Guide people through the process of identifying their community’s needs and mapping their COI.
+                  {% blocktrans trimmed %}This powerpoint can be used to run online mapping events with your community. Guide people through the process of identifying their community’s needs and mapping their COI.{% endblocktrans %}
                   <br><a target="_blank" class="btn btn-outline-primary px-4 my-4" href="https://drive.google.com/file/d/1iN5m7e9LwhitkiLyogWRU5G7t9Y1_cA6/view?usp=sharing">
-                      DOWNLOAD
+                      {% trans "DOWNLOAD" %}
                   </a>
                 </div>
               </div>
@@ -97,12 +98,12 @@
           <div class="row">
             <div class="col-1"></div>
             <div class="col-10">
-              <div class="h3 my-4">Additional Resources</div>
-              <h6><b>Princeton Gerrymandering Project  </b><a class="font-weight-light" href="https://gerrymander.princeton.edu/">https://gerrymander.princeton.edu/</a></h6>
-              Through nonpartisan analysis, the Princeton Gerrymandering Project bridges the gap between mathematics and the law to achieve fair representation through redistricting reform.
+              <div class="h3 my-4">{% trans "Additional Resources" %}</div>
+              <h6><b>{% trans "Princeton Gerrymandering Project" %}  </b><a class="font-weight-light" href="https://gerrymander.princeton.edu/">https://gerrymander.princeton.edu/</a></h6>
+              {% blocktrans trimmed %}Through nonpartisan analysis, the Princeton Gerrymandering Project bridges the gap between mathematics and the law to achieve fair representation through redistricting reform. {% endblocktrans %}
               <br><br>
-              <h6><b>GeoCivics Redistricting Materials  </b><a class="font-weight-light" href="https://geocivics.uccs.edu/">https://geocivics.uccs.edu/</a></h6>
-              GeoCivics provides a suite of state-based resources to develop skills and knowledge for discussing the apportionment and redistricting process in the United States. These resources prepare and support students, teachers, and community members with interactive tools and geospatial data, leading to engagement in conversation about the construction of electoral districts.
+              <h6><b>{% trans "GeoCivics Redistricting Materials" %}  </b><a class="font-weight-light" href="https://geocivics.uccs.edu/">https://geocivics.uccs.edu/</a></h6>
+              {% blocktrans trimmed %}GeoCivics provides a suite of state-based resources to develop skills and knowledge for discussing the apportionment and redistricting process in the United States. These resources prepare and support students, teachers, and community members with interactive tools and geospatial data, leading to engagement in conversation about the construction of electoral districts.{% endblocktrans %}
               <br><br><br>
             </div>
             <div class="col-1"></div>

@@ -96,28 +96,50 @@ class CommunityForm(ModelForm):
             "census_blocks_polygon_array": forms.HiddenInput(),
             "census_blocks_polygon": forms.HiddenInput(),
             "block_groups": forms.HiddenInput(),
+            "census_blocks": forms.HiddenInput(),
             "population": forms.HiddenInput(),
             "entry_name": forms.Textarea(
-                attrs={"placeholder": "ex. University of Texas Students", "maxlength": 100, "rows": 1}
+                attrs={
+                    "placeholder": "ex. University of Texas Students",
+                    "maxlength": 100,
+                    "rows": 1,
+                }
             ),
             "entry_reason": forms.Textarea(
                 attrs={"rows": 3, "maxlength": 500}
             ),
             "cultural_interests": forms.Textarea(
-                attrs={"rows": 3, "maxlength": 500, "placeholder":"ex. My community is made of the Latinx community in east Brooklyn. The community has been in the neighborhood for 20 years and is affected by gentrification."}
+                attrs={
+                    "rows": 3,
+                    "maxlength": 700,
+                    "placeholder": "ex. My community is made of the Latinx community in east Brooklyn. The community has been in the neighborhood for 20 years and is affected by gentrification.",
+                }
             ),
             "economic_interests": forms.Textarea(
-                attrs={"rows": 3, "maxlength": 500, "placeholder": "ex. My community is located near a river. Fishing is the main industry. We experience seasonal unemployment. Water pollution of the river is a common concern of ours."}
+                attrs={
+                    "rows": 3,
+                    "maxlength": 700,
+                    "placeholder": "ex. My community is located near a river. Fishing is the main industry. We experience seasonal unemployment. Water pollution of the river is a common concern of ours.",
+                }
             ),
             "comm_activities": forms.Textarea(
-                attrs={"rows": 3, "maxlength": 500, "placeholder": "ex. My community is made of the people who go to St. Peters Catholic Church. The church provides child care and charity services for the less fortunate in our community. "}
+                attrs={
+                    "rows": 3,
+                    "maxlength": 700,
+                    "placeholder": "ex. My community is made of the people who go to St. Peters Catholic Church. The church provides child care and charity services for the less fortunate in our community. ",
+                }
             ),
             "other_considerations": forms.Textarea(
-                attrs={"rows": 3, "maxlength": 500, "placeholder": "ex. My farming community extends over two counties and we hope you can put the community together in a single State Senate district."}
+                attrs={
+                    "rows": 3,
+                    "maxlength": 700,
+                    "placeholder": "ex. My farming community extends over two counties and we hope you can put the community together in a single State Senate district.",
+                }
             ),
-            "user_name": forms.TextInput(
-                attrs={"maxlength": 500}
+            "custom_response": forms.Textarea(
+                attrs={"rows": 3, "maxlength": 700, "placeholder": ""}
             ),
+            "user_name": forms.TextInput(attrs={"maxlength": 500}),
             "user_polygon": forms.HiddenInput(),
         }
         label = {
@@ -126,6 +148,7 @@ class CommunityForm(ModelForm):
             "cultural_interests": "Input your community's cultural or historical interests: ",
             "comm_activities": "Input your community's activities and services: ",
             "other_considerations": "Input your community's other interests and concerns: ",
+            "custom_response": "Input your response to this mapping drive's custom question: ",
             "entry_name": "Input your community's name: ",
         }
 
@@ -140,11 +163,13 @@ class CommunityForm(ModelForm):
         economic_interests = self.cleaned_data.get("economic_interests")
         comm_activities = self.cleaned_data.get("comm_activities")
         other_considerations = self.cleaned_data.get("other_considerations")
+        custom_response = self.cleaned_data.get("custom_response")
         if (
             cultural_interests == ""
             and economic_interests == ""
             and comm_activities == ""
             and other_considerations == ""
+            and custom_response == ""
         ):
             errors["cultural_interests"] = "Blank interest fields."
         if errors:
@@ -186,9 +211,11 @@ class OrganizationForm(ModelForm):
                 }
             ),
             "states": forms.Select(
-                choices=STATES, attrs={"data-placeholder": "Select States"},
+                choices=STATES,
+                attrs={"data-placeholder": "Select States"},
             ),
         }
+
 
 class EditOrganizationForm(ModelForm):
     class Meta:
@@ -215,6 +242,7 @@ class EditOrganizationForm(ModelForm):
                 }
             ),
         }
+
 
 class AllowlistForm(ModelForm):
     class Meta:
@@ -265,9 +293,11 @@ class DriveForm(ModelForm):
 class MemberForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(MemberForm, self).__init__(*args, **kwargs)
-        member_email = forms.EmailField(max_length = 200)
+        member_email = forms.EmailField(max_length=200)
         self.fields["email"] = member_email
-        self.fields["email"].widget.attrs.update({"placeholder": "Admin Email", "class": "form-control"})
+        self.fields["email"].widget.attrs.update(
+            {"placeholder": "Admin Email", "class": "form-control"}
+        )
 
     class Meta:
         model = Membership
@@ -291,7 +321,9 @@ class RepresentableLoginForm(LoginForm):
             del field.widget.attrs["placeholder"]
         self.fields["login"].label = "E-mail"
         self.fields["password"].label = "Password"
-        del self.fields["login"].widget.attrs["autofocus"]
+        if "autofocus" in self.fields["login"].widget.attrs:
+            del self.fields["login"].widget.attrs["autofocus"]
+
 
 class SubmissionAddDrive(forms.Form):
     def upd(self, state):
@@ -304,9 +336,18 @@ class SubmissionAddDrive(forms.Form):
             * Are not private
         """
         all_drives = State.objects.get(abbr=state).get_drives()
-        drives_to_add = [d for d in all_drives if d.state==state and d.is_active==True and d.private==False]
-        choices = [(str(d.id), str(d.name) + ' - ' + str(d.organization)) for d in drives_to_add]
-        self.fields['Add a new drive'] = forms.ChoiceField(
-            choices=choices, 
-            widget=forms.Select(attrs={'class' : 'custom-select'}),
+        drives_to_add = [
+            d
+            for d in all_drives
+            if d.state == state
+            and d.is_active
+            and not d.private  # changed this line
+        ]
+        choices = [
+            (str(d.id), str(d.name) + " - " + str(d.organization))
+            for d in drives_to_add
+        ]
+        self.fields["Add a new drive"] = forms.ChoiceField(
+            choices=choices,
+            widget=forms.Select(attrs={"class": "custom-select"}),
         )

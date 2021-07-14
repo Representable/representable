@@ -1,0 +1,2882 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-06-27 20:48+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural= (n != 1);\n"
+
+#: main/templates/account/email/debug_email_confirmation_subject.txt:3
+#: main/templates/account/email/email_confirmation_subject.txt:3
+msgid "Please Confirm Your E-mail Address"
+msgstr "Thov Lees Paub Koj Li Chaw Nyob E-mail"
+
+#: main/templates/account/email/email_confirmation_message.html:7
+msgid "Email Confirmation"
+msgstr "Tsab Email Rau Kev Lees Paub"
+
+#: main/templates/account/email/email_confirmation_message.html:118
+#: main/templates/account/email/email_template_do_not_delete.html:115
+msgid "Welcome to Representable.org!"
+msgstr "Hais Txog Representable"
+
+#: main/templates/account/email/email_confirmation_message.html:119
+#: main/templates/account/email/email_template_do_not_delete.html:116
+msgid ""
+"Click the button below to confirm your email address for your "
+"Representable.org account. If you didn't create an account with "
+"Representable.org you can safely delete the email."
+msgstr ""
+"Nias rau lub pob nias hauv qab no txhawm rau lees paub koj li chaw nyob "
+"email rau tus as khauj Representable.org.Yog koj tsis tau tsim tus as khauj "
+"ntawm Representable.org koj tuaj yeem tshem tsab email no tawm yam nyab xeeb"
+" lug."
+
+#: main/templates/account/email/email_confirmation_message.html:135
+#: main/templates/account/email/email_template_do_not_delete.html:132
+#: main/templates/account/email/password_reset_key_message.html:137
+msgid ""
+"If the button doesn't work, copy and paste the following link in your "
+"browser:"
+msgstr ""
+"Yog tias lub pob nias tsis ua hauj lwm, theej qauv thiab tso tus link txuas "
+"nram qab no rau hauv koj lub browser:"
+
+#: main/templates/account/email/email_confirmation_message.html:137
+#: main/templates/account/email/email_template_do_not_delete.html:134
+msgid "The Representable.org Team"
+msgstr "Representable yog dab tsi?"
+
+#: main/templates/account/email/email_confirmation_message.html:152
+msgid "Representable.org"
+msgstr "Hais Txog Representable"
+
+#: main/templates/account/email/email_template_do_not_delete.html:106
+msgid "This is preheader text. Some clients will show this text as a preview."
+msgstr ""
+"Qhov no yog kab ntawv coj kev.Qee cov qhua yuav ua kom kab ntawv no pom ua "
+"qhov preview."
+
+#: main/templates/account/email/email_template_do_not_delete.html:124
+#: main/templates/account/email/password_reset_key_message.html:129
+msgid "Confirm Email"
+msgstr "Tsab Email Lees Paub"
+
+#: main/templates/account/email/password_reset_key_message.html:7
+msgid "Password Reset Email"
+msgstr "Tsab Email Hloov Tus Password Dua Tshiab"
+
+#: main/templates/account/email/password_reset_key_message.html:118
+msgid "Hello from Representable.org!"
+msgstr "Hais Txog Representable"
+
+#: main/templates/account/email/password_reset_key_message.html:140
+#, python-format
+msgid "In case you forgot, your username is %(username)s."
+msgstr ""
+"Nyob rau kis uas koj nco tsis tau lawm, koj lub npe tus neeg siv yog "
+"%(username)s."
+
+#: main/templates/account/email/password_reset_key_message.html:142
+#, python-format
+msgid "Thank you for using %(current_site.name)s!"
+msgstr "Ua tsaug rau koj siv %(current_site.name)s!"
+
+#: main/templates/account/email/password_reset_key_subject.txt:3
+msgid "Password Reset E-mail"
+msgstr "Tsab E-mail Hloov Tus Password Dua Tshiab"
+
+#: main/templates/account/email_confirm.html:6
+#: main/templates/account/email_confirm.html:14
+msgid "Confirm E-mail Address"
+msgstr "Lees Paub Qhov Chaw Nyob E-mail"
+
+#: main/templates/account/email_confirm.html:18
+#, python-format
+msgid ""
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
+"address for user %(user_display)s."
+msgstr ""
+"Thov lees paub tias <a href=\"mailto:%(email)s\">%(email)s</a> yog qhov chaw"
+" nyob e-mail rau tus neeg siv %(user_display)s."
+
+#: main/templates/account/email_confirm.html:22
+msgid "Finish Sign Up"
+msgstr "Tiav Txoj Kev Sau Npe Nkag Lawm"
+
+#: main/templates/account/email_confirm.html:23
+#: main/templates/account/signup.html:39
+msgid "Making an account helps us protect legitimate submissions."
+msgstr ""
+
+#: main/templates/account/email_confirm.html:31
+#, python-format
+msgid ""
+"This e-mail confirmation link expired or is invalid. Please <a "
+"href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+msgstr ""
+"Tus link txuas ntawm tsab e-mail lees paub no tag sij hawm lawm los sis tsis"
+" raug.Thov <a href=\"%(email_url)s\">tsim ib qho kev rau tshab e-mail lees "
+"paub tshiab</a>."
+
+#: main/templates/account/login.html:13
+msgid "Already have an account?"
+msgstr "Twb muaj ib tus as khauj lawm?"
+
+#: main/templates/account/login.html:14
+msgid "Log In"
+msgstr "Sau Npe Nkag"
+
+#: main/templates/account/login.html:34
+msgid "Forgot Password?"
+msgstr "Tsis nco qab koj tus password lawm los?"
+
+#: main/templates/account/login.html:36
+msgid "log in"
+msgstr "nkag mus rau hauv"
+
+#: main/templates/account/login.html:39
+msgid "No Account? Sign up."
+msgstr "Yog Tsis Muaj As Khauj? Sau spe nkag."
+
+#: main/templates/account/logout.html:5 main/templates/account/logout.html:19
+msgid "Sign Out"
+msgstr "Tawm Txoj Kev Siv"
+
+#: main/templates/account/logout.html:11
+msgid "Are you sure you want to sign out?"
+msgstr "Koj puas ntseeg tau koj xav tawm txoj kev siv?"
+
+#: main/templates/account/password_change.html:6
+#: main/templates/account/password_change.html:19
+#: main/templates/account/password_reset_from_key.html:4
+#: main/templates/account/password_reset_from_key.html:13
+#: main/templates/account/password_reset_from_key.html:23
+#: main/templates/account/password_reset_from_key_done.html:4
+#: main/templates/account/password_set.html:6
+msgid "Change Password"
+msgstr "Hloov Tus Password"
+
+#: main/templates/account/password_change.html:15
+#: main/templates/account/password_reset.html:14
+#: main/templates/account/password_reset_from_key_done.html:12
+#: main/templates/account/password_set.html:15
+msgid "Change your password"
+msgstr "Hloov koj tus password"
+
+#: main/templates/account/password_reset.html:15
+msgid ""
+"Forgot your password? Enter your e-mail address below, and we'll send you an"
+" e-mail allowing you to reset it."
+msgstr ""
+"Tsis nco qab koj tus password lawm los? Ntaus sau koj li chaw nyob e-mail "
+"rau hauv qab no, thiab peb yuav xa ib tsab e-mail rau koj kom cia koj los "
+"hloov dua tshiab tau."
+
+#: main/templates/account/password_reset.html:33
+msgid "Reset My Password"
+msgstr "Hloov Kuv Tus Password Dua Tshiab"
+
+#: main/templates/account/password_reset_done.html:6
+#: main/templates/account/password_reset_done.html:14
+msgid "Password Reset"
+msgstr "Hloov Tus Password Dua Tshiab"
+
+#: main/templates/account/password_reset_done.html:20
+msgid ""
+"We have sent you an e-mail.</p> <p class=\"text-center\">Please contact us "
+"at <a href=\"mailto:team@representable.org\">team@representable.org</a> if "
+"you do not receive it within a few minutes."
+msgstr ""
+"Peb twb tau xa tsab e-mail rau koj lawm.</p><p class=\"text-center\">Thov "
+"tiv tauj rau peb ntawm <a "
+"href=\"mailto:team@representable.org\">team@representable.org</a> yog tias "
+"koj tsis tau txais tsab e-mail ntawd nyob rau ob peb feeb."
+
+#: main/templates/account/password_reset_from_key.html:13
+msgid "Bad Token"
+msgstr "Qhov Token Tsis Raug"
+
+#: main/templates/account/password_reset_from_key.html:17
+#, python-format
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password "
+"reset</a>."
+msgstr ""
+"Tus link txuas los hloov tus password tsis raug lawm, zoo yam li vim yog nws"
+" twb tau raug siv lawm.  Thov los thov rau qhov <a "
+"href=\"%(passwd_reset_url)s\">kev hloov tus password dua tshiab</a>."
+
+#: main/templates/account/password_reset_from_key.html:23
+msgid "change password"
+msgstr "hloov tus password"
+
+#: main/templates/account/password_reset_from_key.html:26
+msgid "Your password is now changed."
+msgstr "Koj tus password tau raug hloov pauv lawm."
+
+#: main/templates/account/password_set.html:20
+msgid "Set Password"
+msgstr "Teeb Tsim Tus Password"
+
+#: main/templates/account/signup.html:12 main/templates/account/signup.html:43
+msgid "Sign Up"
+msgstr "Sau Npe"
+
+#: main/templates/account/signup.html:46
+msgid "Already have an account? Log in."
+msgstr "Twb muaj ib tus as khauj lawm? Sau Npe Nkag."
+
+#: main/templates/account/signup_login.html:15
+msgid "Let's have you sign up or log in before you start..."
+msgstr "Cia kom koj sau npe los sis sau npe nkag ua ntej koj pib ..."
+
+#: main/templates/account/verification_sent.html:5
+msgid "Verify Your E-mail Address"
+msgstr "Lees Xyuas Kom Paub Tseeb Koj Li Chaw Nyob E-mail"
+
+#: main/templates/account/verification_sent.html:14
+msgid "Verify Email"
+msgstr "Tsab Email Lees Xyuas Kom Paub Tseeb"
+
+#: main/templates/account/verification_sent.html:15
+msgid ""
+"We have sent an e-mail to you for verification. Follow the link provided to "
+"finalize the signup process. Please contact us if you do not receive it "
+"within a few minutes."
+msgstr ""
+"Peb twb tau xa tsab e-mail rau koj lawm txhawm rau lees xyuas kom paub "
+"tseeb.Ua raws li tus link txuas uas muab los txhawm rau lis ntu kawg ntawm "
+"qhov txheej txheem kev sau npe nkag.Thov tiv tauj rau peb yog tias koj tsis "
+"tau txais tsab e-mail ntawd nyob rau ob peb feeb."
+
+#: main/templates/main/dashboard/index.html:10
+msgid "Dashboard"
+msgstr "Phab Dashboard"
+
+#: main/templates/main/dashboard/index.html:20
+msgid "Organizations"
+msgstr "Cov Koom Haum"
+
+#: main/templates/main/dashboard/index.html:31
+msgid ""
+"You're currently not part of any organizations. Ask someone to add you to "
+"their organization or create a new one below."
+msgstr ""
+"Tam sim no koj tsis yog ib feem ntawm cov koom haum twg li lawm.Thov kom ib "
+"tug neeg twg los ntxiv koj rau hauv lawv lub koom haum los sis tsim ib tug "
+"tshiab nram qab no."
+
+#: main/templates/main/dashboard/index.html:36
+msgid "Create New"
+msgstr "Tsim Tus Tshiab"
+
+#: main/templates/main/dashboard/index.html:45
+msgid "Quick Links"
+msgstr "Cov Links Txuas Sai"
+
+#: main/templates/main/dashboard/index.html:49
+msgid "Create Organization"
+msgstr "Tsim Koom Haum"
+
+#: main/templates/main/dashboard/index.html:50
+msgid "Create Entry"
+msgstr "Tsim Lub Chaw Lees Kev Nkag Rau"
+
+#: main/templates/main/dashboard/index.html:51
+#: representable/templates/base.html:279
+msgid "My Communities"
+msgstr "Kuv Cov Zej Zos"
+
+#: main/templates/main/dashboard/index.html:62
+#: representable/templates/base.html:130
+msgid "Account Settings"
+msgstr "Cov Kev Teeb Tsim Tus As Khauj"
+
+#: main/templates/main/dashboard/index.html:65
+#: main/templates/main/dashboard/index.html:67
+msgid "Reset password"
+msgstr "Hloov tus password"
+
+#: main/templates/main/dashboard/index.html:66
+msgid ""
+"Reset your password by pressing on the following button. You will receive an"
+" email with the appropriate instructions."
+msgstr ""
+"Hloov koj tus password dua yam nyem rau cov pob nram qab no.Koj yuav tau "
+"txais ib tsab email nrog rau cov lus qhia yam tsim nyog."
+
+#: main/templates/main/dashboard/index.html:70
+msgid "Cookie Settings"
+msgstr "Cov Kev Teeb Tsim Cookie"
+
+#: main/templates/main/dashboard/index.html:71
+msgid ""
+"We use Mixpanel and Google Analytics to collect anonymized information about"
+" users' website usage. We use this information to improve our website "
+"experience. You can control whether we have access to this information or "
+"not."
+msgstr ""
+"Peb siv Mixpanel thiab Google Analytics los khaws cov ntaub ntawv uas tsis "
+"taw qhia npe txog cov kev siv lub vev xaib ntawm cov neeg siv.Peb siv cov "
+"ntaub ntawv no los txhim kho peb txoj kev tau ntsib los ntawm lub vev "
+"xaib.Koj tuaj yeem kav tswj tau tab txawm tias peb yuav nkag los sis tsis "
+"nkag rau qhov ntaub ntawv los xij."
+
+#: main/templates/main/dashboard/index.html:73
+msgid ""
+"<p>Based on our records, you have <strong>opted in</strong> for anonymized "
+"information collection. To <strong>opt out</strong>, press on the button "
+"below.</p>"
+msgstr ""
+"<p>Raws li peb cov ntaub ntawv teev tseg, koj twb <strong>tau xaiv qhib "
+"siv</strong> rau txoj kev khaws cov ntaub ntawv uas tsis taw qhia npe no "
+"lawm.Txhawm rau <strong>xaiv tua tawm</strong>, nyem rau lub pob nram qab "
+"no.</p>"
+
+#: main/templates/main/dashboard/index.html:79
+msgid ""
+"<p>Based on our records, you have <strong>opted out</strong> of anonymized "
+"information collection. To <strong>opt in</strong>, press on the button "
+"below.</p>"
+msgstr ""
+"<p>Raws li peb cov ntaub ntawv teev tseg, koj twb <strong>tau xaiv tua "
+"tawm</strong> rau txoj kev khaws cov ntaub ntawv uas tsis taw qhia npe no "
+"lawm.Txhawm rau <strong>xaiv qhib siv</strong>, nyem rau lub pob nram qab "
+"no.</p>"
+
+#: main/templates/main/dashboard/partners/thanks.html:13
+msgid "Thank you for creating an organization!"
+msgstr "Ua tsaug rau kev tsim lub koom haum!"
+
+#: main/templates/main/dashboard/partners/thanks.html:16
+msgid "Please verify your email."
+msgstr "Thov lees xyuas kom paub tseeb koj tus email."
+
+#: main/templates/main/dashboard/partners/thanks.html:20
+msgid "We are excited to work with you!"
+msgstr "Peb zoo siab heev uas tau ua hauv lwm nrog koj!"
+
+#: main/templates/main/dashboard/partners/thanks.html:21
+msgid ""
+"Check out our <a "
+"href=\"https://docs.google.com/document/d/1NJMUpZodlqo96xVASJzihpcfgWir18ifMaMD380zrXE/edit\">organization"
+" guide</a> to learn more about using Representable to gather community maps."
+msgstr ""
+"Txheeb xyuas peb <a "
+"href=\"https://docs.google.com/document/d/1NJMUpZodlqo96xVASJzihpcfgWir18ifMaMD380zrXE/edit\">phau"
+" ntawv qhia ntawm lub koom haum</a> txhawm rau kawm paub ntau ntxiv txog "
+"txoj kev siv lub vev xaib Representable txhawm rau los sau cov daim phiaj "
+"qhia chaw ntawm lub zej zos ua ke."
+
+#: main/templates/main/dashboard/partners/thanks.html:22
+msgid ""
+"Contact us at <a href=\"mailto:team@representable.org\"> "
+"team@representable.org</a> with any questions."
+msgstr ""
+"Tiv tauj rau peb ntawm <a href=\"mailto:team@representable.org\"> "
+"team@representable.org</a> yog muaj lus nug dab tsi."
+
+#: main/templates/main/dashboard/partners/thanks.html:23
+msgid ""
+"Click the button below to go to the Organization Dashboard and get started "
+"by creating a community mapping drive."
+msgstr ""
+"Nias rau lub pob nram qab no txhawm rau mus hauv Phab Dashboard ntawm Lub "
+"Koom Haum thiab txais kev pib los ntawm txoj kev tsim lub chaw khaws txoj "
+"kev teev daim phiaj qhia chaw ntawm lub zej zos."
+
+#: main/templates/main/dashboard/partners/thanks.html:26
+msgid ""
+"Email verification will be necessary to access certain organization features"
+" on Representable. We have resent an email verification link to your inbox."
+msgstr ""
+"Kev lees xyuas kom paub tseeb tus email yuav yog qhov tsim nyog txhawm rau "
+"nkag tau rau qee cov xim xoo ntawm lub koom haum rau lub vev xaib "
+"Representable.Peb tau rov xa tus link txuas ntawm tsab email lees xyuas kom "
+"paub tseeb rau koj lub npov xa ntawv nkag lawm."
+
+#: main/templates/main/dashboard/partners/thanks.html:29
+msgid "organization dashboard"
+msgstr "phab dashboard ntawm lub koom haum"
+
+#: main/templates/main/drives/dane-county-page.html:10
+msgid "Tell Us About Your Community!"
+msgstr "Qhia Peb Txog Koj Lub Zej Zos!"
+
+#: main/templates/main/drives/dane-county-page.html:12
+msgid ""
+"We are working to make sure the Dane County Board of Supervisors accurately "
+"reflects the people and communities it represents. As part of that process, "
+"we are interested in learning what you think makes up your \"community of "
+"interest.\" <br><br> Who do you consider your neighbors? What other people, "
+"businesses, schools, churches or other organizations do you interact with on"
+" a regular basis? What places do you visit or travel to in the course of "
+"your day or week? What issues, values, or concerns bind you and your "
+"community together? Join us to help make sure your elected officials truly "
+"\"represent\" you and your community."
+msgstr ""
+"Peb tab tom lis hauj lwm los xyuas kom paub tseeb tias seb Pawg Thawj Coj "
+"Saib Xyuas ntawm Lub Cheeb Nroog Dane (Dane County Board of Supervisers) "
+"puas qhia tau tseeb txog cov neeg thiab cov zej zos uas nws sawv cev tam yam"
+" uas raug lawm.Raws li feem ntawm qhov txheej txheem no, peb muaj siab rau "
+"txoj kev kawm paub txog yam uas koj xav yuav los teeb tsim kom yog \"lub zej"
+" zos uas muaj kev txaus siab\" ntawm koj.<br><br> Leej twg yog tus uas koj "
+"txheeb xam tias yog koj cov neeg nyob koom zej zos? Cov neeg, cov chaw lag "
+"luam, cov tsev kawm, cov tsev chawj los sis lwm cov koom haum twg uas koj "
+"sib cuag mus los nrog nyob rau txhua hnub? Cov chaw twg uas koj mus saib los"
+" sis mus cig nyob rau ntawm hnub los sis lub lim piam ntawm koj? Cov teem "
+"meem, cov hauv kev nyiam, los sis cov kev txhawj xeeb twg uas khi koj thiab "
+"koj lub zej zos los ua ke? Koom nrog peb los pab xyuas kom paub tseeb tias "
+"seb cov neeg ua hauj lwm ntawm tsoom fwv uas koj tau xaiv puas los \"sawv "
+"cev tam\" koj thiab koj lub zej zos tiag."
+
+#: main/templates/main/drives/dane-county-page.html:23
+#, fuzzy
+#| msgid "Redistricting is coming."
+msgid "Redistricting in Dane County and Wisconsin"
+msgstr ""
+
+#: main/templates/main/drives/dane-county-page.html:30
+#, fuzzy
+#| msgid "Redistricting Glossary"
+msgid "Redistricting News"
+msgstr ""
+
+#: main/templates/main/drives/dane-county-page.html:33
+msgid ""
+"Wisconsin law requires county boards to redraw their supervisory district "
+"lines after each U.S. Decennial Census. The law also requires that electoral"
+" districts are equal in population, and keep municipalities intact. For the "
+"first time ever, Dane County has appointed a nonpartisan, independent "
+"Redistricting Commission to guide and direct that process. This will help "
+"ensure that supervisory districts are drawn impartially, without regard to "
+"politics."
+msgstr ""
+"Txoj cai lij choj ntawm Xeev Wisconsin tseev koom cov pawg thawj coj rov los"
+" kos lawv cov kab ciam saib xyuas lub nroog dua tshiab tom qab txhuas Txoj "
+"Kev Txheeb Suav Pej Xeem ntawm Txhua Kaum Lub Xyoo Hauv Teb Chaws Mes Kas "
+"(U.S. Decennial Census).Txoj cai lij choj no tseev kom cov koog cheeb tsam "
+"rau kev xaiv nom muaj cov pej xeem neeg uas sib npaug zos, thiab kom cov "
+"tuam cheeb nroog txhob muaj kev puas tsuaj.Thawj zaug uas muaj los, uas Lub "
+"Cheeb Nroog Dane tau xaiv Pab Pawg Kws Saib Xyuas Txoj Kev Rov Faib Cais "
+"Koog Cheeb Tsawm Tshiab yam tsis cais pab pawg, thiab tsis nce raug leej twg"
+" los muab lus qhia thiab coj kev rau qhov txheej txheem ntawd.Qhov no yuav "
+"pab xyuas kom paub tseeb tias cov koog cheeb tsam kev tswj hwm raug kos tus "
+"ciam mus yam ncaj nruab nrab ntug, yam tsis txhob nce rau cov kev siv hwj "
+"chim kev ua nom."
+
+#: main/templates/main/drives/dane-county-page.html:42
+#: main/templates/main/state_info.html:28
+msgid "How can Representable help?"
+msgstr "Representable yuav tuaj yeem pab tau li cas?"
+
+#: main/templates/main/drives/dane-county-page.html:45
+msgid ""
+"Representable will help you tell the Dane County Redistricting Commission "
+"about your community and visualize a map of its boundaries. Then, line-"
+"drawers can fairly consider your community when they draw new voting "
+"district lines."
+msgstr ""
+"Lub vev xaib Representable yuav pab koj qhia rau Pab Pawg Kws Saib Xyuas "
+"Txoj Kev Rov Faib Cais Koog Cheeb Tshiab ntawm Lub Cheeb Nroog Dane txog koj"
+" lub zej zos thiab ua kom pom tau daim phiaj qhia chaw ntawm nws cov ciam "
+"teb chaws.Tom qab ntawd, cov kws kos-kab ciam thiaj tuaj yeem txheeb xam rau"
+" koj lub zej zos tau yam ncaj ncees thaum lawv kos cov kab ciam ntawm koog "
+"cheeb tsam pov npav tshiab."
+
+#: main/templates/main/drives/dane-county-page.html:52
+msgid "Dane County's redistricting <br class=\"d-xl-none\"> criteria"
+msgstr ""
+"Cov qauv kev rov faib cais koog cheeb tshiab <br class=\"d-xl-none\"> ntawm "
+"Lub Cheeb Nroog Dane"
+
+#: main/templates/main/drives/dane-county-page.html:55
+msgid "In order of priority"
+msgstr "Raws txheej txheem ntawm kev muaj cai tau xub thawj"
+
+#: main/templates/main/drives/dane-county-page.html:57
+msgid ""
+"Each district should represent the same population size, be contiguous, and "
+"compact;"
+msgstr ""
+"Txhua koog cheeb tsam yuav tsum sawv cev tam kom muaj cov pej xeem neeg sib "
+"npaug zos, uas sib txuas ze, thiab luv yam tseem ntsiab;"
+
+#: main/templates/main/drives/dane-county-page.html:58
+msgid "Minimize the number of municipal boundaries crossed;"
+msgstr ""
+"Txo qhov ntau ntawm cov ciam lub tuam ceeb nroog hla mus los kom tsawg;"
+
+#: main/templates/main/drives/dane-county-page.html:59
+msgid ""
+"Ensure fair and effective representation of the diverse ethnic and racial "
+"population in Dane County;"
+msgstr ""
+"Xyuas kom paub tseeb tias muaj kev ncaj ncees thiab ua hauj lwm tau zoo rau "
+"txoj kev sawv cev tam ntawm cov pej xeem neeg uas muaj ntau pawg haiv neeg "
+"tsawg thiab ntau haiv neeg hauv Lub Cheeb Nroog Dane;"
+
+#: main/templates/main/drives/dane-county-page.html:60
+msgid ""
+"Take into consideration geography and natural boundaries such as rivers and "
+"lakes;"
+msgstr ""
+"Siv rau hauv kev txiav txim siab txog cov ciam fab teb chaws thiab hav zoov "
+"hav tsuag xws li tej niam dej thiab tej pas dej teev;"
+
+#: main/templates/main/drives/dane-county-page.html:61
+msgid ""
+"Keep intact neighborhoods and communities of interest and association, "
+"whether historical, racial, economic, ethnic, religious, or other;"
+msgstr ""
+"Ceev txoj kev puas tsuaj rau cov koog zej zos thiab cov zej zos ntawm txoj "
+"kev txaus siab nyiam thiab cov koom haum, xws li raws keeb kawm, haiv neeg, "
+"kev lag luam, haiv neeg tsawg, fab dab qhuas kev ntseeg, los sis lwm yam;"
+
+#: main/templates/main/drives/dane-county-page.html:62
+msgid "Districts shall be drawn without regard to incumbency."
+msgstr ""
+"Cov koog cheeb tsam yog tsum raug kos tu ciam yam tsis yog nce rau ntawm tus"
+" neeg tseem zaum lub rooj nom."
+
+#: main/templates/main/drives/dane-county-page.html:74
+msgid "Communities of Interest in Dane County"
+msgstr "Cov Zej Zos Uas Muaj Kev Txaus Siab hauv Lub Cheeb Nroog Dane"
+
+#: main/templates/main/drives/dane-county-page.html:76
+msgid ""
+"Dane County's ordinance requires that: <br><br><em>\"District lines shall "
+"keep intact neighborhoods and communities with established ties of common "
+"interest and association whether historical, racial, economic, ethnic, "
+"religious or other.\"</em><br><br> Communities as described above don't "
+"always fall neatly into existing, easily mapped areas such as municipal "
+"boundaries, school districts, census block groups, or neighborhood "
+"associations. The Redistricting Commission needs your help to make sure your"
+" community is adequately represented."
+msgstr ""
+"Lub Cheeb Nroog Dane txoj cai tswj hwm hauv cheeb nroog tseev kom: "
+"<br><br><em>\"Ceev txoj kev puas tsuaj rau cov koog zej zos thiab cov zej "
+"zos ntawm txoj kev txaus siab nyiam thiab cov koom haum, xws li raws keeb "
+"kawm, haiv neeg, kev lag luam, haiv neeg tsawg, fab dab qhuas kev ntseeg, "
+"los sis lwm yam.\"</em><br><br>Cov zej zos raws li tau piav qhia los saum "
+"toj saud tsis txhob poob raws mus rau qhov uas yeej muaj lawm tas li, cov "
+"cheeb tsam tau teev daim phiaj qhia chaw yooj yim xws li cov ciam luam tuam "
+"ceeb nroog, cov koog cheeb tsam tsev kawm, cov pab pawg tswj xyuas chaw kem "
+"raws kev txheeb suav pej xeem, los sis cov koom haum hauv cheeb tsam zej "
+"zos.Pab Pawg Kws Saib Xyuas Txoj Kev Rov Faib Cais Koog Cheeb Tshiab xav tau"
+" koj txoj kev pab los xyuas kom paub tseeb tias koj lub zej zos raug sawv "
+"cev tam yam raug lawm."
+
+#: main/templates/main/drives/index.html:5
+msgid "Drives"
+msgstr "Cov Chaw Khaws"
+
+#: main/templates/main/drives/page.html:20 main/templates/main/index.html:24
+msgid "Gerrymandering is silencing communities."
+msgstr "Gerrymandering tab tom ua kom cov zej zog txhob hais tawm."
+
+#: main/templates/main/drives/page.html:21 main/templates/main/index.html:25
+msgid ""
+"Make your voice heard with Representable <br> and put your community on the "
+"map."
+msgstr ""
+"Ua kom koj lub suab tau txais kev hnov ​​thiab tso koj lub zej zog hauv daim"
+" duab qhia chaw."
+
+#: main/templates/main/drives/page.html:27
+#: main/templates/main/pages/about.html:48
+msgid "What is Representable?"
+msgstr "Representable yog dab tsi?"
+
+#: main/templates/main/drives/page.html:29
+msgid ""
+"Representable allows people to draw communities of interest and share "
+"information about the interests and needs in those communities. "
+"<br><br>Making this information available encourages mapmakers to take these"
+" communities into account during redistricting, in order to avoid "
+"gerrymandering and the “packing and cracking” of marginalized groups. </p>"
+msgstr ""
+"Kev ua tus neeg sawv cev ua rau cov neeg tuaj yeem kos duab qhia chaw hauv cov zej zog ntawm kev txaus siab thiab qhia cov ntaub ntawv txog cov kev txaus siab thiab kev xav tau hauv cov zej zog.\n"
+"<br><br>Kev ua cov ntaub ntawv no kom txhawb nqa cov kws tsim daim duab qhia chaw kom cov zej zog muaj kev koom tes nrog thaum lub sij hawm rov faib cheeb tsam dua, txhawm rau zam kev tiv thaiv thiab \"kev ntim thiab tawg\" ntawm cov pab pawg uas tsis muaj feem."
+
+#: main/templates/main/drives/page.html:50
+msgid "Organized by "
+msgstr "Tau tuav tswj los ntawm "
+
+#: main/templates/main/entry_address.html:7
+msgid "Step 1"
+msgstr "Kauj Ruam 1"
+
+#: main/templates/main/entry_address.html:10
+msgid "Tell us about yourself."
+msgstr "Qhia peb txog koj tus kheej."
+
+#: main/templates/main/entry_address.html:13
+msgid "Please include your name."
+msgstr "Thov muab koj lub npe nrog."
+
+#: main/templates/main/entry_address.html:19
+msgid "Please include your entire address."
+msgstr "Thov muab koj li chaw nyob txhij txhua nrog."
+
+#: main/templates/main/entry_address.html:26
+msgid "Why do we need your information?"
+msgstr "Vim li cas peb thiaj xav tau koj cov ntaub ntawv?"
+
+#: main/templates/main/entry_address.html:33
+#, python-format
+msgid ""
+"Your personal privacy is our highest priority. We gather personal "
+"information to verify that you are a real person. If you choose to submit "
+"this entry to an organization, the administrators of the organization will "
+"have access to this information. Learn more about our commitment to privacy "
+"on our <a target=\"_blank\" rel=\"noopener noreferrer\" "
+"href=\"%(url1)s\">Privacy</a> and <a target=\"_blank\" rel=\"noopener "
+"noreferrer\" href=\"%(url2)s\">Terms</a> pages."
+msgstr ""
+"Koj tus kheej kev ntiag tug yog qhov tseem ceeb tshaj plaws ntawm peb.Peb "
+"sau cov ntaub ntawv tus kheej los txheeb xyuas qhov tseeb tias koj yog tus "
+"neeg tiag-tiag.Yog tias koj xaiv xa cov nkag no rau hauv lub cuab yeej "
+"drive, cov tswj hwm lub drive yuav muaj kev nkag mus rau cov ntaub ntawv "
+"no.Kawm paub ntxiv txog peb kev mob siab rau kev ceev ntiag tug ntawm peb "
+"phab ntawv qhia txog <a target=\"_blank\" rel=\"noopener noreferrer\" "
+"href=\"%(url1)s\">Kev Ntiag Tug</a> thiab <a target=\"_blank\" "
+"rel=\"noopener noreferrer\" href=\"%(url2)s\">Cov Lus Qhia</a>."
+
+#: main/templates/main/entry_address.html:61
+msgid "Your Name"
+msgstr "Koj lub npe"
+
+#: main/templates/main/entry_address.html:103
+msgid "Street"
+msgstr "Txoj Kev"
+
+#: main/templates/main/entry_address.html:144
+msgid "City"
+msgstr "Lub Nroog"
+
+#: main/templates/main/entry_address.html:149
+msgid "State"
+msgstr "Lub Xeev"
+
+#: main/templates/main/entry_address.html:173
+msgid "Zipcode"
+msgstr "Tus Zauv Chaw Nyob"
+
+#: main/templates/main/entry_address.html:180
+#: main/templates/main/entry_survey.html:347
+#: main/templates/main/entry_survey.html:414
+msgid "NEXT"
+msgstr "TOM NTEJ"
+
+#: main/templates/main/entry_map.html:17
+msgid ""
+"<p><strong>Search for a zipcode, address, or landmark to start. Then draw "
+"your community by clicking units on the map.</strong></p>"
+msgstr ""
+"<p><strong>Tshawb rau tus zauv xa ntawv, chaw nyob, los sis qhov chaw cim "
+"keeb kwm tseeb ceeb txhawm rau pib.Tom qab ntawd kos koj lub zej zos los "
+"ntawm nias rau chav nyob hauv daim phiaj qhia chaw.</strong></p>"
+
+#: main/templates/main/entry_map.html:18
+#, fuzzy
+#| msgid ""
+#| "<p>Make sure that all your community is contained within the highlighted "
+#| "units, and that it does not contain gaps. The units are <a class=\"no-"
+#| "underline-link\" href=\"https://www.census.gov/programs-"
+#| "surveys/geography/about/glossary.html#par_textimage_4\" "
+#| "target=\"_blank\"><strong>census block groups</strong></a>, which are used "
+#| "by map drawers to draw voting districts.</p>"
+msgid ""
+"<p>Make sure that all your community is contained within the highlighted "
+"units, and that it does not contain gaps. The units are <span id=\"units-"
+"link\"><a class=\"no-underline-link\" "
+"href=\"https://www.census.gov/programs-"
+"surveys/geography/about/glossary.html#par_textimage_4\" "
+"target=\"_blank\"><strong>census block groups</strong></a></span>, which are"
+" used by map drawers to draw voting districts.</p>"
+msgstr ""
+
+#: main/templates/main/entry_map.html:50 main/templates/main/entry_map.html:78
+msgid "Change your mapping units."
+msgstr "Hloov koj cov feem chaw kem uas tab tom teev daim phiaj qhia chaw."
+
+#: main/templates/main/entry_map.html:52
+msgid ""
+"Currently, you are mapping with <b>census block groups</b>. These units are "
+"used by map drawers to draw voting districts."
+msgstr ""
+"Tam sim no, koj tab tom teev daim phiaj qhia chaw nrog <b>cov pab pawg tswj "
+"xyuas chaw kem raws kev txheeb suav pej xeem</b>.Cov feem chaw kem no raug "
+"siv los ntawm cov kws kos daim phiaj qhia chaw txhawm rau kos cov koog cheeb"
+" tsam pov npav."
+
+#: main/templates/main/entry_map.html:53
+msgid ""
+"If you would like to map your community with smaller units, you can switch "
+"to <b>census blocks</b>. Census blocks are small units that make up census "
+"block groups."
+msgstr ""
+"Yog koj xav los los teev daim phiaj qhia chaw ntawm koj lub zej zos yam siv "
+"cov feem chaw kem uas me dua qub, koj tuaj yeem hloov los rau <b>cov chaw "
+"kem raws kev txheeb suav pej xeem</b>.Cov chaw kem raws kev txheeb suav pej "
+"xeem yog cov feem chaw kem me uas tsim muaj ntawm cov pab pawg tswj xyuas "
+"chaw kem raws kev txheeb suav pej xeem."
+
+#: main/templates/main/entry_map.html:54 main/templates/main/entry_map.html:82
+msgid "If you switch the units now, your current selection will be erased."
+msgstr ""
+"Yog koj hloov cov feem chaw kem ntawd tam sim no, qhov kev xaiv tam sim no "
+"yuav raug tshem tawm."
+
+#: main/templates/main/entry_map.html:56
+msgid "Switch to smaller units"
+msgstr "Hloov los rau cov feem chaw kem uas me dua qub"
+
+#: main/templates/main/entry_map.html:80
+msgid ""
+"Currently, you are mapping with <b>census blocks</b>. These units are used "
+"by map drawers to draw voting districts."
+msgstr ""
+"Tam sim no, koj tab tom teev daim phiaj qhia chaw nrog <b>cov chaw kem raws "
+"kev txheeb suav pej xeem</b>.Cov feem chaw kem no raug siv los ntawm cov kws"
+" kos daim phiaj qhia chaw txhawm rau kos cov koog cheeb tsam pov npav."
+
+#: main/templates/main/entry_map.html:81
+msgid ""
+"If you would like to map your community with larger units, you can switch to"
+" <b>census block groups</b>. Census block groups are large units comprised "
+"of census blocks."
+msgstr ""
+"Yog koj xav los los teev daim phiaj qhia chaw ntawm koj lub zej zos yam siv "
+"cov feem chaw kem uas loj dua qub, koj tuaj yeem hloov los rau <b>cov pab "
+"pawg tswj xyuas chaw kem raws kev txheeb suav pej xeem</b>.Cov pab pawg tswj"
+" xyuas chaw kem raws kev txheeb suav pej xeem yog cov feem chaw kem loj uas "
+"muaj nrog ntawm cov chaw kem raws kev txheeb suav pej xeem."
+
+#: main/templates/main/entry_map.html:84
+msgid "Switch to larger units"
+msgstr "Hloov los rau cov feem chaw kem uas loj dua qub"
+
+#: main/templates/main/entry_map.html:103
+#: main/templates/main/entry_map.html:209
+msgid "How to draw my community?"
+msgstr "Yuav kos kuv lub zej zog li cas?"
+
+#: main/templates/main/entry_map.html:105
+#: main/templates/main/entry_map.html:211
+msgid ""
+"Select units on the map by clicking with your mouse. To deselect a unit, "
+"click it again. Watch the following video to learn more."
+msgstr ""
+"Xaiv cov chaw hauv duab qhia chaw thib los ntawm nyem nrog koj nas.Txhawm "
+"rau xaiv ib qho chaw, nyem nws dua ntxiv.Saib cov yeeb yaj kiab hauv qab no "
+"kom paub ntau ntxiv."
+
+#: main/templates/main/entry_map.html:116
+#: main/templates/main/entry_map.html:222
+#: representable/templates/base.html:113
+msgid "FAQ"
+msgstr "Cov Lus Kheev Nug"
+
+#: main/templates/main/entry_map.html:120
+#: main/templates/main/entry_map.html:226
+msgid "What are the units?"
+msgstr "Cov chaw yog dab tsi?"
+
+#: main/templates/main/entry_map.html:122
+#: main/templates/main/entry_map.html:228
+msgid ""
+"The units are <strong>census block groups</strong>, which are used by map "
+"drawers to draw voting districts."
+msgstr ""
+"Cov chaw yog cov pawg neeg suav neeg, uas siv los ntawm cov duab qhia chaw "
+"los kos cov cheeb tsam pov npav."
+
+#: main/templates/main/entry_map.html:125
+#: main/templates/main/entry_map.html:231
+msgid "Why am I unable to save my map?"
+msgstr "Vim li cas kuv tsis tuaj yeem khaws kuv daim ntawv qhia chaw tau?"
+
+#: main/templates/main/entry_map.html:127
+#: main/templates/main/entry_map.html:233
+msgid ""
+"Make sure that it does not contain gaps. Communities of Interest must be "
+"contiguous."
+msgstr ""
+"Nco ntsoov tias nws tsis muaj qhov khoob.Cov Zej Zog Kev Txaus Siab yuav "
+"tsum muaj kev sib txuas."
+
+#: main/templates/main/entry_map.html:130
+#: main/templates/main/entry_map.html:236
+msgid "Can I map outside of my state?"
+msgstr "Kuv puas tuaj yeem kos duab qhia chaw sab nraud ntawm kuv lub xeev?"
+
+#: main/templates/main/entry_map.html:132
+#: main/templates/main/entry_map.html:238
+msgid ""
+"In order to map outside of your state, you need to add a new community "
+"within the other state."
+msgstr ""
+"Txhawm rau kos duab qhia chaw rau sab nraud ntawm koj lub xeev, koj yuav "
+"tsum ntxiv ib lub zej zog tshiab hauv lwm lub xeev."
+
+#: main/templates/main/entry_map.html:135
+#: main/templates/main/entry_map.html:241
+msgid "How large should my community be?"
+msgstr "Kuv lub zej zog yuav loj npaum li cas?"
+
+#: main/templates/main/entry_map.html:137
+#: main/templates/main/entry_map.html:243
+msgid "Your community can be as small as one unit or as large as 800 units."
+msgstr ""
+"Koj lub zej zog muaj peev xwm me li ib chav tsev los sis loj li 800 chav."
+
+#: main/templates/main/entry_map.html:156
+#: main/templates/main/entry_map.html:261
+msgid "Community Name"
+msgstr "Lub Npe Zej Zos"
+
+#: main/templates/main/entry_map.html:159
+#: main/templates/main/entry_map.html:264
+msgid "Communities Activities and Services"
+msgstr "Cov Hauj Lwm thiab Cov Kev Pab Cuam Hauv Zej Zog"
+
+#: main/templates/main/entry_map.html:167
+#: main/templates/main/entry_map.html:272
+#: main/templates/main/entry_survey.html:282 main/templates/main/map.html:130
+#: main/templates/main/partners/map.html:140
+#: main/templates/main/review.html:74 main/templates/main/submission.html:157
+#: main/templates/main/submission.html:438
+msgid "Cultural or Historical Interests"
+msgstr "Cov Kev Tshawb Fawb Txog Keeb Kwm los sis Keeb Kwm"
+
+#: main/templates/main/entry_map.html:175
+#: main/templates/main/entry_map.html:280
+#: main/templates/main/entry_survey.html:298 main/templates/main/map.html:140
+#: main/templates/main/partners/map.html:150
+#: main/templates/main/review.html:84 main/templates/main/submission.html:167
+#: main/templates/main/submission.html:420
+msgid "Economic or Environmental Interests"
+msgstr "Cov Kev Txaus Siab Txog Kev Lag Luam los sis Ib Puag Ncig"
+
+#: main/templates/main/entry_map.html:183
+#: main/templates/main/entry_map.html:288
+#: main/templates/main/entry_survey.html:317
+#: main/templates/main/entry_survey.html:334 main/templates/main/map.html:145
+#: main/templates/main/partners/map.html:155
+#: main/templates/main/review.html:89 main/templates/main/submission.html:177
+#: main/templates/main/submission.html:447
+msgid "Community Needs and Concerns"
+msgstr "Kev Xav Tau Hauv Zej Zog thiab Cov Kev Txhawj Xeeb"
+
+#: main/templates/main/entry_map.html:257
+msgid "Your Community Info"
+msgstr "Koj Li Ntaub Ntawv Qhia Paub Txog Lub Zej Zos"
+
+#: main/templates/main/entry_map.html:300
+msgid "Saving Community..."
+msgstr "Tab Tom Khaws Lub Zej Zos Cia..."
+
+#: main/templates/main/entry_map.html:331
+#: main/templates/main/entry_map.html:335
+msgid "EDIT INFO"
+msgstr "NTAUB NTAWV HLOOV KHO"
+
+#: main/templates/main/entry_map.html:332
+#: main/templates/main/entry_map.html:336
+msgid "SAVE"
+msgstr "KHAWS CIA"
+
+#: main/templates/main/entry_map.html:346
+msgid "Population"
+msgstr "Pej xeem"
+
+#: main/templates/main/entry_map.html:353
+msgid "Step-by-step guide"
+msgstr "Phau ntawv qhia ib kauj ruam zuj zus"
+
+#: main/templates/main/entry_map.html:362
+msgid "You need to draw a community to submit the form."
+msgstr "Koj yuav tsum tau los kos lub zej zos txhawm rau xa daim foos."
+
+#: main/templates/main/entry_preview.html:13
+msgid "Add your community to the map."
+msgstr "Ntxiv koj cov zej zog rau daim duab kos qhia chaw."
+
+#: main/templates/main/entry_preview.html:14
+msgid ""
+"Mapping your community and identifying its shared interests allows public "
+"officials to take your community’s concerns into account."
+msgstr ""
+"Kos duab qhia chaw koj lub zej zog thiab kev txheeb xyuas cov kev sib koom "
+"siab uas ua rau cov thawj coj pej xeem los saib xyuas koj cov kev txhawj "
+"xeeb hauv zej zog."
+
+#: main/templates/main/entry_preview.html:20
+msgid "Gerrymandering"
+msgstr "Gerrymandering"
+
+#: main/templates/main/entry_preview.html:20
+msgid "is silencing communities across the country."
+msgstr ""
+"yog ua kom cov zej zog txhob hais tawm thoob plaws hauv lub teb chaws."
+
+#: main/templates/main/entry_preview.html:21
+msgid ""
+"Politicians have been splitting up or packing together communities into "
+"districts that silence their voices. Gathering communities of interest helps"
+" fight gerrymandering."
+msgstr ""
+"Cov neeg kas moos tau faib los sis sau cov zej zog ua ke mus rau hauv cov "
+"nroog uas tsis hnov lawv cov suab.Kev sib sau cov zej zog ntawm kev txaus "
+"siab pab tawm tsam nrog kev tsis ncaj ncees."
+
+#: main/templates/main/entry_preview.html:33
+msgid "ADD MY COMMUNITY"
+msgstr "Ntxiv rau kuv lub zej zog"
+
+#: main/templates/main/entry_privacy.html:12
+msgid "<p id=\"backup_error_txt\" class=\"p-0 m-0\"></p>"
+msgstr "<p id=\"backup_error_txt\" class=\"p-0 m-0\"></p>"
+
+#: main/templates/main/entry_privacy.html:20
+msgid "Please make sure to agree to the terms and conditions."
+msgstr ""
+"Thov xyuas kom tseeb los pom zoo rau cov ntsiab lus thiab cov zwj ceeb."
+
+#: main/templates/main/entry_privacy.html:28
+msgid "Privacy and Terms of Use"
+msgstr "Kev Ntiag Tug thiab Cov Lus Qhia Rau Kev Siv"
+
+#: main/templates/main/entry_privacy.html:36
+msgid ""
+"We gather your identifying information to verify that you are a real person."
+" We will not publicly share anyone's individual personal information, such "
+"as name, address, or email. Your privacy is our highest priority."
+msgstr ""
+"Peb suav sau koj cov ntaub ntawv teev kev txheeb xyuas kom paub tseeb tias "
+"koj yog ib tug neeg muaj nyob tseeb tiag.Peb yuav tsis tshaj tawm leej twg "
+"tus kheej cov ntaub ntawv ntiag tug, xws li npe, chaw nyob, los sis "
+"email.Koj li kev ntiag tug yog peb qhov tseem ceeb tshaj plaws."
+
+#: main/templates/main/entry_privacy.html:52
+#: main/templates/main/entry_privacy.html:68
+#, python-format
+msgid ""
+"Click here to indicate that you have read and agree to the <a "
+"target=\"_blank\" rel=\"noopener noreferrer\" href=%(url2)s>Terms of Use</a>"
+" and <a target=\"_blank\" rel=\"noopener noreferrer\" "
+"href=\"%(url1)s\">Privacy Policy</a>."
+msgstr ""
+"Nias rau ntawm no los taw qhia tias koj tau nyeem thiab pom zoo rau <a "
+"target=\"_blank\" rel=\"noopener noreferrer\" href=%(url2)s>Cov Ntsiab Lus "
+"Qhia Kev Siv</a> thiab <a target=\"_blank\" rel=\"noopener noreferrer\" "
+"href=\"%(url1)s\">Tsab Cai Kev Ntiag Tug</a>."
+
+#: main/templates/main/entry_privacy.html:80
+#, fuzzy
+#| msgid "Submitted communities are final."
+msgid "Submitted communities are final and public."
+msgstr ""
+
+#: main/templates/main/entry_privacy.html:86
+msgid ""
+"In order to edit a saved community you will need to create a new community "
+"and delete the old one. Your community map, name, and testimony will be "
+"publicly visible on Representable.org"
+msgstr ""
+"Txhawm rau kom kho lub zej zos uas tau sau cia tias koj yuav tsum tsim lub "
+"zej zos tshiab thiab tshem tawm qhov qub.Koj lub zej zos daim phiaj qhia "
+"chaw, lub npe, thiab cov pov thawj yuav raug nthuav kom pom rau zej tsoom "
+"sawv daws nyob hauv Representable.org"
+
+#: main/templates/main/entry_privacy.html:96
+msgid "You need to complete the recaptcha to submit this map."
+msgstr ""
+"Koj yuav tsum tau sau lus teb rau qhov recaptcha no txhawm rau xa daim phiaj"
+" qhia chaw."
+
+#: main/templates/main/entry_privacy.html:107
+#: main/templates/main/entry_survey.html:103
+#: main/templates/main/entry_survey.html:204
+#: main/templates/main/entry_survey.html:346
+#: main/templates/main/entry_survey.html:413
+msgid "BACK"
+msgstr "ROV QAB"
+
+#: main/templates/main/entry_privacy.html:108
+msgid "SUBMIT"
+msgstr "XA"
+
+#: main/templates/main/entry_state_selection.html:20
+#: main/templates/main/entry_state_selection.html:21
+msgid "Select your state."
+msgstr "Xaiv lub xeev los pib."
+
+#: main/templates/main/entry_survey.html:7
+msgid "Step 2"
+msgstr "Kauj Ruam 2"
+
+#: main/templates/main/entry_survey.html:17
+msgid "Tell us about what unites your community."
+msgstr "Qhia peb txog yam sib koom hauv koj lub zej zog."
+
+#: main/templates/main/entry_survey.html:20
+msgid ""
+"Next, you will share information about what brings your community together. "
+"What do you think is important for politicians to know about your community?"
+msgstr ""
+"Tom ntej no, koj yuav qhia tawm cov ntaub ntawv hais txog yam coj koj zej "
+"zog los ua ke.Koj xav tias dab tsi yog yam tseem ceeb rau cov ua kas moos "
+"paub txog koj lub zej zog?"
+
+#: main/templates/main/entry_survey.html:26
+#: main/templates/main/entry_survey.html:115
+msgid "What is a Community of Interest?"
+msgstr "Ib Lub Zej Zog Kev Txaus Siab yog dab tsi?"
+
+#: main/templates/main/entry_survey.html:31
+msgid ""
+"A Community of Interest is a <strong>geographic area</strong> that shares "
+"<strong>cultural</strong>, <strong>historical</strong>, or "
+"<strong>economic</strong> interests. Communities of Interest encourage the "
+"drawing of fairer voting districts."
+msgstr ""
+"Ib Lub Zej Zog Kev Txaus Siab yog daim duab cheeb tsam uas qhia txog kev "
+"nyiam kab lis kev cai, keeb kwm, los sis kev txaus siab ntawm kev lag "
+"luam.Cov Zej Zog Kev Txaus Siab txhawb kom kos cov chaw xaiv tsa cov cheeb "
+"tsam yam ncaj ncees."
+
+#: main/templates/main/entry_survey.html:39
+#: main/templates/main/entry_survey.html:128
+msgid "Communities of Interest can include..."
+msgstr "Cov Zej Zog Kev Txaus Siab tuaj yeem suav nrog ..."
+
+#: main/templates/main/entry_survey.html:53
+#: main/templates/main/entry_survey.html:164
+msgid "Your neighborhood, or an area you live in."
+msgstr "Koj ib cheeb tsam chaw, los sis ib thaj chaw koj nyob."
+
+#: main/templates/main/entry_survey.html:72
+#: main/templates/main/entry_survey.html:141
+msgid "The people you would like to choose representatives with."
+msgstr "Cov neeg koj xav xaiv los sawv cev nrog."
+
+#: main/templates/main/entry_survey.html:91
+#: main/templates/main/entry_survey.html:187
+msgid "A local group that is brought together by a common interest."
+msgstr ""
+"Ib pawg hauv cheeb tsam uas tau coj los ua ke los ntawm ib qho kev nyiam ib "
+"txwm muaj."
+
+#: main/templates/main/entry_survey.html:104
+#: main/templates/main/entry_survey.html:205
+msgid "START"
+msgstr "PIB"
+
+#: main/templates/main/entry_survey.html:120
+msgid ""
+"A Community of Interest is a geographic area that shares "
+"<strong>cultural</strong>, <strong>historical</strong>, or "
+"<strong>economic</strong> interests. Communities of Interest encourage the "
+"drawing of fairer voting districts."
+msgstr ""
+"Ib Lub Zej Zog Kev Txaus Siab yog daim duab cheeb tsam uas qhia txog kev "
+"nyiam kab lis kev cai, keeb kwm, los sis kev txaus siab ntawm kev lag "
+"luam.Cov Zej Zog Kev Txaus Siab txhawb kom kos cov chaw xaiv tsa cov cheeb "
+"tsam yam ncaj ncees."
+
+#: main/templates/main/entry_survey.html:217
+msgid "What unites your Community of Interest?"
+msgstr "Dab tsi los suav sau koj Lub Zej Zog Kev Txaus Siab tau?"
+
+#: main/templates/main/entry_survey.html:221
+msgid "Community of Interest Definition in "
+msgstr "Cov Ntsiab Lus Txhais Zej Zos Kev Uas Muaj Txaus Siab hauv "
+
+#: main/templates/main/entry_survey.html:231
+msgid ""
+"Respond to <b>at least one</b> of the sections below. There are no wrong "
+"answers.<br> Click on each category to see helpful questions and examples."
+msgstr ""
+"Teb rau <b>yam tsawg kawg yog ib nqe</b> ntawm cov tshooj hauv qab no.Muaj "
+"ob nqe lus teb uas tsis raug.<br>Nias rau ntawm txhua pawg txhawm rau saib "
+"cov lus nug thiab cov piv txwv uas muaj txiaj ntsig zoo."
+
+#: main/templates/main/entry_survey.html:246
+#: main/templates/main/entry_survey.html:254
+msgid "Please fill out at least one of the interest fields."
+msgstr "Thov sau yam tsawg kawg ib qhov ntawm cov feem txaus siab."
+
+#: main/templates/main/entry_survey.html:265 main/templates/main/map.html:135
+#: main/templates/main/partners/map.html:145
+#: main/templates/main/review.html:79 main/templates/main/submission.html:147
+#: main/templates/main/submission.html:429
+msgid "Community Activities and Services"
+msgstr "Cov Hauj Lwm thiab Cov Kev Pab Cuam Hauv Zej Zog"
+
+#: main/templates/main/entry_survey.html:269
+#: main/templates/main/entry_survey.html:286
+#: main/templates/main/entry_survey.html:321
+msgid ""
+"Use these questions to think more about how you would describe your "
+"community..."
+msgstr ""
+"Siv cov lus nug no los xav ntau ntxiv txog qhov koj yuav piav qhia koj lub "
+"zej zog…"
+
+#: main/templates/main/entry_survey.html:270
+msgid "Where do people in your community gather or socialize?"
+msgstr "Cov neeg hauv koj lub zej zog sib sau los sis ua pab pawg qhov twg?"
+
+#: main/templates/main/entry_survey.html:271
+msgid ""
+"How and where does your community access services (healthcare, "
+"transportation, educational services, etc.)?"
+msgstr ""
+"Koj lub zej zog tau txais kev pab tau li cas (kev kho mob, tsheb thauj mus "
+"los, kev qhia ntawv, thiab lwm yam li cas thiab qhov twg)?"
+
+#: main/templates/main/entry_survey.html:272
+msgid "Examples of activities and services:"
+msgstr "Piv txwv ntawm cov hauj lwm thiab cov kev pab cuam:"
+
+#: main/templates/main/entry_survey.html:272
+msgid ""
+"Shopping areas, schools and universities, libraries, parks, lakes, rivers, "
+"places of worship, healthcare services, public transport, local nonprofit "
+"organizations, etc."
+msgstr ""
+"Cov cheeb tsam khw, tsev kawm ntawv thiab tsev kawm ntawv qib siab, tsev qiv"
+" ntawv, chaw ua si, pas dej, dej ntws, cov chaw teev ntuj, chaw kho mob, kev"
+" thauj mus los rau pej xeem, cov koom haum hauv zej zog, thiab lwm yam."
+
+#: main/templates/main/entry_survey.html:287
+msgid "What are the cultural bonds in your community?"
+msgstr "Cov kev cai dab tsi hauv koj lub zej zog?"
+
+#: main/templates/main/entry_survey.html:288
+msgid "If your community has a shared history, what is it?"
+msgstr "Yog tias koj lub zej zog muaj keeb kwm sib koom, nws yog dab tsi?"
+
+#: main/templates/main/entry_survey.html:289
+#, fuzzy
+#| msgid "Examples of cultural or historical interests:"
+msgid "Examples of cultural or historical interests: "
+msgstr ""
+
+#: main/templates/main/entry_survey.html:289
+msgid ""
+"Religious groups, ethnic groups, languages, age groups, immigration status, "
+"historic or arts districts, etc."
+msgstr ""
+"Pawg ntseeg, pawg neeg, lus, hnub nyoog, kev nkag teb chaws, keeb kwm los "
+"sis txuj ci hauv nroog, thiab lwm yam."
+
+#: main/templates/main/entry_survey.html:302
+msgid ""
+"<b>Use these questions to think more about how you would describe your "
+"community...</b><br> &emsp; - Where are residents employed?<br> &emsp; - If "
+"there are environmental concerns in your community, what are they?<br><br> "
+"<span class=\"blue-text\"><b>Examples of economic or environmental "
+"interests:</b> Tourism industry, agricultural workers, mining town, "
+"manufacturing center, polluted natural resource, unemployment problem, "
+"etc.</span>"
+msgstr ""
+"<b>Siv cov lus nug no los xav ntau ntxiv txog qhov koj yuav piav qhia koj "
+"lub zej zog…</b><br> &emsp; - Cov neeg nyob hauv zej zog ua hauj lwm qhov "
+"twg?<br> &emsp; - Yog tias muaj kev txhawj xeeb txog ib puag ncig hauv koj "
+"lub zej zog, nws yog dab tsi?<br><br> <span class=\"blue-text\"><b>Piv txwv "
+"ntawm cov kev lag luam los sis ib puag ncig kev txaus siab:</b>Kev lag luam "
+"ncig teb chaws, cov neeg ua liaj ua teb, khawb nyiaj khawb kub, chaw tsim "
+"khoom, cov khoom muaj kuab paug, teeb meem tsis muaj hauj lwm, thiab lwm "
+"yam. </span>"
+
+#: main/templates/main/entry_survey.html:322
+msgid "What should politicians and/or map drawers know about your community?"
+msgstr ""
+"Cov nom tswv dab tsi thiab/los yog cov tub rau cov duab qhia chaw yuav tsum "
+"paub txog koj lub zej zog?"
+
+#: main/templates/main/entry_survey.html:323
+msgid "What are the needs of your community?"
+msgstr "Koj lub zej zog xav tau yog dab tsi?"
+
+#: main/templates/main/entry_survey.html:324
+msgid "Is there anything else you want to tell us about your community?"
+msgstr "Puas muaj lwm yam koj xav qhia rau peb txog koj lub zej zog?"
+
+#: main/templates/main/entry_survey.html:325
+msgid "Examples of needs or concerns:"
+msgstr "Cov Piv Txwv ntawm Kev Xav Tau los sis Txhawj Xeeb:"
+
+#: main/templates/main/entry_survey.html:325
+msgid ""
+"Keep community in the same district or separate into multiple districts, "
+"shared policy concerns, need for a social service, relationship to other "
+"nearby communities, issues with current district lines"
+msgstr ""
+"Ua kom cov zej zog nyob hauv tib lub nroog los sis cais mus rau ntau lub "
+"cheeb tsam, sib qhia txog txoj cai kev txhawj xeeb, xav tau kev pab cuam kev"
+" sib raug zoo, kev sib raug zoo nrog lwm cov zej zog nyob ze, teeb meem nrog"
+" cov ciam cheeb tsam"
+
+#: main/templates/main/entry_survey.html:373
+msgid "Please include a community name."
+msgstr "Koj lub zej zog lub npe."
+
+#: main/templates/main/entry_survey.html:385
+msgid "Name your community."
+msgstr "Koj lub zej zog lub npe."
+
+#: main/templates/main/entry_survey.html:390
+msgid ""
+"Give your community of interest a name. This does not have to be the "
+"official name of your community."
+msgstr ""
+"Qhia lub npe ntawm koj lub zej zog kev txaus siab.Qhov no tsis tas yuav yog "
+"cov nom tswv ntawm koj lub zej zog."
+
+#: main/templates/main/entry_survey.html:396
+msgid "Examples"
+msgstr "Piv txwv li:"
+
+#: main/templates/main/entry_survey.html:396
+msgid ""
+"Cherry Farmers Community, St. Peters Church Community, Riverside Fishing "
+"Community"
+msgstr ""
+"Lub Zej Zog Cherry Farmers, Lub Zej Zog St. Peters Church, Lub Zej Zog "
+"Riverside Fishing"
+
+#: main/templates/main/entry_survey.html:403
+msgid "Community Name:"
+msgstr "Koj Lub Zej Zog Lub Npe:"
+
+#: main/templates/main/index.html:27
+msgid "GET STARTED"
+msgstr "Los Pib"
+
+#: main/templates/main/index.html:34
+msgid "Are you the leader of an organization?"
+msgstr "Koj puas yog tus thawj coj ntawm ib lub koom haum?"
+
+#: main/templates/main/index.html:35
+msgid ""
+"Many organizations have partnered with Representable.org to collect "
+"community-of-interest data."
+msgstr ""
+"Ntau lub koom haum muaj kev koom tes nrog Representable.org kom tau txais "
+"txiaj ntsig cov zej zog-ntawm cov paj ntaub ntawv."
+
+#: main/templates/main/index.html:36
+msgid "PARTNER WITH US"
+msgstr "Tus koom tes nrog peb "
+
+#: main/templates/main/index.html:51
+msgid ""
+"<b>Our mission</b> is to give communities a voice in drawing voting "
+"districts."
+msgstr ""
+"Peb lub hom phiaj yog los muab cov zej zog lub suab rau qhov kev xaiv tsa "
+"kos duab qhia cheeb tsam."
+
+#: main/templates/main/index.html:52
+msgid ""
+"Representable allows people to draw communities of interest and share "
+"information about the interests and needs in those communities. "
+"<br><br>Making this information available encourages mapmakers to take these"
+" communities into account during redistricting, in order to avoid "
+"gerrymandering and the “packing and cracking” of marginalized groups."
+msgstr ""
+"Kev ua tus neeg sawv cev ua rau cov neeg tuaj yeem kos duab qhia chaw hauv "
+"cov zej zog ntawm kev txaus siab thiab qhia cov ntaub ntawv txog cov kev "
+"txaus siab thiab kev xav tau hauv cov zej zog.<br><br>Kev ua cov ntaub ntawv"
+" no kom txhawb nqa cov kws tsim daim duab qhia chaw kom cov zej zog muaj kev"
+" koom tes nrog thaum lub sij hawm rov faib cheeb tsam dua, txhawm rau zam "
+"kev tiv thaiv thiab \"kev ntim thiab tawg\" ntawm cov pab pawg uas tsis muaj"
+" feem."
+
+#: main/templates/main/index.html:59
+msgid "<b>Gerrymandering</b> is threatening democracy."
+msgstr "<b>Gerrymandering yog</b> hem thawj rau kev ywj pheej."
+
+#: main/templates/main/index.html:60
+msgid ""
+"Politicians have been splitting up and packing together communities into "
+"districts that silence the voices of community members. This prevents "
+"communities from electing representatives that listen to their needs. "
+"Gathering communities of interest maps helps fight gerrymandering. We can "
+"provide map drawers with the information they need to draw districts that "
+"empower communities."
+msgstr ""
+"Cov neeg kas moos tau faib thiab sau cov zej zog ua ke mus rau hauv cov "
+"nroog uas ua kom cov suab tsis txaus siab ntawm cov neeg hauv zej zog.Qhov "
+"kev tiv thaiv cov zej zog no los ntawm kev xaiv cov sawv cev uas mloog lawv "
+"cov kev xav tau.Kev sib sau ua ke cov zej zog ntawm daim duab qhia chaw pab "
+"sib ntaus gerrymandering.Peb tuaj yeem muab cov duab kos qhia chaw nrog cov "
+"ntaub ntawv lawv xav tau los kos cov cheeb tsam uas txhawb zog rau cov zej "
+"zog. "
+
+#: main/templates/main/index.html:61
+msgid "We're fighting to make democracy more..."
+msgstr "Peb tabtom tawm tsam los ua kev ywj pheej ntau dua…"
+
+#: main/templates/main/index.html:64
+msgid "Transparent"
+msgstr "Muaj Kev Ncaj Ncees"
+
+#: main/templates/main/index.html:67
+msgid "Inclusive"
+msgstr "Kev Koom Tes"
+
+#: main/templates/main/index.html:70
+msgid "Accessible"
+msgstr "Kev Siv Tau"
+
+#: main/templates/main/index.html:76 main/templates/main/pages/about.html:96
+msgid "Answer Questions"
+msgstr "Teb Cov Lus Nug"
+
+#: main/templates/main/index.html:77
+msgid "that help you identify what bonds your community together."
+msgstr "uas pab koj los taw qhia txog yam uas khi koj lub zej zos ua ke."
+
+#: main/templates/main/index.html:81 main/templates/main/pages/about.html:109
+msgid "Draw a Community Map"
+msgstr "Kos Daim Duab Qhia Chaw Hauv Zej Zog"
+
+#: main/templates/main/index.html:82
+msgid ""
+"by choosing units that make up your community. Use landmarks to draw your "
+"map."
+msgstr ""
+"yam xaiv cov feem chaw kem uas tsim muaj ntawm koj lub zej zos.Siv cov cim "
+"keeb kwm tseem ceeb los kos koj daim phiaj qhia chaw."
+
+#: main/templates/main/index.html:86
+msgid "Share your Map"
+msgstr "Qhia koj Daim Phiaj Qhia Chaw Tawm"
+
+#: main/templates/main/index.html:87
+msgid ""
+"as public input for map makers to use when drawing new voting districts."
+msgstr ""
+"raws li kis tso rau zej tsoom sawv daws pom es kom cov kws tsim daim phiaj "
+"qhia chaw thiaj muab los siv tau thaum lawv kos cov koog cheeb tsam pov npav"
+" tshiab."
+
+#: main/templates/main/index.html:99
+msgid ""
+"We are putting Representable in the hands of the communities that need it."
+msgstr "Peb tso Representable rau zej zog txhais tes uas xav tau nws."
+
+#: main/templates/main/index.html:100
+msgid "Join us to help communities get the representation they deserve."
+msgstr ""
+"Koom nrog peb los pab cov zej zog kom tau txais cov sawv cev uas lawv tsim "
+"nyog tau."
+
+#: main/templates/main/map.html:13
+msgid "View Communities"
+msgstr "Saib Cov Zej Zos"
+
+#: main/templates/main/map.html:46
+msgid "State Map"
+msgstr "Daim Phiaj Qhia Chaw Ntawm Lub Xeev"
+
+#: main/templates/main/map.html:63 main/templates/main/partners/map.html:67
+msgid "Data layers"
+msgstr "Txheej Txheem Ntaub Ntawv"
+
+#: main/templates/main/map.html:72 main/templates/main/submission.html:263
+#: main/templates/main/submission.html:272
+#: main/templates/main/submission.html:275
+msgid "Election Data"
+msgstr ""
+
+#: main/templates/main/map.html:84 main/templates/main/partners/map.html:78
+msgid "Communities"
+msgstr "Cov Zej Zos"
+
+#: main/templates/main/map.html:89 main/templates/main/partners/map.html:83
+#: main/templates/main/review.html:49 main/templates/main/submission.html:144
+msgid "Community Information"
+msgstr "Cov Ntaub Ntawv Qhia Txog Zej Zos"
+
+#: main/templates/main/map.html:90 main/templates/main/partners/map.html:84
+#, fuzzy
+#| msgid "Show"
+msgid "Only Show"
+msgstr ""
+
+#: main/templates/main/map.html:150 main/templates/main/partners/map.html:160
+#: main/templates/main/review.html:94
+msgid "Show More"
+msgstr "Tso Kom Pom Ntau Ntxiv"
+
+#: main/templates/main/map.html:164 main/templates/main/partners/map.html:173
+msgid "Show All"
+msgstr "Tso Kom Pom Tag Nrho"
+
+#: main/templates/main/pages/about.html:8
+msgid "About Representable"
+msgstr "Hais Txog Representable"
+
+#: main/templates/main/pages/about.html:12
+msgid ""
+"<span class=\"d-block display-3\">We want to give communities a <span "
+"class=\"light-blue-text\">voice</span> in drawing districts.</span>"
+msgstr ""
+"<span class=\"d-block display-3\">Peb xav tau cov zej zog kev koom tes hauv "
+"cov kev kos duab cov cheeb tsam.</span>"
+
+#: main/templates/main/pages/about.html:18
+msgid ""
+"<span class=\"display-4 d-block\">We want to give communities a <span "
+"class=\"light-blue-text\">voice</span> in drawing districts.</span>"
+msgstr ""
+"<span class=\"display-4 d-block\">Peb xav tau cov zej zog kev koom tes hauv "
+"cov kev kos duab cov cheeb tsam.</span>"
+
+#: main/templates/main/pages/about.html:34
+#: main/templates/main/pages/about.html:38
+msgid "Redistricting is coming."
+msgstr "Qhov kev faib ciam cheeb tsam tshiab yuav los txog sai no."
+
+#: main/templates/main/pages/about.html:40
+msgid ""
+"In 2021, state governments will redraw Congressional and state legislative "
+"districts. We need to fight for fairer districts which respect the concerns "
+"of communities."
+msgstr ""
+"Nyob hauv xyoo 2021, tsoom fwv hauv xeev yuav rov rho ccheeb tsam Xab Phas "
+"thiab lub xeev cov chaw tsim kev cai lij choj.Peb yuav tsum tawm tsam rau "
+"cov kev ncaj ncees dua hauv cheeb tsam uas hwm cov kev txhawj xeeb ntawm cov"
+" zej zog"
+
+#: main/templates/main/pages/about.html:49
+msgid ""
+"Representable is a free, open-source tool for creating maps for Communities "
+"of Interest (COI) — groups of individuals who share common social and "
+"economic interests, who are likely to have similar political concerns. "
+"Currently, over half of states have legal requirements to respect COIs, but "
+"before Representable, no tools existed to get COIs to mapmakers."
+msgstr ""
+"Representable yog ib qho pub dawb, qhib qhov cuab yeej rau kev tsim cov duab"
+" qhia rau Cov Zej Zog Kev Txaus Siab (COI) — pab pawg ntawm cov tib neeg uas"
+" muaj kev cuam tshuam nrog kev sib raug zoo thiab nyiaj txiag, uas yuav muaj"
+" kev txhawj xeeb txog kev tswj hwm kom zoo sib xws.Tam sim no, ntau tshaj li"
+" ib nrab ntawm cov xeev muaj cov cai yuav tsum tau ua raws li COIs, tab sis "
+"ua ntej Representable, tsis muaj ib qho cuab yeej dab tsi tau txais COI rau "
+"cov kws tsim daim duab qhia chaw."
+
+#: main/templates/main/pages/about.html:51
+msgid ""
+"We work closely with organizations to gather community maps along with "
+"information about the shared interests of the community. This data can then "
+"be used by map drawers, journalists, analysts, and activists to create and "
+"evaluate proposed district maps. Our goal is to democratize public "
+"testimony, inform map drawers, and encourage map analysis. Learn more about "
+"how Representable fights gerrymandering in the <a "
+"href=\"https://docs.google.com/document/d/1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc/edit?usp=sharing\">Official"
+" Education Guide.</a></p>"
+msgstr ""
+"Peb koom tes ua hauj lwm nrog cov koom haum txhawm rau sau cov duab qhia "
+"chaw nyob hauv zej zog nrog rau cov ntaub ntawv hais txog cov txiaj ntsig "
+"ntawm kev sib koom tes lub zej zog.Cov ntaub ntawv no tuaj yeem siv los "
+"ntawm cov kws duab kos dawb qhia chaw, cov neeg sau xov xwm, cov kws tshuaj "
+"ntsuam, thiab cov neeg ua hauj lwm los tsim thiab ntsuam xyuas hauv cheeb "
+"tsam cov duab kos qhia chaw uas tau qhia.Peb lub hom phiaj yog tsim kho kom "
+"cov lus pov thawj ntawm pej xeem, qhia cov kws tsim duab qhia chaw, thiab "
+"txhawb nqa kev tshuaj xyuas daim duab qhia chaw.<a "
+"href=\"https://docs.google.com/document/d/1zeSkzuMoFi5uayc3OdB7BVWM6qI3dMkF1E5Nktjl5Rc/edit?usp=sharingKawm\">paub"
+" ntau ntxiv txog tias Representable yuav tiv thaiv tawm tsam hauv Daim Ntawv"
+" Qhia Kev Kawm.</a></p>"
+
+#: main/templates/main/pages/about.html:56
+msgid ""
+"Representable is built in partnership with the <a "
+"href=\"http://gerrymander.princeton.edu/\">Princeton Gerrymandering "
+"Project</a> and supported by <a href=\"https://schmidtfutures.com/\">Schmidt"
+" Futures.</a></p>"
+msgstr ""
+"Lub vev xaib Representable raug tsim raws kev sib koom tes ntawm <a "
+"href=\"http://gerrymander.princeton.edu/\">Tes Dej Num Saib Xyuas Txoj Kev "
+"Faib  Koog Cheeb Tsam Xaiv Tsa Yam Tsis Ncaj Ncees Princeton (Princeton "
+"Gerrymandering Project)</a> thiab raug txhawb nqa los ntawm <a "
+"href=\"https://schmidtfutures.com/\">Schmidt Futures.</a></p>"
+
+#: main/templates/main/pages/about.html:59
+msgid "Representable will help..."
+msgstr "Representable yuav pab..."
+
+#: main/templates/main/pages/about.html:66
+msgid "Democratize Public Testimony"
+msgstr "Kev Qhia Rau Pej Xeem Rau Cov Lus Ywj Pheej"
+
+#: main/templates/main/pages/about.html:67
+msgid ""
+"Enable any individual to submit maps with their community information and "
+"share them."
+msgstr ""
+"Pab kom txhua tus neeg xa cov phiaj duab nrog lawv cov lus qhia hauv zej zog"
+" thiab qhia rau lawv."
+
+#: main/templates/main/pages/about.html:72
+msgid "Inform Map Drawers"
+msgstr "Qhia Cov Kws Kos Duab Qhia Chaw"
+
+#: main/templates/main/pages/about.html:73
+msgid ""
+"Deliver COI data to map drawers, using a digital format that is easy to "
+"analyze."
+msgstr ""
+"Xa cov ntaub ntawv COI rau cov kws kos duab qhia chaw, siv cov qauv dis gis "
+"toj (digital) uas yooj yim rau kev tshuaj xyuas."
+
+#: main/templates/main/pages/about.html:78
+msgid "Encourage Map Analysis"
+msgstr "Txhawb Nqa Kev Tshuaj Xyuas Daim Duab Qhia Chaw"
+
+#: main/templates/main/pages/about.html:79
+msgid "Support journalists and analysts with data to evaluate proposed maps."
+msgstr ""
+"Txhawb nqa cov neeg sau xov xwm thiab cov kws tshuaj ntsuam nrog cov ntaub "
+"ntawv rau kev ntsuam xyuas daim duab qhia chaw tau qhia."
+
+#: main/templates/main/pages/about.html:89
+msgid "HOW IT WORKS?"
+msgstr "Nws ua hauj lwm li cas?"
+
+#: main/templates/main/pages/about.html:101
+msgid ""
+"Thought-provoking questions built based on policy and legal definitions of "
+"COIs."
+msgstr ""
+"Cov lus nug txhawb kom teb los ntawm cov cai thiab cov ntsiab lus hauv txoj "
+"cai ntawm COIs."
+
+#: main/templates/main/pages/about.html:114
+msgid "Use landmarks, zoom, and navigation for an easy drawing experience."
+msgstr ""
+"Siv cov cim ntawm thaj chaw, ua kom loj, thiab qhia kev rau ib qho kev kos "
+"duab yooj yim."
+
+#: main/templates/main/pages/about.html:122
+msgid "Visualize and Export"
+msgstr "Ua Kom Pom Duab thiab Xa Tawm"
+
+#: main/templates/main/pages/about.html:127
+msgid ""
+"Export as GeoJSON or PDF file. Our data is interoperable with other mapping "
+"softwares."
+msgstr ""
+"Xa tawm ua GeoJSON los sis daim ntawv PDF.Peb cov ntaub ntawv cuam tshuam "
+"nrog lwm cov software daim phiaj qhia chaw."
+
+#: main/templates/main/pages/about.html:138
+msgid "Our Team"
+msgstr "Peb Pab Pawg"
+
+#: main/templates/main/pages/about.html:141
+msgid "Executive Director"
+msgstr "Tus Thawj Tswj Xyuas"
+
+#: main/templates/main/pages/about.html:142
+msgid "Head of Engineering"
+msgstr "Tus Thawj Coj Feem Hauj Lwm Kev Tsim"
+
+#: main/templates/main/pages/about.html:143
+msgid "Head of Design"
+msgstr "Tus Thawj Coj Feem Hauj Lwm Tsim Qauv"
+
+#: main/templates/main/pages/about.html:144
+msgid "Strategy Coordinator"
+msgstr "Tus Lis Hauj Lwm Saib Xyuas Kev Tawm Tswv Yim"
+
+#: main/templates/main/pages/about.html:145
+#: main/templates/main/pages/about.html:152
+msgid "Outreach Coordinator"
+msgstr "Tus Lis Hauj Lwm Saib Xyuas Kev Tshaj Tawm"
+
+#: main/templates/main/pages/about.html:146
+#: main/templates/main/pages/about.html:147
+#: main/templates/main/pages/about.html:151
+msgid "Software Engineer"
+msgstr "Tus Kws Tsim Lub Software"
+
+#: main/templates/main/pages/about.html:148
+#: main/templates/main/pages/about.html:149
+msgid "Data Engineer"
+msgstr "Tus Kws Tsim Cov Ntaub Ntawv Data"
+
+#: main/templates/main/pages/about.html:150
+msgid "Media and Communications Coordinator"
+msgstr "Tus Kws Cev Lus Fab Sam Thiaj Xov Xwm thiab Cov Kev Sib Txuas Lus"
+
+#: main/templates/main/pages/about.html:154
+msgid "Our Founding Team"
+msgstr "Peb Pab Pawg Tsim"
+
+#: main/templates/main/pages/about.html:157
+msgid ""
+"Representable began in February 2019 as a final project for the Princeton "
+"course COS333: Advanced Programming Techniques."
+msgstr ""
+"Lub vev xaib Representable pib nyob rau Lub Ob Hlis Ntuj xyoo 2019 raws li "
+"yog tes dej num zeeg kawg rau Princeton fab ncauj kev kawm COS333: Cov Tev "
+"Niv Kev Sau Program Qib Siab."
+
+#: main/templates/main/pages/about.html:158
+#: main/templates/main/pages/about.html:161
+msgid "Engineering, Full-Stack"
+msgstr "Kev Tsim Qauv, Txhua-Fab"
+
+#: main/templates/main/pages/about.html:159
+msgid "Engineering, Mapping"
+msgstr "Kev Tsim Qauv, Txoj Kev Teev Daim Phiaj Qhia Chaw"
+
+#: main/templates/main/pages/about.html:160
+msgid "Outreach, Content"
+msgstr "Kev Ntuav Tawm, Lub Ntsiab Lus"
+
+#: main/templates/main/pages/about.html:162
+msgid "Engineering, Product"
+msgstr "Kev Tsim Qauv, Khoom Tsim Tawm"
+
+#: main/templates/main/pages/blog.html:4
+msgid "Representable Blog"
+msgstr "Chav Sib Tham ntawm Lub Vev Xaib Representable"
+
+#: main/templates/main/pages/blog.html:10
+msgid "Communities of Interest. Stories of Representation."
+msgstr ""
+"Cov Zej Zos Kev Uas Muaj Kev Txaus Siab.Cov Zaj Keeb Kwm ntawm Kev Sawv Cev "
+"Tam."
+
+#: main/templates/main/pages/faq.html:11
+msgid "Check out our most frequently asked questions below."
+msgstr "Tshawb xyuas peb cov lus nug uas kheev nug hauv qab no."
+
+#: main/templates/main/pages/faq.html:13
+msgid "For Community Members"
+msgstr "Rau Cov Tswv Cuab Hauv Zej Zos"
+
+#: main/templates/main/pages/faq.html:26
+msgid "For Organizations"
+msgstr "Rau Cov Koom Haum"
+
+#: main/templates/main/pages/faq.html:39
+msgid "Have more questions? Email us at "
+msgstr "Koj puas muaj lus nug dab tsi ntxiv? Xa email rau peb tau ntawm "
+
+#: main/templates/main/pages/glossary.html:10
+#: representable/templates/base.html:114
+msgid "Redistricting Glossary"
+msgstr "Lub Ntsiab Lus Tshab Txhais Txoj Kev Rov Faib Cais Koog Cheeb Tshiab"
+
+#: main/templates/main/pages/glossary.html:29
+msgid "More Information"
+msgstr "Cov Ntaub Ntawv Qhia Ntxiv"
+
+#: main/templates/main/pages/privacy.html:5
+#: representable/templates/base.html:288
+msgid "Privacy"
+msgstr "Kev Ntiag Tug"
+
+#: main/templates/main/pages/privacy.html:7
+msgid ""
+"<p>Your privacy is our highest priority. We gather your identifying "
+"information to verify that you are a real person. We will not publicly share"
+" anyone's individual personal information, such as name, address, or "
+"email.</p> <p>If you choose to submit an entry to an organization, the "
+"organization will receive your identifying information in order to verify "
+"that you are a real person. This aspect will be communicated to you before "
+"you save an entry.</p> <p>We rely on third-party services (Mixpanel and "
+"Google Analytics) to better understand our users' anonymous behavior on the "
+"website. This allows us to understand how we can improve Representable.org "
+"by finding any hidden friction points. We don't share any personal "
+"information with these services.</a> <p>Our implementation of third-party "
+"tracking services respects your browser's <a "
+"href=\"https://allaboutdnt.com/\">Do Not Track</a> settings. We also give "
+"users the option to opt in or opt out of tracking at any point. Users can "
+"update their preferences on their account dashboard page (if logged in). By "
+"default, we enable Google Analytics to count website visitors (which only "
+"uses first-party cookies), but this behavior is disabled by opting out. "
+"Mixpanel is only enabled by opting in.</p> <p>It is Representable's policy "
+"to respect your privacy regarding any information we may collect from you "
+"across our website, <a "
+"href=\"http://representable.org\">representable.org</a>, and other sites we "
+"own and operate.</p> <p>We only ask for personal information when we truly "
+"need it to provide a service to you. We collect it by fair and lawful means,"
+" with your knowledge and consent. We also let you know why we’re collecting "
+"it and how it will be used.</p> <p>The information we collect from our users"
+" may be used for research by our team or by our partners at Princeton "
+"University.  Such information will be retained in an anonymous form and in "
+"accordance with this policy's other provisions.  If you do not wish for your"
+" information to be used in research, please contact us.</p> <p>We only "
+"retain collected information for as long as necessary to provide you with "
+"your requested service and, in an anonymized, aggregated form, for research "
+"purposes. What data we store, we’ll protect within commercially acceptable "
+"means to prevent loss and theft, as well as unauthorized access, disclosure,"
+" copying, use or modification.</p> <p>We don’t share any personally "
+"identifying information publicly or with third-parties, except when explicit"
+" permission is given during a \"community\" submission or when required to "
+"by law.</p> <p>Our website may link to external sites that are not operated "
+"by us. Please be aware that we have no control over the content and "
+"practices of these sites, and cannot accept responsibility or liability for "
+"their respective privacy policies. </p> <p>You are free to refuse our "
+"request for your personal information, with the understanding that we may be"
+" unable to provide you with some of your desired services.</p> <p>Your "
+"continued use of our website will be regarded as acceptance of our practices"
+" around privacy and personal information. If you have any questions about "
+"how we handle user data and personal information, feel free to contact "
+"us.</p> <p>This policy is effective as of July 14, 2020.</p>"
+msgstr ""
+"<p>Koj li kev ntiag tug yog peb qhov tseem ceeb tshaj plaws.Peb suav sau koj"
+" cov ntaub ntawv teev kev txheeb xyuas kom paub tseeb tias koj yog tus neeg "
+"tiag-tiag.Peb yuav tsis tshaj tawm leej twg tus kheej cov ntaub ntawv ntiag "
+"tug, xws li npe, chaw nyob, los sis email.</p> <p>Yog koj xaiv los xa lub "
+"chaw lees kev nkag rau lub koom haum, lub koom haum yuav tau txais koj cov "
+"kev qhia paub txog tus kheej raws txheej txheem los lees xyuas kom paub "
+"tseeb tias koj yog ib tug neeg muaj nyob tseeb tiag.Qhov uas neeg saib pom "
+"no yuav raug muab los sib txuas lus nrog koj ua ntej koj yuav khaws koj lub "
+"chaw lees nkag rau ntawd cia.</p><p>Peb cia siab rau cov kev pab cuam feem "
+"thib peb (Mixpanel thiab Google Analytics) los ua kom nkag siab zoo dua qub "
+"rau peb cov neeg siv tus cwj pwm yam tsis qhia npe hauv peb lub vev "
+"xaib.Qhov no yuav cia rau peb los nkag siab txog txoj hauv kev uas peb tuaj "
+"yeem los txhim kho Representable.org raws kev nrhiav txhua cov kev khuam uas"
+" raug zais cia.Peb yuav tsis qhia qho kev qhia paub txog tus kheej twg nrog "
+"rau hauv cov kev pab cuam no li.</a><p>Peb li kev nqis tes siv cov kev pab "
+"cuam soj xyuas raws feem thib peb yuav hwm rau koj cov kev teeb tsim ntawm "
+"koj lub browser tias <a href=\"https://allaboutdnt.com/\">Tsis Txhob Soj "
+"Xyuas</a>.Peb kuj tseem muab txoj kev xaiv rau cov neeg siv los xaiv qhib "
+"siv los sis xaiv tua tawm ntawm txoj kev soj xyuas nyob rau txhua ntu.Cov "
+"neeg siv tuaj yeem hloov pauv tshiab txog lawv cov kev nyiam hauv lawv phab "
+"dashboard ntawm tus as khauj tau (yog tau nkag mus siv lawm).Raws kev hloov "
+"kom rov zoo li qub, peb qhib rau Google Analytics los suav cov neeg qhua uas"
+" tuaj saib lub vev xaib (yam uas tsuas yog siv cov cookies ntawm feem thib "
+"peb), tab sis tus cwj pwm no tuaj yeem muab tshem tawm tau raws li kev xaiv "
+"tua tawm.Mixpanel tsuas tuaj yeem siv tau raws kev xaiv qhib siv.</p> <p>Nws"
+" yog lub vev xaib Representable tsab cai los hwm koj li kev ntiag tug raws "
+"li txhua cov ntaub ntawv uas peb yuav tuaj yeem khaws los ntawm koj nyob rau"
+" hauv peb lub vev xaib, <a "
+"href=\"http://representable.org\">representable.org</a>, thiab lwm cov vev "
+"xaib uas yog peb li thiab peb tswj hwm.</p><p>Peb tsuas yog thov cov kev "
+"qhia paub txog tus kheej nyob rau thaum peb xav tau qhov tseeb ntawm nws los"
+" muab qhov kev pab cuam rau koj nkaus xwb.Peb khaws cov ntaub ntawv no yam "
+"ncaj ncees thiab raws cov ntsiab lus ntawm txoj cai lij choj, nrog rau koj "
+"li kev paub tau thiab kev pom zoo.Peb kuaj tseem yuav qhia rau koj paub tias"
+" vim li cas peb ho yuav khaws cov ntaub ntawv no thiab cov ntaub ntawv no "
+"yuav raug siv mus li cas.</p><p>Cov ntaub ntawv uas peb khaws los ntawm peb "
+"cov neeg siv tej zaum yuav raug siv mus rau txoj kev tshawb fawb los ntawm "
+"peb li pab pawg los sis los ntawm peb cov khub lag luam ntawm Lub Tuam Tsev "
+"Kawm Qib Siab Princeton.  Cov ntaub ntawv ntawd yuav raug khaws cia nyob rau"
+" hom uas tsis muaj kev qhia npe thiab yam ua raws li tsab cai no lwm nqe lus"
+" muaj cai.  Yog koj tsis xav kom koj cov ntaub ntawv qhia paub raug siv rau "
+"hauv kev tshawb fawb, thov tiv tauj rau peb.</p><p>Peb tsuas khaws koj cov "
+"ntaub ntawv cia tseg ntawd ntev mus txog rau thaum muab tau koj cov kev pab "
+"cuam uas tau thov rau koj yam tsim nyog lawm thiab, nyob rau hauv hom ntawv "
+"uas tsis qhia npe, nrog rau muab tso koom ua ib ke, uas siv mus rau cov hom "
+"phiaj kev tshawb fawb.Yam ntaub ntawv data uas peb khaws, peb yuas tiv thaiv"
+" yam nyob rau cov hauv kev uas lees txais tau ntawm fab kev lag luam los tiv"
+" thaiv tsis pub ploj thiab tsis pub raug nyiag, nrog rau tsis tso cai rau "
+"nkag cuag tau rau, nthuav tawm, luam theej qauv, siv los sis muab hloov "
+"kho.</p><p>Peb yuav tsis qhia cov ntaub ntawv no tawm yam muaj ntaub ntawv "
+"qhia paub tus kheej ntawm ib tug neeg twg rau fab zej tsoom sawv daws los "
+"sis rau cov feem thib peb, tshwj tsis yog thaum tsi ntaws kom muab kev tso "
+"cai nkag rau thaum txoj kev zwm txog ntawm \"lub zej zos\" los sis thaum "
+"tseev kom ua los ntawm txoj cai lij choj.</p><p>Peb lub vev xaib yuav txuas "
+"tau rau cov vev xais sab nraud uas tsis raug tswj hwm los ntawm peb.Thov "
+"ceev faj tias peb yuav tsis tswj hwm tau rau cov ntsiab lus thiab cov kev "
+"lis ntawm cov vev xaib no, thiab tsis tuaj yeem lees txais txoj kev thaj "
+"tsob los sis kev lees saib xyuas cov ntawd cov cai kev ntiag tug uas cuam "
+"tshuam nrog.</p> <p>Koj muaj kev ywj pheej los xyeej tsis lees peb txoj kev "
+"thov rau koj cov kev qhia paub txog tus kheej, nrog rau txoj kev nkag siab "
+"zoo tias peb yuav tsis tuaj yeem los muab qee cov kev pab cuam uas xav tau "
+"rau koj.</p><p>Koj txoj kev pheej siv peb lub vev xaib mus txuas ntxiv ntawd"
+" yuav raug xam tias yog lees txais peb cov kev lis rau txoj kev ntiag tug "
+"thiab cov kev qhia paub txog tus kheej.Yog hais tias koj muaj lus nug dab "
+"tsi txog txoj hauv uas peb tuav tswj tus neeg siv thiab cov kev qhia paub "
+"txog tus kheej, ua siab dawb paug los tiv tauj rau peb.</p><p>Tsab cai no "
+"yuav pib siv tau nyob rau thaum Lub Plaub Hlis Ntuj 14, 2020.</p>"
+
+#: main/templates/main/pages/resources.html:10
+#: representable/templates/base.html:115
+msgid "Resources"
+msgstr "Cov Chaw Muab Kev Pab Cuam"
+
+#: main/templates/main/pages/resources.html:17
+msgid "Educational Video"
+msgstr "Cov Vis Dis Aus Muab Kev Qhia"
+
+#: main/templates/main/pages/resources.html:23
+msgid ""
+"This video is a text-based educational tool meant to inform users about the "
+"redistricting process, dangers of gerrymandering, and the effectiveness of "
+"Communities of Interest which can be mapped easily on Representable.org."
+msgstr ""
+"Daim vis dis aus no yog ib qho cuab yeej fab kev qhia raws li-tsab lus uas "
+"muaj los ceeb toom rau cov neeg siv txog tus txheej ntawm txoj kev rov faib "
+"cais koog cheeb tshiab, cov kev phom sij ntawm txoj kev faib koog cheeb tsam"
+" kev xaiv tsa yam tsis ncaj ncees, thiab qhov kev ua hauj lwm tau zoo ntawm "
+"Cov Zej Zos Kev Uas Muaj Kev Txaus Siab uas tuaj yeem raug teev daim phiaj "
+"qhia chaw yam yooj yim rau hauv Representable.org."
+
+#: main/templates/main/pages/resources.html:32
+msgid "Demo Videos"
+msgstr "Cov Vis Dis Aus Qhia Laj Txheej"
+
+#: main/templates/main/pages/resources.html:38
+msgid ""
+"These video walkthroughs are key to navigating Representable from both the "
+"perspective of a user and an organization, complete with tips for easily "
+"mapping your community and collecting communities of interest."
+msgstr ""
+"Cov kev qhia laj txheej raws daim vis dis aus no yog tus yawm sij los tsav "
+"xyuas txog lub vev xaib Representable los ntawm cov kev xam pom ntawm tus "
+"neeg siv thiab lub koom haum tib si, cov kev lis tiav log nrog cov tswv yim "
+"pab rau txoj kev teev daim phiaj qhia chaw yam yooj yim txog koj lub zej zos"
+" thiab txoj kev khaws lub zej zos uas muaj kev txaus siab."
+
+#: main/templates/main/pages/resources.html:47
+msgid "One Pager"
+msgstr "Daim Ntawv Sau Koom Ntsiab Lus Ua Tib Phab"
+
+#: main/templates/main/pages/resources.html:53
+msgid ""
+"This infographic provides a short overview of redistricting, gerrymandering,"
+" and how Representable can be used to address this issue using communities "
+"of interest."
+msgstr ""
+"Daim duab teev ua lus qhia no yuav muab ib qhov kev tshab qhia ntsiab luv "
+"ntawm txoj kev rov faib cais koog cheeb tshiab, cov kev faib koog cheeb tsam"
+" kev xaiv tsa yam tsis ncaj ncees, thiab txoj hauv kev uas lub vev xaib "
+"Representable tuaj yeem raug siv los qhia qhov teeb meem yam siv cov zej zos"
+" kev uas muaj kev txaus siab."
+
+#: main/templates/main/pages/resources.html:55
+msgid "VIEW & DOWNLOAD"
+msgstr "KEV SAIB & KEV RUB TAWM"
+
+#: main/templates/main/pages/resources.html:65
+msgid "Organization Guide"
+msgstr "Phau Ntawv Qhia"
+
+#: main/templates/main/pages/resources.html:71
+msgid ""
+"This guide is the primary reference point for organizations to find "
+"information about the tool, community mapping drives, our educational "
+"materials, FAQs, and more!"
+msgstr ""
+"Phau ntawv qhia no yog thawj ntu ntaub ntawv thim khawv ntsig txog rau cov "
+"koom haum txhawm rau nrhiav cov ntaub ntawv qhia paub txog qhov cuab yeej, "
+"cov chaw khaws txoj kev teev daim phiaj qhia chaw ntawm lub zej zos, peb cov"
+" khoom siv pab fab kev qhia, cov lus nug uas nquag nug (frequently asked "
+"questions, FAQs), thiab ntau yam ntxiv!"
+
+#: main/templates/main/pages/resources.html:73
+msgid "READ MORE"
+msgstr "NYEEM NTAU NTXIV"
+
+#: main/templates/main/pages/resources.html:83
+msgid "Community Mapping Event Powerpoint"
+msgstr ""
+"Daim Ntawv Powerpoint Hais Txog Zeeg Xwm Txheej Txoj Kev Teev Daim Phiaj "
+"Qhia Chaw ntawm Lub Zej Zos"
+
+#: main/templates/main/pages/resources.html:89
+msgid ""
+"This powerpoint can be used to run online mapping events with your "
+"community. Guide people through the process of identifying their community’s"
+" needs and mapping their COI."
+msgstr ""
+"Daim ntawv powerpoint no tuaj yeem siv los khiav hauj lwm ntawm cov xwm "
+"txheej txoj kev teev daim phiaj qhia chaw hauv online nrog koj lub zej "
+"zos.Coj kev rau cov neeg mus lis qhov txheej txheem ntawm kev taw qhia lawv "
+"lub zeg zog cov kev xav tau thiab txoj kev teev daim phiaj qhia chaw rau "
+"lawv cov COI."
+
+#: main/templates/main/pages/resources.html:91
+msgid "DOWNLOAD"
+msgstr "NRUB TAWM"
+
+#: main/templates/main/pages/resources.html:101
+msgid "Additional Resources"
+msgstr "Cov Chaw Muab Kev Pab Cuam Ntau Ntxiv"
+
+#: main/templates/main/pages/resources.html:102
+msgid "Princeton Gerrymandering Project"
+msgstr ""
+"Tes Dej Num Saib Xyuas Txoj Kev Faib Koog Cheeb Tsam Xaiv Tsa Yam Tsis Ncaj "
+"Ncees Princeton (Princeton Gerrymandering Project)"
+
+#: main/templates/main/pages/resources.html:103
+msgid ""
+"Through nonpartisan analysis, the Princeton Gerrymandering Project bridges "
+"the gap between mathematics and the law to achieve fair representation "
+"through redistricting reform."
+msgstr ""
+"Raws txoj kev tshuaj ntsuam xyuas yam tsis cais pab pawg, Tes Dej Num Saib "
+"Xyuas Txoj Kev Faib Koog Cheeb Tsam Xaiv Tsa Yam Tsis Ncaj Ncees Princeton "
+"(Princeton Gerrymandering Project) ua choj txuas rau fab kev xam zauv lej "
+"thiab fab txoj kev cai lij choj kom tau txais qhov kev sawv cev tam yam ncaj"
+" ncees raws txoj kev rov kho txoj kev rov faib cais koog cheeb tshiab."
+
+#: main/templates/main/pages/resources.html:105
+msgid "GeoCivics Redistricting Materials"
+msgstr "Cov Khoom Siv Pab Txoj Kev Rov Faib Cais Koog Cheeb Tshiab GeoCivics"
+
+#: main/templates/main/pages/resources.html:106
+msgid ""
+"GeoCivics provides a suite of state-based resources to develop skills and "
+"knowledge for discussing the apportionment and redistricting process in the "
+"United States. These resources prepare and support students, teachers, and "
+"community members with interactive tools and geospatial data, leading to "
+"engagement in conversation about the construction of electoral districts."
+msgstr ""
+"GeoCivics muab ib xuv chaw muab kev pab cuam raws lub xeev los txhim kho cov"
+" kev txawj thiab cov kev paub rau txoj kev sib tham txog qhov kev faib kom "
+"sib txig sib luag thiab tus txheej txheem ntawm txoj kev rov faib cais koog "
+"cheeb tshiab hauv Teb Chaws Mes Kas.Cov chaw muab kev pab cuam no npaj thiab"
+" txhawb nqa cov tub ntxhais kawm, cov xib fwb qhia ntawv, thiab cov tswv "
+"cuab hauv lub zej zos nrog rau cov cuab yeej uas muaj feem sib cuam tshuam "
+"thiab cov ntaub ntawv khaws kev teev chaw, txoj kev coj los koom rau txoj "
+"kev sib tham txog qhov kev tsim ntawm cov koog cheeb tsam rau kev xaiv nom."
+
+#: main/templates/main/pages/terms.html:5
+#: representable/templates/base.html:291
+msgid "Terms"
+msgstr "Cov Lus Qhia"
+
+#: main/templates/main/pages/terms.html:7
+msgid "1. Terms"
+msgstr "1. Cov Lus Qhia"
+
+#: main/templates/main/pages/terms.html:8
+msgid ""
+"By accessing the website at <a "
+"href=\"https://representable.org\">http://representable.org</a>, you are "
+"agreeing to be bound by these terms of service, all applicable laws and "
+"regulations, and agree that you are responsible for compliance with any "
+"applicable local laws. If you do not agree with any of these terms, you are "
+"prohibited from using or accessing this site. The materials contained in "
+"this website are protected by applicable copyright and trademark law."
+msgstr ""
+"Raws txoj kev nkag rau lub vev xaib ntawm <a "
+"href=\"https://representable.org\">http://representable.org</a>, koj tab tom"
+" pom zoo los lees paub rau cov ntsiab lus ntawm qhov kev pab cuam no, txhua "
+"cov cai lij choj thiab cov cai tswj hwm uas siv tau rau, thiab pom zoo tias "
+"koj muaj kev thaj tsob rau kev ua raws txoj cai nrog cov cai lij choj uas "
+"siv tau rau.Yog koj tsis pom zoo rau txhua ntawm cov ntsiab lus no, koj yuav"
+" raug txwv tsis siv los sis nkag tau rau hauv lub vev xaib no.Cov khoom siv "
+"pab uas muaj nyob hauv lub vev xaib no uas raug tiv thaiv raws tsab cai lij "
+"choj hais txog cai ceev kev ua tswv thiab lub cim kev lag laum."
+
+#: main/templates/main/pages/terms.html:10
+msgid "2. Use License"
+msgstr "2.Daim Ntawv Tso Cai Kev Siv"
+
+#: main/templates/main/pages/terms.html:12
+msgid ""
+"<li>Permission is granted to temporarily download one copy of the materials "
+"(information or software) on Representable's website for personal, non-"
+"commercial transitory viewing only. This is the grant of a license, not a "
+"transfer of title, and under this license you may not: <ol type=\"i\"> "
+"<li>modify or copy the materials;</li> <li>use the materials for any "
+"commercial purpose, or for any public display (commercial or non-"
+"commercial);</li> <li>attempt to decompile or reverse engineer any software "
+"contained on Representable's website;</li> <li>remove any copyright or other"
+" proprietary notations from the materials; or</li> <li>transfer the "
+"materials to another person or \"mirror\" the materials on any other "
+"server.</li> </ol> </li>"
+msgstr ""
+"<li>Yuav tsum thov kev tso cai los rub tawm ib qho kev theej qauv ntawm cov "
+"khoom siv pab yam siv ib ntus (cov ntaub ntawv los sis software) hauv "
+"Representable lub vev xaib rau txoj kev saib ntawm tus kheej, thiab saib ib "
+"ntus yam tsis ntsig txog fab kev lag luam nkaus xwb.Qhov no yog txoj kev "
+"thov qhov kev tso cai, tsis yog qhov kev xa lub ncauj lug, thiab nyob rau "
+"hauv qhov kev tso cai no koj tsis tuaj yeem yuav: <ol type=\"i\"> <li>Hloov "
+"kho los sis theej qauv ntawm cov khoom siv pab no;</li> <li>siv cov khoom "
+"siv pab no rau txhua lub hom phiaj kev lag luam, los sis rau zej tsoom sawv "
+"daws pom (yam ua lag luam los sis tsis yog ua lag luam);</li> <li>pheej sim "
+"muab cais pawg los sis rov tig tsim qhov kev tsim qauv ntawm txhua lub "
+"software uas muaj nyob hauv lub vev xaib ntawm Representable;</li> <li>tshem"
+" txhuas cov cai ceev kev ua tswv los sis lwm cov lub cim uas taw qhia kev "
+"yog tswv; los sis</li> <li>muab cov khoom siv pab ntawd xa mus rau lwm lub "
+"xawj vawj (sever).</li> </ol> </li>"
+
+#: main/templates/main/pages/terms.html:25
+msgid ""
+"This license shall automatically terminate if you violate any of these "
+"restrictions and may be terminated by Representable at any time. Upon "
+"terminating your viewing of these materials or upon the termination of this "
+"license, you must destroy any downloaded materials in your possession "
+"whether in electronic or printed format."
+msgstr ""
+"Txoj kev tso cai no yuav txiav kev siv tam sid yog tias koj yuam cai rau ib "
+"txoj twg ntawm cov kev txwv no thiab tuaj yeem raug txiav kev siv los ntawm "
+"lub vev xaib Representable tau txhuas lub sij hawm.Raws li txoj kev txiav "
+"kev siv ntawm koj txoj kev saib cov khoom siv pab los sis raws txoj kev "
+"txiav kev siv ntawm qhov kev tso cai no, peb yuav tsum tau rhuav tshem txhua"
+" cov khoom siv pab uas tau rub hauv koj li ntiag tug tsis hais yuav ua ntawv"
+" hluav taws xob los sis ntawv luam tawv."
+
+#: main/templates/main/pages/terms.html:31
+msgid "3. Disclaimer"
+msgstr "3.Daim Ntawv Tsis Lees Paub"
+
+#: main/templates/main/pages/terms.html:34
+msgid ""
+"The materials on Representable's website are provided on an 'as is' basis. "
+"Representable makes no warranties, expressed or implied, and hereby "
+"disclaims and negates all other warranties including, without limitation, "
+"implied warranties or conditions of merchantability, fitness for a "
+"particular purpose, or non-infringement of intellectual property or other "
+"violation of rights."
+msgstr ""
+"Cov khoom siv pab hauv Representable lub vev xaib raug muab los rau kis "
+"'raws li qhov yog'.Lub vev xaib Representable yuav tsis muaj cov kev lav, "
+"yam pom tau tsheeb los sis yam piav qhia meej tseeb, thiab raws li qhov "
+"ntawd cov kev tsis kam lees txais thiab cov kev xyeej txhuas lwm cov kev lav"
+" ntawd muaj xws li, yam tsis muaj ncua ciam rau, kev lav yam pom tau tseeb "
+"los sis cov zwj ceeb ntawm lub peev xwm kev lag luam, qhov haum rau qee lub "
+"hauv phiaj, los sis kev tsis nyiag peev txheej fab kev txawj ntse los sis "
+"lwm cov kev yuam txoj cai."
+
+#: main/templates/main/pages/terms.html:40
+msgid ""
+"Further, Representable does not warrant or make any representations "
+"concerning the accuracy, likely results, or reliability of the use of the "
+"materials on its website or otherwise relating to such materials or on any "
+"sites linked to this site."
+msgstr ""
+"Ntxiv ntawd, lub vev xaib Representable yuav tsis lav los sis tsis muab cov "
+"kev lees paub twg raws li qhov tias yog lawm, zoo ntxim li ua rau, los sis "
+"lees ris saib xyuas rau txoj kev siv ntawm cov khoom siv pab hauv nws lub "
+"vev xaib los sis tsis hais yuav yog lwm yam uas cuam tshuam rau cov khoom "
+"siv pab ntawd los sis hauv txhua lwm cov vev xaib uas txuas rau lub vev xaib"
+" no."
+
+#: main/templates/main/pages/terms.html:46
+msgid "4. Limitations"
+msgstr "4.Cov Ncua Ciaj Ciam"
+
+#: main/templates/main/pages/terms.html:48
+msgid ""
+"In no event shall Representable or its suppliers be liable for any damages "
+"(including, without limitation, damages for loss of data or profit, or due "
+"to business interruption) arising out of the use or inability to use the "
+"materials on Representable's website, even if Representable or a "
+"Representable authorized representative has been notified orally or in "
+"writing of the possibility of such damage. Because some jurisdictions do not"
+" allow limitations on implied warranties, or limitations of liability for "
+"consequential or incidental damages, these limitations may not apply to you."
+msgstr ""
+"Tsis hais xwm txheej twg los xij lub vev xaib Representable los sis nws cov "
+"neeg muab khoom lag luam yuav tsis lees ris saib xyuas rau txhua cov kev "
+"puas tshuaj (xws li, yam tsis muaj ncw ciam rau, cov kev uas tshuaj los "
+"ntawm txoj kev poob tej ntaub ntawv data los sis nyiaj tshaj thawj, los sis "
+"vim yog kev cuam tshuam ntawm kev lag luam) tshwm sim los ntawm txoj kev siv"
+" los sis kev tsis muaj peev xwm siv cov khoom siv pab ntawm Representable "
+"lub vev xaib, tab txhawm tias yog thaum Representable los sis Representable "
+"tus neeg sawv cev uas tau kev tso cai tau ceeb toom ncauj dawb ncauj lug los"
+" sis ceeb toom ua ntawv sau ntawm qhov kev tshwm sim tau ntawm qhov kev puas"
+" tsuaj ntawd lawm los xij.Vim hais tias qee cov ncua ciam kev muaj cai ntawm"
+" tsev hais plaub tsis tso cai rau muaj cov ncua ciaj ciam ntawm cov kev lav "
+"uas pom tau tseeb, los sis muaj cov ncua ciaj ciam ntawm kev lees ris los "
+"saib xyuas rau cov kev puas tsuaj uas tshwm sim yam muaj qhov tim los sis "
+"tshwm yam yam tsis paub txog, yog li cov ncua ciaj ciam no thiaj tsis tuaj "
+"yeem yuav siv tau rau koj."
+
+#: main/templates/main/pages/terms.html:54
+msgid "5. Accuracy of materials"
+msgstr "5.Kev Ua Raug ntawm Cov Koom Siv Pab"
+
+#: main/templates/main/pages/terms.html:56
+msgid ""
+"The materials appearing on Representable's website could include technical, "
+"typographical, or photographic errors. Representable does not warrant that "
+"any of the materials on its website are accurate, complete or current. "
+"Representable may make changes to the materials contained on its website at "
+"any time without notice. However Representable does not make any commitment "
+"to update the materials."
+msgstr ""
+"Cov khoom siv pab li kev pom muaj nyob rau ntawm lub vev xaib Representable "
+"lub vev xaib tuaj yeem muaj xam nrog rau cov kev yuam kev ntawm fab tev niv,"
+" fab kev ntau ntawv, los sis fab duab tso.Lub vev xaib Representable yuav "
+"tsis lav tias txhua ntawm cov khoom siv pab hauv nws lub vev xaib tias raug,"
+" muaj txhij txhua los sis yog qhov tshiab tam sim no.Lub vev xaib "
+"Representable tuaj yeem hloov cov kev siv pab uas muaj nyob rau hauv nws lub"
+" vev xaib nyob rau thaum twg los tau yam tsis tas ceeb toom qhia paub.Txawm "
+"li cas los xij lub vev xaib Representable yuav tsis tsim los cog tseg tias "
+"yuav los hloov pauv cov khoom siv pab ntawd."
+
+#: main/templates/main/pages/terms.html:61
+msgid "6. Links"
+msgstr "6.Cov Links Txuas"
+
+#: main/templates/main/pages/terms.html:62
+msgid ""
+"Representable has not reviewed all of the sites linked to its website and is"
+" not responsible for the contents of any such linked site. The inclusion of "
+"any link does not imply endorsement by Representable of the site. Use of any"
+" such linked website is at the user's own risk."
+msgstr ""
+"Lub vev xaib Representable tsis tau txheeb xyuas txhua cov vev xaib uas tau "
+"txuas nrog nws lub vev xaib thiab yuav tsis thaj tsob rau cov ntsiab lus "
+"ntawm ib lub vev xaib twg ntawd.Kev muab tso koom nrog ntawm ib tug link twg"
+" tsis tau txhais hais tias yuav muaj kev lees ris los ntawm Representable "
+"rau lub vev xaib ntawd.Kev siv ib lub vev xaib twg uas tau muab link tso "
+"nrog ntawd nws yog qhov pheej hmo tus neeg siv tus kheej li xwb."
+
+#: main/templates/main/pages/terms.html:64
+msgid "7. Modifications"
+msgstr "7.Cov Kev Hloov Pauv"
+
+#: main/templates/main/pages/terms.html:65
+msgid ""
+"Representable may revise these terms of service for its website at any time "
+"without notice. By using this website you are agreeing to be bound by the "
+"then current version of these terms of service."
+msgstr ""
+"Lub vev xaib Representable tuaj yeem kho cov ntshiab lus ntawm txoj kev siv "
+"dua rau nws li vev xaib thaum twg los tau yam tsis tas ceeb toom qhia "
+"paub.Raws txoj kev siv lub vev xaib no koj tab tom pom zoo los lees paub rau"
+" ntawm cov ntsiab lus ntawm txoj kev siv uas yog hom tam sim no."
+
+#: main/templates/main/pages/terms.html:66
+msgid "8. Governing Law"
+msgstr "8.Kev Tuav Tswj Txoj Cai Lij Choj"
+
+#: main/templates/main/pages/terms.html:67
+msgid ""
+"These terms and conditions are governed by and construed in accordance with "
+"the laws of New Jersey and you irrevocably submit to the exclusive "
+"jurisdiction of the courts in that State or location."
+msgstr ""
+"Cov ntsiab lus thiab cov zwj ceeb no raug tuav tswj los ntawm thiab raug "
+"tshab txhais lub ntsiab raws li cov cai lij choj ntawm Xeev New Jersey thiab"
+" koj yuav lees txais yam thim tsis tau rau qhov ncua ciam kev muaj cai ntawm"
+" tsev hais plaub uas tsuas yog tshwj nkaus rau cov tshev hais plaub ntawm "
+"Lub Xeev los sis qhov chaw ntawd xwb."
+
+#: main/templates/main/partners/get_started.html:9
+msgid "Join the national Representable community."
+msgstr "Koom zej zoslub vev xaib Representable hauv teb chaws."
+
+#: main/templates/main/partners/get_started.html:11
+msgid ""
+"Representable is growing a redistricting community with organizations across"
+" the country. Organization leaders can easily collect community maps with "
+"Representable and join redistricting efforts in their states."
+msgstr ""
+"Lub vev xaib Representable yog tab tom nthuav txoj kev rov faib cais koog "
+"cheeb tshiab ntawm lub zej zos nrog cov koom haum hauv mus thoob plaws lub "
+"teb chaws.Cov coj ntawm lub koom haum tuaj yeem los khaws cov phiaj qhia "
+"chaw ntawm lub zej zos tau yam yooj yim yam siv lub vev xaib Representable "
+"thiab koom rau cov kev txhawb nqa txoj kev rov faib cais koog cheeb tshiab "
+"hauv lawv cov xeev."
+
+#: main/templates/main/partners/get_started.html:15
+msgid "How to use Representable as an organization?"
+msgstr ""
+"Yuav siv lub vev xaib Representable los tawm li yog ib lub koom haum tau li "
+"cas?"
+
+#: main/templates/main/partners/get_started.html:17
+msgid "Check out our demo to see all of Representable’s features."
+msgstr ""
+"Txheeb xyuas peb cov vis dis aus qhia laj txheej txhawm rau saib txhua cov "
+"xim xoos siv (features) ntawm Representable."
+
+#: main/templates/main/partners/get_started.html:31
+msgid "Join Representable as an Organization"
+msgstr ""
+"Kev Koom Rau hauv Lub Vev Xaib Representable Tawm lLi yog ib Lub Koom Haum"
+
+#: main/templates/main/partners/get_started.html:33
+msgid ""
+"As the leader of an organization, you can collect community maps and "
+"download submissions. Joining Representable as an organization is free, and "
+"includes access to our redistricting toolkit."
+msgstr ""
+"Raws li tus coj ntawm koj lub koom haum, koj tuaj yeem khaws cov phiaj qhia "
+"chaw hauv lub zej zos thiab rub tawm cov kev xa.Txoj kev koom lub vev xaib "
+"Representable raws li yog ib lub koom haum ntawd yog dawb xwb, thiab kuj "
+"tseem nkag cuag tau rau peb cov cuab yeej rau txoj kev rov faib cais koog "
+"cheeb tshiab tib sis."
+
+#: main/templates/main/partners/get_started.html:38
+#: main/templates/main/partners/get_started.html:39
+msgid "CREATE ORGANIZATION"
+msgstr "TSIM KOOM HAUM"
+
+#: main/templates/main/partners/get_started.html:51
+msgid "Create an Organization"
+msgstr "Tsim lub Koom Haum"
+
+#: main/templates/main/partners/get_started.html:52
+msgid "Include a brief description, link, and the state(s) you operate in."
+msgstr ""
+"Nrog rau qhov kev piav qhia luv, tus link txuas, thiab lub (cov) xeev uas "
+"koj tswj hwm nws."
+
+#: main/templates/main/partners/get_started.html:60
+msgid "Start a Community Mapping Drive"
+msgstr ""
+"Pib lub Chaw Khaws Txoj Kev Teev Daim Phiaj Qhia Chaw Ntawm Lub Zej Zos"
+
+#: main/templates/main/partners/get_started.html:61
+msgid "Create a community mapping drive via the organization dashboard."
+msgstr ""
+"Tsim lub chaw khaws txoj kev teev daim phiaj qhia chaw ntawm lub zej zos "
+"raws phab dashboard ntawm lub koom haum."
+
+#: main/templates/main/partners/get_started.html:69
+msgid "Collect Community Maps"
+msgstr "Khaws Cov Phiaj Qhia Chaw ntawm Lub Zej Zos"
+
+#: main/templates/main/partners/get_started.html:70
+msgid ""
+"Share the link to your community mapping drive to individuals in your state "
+"to start collecting submissions."
+msgstr ""
+"Qhia tus link txhuas rau lub chaw khaws txoj kev teev daim phiaj qhia chaw "
+"ntawm lub zej zos txhawm mus rau cov neeg hauv koj lub xeev txhawm rau los "
+"pib khaws cov kev xa no."
+
+#: main/templates/main/partners/get_started.html:78
+msgid "Visualize and Export Community Maps"
+msgstr "Ua Kom Pom thiab Xa Tawm Cov Phiaj Qhia Chaw ntawm Lub Zej Zos"
+
+#: main/templates/main/partners/get_started.html:79
+msgid ""
+"View a map of all submitted communities, and download them to your "
+"organization as geoJSON for easy integration with district drawing and "
+"visualization tools."
+msgstr ""
+"Saib daim phiaj qhia chaw ntawm txhua cov zej zos uas xa tuaj, thiab rub cov"
+" phiaj ntawd los rau koj lub koom haum raws li yog geoJSON txhawm rau sau ua"
+" kev kom yooj yim nrog rau txoj kev kos koog cheeb tsam thiab cov cuab yeej "
+"ua kom pom."
+
+#: main/templates/main/partners/index.html:9
+#: representable/templates/base.html:105
+msgid "Partners"
+msgstr "Cov Khub Koom Tes"
+
+#: main/templates/main/partners/index.html:10
+msgid ""
+"Find out more about the organizations using Representable.org to gather "
+"community data. Want to become a partner? Learn more "
+msgstr ""
+"Nrhiav ntau ntxiv txog cov koom haum yam siv Representable.org los sau cov "
+"ntaub ntawv ntawm lub zej zos ua ke.Puas xav ua tus khub koom tes? Kawm paub"
+" ntxiv "
+
+#: main/templates/main/partners/index.html:10
+msgid "here"
+msgstr "nov"
+
+#: main/templates/main/partners/index.html:33
+msgid "More Details"
+msgstr "Cov Lus Qhia Ntau Ntxiv"
+
+#: main/templates/main/partners/index.html:35
+msgid "Partner Site"
+msgstr "Lub Vev Xaib Khub Koom Tes"
+
+#: main/templates/main/partners/map.html:56
+#: main/templates/main/partners/map.html:59
+msgid "Export All as GeoJSON"
+msgstr "Xa Txhua Yam Mus ua GeoJSON"
+
+#: main/templates/main/partners/map.html:57
+#: main/templates/main/partners/map.html:60
+msgid "Export All as CSV"
+msgstr "Xa Txhua Yam Mus ua CSV"
+
+#: main/templates/main/partners/map.html:110
+msgid "Hidden"
+msgstr "Zais Cai"
+
+#: main/templates/main/partners/map.html:114
+msgid "Private"
+msgstr "Ntiag Tug"
+
+#: main/templates/main/partners/map.html:194
+msgid "Report this community"
+msgstr "Tshaj qhia lub zej zos no"
+
+#: main/templates/main/partners/map.html:201
+msgid ""
+"If you feel this community is abusive, spam, low-effort, or doesn't live up "
+"to our guidelines, send us a report."
+msgstr ""
+"Yog koj hnov tau tias lub zej zos no tsis tsim nyog, xa tej yam tsis muaj "
+"nqi, txhawb pab tsawg, los sis tsis ua raws peb cov qauv, xa kev tshaj qhia "
+"rau peb."
+
+#: main/templates/main/partners/map.html:208
+msgid ""
+"As an administrator of this organization, reporting this community will "
+"automatically hide it from all non-administrators."
+msgstr ""
+"Raws li yog tus neeg tswj hwm ntawm lub koom haum no, txoj kev tshaj qhia "
+"lub zej zos no yuav raug zais nws cai los sis txhua cov neeg uas tsis yog "
+"neeg tswj hwm."
+
+#: main/templates/main/partners/map.html:217
+msgid "Email address"
+msgstr "Chaw Nyob Email"
+
+#: main/templates/main/partners/map.html:221
+msgid "Cancel"
+msgstr "Rho tawm"
+
+#: main/templates/main/partners/map.html:222
+msgid "Danger: </span>Send Report"
+msgstr "Kev Phom Sij: </span>Xa Kev Tshaj Qhia"
+
+#: main/templates/main/partners/map.html:234
+msgid "Thank you for letting us know!"
+msgstr "Ua tsaug uas cia rau peb los paub txog!"
+
+#: main/templates/main/partners/map.html:240
+msgid "Your report was successfully submitted. Thank you."
+msgstr "Koj txoj kev tshaj qhia yuav raug xa yam tiav log.Ua tsaug."
+
+#: main/templates/main/partners/page.html:22
+msgid "Return to Partners"
+msgstr "Rov Mus rau Cov Khub Koom Tes"
+
+#: main/templates/main/partners/page.html:23
+msgid "Link to organization map"
+msgstr "Txhuas rau daim phiaj qhia chaw ntawm lub koom haum"
+
+#: main/templates/main/partners/page.html:25
+msgid "Visit Partner Site"
+msgstr "Mus Saib Lub Vev Xaib Ntawm Tus Khub Koom Tes"
+
+#: main/templates/main/review.html:43
+msgid "The community was already deleted."
+msgstr "Lub zej zos ntawd twb raug tshem tawm lawm."
+
+#: main/templates/main/review.html:50
+msgid "Action"
+msgstr "Kev Nqis Tes"
+
+#: main/templates/main/review.html:51
+msgid "Show"
+msgstr "Tso Kom Pom"
+
+#: main/templates/main/review.html:101
+msgid "Delete"
+msgstr "Tshem Tawm"
+
+#: main/templates/main/review.html:112
+msgid "No entries!"
+msgstr "Tsis muaj cov chaw lees kev nkag rau!"
+
+#: main/templates/main/review.html:113
+msgid ""
+"Join us in the fight against gerrymandering. Click <a "
+"href=\"/entry_preview\">here</a> to add your community."
+msgstr ""
+"Koom nrog peb los tawm tsam txoj kev faibkoog cheeb tsam kev xaiv tsa yam "
+"tsis ncaj ncees.Nias rau <a href=\"/entry_preview\">nov</a> txhawm rau ntxiv"
+" koj lub zej zos."
+
+#: main/templates/main/state.html:16
+msgid "Welcome to"
+msgstr "Zoo siab txais tos"
+
+#: main/templates/main/state.html:23 main/templates/main/state.html:24
+msgid "START MAPPING"
+msgstr "PIB TXOJ KEV TEEV DAIM PHIAJ QHIA CHAW"
+
+#: main/templates/main/state_info.html:7
+msgid "What is redistricting?"
+msgstr "Qhov kev rov faib ciam dua no yog dab tsi?"
+
+#: main/templates/main/state_info.html:11
+msgid ""
+"In 2021, voting district lines across the country will be redrawn to "
+"determine who represents the people of your state."
+msgstr ""
+"Nyob rau xyoo 2021, qhov kev pov npav cov cheeb tsam thoob plaws hauv lub "
+"teb chaws yuav rov faib los txiav txim seb leej twg sawv cev ntawm cov neeg "
+"hauv koj lub xeev."
+
+#: main/templates/main/state_info.html:17
+msgid "How does redistricting work in "
+msgstr "Txoj kev rov faib ciam dua ua hauj lwm li cas nyob hauv"
+
+#: main/templates/main/state_info.html:31
+msgid ""
+"Representable will help you tell mapmakers about your community interests "
+"and boundaries, so that they can fairly consider it when they draw new "
+"voting district lines."
+msgstr ""
+"Representable yuav pab koj qhia cov kws tsim cov duab qhia chaw txog koj lub"
+" zej zog tej kev nyiam thiab cov thaj tsam ciaj ciam, kom lawv thiaj txiav "
+"txim tau ncaj ncees rau nws thaum lawv kos cov cheeb tsam kev xaiv tsa "
+"tshiab."
+
+#: main/templates/main/state_info.html:37
+msgid "redistricting criteria"
+msgstr "Txoj Qhov Tseem Ceeb Ntawm Kev Rov Faib Ciam Dua"
+
+#: main/templates/main/state_info.html:53
+msgid "See community maps drawn in"
+msgstr ""
+
+#: main/templates/main/state_info.html:67
+msgid "Communities of Interest in "
+msgstr "Cov Zej Zog Muaj Kev Txaus Siab nyob rau hauv"
+
+#: main/templates/main/submission.html:56
+msgid "Download this map"
+msgstr "Rub tawm daim duab qhia chaw no"
+
+#: main/templates/main/submission.html:58
+msgid "Map downloads include the community information below."
+msgstr ""
+"Kev duab tawm daim ntawv qhia chaw muaj cov lus qhia hauv zej zog hauv qab "
+"no."
+
+#: main/templates/main/submission.html:69
+msgid "What is GeoJSON?"
+msgstr "GeoJSON yog dab tsi?"
+
+#: main/templates/main/submission.html:75
+msgid ""
+"GeoJSON files are industry standard and usable with other mapping softwares "
+"like Maptitude for Redistricting, Dave's Redistricting App, ESRI, and more."
+msgstr ""
+"Cov ntawv GeoJSON yog lub tuam txhab tus qauv thiab kev siv tau nrog lwm lub"
+" software xws li Maptitude rau Txoj Kev Rov Faib Cais Koog Cheeb Tshiab, "
+"Dave Lub App Txoj Kev Rov Faib Cais Koog Cheeb Tshiab, ESRI, thiab ntau yam "
+"ntxiv."
+
+#: main/templates/main/submission.html:89
+#, fuzzy
+#| msgid "Select your state."
+msgid "Send your map to your state."
+msgstr ""
+
+#: main/templates/main/submission.html:90
+msgid ""
+"Congratulations, you have downloaded your map. Your state accepts "
+"communities of interest as public input. Visit the site below to submit your"
+" map."
+msgstr ""
+
+#: main/templates/main/submission.html:91
+#: main/templates/main/submission.html:203
+msgid "Go to public input portal"
+msgstr ""
+
+#: main/templates/main/submission.html:136
+msgid ""
+"Or <a href=\"#\" onclick=\"copyPageLink();event.preventDefault();\">copy the"
+" link</a> to this page to share."
+msgstr ""
+
+#: main/templates/main/submission.html:201
+#, fuzzy
+#| msgid "Select your state."
+msgid "Send to your state."
+msgstr ""
+
+#: main/templates/main/submission.html:202
+msgid ""
+"Your state accepts communities of interest as public input. Download your "
+"map and then visit this site."
+msgstr ""
+
+#: main/templates/main/submission.html:209
+#, fuzzy
+#| msgid "Link to organization map"
+msgid "Submit to an organization."
+msgstr ""
+
+#: main/templates/main/submission.html:211
+msgid ""
+"Many organizations in your state are collecting community maps. Submit yours"
+" to one of their collection drives."
+msgstr ""
+
+#: main/templates/main/submission.html:219
+msgid "Submit"
+msgstr "Xa"
+
+#: main/templates/main/submission.html:224
+msgid "This community map has already been submitted to an organization"
+msgstr ""
+"Daim phiaj qhia chaw ntawm lub zej zos no twb tau raug xa rau lub koom haum "
+"lawm"
+
+#: main/templates/main/submission.html:247
+#: main/templates/main/submission.html:254
+#: main/templates/main/submission.html:257
+msgid "Data Layers"
+msgstr "Txheej Txheem Ntaub Ntawv"
+
+#: main/templates/main/submission.html:281
+#: main/templates/main/submission.html:294
+#: main/templates/main/submission.html:297
+msgid "Demographics"
+msgstr "Cov Ntaub Ntawv Qhia Txog Pej Xeem"
+
+#: main/templates/main/submission.html:287
+msgid ""
+"Demographic information will become available with the release of 2020 "
+"Census data by the US Census Bureau."
+msgstr ""
+
+#: main/templates/main/submission.html:331
+msgid "Your community is ready to be viewed and downloaded. You have "
+msgstr "Koj lub zej zog yog tau npaj txhij los saib thiab rub tawm."
+
+#: main/templates/main/submission.html:331
+msgid "received an email with your community as a PDF file."
+msgstr "Koj tau txais tsab email nrog koj lub zej zog ua ntawv pdf."
+
+#: main/templates/main/submission.html:332
+msgid "Make an impact with your map."
+msgstr "Ua rau muaj feem nrog koj daim duab qhia chaw."
+
+#: main/templates/main/submission.html:342
+msgid ""
+"View your community on a computer to download as a PDF or geoJSON file. You "
+"can submit these files as public testimony or to a local redistricting "
+"organization."
+msgstr ""
+"Saib koj lub zej zos hauv lub khoos phiv dawm txhawm rau rub daim ntawv PDF "
+"los sis geoJSON.Koj tuaj yeem xa cov ntawv no raws li yog cov pov thawj zej "
+"tsoom los sis xa mus rau lub koom haum rov faib cais koog cheeb tshiab ntawm"
+" cheeb tsam zej zos."
+
+#: main/templates/main/submission.html:352
+msgid ""
+"If your state has a redistricting commission or accepts Communities of "
+"Interest, send a pdf of your community to submit as public testimony. If "
+"not, you can send it to a local redistricting organization or <a "
+"href=\"https://myreps.datamade.us/\" target=\"_blank\" rel=\"noopener "
+"noreferrer\">your legislator</a>."
+msgstr ""
+"Yog tias koj lub xeev muaj qhov rov faib ciam dua los sis lees txais cov "
+"tswv yim los ntawm cov zej zog ntawm kev txaus siab, xa pdf ntawm koj lub "
+"zej zog xa mus ua cov lus pov thawj. Yog tias tsis yog, koj tuaj yeem xa nws"
+" mus rau ib lub koom haum hauv koj lub xeev uas ua hauj lwm ntawm kev rov "
+"faib ciam dua."
+
+#: main/templates/main/submission.html:356
+msgid "Export PDF"
+msgstr "Xa tawm ua PDF"
+
+#: main/templates/main/submission.html:368
+msgid ""
+"If you would like to use your map to draw voting districts, you can upload "
+"the geoJSON file to mapping softwares such as Maptitude, Dave’s "
+"Redistricting App, or Districtr."
+msgstr ""
+"Yog tias koj xav siv koj daim duab kos los xaiv cov cheeb tsam pov ntawv "
+"xaiv tsa, koj tuaj yeem rub ua ntawv geoJSON nkag mus rau cov software duab "
+"qhia chaw xws li District Builder, Dave's Redistricting App, los sis "
+"Districtr."
+
+#: main/templates/main/submission.html:390
+msgid ""
+"Send the map to your community members and encourage them to draw maps. When"
+" map drawers have more data from your community, they are more likely to "
+"draw fairer districts."
+msgstr ""
+"Xa daim duab qhia chaw rau koj cov neeg zej zog thiab txhawb lawv kom kos "
+"duab qhia chaw.Thaum daim duab qhia kev teeb txheeb muaj ntaub ntawv ntau "
+"los ntawm koj lub zej zog, lawv muaj peev xwm xaiv cov tsev kawm ncaj ncees."
+
+#: main/templates/main/submission.html:401
+msgid "Resend Email"
+msgstr "Rov qab xa email"
+
+#: main/templates/main/submission.html:414
+msgid ""
+"This map was created at <a "
+"href=\"https://representable.org/\">Representable.org"
+msgstr ""
+"Daim phiaj qhia chaw raug tsim los ntawm <a "
+"href=\"https://representable.org/\">Representable.org"
+
+#: main/templates/main/thanks.html:13
+msgid "Thank you for your submission!"
+msgstr "Ua tsaug rau koj txoj kev xa!"
+
+#: main/templates/main/thanks.html:16
+msgid "Please Verify Your Email"
+msgstr "Thov Lees Xyuas Kom Paub Tseeb Koj Tus Email"
+
+#: main/templates/main/thanks.html:22
+msgid ""
+"This tool is meant for non-partisan use by communities and their members to "
+"provide information to the Redistricting Commission."
+msgstr ""
+"Qhov cuab yeej no yog rau txoj kev siv yam tsis cais pab pawg los ntawm cov "
+"zej zos thiab lawv cov tswv cuab txhawm rau muab ntaub ntawv qhia paub rau "
+"Pab Pawg Kws Saib Xyuas Txoj Kev Rov Faib Cais Koog Cheeb Tshiab."
+
+#: main/templates/main/thanks.html:23
+msgid ""
+"By adding your map to Representable.org you're not submitting a map to a "
+"redistricting commission. We will add information about submitting to the "
+"commission as soon as information becomes available in your state."
+msgstr ""
+"Raws li kev ntxiv koj daim phiaj qhia chaw rau Representable.org koj yuav "
+"tsis xa daim phiaj qhia chaw rau pab pawg kws saib xyuas txoj kev rov faib "
+"cais koog cheeb tshiab.Peb yuav ntxiv ntaub ntawv qhia paub txog txoj kev xa"
+" rau pab pawg kws saib xyuas kom sai li qhov uas cov ntaub ntawv qhia paub "
+"muaj siv tau hauv koj lub xeev."
+
+#: main/templates/main/thanks.html:26
+msgid ""
+"Thank you for submitting your map. The next step is to verify your email. We"
+" resent an email verification link to your inbox."
+msgstr ""
+"Ua tsaug rau txoj kev xa koj daim phiaj qhia chaw.Kauj ruam ntxiv mus yog "
+"los lees xyuas kom paub tseeb koj li email.Peb rov xa tus link txuas ntawm "
+"tsab email lees xyuas kom paub tseeb rau koj lub npov xa ntawv nkag lawm."
+
+#: main/templates/main/thanks.html:27
+msgid ""
+"Account verification allows Representable.org and our partner organizations "
+"to submit credible maps to Redistricting Commisions ensuring that your entry"
+" has an impact in ending gerrymandering."
+msgstr ""
+"Kev lees xyuas kom paub qhov tseeb ntawm tus as khauj tso cai rau "
+"Representable.org thiab peb cov koom haum khub koom tes los xa cov phiaj "
+"qhia chaw uas tsis txaus ntseeg rau Pab Pawg Kws Saib Xyuas Txoj Kev Rov "
+"Faib Cais Koog Cheeb Tshiab los xyuas qhov tseeb tias seb koj lub chaw lees "
+"kev nkag rau puas tau muaj qhov puas tsuaj hauv txoj kev xaus kev faib koog "
+"cheeb tsam kev xaiv tsa yam tsis ncaj ncees."
+
+#: main/templates/main/thanks.html:29
+msgid ""
+"In the meantime, you can export your community in GeoJSON or PDF format "
+"using the link below."
+msgstr ""
+"Nyob rau tib lub sij hawm, koj tuaj yeem xa koj lub zej zos ua hom ntawv "
+"GeoJSON los sis PDF yam siv tus link txuas hauv qab no."
+
+#: main/templates/main/thanks.html:33
+msgid "View/Export Your Community"
+msgstr "Saib/Xa Koj Lub Zej Zos"
+
+#: main/templates/main/thanks.html:35 main/templates/main/thanks.html:38
+msgid "Your community map is now live here: "
+msgstr ""
+"Koj daim phiaj qhia chaw ntawm lub zej zos tam sim no yog nyob rau nov: "
+
+#: main/templates/main/thanks.html:39
+msgid "View Community"
+msgstr "Saib Lub Zej Zos"
+
+#: main/templates/main/thanks.html:45
+msgid "Map"
+msgstr "Daim Phiaj Qhia Chaw"
+
+#: main/templates/main/thanks.html:46
+msgid "View all communities submitted to {{drive_name}}"
+msgstr "Saib txhua cov zej zos uas tau xa tuaj rau {{drive_name}}"
+
+#: main/templates/main/thanks.html:52
+msgid "Do you have any feedback for us?"
+msgstr "Koj puas muaj lus xav pom dab tsi nug peb?"
+
+#: main/templates/main/thanks.html:53
+msgid ""
+"We are interested in your feedback. If you found a bug or have any "
+"suggestions for us, please send them to us by pressing on the button below."
+msgstr ""
+"Peb txaus siab rau koj qhov lus xam pom.Yog koj pom qhov tsis zoo los sis "
+"muaj cov lus pab qhia dab tsi rau peb, thov muab nws xa tuaj rau peb raws "
+"txoj kev nyem rau lub pob hauv qab no."
+
+#: main/templates/main/thanks.html:54
+msgid "Send Feedback"
+msgstr "Xa Cov Lus Xam Pom"
+
+#: main/templates/main/thanks.html:57
+msgid "Having trouble with email verification?"
+msgstr "Puas muaj teeb meem ntawm tab email lees xyuas kom paub tseeb?"
+
+#: main/templates/main/thanks.html:58
+#, fuzzy
+#| msgid ""
+#| "We are here to help! Let us know if you didn't recieve an email verification"
+#| " link or want to provide feedback by contacting Team@Representable.org"
+msgid ""
+"We are here to help! Let us know if you didn't receive an email verification"
+" link or want to provide feedback by contacting Team@Representable.org"
+msgstr ""
+
+#: representable/templates/base.html:81
+msgid "My Organizations"
+msgstr "Kuv Cov Koom Haum"
+
+#: representable/templates/base.html:110
+msgid "Learn More"
+msgstr "Kawm Paub Ntxiv"
+
+#: representable/templates/base.html:120
+msgid "About"
+msgstr "Ntsig Txog"
+
+#: representable/templates/base.html:127
+msgid "My Account"
+msgstr "Kuv Tus As Khauj"
+
+#: representable/templates/base.html:131
+msgid "My communities"
+msgstr "Kuv cov zej zos"
+
+#: representable/templates/base.html:132
+msgid "Logout"
+msgstr "Tawm Kev Siv"
+
+#: representable/templates/base.html:142 representable/templates/base.html:146
+msgid "Add community"
+msgstr "Ntxiv lub zej zos"
+
+#: representable/templates/base.html:153
+msgid "Log in"
+msgstr "Nkag mus siv rau-hauv"
+
+#: representable/templates/base.html:158
+msgid "Sign up"
+msgstr "Sau spe nkag"
+
+#: representable/templates/base.html:272
+msgid "Add Your Community"
+msgstr "Ntxiv Koj Lub Zej Zos"
+
+#: representable/templates/base.html:275
+msgid "Create a Partner Profile"
+msgstr "Tsim ib Qho Profile Tus Khub Koom Siv"
+
+#: representable/templates/base.html:297
+msgid "More questions? Reach out at"
+msgstr "Puas muaj lus nug dab tsi ntxiv? Tiv tauj rau ntawm"
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:5
+msgid "Select an image to embed"
+msgstr "(IGNORE)"
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:27
+msgid "Browse for the image you want, then click 'Embed Image' to continue..."
+msgstr "(IGNORE)"
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:29
+msgid ""
+"No images found. Upload images using the 'Image Button' dialog's 'Upload' "
+"tab."
+msgstr "(IGNORE)"
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:50
+msgid "Images in: "
+msgstr "(IGNORE)"
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:62
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:80
+msgid "Embed Image"
+msgstr "(IGNORE)"
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:146
+msgid "Play Slideshow"
+msgstr "(IGNORE)"
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:147
+msgid "Pause Slideshow"
+msgstr "(IGNORE)"
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:148
+msgid "&lsaquo; Previous Photo"
+msgstr "(IGNORE)"
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:149
+msgid "Next Photo &rsaquo;"
+msgstr "(IGNORE)"
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:150
+msgid "Next &rsaquo;"
+msgstr "(IGNORE)"
+
+#: venv/lib/python3.7/site-packages/ckeditor_uploader/templates/ckeditor/browse.html:151
+msgid "&lsaquo; Prev"
+msgstr "(IGNORE)"
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:6
+msgid "Django: the Web framework for perfectionists with deadlines."
+msgstr "(IGNORE)"
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:345
+#, python-format
+msgid ""
+"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+msgstr ""
+"(IGNORE) <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\""
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:367
+msgid "The install worked successfully! Congratulations!"
+msgstr "(IGNORE)"
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:368
+#, python-format
+msgid ""
+"You are seeing this page because <a "
+"href=\"https://docs.djangoproject.com/en/%(version)s/ref/settings/#debug\" "
+"target=\"_blank\" rel=\"noopener\">DEBUG=True</a> is in your settings file "
+"and you have not configured any URLs."
+msgstr ""
+"(IGNORE) <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\""
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:383
+msgid "Django Documentation"
+msgstr "(IGNORE)"
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:384
+msgid "Topics, references, &amp; how-to's"
+msgstr "(IGNORE)"
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:395
+msgid "Tutorial: A Polling App"
+msgstr "(IGNORE)"
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:396
+msgid "Get started with Django"
+msgstr "(IGNORE)"
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:407
+msgid "Django Community"
+msgstr "(IGNORE)"
+
+#: venv/lib/python3.7/site-packages/django/views/templates/default_urlconf.html:408
+msgid "Connect, get help, or contribute"
+msgstr "(IGNORE)"

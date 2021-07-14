@@ -133,9 +133,18 @@
                     </ul>
                 </li>
                 <li class="nav-item mx-auto">
-                    <a class="btn btn-outline-primary m-2" href="{% url 'main:entry_preview' %}">
-                        {% trans "Add community" %}
-                    </a>
+                    {% if page_type == "drive-page" %}
+                        {% comment %} <a class="btn btn-outline-primary m-2" href="{% url 'main:entry' drive=object.slug %}{{object.state|lower}}">
+                            {% trans "Add community" %}
+                        </a> {% endcomment %}
+                        <a class="btn btn-outline-primary m-2" href="#drive-get-started-btn">
+                            {% trans "Add community" %}
+                        </a>
+                    {% else %}
+                        <a class="btn btn-outline-primary m-2" href="{% url 'main:entry_preview' %}">
+                            {% trans "Add community" %}
+                        </a>
+                    {% endif %}
                 </li>
                 {% else %}
                 <li class="nav-item mx-auto">
@@ -154,7 +163,7 @@
                 <span class="d-none d-lg-block">|</span>
                 <li class="dropdown mx-auto nav-item">
                     <button class="btn btn-link nav-link" type="button" data-toggle="dropdown">
-                        {% if LANGUAGE_CODE == "es" %}ES{% elif LANGUAGE_CODE == "en-us" %}EN{% else %}AR{% endif %}
+                        {% if LANGUAGE_CODE == "es" %}ES{% elif LANGUAGE_CODE == "en-us" %}EN{% elif LANGUAGE_CODE == "hmn" %}HMN{% else %}AR{% endif %}
                     <i class="fas fa-angle-down pl-1"></i></button>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <div {% if LANGUAGE_CODE == "en-us" %} class = "hidden" {% endif %}>
@@ -180,14 +189,24 @@
                         </div>
 
                         <div {% if LANGUAGE_CODE == "ar" %} class = "hidden" {% endif %}>
-                        <li class="nav-link mx-1">
-                            <form action="{% url 'set_language' %}" method="post">
-                        {% csrf_token %}
-                        <input name="next" type="hidden" value="{{ redirect_to }}" />
-                        <input name="language" type="hidden" value="ar" />
-                        <input class="language-button" type="submit" value="بالعربية" />
-                            </form>
-                        </li>
+                            <li class="nav-link mx-1">
+                                <form action="{% url 'set_language' %}" method="post">
+                                    {% csrf_token %}
+                                    <input name="next" type="hidden" value="{{ redirect_to }}" />
+                                    <input name="language" type="hidden" value="ar" />
+                                    <input class="language-button" type="submit" value="بالعربية" />
+                                </form>
+                            </li>
+                        </div>
+                        <div {% if LANGUAGE_CODE == "hmn" %} class = "hidden" {% endif %}>
+                            <li class="nav-link mx-1">
+                                <form action="{% url 'set_language' %}" method="post">
+                                    {% csrf_token %}
+                                    <input name="next" type="hidden" value="{{ redirect_to }}" />
+                                    <input name="language" type="hidden" value="hmn" />
+                                    <input class="language-button" type="submit" value="Hmong" />
+                                </form>
+                            </li>
                         </div>
                     </ul>
                 </li>
@@ -234,12 +253,15 @@
     {% endblock %}
 
 </body>
+{% if page_type == "entry" %}
+
+{% else %}
 <footer class="pt-4 mb-md-5 pt-md-5 border-top">
     <div class="container">
         <div class="row">
             <div class="col-12 col-md">
                 <a href="/"><img id="r-logo-svg" class="mb-2 text-muted" src="{% static 'img/logo-lowres.svg' %}" alt="Representable logo" width="24" height="24"></a>
-                <p class="d-block mb-3 text-muted">© Representable 2020</p>
+                <p class="d-block mb-3 text-muted">© Representable 2021</p>
             </div>
             <div class="col-6 col-md">
                 <ul class="list-unstyled text-small">
@@ -274,5 +296,6 @@
         </div>
     </div>
 </footer>
+{% endif %}
 
 </html>

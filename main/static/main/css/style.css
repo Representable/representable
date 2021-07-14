@@ -42,6 +42,11 @@ form:invalid {
   border: 1px solid red !important;
 }
 
+.scrollable {
+  max-height: 100px;
+  overflow: scroll;
+}
+
 .text-required {
   color: #ff726f;
 }
@@ -77,6 +82,18 @@ form:invalid {
 
 .bg-70C5EA {
   background: #70C5EA;
+}
+
+.bg-2A94F4 {
+  background: #2A94F4;
+}
+
+.text-359DFB {
+  color: #359DFB;
+}
+
+.text-2A94F4 {
+  color: #2A94F4;
 }
 
 .txt-16 {
@@ -228,6 +245,26 @@ form:invalid {
   }
 }
 
+.org-icon {
+  font-size: 2rem;
+}
+
+.org-card {
+  min-height: 200px;
+}
+
+.org-card-btn {
+  position: absolute;
+  bottom: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}
+
+.org-dash-drive-group {
+  max-height: 275px;
+}
 /* .progress-bar.complete:hover {
   height: 100% !important;
 } */
@@ -253,7 +290,28 @@ form:invalid {
 
 #state-map-cois {
   overflow: scroll;
-  max-height: 500px;
+  max-height: 800px;
+}
+
+#partner-welcome-modal .modal-dialog .modal-content{
+  background-color: #DAEFFF;
+  opacity: .85;
+  border-radius: 50px;
+}
+
+.gray-btn {
+  color: #5B5B5B;
+  border-color: #5B5B5B;
+  background-color: transparent;
+}
+
+.gray-btn:hover {
+  background-color: #5B5B5B;
+  color: #ffffff;
+}
+
+.gray-btn:focus {
+  box-shadow: 0 0 0 0.25rem #5B5B5A;
 }
 
 /*********************************************************************
@@ -542,18 +600,27 @@ body {
   .px-10 {
     padding: 10px;
   }
+  #map-units-btn {
+    right: 2% !important;
+    bottom: -6000% !important;
+  }
+
+  #map-pop-btn {
+    right: 2% !important;
+    bottom: -6000% !important;
+  }
 }
 /* EXCLUSIVELY FOR HOME PAGE rect */
-@media screen and (min-width:992px) and (max-width:1169px){
+@media screen and (min-width:1151px) and (max-width:1261px){
   #home-page-rect {
-    height: 275% !important;
+    height: 190% !important;
   }
 }
 
 #home-page-rect {
   position: absolute;
   width: 250%;
-  height: 300%;
+  height: 225%;
   left: -10%;
   bottom: 110%;
 
@@ -653,7 +720,7 @@ footer {
 
 #loading-entry {
   position: fixed;
-  bottom: 40px;
+  bottom: 150px;
   left: 40px;
   z-index: 1010;
   display: none;
@@ -878,6 +945,11 @@ Entry Mapping Page
   margin: 1rem 1rem 0 0;
 }
 
+.mapboxgl-ctrl-group {
+  border-radius: 10px;
+  background: rgba(247, 247, 247, 1);
+}
+
 .mapboxgl-ctrl-geocoder .geocoder-icon-search {
   top: 15px;
 }
@@ -885,6 +957,14 @@ Entry Mapping Page
 .mapboxgl-ctrl-geocoder input[type='text'] {
   font-size: 1rem;
   height: 50px;
+}
+
+#map-radius-control-id {
+  border: 0;
+}
+
+.nohover:hover {
+  background-color: rgba(0, 0, 0, 0) !important;
 }
 
 #modal-geocoder .mapboxgl-ctrl-geocoder {
@@ -895,8 +975,15 @@ Entry Mapping Page
   text-align: left;
 }
 
-#entry-map-modal .modal-content {
+.green-modal .modal-content {
   background-color: rgba(216, 241, 237, 0.9);
+  border-radius: 20px;
+  border: none;
+  backdrop-filter: blur(4px); /* Note: backdrop-filter has minimal browser support */
+}
+
+.blue-modal .modal-content {
+  background-color: rgba(218, 239, 255, 0.85);
   border-radius: 20px;
   border: none;
   backdrop-filter: blur(4px); /* Note: backdrop-filter has minimal browser support */
@@ -909,6 +996,7 @@ Entry Mapping Page
 
 #map-comm-menu {
   top: 10px !important;
+  width: max-content;
 }
 
 #map-top-row {
@@ -929,29 +1017,37 @@ Entry Mapping Page
 #mapToPrivacy {
   position: absolute;
   z-index: 1;
-  right: 34.8%;
+  right: 30%;
   bottom: 20%;
+  max-width: 18%;
+  white-space: normal;
 }
 
 #mapToSurveyP2 {
   position: absolute;
   z-index: 1;
-  left: 34.8%;
+  left: 30%;
   bottom: 20%;
+  max-width: 18%;
+  white-space: normal;
 }
 
 #mapToPrivacyMobile {
   position: absolute;
   z-index: 1;
-  right: 22%;
+  right: 15%;
   bottom: 20%;
+  max-width: 35%;
+  white-space: normal;
 }
 
 #mapToSurveyP2Mobile {
   position: absolute;
   z-index: 1;
-  left: 22%;
+  left: 15%;
   bottom: 20%;
+  max-width: 35%;
+  white-space: normal;
 }
 
 #mobile-map-help-btn:not(.opened),
@@ -970,19 +1066,20 @@ Entry Mapping Page
 .comm-info-text {
   color:#2A94F4;
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
 }
 
 .comm-item-text {
   color:#2A94F4;
   font-weight: bold;
   font-size: 1rem;
+  white-space: normal;
 }
 
 .map-survey-response {
   color: #1b7a9f;
   font-weight: normal;
-  max-height: 200px;
+  max-height: 290px;
   overflow: scroll;
 }
 
@@ -1015,6 +1112,7 @@ Entry Mapping Page
   background-color: #DAEFFF;
   opacity: 0.9;
   width: auto;
+  height: 93%;
   white-space: unset;
 }
 
@@ -1030,6 +1128,23 @@ Entry Mapping Page
   /* transition: 2s; */
   transform-origin: left center;
   z-index: 1000;
+  max-width: 100%;
+  white-space: normal;
+}
+
+#map-units-btn {
+  position: absolute;
+  z-index: 1;
+  left: 5%;
+  bottom: 0%;
+}
+
+#map-pop-btn {
+  position: absolute;
+  z-index: 1;
+  right: 5%;
+  bottom: 0%;
+  border: black;
 }
 
 .map-visualization {
@@ -1061,6 +1176,10 @@ Entry Mapping Page
 
   .row-content {
     padding: 40px 40px 25px 40px;
+  }
+
+  .modal-xl {
+    max-width: 80%;
   }
 }
 
@@ -1354,14 +1473,14 @@ Entry Form Management
 }
 
 .survey-field {
-  background: #DAEFFF;
+  background: #F2FAFF 80%;
   opacity: 0.8;
   border: none;
   outline: none;
 }
 
 .survey-field:focus {
-  background: #DAEFFF;
+  background: #F2FAFF 80%;
   border: none;
   outline: none;
 }
@@ -1472,6 +1591,9 @@ textarea.survey-field:focus {
   #survey-qs-p2 {
     width: 85%;
   }
+  .map-survey-response {
+    max-height: 80%;
+  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -1525,6 +1647,10 @@ textarea.survey-field:focus {
   color: #3f3f3f;
 }
 
+.text-5996D2 {
+  color: #5996D2;
+}
+
 .gray-text {
   color: #5B5B5B;
 }
@@ -1557,7 +1683,7 @@ textarea.survey-field:focus {
   background-color: #FFFFFF;
 }
 .content-blue-bg {
-  background: rgba(242, 250, 255, 0.5);
+  background-color: rgba(242, 250, 255, 0.5);
 }
 .btn-outline-gray {
   background-color: transparent;
@@ -2235,4 +2361,15 @@ height:25vh!important;
   -o-transform: scale(1, -1);
   -webkit-transform: scale(1, -1);
   transform: scale(1, -1);
+}
+
+.btn.no-underline-link.bg-transparent {
+  border-radius: 0px;
+}
+
+/* Makes buttons on submission page equal widths */
+#election-btn, #mobile-election-btn, #data-layer-btn,
+#mobile-data-layer-btn, #demographics-btn,
+#mobile-demographics-btn {
+  width: 215px;
 }

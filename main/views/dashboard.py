@@ -303,7 +303,7 @@ class CreateMember(LoginRequiredMixin, OrgAdminRequiredMixin, FormView):
         # get the email
         email = form.cleaned_data['email']
         try:
-            us = User.objects.get(email=email)
+            us = User.objects.get(email__iexact=email)
         except User.DoesNotExist:
             # send back error message
             list(messages.get_messages(self.request))

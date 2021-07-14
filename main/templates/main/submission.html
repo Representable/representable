@@ -55,35 +55,151 @@
           <div class="card-body">
             <h5 class="card-title header-text"><strong>{% trans "Download this map" %}</strong></h5>
             <p class="header-text small">
-              {% blocktrans %}
+              {% blocktrans trimmed %}
                 Map downloads include the community information below.
               {% endblocktrans %}
             </p>
             <div class="row">
               <div class="col text-center">
-                  <!-- ********************* -->
                   <!-- GeoJSON Explainer Modal -->
                   <div class="modal fade" id="geojson-explain-modal" tabindex="-1" role="dialog" aria-labelledby="geojson-explain-modalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">What is GeoJSON?</h5>
+                          <h5 class="modal-title" id="exampleModalLabel">{% trans "What is GeoJSON?" %}</h5>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
                         <div class="modal-body">
-                          GeoJSON files are industry standard and usable with other mapping softwares like Maptitude for Redistricting, Dave's Redistricting App, ESRI, and more.
+                          {% trans "GeoJSON files are industry standard and usable with other mapping softwares like Maptitude for Redistricting, Dave's Redistricting App, ESRI, and more." %}
                         </div>
                       </div>
                     </div>
                   </div>
+                  <!-- ********************* -->
+                  <!-- PDF Export + Public comment Modal -->
+                  <div class="modal fade blue-modal" id="pdf-comment-modal" tabindex="-1" role="dialog" aria-labelledby="pdf-comment-modalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-body px-md-5 text-left">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                          <h4 class="mx-md-5 px-md-5 mt-md-5"><strong>{% trans "Send your map to your state." %}</strong></h4>
+                          <p class="mx-md-5 px-md-5">{% trans "Congratulations, you have downloaded your map. Your state accepts communities of interest as public input. Visit the site below to submit your map." %}</p>
+                          <a id="public-comment-link-modal"><h5 class="blue-text px-md-5 mx-md-5 mb-md-5">{% trans "Go to public input portal" %} <i class="far fa-arrow-alt-circle-right"></i></h5></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- ********************* -->
+                  <!-- Community info modal -->
+                  <div class="modal fade blue-modal" id="submission-info-modal" tabindex="-1" role="dialog" aria-labelledby="submission-info-modalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-body px-md-5 text-left">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                          <h4 class="mx-lg-5 px-lg-5 mt-md-5"><strong>{% trans "Your Community Information" %}</strong></h4>
+                          <p class="mx-lg-5 px-lg-5">{% trans "When drawing a map with Representable, you are asked a series of questions in different categories. We've repeated the questions below." %}</p>
+                          <!-- Sections: -->
+                          <!-- Activities -->
+                          <div class="accordion" id="comm_activities_accordion">
+                              <button id="comm_activities_btn" class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#comm_activities_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                                  <h5 class="survey-sect-title">{% trans "Community Activities and Services" %}<i class="fas fa-angle-down pl-3"></i></h5>
+                              </button>
+                              <div id="comm_activities_example" class="collapse" aria-labelledby="comm_activities_accordion" data-parent="#comm_activities_accordion">
+                                  <p class="collapse-in ml-4 gray-text">
+                                    <b>{% trans "Use these questions to think more about how you would describe your community..." %}</b><br>
+                                    &emsp; - {% trans "Where do people in your community gather or socialize?" %} <br>
+                                    &emsp; - {% trans "How and where does your community access services (healthcare, transportation, educational services, etc.)?" %}<br><br>
+                                    <span class="blue-text"><b>{% trans "Examples of activities and services:" %}</b> {% trans "Shopping areas, schools and universities, libraries, parks, lakes, rivers, places of worship, healthcare services, public transport, local nonprofit organizations, etc." %}</span>
+                                  </p>
+                                  {% if c.comm_activities %}
+                                    <p class="collapse-in ml-4"><b>{% trans "Your response: " %}</b> {{c.comm_activities}}</p>
+                                  {% endif %}
+                              </div>
+
+                          </div>
+
+                          <!-- Cultural -->
+                          <div class="accordion" id="cultural_interests_accordion">
+                              <button id="cultural_interests_btn" class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#cultural_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                                  <h5 class="survey-sect-title">{% trans "Cultural or Historical Interests" %}<i class="fas fa-angle-down pl-3"></i></h5>
+                              </button>
+                              <div id="cultural_interests_example" class="collapse" aria-labelledby="cultural_interests_accordion" data-parent="#cultural_interests_accordion">
+                                <p class="collapse-in ml-4 gray-text">
+                                  <b>{% trans "Use these questions to think more about how you would describe your community..." %}</b><br>
+                                  &emsp; - {% trans "What are the cultural bonds in your community?" %} <br>
+                                  &emsp; - {% trans "If your community has a shared history, what is it?" %}<br><br>
+                                  <span class="blue-text"><b>{% trans "Examples of cultural or historical interests: " %}</b>{% trans "Religious groups, ethnic groups, languages, age groups, immigration status, historic or arts districts, etc."%} </span>
+                                </p>
+                                {% if c.cultural_interests %}
+                                  <p class="collapse-in ml-4"><b>{% trans "Your response: " %}</b> {{c.cultural_interests}}</p>
+                                {% endif %}
+                              </div>
+                          </div>
+                          <!--  Economic -->
+                          <div class="accordion" id="economic_interests_accordion">
+                              <button id="economic_interests_btn" class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#economic_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                                  <h5 class="survey-sect-title">{% trans "Economic or Environmental Interests" %}<i class="fas fa-angle-down pl-3"></i></h5>
+                              </button>
+                              <div id="economic_interests_example" class="collapse" aria-labelledby="economic_interests_accordion" data-parent="#economic_interests_accordion">
+                                  <p class="collapse-in ml-4 gray-text">
+                                      {% blocktrans trimmed %}
+                                      <b>Use these questions to think more about how you would describe your community...</b><br>
+                                      &emsp; - Where are residents employed?<br>
+                                      &emsp; - If there are environmental concerns in your community, what are they?<br><br>
+                                      <span class="blue-text"><b>Examples of economic or environmental interests:</b> Tourism industry, agricultural workers, mining town, manufacturing center, polluted natural resource, unemployment problem, etc.</span>
+                                      {% endblocktrans %}
+                                  </p>
+                                  {% if c.economic_interests %}
+                                    <p class="collapse-in ml-4"><b>{% trans "Your response: " %}</b> {{c.economic_interests}}</p>
+                                  {% endif %}
+                              </div>
+                          </div>
+
+                          <!-- Other -->
+                          <div class="accordion" id="other_interests_accordion">
+                              <button id="other_interests_btn" class="btn btn-link text-left pl-0 no-underline-link" type="button" data-target="#other_interests_example" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                                  <h5 class="survey-sect-title">{% trans "Community Needs and Concerns" %}<i class="fas fa-angle-down pl-3"></i></h5>
+                              </button>
+                              <div id="other_interests_example" class="collapse" aria-labelledby="other_interests_accordion" data-parent="#other_interests_accordion">
+                                <p class="collapse-in ml-4 gray-text">
+                                  <b>{% trans "Use these questions to think more about how you would describe your community..." %}</b><br>
+                                  &emsp; - {% trans "What should politicians and/or map drawers know about your community?" %}<br>
+                                  &emsp; - {% trans "What are the needs of your community?" %}<br>
+                                  &emsp; - {% trans "Is there anything else you want to tell us about your community?" %}<br><br>
+                                  <span class="blue-text"><b>{% trans "Examples of needs or concerns: " %}</b>{% trans "Keep community in the same district or separate into multiple districts, shared policy concerns, need for a social service, relationship to other nearby communities, issues with current district lines" %}</span>
+                                </p>
+                                {% if c.other_considerations %}
+                                  <p class="collapse-in ml-4"><b>{% trans "Your response: " %}</b> {{c.other_considerations}}</p>
+                                {% endif %}
+                              </div>
+                          </div>
+
+                          <!-- custom question -->
+                          {% if c.drive and c.drive.custom_question %}
+                            <p class="my-4 ml-1 gray-text">
+                              <b>{{ c.drive.custom_question }}</b><br>
+                            </p>
+                            {% if c.custom_response %}
+                              <p class="collapse-in ml-4"><b>{% trans "Your response: " %}</b> {{c.custom_response}}</p>
+                            {% endif %}
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- ********************* -->
                   <div class="row">
                     {% if has_state %}
                       {% with link_text="/export/geojson/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
                       <div class="col-12 col-md-4">
                         <a class="btn btn-primary w-50 w-md-75 w-xl-100 mb-3 mb-md-0" data-toggle="modal" href="#" data-target="#geojson-explain-modal" rel="nofollow" download>GeoJSON</a>
-                        <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
+                        <a href={{link_text}} download="{{c.human_readable_name}}.zip" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
                       </div>
                       <!-- ********************* -->
                       <div class="col-12 col-md-4">
@@ -92,14 +208,14 @@
                       {% endwith %}
                       {% with link_text="/export/csv/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
                       <div class="col-12 col-md-4">
-                        <a class="btn btn-primary w-50 w-md-75 w-xl-100" href={{link_text}} role="button" download="community_{{c.entry_ID}}.csv">CSV</a>
+                        <a class="btn btn-primary w-50 w-md-75 w-xl-100" href={{link_text}} role="button" download="{{c.human_readable_name}}.zip">CSV</a>
                       </div>
                       {% endwith %}
                     {% else %}
                       {% with link_text="/export/geojson/?map_id="|addstr:c.entry_ID %}
                       <div class="col-12 col-md-4">
                         <a class="btn btn-primary w-50 w-md-75 w-xl-100 mb-3 mb-md-0" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>GeoJSON</a>
-                        <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
+                        <a href={{link_text}} download="{{c.human_readable_name}}.zip" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
                       </div>
                       <!-- ********************* -->
                       <div class="col-12 col-md-4">
@@ -108,7 +224,7 @@
                       {% endwith %}
                       {% with link_text="/export/csv"|add:"/?map_id="|addstr:c.entry_ID %}
                       <div class="col-12 col-md-4">
-                        <a class="btn btn-primary w-50 w-md-75 w-xl-100" href={{link_text}} role="button" download="community_{{c.entry_ID}}.csv">CSV</a>
+                        <a class="btn btn-primary w-50 w-md-75 w-xl-100" href={{link_text}} role="button" download="{{c.human_readable_name}}.zip">CSV</a>
                       </div>
                       {% endwith %}
                     {% endif %}
@@ -116,11 +232,16 @@
                   <!-- ********************* -->
               </div>
             </div>
+            <p id="copy-link-text" class="header-text small mt-4 mb-0">
+              {% blocktrans trimmed %}
+              Or <a href="#" onclick="copyPageLink();event.preventDefault();">copy the link</a> to this page to share.
+              {% endblocktrans %}
+            </p>
           </div>
         </div>
         <div class="card text-left border-0 w-100 rounded-lg mt-3">
           <div class="card-body">
-            <h4 class="card-title header-text"><strong>{% trans "Community Information" %}</strong></h4>
+            <h4 class="card-title header-text"><strong>{% trans "Community Information" %}</strong> <button class="btn btn-link no-underline-link p-0" type="button" data-toggle="modal" data-target="#submission-info-modal" rel="nofollow"><i class="far fa-question-circle small text-muted"></i></a></h4>
             <div class="accordion map-info-item mt-4" id="mobile-map-activities-accordion">
                 <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-activities-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                     {% trans "Community Activities and Services" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
@@ -161,14 +282,33 @@
                     </p>
                 </div>
             </div>
+            {% if c.drive and c.drive.custom_question %}
+            <div class="accordion map-info-item mt-3 mb-3" id="mobile-map-custom-accordion">
+                <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-custom-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                    <div class="text-wrap" style="white-space: normal">{{c.drive.custom_question}}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i></div>
+                </button>
+                <div id="mobile-map-custom-resp" class="collapse pl-3 pb-1" aria-labelledby="mobile-map-custom-accordion" data-parent="#mobile-map-custom-accordion">
+                    <p class="collapse-in map-survey-response">
+                        {{c.custom_response}}
+                    </p>
+                </div>
+            </div>
+            {% endif %}
           </div>
         </div>
-        {% if is_community_author %}
+        <div id="public-comment-card" class="card text-left border-0 w-100 rounded-lg mt-3 mb-3 d-l-block">
+          <div class="card-body">
+            <h5 class="card-title header-text"><strong>{% trans "Send to your state." %}</strong></h5>
+            <p>{% blocktrans trimmed %}Your state accepts communities of interest as public input. Download your map and then visit this site.{% endblocktrans %}</p>
+            <a id="public-comment-link"><h5 class="blue-text">{% trans "Go to public input portal" %} <i class="far fa-arrow-alt-circle-right"></i></h5></a>
+          </div>
+        </div>
+        {% if show_form is True and not form_empty %}
         <div class="card text-left border-0 w-100 rounded-lg mt-3 mb-3 d-xl-block">
           <div class="card-body">
-            <h5 class="card-title header-text"><strong>Submit to an organization in your state</strong></h5>
-            {% if show_form is True %}
-              <p class="header-text small">Many organizations in your state are collecting community maps. Submit yours to one of their collection drives.</p>
+            <h5 class="card-title header-text"><strong>{% trans "Submit to an organization." %}</strong></h5>
+            {% if c.drive is not True %}
+              <p class="header-text small">{% blocktrans trimmed %}Many organizations in your state are collecting community maps. Submit yours to one of their collection drives.{% endblocktrans %}</p>
               <form method="post">
                 {% csrf_token %}
                 {% for field in form %}
@@ -176,12 +316,12 @@
                 {% endfor %}
                 <div class="row justify-content-center pt-3">
                   <div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
                   </div>
                 </div>
               </form>
             {% else %}
-              <p class="header-text small">This community map has already been submitted to an organization</p>
+              <p class="header-text small">{% trans "This community map has already been submitted to an organization" %}</p>
             {% endif %}
           </div>
         </div>
@@ -197,44 +337,64 @@
               <div class="card border-0 rounded-lg d-inline-block w-100 w-md-75">
                 <div class="card-body p-3">
                   <h3 class="card-title header-text"><strong>{{c.entry_name}}</strong></h3>
-                  <h6 class="info-text"><strong>{{c.drive.name}}</strong></h5>
+                  <h6 class="info-text"><strong>{{c.drive.name}}</strong></h6>
                 </div>
               </div>
             </div>
             <div id="filter-row" class="row">
               <div id="data-layer-card" class="col-12 col-lg-8 card border-0 rounded-lg p-0 d-none mr-2 mb-3 mr-xl-3">
                 <div class="card-body pb-0">
-                  <h5 class="card-title filter-header header-text pb-2"><strong>Data Layers <i class="fas fa-minus ml-2 filter-sign"></i></strong></h5>
+                  <h5 class="card-title filter-header header-text pb-2"><strong>{% trans "Data Layers" %}<i class="fas fa-minus ml-2 filter-sign"></i></strong></h5>
                   <div class="font-weight-light text-uppercase small" id="outline-menu"></div>
                 </div>
               </div>
 
-              <div id="data-layer-col" class="col-5 col-sm-6 col-md-4 col-lg-3 p-0 mb-3 filter-col mr-5 mr-md-2 mr-xl-5">
+              <div id="data-layer-col" class="col p-0 mb-3 filter-col mr-5 mr-md-2 mr-xl-5">
                 <div class="d-none d-md-block">
-                  <button id="data-layer-btn" class="btn filter-btn btn-lg rounded m-0 bottom">Data Layers <i class="fas fa-plus ml-2 filter-sign"></i></button>
+                  <button id="data-layer-btn" class="btn filter-btn btn-lg rounded m-0 ws-normal w-100 px-2">{% trans "Data Layers" %} <i class="fas fa-plus ml-2 filter-sign"></i></button>
                 </div>
                 <div class="d-md-none">
-                  <button id="mobile-data-layer-btn" class="btn filter-btn rounded m-0 w-100">Data Layers <i class="fas fa-plus ml-2 filter-sign"></i></button>
+                  <button id="mobile-data-layer-btn" class="btn filter-btn rounded m-0 w-100">{% trans "Data Layers" %} <i class="fas fa-plus ml-2 filter-sign"></i></button>
+                </div>
+              </div>
+
+              <div id="election-card" class="col-12 col-lg-8 card border-0 rounded-lg p-0 d-none mr-2 mb-3 mr-xl-3">
+                <div class="card-body pb-0">
+                  <h5 class="card-title filter-header header-text pb-2"><strong>{% trans "Election Data" %}<i class="fas fa-minus ml-2 filter-sign"></i></strong></h5>
+                  <div class="font-weight-light text-uppercase small mb-3" id="election-menu">
+                    <div id="election-text"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="election-col" class="col p-0 mb-3 filter-col mr-5 mr-md-2 mr-xl-5">
+                <div class="d-none d-md-block">
+                  <button id="election-btn" class="btn filter-btn btn-lg rounded m-0 ws-normal w-100 px-2">{% trans "Election Data" %} <i class="fas fa-plus ml-2 filter-sign"></i></button>
+                </div>
+                <div class="d-md-none">
+                  <button id="mobile-election-btn" class="btn filter-btn rounded m-0 w-100">{% trans "Election Data" %} <i class="fas fa-plus ml-2 filter-sign"></i></button>
                 </div>
               </div>
 
               <div id="demographics-card" class="col-12 col-lg-8 card border-0 rounded-lg p-0 d-none mr-2 mb-3">
                 <div class="card-body pb-0">
-                  <h5 class="card-title filter-header header-text pb-2"><strong>Demographics <i class="fas fa-minus ml-2 filter-sign"></i></strong></h5>
+                  <h5 class="card-title filter-header header-text pb-2"><strong>{% trans "Demographics" %}<i class="fas fa-minus ml-2 filter-sign"></i></strong></h5>
                   <div class="font-weight-light text-uppercase small mb-3" id="demographic-menu">
                         {% if c.population > 0 %}
                         <b>Population:</b> {{ c.population }}
                         <br>
+                        {% else %}
+                        <b>{% trans "Demographic information will become available with the release of 2020 Census data by the US Census Bureau." %}</b>
                         {% endif %}
                   </div>
                 </div>
               </div>
-              <div id="demographics-col" class="col-5 col-sm-6 col-md-4 col-lg-3 p-0 mb-3 filter-col mr-md-2">
+              <div id="demographics-col" class="col p-0 mb-3 filter-col mr-md-2">
                 <div class="d-none d-md-block">
-                  <button id="demographics-btn" class="btn filter-btn btn-lg rounded m-0 bottom">Demographics <i class="fas fa-plus ml-2 filter-sign"></i></button>
+                  <button id="demographics-btn" class="btn filter-btn btn-lg rounded m-0 ws-normal w-100 px-2">{% trans "Demographics" %} <i class="fas fa-plus ml-2 filter-sign"></i></button>
                 </div>
                 <div class="d-md-none">
-                  <button id="mobile-demographics-btn" class="btn filter-btn rounded m-0 w-100">Demographics <i class="fas fa-plus ml-2 filter-sign"></i></button>
+                  <button id="mobile-demographics-btn" class="btn filter-btn rounded m-0 w-100">{% trans "Demographics" %} <i class="fas fa-plus ml-2 filter-sign"></i></button>
                 </div>
               </div>
             </div>
@@ -242,9 +402,6 @@
           <div class="col-12 border-0 text-left">
             <div class="row vh-50">
               <div id='map' class="map-visualization p-0">
-                <div id="pdf-loading-box" class="map-popup-box">
-                  <p class="mb-0">Loading PDF...</p>
-                </div>
               </div>
             </div>
           </div>
@@ -271,8 +428,8 @@
                   <div class="row my-1">
                     <div class="col-lg-2"></div>
                     <div class="col-lg-8 text-center">
-                      <p>Your community is ready to be viewed and downloaded. You have <br class="d-none d-md-block"> received an email with your community as a PDF file. </p>
-                      <h4 class="mb-lg-4">Make an impact with your map.</h4>
+                      <p>{% trans "Your community is ready to be viewed and downloaded. You have " %}<br class="d-none d-md-block">{% trans "received an email with your community as a PDF file." %}</p>
+                      <h4 class="mb-lg-4">{% trans "Make an impact with your map." %}</h4>
                     </div>
                     <div class="col-lg-2"></div>
                   </div>
@@ -282,7 +439,7 @@
                       <img class="mx-auto d-block w-75 h-100" src="{% static 'img/thanks-district.svg' %}" alt="district icon"> </img>
                     </div>
                     <div class="col-8 d-flex d-lg-none">
-                      <p class="">View your community on a computer to download as a PDF or geoJSON file. You can submit these files as public testimony or to a local redistricting organization.</p>
+                      <p class="">{% trans "View your community on a computer to download as a PDF or geoJSON file. You can submit these files as public testimony or to a local redistricting organization." %}</p>
                     </div>
                   </div>
                   <div class="row my-1 mb-lg-3 d-none d-lg-flex">
@@ -292,8 +449,11 @@
                       <img class="mx-auto w-125 h-100" src="{% static 'img/thanks-email.svg' %}" alt="email icon"> </img>
                     </div>
                     <div class="col-lg-7">
-                      If your state has a redistricting commission or accepts Communities of Interest, send a pdf of your community to submit as public testimony. If not, you can send it to a local redistricting organization or <a href="https://myreps.datamade.us/" target="_blank" rel="noopener noreferrer">your legislator</a>.<br>
-                      <div class="text-center"><a class="btn btn-outline-gray mx-2 my-1" id="pdf-button-modal" target="_blank" data-dismiss="modal" role="button">Export PDF</a></div>
+                      {% blocktrans trimmed %}
+                      If your state has a redistricting commission or accepts Communities of Interest, send a pdf of your community to submit as public testimony. If not, you can send it to a local redistricting organization or <a href="https://myreps.datamade.us/" target="_blank" rel="noopener noreferrer">your legislator</a>.
+                      {% endblocktrans %}
+                      <br>
+                      <div class="text-center"><a class="btn btn-outline-gray mx-2 my-1" id="pdf-button-modal" target="_blank" data-dismiss="modal" role="button">{% trans "Export PDF" %}</a></div>
                     </div>
                     <div class="col-lg-3"></div>
                   </div>
@@ -305,7 +465,7 @@
                       <img class="mx-auto d-block w-125 h-100" src="{% static 'img/thanks-district.svg' %}" alt="district icon"> </img>
                     </div>
                     <div class="col-lg-7">
-                      If you would like to use your map to draw voting districts, you can upload the geoJSON file to mapping softwares such as Maptitude, Dave’s Redistricting App, or Districtr.<br>
+                      {% trans "If you would like to use your map to draw voting districts, you can upload the geoJSON file to mapping softwares such as Maptitude, Dave’s Redistricting App, or Districtr." %}<br>
                       <!-- <div class="text-center"><a class="btn btn-outline-gray mx-2 my-1" target="_blank" href="" role="button">Export geoJSON</a></div> -->
                       {% if has_state %}
                       {% with link_text="/export/geojson/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
@@ -327,7 +487,7 @@
                       <img class="mx-auto d-block w-125 h-100" src="{% static 'img/thanks-comm.svg' %}" alt="community icon"> </img>
                     </div>
                     <div class="col-lg-7">
-                      Send the map to your community members and encourage them to draw maps. When map drawers have more data from your community, they are more likely to draw fairer districts. <br>
+                      {% trans "Send the map to your community members and encourage them to draw maps. When map drawers have more data from your community, they are more likely to draw fairer districts." %} <br>
                       <!-- <div class="text-center"><a class="btn btn-outline-gray mx-2 my-1" target="_blank" href="" role="button">Send Email</a></div> -->
                       <div class="text-center">
                         <!--Form Used to Send Email-->
@@ -338,7 +498,7 @@
                               <textarea name = "message" class = "form-control">{{email}}</textarea>
                             </div>
                             <div class = "form-group">
-                              <button type = "submit" class="btn btn-outline-gray mx-2 my-1">Resend Email</button>
+                              <button type = "submit" class="btn btn-outline-gray mx-2 my-1">{% trans "Resend Email" %}</button>
                             </div>
                           </form>
                         </div>
@@ -351,47 +511,53 @@
             </div>
           </div>
           <div class="d-none" id="pdfCreatedWith">
-            <small class="text-muted">This map was created at <a href="https://representable.org/">Representable.org</a></small>
+            <small class="text-muted">{% blocktrans trimmed %} This map was created at <a href="https://representable.org/">Representable.org {% endblocktrans %}</a></small>
           </div>
           <div class="d-none" id="pdfInfo">
             {% if c.economic_interests %}
-            <h6>
+            <h3>
               <br>
-
-              Economic or Environmental Interests
+              {% trans "Economic or Environmental Interests" %}
             </h6>
             <small>
               {{c.economic_interests}}
             </small>
             {% endif %}
-            {% if c.economic_interests %}
-            <h6>
+            {% if c.comm_activities %}
+            <h3>
               <br>
-
-              Community Activities and Services
+              {% trans "Community Activities and Services" %}
             </h6>
             <small>
               {{c.comm_activities}}
             </small>
             {% endif %}
-            {% if c.economic_interests %}
-            <h6>
+            {% if c.cultural_interests %}
+            <h3>
               <br>
-
-              Cultural or Historical Interests
+              {% trans "Cultural or Historical Interests" %}
             </h6>
             <small>
               {{c.cultural_interests}}
             </small>
             {% endif %}
-            {% if c.economic_interests %}
-            <h6>
+            {% if c.other_considerations %}
+            <h3>
               <br>
-
-              Community Needs and Concerns
+              {% trans "Community Needs and Concerns" %}
             </h6>
             <small>
               {{c.other_considerations}}
+            </small>
+            {% endif %}
+            {% if c.custom_response %}
+            <h6>
+              <br>
+
+              {{ c.drive.custom_question }}
+            </h6>
+            <small>
+              {{c.custom_response}}
             </small>
             {% endif %}
           </div>
@@ -399,7 +565,7 @@
           <div class="d-none" id="pdfOrg">{{c.organization}}</div>
           <div class="d-none" id="pdfDrive">{{c.drive}}</div>
           {% endif %}
-        {% endblock %}
+{% endblock %}
 
         {% block script %}
         <!--  Has to be at the end after the HTML loads.-->
@@ -407,5 +573,9 @@
           mapboxgl.accessToken = "{{ mapbox_key }}";
         </script>
         <script type="text/javascript" src="{% static 'main/js/components/keys.js' %}"></script>
+        <script type="text/javascript" src="{% static 'main/feature-lookup-tables/feature-lookup-tables.js'%}"></script>
+        <script type="text/javascript" src="{% static 'main/feature-lookup-tables/state-codes.js'%}"></script>
+        <script type="text/javascript" src="{% static 'main/js/components/states.js' %}"></script>
+        <script type="text/javascript" src="{% static 'main/js/map-common.js' %}"></script>
         <script type="text/javascript" src="{% static 'main/js/submission.js' %}"></script>
         {% endblock %}
