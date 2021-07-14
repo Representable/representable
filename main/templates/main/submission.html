@@ -241,7 +241,10 @@
         </div>
         <div class="card text-left border-0 w-100 rounded-lg mt-3">
           <div class="card-body">
-            <h4 class="card-title header-text"><strong>{% trans "Community Information" %}</strong> <button class="btn btn-link no-underline-link p-0" type="button" data-toggle="modal" data-target="#submission-info-modal" rel="nofollow"><i class="far fa-question-circle small text-muted"></i></a></h4>
+            <h4 class="card-title header-text"><strong>{% trans "Community Information" %}</strong></h4>
+            {% for tag in c.tags.all %}
+            <span class="badge badge-pill badge-primary">{{tag}}</span>
+            {% endfor %}
             <div class="accordion map-info-item mt-4" id="mobile-map-activities-accordion">
                 <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-activities-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                     {% trans "Community Activities and Services" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>

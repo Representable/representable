@@ -336,11 +336,66 @@ function surveyStartToAddress() {
   automaticScrollToTop();
 }
 
+// TODO: update so that these are objects, then they will show up
+// move this outside this function and load in existing tags from server
+tags_repl = tags.replaceAll("'", '"');
+tagslist = JSON.parse(tags_repl);
+
+var tagnames = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  local: tagslist,
+});
+tagnames.initialize();
+
+// for each top-tag class, add an onclick function which adds that tag to the tagsinput (if possible)
+// if not possible, display an error message -- you cannot add more than five tags to your community.
+var tagTopId = 999;
+var tagsText = [];
+$(".tag-top").on('click', function(){
+   $('#id_tags').tagsinput('add', {'value': tagTopId, 'text': $(this).text()});
+   tagTopId++;
+});
+
+$('#id_tags').on('itemAdded', function(event) {
+  // if this is the fifth tag, gray out the buttons
+  if ($('.bootstrap-tagsinput-max').length > 0) {
+    $(".tag-top").addClass('disabled');
+  }
+  tagsText.push(event.item.text);
+  $('.bootstrap-tagsinput input').addClass('m-0');
+  $('.bootstrap-tagsinput input').attr('placeholder', '');
+});
+
+$('#id_tags').on('itemRemoved', function(event) {
+  // if this is the fifth tag, gray out the buttons
+  if ($('.bootstrap-tagsinput-max').length === 0) {
+    $(".tag-top").removeClass('disabled');
+  }
+  tagsText.splice($.inArray(event.item.text, tagsText), 1);
+  if ($(this).val().length === 0) $('.bootstrap-tagsinput input').removeClass('m-0');
+});
+
+
 // changes page entry page from the survey start page to the first part of the survey
 function startSurvey() {
   $("#entry-survey-start").addClass("d-none");
   $("#survey-qs-p1").removeClass("d-none");
   $("#2to3").addClass("h-50");
+  $('#id_tags').tagsinput({
+    maxTags: 5,
+    maxChars: 30,
+    trimValue: true,
+    itemValue: "value",
+    itemText: "text",
+    typeaheadjs: {
+      name: 'tagnames',
+      displayKey: 'text',
+      source: tagnames.ttAdapter(),
+    }
+  });
+
+  $('.bootstrap-tagsinput').addClass(['form-control', 'survey-field']);
   automaticScrollToTop();
 }
 
@@ -348,6 +403,7 @@ function surveyP1ToSurveyStart() {
   $("#survey-qs-p1").addClass("d-none");
   $("#entry-survey-start").removeClass("d-none");
   $("#2to3").removeClass("h-50");
+  $("#id_tags").val(tagsText);
   automaticScrollToTop();
 }
 
@@ -355,6 +411,7 @@ function surveyP1ToP2() {
   $("#survey-qs-p1").addClass("d-none");
   $("#survey-qs-p2").removeClass("d-none");
   $("#2to3").addClass("h-75").removeClass("h-50");
+  $("#id_tags").val(tagsText);
   automaticScrollToTop();
 }
 
@@ -362,6 +419,7 @@ function surveyP2ToP1() {
   $("#survey-qs-p2").addClass("d-none");
   $("#survey-qs-p1").removeClass("d-none");
   $("#2to3").addClass("h-50").removeClass("h-75");
+  $('.bootstrap-tagsinput').addClass(['form-control', 'survey-field']);
   automaticScrollToTop();
 }
 
