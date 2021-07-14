@@ -1042,11 +1042,11 @@ class EntryView(LoginRequiredMixin, View):
         all_tags = Tag.objects.all()
         tags_arr = []
         for i, c in enumerate(all_tags):
-            tags_arr.append({"value": i, "text": c.name})
+            tags_arr.append({"value": c.id, "text": c.name})
         top_tags_query = CommunityEntry.tags.most_common()[:15]
-        top_tags = []
+        top_tags = dict()
         for i, c in enumerate(top_tags_query):
-            top_tags.append(c.name)
+            top_tags[c.id] = c.name
 
         address_required = True
         has_drive = False

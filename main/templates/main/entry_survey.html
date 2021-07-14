@@ -344,8 +344,8 @@
                   <span class="small text-muted">Add up to five tags that describe your community.</span>
                 </p>
                 <div class="mb-4">
-                  {% for tag in top_tags %}
-                  <button type="button" class="btn btn-outline-secondary tag-top mb-2">{{ tag }}</button>
+                  {% for key, value in top_tags.items %}
+                    <button type="button" class="btn btn-outline-secondary tag-top mb-2" id="tag_{{key}}">{{ value }}</button>
                   {% endfor %}
                 </div>
                 <div class="sr-only">{{ comm_form.tags.label_tag }}</div>
