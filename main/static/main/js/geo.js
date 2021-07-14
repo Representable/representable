@@ -350,11 +350,10 @@ tagnames.initialize();
 
 // for each top-tag class, add an onclick function which adds that tag to the tagsinput (if possible)
 // if not possible, display an error message -- you cannot add more than five tags to your community.
-var tagTopId = 999;
+
 var tagsText = [];
 $(".tag-top").on('click', function(){
-   $('#id_tags').tagsinput('add', {'value': tagTopId, 'text': $(this).text()});
-   tagTopId++;
+   $('#id_tags').tagsinput('add', {'value': parseInt($(this).attr('id').slice(4)), 'text': $(this).text()});
 });
 
 $('#id_tags').on('itemAdded', function(event) {
