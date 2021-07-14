@@ -676,10 +676,12 @@ $("#surveyP2ToMap_button").on("click", function(e) {
 
 $("#mapToPrivacy").on("click", function(e) {
   zoomToCommunity();
-  createCommSuccess = createCommPolygon();
+  setTimeout(() => {
+    createCommSuccess = createCommPolygon();
+  }, 1000);
   // loading icon
   $("#loading-entry").css("display", "block");
-  $("#loading-entry").delay(2000).fadeOut(2000);
+  $("#loading-entry").delay(2500).fadeOut(2500);
   setTimeout(function() {
     if (createCommSuccess) {
       e.preventDefault();
@@ -687,15 +689,17 @@ $("#mapToPrivacy").on("click", function(e) {
       $('#map-card').removeClass("has_error");
       automaticScrollToTop();
     }
-  }, 2000);
+  }, 2500);
 })
 
 $("#mapToPrivacyMobile").on("click", function(e) {
   zoomToCommunity();
-  createCommSuccess = createCommPolygon();
+  setTimeout(() => {
+    createCommSuccess = createCommPolygon();
+  }, 1000);
   // loading icon
   $("#loading-entry").css("display", "block");
-  $("#loading-entry").delay(2000).fadeOut(2000);
+  $("#loading-entry").delay(2500).fadeOut(2500);
   setTimeout(function() {
     if (createCommSuccess) {
       e.preventDefault();
@@ -703,7 +707,7 @@ $("#mapToPrivacyMobile").on("click", function(e) {
       $('#map-card').removeClass("has_error");
       automaticScrollToTop();
     }
-  }, 2000);
+  }, 2500);
 })
 
 $("#mapToSurveyP2").click(mapToSurveyP2);
@@ -796,6 +800,19 @@ function createCommPolygon() {
     }
   });
 
+  // map.addLayer({
+  //   'id': Math.random().toString().substring(),
+  //   'type': 'line',
+  //   'source': {
+  //     'type': 'geojson',
+  //     'data': multiPolySave.geometry,
+  //   },
+  //   'paint': {
+  //     'line-color': '#000',
+  //     'line-width': 3
+  //   }
+  // });
+
   // for display purposes -- this is the final multipolygon!!
   // TODO: implement community entry model change -> store only outer coordinates (like code in map.js)
   var wkt = new Wkt.Wkt();
@@ -826,7 +843,54 @@ function zoomToCommunity() {
   var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
   if (selectBbox === null || selectBbox.length === 0) return;
   var bbox = turf.bbox(selectBbox);
-  map.fitBounds(bbox, { padding: 300, duration: 0 });
+
+  if(blockGroupPolygons != null && unit_id === bg_id) {
+    // map.addLayer({
+    //   'id': Math.random().toString().substring(),
+    //   'type': 'line',
+    //   'source': {
+    //     'type': 'geojson',
+    //     'data': turf.bboxPolygon(bbox).geometry,
+    //   },
+    //   'paint': {
+    //     'line-color': '#eb4034',
+    //     'line-width': 3
+    //   }
+    // });
+
+    polyFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
+    let bbox_adjustment = undefined;
+    for(var i = 2; i < polyFilter.length; i++) {
+      if(bbox_adjustment === undefined) {
+        bbox_adjustment = blockGroupPolygons[polyFilter[i]].bbox_dims;
+      } else {
+        bbox_adjustment[0] = Math.max(bbox_adjustment[0], blockGroupPolygons[polyFilter[i]].bbox_dims[0]);
+        bbox_adjustment[1] = Math.max(bbox_adjustment[1], blockGroupPolygons[polyFilter[i]].bbox_dims[1]);
+      }
+      blockGroupPolygons[polyFilter[i]].bbox_dims[0];
+      blockGroupPolygons[polyFilter[i]].bbox_dims[1];
+    }
+    bbox[0] -= bbox_adjustment[0];
+    bbox[1] -= bbox_adjustment[1];
+    bbox[2] += bbox_adjustment[0];
+    bbox[3] += bbox_adjustment[1];
+
+    // map.addLayer({
+    //   'id': Math.random().toString().substring(),
+    //   'type': 'line',
+    //   'source': {
+    //     'type': 'geojson',
+    //     'data': turf.bboxPolygon(bbox).geometry,
+    //   },
+    //   'paint': {
+    //     'line-color': '#eb4034',
+    //     'line-width': 3
+    //   }
+    // });
+    map.fitBounds(bbox, { duration: 0 });
+  } else {
+    map.fitBounds(bbox, { duration: 0, padding: 300 });
+  }
 }
 /****************************************************************************/
 
@@ -929,7 +993,7 @@ var map = new mapboxgl.Map({
   style: "mapbox://styles/districter-team/ckdfv8riy0uf51hqu1g7qjrha", //hosted style id
   center: [-96.7026, 40.8136], // starting position - Lincoln, NE :)
   zoom: 3, // starting zoom -- higher is closer
-  minZoom: 7,
+  minZoom: 6.5,
 });
 
 map.on('load', function() {
@@ -1332,13 +1396,56 @@ function newHighlightLayer(state, firstSymbolId, suffix) {
   );
 }
 
+function checkIsContiguous(idFilter) {
+  var active_ids = new Set(idFilter.slice(2));
+  if(active_ids.size == 0)
+    return true;
+  let visited = new Set();
+  let stack = [];
+  stack.push(active_ids.values().next().value);
+  visited.add(stack[0]);
+
+  while(stack.length > 0){
+    blockGroupPolygons[stack.pop()].adj_geoids.forEach((id) => {
+      if(active_ids.has(id) && !visited.has(id)){
+        stack.push(id);
+        visited.add(id);
+      }
+    });
+  }
+
+  if(visited.size == active_ids.size)
+    hideWarningMessage();
+  else
+    showWarningMessage("WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org.");
+}
 /******************************************************************************/
 // the drawing radius for select tool
 var drawRadius = 0;
 var isStateChanged = false;
+var blockGroupPolygons = null;
 /* After the map style has loaded on the page, add a source layer and default
 styling for a single point. */
 map.on("style.load", function () {
+  fetch('/block_group_polygons/' + state.toLowerCase() + 'bg/')
+    .then(response => {
+      if (response.ok) {
+        return response.json()
+      } else if(response.status === 404) {
+        return Promise.reject('error 404')
+      } else {
+        return Promise.reject('some other error: ' + response.status)
+      }
+    })
+    .then(data => {
+      blockGroupPolygons = data;
+      console.log('data loaded successfully');
+    })
+    .catch(error => {
+      blockGroupPolygons = null;
+      console.log('error while loading data,', error);
+    });
+
   var layers = map.getStyle().layers;
   // Find the index of the first symbol layer in the map style
   // this is so that added layers go under the symbols on the map
@@ -1468,10 +1575,12 @@ map.on("style.load", function () {
         }
         else {
           selectBbox = turf.difference(selectBbox, currentBbox);
-          if (selectBbox != null && turf.getType(selectBbox) == "MultiPolygon") {
-            showWarningMessage(
-              "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
-            );
+          if(blockGroupPolygons == null || unit_id != bg_id) {
+            if (selectBbox != null && turf.getType(selectBbox) == "MultiPolygon") {
+              showWarningMessage(
+                "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
+              );
+            }
           }
         }
       }
@@ -1484,13 +1593,15 @@ map.on("style.load", function () {
         hideWarningMessage();
       } else {
         isChanged = true;
-        if (
-          turf.booleanDisjoint(currentBbox, selectBbox) &&
-          !isEmptyFilter(currentFilter)
-        ) {
-          showWarningMessage(
-            "WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
-          );
+        if (blockGroupPolygons == null || unit_id != bg_id) {
+          if (
+            turf.booleanDisjoint(currentBbox, selectBbox) &&
+            !isEmptyFilter(currentFilter)
+          ) {
+            showWarningMessage(
+              "WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
+            );
+          }
         }
         selectBbox = turf.union(currentBbox, selectBbox);
       }
@@ -1510,6 +1621,13 @@ map.on("style.load", function () {
         }
       });
     }
+
+    if (blockGroupPolygons != null && unit_id === bg_id) {
+      // console.time('contiguitycheck')
+      checkIsContiguous(filter);
+      // console.timeEnd('contiguitycheck')
+    }
+
     // check size of community - 800 block groups or 2400 blocks
     if ((!drawUsingBlocks && filter.length < 802) || (drawUsingBlocks && filter.length < 2402)) {
       map.setFilter(state + "-highlighted-" + layer_suffix, filter);

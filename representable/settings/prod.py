@@ -20,7 +20,7 @@ ALLOWED_HOSTS = [
     "representable-dev.herokuapp.com",
 ]
 
-DEBUG = False
+DEBUG = True
 
 # Production Email Settings
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
@@ -38,3 +38,4 @@ MIXPANEL_TOKEN = "d0cc0bfda7587bccdb286d10deeac993"
 
 RECAPTCHA_PUBLIC = "6Lcz7BsaAAAAAPZw-gbTKcIoAZcw55QqVxe3PWzz"
 RECAPTCHA_PRIVATE = os.getenv("RECAPTCHA_PRIVATE")
+CHECK_CAPTCHA_SUBMIT = True

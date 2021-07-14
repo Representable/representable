@@ -124,6 +124,7 @@ from itertools import islice
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 import pandas as pd
+import requests
 
 from django.conf import settings
 
@@ -143,6 +144,13 @@ from django.contrib.gis.geos import GEOSGeometry
 
 from googleapiclient import discovery
 
+def block_group_polygons(request, abbr):
+    try:
+        s3 = boto3.resource('s3')
+        obj = s3.Object('dev-precomputed-blockgroups', 'adj-n-bounds-'+abbr+'.json')
+        return JsonResponse(json.loads(obj.get()['Body'].read()))
+    except Exception as e:
+        raise Http404
 
 # custom mixin redirects to signup page/tab rather than login
 class SignupRequiredMixin(AccessMixin):
