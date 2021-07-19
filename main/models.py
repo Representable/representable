@@ -439,6 +439,7 @@ class Signature(models.Model):
         CommunityEntry, on_delete=models.CASCADE, default=""
     )
     hash = models.CharField(max_length=64, blank=True)
+    edit_hash = models.CharField(max_length=64, blank=True)
 
 
 # ******************************************************************************#

@@ -87,6 +87,12 @@ urlpatterns = [
         {"token": "", "state": "", "drive": ""},
         name="entry",
     ),
+    path(
+        "edit/<edit_hash>/",
+        views.main.EntryView.as_view(),
+        {"token": "", "state": "", "drive": ""},
+        name="entry",
+    ),
     path("about/", views.main.About.as_view(), name="about"),
     path("faq/", views.main.FAQ.as_view(), name="faq"),
     path("glossary/", views.main.Glossary.as_view(), name="glossary"),

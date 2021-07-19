@@ -107,6 +107,7 @@ from representable.settings.base import STATIC_ROOT
 from shapely.geometry import mapping
 from geojson_rewind import rewind
 import geojson
+import psycopg2
 import os
 import json
 import re
@@ -114,6 +115,8 @@ import csv
 import hmac
 import hashlib
 import base64
+import uuid
+import datetime
 from django.template import loader
 import shapely.wkt
 import reverse_geocoder as rg
@@ -1005,22 +1008,92 @@ class EntryView(LoginRequiredMixin, View):
         "form-MAX_NUM_FORMS": "10",
     }
 
-    # https://www.agiliq.com/blog/2019/01/django-formview/
+    # https://www.agiliq.com/blog/2019/01/django-formview/, for creating an entry from scratch
     def get_initial(self):
         initial = self.initial
         if self.request.user.is_authenticated:
             initial.update({"user": self.request.user})
         return initial
+    
+    # for editing pre-existing entry
+    def get_initial_values(self, id):
+        initial = self.initial
+        if self.request.user.is_authenticated:
 
-    def get(self, request, abbr=None, *args, **kwargs):
-        if not abbr:
-            return redirect("/#select")
+            # cur.execute("""SELECT "custom_question" FROM community_entry WHERE id='"""+str(id)+"""'""")
+            # query_results = cur.fetchall()
+            # custom_question = query_results[0][0]
+            custom_question = "custom q!!"
+
+            query = CommunityEntry.objects.filter(id=id)
+            entry = query[0]
+
+            query = Address.objects.filter(entry_id=id)
+            address = query[0]
+
+            print(entry.census_blocks_polygon.type())
+
+            initial.update({"user": self.request.user})
+            initial.update({"user_name": entry.user_name})
+            initial.update({"street": address.street})
+            initial.update({"city": address.city})
+            initial.update({"state": address.state})
+            initial.update({"zipcode": address.zipcode})
+            initial.update({"comm_activities": entry.comm_activities})
+            initial.update({"cultural_interests": entry.cultural_interests})
+            initial.update({"economic_interests": entry.economic_interests})
+            initial.update({"other_considerations": entry.other_considerations})
+            initial.update({"custom_question": custom_question})
+            initial.update({"entry_name": entry.entry_name})
+            initial.update({"census_blocks_polygon": entry.census_blocks_polygon})
+        
+        return initial
+
+    def get(self, request, abbr=None, edit_hash=None, *args, **kwargs):
+        if edit_hash:
+            print("edit_hash: "+edit_hash)
+            conn = psycopg2.connect(host="localhost", port = 5432, database="representable_db", user="representable", password="representable333")
+            cur = conn.cursor()
+
+            cur.execute("""SELECT entry_id FROM main_signature WHERE edit_hash='"""+str(edit_hash)+"""'""")
+            query_results = cur.fetchall()
+            if not query_results:
+                return redirect("/404.html")
+            entry_id = query_results[0][0]
+
+            cur.execute("""SELECT state FROM community_entry WHERE "id"='"""+str(entry_id)+"""'""")
+            query_results = cur.fetchall()
+            if not query_results:
+                return redirect("/404.html")
+            abbr = query_results[0][0]
+
+            cur.execute("""SELECT created_at FROM community_entry WHERE id='"""+str(entry_id)+"""'""")
+            query_results = cur.fetchall()
+            created_at = query_results[0][0].replace(tzinfo=None)
+
+            cur.execute("""SELECT "entry_ID" FROM community_entry WHERE id='"""+str(entry_id)+"""'""")
+            query_results = cur.fetchall()
+            entry_ID = query_results[0][0]
+
+            current_time = datetime.datetime.now()
+
+            if (current_time-created_at).total_seconds() > 86400:
+                return redirect("../../submission/"+str(entry_ID))
+
+            cur.close()
+            conn.close()
+
+            comm_form = self.community_form_class(
+                initial=self.get_initial_values(entry_id), label_suffix=""
+            )
+        elif not abbr:
+            return redirect("/entry_state_selection")
         else:
             if not any(abbr.upper() in i for i in STATES):
                 return redirect("/entry_state_selection")
-        comm_form = self.community_form_class(
-            initial=self.get_initial(), label_suffix=""
-        )
+            comm_form = self.community_form_class(
+                initial=self.get_initial(), label_suffix=""
+            )
         addr_form = self.address_form_class(
             initial=self.get_initial(), label_suffix=""
         )
@@ -1318,7 +1391,7 @@ class EntryView(LoginRequiredMixin, View):
                 digestmod=hashlib.sha256,
             ).digest()
             signature = base64.b64encode(digest).decode()
-            sign_obj = Signature(entry=entryForm, hash=signature)
+            sign_obj = Signature(entry=entryForm, hash=signature, edit_hash = uuid.uuid4())
             sign_obj.save()
 
             m_uuid = str(entryForm.entry_ID)
