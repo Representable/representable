@@ -1047,6 +1047,8 @@ class EntryView(LoginRequiredMixin, View):
         drive_custom_question = ""
         drive_custom_question_example = ""
         drive_units = "BG"
+        coi_def = ""
+        coi_title = ""
         if kwargs["drive"]:
             has_drive = True
             drive_slug = self.kwargs["drive"]
@@ -1080,6 +1082,8 @@ class EntryView(LoginRequiredMixin, View):
                 return redirect(reverse_lazy("main:entry"))
             address_required = drive.require_user_addresses
             drive_units = drive.units
+            coi_title = drive.opt_coi_def_title
+            coi_def = drive.opt_coi_def_info
 
         context = {
             "comm_form": comm_form,
@@ -1101,6 +1105,8 @@ class EntryView(LoginRequiredMixin, View):
             "state": abbr,
             "address_required": address_required,
             "drive_units": drive_units,
+            "coi_title": coi_title,
+            "coi_def": coi_def,
             "state_obj": State.objects.get(abbr=abbr.upper()),
             "page_type": "entry",  # For the base template to check and remove footer
         }

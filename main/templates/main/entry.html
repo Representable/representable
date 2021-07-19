@@ -42,6 +42,8 @@
     var census_key = "{{ census_key }}";
     var language = "{{LANGUAGE_CODE}}";
     var units = "{{drive_units}}";
+    var coi_title = "{{coi_title}}";
+    var coi_def = "{{coi_def}}";
     mixpanel.track("Entry Page Loaded",
     {
      "drive_id": drive_id,
@@ -138,9 +140,9 @@
                             {% include './entry_address.html' %}
                         </div>
 
-                        <div id="entry_survey" class="d-none">{% include './entry_survey.html' %}</div>
+                        <div id="entry_survey" class="d-none">{% include './entry_survey.html' with coi_def=coi_def coi_title=coi_title%}</div>
 
-                        <div id="entry_privacy" class="d-none">{% include './entry_privacy.html' %}</div>
+                        <div id="entry_privacy" class="d-none">{% include './entry_privacy.html' with coi_def=coi_def coi_title=coi_title%}</div>
                     </div>
                 </div>
             </div>

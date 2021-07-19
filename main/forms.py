@@ -325,7 +325,7 @@ class DriveForm(ModelForm):
             ),
             "description": forms.Textarea(
                 attrs={
-                    "placeholder": "Short Description",
+                    "placeholder": "ex. This is a drive run by [organization name] to collect communities of interest.",
                     "class": "form-control",
                 }
             ),
