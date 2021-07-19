@@ -5,15 +5,10 @@
 
 {% block content %}
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-            {% comment %} <div class="card card-signin my-5"> {% endcomment %}
-            <div>
                 <div>
-                {% comment %} <div class="card-body"> {% endcomment %}
                     {% if verified %}
-                    <div class="container">
-                    <div id="left-side-of-page" style="float:left;">
+                    <div class="row" style="margin: 5%">
+                    <div id="left-side-of-page" class="col-sm-9 col-md-8 col-lg-7 mx-auto">
                     {% comment %} <h5 class="card-title text-center"> {% endcomment %}
                     <h3>
                         {% trans "Create a Drive" %}
@@ -82,13 +77,13 @@
                     </form>
                     {% endif %}
                     </div>
-                    <div id="right-side-of-page" style="float:left;">
+                    <div id="right-side-of-page" class="col-sm-9 col-md-6 col-lg-5 mx-auto">
                         <h5 class="text-muted mx-2 pb-3"> Customizable Landing Page </h5>
                         <p class="text-muted mx-2 pb-3"> When you send the link to your mapping drive, members will see this page first. 
                         Customize this page to include a title and description of your mapping drive. 
                         Additionally, if you are a state or local government, you can edit the redistricting information in the blue boxes. 
                         </p>
-                        <img width="500" src="{% static 'img/drive_preview.png' %}" alt="Preview of drive page" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); margin-bottom: 20px;"> </img>
+                        <img width="100%" src="{% static 'img/drive_preview.png' %}" alt="Preview of drive page" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); margin-bottom: 20px;"> </img>
                     </div>
                     </div>
                     {% if not verified %}
@@ -103,10 +98,7 @@
                     </p>
                     {% endif %}
 
-                </div>
-            </div>
-        </div>
-    </div>
+                </div>        
 </div>
 {% endblock %}
 {% block script %}

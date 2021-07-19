@@ -1531,12 +1531,22 @@ Entry Form Management
 
 /************************************* Survey Section *******************************************/
 
+input.survey-field {
+  color: #000000;
+  padding: 10px 20px;
+}
+
 textarea.survey-field {
   color: #000000;
   padding: 10px 20px;
 }
 
 textarea.survey-field:focus {
+  color: #000000;
+  opacity: 1;
+}
+
+input.survey-field:focus {
   color: #000000;
   opacity: 1;
 }
@@ -2434,4 +2444,14 @@ input:checked + .slider:before {
 
 #optional-fields {
   display: none;
+}
+
+.required {
+  color: red;
+  padding: 0px;
+  margin: 0px;
+}
+
+.label-class {
+  padding: 0px;
 }

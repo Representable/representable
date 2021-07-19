@@ -190,8 +190,9 @@ class OrganizationForm(ModelForm):
     class Meta:
         model = Organization
         fields = ["name", "description", "ext_link", "states", "government", "logo"]
+        label_suffix = ""
         labels = {
-            "name": "Organization Name",
+            "name": "Organization Name*",
             "ext_link": "Link to Organization Website",
             "logo": "Optional organization Logo",
             "government": "Are you a state or city government?",
@@ -228,6 +229,7 @@ class EditOrganizationForm(ModelForm):
     class Meta:
         model = Organization
         fields = ["name", "description", "ext_link", "logo"]
+        label_suffix = ""
         labels = {
             "name": "Organization Name",
             "ext_link": "Link to Organization Website",
@@ -276,6 +278,7 @@ class DriveForm(ModelForm):
             "opt_coi_def_title",
             "opt_coi_def_info",
         ]
+        self.label_suffix = ""
         if not gov:
             self.auto_id = False
             for f in optional_fields:
@@ -303,11 +306,10 @@ class DriveForm(ModelForm):
             "opt_coi_def_info",
         ]
         labels = {
-            "name": "Drive Title",
-            "ext_link": "Link to Organization Website",
-            "units": "Mapping Units",
-            "description": "Description",
-            "state": "State",
+            "name": "Drive Title*",
+            "units": "Mapping Units*",
+            "description": "Description*",
+            "state": "State*",
             "require_user_addresses": "Require user addresses",
             "opt_redist_title": "Redistricting title",
             "opt_redist_info": "Redistricting information",
