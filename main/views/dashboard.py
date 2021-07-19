@@ -568,6 +568,9 @@ class CreateDrive(LoginRequiredMixin, OrgAdminRequiredMixin, CreateView):
             user=self.request.user, verified=True
         ).exists()
 
+        org = Organization.objects.get(pk=self.kwargs["pk"])
+        context["gov"] = org.government
+
         return context
 
     def form_valid(self, form):
@@ -610,6 +613,9 @@ class UpdateDrive(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
         kwargs = super().get_form_kwargs()
         org = Organization.objects.get(pk=self.kwargs["pk"])
         kwargs["org_states"] = org.states
+
+        kwargs["gov"] = org.government
+
         return kwargs
 
 

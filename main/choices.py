@@ -73,6 +73,6 @@ STATES = (
 )
 
 UNITS = (
-    ("B", "Census Blocks"),
     ("BG", "Census Block Groups"),
+    ("B", "Census Blocks"),
 )

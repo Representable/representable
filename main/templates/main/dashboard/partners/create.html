@@ -11,20 +11,32 @@
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
             <div class="card card-signin my-5">
                 <div class="card-body">
-                    <h5 class="card-title text-center">
+                    <h5 class="card-title text-left">
                         Create an Organization
                       </h5>
                       <form role="form" id="CreateOrg" method="post" enctype="multipart/form-data">{% csrf_token %}
 
                           <div class="form-group">
                         {% for field in form %}
-                          <div class="fieldWrapper">
-                              {{ field.errors }}
-                              {{ field.label_tag }} {{ field|append_attr:"class:form-control" }}
-                              {% if field.help_text %}
-                              <p class="help">{{ field.help_text|safe }}</p>
-                              {% endif %}
-                          </div>
+                            <div class="fieldWrapper">
+                                {% if "government" in field.label_tag %}
+                                <div class="form-check form-check-inline">
+                                    {{ field.errors }}
+                                    {{ field.label_tag }} {{ field }}
+                                    {% comment %} {{ field.label_tag }} {{ field|append_attr:"class:form-control" }} {% endcomment %}
+                                    {% if field.help_text %}
+                                    <p class="help">{{ field.help_text|safe }}</p>
+                                    {% endif %}
+                                </div>
+                                {% else %}
+                                {{ field.errors }}
+                                {{ field.label_tag }} {{ field|append_attr:"class:form-control survey-field" }}
+                                {% if field.help_text %}
+                                <p class="help">{{ field.help_text|safe }}</p>
+                                {% endif %}
+                                {% endif %}
+                            </div>
+                          {% comment %} {% endif %} {% endcomment %}
                       {% endfor %}
                       </div>
                       <div style="display: inline-block;">

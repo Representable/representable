@@ -194,7 +194,7 @@ class OrganizationForm(ModelForm):
             "name": "Organization Name",
             "ext_link": "Link to Organization Website",
             "logo": "Optional organization Logo",
-            "government": "My organization is a government or jurisdiction",
+            "government": "Are you a state or city government?",
         }
         widgets = {
             "name": forms.TextInput(
@@ -202,7 +202,7 @@ class OrganizationForm(ModelForm):
             ),
             "description": forms.Textarea(
                 attrs={
-                    "placeholder": "Short Description",
+                    "placeholder": "ex. Our goal is to support and uplift Latinx communiities in Philadelphia. Our organization is working to ensure that fair maps are drawn in order to protect our communities and have elected officials that reflect our values.",
                     "rows": 4,
                     "cols": 20,
                 }
@@ -269,35 +269,38 @@ class DriveForm(ModelForm):
             choices=choices, attrs={"class": "form-control"}
         )
         optional_fields = [
-            "redist_title",
-            "redist_info",
-            "criteria_title",
-            "criteria_info",
-            "coi_def_title",
-            "coi_def_info",
+            "opt_redist_title",
+            "opt_redist_info",
+            "opt_criteria_title",
+            "opt_criteria_info",
+            "opt_coi_def_title",
+            "opt_coi_def_info",
         ]
         if not gov:
             self.auto_id = False
             for f in optional_fields:
                 self.fields[f].widget = forms.HiddenInput()
                 self.fields[f].label = ''
-        for f in optional_fields:
+        # for f in optional_fields:
+        #     self.fields[f].widget = forms.HiddenInput()
+        #     self.fields[f].label = ''
+        # for f in optional_fields:
             # self.fields[f].label_suffix = "_opt"
 
     class Meta:
         model = Drive
         fields = [
             "name",
-            "description",
             "state",
             "require_user_addresses",
-            "redist_title",
-            "redist_info",
-            "criteria_title",
-            "criteria_info",
-            "coi_def_title",
-            "coi_def_info",
+            "description",
             "units",
+            "opt_redist_title",
+            "opt_redist_info",
+            "opt_criteria_title",
+            "opt_criteria_info",
+            "opt_coi_def_title",
+            "opt_coi_def_info",
         ]
         labels = {
             "name": "Drive Title",
@@ -306,12 +309,12 @@ class DriveForm(ModelForm):
             "description": "Description",
             "state": "State",
             "require_user_addresses": "Require user addresses",
-            "redist_title": "Redistricting title",
-            "redist_info": "Redistricting information",
-            "criteria_title": "Criteria title",
-            "criteria_info": "Criteria information",
-            "coi_def_title": "COI definition title",
-            "coi_def_info": "COI definition information",
+            "opt_redist_title": "Redistricting title",
+            "opt_redist_info": "Redistricting information",
+            "opt_criteria_title": "Criteria title",
+            "opt_criteria_info": "Criteria information",
+            "opt_coi_def_title": "COI definition title",
+            "opt_coi_def_info": "COI definition information",
         }
         widgets = {
             "name": forms.TextInput(
@@ -332,37 +335,37 @@ class DriveForm(ModelForm):
             "require_user_addresses": forms.CheckboxInput(
                 attrs={"class": "form-check-input"}
             ),
-            "redist_title": forms.TextInput(
+            "opt_redist_title": forms.TextInput(
                 attrs={
                     "placeholder": "ex. Redistricting in [State/City]",
                     "class": "form-control",
                 }
             ),
-            "redist_info": forms.Textarea(
+            "opt_redist_info": forms.Textarea(
                 attrs={
                     "placeholder": "ex. Description of how redistricting works in your state or city.",
                     "class": "form-control",
                 }
             ),
-            "criteria_title": forms.TextInput(
+            "opt_criteria_title": forms.TextInput(
                 attrs={
                     "placeholder": "ex. [State/City] Redistricting Criteria",
                     "class": "form-control",
                 }
             ),
-            "criteria_info": forms.Textarea(
+            "opt_criteria_info": forms.Textarea(
                 attrs={
                     "placeholder": "ex. A list of redistricting criteria in your state or city.",
                     "class": "form-control",
                 }
             ),
-            "coi_def_title": forms.TextInput(
+            "opt_coi_def_title": forms.TextInput(
                 attrs={
                     "placeholder": "ex. Communities of Interest in [State/City]",
                     "class": "form-control",
                 }
             ),
-            "coi_def_info": forms.Textarea(
+            "opt_coi_def_info": forms.Textarea(
                 attrs={
                     "placeholder": "ex. The definition of Communities of Interest in your state or city.",
                     "class": "form-control",

@@ -169,7 +169,7 @@ class Drive(models.Model):
         max_length=700,
         blank=False,
         null=False,
-        default="A mapping drive for communities of interest",
+        default="",
     )
     state = models.CharField(
         max_length=50, choices=STATES, default=None, blank=False
@@ -187,26 +187,26 @@ class Drive(models.Model):
     custom_question_example = models.TextField(
         max_length=255, blank=True, unique=False, default=""
     )
-    redist_title = models.CharField(
+    opt_redist_title = models.CharField(
         max_length=100, blank=True, unique=False, default=""
     )
-    redist_info = models.TextField(
+    opt_redist_info = models.TextField(
         max_length=700, blank=True, unique=False, default=""
     )
-    criteria_title = models.CharField(
+    opt_criteria_title = models.CharField(
         max_length=100, blank=True, unique=False, default=""
     )
-    criteria_info = models.TextField(
+    opt_criteria_info = models.TextField(
         max_length=700, blank=True, unique=False, default=""
     )
-    coi_def_title = models.CharField(
+    opt_coi_def_title = models.CharField(
         max_length=100, blank=True, unique=False, default=""
     )
-    coi_def_info = models.TextField(
+    opt_coi_def_info = models.TextField(
         max_length=700, blank=True, unique=False, default=""
     )
     units = models.CharField(
-        max_length=50, choices=UNITS, default="block_groups", blank=False
+        max_length=50, choices=UNITS, default="Census Block Groups", blank=False
     )
 
     class Meta:

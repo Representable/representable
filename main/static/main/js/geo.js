@@ -1429,6 +1429,32 @@ map.on("style.load", function () {
     newCensusShading(state, firstSymbolId, "bg");
     newCensusLines(state, "bg");
     newHighlightLayer(state, firstSymbolId, "bg");
+    if (units==="B") {
+      map.setLayoutProperty(state + "-census-lines-block", "visibility", "visible");
+      map.setLayoutProperty(state + "-census-shading-block", "visibility", "visible");
+      map.setLayoutProperty(state + "-highlighted-block", "visibility", "visible");
+      map.setLayoutProperty(state + "-census-lines-bg", "visibility", "none");
+      map.setLayoutProperty(state + "-census-shading-bg", "visibility", "none");
+      map.setLayoutProperty(state + "-highlighted-bg", "visibility", "none");
+      drawUsingBlocks = true;
+      layer_suffix = "block";
+      unit_id = block_id;
+      // change button name for this case -- TODO: languages?
+      $("#map-units-btn").text("Use larger units");
+      //clear "cache" so that undo button still works as expected
+      sessionStorage.clear();
+      filterStack = [];
+      bboxStack = [];    // show or hide population display
+      if (old_units) {
+        $("#map-pop-btn").show();
+      } else {
+        $("#map-pop-btn").hide();
+      }
+      // clear selection
+      map.setFilter(state + "-highlighted-block", ["in", block_id, ""]);
+      map.setFilter(state + "-highlighted-bg", ["in", bg_id, ""]);
+      mapHover();
+    }
   }
   showMap();
   map.flyTo({
