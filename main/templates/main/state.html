@@ -20,8 +20,8 @@
 
   <div id="state-info">{% include './state_info.html' %}</div>
   <div class="row text-center">
-      <a class="mx-auto btn btn-outline-primary btn-lg btn-canvas my-5 d-none d-lg-block" href="{% url 'main:entry' %}{{state_obj.abbr|lower}}" role="button">{% trans "START MAPPING" %}</a>
-      <a class="mx-auto btn btn-outline-primary btn-canvas my-5 d-lg-none" href="{% url 'main:entry' %}{{state_obj.abbr|lower}}" role="button">{% trans "START MAPPING" %}</a>
+      <a class="mx-auto btn btn-outline-primary btn-lg btn-canvas my-5 d-none d-lg-block btn-ls-md" href="{% url 'main:entry' %}{{state_obj.abbr|lower}}" role="button">{% trans "START MAPPING" %}</a>
+      <a class="mx-auto btn btn-outline-primary btn-canvas my-5 d-lg-none btn-ls-md" href="{% url 'main:entry' %}{{state_obj.abbr|lower}}" role="button">{% trans "START MAPPING" %}</a>
   </div>
 </div>
 </div>

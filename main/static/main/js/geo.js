@@ -199,16 +199,40 @@ function toggleAngle(e) {
 // Adds the responses given to the survey questions to the dropdown on the map page
 function fillSurveyQuestions() {
   $("h6#dropdown-comm-name").text(`${$("#id_entry_name").val()}:`);
-  $("#map-economic-interests-resp>p.collapse-in").text($("#id_economic_interests").val());
-  $("#map-activities-resp>p.collapse-in").text($("#id_comm_activities").val());
-  $("#map-cultural-interests-resp>p.collapse-in").text($("#id_cultural_interests").val());
-  $("#map-other-interests-resp>p.collapse-in").text($("#id_other_considerations").val());
-
   $("h6#modal-comm-name").text(`${$("#id_entry_name").val()}:`);
-  $("#mobile-map-economic-interests-resp>p.collapse-in").text($("#id_economic_interests").val());
-  $("#mobile-map-activities-resp>p.collapse-in").text($("#id_comm_activities").val());
-  $("#mobile-map-cultural-interests-resp>p.collapse-in").text($("#id_cultural_interests").val());
-  $("#mobile-map-other-interests-resp>p.collapse-in").text($("#id_other_considerations").val());
+  // if empty field, don't show on dropdown
+  if ($("#id_comm_activities").val() == "") {
+    $("#map_activities_accordion").hide();
+    $("#mobile-map_activities_accordion").hide();
+  } else {
+    $("#map-activities-resp>p.collapse-in").text($("#id_comm_activities").val());
+    $("#mobile-map-activities-resp>p.collapse-in").text($("#id_comm_activities").val());
+  }
+  if ($("#id_economic_interests").val() == "") {
+    $("#map-economic-interests-accordion").hide();
+    $("#mobile-map-economic-interests-accordion").hide();
+  } else {
+    $("#map-economic-interests-resp>p.collapse-in").text($("#id_economic_interests").val());
+    $("#mobile-map-economic-interests-resp>p.collapse-in").text($("#id_economic_interests").val());
+  }
+  if ($("#id_cultural_interests").val() == "") {
+    $("#map-cultural-interests-accordion").hide();
+    $("#mobile-map-cultural-interests-accordion").hide();
+  } else {
+    $("#map-cultural-interests-resp>p.collapse-in").text($("#id_cultural_interests").val());
+    $("#mobile-map-cultural-interests-resp>p.collapse-in").text($("#id_cultural_interests").val());
+  }
+  if ($("#id_other_considerations").val() == "") {
+    $("#map-other-interests-accordion").hide();
+    $("#mobile-map-other-interests-accordion").hide();
+  } else {
+    $("#map-other-interests-resp>p.collapse-in").text($("#id_other_considerations").val());
+    $("#mobile-map-other-interests-resp>p.collapse-in").text($("#id_other_considerations").val());
+  }
+  if (drive_name != "" && drive_custom_question != "") {
+    $("#map-custom-question-resp>p.collapse-in").text($("#id_custom_response").val());
+    $("#mobile-map-custom-question-resp>p.collapse-in").text($("#id_custom_response").val());
+  }
 }
 
 $('#map-comm-menu').on('click', function (event) {
@@ -1268,8 +1292,12 @@ function hideWarningMessage() {
 }
 
 // Only add zoom buttons to medium and large screen devices (non-mobile)
-if (!window.matchMedia("only screen and (max-width: 760px)").matches) {
-  map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
+if (!window.matchMedia("screen and (max-width: 760px)").matches) {
+  var nav = new mapboxgl.NavigationControl({
+        showCompass: false
+      });
+
+  map.addControl(nav);
 }
 
 var user_polygon_id = undefined;
