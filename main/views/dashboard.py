@@ -161,8 +161,8 @@ class CreateOrg(LoginRequiredMixin, CreateView):
             "[Action Required] New Organization Sign-up",
             email_content,
             "no-reply@representable.org",
-            # ["team@representable.org"],
-            ["acbeaton4@gmail.com"],
+            ["team@representable.org"],
+            # ["acbeaton4@gmail.com"],
             fail_silently=False,
         )
 
