@@ -391,7 +391,6 @@ class CommunityEntry(models.Model):
     state = models.CharField(
         max_length=10, blank=True, unique=False, default=""
     )
-    # signature = models.CharField(max_length=64, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     admin_approved = models.BooleanField(default=True)
     private = models.BooleanField(default=False, null=True)
