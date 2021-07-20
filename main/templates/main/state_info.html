@@ -82,7 +82,7 @@
           {% comment %} <object type="image" class="w-75 mx-auto d-block h-100" data={{ logo.url }} alt="image of map with information icon"></object> {% endcomment %}
           <img src = {{ logo.url }} class="w-50 mx-auto d-block h-50" style="padding: 20px"/>
         <h5><p class="text-center">
-          <a href="/partners/{{drive_obj.organization}}" class="link-primary">
+          <a href="{% url 'main:partner_page' object.organization.slug %}" class="link-primary">
             {% blocktrans trimmed %}
             Organized by 
             {% endblocktrans %} {{ drive_obj.organization }} <i class="fas fa-arrow-circle-right"></i>

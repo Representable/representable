@@ -187,10 +187,13 @@ class DeletionForm(ModelForm):
 
 
 class OrganizationForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.label_suffix = ""
+
     class Meta:
         model = Organization
         fields = ["name", "description", "ext_link", "states", "government", "logo"]
-        label_suffix = ""
         labels = {
             "name": "Organization Name*",
             "ext_link": "Link to Organization Website",
@@ -203,7 +206,7 @@ class OrganizationForm(ModelForm):
             ),
             "description": forms.Textarea(
                 attrs={
-                    "placeholder": "ex. Our goal is to support and uplift Latinx communiities in Philadelphia. Our organization is working to ensure that fair maps are drawn in order to protect our communities and have elected officials that reflect our values.",
+                    "placeholder": "ex. Our goal is to support and uplift Latinx communities in Philadelphia. Our organization is working to ensure that fair maps are drawn in order to protect our communities and have elected officials that reflect our values.",
                     "rows": 4,
                     "cols": 20,
                 }
@@ -226,10 +229,13 @@ class OrganizationForm(ModelForm):
 
 
 class EditOrganizationForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.label_suffix = ""
+
     class Meta:
         model = Organization
         fields = ["name", "description", "ext_link", "logo"]
-        label_suffix = ""
         labels = {
             "name": "Organization Name",
             "ext_link": "Link to Organization Website",
