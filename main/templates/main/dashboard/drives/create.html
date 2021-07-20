@@ -1,46 +1,91 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load widget_tweaks %}
+{% load i18n %}
 
 {% block content %}
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-            <div class="card card-signin my-5">
-                <div class="card-body">
+                <div>
                     {% if verified %}
-                    <h5 class="card-title text-center">
-                        Create a Drive
-                    </h5>
+                    <div class="row" style="margin: 5%">
+                    <div id="left-side-of-page" class="col-sm-9 col-md-8 col-lg-7 mx-auto">
+                    {% comment %} <h5 class="card-title text-center"> {% endcomment %}
+                    <h3>
+                        {% trans "Create a Drive" %}
+                    </h3>
+                    <p>
+                        {% blocktrans %} With Representable, your organization can create a drive to collect community maps. 
+                        Then, you can send out a link to your customized drive page. {% endblocktrans %}
+                    </p>
                     <form role="form" id="CreateDrive" method="post">
                         {% csrf_token %}
                         <div class="form-group">
-                            {% for field in form %}
-                            <div class="fieldWrapper">
-                                {% if "require_user_addresses" in field.label_tag %}
-                                <div class="form-check form-check-inline">
-                                    {{ field.label_tag }}
-                                    {{ field }}
-                                </div>
-                                {% else %}
-                                {{ field.errors }}
-                                {{ field.label_tag }}
-                                {{ field }}
-                                {% if field.help_text %}
-                                <p class="help">{{ field.help_text|safe }}</p>
-                                {% endif %}
-                                {% endif %}
+                            <div id="regular-fields">
+                                <h5 class="text-primary"> {% trans "Drive Introduction" %} </h5>
+                                {% for field in form %}
+                                    {% if "require_user_addresses" in field.label_tag %}
+                                        <div class="fieldWrapper">
+                                        <div class="form-check form-check-inline">
+                                            {{ field.label_tag }}
+                                            {{ field }}
+                                        </div>
+                                        </div>
+                                    {% else %}
+                                    {% if "opt" not in field.auto_id %}
+                                        <div class="fieldWrapper">
+                                        {{ field.errors }}
+                                        {{ field.label_tag }}
+                                        {{ field|append_attr:"class:form-control survey-field" }}
+                                        {% if field.help_text %}
+                                            <p class="help">{{ field.help_text|safe }}</p>
+                                        {% endif %}
+                                        </div>
+                                    {% endif %}
+                                    {% endif %}
+                                {% endfor %}
                             </div>
-                            {% endfor %}
+                            {% if gov %}
+                                <div id="optional-fields-toggle" class="form-toggle form-toggle-inline form-check-inline">
+                                    <h5 class="text-primary" style="padding-right: 10px; padding-top: 4px;"> {% trans "Edit Redistricting Information" %} </h5>
+                                    <label class="switch">
+                                        <input type="checkbox" id="edit-info" onchange="toggleFields()">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            {% endif %}
+                            <div id="optional-fields">
+                                {% for field in form %}
+                                    {% if "opt" in field.auto_id %}
+                                        <div class="fieldWrapper">
+                                        {{ field.errors }}
+                                        {{ field.label_tag }}
+                                        {{ field|append_attr:"class:form-control survey-field" }}
+                                        {% if field.help_text %}
+                                        <p class="help">{{ field.help_text|safe }}</p>
+                                        {% endif %}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
                         </div>
-                        <div style="display: inline-block;">
-                          <p class="text-muted mx-2 pb-3">By following this drive's custom link, users will be able to draw their community, after answering a series of questions.
+                        <div style="display: inline-block; padding-bottom: 30px">
+                          <p class="text-muted mx-2 pb-3">
                             If you would like to include a custom question for users to answer when submitting a community to this mapping drive, please send us a request
                             at <a href="mailto:team@representable.org">team@representable.org</a>.</p>
                           <button id="save" form="CreateDrive" type="submit" class="btn btn-primary" value="Submit">Submit</button>
                         </div>
                     </form>
                     {% endif %}
+                    </div>
+                    <div id="right-side-of-page" class="col-sm-9 col-md-6 col-lg-5 mx-auto">
+                        <h5 class="text-muted mx-2 pb-3"> Customizable Landing Page </h5>
+                        <p class="text-muted mx-2 pb-3"> When you send the link to your mapping drive, members will see this page first. 
+                        Customize this page to include a title and description of your mapping drive. 
+                        Additionally, if you are a state or local government, you can edit the redistricting information in the blue boxes. 
+                        </p>
+                        <img width="100%" src="{% static 'img/drive_preview.png' %}" alt="Preview of drive page" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); margin-bottom: 20px;"> </img>
+                    </div>
+                    </div>
                     {% if not verified %}
                     <h5 class="card-title text-center">
                         Create a Drive
@@ -53,9 +98,9 @@
                     </p>
                     {% endif %}
 
-                </div>
-            </div>
-        </div>
-    </div>
+                </div>        
 </div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="{% static 'main/js/drive.js' %}"></script>
 {% endblock %}
