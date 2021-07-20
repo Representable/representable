@@ -116,6 +116,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "main.context_processors.mixpanel.get_user_type",
                 "main.context_processors.mixpanel.get_mixpanel_token",
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -210,6 +211,9 @@ STATIC_URL = "/static/"
 # https://warehouse.python.org/project/whitenoise/
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+    )
 
 # Mapbox API Key
 MAPBOX_KEY = os.environ.get("DISTR_MAPBOX_KEY")
@@ -262,3 +266,8 @@ else:
     CHECK_CAPTCHA_SUBMIT = True
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 6242880
+
+MEDIA_ROOT= os.path.join(BASE_DIR, 'media')
+MEDIA_URL= "/media/"
+
+MAX_UPLOAD_SIZE = "500000"

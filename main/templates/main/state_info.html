@@ -13,14 +13,25 @@
     </div>
 
     <div class="col-12 p-3 light-blue-bg px-md-4 py-md-3 mb-4">
-        <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria2" aria-expanded="false" aria-controls="collapseCriteria2" onclick="toggleAngle(this)">
-          <h5 class="dark-gray-text" style="width: fit-content;"><b>{% trans "How does redistricting work in " %} {{ state_obj.name }}?</b><i class="fas fa-angle-down pl-3"></i></h5>
-        </button>
-      <div class="collapse" id="collapseCriteria2">
-        {% autoescape off %}
-        {{ state_obj.content_news }}
-        {% endautoescape %}
-      </div>
+      {% if not edited %}
+          <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria2" aria-expanded="false" aria-controls="collapseCriteria2" onclick="toggleAngle(this)">
+            <h5 class="dark-gray-text" style="width: fit-content;"><b>{% trans "How does redistricting work in " %} {{ state_obj.name }}?</b><i class="fas fa-angle-down pl-3"></i></h5>
+          </button>
+        <div class="collapse" id="collapseCriteria2">
+          {% autoescape off %}
+          {{ state_obj.content_news }}
+          {% endautoescape %}
+        </div>
+      {% else %}
+          <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria2" aria-expanded="false" aria-controls="collapseCriteria2" onclick="toggleAngle(this)">
+            <h5 class="dark-gray-text" style="width: fit-content;"><b> {{ drive_obj.opt_redist_title }} </b><i class="fas fa-angle-down pl-3"></i></h5>
+          </button>
+        <div class="collapse" id="collapseCriteria2">
+          {% autoescape off %}
+          {{ drive_obj.opt_redist_info }}
+          {% endautoescape %}
+        </div>
+      {% endif %}
     </div>
 
     <div class="col-12 p-3 light-blue-bg px-md-4 py-md-3 mb-4">
@@ -33,30 +44,68 @@
     </div>
 
     <div class="col-12 p-3 light-blue-bg px-md-4 py-md-3 mb-4">
-        <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria4" aria-expanded="false" aria-controls="collapseCriteria4" onclick="toggleAngle(this)">
-          <h5 class="dark-gray-text" style="width: fit-content;"><b>{{ state_obj.name }}'s {% trans "redistricting criteria" %} &#32;<i class="fas fa-angle-down pl-3"></i></b></h5>
-        </button>
-      <div class="collapse" id="collapseCriteria4">
-        {% autoescape off %}
-        {{ state_obj.content_criteria }}
-        {% endautoescape %}
-      </div>
+      {% if not edited %}
+          <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria4" aria-expanded="false" aria-controls="collapseCriteria4" onclick="toggleAngle(this)">
+            <h5 class="dark-gray-text" style="width: fit-content;"><b>{{ state_obj.name }}'s {% trans "redistricting criteria" %} &#32;<i class="fas fa-angle-down pl-3"></i></b></h5>
+          </button>
+        <div class="collapse" id="collapseCriteria4">
+          {% autoescape off %}
+          {{ state_obj.content_criteria }}
+          {% endautoescape %}
+        </div>
+      {% else %}
+          <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria4" aria-expanded="false" aria-controls="collapseCriteria4" onclick="toggleAngle(this)">
+            <h5 class="dark-gray-text" style="width: fit-content;"><b>{{ drive_obj.opt_criteria_title }}<i class="fas fa-angle-down pl-3"></i></b></h5>
+          </button>
+        <div class="collapse" id="collapseCriteria4">
+          {% autoescape off %}
+          {{ drive_obj.opt_criteria_info }}
+          {% endautoescape %}
+        </div>
+      {% endif %}
     </div>
   </div>
 
 
   <div class="col-6 d-none d-sm-block">
     <div class="m-auto pb-4 pt-2">
-      <object type="image/svg+xml" class="w-75 mx-auto d-block h-100" data="{% static 'img/map-info.svg' %}" alt="image of map with information icon"></object>
-      <h5><p class="text-center">
-        <a href="/map/{{state_obj.abbr}}" class="link-primary">
-          {% blocktrans trimmed %}
-          See community maps drawn in
-          {% endblocktrans %} {{ state_obj.name }} <i class="fas fa-arrow-circle-right"></i>
-        </a>
-      </p></h5>
+      
+      {% if logo.url == "" or not logo %}
+        <object type="image/svg+xml" class="w-75 mx-auto d-block h-100" data="{% static 'img/map-info.svg' %}" alt="image of map with information icon"></object>
+        <h5><p class="text-center">
+          <a href="/map/{{state_obj.abbr}}" target="_blank class="link-primary">
+            {% blocktrans trimmed %}
+            See community maps drawn in
+            {% endblocktrans %} {{ state_obj.name }} <i class="fas fa-arrow-circle-right"></i>
+          </a>
+        </p></h5>
+      {% else %}
+          {% comment %} <object type="image" class="w-75 mx-auto d-block h-100" data={{ logo.url }} alt="image of map with information icon"></object> {% endcomment %}
+          <img src = {{ logo.url }} class="w-50 mx-auto d-block h-50" style="padding: 20px"/>
+        <h5><p class="text-center">
+          <a href="{% url 'main:partner_page' object.organization.slug %}" class="link-primary">
+            {% blocktrans trimmed %}
+            Organized by 
+            {% endblocktrans %} {{ drive_obj.organization }} <i class="fas fa-arrow-circle-right"></i>
+          </a>
+        </p></h5>
+      {% endif %}
+                                                                                                 
     </div>
   </div>
 
+  <div class="col-12 p-3 light-blue-bg px-md-4 py-md-3 mb-4">
+      {% if not edited %}
+          <h5 class="dark-gray-text" style="width: fit-content;"><b>{% trans "Communities of Interest in " %} {{ state_obj.name }}&#32;</b></h5>
+          {% autoescape off %}
+          {{ state_obj.content_coi }}
+          {% endautoescape %}
+      {% else %}
+          <h5 class="dark-gray-text" style="width: fit-content;"><b>{{ drive_obj.opt_coi_def_title }}</b></h5>
+          {% autoescape off %}
+          {{ drive_obj.opt_coi_def_info }}
+          {% endautoescape %}
+      {% endif %}
+    </div>
 
 </div>

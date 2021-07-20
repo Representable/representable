@@ -203,12 +203,12 @@
                       </div>
                       <!-- ********************* -->
                       <div class="col-12 col-md-4">
-                        <button class="btn btn-primary w-50 w-md-75 w-xl-100 mb-3 mb-md-0" id="pdf-button">PDF</button>
+                        <button class="btn btn-primary w-50 w-md-75 w-xl-100 mb-3 mb-md-0 btn-ls-md" id="pdf-button">PDF</button>
                       </div>
                       {% endwith %}
                       {% with link_text="/export/csv/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
                       <div class="col-12 col-md-4">
-                        <a class="btn btn-primary w-50 w-md-75 w-xl-100" href={{link_text}} role="button" download="{{c.human_readable_name}}.zip">CSV</a>
+                        <a class="btn btn-primary w-50 w-md-75 w-xl-100 btn-ls-md" href={{link_text}} role="button" download="{{c.human_readable_name}}.zip">CSV</a>
                       </div>
                       {% endwith %}
                     {% else %}
@@ -219,12 +219,12 @@
                       </div>
                       <!-- ********************* -->
                       <div class="col-12 col-md-4">
-                        <button class="btn btn-primary w-50 w-md-75 w-xl-100 mb-3 mb-md-0" id="pdf-button" role="button">PDF</button>
+                        <button class="btn btn-primary w-50 w-md-75 w-xl-100 mb-3 mb-md-0 btn-ls-md" id="pdf-button" role="button">PDF</button>
                       </div>
                       {% endwith %}
                       {% with link_text="/export/csv"|add:"/?map_id="|addstr:c.entry_ID %}
                       <div class="col-12 col-md-4">
-                        <a class="btn btn-primary w-50 w-md-75 w-xl-100" href={{link_text}} role="button" download="{{c.human_readable_name}}.zip">CSV</a>
+                        <a class="btn btn-primary w-50 w-md-75 w-xl-100 btn-ls-md" href={{link_text}} role="button" download="{{c.human_readable_name}}.zip">CSV</a>
                       </div>
                       {% endwith %}
                     {% endif %}
@@ -241,10 +241,14 @@
         </div>
         <div class="card text-left border-0 w-100 rounded-lg mt-3">
           <div class="card-body">
-            <h4 class="card-title header-text"><strong>{% trans "Community Information" %}</strong></h4>
+
+            <h4 class="card-title header-text"><strong>{% trans "Community Information" %}</strong> <button class="btn btn-link no-underline-link p-0" type="button" data-toggle="modal" data-target="#submission-info-modal" rel="nofollow"><i class="far fa-question-circle small text-muted"></i></a></h4>
+            
             {% for tag in c.tags.all %}
             <span class="badge badge-pill badge-primary">{{tag}}</span>
             {% endfor %}
+          
+            {% if c.comm_activities %}
             <div class="accordion map-info-item mt-4" id="mobile-map-activities-accordion">
                 <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-activities-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                     {% trans "Community Activities and Services" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
@@ -255,6 +259,8 @@
                     </p>
                 </div>
             </div>
+            {% endif %}
+            {% if c.cultural_interests %}
             <div class="accordion map-info-item mt-3" id="mobile-map-cultural-interests-accordion">
                 <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#map-cultural-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                     {% trans "Cultural or Historical Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
@@ -265,6 +271,8 @@
                     </p>
                 </div>
             </div>
+            {% endif %}
+            {% if c.economic_interests %}
             <div class="accordion map-info-item mt-3" id="economic-interests-accordion">
                 <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#economic-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                     {% trans "Economic or Environmental Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
@@ -275,6 +283,8 @@
                     </p>
                 </div>
             </div>
+            {% endif %}
+            {% if c.other_considerations %}
             <div class="accordion map-info-item mt-3 mb-3" id="mobile-map-other-interests-accordion">
                 <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-other-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                     {% trans "Community Needs and Concerns" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
@@ -285,7 +295,8 @@
                     </p>
                 </div>
             </div>
-            {% if c.drive and c.drive.custom_question %}
+            {% endif %}
+            {% if c.drive and c.drive.custom_question and c.custom_response %}
             <div class="accordion map-info-item mt-3 mb-3" id="mobile-map-custom-accordion">
                 <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-custom-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                     <div class="text-wrap" style="white-space: normal">{{c.drive.custom_question}}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i></div>

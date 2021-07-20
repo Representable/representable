@@ -125,10 +125,19 @@ class PartnerMap(TemplateView):
                         a.city + ", " + a.state + " " + a.zipcode
                     )
 
+        if (self.request.user.is_authenticated and self.request.user.is_org_admin(org.id)):
+            comms_counter = query.count()
+            print(comms_counter)
+        else:
+            comms_counter = query.filter(admin_approved=True).count()
+            print("not admin or authenticated")
+            print(comms_counter)
+
         context = {
             "streets": streets,
             "cities": cities,
             "communities": query,
+            "comms_counter": comms_counter,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),

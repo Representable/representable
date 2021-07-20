@@ -34,7 +34,7 @@ from .models import (
     Address,
     State,
 )
-from .choices import STATES
+from .choices import STATES, UNITS
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Area
 
@@ -189,12 +189,18 @@ class DeletionForm(ModelForm):
 
 
 class OrganizationForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.label_suffix = ""
+
     class Meta:
         model = Organization
-        fields = ["name", "description", "ext_link", "states"]
+        fields = ["name", "description", "ext_link", "states", "government", "logo"]
         labels = {
-            "name": "Organization Name",
+            "name": "Organization Name*",
             "ext_link": "Link to Organization Website",
+            "logo": "Optional organization Logo",
+            "government": "Are you a state or city government?",
         }
         widgets = {
             "name": forms.TextInput(
@@ -202,7 +208,7 @@ class OrganizationForm(ModelForm):
             ),
             "description": forms.Textarea(
                 attrs={
-                    "placeholder": "Short Description",
+                    "placeholder": "ex. Our goal is to support and uplift Latinx communities in Philadelphia. Our organization is working to ensure that fair maps are drawn in order to protect our communities and have elected officials that reflect our values.",
                     "rows": 4,
                     "cols": 20,
                 }
@@ -216,16 +222,26 @@ class OrganizationForm(ModelForm):
                 choices=STATES,
                 attrs={"data-placeholder": "Select States"},
             ),
+            "government": forms.CheckboxInput(
+                attrs={
+                    "class": "form-check-input",
+                }
+            ),
         }
 
 
 class EditOrganizationForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.label_suffix = ""
+
     class Meta:
         model = Organization
-        fields = ["name", "description", "ext_link"]
+        fields = ["name", "description", "ext_link", "logo"]
         labels = {
             "name": "Organization Name",
             "ext_link": "Link to Organization Website",
+            "logo": "Optional organization Logo",
         }
         widgets = {
             "name": forms.TextInput(
@@ -256,19 +272,59 @@ class AllowlistForm(ModelForm):
 
 
 class DriveForm(ModelForm):
-    def __init__(self, org_states, *args, **kwargs):
+    def __init__(self, org_states, gov, *args, **kwargs):
         super(DriveForm, self).__init__(*args, **kwargs)
         choices = [state for state in STATES if state[0] in org_states]
         self.fields["state"].widget = forms.Select(
             choices=choices, attrs={"class": "form-control"}
         )
+        optional_fields = [
+            "opt_redist_title",
+            "opt_redist_info",
+            "opt_criteria_title",
+            "opt_criteria_info",
+            "opt_coi_def_title",
+            "opt_coi_def_info",
+        ]
+        self.label_suffix = ""
+        if not gov:
+            self.auto_id = False
+            for f in optional_fields:
+                self.fields[f].widget = forms.HiddenInput()
+                self.fields[f].label = ''
+        # for f in optional_fields:
+        #     self.fields[f].widget = forms.HiddenInput()
+        #     self.fields[f].label = ''
+        # for f in optional_fields:
+            # self.fields[f].label_suffix = "_opt"
 
     class Meta:
         model = Drive
-        fields = ["name", "description", "state", "require_user_addresses"]
+        fields = [
+            "name",
+            "state",
+            "require_user_addresses",
+            "description",
+            "units",
+            "opt_redist_title",
+            "opt_redist_info",
+            "opt_criteria_title",
+            "opt_criteria_info",
+            "opt_coi_def_title",
+            "opt_coi_def_info",
+        ]
         labels = {
-            "name": "Drive Title",
-            "ext_link": "Link to Organization Website",
+            "name": "Drive Title*",
+            "units": "Mapping Units*",
+            "description": "Description*",
+            "state": "State*",
+            "require_user_addresses": "Require user addresses",
+            "opt_redist_title": "Redistricting title",
+            "opt_redist_info": "Redistricting information",
+            "opt_criteria_title": "Criteria title",
+            "opt_criteria_info": "Criteria information",
+            "opt_coi_def_title": "COI definition title",
+            "opt_coi_def_info": "COI definition information",
         }
         widgets = {
             "name": forms.TextInput(
@@ -279,7 +335,7 @@ class DriveForm(ModelForm):
             ),
             "description": forms.Textarea(
                 attrs={
-                    "placeholder": "Short Description",
+                    "placeholder": "ex. This is a drive run by [organization name] to collect communities of interest.",
                     "class": "form-control",
                 }
             ),
@@ -288,6 +344,45 @@ class DriveForm(ModelForm):
             ),
             "require_user_addresses": forms.CheckboxInput(
                 attrs={"class": "form-check-input"}
+            ),
+            "opt_redist_title": forms.TextInput(
+                attrs={
+                    "placeholder": "ex. Redistricting in [State/City]",
+                    "class": "form-control",
+                }
+            ),
+            "opt_redist_info": forms.Textarea(
+                attrs={
+                    "placeholder": "ex. Description of how redistricting works in your state or city.",
+                    "class": "form-control",
+                }
+            ),
+            "opt_criteria_title": forms.TextInput(
+                attrs={
+                    "placeholder": "ex. [State/City] Redistricting Criteria",
+                    "class": "form-control",
+                }
+            ),
+            "opt_criteria_info": forms.Textarea(
+                attrs={
+                    "placeholder": "ex. A list of redistricting criteria in your state or city.",
+                    "class": "form-control",
+                }
+            ),
+            "opt_coi_def_title": forms.TextInput(
+                attrs={
+                    "placeholder": "ex. Communities of Interest in [State/City]",
+                    "class": "form-control",
+                }
+            ),
+            "opt_coi_def_info": forms.Textarea(
+                attrs={
+                    "placeholder": "ex. The definition of Communities of Interest in your state or city.",
+                    "class": "form-control",
+                }
+            ),
+            "units": forms.Select(
+                choices=UNITS, attrs={"class": "form-control"}
             ),
         }
 

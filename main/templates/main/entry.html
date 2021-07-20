@@ -40,12 +40,16 @@
     var organization_id = "{{organization_id}}";
     var drive_name = "{{drive_name}}";
     var drive_custom_question_example = "{{drive_custom_question_example}}";
+    var drive_custom_question = "{{drive_custom_question}}";
     var drive_slug = "{{drive_slug}}";
     var organization_name = "{{organization_name}}";
     var state = "{{state}}";
     var address_required = "{{address_required}}";
     var census_key = "{{ census_key }}";
     var language = "{{LANGUAGE_CODE}}";
+    var units = "{{drive_units}}";
+    var coi_title = "{{coi_title}}";
+    var coi_def = "{{coi_def}}";
     var tags = "{{tags|safe}}";
     mixpanel.track("Entry Page Loaded",
     {
@@ -143,9 +147,9 @@
                             {% include './entry_address.html' %}
                         </div>
 
-                        <div id="entry_survey" class="d-none">{% include './entry_survey.html' %}</div>
+                        <div id="entry_survey" class="d-none">{% include './entry_survey.html' with coi_def=coi_def coi_title=coi_title%}</div>
 
-                        <div id="entry_privacy" class="d-none">{% include './entry_privacy.html' %}</div>
+                        <div id="entry_privacy" class="d-none">{% include './entry_privacy.html' with coi_def=coi_def coi_title=coi_title%}</div>
                     </div>
                 </div>
             </div>
