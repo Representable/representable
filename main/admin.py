@@ -103,7 +103,7 @@ class ReportAdmin(admin.ModelAdmin):
             rep.unapprove()
             rep.resolved = True
             rep.save()
-    
+
     def approve_resolve(self, request, queryset):
         for rep in queryset:
             rep.approve()
@@ -185,6 +185,8 @@ class CommunityAdmin(ImportExportModelAdmin):
         "entry_name",
         "organization",
         "drive",
+        "state",
+        "admin_approved",
         'get_services_length',
         'get_economic_length',
         'get_cultural_length',

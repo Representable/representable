@@ -1152,6 +1152,18 @@ Entry Mapping Page
   bottom: 0%;
 }
 
+#map-page-search-btn {
+  position: absolute;
+  z-index: 1;
+  right: 2%;
+  bottom: 4%;
+  background-color: rgb(239, 239, 239);
+}
+
+#map-page-search-btn.active {
+  background-color: #6c757d !important;
+}
+
 #map-pop-btn {
   position: absolute;
   z-index: 1;

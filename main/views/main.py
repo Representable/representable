@@ -917,10 +917,14 @@ class Map(TemplateView):
             export_name = state_obj.name.replace(" ", "_") + "_communities"
             print(export_name)
 
+        comms_counter = query.filter(admin_approved=True, private=False).count()
+        print(comms_counter)
+
         context = {
             "state": state,
             "state_name": state_obj.name,
             "communities": query,
+            "comms_counter": comms_counter,
             "drives": drives,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
