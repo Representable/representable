@@ -28,7 +28,7 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import Group
 from django.db import migrations
 from django.contrib.gis.db import models
-from .choices import STATES
+from .choices import STATES, UNITS
 from .utils import generate_unique_slug, generate_unique_token
 
 # state model editable content field
@@ -73,6 +73,8 @@ class Organization(models.Model):
     - slug: internal representable link slug
     - members: members of the organization
     - verified: is the organization verified as legitimate by our team
+    - government: is the organization a government (e.g. city, county, state commission)
+    - logo: organization logo image
     """
 
     name = models.CharField(max_length=128)
@@ -85,6 +87,9 @@ class Organization(models.Model):
     slug = models.SlugField(unique=True, max_length=50)
     members = models.ManyToManyField(User, through="Membership")
     verified = models.BooleanField(default=False)
+    government = models.BooleanField(default=False, blank=True, null=True)
+    # logo = models.ImageField(_(""), upload_to=None, height_field=None, width_field=None, max_length=None)
+    logo = models.ImageField(upload_to='images/', null=True, blank=True, verbose_name="")
 
     class Meta:
         ordering = ("description",)
@@ -148,12 +153,24 @@ class Drive(models.Model):
     - require_user_addresses: does the drive require users to include an address
     - custom_question: custom question to be asked as part of the survey process
     - custom_question_example: example custom question response for survey placeholder text
+    - redist_title: custom redistricting information title
+    - redist_info: custom redistricting information
+    - criteria_title: custom redistricting criteria title
+    - criteria_info: custom redistricting criteria
+    - coi_def_title: e.g. "definition of cois in x area"
+    - coi_def_title: actual definition
+    - units: map drawing units
     """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     slug = models.SlugField(max_length=255, null=True, unique=True)
     name = models.CharField(max_length=128)
-    description = models.CharField(max_length=700, blank=True, null=True)
+    description = models.CharField(
+        max_length=700,
+        blank=False,
+        null=False,
+        default="",
+    )
     state = models.CharField(
         max_length=50, choices=STATES, default=None, blank=False
     )
@@ -169,6 +186,27 @@ class Drive(models.Model):
     )
     custom_question_example = models.TextField(
         max_length=255, blank=True, unique=False, default=""
+    )
+    opt_redist_title = models.CharField(
+        max_length=100, blank=True, unique=False, default=""
+    )
+    opt_redist_info = models.TextField(
+        max_length=700, blank=True, unique=False, default=""
+    )
+    opt_criteria_title = models.CharField(
+        max_length=100, blank=True, unique=False, default=""
+    )
+    opt_criteria_info = models.TextField(
+        max_length=700, blank=True, unique=False, default=""
+    )
+    opt_coi_def_title = models.CharField(
+        max_length=100, blank=True, unique=False, default=""
+    )
+    opt_coi_def_info = models.TextField(
+        max_length=700, blank=True, unique=False, default=""
+    )
+    units = models.CharField(
+        max_length=50, choices=UNITS, default="Census Block Groups", blank=False
     )
 
     class Meta:
@@ -391,7 +429,6 @@ class CommunityEntry(models.Model):
     state = models.CharField(
         max_length=10, blank=True, unique=False, default=""
     )
-    # signature = models.CharField(max_length=64, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     admin_approved = models.BooleanField(default=True)
     private = models.BooleanField(default=False, null=True)
@@ -500,3 +537,4 @@ class Report(models.Model):
 
 
 # ******************************************************************************#
+

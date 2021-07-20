@@ -558,6 +558,7 @@ body {
   /* draw buttons on entry page */
   .draw-group {
     width: 70%;
+    margin-top: 4rem;
   }
   .sidenav {
     height: 100%;
@@ -601,7 +602,6 @@ body {
     padding: 10px;
   }
   #map-units-btn {
-    right: 2% !important;
     bottom: -6000% !important;
   }
 
@@ -611,9 +611,14 @@ body {
   }
 }
 /* EXCLUSIVELY FOR HOME PAGE rect */
-@media screen and (min-width:1151px) and (max-width:1261px){
+@media screen and (min-width:1151px) and (max-width:1172px){
   #home-page-rect {
     height: 190% !important;
+  }
+}
+@media screen and (min-width:1261px){
+  #home-page-rect {
+    height: 255% !important;
   }
 }
 
@@ -837,6 +842,14 @@ color scheme. See readme.md*/
 
 .filter-btn {
   background-color: white;
+}
+
+/* LETTER SPACING FOR CAPS BUTTONS */
+.btn-ls-lg {
+  letter-spacing: 5px;
+}
+.btn-ls-md {
+  letter-spacing: 3px;
 }
 
 @media only screen and (max-width: 767px) {
@@ -1077,14 +1090,14 @@ Entry Mapping Page
 }
 
 .map-survey-response {
-  color: #1b7a9f;
+  color: #5B5B5B;
   font-weight: normal;
   max-height: 290px;
   overflow: scroll;
 }
 
 .map-survey-response:hover {
-  color: #1b7a9f;
+  color: #5B5B5B;
   cursor: text;
 }
 
@@ -1543,12 +1556,22 @@ Entry Form Management
 
 /************************************* Survey Section *******************************************/
 
+input.survey-field {
+  color: #000000;
+  padding: 10px 20px;
+}
+
 textarea.survey-field {
   color: #000000;
   padding: 10px 20px;
 }
 
 textarea.survey-field:focus {
+  color: #000000;
+  opacity: 1;
+}
+
+input.survey-field:focus {
   color: #000000;
   opacity: 1;
 }
@@ -2375,4 +2398,85 @@ height:25vh!important;
 #mobile-data-layer-btn, #demographics-btn,
 #mobile-demographics-btn {
   width: 215px;
+}
+
+#optional-fields-toggle {
+  padding-top: 20px;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 24px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(16px);
+  -ms-transform: translateX(16px);
+  transform: translateX(16px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 24px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+#optional-fields {
+  display: none;
+}
+
+.required {
+  color: red;
+  padding: 0px;
+  margin: 0px;
+}
+
+.label-class {
+  padding: 0px;
 }

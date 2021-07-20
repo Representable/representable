@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container-fluid px-1 px-lg-5 py-3 light-blue-bg">
   <div class="col-sm">
-    {% if messages %} 
+    {% if messages %}
     <ul class="messages">
       {% for message in messages %}
         {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
@@ -47,7 +47,7 @@
               <button class="btn btn-danger float-right" data-toggle="modal" data-target="#deleteOrgConfirm">
                 <i class="fas fa-trash"></i>
               </button>
-              {% endif %} 
+              {% endif %}
             </div>
 
           </div>
@@ -60,10 +60,10 @@
 
           <div class="row">
             <div class="col-6">
-              <a href="{% url 'main:edit_org' object.slug  object.pk %}" class="btn btn-sm btn-outline-primary w-100" role="button">{% trans "EDIT DETAILS" %}</a>
+              <a href="{% url 'main:edit_org' object.slug  object.pk %}" class="btn btn-sm btn-outline-primary w-100 btn-ls-md" role="button">{% trans "EDIT DETAILS" %}</a>
             </div>
             <div class="col-6 text-right">
-              <a href="{% url 'main:manage_org' object.slug  object.pk %}" class="btn btn-sm btn-outline-primary w-100" role="button">{% trans "ADD ADMINS" %}</a>
+              <a href="{% url 'main:manage_org' object.slug  object.pk %}" class="btn btn-sm btn-outline-primary w-100 btn-ls-md" role="button">{% trans "ADD ADMINS" %}</a>
             </div>
           </div>
 
@@ -95,7 +95,7 @@
           </div>
 
           <div class="text-center pt-3 org-card-btn">
-            <a class="btn btn-outline-primary" href="{% url 'main:create_drive' object.slug  object.pk %}" role="button">{% trans "CREATE NEW" %}</a>
+            <a class="btn btn-outline-primary btn-ls-md" href="{% url 'main:create_drive' object.slug  object.pk %}" role="button">{% trans "CREATE NEW" %}</a>
           </div>
         </div>
       </div>
@@ -113,11 +113,11 @@
               <i class="fas fa-toolbox org-icon text-2A94F4"></i>
             </div>
             <div class="col-12 col-xl-10 pl-xl-2">
-              {% trans "Check out our toolkit to help guide you through the process of collecting maps." %} 
+              {% trans "Check out our toolkit to help guide you through the process of collecting maps." %}
             </div>
           </div>
           <div class="text-center pt-3 org-card-btn">
-            <a class="btn btn-primary" target="_blank" href="https://drive.google.com/file/d/1NHkU_SazAHgF2rv7-9we13rsBonv8s5S/view?usp=sharing" role="button">{% trans "VIEW & DOWNLOAD" %}</a>
+            <a class="btn btn-primary btn-ls-md" target="_blank" href="https://drive.google.com/file/d/1NHkU_SazAHgF2rv7-9we13rsBonv8s5S/view?usp=sharing" role="button">{% trans "VIEW & DOWNLOAD" %}</a>
           </div>
         </div>
       </div>
@@ -133,11 +133,11 @@
               <i class="fas fa-home org-icon text-2A94F4"></i>
             </div>
             <div class="col-12 col-xl-10 pl-xl-2">
-              {% trans "Create a drive to collect community maps from your members. You can make multiple community mapping drives." %} 
+              {% trans "Create a drive to collect community maps from your members. You can make multiple community mapping drives." %}
             </div>
           </div>
           <div class="text-center pt-3 org-card-btn">
-            <a class="btn btn-primary" href="{% url 'main:create_drive' object.slug  object.pk %}" role="button">{% trans "CREATE NEW DRIVE" %}</a>
+            <a class="btn btn-primary btn-ls-md" href="{% url 'main:create_drive' object.slug  object.pk %}" role="button">{% trans "CREATE NEW DRIVE" %}</a>
           </div>
         </div>
       </div>
@@ -153,11 +153,11 @@
               <i class="fas fa-share-square org-icon text-2A94F4"></i>
             </div>
             <div class="col-12 col-xl-10 pl-xl-2">
-              {% trans "Use this link to share all maps collected by your organization (includes all drives)" %}: <a href="{% url 'main:partner_map' object.slug %}">https://representable.org{% url 'main:partner_map' object.slug %}</a> 
+              {% trans "Use this link to share all maps collected by your organization (includes all drives)" %}: <a href="{% url 'main:partner_map' object.slug %}">https://representable.org{% url 'main:partner_map' object.slug %}</a>
             </div>
           </div>
           <div class="text-center pt-3 org-card-btn">
-            <a class="btn btn-primary" href="{% url 'main:partner_map' object.slug %}" role="button">{% trans "VIEW ALL MAPS" %}</a>
+            <a class="btn btn-primary btn-ls-md" href="{% url 'main:partner_map' object.slug %}" role="button">{% trans "VIEW ALL MAPS" %}</a>
           </div>
         </div>
       </div>

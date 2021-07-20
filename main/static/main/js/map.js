@@ -93,9 +93,14 @@ $("#map-page-search-btn").click(function() {
   }
 });
 
-// Add zoom control for non-mobile devices
-if (!window.matchMedia("only screen and (max-width: 760px)").matches) {
-  map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
+// Only add zoom buttons to medium and large screen devices (non-mobile)
+if (!window.matchMedia("screen and (max-width: 760px)").matches) {
+  var nav = new mapboxgl.NavigationControl({
+        showCompass: false
+      });
+
+  map.addControl(nav);
+
 }
 
 var community_bounds = {};

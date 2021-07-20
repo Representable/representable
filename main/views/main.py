@@ -130,7 +130,6 @@ from django.conf import settings
 import ssl
 
 
-
 # ******************************************************************************#
 
 # must be imported after other models
@@ -1050,6 +1049,9 @@ class EntryView(LoginRequiredMixin, View):
         drive_id = None
         drive_custom_question = ""
         drive_custom_question_example = ""
+        drive_units = "BG"
+        coi_def = ""
+        coi_title = ""
         if kwargs["drive"]:
             has_drive = True
             drive_slug = self.kwargs["drive"]
@@ -1082,6 +1084,9 @@ class EntryView(LoginRequiredMixin, View):
                 # redirect them if they're not an org admin or on the allowlist
                 return redirect(reverse_lazy("main:entry"))
             address_required = drive.require_user_addresses
+            drive_units = drive.units
+            coi_title = drive.opt_coi_def_title
+            coi_def = drive.opt_coi_def_info
 
         context = {
             "comm_form": comm_form,
@@ -1102,6 +1107,9 @@ class EntryView(LoginRequiredMixin, View):
             "drive_slug": drive_slug,
             "state": abbr,
             "address_required": address_required,
+            "drive_units": drive_units,
+            "coi_title": coi_title,
+            "coi_def": coi_def,
             "state_obj": State.objects.get(abbr=abbr.upper()),
             "page_type": "entry",  # For the base template to check and remove footer
         }
@@ -1264,9 +1272,7 @@ class EntryView(LoginRequiredMixin, View):
                     for field in entryForm._meta.fields
                 ]
             )
-            finalres["census_blocks_polygon"] = str(
-                entryForm.census_blocks_polygon
-            )
+            finalres["census_blocks_polygon"] = shapely.wkt.dumps(shapely.wkt.loads(str(entryForm.census_blocks_polygon)[10:]), rounding_precision=10)
             finalres["user"] = entryForm.user.email
             if entryForm.organization:
                 finalres["organization"] = entryForm.organization.name
@@ -1278,7 +1284,6 @@ class EntryView(LoginRequiredMixin, View):
             string_to_hash = str(finalres)
             print("finalres: ")
             print(finalres)
-
 
             if (
                 flagText(comm_form.data["entry_name"])
@@ -1313,7 +1318,9 @@ class EntryView(LoginRequiredMixin, View):
                 )
                 del addres["id"]
                 finalres.update(addres)
+                print("polygon: " + finalres["census_blocks_polygon"])
                 string_to_hash = str(finalres)
+                print("string_to_hash: " + string_to_hash)
 
             digest = hmac.new(
                 bytes(os.environ.get("AUDIT_SECRET"), encoding="utf8"),
