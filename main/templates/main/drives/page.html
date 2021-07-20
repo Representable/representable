@@ -39,8 +39,10 @@
           {% endif %}
         </a> in {{drive.state}}</p>
         <hr class="line-break">
+
         {% if object.description != "A mapping drive for communities of interest" %}
-          <p class="mx-lg-5 px-lg-5 pb-lg-4">{{object.description}}</p>
+          <p class="mx-lg-5 px-lg-5 pb-lg-4 text-break">{{object.description}}</p>
+
         {% endif %}
         <p class="mx-lg-5 px-lg-5 pb-lg-4"> {% blocktrans trimmed %}
                 This organization has partnered with Representable to allow people to draw communities of interest and share information about the interests and needs in those communities.

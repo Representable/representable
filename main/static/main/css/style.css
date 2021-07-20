@@ -558,6 +558,7 @@ body {
   /* draw buttons on entry page */
   .draw-group {
     width: 70%;
+    margin-top: 4rem;
   }
   .sidenav {
     height: 100%;
@@ -601,7 +602,6 @@ body {
     padding: 10px;
   }
   #map-units-btn {
-    right: 2% !important;
     bottom: -6000% !important;
   }
 
@@ -611,16 +611,21 @@ body {
   }
 }
 /* EXCLUSIVELY FOR HOME PAGE rect */
-@media screen and (min-width:992px) and (max-width:1169px){
+@media screen and (min-width:1151px) and (max-width:1172px){
   #home-page-rect {
-    height: 275% !important;
+    height: 190% !important;
+  }
+}
+@media screen and (min-width:1261px){
+  #home-page-rect {
+    height: 255% !important;
   }
 }
 
 #home-page-rect {
   position: absolute;
   width: 250%;
-  height: 300%;
+  height: 225%;
   left: -10%;
   bottom: 110%;
 
@@ -837,6 +842,14 @@ color scheme. See readme.md*/
 
 .filter-btn {
   background-color: white;
+}
+
+/* LETTER SPACING FOR CAPS BUTTONS */
+.btn-ls-lg {
+  letter-spacing: 5px;
+}
+.btn-ls-md {
+  letter-spacing: 3px;
 }
 
 @media only screen and (max-width: 767px) {
@@ -1077,14 +1090,14 @@ Entry Mapping Page
 }
 
 .map-survey-response {
-  color: #1b7a9f;
+  color: #5B5B5B;
   font-weight: normal;
   max-height: 290px;
   overflow: scroll;
 }
 
 .map-survey-response:hover {
-  color: #1b7a9f;
+  color: #5B5B5B;
   cursor: text;
 }
 

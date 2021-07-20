@@ -151,7 +151,7 @@
 <div id="map-comm-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-body p-1">
+            <div class="modal-body p-1 pb-3">
                 <button type="button" class="close p-2" aria-label="Close" data-dismiss="modal">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -159,7 +159,7 @@
                 <h6 id="modal-comm-name" class="dropdown-header comm-info-text w-75 pt-5">{% trans "Community Name" %}:</h6>
                 <div class="accordion map-info-item ml-4 mr-4 mt-3" id="mobile-map-activities-accordion">
                     <button class="btn btn-link text-left comm-item-text pl-2 no-underline-link" type="button" data-target="#mobile-map-activities-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
-                        {% trans "Communities Activities and Services" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
+                        {% trans "Community Activities and Services" %}<i class="fas fa-angle-down pl-3 pr-md-5 py-md-2"></i>
                     </button>
                     <div id="mobile-map-activities-resp" class="collapse pl-2 pb-1" aria-labelledby="mobile-map-activities-accordion" data-parent="#mobile-map-activities-accordion">
                         <p class="collapse-in map-survey-response"></p>
@@ -167,7 +167,7 @@
                 </div>
                 <div class="accordion map-info-item ml-4 mr-4 mt-3" id="mobile-map-cultural-interests-accordion">
                     <button class="btn btn-link text-left comm-item-text pl-2 no-underline-link" type="button" data-target="#map-cultural-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
-                        {% trans "Cultural or Historical Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
+                        {% trans "Cultural or Historical Interests" %}<i class="fas fa-angle-down pl-3 pr-md-5 py-md-2"></i>
                     </button>
                     <div id="mobile-map-cultural-interests-resp" class="collapse pl-2 pb-1" aria-labelledby="map_cultural_activities_accordion" data-parent="#mobile-map-cultural-interests-accordion">
                         <p class="collapse-in map-survey-response"></p>
@@ -175,7 +175,7 @@
                 </div>
                 <div class="accordion ml-4 mr-4 mt-1 map-info-item" id="mobile-map-economic-interests-accordion">
                     <button class="btn btn-link text-left comm-item-text pl-2 no-underline-link" type="button" data-target="#mobile-map-economic-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
-                        {% trans "Economic or Environmental Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
+                        {% trans "Economic or Environmental Interests" %}<i class="fas fa-angle-down pl-3 pr-md-5 py-md-2"></i>
                     </button>
                     <div id="mobile-map-economic-interests-resp" class="collapse pl-2 pb-1" aria-labelledby="mobile-map-economic-interests-accordion" data-parent="#mobile-map-economic-interests-accordion">
                         <p class="collapse-in map-survey-response"></p>
@@ -183,12 +183,22 @@
                 </div>
                 <div class="accordion map-info-item ml-4 mr-4 mt-3 mb-5" id="mobile-map-other-interests-accordion">
                     <button class="btn btn-link text-left comm-item-text pl-2 no-underline-link" type="button" data-target="#mobile-map-other-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
-                        {% trans "Community Needs and Concerns" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
+                        {% trans "Community Needs and Concerns" %}<i class="fas fa-angle-down pl-3 pr-md-5 py-md-2"></i>
                     </button>
                     <div id="mobile-map-other-interests-resp" class="collapse pl-2 pb-1" aria-labelledby="mobile-map-other-interests-accordion" data-parent="#mobile-map-other-interests-accordion">
                         <p class="collapse-in map-survey-response"></p>
                     </div>
                 </div>
+                {% if has_drive and drive_custom_question %}
+                <div class="accordion map-info-item ml-4 mr-4 mt-3" id="mobile-map-custom-question-accordion">
+                    <button class="btn btn-link text-left comm-item-text pl-2 no-underline-link" type="button" data-target="#map-custom-question-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                        {{ drive_custom_question }}<i class="fas fa-angle-down pl-3 pr-md-5 py-md-2"></i>
+                    </button>
+                    <div id="mobile-map-custom-question-resp" class="collapse pl-2 pb-1" aria-labelledby="mobile-map-custom-question-accordion" data-parent="#mobile-map-custom-question-accordion">
+                        <p class="collapse-in map-survey-response"></p>
+                    </div>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -261,10 +271,10 @@
                             {% blocktrans trimmed %}Your Community Info{% endblocktrans %}
                         </button>
 
-                        <div id="map-comm-menu" class="dropdown-menu" aria-labelledby="map-comm-btn">
+                        <div id="map-comm-menu" class="dropdown-menu pb-3" aria-labelledby="map-comm-btn">
                             <h6 id="dropdown-comm-name" class="dropdown-header comm-info-text">{% trans "Community Name" %}:</h6>
                             <div class="dropdown-item accordion map-info-item ml-4 mr-4 mt-1" id="map-activities-accordion">
-                                <button class="btn btn-link text-left comm-item-text pl-0 no-underline-link" type="button" data-target="#map-activities-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                                <button class="btn btn-link text-left comm-item-text pl-0 no-underline-link bg-transparent" type="button" data-target="#map-activities-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                                     {% trans "Communities Activities and Services" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
                                 </button>
                                 <div id="map-activities-resp" class="collapse" aria-labelledby="map-activities-accordion" data-parent="#map-activities-accordion">
@@ -272,7 +282,7 @@
                                 </div>
                             </div>
                             <div class="dropdown-item accordion map-info-item ml-4 mr-4 mt-3" id="map-cultural-interests-accordion">
-                                <button class="btn btn-link text-left comm-item-text pl-0 no-underline-link" type="button" data-target="#map-cultural-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                                <button class="btn btn-link text-left comm-item-text pl-0 no-underline-link bg-transparent" type="button" data-target="#map-cultural-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                                     {% trans "Cultural or Historical Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
                                 </button>
                                 <div id="map-cultural-interests-resp" class="collapse" aria-labelledby="map_cultural_activities_accordion" data-parent="#map-cultural-interests-accordion">
@@ -280,7 +290,7 @@
                                 </div>
                             </div>
                             <div class="dropdown-item accordion map-info-item ml-4 mr-4 mt-3" id="map-economic-interests-accordion">
-                                <button class="btn btn-link text-left comm-item-text pl-0 no-underline-link" type="button" data-target="#map-economic-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                                <button class="btn btn-link text-left comm-item-text pl-0 no-underline-link bg-transparent" type="button" data-target="#map-economic-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                                     {% trans "Economic or Environmental Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
                                 </button>
                                 <div id="map-economic-interests-resp" class="collapse" aria-labelledby="comm_activities_accordion" data-parent="#map-economic-interests-resp">
@@ -288,13 +298,23 @@
                                 </div>
                             </div>
                             <div class="dropdown-item accordion map-info-item ml-4 mr-4 mt-3 mb-3" id="map-other-interests-accordion">
-                                <button class="btn btn-link text-left comm-item-text pl-0 no-underline-link" type="button" data-target="#map-other-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                                <button class="btn btn-link text-left comm-item-text pl-0 no-underline-link bg-transparent" type="button" data-target="#map-other-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                                     {% trans "Community Needs and Concerns" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
                                 </button>
                                 <div id="map-other-interests-resp" class="collapse" aria-labelledby="map-other-interests-accordion" data-parent="#map-other-interests-accordion">
                                     <p class="collapse-in map-survey-response"></p>
                                 </div>
                             </div>
+                            {% if has_drive and drive_custom_question %}
+                            <div class="dropdown-item accordion map-info-item ml-4 mr-4 mt-3 mb-3" id="map-custom-question-accordion">
+                                <button class="btn btn-link text-left comm-item-text pl-0 no-underline-link bg-transparent" type="button" data-target="#map-custom-question-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                                    {{ drive_custom_question }}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
+                                </button>
+                                <div id="map-custom-question-resp" class="collapse" aria-labelledby="map-custom-question-accordion" data-parent="#map-custom-question-accordion">
+                                    <p class="collapse-in map-survey-response"></p>
+                                </div>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -321,7 +341,7 @@
                 <div class="col-10 col-md-7 col-lg-8 col-xl-9">
                     <div id="geocoder" class="geocoder my-3 ml-xl-5"></div>
                 </div>
-
+                <div class="col-1 p-0"></div>
             </div>
         </div>
     </div>
@@ -332,12 +352,12 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col text-center d-none d-lg-block">
-                    <button type="button" id="mapToSurveyP2" class="btn btn-outline-primary btn-lg no-underline-link entry-nav-btn mr-4 mapping-icon white-bg"><i class="fas fa-angle-left pr-2"></i>{% trans "EDIT INFO" %}</button>
-                    <button type="button" id="mapToPrivacy" class="btn btn-primary btn-lg no-underline-link entry-nav-btn ml-4 mapping-icon">{% trans "SAVE" %}<i class="fas fa-angle-right pl-2"></i></button>
+                    <button type="button" id="mapToSurveyP2" class="btn btn-outline-primary btn-lg no-underline-link entry-nav-btn mr-4 mapping-icon white-bg btn-ls-md"><i class="fas fa-angle-left pr-2"></i>{% trans "EDIT INFO" %}</button>
+                    <button type="button" id="mapToPrivacy" class="btn btn-primary btn-lg no-underline-link entry-nav-btn ml-4 mapping-icon btn-ls-md">{% trans "SAVE" %}<i class="fas fa-angle-right pl-2"></i></button>
                 </div>
                 <div class="col text-center d-lg-none">
-                    <button type="button" id="mapToSurveyP2Mobile" class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4 mapping-icon white-bg"><i class="fas fa-angle-left pr-2"></i>{% trans "EDIT INFO" %}</button>
-                    <button type="button" id="mapToPrivacyMobile" class="btn btn-primary no-underline-link entry-nav-btn ml-4 mapping-icon">{% trans "SAVE" %}<i class="fas fa-angle-right pl-2"></i></button>
+                    <button type="button" id="mapToSurveyP2Mobile" class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4 mapping-icon white-bg btn-ls-md"><i class="fas fa-angle-left pr-2"></i>{% trans "EDIT INFO" %}</button>
+                    <button type="button" id="mapToPrivacyMobile" class="btn btn-primary no-underline-link entry-nav-btn ml-4 mapping-icon btn-ls-md">{% trans "SAVE" %}<i class="fas fa-angle-right pl-2"></i></button>
                 </div>
             </div>
             <div class="row">
