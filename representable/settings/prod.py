@@ -20,7 +20,7 @@ ALLOWED_HOSTS = [
     "representable-dev.herokuapp.com",
 ]
 
-DEBUG = False
+DEBUG = True
 
 # Production Email Settings
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"

@@ -199,16 +199,40 @@ function toggleAngle(e) {
 // Adds the responses given to the survey questions to the dropdown on the map page
 function fillSurveyQuestions() {
   $("h6#dropdown-comm-name").text(`${$("#id_entry_name").val()}:`);
-  $("#map-economic-interests-resp>p.collapse-in").text($("#id_economic_interests").val());
-  $("#map-activities-resp>p.collapse-in").text($("#id_comm_activities").val());
-  $("#map-cultural-interests-resp>p.collapse-in").text($("#id_cultural_interests").val());
-  $("#map-other-interests-resp>p.collapse-in").text($("#id_other_considerations").val());
-
   $("h6#modal-comm-name").text(`${$("#id_entry_name").val()}:`);
-  $("#mobile-map-economic-interests-resp>p.collapse-in").text($("#id_economic_interests").val());
-  $("#mobile-map-activities-resp>p.collapse-in").text($("#id_comm_activities").val());
-  $("#mobile-map-cultural-interests-resp>p.collapse-in").text($("#id_cultural_interests").val());
-  $("#mobile-map-other-interests-resp>p.collapse-in").text($("#id_other_considerations").val());
+  // if empty field, don't show on dropdown
+  if ($("#id_comm_activities").val() == "") {
+    $("#map_activities_accordion").hide();
+    $("#mobile-map_activities_accordion").hide();
+  } else {
+    $("#map-activities-resp>p.collapse-in").text($("#id_comm_activities").val());
+    $("#mobile-map-activities-resp>p.collapse-in").text($("#id_comm_activities").val());
+  }
+  if ($("#id_economic_interests").val() == "") {
+    $("#map-economic-interests-accordion").hide();
+    $("#mobile-map-economic-interests-accordion").hide();
+  } else {
+    $("#map-economic-interests-resp>p.collapse-in").text($("#id_economic_interests").val());
+    $("#mobile-map-economic-interests-resp>p.collapse-in").text($("#id_economic_interests").val());
+  }
+  if ($("#id_cultural_interests").val() == "") {
+    $("#map-cultural-interests-accordion").hide();
+    $("#mobile-map-cultural-interests-accordion").hide();
+  } else {
+    $("#map-cultural-interests-resp>p.collapse-in").text($("#id_cultural_interests").val());
+    $("#mobile-map-cultural-interests-resp>p.collapse-in").text($("#id_cultural_interests").val());
+  }
+  if ($("#id_other_considerations").val() == "") {
+    $("#map-other-interests-accordion").hide();
+    $("#mobile-map-other-interests-accordion").hide();
+  } else {
+    $("#map-other-interests-resp>p.collapse-in").text($("#id_other_considerations").val());
+    $("#mobile-map-other-interests-resp>p.collapse-in").text($("#id_other_considerations").val());
+  }
+  if (drive_name != "" && drive_custom_question != "") {
+    $("#map-custom-question-resp>p.collapse-in").text($("#id_custom_response").val());
+    $("#mobile-map-custom-question-resp>p.collapse-in").text($("#id_custom_response").val());
+  }
 }
 
 $('#map-comm-menu').on('click', function (event) {
@@ -336,11 +360,65 @@ function surveyStartToAddress() {
   automaticScrollToTop();
 }
 
+// TODO: update so that these are objects, then they will show up
+// move this outside this function and load in existing tags from server
+tags_repl = tags.replaceAll("'", '"');
+tagslist = JSON.parse(tags_repl);
+
+var tagnames = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  local: tagslist,
+});
+tagnames.initialize();
+
+// for each top-tag class, add an onclick function which adds that tag to the tagsinput (if possible)
+// if not possible, display an error message -- you cannot add more than five tags to your community.
+
+var tagsText = [];
+$(".tag-top").on('click', function(){
+   $('#id_tags').tagsinput('add', {'value': parseInt($(this).attr('id').slice(4)), 'text': $(this).text()});
+});
+
+$('#id_tags').on('itemAdded', function(event) {
+  // if this is the fifth tag, gray out the buttons
+  if ($('.bootstrap-tagsinput-max').length > 0) {
+    $(".tag-top").addClass('disabled');
+  }
+  tagsText.push(event.item.text);
+  $('.bootstrap-tagsinput input').addClass('m-0');
+  $('.bootstrap-tagsinput input').attr('placeholder', '');
+});
+
+$('#id_tags').on('itemRemoved', function(event) {
+  // if this is the fifth tag, gray out the buttons
+  if ($('.bootstrap-tagsinput-max').length === 0) {
+    $(".tag-top").removeClass('disabled');
+  }
+  tagsText.splice($.inArray(event.item.text, tagsText), 1);
+  if ($(this).val().length === 0) $('.bootstrap-tagsinput input').removeClass('m-0');
+});
+
+
 // changes page entry page from the survey start page to the first part of the survey
 function startSurvey() {
   $("#entry-survey-start").addClass("d-none");
   $("#survey-qs-p1").removeClass("d-none");
   $("#2to3").addClass("h-50");
+  $('#id_tags').tagsinput({
+    maxTags: 5,
+    maxChars: 30,
+    trimValue: true,
+    itemValue: "value",
+    itemText: "text",
+    typeaheadjs: {
+      name: 'tagnames',
+      displayKey: 'text',
+      source: tagnames.ttAdapter(),
+    }
+  });
+
+  $('.bootstrap-tagsinput').addClass(['form-control', 'survey-field']);
   automaticScrollToTop();
 }
 
@@ -348,6 +426,7 @@ function surveyP1ToSurveyStart() {
   $("#survey-qs-p1").addClass("d-none");
   $("#entry-survey-start").removeClass("d-none");
   $("#2to3").removeClass("h-50");
+  $("#id_tags").val(tagsText);
   automaticScrollToTop();
 }
 
@@ -355,6 +434,7 @@ function surveyP1ToP2() {
   $("#survey-qs-p1").addClass("d-none");
   $("#survey-qs-p2").removeClass("d-none");
   $("#2to3").addClass("h-75").removeClass("h-50");
+  $("#id_tags").val(tagsText);
   automaticScrollToTop();
 }
 
@@ -362,6 +442,7 @@ function surveyP2ToP1() {
   $("#survey-qs-p2").addClass("d-none");
   $("#survey-qs-p1").removeClass("d-none");
   $("#2to3").addClass("h-50").removeClass("h-75");
+  $('.bootstrap-tagsinput').addClass(['form-control', 'survey-field']);
   automaticScrollToTop();
 }
 
@@ -1268,8 +1349,12 @@ function hideWarningMessage() {
 }
 
 // Only add zoom buttons to medium and large screen devices (non-mobile)
-if (!window.matchMedia("only screen and (max-width: 760px)").matches) {
-  map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
+if (!window.matchMedia("screen and (max-width: 760px)").matches) {
+  var nav = new mapboxgl.NavigationControl({
+        showCompass: false
+      });
+
+  map.addControl(nav);
 }
 
 var user_polygon_id = undefined;
@@ -1429,6 +1514,32 @@ map.on("style.load", function () {
     newCensusShading(state, firstSymbolId, "bg");
     newCensusLines(state, "bg");
     newHighlightLayer(state, firstSymbolId, "bg");
+    if (units==="B") {
+      map.setLayoutProperty(state + "-census-lines-block", "visibility", "visible");
+      map.setLayoutProperty(state + "-census-shading-block", "visibility", "visible");
+      map.setLayoutProperty(state + "-highlighted-block", "visibility", "visible");
+      map.setLayoutProperty(state + "-census-lines-bg", "visibility", "none");
+      map.setLayoutProperty(state + "-census-shading-bg", "visibility", "none");
+      map.setLayoutProperty(state + "-highlighted-bg", "visibility", "none");
+      drawUsingBlocks = true;
+      layer_suffix = "block";
+      unit_id = block_id;
+      // change button name for this case -- TODO: languages?
+      $("#map-units-btn").text("Use larger units");
+      //clear "cache" so that undo button still works as expected
+      sessionStorage.clear();
+      filterStack = [];
+      bboxStack = [];    // show or hide population display
+      if (old_units) {
+        $("#map-pop-btn").show();
+      } else {
+        $("#map-pop-btn").hide();
+      }
+      // clear selection
+      map.setFilter(state + "-highlighted-block", ["in", block_id, ""]);
+      map.setFilter(state + "-highlighted-bg", ["in", bg_id, ""]);
+      mapHover();
+    }
   }
   showMap();
   map.flyTo({

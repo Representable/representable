@@ -93,7 +93,7 @@ class ReportAdmin(admin.ModelAdmin):
     list_filter = ("resolved",)
 
     list_select_related = ("community",)
-    actions = ["unapprove_resolve"]
+    actions = ["unapprove_resolve", "approve_resolve"]
 
     def is_admin_approved(self, obj):
         return obj.community.admin_approved
@@ -104,8 +104,18 @@ class ReportAdmin(admin.ModelAdmin):
             rep.resolved = True
             rep.save()
 
+    def approve_resolve(self, request, queryset):
+        for rep in queryset:
+            rep.approve()
+            rep.resolved = True
+            rep.save()
+
     unapprove_resolve.short_description = (
         "Unapprove the community and mark as resolved"
+    )
+
+    approve_resolve.short_description = (
+        "Approve the community and mark as resolved"
     )
 
     def link_to_community(self, obj):
@@ -175,6 +185,8 @@ class CommunityAdmin(ImportExportModelAdmin):
         "entry_name",
         "organization",
         "drive",
+        "state",
+        "admin_approved",
         'get_services_length',
         'get_economic_length',
         'get_cultural_length',
