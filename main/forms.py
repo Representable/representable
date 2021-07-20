@@ -139,6 +139,7 @@ class CommunityForm(ModelForm):
             "custom_response": forms.Textarea(
                 attrs={"rows": 3, "maxlength": 700, "placeholder": ""}
             ),
+            "tags": forms.TextInput(),
             "user_name": forms.TextInput(attrs={"maxlength": 500}),
             "user_polygon": forms.HiddenInput(),
         }
@@ -149,6 +150,7 @@ class CommunityForm(ModelForm):
             "comm_activities": "Input your community's activities and services: ",
             "other_considerations": "Input your community's other interests and concerns: ",
             "custom_response": "Input your response to this mapping drive's custom question: ",
+            "tags": "Input a comma-separated list of tags for your community: ",
             "entry_name": "Input your community's name: ",
         }
 

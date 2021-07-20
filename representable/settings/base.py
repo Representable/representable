@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     "phone_field",
     "ckeditor",
     "representable",
+    "taggit",
     # 'allauth.socialaccount.providers.facebook',
     # 'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.linkedin',

@@ -117,6 +117,7 @@ import base64
 from django.template import loader
 import shapely.wkt
 import reverse_geocoder as rg
+from taggit.models import Tag
 from state_abbrev import us_state_abbrev
 from django.contrib.auth.models import Group
 from itertools import islice
@@ -835,7 +836,6 @@ class ExportView(TemplateView):
                 folder_name = query.drive.slug
             else:
                 folder_name = query.state
-        print(folder_name)
 
         gj = make_geojson(request, query)
 
@@ -1040,6 +1040,17 @@ class EntryView(LoginRequiredMixin, View):
         if kwargs["token"]:
             has_token = True
 
+        # all tags already in db for tagging typeahead
+        # also the top 15 tags as options to select
+        all_tags = Tag.objects.all()
+        tags_arr = []
+        for i, c in enumerate(all_tags):
+            tags_arr.append({"value": c.id, "text": c.name})
+        top_tags_query = CommunityEntry.tags.most_common()[:15]
+        top_tags = dict()
+        for i, c in enumerate(top_tags_query):
+            top_tags[c.id] = c.name
+
         address_required = True
         has_drive = False
         organization_name = ""
@@ -1112,6 +1123,8 @@ class EntryView(LoginRequiredMixin, View):
             "coi_def": coi_def,
             "state_obj": State.objects.get(abbr=abbr.upper()),
             "page_type": "entry",  # For the base template to check and remove footer
+            "tags": tags_arr,
+            "top_tags": top_tags,
         }
         return render(request, self.template_name, context)
 

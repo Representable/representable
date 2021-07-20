@@ -31,6 +31,8 @@ from django.contrib.gis.db import models
 from .choices import STATES, UNITS
 from .utils import generate_unique_slug, generate_unique_token
 
+from taggit.managers import TaggableManager
+
 # state model editable content field
 from ckeditor.fields import RichTextField
 
@@ -353,6 +355,7 @@ class CommunityEntry(models.Model):
      - comm_activities: community activities and services question response
      - other_considerations: community needs and concerns questions response
      - custom_response: response to custom question, if included in a drive
+     - tags: user generated tags
 
     """
 
@@ -433,6 +436,8 @@ class CommunityEntry(models.Model):
     admin_approved = models.BooleanField(default=True)
     private = models.BooleanField(default=False, null=True)
     population = models.IntegerField(blank=True, null=True, default=0)
+
+    tags = TaggableManager(blank=True)
 
     def human_readable_name(self):
         return self.entry_name.replace(' ', '_')
