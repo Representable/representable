@@ -1571,6 +1571,21 @@ Entry Form Management
   padding-bottom: 5px;
 }
 
+.rounded-1rem {
+  border-radius: 1rem;
+}
+
+#comm-example-title:before {
+  content: "";
+  background-color: #f8f9fa;
+  position: absolute;
+  height: 100%;
+  width: 200px;
+  left: -10%;
+  bottom: 0%;
+  z-index: -1;
+}
+
 /************************************* First Page *******************************************/
 
 #entryForm {

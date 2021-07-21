@@ -243,6 +243,10 @@ $('#map-comm-menu').on('touchstart', function (event) {
   event.stopPropagation();
 });
 
+$("#comm-example-btn").on("click", function() {
+  $("#comm-example-modal").modal();
+});
+
 $("#mobile-map-help-btn").on("click", function() {
   $("#map-help-modal").modal();
 });
