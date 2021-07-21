@@ -198,14 +198,14 @@ class OrganizationForm(ModelForm):
         model = Organization
         fields = ["name", "description", "ext_link", "states", "government", "logo"]
         labels = {
-            "name": "Organization Name*",
-            "ext_link": "Link to Organization Website",
-            "logo": "Optional organization Logo",
+            "name": "Organization name*",
+            "ext_link": "Link to organization website",
+            "logo": "Optional organization logo",
             "government": "Are you a state or city government?",
         }
         widgets = {
             "name": forms.TextInput(
-                attrs={"placeholder": "Name of Organization"}
+                attrs={"placeholder": "Name of organization"}
             ),
             "description": forms.Textarea(
                 attrs={
@@ -260,13 +260,13 @@ class EditOrganizationForm(ModelForm):
         model = Organization
         fields = ["name", "description", "ext_link", "logo"]
         labels = {
-            "name": "Organization Name",
-            "ext_link": "Link to Organization Website",
-            "logo": "Optional organization Logo",
+            "name": "Organization name",
+            "ext_link": "Link to organization website",
+            "logo": "Optional organization logo",
         }
         widgets = {
             "name": forms.TextInput(
-                attrs={"placeholder": "Name of Organization"}
+                attrs={"placeholder": "Name of organization"}
             ),
             "description": forms.Textarea(
                 attrs={
@@ -406,6 +406,23 @@ class DriveForm(ModelForm):
                 choices=UNITS, attrs={"class": "form-control"}
             ),
         }
+
+    def clean(self):
+        """
+        Make sure all of the optional fields have information filled out
+        """
+        errors = {}
+        a1 = self.cleaned_data.get("opt_redist_title")
+        a2 = self.cleaned_data.get("opt_redist_info")
+        b1 = self.cleaned_data.get("opt_criteria_title")
+        b2 = self.cleaned_data.get("opt_criteria_info")
+        c1 = self.cleaned_data.get("opt_coi_def_title")
+        c2 = self.cleaned_data.get("opt_coi_def_info")
+        if ((a1 or a2 or b1 or b2 or c1 or c2) and not (a1 and a2 and b1 and b2 and c1 and c2)
+        ):
+            errors["opt_redist_title"] = "You must fill out none or all of the customized criteria."
+        if errors:
+            raise forms.ValidationError(errors)
 
 
 class MemberForm(ModelForm):
