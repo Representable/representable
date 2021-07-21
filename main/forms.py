@@ -37,6 +37,7 @@ from .models import (
 from .choices import STATES, UNITS
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Area
+from django.core.files.images import get_image_dimensions
 
 # https://django-select2.readthedocs.io/en/latest/django_select2.html
 
@@ -229,6 +230,26 @@ class OrganizationForm(ModelForm):
             ),
         }
 
+    def clean(self):
+        """
+        Make sure that the image is a reasonable shape
+        """
+        errors = {}
+        image = self.cleaned_data.get("logo")
+        # w = image.width
+        # h = image.height
+        w = 1
+        h = 1
+        if image:
+            w, h = get_image_dimensions(image)
+        r = w/h
+        if (
+            .5 > r or r > 2
+        ):
+            errors["logo"] = "Unacceptable image shape. Image should have similar width and height."
+        if errors:
+            raise forms.ValidationError(errors)
+
 
 class EditOrganizationForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -315,7 +336,7 @@ class DriveForm(ModelForm):
         ]
         labels = {
             "name": "Drive Title*",
-            "units": "Mapping Units*",
+            "units": "Default mapping units*",
             "description": "Description*",
             "state": "State*",
             "require_user_addresses": "Require user addresses",
