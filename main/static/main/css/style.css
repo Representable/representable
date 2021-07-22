@@ -1344,6 +1344,9 @@ Entry Mapping Page
   #mapping-image-div {
     width: 30% !important;
   }
+  .w-xxl-50.w-100 {
+    width: 50% !important;
+  }
 }
 
 .loader {
