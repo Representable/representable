@@ -1043,9 +1043,10 @@ class EntryView(LoginRequiredMixin, View):
         # all tags already in db for tagging typeahead
         # also the top 15 tags as options to select
         all_tags = Tag.objects.all()
-        tags_arr = []
+        tags_arr_unsort = []
         for i, c in enumerate(all_tags):
-            tags_arr.append({"value": c.id, "text": c.name})
+            tags_arr_unsort.append({"value": c.id, "text": c.name})
+        tags_arr = sorted(tags_arr_unsort, key=lambda k: k['text'].lower())
         top_tags_query = CommunityEntry.tags.most_common()[:15]
         top_tags = dict()
         for i, c in enumerate(top_tags_query):
