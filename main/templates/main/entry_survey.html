@@ -100,8 +100,8 @@
                 </div>
                 <div class="row d-none d-xl-flex pt-4">
                     <div class="col text-center">
-                        <button class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4" onclick="surveyStartToAddress()"><i class="fas fa-angle-left pr-2" type="button"></i>{% trans "BACK" %}</button>
-                        <button class="btn btn-primary no-underline-link entry-nav-btn ml-4" onclick="startSurvey()" type="button">{% trans "START" %}<i class="fas fa-angle-right pl-2"></i></button>
+                        <button class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4 btn-ls-md" onclick="surveyStartToAddress()"><i class="fas fa-angle-left pr-2" type="button"></i>{% trans "BACK" %}</button>
+                        <button class="btn btn-primary no-underline-link entry-nav-btn ml-4 btn-ls-md" onclick="startSurvey()" type="button">{% trans "START" %}<i class="fas fa-angle-right pl-2"></i></button>
                     </div>
                 </div>
             </div>
@@ -198,8 +198,8 @@
                 </div>
                 <div class="row">
                     <div class="col text-center">
-                        <button class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4" onclick="surveyStartToAddress()" type="button"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
-                        <button class="btn btn-primary no-underline-link entry-nav-btn ml-4" onclick="startSurvey()" type="button">{% trans "START" %}<i class="fas fa-angle-right pl-2"></i></button>
+                        <button class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4 btn-ls-md" onclick="surveyStartToAddress()" type="button"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
+                        <button class="btn btn-primary no-underline-link entry-nav-btn ml-4 btn-ls-md" onclick="startSurvey()" type="button">{% trans "START" %}<i class="fas fa-angle-right pl-2"></i></button>
                     </div>
                 </div>
             </div>
@@ -215,14 +215,25 @@
             </div>
             <!-- TODO : change padding to be 1px less on the left -->
             <div class="py-3 px-4 light-blue-bg opacity-4 mt-2">
-                <button class="btn btn-link ws-normal btn-no-focus-outline bg-transparent text-left my-0 p-0 no-underline-link border-0" aria-expanded="false" aria-controls="collapseCriteria" onclick="toggleAngle(this)" type="button">
-                <h5 style="width: fit-content; color: initial;">{% trans "Community of Interest Definition in " %} {{ state_obj.name }} &#32;<i class="fas fa-angle-down pl-3"></i></h5>
-                </button>
-                <div class="collapse mt-2" id="collapseCriteria">
-                    {% autoescape off %}
-                    {{ state_obj.content_coi }}
-                    {% endautoescape %}
-                </div>
+                {% if coi_title == "" %}
+                    <button class="btn btn-link ws-normal btn-no-focus-outline bg-transparent text-left my-0 p-0 no-underline-link border-0" aria-expanded="false" aria-controls="collapseCriteria" onclick="toggleAngle(this)" type="button">
+                    <h5 style="width: fit-content; color: initial;">{% trans "Community of Interest Definition in " %} {{ state_obj.name }} &#32;<i class="fas fa-angle-down pl-3"></i></h5>
+                    </button>
+                    <div class="collapse mt-2" id="collapseCriteria">
+                        {% autoescape off %}
+                        {{ state_obj.content_coi }}
+                        {% endautoescape %}
+                    </div>
+                {% else %}
+                    <button class="btn btn-link ws-normal btn-no-focus-outline bg-transparent text-left my-0 p-0 no-underline-link border-0" aria-expanded="false" aria-controls="collapseCriteria" onclick="toggleAngle(this)" type="button">
+                    <h5 style="width: fit-content; color: initial;"> {{ coi_title }} &#32;<i class="fas fa-angle-down pl-3"></i></h5>
+                    </button>
+                    <div class="collapse mt-2" id="collapseCriteria">
+                        {% autoescape off %}
+                        {{ coi_def }}
+                        {% endautoescape %}
+                    </div>
+                {% endif %}
             </div>
             <div class="survey-instruction mt-2">
                 <p>
@@ -338,11 +349,34 @@
                   <div class="sr-only">{{ comm_form.custom_response.label_tag }}</div>
                   {{ comm_form.custom_response|append_attr:"class:form-control survey-field" }}
                 {% endif %}
+
+                {% comment %} <p class="my-4 ml-1 gray-text">
+                  <b>What are the main topics relevant to your community?</b><br>
+                  <span class="small text-muted">Add up to five tags that describe your community.</span>
+                </p>
+                <div class="mb-4">
+                  {% for key, value in top_tags.items %}
+                    <button type="button" class="btn btn-outline-secondary tag-top mb-2" id="tag_{{key}}">{{ value }}</button>
+                  {% endfor %}
+                </div>
+                <div class="sr-only">{{ comm_form.tags.label_tag }}</div>
+                {{ comm_form.tags|append_attr:"class:form-control survey-field" }}
+                <div class="accordion" id="add_tag_accordion">
+                    <button class="btn btn-link text-left pl-0" style="text-decoration:underline;" type="button" data-toggle="collapse" data-target="#add_tag_example" aria-expanded="false" aria-controls="collapseOne">
+                    <small>{% trans "Don't see your topic?" %}</small>
+                    </button>
+                    <div id="add_tag_example" class="collapse" aria-labelledby="add_tag_accordion" data-parent="#add_tag_accordion">
+                        <p class="collapse-in ml-0 small">
+                            {% blocktrans trimmed %} Try typing a term similar to what you have in mind. If you still have a tag you want to add that isn't available, contact our team with your tag request by emailing <a href="mailto:team@representable.org">team@representable.org</a>. {% endblocktrans%}
+                        </p>
+                    </div>
+                </div> {% endcomment %}
+
             </div>
             <div class="row pt-5">
                 <div class="col text-center">
-                    <button class="btn btn-outline-primary entry-nav-btn mr-4" onclick="surveyP1ToSurveyStart()" type="button"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
-                    <button id="surveyP1ToP2_button" class="btn btn-primary entry-nav-btn ml-4" type="button">{% trans "NEXT" %}<i class="fas fa-angle-right pl-2"></i></button>
+                    <button class="btn btn-outline-primary entry-nav-btn mr-4 btn-ls-md" onclick="surveyP1ToSurveyStart()" type="button"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
+                    <button id="surveyP1ToP2_button" class="btn btn-primary entry-nav-btn ml-4 btn-ls-md" type="button">{% trans "NEXT" %}<i class="fas fa-angle-right pl-2"></i></button>
                 </div>
             </div>
         </div>
@@ -408,8 +442,8 @@
 
             <div class="row pt-5">
                 <div class="col text-center">
-                    <button class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4" onclick="surveyP2ToP1()" type="button"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
-                    <button id="surveyP2ToMap_button" class="btn btn-primary no-underline-link entry-nav-btn ml-4" type="button">{% trans "NEXT" %}<i class="fas fa-angle-right pl-2"></i></button>
+                    <button class="btn btn-outline-primary no-underline-link entry-nav-btn mr-4 btn-ls-md" onclick="surveyP2ToP1()" type="button"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
+                    <button id="surveyP2ToMap_button" class="btn btn-primary no-underline-link entry-nav-btn ml-4 btn-ls-md" type="button">{% trans "NEXT" %}<i class="fas fa-angle-right pl-2"></i></button>
                 </div>
             </div>
         </div>

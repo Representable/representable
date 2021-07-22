@@ -124,6 +124,12 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                                   <b>Population:</b> {{ c.population }}
                                   <br>
                                   {% endif %}
+                                  {% if c.tags.all %}
+                                    {% for tag in c.tags.all %}
+                                    <span class="badge badge-pill badge-primary">{{tag}}</span>
+                                    {% endfor %}
+                                    <br>
+                                  {% endif %}
                                 </span>
                                 {% if c.cultural_interests %}
                                 <b><i class="fas fa-palette"></i> {% trans "Cultural or Historical Interests" %}</b><br>
@@ -163,6 +169,9 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                         <button class="btn btn-link" role="button" onclick="showAllCommunities()">{% trans "Show All" %}</button>
                       </div>
                     </div>
+                    <div class="row px-3">
+                      <span class="mx-3 small text-muted"><span id="comms_count">{{ comms_counter }}</span> Communities</span>
+                    </div>
                 </div>
                 {% endif %}
                 </div>
@@ -172,6 +181,9 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
         </div>
         <div class="col-md-8 col-map col-wide">
           <div id='map' class="map-visualization"></div>
+          <button type="button" class="btn btn-outline-secondary mapping-icon mapping-btn py-2 m-1"  style="border-radius: .5rem;" id="map-page-search-btn" data-toggle="button" aria-pressed="false" autocomplete="off">
+              {% trans "Search while moving the map"%}
+          </button>
         </div>
       </div>
     </div>
@@ -183,6 +195,9 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
       mapboxgl.accessToken = "{{ mapbox_key }}";
     </script>
     <script type="text/javascript" src="{% static 'main/js/components/keys.js' %}"></script>
+    <script type="text/javascript" src="{% static 'main/feature-lookup-tables/feature-lookup-tables.js'%}"></script>
+    <script type="text/javascript" src="{% static 'main/feature-lookup-tables/state-codes.js'%}"></script>
+    <script type="text/javascript" src="{% static 'main/js/map-common.js' %}"></script>
     <script type="text/javascript" src="{% static 'main/js/map.js' %}"></script>
     <script type="text/javascript" src="{% static 'main/js/components/states.js' %}"></script>
     {% endblock %}

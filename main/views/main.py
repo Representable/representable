@@ -117,17 +117,18 @@ import base64
 from django.template import loader
 import shapely.wkt
 import reverse_geocoder as rg
+from taggit.models import Tag
 from state_abbrev import us_state_abbrev
 from django.contrib.auth.models import Group
 from itertools import islice
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 import pandas as pd
+import requests
 
 from django.conf import settings
 
 import ssl
-
 
 
 # ******************************************************************************#
@@ -142,6 +143,13 @@ from django.contrib.gis.geos import GEOSGeometry
 
 from googleapiclient import discovery
 
+def block_group_polygons(request, abbr):
+    try:
+        s3 = boto3.resource('s3')
+        obj = s3.Object('dev-precomputed-blockgroups', 'adj-n-bounds-'+abbr+'.json')
+        return JsonResponse(json.loads(obj.get()['Body'].read()))
+    except Exception as e:
+        raise Http404
 
 # custom mixin redirects to signup page/tab rather than login
 class SignupRequiredMixin(AccessMixin):
@@ -828,7 +836,6 @@ class ExportView(TemplateView):
                 folder_name = query.drive.slug
             else:
                 folder_name = query.state
-        print(folder_name)
 
         gj = make_geojson(request, query)
 
@@ -910,10 +917,14 @@ class Map(TemplateView):
             export_name = state_obj.name.replace(" ", "_") + "_communities"
             print(export_name)
 
+        comms_counter = query.filter(admin_approved=True, private=False).count()
+        print(comms_counter)
+
         context = {
             "state": state,
             "state_name": state_obj.name,
             "communities": query,
+            "comms_counter": comms_counter,
             "drives": drives,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
@@ -1029,6 +1040,17 @@ class EntryView(LoginRequiredMixin, View):
         if kwargs["token"]:
             has_token = True
 
+        # all tags already in db for tagging typeahead
+        # also the top 15 tags as options to select
+        all_tags = Tag.objects.all()
+        tags_arr = []
+        for i, c in enumerate(all_tags):
+            tags_arr.append({"value": c.id, "text": c.name})
+        top_tags_query = CommunityEntry.tags.most_common()[:15]
+        top_tags = dict()
+        for i, c in enumerate(top_tags_query):
+            top_tags[c.id] = c.name
+
         address_required = True
         has_drive = False
         organization_name = ""
@@ -1038,6 +1060,9 @@ class EntryView(LoginRequiredMixin, View):
         drive_id = None
         drive_custom_question = ""
         drive_custom_question_example = ""
+        drive_units = "BG"
+        coi_def = ""
+        coi_title = ""
         if kwargs["drive"]:
             has_drive = True
             drive_slug = self.kwargs["drive"]
@@ -1070,6 +1095,9 @@ class EntryView(LoginRequiredMixin, View):
                 # redirect them if they're not an org admin or on the allowlist
                 return redirect(reverse_lazy("main:entry"))
             address_required = drive.require_user_addresses
+            drive_units = drive.units
+            coi_title = drive.opt_coi_def_title
+            coi_def = drive.opt_coi_def_info
 
         context = {
             "comm_form": comm_form,
@@ -1090,8 +1118,13 @@ class EntryView(LoginRequiredMixin, View):
             "drive_slug": drive_slug,
             "state": abbr,
             "address_required": address_required,
+            "drive_units": drive_units,
+            "coi_title": coi_title,
+            "coi_def": coi_def,
             "state_obj": State.objects.get(abbr=abbr.upper()),
             "page_type": "entry",  # For the base template to check and remove footer
+            "tags": tags_arr,
+            "top_tags": top_tags,
         }
         return render(request, self.template_name, context)
 
@@ -1139,29 +1172,20 @@ class EntryView(LoginRequiredMixin, View):
             # special characters
             attributeThresholds = [
                 ("TOXICITY", 0.75),
-                ("IDENTITY_ATTACK", 0.4),
+                ("IDENTITY_ATTACK", 0.5),
                 ("INSULT", 0.5),
                 ("PROFANITY", 0.75),
                 ("THREAT", 0.9),
             ]
 
-            for attributeThreshold in attributeThresholds:
-                attribute = attributeThreshold[0]
-                threshold = attributeThreshold[1]
-                analyze_request = {
-                    "comment": {"text": text},
-                    "languages": ["en"],
-                    "requestedAttributes": {attributeThreshold[0]: {}},
-                }
-                response = (
-                    client.comments().analyze(body=analyze_request).execute()
-                )
-                if (
-                    response["attributeScores"][attribute]["summaryScore"][
-                        "value"
-                    ]
-                    >= threshold
-                ):
+            analyze_request = {
+                'comment': {'text': text},
+                'languages': ['en'],
+                'requestedAttributes': {'TOXICITY': {}, 'IDENTITY_ATTACK': {}, 'INSULT': {}, 'PROFANITY': {}, 'THREAT': {}},
+            }
+            response = client.comments().analyze(body=analyze_request).execute()
+            for (attribute, threshold) in attributeThresholds :
+                if response["attributeScores"][attribute]["summaryScore"]["value"] >= threshold :
                     return True
             return False
 
@@ -1261,9 +1285,7 @@ class EntryView(LoginRequiredMixin, View):
                     for field in entryForm._meta.fields
                 ]
             )
-            finalres["census_blocks_polygon"] = str(
-                entryForm.census_blocks_polygon
-            )
+            finalres["census_blocks_polygon"] = shapely.wkt.dumps(shapely.wkt.loads(str(entryForm.census_blocks_polygon)[10:]), rounding_precision=10)
             finalres["user"] = entryForm.user.email
             if entryForm.organization:
                 finalres["organization"] = entryForm.organization.name
@@ -1275,7 +1297,6 @@ class EntryView(LoginRequiredMixin, View):
             string_to_hash = str(finalres)
             print("finalres: ")
             print(finalres)
-
 
             if (
                 flagText(comm_form.data["entry_name"])
@@ -1310,7 +1331,9 @@ class EntryView(LoginRequiredMixin, View):
                 )
                 del addres["id"]
                 finalres.update(addres)
+                print("polygon: " + finalres["census_blocks_polygon"])
                 string_to_hash = str(finalres)
+                print("string_to_hash: " + string_to_hash)
 
             digest = hmac.new(
                 bytes(os.environ.get("AUDIT_SECRET"), encoding="utf8"),

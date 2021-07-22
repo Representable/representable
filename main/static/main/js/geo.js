@@ -199,16 +199,40 @@ function toggleAngle(e) {
 // Adds the responses given to the survey questions to the dropdown on the map page
 function fillSurveyQuestions() {
   $("h6#dropdown-comm-name").text(`${$("#id_entry_name").val()}:`);
-  $("#map-economic-interests-resp>p.collapse-in").text($("#id_economic_interests").val());
-  $("#map-activities-resp>p.collapse-in").text($("#id_comm_activities").val());
-  $("#map-cultural-interests-resp>p.collapse-in").text($("#id_cultural_interests").val());
-  $("#map-other-interests-resp>p.collapse-in").text($("#id_other_considerations").val());
-
   $("h6#modal-comm-name").text(`${$("#id_entry_name").val()}:`);
-  $("#mobile-map-economic-interests-resp>p.collapse-in").text($("#id_economic_interests").val());
-  $("#mobile-map-activities-resp>p.collapse-in").text($("#id_comm_activities").val());
-  $("#mobile-map-cultural-interests-resp>p.collapse-in").text($("#id_cultural_interests").val());
-  $("#mobile-map-other-interests-resp>p.collapse-in").text($("#id_other_considerations").val());
+  // if empty field, don't show on dropdown
+  if ($("#id_comm_activities").val() == "") {
+    $("#map_activities_accordion").hide();
+    $("#mobile-map_activities_accordion").hide();
+  } else {
+    $("#map-activities-resp>p.collapse-in").text($("#id_comm_activities").val());
+    $("#mobile-map-activities-resp>p.collapse-in").text($("#id_comm_activities").val());
+  }
+  if ($("#id_economic_interests").val() == "") {
+    $("#map-economic-interests-accordion").hide();
+    $("#mobile-map-economic-interests-accordion").hide();
+  } else {
+    $("#map-economic-interests-resp>p.collapse-in").text($("#id_economic_interests").val());
+    $("#mobile-map-economic-interests-resp>p.collapse-in").text($("#id_economic_interests").val());
+  }
+  if ($("#id_cultural_interests").val() == "") {
+    $("#map-cultural-interests-accordion").hide();
+    $("#mobile-map-cultural-interests-accordion").hide();
+  } else {
+    $("#map-cultural-interests-resp>p.collapse-in").text($("#id_cultural_interests").val());
+    $("#mobile-map-cultural-interests-resp>p.collapse-in").text($("#id_cultural_interests").val());
+  }
+  if ($("#id_other_considerations").val() == "") {
+    $("#map-other-interests-accordion").hide();
+    $("#mobile-map-other-interests-accordion").hide();
+  } else {
+    $("#map-other-interests-resp>p.collapse-in").text($("#id_other_considerations").val());
+    $("#mobile-map-other-interests-resp>p.collapse-in").text($("#id_other_considerations").val());
+  }
+  if (drive_name != "" && drive_custom_question != "") {
+    $("#map-custom-question-resp>p.collapse-in").text($("#id_custom_response").val());
+    $("#mobile-map-custom-question-resp>p.collapse-in").text($("#id_custom_response").val());
+  }
 }
 
 $('#map-comm-menu').on('click', function (event) {
@@ -336,11 +360,65 @@ function surveyStartToAddress() {
   automaticScrollToTop();
 }
 
+// TODO: update so that these are objects, then they will show up
+// move this outside this function and load in existing tags from server
+tags_repl = tags.replaceAll("'", '"');
+tagslist = JSON.parse(tags_repl);
+
+var tagnames = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  local: tagslist,
+});
+tagnames.initialize();
+
+// for each top-tag class, add an onclick function which adds that tag to the tagsinput (if possible)
+// if not possible, display an error message -- you cannot add more than five tags to your community.
+
+var tagsText = [];
+$(".tag-top").on('click', function(){
+   $('#id_tags').tagsinput('add', {'value': parseInt($(this).attr('id').slice(4)), 'text': $(this).text()});
+});
+
+$('#id_tags').on('itemAdded', function(event) {
+  // if this is the fifth tag, gray out the buttons
+  if ($('.bootstrap-tagsinput-max').length > 0) {
+    $(".tag-top").addClass('disabled');
+  }
+  tagsText.push(event.item.text);
+  $('.bootstrap-tagsinput input').addClass('m-0');
+  $('.bootstrap-tagsinput input').attr('placeholder', '');
+});
+
+$('#id_tags').on('itemRemoved', function(event) {
+  // if this is the fifth tag, gray out the buttons
+  if ($('.bootstrap-tagsinput-max').length === 0) {
+    $(".tag-top").removeClass('disabled');
+  }
+  tagsText.splice($.inArray(event.item.text, tagsText), 1);
+  if ($(this).val().length === 0) $('.bootstrap-tagsinput input').removeClass('m-0');
+});
+
+
 // changes page entry page from the survey start page to the first part of the survey
 function startSurvey() {
   $("#entry-survey-start").addClass("d-none");
   $("#survey-qs-p1").removeClass("d-none");
   $("#2to3").addClass("h-50");
+  $('#id_tags').tagsinput({
+    maxTags: 5,
+    maxChars: 30,
+    trimValue: true,
+    itemValue: "value",
+    itemText: "text",
+    typeaheadjs: {
+      name: 'tagnames',
+      displayKey: 'text',
+      source: tagnames.ttAdapter(),
+    }
+  });
+
+  $('.bootstrap-tagsinput').addClass(['form-control', 'survey-field']);
   automaticScrollToTop();
 }
 
@@ -348,6 +426,7 @@ function surveyP1ToSurveyStart() {
   $("#survey-qs-p1").addClass("d-none");
   $("#entry-survey-start").removeClass("d-none");
   $("#2to3").removeClass("h-50");
+  $("#id_tags").val(tagsText);
   automaticScrollToTop();
 }
 
@@ -355,6 +434,7 @@ function surveyP1ToP2() {
   $("#survey-qs-p1").addClass("d-none");
   $("#survey-qs-p2").removeClass("d-none");
   $("#2to3").addClass("h-75").removeClass("h-50");
+  $("#id_tags").val(tagsText);
   automaticScrollToTop();
 }
 
@@ -362,6 +442,7 @@ function surveyP2ToP1() {
   $("#survey-qs-p2").addClass("d-none");
   $("#survey-qs-p1").removeClass("d-none");
   $("#2to3").addClass("h-50").removeClass("h-75");
+  $('.bootstrap-tagsinput').addClass(['form-control', 'survey-field']);
   automaticScrollToTop();
 }
 
@@ -618,10 +699,12 @@ $("#surveyP2ToMap_button").on("click", function(e) {
 
 $("#mapToPrivacy").on("click", function(e) {
   zoomToCommunity();
-  createCommSuccess = createCommPolygon();
+  setTimeout(() => {
+    createCommSuccess = createCommPolygon();
+  }, 1000);
   // loading icon
   $("#loading-entry").css("display", "block");
-  $("#loading-entry").delay(2000).fadeOut(2000);
+  $("#loading-entry").delay(2500).fadeOut(2500);
   setTimeout(function() {
     if (createCommSuccess) {
       e.preventDefault();
@@ -629,15 +712,17 @@ $("#mapToPrivacy").on("click", function(e) {
       $('#map-card').removeClass("has_error");
       automaticScrollToTop();
     }
-  }, 2000);
+  }, 2500);
 })
 
 $("#mapToPrivacyMobile").on("click", function(e) {
   zoomToCommunity();
-  createCommSuccess = createCommPolygon();
+  setTimeout(() => {
+    createCommSuccess = createCommPolygon();
+  }, 1000);
   // loading icon
   $("#loading-entry").css("display", "block");
-  $("#loading-entry").delay(2000).fadeOut(2000);
+  $("#loading-entry").delay(2500).fadeOut(2500);
   setTimeout(function() {
     if (createCommSuccess) {
       e.preventDefault();
@@ -645,7 +730,7 @@ $("#mapToPrivacyMobile").on("click", function(e) {
       $('#map-card').removeClass("has_error");
       automaticScrollToTop();
     }
-  }, 2000);
+  }, 2500);
 })
 
 $("#mapToSurveyP2").click(mapToSurveyP2);
@@ -738,6 +823,19 @@ function createCommPolygon() {
     }
   });
 
+  // map.addLayer({
+  //   'id': Math.random().toString().substring(),
+  //   'type': 'line',
+  //   'source': {
+  //     'type': 'geojson',
+  //     'data': multiPolySave.geometry,
+  //   },
+  //   'paint': {
+  //     'line-color': '#000',
+  //     'line-width': 3
+  //   }
+  // });
+
   // for display purposes -- this is the final multipolygon!!
   // TODO: implement community entry model change -> store only outer coordinates (like code in map.js)
   var wkt = new Wkt.Wkt();
@@ -768,7 +866,54 @@ function zoomToCommunity() {
   var selectBbox = JSON.parse(sessionStorage.getItem("selectBbox"));
   if (selectBbox === null || selectBbox.length === 0) return;
   var bbox = turf.bbox(selectBbox);
-  map.fitBounds(bbox, { padding: 300, duration: 0 });
+
+  if(blockGroupPolygons != null && unit_id === bg_id) {
+    // map.addLayer({
+    //   'id': Math.random().toString().substring(),
+    //   'type': 'line',
+    //   'source': {
+    //     'type': 'geojson',
+    //     'data': turf.bboxPolygon(bbox).geometry,
+    //   },
+    //   'paint': {
+    //     'line-color': '#eb4034',
+    //     'line-width': 3
+    //   }
+    // });
+
+    polyFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
+    let bbox_adjustment = undefined;
+    for(var i = 2; i < polyFilter.length; i++) {
+      if(bbox_adjustment === undefined) {
+        bbox_adjustment = blockGroupPolygons[polyFilter[i]].bbox_dims;
+      } else {
+        bbox_adjustment[0] = Math.max(bbox_adjustment[0], blockGroupPolygons[polyFilter[i]].bbox_dims[0]);
+        bbox_adjustment[1] = Math.max(bbox_adjustment[1], blockGroupPolygons[polyFilter[i]].bbox_dims[1]);
+      }
+      blockGroupPolygons[polyFilter[i]].bbox_dims[0];
+      blockGroupPolygons[polyFilter[i]].bbox_dims[1];
+    }
+    bbox[0] -= bbox_adjustment[0];
+    bbox[1] -= bbox_adjustment[1];
+    bbox[2] += bbox_adjustment[0];
+    bbox[3] += bbox_adjustment[1];
+
+    // map.addLayer({
+    //   'id': Math.random().toString().substring(),
+    //   'type': 'line',
+    //   'source': {
+    //     'type': 'geojson',
+    //     'data': turf.bboxPolygon(bbox).geometry,
+    //   },
+    //   'paint': {
+    //     'line-color': '#eb4034',
+    //     'line-width': 3
+    //   }
+    // });
+    map.fitBounds(bbox, { duration: 0 });
+  } else {
+    map.fitBounds(bbox, { duration: 0, padding: 300 });
+  }
 }
 /****************************************************************************/
 
@@ -871,7 +1016,7 @@ var map = new mapboxgl.Map({
   style: "mapbox://styles/districter-team/ckdfv8riy0uf51hqu1g7qjrha", //hosted style id
   center: [-96.7026, 40.8136], // starting position - Lincoln, NE :)
   zoom: 3, // starting zoom -- higher is closer
-  minZoom: 7,
+  minZoom: 6.5,
 });
 
 map.on('load', function() {
@@ -1204,8 +1349,12 @@ function hideWarningMessage() {
 }
 
 // Only add zoom buttons to medium and large screen devices (non-mobile)
-if (!window.matchMedia("only screen and (max-width: 760px)").matches) {
-  map.addControl(new mapboxgl.NavigationControl()); // plus minus top right corner
+if (!window.matchMedia("screen and (max-width: 760px)").matches) {
+  var nav = new mapboxgl.NavigationControl({
+        showCompass: false
+      });
+
+  map.addControl(nav);
 }
 
 var user_polygon_id = undefined;
@@ -1274,13 +1423,56 @@ function newHighlightLayer(state, firstSymbolId, suffix) {
   );
 }
 
+function checkIsContiguous(idFilter) {
+  var active_ids = new Set(idFilter.slice(2));
+  if(active_ids.size == 0)
+    return true;
+  let visited = new Set();
+  let stack = [];
+  stack.push(active_ids.values().next().value);
+  visited.add(stack[0]);
+
+  while(stack.length > 0){
+    blockGroupPolygons[stack.pop()].adj_geoids.forEach((id) => {
+      if(active_ids.has(id) && !visited.has(id)){
+        stack.push(id);
+        visited.add(id);
+      }
+    });
+  }
+
+  if(visited.size == active_ids.size)
+    hideWarningMessage();
+  else
+    showWarningMessage("WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org.");
+}
 /******************************************************************************/
 // the drawing radius for select tool
 var drawRadius = 0;
 var isStateChanged = false;
+var blockGroupPolygons = null;
 /* After the map style has loaded on the page, add a source layer and default
 styling for a single point. */
 map.on("style.load", function () {
+  fetch('/block_group_polygons/' + state.toLowerCase() + 'bg/')
+    .then(response => {
+      if (response.ok) {
+        return response.json()
+      } else if(response.status === 404) {
+        return Promise.reject('error 404')
+      } else {
+        return Promise.reject('some other error: ' + response.status)
+      }
+    })
+    .then(data => {
+      blockGroupPolygons = data;
+      console.log('data loaded successfully');
+    })
+    .catch(error => {
+      blockGroupPolygons = null;
+      console.log('error while loading data,', error);
+    });
+
   var layers = map.getStyle().layers;
   // Find the index of the first symbol layer in the map style
   // this is so that added layers go under the symbols on the map
@@ -1322,6 +1514,32 @@ map.on("style.load", function () {
     newCensusShading(state, firstSymbolId, "bg");
     newCensusLines(state, "bg");
     newHighlightLayer(state, firstSymbolId, "bg");
+    if (units==="B") {
+      map.setLayoutProperty(state + "-census-lines-block", "visibility", "visible");
+      map.setLayoutProperty(state + "-census-shading-block", "visibility", "visible");
+      map.setLayoutProperty(state + "-highlighted-block", "visibility", "visible");
+      map.setLayoutProperty(state + "-census-lines-bg", "visibility", "none");
+      map.setLayoutProperty(state + "-census-shading-bg", "visibility", "none");
+      map.setLayoutProperty(state + "-highlighted-bg", "visibility", "none");
+      drawUsingBlocks = true;
+      layer_suffix = "block";
+      unit_id = block_id;
+      // change button name for this case -- TODO: languages?
+      $("#map-units-btn").text("Use larger units");
+      //clear "cache" so that undo button still works as expected
+      sessionStorage.clear();
+      filterStack = [];
+      bboxStack = [];    // show or hide population display
+      if (old_units) {
+        $("#map-pop-btn").show();
+      } else {
+        $("#map-pop-btn").hide();
+      }
+      // clear selection
+      map.setFilter(state + "-highlighted-block", ["in", block_id, ""]);
+      map.setFilter(state + "-highlighted-bg", ["in", bg_id, ""]);
+      mapHover();
+    }
   }
   showMap();
   map.flyTo({
@@ -1410,10 +1628,12 @@ map.on("style.load", function () {
         }
         else {
           selectBbox = turf.difference(selectBbox, currentBbox);
-          if (selectBbox != null && turf.getType(selectBbox) == "MultiPolygon") {
-            showWarningMessage(
-              "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
-            );
+          if(blockGroupPolygons == null || unit_id != bg_id) {
+            if (selectBbox != null && turf.getType(selectBbox) == "MultiPolygon") {
+              showWarningMessage(
+                "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
+              );
+            }
           }
         }
       }
@@ -1426,13 +1646,15 @@ map.on("style.load", function () {
         hideWarningMessage();
       } else {
         isChanged = true;
-        if (
-          turf.booleanDisjoint(currentBbox, selectBbox) &&
-          !isEmptyFilter(currentFilter)
-        ) {
-          showWarningMessage(
-            "WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
-          );
+        if (blockGroupPolygons == null || unit_id != bg_id) {
+          if (
+            turf.booleanDisjoint(currentBbox, selectBbox) &&
+            !isEmptyFilter(currentFilter)
+          ) {
+            showWarningMessage(
+              "WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
+            );
+          }
         }
         selectBbox = turf.union(currentBbox, selectBbox);
       }
@@ -1452,6 +1674,13 @@ map.on("style.load", function () {
         }
       });
     }
+
+    if (blockGroupPolygons != null && unit_id === bg_id) {
+      // console.time('contiguitycheck')
+      checkIsContiguous(filter);
+      // console.timeEnd('contiguitycheck')
+    }
+
     // check size of community - 800 block groups or 2400 blocks
     if ((!drawUsingBlocks && filter.length < 802) || (drawUsingBlocks && filter.length < 2402)) {
       map.setFilter(state + "-highlighted-" + layer_suffix, filter);

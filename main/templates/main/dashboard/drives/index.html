@@ -1,101 +1,173 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
-<div class="container">
-  <div class="row pt-3">
-    <div class="col">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{% url 'main:home_org' object.organization.slug  object.organization.pk %}"><i class="fa fa-arrow-circle-left"></i> Return to {{ object.organization.name }}</a></li>
-        </ol>
-      </nav>
-    </div>
-  </div>
-  <div class="row pt-3">
-    <div class="col-sm">
-      <div class="card shadow-sm h-100">
-        <div class="card-body">
-          <h5>
-            {{ object.name}}
-          </h5>
-          <hr>
-          {% if is_org_admin %}
-          <button class="btn btn-danger float-right" data-toggle="modal" data-target="#deleteDriveConfirm">
-            <i class="fas fa-trash"></i>
-          </button>
-          {% endif %}
-          {% if object.private %}
-          <span class="badge badge-primary">Private Drive</span>
-          {% endif %}
-          <div class="mt-2">
-          <p> State:
-            <span class="badge badge-secondary">{{object.state}}</span>
-
-          </p>
-          </div>
-          <p> Description: {{ object.description }} </p>
-          <a href="{% url 'main:update_drive' object.organization.slug  object.organization.pk object.pk %}" role="button">Edit Details</a>
-
+<script type="text/javascript" src="{% static 'main/js/base.js' %}"></script>
+<div class="container-fluid light-blue-bg py-3">
+  <div class="row">
+    <div class="col-md-1 col-lg-2"></div>
+    <div class="col-12 col-md-10 col-lg-8">
+      <div class="row pt-3">
+        <div class="col">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'main:home_org' object.organization.slug  object.organization.pk %}"><i class="fa fa-arrow-circle-left"></i> Return to {{ object.organization.name }}</a></li>
+            </ol>
+          </nav>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm">
-      <div class="card shadow-sm my-3">
-        <div class="card-body">
-          <h5>Getting Started</h5>
-          <ul class="list-group my-3">
-          {% if not object.private %}
+      <div class="row pt-3">
+        <div class="col-sm">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+              <h4>
+                {{ object.name}}
+              </h4>
+              {% if object.private %}
+              <span class="badge badge-primary">{% trans "Private Drive" %}</span>
+              {% endif %}
+              <div class="mt-2">
+                <p class="blue-text"><strong>{% trans "State" %}</strong>:
+                  <span class="badge badge-secondary">{{object.state}}</span>
+                </p>
+              </div>
+              <p class="scrollable"><strong class="blue-text">{% trans "Description" %}:</strong> {{ object.description }}</p>
+              {% if object.require_user_addresses %}
+              <p class="blue-text">{% trans "This drive requires street addresses." %}</p>
+              {% endif %}
 
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <div class="container pl-0 pr-0">
-                <h5><span class="badge badge-secondary"><i class="fas fa-share-alt"></i></span> Gather Submissions</h5>
-                <div class="row no-gutters">
-                  <div class="col-9">
-                    <p>Gather submissions for this drive! Copy this link and share it with people you'd like to contribute to this drive: <a href="{% url 'main:drive_page' object.slug %}">representable.org{% url 'main:drive_page' object.slug %}</a></p>
-                  </div>
-                  <div class="col">
-                    <a class="btn btn-primary float-right" href="{% url 'main:drive_page' object.slug %}" role="button">View <i class="fa fa-arrow-circle-right"></i></a>
-                  </div>
+              <div class="row">
+                <div class="col-6">
+                  <a href="{% url 'main:update_drive' object.organization.slug  object.organization.pk object.pk %}" class="btn btn-primary btn-ls-md" role="button">{% trans "EDIT DETAILS" %}</a>
+                </div>
+                <div class="col-6">
+                  {% if is_org_admin %}
+                  <button class="btn btn-danger float-right btn-ls-md" data-toggle="modal" data-target="#deleteDriveConfirm">{% trans "DELETE" %}</button>
+                  {% endif %}
                 </div>
               </div>
-            </li>
-          {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row pb-3">
+        <div class="col-12 col-lg-6">
+          <div class="card h-100 border-0 shadow-sm my-3 rounded-lg">
+            <div class="card-body">
+              <h6 class="text-primary text-xl-center py-2"><strong>{% trans "1. Gather Submissions" %}</strong></h6>
+              <div class="row pb-2">
+                <div class="d-none d-xl-block col-xl-2 pt-xl-1 text-right">
+                  <i class="fas fa-home org-icon text-2A94F4"></i>
+                </div>
+                <div class="col-12 col-xl-10 pl-xl-2">
 
-            {% if object.private %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <div>
-                <h5><span class="badge badge-secondary"><i class="fas fa-file-upload"></i></span> Manage Invite List </h5>
-                <p>Only users you invite can submit to or see your private drive. Manage the invite list here. <p>
+                  {% trans "Gather submissions for this drive! Share this link with people you'd like to contribute" %}: <a href="{% url 'main:drive_page' object.slug %}">representable.org{% url 'main:drive_page' object.slug %}</a>
+                </div>
               </div>
-              <a class="btn btn-primary" href="{% url 'main:manage_allowlist' object.organization.slug  object.organization.pk object.pk %}" role="button">Manage <i class="fa fa-arrow-circle-right"></i></a>
-            </li>
-            {% endif %}
+              <div class="text-center org-card-btn">
+                <button class="btn btn-primary btn-ls-md" role="button" onclick="copyLinkToClipboard('https://representable.org{% url 'main:drive_page' object.slug %}')">{% trans "COPY LINK" %}</button>
 
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <div class="container pl-0 pr-0">
-                <h5><span class="badge badge-secondary"><i class="fas fa-map-marker-alt"></i></span> View{% if not object.private %}/Share {% endif %} Your Map</h5>
-                <div class="row no-gutters">
-                  <div class="col-9">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6 mt-3 mt-lg-0">
+          <div class="card h-100 border-0 shadow-sm my-3 rounded-lg">
+            <div class="card-body">
+              <h6 class="text-primary text-xl-center py-2">
+                {% if not object.private %}
+                  <strong>
+                  {% trans "2. View And Share Your Drive." %}
+                  </strong>
+                {% else %}
+                  <strong>
+                  {% trans "2. View Your Drive." %}
+                  </strong>
+                {% endif %}
+              </h6>
+              <div class="row pb-2">
+                <div class="d-none d-xl-block col-xl-2 pt-xl-1 text-right">
+                  <i class="fas fa-share-square org-icon text-2A94F4"></i>
+                </div>
+                <div class="col-12 col-xl-10 pl-xl-2">
+                  {% comment %} {% trans "Gather submissions for this drive! Share this link with people you'd like to contribute" %}: <a href="{% url 'main:partner_map' object.slug %}">https://representable.org{% url 'main:partner_map' object.slug %}</a>  {% endcomment %}
                   {% if not object.private %}
                     <p>Your drive's map is live at: <a href="{% url 'main:partner_map' object.organization.slug object.slug %}">representable.org{% url 'main:partner_map' object.organization.slug object.slug %}</a></p>
                   {% endif %}
                   {% if object.private %}
                     <p>Your drive's map is available to organization administrators at: <a href="{% url 'main:partner_map' object.organization.slug object.slug %}">representable.org{% url 'main:partner_map' object.organization.slug object.slug %}</a></p>
+                    <div>
+                      <p>Only users you invite can submit to or see your private drive. Manage the invite list <a href="{% url 'main:manage_allowlist' object.organization.slug  object.organization.pk object.pk %}">here.</a><p>
+                    </div>
                   {% endif %}
-                  </div>
-
-                  <div class="col">
-                    <a class="btn btn-primary float-right" href="{% url 'main:partner_map' object.organization.slug object.slug %}"  role="button">View <i class="fa fa-arrow-circle-right"></i></a>
-                  </div>
                 </div>
-            </li>
-          </ul>
+              </div>
+              <div class="text-center org-card-btn">
+                <a class="btn btn-primary btn-ls-md" href="{% url 'main:partner_map' object.organization.slug object.slug %}"  role="button">VIEW MAPS</a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+      {% comment %} <div class="row">
+        <div class="col-sm">
+          <div class="card shadow-sm my-3">
+            <div class="card-body">
+              <h5>{% trans "Getting Started" %}</h5>
+              <ul class="list-group my-3">
+              {% if not object.private %}
+
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div class="container pl-0 pr-0">
+                    <h5><span class="badge badge-secondary"><i class="fas fa-share-alt"></i></span> Gather Submissions</h5>
+                    <div class="row no-gutters">
+                      <div class="col-9">
+                        <p>Gather submissions for this drive! Copy this link and share it with people you'd like to contribute to this drive: <a href="{% url 'main:drive_page' object.slug %}">representable.org{% url 'main:drive_page' object.slug %}</a></p>
+                      </div>
+                      <div class="col">
+                        <a class="btn btn-primary float-right" href="{% url 'main:drive_page' object.slug %}" role="button">View <i class="fa fa-arrow-circle-right"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              {% endif %}
+
+                {% if object.private %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <h5><span class="badge badge-secondary"><i class="fas fa-file-upload"></i></span> Manage Invite List </h5>
+                    <p>Only users you invite can submit to or see your private drive. Manage the invite list here. <p>
+                  </div>
+                  <a class="btn btn-primary" href="{% url 'main:manage_allowlist' object.organization.slug  object.organization.pk object.pk %}" role="button">Manage <i class="fa fa-arrow-circle-right"></i></a>
+                </li>
+                {% endif %}
+
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div class="container pl-0 pr-0">
+                    <h5><span class="badge badge-secondary"><i class="fas fa-map-marker-alt"></i></span> View{% if not object.private %}/Share {% endif %} Your Map</h5>
+                    <div class="row no-gutters">
+                      <div class="col-9">
+                      {% if not object.private %}
+                        <p>Your drive's map is live at: <a href="{% url 'main:partner_map' object.organization.slug object.slug %}">representable.org{% url 'main:partner_map' object.organization.slug object.slug %}</a></p>
+                      {% endif %}
+                      {% if object.private %}
+                        <p>Your drive's map is available to organization administrators at: <a href="{% url 'main:partner_map' object.organization.slug object.slug %}">representable.org{% url 'main:partner_map' object.organization.slug object.slug %}</a></p>
+                      {% endif %}
+                      </div>
+
+                      <div class="col">
+                        <a class="btn btn-primary float-right" href="{% url 'main:partner_map' object.organization.slug object.slug %}"  role="button">View <i class="fa fa-arrow-circle-right"></i></a>
+                      </div>
+                    </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div> {% endcomment %}
     </div>
+    <div class="col-md-1 col-lg-2"></div>
   </div>
 </div>
 <!-- Modal -->
