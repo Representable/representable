@@ -22,7 +22,9 @@
                                     <label for="id_logo">
                                         <img class="h-100 w-100" id="blah" src="{{ url }}" alt="Upload Image"> </img>
                                     </label>
+                                    <div id="upload-stuff">
                                     {{ form.logo|append_attr:"onchange:readURL(this);" }}
+                                    </div>
                                 </div>
                             </div>
                             <div class="fieldWrapper col-9 my-auto">
@@ -50,24 +52,6 @@
                             {% if form.ext_link.help_text %}
                                 <p class="help">{{ form.ext_link.help_text|safe }}</p>
                             {% endif %}
-                        </div>
-                        <div class="fieldWrapper">
-                            {{ form.states.errors }}
-                            {{ form.states.label_tag }} 
-                            {{ form.states|append_attr:"class:form-control survey-field" }}
-                            {% if form.states.help_text %}
-                                <p class="help">{{ form.states.help_text|safe }}</p>
-                            {% endif %}
-                        </div>
-                        <div class="fieldWrapper">
-                            <div class="form-check form-check-inline">
-                                {{ form.government.errors }}
-                                {{ form.government.label_tag }} {{ form.government }}
-                                {% comment %} {{ field.label_tag }} {{ field|append_attr:"class:form-control" }}  {% endcomment %}
-                                {% if form.government.help_text %}
-                                <p class="help">{{ form.government.help_text|safe }}</p>
-                                {% endif %}
-                            </div>
                         </div>
                       </div>
                       <div style="display: inline-block;">
