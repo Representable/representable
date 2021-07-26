@@ -19,9 +19,13 @@
  */
 
 let jQuery = window.jQuery;
+let user_flow = false;
+if (jQuery("#usa-map").length > 0) user_flow = true;
 
 jQuery(document).ready(function () {
-  setUpUSAMap();
+  if (user_flow){
+    setUpUSAMap();
+  }
   populateStateSelectionDropdown();
 });
 
@@ -48,8 +52,16 @@ let populateStateSelectionDropdown = function () {
     newOption.innerHTML = stateName;
     selectElement.appendChild(newOption);
   }
+  if (!user_flow && state) {
+    jQuery("#stateSelectionDropdown").val(state.toLowerCase());
+  }
   jQuery("#stateSelectionDropdown").on("change", function () {
-    window.location = "/state/" + this.value;
+    // go to state page if user flow, else go to resources
+    if (user_flow) {
+      window.location = "/state/" + this.value;
+    } else {
+      window.location = "/resources/" + this.value;
+    }
   });
 };
 

@@ -1318,7 +1318,7 @@ Entry Mapping Page
   margin: auto;
   cursor: pointer;
 }
-#stateSelectionDropdown {
+.state_select {
   font-size: 1.5rem;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -1332,6 +1332,16 @@ Entry Mapping Page
   border-radius: 0.25rem;
   padding: 5px;
   width: 14rem;
+}
+.state-select-resources {
+  padding: 5px;
+  background: none;
+  width: 14rem;
+  border-width: 0 0 3px 0;
+  -webkit-appearance: none;
+}
+.state-select-resources option {
+  font-size: 1.5rem;
 }
 .ws-normal {
   white-space: normal;
