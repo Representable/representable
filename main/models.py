@@ -77,6 +77,7 @@ class Organization(models.Model):
     - verified: is the organization verified as legitimate by our team
     - government: is the organization a government (e.g. city, county, state commission)
     - logo: organization logo image
+    - image_width and image_height: for calculating the image ratios
     """
 
     name = models.CharField(max_length=128)
@@ -90,8 +91,9 @@ class Organization(models.Model):
     members = models.ManyToManyField(User, through="Membership")
     verified = models.BooleanField(default=False)
     government = models.BooleanField(default=False, blank=True, null=True)
-    # logo = models.ImageField(_(""), upload_to=None, height_field=None, width_field=None, max_length=None)
-    logo = models.ImageField(upload_to='images/', null=True, blank=True, verbose_name="")
+    logo = models.ImageField(upload_to='images/', null=True, blank=True, verbose_name="") #, width_field='image_width', height_field='image_height')
+    # image_width = models.IntegerField(blank=True, null=True)
+    # image_height = models.IntegerField(blank=True, null=True)
 
     class Meta:
         ordering = ("description",)

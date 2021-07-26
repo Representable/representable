@@ -2525,6 +2525,18 @@ input:checked + .slider:before {
   margin: 0px;
 }
 
-.label-class {
-  padding: 0px;
+.fieldWrapper {
+  margin-bottom: 10px;
+}
+
+.errorlist {
+  color: red;
+}
+
+.image-upload>input {
+  display: none;
+}
+
+#upload-stuff {
+  display: none;
 }
