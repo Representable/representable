@@ -1318,7 +1318,7 @@ Entry Mapping Page
   margin: auto;
   cursor: pointer;
 }
-.state_select {
+.state-select {
   font-size: 1.5rem;
   -webkit-appearance: none;
   -moz-appearance: none;
