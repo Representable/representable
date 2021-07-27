@@ -79,8 +79,6 @@ from ..models import (
     Signature,
     BlockGroup,
     CensusBlock,
-    FrequentlyAskedQuestion,
-    GlossaryDefinition,
     Report,
 )
 from ..admin import (
@@ -279,31 +277,12 @@ class About(TemplateView):
 class FAQ(TemplateView):
     template_name = "main/pages/faq.html"
 
-    def get(self, request, *args, **kwargs):
-
-        faqs_users = FrequentlyAskedQuestion.objects.filter(type="USER")
-        faqs_orgs = FrequentlyAskedQuestion.objects.filter(type="ORGANIZATION")
-        return render(
-            request,
-            self.template_name,
-            {"faqs_users": faqs_users, "faqs_orgs": faqs_orgs},
-        )
-
 
 # ******************************************************************************#
 
 
 class Glossary(TemplateView):
     template_name = "main/pages/glossary.html"
-
-    def get(self, request, *args, **kwargs):
-
-        glossaryterms = GlossaryDefinition.objects.all()
-        return render(
-            request,
-            self.template_name,
-            {"glossaryterms": glossaryterms},
-        )
 
 
 # ******************************************************************************#
@@ -1043,9 +1022,10 @@ class EntryView(LoginRequiredMixin, View):
         # all tags already in db for tagging typeahead
         # also the top 15 tags as options to select
         all_tags = Tag.objects.all()
-        tags_arr = []
+        tags_arr_unsort = []
         for i, c in enumerate(all_tags):
-            tags_arr.append({"value": c.id, "text": c.name})
+            tags_arr_unsort.append({"value": c.id, "text": c.name})
+        tags_arr = sorted(tags_arr_unsort, key=lambda k: k['text'].lower())
         top_tags_query = CommunityEntry.tags.most_common()[:15]
         top_tags = dict()
         for i, c in enumerate(top_tags_query):

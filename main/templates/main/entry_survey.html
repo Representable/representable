@@ -357,7 +357,7 @@
                   {{ comm_form.custom_response|append_attr:"class:form-control survey-field" }}
                 {% endif %}
 
-                {% comment %} <p class="my-4 ml-1 gray-text">
+                <p class="my-4 ml-1 gray-text">
                   <b>What are the main topics relevant to your community?</b><br>
                   <span class="small text-muted">Add up to five tags that describe your community.</span>
                 </p>
@@ -365,6 +365,7 @@
                   {% for key, value in top_tags.items %}
                     <button type="button" class="btn btn-outline-secondary tag-top mb-2" id="tag_{{key}}">{{ value }}</button>
                   {% endfor %}
+                  <button type="button" class="btn btn-outline-secondary mb-2" id="tag_more" aria-haspopup="true" aria-expanded="false" style="border-width: 2px;"><i class="fas fa-plus"></i></button>
                 </div>
                 <div class="sr-only">{{ comm_form.tags.label_tag }}</div>
                 {{ comm_form.tags|append_attr:"class:form-control survey-field" }}
@@ -377,7 +378,7 @@
                             {% blocktrans trimmed %} Try typing a term similar to what you have in mind. If you still have a tag you want to add that isn't available, contact our team with your tag request by emailing <a href="mailto:team@representable.org">team@representable.org</a>. {% endblocktrans%}
                         </p>
                     </div>
-                </div> {% endcomment %}
+                </div>
 
             </div>
             <div class="row pt-5">
@@ -386,6 +387,36 @@
                     <button id="surveyP1ToP2_button" class="btn btn-primary entry-nav-btn ml-4 btn-ls-md" type="button">{% trans "NEXT" %}<i class="fas fa-angle-right pl-2"></i></button>
                 </div>
             </div>
+        </div>
+        <!-- modal for census blocks -> census block groups -->
+        <div id="tags-select-modal" class="modal fade blue-modal" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content px-lg-5 gray-text">
+              <div class="modal-body">
+                <button type="button" class="close p-2" aria-label="Close" data-dismiss="modal">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="mx-3 my-5">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col px-0">
+                        <input class="my-2 mb-3 py-2 w-100" id="search-tags" type="text" placeholder="Search tags..." autofocus>
+                        <br>
+                      </div>
+                    </div>
+                    <div class="row vh-50" style="overflow: scroll;">
+                      <div class="col px-0" id="tags-col">
+                        {% for tag in tags %}
+                        <button type="button" class="btn btn-outline-secondary tag-select mb-2" id="tag_select_{{tag.value}}">{{ tag.text }}</button>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         </div>
     </div>
 
