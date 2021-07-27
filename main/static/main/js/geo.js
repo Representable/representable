@@ -243,6 +243,10 @@ $('#map-comm-menu').on('touchstart', function (event) {
   event.stopPropagation();
 });
 
+$("#comm-example-btn").on("click", function() {
+  $("#comm-example-modal").modal();
+});
+
 $("#mobile-map-help-btn").on("click", function() {
   $("#map-help-modal").modal();
 });
@@ -375,16 +379,57 @@ tagnames.initialize();
 // for each top-tag class, add an onclick function which adds that tag to the tagsinput (if possible)
 // if not possible, display an error message -- you cannot add more than five tags to your community.
 
+$("#tag_more").on("click", function() {
+  if (!$('.bootstrap-tagsinput-max').length > 0) {
+    $("#tags-select-modal").modal();
+  }
+});
+
+$('#tags-select-modal').on('shown.bs.modal', function() {
+  $('#search-tags').focus();
+});
+
+// search bar filtering Communities
+$(document).ready(function(){
+  $("#search-tags").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#tags-col .btn").filter(function() {
+      var innerText = $(this).text().toLowerCase();
+      $(this).toggle(innerText.indexOf(value) > -1)
+    });
+  });
+});
+
 var tagsText = [];
 $(".tag-top").on('click', function(){
+  if ($(this).hasClass("active")) {
+    $('#id_tags').tagsinput('remove', {'value': parseInt($(this).attr('id').slice(4)), 'text': $(this).text()});
+  } else {
    $('#id_tags').tagsinput('add', {'value': parseInt($(this).attr('id').slice(4)), 'text': $(this).text()});
+ }
+});
+
+$(".tag-select").on('click', function(){
+  if ($(this).hasClass("active")) {
+    $('#id_tags').tagsinput('remove', {'value': parseInt($(this).attr('id').slice(11)), 'text': $(this).text()});
+  } else {
+   $('#id_tags').tagsinput('add', {'value': parseInt($(this).attr('id').slice(11)), 'text': $(this).text()});
+  }
 });
 
 $('#id_tags').on('itemAdded', function(event) {
   // if this is the fifth tag, gray out the buttons
   if ($('.bootstrap-tagsinput-max').length > 0) {
-    $(".tag-top").addClass('disabled');
+    $(".tag-top:not(.active)").addClass('disabled');
+    $(".tag-select:not(.active)").addClass('disabled');
+    $("#tag_more").addClass('disabled');
   }
+  // visual signal that tag has been selected
+  $("#tag_" + event.item.value).addClass('active');
+  $("#tag_" + event.item.value).removeClass('disabled');
+  $("#tag_select_" + event.item.value).addClass('active');
+  $("#tag_select_" + event.item.value).removeClass('disabled');
+
   tagsText.push(event.item.text);
   $('.bootstrap-tagsinput input').addClass('m-0');
   $('.bootstrap-tagsinput input').attr('placeholder', '');
@@ -394,7 +439,13 @@ $('#id_tags').on('itemRemoved', function(event) {
   // if this is the fifth tag, gray out the buttons
   if ($('.bootstrap-tagsinput-max').length === 0) {
     $(".tag-top").removeClass('disabled');
+    $(".tag-select").removeClass('disabled');
+    $("#tag_more").removeClass('disabled');
   }
+  // visual signal that tag can be selected
+  $("#tag_" + event.item.value).removeClass('active');
+  $("#tag_select_" + event.item.value).removeClass('active');
+
   tagsText.splice($.inArray(event.item.text, tagsText), 1);
   if ($(this).val().length === 0) $('.bootstrap-tagsinput input').removeClass('m-0');
 });

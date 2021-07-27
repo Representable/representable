@@ -210,9 +210,16 @@
     <!-- Page for the first set of the survey questions -->
     <div id="survey-qs-p1" class="row row-equal-cols d-none">
         <div class="col-lg">
-            <div class="entry-header">
-                <strong>{% trans "What unites your Community of Interest?" %}</strong>
+          <div class="row">
+            <div class="col-md-7 col-lg-8">
+              <div class="entry-header">
+                  <strong>{% trans "What unites your Community of Interest?" %}</strong>
+              </div>
             </div>
+            <div class="col-md-5 col-lg-4 align-right">
+              <button class="btn btn-outline-primary mr-4 btn-ls-md float-xl-right" type="button" id="comm-example-btn">{% trans "EXAMPLE COMMUNITY" %}</button>
+            </div>
+          </div>
             <!-- TODO : change padding to be 1px less on the left -->
             <div class="py-3 px-4 light-blue-bg opacity-4 mt-2">
                 {% if coi_title == "" %}
@@ -358,6 +365,7 @@
                   {% for key, value in top_tags.items %}
                     <button type="button" class="btn btn-outline-secondary tag-top mb-2" id="tag_{{key}}">{{ value }}</button>
                   {% endfor %}
+                  <button type="button" class="btn btn-outline-secondary mb-2" id="tag_more" aria-haspopup="true" aria-expanded="false" style="border-width: 2px;"><i class="fas fa-plus"></i></button>
                 </div>
                 <div class="sr-only">{{ comm_form.tags.label_tag }}</div>
                 {{ comm_form.tags|append_attr:"class:form-control survey-field" }}
@@ -379,6 +387,36 @@
                     <button id="surveyP1ToP2_button" class="btn btn-primary entry-nav-btn ml-4 btn-ls-md" type="button">{% trans "NEXT" %}<i class="fas fa-angle-right pl-2"></i></button>
                 </div>
             </div>
+        </div>
+        <!-- modal for census blocks -> census block groups -->
+        <div id="tags-select-modal" class="modal fade blue-modal" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content px-lg-5 gray-text">
+              <div class="modal-body">
+                <button type="button" class="close p-2" aria-label="Close" data-dismiss="modal">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="mx-3 my-5">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col px-0">
+                        <input class="my-2 mb-3 py-2 w-100" id="search-tags" type="text" placeholder="Search tags..." autofocus>
+                        <br>
+                      </div>
+                    </div>
+                    <div class="row vh-50" style="overflow: scroll;">
+                      <div class="col px-0" id="tags-col">
+                        {% for tag in tags %}
+                        <button type="button" class="btn btn-outline-secondary tag-select mb-2" id="tag_select_{{tag.value}}">{{ tag.text }}</button>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         </div>
     </div>
 
@@ -449,4 +487,57 @@
         </div>
     </div>
 
+</div>
+<!-- modal for community example -->
+<div id="comm-example-modal" class="modal fade blue-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content px-xl-5 gray-text">
+      <div class="modal-body">
+        <button type="button" class="close p-2" aria-label="Close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="mx-3 my-5">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-lg-2 col-md-3 col-4 pr-0 d-flex justify-content-end">
+                <img id="comm-example-face" class=" w-xxl-50 w-xl-75 w-100 h-100 mr-0 rounded-circle" src="{% static 'img/example-comm-face.jpg' %}" alt="Kai headshot - example comm author"> </img>
+              </div>
+              <div class="col-8 my-auto pl-0">
+                <h5 class="rounded-1rem bg-light w-100 p-md-4 p-2 mb-0" id="comm-example-title">I'm Kai, and I work for Representable. This is my community.</h5>
+              </div>
+              <div class="col-2"></div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 my-4">
+                <div class="rounded-1rem bg-light p-md-4 p-2">
+                  <h4>Union Square Community</h4>
+                  <h6 class="text-muted">League of Women Voters of the City of New York</h6>
+                </div>
+                <br>
+                <img class="w-100 w-xxl-50 d-block mx-auto d-sm-none mb-4" src="{% static 'img/example-comm.png' %}" alt="Example Union Square community map"> </img>
+                <div class="rounded-1rem bg-light p-md-4 p-2">
+                  <h6>Community Activities and Services</h6>
+                  <small>My community is centered around Union Square Park, which serves as an important communal resource. It is the location of a regular farmers' market and many other events that occur there, such as protests and gatherings, as well as have public services like playgrounds and green space. Parts of NYU and The New School are in my community. There are also a number of subway stations in my community, including the large 14 Street-Union Square station, the city's upkeep and development of which affects the area.</small>
+                  <h6 class="mt-3">Cultural or Historical Interests</h6>
+                  <small>My community is in the center of Manhattan, but somewhat in between traditional neighborhoods, being south of Flatiron, east of Chelsea, and north of the West Village and East Village. We have our own unique cultural identity centered around Union Square Park and the many social and cultural happenings there throughout history.</small>
+                </div>
+              </div>
+              <div class="col-sm-6 my-auto">
+                <div class="">
+                  <img class="w-100 w-xxl-50 d-none mx-auto d-sm-block" src="{% static 'img/example-comm.png' %}" alt="Example Union Square community map"> </img>
+                </div>
+                <br>
+                <div class="rounded-1rem bg-light p-md-4 p-2">
+                  <h6>Environmental or Economic Interests</h6>
+                  <small>My community is impacted by rising costs of living, which threatens to push many residents out or make residing here more economical challenging. The maintenance of the Union Square green space, valuable in a dense urban environment, is also important.</small>
+                  <h6 class="mt-3">Community Needs and Concerns</h6>
+                  <small>My community is often split up in redistricting, divided between congressional districts, state house and senate districts, and NYC city council and state assembly districts, which dilutes our interests.</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

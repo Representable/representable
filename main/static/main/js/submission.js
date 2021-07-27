@@ -378,6 +378,8 @@ function toggleElections() {
 if (state in publicCommentLinks) {
   $('#public-comment-link-modal').prop("href", publicCommentLinks[state]);
   $('#public-comment-link').prop("href", publicCommentLinks[state]);
+  $('#public-comment-link-modal').prop("target", "_blank");
+  $('#public-comment-link').prop("target", "_blank");
 } else {
   $('#public-comment-card').hide();
 }

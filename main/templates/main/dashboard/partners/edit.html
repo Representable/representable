@@ -8,24 +8,51 @@
 {% block content %}
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="col-sm-10 col-md-9 col-lg-7 mx-auto">
             <div class="card card-signin my-5">
                 <div class="card-body">
                     <h5 class="card-title text-center">
                         Edit Organization Details
                       </h5>
                       <form role="form" id="CreateOrg" method="post">{% csrf_token %}
-
-                          <div class="form-group">
-                        {% for field in form %}
-                          <div class="fieldWrapper">
-                              {{ field.errors }}
-                              {{ field.label_tag }} {{ field|append_attr:"class:form-control" }}
-                              {% if field.help_text %}
-                              <p class="help">{{ field.help_text|safe }}</p>
-                              {% endif %}
-                          </div>
-                      {% endfor %}
+                        <div class="form-group">
+                        <div class="row">
+                            <div class="fieldWrapper col-3 my-auto">
+                                <div class="image-upload">
+                                    <label for="id_logo">
+                                        <img class="h-100 w-100" id="blah" src="{{ url }}" alt="Upload Image"> </img>
+                                    </label>
+                                    <div id="upload-stuff">
+                                    {{ form.logo|append_attr:"onchange:readURL(this);" }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="fieldWrapper col-9 my-auto">
+                                {{ form.name.label_tag }}
+                                {{ form.name|append_attr:"class:form-control survey-field" }}
+                                {% if form.name.help_text %}
+                                <p class="help">{{ form.name.help_text|safe }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {{ form.logo.errors }}
+                        {{ form.name.errors }}
+                        <div class="fieldWrapper">
+                            {{ form.description.errors }}
+                            {{ form.description.label_tag }} 
+                            {{ form.description|append_attr:"class:form-control survey-field" }}
+                            {% if form.description.help_text %}
+                                <p class="help">{{ form.description.help_text|safe }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="fieldWrapper">
+                            {{ form.ext_link.errors }}
+                            {{ form.ext_link.label_tag }} 
+                            {{ form.ext_link|append_attr:"class:form-control survey-field" }}
+                            {% if form.ext_link.help_text %}
+                                <p class="help">{{ form.ext_link.help_text|safe }}</p>
+                            {% endif %}
+                        </div>
                       </div>
                       <div style="display: inline-block;">
                           <button id="save" form="CreateOrg" type="submit" class="btn btn-primary" value="Submit">Submit</button>
@@ -39,4 +66,5 @@
 {% endblock %}
 {% block script %}
 {{ form.media.js }}
+<script type="text/javascript" src="{% static 'main/js/drive.js' %}"></script>
 {% endblock %}

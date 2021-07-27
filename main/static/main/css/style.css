@@ -1003,6 +1003,7 @@ Entry Mapping Page
   background-color: rgba(218, 239, 255, 0.85);
   border-radius: 20px;
   border: none;
+  z-index: -2;
   backdrop-filter: blur(4px); /* Note: backdrop-filter has minimal browser support */
 }
 
@@ -1344,6 +1345,9 @@ Entry Mapping Page
   #mapping-image-div {
     width: 30% !important;
   }
+  .w-xxl-50.w-100 {
+    width: 50% !important;
+  }
 }
 
 .loader {
@@ -1414,6 +1418,28 @@ Entry Mapping Page
 
 .tag-top {
   border-width: 2px;
+}
+.tag-select {
+  border-width: 2px;
+}
+
+.btn.tag-top:hover {
+  color: #fff;
+  background-color: #7e8991;
+  border-color: #7e8991;
+}
+
+.btn.tag-select:hover {
+  color: #fff;
+  background-color: #7e8991;
+  border-color: #7e8991;
+}
+
+#search-tags {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 2.5rem;
 }
 
 .tt-dropdown-menu {
@@ -1571,6 +1597,25 @@ Entry Form Management
   padding-bottom: 5px;
 }
 
+.rounded-1rem {
+  border-radius: 1rem;
+}
+
+#comm-example-title:before {
+  content: "";
+  background-color: #f8f9fa;
+  position: absolute;
+  height: 100%;
+  width: 200px;
+  left: -10%;
+  bottom: 0%;
+  z-index: -1;
+}
+
+#comm-example-face {
+  border: 1rem solid #f8f9fa;
+}
+
 /************************************* First Page *******************************************/
 
 #entryForm {
@@ -1693,6 +1738,14 @@ input.survey-field:focus {
 
   .survey-sect-title {
     font-size: 1rem;
+  }
+
+  #comm-example-face {
+    border: .5rem solid #f8f9fa !important;
+  }
+
+  #comm-example-title::before {
+    left: -20% !important;
   }
 
 }
@@ -2527,4 +2580,20 @@ input:checked + .slider:before {
 
 .label-class {
   padding: 0px;
+
+.fieldWrapper {
+  margin-bottom: 10px;
+}
+
+.errorlist {
+  color: red;
+}
+
+.image-upload>input {
+  display: none;
+}
+
+#upload-stuff {
+  display: none;
+
 }

@@ -214,6 +214,22 @@ class EditOrg(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
     form_class = EditOrganizationForm
     model = Organization
 
+    # def get_form_kwargs(self):
+    #     kwargs = super().get_form_kwargs()
+    #     org = Organization.objects.get(pk=self.kwargs["pk"])
+    #     kwargs["url"] = org.logo.url
+    #     return kwargs
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        org = Organization.objects.get(pk=self.kwargs["pk"])
+        if org.logo:
+            context["url"] = org.logo.url
+        else:
+            context["url"] = "/static/img/upload_photo.png"
+
+        return context
+
 
 # ******************************************************************************#
 
