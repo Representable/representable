@@ -1590,6 +1590,10 @@ Entry Form Management
   z-index: -1;
 }
 
+#comm-example-face {
+  border: 1rem solid #f8f9fa;
+}
+
 /************************************* First Page *******************************************/
 
 #entryForm {
@@ -1712,6 +1716,14 @@ input.survey-field:focus {
 
   .survey-sect-title {
     font-size: 1rem;
+  }
+
+  #comm-example-face {
+    border: .5rem solid #f8f9fa !important;
+  }
+
+  #comm-example-title::before {
+    left: -20% !important;
   }
 
 }
