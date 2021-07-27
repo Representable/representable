@@ -77,6 +77,7 @@ class Organization(models.Model):
     - verified: is the organization verified as legitimate by our team
     - government: is the organization a government (e.g. city, county, state commission)
     - logo: organization logo image
+    - image_width and image_height: for calculating the image ratios
     """
 
     name = models.CharField(max_length=128)
@@ -90,8 +91,9 @@ class Organization(models.Model):
     members = models.ManyToManyField(User, through="Membership")
     verified = models.BooleanField(default=False)
     government = models.BooleanField(default=False, blank=True, null=True)
-    # logo = models.ImageField(_(""), upload_to=None, height_field=None, width_field=None, max_length=None)
-    logo = models.ImageField(upload_to='images/', null=True, blank=True, verbose_name="")
+    logo = models.ImageField(upload_to='images/', null=True, blank=True, verbose_name="") #, width_field='image_width', height_field='image_height')
+    # image_width = models.IntegerField(blank=True, null=True)
+    # image_height = models.IntegerField(blank=True, null=True)
 
     class Meta:
         ordering = ("description",)
@@ -486,43 +488,6 @@ class Signature(models.Model):
 # ******************************************************************************#
 
 
-class FrequentlyAskedQuestion(models.Model):
-
-    FAQ_TYPE_CHOICES = [
-        ("USER", "User"),
-        ("ORGANIZATION", "Organization"),
-    ]
-
-    type = models.CharField(
-        max_length=12,
-        choices=FAQ_TYPE_CHOICES,
-        default="USER",
-    )
-
-    question = RichTextField()
-    answer = RichTextField()
-
-    class Meta:
-        db_table = "faq"
-
-
-# ******************************************************************************#
-
-
-class GlossaryDefinition(models.Model):
-
-    term = models.CharField(
-        max_length=100, blank=False, unique=True, default=""
-    )
-    definition = models.CharField(
-        max_length=1000, blank=False, unique=True, default=""
-    )
-
-    class Meta:
-        db_table = "glossary"
-
-
-# ******************************************************************************#
 class Report(models.Model):
     community = models.ForeignKey(
         CommunityEntry, on_delete=models.CASCADE, related_name="reports"
@@ -535,11 +500,10 @@ class Report(models.Model):
     def unapprove(self):
         self.community.admin_approved = False
         self.community.save()
-    
+
     def approve(self):
         self.community.admin_approved = True
         self.community.save()
 
 
 # ******************************************************************************#
-

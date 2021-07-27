@@ -350,7 +350,7 @@
                   {{ comm_form.custom_response|append_attr:"class:form-control survey-field" }}
                 {% endif %}
 
-                <p class="my-4 ml-1 gray-text">
+                {% comment %} <p class="my-4 ml-1 gray-text">
                   <b>What are the main topics relevant to your community?</b><br>
                   <span class="small text-muted">Add up to five tags that describe your community.</span>
                 </p>
@@ -371,7 +371,7 @@
                             {% blocktrans trimmed %} Try typing a term similar to what you have in mind. If you still have a tag you want to add that isn't available, contact our team with your tag request by emailing <a href="mailto:team@representable.org">team@representable.org</a>. {% endblocktrans%}
                         </p>
                     </div>
-                </div>
+                </div> {% endcomment %}
 
             </div>
             <div class="row pt-5">
