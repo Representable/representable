@@ -67,7 +67,6 @@ INSTALLED_APPS = [
     "import_export",
     "main",
     "leaflet",
-    "django_select2",
     "widget_tweaks",
     "allauth",
     "allauth.account",
@@ -227,13 +226,7 @@ if "REDIS_URL" in os.environ:
             "BACKEND": "redis_cache.RedisCache",
             "LOCATION": os.environ.get("REDIS_URL"),
         },
-        "select2": {
-            "BACKEND": "redis_cache.RedisCache",
-            "LOCATION": os.environ.get("HEROKU_REDIS_NAVY_URL"),
-        },
     }
-    # Set the cache backend to select2
-    SELECT2_CACHE_BACKEND = "select2"
 
 
 # https://github.com/heroku/django-heroku/issues/6
