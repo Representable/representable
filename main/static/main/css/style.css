@@ -1415,6 +1415,28 @@ Entry Mapping Page
 .tag-top {
   border-width: 2px;
 }
+.tag-select {
+  border-width: 2px;
+}
+
+.btn.tag-top:hover {
+  color: #fff;
+  background-color: #7e8991;
+  border-color: #7e8991;
+}
+
+.btn.tag-select:hover {
+  color: #fff;
+  background-color: #7e8991;
+  border-color: #7e8991;
+}
+
+#search-tags {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 2.5rem;
+}
 
 .tt-dropdown-menu {
   left: 5px !important;
