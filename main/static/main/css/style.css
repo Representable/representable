@@ -1003,6 +1003,7 @@ Entry Mapping Page
   background-color: rgba(218, 239, 255, 0.85);
   border-radius: 20px;
   border: none;
+  z-index: -2;
   backdrop-filter: blur(4px); /* Note: backdrop-filter has minimal browser support */
 }
 
