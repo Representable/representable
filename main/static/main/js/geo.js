@@ -787,6 +787,34 @@ document.addEventListener(
 
     $("#entrySubmissionButton").on("click", function (e) {
       e.preventDefault();
+      document.getElementById('id_is_final').value = "True"
+      var form = $("#entryForm");
+      zoomToCommunity();
+      // delay so that zoom can occur
+      var polySuccess = true,
+        formSuccess = true;
+      // loading icon
+      // $("#loading-entry").css("display", "block");
+      // $("#loading-entry").delay(1000).fadeOut(1000);
+      //todo: switch this to a promise ?
+      setTimeout(function () {
+        backupSuccess = backupFormValidation();
+        privacySuccess = privacyCheckValidation();
+        animateStepForward(4, 5, null);
+      }, 500);
+      setTimeout(function () {
+        if (backupSuccess && privacySuccess) {
+          form.submit();
+        } else {
+          animateStepBackward(5, 4, null);
+        }
+      }, 850);
+      return false;
+    });
+
+    $("#entrySaveButton").on("click", function (e) {
+      e.preventDefault();
+      document.getElementById('id_is_final').value = "False"
       var form = $("#entryForm");
       zoomToCommunity();
       // delay so that zoom can occur

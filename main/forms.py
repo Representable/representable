@@ -141,6 +141,7 @@ class CommunityForm(ModelForm):
             ),
             "user_name": forms.TextInput(attrs={"maxlength": 500}),
             "user_polygon": forms.HiddenInput(),
+            "is_final": forms.TextInput()
         }
         label = {
             "user_name": "Input your full name: ",

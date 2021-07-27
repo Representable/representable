@@ -127,7 +127,11 @@ urlpatterns = [
     # path("blog/", views.main.Blog.as_view(), name="blog"),
     path("export/geojson/", views.main.ExportView.as_view(), name="export"),
     path("export/csv/", views.main.ExportView.as_view(), name="export"),
-    path("export/geojson/<abbr>/", views.main.ExportView.as_view(), name="export"),
+    path(
+        "export/geojson/<abbr>/",
+        views.main.ExportView.as_view(),
+        name="export",
+    ),
     path("export/csv/<abbr>/", views.main.ExportView.as_view(), name="export"),
     path(
         "multiexport/<abbr>/<type>/",

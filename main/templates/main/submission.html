@@ -49,6 +49,9 @@
           <div class="card-body">
             <h3 id="pdfName" class="card-title header-text"><strong>{{c.entry_name}}</strong></h3>
             <h6 class="info-text"><strong>{{c.drive.name}}</strong></h6>
+            {% if c.is_final is False or 86400 > time_difference %}
+              <button id="toEdit" name="toEdit" class="btn btn-lg btn-outline-primary no-underline-link entry-nav-btn ml-4 mapping-icon" value="edit" onclick="window.location.replace('/edit/{{ edit_hash }}');">{% trans "EDIT" %}</button>
+            {% endif %}
           </div>
         </div>
         <div class="card text-left w-100 border-0 rounded-lg">

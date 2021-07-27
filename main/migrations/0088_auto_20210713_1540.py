@@ -6,13 +6,13 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('main', '0087_signature_edit_hash'),
+        ("main", "0087_signature_edit_hash"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='signature',
-            old_name='edit_hash',
-            new_name='edit_Hash',
+            model_name="signature",
+            old_name="edit_hash",
+            new_name="edit_Hash",
         ),
     ]

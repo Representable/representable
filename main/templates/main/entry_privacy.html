@@ -42,7 +42,7 @@
             {% endif %}
         </p>
 
-        <div class="row row-equal-cols toc-check my-5">
+        <div class="row row-equal-cols toc-check my-2">
             <div class="col d-none d-xl-block">
                 <input class="toc-check-input" type="checkbox" value="" id="toc_check_xl" required="">
                 <label class="toc-check-label info-text" for="toc_check_xl">
@@ -73,24 +73,7 @@
                 </label>
             </div>
         </div>
-
-        <div class="row w-xl-50 mx-auto rounded" style="background-color: #DAEFFF;">
-            <div class="m-4">
-                <p><strong class="header-text">
-                {% blocktrans trimmed %}
-                    Submitted communities are final and public.
-                {% endblocktrans %}
-                </strong></p>
-
-                <p class="info-text">
-                    {% blocktrans trimmed %} In order to edit a saved community you will need
-                    to create a new community and delete the old one. Your community map, name,
-                    and testimony will be publicly visible on Representable.org {% endblocktrans %}
-                </p>
-            </div>
-        </div>
-
-        <div class="row pt-5">
+        <div class="row pt-3 pl-3">
             <div id="need_captcha" class="col-12 text-center w-xl-50 d-none">
                 <div class="alert alert-danger alert-dismissible fade show form-error d-inline-block" role="alert">
                     {% trans "You need to complete the recaptcha to submit this map." %}
@@ -99,14 +82,37 @@
                     </button>
                 </div>
             </div>
-            <div class="col-12 text-center p-0"><div class="g-recaptcha pt-0 mr-4 mr-md-0" data-sitekey="{{recaptcha_public}}"></div></div>
+            <div class="col-12 p-0"><div class="g-recaptcha pt-0 mr-4 mr-md-0" data-sitekey="{{recaptcha_public}}"></div></div>
         </div>
+        <div style="display: none;">
+            {{ comm_form.is_final }}
+        </div>
+        <div class="pt-3 pb-4 pl-3">
+            <div class="row w-xl-80 rounded" style="background-color: #DAEFFF;">
+                <div class="m-4">
+                    <p><strong class="header-text">
+                    {% blocktrans trimmed %}
+                        Submitted communities are final.
+                    {% endblocktrans %}
+                    </strong></p>
 
-        <div class="row my-5 pb-2">
-            <div class="col text-center">
-                <button class="btn btn-lg btn-primary no-underline-link entry-nav-btn mr-3 mapping-icon" onclick="privacyToMap()" type="button"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
-                <button id="entrySubmissionButton" class="btn btn-lg btn-primary no-underline-link entry-nav-btn ml-4 mapping-icon" type="submit" form="entryForm" value="Submit">{% trans "SUBMIT" %}</button>
+                    <p class="info-text">
+                        {% blocktrans %} 
+                        In order to edit your community again before submitting (or allow collaborators 
+                        to edit your community), choose to save as draft. Otherwise, you will need to 
+                        delete your community and make a new one in order to make changes.
+                        {% endblocktrans %}
+                    </p>
+                    <div class="row">
+                        <div class="col text-center">
+                            <button id="entrySaveButton" name="saveDraft" class="btn btn-lg btn-outline-primary no-underline-link entry-nav-btn ml-4 mapping-icon" type="submit" form="entryForm" value="Save as draft">{% trans "SAVE AS DRAFT" %}</button>
+                            <button id="entrySubmissionButton" name="submitFinal" class="btn btn-lg btn-primary no-underline-link entry-nav-btn ml-4 mapping-icon" type="submit" form="entryForm" value="Submit">{% trans "SUBMIT" %}</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        <button class="btn btn-lg btn-outline-primary no-underline-link entry-nav-btn mr-3 mapping-icon" onclick="privacyToMap()" type="button"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
+
     </div>
 </div>

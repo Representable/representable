@@ -605,6 +605,8 @@ class Submission(View):
             "has_state": has_state,
             "state": state,
             "c": comm,
+            "edit_hash": Signature.objects.filter(entry_id=comm.id)[0].edit_hash,
+            "time_difference": (datetime.datetime.now() - comm.created_at.replace(tzinfo=None)).total_seconds(),
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
@@ -1013,6 +1015,17 @@ class EntryView(LoginRequiredMixin, View):
         initial = self.initial
         if self.request.user.is_authenticated:
             initial.update({"user": self.request.user})
+            initial.update({"user_name": ""})
+            initial.update({"street": ""})
+            initial.update({"city": ""})
+            initial.update({"state": ""})
+            initial.update({"zipcode": ""})
+            initial.update({"comm_activities": ""})
+            initial.update({"cultural_interests": ""})
+            initial.update({"economic_interests": ""})
+            initial.update({"other_considerations": ""})
+            initial.update({"custom_question": ""})
+            initial.update({"entry_name": ""})
         return initial
     
     # for editing pre-existing entry
@@ -1031,8 +1044,6 @@ class EntryView(LoginRequiredMixin, View):
             query = Address.objects.filter(entry_id=id)
             address = query[0]
 
-            print(entry.census_blocks_polygon.type())
-
             initial.update({"user": self.request.user})
             initial.update({"user_name": entry.user_name})
             initial.update({"street": address.street})
@@ -1050,57 +1061,6 @@ class EntryView(LoginRequiredMixin, View):
         return initial
 
     def get(self, request, abbr=None, edit_hash=None, *args, **kwargs):
-        if edit_hash:
-            print("edit_hash: "+edit_hash)
-            conn = psycopg2.connect(host="localhost", port = 5432, database="representable_db", user="representable", password="representable333")
-            cur = conn.cursor()
-
-            cur.execute("""SELECT entry_id FROM main_signature WHERE edit_hash='"""+str(edit_hash)+"""'""")
-            query_results = cur.fetchall()
-            if not query_results:
-                return redirect("/404.html")
-            entry_id = query_results[0][0]
-
-            cur.execute("""SELECT state FROM community_entry WHERE "id"='"""+str(entry_id)+"""'""")
-            query_results = cur.fetchall()
-            if not query_results:
-                return redirect("/404.html")
-            abbr = query_results[0][0]
-
-            cur.execute("""SELECT created_at FROM community_entry WHERE id='"""+str(entry_id)+"""'""")
-            query_results = cur.fetchall()
-            created_at = query_results[0][0].replace(tzinfo=None)
-
-            cur.execute("""SELECT "entry_ID" FROM community_entry WHERE id='"""+str(entry_id)+"""'""")
-            query_results = cur.fetchall()
-            entry_ID = query_results[0][0]
-
-            current_time = datetime.datetime.now()
-
-            if (current_time-created_at).total_seconds() > 86400:
-                return redirect("../../submission/"+str(entry_ID))
-
-            cur.close()
-            conn.close()
-
-            comm_form = self.community_form_class(
-                initial=self.get_initial_values(entry_id), label_suffix=""
-            )
-        elif not abbr:
-            return redirect("/entry_state_selection")
-        else:
-            if not any(abbr.upper() in i for i in STATES):
-                return redirect("/entry_state_selection")
-            comm_form = self.community_form_class(
-                initial=self.get_initial(), label_suffix=""
-            )
-        addr_form = self.address_form_class(
-            initial=self.get_initial(), label_suffix=""
-        )
-
-        has_token = False
-        if kwargs["token"]:
-            has_token = True
 
         address_required = True
         has_drive = False
@@ -1111,6 +1071,89 @@ class EntryView(LoginRequiredMixin, View):
         drive_id = None
         drive_custom_question = ""
         drive_custom_question_example = ""
+
+        if edit_hash:
+
+            query = Signature.objects.filter(edit_hash=edit_hash)
+
+            if not query:
+                return redirect("/404.html")
+            signature = query[0]
+            entry_id = signature.entry_id
+
+            query = CommunityEntry.objects.filter(id=entry_id)
+            entry = query[0]
+
+            query = Address.objects.filter(entry_id=entry_id)
+            address = query[0]
+
+            abbr = entry.state
+            created_at = entry.created_at.replace(tzinfo=None)
+            entry_ID = entry.entry_ID
+
+            current_time = datetime.datetime.now()
+
+            # if more than 24 hrs. since community submitted
+            if (current_time - created_at).total_seconds() > 86400 and entry.is_final:
+                return redirect("../../submission/"+str(entry_ID))
+
+
+            comm_form = self.community_form_class(
+                initial=self.get_initial_values(entry_id), label_suffix="", instance=entry
+            )
+            addr_form = self.address_form_class(
+                initial=self.get_initial_values(entry_id), label_suffix="", instance=address
+            )
+
+            if entry.drive_id != None:
+                has_drive = True
+                try:
+                    drive = Drive.objects.get(id=entry.drive_id)
+                except:
+                    raise Http404
+                if abbr.upper() != drive.state:
+                    return redirect(
+                        "/entry/drive/" + drive.slug + "/" + drive.state.lower()
+                    )
+
+                drive_name = drive.name
+                drive_id = drive.id
+                drive_custom_question = drive.custom_question
+                drive_custom_question_example = drive.custom_question_example
+                organization = drive.organization
+                organization_name = organization.name
+                organization_id = organization.id
+                org_admin = self.request.user.is_org_admin(drive.organization.id)
+                on_allowlist = False
+                allowlist_q = AllowList.objects.filter(
+                    organization=drive.organization.id,
+                    email=self.request.user.email,
+                )
+                if allowlist_q:
+                    on_allowlist = True
+                if drive.private and not (org_admin or on_allowlist):
+                    # if someone somehow gets the URL for a private drive,
+                    # redirect them if they're not an org admin or on the allowlist
+                    return redirect(reverse_lazy("main:entry"))
+                address_required = drive.require_user_addresses
+                
+        elif not abbr:
+            return redirect("/entry_state_selection")
+        else:
+            if not any(abbr.upper() in i for i in STATES):
+                return redirect("/entry_state_selection")
+            print("making new community")
+            comm_form = self.community_form_class(
+                initial=self.get_initial(), label_suffix=""
+            )
+            addr_form = self.address_form_class(
+                initial=self.get_initial(), label_suffix=""
+            )
+
+        has_token = False
+        if kwargs["token"]:
+            has_token = True
+
         if kwargs["drive"]:
             has_drive = True
             drive_slug = self.kwargs["drive"]
@@ -1168,18 +1211,42 @@ class EntryView(LoginRequiredMixin, View):
         }
         return render(request, self.template_name, context)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, edit_hash=None, *args, **kwargs):
         # for creation of BlockGroup and CensusBlock objects
         STATES_USING_OLD_UNITS = ["il", "ok"]
+        if edit_hash:
+            query = Signature.objects.filter(edit_hash=edit_hash)
 
-        comm_form = self.community_form_class(request.POST, label_suffix="")
-        addr_form = self.address_form_class(request.POST, label_suffix="")
+            if not query:
+                return redirect("/404.html")
+            signature = query[0]
+            entry_id = signature.entry_id
+
+            query = CommunityEntry.objects.filter(id=entry_id)
+            entry = query[0]
+
+            query = Address.objects.filter(entry_id=entry_id)
+            address = query[0]
+
+            state = entry.state
+
+            comm_form = self.community_form_class(request.POST, label_suffix="", instance=entry)
+            addr_form = self.address_form_class(request.POST, label_suffix="", instance=address)
+        else:
+            state = self.kwargs["abbr"].lower()
+            comm_form = self.community_form_class(request.POST, label_suffix="")
+            addr_form = self.address_form_class(request.POST, label_suffix="")
         # parse block groups and add to field
         comm_form.data._mutable = True
         block_groups = comm_form.data["block_groups"].split(",")
         census_blocks = comm_form.data["census_blocks"].split(",")
+        if block_groups == ['[]']:
+            block_groups = ['']
+        if census_blocks == ['[]']:
+            census_blocks = ['']
+        
+
         # get the year of census units being used -- use for get_or_create function
-        state = self.kwargs["abbr"].lower()
         year = 2020
         if state in STATES_USING_OLD_UNITS:
             year = 2010
@@ -1193,6 +1260,11 @@ class EntryView(LoginRequiredMixin, View):
                 BlockGroup.objects.get_or_create(census_id=bg, year=year)[0].id
                 for bg in block_groups
             ]
+
+        if comm_form.data["census_blocks_polygon_array"] == '{}':
+            comm_form.data["census_blocks_polygon_array"] = ''
+        if comm_form.data["census_blocks"] == '[]':
+            comm_form.data["census_blocks"] = '' 
 
         def flagText(text):
             API_KEY = os.environ.get("PERSPECTIVE_API_KEY")
@@ -1212,7 +1284,7 @@ class EntryView(LoginRequiredMixin, View):
             # special characters
             attributeThresholds = [
                 ("TOXICITY", 0.75),
-                ("IDENTITY_ATTACK", 0.4),
+                ("IDENTITY_ATTACK", 0.5),
                 ("INSULT", 0.5),
                 ("PROFANITY", 0.75),
                 ("THREAT", 0.9),
@@ -1237,7 +1309,7 @@ class EntryView(LoginRequiredMixin, View):
                 ):
                     return True
             return False
-
+        is_final = comm_form.data["is_final"]
         comm_form.data._mutable = False
         if comm_form.is_valid():
             recaptcha_response = request.POST.get("g-recaptcha-response")
@@ -1282,25 +1354,19 @@ class EntryView(LoginRequiredMixin, View):
                     entryForm.drive = drive
                     entryForm.organization = drive.organization
                     entryForm.private = drive.private
-
+            elif edit_hash and CommunityEntry.objects.filter(id=Signature.objects.filter(edit_hash=edit_hash)[0].entry_id)[0].drive_id != None:
+                drive = Drive.objects.filter(id=CommunityEntry.objects.filter(id=Signature.objects.filter(edit_hash=edit_hash)[0].entry_id)[0].drive_id)[0]
+                entryForm.drive = drive
+                entryForm.organization = drive.organization
+                entryForm.private = drive.private
+                folder_name = drive.slug
             else:
-                folder_name = self.kwargs["abbr"]
+                folder_name = state
 
-            entryForm.state = self.kwargs["abbr"].lower()
+            entryForm.state = state.lower()
             entryForm.state_obj = State.objects.get(
-                abbr=self.kwargs["abbr"].upper()
+                abbr=state.upper()
             )
-            if (
-                flagText(comm_form.data["entry_name"])
-                or flagText(comm_form.data["user_name"])
-                or flagText(comm_form.data["cultural_interests"] + " ")
-                or flagText(comm_form.data["economic_interests"] + " ")
-                or flagText(comm_form.data["comm_activities"] + " ")
-                or flagText(comm_form.data["other_considerations"] + " ")
-            ):
-                entryForm.admin_approved = False
-            else:
-                entryForm.admin_approved = True
             if entryForm.organization:
                 if (
                     self.request.user.is_org_admin(entryForm.organization.id)
@@ -1324,6 +1390,7 @@ class EntryView(LoginRequiredMixin, View):
                 ServerSideEncryption="AES256",
                 StorageClass="STANDARD_IA",
             )
+            entryForm.is_final = is_final
 
             entryForm.save()
             comm_form.save_m2m()
@@ -1337,6 +1404,7 @@ class EntryView(LoginRequiredMixin, View):
             finalres["census_blocks_polygon"] = str(
                 entryForm.census_blocks_polygon
             )
+            finalres["census_blocks_polygon"] = shapely.wkt.dumps(shapely.wkt.loads(str(entryForm.census_blocks_polygon)[10:]), rounding_precision=10)
             finalres["user"] = entryForm.user.email
             if entryForm.organization:
                 finalres["organization"] = entryForm.organization.name
@@ -1346,8 +1414,6 @@ class EntryView(LoginRequiredMixin, View):
             del finalres["admin_approved"]
 
             string_to_hash = str(finalres)
-            print("finalres: ")
-            print(finalres)
 
 
             if (
@@ -1367,7 +1433,6 @@ class EntryView(LoginRequiredMixin, View):
                     community_id=finalres["id"],
                     email="AUTOMATIC PROFANITY CHECKER",
                 )
-                print(finalres["entry_ID"] + " failed!")
 
             addres = dict()
             if addr_form.is_valid():
@@ -1384,6 +1449,9 @@ class EntryView(LoginRequiredMixin, View):
                 del addres["id"]
                 finalres.update(addres)
                 string_to_hash = str(finalres)
+            
+            print("finalres: ")
+            print(string_to_hash)
 
             digest = hmac.new(
                 bytes(os.environ.get("AUDIT_SECRET"), encoding="utf8"),
@@ -1391,8 +1459,14 @@ class EntryView(LoginRequiredMixin, View):
                 digestmod=hashlib.sha256,
             ).digest()
             signature = base64.b64encode(digest).decode()
-            sign_obj = Signature(entry=entryForm, hash=signature, edit_hash = uuid.uuid4())
-            sign_obj.save()
+            if edit_hash:
+                query = Signature.objects.filter(edit_hash=edit_hash)
+                sig = query[0]
+                sig.hash = signature
+                sig.save()
+            else:
+                sign_obj = Signature(entry=entryForm, hash=signature, edit_hash = uuid.uuid4())
+                sign_obj.save()
 
             m_uuid = str(entryForm.entry_ID)
             if not entryForm.drive:

@@ -393,12 +393,13 @@ class CommunityEntry(models.Model):
     )
     # signature = models.CharField(max_length=64, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    is_final = models.BooleanField(default=True)
     admin_approved = models.BooleanField(default=True)
     private = models.BooleanField(default=False, null=True)
     population = models.IntegerField(blank=True, null=True, default=0)
 
     def human_readable_name(self):
-        return self.entry_name.replace(' ', '_')
+        return self.entry_name.replace(" ", "_")
 
     def __str__(self):
         return str(self.entry_ID)
