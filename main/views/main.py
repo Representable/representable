@@ -320,8 +320,8 @@ class EntryPreview(TemplateView):
     template_name = "main/entry_preview.html"
 
 
-class EntryStateSelection(TemplateView):
-    template_name = "main/entry_state_selection.html"
+class StateSelection(TemplateView):
+    template_name = "main/state_selection.html"
 
 
 # ******************************************************************************#
@@ -852,7 +852,7 @@ class ExportView(TemplateView):
 class Map(TemplateView):
     template_name = "main/map.html"
 
-    def get_context_data(self, **kwargs):
+    def get(self, request, **kwargs):
         state = self.kwargs["state"].lower()
         if not state:
             raise Http404
@@ -894,10 +894,8 @@ class Map(TemplateView):
             entryPolyDict[obj.entry_ID] = struct.coordinates
 
             export_name = state_obj.name.replace(" ", "_") + "_communities"
-            print(export_name)
 
         comms_counter = query.filter(admin_approved=True, private=False).count()
-        print(comms_counter)
 
         context = {
             "state": state,
@@ -909,9 +907,30 @@ class Map(TemplateView):
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
-        context["multi_export_link"] = f"/multiexport/{state}"
-        return context
 
+        # the most extreme points of the US -- checking if the lat and long are valid points to go to
+        # source: https://gist.github.com/graydon/11198540
+        # things get kinda flipped around because leaflet and mapbox reverse the order LngLat -> LatLng
+        left = -171.791110603
+        bottom = 18.91619
+        right = -66.96466
+        top = 71.3577635769
+        if "lat" in self.kwargs:
+            try:
+                lat = float(self.kwargs["lat"])
+                lng = float(self.kwargs["lng"])
+                if left <= float(lat) <= right and bottom <= float(lng) <= top:
+                    context["centerLat"] = lat
+                    context["centerLng"] = lng
+                else:
+                    print("map page coordinates invalid")
+                    return redirect("/map/" + self.kwargs["state"])
+            except ValueError:
+                print("map page coordinates are not floats")
+                return redirect("/map/" + self.kwargs["state"])
+
+        context["multi_export_link"] = f"/multiexport/{state}"
+        return render(request, self.template_name, context)
 
 # ******************************************************************************#
 
@@ -1007,7 +1026,7 @@ class EntryView(LoginRequiredMixin, View):
             return redirect("/#select")
         else:
             if not any(abbr.upper() in i for i in STATES):
-                return redirect("/entry_state_selection")
+                return redirect("/state_selection")
         comm_form = self.community_form_class(
             initial=self.get_initial(), label_suffix=""
         )

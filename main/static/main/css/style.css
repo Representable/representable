@@ -503,6 +503,9 @@ body {
   border-width: 3px !important;
   border-color: #5b5b5b;
 }
+.border-solid {
+  border: solid !important;
+}
 
 .container-full-width {
   width: 100%;
@@ -1820,6 +1823,12 @@ input.survey-field:focus {
 }
 .content-blue-bg {
   background-color: rgba(242, 250, 255, 0.5);
+}
+.gray-gradient-bg {
+  background: linear-gradient(90deg, #F5FBFF 0%, #F1F1F0 51.8%, #F3F4F1 100%);
+}
+.map-preview-bg {
+  background: url("/static/img/map-preview.png");
 }
 .btn-outline-gray {
   background-color: transparent;

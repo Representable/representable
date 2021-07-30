@@ -79,7 +79,6 @@ function searchMove() {
 // button to search while moving map
 $("#map-page-search-btn").click(function() {
   search_while_moving = !search_while_moving;
-  console.log(search_while_moving);
   if (search_while_moving) {
     map.on("moveend", searchMove);
   } else {
@@ -236,7 +235,13 @@ map.on("load", function () {
   // loading icon
   $(".loader").delay(500).fadeOut(500);
   // fly to state if org, otherwise stay on map
-  if (state !== "") {
+  if (typeof centerLat !== 'undefined') {
+    map.flyTo({
+      center: [parseFloat(centerLat), parseFloat(centerLng)],
+      zoom: 9,
+      essential: true,
+    });
+  } else if (state !== "") {
     map.flyTo({
       center: statesLngLat[state.toUpperCase()],
       zoom: 5,
