@@ -46,9 +46,14 @@ urlpatterns = [
         name="entry_preview",
     ),
     path(
-        "entry_state_selection/",
-        views.main.EntryStateSelection.as_view(),
-        name="entry_state_selection",
+        "state_selection/",
+        views.main.StateSelection.as_view(),
+        name="state_selection",
+    ),
+    path(
+        "state_selection/map",
+        views.main.StateSelection.as_view(),
+        name="state_selection_map",
     ),
     path(
         "entry/",
@@ -155,6 +160,7 @@ urlpatterns = [
         name="partner_page",
     ),
     path("map/<state>/", views.main.Map.as_view(), name="map"),
+    path("map/<state>/<lat>/<lng>", views.main.Map.as_view(), name="map"),
     path(
         "map/p/<slug:slug>/",
         views.partners.PartnerMap.as_view(),

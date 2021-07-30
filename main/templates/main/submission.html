@@ -243,11 +243,11 @@
           <div class="card-body">
 
             <h4 class="card-title header-text"><strong>{% trans "Community Information" %}</strong> <button class="btn btn-link no-underline-link p-0" type="button" data-toggle="modal" data-target="#submission-info-modal" rel="nofollow"><i class="far fa-question-circle small text-muted"></i></a></h4>
-            
+
             {% for tag in c.tags.all %}
             <span class="badge badge-pill badge-primary">{{tag}}</span>
             {% endfor %}
-          
+
             {% if c.comm_activities %}
             <div class="accordion map-info-item mt-4" id="mobile-map-activities-accordion">
                 <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-activities-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
@@ -417,6 +417,11 @@
             <div class="row vh-50">
               <div id='map' class="map-visualization p-0">
               </div>
+            </div>
+          </div>
+          <div id="map-page-link-card" class="card text-left border-0 w-100 rounded-lg mt-3 mb-3 d-l-block">
+            <div class="card-body">
+              <a id="map-page-link" href="/map/{{c.state}}" target="_blank"><h5 class="blue-text m-0">{% trans "Check out other community maps in this area" %} <i class="far fa-arrow-alt-circle-right"></i></h5></a>
             </div>
           </div>
         </div>
