@@ -28,6 +28,7 @@
                             </div>
                             <div class="fieldWrapper col-9 my-auto">
                                 {{ form.name.label_tag }}
+                                <span style="color: red;">*</span>
                                 {{ form.name|append_attr:"class:form-control survey-field" }}
                                 {% if form.name.help_text %}
                                 <p class="help">{{ form.name.help_text|safe }}</p>

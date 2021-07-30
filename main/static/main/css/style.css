@@ -2533,10 +2533,14 @@ input:checked + .slider:before {
   color: red;
 }
 
-.image-upload>input {
+.image-upload>input#id_logo {
   display: none;
 }
 
 #upload-stuff {
   display: none;
+}
+
+.fieldWrapper>label { 
+  padding-right: none !important;
 }
