@@ -14,7 +14,7 @@
 
     <div class="col-12 p-3 light-blue-bg px-md-4 py-md-3 mb-4">
       {% if not edited %}
-          <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria2" aria-expanded="false" aria-controls="collapseCriteria2" onclick="toggleAngle(this)">
+          <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link state-info-mix" data-toggle="collapse" data-target="#collapseCriteria2" aria-expanded="false" aria-controls="collapseCriteria2" onclick="toggleAngle(this)">
             <h5 class="dark-gray-text" style="width: fit-content;"><b>{% trans "How does redistricting work in " %} {{ state_obj.name }}?</b><i class="fas fa-angle-down pl-3"></i></h5>
           </button>
         <div class="collapse" id="collapseCriteria2">
@@ -23,7 +23,7 @@
           {% endautoescape %}
         </div>
       {% else %}
-          <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria2" aria-expanded="false" aria-controls="collapseCriteria2" onclick="toggleAngle(this)">
+          <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link state-info-mix" data-toggle="collapse" data-target="#collapseCriteria2" aria-expanded="false" aria-controls="collapseCriteria2" onclick="toggleAngle(this)">
             <h5 class="dark-gray-text" style="width: fit-content;"><b> {{ drive_obj.opt_redist_title }} </b><i class="fas fa-angle-down pl-3"></i></h5>
           </button>
         <div class="collapse" id="collapseCriteria2">
@@ -35,7 +35,7 @@
     </div>
 
     <div class="col-12 p-3 light-blue-bg px-md-4 py-md-3 mb-4">
-        <button class="btn ws-normal btn-link bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria3" aria-expanded="false" aria-controls="collapseCriteria3" onclick="toggleAngle(this)">
+        <button class="btn ws-normal btn-link bg-transparent text-left pl-0 no-underline-link state-info-mix" data-toggle="collapse" data-target="#collapseCriteria3" aria-expanded="false" aria-controls="collapseCriteria3" onclick="toggleAngle(this)">
           <h5 class="dark-gray-text" style="width: fit-content;"><b>{% trans "How can Representable help?" %}<i class="fas fa-angle-down pl-3"></i></b></h5>
         </button>
       <div class="collapse" id="collapseCriteria3">
@@ -45,7 +45,7 @@
 
     <div class="col-12 p-3 light-blue-bg px-md-4 py-md-3 mb-4">
       {% if not edited %}
-          <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria4" aria-expanded="false" aria-controls="collapseCriteria4" onclick="toggleAngle(this)">
+          <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link state-info-mix" data-toggle="collapse" data-target="#collapseCriteria4" aria-expanded="false" aria-controls="collapseCriteria4" onclick="toggleAngle(this)">
             <h5 class="dark-gray-text" style="width: fit-content;"><b>{{ state_obj.name }}'s {% trans "redistricting criteria" %} &#32;<i class="fas fa-angle-down pl-3"></i></b></h5>
           </button>
         <div class="collapse" id="collapseCriteria4">
@@ -54,7 +54,7 @@
           {% endautoescape %}
         </div>
       {% else %}
-          <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria4" aria-expanded="false" aria-controls="collapseCriteria4" onclick="toggleAngle(this)">
+          <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link state-info-mix" data-toggle="collapse" data-target="#collapseCriteria4" aria-expanded="false" aria-controls="collapseCriteria4" onclick="toggleAngle(this)">
             <h5 class="dark-gray-text" style="width: fit-content;"><b>{{ drive_obj.opt_criteria_title }}<i class="fas fa-angle-down pl-3"></i></b></h5>
           </button>
         <div class="collapse" id="collapseCriteria4">

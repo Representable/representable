@@ -1,6 +1,16 @@
 {% load i18n %}
 {% load widget_tweaks %}
 {% load static %}
+<script type="text/javascript">
+  mixpanel.track("Entry Survey Loaded",
+  {
+    "drive_id": drive_id,
+    "drive_name": drive_name,
+    "organization_id": organization_id,
+    "organization_name": organization_name,
+  }
+  );
+</script>
 <div class="pl-xl-4 pr-xl-4 pb-5">
     <div class="entry-step row mb-2">
         <div class="col">
