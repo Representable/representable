@@ -1958,7 +1958,6 @@ Signup and Login Page
 
 .auth-form {
   display: inline-block;
-  width: 70%;
 }
 
 .auth-form .btn {
@@ -1977,6 +1976,16 @@ Signup and Login Page
 
 .auth-btn {
   width: 50%;
+}
+
+.social-btn {
+  border: 1px solid gray;
+  height: 60px;
+}
+
+.connect-social-btn {
+  height: 50px;
+  width: 200px;
 }
 
 .auth-form-label {
