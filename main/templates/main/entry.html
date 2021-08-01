@@ -20,6 +20,11 @@
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
 <!--  Turf JS for calculating the area. -->
 <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script>
+<!-- Bootstrap tags js for formatting -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" integrity="sha512-xmGTNt20S0t62wHLmQec2DauG9T+owP9e6VU8GigI0anN7OXLip9i7IwEhelasml2osdxX71XcYm6BQunTQeQg==" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js" integrity="sha512-VvWznBcyBJK71YKEKDMpZ0pCVxjNuKwApp4zLF3ul+CiflQi6aIJR+aZCP/qWsoFBA28avL5T5HA+RE+zrGQYg==" crossorigin="anonymous"></script>
+<!-- typeahead for tagsinput -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.3/typeahead.bundle.min.js" integrity="sha512-E4rXB8fOORHVM/jZYNCX2rIY+FOvmTsWJ7OKZOG9x/0RmMAGyyzBqZG0OGKMpTyyuXVVoJsKKWYwbm7OU2klxA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- Shepherd.js -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@lHOatest/dist/css/shepherd.css"/>
 <script src="https://cdn.jsdelivr.net/npm/shepherd.js@latest/dist/js/shepherd.min.js"></script>
@@ -35,12 +40,17 @@
     var organization_id = "{{organization_id}}";
     var drive_name = "{{drive_name}}";
     var drive_custom_question_example = "{{drive_custom_question_example}}";
+    var drive_custom_question = "{{drive_custom_question}}";
     var drive_slug = "{{drive_slug}}";
     var organization_name = "{{organization_name}}";
     var state = "{{state}}";
     var address_required = "{{address_required}}";
     var census_key = "{{ census_key }}";
     var language = "{{LANGUAGE_CODE}}";
+    var units = "{{drive_units}}";
+    var coi_title = "{{coi_title}}";
+    var coi_def = "{{coi_def}}";
+    var tags = "{{tags|safe}}";
     mixpanel.track("Entry Page Loaded",
     {
      "drive_id": drive_id,
@@ -137,9 +147,9 @@
                             {% include './entry_address.html' %}
                         </div>
 
-                        <div id="entry_survey" class="d-none">{% include './entry_survey.html' %}</div>
+                        <div id="entry_survey" class="d-none">{% include './entry_survey.html' with coi_def=coi_def coi_title=coi_title%}</div>
 
-                        <div id="entry_privacy" class="d-none">{% include './entry_privacy.html' %}</div>
+                        <div id="entry_privacy" class="d-none">{% include './entry_privacy.html' with coi_def=coi_def coi_title=coi_title%}</div>
                     </div>
                 </div>
             </div>

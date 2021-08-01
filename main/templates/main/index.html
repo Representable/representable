@@ -24,7 +24,7 @@
         <span class="d-block mb-3 font-large-mobile font-weight-bold dark-blue-text line-space-less pt-md-3">{% trans "Gerrymandering is silencing communities." %}</span>
         <span class="d-block h4 font-weight-light gray-text font-medium-mobile">{% blocktrans trimmed %} Make your voice heard with Representable <br> and put your community on the map. {% endblocktrans %}</span>
       </div>
-      <a id="get-started-btn" class="text-center font-medium-mobile btn btn-primary btn-lg py-3 px-lg-5 px-4 mb-lg-5 mt-2" href="{% url 'main:entry_preview' %}"  role="button">{% trans "GET STARTED" %}</a>
+      <a id="get-started-btn" class="text-center font-medium-mobile btn btn-primary btn-lg py-3 btn-ls-lg mb-lg-5 mt-2" href="{% url 'main:entry_preview' %}"  role="button">{% trans "GET STARTED" %}</a>
       <div class="row d-none d-lg-block mt-5">
         <div class="col-lg-1">
         </div>
@@ -32,7 +32,7 @@
           <div id="home-page-rect"></div>
           <div class="alert gray-text" role="alert">
             <p class="my-2 px-4 h5 font-weight-bold">{% trans "Are you the leader of an organization?" %}</p>
-            <p class="border-left border-dark border-3 pl-4 my-2 font-weight-light" style="font-size: 17px;">{% trans "Many organizations have partnered with Representable.org to collect community-of-interest data." %}</p>
+            <p class="border-left border-dark border-3 pl-4 my-2 font-weight-light" style="font-size: 17px;">{% trans "Many organizations have partnered with Representable.org to collect community maps." %}</p>
             <p class="px-4 my-2" style="font-size: 17px;"><a class="link-custom" href='/partners/welcome'>{% trans "JOIN AS AN ORGANIZATION" %}</a></p>
           </div>
         </div>
@@ -43,20 +43,50 @@
         <img class="img-fluid align-bottom my-md-5 pl-lg-0 pl-3" src="{% static 'img/illustration.svg' %}" alt="people drawing a map"> </img>
       </div>
     </div>
+  </div>
+    <div class="row gray-gradient-bg d-none d-md-block">
+      <div class="container">
+        <div class="row">
+          <div class="col-1"></div>
+          <div class="col-6 my-auto gray-text">
+            <h2 class="mb-3 font-weight-bold mt-4 mt-lg-2">We are mapping America.</h2>
+            <h5>Check out the communities drawn in your state.</h5>
+            <a class="btn btn-outline-primary mt-3 btn-ls-lg border-solid px-3 mb-4 mb-lg-2" href="{% url 'main:state_selection_map' %}">
+                {% trans "VIEW COMMUNITIES" %}
+            </a>
+          </div>
+          <div class="col-5">
+            <img class="img-fluid align-bottom h-100" src="{% static 'img/map-preview.png' %}" alt="preview of Representable's map page"> </img>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- MOBILE ONLY -->
+      <div class="container map-preview-bg d-block d-md-none mt-4">
+        <div class="row">
+          <h2 class="mb-3 font-weight-bold mt-4 mt-lg-2 mx-auto">We are mapping America.</h2>
+          <h5 class="mx-5 px-4 text-center">Check out the communities drawn in your state.</h5>
+          <a class="mx-auto btn btn-outline-primary mt-3 btn-ls-lg border-solid px-3 mb-4 mb-lg-2" href="{% url 'main:state_selection_map' %}">
+              {% trans "VIEW COMMUNITIES" %}
+          </a>
+        </div>
+      </div>
+    <!-- </div> -->
+  <div class="container">
     <div class="container mb-5">
       <div class="row gray-text text-center py-md-5 mt-5">
         <div class="col-md-4">
-          <img class="card-img-top img-fluid m-2 w-50 w-35-mobile mx-auto mb-md-4" src="{% static 'img/home_step_1.png' %}" alt="Icon of people"></img>
+          <img class="card-img-top img-fluid m-2 w-25 w-sm-50 mx-auto mb-md-4" src="{% static 'img/home_step_1.png' %}" alt="Icon of people"></img>
           <h4 class="font-medium-mobile">{% trans "Answer Questions" %}</h4>
           <p class="text-center mx-4 px-lg-5 font-small-mobile">{% trans "that help you identify what bonds your community together." %}</p>
         </div>
         <div class="col-md-4">
-          <img class="card-img-top img-fluid m-2 w-50 w-35-mobile mx-auto mb-md-4" src="{% static 'img/home_step_2.png' %}" alt="Icon of blocks being clicked"></img>
+          <img class="card-img-top img-fluid m-2 w-25 w-sm-50 mx-auto mb-md-4" src="{% static 'img/home_step_2.png' %}" alt="Icon of blocks being clicked"></img>
           <h4 class="font-medium-mobile">{% trans "Draw a Community Map" %}</h4>
           <p class="text-center mx-lg-4 px-4 font-small-mobile">{% trans "by choosing units that make up your community. Use landmarks to draw your map." %}</p>
         </div>
         <div class="col-md-4">
-          <img class="card-img-top img-fluid m-2 w-50 w-35-mobile mx-auto mb-md-4" src="{% static 'img/home_step_3.png' %}" alt="Icon of envelope"></img>
+          <img class="card-img-top img-fluid m-2 w-25 w-sm-50 mx-auto mb-md-4" src="{% static 'img/home_step_3.png' %}" alt="Icon of envelope"></img>
           <h4 class="font-medium-mobile">{% trans 'Share your Map' %}</h4>
           <p class="text-center mx-lg-5 px-4 font-small-mobile">{% trans "as public input for map makers to use when drawing new voting districts." %}</p>
         </div>
@@ -65,7 +95,7 @@
       <div class="row mb-5">
         <div class="col-md-2"></div>
         <div class="col-md-8 gray-text px-3">
-          <img class="mx-auto d-block w-16 w-35-mobile pb-5" src="{% static 'img/logo.svg' %}" alt="representable logo - continental USA made of blocks"> </img>
+          <img class="mx-auto d-block w-16 pb-4 pt-4" src="{% static 'img/logo.svg' %}" alt="representable logo - continental USA made of blocks"> </img>
           <h4 class="py-3 font-medium-mobile">{% blocktrans trimmed %}<b>Our mission</b> is to give communities a voice in drawing voting districts.{% endblocktrans %}</h4>
           <h4 class="py-4 font-weight-light font-small-mobile">{% blocktrans trimmed %}Representable allows people to draw communities of interest and share information about the interests and needs in those communities.
             <br><br>Making this information available encourages mapmakers to take these communities into account during redistricting, in order to avoid gerrymandering and the “packing and cracking” of marginalized groups.{% endblocktrans %}</h4>
@@ -103,22 +133,26 @@
         </div>
         <div class="col-lg-1"></div>
       </div>
-      <div class="row m-5 p-5">
-        <div class="col-3"></div>
-        <div class="col-2 text-right">
-          <a href="https://www.facebook.com/Representable.org/" target="_blank"><img class="social-media-logo mx-auto w-md-50 w-lg-25" src="{% static 'img/facebook-grey-logo.svg' %}" alt="Representable's Facebook page linked from Facebook logo"></img></a>
+      <div class="row mt-5 mx-5 p-5">
+        <div class="col-md-4"></div>
+        <div class="col-md-1 text-center">
+          <a href="https://www.facebook.com/Representable.org/" target="_blank"><img class="social-media-logo mx-auto w-md-100 w-lg-75 w-10" src="{% static 'img/facebook-gray-logo.svg' %}" alt="Representable's Facebook page linked from Facebook logo"></img></a>
         </div>
-        <div class="col-2 text-center">
-          <a href="https://www.instagram.com/representable_org/" target="_blank"><img class="social-media-logo mx-auto w-md-50 w-lg-25" src="{% static 'img/ig-grey-logo.svg' %}" alt="Representable's Instagram page linked from Instagram logo"></img></a>
+        <div class="col-md-1 text-center">
+          <a href="https://www.instagram.com/representable_org/" target="_blank"><img class="social-media-logo mx-auto w-md-100 w-lg-75 w-10" src="{% static 'img/ig-gray-logo.svg' %}" alt="Representable's Instagram page linked from Instagram logo"></img></a>
         </div>
-        <div class="col-2 text-left">
-          <a href="https://twitter.com/representable_" target="_blank"><img class="social-media-logo mx-auto w-md-50 w-lg-25" src="{% static 'img/twitter-grey-logo.svg' %}" alt="Representable's Twitter page linked from Twitter logo"></img></a>
+        <div class="col-md-1 text-center">
+          <a href="https://twitter.com/representable_" target="_blank"><img class="social-media-logo mx-auto w-md-100 w-lg-75 w-10" src="{% static 'img/twitter-gray-logo.svg' %}" alt="Representable's Twitter page linked from Twitter logo"></img></a>
         </div>
-        <div class="col-3"></div>
+        <div class="col-md-1 text-center">
+          <a href="https://www.youtube.com/channel/UCxDe9nogUoC37lAGfoC5ZRw" target="_blank"><img class="social-media-logo mx-auto w-md-100 w-lg-75 w-10" src="{% static 'img/yt-gray-logo.svg' %}" alt="Representable's Youtube page linked from Youtube logo"></img></a>
+        </div>
+        <div class="col-md-4"></div>
       </div>
       <div class="row text-center">
         <div class="col-md-2"></div>
         <div class="col-md-8 text-center">
+          <a id="get-started-btn" class="text-center font-medium-mobile btn btn-outline-primary btn-lg py-3 btn-ls-lg mb-5 mt-2" style="border-radius: 0;" href="{% url 'main:entry_preview' %}"  role="button">{% trans "GET STARTED" %}</a>
           <h4 class="font-medium-mobile">Our Partners</h4>
           <hr class="line-break">
           <!-- image of partner organization logos -->

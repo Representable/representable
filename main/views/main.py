@@ -80,8 +80,6 @@ from ..models import (
     Signature,
     BlockGroup,
     CensusBlock,
-    FrequentlyAskedQuestion,
-    GlossaryDefinition,
     Report,
 )
 from ..admin import (
@@ -118,6 +116,7 @@ import base64
 from django.template import loader
 import shapely.wkt
 import reverse_geocoder as rg
+from taggit.models import Tag
 from state_abbrev import us_state_abbrev
 from django.contrib.auth.models import Group
 from itertools import islice
@@ -129,7 +128,6 @@ import requests
 from django.conf import settings
 
 import ssl
-
 
 
 # ******************************************************************************#
@@ -288,31 +286,12 @@ class About(TemplateView):
 class FAQ(TemplateView):
     template_name = "main/pages/faq.html"
 
-    def get(self, request, *args, **kwargs):
-
-        faqs_users = FrequentlyAskedQuestion.objects.filter(type="USER")
-        faqs_orgs = FrequentlyAskedQuestion.objects.filter(type="ORGANIZATION")
-        return render(
-            request,
-            self.template_name,
-            {"faqs_users": faqs_users, "faqs_orgs": faqs_orgs},
-        )
-
 
 # ******************************************************************************#
 
 
 class Glossary(TemplateView):
     template_name = "main/pages/glossary.html"
-
-    def get(self, request, *args, **kwargs):
-
-        glossaryterms = GlossaryDefinition.objects.all()
-        return render(
-            request,
-            self.template_name,
-            {"glossaryterms": glossaryterms},
-        )
 
 
 # ******************************************************************************#
@@ -350,8 +329,8 @@ class EntryPreview(TemplateView):
     template_name = "main/entry_preview.html"
 
 
-class EntryStateSelection(TemplateView):
-    template_name = "main/entry_state_selection.html"
+class StateSelection(TemplateView):
+    template_name = "main/state_selection.html"
 
 
 # ******************************************************************************#
@@ -845,7 +824,6 @@ class ExportView(TemplateView):
                 folder_name = query.drive.slug
             else:
                 folder_name = query.state
-        print(folder_name)
 
         gj = make_geojson(request, query)
 
@@ -883,7 +861,7 @@ class ExportView(TemplateView):
 class Map(TemplateView):
     template_name = "main/map.html"
 
-    def get_context_data(self, **kwargs):
+    def get(self, request, **kwargs):
         state = self.kwargs["state"].lower()
         if not state:
             raise Http404
@@ -925,20 +903,43 @@ class Map(TemplateView):
             entryPolyDict[obj.entry_ID] = struct.coordinates
 
             export_name = state_obj.name.replace(" ", "_") + "_communities"
-            print(export_name)
+
+        comms_counter = query.filter(admin_approved=True, private=False).count()
 
         context = {
             "state": state,
             "state_name": state_obj.name,
             "communities": query,
+            "comms_counter": comms_counter,
             "drives": drives,
             "entries": json.dumps(entryPolyDict),
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
-        context["multi_export_link"] = f"/multiexport/{state}"
-        return context
 
+        # the most extreme points of the US -- checking if the lat and long are valid points to go to
+        # source: https://gist.github.com/graydon/11198540
+        # things get kinda flipped around because leaflet and mapbox reverse the order LngLat -> LatLng
+        left = -171.791110603
+        bottom = 18.91619
+        right = -66.96466
+        top = 71.3577635769
+        if "lat" in self.kwargs:
+            try:
+                lat = float(self.kwargs["lat"])
+                lng = float(self.kwargs["lng"])
+                if left <= float(lat) <= right and bottom <= float(lng) <= top:
+                    context["centerLat"] = lat
+                    context["centerLng"] = lng
+                else:
+                    print("map page coordinates invalid")
+                    return redirect("/map/" + self.kwargs["state"])
+            except ValueError:
+                print("map page coordinates are not floats")
+                return redirect("/map/" + self.kwargs["state"])
+
+        context["multi_export_link"] = f"/multiexport/{state}"
+        return render(request, self.template_name, context)
 
 # ******************************************************************************#
 
@@ -1034,7 +1035,7 @@ class EntryView(LoginRequiredMixin, View):
             return redirect("/#select")
         else:
             if not any(abbr.upper() in i for i in STATES):
-                return redirect("/entry_state_selection")
+                return redirect("/state_selection")
         comm_form = self.community_form_class(
             initial=self.get_initial(), label_suffix=""
         )
@@ -1046,6 +1047,18 @@ class EntryView(LoginRequiredMixin, View):
         if kwargs["token"]:
             has_token = True
 
+        # all tags already in db for tagging typeahead
+        # also the top 15 tags as options to select
+        all_tags = Tag.objects.all()
+        tags_arr_unsort = []
+        for i, c in enumerate(all_tags):
+            tags_arr_unsort.append({"value": c.id, "text": c.name})
+        tags_arr = sorted(tags_arr_unsort, key=lambda k: k['text'].lower())
+        top_tags_query = CommunityEntry.tags.most_common()[:15]
+        top_tags = dict()
+        for i, c in enumerate(top_tags_query):
+            top_tags[c.id] = c.name
+
         address_required = True
         has_drive = False
         organization_name = ""
@@ -1055,6 +1068,9 @@ class EntryView(LoginRequiredMixin, View):
         drive_id = None
         drive_custom_question = ""
         drive_custom_question_example = ""
+        drive_units = "BG"
+        coi_def = ""
+        coi_title = ""
         if kwargs["drive"]:
             has_drive = True
             drive_slug = self.kwargs["drive"]
@@ -1087,6 +1103,9 @@ class EntryView(LoginRequiredMixin, View):
                 # redirect them if they're not an org admin or on the allowlist
                 return redirect(reverse_lazy("main:entry"))
             address_required = drive.require_user_addresses
+            drive_units = drive.units
+            coi_title = drive.opt_coi_def_title
+            coi_def = drive.opt_coi_def_info
 
         context = {
             "comm_form": comm_form,
@@ -1107,8 +1126,13 @@ class EntryView(LoginRequiredMixin, View):
             "drive_slug": drive_slug,
             "state": abbr,
             "address_required": address_required,
+            "drive_units": drive_units,
+            "coi_title": coi_title,
+            "coi_def": coi_def,
             "state_obj": State.objects.get(abbr=abbr.upper()),
             "page_type": "entry",  # For the base template to check and remove footer
+            "tags": tags_arr,
+            "top_tags": top_tags,
         }
         return render(request, self.template_name, context)
 
@@ -1269,9 +1293,7 @@ class EntryView(LoginRequiredMixin, View):
                     for field in entryForm._meta.fields
                 ]
             )
-            finalres["census_blocks_polygon"] = str(
-                entryForm.census_blocks_polygon
-            )
+            finalres["census_blocks_polygon"] = shapely.wkt.dumps(shapely.wkt.loads(str(entryForm.census_blocks_polygon)[10:]), rounding_precision=10)
             finalres["user"] = entryForm.user.email
             if entryForm.organization:
                 finalres["organization"] = entryForm.organization.name
@@ -1283,7 +1305,6 @@ class EntryView(LoginRequiredMixin, View):
             string_to_hash = str(finalres)
             print("finalres: ")
             print(finalres)
-
 
             if (
                 flagText(comm_form.data["entry_name"])
@@ -1318,7 +1339,9 @@ class EntryView(LoginRequiredMixin, View):
                 )
                 del addres["id"]
                 finalres.update(addres)
+                print("polygon: " + finalres["census_blocks_polygon"])
                 string_to_hash = str(finalres)
+                print("string_to_hash: " + string_to_hash)
 
             digest = hmac.new(
                 bytes(os.environ.get("AUDIT_SECRET"), encoding="utf8"),

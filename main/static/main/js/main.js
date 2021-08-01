@@ -49,7 +49,11 @@ let populateStateSelectionDropdown = function () {
     selectElement.appendChild(newOption);
   }
   jQuery("#stateSelectionDropdown").on("change", function () {
-    window.location = "/state/" + this.value;
+    if (window.location.href.indexOf("map") > -1) {
+      window.location.href = "/map/" + code;
+    } else {
+      window.location.href = "/state/" + code;
+    }
   });
 };
 
@@ -77,7 +81,11 @@ let setUpUSAMap = function () {
       if (jQuery("#stateSelectionDropdown").val() !== code) {
         jQuery("#stateSelectionDropdown").val(code);
       }
-      window.location.href = "/state/" + code;
+      if (window.location.href.indexOf("map") > -1) {
+        window.location.href = "/map/" + code;
+      } else {
+        window.location.href = "/state/" + code;
+      }
     },
     onLabelShow: function (event, label, code) {
       return ignoreUnsupportedStates(event, code);

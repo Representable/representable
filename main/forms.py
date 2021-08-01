@@ -34,9 +34,10 @@ from .models import (
     Address,
     State,
 )
-from .choices import STATES
+from .choices import STATES, UNITS
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Area
+from django.core.files.images import get_image_dimensions
 
 # https://django-select2.readthedocs.io/en/latest/django_select2.html
 
@@ -139,6 +140,7 @@ class CommunityForm(ModelForm):
             "custom_response": forms.Textarea(
                 attrs={"rows": 3, "maxlength": 700, "placeholder": ""}
             ),
+            "tags": forms.TextInput(),
             "user_name": forms.TextInput(attrs={"maxlength": 500}),
             "user_polygon": forms.HiddenInput(),
         }
@@ -149,6 +151,7 @@ class CommunityForm(ModelForm):
             "comm_activities": "Input your community's activities and services: ",
             "other_considerations": "Input your community's other interests and concerns: ",
             "custom_response": "Input your response to this mapping drive's custom question: ",
+            "tags": "Input a comma-separated list of tags for your community: ",
             "entry_name": "Input your community's name: ",
         }
 
@@ -187,20 +190,26 @@ class DeletionForm(ModelForm):
 
 
 class OrganizationForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.label_suffix = ""
+
     class Meta:
         model = Organization
-        fields = ["name", "description", "ext_link", "states"]
+        fields = ["name", "description", "ext_link", "states", "government", "logo"]
         labels = {
-            "name": "Organization Name",
-            "ext_link": "Link to Organization Website",
+            "name": "Organization name*",
+            "ext_link": "Link to organization website",
+            "logo": "Optional organization logo",
+            "government": "Are you a state or city government?",
         }
         widgets = {
             "name": forms.TextInput(
-                attrs={"placeholder": "Name of Organization"}
+                attrs={"placeholder": "Name of organization"}
             ),
             "description": forms.Textarea(
                 attrs={
-                    "placeholder": "Short Description",
+                    "placeholder": "ex. Our goal is to support and uplift Latinx communities in Philadelphia. Our organization is working to ensure that fair maps are drawn in order to protect our communities and have elected officials that reflect our values.",
                     "rows": 4,
                     "cols": 20,
                 }
@@ -214,20 +223,50 @@ class OrganizationForm(ModelForm):
                 choices=STATES,
                 attrs={"data-placeholder": "Select States"},
             ),
+            "government": forms.CheckboxInput(
+                attrs={
+                    "class": "form-check-input",
+                }
+            ),
         }
+
+    def clean(self):
+        """
+        Make sure that the image is a reasonable shape
+        """
+        errors = {}
+        image = self.cleaned_data.get("logo")
+        # w = image.width
+        # h = image.height
+        w = 1
+        h = 1
+        if image:
+            w, h = get_image_dimensions(image)
+        r = w/h
+        if (
+            .5 > r or r > 2
+        ):
+            errors["logo"] = "Unacceptable image shape. Image should have similar width and height."
+        if errors:
+            raise forms.ValidationError(errors)
 
 
 class EditOrganizationForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.label_suffix = ""
+
     class Meta:
         model = Organization
-        fields = ["name", "description", "ext_link"]
+        fields = ["name", "description", "ext_link", "logo"]
         labels = {
-            "name": "Organization Name",
-            "ext_link": "Link to Organization Website",
+            "name": "Organization name",
+            "ext_link": "Link to organization website",
+            "logo": "Optional organization logo",
         }
         widgets = {
             "name": forms.TextInput(
-                attrs={"placeholder": "Name of Organization"}
+                attrs={"placeholder": "Name of organization"}
             ),
             "description": forms.Textarea(
                 attrs={
@@ -242,6 +281,26 @@ class EditOrganizationForm(ModelForm):
                 }
             ),
         }
+    
+    def clean(self):
+        """
+        Make sure that the image is a reasonable shape
+        """
+        errors = {}
+        image = self.cleaned_data.get("logo")
+        # w = image.width
+        # h = image.height
+        w = 1
+        h = 1
+        if image:
+            w, h = get_image_dimensions(image)
+        r = w/h
+        if (
+            .5 > r or r > 2
+        ):
+            errors["logo"] = "Unacceptable image shape. Image should have similar width and height."
+        if errors:
+            raise forms.ValidationError(errors)
 
 
 class AllowlistForm(ModelForm):
@@ -254,19 +313,59 @@ class AllowlistForm(ModelForm):
 
 
 class DriveForm(ModelForm):
-    def __init__(self, org_states, *args, **kwargs):
+    def __init__(self, org_states, gov, *args, **kwargs):
         super(DriveForm, self).__init__(*args, **kwargs)
         choices = [state for state in STATES if state[0] in org_states]
         self.fields["state"].widget = forms.Select(
             choices=choices, attrs={"class": "form-control"}
         )
+        optional_fields = [
+            "opt_redist_title",
+            "opt_redist_info",
+            "opt_criteria_title",
+            "opt_criteria_info",
+            "opt_coi_def_title",
+            "opt_coi_def_info",
+        ]
+        self.label_suffix = ""
+        if not gov:
+            self.auto_id = False
+            for f in optional_fields:
+                self.fields[f].widget = forms.HiddenInput()
+                self.fields[f].label = ''
+        # for f in optional_fields:
+        #     self.fields[f].widget = forms.HiddenInput()
+        #     self.fields[f].label = ''
+        # for f in optional_fields:
+            # self.fields[f].label_suffix = "_opt"
 
     class Meta:
         model = Drive
-        fields = ["name", "description", "state", "require_user_addresses"]
+        fields = [
+            "name",
+            "state",
+            "require_user_addresses",
+            "description",
+            "units",
+            "opt_redist_title",
+            "opt_redist_info",
+            "opt_criteria_title",
+            "opt_criteria_info",
+            "opt_coi_def_title",
+            "opt_coi_def_info",
+        ]
         labels = {
-            "name": "Drive Title",
-            "ext_link": "Link to Organization Website",
+            "name": "Drive Title*",
+            "units": "Default mapping units*",
+            "description": "Description*",
+            "state": "State*",
+            "require_user_addresses": "Require user addresses",
+            "opt_redist_title": "Redistricting title",
+            "opt_redist_info": "Redistricting information",
+            "opt_criteria_title": "Criteria title",
+            "opt_criteria_info": "Criteria information",
+            "opt_coi_def_title": "COI definition title",
+            "opt_coi_def_info": "COI definition information",
         }
         widgets = {
             "name": forms.TextInput(
@@ -277,7 +376,7 @@ class DriveForm(ModelForm):
             ),
             "description": forms.Textarea(
                 attrs={
-                    "placeholder": "Short Description",
+                    "placeholder": "ex. This is a drive run by [organization name] to collect communities of interest.",
                     "class": "form-control",
                 }
             ),
@@ -287,7 +386,63 @@ class DriveForm(ModelForm):
             "require_user_addresses": forms.CheckboxInput(
                 attrs={"class": "form-check-input"}
             ),
+            "opt_redist_title": forms.TextInput(
+                attrs={
+                    "placeholder": "ex. Redistricting in [State/City]",
+                    "class": "form-control",
+                }
+            ),
+            "opt_redist_info": forms.Textarea(
+                attrs={
+                    "placeholder": "ex. Description of how redistricting works in your state or city.",
+                    "class": "form-control",
+                }
+            ),
+            "opt_criteria_title": forms.TextInput(
+                attrs={
+                    "placeholder": "ex. [State/City] Redistricting Criteria",
+                    "class": "form-control",
+                }
+            ),
+            "opt_criteria_info": forms.Textarea(
+                attrs={
+                    "placeholder": "ex. A list of redistricting criteria in your state or city.",
+                    "class": "form-control",
+                }
+            ),
+            "opt_coi_def_title": forms.TextInput(
+                attrs={
+                    "placeholder": "ex. Communities of Interest in [State/City]",
+                    "class": "form-control",
+                }
+            ),
+            "opt_coi_def_info": forms.Textarea(
+                attrs={
+                    "placeholder": "ex. The definition of Communities of Interest in your state or city.",
+                    "class": "form-control",
+                }
+            ),
+            "units": forms.Select(
+                choices=UNITS, attrs={"class": "form-control"}
+            ),
         }
+
+    def clean(self):
+        """
+        Make sure all of the optional fields have information filled out
+        """
+        errors = {}
+        a1 = self.cleaned_data.get("opt_redist_title")
+        a2 = self.cleaned_data.get("opt_redist_info")
+        b1 = self.cleaned_data.get("opt_criteria_title")
+        b2 = self.cleaned_data.get("opt_criteria_info")
+        c1 = self.cleaned_data.get("opt_coi_def_title")
+        c2 = self.cleaned_data.get("opt_coi_def_info")
+        if ((a1 or a2 or b1 or b2 or c1 or c2) and not (a1 and a2 and b1 and b2 and c1 and c2)
+        ):
+            errors["opt_redist_title"] = "You must fill out none or all of the customized criteria."
+        if errors:
+            raise forms.ValidationError(errors)
 
 
 class MemberForm(ModelForm):

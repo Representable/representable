@@ -162,6 +162,7 @@ class CreateOrg(LoginRequiredMixin, CreateView):
             email_content,
             "no-reply@representable.org",
             ["team@representable.org"],
+            # ["acbeaton4@gmail.com"],
             fail_silently=False,
         )
 
@@ -212,6 +213,22 @@ class EditOrg(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
     template_name = "main/dashboard/partners/edit.html"
     form_class = EditOrganizationForm
     model = Organization
+
+    # def get_form_kwargs(self):
+    #     kwargs = super().get_form_kwargs()
+    #     org = Organization.objects.get(pk=self.kwargs["pk"])
+    #     kwargs["url"] = org.logo.url
+    #     return kwargs
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        org = Organization.objects.get(pk=self.kwargs["pk"])
+        if org.logo:
+            context["url"] = org.logo.url
+        else:
+            context["url"] = "/static/img/upload_photo.png"
+
+        return context
 
 
 # ******************************************************************************#
@@ -568,6 +585,9 @@ class CreateDrive(LoginRequiredMixin, OrgAdminRequiredMixin, CreateView):
             user=self.request.user, verified=True
         ).exists()
 
+        org = Organization.objects.get(pk=self.kwargs["pk"])
+        context["gov"] = org.government
+
         return context
 
     def form_valid(self, form):
@@ -592,6 +612,7 @@ class CreateDrive(LoginRequiredMixin, OrgAdminRequiredMixin, CreateView):
         kwargs = super().get_form_kwargs()
         org = Organization.objects.get(pk=self.kwargs["pk"])
         kwargs["org_states"] = org.states
+        kwargs["gov"] = org.government
         return kwargs
 
 
@@ -609,6 +630,9 @@ class UpdateDrive(LoginRequiredMixin, OrgAdminRequiredMixin, UpdateView):
         kwargs = super().get_form_kwargs()
         org = Organization.objects.get(pk=self.kwargs["pk"])
         kwargs["org_states"] = org.states
+
+        kwargs["gov"] = org.government
+
         return kwargs
 
 
