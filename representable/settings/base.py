@@ -83,7 +83,7 @@ INSTALLED_APPS = [
 
 ACCOUNT_SESSION_REMEMBER = True
 
-SITE_ID = 2
+SITE_ID = 0
 # SITE_NAME = "Represenetable.org"
 
 MIDDLEWARE = [
