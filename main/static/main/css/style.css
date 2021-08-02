@@ -1319,7 +1319,7 @@ Entry Mapping Page
   cursor: pointer;
 }
 .state-select {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -1336,12 +1336,10 @@ Entry Mapping Page
 .state-select-resources {
   padding: 5px;
   background: none;
-  width: 14rem;
+  width: 18rem;
+  font-size: 1.8rem;
   border-width: 0 0 3px 0;
-  -webkit-appearance: none;
-}
-.state-select-resources option {
-  font-size: 1.5rem;
+  /* -webkit-appearance: none; */
 }
 .ws-normal {
   white-space: normal;
