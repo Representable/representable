@@ -235,7 +235,7 @@ map.on("load", function () {
   // loading icon
   $(".loader").delay(500).fadeOut(500);
   // fly to state if org, otherwise stay on map
-  if (typeof centerLat !== 'undefined') {
+  if ((typeof centerLat !== 'undefined') && (centerLat !== '')) {
     map.flyTo({
       center: [parseFloat(centerLat), parseFloat(centerLng)],
       zoom: 9,
