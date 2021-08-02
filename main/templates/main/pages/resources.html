@@ -2,15 +2,49 @@
 {% load static %}
 {% load i18n %}
 {% block content %}
+<script type="text/javascript">
+  var state = '{{ state.abbr }}';
+</script>
 <div class="container-fluid content-blue-bg">
   <div class="row row-content mx-lg-5 px-lg-5">
     <div class="col mx-lg-5 px-lg-5">
       <div class="row light-blue-bg mx-lg-4 px-lg-5">
         <div class="col-12">
-          <div class="h1 my-4 ml-3">{% trans "Resources" %}</div>
+          <div class="h1 my-4 ml-3">{% trans "Resources" %} in:
+          <select id="stateSelectionDropdown" class="state-select-resources">
+            <option label="" value="{{state.abbr}}"></option>
+          </select></div>
         </div>
       </div>
-      <div class="mb-3 white-bg mx-lg-5">
+      {% if state %}
+        <div class="mb-3 white-bg mx-lg-5">
+          <div class="row mb-3 pb-4">
+            <div class="col-1"></div>
+            <div class="col-10">
+              <h6 class="mb-3 mt-5"><b>{% trans "How does redistricting work in " %} {{ state.name }}?</b></h6>
+              <p>
+                {% autoescape off %}
+                {{ state.content_news }}
+                {% endautoescape %}
+              </p>
+              <h6 class="mb-3"><b>{{ state.name }}'s {% trans "redistricting criteria" %}</b></h6>
+              <p>
+                {% autoescape off %}
+                {{ state.content_criteria }}
+                {% endautoescape %}
+              </p>
+              <h6 class="mb-3"><b>{% trans "Communities of Interest in " %} {{ state.name }}</b></h6>
+              <p>
+                {% autoescape off %}
+                {{ state.content_coi }}
+                {% endautoescape %}
+              </p>
+            </div>
+            <div class="col-1"></div>
+          </div>
+        </div>
+      {% endif %}
+      <div class="mb-3 mt-5 white-bg mx-lg-5">
           <div class="row">
             <div class="col-1"></div>
             <div class="col-10 mt-3 white-bg">
@@ -51,7 +85,7 @@
                 </div>
                 <div class="col-md-6 mt-3 mt-md-0">
                   {% blocktrans trimmed %}This infographic provides a short overview of redistricting, gerrymandering, and how Representable can be used to address this issue using communities of interest. {% endblocktrans %}
-                  <br><a target="_blank" class="btn btn-outline-primary px-4 my-4" href="https://drive.google.com/file/d/132yv4mG9BqH12x3qVvexOFkkTlBmmmEf/view?usp=sharing">
+                  <br><a target="_blank" class="btn btn-outline-primary px-4 my-4" href="{% static 'img/Representable-Infographic.pdf' %}">
                       {% trans "VIEW & DOWNLOAD" %}
                   </a>
                 </div>
@@ -112,4 +146,8 @@
     </div>
   </div>
 </div>
+{% endblock %}
+{% block script %}
+  <script type="text/javascript" src="{% static 'main/js/main.js' %}"></script>
+  <script type="text/javascript" src="{% static 'main/js/components/states.js' %}"></script>
 {% endblock %}
