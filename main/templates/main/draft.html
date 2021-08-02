@@ -14,17 +14,52 @@
 <title>View Map</title>
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!--  GeoCoder -->
 <meta name='robots' content='noindex, nofollow'>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
 <!-- Add css again to take precedence over mapbox css. -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <!--  Custom CSS -->
 <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+
+<script type="text/javascript">
+window.onload=function(){
+
+  function sendEmail(address){
+    document.getElementById('emailMessage').innerHTML = "email sent to "+address+"!";
+	$.get("{% static 'main/php/send-email.php' %}", { op: address }, function(data){
+		console.log(data);
+		let json = $.parseJSON(data);
+		// console.log(json);
+		if (json.isError == true) {
+			alert(json.message);
+    }
+    else{
+      // document.getElementById('emailMessage').innerHTML = "email sent to "+address+"!";
+    }
+		console.log(json);
+	});
+
+  }
+
+  document.onkeypress = function(evt) {
+    evt = evt || window.event;
+    var charCode = evt.keyCode || evt.which;
+    if(charCode == 13){
+      sendEmail(document.getElementById('emailForm').value);
+    }
+  }
+}
+</script>
+
 {% endblock %}
 {% block content %}
 <div class="container-fluid w-100">
@@ -43,44 +78,125 @@
       alert('No map found with the given map_id.');
     </script>
     {% endif %}
+    <div class="row w-md-75 mt-4 mx-auto">
+        <div class="card text-left border-0 w-100 rounded-lg mb-3 pt-80 bg-transparent">
+            <div class="card-body">
+                <div class="row justify-content-between">
+                    <div class="col-md-8">
+                        <h2>This is a draft map.</h2>
+                        <h4>Add collaborators so they can edit your map.</h4>
+                    </div>
+                    <div class="col-md-2">
+                        <a data-toggle="collapse" href="#collaboration" role="button" aria-expanded="false" aria-controls="collaboration" onclick="toggleGrayScale()"><img src="/static/img/collaborate-active.png" id="collaborationButton"></a>
+                        <img src="/static/img/collaborate-inactive.png" id="inactive" style="display: none;">
+                    </div>
+                </div>
+                  <div class="collapse" id="collaboration">
+                    <div class="card-body">
+                      <div class="row">
+                            <div class="col-md-1"><img src="/static/img/collaborate-plus.png"></div>
+                            <div class="col-md-6">
+                                <input id="emailForm" class="form-control w-100 border-5 badge-pill" type="text" placeholder="Add emails">
+                                <div id="emailMessage">nathanshap@gmail.com</div>
+                            </div>
+                      </div>
+                      <div class="row pt-3">
+                        <div class="col-1"><img src="/static/img/collaborate-link.svg"></div>
+                        <div class="col-11">
+                            <h4>Copy Link</h4>
+                        </div>
+                        <div class="col-1">
+                            
+                        </div>
+                        <div class="col-md-7" id="edit-link">
+                            <a href="/../edit/{{edit_hash}}">https://representable.org/edit/{{edit_hash}}</a>
+                        </div>
+                        <div class="col-md-4" id="copy-link-text" onclick='copyEditLink();'>
+                            &#128279 Copy Link
+                        </div>
+                        <div class="col-md-1">
+
+                        </div>
+                        <div class="col-md-7 pt-3">
+                            <p class="small">Anyone with the link can edit this map, however only the creator may officially submit the map. Changes to the map will be reflected here when you open your map on Representable.</p>
+                        </div>  
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
     <div class="col-xl-5 col-wide text-center text-xl-right pt-3 pr-xl-5 mb-5">
       <div class="row w-md-75 d-inline-block m-0">
         <div class="card text-left border-0 w-100 rounded-lg mb-3 d-none d-xl-block">
           <div class="card-body">
             <h3 id="pdfName" class="card-title header-text"><strong>{{c.entry_name}}</strong></h3>
             <h6 class="info-text"><strong>{{c.drive.name}}</strong></h6>
-            {% if c.is_final is False or 86400 > time_difference %}
-              <button id="toEdit" name="toEdit" class="btn btn-md btn-outline-primary no-underline-link entry-nav-btn mapping-icon" value="edit" onclick="window.location.replace('/edit/{{ edit_hash }}');">{% trans "EDIT" %}</button>
-            {% endif %}
+                <h4 class="card-title header-text pt-4"><strong>{% trans "Community Information" %}</strong> <button class="btn btn-link no-underline-link p-0" type="button" data-toggle="modal" data-target="#submission-info-modal" rel="nofollow"><i class="far fa-question-circle small text-muted"></i></a></h4>
+                <div class="accordion map-info-item mt-4" id="mobile-map-activities-accordion">
+                    <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-activities-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                        {% trans "Community Activities and Services" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
+                    </button>
+                    <div id="mobile-map-activities-resp" class="collapse pl-3 pb-1" aria-labelledby="mobile-map-activities-accordion" data-parent="#mobile-map-activities-accordion">
+                        <p class="collapse-in map-survey-response">
+                            {{c.comm_activities}}
+                        </p>
+                    </div>
+                </div>
+                <div class="accordion map-info-item mt-3" id="mobile-map-cultural-interests-accordion">
+                    <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#map-cultural-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                        {% trans "Cultural or Historical Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
+                    </button>
+                    <div id="mobile-map-cultural-interests-resp" class="collapse pl-3 pb-1" aria-labelledby="map_cultural_activities_accordion" data-parent="#mobile-map-cultural-interests-accordion">
+                        <p class="collapse-in map-survey-response">
+                            {{c.cultural_interests}}
+                        </p>
+                    </div>
+                </div>
+                <div class="accordion map-info-item mt-3" id="economic-interests-accordion">
+                    <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#economic-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                        {% trans "Economic or Environmental Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
+                    </button>
+                    <div id="economic-interests-resp" class="collapse pl-3 pb-1" aria-labelledby="economic-interests-accordion" data-parent="#economic-interests-accordion">
+                        <p class="collapse-in map-survey-response">
+                            {{c.economic_interests}}
+                        </p>
+                    </div>
+                </div>
+                <div class="accordion map-info-item mt-3 mb-3" id="mobile-map-other-interests-accordion">
+                    <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-other-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                        {% trans "Community Needs and Concerns" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
+                    </button>
+                    <div id="mobile-map-other-interests-resp" class="collapse pl-3 pb-1" aria-labelledby="mobile-map-other-interests-accordion" data-parent="#mobile-map-other-interests-accordion">
+                        <p class="collapse-in map-survey-response">
+                            {{c.other_considerations}}
+                        </p>
+                    </div>
+                </div>
+                {% if c.drive and c.drive.custom_question %}
+                <div class="accordion map-info-item mt-3 mb-3" id="mobile-map-custom-accordion">
+                    <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-custom-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                        <div class="text-wrap" style="white-space: normal">{{c.drive.custom_question}}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i></div>
+                    </button>
+                    <div id="mobile-map-custom-resp" class="collapse pl-3 pb-1" aria-labelledby="mobile-map-custom-accordion" data-parent="#mobile-map-custom-accordion">
+                        <p class="collapse-in map-survey-response">
+                            {{c.custom_response}}
+                        </p>
+                    </div>
+                </div>
+                {% endif %}
           </div>
         </div>
         <div class="card text-left w-100 border-0 rounded-lg">
           <div class="card-body">
-            <h5 class="card-title header-text"><strong>{% trans "Download this map" %}</strong></h5>
+            <h5 class="card-title header-text"><strong>{% trans "Download this draft" %}</strong></h5>
             <p class="header-text small">
               {% blocktrans trimmed %}
-                Map downloads include the community information below.
+                Map downloads include the community information above.
               {% endblocktrans %}
             </p>
             <div class="row">
               <div class="col text-center">
-                  <!-- GeoJSON Explainer Modal -->
-                  <div class="modal fade" id="geojson-explain-modal" tabindex="-1" role="dialog" aria-labelledby="geojson-explain-modalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">{% trans "What is GeoJSON?" %}</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          {% trans "GeoJSON files are industry standard and usable with other mapping softwares like Maptitude for Redistricting, Dave's Redistricting App, ESRI, and more." %}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- ********************* -->
                   <!-- PDF Export + Public comment Modal -->
                   <div class="modal fade blue-modal" id="pdf-comment-modal" tabindex="-1" role="dialog" aria-labelledby="pdf-comment-modalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -199,37 +315,16 @@
                   <!-- ********************* -->
                   <div class="row">
                     {% if has_state %}
-                      {% with link_text="/export/geojson/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
-                      <div class="col-12 col-md-4">
-                        <a class="btn btn-primary w-50 w-md-75 w-xl-100 mb-3 mb-md-0" data-toggle="modal" href="#" data-target="#geojson-explain-modal" rel="nofollow" download>GeoJSON</a>
-                        <a href={{link_text}} download="{{c.human_readable_name}}.zip" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
-                      </div>
                       <!-- ********************* -->
                       <div class="col-12 col-md-4">
                         <button class="btn btn-primary w-50 w-md-75 w-xl-100 mb-3 mb-md-0" id="pdf-button">PDF</button>
                       </div>
-                      {% endwith %}
-                      {% with link_text="/export/csv/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
-                      <div class="col-12 col-md-4">
-                        <a class="btn btn-primary w-50 w-md-75 w-xl-100" href={{link_text}} role="button" download="{{c.human_readable_name}}.zip">CSV</a>
-                      </div>
-                      {% endwith %}
+                      
                     {% else %}
-                      {% with link_text="/export/geojson/?map_id="|addstr:c.entry_ID %}
-                      <div class="col-12 col-md-4">
-                        <a class="btn btn-primary w-50 w-md-75 w-xl-100 mb-3 mb-md-0" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>GeoJSON</a>
-                        <a href={{link_text}} download="{{c.human_readable_name}}.zip" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
-                      </div>
                       <!-- ********************* -->
                       <div class="col-12 col-md-4">
                         <button class="btn btn-primary w-50 w-md-75 w-xl-100 mb-3 mb-md-0" id="pdf-button" role="button">PDF</button>
                       </div>
-                      {% endwith %}
-                      {% with link_text="/export/csv"|add:"/?map_id="|addstr:c.entry_ID %}
-                      <div class="col-12 col-md-4">
-                        <a class="btn btn-primary w-50 w-md-75 w-xl-100" href={{link_text}} role="button" download="{{c.human_readable_name}}.zip">CSV</a>
-                      </div>
-                      {% endwith %}
                     {% endif %}
                   </div>
                   <!-- ********************* -->
@@ -237,98 +332,11 @@
             </div>
             <p id="copy-link-text" class="header-text small mt-4 mb-0">
               {% blocktrans trimmed %}
-              Or <a href="#" onclick="copyPageLink();event.preventDefault();">copy the link</a> to this page to share.
+              You will be able to export your map in more formats after submitting.
               {% endblocktrans %}
             </p>
           </div>
         </div>
-        <div class="card text-left border-0 w-100 rounded-lg mt-3">
-          <div class="card-body">
-            <h4 class="card-title header-text"><strong>{% trans "Community Information" %}</strong> <button class="btn btn-link no-underline-link p-0" type="button" data-toggle="modal" data-target="#submission-info-modal" rel="nofollow"><i class="far fa-question-circle small text-muted"></i></a></h4>
-            <div class="accordion map-info-item mt-4" id="mobile-map-activities-accordion">
-                <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-activities-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
-                    {% trans "Community Activities and Services" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
-                </button>
-                <div id="mobile-map-activities-resp" class="collapse pl-3 pb-1" aria-labelledby="mobile-map-activities-accordion" data-parent="#mobile-map-activities-accordion">
-                    <p class="collapse-in map-survey-response">
-                        {{c.comm_activities}}
-                    </p>
-                </div>
-            </div>
-            <div class="accordion map-info-item mt-3" id="mobile-map-cultural-interests-accordion">
-                <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#map-cultural-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
-                    {% trans "Cultural or Historical Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
-                </button>
-                <div id="mobile-map-cultural-interests-resp" class="collapse pl-3 pb-1" aria-labelledby="map_cultural_activities_accordion" data-parent="#mobile-map-cultural-interests-accordion">
-                    <p class="collapse-in map-survey-response">
-                        {{c.cultural_interests}}
-                    </p>
-                </div>
-            </div>
-            <div class="accordion map-info-item mt-3" id="economic-interests-accordion">
-                <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#economic-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
-                    {% trans "Economic or Environmental Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
-                </button>
-                <div id="economic-interests-resp" class="collapse pl-3 pb-1" aria-labelledby="economic-interests-accordion" data-parent="#economic-interests-accordion">
-                    <p class="collapse-in map-survey-response">
-                        {{c.economic_interests}}
-                    </p>
-                </div>
-            </div>
-            <div class="accordion map-info-item mt-3 mb-3" id="mobile-map-other-interests-accordion">
-                <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-other-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
-                    {% trans "Community Needs and Concerns" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
-                </button>
-                <div id="mobile-map-other-interests-resp" class="collapse pl-3 pb-1" aria-labelledby="mobile-map-other-interests-accordion" data-parent="#mobile-map-other-interests-accordion">
-                    <p class="collapse-in map-survey-response">
-                        {{c.other_considerations}}
-                    </p>
-                </div>
-            </div>
-            {% if c.drive and c.drive.custom_question %}
-            <div class="accordion map-info-item mt-3 mb-3" id="mobile-map-custom-accordion">
-                <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-custom-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
-                    <div class="text-wrap" style="white-space: normal">{{c.drive.custom_question}}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i></div>
-                </button>
-                <div id="mobile-map-custom-resp" class="collapse pl-3 pb-1" aria-labelledby="mobile-map-custom-accordion" data-parent="#mobile-map-custom-accordion">
-                    <p class="collapse-in map-survey-response">
-                        {{c.custom_response}}
-                    </p>
-                </div>
-            </div>
-            {% endif %}
-          </div>
-        </div>
-        <div id="public-comment-card" class="card text-left border-0 w-100 rounded-lg mt-3 mb-3 d-l-block">
-          <div class="card-body">
-            <h5 class="card-title header-text"><strong>{% trans "Send to your state." %}</strong></h5>
-            <p>{% blocktrans trimmed %}Your state accepts communities of interest as public input. Download your map and then visit this site.{% endblocktrans %}</p>
-            <a id="public-comment-link"><h5 class="blue-text">{% trans "Go to public input portal" %} <i class="far fa-arrow-alt-circle-right"></i></h5></a>
-          </div>
-        </div>
-        {% if show_form is True and not form_empty %}
-        <div class="card text-left border-0 w-100 rounded-lg mt-3 mb-3 d-xl-block">
-          <div class="card-body">
-            <h5 class="card-title header-text"><strong>{% trans "Submit to an organization." %}</strong></h5>
-            {% if c.drive is not True %}
-              <p class="header-text small">{% blocktrans trimmed %}Many organizations in your state are collecting community maps. Submit yours to one of their collection drives.{% endblocktrans %}</p>
-              <form method="post">
-                {% csrf_token %}
-                {% for field in form %}
-                {{ field }}
-                {% endfor %}
-                <div class="row justify-content-center pt-3">
-                  <div>
-                    <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
-                  </div>
-                </div>
-              </form>
-            {% else %}
-              <p class="header-text small">{% trans "This community map has already been submitted to an organization" %}</p>
-            {% endif %}
-          </div>
-        </div>
-        {% endif %}
       </div>
     </div>
 
@@ -406,6 +414,15 @@
             <div class="row vh-50">
               <div id='map' class="map-visualization p-0">
               </div>
+            </div>
+            <div class="row pt-4 justify-content-center">
+                    <button id="toEdit" name="toEdit" class="btn btn-lg btn-outline-primary no-underline-link entry-nav-btn mapping-icon mr-4" value="edit draft" onclick="window.location.replace('/edit/{{ edit_hash }}');">{% trans "EDIT DRAFT" %}</button>
+                    {% if is_owner %}
+                    <button id="submit" name="submit" class="btn btn-lg btn-primary no-underline-link entry-nav-btn mapping-icon" value="submit as final" onclick="window.location.replace('/submit/{{ edit_hash }}');">{% trans "SUBMIT AS FINAL" %}</button>
+                    {% else %}
+                    <button id="submit" name="submit" class="btn btn-lg btn-primary no-underline-link entry-nav-btn mapping-icon" value="submit as final" onclick="window.location.replace('/submit/{{ edit_hash }}');" data-toggle="tooltip" data-html="true" title="Only the map creator can submit" disabled>{% trans "SUBMIT AS FINAL" %}</button>
+                    {% endif%}
+                </div>
             </div>
           </div>
         </div>

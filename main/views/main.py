@@ -514,6 +514,7 @@ class Submission(View):
             raise Http404
 
         user_map = query[0]
+
         if user_map.drive:
             state = ""
         else:
@@ -560,6 +561,10 @@ class Submission(View):
 
         # query will have length 1 or database is invalid
         user_map = query[0]
+
+        if not user_map.is_final:
+            query = Signature.objects.filter(entry_id = user_map.id)
+            return redirect("/draft/"+str(query[0].edit_hash))
 
         if user_map.drive:
             folder_name = query[0].drive.slug
@@ -810,6 +815,161 @@ def make_geojson_for_state_map_page(request, entry):
 
 # ******************************************************************************#
 
+class Draft(View):
+    template_name = "main/draft.html"
+
+    def get(self, request, edit_hash, *args, **kwargs):
+        if not edit_hash:
+            raise Http404
+        query = Signature.objects.filter(edit_hash=edit_hash)
+        if not query:
+            raise Http404
+
+        # query will have length 1 or database is invalid
+        signature = query[0]
+        query = CommunityEntry.objects.filter(id=signature.entry_id)
+        user_map = query[0]
+
+        if user_map.is_final:
+            return redirect("/submission/"+str(user_map.entry_ID))
+
+        if user_map.drive:
+            folder_name = query[0].drive.slug
+            # has_state = False
+            # state = ""
+            has_state = user_map.state != ""
+            state = user_map.state
+        else:
+            if "abbr" in self.kwargs:
+                folder_name = self.kwargs["abbr"]
+                has_state = True
+                state = folder_name
+            else:
+                has_state = user_map.state != ""
+                state = user_map.state
+                folder_name = state
+
+        entryPolyDict = {}
+
+        if (
+            user_map.census_blocks_polygon == ""
+            or user_map.census_blocks_polygon is None
+            and user_map.user_polygon
+        ):
+            s = "".join(user_map.user_polygon.geojson)
+        elif user_map.census_blocks_polygon:
+            s = "".join(user_map.census_blocks_polygon.geojson)
+        else:
+            raise Http404
+        map_poly = geojson.loads(s)
+        entryPolyDict[user_map.entry_ID] = map_poly.coordinates
+        comm = user_map
+
+        # get user email address
+        if self.request.user.is_authenticated:
+            user_email_address = EmailAddress.objects.get(
+                user=self.request.user
+            )
+        else:
+            user_email_address = ""
+
+        is_owner = self.request.user.id == comm.user_id
+
+
+        context = {
+            "has_state": has_state,
+            "state": state,
+            "c": comm,
+            "edit_hash": Signature.objects.filter(entry_id=comm.id)[0].edit_hash,
+            "time_difference": (datetime.datetime.now() - comm.created_at.replace(tzinfo=None)).total_seconds(),
+            "entries": json.dumps(entryPolyDict),
+            "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
+            "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
+            "map_id": user_map.entry_ID,
+            "email": user_email_address,
+            "is_owner": is_owner,
+        }
+
+        # from thanks view
+        context["is_thanks"] = False
+        if "thanks" in request.path:
+            context["is_thanks"] = True
+            has_drive = False
+            organization_name = ""
+            drive_name = ""
+            organization_slug = ""
+            if kwargs["drive"]:
+                has_drive = True
+                drive_slug = self.kwargs["drive"]
+                drive = Drive.objects.get(slug=drive_slug)
+                drive_name = drive.name
+                organization = drive.organization
+                organization_name = organization.name
+                organization_slug = organization.slug
+
+            if (
+                self.request.user.is_authenticated
+                and EmailAddress.objects.filter(
+                    user=self.request.user, verified=True
+                ).exists()
+            ):
+                context["verified"] = True
+
+            elif self.request.user.is_authenticated:
+                user_email_confirmation = EmailConfirmationHMAC(
+                    email_address=user_email_address
+                )
+
+                user_email_confirmation.send(self.request, False)
+                context["verified"] = False
+
+            context["drive_slug"] = self.kwargs["drive"]
+            context["has_drive"] = has_drive
+            context["organization_name"] = organization_name
+            context["organization_slug"] = organization_slug
+            context["drive_name"] = drive_name
+
+        # if self.request.user.is_authenticated:
+        #     if user_map.organization:
+        #         context["is_org_admin"] = self.request.user.is_org_admin(
+        #             user_map.organization_id
+        #         )
+        #     if self.request.user == user_map.user:
+        #         for a in Address.objects.filter(entry=user_map):
+        #             context["street"] = a.street
+        #             context["city"] = a.city + ", " + a.state + " " + a.zipcode
+        #             context["is_community_author"] = (
+        #                 self.request.user == user_map.user
+        #             )
+        #             comm.user_name = user_map.user_name
+
+        return render(request, self.template_name, context)
+
+# ******************************************************************************#
+
+class Submit(TemplateView):
+    template = "draft.html"
+
+    def get(self, request, edit_hash, *args, **kwargs):
+        if not edit_hash:
+            raise Http404
+        query = Signature.objects.filter(edit_hash=edit_hash)
+        if not query:
+            raise Http404
+        sig = query[0]
+
+        query = CommunityEntry.objects.filter(id=sig.entry_id)
+        entry = query[0]
+
+        is_owner = self.request.user.id == entry.user_id
+
+        if is_owner:
+            entry.is_final = True
+            entry.save()
+        return redirect("/draft/"+edit_hash)
+
+
+    
 
 class ExportView(TemplateView):
     template = "main/export.html"
@@ -1072,6 +1232,10 @@ class EntryView(LoginRequiredMixin, View):
         drive_custom_question = ""
         drive_custom_question_example = ""
 
+        census_blocks = []
+        block_groups = []
+        polygon = None
+
         if edit_hash:
 
             query = Signature.objects.filter(edit_hash=edit_hash)
@@ -1090,6 +1254,13 @@ class EntryView(LoginRequiredMixin, View):
             abbr = entry.state
             created_at = entry.created_at.replace(tzinfo=None)
             entry_ID = entry.entry_ID
+
+            for census_block in entry.census_blocks.all():
+                census_blocks.append(census_block.census_id)
+            for block_group in entry.block_groups.all():
+                block_groups.append(block_group.census_id)
+            
+            polygon = entry.census_blocks_polygon
 
             current_time = datetime.datetime.now()
 
@@ -1187,6 +1358,8 @@ class EntryView(LoginRequiredMixin, View):
                 return redirect(reverse_lazy("main:entry"))
             address_required = drive.require_user_addresses
 
+        show_submit = not (edit_hash and self.request.user.id != entry.user_id)
+
         context = {
             "comm_form": comm_form,
             "addr_form": addr_form,
@@ -1195,6 +1368,11 @@ class EntryView(LoginRequiredMixin, View):
             "recaptcha_public": settings.RECAPTCHA_PUBLIC,
             "check_captcha": settings.CHECK_CAPTCHA_SUBMIT,
             "census_key": os.environ.get("CENSUS_API_KEY"),
+            "edit_hash": edit_hash,
+            "show_submit": show_submit,
+            "census_blocks": census_blocks,
+            "block_groups": block_groups,
+            "polygon": polygon,
             "has_token": has_token,
             "has_drive": has_drive,
             "organization_name": organization_name,
@@ -1227,6 +1405,8 @@ class EntryView(LoginRequiredMixin, View):
 
             query = Address.objects.filter(entry_id=entry_id)
             address = query[0]
+
+            user_id = entry.user_id
 
             state = entry.state
 
@@ -1392,6 +1572,9 @@ class EntryView(LoginRequiredMixin, View):
             )
             entryForm.is_final = is_final
 
+            if(edit_hash):
+                entryForm.user_id = user_id
+
             entryForm.save()
             comm_form.save_m2m()
 
@@ -1413,6 +1596,10 @@ class EntryView(LoginRequiredMixin, View):
             finalres["state_obj"] = finalres["state"]
             del finalres["admin_approved"]
 
+            if not edit_hash:
+                finalres["edit_hash"] = uuid.uuid4()
+            else:
+                finalres["edit_hash"] = uuid.UUID(edit_hash)
             string_to_hash = str(finalres)
 
 
@@ -1449,7 +1636,8 @@ class EntryView(LoginRequiredMixin, View):
                 del addres["id"]
                 finalres.update(addres)
                 string_to_hash = str(finalres)
-            
+
+
             print("finalres: ")
             print(string_to_hash)
 
@@ -1465,7 +1653,7 @@ class EntryView(LoginRequiredMixin, View):
                 sig.hash = signature
                 sig.save()
             else:
-                sign_obj = Signature(entry=entryForm, hash=signature, edit_hash = uuid.uuid4())
+                sign_obj = Signature(entry=entryForm, hash=signature, edit_hash = finalres["edit_hash"])
                 sign_obj.save()
 
             m_uuid = str(entryForm.entry_ID)

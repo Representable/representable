@@ -106,7 +106,9 @@
                     <div class="row">
                         <div class="col text-center">
                             <button id="entrySaveButton" name="saveDraft" class="btn btn-lg btn-outline-primary no-underline-link entry-nav-btn ml-4 mapping-icon" type="submit" form="entryForm" value="Save as draft">{% trans "SAVE AS DRAFT" %}</button>
+                            {% if show_submit %}
                             <button id="entrySubmissionButton" name="submitFinal" class="btn btn-lg btn-primary no-underline-link entry-nav-btn ml-4 mapping-icon" type="submit" form="entryForm" value="Submit">{% trans "SUBMIT" %}</button>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

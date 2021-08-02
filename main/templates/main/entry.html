@@ -41,6 +41,9 @@
     var address_required = "{{address_required}}";
     var census_key = "{{ census_key }}";
     var language = "{{LANGUAGE_CODE}}";
+    var census_blocks = "{{ census_blocks }}";
+    var block_groups = "{{ block_groups }}";
+    var polygon = "{{ polygon }}";
     mixpanel.track("Entry Page Loaded",
     {
      "drive_id": drive_id,
@@ -49,6 +52,7 @@
      "organization_name": organization_name,
     }
     );
+
 </script>
 <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 <style data="slider-data" type="text/css"></style>
@@ -56,6 +60,58 @@
 
 {% block content %}
 <!-- Entry Form -->
+<div class="row pt-3">
+    
+</div>
+{% if edit_hash == None %}
+<script type="text/javascript">
+    function toggleCollaborate(){
+        if(document.getElementById('collaborateBox').classList.contains('bg-primary')){
+            document.getElementById('collaborateBox').classList.remove('bg-primary');
+            document.getElementById('collaborateBox').classList.add('bg-white');
+            document.getElementById('collaborateBox').classList.remove('text-white');
+            document.getElementById('collaborateBox').classList.add('text-primary');
+            document.getElementById('collaborateBox').classList.remove('bg-primary');
+            document.getElementById('collaborateBox').classList.add('bg-white');
+            document.getElementById('collaborate-icon-box').style = "filter: sepia(100%) hue-rotate(190deg) saturate(500%);"
+            document.getElementById('collaboration-notification').style = "width: 33%; display: block;"
+            document.getElementById('entrySubmissionButton').disabled = true;
+        }
+        else{
+            document.getElementById('collaborateBox').classList.add('bg-primary');
+            document.getElementById('collaborateBox').classList.remove('bg-white');
+            document.getElementById('collaborateBox').classList.add('text-white');
+            document.getElementById('collaborateBox').classList.remove('text-primary');
+            document.getElementById('collaborateBox').classList.add('bg-primary');
+            document.getElementById('collaborateBox').classList.remove('bg-white');
+            document.getElementById('collaborate-icon-box').style = "filter: brightness(0) invert();"
+            document.getElementById('collaboration-notification').style = "width:33%; display: none;"
+            document.getElementById('entrySubmissionButton').disabled = false;
+        }
+    }
+</script>
+{% endif %}
+
+<div class="row" id="collaborationBar">
+    {% if edit_hash == None %}
+    <div class="col-9">
+
+    </div>
+    <div class="col-2 text-white bg-primary my-2 px-4 rounded" style="box-shadow: 0px 2px 5px gray;" id="collaborateBox" onclick="toggleCollaborate();">
+        <div class="row">
+            <div class="col-2 align-middle my-0 px-1">
+                <img src="/static/img/collaborate-icon.svg" id="collaborate-icon-box" class="w-100 h-100" style="filter: brightness(0) invert();">
+            </div>
+            <div class="col py-3 px-0">
+                Collaborate
+            </div>
+        </div>
+        
+    </div>
+    {% endif %}
+</div>
+
+
 <form id="entryForm" method="post" onSubmit="return validateRecaptcha();">
     <button type="submit" disabled style="display: none" aria-hidden="true"></button>
     {% csrf_token %}
@@ -207,4 +263,18 @@
     </script>
     <!-- Turf to get the bounding box. -->
     <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+    <div id="collaboration-notification" class="alert alert-secondary alert-dismissable collaboration-notification m-0" style="width:33%; display: none;" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="row">
+            <div class="col-2 align-middle float-center text-center">
+                <img src="/static/img/collaborate-icon.svg">
+            </div>
+            <div class="col-10">
+                <p class="my-1 font-weight-bold smallish" style="font-size: 90%;">You have indicated collaboration.</p>
+                <p class="small">You will be able to add collaborators after saving the map as a draft. Because of this, you will not be able to submit your map. If you would like to submit your map right away, you can turn off collaboration.</p>
+            </div>
+        </div>
+    </div>
     {% endblock %}

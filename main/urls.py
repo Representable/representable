@@ -124,6 +124,16 @@ urlpatterns = [
         views.main.Submission.as_view(),
         name="submission_thanks",
     ),
+    path(
+        "draft/<edit_hash>/",
+        views.main.Draft.as_view(),
+        name="draft",
+    ),
+    path(
+        "submit/<edit_hash>/",
+        views.main.Submit.as_view(),
+        name="submit",
+    ),
     # path("blog/", views.main.Blog.as_view(), name="blog"),
     path("export/geojson/", views.main.ExportView.as_view(), name="export"),
     path("export/csv/", views.main.ExportView.as_view(), name="export"),

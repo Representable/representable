@@ -21,6 +21,7 @@
 
 // GEO Js file for handling map drawing.
 /* https://docs.mapbox.com/mapbox-gl-js/example/mapbox-gl-draw/ */
+
 var bg_id = "GEOID"; // census FIPS code for block group
 var block_id = "GEOID20"; // census FIPS code for block
 var unit_id = bg_id; // abstracted - current unit
@@ -375,6 +376,7 @@ function surveyP2ToMap() {
   animateStepForward(2, 3, 4);
   $("#2to3").removeClass("h-75");
   automaticScrollToTop();
+  document.getElementById('collaborationBar').style = "display: none;";
 }
 
 function mapToSurveyP2() {
@@ -386,6 +388,7 @@ function mapToSurveyP2() {
     $("#2to3").addClass("h-75");
   }, 600);
   automaticScrollToTop();
+  document.getElementById('collaborationBar').style = "visibility: visible";
 }
 
 function mapToPrivacy() {
@@ -395,6 +398,7 @@ function mapToPrivacy() {
   $("#entry_survey").addClass("d-none");
   animateStepForward(3, 4, 5);
   automaticScrollToTop();
+  document.getElementById('collaborationBar').style = "visibility: visible";
 }
 
 function privacyToMap() {
@@ -692,7 +696,12 @@ function backupFormValidation() {
 function createCommPolygon() {
   // start by checking size -- 800 is an arbitrary number
   // it means a community with a population between 480,000 & 2,400,000
-  var polyFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
+  if(JSON.parse(sessionStorage.getItem("bgFilter")) === null && !isEmptyFilter(map.getFilter(state + "-highlighted-" + layer_suffix))){
+    var polyFilter = map.getFilter(state + "-highlighted-" + layer_suffix);
+  }
+  else if (JSON.parse(sessionStorage.getItem("bgFilter")) !== null){
+    var polyFilter = JSON.parse(sessionStorage.getItem("bgFilter"));
+  }
 
   if (polyFilter === null) {
     triggerMissingPolygonError();
@@ -1368,6 +1377,59 @@ map.on("style.load", function () {
     sessionStorage.setItem("bgFilter", "[]");
   }
   sessionStorage.setItem("prev_state", state);
+
+  console.log(polygon);
+  census_blocks = census_blocks.split("&#39;  ");
+  block_groups = block_groups.split("&#39;");
+  toDisplay = ["in", "GEOID"];
+  if(census_blocks.length > 1 || block_groups.length > 1){
+    if (census_blocks.length > 1){ // if there are census blocks
+      let i = 1;
+      while (i < census_blocks.length){
+        toDisplay[(i+3)/2] = parseInt(census_blocks[i]);
+        i+=2;
+      }
+    }
+    else { // (block_groups.length > 1) if there are block groups
+      let i = 1;
+      while (i < block_groups.length){
+        toDisplay[(i+3)/2] = block_groups[i];
+        i+=2;
+      }
+    }
+
+    map.setFilter(state + "-highlighted-" + layer_suffix, toDisplay);
+
+    polygon = polygon.slice(20).slice(0,-2).split(", ");
+    for(let i = 0; i < polygon.length; i++){
+      polygon[i] = polygon[i].split(" ");
+    }
+    
+    var north = polygon[0][1];
+    var south = polygon[0][1];
+    var east = polygon[0][0];
+    var west = polygon[0][0];
+    
+    for(let i = 0; i < polygon.length; i++){
+      if (north < parseFloat(polygon[i][1])){
+        north = parseFloat(polygon[i][1]);
+      }
+      if (south > parseFloat(polygon[i][1])){
+        south = parseFloat(polygon[i][1]);
+      }
+      if (east < parseFloat(polygon[i][0])){
+        east = parseFloat(polygon[i][0]);
+      }
+      if (west > parseFloat(polygon[i][0])){
+        west = parseFloat(polygon[i][0]);
+      }
+    }
+    // console.log("("+east+", "+north+"), ("+west+", "+south+")");
+    map.fitBounds([
+      [west, south], // southwestern corner of the bounds
+      [east, north] // northeastern corner of the bounds
+      ]);
+  }
 
   // When the user moves their mouse over the census shading layer, we'll update the
   // feature state for the feature under the mouse.

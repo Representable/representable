@@ -17,6 +17,33 @@ function toggleAngle(e) {
   }
 }
 
+function toggleGrayScale(){
+  if (document.getElementById("collaborationButton").style.filter == "grayscale(100%)"){
+    document.getElementById("collaborationButton").style.filter = "grayscale(0%)";
+  }
+  else{
+    document.getElementById("collaborationButton").style.filter = "grayscale(100%)";
+  }
+}
+
+function copyEditLink() {
+  var message;
+  var link = document.getElementById("edit-link").innerText;
+  console.log(link);
+  navigator.clipboard.writeText(link).then(function() {
+    message = "Copied to clipboard!";
+    copyText.innerHTML = message;
+  }, function(err) {
+    message = "There was an error, please try again later";
+    copyText.innerHTML = message;
+  });
+
+  // set text to say "copied!" for feedback mechanism that the copying worked
+  var copyText = document.getElementById("copy-link-text");
+  
+  setTimeout(function () { copyText.innerHTML = '&#128279 Copy Link' }, 2000);
+}
+
 /*------------------------------------------------------------------------*/
 /* JS file from mapbox site -- display a polygon */
 /* https://docs.mapbox.com/mapbox-gl-js/example/geojson-polygon/ */
