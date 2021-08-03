@@ -1071,6 +1071,16 @@ Entry Mapping Page
   white-space: normal;
 }
 
+#surveyP1ToP2_button {
+  position: relative;
+  z-index: -1;
+}
+
+#surveyP1ToSurveyStart_button {
+  position: relative;
+  z-index: -1;
+}
+
 #mobile-map-help-btn:not(.opened),
 #map-help-btn:not(.opened) {
   background-color:#fff;
@@ -1460,7 +1470,7 @@ Entry Mapping Page
   border-style: solid;
   border-width: 2px;
   border-radius: 10%;
-  background: #FFFFFF;
+  background: rgba(255, 255, 255, 1);
 }
 
 .tt-hint {
@@ -1657,6 +1667,8 @@ Entry Form Management
   font-size: 1rem;
   color: #3f3f3f;
 }
+
+
 
 /************************************* Survey Section *******************************************/
 
