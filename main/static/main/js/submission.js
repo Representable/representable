@@ -40,7 +40,7 @@ function copyEditLink() {
 
   // set text to say "copied!" for feedback mechanism that the copying worked
   var copyText = document.getElementById("copy-link-text");
-  
+
   setTimeout(function () { copyText.innerHTML = '&#128279 Copy Link' }, 2000);
 }
 
@@ -264,7 +264,7 @@ map.on("load", function () {
   for (var key in BOUNDARIES_LAYERS) {
     newBoundariesLayer(key);
   }
-  
+
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
   var dest = [];
@@ -569,7 +569,7 @@ for (var id in toggleableLayerIds) {
 function updateFeatureState(source, sourceLayer, hoveredStateId, hover) {
   map.setFeatureState(
     { source: source,
-      sourceLayer: 
+      sourceLayer:
         sourceLayer,
       id: hoveredStateId },
     { hover: hover }
@@ -618,7 +618,7 @@ function addToggleableLayer(id, appendElement) {
         map.setLayoutProperty(txt + "-fills", "visibility", "visible");
         visible = txt;
       }
-      
+
     }
 
     if (visible != null && visible != "sta5") {
@@ -636,7 +636,7 @@ function addToggleableLayer(id, appendElement) {
           }
         }
       });
-    
+
       map.on('mouseleave', visible + '-fills', function(e) {
         popup.remove();
         if (hoveredStateId !== null) {

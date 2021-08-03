@@ -14,7 +14,6 @@
 <title>View Map</title>
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
@@ -79,38 +78,36 @@ window.onload=function(){
     {% endif %}
     <div class="row w-md-75 mt-4 mx-auto">
         <div class="card text-left border-0 w-100 rounded-lg mb-3 pt-80 bg-transparent">
-            <div class="card-body">
+            <div class="card-body pb-0 pb-md-3">
                 <div class="row justify-content-between">
-                    <div class="col-md-8">
+                    <div class="col-9">
                         <h2>This is a draft map.</h2>
                         <h4>Add collaborators so they can edit your map.</h4>
                     </div>
-                    <div class="col-md-2">
-                        <a data-toggle="collapse" href="#collaboration" role="button" aria-expanded="false" aria-controls="collaboration" onclick="toggleGrayScale()"><img src="/static/img/collaborate-active.png" id="collaborationButton"></a>
-                        <img src="/static/img/collaborate-inactive.png" id="inactive" style="display: none;">
+                    <div class="col-3">
+                        <a data-toggle="collapse" href="#collaboration" role="button" aria-expanded="false" aria-controls="collaboration" onclick="toggleGrayScale()"><img src="{% static 'img/collaborate-active.png' %}" id="collaborationButton"></a>
+                        <img src="{% static 'img/collaborate-inactive.png' %}" id="inactive" style="display: none;">
                     </div>
                 </div>
                   <div class="collapse" id="collaboration">
                     <div class="card-body">
                       <div class="row">
-                            <div class="col-md-1"><img src="/static/img/collaborate-plus.png"></div>
-                            <div class="col-md-6">
+                            <div class="col-1"><img src="{% static 'img/collaborate-plus.png' %}"></div>
+                            <div class="col-11 pl-5 pl-lg-0">
                                 <input id="emailForm" class="form-control w-100 border-5 badge-pill" type="text" placeholder="Add emails">
-                                <div id="emailMessage"></div>
+                                <div id="emailMessage" class="mt-3 mb-2"></div>
                             </div>
                       </div>
                       <div class="row pt-3">
-                        <div class="col-1"><img src="/static/img/collaborate-link.svg"></div>
-                        <div class="col-11">
+                        <div class="col-1"><img src="{% static 'img/collaborate-link.png' %}" onclick='copyEditLink();'></div>
+                        <div class="col-11 pl-5 pl-lg-0 pb-3">
                             <h4>Copy Link</h4>
                         </div>
-                        <div class="col-1">
-                            
-                        </div>
-                        <div class="col-md-7" id="edit-link">
+                        <div class="col-md-1"></div>
+                        <div class="col-7" id="edit-link">
                             <a href="/../edit/{{edit_hash}}">https://representable.org/edit/{{edit_hash}}</a>
                         </div>
-                        <div class="col-md-4" id="copy-link-text" onclick='copyEditLink();'>
+                        <div class="col-4" id="copy-link-text" onclick='copyEditLink();'>
                             &#128279 Copy Link
                         </div>
                         <div class="col-md-1">
@@ -118,13 +115,14 @@ window.onload=function(){
                         </div>
                         <div class="col-md-7 pt-3">
                             <p class="small">Anyone with the link can edit this map, however only the creator may officially submit the map. Changes to the map will be reflected here when you open your map on Representable.</p>
-                        </div>  
+                        </div>
                       </div>
                     </div>
                   </div>
             </div>
         </div>
     </div>
+    <div class="row w-100">
     <div class="col-xl-5 col-wide text-center text-xl-right pt-3 pr-xl-5 mb-5">
       <div class="row w-md-75 d-inline-block m-0">
         <div class="card text-left border-0 w-100 rounded-lg mb-3 d-none d-xl-block">
@@ -132,21 +130,21 @@ window.onload=function(){
             <h3 id="pdfName" class="card-title header-text"><strong>{{c.entry_name}}</strong></h3>
             <h6 class="info-text"><strong>{{c.drive.name}}</strong></h6>
                 <h4 class="card-title header-text pt-4"><strong>{% trans "Community Information" %}</strong> <button class="btn btn-link no-underline-link p-0" type="button" data-toggle="modal" data-target="#submission-info-modal" rel="nofollow"><i class="far fa-question-circle small text-muted"></i></a></h4>
-                <div class="accordion map-info-item mt-4" id="mobile-map-activities-accordion">
-                    <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-activities-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                <div class="accordion map-info-item mt-4" id="map-activities-accordion">
+                    <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#map-activities-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                         {% trans "Community Activities and Services" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
                     </button>
-                    <div id="mobile-map-activities-resp" class="collapse pl-3 pb-1" aria-labelledby="mobile-map-activities-accordion" data-parent="#mobile-map-activities-accordion">
+                    <div id="map-activities-resp" class="collapse pl-3 pb-1" aria-labelledby="map-activities-accordion" data-parent="#map-activities-accordion">
                         <p class="collapse-in map-survey-response">
                             {{c.comm_activities}}
                         </p>
                     </div>
                 </div>
-                <div class="accordion map-info-item mt-3" id="mobile-map-cultural-interests-accordion">
+                <div class="accordion map-info-item mt-3" id="map-cultural-interests-accordion">
                     <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#map-cultural-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                         {% trans "Cultural or Historical Interests" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
                     </button>
-                    <div id="mobile-map-cultural-interests-resp" class="collapse pl-3 pb-1" aria-labelledby="map_cultural_activities_accordion" data-parent="#mobile-map-cultural-interests-accordion">
+                    <div id="map-cultural-interests-resp" class="collapse pl-3 pb-1" aria-labelledby="map-cultural-interests-accordion" data-parent="#map-cultural-interests-accordion">
                         <p class="collapse-in map-survey-response">
                             {{c.cultural_interests}}
                         </p>
@@ -162,22 +160,22 @@ window.onload=function(){
                         </p>
                     </div>
                 </div>
-                <div class="accordion map-info-item mt-3 mb-3" id="mobile-map-other-interests-accordion">
-                    <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-other-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                <div class="accordion map-info-item mt-3 mb-3" id="map-other-interests-accordion">
+                    <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#map-other-interests-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                         {% trans "Community Needs and Concerns" %}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i>
                     </button>
-                    <div id="mobile-map-other-interests-resp" class="collapse pl-3 pb-1" aria-labelledby="mobile-map-other-interests-accordion" data-parent="#mobile-map-other-interests-accordion">
+                    <div id="map-other-interests-resp" class="collapse pl-3 pb-1" aria-labelledby="map-other-interests-accordion" data-parent="#map-other-interests-accordion">
                         <p class="collapse-in map-survey-response">
                             {{c.other_considerations}}
                         </p>
                     </div>
                 </div>
                 {% if c.drive and c.drive.custom_question %}
-                <div class="accordion map-info-item mt-3 mb-3" id="mobile-map-custom-accordion">
-                    <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#mobile-map-custom-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
+                <div class="accordion map-info-item mt-3 mb-3" id="map-custom-accordion">
+                    <button class="btn btn-link text-left comm-item-text pl-3 no-underline-link" type="button" data-target="#map-custom-resp" aria-expanded="false" aria-controls="collapseOne" onclick="toggleAngle(this)">
                         <div class="text-wrap" style="white-space: normal">{{c.drive.custom_question}}<i class="fas fa-angle-down pl-3 pr-5 pt-2 pb-2"></i></div>
                     </button>
-                    <div id="mobile-map-custom-resp" class="collapse pl-3 pb-1" aria-labelledby="mobile-map-custom-accordion" data-parent="#mobile-map-custom-accordion">
+                    <div id="map-custom-resp" class="collapse pl-3 pb-1" aria-labelledby="map-custom-accordion" data-parent="#map-custom-accordion">
                         <p class="collapse-in map-survey-response">
                             {{c.custom_response}}
                         </p>
@@ -318,7 +316,7 @@ window.onload=function(){
                       <div class="col-12 col-md-4">
                         <button class="btn btn-primary w-50 w-md-75 w-xl-100 mb-3 mb-md-0" id="pdf-button">PDF</button>
                       </div>
-                      
+
                     {% else %}
                       <!-- ********************* -->
                       <div class="col-12 col-md-4">
@@ -415,11 +413,11 @@ window.onload=function(){
               </div>
             </div>
             <div class="row pt-4 justify-content-center">
-                    <button id="toEdit" name="toEdit" class="btn btn-lg btn-outline-primary no-underline-link entry-nav-btn mapping-icon mr-4" value="edit draft" onclick="window.location.replace('/edit/{{ edit_hash }}');">{% trans "EDIT DRAFT" %}</button>
+                    <button id="toEdit" name="toEdit" class="btn btn-lg btn-outline-primary no-underline-link entry-nav-btn mapping-icon mr-4 mb-3" value="edit draft" onclick="window.location.replace('/edit/{{ edit_hash }}');">{% trans "EDIT DRAFT" %}</button>
                     {% if is_owner %}
-                    <button id="submit" name="submit" class="btn btn-lg btn-primary no-underline-link entry-nav-btn mapping-icon" value="submit as final" onclick="window.location.replace('/submit/{{ edit_hash }}');">{% trans "SUBMIT AS FINAL" %}</button>
+                    <button id="submit" name="submit" class="btn btn-lg btn-primary no-underline-link entry-nav-btn mapping-icon mb-3" value="submit as final" onclick="window.location.replace('/submit/{{ edit_hash }}');">{% trans "SUBMIT AS FINAL" %}</button>
                     {% else %}
-                    <button id="submit" name="submit" class="btn btn-lg btn-primary no-underline-link entry-nav-btn mapping-icon" value="submit as final" onclick="window.location.replace('/submit/{{ edit_hash }}');" data-toggle="tooltip" data-html="true" title="Only the map creator can submit" disabled>{% trans "SUBMIT AS FINAL" %}</button>
+                    <button id="submit" name="submit" class="btn btn-lg btn-primary no-underline-link entry-nav-btn mapping-icon mb-3" value="submit as final" onclick="window.location.replace('/submit/{{ edit_hash }}');" data-toggle="tooltip" data-html="true" title="Only the map creator can submit" disabled>{% trans "SUBMIT AS FINAL" %}</button>
                     {% endif%}
                 </div>
             </div>
@@ -596,5 +594,4 @@ window.onload=function(){
         <script type="text/javascript" src="{% static 'main/feature-lookup-tables/state-codes.js'%}"></script>
         <script type="text/javascript" src="{% static 'main/js/components/states.js' %}"></script>
         <script type="text/javascript" src="{% static 'main/js/submission.js' %}"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         {% endblock %}

@@ -393,6 +393,10 @@ Entry Preview Page
   #entry_preview_button {
     padding-top: 20px;
   }
+
+  #collaborationButton {
+    width: 100%;
+  }
 }
 
 input[type="range"]::-webkit-slider-thumb {
