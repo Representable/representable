@@ -1379,10 +1379,17 @@ map.on("style.load", function () {
   sessionStorage.setItem("prev_state", state);
 
   console.log(polygon);
-  census_blocks = census_blocks.split("&#39;");
-  block_groups = block_groups.split("&#39;");
-  census_blocks = census_blocks.split("&#27;");
-  block_groups = block_groups.split("&#27;");
+  if (census_blocks.includes("&#39;")){
+    census_blocks = census_blocks.split("&#39;");
+    block_groups = block_groups.split("&#39;");
+  }
+  else if (census_blocks.includes("&#27")){
+    census_blocks = census_blocks.split("&#27;");
+    block_groups = block_groups.split("&#27;");
+  }
+  else{
+    window.alert("A problem has occurred. Please notify team@representable.org if you have any issues");
+  }
   toDisplay = ["in", "GEOID"];
   if(census_blocks.length > 1 || block_groups.length > 1){
     if (census_blocks.length > 1){ // if there are census blocks
