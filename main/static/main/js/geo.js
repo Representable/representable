@@ -1379,8 +1379,10 @@ map.on("style.load", function () {
   sessionStorage.setItem("prev_state", state);
 
   console.log(polygon);
-  census_blocks = census_blocks.split("&#39;  ");
+  census_blocks = census_blocks.split("&#39;");
   block_groups = block_groups.split("&#39;");
+  census_blocks = census_blocks.split("&#27;");
+  block_groups = block_groups.split("&#27;");
   toDisplay = ["in", "GEOID"];
   if(census_blocks.length > 1 || block_groups.length > 1){
     if (census_blocks.length > 1){ // if there are census blocks
