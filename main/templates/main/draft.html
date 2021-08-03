@@ -23,7 +23,6 @@
 <meta name='robots' content='noindex, nofollow'>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js'></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' type='text/css' />
 <!-- Add css again to take precedence over mapbox css. -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -97,7 +96,7 @@ window.onload=function(){
                             <div class="col-md-1"><img src="/static/img/collaborate-plus.png"></div>
                             <div class="col-md-6">
                                 <input id="emailForm" class="form-control w-100 border-5 badge-pill" type="text" placeholder="Add emails">
-                                <div id="emailMessage">nathanshap@gmail.com</div>
+                                <div id="emailMessage"></div>
                             </div>
                       </div>
                       <div class="row pt-3">
@@ -597,4 +596,5 @@ window.onload=function(){
         <script type="text/javascript" src="{% static 'main/feature-lookup-tables/state-codes.js'%}"></script>
         <script type="text/javascript" src="{% static 'main/js/components/states.js' %}"></script>
         <script type="text/javascript" src="{% static 'main/js/submission.js' %}"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         {% endblock %}
