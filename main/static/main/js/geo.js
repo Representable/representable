@@ -1378,17 +1378,12 @@ map.on("style.load", function () {
   }
   sessionStorage.setItem("prev_state", state);
 
-  console.log(polygon);
-  if (census_blocks.includes("&#39;")){
+  if (census_blocks.includes("&#39;") || block_groups.includes("&#39;")){
     census_blocks = census_blocks.split("&#39;");
     block_groups = block_groups.split("&#39;");
-  }
-  else if (census_blocks.includes("&#27")){
-    census_blocks = census_blocks.split("&#27;");
-    block_groups = block_groups.split("&#27;");
-  }
-  else{
-    window.alert("A problem has occurred. Please notify team@representable.org if you have any issues");
+  } else if (census_blocks.includes("x27") || block_groups.includes("x27")){
+    census_blocks = census_blocks.split("&#x27;");
+    block_groups = block_groups.split("&#x27;");
   }
   toDisplay = ["in", "GEOID"];
   if(census_blocks.length > 1 || block_groups.length > 1){
@@ -1413,12 +1408,12 @@ map.on("style.load", function () {
     for(let i = 0; i < polygon.length; i++){
       polygon[i] = polygon[i].split(" ");
     }
-    
+
     var north = polygon[0][1];
     var south = polygon[0][1];
     var east = polygon[0][0];
     var west = polygon[0][0];
-    
+
     for(let i = 0; i < polygon.length; i++){
       if (north < parseFloat(polygon[i][1])){
         north = parseFloat(polygon[i][1]);
