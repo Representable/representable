@@ -1471,6 +1471,7 @@ Entry Mapping Page
   border-width: 2px;
   border-radius: 10%;
   background: rgba(255, 255, 255, 1);
+  min-width: 150px;
 }
 
 .tt-hint {
