@@ -377,6 +377,7 @@ function surveyP2ToMap() {
   $("#2to3").removeClass("h-75");
   automaticScrollToTop();
   document.getElementById('collaborationBar').style = "display: none;";
+  document.getElementById('collaboration-notification').style = "display: none;";
 }
 
 function mapToSurveyP2() {
@@ -411,6 +412,8 @@ function privacyToMap() {
   privacyCheckValidation();
   animateStepBackward(4, 3, 5);
   automaticScrollToTop();
+  document.getElementById('collaborationBar').style = "display: none;";
+  document.getElementById('collaboration-notification').style = "display: none;";
 }
 
 
@@ -1378,13 +1381,9 @@ map.on("style.load", function () {
   }
   sessionStorage.setItem("prev_state", state);
 
-  if (census_blocks.includes("&#39;") || block_groups.includes("&#39;")){
-    census_blocks = census_blocks.split("&#39;");
-    block_groups = block_groups.split("&#39;");
-  } else if (census_blocks.includes("x27") || block_groups.includes("x27")){
-    census_blocks = census_blocks.split("&#x27;");
-    block_groups = block_groups.split("&#x27;");
-  }
+  console.log(polygon);
+  census_blocks = census_blocks.split("&#39;");
+  block_groups = block_groups.split("&#39;");
   toDisplay = ["in", "GEOID"];
   if(census_blocks.length > 1 || block_groups.length > 1){
     if (census_blocks.length > 1){ // if there are census blocks

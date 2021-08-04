@@ -33,6 +33,7 @@ function copyEditLink() {
   navigator.clipboard.writeText(link).then(function() {
     message = "Copied to clipboard!";
     copyText.innerHTML = message;
+    document.getElementById('copy-link-text').style = "cursor: text";
   }, function(err) {
     message = "There was an error, please try again later";
     copyText.innerHTML = message;
@@ -40,8 +41,8 @@ function copyEditLink() {
 
   // set text to say "copied!" for feedback mechanism that the copying worked
   var copyText = document.getElementById("copy-link-text");
-
-  setTimeout(function () { copyText.innerHTML = '&#128279 Copy Link' }, 2000);
+  
+  setTimeout(function () { copyText.innerHTML = '&#128279 Copy Link'; document.getElementById('copy-link-text').style = "cursor: pointer"; }, 2000);
 }
 
 /*------------------------------------------------------------------------*/

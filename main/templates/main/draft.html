@@ -107,7 +107,7 @@ window.onload=function(){
                         <div class="col-7" id="edit-link">
                             <a href="/../edit/{{edit_hash}}">https://representable.org/edit/{{edit_hash}}</a>
                         </div>
-                        <div class="col-4" id="copy-link-text" onclick='copyEditLink();'>
+                        <div class="col-md-4" id="copy-link-text" style="cursor: pointer;" onclick='copyEditLink();'>
                             &#128279 Copy Link
                         </div>
                         <div class="col-md-1">
@@ -417,7 +417,7 @@ window.onload=function(){
                     {% if is_owner %}
                     <button id="submit" name="submit" class="btn btn-lg btn-primary no-underline-link entry-nav-btn mapping-icon mb-3" value="submit as final" onclick="window.location.replace('/submit/{{ edit_hash }}');">{% trans "SUBMIT AS FINAL" %}</button>
                     {% else %}
-                    <button id="submit" name="submit" class="btn btn-lg btn-primary no-underline-link entry-nav-btn mapping-icon mb-3" value="submit as final" onclick="window.location.replace('/submit/{{ edit_hash }}');" data-toggle="tooltip" data-html="true" title="Only the map creator can submit" disabled>{% trans "SUBMIT AS FINAL" %}</button>
+                    <button id="submit" name="submit" class="btn btn-lg btn-secondary no-underline-link entry-nav-btn mapping-icon" style="cursor: not-allowed;" value="submit as final" onclick="window.location.replace('/submit/{{ edit_hash }}');" data-toggle="tooltip" data-html="true" title="Only the map creator can submit" disabled>{% trans "SUBMIT AS FINAL" %}</button>
                     {% endif%}
                 </div>
             </div>
