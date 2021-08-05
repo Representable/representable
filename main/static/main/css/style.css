@@ -2610,3 +2610,7 @@ input:checked + .slider:before {
 #my-dist-file {
   display: none;
 }
+
+#uploadLabel {
+  padding-bottom: 20px;
+}

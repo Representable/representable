@@ -260,6 +260,7 @@ function addDataSwitches(map, document, pageName, visible) {
   uploadLabel.setAttribute("for", "my-dist-file");
   uploadLabel.innerHTML= "Upload a district plan or custom layer as a geojson file";
   uploadLabel.classList.add("btn-link");
+  uploadLabel.id = "uploadLabel";
 
   var divideLine = document.createElement("hr");
   div.appendChild(divideLine);
