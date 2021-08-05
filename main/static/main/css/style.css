@@ -1071,16 +1071,6 @@ Entry Mapping Page
   white-space: normal;
 }
 
-#surveyP1ToP2_button {
-  position: relative;
-  z-index: -1;
-}
-
-#surveyP1ToSurveyStart_button {
-  position: relative;
-  z-index: -1;
-}
-
 #mobile-map-help-btn:not(.opened),
 #map-help-btn:not(.opened) {
   background-color:#fff;
