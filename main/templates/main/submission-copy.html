@@ -295,6 +295,8 @@
         </script>
         <script type="text/javascript" src="{% static 'main/js/components/keys.js' %}"></script>
         <script type="text/javascript" src="{% static 'main/js/submission.js' %}"></script>
+
+        <script type="text/javascript" src="{% static 'main/js/map-common.js' %}"></script>
         <script type="text/javascript">
           // Track downloads
           document.getElementById("geojson-download-mix").addEventListener("click", function() {
@@ -311,4 +313,5 @@
               mixpanel.track("Downloaded community as PDF");
           });
         </script>
+
         {% endblock %}

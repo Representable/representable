@@ -96,21 +96,38 @@ function createHoverLayer(map, fillLayerName, source, sourceLayer) {
   });
 }
 
-function createLineLayer(map, lineLayerName, source, sourceLayer, line_color = "rgba(106,137,204,0.7)", line_width = 3, line_opacity = 1) {
-  map.addLayer({
-    id: lineLayerName,
-    type: "line",
-    source: source,
-    "source-layer": sourceLayer,
-    layout: {
-      visibility: "none",
-    },
-    paint: {
-      "line-color": line_color,
-      "line-width": line_width,
-      "line-opacity": line_opacity,
-    },
-  });
+function createLineLayer(map, lineLayerName, source, sourceLayer=false, line_color = "rgba(106,137,204,0.7)", line_width = 3, line_opacity = 1) {
+  if (sourceLayer) {
+    map.addLayer({
+      id: lineLayerName,
+      type: "line",
+      source: source,
+      "source-layer": sourceLayer,
+      layout: {
+        visibility: "none",
+      },
+      paint: {
+        "line-color": line_color,
+        "line-width": line_width,
+        "line-opacity": line_opacity,
+      },
+    });
+  }
+  else {
+    map.addLayer({
+      id: lineLayerName,
+      type: "line",
+      source: source,
+      layout: {
+        visibility: "none",
+      },
+      paint: {
+        "line-color": line_color,
+        "line-width": line_width,
+        "line-opacity": line_opacity,
+      },
+    });
+  }
 }
 
 function createElectionLayer(map, layerName, source, sourceLayer) {
@@ -164,7 +181,7 @@ function addAllLayers(map, document, pageName) {
   // add precinct lines and fill
   if (HAS_PRECINCTS.indexOf(state) != -1) {
     newSourceLayer(map, "smaller_combined_precincts", PRECINCTS_KEY);
-    createLineLayer(map, "smaller_combined_precincts-lines", "smaller_combined_precincts", "smaller_combined_precincts", line_color = BOUNDARIES_COLORS["nyc"], line_width = 2, line_opacity = 0.7)
+    createLineLayer(map, "smaller_combined_precincts-lines", "smaller_combined_precincts", "smaller_combined_precincts"); //, line_color = BOUNDARIES_COLORS["nyc"], line_width = 2, line_opacity = 0.7)
     createElectionLayer(map, "smaller_combined_precincts-fill", "smaller_combined_precincts", "smaller_combined_precincts");
   } else if (pageName === "map") {
     var txt_box = document.getElementById("no-election-text");
@@ -229,6 +246,87 @@ function addDataSwitches(map, document, pageName, visible) {
   }
   var newline = document.createElement("br");
 
+  // add the custom layer functionality
+  var div = document.createElement("div");
+
+  var upload = document.createElement("input");
+  upload.setAttribute("type", "file");
+  upload.setAttribute("id", "my-dist-file");
+  upload.setAttribute("name", "filename");
+  upload.onchange = function(){addCustomLayer(this);};
+  upload.setAttribute("accept", ".geojson");
+
+  var uploadLabel = document.createElement("label");
+  uploadLabel.setAttribute("for", "my-dist-file");
+  uploadLabel.innerHTML= "Upload a district plan or custom layer as a geojson file";
+  uploadLabel.classList.add("btn-link");
+  uploadLabel.id = "uploadLabel";
+
+  var divideLine = document.createElement("hr");
+  div.appendChild(divideLine);
+
+  div.appendChild(uploadLabel);
+  div.appendChild(upload);
+  layers.appendChild(div);
+
+  // function to add custom layers
+  function addCustomLayer(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        var name = "uploadedMap"
+        
+        var mapLayer = map.getLayer('uploadedMap-lines');
+
+        // clears previously uploaded maps
+        if (typeof mapLayer !== 'undefined') {
+          // Remove map layer & source.
+          map.removeLayer('uploadedMap-lines').removeSource(name);
+          count--;
+          var oldToggleParent = document.getElementById("uploadedMap").parentNode;
+          while (oldToggleParent.firstChild) {
+            oldToggleParent.removeChild(oldToggleParent.firstChild);
+          }
+          oldToggleParent.remove();
+        }
+
+        // add the map source
+        map.addSource(name, {
+          'type': 'geojson',
+          'data': e.target.result
+        });
+
+        // add map layer
+        createLineLayer(map, 'uploadedMap-lines', name);
+
+        // creates the label for the new layer
+        var disp_name = input.files[0].name;
+        disp_name = disp_name.substring(0, disp_name.length - 8);
+        toggleableLayerIds[name] = disp_name;
+
+        // creates the layer
+        addToggleableLayer(name, layers, pageName);
+        // if (pageName === "map") {
+        //   var div = document.createElement("div");
+        //   layers.appendChild(div);
+        //   addToggleableLayer(name, div, pageName);
+        // }
+        // else {
+        //   if (count % 2 == 0) {
+        //     addToggleableLayer(name, layersCol1, pageName);
+        //   } else {
+        //     addToggleableLayer(name, layersCol2, pageName);
+        //   }
+        // }
+        var button = document.getElementById(name);
+        button.checked = false;
+        count++;
+      };
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
 
   function updateFeatureState(source, sourceLayer, hoveredStateId, hover) {
     map.setFeatureState({
@@ -264,8 +362,9 @@ function addDataSwitches(map, document, pageName, visible) {
         hoveredStateId = null;
         popup.remove();
         visible = null;
-      }
-      else { // unchecked to checked
+
+      } else { // unchecked to checked
+
         hoveredStateId = null;
         popup.remove();
 
@@ -284,6 +383,7 @@ function addDataSwitches(map, document, pageName, visible) {
           map.setLayoutProperty(txt + "-fills", "visibility", "visible");
           visible = txt;
         }
+
         mixpanel.track("Clicked on data layer", {
           layer: txt,
         });

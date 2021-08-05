@@ -2609,6 +2609,7 @@ input:checked + .slider:before {
 
 .label-class {
   padding: 0px;
+}
 
 .fieldWrapper {
   margin-bottom: 10px;
@@ -2624,5 +2625,12 @@ input:checked + .slider:before {
 
 #upload-stuff {
   display: none;
+}
 
+#my-dist-file {
+  display: none;
+}
+
+#uploadLabel {
+  padding-bottom: 20px;
 }
