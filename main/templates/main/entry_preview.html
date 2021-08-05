@@ -36,3 +36,15 @@
     </div>
 </div>
 {% endblock %}
+{% block script %}
+       
+        <script type="text/javascript">
+          // Track video plays
+          document.getElementById("entry_preview_video").addEventListener("click", function() {
+              mixpanel.track("Clicked redistricting video");
+          });
+          
+        </script>
+
+        {% endblock %}
+

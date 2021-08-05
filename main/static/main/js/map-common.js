@@ -362,7 +362,9 @@ function addDataSwitches(map, document, pageName, visible) {
         hoveredStateId = null;
         popup.remove();
         visible = null;
+
       } else { // unchecked to checked
+
         hoveredStateId = null;
         popup.remove();
 
@@ -381,6 +383,10 @@ function addDataSwitches(map, document, pageName, visible) {
           map.setLayoutProperty(txt + "-fills", "visibility", "visible");
           visible = txt;
         }
+
+        mixpanel.track("Clicked on data layer", {
+          layer: txt,
+        });
       }
 
       if (visible != null && visible != "sta5") {

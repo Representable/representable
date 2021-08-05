@@ -197,33 +197,33 @@
                   <div class="row">
                     {% if has_state %}
                       {% with link_text="/export/geojson/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
-                      <div class="col-12 col-md-4">
+                      <div class="col-12 col-md-4" id="geojson-download-mix">
                         <a class="btn btn-primary w-50 w-md-75 w-xl-100 mb-3 mb-md-0" data-toggle="modal" href="#" data-target="#geojson-explain-modal" rel="nofollow" download>GeoJSON</a>
                         <a href={{link_text}} download="{{c.human_readable_name}}.zip" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
                       </div>
                       <!-- ********************* -->
-                      <div class="col-12 col-md-4">
+                      <div class="col-12 col-md-4" id="pdf-download-mix">
                         <button class="btn btn-primary w-50 w-md-75 w-xl-100 mb-3 mb-md-0 btn-ls-md" id="pdf-button">PDF</button>
                       </div>
                       {% endwith %}
                       {% with link_text="/export/csv/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
-                      <div class="col-12 col-md-4">
+                      <div class="col-12 col-md-4" id="csv-download-mix">
                         <a class="btn btn-primary w-50 w-md-75 w-xl-100 btn-ls-md" href={{link_text}} role="button" download="{{c.human_readable_name}}.zip">CSV</a>
                       </div>
                       {% endwith %}
                     {% else %}
                       {% with link_text="/export/geojson/?map_id="|addstr:c.entry_ID %}
-                      <div class="col-12 col-md-4">
+                      <div class="col-12 col-md-4" id="geojson-download-mix">
                         <a class="btn btn-primary w-50 w-md-75 w-xl-100 mb-3 mb-md-0" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>GeoJSON</a>
                         <a href={{link_text}} download="{{c.human_readable_name}}.zip" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
                       </div>
                       <!-- ********************* -->
-                      <div class="col-12 col-md-4">
+                      <div class="col-12 col-md-4" id="pdf-download-mix">
                         <button class="btn btn-primary w-50 w-md-75 w-xl-100 mb-3 mb-md-0 btn-ls-md" id="pdf-button" role="button">PDF</button>
                       </div>
                       {% endwith %}
                       {% with link_text="/export/csv"|add:"/?map_id="|addstr:c.entry_ID %}
-                      <div class="col-12 col-md-4">
+                      <div class="col-12 col-md-4" id="csv-download-mix">
                         <a class="btn btn-primary w-50 w-md-75 w-xl-100 btn-ls-md" href={{link_text}} role="button" download="{{c.human_readable_name}}.zip">CSV</a>
                       </div>
                       {% endwith %}
@@ -472,7 +472,7 @@
                       If your state has a redistricting commission or accepts Communities of Interest, send a pdf of your community to submit as public testimony. If not, you can send it to a local redistricting organization or <a href="https://myreps.datamade.us/" target="_blank" rel="noopener noreferrer">your legislator</a>.
                       {% endblocktrans %}
                       <br>
-                      <div class="text-center"><a class="btn btn-outline-gray mx-2 my-1" id="pdf-button-modal" target="_blank" data-dismiss="modal" role="button">{% trans "Export PDF" %}</a></div>
+                      <div class="text-center" id="pdf-download-mix"><a class="btn btn-outline-gray mx-2 my-1" id="pdf-button-modal" target="_blank" data-dismiss="modal" role="button">{% trans "Export PDF" %}</a></div>
                     </div>
                     <div class="col-lg-3"></div>
                   </div>
@@ -488,12 +488,12 @@
                       <!-- <div class="text-center"><a class="btn btn-outline-gray mx-2 my-1" target="_blank" href="" role="button">Export geoJSON</a></div> -->
                       {% if has_state %}
                       {% with link_text="/export/geojson/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
-                      <div class="text-center"><a class="btn btn-outline-gray mx-2 my-1 geojson-button" href="#" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>Export geoJSON</a></div>
+                      <div class="text-center" id="geojson-download-mix"><a class="btn btn-outline-gray mx-2 my-1 geojson-button" href="#" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>Export geoJSON</a></div>
                       <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
                       {% endwith %}
                       {% else %}
                       {% with link_text="/export/geojson/?map_id="|addstr:c.entry_ID %}
-                      <div class="text-center"><a class="btn btn-outline-gray mx-2 my-1 geojson-button" href="#" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>Export geoJSON</a></div>
+                      <div class="text-center" id="geojson-download-mix"><a class="btn btn-outline-gray mx-2 my-1 geojson-button" href="#" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>Export geoJSON</a></div>
                       <a href={{link_text}} download="community_{{c.entry_ID}}.geojson" id="hidden-download-geojson" class="hidden">Hidden Download GeoJSON</a>
                       {% endwith %}
                       {% endif %}
@@ -597,4 +597,19 @@
         <script type="text/javascript" src="{% static 'main/js/components/states.js' %}"></script>
         <script type="text/javascript" src="{% static 'main/js/map-common.js' %}"></script>
         <script type="text/javascript" src="{% static 'main/js/submission.js' %}"></script>
+
+        <script type="text/javascript">
+          // Track downloads
+          document.getElementById("geojson-download-mix").addEventListener("click", function() {
+              mixpanel.track("Downloaded community as GeoJSON");
+          });
+          document.getElementById("pdf-download-mix").addEventListener("click", function() {
+              mixpanel.track("Downloaded community as PDF");
+              console.log("downloaded pdf");
+          });
+          document.getElementById("csv-download-mix").addEventListener("click", function() {
+              mixpanel.track("Downloaded community as CSV");
+          });
+        </script>
+
         {% endblock %}
