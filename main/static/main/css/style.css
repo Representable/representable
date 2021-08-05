@@ -39,7 +39,7 @@ Bootstrap is better in that case. https://getbootstrap.com/docs/4.5/getting-star
   left: auto;
   right: 0;
   z-index: 100;
-  /* display: none; */
+  width: 33%;
   background-color: #DAEFFF;
 }
 
@@ -358,6 +358,13 @@ Entry Preview Page
     margin-top: 20px;
     margin-left: 0px !important;
   }
+  #collaboration-notification {
+    width: 60%;
+  }
+  #collab-switch {
+    top: 25%;
+    left: 25%;
+  }
 }
 
 @media only screen and (max-width: 540px) {
@@ -395,6 +402,9 @@ Entry Preview Page
   }
 
   #collaborationButton {
+    width: 100%;
+  }
+  #collaboration-notification {
     width: 100%;
   }
 }
@@ -787,6 +797,10 @@ color scheme. See readme.md*/
   border-color: #2a94f4;
   cursor: pointer;
   color: #fff !important;
+}
+
+.bg-primary {
+  background-color: #2a94f4 !important;
 }
 
 .btn-primary:active {
@@ -1305,6 +1319,10 @@ Entry Mapping Page
   #mapping-image-div {
     width: 30% !important;
   }
+  #collab-switch {
+    left: 0% !important;
+    top: 25% !important;
+  }
 }
 
 .loader {
@@ -1758,6 +1776,18 @@ input[type="checkbox"].switch_1 {
 }
 
 input[type="checkbox"].switch_1:checked {
+  background: #2a94f4;
+}
+
+input[type="checkbox"]#collab-switch {
+  background: #fff;
+}
+
+input[type="checkbox"]#collab-switch:checked {
+  background: #fff;
+}
+
+input[type="checkbox"]#collab-switch:after {
   background: #2a94f4;
 }
 
@@ -2229,6 +2259,10 @@ height:25vh!important;
     .vh-lg-25 {
     height:25vh!important;
     }
+    #collab-switch {
+      left: 15%;
+      top: 20%;
+    }
   }
 
   /* Extra large devices (large desktops, 1200px and up)*/
@@ -2281,6 +2315,9 @@ height:25vh!important;
     }
     .vh-xl-25 {
     height:25vh!important;
+    }
+    #collab-switch {
+      left: 0% !important;
     }
   }
 

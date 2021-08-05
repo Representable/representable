@@ -6,8 +6,8 @@
         Step 4
     </div>
 </div>
-<div class="row row-equal-cols">
-    <div class="col">
+<div class="row row-equal-cols pb-5 mb-5 pb-lg-0 mb-lg-0">
+    <div class="col pb-5 mb-5 mb-lg-0">
         <div id="backup_error" class="alert alert-danger alert-dismissible fade show form-error d-none" role="alert">
             {% blocktrans trimmed %}
                 <p id="backup_error_txt" class="p-0 m-0"></p>
@@ -97,17 +97,17 @@
                     </strong></p>
 
                     <p class="info-text">
-                        {% blocktrans %} 
-                        In order to edit your community again before submitting (or allow collaborators 
-                        to edit your community), choose to save as draft. Otherwise, you will need to 
+                        {% blocktrans %}
+                        In order to edit your community again before submitting (or allow collaborators
+                        to edit your community), choose to save as draft. Otherwise, you will need to
                         delete your community and make a new one in order to make changes.
                         {% endblocktrans %}
                     </p>
                     <div class="row">
                         <div class="col text-center">
-                            <button id="entrySaveButton" name="saveDraft" class="btn btn-lg btn-outline-primary no-underline-link entry-nav-btn ml-4 mapping-icon" type="submit" form="entryForm" value="Save as draft">{% trans "SAVE AS DRAFT" %}</button>
+                            <button id="entrySaveButton" name="saveDraft" class="btn btn-lg btn-outline-primary no-underline-link entry-nav-btn ml-4 mapping-icon mt-3" type="submit" form="entryForm" value="Save as draft">{% trans "SAVE AS DRAFT" %}</button>
                             {% if show_submit %}
-                            <button id="entrySubmissionButton" name="submitFinal" class="btn btn-lg btn-primary no-underline-link entry-nav-btn ml-4 mapping-icon" type="submit" form="entryForm" value="Submit">{% trans "SUBMIT" %}</button>
+                            <button id="entrySubmissionButton" name="submitFinal" class="btn btn-lg btn-primary no-underline-link entry-nav-btn ml-4 mapping-icon mt-3" type="submit" form="entryForm" value="Submit">{% trans "SUBMIT" %}</button>
                             {% endif %}
                         </div>
                     </div>

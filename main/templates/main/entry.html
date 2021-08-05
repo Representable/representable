@@ -61,31 +61,19 @@
 {% block content %}
 <!-- Entry Form -->
 <div class="row pt-3">
-    
+
 </div>
 {% if edit_hash == None %}
 <script type="text/javascript">
     function toggleCollaborate(){
-        if(document.getElementById('collaborateBox').classList.contains('bg-primary')){
-            document.getElementById('collaborateBox').classList.remove('bg-primary');
-            document.getElementById('collaborateBox').classList.add('bg-white');
-            document.getElementById('collaborateBox').classList.remove('text-white');
-            document.getElementById('collaborateBox').classList.add('text-primary');
-            document.getElementById('collaborateBox').classList.remove('bg-primary');
-            document.getElementById('collaborateBox').classList.add('bg-white');
-            document.getElementById('collaborate-icon-box').style = "filter: sepia(100%) hue-rotate(190deg) saturate(500%);"
-            document.getElementById('collaboration-notification').style = "width: 33%; display: block;"
+        if(document.getElementById('collab-switch').checked){
+            document.getElementById('collaboration-notification').classList.remove('d-none');
+            document.getElementById('collaboration-notification').classList.add('d-block');
             document.getElementById('entrySubmissionButton').disabled = true;
         }
         else{
-            document.getElementById('collaborateBox').classList.add('bg-primary');
-            document.getElementById('collaborateBox').classList.remove('bg-white');
-            document.getElementById('collaborateBox').classList.add('text-white');
-            document.getElementById('collaborateBox').classList.remove('text-primary');
-            document.getElementById('collaborateBox').classList.add('bg-primary');
-            document.getElementById('collaborateBox').classList.remove('bg-white');
-            document.getElementById('collaborate-icon-box').style = "filter: brightness(0) invert();"
-            document.getElementById('collaboration-notification').style = "width:33%; display: none;"
+            document.getElementById('collaboration-notification').classList.remove('d-block');
+            document.getElementById('collaboration-notification').classList.add('d-none');
             document.getElementById('entrySubmissionButton').disabled = false;
         }
     }
@@ -94,20 +82,21 @@
 
 <div class="row" id="collaborationBar">
     {% if edit_hash == None %}
-    <div class="col-9">
-
-    </div>
-    <div class="col-2 text-white bg-primary my-2 px-4 rounded" style="box-shadow: 0px 2px 5px gray;" id="collaborateBox" onclick="toggleCollaborate();">
+    <div class="col-xl-9 col-lg-8 col-md-7 col-4"></div>
+    <div class="col-xl-2 col-lg-3 col-md-4 col-7 text-white bg-primary my-2 px-4 rounded" style="box-shadow: 0px 2px 5px gray;" id="collaborateBox">
         <div class="row">
-            <div class="col-2 align-middle my-0 px-1">
-                <img src="/static/img/collaborate-icon.svg" id="collaborate-icon-box" class="w-100 h-100" style="filter: brightness(0) invert();">
+            <div class="col-xl-2 col-lg-3 col-4 align-middle my-auto px-1">
+                <img src="{% static 'img/collaborate-icon.svg '%}" id="collaborate-icon-box" class="w-50 w-xl-75 py-2" style="filter: brightness(0) invert();">
             </div>
-            <div class="col py-3 px-0">
+            <div class="col-xl-7 col-lg-6 col-4 px-0 my-auto">
                 Collaborate
             </div>
+            <div class="col-xl-3 col-lg-3 col-4 px-0">
+              <input id="collab-switch" type="checkbox" value="collap-switch" class="switch_1 w-100" onclick="toggleCollaborate();"></input>
+            </div>
         </div>
-        
     </div>
+    <div class="col-1"></div>
     {% endif %}
 </div>
 
@@ -263,15 +252,15 @@
     </script>
     <!-- Turf to get the bounding box. -->
     <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
-    <div id="collaboration-notification" class="alert alert-secondary alert-dismissable collaboration-notification m-0" style="width:33%; display: none;" role="alert">
+    <div id="collaboration-notification" class="alert alert-secondary alert-dismissable collaboration-notification m-0 d-none" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
         <div class="row">
-            <div class="col-2 align-middle float-center text-center">
-                <img src="/static/img/collaborate-icon.svg">
+            <div class="col-xl-2 col-3 align-middle float-center text-center">
+                <img src="{% static 'img/collaborate-icon.svg'%}">
             </div>
-            <div class="col-10">
+            <div class="col-xl-10 col-9">
                 <p class="my-1 font-weight-bold smallish" style="font-size: 90%;">You have indicated collaboration.</p>
                 <p class="small">You will be able to add collaborators after saving the map as a draft. Because of this, you will not be able to submit your map. If you would like to submit your map right away, you can turn off collaboration.</p>
             </div>
