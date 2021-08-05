@@ -26,7 +26,7 @@ var comms_count_total = $("#comms_count").html();
 
 var map = new mapboxgl.Map({
   container: "map", // container id
-  style: "mapbox://styles/mapbox/light-v9", //color of the map -- dark-v10 or light-v9 or streets-v11
+  style: "mapbox://styles/districter-team/ckrp8nt8q0knn19lscssui7aq", //color of the map -- dark-v10 or light-v9 or streets-v11
   center: [-96.7026, 40.8136], // starting position - Lincoln, Nebraska (middle of country lol)
   zoom: 3, // starting zoom -- higher is closer
 });

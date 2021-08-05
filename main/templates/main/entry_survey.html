@@ -379,7 +379,7 @@
                 </div>
                 <div class="sr-only">{{ comm_form.tags.label_tag }}</div>
                 {{ comm_form.tags|append_attr:"class:form-control survey-field" }}
-                <div class="accordion" id="add_tag_accordion">
+                <div class="accordion pb-3" id="add_tag_accordion">
                     <button class="btn btn-link text-left pl-0" style="text-decoration:underline;" type="button" data-toggle="collapse" data-target="#add_tag_example" aria-expanded="false" aria-controls="collapseOne">
                     <small>{% trans "Don't see your topic?" %}</small>
                     </button>
@@ -391,9 +391,9 @@
                 </div>
 
             </div>
-            <div class="row pt-5">
+            <div class="row pt-5 mt-5">
                 <div class="col text-center">
-                    <button class="btn btn-outline-primary entry-nav-btn mr-4 btn-ls-md" onclick="surveyP1ToSurveyStart()" type="button"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
+                    <button id="surveyP1ToSurveyStart_button" class="btn btn-outline-primary entry-nav-btn mr-4 btn-ls-md" onclick="surveyP1ToSurveyStart()" type="button"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
                     <button id="surveyP1ToP2_button" class="btn btn-primary entry-nav-btn ml-4 btn-ls-md" type="button">{% trans "NEXT" %}<i class="fas fa-angle-right pl-2"></i></button>
                 </div>
             </div>
