@@ -19,9 +19,13 @@
  */
 
 let jQuery = window.jQuery;
+let user_flow = false;
+if (jQuery("#usa-map").length > 0) user_flow = true;
 
 jQuery(document).ready(function () {
-  setUpUSAMap();
+  if (user_flow){
+    setUpUSAMap();
+  }
   populateStateSelectionDropdown();
 });
 
@@ -48,8 +52,17 @@ let populateStateSelectionDropdown = function () {
     newOption.innerHTML = stateName;
     selectElement.appendChild(newOption);
   }
+  if (!user_flow && state) {
+    jQuery("#stateSelectionDropdown").val(state.toLowerCase());
+  }
   jQuery("#stateSelectionDropdown").on("change", function () {
-    window.location = "/state/" + this.value;
+    if (window.location.href.indexOf("map") > -1) {
+      window.location.href = "/map/" + code;
+    } else if (user_flow) {
+      window.location.href = "/state/" + code;
+    } else {
+      window.location.href = "/resources/" + code;
+    }
   });
 };
 
@@ -77,7 +90,11 @@ let setUpUSAMap = function () {
       if (jQuery("#stateSelectionDropdown").val() !== code) {
         jQuery("#stateSelectionDropdown").val(code);
       }
-      window.location.href = "/state/" + code;
+      if (window.location.href.indexOf("map") > -1) {
+        window.location.href = "/map/" + code;
+      } else {
+        window.location.href = "/state/" + code;
+      }
     },
     onLabelShow: function (event, label, code) {
       return ignoreUnsupportedStates(event, code);

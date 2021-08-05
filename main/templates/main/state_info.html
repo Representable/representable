@@ -1,5 +1,6 @@
 {% load i18n %}
 {% load static %}
+{% block content %}
 <div class="row mx-lg-5 px-md-5">
   <div class="col-sm-6">
     <div class="col-12 p-2 light-blue-bg px-md-4 py-md-3 mb-4">
@@ -14,7 +15,7 @@
 
     <div class="col-12 p-3 light-blue-bg px-md-4 py-md-3 mb-4">
       {% if not edited %}
-          <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria2" aria-expanded="false" aria-controls="collapseCriteria2" onclick="toggleAngle(this)">
+          <button id="redist_in" class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link state-info-mix" data-toggle="collapse" data-target="#collapseCriteria2" aria-expanded="false" aria-controls="collapseCriteria2" onclick="toggleAngle(this)">
             <h5 class="dark-gray-text" style="width: fit-content;"><b>{% trans "How does redistricting work in " %} {{ state_obj.name }}?</b><i class="fas fa-angle-down pl-3"></i></h5>
           </button>
         <div class="collapse" id="collapseCriteria2">
@@ -23,7 +24,7 @@
           {% endautoescape %}
         </div>
       {% else %}
-          <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria2" aria-expanded="false" aria-controls="collapseCriteria2" onclick="toggleAngle(this)">
+          <button id="redist_in" class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link state-info-mix" data-toggle="collapse" data-target="#collapseCriteria2" aria-expanded="false" aria-controls="collapseCriteria2" onclick="toggleAngle(this)">
             <h5 class="dark-gray-text" style="width: fit-content;"><b> {{ drive_obj.opt_redist_title }} </b><i class="fas fa-angle-down pl-3"></i></h5>
           </button>
         <div class="collapse" id="collapseCriteria2">
@@ -35,7 +36,7 @@
     </div>
 
     <div class="col-12 p-3 light-blue-bg px-md-4 py-md-3 mb-4">
-        <button class="btn ws-normal btn-link bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria3" aria-expanded="false" aria-controls="collapseCriteria3" onclick="toggleAngle(this)">
+        <button id="rep_help" class="btn ws-normal btn-link bg-transparent text-left pl-0 no-underline-link state-info-mix" data-toggle="collapse" data-target="#collapseCriteria3" aria-expanded="false" aria-controls="collapseCriteria3" onclick="toggleAngle(this)">
           <h5 class="dark-gray-text" style="width: fit-content;"><b>{% trans "How can Representable help?" %}<i class="fas fa-angle-down pl-3"></i></b></h5>
         </button>
       <div class="collapse" id="collapseCriteria3">
@@ -45,7 +46,7 @@
 
     <div class="col-12 p-3 light-blue-bg px-md-4 py-md-3 mb-4">
       {% if not edited %}
-          <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria4" aria-expanded="false" aria-controls="collapseCriteria4" onclick="toggleAngle(this)">
+          <button id="redist_crit" class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link state-info-mix" data-toggle="collapse" data-target="#collapseCriteria4" aria-expanded="false" aria-controls="collapseCriteria4" onclick="toggleAngle(this)">
             <h5 class="dark-gray-text" style="width: fit-content;"><b>{{ state_obj.name }}'s {% trans "redistricting criteria" %} &#32;<i class="fas fa-angle-down pl-3"></i></b></h5>
           </button>
         <div class="collapse" id="collapseCriteria4">
@@ -54,7 +55,7 @@
           {% endautoescape %}
         </div>
       {% else %}
-          <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria4" aria-expanded="false" aria-controls="collapseCriteria4" onclick="toggleAngle(this)">
+          <button id="redist_crit" class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link state-info-mix" data-toggle="collapse" data-target="#collapseCriteria4" aria-expanded="false" aria-controls="collapseCriteria4" onclick="toggleAngle(this)">
             <h5 class="dark-gray-text" style="width: fit-content;"><b>{{ drive_obj.opt_criteria_title }}<i class="fas fa-angle-down pl-3"></i></b></h5>
           </button>
         <div class="collapse" id="collapseCriteria4">
@@ -72,8 +73,8 @@
       
       {% if logo.url == "" or not logo %}
         <object type="image/svg+xml" class="w-75 mx-auto d-block h-100" data="{% static 'img/map-info.svg' %}" alt="image of map with information icon"></object>
-        <h5><p class="text-center">
-          <a href="/map/{{state_obj.abbr}}" target="_blank class="link-primary">
+        <h5><p class="text-center" id="go-to-map">
+          <a href="/map/{{state_obj.abbr}}" target="_blank" class="link-primary">
             {% blocktrans trimmed %}
             See community maps drawn in
             {% endblocktrans %} {{ state_obj.name }} <i class="fas fa-arrow-circle-right"></i>
@@ -82,7 +83,7 @@
       {% else %}
           {% comment %} <object type="image" class="w-75 mx-auto d-block h-100" data={{ logo.url }} alt="image of map with information icon"></object> {% endcomment %}
           <img src = {{ logo.url }} class="w-50 mx-auto d-block h-50" style="padding: 20px"/>
-        <h5><p class="text-center">
+        <h5><p class="text-center" id="go-to-org-map">
           <a href="{% url 'main:partner_page' object.organization.slug %}" class="link-primary">
             {% blocktrans trimmed %}
             Organized by 
@@ -109,3 +110,15 @@
     </div>
 
 </div>
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+  // Track traffic to state page
+  document.getElementById("go-to-map").addEventListener("click", function() {
+      mixpanel.track("Clicked through to state map from state page");
+  });
+  document.getElementById("go-to-org-map").addEventListener("click", function() {
+      mixpanel.track("Clicked through to org map from state page");
+  });
+</script>
+{% endblock %}
