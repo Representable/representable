@@ -182,6 +182,7 @@ class CommunityAdmin(ImportExportModelAdmin):
     list_display = (
         "id",
         "user_name",
+        "get_user_email",
         "entry_name",
         "organization",
         "drive",
@@ -198,6 +199,26 @@ class CommunityAdmin(ImportExportModelAdmin):
         "state",
     )
 
+    def export_emails_as_csv(self, request, queryset):
+
+        meta = self.model._meta
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+
+        for obj in queryset:
+            row = writer.writerow([obj.user.email])
+
+        return response
+
+    export_emails_as_csv.short_description = "Export Selected Emails"
+    actions = ["export_emails_as_csv"]
+
+    def get_user_email(self, obj):
+        return obj.user.email
+    get_user_email.short_description = 'user email'
+    get_user_email.admin_order_field = 'user_email'
     def get_services_length(self, obj):
         return len(obj.comm_activities)
     get_services_length.short_description = 'services length'
