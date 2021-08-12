@@ -36,6 +36,7 @@ import csv
 from .models import State, Drive, Organization
 
 # ********************************************************************* #
+
 class ExportCsvMixin:
     def export_as_csv(self, request, queryset):
 
@@ -54,6 +55,7 @@ class ExportCsvMixin:
 
     export_as_csv.short_description = "Export Selected"
 
+# ********************************************************************* #
 
 class StateAdminForm(forms.ModelForm):
     content_news = forms.CharField(widget=CKEditorWidget())
@@ -192,11 +194,13 @@ class CommunityAdmin(ImportExportModelAdmin):
         'get_economic_length',
         'get_cultural_length',
         'get_needs_length',
+        'get_tags',
     )
     list_filter = (
         "drive",
         "organization",
         "state",
+        "tags"
     )
 
     def export_emails_as_csv(self, request, queryset):
@@ -218,7 +222,6 @@ class CommunityAdmin(ImportExportModelAdmin):
     def get_user_email(self, obj):
         return obj.user.email
     get_user_email.short_description = 'user email'
-    get_user_email.admin_order_field = 'user_email'
     def get_services_length(self, obj):
         return len(obj.comm_activities)
     get_services_length.short_description = 'services length'
@@ -235,6 +238,13 @@ class CommunityAdmin(ImportExportModelAdmin):
         return len(obj.other_considerations)
     get_needs_length.short_description = 'needs length'
     get_needs_length.admin_order_field = 'length_needs'
+    def get_tags(self, obj):
+        tags = []
+        for tag in obj.tags.all():
+            tags.append(str(tag))
+        return ', '.join(tags)
+    get_tags.short_description = 'tags'
+
 
     resource_class = CommunityResource
 
