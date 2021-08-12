@@ -159,6 +159,7 @@ class CommunityResource(resources.ModelResource):
 
 
 class CommunityAdmin(ImportExportModelAdmin):
+    date_hierarchy = "created_at"
     list_display = (
         "id",
         "user_name",
@@ -175,6 +176,7 @@ class CommunityAdmin(ImportExportModelAdmin):
     list_filter = (
         "drive",
         "organization",
+        "state",
     )
 
     def get_services_length(self, obj):
@@ -199,4 +201,35 @@ class CommunityAdmin(ImportExportModelAdmin):
 
 admin.site.register(CommunityEntry, CommunityAdmin)
 
-admin.site.register(Organization)
+class OrgStateFilter(SimpleListFilter):
+    title = 'state'
+    parameter_name = 'states'
+
+    def lookups(self, request, model_admin):
+        states_list = [o.states for o in model_admin.model.objects.all()]
+        each_state = [state for states in states_list for state in states]
+        res = []
+        [res.append(x) for x in each_state if x not in res]
+        return [(state, state) for state in res]
+
+    def queryset(self, request, queryset):
+        all_states = State.objects.all()
+        for state in State.objects.all():
+            print(state.abbr)
+            if self.value() == state.abbr:
+                return queryset.filter(states__icontains=state.abbr)
+
+class OrganizationAdmin(admin.ModelAdmin):
+    class Meta:
+        model = Organization
+        fields = (
+            "id",
+            "name",
+            "description",
+            "slug",
+            "states",
+        )
+    list_display = ("id", "name", "description", "slug", "states")
+    list_filter = (OrgStateFilter,)
+
+admin.site.register(Organization, OrganizationAdmin)
