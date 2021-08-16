@@ -515,16 +515,6 @@ body {
   color: #fff;
 }
 
-/* Class for the text that greets the user on the website on the front page. */
-/* Alters display-4 max size from 3.5rem to 2.9rem. */
-.main-display-text-sm {
-  font-size: 2.1rem;
-}
-
-.main-display-text-all {
-  font-size: 2.9rem;
-}
-
 /* Class for what is gerrymandering section styling. */
 .what-is-gerrymandering {
   background: -webkit-linear-gradient(-45deg, #2a94f4, #00c6a7);
@@ -592,16 +582,6 @@ body {
   .w-35-mobile {
     width: 35% !important;
   }
-  #home-page-rect-mobile {
-    position: absolute;
-    width: 80%;
-    height: 130%;
-    left: 10%;
-    bottom: -40%;
-
-    background: rgba(204, 233, 255, 0.2);
-    z-index: -999;
-  }
 }
 /* TABLETS + MOBILE */
 @media only screen and (max-width: 992px) {
@@ -617,28 +597,21 @@ body {
     bottom: -6000% !important;
   }
 }
-/* EXCLUSIVELY FOR HOME PAGE rect */
-@media screen and (min-width:1151px) and (max-width:1172px){
-  #home-page-rect {
-    height: 190% !important;
-  }
-}
-@media screen and (min-width:1261px){
-  #home-page-rect {
-    height: 255% !important;
-  }
-}
 
-#home-page-rect {
+#home-bg {
   position: absolute;
-  width: 250%;
-  height: 225%;
-  left: -10%;
-  bottom: 110%;
-
-  background: rgba(204, 233, 255, 0.2);
-  z-index: -999;
+  left: 0;
+  top: 0;
+  width: 100%;
 }
+
+#home-mapping-am {
+  letter-spacing: -.5rem;
+  font-size: 8rem;
+  margin-top: -1rem;
+  margin-bottom: -1.5rem;
+}
+
 .line-space-less {
   line-height: 97%;
 }

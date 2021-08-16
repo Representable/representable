@@ -17,31 +17,32 @@
 {% block content %}
 <div class="container">
   <!-- Illustration -->
-  <div class="row row-hero row-eq-height my-sm-5 ml-sm-5">
-    <div class="col-lg-6 col-sm-12 col-md-6 mobile-padding-x mobile-padding-top pl-md-5">
-      <div class="my-4 main-display-text-all">
-        <div id="home-page-rect-mobile"></div>
-        <span class="d-block mb-3 font-large-mobile font-weight-bold dark-blue-text line-space-less pt-md-3">{% trans "Gerrymandering is silencing communities." %}</span>
-        <span class="d-block h4 font-weight-light gray-text font-medium-mobile">{% blocktrans trimmed %} Make your voice heard with Representable <br> and put your community on the map. {% endblocktrans %}</span>
+  <img id="home-bg" src="{% static 'img/home-bg.png' %}" alt="light map background"></img>
+  <div class="row row-hero row-eq-height mt-sm-5 ml-sm-2">
+    <div class="col-12 mobile-padding-x mobile-padding-top text-center">
+      <img class="img-fluid align-bottom pl-lg-0 pl-3" src="{% static 'img/home-people.png' %}" alt="people together holding shapes"> </img>
+      <div class="text-center">
+        <span id="home-mapping-am" class="d-block font-large-mobile font-weight-bold dark-blue-text">{% trans "MAPPING AMERICA." %}</span>
+        <span class="d-block h1 btn-ls-md font-weight-light font-medium-mobile dark-blue-text">{% blocktrans trimmed %} One <b>community</b> at a time. {% endblocktrans %}</span>
       </div>
-      <a id="get-started-btn" class="text-center font-medium-mobile btn btn-primary btn-lg py-3 btn-ls-lg mb-lg-5 mt-2" href="{% url 'main:entry_preview' %}"  role="button">{% trans "GET STARTED" %}</a>
-      <div class="row d-none d-lg-block mt-5">
-        <div class="col-lg-1">
-        </div>
-        <div class="col-lg-10">
-          <div id="home-page-rect"></div>
-          <div class="alert gray-text" role="alert">
-            <p class="my-2 px-4 h5 font-weight-bold">{% trans "Are you the leader of an organization?" %}</p>
-            <p class="border-left border-dark border-3 pl-4 my-2 font-weight-light" style="font-size: 17px;">{% trans "Many organizations have partnered with Representable.org to collect community maps." %}</p>
-            <p class="px-4 my-2" style="font-size: 17px;"><a class="link-custom" href='/partners/welcome'>{% trans "JOIN AS AN ORGANIZATION" %}</a></p>
-          </div>
-        </div>
-        <div class="col-lg-1"></div>
+    </div>
+  </div>
+  <div class="row row-hero row-eq-height my-auto ml-sm-2">
+    <div class="col-md-2"></div>
+    <div class="col-12 col-md-3 text-right my-auto pr-0">
+      <a id="get-started-btn" class="text-center font-medium-mobile btn btn-primary btn-lg py-4 px-5 btn-ls-lg" href="{% url 'main:entry_preview' %}"  role="button">{% trans "GET STARTED" %}</a>
+    </div>
+    <div class="col-12 col-md-6">
+      <div class="alert gray-text" role="alert">
+        <p class="my-2 px-5 h5 font-weight-bold">{% trans "Are you the leader of an organization?" %}</p>
+        <p class="border-left border-dark border-3 pl-5 mb-2 mt-3 font-weight-light" style="font-size: 17px;">{% trans "Many organizations have partnered with Representable.org to collect community maps." %}</p>
+        <p class="px-5 mt-2 mb-0" style="font-size: 17px;"><a class="link-custom" href='/partners/welcome'>{% trans "JOIN AS AN ORGANIZATION" %}</a></p>
       </div>
-      </div>
-      <div class="col-lg-6 col-sm-12 col-md-6">
+    </div>
+    <div class="col-md-1"></div>
+      <!-- <div class="col-lg-6 col-sm-12 col-md-6">
         <img class="img-fluid align-bottom my-md-5 pl-lg-0 pl-3" src="{% static 'img/illustration.svg' %}" alt="people drawing a map"> </img>
-      </div>
+      </div> -->
     </div>
   </div>
     <div class="row gray-gradient-bg d-none d-md-block">
