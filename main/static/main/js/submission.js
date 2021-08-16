@@ -74,9 +74,15 @@ map.on("load", function () {
   for (obj in a) {
     // check how deeply nested the outer ring of the unioned polygon is
     final = [];
+    featureType = "Polygon";
     // set the coordinates of the outer ring to final
     if (a[obj][0][0].length > 2) {
-      final = [a[obj][0][0]];
+      featureType = "MultiPolygon";
+      temp = [];
+      final[0] = [a[obj][0][0]];
+      if (a[obj][1][0].length > 2) {
+        final[1] = [a[obj][1][0]];
+      }
     } else if (a[obj][0].length > 2) {
       final = [a[obj][0]];
     } else {
@@ -110,7 +116,7 @@ map.on("load", function () {
         data: {
           type: "Feature",
           geometry: {
-            type: "Polygon",
+            type: featureType,
             coordinates: final,
           },
         },
@@ -130,7 +136,7 @@ map.on("load", function () {
         data: {
           type: "Feature",
           geometry: {
-            type: "Polygon",
+            type: featureType,
             coordinates: final,
           },
         },
