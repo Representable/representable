@@ -598,11 +598,17 @@ body {
   }
 }
 
-#home-bg {
+#home-bg:before {
+  content: "";
+  background: url("/static/img/home-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
 }
 
 #home-mapping-am {
@@ -1808,11 +1814,11 @@ input.survey-field:focus {
 .content-blue-bg {
   background-color: rgba(242, 250, 255, 0.5);
 }
-.gray-gradient-bg {
-  background: linear-gradient(90deg, #F5FBFF 0%, #F1F1F0 51.8%, #F3F4F1 100%);
+.state-maps-bg {
+  background: url("/static/img/map-preview-bg.png");
 }
 .map-preview-bg {
-  background: url("/static/img/map-preview.png");
+  background: url("/static/img/map-preview-bg.png");
 }
 .btn-outline-gray {
   background-color: transparent;
