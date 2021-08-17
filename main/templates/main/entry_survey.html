@@ -367,7 +367,7 @@
                   {{ comm_form.custom_response|append_attr:"class:form-control survey-field" }}
                 {% endif %}
 
-                <p class="my-4 ml-1 gray-text">
+                <!-- <p class="my-4 ml-1 gray-text">
                   <b>What are the main topics relevant to your community?</b><br>
                   <span class="small text-muted">Add up to five topics that describe your community. Use the "+" to see more options.</span>
                 </p>
@@ -388,7 +388,7 @@
                             {% blocktrans trimmed %} Try typing a term similar to what you have in mind. If you still have a tag you want to add that isn't available, contact our team with your tag request by emailing <a href="mailto:team@representable.org">team@representable.org</a>. {% endblocktrans%}
                         </p>
                     </div>
-                </div>
+                </div> -->
 
             </div>
             <div class="row pt-5 mt-5">
@@ -431,7 +431,7 @@
     </div>
 
     <!-- Community Name Part -->
-    <div id="survey-qs-p2" class="d-none">
+    <div id="survey-qs-p2" class="d-none m-0 w-100">
         <div class="col-lg mt-2 ml-lg-3 mt-lg-5">
             <div id="entry_name_error_alerts">
                 {% if comm_form.entry_name.errors %}
@@ -457,34 +457,57 @@
                 </div>
             </div>
             <div class="row">
-                <div id="survey-comm-name-pic" class="col-lg-3">
-                    <object type="image/png" class="w-75 pt-2" data="{% static 'img/community-name-page.svg' %}" alt="image of people with a heart above them" style="opacity: 70%;"></object>
+                <div id="survey-comm-name-pic" class="col-lg-3 my-auto">
+                    <object type="image/png" class="w-62 pt-2" data="{% static 'img/community-name-page.svg' %}" alt="image of people with a heart above them" style="opacity: 70%;"></object>
                 </div>
-                <div id="survey-comm-name-header" class="col-lg-9 pl-xl-0">
+                <div id="survey-comm-name-header" class="col-lg-9 pl-2">
                     <div class="entry-header">
                         <strong>{% trans "Name your community." %}</strong>
                     </div>
 
-                    <div class="row m-0 info-text">
+                    <!-- <div class="row m-0 info-text">
                         <p>
                             {% trans "Give your community of interest a name. This does not have to be the official name of your community." %}
                         </p>
-                    </div>
+                    </div> -->
 
-                    <div class="row m-0 pt-3 info-text">
-                        <p class="" style="color: #5996D2">
+                    <div class="row m-0 pt-0 info-text">
+                        <h5 class="mt-3" style="color: #5996D2">
                             <strong>{% trans "Examples" %}:</strong> {% trans "Cherry Farmers Community, St. Peters Church Community, Riverside Fishing Community" %}
-                        </p>
+                        </h5>
                     </div>
                 </div>
             </div>
-            <div class="row pt-5">
-                <div class="pb-3 text-center col-xl-3 text-xl-left pt-xl-2 pr-xl-0" style="font-size: 1.2rem; color: #5996D2;">
+            <div class="row pt-1">
+                <div class="pb-3 pl-1 col-xl-3 text-xl-left pt-xl-2 pr-xl-0 gray-text" style="font-size: 1.2rem;">
                     <strong>{% trans "Community Name:"%}</strong>
                 </div>
                 <div class="col-xl-9 pl-xl-0">
                     <div class="sr-only">{{ comm_form.entry_name.label_tag }}</div>
                     {{ comm_form.entry_name|append_attr:"class:form-control survey-field" }}
+                </div>
+                <hr>
+                <p class="mb-4 mt-5 ml-1 gray-text" style="font-size: 1.2rem;">
+                  <b >What are the main topics relevant to your community?</b><br>
+                  <span class="small text-muted">Add up to five topics that describe your community. Use the "+" to see more options.</span>
+                </p>
+                <div class="mb-4">
+                  {% for key, value in top_tags.items %}
+                    <button type="button" class="btn btn-outline-secondary tag-top mb-2" id="tag_{{key}}">{{ value }}</button>
+                  {% endfor %}
+                  <button type="button" class="btn btn-outline-secondary mb-2" id="tag_more" aria-haspopup="true" aria-expanded="false" style="border-width: 2px;"><i class="fas fa-plus"></i></button>
+                </div>
+                <div class="sr-only">{{ comm_form.tags.label_tag }}</div>
+                {{ comm_form.tags|append_attr:"class:form-control survey-field" }}
+                <div class="accordion pb-3" id="add_tag_accordion">
+                    <button class="btn btn-link text-left pl-0" style="text-decoration:underline;" type="button" data-toggle="collapse" data-target="#add_tag_example" aria-expanded="false" aria-controls="collapseOne">
+                    <small>{% trans "Don't see your topic?" %}</small>
+                    </button>
+                    <div id="add_tag_example" class="collapse" aria-labelledby="add_tag_accordion" data-parent="#add_tag_accordion">
+                        <p class="collapse-in ml-0 small">
+                            {% blocktrans trimmed %} Try typing a term similar to what you have in mind. If you still have a tag you want to add that isn't available, contact our team with your tag request by emailing <a href="mailto:team@representable.org">team@representable.org</a>. {% endblocktrans%}
+                        </p>
+                    </div>
                 </div>
             </div>
 

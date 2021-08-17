@@ -20,7 +20,7 @@
   <!-- <img id="home-bg" src="{% static 'img/home-bg.png' %}" alt="light map background"></img> -->
   <div class="row row-hero row-eq-height mt-sm-5 mx-0">
     <div class="col-12 mobile-padding-x mobile-padding-top text-center">
-      <img class="img-fluid align-bottom pl-lg-0 pl-3" src="{% static 'img/home-people.png' %}" alt="people together holding shapes"> </img>
+      <img class="w-62 align-bottom" src="{% static 'img/home-people.svg' %}" alt="people together holding shapes"> </img>
       <div class="text-center">
         <span id="home-mapping-am" class="d-block font-large-mobile font-weight-bold dark-blue-text">{% trans "MAPPING AMERICA" %}</span>
         <span class="d-block h1 btn-ls-md font-weight-light font-medium-mobile dark-blue-text">{% blocktrans trimmed %} One <b>community</b> at a time. {% endblocktrans %}</span>
@@ -30,12 +30,12 @@
   <div class="row row-hero row-eq-height my-auto mx-0">
     <div class="col-md-2"></div>
     <div class="col-12 col-md-3 text-right my-auto pr-0">
-      <a id="get-started-btn" class="text-center font-medium-mobile btn btn-primary btn-lg py-4 px-5 btn-ls-lg" href="{% url 'main:entry_preview' %}"  role="button">{% trans "GET STARTED" %}</a>
+      <a id="get-started-btn" class="text-center font-medium-mobile btn btn-primary btn-lg py-3 font-weight-bold btn-ls-lg" href="{% url 'main:entry_preview' %}"  role="button">{% trans "GET STARTED" %}</a>
     </div>
     <div class="col-12 col-md-6">
       <div class="alert gray-text" role="alert">
         <p class="my-2 px-5 h5 font-weight-bold">{% trans "Are you the leader of an organization?" %}</p>
-        <p class="border-left border-dark border-3 pl-5 mb-2 mt-3 font-weight-light" style="font-size: 17px;">{% trans "Many organizations have partnered with Representable.org to collect community maps." %}</p>
+        <p class="border-left border-dark border-3 pl-5 mb-2 mt-2" style="font-size: 17px;">{% blocktrans trimmed %} Many organizations have partnered with Representable.org <br> to collect community maps. {% endblocktrans %}</p>
         <p class="px-5 mt-2 mb-0" style="font-size: 17px;"><a class="link-custom" href='/partners/welcome'>{% trans "JOIN AS AN ORGANIZATION" %}</a></p>
       </div>
     </div>
@@ -94,7 +94,7 @@
     </div>
   </div>
   <!-- MOBILE ONLY -->
-  <div class="container map-preview-bg d-block d-md-none mt-4">
+  <div class="container state-maps-bg d-block d-md-none mt-4">
     <div class="row">
       <h2 class="mb-3 font-weight-bold mt-4 mt-lg-2 mx-auto">We are mapping America.</h2>
       <h5 class="mx-5 px-4 text-center">Check out the communities drawn in your state.</h5>
@@ -145,7 +145,7 @@
       </div>
     </div>
   </div>
-  <div class="row light-blue-bg text-center">
+  <div class="row w-100 m-0 light-blue-bg text-center">
     <div class="container">
       <div class="row pt-4">
         <div class="col-md-3"></div>
@@ -160,7 +160,7 @@
   </div>
   <div class="container">
     <div class="row pt-5">
-      <img class="card-img-top img-fluid mt-2 mx-auto mb-0" src="{% static 'img/home-hands.svg' %}" alt="hands holding shapes"></img>
+      <img class="card-img-top w-62 mt-2 mx-auto mb-0" src="{% static 'img/home-hands.svg' %}" alt="hands holding shapes"></img>
     </div>
   </div>
 {% endblock %}

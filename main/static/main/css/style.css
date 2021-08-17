@@ -490,7 +490,13 @@ body {
   width: 10%;
 }
 .w-16 {
-  width: 16%
+  width: 16%;
+}
+.w-62 {
+  width: 62%;
+}
+.w-68 {
+  width: 68%;
 }
 .px-10 {
   padding-left: 10rem;
@@ -600,7 +606,7 @@ body {
 
 #home-bg:before {
   content: "";
-  background: url("/static/img/home-bg.png");
+  background: url("/static/img/home-bg.svg");
   background-repeat: no-repeat;
   background-size: cover;
   position: absolute;
@@ -612,9 +618,9 @@ body {
 }
 
 #home-mapping-am {
-  letter-spacing: -.5rem;
-  font-size: 8rem;
-  margin-top: -1rem;
+  letter-spacing: -.65rem;
+  font-size: 7.5rem;
+  margin-top: -2rem;
   margin-bottom: -1.5rem;
 }
 
@@ -1563,14 +1569,14 @@ Entry Form Management
 }
 
 .survey-field {
-  background: #F2FAFF 80%;
-  opacity: 0.8;
+  background: #DAEFFF 65%;
+  opacity: 0.65;
   border: none;
   outline: none;
 }
 
 .survey-field:focus {
-  background: #F2FAFF 80%;
+  background: #DAEFFF 80%;
   border: none;
   outline: none;
 }
@@ -1815,10 +1821,8 @@ input.survey-field:focus {
   background-color: rgba(242, 250, 255, 0.5);
 }
 .state-maps-bg {
-  background: url("/static/img/map-preview-bg.png");
-}
-.map-preview-bg {
-  background: url("/static/img/map-preview-bg.png");
+  background: url("/static/img/home-preview-bg.svg");
+  background-size: cover;
 }
 .btn-outline-gray {
   background-color: transparent;
