@@ -30,12 +30,12 @@
   <div class="row row-hero row-eq-height my-auto mx-0">
     <div class="col-md-2"></div>
     <div class="col-12 col-md-3 text-right my-auto pr-0">
-      <a id="get-started-btn" class="text-center font-medium-mobile btn btn-primary btn-lg py-3 font-weight-bold btn-ls-lg" href="{% url 'main:entry_preview' %}"  role="button">{% trans "GET STARTED" %}</a>
+      <a id="get-started-btn" class="text-center font-medium-mobile btn btn-primary btn-lg py-3 font-weight-bold btn-ls-lg" href="{% url 'main:state_selection' %}"  role="button">{% trans "GET STARTED" %}</a>
     </div>
     <div class="col-12 col-md-6">
       <div class="alert gray-text" role="alert">
         <p class="my-2 px-5 h5 font-weight-bold">{% trans "Are you the leader of an organization?" %}</p>
-        <p class="border-left border-dark border-3 pl-5 mb-2 mt-2" style="font-size: 17px;">{% blocktrans trimmed %} Many organizations have partnered with Representable.org <br> to collect community maps. {% endblocktrans %}</p>
+        <p class="border-left border-dark border-3 pl-5 mb-2 mt-2" style="font-size: 17px;">{% blocktrans trimmed %} Many organizations use Representable <br> to collect community maps. {% endblocktrans %}</p>
         <p class="px-5 mt-2 mb-0" style="font-size: 17px;"><a class="link-custom" href='/partners/welcome'>{% trans "JOIN AS AN ORGANIZATION" %}</a></p>
       </div>
     </div>
@@ -60,7 +60,7 @@
         </div>
         <div class="col-4 my-auto">
           <h1 class="font-medium-mobile font-weight-bold">{% blocktrans trimmed %} Draw a <br> Community Map {% endblocktrans %}</h1>
-          <h3 class="font-small-mobile font-weight-light">{% trans "by choosing units that make up your community. Use landmarks to draw your map." %}</h3>
+          <h3 class="font-small-mobile font-weight-light">{% trans "by choosing units that make up your community." %}</h3>
         </div>
       </div>
       <div class="row gray-text pb-md-5">
@@ -83,7 +83,7 @@
         <div class="col-6 my-auto gray-text py-5">
           <h2 class="mb-3 font-weight-bold mt-4 mt-lg-2">We are mapping America.</h2>
           <h4>Check out the communities drawn in your state.</h4>
-          <a class="btn btn-lg btn-outline-primary mt-3 btn-ls-lg border-solid px-3 mb-4" href="{% url 'main:state_selection_map' %}">
+          <a class="btn font-weight-bold btn-outline-primary mt-3 btn-ls-md border-solid px-4 py-2 mb-4" href="{% url 'main:state_selection_map' %}">
               {% trans "VIEW COMMUNITIES" %}
           </a>
         </div>
@@ -98,7 +98,7 @@
     <div class="row">
       <h2 class="mb-3 font-weight-bold mt-4 mt-lg-2 mx-auto">We are mapping America.</h2>
       <h5 class="mx-5 px-4 text-center">Check out the communities drawn in your state.</h5>
-      <a class="mx-auto btn btn-outline-primary mt-3 btn-ls-lg border-solid px-3 mb-4 mb-lg-2" href="{% url 'main:state_selection_map' %}">
+      <a class="mx-auto btn btn-outline-primary font-weight-bold mt-3 btn-ls-md border-solid px-4 py-2 mb-4 mb-lg-2" href="{% url 'main:state_selection_map' %}">
           {% trans "VIEW COMMUNITIES" %}
       </a>
     </div>
@@ -110,12 +110,11 @@
           <img class="card-img-top img-fluid m-2 w-25 w-sm-100 mx-auto mb-md-4" src="{% static 'img/home-shapes-4.svg' %}" alt="two light shapes"></img>
         </div>
         <div class="col-md-6 gray-text px-3">
-          <img class="mx-auto d-block w-16 pb-4 pt-4" src="{% static 'img/logo-gradient.svg' %}" alt="representable logo - continental USA made of blocks"> </img>
-          <h5 class="pt-3 font-medium-mobile font-weight-light">{% blocktrans trimmed %}<b>Our mission</b> is to give communities a voice in drawing voting districts.{% endblocktrans %}</h5>
-          <h5 class="py-4 font-weight-light font-small-mobile mb-0">{% blocktrans trimmed %}Representable allows people to draw communities of interest and share information about the interests and needs in those communities.
-            <br><br>Gerrymandering is threatening democracy. Politicians have been drawing voting districts that silence the voices of communities. This prevents communities from electing representatives that listen to their needs. Gathering communities of interest maps helps fight gerrymandering.{% endblocktrans %}</h5>
+          <img class="mx-auto d-block w-21 py-5" src="{% static 'img/logo-gradient.svg' %}" alt="representable logo - continental USA made of blocks"> </img>
+          <h5 class="pt-3 font-medium-mobile font-weight-light">{% blocktrans trimmed %}<b>Our mission is to give communities a voice in drawing voting districts.</b> Representable allows people to draw Communities of Interest and share information about the interests and needs in those communities.{% endblocktrans %}</h5>
+          <h5 class="py-4 font-weight-light font-small-mobile mb-0">{% blocktrans trimmed %}<br><b>Gerrymandering is threatening democracy.</b> Politicians have been drawing voting districts that silence the voices of communities. This prevents communities from electing representatives that listen to their needs. Gathering Communities of Interest maps helps fight gerrymandering.{% endblocktrans %}</h5>
           <div class="text-center">
-            <a class="btn btn-outline-primary mt-3 btn-ls-md border-solid px-3 mb-4 mb-lg-2" href="{% url 'main:state_selection_map' %}">
+            <a class="btn btn-outline-primary mt-3 btn-ls-md border-solid px-3 mb-4 mb-lg-2" href="{% url 'main:resources' %}">
                 {% trans "LEARN MORE" %}
             </a>
           </div>
@@ -124,7 +123,7 @@
           <img class="card-img-top img-fluid m-2 w-25 w-sm-100 mx-auto mb-md-4" src="{% static 'img/home-shapes-5.svg' %}" alt="two light shapes"></img>
         </div>
       </div>
-      <div class="row mt-5 mx-5 p-5">
+      <div class="row mt-5 mx-5 pb-5 px-5">
         <div class="col-md-4"></div>
         <div class="col-md-1 text-center">
           <a href="https://www.facebook.com/Representable.org/" target="_blank"><img class="social-media-logo mx-auto w-md-100 w-lg-75 w-10" src="{% static 'img/facebook-gray-logo.svg' %}" alt="Representable's Facebook page linked from Facebook logo"></img></a>
@@ -140,7 +139,7 @@
         </div>
         <div class="col-md-4"></div>
         <div class="text-center mx-auto mt-5">
-          <a id="get-started-btn" class="text-center font-medium-mobile btn btn-outline-primary btn-lg py-3 btn-ls-lg mb-5 mt-2 border-solid" style="border-radius: 0;" href="{% url 'main:entry_preview' %}"  role="button">{% trans "GET STARTED" %}</a>
+          <a id="get-started-btn" class="text-center font-medium-mobile btn btn-outline-primary btn-lg py-3 btn-ls-lg mb-5 mt-2 border-solid" style="border-radius: 0;" href="{% url 'main:state_selection' %}"  role="button">{% trans "GET STARTED" %}</a>
         </div>
       </div>
     </div>

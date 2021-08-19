@@ -495,8 +495,8 @@ body {
 .w-62 {
   width: 62%;
 }
-.w-68 {
-  width: 68%;
+.w-21 {
+  width: 21%;
 }
 .px-10 {
   padding-left: 10rem;
@@ -1794,7 +1794,7 @@ input.survey-field:focus {
   color: #65bff1;
 }
 .dark-blue-text {
-  color: #2583D8;
+  color: #3691E0;
 }
 .blue-green-text {
   color: #6dccbb;
