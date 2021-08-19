@@ -56,6 +56,7 @@ let populateStateSelectionDropdown = function () {
     jQuery("#stateSelectionDropdown").val(state.toLowerCase());
   }
   jQuery("#stateSelectionDropdown").on("change", function () {
+    code = jQuery("#stateSelectionDropdown").val();
     if (window.location.href.indexOf("map") > -1) {
       window.location.href = "/map/" + code;
     } else if (user_flow) {
