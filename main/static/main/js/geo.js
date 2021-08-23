@@ -29,6 +29,7 @@ var drawUsingBlocks = false; // are we using blocks block groups currently?
 var old_units = false; // does this state use 2010 census units or 2020?
 var has20 = false;
 var dane_cty = false; // is this a customized building block drive for dane county?
+var popCache = {};
 if (drive_slug == "tell-us-about-your") dane_cty = true;
 var initialZoom = 6; // initial zoom level for first showing map - higher is closer
 if (STATES_USING_OLD_UNITS.indexOf(state) >= 0) {
@@ -40,7 +41,6 @@ if (STATES_USING_OLD_UNITS.indexOf(state) >= 0) {
 if (STATES_WITH_NEW_FILES.indexOf(state) >= 0){
   bg_id = "GEOCODE";
   block_id = "GEOCODE";
-  // console.log("switched thing");
   unit_id = bg_id;
   has20 = true;
 }
@@ -84,6 +84,7 @@ function changeMappingUnit() {
     sessionStorage.clear();
     filterStack = [];
     bboxStack = [];
+    $(".comm-pop").html(0);
     // show or hide population display
     if (old_units || has20) {
       $("#map-pop-btn").show();
@@ -110,7 +111,9 @@ function changeMappingUnit() {
     //clear "cache" so that undo button still works as expected
     sessionStorage.clear();
     filterStack = [];
-    bboxStack = [];    // show or hide population display
+    bboxStack = [];    
+    $(".comm-pop").html(0);
+    // show or hide population display
     if (old_units || has20) {
       $("#map-pop-btn").show();
     } else {
@@ -1670,7 +1673,7 @@ map.on("style.load", function () {
       else {
         features.push(feature.properties[bg_id]);
         if (has20 && !(feature.properties[bg_id] in popCache)) {
-          popCache[feature.properties[block_id]] = feature.properties.tot;
+          popCache[feature.properties[bg_id]] = feature.properties.tot;
         }
       }
       if (features.length >= 1) {
@@ -2012,7 +2015,6 @@ function arraysEqual(a, b) {
 
 /***************************************************************************/
 
-var popCache = {};
 // get the population for a community from filter
 // TODO: load this in automatically as part of the tilesets for immediate lookup?
 function getCommPop(filter) {
@@ -2028,7 +2030,6 @@ function getCommPop(filter) {
           sessionStorage.setItem("pop", pop);
         }
       } else {
-        // console.log(feature);
         getBGPop(feature, function(bgPop) {
           ctr++;
           pop += parseInt(bgPop);
