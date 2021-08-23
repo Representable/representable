@@ -27,6 +27,7 @@ var unit_id = bg_id; // abstracted - current unit
 var layer_suffix = "bg"; // suffix for created unit
 var drawUsingBlocks = false; // are we using blocks block groups currently?
 var old_units = false; // does this state use 2010 census units or 2020?
+var has20 = false;
 var dane_cty = false; // is this a customized building block drive for dane county?
 if (drive_slug == "tell-us-about-your") dane_cty = true;
 var initialZoom = 6; // initial zoom level for first showing map - higher is closer
@@ -35,6 +36,13 @@ if (STATES_USING_OLD_UNITS.indexOf(state) >= 0) {
   block_id = "BLOCKID10";
   bg_id = "GEOID10";
   unit_id = bg_id;
+}
+if (STATES_WITH_NEW_FILES.indexOf(state) >= 0){
+  bg_id = "GEOCODE";
+  block_id = "GEOCODE";
+  // console.log("switched thing");
+  unit_id = bg_id;
+  has20 = true;
 }
 if (dane_cty) {
   bg_id = "WARD_FIPS";
@@ -77,7 +85,7 @@ function changeMappingUnit() {
     filterStack = [];
     bboxStack = [];
     // show or hide population display
-    if (old_units) {
+    if (old_units || has20) {
       $("#map-pop-btn").show();
     } else {
       $("#map-pop-btn").hide();
@@ -103,7 +111,7 @@ function changeMappingUnit() {
     sessionStorage.clear();
     filterStack = [];
     bboxStack = [];    // show or hide population display
-    if (old_units) {
+    if (old_units || has20) {
       $("#map-pop-btn").show();
     } else {
       $("#map-pop-btn").hide();
@@ -116,7 +124,7 @@ function changeMappingUnit() {
 }
 
 // removes population from community info dropdown, if in a state using new census geographies
-if (!old_units) {
+if (!old_units && !has20) {
   $("#map-pop-btn").hide();
 }
 
@@ -1596,7 +1604,7 @@ map.on("style.load", function () {
       sessionStorage.clear();
       filterStack = [];
       bboxStack = [];    // show or hide population display
-      if (old_units) {
+      if (old_units || has20) {
         $("#map-pop-btn").show();
       } else {
         $("#map-pop-btn").hide();
@@ -1655,9 +1663,15 @@ map.on("style.load", function () {
         if (old_units && !(feature.properties[block_id] in blockPopCache)) {
           blockPopCache[feature.properties[block_id]] = feature.properties.POP10;
         }
+        if (has20 && !(feature.properties[block_id] in blockPopCache)) {
+          blockPopCache[feature.properties[block_id]] = feature.properties.tot;
+        }
       }
       else {
         features.push(feature.properties[bg_id]);
+        if (has20 && !(feature.properties[bg_id] in popCache)) {
+          popCache[feature.properties[block_id]] = feature.properties.tot;
+        }
       }
       if (features.length >= 1) {
         // polyCon : the turf polygon from coordinates
@@ -1755,7 +1769,7 @@ map.on("style.load", function () {
         "This community is too large. Please select a smaller area to continue."
       );
     }
-    if (old_units) {
+    if (old_units || has20) {
       // set as indicator that population is loading
       $(".comm-pop").html("...");
       if (drawUsingBlocks) {
@@ -2005,26 +2019,27 @@ function getCommPop(filter) {
   if (filter.length === 0) $(".comm-pop").html(0);
   var pop = 0;
   var ctr = 0;
-  filter.forEach(function(feature){
-    if (feature in popCache) {
-      ctr++;
-      pop += popCache[feature];
-      if (ctr === filter.length) {
-        $(".comm-pop").html(pop);
-        sessionStorage.setItem("pop", pop);
-      }
-    } else {
-      getBGPop(feature, function(bgPop) {
+    filter.forEach(function(feature){
+      if (feature in popCache) {
         ctr++;
-        pop += parseInt(bgPop);
-        popCache[feature] = parseInt(bgPop);
+        pop += popCache[feature];
         if (ctr === filter.length) {
           $(".comm-pop").html(pop);
           sessionStorage.setItem("pop", pop);
         }
-      });
-    }
-  });
+      } else {
+        // console.log(feature);
+        getBGPop(feature, function(bgPop) {
+          ctr++;
+          pop += parseInt(bgPop);
+          popCache[feature] = parseInt(bgPop);
+          if (ctr === filter.length) {
+            $(".comm-pop").html(pop);
+            sessionStorage.setItem("pop", pop);
+          }
+        });
+      }
+    });
 }
 
 /****************************************************************************/
