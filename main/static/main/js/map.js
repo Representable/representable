@@ -26,7 +26,7 @@ var comms_count_total = $("#comms_count").html();
 
 var map = new mapboxgl.Map({
   container: "map", // container id
-  style: "mapbox://styles/mapbox/light-v9", //color of the map -- dark-v10 or light-v9 or streets-v11
+  style: "mapbox://styles/districter-team/ckrp8nt8q0knn19lscssui7aq", //color of the map -- dark-v10 or light-v9 or streets-v11
   center: [-96.7026, 40.8136], // starting position - Lincoln, Nebraska (middle of country lol)
   zoom: 3, // starting zoom -- higher is closer
 });
@@ -79,7 +79,6 @@ function searchMove() {
 // button to search while moving map
 $("#map-page-search-btn").click(function() {
   search_while_moving = !search_while_moving;
-  console.log(search_while_moving);
   if (search_while_moving) {
     map.on("moveend", searchMove);
   } else {
@@ -123,8 +122,15 @@ map.on("load", function () {
   for (coi_id in coidata) {
     // set the coordinates of the outer ring to final
     final = [];
+    featureType = "Polygon";
+    // set the coordinates of the outer ring to final
     if (coidata[coi_id][0][0].length > 2) {
-      final = [coidata[coi_id][0][0]];
+      featureType = "MultiPolygon";
+      temp = [];
+      final[0] = [coidata[coi_id][0][0]];
+      if (coidata[coi_id][1][0].length > 2) {
+        final[1] = [coidata[coi_id][1][0]];
+      }
     } else if (coidata[coi_id][0].length > 2) {
       final = [coidata[coi_id][0]];
     } else {
@@ -141,7 +147,7 @@ map.on("load", function () {
     coidata_geojson_format.features.push({
       'type': 'Feature',
       'geometry': {
-          'type': 'Polygon',
+          'type': featureType,
           'coordinates': final,
       },
       'properties': {
@@ -195,12 +201,15 @@ map.on("load", function () {
         map.setLayoutProperty(highlight_id, "visibility", "visible")
         map.setLayoutProperty(highlight_id_fill, "visibility", "visible")
       } else {
+        // check if nested (multiple) polygons, or just one
+        featureType = "Polygon";
+        if (coidata[this.id].length > 1) featureType = "MultiPolygon";
         map.addSource(highlight_id, {
           'type': 'geojson',
           'data': {
             type: "Feature",
             geometry: {
-              type: "Polygon",
+              type: featureType,
               coordinates: coidata[this.id],
             },
           },
@@ -236,7 +245,13 @@ map.on("load", function () {
   // loading icon
   $(".loader").delay(500).fadeOut(500);
   // fly to state if org, otherwise stay on map
-  if (state !== "") {
+  if ((typeof centerLat !== 'undefined') && (centerLat !== '')) {
+    map.flyTo({
+      center: [parseFloat(centerLat), parseFloat(centerLng)],
+      zoom: 9,
+      essential: true,
+    });
+  } else if (state !== "") {
     map.flyTo({
       center: statesLngLat[state.toUpperCase()],
       zoom: 5,

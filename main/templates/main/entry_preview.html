@@ -29,10 +29,22 @@
     </div>
     <div class="row m-sm-5">
         <div id="entry_preview_button" class="col">
-            <a class="btn btn-outline-primary m-2 mb-lg-3 mb-5 btn-lg btn-ls-md" href="{% url 'main:entry_state_selection' %}">
+            <a class="btn btn-outline-primary m-2 mb-lg-3 mb-5 btn-lg btn-ls-md" href="{% url 'main:state_selection' %}">
                 {% trans "ADD MY COMMUNITY" %}
             </a>
         </div>
     </div>
 </div>
 {% endblock %}
+{% block script %}
+       
+        <script type="text/javascript">
+          // Track video plays
+          document.getElementById("entry_preview_video").addEventListener("click", function() {
+              mixpanel.track("Clicked redistricting video");
+          });
+          
+        </script>
+
+        {% endblock %}
+

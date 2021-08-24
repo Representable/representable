@@ -35,6 +35,11 @@ urlpatterns = [
         name="account_signup",
     ),
     path(
+        "accounts/social/signup/",
+        views.main.RepresentableSocialSignupView.as_view(),
+        name="socialaccount_signup",
+    ),
+    path(
         'block_group_polygons/<str:abbr>/',
         views.main.block_group_polygons,
         name='block_group_polygons',
@@ -46,9 +51,14 @@ urlpatterns = [
         name="entry_preview",
     ),
     path(
-        "entry_state_selection/",
-        views.main.EntryStateSelection.as_view(),
-        name="entry_state_selection",
+        "state_selection/",
+        views.main.StateSelection.as_view(),
+        name="state_selection",
+    ),
+    path(
+        "state_selection/map",
+        views.main.StateSelection.as_view(),
+        name="state_selection_map",
     ),
     path(
         "entry/",
@@ -96,6 +106,7 @@ urlpatterns = [
     path("faq/", views.main.FAQ.as_view(), name="faq"),
     path("glossary/", views.main.Glossary.as_view(), name="glossary"),
     path("resources/", views.main.Resources.as_view(), name="resources"),
+    path("resources/<abbr>/", views.main.Resources.as_view(), {"state": ""}, name="resources"),
     path("review/", views.main.Review.as_view(), name="review"),
     path("privacy/", views.main.Privacy.as_view(), name="privacy"),
     path("terms/", views.main.Terms.as_view(), name="terms"),
@@ -155,6 +166,7 @@ urlpatterns = [
         name="partner_page",
     ),
     path("map/<state>/", views.main.Map.as_view(), name="map"),
+    path("map/<state>/<lat>/<lng>", views.main.Map.as_view(), name="map"),
     path(
         "map/p/<slug:slug>/",
         views.partners.PartnerMap.as_view(),

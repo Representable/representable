@@ -191,6 +191,14 @@ function toggleAngle(e) {
   $('#' + collapsible).collapse('toggle');
   if (e.innerHTML.includes("fa-angle-down")) {
     e.innerHTML = e.innerHTML.replace("fa-angle-down", "fa-angle-up");
+    if (e.classList.contains("coi-def-mix")) {
+      mixpanel.track("Clicked on COI def in state", {
+        drive_id: drive_id,
+        drive_name: drive_name,
+        organization_id: organization_id,
+        organization_name: organization_name,
+      });
+    }
   } else {
     e.innerHTML = e.innerHTML.replace("fa-angle-up", "fa-angle-down");
   }
@@ -241,6 +249,10 @@ $('#map-comm-menu').on('click', function (event) {
 
 $('#map-comm-menu').on('touchstart', function (event) {
   event.stopPropagation();
+});
+
+$("#comm-example-btn").on("click", function() {
+  $("#comm-example-modal").modal();
 });
 
 $("#mobile-map-help-btn").on("click", function() {
@@ -378,6 +390,7 @@ tagnames.initialize();
 $("#tag_more").on("click", function() {
   if (!$('.bootstrap-tagsinput-max').length > 0) {
     $("#tags-select-modal").modal();
+    mixpanel.track("More tags clicked");
   }
 });
 
@@ -1501,6 +1514,12 @@ var blockGroupPolygons = null;
 /* After the map style has loaded on the page, add a source layer and default
 styling for a single point. */
 map.on("style.load", function () {
+  mixpanel.track("Map Drawing Started", {
+    drive_id: drive_id,
+    drive_name: drive_name,
+    organization_id: organization_id,
+    organization_name: organization_name,
+  });
   fetch('/block_group_polygons/' + state.toLowerCase() + 'bg/')
     .then(response => {
       if (response.ok) {

@@ -13,8 +13,8 @@
 <meta charset='utf-8' />
 <title>View Communities</title>
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
-<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!--  GeoCoder -->
 <meta name='robots' content='noindex, nofollow'>
@@ -71,20 +71,30 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
               </div>
               <input class="m-2 p-2 rounded border border-secondary" id="search-comm" type="text" placeholder="Search communities...">
               <div id="headingOne">
-                <button class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne"
+                <button id="buttonOne" class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne"
                 aria-expanded="false" aria-controls="collapseOne" style="width: 100%">
-                {% trans "Data layers" %} <i class="fas fa-caret-down"></i></button>
+                {% trans "Data layers" %} <i id="arrowOne" class="fas fa-caret-down"></i></button>
               </div>
               <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="font-weight-light text-uppercase small" id="outline-menu">
                 </div>
               </div>
+              <div id="headingTwo">
+                <button id="buttonTwo"class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseTwo"
+                aria-expanded="false" aria-controls="collapseTwo" style="width: 100%">
+                {% trans "Election Data" %} <i id="arrowTwo" class="fas fa-caret-down"></i></button>
+              </div>
+              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="font-weight-light text-uppercase small" id="election-menu">
+                  <div class="font-weight-light text-uppercase small mb-3" id="no-election-text"></div>
+                </div>
+              </div>
             </div>
-            <div class="items card">
+            <div class="items">
               <div id="headingThree">
-                <button class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseThree"
-                aria-expanded="true" aria-controls="collapseThree" style="width: 100%">
-                {% trans "Communities" %} <i class="fas fa-caret-down"></i></button>
+                <button id="buttonThree" class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#coisCollapse"
+                aria-expanded="true" aria-controls="coisCollapse" style="width: 100%">
+                {% trans "Communities" %} <i id="arrowThree" class="fas fa-caret-down flipY-inplace"></i></button>
               </div>
               {% if communities %}
               <div id="coisCollapse" class="collapse show container-fluid py-3 p-0">

@@ -66,7 +66,7 @@ map.on("load", function () {
 
   /****************************************************************************/
   addAllLayers(map, document, "submission");
-  
+
   var outputstr = a.replace(/'/g, '"');
   a = JSON.parse(outputstr);
   var dest = [];
@@ -74,15 +74,22 @@ map.on("load", function () {
   for (obj in a) {
     // check how deeply nested the outer ring of the unioned polygon is
     final = [];
+    featureType = "Polygon";
     // set the coordinates of the outer ring to final
     if (a[obj][0][0].length > 2) {
-      final = [a[obj][0][0]];
+      featureType = "MultiPolygon";
+      temp = [];
+      final[0] = [a[obj][0][0]];
+      if (a[obj][1][0].length > 2) {
+        final[1] = [a[obj][1][0]];
+      }
     } else if (a[obj][0].length > 2) {
       final = [a[obj][0]];
     } else {
       final = a[obj];
     }
     dest = final[0][0];
+    // zoom into community bounds
     var fit = new L.Polygon(final).getBounds();
     var southWest = new mapboxgl.LngLat(
       fit["_southWest"]["lat"],
@@ -96,6 +103,11 @@ map.on("load", function () {
     map.fitBounds(commBounds, {
       padding: {top: 20, bottom:20, left: 50, right: 50}
     });
+    // get center of community and set map page url to include this variable
+    var center = fit.getCenter();
+    var stateLink = $("#map-page-link").attr("href") + "/" + center["lat"] + "/" + center["lng"];
+    $("#map-page-link").attr("href", stateLink);
+
     map.addLayer({
       id: obj,
       type: "fill",
@@ -104,7 +116,7 @@ map.on("load", function () {
         data: {
           type: "Feature",
           geometry: {
-            type: "Polygon",
+            type: featureType,
             coordinates: final,
           },
         },
@@ -124,7 +136,7 @@ map.on("load", function () {
         data: {
           type: "Feature",
           geometry: {
-            type: "Polygon",
+            type: featureType,
             coordinates: final,
           },
         },
@@ -383,6 +395,9 @@ if (state in publicCommentLinks) {
 } else {
   $('#public-comment-card').hide();
 }
+/****************************************************************************/
+// set the link to the map page to zoom in to where this community is centered
+
 /****************************************************************************/
 // // remove the last char in the string
 // function removeLastChar(str) {
