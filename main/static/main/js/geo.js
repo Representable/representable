@@ -32,17 +32,22 @@ var dane_cty = false; // is this a customized building block drive for dane coun
 var popCache = {};
 if (drive_slug == "tell-us-about-your") dane_cty = true;
 var initialZoom = 6; // initial zoom level for first showing map - higher is closer
-if (STATES_USING_OLD_UNITS.indexOf(state) >= 0) {
-  old_units = true;
-  block_id = "BLOCKID10";
-  bg_id = "GEOID10";
-  unit_id = bg_id;
-}
-if (STATES_WITH_NEW_FILES.indexOf(state) >= 0){
+var bg_suffix = "bg";
+var bl_suffix = "block";
+// if (STATES_USING_OLD_UNITS.indexOf(state) >= 0) {
+//   old_units = true;
+//   block_id = "BLOCKID10";
+//   bg_id = "GEOID10";
+//   unit_id = bg_id;
+// }
+if (STATES_WITHOUT_NEW_FILES.indexOf(state) < 0){
   bg_id = "GEOCODE";
   block_id = "GEOCODE";
   unit_id = bg_id;
+  bg_suffix = "bg20";
+  bl_suffix = "block20";
   has20 = true;
+  layer_suffix = bg_suffix;
 }
 if (dane_cty) {
   bg_id = "WARD_FIPS";
@@ -69,14 +74,14 @@ function changeMappingUnit() {
   // change variables for selecting units
   // clear cache and sessionStorage stuff
   if (drawUsingBlocks) {
-    map.setLayoutProperty(state + "-census-lines-block", "visibility", "none");
-    map.setLayoutProperty(state + "-census-shading-block", "visibility", "none");
-    map.setLayoutProperty(state + "-highlighted-block", "visibility", "none");
-    map.setLayoutProperty(state + "-census-lines-bg", "visibility", "visible");
-    map.setLayoutProperty(state + "-census-shading-bg", "visibility", "visible");
-    map.setLayoutProperty(state + "-highlighted-bg", "visibility", "visible");
+    map.setLayoutProperty(state + "-census-lines-" + bl_suffix, "visibility", "none");
+    map.setLayoutProperty(state + "-census-shading-" + bl_suffix, "visibility", "none");
+    map.setLayoutProperty(state + "-highlighted-" + bl_suffix, "visibility", "none");
+    map.setLayoutProperty(state + "-census-lines-" + bg_suffix, "visibility", "visible");
+    map.setLayoutProperty(state + "-census-shading-" + bg_suffix, "visibility", "visible");
+    map.setLayoutProperty(state + "-highlighted-" + bg_suffix, "visibility", "visible");
     drawUsingBlocks = false;
-    layer_suffix = "bg";
+    layer_suffix = bg_suffix;
     unit_id = bg_id;
     // change button name for this case -- TODO: languages?
     $("#map-units-btn").text("Use smaller units");
@@ -92,19 +97,19 @@ function changeMappingUnit() {
       $("#map-pop-btn").hide();
     }
     // clear selection
-    map.setFilter(state + "-highlighted-block", ["in", block_id, ""]);
-    map.setFilter(state + "-highlighted-bg", ["in", bg_id, ""]);
+    map.setFilter(state + "-highlighted-" + bl_suffix, ["in", block_id, ""]);
+    map.setFilter(state + "-highlighted-" + bg_suffix, ["in", bg_id, ""]);
 
     mapHover();
   } else {
-    map.setLayoutProperty(state + "-census-lines-block", "visibility", "visible");
-    map.setLayoutProperty(state + "-census-shading-block", "visibility", "visible");
-    map.setLayoutProperty(state + "-highlighted-block", "visibility", "visible");
-    map.setLayoutProperty(state + "-census-lines-bg", "visibility", "none");
-    map.setLayoutProperty(state + "-census-shading-bg", "visibility", "none");
-    map.setLayoutProperty(state + "-highlighted-bg", "visibility", "none");
+    map.setLayoutProperty(state + "-census-lines-" + bl_suffix, "visibility", "visible");
+    map.setLayoutProperty(state + "-census-shading-" + bl_suffix, "visibility", "visible");
+    map.setLayoutProperty(state + "-highlighted-" + bl_suffix, "visibility", "visible");
+    map.setLayoutProperty(state + "-census-lines-" + bg_suffix, "visibility", "none");
+    map.setLayoutProperty(state + "-census-shading-" + bg_suffix, "visibility", "none");
+    map.setLayoutProperty(state + "-highlighted-" + bg_suffix, "visibility", "none");
     drawUsingBlocks = true;
-    layer_suffix = "block";
+    layer_suffix = bl_suffix;
     unit_id = block_id;
     // change button name for this case -- TODO: languages?
     $("#map-units-btn").text("Use larger units");
@@ -120,8 +125,8 @@ function changeMappingUnit() {
       $("#map-pop-btn").hide();
     }
     // clear selection
-    map.setFilter(state + "-highlighted-block", ["in", block_id, ""]);
-    map.setFilter(state + "-highlighted-bg", ["in", bg_id, ""]);
+    map.setFilter(state + "-highlighted-" + bl_suffix, ["in", block_id, ""]);
+    map.setFilter(state + "-highlighted-" + bg_suffix, ["in", bg_id, ""]);
     mapHover();
   }
 }
@@ -1582,24 +1587,24 @@ map.on("style.load", function () {
     map.setLayoutProperty("dane-highlighted-wards", "visibility", "visible");
   } else {
     // block layers
-    newSourceLayer(state + "block", state + "block");
-    newCensusShading(state, firstSymbolId, "block");
-    newCensusLines(state, "block");
-    newHighlightLayer(state, firstSymbolId, "block");
+    newSourceLayer(state + bl_suffix, state + bl_suffix);
+    newCensusShading(state, firstSymbolId, bl_suffix);
+    newCensusLines(state, bl_suffix);
+    newHighlightLayer(state, firstSymbolId, bl_suffix);
     // block group layers
-    newSourceLayer(state + "bg", state + "bg");
-    newCensusShading(state, firstSymbolId, "bg");
-    newCensusLines(state, "bg");
-    newHighlightLayer(state, firstSymbolId, "bg");
+    newSourceLayer(state + bg_suffix, state + bg_suffix);
+    newCensusShading(state, firstSymbolId, bg_suffix);
+    newCensusLines(state, bg_suffix);
+    newHighlightLayer(state, firstSymbolId, bg_suffix);
     if (units==="B") {
-      map.setLayoutProperty(state + "-census-lines-block", "visibility", "visible");
-      map.setLayoutProperty(state + "-census-shading-block", "visibility", "visible");
-      map.setLayoutProperty(state + "-highlighted-block", "visibility", "visible");
-      map.setLayoutProperty(state + "-census-lines-bg", "visibility", "none");
-      map.setLayoutProperty(state + "-census-shading-bg", "visibility", "none");
-      map.setLayoutProperty(state + "-highlighted-bg", "visibility", "none");
+      map.setLayoutProperty(state + "-census-lines-" + bl_suffix, "visibility", "visible");
+      map.setLayoutProperty(state + "-census-shading" + bl_suffix, "visibility", "visible");
+      map.setLayoutProperty(state + "-highlighted-" + bl_suffix, "visibility", "visible");
+      map.setLayoutProperty(state + "-census-lines-" + bg_suffix, "visibility", "none");
+      map.setLayoutProperty(state + "-census-shading-" + bg_suffix, "visibility", "none");
+      map.setLayoutProperty(state + "-highlighted-" + bg_suffix, "visibility", "none");
       drawUsingBlocks = true;
-      layer_suffix = "block";
+      layer_suffix = bl_suffix;
       unit_id = block_id;
       // change button name for this case -- TODO: languages?
       $("#map-units-btn").text("Use larger units");
@@ -1613,8 +1618,8 @@ map.on("style.load", function () {
         $("#map-pop-btn").hide();
       }
       // clear selection
-      map.setFilter(state + "-highlighted-block", ["in", block_id, ""]);
-      map.setFilter(state + "-highlighted-bg", ["in", bg_id, ""]);
+      map.setFilter(state + "-highlighted-" + bl_suffix, ["in", block_id, ""]);
+      map.setFilter(state + "-highlighted-" + bg_suffix, ["in", bg_id, ""]);
       mapHover();
     }
   }

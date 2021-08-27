@@ -67,7 +67,7 @@ var NYC_STATE_ASSEMBLY_KEY = "61wjirls";
 var PRECINCTS_KEY = "precincts_final";
 
 var STATES_USING_OLD_UNITS = ["il", "ok"];
-var STATES_WITH_NEW_FILES = ["nm"];
+var STATES_WITHOUT_NEW_FILES = [];
 
 var SOURCE_LAYER_NAMES = {
   "leg2" : "boundaries_legislative_2",
