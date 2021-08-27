@@ -1668,9 +1668,9 @@ map.on("style.load", function () {
       // GEOID20 for blocks for all states using 2020 blocks (all except il, ok)
       if (drawUsingBlocks) {
         features.push(feature.properties[block_id]);
-        if (old_units && !(feature.properties[block_id] in blockPopCache)) {
-          blockPopCache[feature.properties[block_id]] = feature.properties.POP10;
-        }
+        // if (old_units && !(feature.properties[block_id] in blockPopCache)) {
+        //   blockPopCache[feature.properties[block_id]] = feature.properties.POP10;
+        // }
         if (has20 && !(feature.properties[block_id] in blockPopCache)) {
           blockPopCache[feature.properties[block_id]] = feature.properties.tot;
         }
@@ -1788,6 +1788,7 @@ map.on("style.load", function () {
           }
         });
         $(".comm-pop").html(blockCommPop);
+        sessionStorage.setItem("pop", blockCommPop);
       } else {
         // remove "in" and "GEOID" parts of filter, for population
         getCommPop(cleanFilter(filter));
