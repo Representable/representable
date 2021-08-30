@@ -34,6 +34,9 @@ if (drive_slug == "tell-us-about-your") dane_cty = true;
 var initialZoom = 6; // initial zoom level for first showing map - higher is closer
 var bg_suffix = "bg";
 var bl_suffix = "block";
+
+// var demCache = {}; // add dictionaries for demographics info we want to track
+
 // if (STATES_USING_OLD_UNITS.indexOf(state) >= 0) {
 //   old_units = true;
 //   block_id = "BLOCKID10";
@@ -48,6 +51,9 @@ if (STATES_WITHOUT_NEW_FILES.indexOf(state) < 0){
   bl_suffix = "block20";
   has20 = true;
   layer_suffix = bg_suffix;
+  if (state == 'nh') {
+    block_id = "GEOID20";
+  }
 }
 if (dane_cty) {
   bg_id = "WARD_FIPS";
@@ -1777,6 +1783,7 @@ map.on("style.load", function () {
         "This community is too large. Please select a smaller area to continue."
       );
     }
+
     if (old_units || has20) {
       // set as indicator that population is loading
       $(".comm-pop").html("...");
@@ -2071,3 +2078,18 @@ function cleanFilter(filter) {
   cleanFilter.splice(0, 2);
   return cleanFilter;
 }
+
+// function setDemographic(filter, colName) {
+//   var sum = 0;
+//   var ctr = 0;
+
+//   filter.forEach(function(feature){
+//     if (feature in demCache[colName]) {
+//       ctr++;
+//       sum += demCache[colName[feature]];
+//       if (ctr === filter.length) {
+//         sessionStorage.setItem(colName, sum);
+//       }
+//     } 
+//   });
+// }
