@@ -11,13 +11,34 @@
   });
 </script>
 <div class="container dark-gray-text">
-  <div class="row row-hero my-5">
-    <div class="col-12">
-      <h1 class="font-weight-light text-center mb-3">{% trans "Welcome to" %} {{ state_obj.name }}
-      </h1>
+  <div class="row row-hero my-5 pt-5 px-5">
+    <div class="col-md-3">
+      <h3 class="mb-3">Why map your community?</h3>
+      <img class="w-100" src="{% static 'img/education-1.svg' %}" alt="Map with community selected"/>
+      <p>Mapping your community and identifying its shared interests allows public officials to take your community’s concerns into account during redistricing. </p>
     </div>
+    <div class="col-md-3">
+      <h3 class="mb-3">What is <br> redistricting?</h3>
+      <div id="entry_video_wrap">
+          <div id="entry_preview_video" class="ml-2">
+              <iframe class="w-100" src="https://www.youtube.com/embed/vUbZoyCCR44?"></iframe>
+          </div>
+      </div>
+      <p>Every ten years, the United States draws new voting districts. District lines decide who votes for which representatives in local, state, and federal elections. </p>
+    </div>
+    <div class="col-md-3">
+      <h3 class="mb-3">What is gerrymandering?</h3>
+      <img class="w-100" src="{% static 'img/education-3.svg' %}" alt="Districts illustration with pencil"/>
+      <p>Politicians have been splitting up or packing together communities into voting districts that silence their voices. Mapping your community of interest helps fight gerrymandering.</p>
+    </div>
+    <div class="col-md-3">
+      <h3 class="mb-3">What is a Community of Interest?</h3>
+      <p>A Community of Interest is a <b>geographic area</b> that shares cultural, historical, or economic interests. </p>
+    </div>
+    <a class="mx-auto btn btn-primary btn-lg btn-canvas my-5 d-none d-lg-block btn-ls-md" href="{% url 'main:entry' %}{{state_obj.abbr|lower}}" role="button">{% trans "NEXT" %}</a>
   </div>
 
+  <h1 class="text-center mb-5">Redistricting in your state:</h1>
   <div id="state-info">{% include './state_info.html' %}</div>
   <div class="row text-center">
       <a class="mx-auto btn btn-outline-primary btn-lg btn-canvas my-5 d-none d-lg-block btn-ls-md" href="{% url 'main:entry' %}{{state_obj.abbr|lower}}" role="button">{% trans "START MAPPING" %}</a>
