@@ -23,7 +23,6 @@ django-leaflet==0.24.0
 django-phone-field==1.8.0
 django-redis==4.10.0
 django-redis-cache==2.0.0
-django-select2==6.3.1
 django-storages==1.11.1
 django-taggit==1.4.0
 django-widget-tweaks==1.4.3
