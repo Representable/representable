@@ -156,6 +156,18 @@ map.on("load", function () {
     });
   }
 
+  var layers = map.getStyle().layers;
+  // Find the index of the first symbol layer in the map style
+  // this is so that added layers go under the symbols on the map
+  var firstSymbolId = layers[0].id;
+  for (var i = 0; i < layers.length; i++) {
+    console.log(layers[i]["source-layer"]);
+    if (layers[i].type === "symbol") {
+      firstSymbolId = layers[i].id;
+      break;
+    }
+  }
+
   // mxzoom(def 18 higher = more detail)
   // tol(def .375 higher = simpler geometry)
 
@@ -167,7 +179,8 @@ map.on("load", function () {
   });
   console.log(coidata_geojson_format);
 
-  map.addLayer({
+  map.addLayer(
+    {
       'id': 'coi_layer_fill',
       'type': 'fill',
       'source': 'coi_all',
@@ -175,7 +188,9 @@ map.on("load", function () {
           'fill-color': 'rgb(110, 178, 181)',
           'fill-opacity': 0.15
       },
-  });
+    },
+    firstSymbolId
+  );
   map.addLayer({
     id: "coi_line",
     type: "line",
@@ -264,6 +279,10 @@ map.on("load", function () {
       essential: true // this animation is considered essential with respect to prefers-reduced-motion
     });
   }
+});
+
+map.on("style.load", function () {
+
 });
 
 // on click, zoom to community
