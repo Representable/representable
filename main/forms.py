@@ -20,6 +20,11 @@
 from allauth.account.forms import LoginForm, SignupForm
 from django import forms
 from django.forms import ModelForm
+from django_select2.forms import (
+    Select2MultipleWidget,
+    Select2Widget,
+    ModelSelect2Widget,
+)
 from .models import (
     CommunityEntry,
     Organization,
@@ -33,6 +38,9 @@ from .choices import STATES, UNITS
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Area
 from django.core.files.images import get_image_dimensions
+
+# https://django-select2.readthedocs.io/en/latest/django_select2.html
+
 
 class AddressForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -273,7 +281,7 @@ class EditOrganizationForm(ModelForm):
                 }
             ),
         }
-
+    
     def clean(self):
         """
         Make sure that the image is a reasonable shape
