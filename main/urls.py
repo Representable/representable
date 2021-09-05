@@ -35,11 +35,6 @@ urlpatterns = [
         name="account_signup",
     ),
     path(
-        "accounts/social/signup/",
-        views.main.RepresentableSocialSignupView.as_view(),
-        name="socialaccount_signup",
-    ),
-    path(
         'block_group_polygons/<str:abbr>/',
         views.main.block_group_polygons,
         name='block_group_polygons',
@@ -106,7 +101,6 @@ urlpatterns = [
     path("faq/", views.main.FAQ.as_view(), name="faq"),
     path("glossary/", views.main.Glossary.as_view(), name="glossary"),
     path("resources/", views.main.Resources.as_view(), name="resources"),
-    path("resources/<abbr>/", views.main.Resources.as_view(), {"state": ""}, name="resources"),
     path("review/", views.main.Review.as_view(), name="review"),
     path("privacy/", views.main.Privacy.as_view(), name="privacy"),
     path("terms/", views.main.Terms.as_view(), name="terms"),

@@ -5,7 +5,7 @@ title: Overview
 
 ### Project Structure
 
-The Django project has one central app called `main`. You'll notice there's a `representable` folder - this mostly contains the settings and central `urls.py` file. Futhermore, there's a `docs` folder (a separate React app). For the purpose of this tutorial, we'll mainly discuss the `main` folder.
+The Django project has one central app called `main`. You'll notice there's a `representable` folder - this mostly contains the settings and central `urls.py` file. Futhermore, there's a `viz` folder and a `docs` folder (each are separate React apps). For the purpose of this tutorial, we'll mainly discuss the `main` folder.
 
 #### Django `main` Structure
 

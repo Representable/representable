@@ -27,33 +27,14 @@ var unit_id = bg_id; // abstracted - current unit
 var layer_suffix = "bg"; // suffix for created unit
 var drawUsingBlocks = false; // are we using blocks block groups currently?
 var old_units = false; // does this state use 2010 census units or 2020?
-var has20 = false;
 var dane_cty = false; // is this a customized building block drive for dane county?
-var popCache = {};
 if (drive_slug == "tell-us-about-your") dane_cty = true;
 var initialZoom = 6; // initial zoom level for first showing map - higher is closer
-var bg_suffix = "bg";
-var bl_suffix = "block";
-
-// var demCache = {}; // add dictionaries for demographics info we want to track
-
-// if (STATES_USING_OLD_UNITS.indexOf(state) >= 0) {
-//   old_units = true;
-//   block_id = "BLOCKID10";
-//   bg_id = "GEOID10";
-//   unit_id = bg_id;
-// }
-if (STATES_WITHOUT_NEW_FILES.indexOf(state) < 0){
-  bg_id = "GEOCODE";
-  block_id = "GEOCODE";
+if (STATES_USING_OLD_UNITS.indexOf(state) >= 0) {
+  old_units = true;
+  block_id = "BLOCKID10";
+  bg_id = "GEOID10";
   unit_id = bg_id;
-  bg_suffix = "bg20";
-  bl_suffix = "block20";
-  has20 = true;
-  layer_suffix = bg_suffix;
-  if (state == 'nh') {
-    block_id = "GEOID20";
-  }
 }
 if (dane_cty) {
   bg_id = "WARD_FIPS";
@@ -80,14 +61,14 @@ function changeMappingUnit() {
   // change variables for selecting units
   // clear cache and sessionStorage stuff
   if (drawUsingBlocks) {
-    map.setLayoutProperty(state + "-census-lines-" + bl_suffix, "visibility", "none");
-    map.setLayoutProperty(state + "-census-shading-" + bl_suffix, "visibility", "none");
-    map.setLayoutProperty(state + "-highlighted-" + bl_suffix, "visibility", "none");
-    map.setLayoutProperty(state + "-census-lines-" + bg_suffix, "visibility", "visible");
-    map.setLayoutProperty(state + "-census-shading-" + bg_suffix, "visibility", "visible");
-    map.setLayoutProperty(state + "-highlighted-" + bg_suffix, "visibility", "visible");
+    map.setLayoutProperty(state + "-census-lines-block", "visibility", "none");
+    map.setLayoutProperty(state + "-census-shading-block", "visibility", "none");
+    map.setLayoutProperty(state + "-highlighted-block", "visibility", "none");
+    map.setLayoutProperty(state + "-census-lines-bg", "visibility", "visible");
+    map.setLayoutProperty(state + "-census-shading-bg", "visibility", "visible");
+    map.setLayoutProperty(state + "-highlighted-bg", "visibility", "visible");
     drawUsingBlocks = false;
-    layer_suffix = bg_suffix;
+    layer_suffix = "bg";
     unit_id = bg_id;
     // change button name for this case -- TODO: languages?
     $("#map-units-btn").text("Use smaller units");
@@ -95,50 +76,47 @@ function changeMappingUnit() {
     sessionStorage.clear();
     filterStack = [];
     bboxStack = [];
-    $(".comm-pop").html(0);
     // show or hide population display
-    if (old_units || has20) {
+    if (old_units) {
       $("#map-pop-btn").show();
     } else {
       $("#map-pop-btn").hide();
     }
     // clear selection
-    map.setFilter(state + "-highlighted-" + bl_suffix, ["in", block_id, ""]);
-    map.setFilter(state + "-highlighted-" + bg_suffix, ["in", bg_id, ""]);
+    map.setFilter(state + "-highlighted-block", ["in", block_id, ""]);
+    map.setFilter(state + "-highlighted-bg", ["in", bg_id, ""]);
 
     mapHover();
   } else {
-    map.setLayoutProperty(state + "-census-lines-" + bl_suffix, "visibility", "visible");
-    map.setLayoutProperty(state + "-census-shading-" + bl_suffix, "visibility", "visible");
-    map.setLayoutProperty(state + "-highlighted-" + bl_suffix, "visibility", "visible");
-    map.setLayoutProperty(state + "-census-lines-" + bg_suffix, "visibility", "none");
-    map.setLayoutProperty(state + "-census-shading-" + bg_suffix, "visibility", "none");
-    map.setLayoutProperty(state + "-highlighted-" + bg_suffix, "visibility", "none");
+    map.setLayoutProperty(state + "-census-lines-block", "visibility", "visible");
+    map.setLayoutProperty(state + "-census-shading-block", "visibility", "visible");
+    map.setLayoutProperty(state + "-highlighted-block", "visibility", "visible");
+    map.setLayoutProperty(state + "-census-lines-bg", "visibility", "none");
+    map.setLayoutProperty(state + "-census-shading-bg", "visibility", "none");
+    map.setLayoutProperty(state + "-highlighted-bg", "visibility", "none");
     drawUsingBlocks = true;
-    layer_suffix = bl_suffix;
+    layer_suffix = "block";
     unit_id = block_id;
     // change button name for this case -- TODO: languages?
     $("#map-units-btn").text("Use larger units");
     //clear "cache" so that undo button still works as expected
     sessionStorage.clear();
     filterStack = [];
-    bboxStack = [];    
-    $(".comm-pop").html(0);
-    // show or hide population display
-    if (old_units || has20) {
+    bboxStack = [];    // show or hide population display
+    if (old_units) {
       $("#map-pop-btn").show();
     } else {
       $("#map-pop-btn").hide();
     }
     // clear selection
-    map.setFilter(state + "-highlighted-" + bl_suffix, ["in", block_id, ""]);
-    map.setFilter(state + "-highlighted-" + bg_suffix, ["in", bg_id, ""]);
+    map.setFilter(state + "-highlighted-block", ["in", block_id, ""]);
+    map.setFilter(state + "-highlighted-bg", ["in", bg_id, ""]);
     mapHover();
   }
 }
 
 // removes population from community info dropdown, if in a state using new census geographies
-if (!old_units && !has20) {
+if (!old_units) {
   $("#map-pop-btn").hide();
 }
 
@@ -213,14 +191,6 @@ function toggleAngle(e) {
   $('#' + collapsible).collapse('toggle');
   if (e.innerHTML.includes("fa-angle-down")) {
     e.innerHTML = e.innerHTML.replace("fa-angle-down", "fa-angle-up");
-    if (e.classList.contains("coi-def-mix")) {
-      mixpanel.track("Clicked on COI def in state", {
-        drive_id: drive_id,
-        drive_name: drive_name,
-        organization_id: organization_id,
-        organization_name: organization_name,
-      });
-    }
   } else {
     e.innerHTML = e.innerHTML.replace("fa-angle-up", "fa-angle-down");
   }
@@ -412,7 +382,6 @@ tagnames.initialize();
 $("#tag_more").on("click", function() {
   if (!$('.bootstrap-tagsinput-max').length > 0) {
     $("#tags-select-modal").modal();
-    mixpanel.track("More tags clicked");
   }
 });
 
@@ -1536,12 +1505,6 @@ var blockGroupPolygons = null;
 /* After the map style has loaded on the page, add a source layer and default
 styling for a single point. */
 map.on("style.load", function () {
-  mixpanel.track("Map Drawing Started", {
-    drive_id: drive_id,
-    drive_name: drive_name,
-    organization_id: organization_id,
-    organization_name: organization_name,
-  });
   fetch('/block_group_polygons/' + state.toLowerCase() + 'bg/')
     .then(response => {
       if (response.ok) {
@@ -1593,24 +1556,24 @@ map.on("style.load", function () {
     map.setLayoutProperty("dane-highlighted-wards", "visibility", "visible");
   } else {
     // block layers
-    newSourceLayer(state + bl_suffix, state + bl_suffix);
-    newCensusShading(state, firstSymbolId, bl_suffix);
-    newCensusLines(state, bl_suffix);
-    newHighlightLayer(state, firstSymbolId, bl_suffix);
+    newSourceLayer(state + "block", state + "block");
+    newCensusShading(state, firstSymbolId, "block");
+    newCensusLines(state, "block");
+    newHighlightLayer(state, firstSymbolId, "block");
     // block group layers
-    newSourceLayer(state + bg_suffix, state + bg_suffix);
-    newCensusShading(state, firstSymbolId, bg_suffix);
-    newCensusLines(state, bg_suffix);
-    newHighlightLayer(state, firstSymbolId, bg_suffix);
+    newSourceLayer(state + "bg", state + "bg");
+    newCensusShading(state, firstSymbolId, "bg");
+    newCensusLines(state, "bg");
+    newHighlightLayer(state, firstSymbolId, "bg");
     if (units==="B") {
-      map.setLayoutProperty(state + "-census-lines-" + bl_suffix, "visibility", "visible");
-      map.setLayoutProperty(state + "-census-shading" + bl_suffix, "visibility", "visible");
-      map.setLayoutProperty(state + "-highlighted-" + bl_suffix, "visibility", "visible");
-      map.setLayoutProperty(state + "-census-lines-" + bg_suffix, "visibility", "none");
-      map.setLayoutProperty(state + "-census-shading-" + bg_suffix, "visibility", "none");
-      map.setLayoutProperty(state + "-highlighted-" + bg_suffix, "visibility", "none");
+      map.setLayoutProperty(state + "-census-lines-block", "visibility", "visible");
+      map.setLayoutProperty(state + "-census-shading-block", "visibility", "visible");
+      map.setLayoutProperty(state + "-highlighted-block", "visibility", "visible");
+      map.setLayoutProperty(state + "-census-lines-bg", "visibility", "none");
+      map.setLayoutProperty(state + "-census-shading-bg", "visibility", "none");
+      map.setLayoutProperty(state + "-highlighted-bg", "visibility", "none");
       drawUsingBlocks = true;
-      layer_suffix = bl_suffix;
+      layer_suffix = "block";
       unit_id = block_id;
       // change button name for this case -- TODO: languages?
       $("#map-units-btn").text("Use larger units");
@@ -1618,14 +1581,14 @@ map.on("style.load", function () {
       sessionStorage.clear();
       filterStack = [];
       bboxStack = [];    // show or hide population display
-      if (old_units || has20) {
+      if (old_units) {
         $("#map-pop-btn").show();
       } else {
         $("#map-pop-btn").hide();
       }
       // clear selection
-      map.setFilter(state + "-highlighted-" + bl_suffix, ["in", block_id, ""]);
-      map.setFilter(state + "-highlighted-" + bg_suffix, ["in", bg_id, ""]);
+      map.setFilter(state + "-highlighted-block", ["in", block_id, ""]);
+      map.setFilter(state + "-highlighted-bg", ["in", bg_id, ""]);
       mapHover();
     }
   }
@@ -1674,18 +1637,12 @@ map.on("style.load", function () {
       // GEOID20 for blocks for all states using 2020 blocks (all except il, ok)
       if (drawUsingBlocks) {
         features.push(feature.properties[block_id]);
-        // if (old_units && !(feature.properties[block_id] in blockPopCache)) {
-        //   blockPopCache[feature.properties[block_id]] = feature.properties.POP10;
-        // }
-        if (has20 && !(feature.properties[block_id] in blockPopCache)) {
-          blockPopCache[feature.properties[block_id]] = feature.properties.tot;
+        if (old_units && !(feature.properties[block_id] in blockPopCache)) {
+          blockPopCache[feature.properties[block_id]] = feature.properties.POP10;
         }
       }
       else {
         features.push(feature.properties[bg_id]);
-        if (has20 && !(feature.properties[bg_id] in popCache)) {
-          popCache[feature.properties[bg_id]] = feature.properties.tot;
-        }
       }
       if (features.length >= 1) {
         // polyCon : the turf polygon from coordinates
@@ -1783,8 +1740,7 @@ map.on("style.load", function () {
         "This community is too large. Please select a smaller area to continue."
       );
     }
-
-    if (old_units || has20) {
+    if (old_units) {
       // set as indicator that population is loading
       $(".comm-pop").html("...");
       if (drawUsingBlocks) {
@@ -1795,7 +1751,6 @@ map.on("style.load", function () {
           }
         });
         $(".comm-pop").html(blockCommPop);
-        sessionStorage.setItem("pop", blockCommPop);
       } else {
         // remove "in" and "GEOID" parts of filter, for population
         getCommPop(cleanFilter(filter));
@@ -2028,32 +1983,33 @@ function arraysEqual(a, b) {
 
 /***************************************************************************/
 
+var popCache = {};
 // get the population for a community from filter
 // TODO: load this in automatically as part of the tilesets for immediate lookup?
 function getCommPop(filter) {
   if (filter.length === 0) $(".comm-pop").html(0);
   var pop = 0;
   var ctr = 0;
-    filter.forEach(function(feature){
-      if (feature in popCache) {
+  filter.forEach(function(feature){
+    if (feature in popCache) {
+      ctr++;
+      pop += popCache[feature];
+      if (ctr === filter.length) {
+        $(".comm-pop").html(pop);
+        sessionStorage.setItem("pop", pop);
+      }
+    } else {
+      getBGPop(feature, function(bgPop) {
         ctr++;
-        pop += popCache[feature];
+        pop += parseInt(bgPop);
+        popCache[feature] = parseInt(bgPop);
         if (ctr === filter.length) {
           $(".comm-pop").html(pop);
           sessionStorage.setItem("pop", pop);
         }
-      } else {
-        getBGPop(feature, function(bgPop) {
-          ctr++;
-          pop += parseInt(bgPop);
-          popCache[feature] = parseInt(bgPop);
-          if (ctr === filter.length) {
-            $(".comm-pop").html(pop);
-            sessionStorage.setItem("pop", pop);
-          }
-        });
-      }
-    });
+      });
+    }
+  });
 }
 
 /****************************************************************************/
@@ -2078,18 +2034,3 @@ function cleanFilter(filter) {
   cleanFilter.splice(0, 2);
   return cleanFilter;
 }
-
-// function setDemographic(filter, colName) {
-//   var sum = 0;
-//   var ctr = 0;
-
-//   filter.forEach(function(feature){
-//     if (feature in demCache[colName]) {
-//       ctr++;
-//       sum += demCache[colName[feature]];
-//       if (ctr === filter.length) {
-//         sessionStorage.setItem(colName, sum);
-//       }
-//     } 
-//   });
-// }
