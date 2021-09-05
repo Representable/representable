@@ -26,12 +26,36 @@ from main.models import CommunityEntry, Report
 from .models import User
 from django.urls import reverse
 from django.utils.html import format_html
+from django.http import HttpResponse
 
 from django import forms
 from ckeditor.widgets import CKEditorWidget
 
+import csv
+
 from .models import State, Drive, Organization
 
+# ********************************************************************* #
+
+class ExportCsvMixin:
+    def export_as_csv(self, request, queryset):
+
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+
+        writer.writerow(field_names)
+        for obj in queryset:
+            row = writer.writerow([getattr(obj, field) for field in field_names])
+
+        return response
+
+    export_as_csv.short_description = "Export Selected"
+
+# ********************************************************************* #
 
 class StateAdminForm(forms.ModelForm):
     content_news = forms.CharField(widget=CKEditorWidget())
@@ -57,9 +81,6 @@ class StateAdmin(admin.ModelAdmin):
 admin.site.register(State, StateAdmin)
 
 admin.site.register(User, UserAdmin)
-
-admin.site.register(Drive)
-
 
 class ReportAdmin(admin.ModelAdmin):
     list_display = (
@@ -159,9 +180,11 @@ class CommunityResource(resources.ModelResource):
 
 
 class CommunityAdmin(ImportExportModelAdmin):
+    date_hierarchy = "created_at"
     list_display = (
         "id",
         "user_name",
+        "get_user_email",
         "entry_name",
         "organization",
         "drive",
@@ -171,12 +194,34 @@ class CommunityAdmin(ImportExportModelAdmin):
         'get_economic_length',
         'get_cultural_length',
         'get_needs_length',
+        'get_tags',
     )
     list_filter = (
         "drive",
         "organization",
+        "state",
+        "tags"
     )
 
+    def export_emails_as_csv(self, request, queryset):
+
+        meta = self.model._meta
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+
+        for obj in queryset:
+            row = writer.writerow([obj.user.email])
+
+        return response
+
+    export_emails_as_csv.short_description = "Export Selected Emails"
+    actions = ["export_emails_as_csv"]
+
+    def get_user_email(self, obj):
+        return obj.user.email
+    get_user_email.short_description = 'user email'
     def get_services_length(self, obj):
         return len(obj.comm_activities)
     get_services_length.short_description = 'services length'
@@ -193,10 +238,82 @@ class CommunityAdmin(ImportExportModelAdmin):
         return len(obj.other_considerations)
     get_needs_length.short_description = 'needs length'
     get_needs_length.admin_order_field = 'length_needs'
+    def get_tags(self, obj):
+        tags = []
+        for tag in obj.tags.all():
+            tags.append(str(tag))
+        return ', '.join(tags)
+    get_tags.short_description = 'tags'
+
 
     resource_class = CommunityResource
 
 
 admin.site.register(CommunityEntry, CommunityAdmin)
 
-admin.site.register(Organization)
+class OrgStateFilter(SimpleListFilter):
+    title = 'state'
+    parameter_name = 'states'
+
+    def lookups(self, request, model_admin):
+        # gets list of each state that exists with an org, for selection on admin sidebar
+        states_list = [o.states for o in model_admin.model.objects.all()]
+        each_state = [state for states in states_list for state in states]
+        res = []
+        [res.append(x) for x in each_state if x not in res]
+        return [(state, state) for state in res]
+
+    def queryset(self, request, queryset):
+        # queries orgs by state in list of states
+        for state in State.objects.all():
+            if self.value() == state.abbr:
+                return queryset.filter(states__icontains=state.abbr)
+
+class OrganizationAdmin(admin.ModelAdmin, ExportCsvMixin):
+    class Meta:
+        model = Organization
+        fields = (
+            "id",
+            "name",
+            "description",
+            "slug",
+            "states",
+        )
+    list_display = ("id", "name", "description", "slug", "states")
+    list_filter = (OrgStateFilter,)
+    actions = ["export_as_csv"]
+
+admin.site.register(Organization, OrganizationAdmin)
+
+class DriveStateFilter(SimpleListFilter):
+    title = 'state'
+    parameter_name = 'state'
+
+    def lookups(self, request, model_admin):
+        # gets list of each state that exists with an org, for selection on admin sidebar
+        states_list = [o.state for o in model_admin.model.objects.all()]
+        res = []
+        [res.append(x) for x in states_list if x not in res]
+        return [(state, state) for state in res]
+
+    def queryset(self, request, queryset):
+        # queries orgs by state in list of states
+        for state in State.objects.all():
+            if self.value() == state.abbr:
+                return queryset.filter(state=state.abbr)
+
+class DriveAdmin(admin.ModelAdmin, ExportCsvMixin):
+    class Meta:
+        model = Drive
+        fields = (
+            "name",
+            "description",
+            "organization",
+            "state",
+            "private",
+        )
+    list_display = ("name", "description", "organization", "state", "private")
+    list_filter = (DriveStateFilter,)
+    actions = ["export_as_csv"]
+
+admin.site.register(Drive, DriveAdmin)

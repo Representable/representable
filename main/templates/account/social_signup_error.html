@@ -1,0 +1,28 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12 col-md-6 mb-3 mb-md-0 mx-auto">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5>
+                        {% trans "Third-Party Signup Error" %}
+                    </h5>
+
+                    <hr>
+
+                    {% blocktrans %}
+                    <p>It appears that the email associated with the third-party account that you are trying to connect is already in use. If you already have a Representable account under 
+                    that email, you can login and connect this third-party account in the Account Settings page.
+                    </p>
+                    {% endblocktrans %}
+                    <a href="{% url "account_login" %}" class="mx-auto">Go to Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

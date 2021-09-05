@@ -1,0 +1,75 @@
+{% extends "socialaccount/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Manage Third-Party Connections" %}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h4>
+        {% trans "Manage Third-Party Connections" %}
+    </h4>
+    <hr>
+    <div class="row">
+        <div class="col-12 col-md-6 mb-3 mb-md-0">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5>
+                        {% trans "Current Connections" %}
+                    </h5>
+                    <hr>
+                    {% if form.accounts %}
+                    <p>{% blocktrans %}You can sign in to your account using any of the following third-party accounts:{% endblocktrans %}</p>
+
+
+                    <form method="post" action="{% url 'socialaccount_connections' %}">
+                    {% csrf_token %}
+
+                    <fieldset>
+                    {% if form.non_field_errors %}
+                    <div id="errorMsg">{{ form.non_field_errors }}</div>
+                    {% endif %}
+
+                    {% for base_account in form.accounts %}
+                    {% with base_account.get_provider_account as account %}
+                    <div>
+                    <label for="id_account_{{ base_account.id }}">
+                    <input id="id_account_{{ base_account.id }}" type="checkbox" name="account" value="{{ base_account.id }}"/>
+                    <span class="socialaccount_provider {{ base_account.provider }} {{ account.get_brand.id }} ml-3">{{account.get_brand.name}}</span>
+                    {% comment %} {{ base_account.user.email }} {% endcomment %}
+                    {% comment %} {{ base_account.get_provider}} {% endcomment %}
+                    </label>
+                    </div>
+                    {% endwith %}
+                    {% endfor %}
+
+                    <div class="mt-2 text-center">
+                        <button class="btn btn-outline-primary" type="submit">{% trans 'Remove' %}</button>
+                    </div>
+
+                    </fieldset>
+
+                    </form>
+
+                    {% else %}
+                    <p>{% trans 'You currently have no third-party accounts connected to this account.' %}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5>{% trans 'Add a Third-Party Account' %}</h5>
+                    <hr>
+                    <div class="container">
+                        {% include "socialaccount/snippets/connect_social.html" with process="connect" %}
+                    </div>
+                </div>
+            </div>
+
+            {% comment %} {% include "socialaccount/snippets/login_extra.html" %} {% endcomment %}
+        </div>
+    </div>
+</div>
+{% endblock %}
