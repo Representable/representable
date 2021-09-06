@@ -13,11 +13,6 @@ function toggleAngle(e) {
   $('#' + collapsible).collapse('toggle');
   if (e.innerHTML.includes("fa-angle-down")) {
     e.innerHTML = e.innerHTML.replace("fa-angle-down", "fa-angle-up");
-    if (e.classList.contains("state-info-mix")) {
-      mixpanel.track("State Info Viewed", {
-        question_id: e.id,
-      });
-    }
   } else {
     e.innerHTML = e.innerHTML.replace("fa-angle-up", "fa-angle-down");
   }

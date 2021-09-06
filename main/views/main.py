@@ -291,23 +291,6 @@ class Glossary(TemplateView):
 class Resources(TemplateView):
     template_name = "main/pages/resources.html"
 
-    def get(self, request, abbr=None, *args, **kwargs):
-
-        print(abbr)
-        if abbr:
-            state = State.objects.filter(abbr=abbr.upper())
-            if not state:
-                return HttpResponseRedirect(
-                    reverse_lazy("main:resources")
-                )
-            context = {"state": state[0]}
-            return render(request, self.template_name, context)
-        else:
-            return render(
-                request,
-                self.template_name,
-            )
-
 
 # ******************************************************************************#
 
@@ -354,10 +337,11 @@ class StatePage(TemplateView):
             return HttpResponseRedirect(
                 reverse_lazy("main:entry", kwargs={"abbr": abbr})
             )
+        drives = state[0].get_drives()
         return render(
             request,
             self.template_name,
-            {"state_obj": state[0]},
+            {"state_obj": state[0], "drives": drives},
         )
 
 

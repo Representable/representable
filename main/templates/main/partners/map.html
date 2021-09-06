@@ -71,9 +71,9 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
               </div>
               <input class="m-2 p-2 rounded border border-secondary" id="search-comm" type="text" placeholder="Search communities...">
               <div id="headingOne">
-                <button id="buttonOne" class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne"
+                <button class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne"
                 aria-expanded="false" aria-controls="collapseOne" style="width: 100%">
-                {% trans "Data layers" %} <i id="arrowOne" class="fas fa-caret-down"></i></button>
+                {% trans "Data layers" %} <i class="fas fa-caret-down"></i></button>
               </div>
               <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="font-weight-light text-uppercase small" id="outline-menu">
@@ -90,11 +90,11 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                 </div>
               </div>
             </div>
-            <div class="items">
+            <div class="items card">
               <div id="headingThree">
-                <button id="buttonThree" class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#coisCollapse"
-                aria-expanded="true" aria-controls="coisCollapse" style="width: 100%">
-                {% trans "Communities" %} <i id="arrowThree" class="fas fa-caret-down flipY-inplace"></i></button>
+                <button class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseThree"
+                aria-expanded="true" aria-controls="collapseThree" style="width: 100%">
+                {% trans "Communities" %} <i class="fas fa-caret-down"></i></button>
               </div>
               {% if communities %}
               <div id="coisCollapse" class="collapse show container-fluid py-3 p-0">
