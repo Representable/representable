@@ -2335,7 +2335,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Select your state."
 msgid "Send to your state."
-msgstr "Mándelo a su estado."
+msgstr ""
 
 #: main/templates/main/submission.html:202
 msgid ""
