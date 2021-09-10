@@ -1149,7 +1149,7 @@ msgstr "¿Hay algo más que nos quieras contar sobre tu comunidad?"
 
 #: main/templates/main/entry_survey.html:326
 msgid "Examples of needs or concerns: "
-msgstr ""
+msgstr "asdasdasd"
 
 #: main/templates/main/entry_survey.html:326
 msgid ""
@@ -2335,7 +2335,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Select your state."
 msgid "Send to your state."
-msgstr "Mándelo a su estado."
+msgstr "asasdasd"
 
 #: main/templates/main/submission.html:202
 msgid ""
