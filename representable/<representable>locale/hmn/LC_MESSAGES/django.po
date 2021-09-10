@@ -118,7 +118,7 @@ msgstr "Tiav Txoj Kev Sau Npe Nkag Lawm"
 #: main/templates/account/email_confirm.html:23
 #: main/templates/account/signup.html:39
 msgid "Making an account helps us protect legitimate submissions."
-msgstr ""
+msgstr "bfkjlBFLKBS"
 
 #: main/templates/account/email_confirm.html:31
 #, python-format
@@ -447,7 +447,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Redistricting is coming."
 msgid "Redistricting in Dane County and Wisconsin"
-msgstr ""
+msgstr "ASDBFLKASBDF"
 
 #: main/templates/main/drives/dane-county-page.html:30
 #, fuzzy
@@ -708,7 +708,7 @@ msgid ""
 "surveys/geography/about/glossary.html#par_textimage_4\" "
 "target=\"_blank\"><strong>census block groups</strong></a></span>, which are"
 " used by map drawers to draw voting districts.</p>"
-msgstr ""
+msgstr "ALKSHFKLASJHDF"
 
 #: main/templates/main/entry_map.html:50 main/templates/main/entry_map.html:78
 msgid "Change your mapping units."
@@ -991,7 +991,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Submitted communities are final."
 msgid "Submitted communities are final and public."
-msgstr ""
+msgstr "ALSKDFHKLASJHFLKSAF"
 
 #: main/templates/main/entry_privacy.html:86
 msgid ""
