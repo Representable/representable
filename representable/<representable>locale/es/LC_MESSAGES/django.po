@@ -660,7 +660,7 @@ msgid ""
 "surveys/geography/about/glossary.html#par_textimage_4\" "
 "target=\"_blank\"><strong>census block groups</strong></a></span>, which are"
 " used by map drawers to draw voting districts.</p>"
-msgstr ""
+msgstr "asdasdads"
 
 #: main/templates/main/entry_map.html:50 main/templates/main/entry_map.html:78
 msgid "Change your mapping units."
@@ -2335,7 +2335,7 @@ msgstr ""
 #, fuzzy
 #| msgid "Select your state."
 msgid "Send to your state."
-msgstr "Mándelo a su estado."
+msgstr ""
 
 #: main/templates/main/submission.html:202
 msgid ""
