@@ -66,6 +66,9 @@ class PartnerMap(TemplateView):
 
         # the polygon coordinates
         entryPolyDict = dict()
+        # the size of each polygon in number of block groups or census blocks
+        numBlock = dict()
+        numBG = dict()
 
         # get the org to which this map belongs
         try:
@@ -118,6 +121,10 @@ class PartnerMap(TemplateView):
 
             struct = geojson.loads(s)
             entryPolyDict[obj.entry_ID] = struct.coordinates
+
+            numBG[obj.entry_ID] = len(obj.block_groups.all())
+            numBlock[obj.entry_ID] = len(obj.census_blocks.all())
+
             if is_admin:
                 for a in Address.objects.filter(entry=obj):
                     streets[obj.entry_ID] = a.street
@@ -139,6 +146,8 @@ class PartnerMap(TemplateView):
             "communities": query,
             "comms_counter": comms_counter,
             "entries": json.dumps(entryPolyDict),
+            "numBlock": numBlock,
+            "numBG": numBG,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }

@@ -62,7 +62,8 @@ if (dane_cty) {
   layer_suffix="wards";
   initialZoom = 10;
   // set units link on modal to be municipal wards
-  $("#units-link").html("<strong>municipal wards</strong>")
+  $("#units-link").html("<strong>municipal wards</strong>");
+  $("#faqs-block-groups").html("<strong>municipal wards</strong>");
 }
 // stack of filters (which block to highlight) and bounding boxes (for contiguity check)
 var filterStack = JSON.parse(sessionStorage.getItem("filterStack"));
@@ -122,7 +123,7 @@ function changeMappingUnit() {
     //clear "cache" so that undo button still works as expected
     sessionStorage.clear();
     filterStack = [];
-    bboxStack = [];    
+    bboxStack = [];
     $(".comm-pop").html(0);
     // show or hide population display
     if (old_units || has20) {
@@ -2090,6 +2091,6 @@ function cleanFilter(filter) {
 //       if (ctr === filter.length) {
 //         sessionStorage.setItem(colName, sum);
 //       }
-//     } 
+//     }
 //   });
 // }

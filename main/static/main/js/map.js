@@ -113,6 +113,8 @@ map.on("load", function () {
   addAllLayers(map, document, "map");
   // draw all coi's in one layer
   coidata = JSON.parse(coidata.replace(/'/g, '"'));
+  numBG = JSON.parse(numBG.replace(/'/g, '"'));
+  numBlock = JSON.parse(numBlock.replace(/'/g, '"'));
 
   coidata_geojson_format = {
     'type': 'FeatureCollection',
@@ -128,7 +130,7 @@ map.on("load", function () {
       featureType = "MultiPolygon";
       temp = [];
       final[0] = [coidata[coi_id][0][0]];
-      if (coidata[coi_id][1][0].length > 2) {
+      if (coidata[coi_id][1] && coidata[coi_id][1][0].length > 2) {
         final[1] = [coidata[coi_id][1][0]];
       }
     } else if (coidata[coi_id][0].length > 2) {
@@ -142,7 +144,16 @@ map.on("load", function () {
     var fit = new L.Polygon(final).getBounds();
     var southWest = new mapboxgl.LngLat(fit['_southWest']['lat'], fit['_southWest']['lng']);
     var northEast = new mapboxgl.LngLat(fit['_northEast']['lat'], fit['_northEast']['lng']);
-    community_bounds[coi_id] = new mapboxgl.LngLatBounds(southWest, northEast)
+    community_bounds[coi_id] = new mapboxgl.LngLatBounds(southWest, northEast);
+
+    // get value for block and block group
+    var coi_op = 0.15;
+    if (comms_counter >= 25) {
+      coi_op = 0.12;
+      if (numBlock[coi_id] > 300 || numBG[coi_id] > 15) coi_op = 0.08;
+      if (numBlock[coi_id] > 600 || numBG[coi_id] > 50) coi_op = 0.05;
+      if (numBlock[coi_id] > 900 || numBG[coi_id] > 100) coi_op = 0.025;
+    }
 
     coidata_geojson_format.features.push({
       'type': 'Feature',
@@ -152,8 +163,20 @@ map.on("load", function () {
       },
       'properties': {
           'id': coi_id,
+          'coi_op': coi_op,
       },
     });
+  }
+
+  var layers = map.getStyle().layers;
+  // Find the index of the first symbol layer in the map style
+  // this is so that added layers go under the symbols on the map
+  var firstSymbolId = layers[0].id;
+  for (var i = 0; i < layers.length; i++) {
+    if (layers[i].type === "symbol") {
+      firstSymbolId = layers[i].id;
+      break;
+    }
   }
 
   // mxzoom(def 18 higher = more detail)
@@ -165,17 +188,19 @@ map.on("load", function () {
       'maxzoom': mxzoom,
       'tolerance': tol
   });
-  console.log(coidata_geojson_format);
 
-  map.addLayer({
+  map.addLayer(
+    {
       'id': 'coi_layer_fill',
       'type': 'fill',
       'source': 'coi_all',
       'paint': {
           'fill-color': 'rgb(110, 178, 181)',
-          'fill-opacity': 0.15
+          'fill-opacity': ['get', 'coi_op'],
       },
-  });
+    },
+    firstSymbolId
+  );
   map.addLayer({
     id: "coi_line",
     type: "line",
@@ -190,8 +215,6 @@ map.on("load", function () {
       "line-width": 2,
     },
   });
-
-  // console.log('finsihed layers');
 
   // hover to highlight
   $(".community-review-span").hover(function() {
@@ -264,6 +287,10 @@ map.on("load", function () {
       essential: true // this animation is considered essential with respect to prefers-reduced-motion
     });
   }
+});
+
+map.on("style.load", function () {
+
 });
 
 // on click, zoom to community
