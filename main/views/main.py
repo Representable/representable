@@ -884,6 +884,9 @@ class Map(TemplateView):
 
         # the polygon coordinates
         entryPolyDict = dict()
+        # the size of each polygon in number of block groups or census blocks
+        numBlock = dict()
+        numBG = dict()
         try:
             state_obj = State.objects.get(abbr=state.upper())
         except:
@@ -918,6 +921,9 @@ class Map(TemplateView):
             struct = geojson.loads(s)
             entryPolyDict[obj.entry_ID] = struct.coordinates
 
+            numBG[obj.entry_ID] = len(obj.block_groups.all())
+            numBlock[obj.entry_ID] = len(obj.census_blocks.all())
+
             export_name = state_obj.name.replace(" ", "_") + "_communities"
 
         comms_counter = query.filter(admin_approved=True, private=False).count()
@@ -929,6 +935,8 @@ class Map(TemplateView):
             "comms_counter": comms_counter,
             "drives": drives,
             "entries": json.dumps(entryPolyDict),
+            "numBlock": numBlock,
+            "numBG": numBG,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
         }
