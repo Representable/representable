@@ -76,14 +76,17 @@ INSTALLED_APPS = [
     "representable",
     "taggit",
     # 'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.google',
+    # google code content VVV
+    # 'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.linkedin',
     # 'allauth.socialaccount.providers.linkedin_oauth2',
 ]
 
 ACCOUNT_SESSION_REMEMBER = True
 
-SITE_ID = 2
+# SITE_ID = 2
+# google code comment
+SITE_ID = 1
 # SOCIALAPP_ID = 1
 # SITE_NAME = "Represenetable.org"
 
@@ -124,17 +127,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "representable.wsgi.application"
 
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
-    }
-}
+# google code comment
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         'SCOPE': [
+#             'profile',
+#             'email',
+#         ],
+#         'AUTH_PARAMS': {
+#             'access_type': 'online',
+#         }
+#     }
+# }
 
 
 # Database

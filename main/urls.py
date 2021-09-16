@@ -34,11 +34,12 @@ urlpatterns = [
         views.main.RepresentableSignupView.as_view(),
         name="account_signup",
     ),
-    path(
-        "accounts/social/signup/",
-        views.main.RepresentableSocialSignupView.as_view(),
-        name="socialaccount_signup",
-    ),
+    # google code comment
+    # path(
+    #     "accounts/social/signup/",
+    #     views.main.RepresentableSocialSignupView.as_view(),
+    #     name="socialaccount_signup",
+    # ),
     path(
         'block_group_polygons/<str:abbr>/',
         views.main.block_group_polygons,
