@@ -1,9 +1,8 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% comment %} {% load socialaccount %} {% endcomment %}
+{% load socialaccount %}
 {% load i18n %}
-{% comment %} {% get_providers as socialaccount_providers %} {% endcomment %}
-{% comment %} Google code comment ^^ {% endcomment %}
+{% get_providers as socialaccount_providers %}
 
 {% block content %}
 <div class="container">
@@ -65,15 +64,15 @@
               {% trans "Account Settings" %}
             </h5>
             <hr>
-            {% comment %} google code comment {% endcomment %}
-            {% comment %} <h6>{% trans "Third-Party Accounts" %}</h6>
+            
+            <h6>{% trans "Third-Party Accounts" %}</h6>
             <p>{% trans "Connect your account with one of your existing third-party accounts." %}</p>
             <div class="container-fluid">
                 {% include "socialaccount/snippets/connect_social.html" with process="connect" %}
             </div>
             <p>{% trans "To manage your connected social accounts click" %}
             <a href="{% url "socialaccount_connections" %}">{% trans "here" %}</a>.</p>
-            <hr> {% endcomment %}
+            <hr>
             <h6>{% trans "Reset password" %}</h6>
             <p>{% trans "Reset your password by pressing on the following button. You will receive an email with the appropriate instructions." %}</p>
             <a href="{% url 'account_reset_password' %}" class="btn btn-outline-primary">{% trans "Reset password" %}</a>

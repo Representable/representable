@@ -251,9 +251,9 @@ class RepresentableSignupView(SignupView):
 #
 # Rather than showing the original form, display a message stating that the user
 # should connect the social account with their existing account
-# class RepresentableSocialSignupView(SocialSignupView):
-#     template_name = "account/social_signup_error.html"
-# google code comment
+class RepresentableSocialSignupView(SocialSignupView):
+    template_name = "account/social_signup_error.html"
+
 
 class Index(TemplateView):
     """
