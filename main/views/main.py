@@ -58,7 +58,6 @@ from allauth.account import adapter
 from allauth.account.app_settings import ADAPTER
 from allauth.account.forms import LoginForm, SignupForm
 from allauth.account.views import LoginView, SignupView
-from allauth.socialaccount.views import SignupView as SocialSignupView
 from django.forms import formset_factory
 from ..forms import (
     CommunityForm,
@@ -204,6 +203,7 @@ class RepresentableLoginView(LoginView):
             context["signup_errors"] = self.request.session["invalid_signup"]
             del self.request.session["invalid_signup"]
         return context
+
 
 class RepresentableSignupView(SignupView):
     template_name = "account/signup_login.html"
