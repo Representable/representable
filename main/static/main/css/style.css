@@ -492,9 +492,6 @@ body {
 .w-16 {
   width: 16%;
 }
-.w-62 {
-  width: 62%;
-}
 .w-21 {
   width: 21%;
 }
@@ -618,10 +615,8 @@ body {
 }
 
 #home-mapping-am {
-  letter-spacing: -.65rem;
-  font-size: 7.5rem;
-  margin-top: -2rem;
-  margin-bottom: -1.5rem;
+  font-size: 4rem;
+  letter-spacing: -.2rem;
 }
 
 #state-info-bg {
@@ -916,6 +911,15 @@ color scheme. See readme.md*/
   }
   .container {
     max-width: 1300px;
+  }
+  #home-mapping-am {
+    letter-spacing: -.65rem;
+    font-size: 7.5rem;
+    margin-top: -2rem;
+    margin-bottom: -1.5rem;
+  }
+  .w-62 {
+    width: 62%;
   }
 }
 
@@ -1243,9 +1247,6 @@ Entry Mapping Page
   #video_popup_body {
     padding-right: 0.05rem;
     padding-left: 0.05rem;
-  }
-  .w-10 {
-    width: 30%;
   }
 }
 
