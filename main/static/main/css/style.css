@@ -624,6 +624,19 @@ body {
   margin-bottom: -1.5rem;
 }
 
+#state-info-bg {
+  background: url("/static/img/state-info-bg.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+#state-info-gradient {
+  background: rgb(255,255,255);
+  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(232,245,255,1) 50%);
+}
+#state-info-bg2 {
+  background: #E8F5FF;
+}
+
 .line-space-less {
   line-height: 97%;
 }
@@ -2230,6 +2243,14 @@ height:50vh!important;
 }
 .vh-25 {
 height:25vh!important;
+}
+.state-info-img {
+  width: 100%;
+  height: 150px;
+}
+.state-info-txt {
+  margin-right: -20px;
+  font-size: 90%;
 }
 
 
