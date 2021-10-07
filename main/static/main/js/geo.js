@@ -1400,7 +1400,7 @@ function showWarningMessage(warning) {
   warning_box.style.display = "block";
   setTimeout(function () {
     warning_box.style.display = "none";
-  }, 5000);
+  }, 7000);
 }
 
 function hideWarningMessage() {
@@ -1504,7 +1504,7 @@ function checkIsContiguous(idFilter) {
   if(visited.size == active_ids.size)
     hideWarningMessage();
   else
-    showWarningMessage("WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org.");
+    showWarningMessage("WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest two connected pieces will be visible on Representable.org.");
 }
 /******************************************************************************/
 // the drawing radius for select tool
@@ -1697,7 +1697,7 @@ map.on("style.load", function () {
           if(blockGroupPolygons == null || unit_id != bg_id) {
             if (selectBbox != null && turf.getType(selectBbox) == "MultiPolygon") {
               showWarningMessage(
-                "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
+                "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest two connected pieces will be visible on Representable.org."
               );
             }
           }
@@ -1718,7 +1718,7 @@ map.on("style.load", function () {
             !isEmptyFilter(currentFilter)
           ) {
             showWarningMessage(
-              "WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
+              "WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the two largest connected pieces will be visible on Representable.org."
             );
           }
         }
