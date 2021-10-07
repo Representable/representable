@@ -20,6 +20,7 @@
 from django.contrib import admin
 from django.contrib.admin import SimpleListFilter
 from django.contrib.auth.admin import UserAdmin
+from django.core.serializers import serialize
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 from main.models import CommunityEntry, Report
@@ -30,10 +31,62 @@ from django.http import HttpResponse
 
 from django import forms
 from ckeditor.widgets import CKEditorWidget
+import pandas as pd
 
 import csv
+import geojson
+from geojson_rewind import rewind
 
-from .models import State, Drive, Organization
+from .models import State, Drive, Organization, Address
+
+# ********************************************************************* #
+
+# make geojson for state map pages
+def make_geojson_for_state_map_page(request, entry):
+    map_geojson = serialize(
+        "geojson",
+        [entry],
+        geometry_field="census_blocks_polygon",
+        fields=(
+            "entry_name",
+            "cultural_interests",
+            "economic_interests",
+            "comm_activities",
+            "other_considerations",
+            "custom_response",
+            "population",
+        ),
+    )
+    gj = geojson.loads(map_geojson)
+    gj = rewind(gj)
+    del gj["crs"]
+    user_map = entry
+    # iterate over block_groups or census_blocks in order to get array of IDs
+    if user_map.block_groups.exists():
+        gj["features"][0]["properties"]["block_group_ids"] = [
+            bg.census_id for bg in user_map.block_groups.all()
+        ]
+    elif user_map.census_blocks.exists():
+        gj["features"][0]["properties"]["census_block_ids"] = [
+            block.census_id for block in user_map.census_blocks.all()
+        ]
+    # include organization and drive submitted to, if so
+    if user_map.organization:
+        gj["features"][0]["properties"][
+            "organization"
+        ] = user_map.organization.name
+    if user_map.drive:
+        gj["features"][0]["properties"]["drive"] = user_map.drive.name
+
+    gj["features"][0]["properties"]["author_name"] = user_map.user_name
+    for a in Address.objects.filter(entry=user_map):
+        addy = (
+            a.street + " " + a.city + ", " + a.state + " " + a.zipcode
+        )
+        gj["features"][0]["properties"]["address"] = addy
+
+    feature = gj["features"][0]
+    return feature
 
 # ********************************************************************* #
 
@@ -205,7 +258,7 @@ class CommunityAdmin(ImportExportModelAdmin):
 
     def export_emails_as_csv(self, request, queryset):
 
-        meta = self.model._meta
+        meta = queryset.model._meta
 
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
@@ -216,8 +269,43 @@ class CommunityAdmin(ImportExportModelAdmin):
 
         return response
 
+    def export_cois_block_equiv(self, request, queryset):
+
+        df = pd.DataFrame()
+        i = 0
+        for obj in queryset:
+            i += 1
+            # iterate over block_groups or census_blocks in order to get array of IDs
+            row_data = dict()
+            if obj.block_groups.exists():
+                row_data['BLOCKID'] = [bg.census_id for bg in obj.block_groups.all()]
+            elif obj.census_blocks.exists():
+                row_data['BLOCKID'] = [block.census_id for block in obj.census_blocks.all()]
+            else:
+                break
+            row_data['DISTRICT'] = [i] * len(row_data['BLOCKID'])
+            df = df.append(pd.DataFrame(row_data))
+
+        return HttpResponse(df.to_csv(index=False), content_type="text/csv")
+
+    def export_cois_geojson(self, request, queryset):
+
+        all_gj = []
+        for entry in queryset:
+            gj = make_geojson_for_state_map_page(request, entry)
+            all_gj.append(gj)
+
+        final = geojson.FeatureCollection(all_gj)
+
+        return HttpResponse(geojson.dumps(final), headers={
+        'Content-Type': 'application/json',
+        'Content-Disposition': 'attachment; filename="communities.geojson"'})
+
+
     export_emails_as_csv.short_description = "Export Selected Emails"
-    actions = ["export_emails_as_csv"]
+    export_cois_block_equiv.short_description = "Export as block equivalency"
+    export_cois_geojson.short_description = "Export as geojson"
+    actions = ["export_emails_as_csv", "export_cois_block_equiv", "export_cois_geojson"]
 
     def get_user_email(self, obj):
         return obj.user.email
