@@ -301,7 +301,7 @@ class CommunityAdmin(ImportExportModelAdmin):
         'Content-Type': 'application/json',
         'Content-Disposition': 'attachment; filename="communities.geojson"'})
 
-    def export_cois_pii(self, request, queryset):
+    def export_cois_testimony(self, request, queryset):
 
         meta = queryset.model._meta
 
@@ -327,8 +327,8 @@ class CommunityAdmin(ImportExportModelAdmin):
     export_emails_as_csv.short_description = "Export Selected Emails"
     export_cois_block_equiv.short_description = "Export as block equivalency"
     export_cois_geojson.short_description = "Export as geojson"
-    export_cois_pii.short_description = "Export csv of personal information"
-    actions = ["export_emails_as_csv", "export_cois_block_equiv", "export_cois_geojson", "export_cois_pii"]
+    export_cois_testimony.short_description = "Export csv of testimony"
+    actions = ["export_emails_as_csv", "export_cois_block_equiv", "export_cois_geojson", "export_cois_testimony"]
 
     def get_user_email(self, obj):
         return obj.user.email
