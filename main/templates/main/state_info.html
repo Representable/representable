@@ -6,8 +6,8 @@
     <div class="m-auto pb-4 pt-2">
 
       {% if logo.url == "" or not logo %}
-        <object type="image/svg+xml" class="w-100 mx-auto d-block h-100" data="{% static 'img/map-info.svg' %}" alt="image of map with information icon"></object>
-        <h3><p class="text-center px-md-4" id="go-to-map">
+        <object type="image/svg+xml" class="w-100 mx-auto d-none d-md-block h-100" data="{% static 'img/map-info.svg' %}" alt="image of map with information icon"></object>
+        <h3><p class="text-center px-md-4 d-none d-md-block" id="go-to-map">
           <a href="/map/{{state_obj.abbr}}" target="_blank" class="link-primary">
             {% blocktrans trimmed %}
             See community maps drawn in
@@ -15,15 +15,15 @@
           </a>
         </p></h3>
       {% else %}
-          {% comment %} <object type="image" class="w-75 mx-auto d-block h-100" data={{ logo.url }} alt="image of map with information icon"></object> {% endcomment %}
+          {% comment %} <object type="image" class="w-75 mx-auto h-100" data={{ logo.url }} alt="image of map with information icon"></object> {% endcomment %}
           <img src = {{ logo.url }} class="w-50 mx-auto d-block h-50" style="padding: 20px"/>
-        <h5><p class="text-center" id="go-to-org-map">
+        <h3><p class="text-center px-md-4" id="go-to-org-map">
           <a href="{% url 'main:partner_page' object.organization.slug %}" class="link-primary">
             {% blocktrans trimmed %}
             Organized by
             {% endblocktrans %} {{ drive_obj.organization }} <i class="fas fa-arrow-circle-right"></i>
           </a>
-        </p></h5>
+        </p></h3>
       {% endif %}
 
     </div>
@@ -94,6 +94,13 @@
         </div>
       {% endif %}
     </div>
+    <h5><p class="text-center px-md-4 d-block d-md-none" id="go-to-map">
+      <a href="/map/{{state_obj.abbr}}" target="_blank" class="link-primary">
+        {% blocktrans trimmed %}
+        See community maps drawn in
+        {% endblocktrans %} {{ state_obj.name }} <i class="fas fa-arrow-circle-right"></i>
+      </a>
+    </p></h5>
   </div>
 
 </div>

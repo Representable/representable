@@ -120,12 +120,6 @@ if (!old_units) {
   $("#map-pop-btn").hide();
 }
 
-// changes page entry page from the survey start page to the first part of the survey
-function startSurvey() {
-  $("#entry-survey-start").addClass("d-none");
-  $("#survey-qs-p1").removeClass("d-none");
-}
-
 function showVideoPopup() {
   $("#video_popup").removeClass("d-none");
   mixpanel.track("Video Popup", {
@@ -358,14 +352,14 @@ function animateStepBackward(at, to, next) {
   }, 600);
 }
 
-function addressToSurveyStart() {
+function addressToP1() {
   $("#entry_address").addClass("d-none");
   $("#entry_survey").removeClass("d-none");
   animateStepForward(1, 2, 3);
   automaticScrollToTop();
 }
 
-function surveyStartToAddress() {
+function surveyP1ToAddress() {
   $("#entry_survey").addClass("d-none");
   $("#entry_address").removeClass("d-none");
   animateStepBackward(2, 1, 3);
@@ -651,7 +645,8 @@ function addressValidated() {
 $("#entry_address_button").on("click", function(e) {
   e.preventDefault();
   if (addressValidated()) {
-     addressToSurveyStart();
+     addressToP1();
+     startSurvey();
      var entryForm = document.getElementById("entryForm");
      clearFieldsError(entryForm.getElementsByClassName("addr-field"));
      document.getElementById("need_name").classList.add("d-none");

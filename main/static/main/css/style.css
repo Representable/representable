@@ -362,12 +362,6 @@ Entry Preview Page
     flex-direction: column;
   }
 
-  #entry_video_wrap {
-    align-self: center;
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
-
   #entry_preview_video {
     margin-top: 20px;
     margin-left: 0px !important;
@@ -378,30 +372,6 @@ Entry Preview Page
   #entry_preview_info {
     padding: 30px 30px;
     flex-direction: column;
-  }
-
-  #entry_preview_video {
-    position: relative;
-    overflow: hidden;
-    height: 0;
-    margin-left: 0px !important;
-    padding-top: 20px;
-    padding-bottom: 56.25%;
-  }
-
-  #entry_preview_video iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  #entry_video_wrap {
-    width: 100%;
-    max-width: 300px;
-    padding-top: 20px;
-    padding-bottom: 20px;
   }
 
   #entry_preview_button {
@@ -642,18 +612,6 @@ body {
   left: 0;
   top: -15%;
 }
-.thanks-circle {
-  background: rgb(30, 87, 87);
-  width: 150%;
-  height: 0;
-  padding-top: 150%;
-  border-radius: 50%;
-
-  position: absolute;
-  z-index: -999;
-  left: 50%;
-  bottom: 10%;
-}
 .quote-footer {
   color: white;
 }
@@ -891,7 +849,7 @@ color scheme. See readme.md*/
     margin: -1rem;
   }
   #thanksModalDialog {
-    width: 85%;
+    width: 50%;
     max-width: 1000px;
   }
   #thanksModalLabel {
@@ -1817,7 +1775,7 @@ input.survey-field:focus {
   color: #5996D2;
 }
 .light-blue-bg {
-  background: #F2FAFF 60%;
+  background: rgba(218, 239, 255, 0.6);
 }
 .light-green-bg {
   background-color: #F2FAFF;
@@ -1832,7 +1790,7 @@ input.survey-field:focus {
   background-color: #FFFFFF;
 }
 .content-blue-bg {
-  background-color: rgba(242, 250, 255, 0.5);
+  background-color: rgba(242, 250, 255, 0.4);
 }
 .state-maps-bg {
   background: url("/static/img/home-preview-bg.svg");
@@ -2253,7 +2211,29 @@ height:25vh!important;
   margin-right: -20px;
   font-size: 90%;
 }
+.carousel-item {
+  height: 50vh;
+}
 
+.carousel-indicators li {
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background-color: #EEF7FF;
+  opacity: 1;
+}
+
+.carousel-indicators li.active {
+  background-color: #9FD4FF;
+}
+
+.carousel-control-next-icon {
+  
+}
+
+.carousel-control-prev-icon {
+
+}
 
 /* Small devices (landscape phones, 576px and up)*/
 @media (min-width: 576px) {
