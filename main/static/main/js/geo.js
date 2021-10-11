@@ -115,6 +115,7 @@ function changeMappingUnit() {
     map.setLayoutProperty(state + "-census-lines-" + bg_suffix, "visibility", "none");
     map.setLayoutProperty(state + "-census-shading-" + bg_suffix, "visibility", "none");
     map.setLayoutProperty(state + "-highlighted-" + bg_suffix, "visibility", "none");
+    blockGroupPolygons = null;
     drawUsingBlocks = true;
     layer_suffix = bl_suffix;
     unit_id = block_id;
@@ -1515,19 +1516,26 @@ function checkIsContiguous(idFilter) {
   stack.push(active_ids.values().next().value);
   visited.add(stack[0]);
 
-  while(stack.length > 0){
-    blockGroupPolygons[stack.pop()].adj_geoids.forEach((id) => {
-      if(active_ids.has(id) && !visited.has(id)){
-        stack.push(id);
-        visited.add(id);
-      }
-    });
-  }
+  // console.log(unit_id);
+  // console.log(bg_id);
+  if (!drawUsingBlocks) {
+    while(stack.length > 0){
+      blockGroupPolygons[stack.pop()].adj_geoids.forEach((id) => {
+        if(active_ids.has(id) && !visited.has(id)){
+          stack.push(id);
+          visited.add(id);
+        }
+      });
+    }
 
-  if(visited.size == active_ids.size)
+    if(visited.size == active_ids.size)
+      hideWarningMessage();
+    else
+      showWarningMessage("WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org.");
+  }
+  else {
     hideWarningMessage();
-  else
-    showWarningMessage("WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org.");
+  }
 }
 /******************************************************************************/
 // the drawing radius for select tool
@@ -1561,6 +1569,10 @@ map.on("style.load", function () {
       blockGroupPolygons = null;
       console.log('error while loading data,', error);
     });
+
+  if (drawUsingBlocks) {
+    var blockGroupPolygons = null;
+  }
 
   var layers = map.getStyle().layers;
   // Find the index of the first symbol layer in the map style
@@ -1605,7 +1617,7 @@ map.on("style.load", function () {
     newHighlightLayer(state, firstSymbolId, bg_suffix);
     if (units==="B") {
       map.setLayoutProperty(state + "-census-lines-" + bl_suffix, "visibility", "visible");
-      map.setLayoutProperty(state + "-census-shading" + bl_suffix, "visibility", "visible");
+      map.setLayoutProperty(state + "-census-shading-" + bl_suffix, "visibility", "visible");
       map.setLayoutProperty(state + "-highlighted-" + bl_suffix, "visibility", "visible");
       map.setLayoutProperty(state + "-census-lines-" + bg_suffix, "visibility", "none");
       map.setLayoutProperty(state + "-census-shading-" + bg_suffix, "visibility", "none");
