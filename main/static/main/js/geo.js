@@ -34,6 +34,8 @@ if (drive_slug == "tell-us-about-your") dane_cty = true;
 var initialZoom = 6; // initial zoom level for first showing map - higher is closer
 var bg_suffix = "bg";
 var bl_suffix = "block";
+var cc = false;
+if (drive_slug == "2022-2023-commerce-city") cc = true;
 
 // var demCache = {}; // add dictionaries for demographics info we want to track
 
@@ -1640,6 +1642,23 @@ map.on("style.load", function () {
       map.setFilter(state + "-highlighted-" + bl_suffix, ["in", block_id, ""]);
       map.setFilter(state + "-highlighted-" + bg_suffix, ["in", bg_id, ""]);
       mapHover();
+    }
+    if (cc) {
+      console.log("drawing");
+      newSourceLayer("ccbounds", "ccbounds");
+      map.addLayer({
+        id: "ccbounds-lines",
+        type: "line",
+        source: "ccbounds",
+        "source-layer": "ccbounds",
+        layout: {
+          // visibility: "none",
+        },
+        paint: {
+          "line-color": "rgba(106,137,204,0.7)",
+          "line-width": 5,
+        },
+      });
     }
   }
   showMap();
