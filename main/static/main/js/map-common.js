@@ -181,6 +181,10 @@ function addAllLayers(map, document, pageName) {
     newSourceLayer(map, "ccwards", "ccwards");
     createLineLayer(map, "ccwards-lines", "ccwards", "ccwards");
     createHoverLayer(map, "ccwards-fills", "ccwards", "ccwards");
+
+    newSourceLayer(map, "ccnbh", "ccnbh");
+    createLineLayer(map, "ccnbh-lines", "ccnbh", "ccnbh");
+    createHoverLayer(map, "ccnbh-fills", "ccnbh", "ccnbh");
   }
   // console.log(drive_id);
   // console.log(drive_slug);
@@ -582,6 +586,7 @@ function getToggleableLayerIds(state) {
   }
   if (state === "co") {
     toggleableLayerIds["ccwards"] = "Commerce City Wards";
+    toggleableLayerIds["ccnbh"] = "Commerce City Neighborhoods";
   }
   if (HAS_PRECINCTS.indexOf(state) != -1) {
     toggleableLayerIds["smaller_combined_precincts"] = "Precinct boundaries";
