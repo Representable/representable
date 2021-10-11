@@ -182,8 +182,8 @@ function addAllLayers(map, document, pageName) {
     createLineLayer(map, "ccwards-lines", "ccwards", "ccwards");
     createHoverLayer(map, "ccwards-fills", "ccwards", "ccwards");
   }
-  console.log(drive_id);
-  console.log(drive_slug);
+  // console.log(drive_id);
+  // console.log(drive_slug);
   console.log(state);
   // "2022-2023-commerce-city"
 
