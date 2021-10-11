@@ -36,8 +36,6 @@
         var state = '{{ state }}';
         var is_thanks = '{{ is_thanks }}'
         var comm_id = '{{ c.entry_ID }}'
-        var drive_id = '{{drive_id}}'
-        var drive_slug = '{{drive_slug}}'
       </script>
     </div>
     {% if entries is None %}
@@ -592,7 +590,6 @@
         <!--  Has to be at the end after the HTML loads.-->
         <script type="text/javascript">
           mapboxgl.accessToken = "{{ mapbox_key }}";
-          
         </script>
         <script type="text/javascript" src="{% static 'main/js/components/keys.js' %}"></script>
         <script type="text/javascript" src="{% static 'main/feature-lookup-tables/feature-lookup-tables.js'%}"></script>
