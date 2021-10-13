@@ -953,7 +953,7 @@ function zoomToCommunity() {
   if (selectBbox === null || selectBbox.length === 0) return;
   var bbox = turf.bbox(selectBbox);
 
-  if(blockGroupPolygons != null && unit_id === bg_id) {
+  if(blockGroupPolygons != null && unit_id === bg_id && !drawUsingBlocks) {
     // map.addLayer({
     //   'id': Math.random().toString().substring(),
     //   'type': 'line',
@@ -1521,6 +1521,7 @@ function checkIsContiguous(idFilter) {
   // console.log(unit_id);
   // console.log(bg_id);
   if (!drawUsingBlocks) {
+    console.log()
     while(stack.length > 0){
       blockGroupPolygons[stack.pop()].adj_geoids.forEach((id) => {
         if(active_ids.has(id) && !visited.has(id)){
@@ -1572,9 +1573,9 @@ map.on("style.load", function () {
       console.log('error while loading data,', error);
     });
 
-  if (drawUsingBlocks) {
-    var blockGroupPolygons = null;
-  }
+  // if (drawUsingBlocks) {
+  //   var blockGroupPolygons = null;
+  // }
 
   var layers = map.getStyle().layers;
   // Find the index of the first symbol layer in the map style
@@ -1801,7 +1802,7 @@ map.on("style.load", function () {
       });
     }
 
-    if (blockGroupPolygons != null && unit_id === bg_id) {
+    if (blockGroupPolygons != null && unit_id === bg_id && !drawUsingBlocks) {
       // console.time('contiguitycheck')
       checkIsContiguous(filter);
       // console.timeEnd('contiguitycheck')
@@ -2075,35 +2076,12 @@ function getCommPop(filter) {
           sessionStorage.setItem("pop", pop);
         }
       } else {
-        getBGPop(feature, function(bgPop) {
-          ctr++;
-          pop += parseInt(bgPop);
-          popCache[feature] = parseInt(bgPop);
-          if (ctr === filter.length) {
-            $(".comm-pop").html(pop);
-            sessionStorage.setItem("pop", pop);
-          }
-        });
+        ctr++;
       }
     });
 }
 
 /****************************************************************************/
-
-// query the ACS api in order to get blockgroup population data!
-// geoid chars 0-2:state, 2-5:county, 5-11:tract, 12:block group
-// TODO: fix this for just blocks
-function getBGPop(geoid, callback) {
-  var req = new XMLHttpRequest();
-  req.open('GET', 'https://api.census.gov/data/2018/acs/acs5?get=B01003_001E&for=block%20group:' + geoid.substring(11) + '&in=state:' + geoid.substring(0,2) + '%20county:' + geoid.substring(2, 5) + '%20tract:' + geoid.substring(5, 11) + '&key=' + census_key, true);
-  req.onreadystatechange = function(){
-    if (req.readyState == 4 && req.status == 200) {
-      var data = JSON.parse(req.response);
-      callback(data[1][0]);
-    }
-  }
-  req.send();
-}
 
 function cleanFilter(filter) {
   var cleanFilter = filter.slice();
