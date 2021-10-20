@@ -67,7 +67,6 @@ INSTALLED_APPS = [
     "import_export",
     "main",
     "leaflet",
-    "django_select2",
     "widget_tweaks",
     "allauth",
     "allauth.account",
@@ -77,14 +76,22 @@ INSTALLED_APPS = [
     "representable",
     "taggit",
     # 'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.google',
+
+    # google code content VVV
+
+    # 'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.linkedin',
     # 'allauth.socialaccount.providers.linkedin_oauth2',
 ]
 
 ACCOUNT_SESSION_REMEMBER = True
 
-SITE_ID = 0
+
+# SITE_ID = 2
+# google code comment
+SITE_ID = 1
+# SOCIALAPP_ID = 1
+
 # SITE_NAME = "Represenetable.org"
 
 MIDDLEWARE = [
@@ -124,17 +131,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "representable.wsgi.application"
 
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
-    }
-}
+
+# google code comment
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         'SCOPE': [
+#             'profile',
+#             'email',
+#         ],
+#         'AUTH_PARAMS': {
+#             'access_type': 'online',
+#         }
+#     }
+# }
 
 
 # Database
@@ -244,13 +253,7 @@ if "REDIS_URL" in os.environ:
             "BACKEND": "redis_cache.RedisCache",
             "LOCATION": os.environ.get("REDIS_URL"),
         },
-        "select2": {
-            "BACKEND": "redis_cache.RedisCache",
-            "LOCATION": os.environ.get("HEROKU_REDIS_NAVY_URL"),
-        },
     }
-    # Set the cache backend to select2
-    SELECT2_CACHE_BACKEND = "select2"
 
 
 # https://github.com/heroku/django-heroku/issues/6

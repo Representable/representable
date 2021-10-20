@@ -177,6 +177,19 @@ function addAllLayers(map, document, pageName) {
     createLineLayer(map, "nyc-state-assembly-lines", "nyc-state-assembly", "nyc_state_assembly-5gr5zo");
     createHoverLayer(map, "nyc-state-assembly-fills", "nyc-state-assembly", "nyc_state_assembly-5gr5zo");
   }
+  if (state === "co") {
+    newSourceLayer(map, "ccwards", "ccwards");
+    createLineLayer(map, "ccwards-lines", "ccwards", "ccwards");
+    createHoverLayer(map, "ccwards-fills", "ccwards", "ccwards");
+
+    newSourceLayer(map, "ccnbh", "ccnbh");
+    createLineLayer(map, "ccnbh-lines", "ccnbh", "ccnbh");
+    createHoverLayer(map, "ccnbh-fills", "ccnbh", "ccnbh");
+  }
+  // console.log(drive_id);
+  // console.log(drive_slug);
+  console.log(state);
+  // "2022-2023-commerce-city"
 
   // add precinct lines and fill
   if (HAS_PRECINCTS.indexOf(state) != -1) {
@@ -570,6 +583,10 @@ function getToggleableLayerIds(state) {
   if (state === "ny") {
     toggleableLayerIds["nyc-city-council"] = "New York City Council districts";
     toggleableLayerIds["nyc-state-assembly"] = "New York City state assembly districts";
+  }
+  if (state === "co") {
+    toggleableLayerIds["ccwards"] = "Commerce City Wards";
+    toggleableLayerIds["ccnbh"] = "Commerce City Neighborhoods";
   }
   if (HAS_PRECINCTS.indexOf(state) != -1) {
     toggleableLayerIds["smaller_combined_precincts"] = "Precinct boundaries";

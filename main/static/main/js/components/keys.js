@@ -65,8 +65,10 @@ var TRIBAL_BOUND_KEY = "6jhw01g1";
 var NYC_COUNCIL_KEY = "8igk12p1";
 var NYC_STATE_ASSEMBLY_KEY = "61wjirls";
 var PRECINCTS_KEY = "precincts_final";
+var CCBOUND_KEY = "ccbounds";
 
 var STATES_USING_OLD_UNITS = ["il", "ok"];
+var STATES_WITHOUT_NEW_FILES = [];
 
 var SOURCE_LAYER_NAMES = {
   "leg2" : "boundaries_legislative_2",

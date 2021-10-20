@@ -27,14 +27,35 @@ var unit_id = bg_id; // abstracted - current unit
 var layer_suffix = "bg"; // suffix for created unit
 var drawUsingBlocks = false; // are we using blocks block groups currently?
 var old_units = false; // does this state use 2010 census units or 2020?
+var has20 = false;
 var dane_cty = false; // is this a customized building block drive for dane county?
+var popCache = {};
 if (drive_slug == "tell-us-about-your") dane_cty = true;
 var initialZoom = 6; // initial zoom level for first showing map - higher is closer
-if (STATES_USING_OLD_UNITS.indexOf(state) >= 0) {
-  old_units = true;
-  block_id = "BLOCKID10";
-  bg_id = "GEOID10";
+var bg_suffix = "bg";
+var bl_suffix = "block";
+var cc = false;
+if (drive_slug == "2022-2023-commerce-city") cc = true;
+
+// var demCache = {}; // add dictionaries for demographics info we want to track
+
+// if (STATES_USING_OLD_UNITS.indexOf(state) >= 0) {
+//   old_units = true;
+//   block_id = "BLOCKID10";
+//   bg_id = "GEOID10";
+//   unit_id = bg_id;
+// }
+if (STATES_WITHOUT_NEW_FILES.indexOf(state) < 0){
+  bg_id = "GEOCODE";
+  block_id = "GEOCODE";
   unit_id = bg_id;
+  bg_suffix = "bg20";
+  bl_suffix = "block20";
+  has20 = true;
+  layer_suffix = bg_suffix;
+  if (state == 'nh') {
+    block_id = "GEOID20";
+  }
 }
 if (dane_cty) {
   bg_id = "WARD_FIPS";
@@ -43,7 +64,8 @@ if (dane_cty) {
   layer_suffix="wards";
   initialZoom = 10;
   // set units link on modal to be municipal wards
-  $("#units-link").html("<strong>municipal wards</strong>")
+  $("#units-link").html("<strong>municipal wards</strong>");
+  $("#faqs-block-groups").html("<strong>municipal wards</strong>");
 }
 // stack of filters (which block to highlight) and bounding boxes (for contiguity check)
 var filterStack = JSON.parse(sessionStorage.getItem("filterStack"));
@@ -61,14 +83,14 @@ function changeMappingUnit() {
   // change variables for selecting units
   // clear cache and sessionStorage stuff
   if (drawUsingBlocks) {
-    map.setLayoutProperty(state + "-census-lines-block", "visibility", "none");
-    map.setLayoutProperty(state + "-census-shading-block", "visibility", "none");
-    map.setLayoutProperty(state + "-highlighted-block", "visibility", "none");
-    map.setLayoutProperty(state + "-census-lines-bg", "visibility", "visible");
-    map.setLayoutProperty(state + "-census-shading-bg", "visibility", "visible");
-    map.setLayoutProperty(state + "-highlighted-bg", "visibility", "visible");
+    map.setLayoutProperty(state + "-census-lines-" + bl_suffix, "visibility", "none");
+    map.setLayoutProperty(state + "-census-shading-" + bl_suffix, "visibility", "none");
+    map.setLayoutProperty(state + "-highlighted-" + bl_suffix, "visibility", "none");
+    map.setLayoutProperty(state + "-census-lines-" + bg_suffix, "visibility", "visible");
+    map.setLayoutProperty(state + "-census-shading-" + bg_suffix, "visibility", "visible");
+    map.setLayoutProperty(state + "-highlighted-" + bg_suffix, "visibility", "visible");
     drawUsingBlocks = false;
-    layer_suffix = "bg";
+    layer_suffix = bg_suffix;
     unit_id = bg_id;
     // change button name for this case -- TODO: languages?
     $("#map-units-btn").text("Use smaller units");
@@ -76,47 +98,51 @@ function changeMappingUnit() {
     sessionStorage.clear();
     filterStack = [];
     bboxStack = [];
+    $(".comm-pop").html(0);
     // show or hide population display
-    if (old_units) {
+    if (old_units || has20) {
       $("#map-pop-btn").show();
     } else {
       $("#map-pop-btn").hide();
     }
     // clear selection
-    map.setFilter(state + "-highlighted-block", ["in", block_id, ""]);
-    map.setFilter(state + "-highlighted-bg", ["in", bg_id, ""]);
+    map.setFilter(state + "-highlighted-" + bl_suffix, ["in", block_id, ""]);
+    map.setFilter(state + "-highlighted-" + bg_suffix, ["in", bg_id, ""]);
 
     mapHover();
   } else {
-    map.setLayoutProperty(state + "-census-lines-block", "visibility", "visible");
-    map.setLayoutProperty(state + "-census-shading-block", "visibility", "visible");
-    map.setLayoutProperty(state + "-highlighted-block", "visibility", "visible");
-    map.setLayoutProperty(state + "-census-lines-bg", "visibility", "none");
-    map.setLayoutProperty(state + "-census-shading-bg", "visibility", "none");
-    map.setLayoutProperty(state + "-highlighted-bg", "visibility", "none");
+    map.setLayoutProperty(state + "-census-lines-" + bl_suffix, "visibility", "visible");
+    map.setLayoutProperty(state + "-census-shading-" + bl_suffix, "visibility", "visible");
+    map.setLayoutProperty(state + "-highlighted-" + bl_suffix, "visibility", "visible");
+    map.setLayoutProperty(state + "-census-lines-" + bg_suffix, "visibility", "none");
+    map.setLayoutProperty(state + "-census-shading-" + bg_suffix, "visibility", "none");
+    map.setLayoutProperty(state + "-highlighted-" + bg_suffix, "visibility", "none");
+    blockGroupPolygons = null;
     drawUsingBlocks = true;
-    layer_suffix = "block";
+    layer_suffix = bl_suffix;
     unit_id = block_id;
     // change button name for this case -- TODO: languages?
     $("#map-units-btn").text("Use larger units");
     //clear "cache" so that undo button still works as expected
     sessionStorage.clear();
     filterStack = [];
-    bboxStack = [];    // show or hide population display
-    if (old_units) {
+    bboxStack = [];
+    $(".comm-pop").html(0);
+    // show or hide population display
+    if (old_units || has20) {
       $("#map-pop-btn").show();
     } else {
       $("#map-pop-btn").hide();
     }
     // clear selection
-    map.setFilter(state + "-highlighted-block", ["in", block_id, ""]);
-    map.setFilter(state + "-highlighted-bg", ["in", bg_id, ""]);
+    map.setFilter(state + "-highlighted-" + bl_suffix, ["in", block_id, ""]);
+    map.setFilter(state + "-highlighted-" + bg_suffix, ["in", bg_id, ""]);
     mapHover();
   }
 }
 
 // removes population from community info dropdown, if in a state using new census geographies
-if (!old_units) {
+if (!old_units && !has20) {
   $("#map-pop-btn").hide();
 }
 
@@ -480,7 +506,6 @@ function surveyP1ToSurveyStart() {
   $("#survey-qs-p1").addClass("d-none");
   $("#entry-survey-start").removeClass("d-none");
   $("#2to3").removeClass("h-50");
-  $("#id_tags").val(tagsText);
   automaticScrollToTop();
 }
 
@@ -488,7 +513,6 @@ function surveyP1ToP2() {
   $("#survey-qs-p1").addClass("d-none");
   $("#survey-qs-p2").removeClass("d-none");
   $("#2to3").addClass("h-75").removeClass("h-50");
-  $("#id_tags").val(tagsText);
   automaticScrollToTop();
 }
 
@@ -497,6 +521,7 @@ function surveyP2ToP1() {
   $("#survey-qs-p1").removeClass("d-none");
   $("#2to3").addClass("h-50").removeClass("h-75");
   $('.bootstrap-tagsinput').addClass(['form-control', 'survey-field']);
+  $("#id_tags").val(tagsText);
   automaticScrollToTop();
 }
 
@@ -505,6 +530,7 @@ function surveyP2ToMap() {
   $("#entryForm").children(".container-fluid").addClass("d-none");
   $("#entry_map").removeClass("d-none");
   $("#entry-map-modal").modal({backdrop: 'static', keyboard: false});
+  $("#id_tags").val(tagsText);
   map.resize();
   fillSurveyQuestions();
   animateStepForward(2, 3, 4);
@@ -922,7 +948,7 @@ function zoomToCommunity() {
   if (selectBbox === null || selectBbox.length === 0) return;
   var bbox = turf.bbox(selectBbox);
 
-  if(blockGroupPolygons != null && unit_id === bg_id) {
+  if(blockGroupPolygons != null && unit_id === bg_id && !drawUsingBlocks) {
     // map.addLayer({
     //   'id': Math.random().toString().substring(),
     //   'type': 'line',
@@ -1487,19 +1513,26 @@ function checkIsContiguous(idFilter) {
   stack.push(active_ids.values().next().value);
   visited.add(stack[0]);
 
-  while(stack.length > 0){
-    blockGroupPolygons[stack.pop()].adj_geoids.forEach((id) => {
-      if(active_ids.has(id) && !visited.has(id)){
-        stack.push(id);
-        visited.add(id);
-      }
-    });
-  }
+  // console.log(unit_id);
+  // console.log(bg_id);
+  if (!drawUsingBlocks) {
+    while(stack.length > 0){
+      blockGroupPolygons[stack.pop()].adj_geoids.forEach((id) => {
+        if(active_ids.has(id) && !visited.has(id)){
+          stack.push(id);
+          visited.add(id);
+        }
+      });
+    }
 
-  if(visited.size == active_ids.size)
+    if(visited.size == active_ids.size)
+      hideWarningMessage();
+    else
+      showWarningMessage("WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org.");
+  }
+  else {
     hideWarningMessage();
-  else
-    showWarningMessage("WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest two connected pieces will be visible on Representable.org.");
+  }
 }
 /******************************************************************************/
 // the drawing radius for select tool
@@ -1534,6 +1567,10 @@ map.on("style.load", function () {
       console.log('error while loading data,', error);
     });
 
+  // if (drawUsingBlocks) {
+  //   var blockGroupPolygons = null;
+  // }
+
   var layers = map.getStyle().layers;
   // Find the index of the first symbol layer in the map style
   // this is so that added layers go under the symbols on the map
@@ -1566,24 +1603,24 @@ map.on("style.load", function () {
     map.setLayoutProperty("dane-highlighted-wards", "visibility", "visible");
   } else {
     // block layers
-    newSourceLayer(state + "block", state + "block");
-    newCensusShading(state, firstSymbolId, "block");
-    newCensusLines(state, "block");
-    newHighlightLayer(state, firstSymbolId, "block");
+    newSourceLayer(state + bl_suffix, state + bl_suffix);
+    newCensusShading(state, firstSymbolId, bl_suffix);
+    newCensusLines(state, bl_suffix);
+    newHighlightLayer(state, firstSymbolId, bl_suffix);
     // block group layers
-    newSourceLayer(state + "bg", state + "bg");
-    newCensusShading(state, firstSymbolId, "bg");
-    newCensusLines(state, "bg");
-    newHighlightLayer(state, firstSymbolId, "bg");
+    newSourceLayer(state + bg_suffix, state + bg_suffix);
+    newCensusShading(state, firstSymbolId, bg_suffix);
+    newCensusLines(state, bg_suffix);
+    newHighlightLayer(state, firstSymbolId, bg_suffix);
     if (units==="B") {
-      map.setLayoutProperty(state + "-census-lines-block", "visibility", "visible");
-      map.setLayoutProperty(state + "-census-shading-block", "visibility", "visible");
-      map.setLayoutProperty(state + "-highlighted-block", "visibility", "visible");
-      map.setLayoutProperty(state + "-census-lines-bg", "visibility", "none");
-      map.setLayoutProperty(state + "-census-shading-bg", "visibility", "none");
-      map.setLayoutProperty(state + "-highlighted-bg", "visibility", "none");
+      map.setLayoutProperty(state + "-census-lines-" + bl_suffix, "visibility", "visible");
+      map.setLayoutProperty(state + "-census-shading-" + bl_suffix, "visibility", "visible");
+      map.setLayoutProperty(state + "-highlighted-" + bl_suffix, "visibility", "visible");
+      map.setLayoutProperty(state + "-census-lines-" + bg_suffix, "visibility", "none");
+      map.setLayoutProperty(state + "-census-shading-" + bg_suffix, "visibility", "none");
+      map.setLayoutProperty(state + "-highlighted-" + bg_suffix, "visibility", "none");
       drawUsingBlocks = true;
-      layer_suffix = "block";
+      layer_suffix = bl_suffix;
       unit_id = block_id;
       // change button name for this case -- TODO: languages?
       $("#map-units-btn").text("Use larger units");
@@ -1591,15 +1628,32 @@ map.on("style.load", function () {
       sessionStorage.clear();
       filterStack = [];
       bboxStack = [];    // show or hide population display
-      if (old_units) {
+      if (old_units || has20) {
         $("#map-pop-btn").show();
       } else {
         $("#map-pop-btn").hide();
       }
       // clear selection
-      map.setFilter(state + "-highlighted-block", ["in", block_id, ""]);
-      map.setFilter(state + "-highlighted-bg", ["in", bg_id, ""]);
+      map.setFilter(state + "-highlighted-" + bl_suffix, ["in", block_id, ""]);
+      map.setFilter(state + "-highlighted-" + bg_suffix, ["in", bg_id, ""]);
       mapHover();
+    }
+    if (cc) {
+      console.log("drawing");
+      newSourceLayer("ccbounds", "ccbounds");
+      map.addLayer({
+        id: "ccbounds-lines",
+        type: "line",
+        source: "ccbounds",
+        "source-layer": "ccbounds",
+        layout: {
+          // visibility: "none",
+        },
+        paint: {
+          "line-color": "rgba(106,137,204,0.7)",
+          "line-width": 5,
+        },
+      });
     }
   }
   showMap();
@@ -1647,12 +1701,18 @@ map.on("style.load", function () {
       // GEOID20 for blocks for all states using 2020 blocks (all except il, ok)
       if (drawUsingBlocks) {
         features.push(feature.properties[block_id]);
-        if (old_units && !(feature.properties[block_id] in blockPopCache)) {
-          blockPopCache[feature.properties[block_id]] = feature.properties.POP10;
+        // if (old_units && !(feature.properties[block_id] in blockPopCache)) {
+        //   blockPopCache[feature.properties[block_id]] = feature.properties.POP10;
+        // }
+        if (has20 && !(feature.properties[block_id] in blockPopCache)) {
+          blockPopCache[feature.properties[block_id]] = feature.properties.tot;
         }
       }
       else {
         features.push(feature.properties[bg_id]);
+        if (has20 && !(feature.properties[bg_id] in popCache)) {
+          popCache[feature.properties[bg_id]] = feature.properties.tot;
+        }
       }
       if (features.length >= 1) {
         // polyCon : the turf polygon from coordinates
@@ -1736,7 +1796,7 @@ map.on("style.load", function () {
       });
     }
 
-    if (blockGroupPolygons != null && unit_id === bg_id) {
+    if (blockGroupPolygons != null && unit_id === bg_id && !drawUsingBlocks) {
       // console.time('contiguitycheck')
       checkIsContiguous(filter);
       // console.timeEnd('contiguitycheck')
@@ -1750,7 +1810,8 @@ map.on("style.load", function () {
         "This community is too large. Please select a smaller area to continue."
       );
     }
-    if (old_units) {
+
+    if (old_units || has20) {
       // set as indicator that population is loading
       $(".comm-pop").html("...");
       if (drawUsingBlocks) {
@@ -1761,6 +1822,7 @@ map.on("style.load", function () {
           }
         });
         $(".comm-pop").html(blockCommPop);
+        sessionStorage.setItem("pop", blockCommPop);
       } else {
         // remove "in" and "GEOID" parts of filter, for population
         getCommPop(cleanFilter(filter));
@@ -1993,54 +2055,45 @@ function arraysEqual(a, b) {
 
 /***************************************************************************/
 
-var popCache = {};
 // get the population for a community from filter
 // TODO: load this in automatically as part of the tilesets for immediate lookup?
 function getCommPop(filter) {
   if (filter.length === 0) $(".comm-pop").html(0);
   var pop = 0;
   var ctr = 0;
-  filter.forEach(function(feature){
-    if (feature in popCache) {
-      ctr++;
-      pop += popCache[feature];
-      if (ctr === filter.length) {
-        $(".comm-pop").html(pop);
-        sessionStorage.setItem("pop", pop);
-      }
-    } else {
-      getBGPop(feature, function(bgPop) {
+    filter.forEach(function(feature){
+      if (feature in popCache) {
         ctr++;
-        pop += parseInt(bgPop);
-        popCache[feature] = parseInt(bgPop);
+        pop += popCache[feature];
         if (ctr === filter.length) {
           $(".comm-pop").html(pop);
           sessionStorage.setItem("pop", pop);
         }
-      });
-    }
-  });
+      } else {
+        ctr++;
+      }
+    });
 }
 
 /****************************************************************************/
-
-// query the ACS api in order to get blockgroup population data!
-// geoid chars 0-2:state, 2-5:county, 5-11:tract, 12:block group
-// TODO: fix this for just blocks
-function getBGPop(geoid, callback) {
-  var req = new XMLHttpRequest();
-  req.open('GET', 'https://api.census.gov/data/2018/acs/acs5?get=B01003_001E&for=block%20group:' + geoid.substring(11) + '&in=state:' + geoid.substring(0,2) + '%20county:' + geoid.substring(2, 5) + '%20tract:' + geoid.substring(5, 11) + '&key=' + census_key, true);
-  req.onreadystatechange = function(){
-    if (req.readyState == 4 && req.status == 200) {
-      var data = JSON.parse(req.response);
-      callback(data[1][0]);
-    }
-  }
-  req.send();
-}
 
 function cleanFilter(filter) {
   var cleanFilter = filter.slice();
   cleanFilter.splice(0, 2);
   return cleanFilter;
 }
+
+// function setDemographic(filter, colName) {
+//   var sum = 0;
+//   var ctr = 0;
+
+//   filter.forEach(function(feature){
+//     if (feature in demCache[colName]) {
+//       ctr++;
+//       sum += demCache[colName[feature]];
+//       if (ctr === filter.length) {
+//         sessionStorage.setItem(colName, sum);
+//       }
+//     }
+//   });
+// }

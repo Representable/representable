@@ -44,7 +44,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     # path('accounts/', include('django.contrib.auth.urls')),
     path("accounts/", include("allauth.urls")),
-    path("select2/", include("django_select2.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
     path("send_mail_plain", main.SendPlainEmail, name="plain_email"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
