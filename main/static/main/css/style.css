@@ -748,6 +748,9 @@ body
   .w-35-mobile {
     width: 35% !important;
   }
+  .carousel-item {
+    height: 64vh !important;
+  }
 }
 /* TABLETS + MOBILE */
 @media only screen and (max-width: 992px)
