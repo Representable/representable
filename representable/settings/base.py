@@ -232,6 +232,7 @@ STATIC_URL = "/static/"
 # https://warehouse.python.org/project/whitenoise/
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+# STATICFILES_STORAGE = 'representable.storage.WhiteNoiseStaticFilesStorage'
 STATICFILES_DIRS = (
     # os.path.join(BASE_DIR, 'static'),
     )
