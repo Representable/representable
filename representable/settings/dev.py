@@ -5,8 +5,8 @@ ALLOWED_HOSTS = ["*"]
 
 SECURE_SSL_REDIRECT = False
 
-# DEBUG = True
-DEBUG = False
+DEBUG = True
+# DEBUG = False
 
 # Dev Email Settings - Print to Console
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
@@ -35,3 +35,22 @@ MIXPANEL_TOKEN = "ce31fc3e8e15a16619bb3672f9c25407"
 RECAPTCHA_PUBLIC = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
 RECAPTCHA_PRIVATE = os.getenv("RECAPTCHA_PRIVATE_DEV")
 CHECK_CAPTCHA_SUBMIT = False
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
