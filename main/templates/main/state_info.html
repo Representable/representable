@@ -1,49 +1,33 @@
 {% load i18n %}
 {% load static %}
 {% block content %}
-<div class="row mx-lg-5 pb-5">
-  <div class="col-md-4">
-    <div class="m-auto pb-4 pt-2">
+<div class="row mx-lg-5 px-md-5">
+  <div class="col-sm-6">
+    <div class="col-12 p-2 light-blue-bg px-md-4 py-md-3 mb-4">
+      <button class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link" data-toggle="collapse" data-target="#collapseCriteria1" aria-expanded="false" aria-controls="collapseCriteria1" onclick="toggleAngle(this)">
+        <h5 class="dark-gray-text" style="width: fit-content;"><b>{% trans "What is redistricting?" %}</b><i class="fas fa-angle-down pl-3"></i></h5>
+      </button>
 
-      {% if logo.url == "" or not logo %}
-        <object type="image/svg+xml" class="w-100 mx-auto d-none d-md-block h-100" data="{% static 'img/map-info.svg' %}" alt="image of map with information icon"></object>
-        <h3><p class="text-center px-md-4 d-none d-md-block" id="go-to-map">
-          <a href="/map/{{state_obj.abbr}}" target="_blank" class="link-primary">
-            {% blocktrans trimmed %}
-            See community maps drawn in
-            {% endblocktrans %} {{ state_obj.name }} <i class="fas fa-arrow-circle-right"></i>
-          </a>
-        </p></h3>
-      {% else %}
-          {% comment %} <object type="image" class="w-75 mx-auto h-100" data={{ logo.url }} alt="image of map with information icon"></object> {% endcomment %}
-          <img src = {{ logo.url }} class="w-50 mx-auto d-block h-50" style="padding: 20px"/>
-        <h3><p class="text-center px-md-4" id="go-to-org-map">
-          <a href="{% url 'main:partner_page' object.organization.slug %}" class="link-primary">
-            {% blocktrans trimmed %}
-            Organized by
-            {% endblocktrans %} {{ drive_obj.organization }} <i class="fas fa-arrow-circle-right"></i>
-          </a>
-        </p></h3>
-      {% endif %}
-
+      <div class="collapse" id="collapseCriteria1">
+        {% trans "In 2021, voting district lines across the country will be redrawn to determine who represents the people of your state." %}
+      </div>
     </div>
-  </div>
-  <div class="col-sm-8">
-    <div class="col-12 p-3 bg-white px-md-4 py-md-3 mb-4">
+
+    <div class="col-12 p-3 light-blue-bg px-md-4 py-md-3 mb-4">
       {% if not edited %}
-          <button id="redist_in" class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link state-info-mix" data-toggle="collapse" data-target="#collapseCriteria1" aria-expanded="false" aria-controls="collapseCriteria1" onclick="toggleAngle(this)">
+          <button id="redist_in" class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link state-info-mix" data-toggle="collapse" data-target="#collapseCriteria2" aria-expanded="false" aria-controls="collapseCriteria2" onclick="toggleAngle(this)">
             <h5 class="dark-gray-text" style="width: fit-content;"><b>{% trans "How does redistricting work in " %} {{ state_obj.name }}?</b><i class="fas fa-angle-down pl-3"></i></h5>
           </button>
-        <div class="collapse" id="collapseCriteria1">
+        <div class="collapse" id="collapseCriteria2">
           {% autoescape off %}
           {{ state_obj.content_news }}
           {% endautoescape %}
         </div>
       {% else %}
-          <button id="redist_in" class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link state-info-mix" data-toggle="collapse" data-target="#collapseCriteria1" aria-expanded="false" aria-controls="collapseCriteria1" onclick="toggleAngle(this)">
+          <button id="redist_in" class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link state-info-mix" data-toggle="collapse" data-target="#collapseCriteria2" aria-expanded="false" aria-controls="collapseCriteria2" onclick="toggleAngle(this)">
             <h5 class="dark-gray-text" style="width: fit-content;"><b> {{ drive_obj.opt_redist_title }} </b><i class="fas fa-angle-down pl-3"></i></h5>
           </button>
-        <div class="collapse" id="collapseCriteria1">
+        <div class="collapse" id="collapseCriteria2">
           {% autoescape off %}
           {{ drive_obj.opt_redist_info }}
           {% endautoescape %}
@@ -51,57 +35,79 @@
       {% endif %}
     </div>
 
-    <div class="col-12 p-3 bg-white px-md-4 py-md-3 mb-4">
+    <div class="col-12 p-3 light-blue-bg px-md-4 py-md-3 mb-4">
+        <button id="rep_help" class="btn ws-normal btn-link bg-transparent text-left pl-0 no-underline-link state-info-mix" data-toggle="collapse" data-target="#collapseCriteria3" aria-expanded="false" aria-controls="collapseCriteria3" onclick="toggleAngle(this)">
+          <h5 class="dark-gray-text" style="width: fit-content;"><b>{% trans "How can Representable help?" %}<i class="fas fa-angle-down pl-3"></i></b></h5>
+        </button>
+      <div class="collapse" id="collapseCriteria3">
+        {% trans "Representable will help you tell mapmakers about your community interests and boundaries, so that they can fairly consider it when they draw new voting district lines." %}
+      </div>
+    </div>
+
+    <div class="col-12 p-3 light-blue-bg px-md-4 py-md-3 mb-4">
       {% if not edited %}
-          <button id="redist_crit" class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link state-info-mix" data-toggle="collapse" data-target="#collapseCriteria2" aria-expanded="false" aria-controls="collapseCriteria2" onclick="toggleAngle(this)">
+          <button id="redist_crit" class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link state-info-mix" data-toggle="collapse" data-target="#collapseCriteria4" aria-expanded="false" aria-controls="collapseCriteria4" onclick="toggleAngle(this)">
             <h5 class="dark-gray-text" style="width: fit-content;"><b>{{ state_obj.name }}'s {% trans "redistricting criteria" %} &#32;<i class="fas fa-angle-down pl-3"></i></b></h5>
           </button>
-        <div class="collapse" id="collapseCriteria2">
+        <div class="collapse" id="collapseCriteria4">
           {% autoescape off %}
           {{ state_obj.content_criteria }}
           {% endautoescape %}
         </div>
       {% else %}
-          <button id="redist_crit" class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link state-info-mix" data-toggle="collapse" data-target="#collapseCriteria2" aria-expanded="false" aria-controls="collapseCriteria2" onclick="toggleAngle(this)">
+          <button id="redist_crit" class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link state-info-mix" data-toggle="collapse" data-target="#collapseCriteria4" aria-expanded="false" aria-controls="collapseCriteria4" onclick="toggleAngle(this)">
             <h5 class="dark-gray-text" style="width: fit-content;"><b>{{ drive_obj.opt_criteria_title }}<i class="fas fa-angle-down pl-3"></i></b></h5>
           </button>
-        <div class="collapse" id="collapseCriteria2">
+        <div class="collapse" id="collapseCriteria4">
           {% autoescape off %}
           {{ drive_obj.opt_criteria_info }}
           {% endautoescape %}
         </div>
       {% endif %}
     </div>
+  </div>
 
-    <div class="col-12 p-3 bg-white px-md-4 py-md-3 mb-5">
+
+  <div class="col-6 d-none d-sm-block">
+    <div class="m-auto pb-4 pt-2">
+      
+      {% if logo.url == "" or not logo %}
+        <object type="image/svg+xml" class="w-75 mx-auto d-block h-100" data="{% static 'img/map-info.svg' %}" alt="image of map with information icon"></object>
+        <h5><p class="text-center" id="go-to-map">
+          <a href="/map/{{state_obj.abbr}}" target="_blank" class="link-primary">
+            {% blocktrans trimmed %}
+            See community maps drawn in
+            {% endblocktrans %} {{ state_obj.name }} <i class="fas fa-arrow-circle-right"></i>
+          </a>
+        </p></h5>
+      {% else %}
+          {% comment %} <object type="image" class="w-75 mx-auto d-block h-100" data={{ logo.url }} alt="image of map with information icon"></object> {% endcomment %}
+          <img src = {{ logo.url }} class="w-50 mx-auto d-block h-50" style="padding: 20px"/>
+        <h5><p class="text-center" id="go-to-org-map">
+          <a href="{% url 'main:partner_page' object.organization.slug %}" class="link-primary">
+            {% blocktrans trimmed %}
+            Organized by 
+            {% endblocktrans %} {{ drive_obj.organization }} <i class="fas fa-arrow-circle-right"></i>
+          </a>
+        </p></h5>
+      {% endif %}
+                                                                                                 
+    </div>
+  </div>
+
+  <div class="col-12 p-3 light-blue-bg px-md-4 py-md-3 mb-4">
       {% if not edited %}
-          <button id="redist_coi" class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link state-info-mix" data-toggle="collapse" data-target="#collapseCriteria3" aria-expanded="false" aria-controls="collapseCriteria3" onclick="toggleAngle(this)">
-            <h5 class="dark-gray-text" style="width: fit-content;"><b>{% trans "Communities of Interest in " %} {{ state_obj.name }}&#32;<i class="fas fa-angle-down pl-3"></i></b></h5>
-          </button>
-        <div class="collapse" id="collapseCriteria3">
+          <h5 class="dark-gray-text" style="width: fit-content;"><b>{% trans "Communities of Interest in " %} {{ state_obj.name }}&#32;</b></h5>
           {% autoescape off %}
           {{ state_obj.content_coi }}
           {% endautoescape %}
-        </div>
       {% else %}
-          <button id="redist_coi" class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link state-info-mix" data-toggle="collapse" data-target="#collapseCriteria3" aria-expanded="false" aria-controls="collapseCriteria3" onclick="toggleAngle(this)">
-            <h5 class="dark-gray-text" style="width: fit-content;"><b>{% trans "Communities of Interest in " %} {{ state_obj.name }}&#32;<i class="fas fa-angle-down pl-3"></i></b></h5>
-          </button>
-        <div class="collapse" id="collapseCriteria3">
+          <h5 class="dark-gray-text" style="width: fit-content;"><b>{{ drive_obj.opt_coi_def_title }}</b></h5>
           {% autoescape off %}
           {{ drive_obj.opt_coi_def_info }}
           {% endautoescape %}
-        </div>
       {% endif %}
     </div>
-    <h5><p class="text-center px-md-4 d-block d-md-none" id="go-to-map">
-      <a href="/map/{{state_obj.abbr}}" target="_blank" class="link-primary">
-        {% blocktrans trimmed %}
-        See community maps drawn in
-        {% endblocktrans %} {{ state_obj.name }} <i class="fas fa-arrow-circle-right"></i>
-      </a>
-    </p></h5>
-  </div>
 
 </div>
 {% endblock %}

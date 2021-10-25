@@ -113,15 +113,15 @@
                     </div>
                   </div>
                   <div class="col-md-5">
-                    <div class="rounded accordion map-info-item mt-3 mb-3" id="map_faq_accordion">
+                    <div class="rounded accordion map-info-item text-center mt-3 mb-3" id="map_faq_accordion">
                         <div class="text-left comm-item-text pl-4 pt-3 no-underline-link h4" style="font-size: 1.4rem;padding-left: 2.2rem !important;">
                             {% trans "FAQ" %}
                         </div>
-                        <div id="mobile_map_faq" class="mt-2" aria-labelledby="map_faq_accordion" data-parent="#mobile_map_faq">
-                            <div class="map-survey-response d-inline-block text-left w-75" style="padding-left: 2.2rem !important;">
+                        <div id="mobile_map_faq" class="text-center mt-2" aria-labelledby="map_faq_accordion" data-parent="#mobile_map_faq">
+                            <div class="map-survey-response d-inline-block text-left w-75">
                                 <h6><strong>{% trans "What are the units?" %}</strong></h6>
                                 <p>
-                                    {% blocktrans trimmed %}The units are <strong>census block groups</strong> and <strong>census blocks</strong>, which are used by map drawers to draw voting districts.{% endblocktrans %}
+                                    {% blocktrans trimmed %}The units are <span id="faqs-block-groups"><strong>census block groups</strong></span>, which are used by map drawers to draw voting districts.{% endblocktrans %}
                                 </p>
 
                                 <h6><strong>{% trans "Why am I unable to save my map?" %}</strong></h6>
@@ -315,7 +315,6 @@
                                 </div>
                             </div>
                             {% endif %}
-                            <button type="button" class="btn btn-outline-primary no-underline-link entry-nav-btn mt-3 ml-4 white-bg btn-ls-md">{% trans "EDIT INFO" %}</button>
                         </div>
                     </div>
                 </div>
@@ -397,7 +396,7 @@
         <div class="map-box">
             <div id='menu'></div>
             <div id='map' class='draw_polygon_map' onload="map.resize()">
-                <div id="warning-box-id" class="map-popup-box warning-box mt-3">
+                <div id="warning-box-id" class="map-popup-box warning-box">
                 </div>
             </div>
         </div>
