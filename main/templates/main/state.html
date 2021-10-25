@@ -11,132 +11,19 @@
   });
   
 </script>
-<div class="container-fluid dark-gray-text px-5">
-  <div id="state-info-bg" class="row row-hero my-5 pt-5 px-md-5 w-100 d-none d-lg-flex">
-    <div class="col-md-3 px-4">
-      <h3 class="mb-3">Why map your community?</h3>
-      <img class="state-info-img mt-3 mb-5" src="{% static 'img/education-1.svg' %}" alt="Map with community selected"/>
-      <p class="state-info-txt">Mapping your community and identifying its shared interests allows public officials to take your community’s concerns into account during redistricing. </p>
-    </div>
-    <div class="col-md-3 px-4">
-      <h3 class="mb-3">What is <br> redistricting?</h3>
-      <div id="entry_video_wrap" class="mt-4">
-          <div class="mt-3 mb-5">
-              <iframe class="state-info-img" src="https://www.youtube.com/embed/vUbZoyCCR44?"></iframe>
-          </div>
-      </div>
-      <p class="state-info-txt">Every ten years, the United States draws new voting districts. District lines decide who votes for which representatives in local, state, and federal elections. </p>
-    </div>
-    <div class="col-md-3 px-4">
-      <h3 class="mb-3">What is gerrymandering?</h3>
-      <img class="state-info-img mt-3 mb-5" src="{% static 'img/education-3.svg' %}" alt="Districts illustration with pencil"/>
-      <p class="state-info-txt">Politicians have been splitting up or packing together communities into voting districts that silence their voices. Mapping your community of interest helps fight gerrymandering.</p>
-    </div>
-    <div class="col-md-3 px-4">
-      <h3 class="mb-3">What is a Community of Interest?</h3>
-      <p>A Community of Interest is a <b>geographic area</b> that shares cultural, historical, or economic interests. </p>
-      <div class="row mb-3">
-        <div class="col-3">
-          <img class="" src="{% static 'img/state-info-1.svg' %}" alt="Districts illustration with pencil"/>
-        </div>
-        <div class="col-9">
-          Your neighborhood
-        </div>
-      </div>
-      <div class="row my-3">
-        <div class="col-3">
-          <img class="" src="{% static 'img/state-info-2.svg' %}" alt="Districts illustration with pencil"/>
-        </div>
-        <div class="col-9">
-          People you want to choose representatives with
-        </div>
-      </div>
-      <div class="row mt-3">
-        <div class="col-3">
-          <img class="" src="{% static 'img/state-info-3.svg' %}" alt="Districts illustration with pencil"/>
-        </div>
-        <div class="col-9">
-          A local group connected by an interest
-        </div>
-      </div>
+<div class="container dark-gray-text">
+  <div class="row row-hero my-5">
+    <div class="col-12">
+      <h1 class="font-weight-light text-center mb-3">{% trans "Welcome to" %} {{ state_obj.name }}
+      </h1>
     </div>
   </div>
-  <div class="row light-blue-bg rounded d-block d-lg-none p-4">
-    <div id="info-carousel-indicators" class="carousel slide" data-ride="carousel">
-      <ol class="carousel-indicators">
-        <li data-target="#info-carousel-indicators" data-slide-to="0" class="active"></li>
-        <li data-target="#info-carousel-indicators" data-slide-to="1"></li>
-        <li data-target="#info-carousel-indicators" data-slide-to="2"></li>
-        <li data-target="#info-carousel-indicators" data-slide-to="3"></li>
-      </ol>
-      <div class="carousel-inner">
-        <div class="carousel-item active bg-white rounded px-md-5">
-          <h3 class="p-3">Why map your community?</h3>
-          <img class="state-info-img mt-3 mb-5" src="{% static 'img/education-1.svg' %}" alt="Map with community selected"/>
-          <p class="state-info-txt w-100 px-3">Mapping your community and identifying its shared interests allows public officials to take your community’s concerns into account during redistricing. </p>
-        </div>
-        <div class="carousel-item bg-white rounded px-md-5">
-          <h3 class="p-3">What is redistricting?</h3>
-          <div id="entry_video_wrap" class="">
-              <div id="" class="mt-3 mb-4 text-center">
-                  <iframe class="state-info-img w-75" src="https://www.youtube.com/embed/vUbZoyCCR44?"></iframe>
-              </div>
-          </div>
-          <p class="state-info-txt w-100 px-3">Every ten years, the United States draws new voting districts. District lines decide who votes for which representatives in local, state, and federal elections. </p>
-        </div>
-        <div class="carousel-item bg-white rounded px-md-5">
-          <h3 class="p-3">What is gerrymandering?</h3>
-          <img class="state-info-img mt-3 mb-5" src="{% static 'img/education-3.svg' %}" alt="Districts illustration with pencil"/>
-          <p class="state-info-txt w-100 px-3">Politicians have been splitting up or packing together communities into voting districts that silence their voices. Mapping your community of interest helps fight gerrymandering.</p>
-        </div>
-        <div class="carousel-item bg-white rounded px-md-5">
-          <h3 class="p-3">What is a Community of Interest?</h3>
-          <p class="pl-3">A Community of Interest is a <b>geographic area</b> that shares cultural, historical, or economic interests. </p>
-          <div class="row mb-3 pl-3">
-            <div class="col-3">
-              <img class="" src="{% static 'img/state-info-1.svg' %}" alt="Districts illustration with pencil"/>
-            </div>
-            <div class="col-9">
-              Your neighborhood
-            </div>
-          </div>
-          <div class="row my-3 pl-3">
-            <div class="col-3">
-              <img class="" src="{% static 'img/state-info-2.svg' %}" alt="Districts illustration with pencil"/>
-            </div>
-            <div class="col-9">
-              People you want to choose representatives with
-            </div>
-          </div>
-          <div class="row mt-3 pl-3">
-            <div class="col-3">
-              <img class="" src="{% static 'img/state-info-3.svg' %}" alt="Districts illustration with pencil"/>
-            </div>
-            <div class="col-9">
-              A local group connected by an interest
-            </div>
-          </div>
-        </div>
-      </div>
-      <a class="carousel-control-prev" href="#info-carousel-indicators" role="button" data-slide="prev">
-        <!-- <i class="fas fa-chevron-left" style="color:#EEF7FF;"></i> -->
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="carousel-control-next" href="#info-carousel-indicators" role="button" data-slide="next">
-        <!-- <i class="fas fa-chevron-right" style="color:#EEF7FF;"></i> -->
-        <span class="sr-only">Next</span>
-      </a>
-    </div>
-  </div>
-</div>
-<div id="state-info-gradient" class="container-fluid dark-gray-text">
-  <div class="row">
-    <a class="mx-auto btn btn-primary btn-lg btn-canvas my-5 btn-ls-md" href="{% url 'main:entry' %}{{state_obj.abbr|lower}}" role="button">{% trans "NEXT" %}</a>
-  </div>
-</div>
-<div id="state-info-bg2" class="container-fluid dark-gray-text px-5">
-  <h1 class="text-center mb-5">Redistricting in your state:</h1>
+
   <div id="state-info">{% include './state_info.html' %}</div>
+  <div class="row text-center">
+      <a class="mx-auto btn btn-outline-primary btn-lg btn-canvas my-5 d-none d-lg-block btn-ls-md" href="{% url 'main:entry' %}{{state_obj.abbr|lower}}" role="button">{% trans "START MAPPING" %}</a>
+      <a class="mx-auto btn btn-outline-primary btn-canvas my-5 d-lg-none btn-ls-md" href="{% url 'main:entry' %}{{state_obj.abbr|lower}}" role="button">{% trans "START MAPPING" %}</a>
+  </div>
 </div>
 </div>
 </div>
