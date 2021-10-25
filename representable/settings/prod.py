@@ -75,4 +75,3 @@ DEBUG_PROPAGATE_EXCEPTIONS = True
 #     }
 # }
 
-ALLOWED_HOSTS = []
