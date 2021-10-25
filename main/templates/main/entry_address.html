@@ -10,7 +10,7 @@
                 <strong>{% trans "Tell us about yourself." %} </strong>
             </div>
             <div id="need_name" class="alert alert-danger alert-dismissible fade show form-error d-none" role="alert">
-                {% trans "Please include your name." %}
+                {% trans "Please include your full name." %}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -58,7 +58,7 @@
             </div>
             <div class="row my-2">
                 <div class="col">
-                    <small class="ml-2">{% trans "Your Name"%} <small class="text-required">*</small></small>
+                    <small class="ml-2">{% trans "Full Name"%} <small class="text-required">*</small></small>
                     <div class="sr-only">{{ comm_form.user_name.label_tag }}</div>
                     {{ comm_form.user_name|append_attr:"class:form-control addr-field" }}
                 </div>

@@ -146,12 +146,6 @@ if (!old_units && !has20) {
   $("#map-pop-btn").hide();
 }
 
-// changes page entry page from the survey start page to the first part of the survey
-function startSurvey() {
-  $("#entry-survey-start").addClass("d-none");
-  $("#survey-qs-p1").removeClass("d-none");
-}
-
 function showVideoPopup() {
   $("#video_popup").removeClass("d-none");
   mixpanel.track("Video Popup", {
@@ -384,14 +378,14 @@ function animateStepBackward(at, to, next) {
   }, 600);
 }
 
-function addressToSurveyStart() {
+function addressToP1() {
   $("#entry_address").addClass("d-none");
   $("#entry_survey").removeClass("d-none");
   animateStepForward(1, 2, 3);
   automaticScrollToTop();
 }
 
-function surveyStartToAddress() {
+function surveyP1ToAddress() {
   $("#entry_survey").addClass("d-none");
   $("#entry_address").removeClass("d-none");
   animateStepBackward(2, 1, 3);
@@ -512,7 +506,6 @@ function surveyP1ToSurveyStart() {
   $("#survey-qs-p1").addClass("d-none");
   $("#entry-survey-start").removeClass("d-none");
   $("#2to3").removeClass("h-50");
-  $("#id_tags").val(tagsText);
   automaticScrollToTop();
 }
 
@@ -520,7 +513,6 @@ function surveyP1ToP2() {
   $("#survey-qs-p1").addClass("d-none");
   $("#survey-qs-p2").removeClass("d-none");
   $("#2to3").addClass("h-75").removeClass("h-50");
-  $("#id_tags").val(tagsText);
   automaticScrollToTop();
 }
 
@@ -529,6 +521,7 @@ function surveyP2ToP1() {
   $("#survey-qs-p1").removeClass("d-none");
   $("#2to3").addClass("h-50").removeClass("h-75");
   $('.bootstrap-tagsinput').addClass(['form-control', 'survey-field']);
+  $("#id_tags").val(tagsText);
   automaticScrollToTop();
 }
 
@@ -537,6 +530,7 @@ function surveyP2ToMap() {
   $("#entryForm").children(".container-fluid").addClass("d-none");
   $("#entry_map").removeClass("d-none");
   $("#entry-map-modal").modal({backdrop: 'static', keyboard: false});
+  $("#id_tags").val(tagsText);
   map.resize();
   fillSurveyQuestions();
   animateStepForward(2, 3, 4);
@@ -677,7 +671,8 @@ function addressValidated() {
 $("#entry_address_button").on("click", function(e) {
   e.preventDefault();
   if (addressValidated()) {
-     addressToSurveyStart();
+     addressToP1();
+     startSurvey();
      var entryForm = document.getElementById("entryForm");
      clearFieldsError(entryForm.getElementsByClassName("addr-field"));
      document.getElementById("need_name").classList.add("d-none");
@@ -1426,7 +1421,7 @@ function showWarningMessage(warning) {
   warning_box.style.display = "block";
   setTimeout(function () {
     warning_box.style.display = "none";
-  }, 5000);
+  }, 7000);
 }
 
 function hideWarningMessage() {
@@ -1521,7 +1516,6 @@ function checkIsContiguous(idFilter) {
   // console.log(unit_id);
   // console.log(bg_id);
   if (!drawUsingBlocks) {
-    console.log()
     while(stack.length > 0){
       blockGroupPolygons[stack.pop()].adj_geoids.forEach((id) => {
         if(active_ids.has(id) && !visited.has(id)){
@@ -1758,7 +1752,7 @@ map.on("style.load", function () {
           if(blockGroupPolygons == null || unit_id != bg_id) {
             if (selectBbox != null && turf.getType(selectBbox) == "MultiPolygon") {
               showWarningMessage(
-                "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
+                "WARNING: We have detected that your community may consist of separate parts. If you choose to submit this community, only the largest two connected pieces will be visible on Representable.org."
               );
             }
           }
@@ -1779,7 +1773,7 @@ map.on("style.load", function () {
             !isEmptyFilter(currentFilter)
           ) {
             showWarningMessage(
-              "WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the largest connected piece will be visible on Representable.org."
+              "WARNING: Please ensure that your community does not contain any gaps. Your selected units must connect. If you choose to submit this community, only the two largest connected pieces will be visible on Representable.org."
             );
           }
         }
