@@ -147,7 +147,7 @@
                             {% trans "Add community" %}
                         </a>
                     {% else %}
-                        <a class="btn btn-outline-primary m-2" href="{% url 'main:entry_preview' %}">
+                        <a class="btn btn-outline-primary m-2" href="{% url 'main:state_selection' %}">
                             {% trans "Add community" %}
                         </a>
                     {% endif %}
@@ -271,7 +271,7 @@
             </div>
             <div class="col-6 col-md">
                 <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="{% url 'main:entry_preview' %}">
+                    <li><a class="text-muted" href="{% url 'main:state_selection' %}">
                             {% trans "Add Your Community" %}
                         </a></li>
                     <li><a class="text-muted" href="{% url 'main:partner_welcome' %}">
