@@ -5,7 +5,8 @@ ALLOWED_HOSTS = ["*"]
 
 SECURE_SSL_REDIRECT = False
 
-DEBUG = True
+# DEBUG = True
+DEBUG = False
 
 # Dev Email Settings - Print to Console
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
