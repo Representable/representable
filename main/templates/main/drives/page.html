@@ -13,23 +13,66 @@
   }
   );
 </script>
-<div class="container" >
-  <div class="row p-3 mb-5 content-blue-bg rounded-lg col-12 p-3 light-blue-bg px-md-4 py-md-3 mb-4">
-    <div class="col-lg-7 col-12 pl-md-5">
-      <div class="my-4 main-display-text-all" style="padding-top: 60px">
-        <span class="d-block mb-3 font-large-mobile font-weight-bold dark-blue-text line-space-less pt-md-3">{% trans "Gerrymandering is silencing communities." %}</span>
-        <span class="d-block h4 font-weight-light gray-text font-medium-mobile">{% blocktrans trimmed %}Make your voice heard with Representable <br> and put your community on the map.{% endblocktrans %}</span>
+<div id="home-bg" class="container-fluid">
+  <!-- Illustration -->
+  <!-- <img id="home-bg" src="{% static 'img/home-bg.png' %}" alt="light map background"></img> -->
+  <div class="row row-hero row-eq-height mt-sm-5 mx-0">
+    <div class="col-12 mobile-padding-x mobile-padding-top text-center">
+      <img class="w-62 align-bottom" src="{% static 'img/home-people.svg' %}" alt="people together holding shapes"> </img>
+      <div class="text-center">
+        <span id="home-mapping-am" class="d-block font-large-mobile font-weight-bold dark-blue-text">{% trans "MAPPING AMERICA" %}</span>
+        <span class="d-block h1 btn-ls-md font-weight-light font-medium-mobile dark-blue-text">{% blocktrans trimmed %} One <b>community</b> at a time. {% endblocktrans %}</span>
       </div>
     </div>
-    <div class="col-lg-5 d-none d-lg-block">
-        <img height="400px" src="{% static 'img/illustration.svg' %}" alt="people drawing a map"> </img>
+  </div>
+  <div class="row">
+    <div class="col-12 text-center my-auto pr-0">
+      <a id="get-started-btn" class="text-center font-medium-mobile btn btn-primary btn-lg py-3 font-weight-bold btn-ls-lg mt-3" href="{% url 'main:entry' drive=object.slug %}{{object.state|lower}}"  role="button">{% trans "GET STARTED" %}</a>
     </div>
   </div>
+  </div>
+  <div class="container-fluid bg-white">
+    <div class="container mb-md-5">
+      <div class="row gray-text pt-3 pt-md-5 px-md-5 mt-5">
+        <div class="col-2">
+          <img class="card-img-top img-fluid m-2 w-100 mx-auto mb-md-4 pt-3 pt-md-0" src="{% static 'img/home-shapes-1.svg' %}" alt="two light shapes"></img>
+        </div>
+        <div class="col-4 my-auto">
+          <h1 class="font-medium-mobile font-weight-bold">{% blocktrans trimmed %} Describe <br>Your Community {% endblocktrans %}</h1>
+          <h3 class="font-small-mobile font-weight-light">{% trans "by identifying shared interests and community needs." %}</h3>
+        </div>
+        <div class="col-2">
+          <img class="card-img-top img-fluid m-2 w-100 mx-auto mb-md-4 pt-3 pt-md-0" src="{% static 'img/home-shapes-3.svg' %}" alt="two light shapes"></img>
+        </div>
+        <div class="col-4 my-auto">
+          <h1 class="font-medium-mobile font-weight-bold">{% blocktrans trimmed %} Draw a <br> Community Map {% endblocktrans %}</h1>
+          <h3 class="font-small-mobile font-weight-light">{% trans "by choosing units that make up your community." %}</h3>
+        </div>
+      </div>
+      <div class="row gray-text pb-md-5">
+        <div class="col-3"></div>
+        <div class="col-2">
+          <img class="card-img-top img-fluid m-2 w-100 mx-auto mb-md-4 pt-3 pt-md-0" src="{% static 'img/home-shapes-2.svg' %}" alt="two light shapes"></img>
+        </div>
+        <div class="col-4 my-auto">
+          <h1 class="font-medium-mobile font-weight-bold">{% blocktrans trimmed %} Share <br>Your Map {% endblocktrans %}</h1>
+          <h3 class="font-small-mobile font-weight-light">{% trans "as public input for map makers to use when drawing new voting districts." %}</h3>
+        </div>
+        <div class="col-3"></div>
+      </div>
+    </div>
+  </div>
+  <div id="state-info-gradient" class="container-fluid dark-gray-text">
+    <div class="row">
+      <a class="mx-auto btn btn-primary btn-lg btn-canvas my-5 btn-ls-md" href="{% url 'main:entry' drive=object.slug %}{{object.state|lower}}" role="button">{% trans "NEXT" %}</a>
+    </div>
+  </div>
+  <div id="state-info-bg2" class="container-fluid dark-gray-text px-5">
   {% if object.slug == "tell-us-about-your" %}
     <div class="row px-md-5">
     {% include './dane-county-page.html' %}
     </div>
-  {% else %}  
+  {% else %}
     <div class="row" style="padding-bottom: 20px">
       <div class="col mx-5">
         <h1 class="text-center font-weight-light">{{object.name}}</h1>
@@ -48,7 +91,6 @@
                 This organization has partnered with Representable to allow people to draw communities of interest and share information about the interests and needs in those communities.
                 <br><br>Making this information available encourages mapmakers to take these communities into account during redistricting, in order to avoid gerrymandering and the “packing and cracking” of marginalized groups. </p>
                 {% endblocktrans %}
-        </p>
       </div>
     </div>
     {% if object.opt_redist_title != "" %}
@@ -61,7 +103,7 @@
   {% endif %}
   <div class="row">
     <div class="col text-center mb-4">
-      <a id="drive-get-started-btn" class="btn btn-primary btn-lg my-5 drive-new-entry" href="{% url 'main:entry' drive=object.slug %}{{object.state|lower}}" role="button">Get Started</a>
+      <a id="drive-get-started-btn" class="btn btn-primary btn-lg my-5 drive-new-entry btn-ls-md" href="{% url 'main:entry' drive=object.slug %}{{object.state|lower}}" role="button">GET STARTED</a>
     </div>
   </div>
 </div>

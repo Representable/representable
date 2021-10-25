@@ -239,6 +239,29 @@
             </p>
           </div>
         </div>
+        {% if show_form is True and not form_empty %}
+        <div class="card text-left border-0 w-100 rounded-lg mt-3 mb-3 d-xl-block">
+          <div class="card-body">
+            <h5 class="card-title header-text"><strong>{% trans "Submit to an organization." %}</strong></h5>
+            {% if c.drive is not True %}
+              <p class="header-text small">{% blocktrans trimmed %}Many organizations in your state are collecting community maps. Submit yours to one of their collection drives.{% endblocktrans %}</p>
+              <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                {{ field }}
+                {% endfor %}
+                <div class="row justify-content-center pt-3">
+                  <div>
+                    <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
+                  </div>
+                </div>
+              </form>
+            {% else %}
+              <p class="header-text small">{% trans "This community map has already been submitted to an organization" %}</p>
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
         <div class="card text-left border-0 w-100 rounded-lg mt-3">
           <div class="card-body">
 
@@ -317,29 +340,6 @@
             <a id="public-comment-link"><h5 class="blue-text">{% trans "Go to public input portal" %} <i class="far fa-arrow-alt-circle-right"></i></h5></a>
           </div>
         </div>
-        {% if show_form is True and not form_empty %}
-        <div class="card text-left border-0 w-100 rounded-lg mt-3 mb-3 d-xl-block">
-          <div class="card-body">
-            <h5 class="card-title header-text"><strong>{% trans "Submit to an organization." %}</strong></h5>
-            {% if c.drive is not True %}
-              <p class="header-text small">{% blocktrans trimmed %}Many organizations in your state are collecting community maps. Submit yours to one of their collection drives.{% endblocktrans %}</p>
-              <form method="post">
-                {% csrf_token %}
-                {% for field in form %}
-                {{ field }}
-                {% endfor %}
-                <div class="row justify-content-center pt-3">
-                  <div>
-                    <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
-                  </div>
-                </div>
-              </form>
-            {% else %}
-              <p class="header-text small">{% trans "This community map has already been submitted to an organization" %}</p>
-            {% endif %}
-          </div>
-        </div>
-        {% endif %}
       </div>
     </div>
 
@@ -443,49 +443,20 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body gray-text">
+                <div class="modal-body gray-text px-lg-5">
                   <div class="row my-1">
                     <div class="col-lg-2"></div>
                     <div class="col-lg-8 text-center">
-                      <p>{% trans "Your community is ready to be viewed and downloaded. You have " %}<br class="d-none d-md-block">{% trans "received an email with your community as a PDF file." %}</p>
+                      <p>{% trans "Your community is ready to be viewed and downloaded. You have " %}{% trans "received an email with your community as a PDF file." %}</p>
                       <h4 class="mb-lg-4">{% trans "Make an impact with your map." %}</h4>
                     </div>
                     <div class="col-lg-2"></div>
                   </div>
-                  <!-- MOBILE ONLY - NO download links but instead we provide more info -->
-                  <div class="row my-2">
-                    <div class="col-4 d-flex d-lg-none">
-                      <img class="mx-auto d-block w-75 h-100" src="{% static 'img/thanks-district.svg' %}" alt="district icon"> </img>
-                    </div>
-                    <div class="col-8 d-flex d-lg-none">
-                      <p class="">{% trans "View your community on a computer to download as a PDF or geoJSON file. You can submit these files as public testimony or to a local redistricting organization." %}</p>
-                    </div>
-                  </div>
-                  <div class="row my-1 mb-lg-3 d-none d-lg-flex">
-                    <div class="col-lg-1"></div>
-                    <div class="col-lg-1">
-                      <div class="thanks-circle"></div>
-                      <img class="mx-auto w-125 h-100" src="{% static 'img/thanks-email.svg' %}" alt="email icon"> </img>
-                    </div>
-                    <div class="col-lg-7">
-                      {% blocktrans trimmed %}
-                      If your state has a redistricting commission or accepts Communities of Interest, send a pdf of your community to submit as public testimony. If not, you can send it to a local redistricting organization or <a href="https://myreps.datamade.us/" target="_blank" rel="noopener noreferrer">your legislator</a>.
-                      {% endblocktrans %}
-                      <br>
+                  <div class="row my-1">
+                    <div class="col">
                       <div class="text-center" id="pdf-download-mix"><a class="btn btn-outline-gray mx-2 my-1" id="pdf-button-modal" target="_blank" data-dismiss="modal" role="button">{% trans "Export PDF" %}</a></div>
                     </div>
-                    <div class="col-lg-3"></div>
-                  </div>
-                  <div class="row my-1 mb-lg-3 d-none d-lg-flex">
-                    <div class="col-lg-3"></div>
-                    <div class="col-lg-1"></div>
-                    <div class="col-lg-1">
-                      <div class="thanks-circle"></div>
-                      <img class="mx-auto d-block w-125 h-100" src="{% static 'img/thanks-district.svg' %}" alt="district icon"> </img>
-                    </div>
-                    <div class="col-lg-7">
-                      {% trans "If you would like to use your map to draw voting districts, you can upload the geoJSON file to mapping softwares such as Maptitude, Dave’s Redistricting App, or Districtr." %}<br>
-                      <!-- <div class="text-center"><a class="btn btn-outline-gray mx-2 my-1" target="_blank" href="" role="button">Export geoJSON</a></div> -->
+                    <div class="col">
                       {% if has_state %}
                       {% with link_text="/export/geojson/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
                       <div class="text-center" id="geojson-download-mix"><a class="btn btn-outline-gray mx-2 my-1 geojson-button" href="#" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>Export geoJSON</a></div>
@@ -498,32 +469,12 @@
                       {% endwith %}
                       {% endif %}
                     </div>
+                    <div class="col">
+                      <div class="text-center"><a class="btn btn-outline-gray mx-2 my-1" target="_blank" data-dismiss="modal" role="button" onclick="copyPageLink();event.preventDefault();">{% trans "Copy Link" %}</a></div>
+                    </div>
                   </div>
-                  <div class="row my-1 mb-lg-3 d-none d-lg-flex">
-                    <div class="col-lg-1"></div>
-                    <div class="col-lg-1">
-                      <div class="thanks-circle"></div>
-                      <img class="mx-auto d-block w-125 h-100" src="{% static 'img/thanks-comm.svg' %}" alt="community icon"> </img>
-                    </div>
-                    <div class="col-lg-7">
-                      {% trans "Send the map to your community members and encourage them to draw maps. When map drawers have more data from your community, they are more likely to draw fairer districts." %} <br>
-                      <!-- <div class="text-center"><a class="btn btn-outline-gray mx-2 my-1" target="_blank" href="" role="button">Send Email</a></div> -->
-                      <div class="text-center">
-                        <!--Form Used to Send Email-->
-                        <div>
-                          <form name="pdfForm" id="pdfForm">
-                            {% csrf_token %}
-                            <div class = "form-group" style = "display:none">
-                              <textarea name = "message" class = "form-control">{{email}}</textarea>
-                            </div>
-                            <div class = "form-group">
-                              <button type = "submit" class="btn btn-outline-gray mx-2 my-1">{% trans "Resend Email" %}</button>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-3"></div>
+                  <div class="row p-4">
+                    To submit your community as public testimony, you can download it as a pdf or share a link. To draw voting districts, you can upload the geoJSON file to mapping softwares such as District Builder, or Dave’s Redistricting App.
                   </div>
                 </div>
               </div>
