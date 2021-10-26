@@ -855,9 +855,13 @@ class ExportView(TemplateView):
                 data['BLOCKID'] = 0
             data['DISTRICT'] = [1] * len(data['BLOCKID'])
             comm_csv = pd.DataFrame(data).to_csv(index=False)
+            # get the testimony for the second csv file
+            testimony_df = pd.DataFrame(gj['properties']).iloc[0].drop('block_group_ids')
+            testimony_csv = testimony_df.to_csv()
             response = HttpResponse(content_type='application/zip')
             with zipfile.ZipFile(response, "w") as z:
                 z.writestr('%s.csv' % export_name, comm_csv)
+                z.writestr('%s_testimony.csv' % export_name, testimony_csv)
                 z.write(STATIC_ROOT + '/main/readme/README_csv.txt', arcname="README_csv.txt")
             response['Content-Disposition'] = 'attachment; filename=%s.zip' % export_name
         else:
