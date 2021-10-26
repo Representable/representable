@@ -342,8 +342,8 @@ class Terms(TemplateView):
 # ******************************************************************************#
 
 
-class EntryPreview(TemplateView):
-    template_name = "main/entry_preview.html"
+# class EntryPreview(TemplateView):
+#     template_name = "main/entry_preview.html"
 
 
 class StateSelection(TemplateView):
