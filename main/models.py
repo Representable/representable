@@ -155,6 +155,7 @@ class Drive(models.Model):
     - is_active: is the drive active
     - private: is the drive private
     - require_user_addresses: does the drive require users to include an address
+    - draw_layer: layer added while drawing the map
     - custom_question: custom question to be asked as part of the survey process
     - custom_question_example: example custom question response for survey placeholder text
     - redist_title: custom redistricting information title
@@ -184,6 +185,9 @@ class Drive(models.Model):
     private = models.BooleanField(default=False)
     require_user_addresses = models.BooleanField(
         default=True, blank=True, null=True
+    )
+    draw_layer = models.CharField(
+        max_length=100, blank=True, unique=False, default=""
     )
     custom_question = models.TextField(
         max_length=255, blank=True, unique=False, default=""
