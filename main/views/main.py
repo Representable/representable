@@ -803,6 +803,21 @@ def make_geojson_for_state_map_page(request, entry):
         gj["features"][0]["properties"]["census_block_ids"] = [
             block.census_id for block in user_map.census_blocks.all()
         ]
+    # include address if user is authenticated + either author or org admin
+    if request.user.is_authenticated:
+        is_org_leader = user_map.organization and (
+            request.user.is_org_admin(user_map.organization_id)
+        )
+        if is_org_leader or request.user == user_map.user:
+            gj["features"][0]["properties"]["author_name"] = user_map.user_name
+            for a in Address.objects.filter(entry=user_map):
+                addy = (
+                    a.street + " " + a.city + ", " + a.state + " " + a.zipcode
+                )
+                gj["features"][0]["properties"]["address"] = addy
+        else:
+            gj["features"][0]["properties"]["author_name"] = ""
+            gj["features"][0]["properties"]["address"] = ""
     # include organization and drive submitted to, if so
     if user_map.organization:
         gj["features"][0]["properties"][
@@ -855,9 +870,13 @@ class ExportView(TemplateView):
                 data['BLOCKID'] = 0
             data['DISTRICT'] = [1] * len(data['BLOCKID'])
             comm_csv = pd.DataFrame(data).to_csv(index=False)
+            # get the testimony for the second csv file
+            testimony_df = pd.DataFrame(gj['properties']).iloc[0].drop('block_group_ids')
+            testimony_csv = testimony_df.to_csv()
             response = HttpResponse(content_type='application/zip')
             with zipfile.ZipFile(response, "w") as z:
                 z.writestr('%s.csv' % export_name, comm_csv)
+                z.writestr('%s_testimony.csv' % export_name, testimony_csv)
                 z.write(STATIC_ROOT + '/main/readme/README_csv.txt', arcname="README_csv.txt")
             response['Content-Disposition'] = 'attachment; filename=%s.zip' % export_name
         else:
@@ -1092,6 +1111,7 @@ class EntryView(LoginRequiredMixin, View):
         drive_id = None
         drive_custom_question = ""
         drive_custom_question_example = ""
+        drive_draw_layer = ""
         drive_units = "BG"
         coi_def = ""
         coi_title = ""
@@ -1111,6 +1131,7 @@ class EntryView(LoginRequiredMixin, View):
             drive_id = drive.id
             drive_custom_question = drive.custom_question
             drive_custom_question_example = drive.custom_question_example
+            drive_draw_layer = drive.draw_layer
             organization = drive.organization
             organization_name = organization.name
             organization_id = organization.id
@@ -1147,6 +1168,7 @@ class EntryView(LoginRequiredMixin, View):
             "drive_id": drive_id,
             "drive_custom_question": drive_custom_question,
             "drive_custom_question_example": drive_custom_question_example,
+            "drive_draw_layer": drive_draw_layer,
             "drive_slug": drive_slug,
             "state": abbr,
             "address_required": address_required,
@@ -1460,8 +1482,10 @@ class MultiExportView(TemplateView):
             print('********', 'csv', '********')
             dictform = json.loads(geojson.dumps(final))
             df = pd.DataFrame()
+            properties = ["entry_name", "author_name", "address", "cultural_interests", "economic_interests", "comm_activities", "other_considerations", "custom_response"]
             for i, entry in enumerate(dictform["features"]):
                 row_dict = dict()
+                # TODO: get population for each individual block group / block
                 if 'block_group_ids' in entry['properties']:
                     row_dict['BLOCKID'] = entry['properties']['block_group_ids']
                 elif 'census_block_ids' in entry['properties']:
@@ -1469,7 +1493,21 @@ class MultiExportView(TemplateView):
                 else:
                     break
                 row_dict['DISTRICT'] = [i + 1] * len(row_dict['BLOCKID'])
+                for property in properties:
+                    row_dict[property] = [entry['properties'][property]] * len(row_dict['BLOCKID'])
+
+                # include organization and drive submitted to, if so
+                org = ''
+                drive = ''
+                if 'organization' in entry['properties']:
+                    org = entry['properties']['organization']
+                if 'drive' in entry['properties']:
+                    drive = entry['properties']['drive']
+                row_dict['organization'] = [org] * len(row_dict['BLOCKID'])
+                row_dict['drive'] = [drive] * len(row_dict['BLOCKID'])
+
                 df = df.append(pd.DataFrame(row_dict))
+
             response = HttpResponse(df.to_csv(index=False), content_type="text/csv")
             # response = HttpResponse(content_type='application/zip')
             # with zipfile.ZipFile(response, "w") as z:

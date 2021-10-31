@@ -422,8 +422,9 @@ class DriveAdmin(admin.ModelAdmin, ExportCsvMixin):
             "organization",
             "state",
             "private",
+            "draw_layer",
         )
-    list_display = ("name", "description", "organization", "state", "private")
+    list_display = ("name", "description", "organization", "state", "private", "draw_layer")
     list_filter = (DriveStateFilter,)
     actions = ["export_as_csv"]
 
