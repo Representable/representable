@@ -1111,6 +1111,7 @@ class EntryView(LoginRequiredMixin, View):
         drive_id = None
         drive_custom_question = ""
         drive_custom_question_example = ""
+        drive_draw_layer = ""
         drive_units = "BG"
         coi_def = ""
         coi_title = ""
@@ -1130,6 +1131,7 @@ class EntryView(LoginRequiredMixin, View):
             drive_id = drive.id
             drive_custom_question = drive.custom_question
             drive_custom_question_example = drive.custom_question_example
+            drive_draw_layer = drive.draw_layer
             organization = drive.organization
             organization_name = organization.name
             organization_id = organization.id
@@ -1166,6 +1168,7 @@ class EntryView(LoginRequiredMixin, View):
             "drive_id": drive_id,
             "drive_custom_question": drive_custom_question,
             "drive_custom_question_example": drive_custom_question_example,
+            "drive_draw_layer": drive_draw_layer,
             "drive_slug": drive_slug,
             "state": abbr,
             "address_required": address_required,
