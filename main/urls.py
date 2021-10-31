@@ -50,7 +50,7 @@ urlpatterns = [
     path("", views.main.Index.as_view(), name="index"),
     path(
         "entry_preview/",
-        views.main.EntryPreview.as_view(),
+        views.main.StateSelection.as_view(),
         name="entry_preview",
     ),
     path(
