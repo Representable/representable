@@ -311,7 +311,7 @@ document.querySelectorAll(".comm-content").forEach(function (p) {
 var toggleableLayerIds = getToggleableLayerIds(state);
 addDataSwitches(map, document, "map", visible);
 addElections(map, document, "map");
-
+addDemLayers(map, document, "map");
 
 // Toggles the visibility of the selected community. If the coi_layer_fill layer (all the communities) is displayed, remove it and
 // display the selected community. If the last selected community community is hidden, display the coi_layer_fill layer.

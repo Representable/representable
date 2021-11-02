@@ -225,3 +225,30 @@ var STATE_FILES = {
   dc: "DC_Gen_16_18",
   vt: "vt_2016",
 };
+
+var demLayersRef = [
+  "whi_alo",
+  "bla_alo",
+  "nat_alo",
+  "asi_alo",
+  "pci_alo",
+  "sor_alo",
+]
+
+var demLayersNHRef = [
+  "whi_alo",
+  "bla_alo",
+  "nat_alo",
+  "asi_alo",
+  "pci_alo",
+  "sor_alo",
+]
+
+var DEMLAYERS = {
+  "whi_alo": "White",
+  "bla_alo": "Black",
+  "nat_alo": "American Indian and Alaska Native",
+  "asi_alo": "Asian",
+  "pci_alo": "Native Hawaiian or Pacific Islander",
+  "sor_alo": "Some other race",
+}
