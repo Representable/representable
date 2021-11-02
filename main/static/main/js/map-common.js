@@ -220,6 +220,11 @@ function addAllLayers(map, document, pageName) {
     txt_box.innerHTML = "<b>Election data is not yet available for this state.</b>"
   }
 
+  if (pageName === "map") {
+    var txt_box = document.getElementById("demographic-text");
+    txt_box.innerHTML = "<b>Percentage of population by race (denoted by shading opacity):</b>"
+  }
+
   var layers = map.getStyle().layers;
   // Find the index of the first symbol layer in the map style
   // this is so that added layers go under the symbols on the map
@@ -632,7 +637,7 @@ function addDemLayers(map, document, pageName) {
   // adds dem info to next dropdown
   var stateDemLayers = demLayersRef;
   var nhDemLayers = demLayersNHRef;
-  var demLayers_text = document.getElementById('demographic-text');
+  // var demLayers_text = document.getElementById('demographic-text');
   // if (HAS_PRECINCTS.indexOf(state) != -1) {
   //   stateElections = STATE_ELECTIONS[state];
   // }

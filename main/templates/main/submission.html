@@ -393,13 +393,14 @@
               <div id="demographics-card" class="col-12 col-lg-8 card border-0 rounded-lg p-0 d-none mr-2 mb-3">
                 <div class="card-body pb-0">
                   <h5 class="card-title filter-header header-text pb-2"><strong>{% trans "Demographics" %}<i class="fas fa-minus ml-2 filter-sign"></i></strong></h5>
-                  <div class="font-weight-light text-uppercase small mb-3" id="demographic-menu">
+                  <div class="font-weight-light  small mb-3" id="demographic-menu">
+                        <div class="text-uppercase">
                         {% if c.population > 0 %}
                         <b>Population:</b> {{ c.population }}
                         <br>
-                        {% else %}
-                        <b>{% trans "Demographic information will become available with the release of 2020 Census data by the US Census Bureau." %}</b>
                         {% endif %}
+                         </div>
+                        <b>{% trans "Percentage of population by race (denoted by shading opacity):" %}</b>
                   </div>
                 </div>
               </div>
