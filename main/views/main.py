@@ -730,6 +730,7 @@ def make_geojson(request, entry):
         geometry_field="census_blocks_polygon",
         fields=(
             "entry_name",
+            "entry_ID",
             "cultural_interests",
             "economic_interests",
             "comm_activities",
@@ -782,6 +783,7 @@ def make_geojson_for_state_map_page(request, entry):
         geometry_field="census_blocks_polygon",
         fields=(
             "entry_name",
+            "entry_ID",
             "cultural_interests",
             "economic_interests",
             "comm_activities",
@@ -1012,6 +1014,7 @@ def make_geojson_for_s3(entry):
         geometry_field="census_blocks_polygon",
         fields=(
             "entry_name",
+            "entry_ID",
             "cultural_interests",
             "economic_interests",
             "comm_activities",
