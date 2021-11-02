@@ -79,11 +79,11 @@ def make_geojson_for_state_map_page(request, entry):
         gj["features"][0]["properties"]["drive"] = user_map.drive.name
 
     gj["features"][0]["properties"]["author_name"] = user_map.user_name
-    for a in Address.objects.filter(entry=user_map):
-        addy = (
-            a.street + " " + a.city + ", " + a.state + " " + a.zipcode
-        )
-        gj["features"][0]["properties"]["address"] = addy
+    # for a in Address.objects.filter(entry=user_map):
+    #     addy = (
+    #         a.street + " " + a.city + ", " + a.state + " " + a.zipcode
+    #     )
+    #     gj["features"][0]["properties"]["address"] = addy
 
     feature = gj["features"][0]
     return feature
@@ -308,7 +308,7 @@ class CommunityAdmin(ImportExportModelAdmin):
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
         writer = csv.writer(response)
-        writer.writerow(["ENTRY NAME", "DISTRICT", "AUTHOR NAME", "ADDRESS", "CULTURAL AND HISTORICAL INTERESTS",
+        writer.writerow(["ENTRY NAME", "ENTRY ID", "DISTRICT", "AUTHOR NAME", "ADDRESS", "CULTURAL AND HISTORICAL INTERESTS",
         "ECONOMIC OR ENVIRONMENTAL INTERESTS", "COMMUNITY ACTIVITIES AND SERVICES", "COMMUNITY NEEDS AND CONCERNS",
         "RESPONSE TO CUSTOM DRIVE QUESTION", "POPULATION"])
 
@@ -320,7 +320,7 @@ class CommunityAdmin(ImportExportModelAdmin):
                 addy = (
                     a.street + " " + a.city + ", " + a.state + " " + a.zipcode
                 )
-            row = writer.writerow([obj.entry_name, i, name, addy, obj.cultural_interests, obj.economic_interests, obj.comm_activities, obj.other_considerations, obj.custom_response, obj.population])
+            row = writer.writerow([obj.entry_name, obj.entry_ID, i, name, addy, obj.cultural_interests, obj.economic_interests, obj.comm_activities, obj.other_considerations, obj.custom_response, obj.population])
 
         return response
 

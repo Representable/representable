@@ -138,12 +138,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                           <span class="small text-muted">
                           {% if is_org_admin %}
                             {{ c.user_name }}
-                            {% if streets|get_item:c.entry_ID %}
-                            | {{streets|get_item:c.entry_ID}},
-                            {{cities|get_item:c.entry_ID}} <br>
-                            {% else %}
                             <br>
-                            {% endif %}
                           {% endif %}
                           <a tabindex="0" class="small float-right mt-2" style="color:red" id="report" data-community-id={{c.id}} role="button" data-toggle="modal" data-target="#sendReport"> <span class="sr-only">Danger: </span>REPORT</a>
                           </span>
