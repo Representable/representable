@@ -125,12 +125,12 @@ class PartnerMap(TemplateView):
             numBG[obj.entry_ID] = len(obj.block_groups.all())
             numBlock[obj.entry_ID] = len(obj.census_blocks.all())
 
-            if is_admin:
-                for a in Address.objects.filter(entry=obj):
-                    streets[obj.entry_ID] = a.street
-                    cities[obj.entry_ID] = (
-                        a.city + ", " + a.state + " " + a.zipcode
-                    )
+            # if is_admin:
+            #     for a in Address.objects.filter(entry=obj):
+            #         streets[obj.entry_ID] = a.street
+            #         cities[obj.entry_ID] = (
+            #             a.city + ", " + a.state + " " + a.zipcode
+            #         )
 
         if (self.request.user.is_authenticated and self.request.user.is_org_admin(org.id)):
             comms_counter = query.count()

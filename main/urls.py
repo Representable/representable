@@ -48,11 +48,11 @@ urlpatterns = [
         name='block_group_polygons',
     ),
     path("", views.main.Index.as_view(), name="index"),
-    # path(
-    #     "entry_preview/",
-    #     views.main.EntryPreview.as_view(),
-    #     name="entry_preview",
-    # ),
+    path(
+        "entry_preview/",
+        views.main.StateSelection.as_view(),
+        name="entry_preview",
+    ),
     path(
         "state_selection/",
         views.main.StateSelection.as_view(),

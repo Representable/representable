@@ -147,6 +147,25 @@ function createElectionLayer(map, layerName, source, sourceLayer) {
   });
 }
 
+function newCensusShading(state, firstSymbolId, suffix) {
+  map.addLayer(
+    {
+      id: state + "-census-shading-" + suffix,
+      type: "fill",
+      source: state + suffix,
+      "source-layer": state + suffix,
+      layout: {
+        visibility: "none",
+      },
+      paint: {
+        "fill-outline-color": "rgb(0,0,0)",
+        "fill-opacity": 0.35,
+      },
+    },
+    firstSymbolId
+  );
+}
+
 function addAllLayers(map, document, pageName) {
   // school districts as a data layer
   newSourceLayer(map, "school-districts", SCHOOL_DISTR_KEY);
@@ -201,6 +220,25 @@ function addAllLayers(map, document, pageName) {
     txt_box.innerHTML = "<b>Election data is not yet available for this state.</b>"
   }
 
+  if (pageName === "map") {
+    var txt_box = document.getElementById("demographic-text");
+    txt_box.innerHTML = "<b>Percentage of population by race (denoted by shading opacity):</b>"
+  }
+
+  var layers = map.getStyle().layers;
+  // Find the index of the first symbol layer in the map style
+  // this is so that added layers go under the symbols on the map
+  var firstSymbolId;
+  for (var i = 0; i < layers.length; i++) {
+    if (layers[i].type === "symbol" && layers[i] !== "road") {
+      firstSymbolId = layers[i].id;
+      break;
+    }
+  }
+
+  newSourceLayer(map, state + "block20", state + "block20")
+  newCensusShading(state, firstSymbolId, 'block20')
+  // add dem layers
 
   // leg2 : congressional district
   // leg3 : state senate district
@@ -564,6 +602,128 @@ function addElections(map, document, pageName) {
     var label = document.createElement("label");
     label.setAttribute("for", id);
     label.textContent = ELECTION_NAMES[id];
+    div.appendChild(link);
+    div.appendChild(label);
+    dest.appendChild(div);
+    var newline = document.createElement("br");
+  }
+}
+
+function addDemLayers(map, document, pageName) {
+  // Create toggle switches for demographics - copied elections
+  var demLayers = document.getElementById("demographic-menu");
+  // var addContainer = document.createElement("div");
+  // addContainer.classList.add("container-fluid", "w-100");
+  // demLayers.appendChild(addContainer);
+
+  // var demLayersContainer = demLayers.children[0];
+  // var addRow = document.createElement("div");
+  // addRow.classList.add("row", "row-wide");
+  // demLayersContainer.appendChild(addRow);
+
+  // var demLayersRow = demLayersContainer.children[0];
+  // var addCol1 = document.createElement("div");
+  // addCol1.classList.add("col-12", "col-md-6", "m-0", "p-0");
+  // var addCol2 = document.createElement("div");
+  // addCol2.classList.add("col-12", "col-md-6", "m-0", "p-0");
+
+  // demLayersRow.appendChild(addCol1);
+  // demLayersRow.appendChild(addCol2);
+
+  // var demLayersCol1 = demLayersRow.children[0];
+  // var demLayersCol2 = demLayersRow.children[1];
+
+  count = 0;
+  // adds dem info to next dropdown
+  var stateDemLayers = demLayersRef;
+  var nhDemLayers = demLayersNHRef;
+  // var demLayers_text = document.getElementById('demographic-text');
+  // if (HAS_PRECINCTS.indexOf(state) != -1) {
+  //   stateElections = STATE_ELECTIONS[state];
+  // }
+  // else if (pageName === "submission") {
+  //   elec_text.innerHTML = "<b>Election data is not yet available for this state.</b>";
+  // }
+
+  for (var idx in stateDemLayers) {
+    if (state === 'nh') {
+      id = nhDemLayers[idx];
+      pop = 'tot';
+    }
+    else {
+      id = stateDemLayers[idx];
+      pop = 'tot';
+    }
+    var link = document.createElement("input");
+
+    link.value = id;
+    link.id = id;
+    link.type = "checkbox";
+    link.className = "switch_1";
+    link.checked = false;
+
+    link.onchange = function (e) {
+      var txt = state + "-census-shading-block20"
+      // var clickedLayers = [];
+      // clickedLayers.push(txt + "-lines");
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (this.checked === false) {
+        map.setLayoutProperty(txt, "visibility", "none");
+      } else {
+        map.setLayoutProperty(txt, "visibility", "visible");
+        var prop = this.id;
+        // var state_layer = STATE_FILES[state];
+        // set all other layers to not visible, uncheck the display box for all other layers
+        var computedColor = [
+          "interpolate-lab", // perceptual color space interpolation
+          ["linear"],
+          [
+            "to-number",
+            [
+              "/",
+              ["to-number", ["get", prop]],
+              // [">", ["number", ["get", demProp], -1], 0],
+              [
+                "+",
+                ["to-number", ["get", pop]],
+                ["to-number", ".01"],
+              ]
+            ],
+          ],
+          0,
+          "white", // note that, unlike functions, the "stops" are flat, not wrapped in two-element arrays
+          1,
+          "blue",
+        ];
+        // map.setFilter(txt, ["==", ["get", "layer"], state_layer]);
+        map.setPaintProperty(txt, "fill-color", computedColor);
+
+        for (var idx2 in stateDemLayers) {
+          otherElection = stateDemLayers[idx2];
+          if (otherElection != this.id) {
+            var button = document.getElementById(otherElection);
+            button.checked = false;
+          }
+        }
+        // if (property.demProp===NULL) {
+        //   map.setLayoutProperty(txt, "visibility", "none");
+        // }
+      }
+    };
+
+    // in order to create the buttons
+    var dest = demLayers
+
+    var div = document.createElement("div");
+    div.className = "switch_box box_1";
+    if (pageName === "submission") {
+      div.classList.add("mb-3");
+    }
+    var label = document.createElement("label");
+    label.setAttribute("for", id);
+    label.textContent = DEMLAYERS[id];
     div.appendChild(link);
     div.appendChild(label);
     dest.appendChild(div);
