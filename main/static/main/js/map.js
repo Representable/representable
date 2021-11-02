@@ -410,6 +410,9 @@ $("#buttonOne").click(function() {
 $("#buttonTwo").click(function () {
   $("#arrowTwo").toggleClass("flipY-inplace");
 });
+$("#buttonTwoAndAHalf").click(function () {
+  $("#arrowTwoAndAHalf").toggleClass("flipY-inplace");
+});
 $("#buttonThree").click(function() {
   $("#arrowThree").toggleClass('flipY-inplace');
 });
