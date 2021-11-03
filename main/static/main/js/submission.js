@@ -332,7 +332,7 @@ map.on("load", function () {
 var toggleableLayerIds = getToggleableLayerIds(state);
 addDataSwitches(map, document, "submission", visible)
 addElections(map, document, "submission");
-
+addDemLayers(map, document, "map");
 
 $("#data-layer-btn").on("click", function () {
   toggleDataLayers();

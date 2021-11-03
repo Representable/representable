@@ -92,6 +92,17 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                   <div class="font-weight-light text-uppercase small mb-3" id="no-election-text"></div>
                 </div>
               </div>
+              <div id="headingTwoAndAHalf">
+                <button id="buttonTwoAndAHalf"class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseTwoAndAHalf"
+                aria-expanded="false" aria-controls="collapseTwoAndAHalf" style="width: 100%">
+                {% trans "Demographic Data" %} <i id="arrowTwoAndAHalf" class="fas fa-caret-down"></i></button>
+              </div>
+              <div id="collapseTwoAndAHalf" class="collapse" aria-labelledby="headingTwoAndAHalf" data-parent="#accordionExample">
+                <div class="font-weight-light text-uppercase small" id="demographic-menu">
+                  <br>
+                  <div class="font-weight-light text-uppercase small mb-3" id="demographic-text"></div>
+                </div>
+              </div>
             </div>
             <div class="items">
               <div id="headingThree">
@@ -138,12 +149,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                           <span class="small text-muted">
                           {% if is_org_admin %}
                             {{ c.user_name }}
-                            {% if streets|get_item:c.entry_ID %}
-                            | {{streets|get_item:c.entry_ID}},
-                            {{cities|get_item:c.entry_ID}} <br>
-                            {% else %}
                             <br>
-                            {% endif %}
                           {% endif %}
                           <a tabindex="0" class="small float-right mt-2" style="color:red" id="report" data-community-id={{c.id}} role="button" data-toggle="modal" data-target="#sendReport"> <span class="sr-only">Danger: </span>REPORT</a>
                           </span>
