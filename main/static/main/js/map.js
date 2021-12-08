@@ -150,9 +150,9 @@ map.on("load", function () {
     var coi_op = 0.15;
     if (comms_counter >= 25) {
       coi_op = 0.12;
-      if (numBlock[coi_id] > 300 || numBG[coi_id] > 15) coi_op = 0.08;
-      if (numBlock[coi_id] > 600 || numBG[coi_id] > 50) coi_op = 0.05;
-      if (numBlock[coi_id] > 900 || numBG[coi_id] > 100) coi_op = 0.025;
+      if (numBlock[coi_id] > 300 || numBG[coi_id] > 15) coi_op = 0.09;
+      if (numBlock[coi_id] > 600 || numBG[coi_id] > 50) coi_op = 0.06;
+      if (numBlock[coi_id] > 900 || numBG[coi_id] > 100) coi_op = 0.045;
     }
 
     coidata_geojson_format.features.push({

@@ -565,6 +565,10 @@ body
     flex-flow: column;
 }
 
+a {
+  color: #2a94f4;
+}
+
 /* Change hero card so that it doesn't display borders. */
 .hero-card .card
 {
@@ -777,10 +781,10 @@ body
   background-repeat: no-repeat;
   background-size: cover;
   position: absolute;
-  top: 0px;
+  top: -25px;
   left: 0px;
   width: 100vw;
-  height: 150vh;
+  height: 130vh;
   z-index: -1;
 }
 
@@ -1173,6 +1177,8 @@ Entry Mapping Page
     position: relative;
 
     height: 100vh;
+
+    top: -15px;
 }
 
 .map-box
@@ -1200,7 +1206,6 @@ Entry Mapping Page
 
 .mapboxgl-ctrl-group
 {
-    border-radius: 10px;
     background: rgba(247, 247, 247, 1);
 }
 
@@ -1308,7 +1313,7 @@ Entry Mapping Page
     bottom: 20%;
     left: 30%;
 
-    max-width: 18%;
+    max-width: 22%;
 
     white-space: normal;
 }
@@ -1670,16 +1675,12 @@ Entry Mapping Page
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23000000'><polygon points='0,0 100,0 50,50'/></svg>")
-    no-repeat;
+  /* background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23000000'><polygon points='0,0 100,0 50,50'/></svg>")
+    no-repeat !important;
     background-color: #efefef;
     background-repeat: no-repeat;
     background-position: calc(100% - 20px) center;
-    background-size: 12px;
-
-    -webkit-appearance: none;
-       -moz-appearance: none;
-            appearance: none;
+    background-size: 12px; */
 }
 .state-select-resources {
   padding: 5px;

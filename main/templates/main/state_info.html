@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 <div class="row mx-lg-5 pb-5">
-  <div class="col-md-4">
+  <div class="col-md-4 pr-md-4">
     <div class="m-auto pb-4 pt-2">
 
       {% if logo.url == "" or not logo %}
@@ -28,7 +28,7 @@
 
     </div>
   </div>
-  <div class="col-sm-8">
+  <div class="col-sm-8 pl-md-5">
     <div class="col-12 p-3 bg-white px-md-4 py-md-3 mb-4">
       {% if not edited %}
           <button id="redist_in" class="btn btn-link ws-normal bg-transparent text-left pl-0 no-underline-link state-info-mix" data-toggle="collapse" data-target="#collapseCriteria1" aria-expanded="false" aria-controls="collapseCriteria1" onclick="toggleAngle(this)">

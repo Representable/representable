@@ -17,7 +17,7 @@
 {% block content %}
 <div id="home-bg" class="container-fluid">
   <!-- Illustration -->
-  <div class="row row-hero row-eq-height mt-sm-5 mx-0">
+  <div class="row row-hero row-eq-height mt-sm-4 mx-0">
     <div class="col-12 mobile-padding-x mobile-padding-top text-center">
       <img class="w-62 align-bottom" src="{% static 'img/home-people.svg' %}" alt="people together holding shapes"> </img>
       <div class="text-center">
@@ -27,31 +27,28 @@
     </div>
   </div>
   <div class="row row-hero row-eq-height my-auto mx-0">
-    <div class="col-md-2"></div>
-    <div class="col-12 d-md-block d-none col-md-3 text-right my-auto pr-0">
+    <div class="col-12 text-center my-auto pt-3">
       <a id="get-started-btn" class="text-center font-medium-mobile btn btn-primary btn-lg py-3 font-weight-bold btn-ls-lg" href="{% url 'main:state_selection' %}"  role="button">{% trans "GET STARTED" %}</a>
-    </div>
-    <div class="col-12 d-block d-md-none col-md-3 text-center my-auto pr-0 pt-3">
-      <a id="get-started-btn" class="text-center font-medium-mobile btn btn-primary btn-lg py-3 font-weight-bold btn-ls-lg" href="{% url 'main:state_selection' %}"  role="button">{% trans "GET STARTED" %}</a>
-    </div>
-    <div class="col-12 col-md-6">
-      <div class="d-md-block d-none alert gray-text" role="alert">
-        <p class="my-2 px-5 h5 font-weight-bold">{% trans "Are you the leader of an organization?" %}</p>
-        <p class="border-left border-dark border-3 pl-5 mb-2 mt-2" style="font-size: 17px;">{% blocktrans trimmed %} Many organizations use Representable <br> to collect community maps. {% endblocktrans %}</p>
-        <p class="px-5 mt-2 mb-0" style="font-size: 17px;"><a class="link-custom" href='/partners/welcome'>{% trans "JOIN AS AN ORGANIZATION" %}</a></p>
-      </div>
-      <div class="d-block d-md-none alert gray-text" role="alert">
-        <p class="my-2 px-5 h6 font-weight-bold">{% trans "Are you the leader of an organization?" %}</p>
-        <p class="border-left border-dark border-3 pl-5 mb-2 mt-2 small">{% blocktrans trimmed %} Many organizations use Representable <br> to collect community maps. {% endblocktrans %}</p>
-        <p class="px-5 mt-2 mb-0 small"><a class="link-custom" href='/partners/welcome'>{% trans "JOIN AS AN ORGANIZATION" %}</a></p>
-      </div>
-    </div>
-    <div class="col-md-1"></div>
-      <!-- <div class="col-lg-6 col-sm-12 col-md-6">
-        <img class="img-fluid align-bottom my-md-5 pl-lg-0 pl-3" src="{% static 'img/illustration.svg' %}" alt="people drawing a map"> </img>
-      </div> -->
     </div>
   </div>
+  <div class="row">
+    <h4 class="mx-auto gray-text my-2">-OR-</h4>
+  </div>
+  <div class="row row-hero row-eq-height my-auto mx-0">
+    <div class="d-none d-md-block col-12 col-md-6">
+      <a class="float-right font-medium-mobile btn btn-outline-secondary py-3 btn-ls-md mb-5 mt-2 border-solid" style="border-radius: 0;" href="{% url 'main:state_selection_map' %}"  role="button">{% trans "VIEW & EXPORT MAPS" %}</a>
+    </div>
+    <div class="d-block d-md-none col-12 col-md-6 text-center">
+      <a class="font-medium-mobile btn btn-outline-secondary py-3 btn-ls-md my-2 border-solid" style="border-radius: 0;" href="{% url 'main:state_selection_map' %}"  role="button">{% trans "VIEW & EXPORT MAPS" %}</a>
+    </div>
+    <div class="d-none d-md-block col-12 col-md-6">
+      <a class="float-left font-medium-mobile btn btn-outline-secondary py-3 btn-ls-md mb-5 mt-2 border-solid" style="border-radius: 0;" href="{% url 'main:partner_welcome' %}"  role="button">{% trans "JOIN AS AN ORG" %}</a>
+    </div>
+    <div class="d-block d-md-none col-12 col-md-6 text-center">
+      <a class="font-medium-mobile btn btn-outline-secondary py-3 btn-ls-md my-2 border-solid" style="border-radius: 0;" href="{% url 'main:partner_welcome' %}"  role="button">{% trans "JOIN AS AN ORG" %}</a>
+    </div>
+  </div>
+</div>
   <div class="container-fluid bg-white">
     <div class="container mb-5">
       <div class="row gray-text pt-5 px-md-5 mt-5">
@@ -178,7 +175,7 @@
       <div class="row pt-4">
         <div class="col-md-3"></div>
         <div class="col-md-6 text-center">
-          <h3 class="font-medium-mobile btn-ls-lg font-weight-bold">OUR PARTNERS</h3>
+          <h3 class="font-medium-mobile btn-ls-lg pt-4 font-weight-bold">OUR PARTNERS</h3>
           <!-- image of partner organization logos -->
           <img class="card-img-top img-fluid m-2 mx-auto mb-md-4" src="{% static 'img/partner-logos.png' %}" alt="logos of organizations that partner with representable"></img>
         </div>

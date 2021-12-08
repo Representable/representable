@@ -17,7 +17,7 @@
   <!-- Illustration -->
   <div class="row row-hero row-eq-height mt-sm-5 mx-0">
     <div class="col-12 mobile-padding-x mobile-padding-top text-center">
-      <img class="w-62 align-bottom" src="{% static 'img/home-people.svg' %}" alt="people together holding shapes"> </img>
+      <img class="w-50 align-bottom" src="{% static 'img/home-people.svg' %}" alt="people together holding shapes"> </img>
       <div class="text-center">
         <span id="home-mapping-am" class="d-block font-large-mobile font-weight-bold dark-blue-text">{% trans "MAPPING AMERICA" %}</span>
         <span class="d-block h1 btn-ls-md font-weight-light font-medium-mobile dark-blue-text">{% blocktrans trimmed %} One <b>community</b> at a time. {% endblocktrans %}</span>
@@ -27,6 +27,9 @@
   <div class="row">
     <div class="col-12 text-center my-auto pr-0">
       <a id="get-started-btn" class="text-center font-medium-mobile btn btn-primary btn-lg py-3 font-weight-bold btn-ls-lg mt-3" href="{% url 'main:entry' drive=object.slug %}{{object.state|lower}}"  role="button">{% trans "GET STARTED" %}</a>
+    </div>
+    <div class="col-12 text-center my-auto pr-0 pt-5 dark-blue-text">
+      <button class="display-3 btn-link border-0" onclick="scrollFn()"><i class="fas fa-chevron-down"></i></button>
     </div>
   </div>
   </div>
@@ -48,7 +51,7 @@
           <h3 class="font-small-mobile font-weight-light">{% trans "by choosing units that make up your community." %}</h3>
         </div>
       </div>
-      <div class="row gray-text pb-md-5">
+      <div class="row gray-text pb-md-3">
         <div class="col-3"></div>
         <div class="col-2">
           <img class="card-img-top img-fluid m-2 w-100 mx-auto mb-md-4 pt-3 pt-md-0" src="{% static 'img/home-shapes-2.svg' %}" alt="two light shapes"></img>
@@ -62,11 +65,11 @@
     </div>
   </div>
   <div id="state-info-gradient" class="container-fluid dark-gray-text">
-    <div class="row">
-      <a class="mx-auto btn btn-primary btn-lg btn-canvas my-5 btn-ls-md" href="{% url 'main:entry' drive=object.slug %}{{object.state|lower}}" role="button">{% trans "NEXT" %}</a>
-    </div>
+    <!-- <div class="row">
+      <div style="height: 100px"></div>
+    </div> -->
   </div>
-  <div id="state-info-bg2" class="container-fluid dark-gray-text px-5">
+  <div id="state-info-bg2" class="container-fluid dark-gray-text px-5 pt-5">
   {% if object.slug == "tell-us-about-your" %}
     <div class="row px-md-5">
     {% include './dane-county-page.html' %}
@@ -102,7 +105,7 @@
   {% endif %}
   <div class="row">
     <div class="col text-center mb-4">
-      <a id="drive-get-started-btn" class="btn btn-primary btn-lg my-5 drive-new-entry btn-ls-md" href="{% url 'main:entry' drive=object.slug %}{{object.state|lower}}" role="button">GET STARTED</a>
+      <a id="drive-get-started-btn" class="btn btn-primary btn-lg mb-5 drive-new-entry btn-ls-md" href="{% url 'main:entry' drive=object.slug %}{{object.state|lower}}" role="button">GET STARTED</a>
     </div>
   </div>
 </div>
@@ -110,4 +113,14 @@
 
 {% block script %}
 <script type="text/javascript" src="{% static 'main/js/components/dropdown.js' %}"></script>
+<script>
+function scrollFn() {
+        let e = document.getElementById("state-info-bg2");
+        e.scrollIntoView({
+          block: 'start',
+          behavior: 'smooth',
+          inline: 'start'
+        });
+      }
+</script>
 {% endblock %}
