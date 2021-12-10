@@ -1118,6 +1118,8 @@ class EntryView(LoginRequiredMixin, View):
         drive_units = "BG"
         coi_def = ""
         coi_title = ""
+        drive_flytox = ""
+        drive_flytoy = ""
         if kwargs["drive"]:
             has_drive = True
             drive_slug = self.kwargs["drive"]
@@ -1135,6 +1137,8 @@ class EntryView(LoginRequiredMixin, View):
             drive_custom_question = drive.custom_question
             drive_custom_question_example = drive.custom_question_example
             drive_draw_layer = drive.draw_layer
+            drive_flytox = drive.flytox
+            drive_flytoy = drive.flytoy
             organization = drive.organization
             organization_name = organization.name
             organization_id = organization.id
@@ -1172,6 +1176,8 @@ class EntryView(LoginRequiredMixin, View):
             "drive_custom_question": drive_custom_question,
             "drive_custom_question_example": drive_custom_question_example,
             "drive_draw_layer": drive_draw_layer,
+            "drive_flytox": drive_flytox,
+            "drive_flytoy": drive_flytoy,
             "drive_slug": drive_slug,
             "state": abbr,
             "address_required": address_required,
