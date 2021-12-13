@@ -262,20 +262,26 @@
 {% if page_type == "entry" %}
 
 {% else %}
-<footer class="pt-4 mb-md-5 pt-md-5 border-top">
+<footer class="pt-4 mb-md-5 pt-md-5 pb-4 border-top">
     <div class="container">
         <div class="row">
             <div class="col-12 col-md">
-                <a href="/"><img id="r-logo-svg" class="mb-2 text-muted" src="{% static 'img/logo-lowres.svg' %}" alt="Representable logo" width="24" height="24"></a>
-                <p class="d-block mb-3 text-muted">© Representable 2021</p>
+              <a class="navbar-brand pb-2" href="{% url 'main:index' %}">
+                <img class="img-fluid pr-2 w-25" src="{% static 'img/logo-gradient.svg' %}" alt="representable logo - low resolution version"> </img>
+                <img class="img-fluid pr-2 w-75" src="{% static 'img/representable-text.svg' %}" alt="representable text logo"> </img>
+              </a>
+              <p class="d-block mb-3 text-muted">© Representable 2021</p>
             </div>
             <div class="col-6 col-md">
                 <ul class="list-unstyled text-small">
                     <li><a class="text-muted" href="{% url 'main:state_selection' %}">
                             {% trans "Add Your Community" %}
                         </a></li>
+                    <li><a class="text-muted" href="{% url 'main:state_selection_map' %}">
+                            {% trans "View Communities" %}
+                        </a></li>
                     <li><a class="text-muted" href="{% url 'main:partner_welcome' %}">
-                            {% trans "Create a Partner Profile" %}
+                            {% trans "Create an Organization Profile" %}
                         </a></li>
                     {% if user.is_authenticated %}
                     <li><a class="text-muted" href="{% url 'main:review' %}">
@@ -293,10 +299,27 @@
                     <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="{% url 'main:terms' %}">
                             {% trans "Terms" %}
                     </a></li>
+                    <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="{% url 'main:about' %}">
+                            {% trans "About" %}
+                    </a></li>
+                    <li><a class="text-muted" target="_blank" rel="noopener noreferrer" href="https://medium.com/representable">
+                            {% trans "Blog" %}
+                    </a></li>
 
                 </ul>
             </div>
             <div class="col-12 col-md">
+              <ul class="list-unstyled text-small">
+              <li><a class="text-muted" href="{% url 'main:resources' %}">
+                      {% trans "Resources" %}
+                  </a></li>
+              <li><a class="text-muted" href="{% url 'main:faq' %}">
+                      {% trans "FAQ" %}
+                  </a></li>
+              <li><a class="text-muted" href="{% url 'main:glossary' %}">
+                      {% trans "Redistricting Glossary" %}
+                  </a></li>
+              </ul>
                 <p class="text-muted">{% trans "More questions? Reach out at" %} <a href="mailto:team@representable.org">team@representable.org</a></p>
             </div>
         </div>

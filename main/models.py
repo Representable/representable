@@ -36,9 +36,7 @@ from taggit.managers import TaggableManager
 # state model editable content field
 from ckeditor.fields import RichTextField
 
-# ******************************************************************************#
-
-
+# *****************************************************************************
 class User(AbstractUser):
     # TODO: Add a language variable for each user
     def is_org_admin(self, org_id):
@@ -165,6 +163,8 @@ class Drive(models.Model):
     - coi_def_title: e.g. "definition of cois in x area"
     - coi_def_title: actual definition
     - units: map drawing units
+    - flytox: coords to start x
+    - flytoy: coords to start y
     """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -215,6 +215,12 @@ class Drive(models.Model):
     )
     units = models.CharField(
         max_length=50, choices=UNITS, default="Census Block Groups", blank=False
+    )
+    flytox = models.FloatField(
+        default="0.0", blank=True, help_text='Longitude'
+    )
+    flytoy = models.FloatField(
+        default="0.0", blank=True, help_text='Latitude'
     )
 
     class Meta:
