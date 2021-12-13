@@ -34,5 +34,4 @@ I recommend starring the drive folder, so it's easy to find in the future!
 
 ### Representable email
 We have it set up so that emails sent to team@representable.org are automatically forwarded to our personal emails. This is done through cloudflare apps. You should be set up for this as well!
-Link:
-https://app.eforw.com 
+Link is in the Bitwarden.

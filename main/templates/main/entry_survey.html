@@ -11,7 +11,7 @@
   }
   );
 </script>
-<div class="pl-xl-4 pr-xl-4 pb-5">
+<div class="pl-xl-4 pr-xl-4 pb-2">
     <div class="entry-step row mb-2">
         <div class="col">
             {% trans "Step 2" %}
@@ -31,11 +31,15 @@
               <button class="btn btn-outline-primary mr-4 btn-ls-md float-xl-right" type="button" id="comm-example-btn">{% trans "EXAMPLE COMMUNITY" %}</button>
             </div>
           </div>
-            <div id="survey-start-infographic" class="d-xl-inline-block my-3 p-4 d-lg-block d-none">
-                <div class="row m-0 header-text mb-2">
+          <div class="accordion" id="coi_info_accordion">
+            <div id="survey-start-infographic" class="d-xl-inline-block my-3 p-4 d-lg-block d-none w-100">
+              <button class="border-0 ws-normal bg-transparent text-left pl-0 no-underline-link state-info-mix h5 dark-gray-text" type="button" data-toggle="collapse" data-target="#coi_info_example" aria-expanded="false" aria-controls="collapseOne">
+              <i class="fas fa-info-circle"></i> {% trans "What is a Community of Interest?" %}<i class="fas fa-angle-down pl-3"></i>
+              </button>
+                <!-- <div class="row m-0 header-text mb-2">
                     <h5><strong>{% trans "What is a Community of Interest?" %}</strong></h5>
-                </div>
-
+                </div> -->
+              <div id="coi_info_example" class="collapse" aria-labelledby="coi_info_accordion" data-parent="#coi_info_accordion">
                 <div id="entry-coi-def" class="row m-0 mb-2">
                     <p class="info-text txt-16">
                         {% blocktrans trimmed %}
@@ -107,7 +111,9 @@
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
+          </div>
             <div id="mobile-survey-start-infographic" class="mt-3 mb-5 d-lg-none d-block">
                 <div class="row m-0 header-text mb-2">
                     <strong>{% trans "What is a Community of Interest?" %}</strong>
@@ -235,8 +241,8 @@
                     <div id="comm_activities_example" class="collapse" aria-labelledby="comm_activities_accordion" data-parent="#comm_activities_accordion">
                         <p class="collapse-in ml-4 gray-text">
                           <b>{% trans "Use these questions to think more about how you would describe your community..." %}</b><br>
-                          &emsp; - {% trans "Where do people in your community gather or socialize?" %} <br>
-                          &emsp; - {% trans "How and where does your community access services (healthcare, transportation, educational services, etc.)?" %}<br><br>
+                          &emsp; · {% trans "Where do people in your community gather or socialize?" %} <br>
+                          &emsp; · {% trans "How and where does your community access services (healthcare, transportation, educational services, etc.)?" %}<br><br>
                           <span class="blue-text"><b>{% trans "Examples of activities and services:" %}</b> {% trans "Shopping areas, schools and universities, libraries, parks, lakes, rivers, places of worship, healthcare services, public transport, local nonprofit organizations, etc." %}</span>
                         </p>
                     </div>
@@ -252,8 +258,8 @@
                     <div id="cultural_interests_example" class="collapse" aria-labelledby="cultural_interests_accordion" data-parent="#cultural_interests_accordion">
                       <p class="collapse-in ml-4 gray-text">
                         <b>{% trans "Use these questions to think more about how you would describe your community..." %}</b><br>
-                        &emsp; - {% trans "What are the cultural bonds in your community?" %} <br>
-                        &emsp; - {% trans "If your community has a shared history, what is it?" %}<br><br>
+                        &emsp; · {% trans "What are the cultural bonds in your community?" %} <br>
+                        &emsp; · {% trans "If your community has a shared history, what is it?" %}<br><br>
                         <span class="blue-text"><b>{% trans "Examples of cultural or historical interests: " %}</b>{% trans "Religious groups, ethnic groups, languages, age groups, immigration status, historic or arts districts, etc."%} </span>
                       </p>
                     </div>
@@ -269,8 +275,8 @@
                         <p class="collapse-in ml-4 gray-text">
                             {% blocktrans trimmed %}
                             <b>Use these questions to think more about how you would describe your community...</b><br>
-                            &emsp; - Where are residents employed?<br>
-                            &emsp; - If there are environmental concerns in your community, what are they?<br><br>
+                            &emsp; · Where are residents employed?<br>
+                            &emsp; · If there are environmental concerns in your community, what are they?<br><br>
                             <span class="blue-text"><b>Examples of economic or environmental interests:</b> Tourism industry, agricultural workers, mining town, manufacturing center, polluted natural resource, unemployment problem, etc.</span>
                             {% endblocktrans %}
                         </p>
@@ -287,9 +293,9 @@
                     <div id="other_interests_example" class="collapse" aria-labelledby="other_interests_accordion" data-parent="#other_interests_accordion">
                       <p class="collapse-in ml-4 gray-text">
                         <b>{% trans "Use these questions to think more about how you would describe your community..." %}</b><br>
-                        &emsp; - {% trans "What should politicians and/or map drawers know about your community?" %}<br>
-                        &emsp; - {% trans "What are the needs of your community?" %}<br>
-                        &emsp; - {% trans "Is there anything else you want to tell us about your community?" %}<br><br>
+                        &emsp; · {% trans "What should politicians and/or map drawers know about your community?" %}<br>
+                        &emsp; · {% trans "What are the needs of your community?" %}<br>
+                        &emsp; · {% trans "Is there anything else you want to tell us about your community?" %}<br><br>
                         <span class="blue-text"><b>{% trans "Examples of needs or concerns: " %}</b>{% trans "Keep community in the same district or separate into multiple districts, shared policy concerns, need for a social service, relationship to other nearby communities, issues with current district lines" %}</span>
                       </p>
                     </div>
@@ -333,7 +339,7 @@
                 </div> -->
 
             </div>
-            <div class="row pt-5 mt-5">
+            <div class="row pt-5 mb-5 pb-5">
                 <div class="col text-center">
                     <button id="surveyP1ToAddress_button" class="btn btn-outline-primary entry-nav-btn mr-4 btn-ls-md" onclick="surveyP1ToAddress()" type="button"><i class="fas fa-angle-left pr-2"></i>{% trans "BACK" %}</button>
                     <button id="surveyP1ToP2_button" class="btn btn-primary entry-nav-btn ml-4 btn-ls-md" type="button">{% trans "NEXT" %}<i class="fas fa-angle-right pl-2"></i></button>
@@ -375,7 +381,7 @@
                 </div>
                 <div id="survey-comm-name-header" class="col-lg-9 pl-2">
                     <div class="entry-header">
-                        <strong>{% trans "Name your community." %}</strong>
+                        <strong>{% trans "Name your community" %}</strong>
                     </div>
 
                     <!-- <div class="row m-0 info-text">
@@ -402,7 +408,7 @@
                 <hr>
                 <p class="mb-4 mt-5 ml-1 gray-text" style="font-size: 1.2rem;">
                   <b >What are the main topics relevant to your community?</b><br>
-                  <span class="small text-muted">Add up to five topics that describe your community. Use the "+" to see more options.</span>
+                  <span class="small text-muted">Type or click to add up to five topics that describe your community. Use the "+" to see more options.</span>
                 </p>
                 <div class="mb-4">
                   {% for key, value in top_tags.items %}
@@ -434,10 +440,10 @@
         <!-- modal for census blocks -> census block groups -->
         <div id="tags-select-modal" class="modal fade blue-modal" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content px-lg-5 gray-text">
+            <div class="modal-content px-lg- gray-text">
               <div class="modal-body">
                 <button type="button" class="close p-2" aria-label="Close" data-dismiss="modal">
-                  <span aria-hidden="true">&times;</span>
+                  <span aria-hidden="true" class="h2">&times;</span>
                 </button>
                 <div class="mx-3 my-5">
                   <div class="container-fluid">
