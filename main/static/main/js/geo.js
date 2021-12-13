@@ -1656,8 +1656,12 @@ map.on("style.load", function () {
     }
   }
   showMap();
+  flyto = statesLngLat[state.toUpperCase()]
+  if (drive_flytox!=0.0) {
+    flyto = [drive_flytox,drive_flytoy]
+  }
   map.flyTo({
-    center: statesLngLat[state.toUpperCase()],
+    center: flyto,
     zoom: initialZoom,
     essential: true, // this animation is considered essential with respect to prefers-reduced-motion
   });
