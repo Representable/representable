@@ -98,12 +98,12 @@
                   <div class="modal fade blue-modal" id="submission-info-modal" tabindex="-1" role="dialog" aria-labelledby="submission-info-modalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                       <div class="modal-content">
-                        <div class="modal-body px-md-5 text-left">
+                        <div class="modal-body px-md-5 ml-md-3 text-left">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
-                          <h4 class="mx-lg-5 px-lg-5 mt-md-5"><strong>{% trans "Your Community Information" %}</strong></h4>
-                          <p class="mx-lg-5 px-lg-5">{% trans "When drawing a map with Representable, you are asked a series of questions in different categories. We've repeated the questions below." %}</p>
+                          <h4 class="mt-md-5"><strong>{% trans "Your Community Information" %}</strong></h4>
+                          <p class="pr-lg-5">{% trans "When drawing a map with Representable, you are asked a series of questions in different categories. We've repeated the questions below." %}</p>
                           <!-- Sections: -->
                           <!-- Activities -->
                           <div class="accordion" id="comm_activities_accordion">
@@ -447,17 +447,17 @@
                 <div class="modal-body gray-text px-lg-5">
                   <div class="row my-1">
                     <div class="col-lg-2"></div>
-                    <div class="col-lg-8 text-center">
+                    <div class="col-lg-8 text-center px-0">
                       <p>{% trans "Your community is ready to be viewed and downloaded. You have " %}{% trans "received an email with your community as a PDF file." %}</p>
                       <h4 class="mb-lg-4">{% trans "Make an impact with your map." %}</h4>
                     </div>
                     <div class="col-lg-2"></div>
                   </div>
                   <div class="row my-1">
-                    <div class="col">
+                    <div class="col pl-5 pr-0">
                       <div class="text-center" id="pdf-download-mix"><a class="btn btn-outline-gray mx-2 my-1" id="pdf-button-modal" target="_blank" data-dismiss="modal" role="button">{% trans "Export PDF" %}</a></div>
                     </div>
-                    <div class="col">
+                    <div class="col px-0">
                       {% if has_state %}
                       {% with link_text="/export/geojson/"|add:state|add:"/?map_id="|addstr:c.entry_ID %}
                       <div class="text-center" id="geojson-download-mix"><a class="btn btn-outline-gray mx-2 my-1 geojson-button" href="#" data-toggle="modal" data-target="#geojson-explain-modal" rel="nofollow" download>Export geoJSON</a></div>
@@ -470,7 +470,7 @@
                       {% endwith %}
                       {% endif %}
                     </div>
-                    <div class="col">
+                    <div class="col pl-0 pr-5">
                       <div class="text-center"><a class="btn btn-outline-gray mx-2 my-1" target="_blank" data-dismiss="modal" role="button" onclick="copyPageLink();event.preventDefault();">{% trans "Copy Link" %}</a></div>
                     </div>
                   </div>
