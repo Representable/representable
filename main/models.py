@@ -217,10 +217,10 @@ class Drive(models.Model):
         max_length=50, choices=UNITS, default="Census Block Groups", blank=False
     )
     flytox = models.FloatField(
-        default="0.0", blank=True
+        default="0.0", blank=True, help_text='Longitude'
     )
     flytoy = models.FloatField(
-        default="0.0", blank=True
+        default="0.0", blank=True, help_text='Latitude'
     )
 
     class Meta:
