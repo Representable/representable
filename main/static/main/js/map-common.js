@@ -1,5 +1,5 @@
 /*------------------------------------------------------------------------*/
-/* this file is for functions and variables common to both map.js and 
+/* this file is for functions and variables common to both map.js and
     submission.js */
 /*------------------------------------------------------------------------*/
 
@@ -327,7 +327,7 @@ function addDataSwitches(map, document, pageName, visible) {
 
       reader.onload = function (e) {
         var name = "uploadedMap"
-        
+
         var mapLayer = map.getLayer('uploadedMap-lines');
 
         // clears previously uploaded maps
@@ -758,3 +758,16 @@ function getToggleableLayerIds(state) {
 function removeLastChar(str) {
   return str.substring(0, str.length - 1);
 }
+
+$("#tag_more").on("click", function() {
+  if (!$('.bootstrap-tagsinput-max').length > 0) {
+    $("#tags-select-modal").modal();
+    mixpanel.track("More tags clicked");
+  }
+});
+
+$(".tag-map-search").on("click", function() {
+  // get value of element
+  // filter communities by those that contain tag-map class and have same value
+  // remove all the rest 
+});

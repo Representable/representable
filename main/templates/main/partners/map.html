@@ -28,6 +28,35 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
 <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
 {% endblock %}
 {% block content %}
+<!-- modal for census blocks -> census block groups -->
+<div id="tags-select-modal" class="modal fade blue-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content px-lg- gray-text">
+      <div class="modal-body">
+        <button type="button" class="close p-2" aria-label="Close" data-dismiss="modal">
+          <span aria-hidden="true" class="h2">&times;</span>
+        </button>
+        <div class="mx-3 my-5">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col px-0">
+                <input class="my-2 mb-3 py-2 w-100" id="search-tags" type="text" placeholder="Search tags..." autofocus>
+                <br>
+              </div>
+            </div>
+            <div class="row vh-50" style="overflow: scroll;">
+              <div class="col px-0" id="tags-col">
+                {% for tag in tags %}
+                <button type="button" class="btn btn-outline-secondary tag-select mb-2 tag-map-search" id="tag_select_{{tag.value}}">{{ tag.text }}</button>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="container-fluid">
   <div class="row row-wide">
     <div>
@@ -73,6 +102,12 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                 {% endif %}
               </div>
               <input class="m-2 p-2 rounded border border-secondary" id="search-comm" type="text" placeholder="Search communities...">
+              <div class="m-2">
+                {% for key, value in top_tags.items %}
+                  <button type="button" class="btn btn-outline-secondary tag-top tag-map-search mb-2" id="tag_{{key}}">{{ value }}</button>
+                {% endfor %}
+                <button type="button" class="btn btn-outline-secondary mb-2" id="tag_more" aria-haspopup="true" aria-expanded="false" style="border-width: 2px;"><i class="fas fa-plus"></i></button>
+              </div>
               <div id="headingOne">
                 <button id="buttonOne" class="viz-dropdown btn btn-light font-weight-light" type="button" data-toggle="collapse" data-target="#collapseOne"
                 aria-expanded="false" aria-controls="collapseOne" style="width: 100%">
@@ -164,7 +199,7 @@ integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLP
                                 {% endif %}
                                 {% if c.tags.all %}
                                   {% for tag in c.tags.all %}
-                                  <span class="badge badge-pill badge-primary">{{tag}}</span>
+                                  <span class="badge badge-pill badge-primary tag-map">{{tag}}</span>
                                   {% endfor %}
                                   <br>
                                 {% endif %}

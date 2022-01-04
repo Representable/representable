@@ -140,6 +140,18 @@ class PartnerMap(TemplateView):
             print("not admin or authenticated")
             print(comms_counter)
 
+        # all tags already in db for tagging typeahead
+        # also the top 15 tags as options to select
+        all_tags = Tag.objects.all()
+        tags_arr_unsort = []
+        for i, c in enumerate(all_tags):
+            tags_arr_unsort.append({"value": c.id, "text": c.name})
+        tags_arr = sorted(tags_arr_unsort, key=lambda k: k['text'].lower())
+        top_tags_query = CommunityEntry.tags.most_common()[:10]
+        top_tags = dict()
+        for i, c in enumerate(top_tags_query):
+            top_tags[c.id] = c.name
+
         context = {
             "streets": streets,
             "cities": cities,
@@ -150,6 +162,8 @@ class PartnerMap(TemplateView):
             "numBG": numBG,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
+            "top_tags": top_tags,
+            "tags": tags_arr,
         }
         context["organization"] = org
         context["state"] = org.states[0].lower()

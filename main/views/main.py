@@ -949,6 +949,18 @@ class Map(TemplateView):
 
         comms_counter = query.filter(admin_approved=True, private=False).count()
 
+        # all tags already in db for tagging typeahead
+        # also the top 15 tags as options to select
+        all_tags = Tag.objects.all()
+        tags_arr_unsort = []
+        for i, c in enumerate(all_tags):
+            tags_arr_unsort.append({"value": c.id, "text": c.name})
+        tags_arr = sorted(tags_arr_unsort, key=lambda k: k['text'].lower())
+        top_tags_query = CommunityEntry.tags.most_common()[:10]
+        top_tags = dict()
+        for i, c in enumerate(top_tags_query):
+            top_tags[c.id] = c.name
+
         context = {
             "state": state,
             "state_name": state_obj.name,
@@ -960,6 +972,8 @@ class Map(TemplateView):
             "numBG": numBG,
             "mapbox_key": os.environ.get("DISTR_MAPBOX_KEY"),
             "mapbox_user_name": os.environ.get("MAPBOX_USER_NAME"),
+            "top_tags": top_tags,
+            "tags": tags_arr,
         }
 
         # the most extreme points of the US -- checking if the lat and long are valid points to go to
