@@ -862,7 +862,7 @@ function createCommPolygon() {
     triggerMissingPolygonError();
     return false;
   }
-  if (polyFilter.length > 802) {
+  if (polyFilter.length > 4002) {
     triggerDrawError(
       "polygon_size",
       "You must select a smaller area to submit this community."
@@ -1806,7 +1806,8 @@ map.on("style.load", function () {
     }
 
     // check size of community - 800 block groups or 2400 blocks
-    if ((!drawUsingBlocks && filter.length < 802) || (drawUsingBlocks && filter.length < 2402)) {
+    // changed to 4000 and 10000 for the sake of NJ partners requests
+    if ((!drawUsingBlocks && filter.length < 4002) || (drawUsingBlocks && filter.length < 10002)) {
       map.setFilter(state + "-highlighted-" + layer_suffix, filter);
     } else {
       showWarningMessage(
