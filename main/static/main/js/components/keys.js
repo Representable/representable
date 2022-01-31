@@ -233,6 +233,7 @@ var demLayersRef = [
   "asi_alo",
   "pci_alo",
   "sor_alo",
+  "Htot"
 ]
 
 var demLayersNHRef = [
@@ -251,4 +252,5 @@ var DEMLAYERS = {
   "asi_alo": "Asian",
   "pci_alo": "Native Hawaiian or Pacific Islander",
   "sor_alo": "Some other race",
+  "Htot": "Hispanic",
 }
