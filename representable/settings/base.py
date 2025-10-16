@@ -108,9 +108,8 @@ SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
 
 # Can Log In With Either Email or Username
-ACCOUNT_AUTHENTICATION_METHOD = "email"
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_LOGIN_METHODS = {"email"}
+ACCOUNT_SIGNUP_FIELDS = ['username', 'email*', 'password1*', 'password2']
 
 # Always remember login (hide the Remember me? checkbox)
 ACCOUNT_SESSION_REMEMBER = True

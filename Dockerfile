@@ -1,5 +1,4 @@
-FROM python:3.10.18-slim 
-# python 3.10 end of life October 2026, need to refactor code to Django 5
+FROM python:3.14.0-slim
 
 WORKDIR /app
 

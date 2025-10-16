@@ -18,8 +18,6 @@ from django.views.generic import (
     DetailView,
 )
 
-# import boto3
-# import botocore
 import pandas
 import zipfile
 from representable.settings.base import STATIC_ROOT

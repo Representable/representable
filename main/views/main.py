@@ -88,20 +88,10 @@ from django.utils.html import format_html
 from ..choices import STATES
 from django.views.generic.edit import FormView
 from django.core.serializers import serialize
-from django.utils.translation import ugettext as _
-from django.utils.translation import (
-    activate,
-    get_language,
-)
+from django.utils.translation import gettext as _
 from django.urls import reverse, reverse_lazy
 from representable.settings.base import STATIC_ROOT
 
-# from django.utils.translation import (
-#     LANGUAGE_SESSION_KEY,
-#     check_for_language,
-#     get_language,
-#     to_locale,
-# )
 from shapely.geometry import mapping
 from geojson_rewind import rewind
 import geojson
@@ -122,7 +112,6 @@ from itertools import islice
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 import pandas as pd
-import requests
 
 from django.conf import settings
 
@@ -142,12 +131,39 @@ from django.contrib.gis.geos import GEOSGeometry
 from googleapiclient import discovery
 
 def block_group_polygons(request, abbr):
+    # Try S3 for those files, then try local
     try:
         s3 = boto3.resource('s3')
         obj = s3.Object('dev-precomputed-blockgroups', 'adj-n-bounds-'+abbr+'.json')
-        return JsonResponse(json.loads(obj.get()['Body'].read()))
-    except Exception as e:
-        raise Http404
+        data = json.loads(obj.get()['Body'].read())
+        return JsonResponse(data)
+    except Exception as s3_error:
+        print(f"S3 error for abbr={abbr}: {s3_error}")
+        
+        local_path = os.path.join(
+            settings.BASE_DIR,
+            'data',
+            'block_group_polygons',
+            f'adj-n-bounds-{abbr}.json'
+        )
+        
+        if os.path.exists(local_path):
+            try:
+                with open(local_path, 'r') as f:
+                    data = json.load(f)
+                return JsonResponse(data)
+            except Exception as file_error:
+                print(f"Error reading local file {local_path}: {file_error}")
+                return JsonResponse(
+                    {'error': f'Block group polygons not found for {abbr}'},
+                    status=404
+                )
+        else:
+            print(f"Local file not found: {local_path}")
+            return JsonResponse(
+                {'error': f'Block group polygons not found for {abbr}. s3: {s3_error}'},
+                status=404
+            )
 
 # custom mixin redirects to signup page/tab rather than login
 class SignupRequiredMixin(AccessMixin):

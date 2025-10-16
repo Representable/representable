@@ -1,0 +1,34 @@
+{% load i18n %}
+{% load static %}
+{% load socialaccount %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans "Sign In" %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="auth-wrap col-sm-9 col-md-7 col-lg-5 mx-auto mt-4">
+        <h1 class="auth-title">{% trans "Sign In Via" %} {{ provider.name }}</h1>
+        <p class="text-muted">{% trans "You are about to sign in using a third-party account from" %} <strong>{{ provider.name }}</strong>.</p>
+        
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+             <button 
+            style="gap: 1rem;"
+            class="btn btn-outline-primary mx-auto w-75 d-flex align-items-center justify-content-center">
+            <img class="" src="{% static 'img/google-icon.svg' %}" width="16" height="16"
+                alt="Google icon logo" />{% trans "Continue with Google" %}
+        </button>
+        </form>
+        
+        <div class="text-center mt-3">
+            <a href="{% url 'account_login' %}" class="auth-link">{% trans "Back to Login" %}</a>
+        </div>
+    </div>
+</body>
+</html>
