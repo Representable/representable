@@ -78,7 +78,7 @@ typing==3.6.6
 uhashring==1.1
 urllib3==1.26.5
 webencodings==0.5.1
-Werkzeug==0.15.4
+Werkzeug==3.1.4
 whitenoise==6.9.0
 wrapt==1.11.2
 xhtml2pdf==0.2.5
