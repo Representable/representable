@@ -517,19 +517,3 @@ class Report(models.Model):
 
 
 # ******************************************************************************#
-
-class Turf(models.Model):
-    organization = models.ForeignKey(
-        Organization,
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True
-    )
-    tracts = ArrayField(
-        ArrayField(
-            models.CharField(max_length=11, blank=True),
-            blank=False,
-        )
-    ) # an array of tracts 
-    description = models.JSONField(blank=True, null=True) # information submited by the org/ user
-    meta = models.JSONField(blank=True, null=True) # used for embeddings to find related tracts 

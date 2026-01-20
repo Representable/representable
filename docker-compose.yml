@@ -13,21 +13,8 @@ services:
       - "8000:8000"
     tty: true
     stdin_open: true
-  app-plus: # flask/vue app that uses django (app) as a proxy for auth
-    build: ./representable_plus
-    volumes:
-      - ./representable_plus:/app
-    depends_on:
-      - app
-    env_file:
-      - .env
-    ports:
-      - "8001:8001"
-      - "8888:8888"
-    tty: true
-    stdin_open: true
   db:
-    image: postgis/postgis:17-3.4-alpine
+    image: postgis/postgis:17-3.5-alpine
     restart: unless-stopped
     environment:
       - POSTGRES_DB=representable_db
@@ -36,20 +23,9 @@ services:
     volumes:
       - ./pg_data:/var/lib/postgresql/data
     ports:
-      - "127.0.0.1:5433:5432" # access via port 5433 in dbeaver
+      - "127.0.0.1:5433:5432" # access via port 5433
     # creating a new user
     # psql -U public_test representable_db
     # CREATE USER public_test WITH encrypted password 'test';
     # change to select only for non-PII tables
     # GRANT ALL PRIVILEGES ON DATABASE representable_db to public_test;
-  martin:
-    image: ghcr.io/maplibre/martin
-    restart: unless-stopped
-    environment:
-      - DATABASE_URL=postgresql://representable:password@db/representable_db
-    depends_on:
-      - db
-    volumes:
-      - ./martin:/files
-    ports:
-      - "3000:3000"

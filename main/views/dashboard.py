@@ -145,43 +145,42 @@ class CreateOrg(LoginRequiredMixin, CreateView):
         admin = Membership(member=self.request.user, organization=org,)
         admin.save()
 
-        # disable sending an email for now - need to get an email server / mailgun setup
-        # email_content = (
-        #     "Dear Representable Team, "
-        #     + self.request.user.email
-        #     + " signed up to create an organization called "
-        #     + org.name
-        #     + ", in the state(s) of "
-        #     + str(org.states)
-        #     + " Their organization description: "
-        #     + org.description
-        #     + "."
-        # )
+        email_content = (
+            "Dear Representable Team, "
+            + self.request.user.email
+            + " signed up to create an organization called "
+            + org.name
+            + ", in the state(s) of "
+            + str(org.states)
+            + " Their organization description: "
+            + org.description
+            + "."
+        )
 
-        # send_mail(
-        #     "[Action Required] New Organization Sign-up",
-        #     email_content,
-        #     "no-reply@representable.org",
-        #     ["team@representable.org"],
-        #     # ["acbeaton4@gmail.com"],
-        #     fail_silently=False,
-        # )
+        send_mail(
+            "[Action Required] New Organization Sign-up",
+            email_content,
+            "no-reply@representable.org",
+            ["team@representable.org"],
+            # ["acbeaton4@gmail.com"],
+            fail_silently=False,
+        )
 
-        # self.success_url = reverse_lazy(
-        #     "main:thanks_org", kwargs=org.get_url_kwargs()
-        # )
+        self.success_url = reverse_lazy(
+            "main:thanks_org", kwargs=org.get_url_kwargs()
+        )
 
-        # if not EmailAddress.objects.filter(
-        #     user=self.request.user, verified=True
-        # ).exists():
+        if not EmailAddress.objects.filter(
+            user=self.request.user, verified=True
+        ).exists():
 
-        #     user_email_address = EmailAddress.objects.get(
-        #         user=self.request.user
-        #     )
-        #     user_email_confirmation = EmailConfirmationHMAC(
-        #         email_address=user_email_address
-        #     )
-        #     user_email_confirmation.send(self.request, False)
+            user_email_address = EmailAddress.objects.get(
+                user=self.request.user
+            )
+            user_email_confirmation = EmailConfirmationHMAC(
+                email_address=user_email_address
+            )
+            user_email_confirmation.send(self.request, False)
 
         return super().form_valid(form)
 
