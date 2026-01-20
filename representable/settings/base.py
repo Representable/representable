@@ -127,7 +127,6 @@ SITE_ID = 1
 # SITE_NAME = "Represenetable.org"
 
 MIDDLEWARE = [
-    "main.middleware.cors_middleware.CORSMiddleware",
     # Simplified static file serving.
     # https://warehouse.python.org/project/whitenoise/
     "django.middleware.security.SecurityMiddleware",
